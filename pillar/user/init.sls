@@ -1,4 +1,4 @@
-users:
+user:
 
   daniel.seif:
     fullname: Daniel Seif
