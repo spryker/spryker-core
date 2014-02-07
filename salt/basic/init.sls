@@ -8,7 +8,6 @@ basic:
       - mc
       - unzip
 
-
 vim:
   pkg:
     - installed
@@ -17,7 +16,6 @@ vim:
     - path: /usr/bin/vim.basic
     - require:
       - pkg: vim
-
 
 include:
   - .sudoers
