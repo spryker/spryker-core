@@ -1,4 +1,9 @@
 #!/bin/bash
+###
+# Use this script on a freshly installed debian wheezy server to setup SaltStack Master
+# This script assumes, that the salt git repostiory of the project has been cloned into /srv directory
+# Before running, edit the settings below:
+###
 
 # Settings
 RACKSPACE_API_USERNAME="fabianwesner"
@@ -7,6 +12,7 @@ DOMAIN_NAME="project-boss.net"
 RACKSPACE_REGION="LON"
 RACKSPACE_API_URL="https://lon.identity.api.rackspacecloud.com/v2.0/tokens"
 
+# Implementation starts here
 set -e
 echo "###"
 echo "### Instaling SaltStack master on this host"
@@ -25,9 +31,6 @@ wget -q -O- "http://debian.saltstack.com/debian-salt-team-joehealy.gpg.key" | ap
 apt-get -qq update
 apt-get -qq install salt-master python-pip
 
-# Create code directory
-mkdir -p /srv/salt
-
 # Open salt-master firewall ports
 ufw allow 4505/tcp
 ufw allow 4506/tcp
@@ -35,10 +38,10 @@ ufw allow 4506/tcp
 # Install python extensions for rackspace cloud
 pip -q install rackspace-novaclient salt-cloud apache_libcloud
 
-# Prepare for cloud credentials
+# Prepare cloud credentials
 mkdir -p /etc/salt/cloud.providers.d
 [ -f /etc/salt/cloud.providers.d/rackspace.conf ] || cat > /etc/salt/cloud.providers.d/rackspace.conf << EOF
-marconi-test:
+rackspace:
   minion:
     master: salt.${DOMAIN_NAME}
   identity_url: '${RACKSPACE_API_URL}'
@@ -61,35 +64,18 @@ export OS_PASSWORD=${RACKSPACE_API_KEY}
 export OS_PROJECT_ID=${RACKSPACE_API_USERNAME}
 export OS_NO_CACHE=1
 EOF
+source /root/nova-credentials
 
-mkdir -p /etc/salt/cloud.profiles.d
-[ -f /etc/salt/cloud.profiles.d/marconi.conf ] || cat > /etc/salt/cloud.profiles.d/marconi.conf << EOF
-marconi-test-1GB:
-  provider: marconi-test
-  size: 1 GB Performance
-  image: Debian 7 (Wheezy)
+# Prepare cloud profiles (from git repo)
+if [ ! -L /etc/salt/cloud.profiles.d ]; then
+  [ -d /etc/salt/cloud.profiles.d ] && mv /etc/salt/cloud.profiles.d /etc/salt/cloud.profiles.bak
+  ln -sf /srv/cloud.profiles.d /etc/salt/cloud.profiles.d
+fi
 
-marconi-test-2GB:
-  provider: marconi-test
-  size: 2 GB Performance
-  image: Debian 7 (Wheezy)
-
-marconi-test-4GB:
-  provider: marconi-test
-  size: 4 GB Performance
-  image: Debian 7 (Wheezy)
-
-marconi-test-8GB:
-  provider: marconi-test
-  size: 8 GB Performance
-  image: Debian 7 (Wheezy)
-EOF
-
-# Generate ssh keypair
+# Generate ssh keypair, will be used for creating new instances
 if [ ! -f /root/.ssh/id_rsa ]; then
-	ssh-keygen -f /root/.ssh/id_rsa -P ''
+  ssh-keygen -f /root/.ssh/id_rsa -P ''
 fi
 
 # Upload key pair to OpenStack
-source /root/nova-credentials
 nova keypair-add --pub-key /root/.ssh/id_rsa.pub marconi
