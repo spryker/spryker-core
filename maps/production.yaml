@@ -1,6 +1,6 @@
 rackspace-wheezy-1GB:
-  - app01.project-boss.net:
-    minion:
+  - app01.project-boss.net
+#    minion:
 #        grains:
 #          environment: production
 #          roles:
