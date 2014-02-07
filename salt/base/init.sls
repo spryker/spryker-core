@@ -8,7 +8,7 @@ base:
       - mc
       - unzip
 
-
+pav:
   pkgrepo.managed:
     - humanname: Project-A APT wheezy
     - name: deb http://apt2.test-a-team.com/wheezy ./

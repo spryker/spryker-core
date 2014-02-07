@@ -5,6 +5,8 @@ libssl:
   pkg:
     - installed
     - name: libssl0.9.8
+    - require:
+      - pkgrepo: pav
 
 
 couchbase-server:
