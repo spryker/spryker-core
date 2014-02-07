@@ -12,7 +12,7 @@ base:
   pkgrepo.managed:
     - humanname: Project-A APT wheezy
     - name: deb http://apt2.test-a-team.com/wheezy wheezy main
-    - dist: wheezy
+    - dist: .
     - file: /etc/apt/sources.list.d/project-a-wheezy.list
 
 
