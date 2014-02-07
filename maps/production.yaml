@@ -13,8 +13,6 @@ rackspace-wheezy-1GB:
         roles:
           - app
           - web
-
-rackspace-wheezy-1GB:
   - data01.project-boss.net:
     minion:
       grains:
