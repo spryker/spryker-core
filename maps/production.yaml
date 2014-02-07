@@ -1,11 +1,11 @@
 rackspace-wheezy-1GB:
-  - app01.project-boss.net
+  - app01.project-boss.net:
     minion:
       grains:
         roles:
           - app
           - web
-  - app02.project-boss.net
+  - app02.project-boss.net:
     minion:
       grains:
         roles:
@@ -13,7 +13,7 @@ rackspace-wheezy-1GB:
           - web
 
 rackspace-wheezy-1GB:
-  - data01.project-boss.net
+  - data01.project-boss.net:
     minion:
       grains:
         roles:
@@ -21,7 +21,7 @@ rackspace-wheezy-1GB:
           - solr_master
           - queue
           - sessions
-  - data02.project-boss.net
+  - data02.project-boss.net:
     minion:
       grains:
         roles:
