@@ -1,10 +1,10 @@
 rackspace-wheezy-1GB:
   - app01.project-boss.net
-    grains:
+      grains:
 #          environment: production
-      roles:
-        - app
-        - web
+        roles:
+          - app
+          - web
 #  - app02.project-boss.net:
 #      minion:
 #        grains:
