@@ -8,6 +8,13 @@ base:
       - mc
       - unzip
 
+  pkgrepo.managed:
+    - humanname: Project-A APT wheezy
+    - name: http://apt2.test-a-team.com/wheezy/ ./
+    - dist: .
+    - file: /etc/apt/sources.list.d/project-a-wheezy.list
+
+
 vim:
   pkg:
     - installed
