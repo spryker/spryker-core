@@ -1,11 +1,18 @@
 rackspace-wheezy-1GB:
+    - web1:
+        minion:
+            log_level: debug
+            grains:
+                cheese: tasty
+                omelet: du fromage
+
   - app01.project-boss.net
-#    minion:
-#        grains:
-#          environment: production
-#          roles:
-#            - app
-#            - web
+      minion:
+        grains:
+          environment: production
+          roles:
+            - app
+            - web
 #  - app02.project-boss.net:
 #      minion:
 #        grains:
