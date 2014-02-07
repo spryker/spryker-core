@@ -7,8 +7,6 @@ base:
       - curl
       - mc
       - unzip
-deb http://apt.test-a-team.com/ squeeze main non-free
-deb http://apt2.test-a-team.com/wheezy/ ./
 
 
   pkgrepo.managed:
