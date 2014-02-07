@@ -1,3 +1,3 @@
 /etc/sudoers:
   file.managed:
-    - source: salt://basic/files/sudoers
+    - source: salt://base/files/sudoers
