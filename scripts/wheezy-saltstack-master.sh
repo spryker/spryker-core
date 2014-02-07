@@ -11,6 +11,7 @@ RACKSPACE_API_KEY="14d002abd595109f2f383b8287098a00"
 DOMAIN_NAME="project-boss.net"
 RACKSPACE_REGION="LON"
 RACKSPACE_API_URL="https://lon.identity.api.rackspacecloud.com/v2.0/tokens"
+RACKSPACE_PROJECT_NET_UUID="37d4cda3-fe86-4231-b69a-7a5401e7c96d"
 
 # Implementation starts here
 set -e
@@ -51,6 +52,11 @@ rackspace:
   user: ${RACKSPACE_API_USERNAME}
   apikey: ${RACKSPACE_API_KEY}
   provider: openstack
+  ssh_key_name: marconi
+  ssh_key_file: /root/.ssh/id_rsa
+  networks:
+    - project:
+      - ${RACKSPACE_PROJECT_NET_UUID}
 EOF
 
 [ -f /root/nova-credentials ] || cat > /root/nova-credentials << EOF
@@ -78,4 +84,4 @@ if [ ! -f /root/.ssh/id_rsa ]; then
 fi
 
 # Upload key pair to OpenStack
-nova keypair-add --pub-key /root/.ssh/id_rsa.pub marconi
+nova keypair-add --pub-key /root/.ssh/id_rsa.pub rackspace-default || true
