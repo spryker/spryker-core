@@ -6,30 +6,30 @@ rackspace-wheezy-1GB:
           roles:
             - app
             - web
-  - app02.project-boss.net:
-      minion:
-        grains:
-          environment: production
-          roles:
-            - app
-            - web
-  - data01.project-boss.net:
-      minion:
-        grains:
-          environment: production
-          roles:
-            - couchbase
-            - solr_master
-            - queue
-            - sessions
-  - data02.project-boss.net:
-      minion:
-        grains:
-          environment: production
-          roles:
-            - couchbase
-            - solr
-            - sessions
+#  - app02.project-boss.net:
+#      minion:
+#        grains:
+#          environment: production
+#          roles:
+#            - app
+#            - web
+#  - data01.project-boss.net:
+#      minion:
+#        grains:
+#          environment: production
+#          roles:
+#            - couchbase
+#            - solr_master
+#            - queue
+#            - sessions
+#  - data02.project-boss.net:
+#      minion:
+#        grains:
+#          environment: production
+#          roles:
+#            - couchbase
+#            - solr
+#            - sessions
 
 #rackspace-wheezy-1GB:
 #	- jobs01
