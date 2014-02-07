@@ -1,4 +1,3 @@
 base:
   '*':
     - user
-    - base
