@@ -3,7 +3,6 @@ install:
     - pkgs:
       - doxygen
       - graphviz
-      - libmemcached11
       - libjpeg-progs
       - nodejs
 
