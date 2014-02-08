@@ -9,7 +9,7 @@ source /root/nova-credentials
 
 # Check for parameters
 if [ -z $1 ]; then
-  echo "Usage: $1 <map_file>"
+  echo "Usage: $1 <map_name>"
   exit 1
 fi
 
@@ -18,4 +18,4 @@ if [ ! -f /srv/maps/$1.yaml ]; then
   exit 2
 fi
 
-salt-cloud -m /srv/maps/$1.yaml -P
+time salt-cloud -m /srv/maps/$1.yaml -P
