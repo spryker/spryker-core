@@ -16,15 +16,16 @@ rackspace-wheezy-4GB:
         deployment: prod
         roles:
           - couchbase
-          - solr_master
+          - solr
           - queue
+        solr_role: master
   - data02.project-boss.net:
       grains:
         deployment: prod
         roles:
           - couchbase
           - solr
-
+        solr_role: slave
 rackspace-wheezy-2GB:
   - jobs01.project-boss.net:
       grains:
@@ -32,6 +33,7 @@ rackspace-wheezy-2GB:
         roles:
           - app
           - cronjobs
+        solr_role: slave
 
 #  - dwh01.project-boss.net:
 

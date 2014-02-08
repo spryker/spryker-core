@@ -10,7 +10,7 @@
 /etc/deploy/config.rb:
   file.managed:
     - source: salt://app/files/deploy_config.rb
-        - template: jinja
+    - template: jinja
             
 #/etc/deploy/ssh_wrapper:
 #/etc/deploy/deploy.key:
