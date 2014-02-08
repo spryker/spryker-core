@@ -1,4 +1,4 @@
-install:
+install ruby:
   pkg.installed:
     - pkgs:
       - ruby1.9.1

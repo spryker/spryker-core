@@ -1,4 +1,4 @@
-install:
+install app:
   pkg.installed:
     - pkgs:
       - doxygen
