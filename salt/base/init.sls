@@ -17,15 +17,15 @@ base:
 pav-v1:
   pkgrepo.managed:
     - humanname: Project-A APT wheezy
-    - name: deb http://apt2.test-a-team.com/wheezy ./
-    - file: /etc/apt/sources.list.d/project-a-wheezy.list
+    - name: deb http://apt.test-a-team.com squeeze main
+    - file: /etc/apt/sources.list.d/project-a.list
     - key_url: http://apt.test-a-team.com/key.gpg
 
 pav-v2:
   pkgrepo.managed:
     - humanname: Project-A APT wheezy
-    - name: deb http://apt.test-a-team.com squeeze main
-    - file: /etc/apt/sources.list.d/project-a.list
+    - name: deb http://apt2.test-a-team.com/wheezy ./
+    - file: /etc/apt/sources.list.d/project-a-wheezy.list
     - key_url: http://apt.test-a-team.com/key.gpg
 
 include:
