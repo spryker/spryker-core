@@ -24,10 +24,12 @@ pav:
 
 
 include:
+  - .minion
   - .sudoers
   - .vim
   - .time
   - .firewall
+
 
 # Preferences (editors, skel, .bashrc, etc)
 # /data
