@@ -7,13 +7,13 @@ install ruby:
       - libncurses5-dev
 
 highline:
-  gem.installed:
+  gem.installed
 
 net-scp:
-  gem.installed:
+  gem.installed
 
 net-ssh-multi:
-  gem.installed:
+  gem.installed
 
 compass:
-  gem.installed:
+  gem.installed
