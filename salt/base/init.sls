@@ -21,14 +21,15 @@ pav:
     - file: /etc/apt/sources.list.d/project-a-wheezy.list
     - key_url: http://apt.test-a-team.com/key.gpg
 
-vim:
-  pkg:
-    - installed
-  alternatives.set:
-    - name: editor
-    - path: /usr/bin/vim.basic
-    - require:
-      - pkg: vim
+
 
 include:
   - .sudoers
+  - .vim
+  - .time
+
+# Preferences (editors, skel, .bashrc, etc)
+# Timezone, ntp
+# /data
+# sysctl # Max number of sockets net.core.somaxconn = 4096
+# firewall
