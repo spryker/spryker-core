@@ -30,12 +30,12 @@ base:
   # jenkins to run cronjob and indexers
   'roles:cronjobs':
     - match: grain
-    - tomcat
+#    - tomcat
 
   # solr master
   'roles:solr_master':
     - match: grain
-    - tomcat
+#    - tomcat
 
   # solr slave
   'roles:solr':

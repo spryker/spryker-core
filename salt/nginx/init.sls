@@ -7,9 +7,11 @@ nginx:
       - pkg: nginx-extras
     - watch:
       - file: /etc/nginx/nginx.conf
+
+/etc/nginx/nginx.conf:
   file.managed:
-    - name: /etc/nginx/nginx.conf
     - source: salt://nginx/files/nginx.conf
+
+/etc/nginx/fastcgi_params:
   file.managed:
-    - name: /etc/nginx/fastcgi_params
     - source: salt://nginx/files/fastcgi_params
