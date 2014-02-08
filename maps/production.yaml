@@ -18,14 +18,12 @@ rackspace-wheezy-1GB:
           - couchbase
           - solr_master
           - queue
-          - sessions
   - data02.project-boss.net:
       grains:
         environment: production
         roles:
           - couchbase
           - solr
-          - sessions
   - jobs01.project-boss.net:
       grains:
         environment: production

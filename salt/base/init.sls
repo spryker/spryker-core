@@ -2,11 +2,17 @@ base:
   pkg.installed:
     - pkgs:
       - git
-      - htop
-      - zsh
-      - curl
-      - mc
       - unzip
+      - pbzip2
+      - zsh
+      - screen
+      - mc
+      - curl
+      - lsof
+      - htop
+      - iotop
+      - dstat
+      - telnet
 
 pav:
   pkgrepo.managed:
