@@ -5,4 +5,4 @@ ufw allow in on eth2:
       - pkg: ufw
 
 ufw:
-  pkg.install
+  pkg.installed
