@@ -28,10 +28,8 @@ rackspace-wheezy-1GB:
       grains:
         environment: production
         roles:
+          - app
           - cronjobs
 
-#rackspace-wheezy-1GB:
-#	- jobs01
-#
-#rackspace-wheezy-1GB:
-#	- dwh01
+#  - dwh01.project-boss.net:
+
