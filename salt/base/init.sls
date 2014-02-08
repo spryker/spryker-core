@@ -27,9 +27,9 @@ include:
   - .sudoers
   - .vim
   - .time
+  - .firewall
 
 # Preferences (editors, skel, .bashrc, etc)
-# Timezone, ntp
 # /data
 # sysctl # Max number of sockets net.core.somaxconn = 4096
 # firewall
