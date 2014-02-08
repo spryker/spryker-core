@@ -19,3 +19,6 @@ if [ ! -f /srv/maps/$1.yaml ]; then
 fi
 
 time salt-cloud -m /srv/maps/$1.yaml -P
+
+sleep 10s
+salt '*' test.ping
