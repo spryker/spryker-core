@@ -19,7 +19,7 @@ install app:
     - group: www-data
     - dir_mode: 755
 
-/data/logs:
+/data/storage:
   file.directory:
     - makedirs: true
     - user: www-data
