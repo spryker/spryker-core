@@ -1,10 +1,3 @@
-install app:
-  pkg.installed:
-    - pkgs:
-      - doxygen
-      - graphviz
-      - libjpeg-progs
-
 /etc/deploy:
   file.directory:
     - user: root
@@ -13,6 +6,11 @@ install app:
 
 #/etc/deploy/deploy.rb:
 #/etc/deploy/functions.rb:
-#/etc/deploy/config.rb:
+
+/etc/deploy/config.rb:
+  file.managed:
+    - source: salt://app/files/deploy_config.rb
+        - template: jinja
+            
 #/etc/deploy/ssh_wrapper:
 #/etc/deploy/deploy.key:
