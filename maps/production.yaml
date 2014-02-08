@@ -1,32 +1,34 @@
-rackspace-wheezy-1GB:
+rackspace-wheezy-4GB:
   - app01.project-boss.net:
       grains:
-        environment: production
+        deployment: prod
         roles:
           - app
           - web
   - app02.project-boss.net:
       grains:
-        environment: production
+        deployment: prod
         roles:
           - app
           - web
   - data01.project-boss.net:
       grains:
-        environment: production
+        deployment: prod
         roles:
           - couchbase
           - solr_master
           - queue
   - data02.project-boss.net:
       grains:
-        environment: production
+        deployment: prod
         roles:
           - couchbase
           - solr
+
+rackspace-wheezy-2GB:
   - jobs01.project-boss.net:
       grains:
-        environment: production
+        deployment: prod
         roles:
           - app
           - cronjobs
