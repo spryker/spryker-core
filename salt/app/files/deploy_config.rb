@@ -3,6 +3,7 @@
 # deploy_config.rb
 
 {% set netif = pillar.get('project_network_interface') %}
+{{ pillar.get('git_url') }}
 {% set appservers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
 
 {{ netif }}
