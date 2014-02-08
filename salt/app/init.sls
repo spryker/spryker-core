@@ -1,3 +1,5 @@
 include:
   - .install
-#  - .deploy
+  - .nodejs
+  - .ruby
+  - .deploy

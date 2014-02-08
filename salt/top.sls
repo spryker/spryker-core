@@ -18,7 +18,7 @@ base:
   # php and application code
   'roles:app':
     - match: grain
-#    - php
+    - php
     - app
 
   # nginx and web components
