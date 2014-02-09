@@ -1,4 +1,5 @@
 {%- set netif = pillar['network']['project_interface'] %}
+{%- set environments = pillar['environments'] %}
 {%- set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
 {%- set solr_servers = salt['mine.get']('roles:solr', 'network.interfaces', expr_form = 'grain').items() %}
 {%- set solr_masters = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() %}
@@ -6,12 +7,11 @@
 {%- set dwh_servers = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items() %}
 {%- set has_dwh = (dwh_servers|count > 0) -%}
 # This file is maintained by salt
-#
 # deploy_config.rb
 
 
 ###################
-### Directories
+### Locations and permissions
 ###################
 
 # For info only
@@ -21,10 +21,7 @@ $project_name = "salt"
 $deploy_dir = "/data/deploy"
 
 # Destination directory for application
-$destination_dir = "/data/shop"   # z.B: /data/shop/<ENV>/current/{Yves,Zed,Solr}
-
-# DocumentRoot for static files
-$static_dir = "/data/static"      # z.B: /data/static/<ENV>/
+$destination_dir = "/data/shop"
 
 # Username to use to connect to all hosts
 $ssh_user = $rsync_user = "root"
@@ -41,6 +38,7 @@ $rev_txt_locations = ['.']
 ###################
 
 # List of application environments
+{{ environments }}
 $environments = [
   "production",
   "staging",
@@ -72,6 +70,11 @@ $app_hosts = [
 # Host(s) that run jobs
 $jobs_host = [
   {% for hostname, network_settings in cron_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}",
+{% endfor %}]
+
+# Host(s) that run solr
+$solr_hosts = [
+  {% for hostname, network_settings in solr_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}",
 {% endfor %}]
 
 # Host that runs the dwh

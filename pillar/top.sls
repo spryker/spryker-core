@@ -1,7 +1,7 @@
 base:
   '*':
     - user
-#    - app.prod
+    - app
 
   'deployment:prod':
     - match: grain
