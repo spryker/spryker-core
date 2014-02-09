@@ -4,7 +4,7 @@
 {% set solr_masters = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() %}
 {% set cron_servers = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
 {% set dwh_servers = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items() %}
-{% set has_dwh = (dwh_servers.length > 0) %}
+{% set has_dwh = (count(dwh_servers) > 0) %}
 # This file is maintained by salt
 #
 # deploy_config.rb
