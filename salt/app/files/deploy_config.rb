@@ -1,12 +1,11 @@
-{% 
-	set netif = pillar['network']['project_interface'];
-	set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items()
-	set solr_servers = salt['mine.get']('roles:solr', 'network.interfaces', expr_form = 'grain').items()
-	set solr_masters = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items()
-	set cron_servers = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items()
-	set dwh_servers = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items()
-	set has_dwh = (dwh_servers|count > 0) 
-%}# This file is maintained by salt
+{%- set netif = pillar['network']['project_interface'] %}
+{%- set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
+{%- set solr_servers = salt['mine.get']('roles:solr', 'network.interfaces', expr_form = 'grain').items() %}
+{%- set solr_masters = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() %}
+{%- set cron_servers = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
+{%- set dwh_servers = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items() %}
+{%- set has_dwh = (dwh_servers|count > 0) %}
+# This file is maintained by salt
 #
 # deploy_config.rb
 
@@ -61,15 +60,18 @@ $use_dwh = {{ has_dwh }}
 
 # Hosts that get Yves and Zed application code
 $app_hosts = [
-{% for hostname, network_settings in app_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}", {% endfor %}
+  {% for hostname, network_settings in app_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}", {% endfor %}
 ]
 
 # Host(s) that run jobs
-{% for hostname, network_settings in cron_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}", {% endfor %}
-]
+$jobs_host = [
+  {% for hostname, network_settings in cron_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}",
+{% endfor %}]
 
 # Host that runs the dwh
-{% if has_dwh %}$dwh_host = "{{ dwh_servers[0][netif]['inet'][0]['address'] }}"{% endif %}
+{%- if has_dwh %}
+$dwh_host = "{{ dwh_servers[0][netif]['inet'][0]['address'] }}"
+{% endif %}
 
 # List of environments to deploy
 <%- env_rank={"production" => 1, "staging" => 2, "testing" => 3, "development" => -1} -%>
