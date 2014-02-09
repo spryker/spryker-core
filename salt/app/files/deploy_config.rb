@@ -1,5 +1,5 @@
 {% 
-	set netif = pillar['network']['project_interface']
+	set netif = pillar['network']['project_interface'];
 	set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items()
 	set solr_servers = salt['mine.get']('roles:solr', 'network.interfaces', expr_form = 'grain').items()
 	set solr_masters = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items()
