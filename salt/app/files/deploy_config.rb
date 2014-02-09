@@ -3,8 +3,8 @@
 {% set solr_servers = salt['mine.get']('roles:solr', 'network.interfaces', expr_form = 'grain').items() %}
 {% set solr_masters = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() %}
 {% set cron_servers = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
-{% set dwh_server = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items() %}
-{% set has_dwh = (dwh_server != None) %}
+{% set dwh_servers = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items() %}
+{% set has_dwh = (dwh_servers[0] != None) %}
 # This file is maintained by salt
 #
 # deploy_config.rb
@@ -68,9 +68,8 @@ $jobs_host = [
 ]
 
 # Host that runs the dwh
-{% set dwh_server = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items()[0] %}
-{% if dwh_server %}
-$dwh_host = "{{ dwh_server[netif]['inet'][0]['address'] }}"
+{% if has_dwh %}
+$dwh_host = "{{ dwh_servers[0][netif]['inet'][0]['address'] }}"
 {% endif %}
 
 # List of environments to deploy
