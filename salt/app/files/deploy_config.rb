@@ -4,7 +4,7 @@
 {%- set solr_masters = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() %}
 {%- set cron_servers = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
 {%- set dwh_servers = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items() %}
-{%- set has_dwh = (dwh_servers|count > 0) %}
+{%- set has_dwh = (dwh_servers|count > 0) -%}
 # This file is maintained by salt
 #
 # deploy_config.rb
@@ -37,8 +37,14 @@ $www_group = "www-data"
 $rev_txt_locations = ['.']
 
 ###################
-### Stores
+### Environments, stores
 ###################
+
+# List of application environments
+$environments = [
+  "production",
+  "staging",
+]
 
 # List of stores
 $stores = [
@@ -46,7 +52,7 @@ $stores = [
 ]
 
 ###################
-### Hosts
+### Hosts and roles
 ###################
 
 # Enable solr indexing?
@@ -56,7 +62,7 @@ $use_solr = true
 $use_jobs = true
 
 # Enable data warehouse?
-$use_dwh = {{ has_dwh }}
+$use_dwh = {{ has_dwh|lower }}
 
 # Hosts that get Yves and Zed application code
 $app_hosts = [
@@ -73,9 +79,6 @@ $jobs_host = [
 $dwh_host = "{{ dwh_servers[0][netif]['inet'][0]['address'] }}"
 {% endif %}
 
-# List of environments to deploy
-<%- env_rank={"production" => 1, "staging" => 2, "testing" => 3, "development" => -1} -%>
-$environments = %w(<%= config['environments'].map{ |k,v| k }.select{ |e| env_rank[e]>-1 }.sort_by{ |e| env_rank[e] }.join(" ")%>)
 
 # Deploy notifications (it's NOT same as Newrelic License Key!)
 $newrelic_api_key = "<%= config['monitoring']['newrelic']['api_key'] %>"
