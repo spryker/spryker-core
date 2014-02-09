@@ -1,3 +1,4 @@
+{% set netif = pillar['network']['project_interface'] %}
 # This file is maintained by salt
 #
 # deploy_config.rb
@@ -75,14 +76,12 @@ $newrelic_api_key = "<%= config['monitoring']['newrelic']['api_key'] %>"
 ### Code repository
 ###################
 
-$scm_type = "<%= config['deployment']['scm']['type'] %>"
+$scm_type = "git§"
 
-<%- if config['deployment']['scm']['type'] == 'git' %>
 ### Git settings
 $ssh_wrapper_path = "/etc/deploy/ssh_wrapper.sh"
 $git_path = $deploy_dir + "/git/"
-$original_git_url = "<%= config['deployment']['scm']['url'] %>"
-<%- end %>
+$original_git_url = "{{ pillar.get('git_url') }}"
 
 ###################
 ### Project custom parameters
@@ -97,9 +96,6 @@ $project_options = [
 
 
 
-{% set netif = pillar['network']['project_interface'] %}
-git: {{ pillar.get('git_url') }}
-netif: {{ netif }}
 
 {% set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
 {% for hostname, network_settings in app_servers %}
