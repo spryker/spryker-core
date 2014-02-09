@@ -1,4 +1,10 @@
 {% set netif = pillar['network']['project_interface'] %}
+{% set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
+{% set solr_servers = salt['mine.get']('roles:solr', 'network.interfaces', expr_form = 'grain').items() %}
+{% set solr_masters = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() %}
+{% set cron_servers = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
+{% set dwh_server = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items() %}
+{% set has_dwh = (dwh_server != None) %}
 # This file is maintained by salt
 #
 # deploy_config.rb
@@ -48,10 +54,9 @@ $use_solr = true
 # Enable job server?
 $use_jobs = true
 # Enable data warehouse?
-$use_dwh = false
+$use_dwh = {{ has_dwh }}
 
 # Hosts that get Yves and Zed application code
-{% set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
 $app_hosts = [
 {% for hostname, network_settings in app_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}", {% endfor %}
 ]
@@ -64,7 +69,7 @@ $jobs_host = [
 
 # Host that runs the dwh
 {% set dwh_server = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items()[0] %}
-{% if dwh_server }}
+{% if dwh_server %}
 $dwh_host = "{{ dwh_server[netif]['inet'][0]['address'] }}"
 {% endif %}
 
@@ -98,28 +103,22 @@ $project_options = [
 
 
 
-{% set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
 {% for hostname, network_settings in app_servers %}
 {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
 {% endfor %}
 
-{% set solr_servers = salt['mine.get']('roles:solr', 'network.interfaces', expr_form = 'grain').items() %}
 {% for hostname, network_settings in solr_servers %}
 solr {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
 {% endfor %}
 
-{% set solr_master = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() %}
-{% for hostname, network_settings in solr_master %}
+{% for hostname, network_settings in solr_masters %}
 solr_master {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
 {% endfor %}
 
-
-{% set cron_servers = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
 {% for hostname, network_settings in cron_servers %}
 cron {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
 {% endfor %}
 
-{% set dwh_servers = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items() %}
 {% for hostname, network_settings in dwh_servers %}
 dwh {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
 {% endfor %}
