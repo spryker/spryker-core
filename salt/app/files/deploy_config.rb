@@ -43,27 +43,30 @@ $stores = [
 ### Hosts
 ###################
 
-# Hosts that get Yves and Zed application code
-# Entries here must be either valid FQDN's or entries in /etc/hosts (prefferably over private network)
+# Enable solr indexing?
+$use_solr = true
+# Enable job server?
+$use_jobs = true
+# Enable data warehouse?
+$use_dwh = false
 
-## Fixme zed_hosts => app_hosts
+# Hosts that get Yves and Zed application code
 {% set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
 $app_hosts = [
 {% for hostname, network_settings in app_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}", {% endfor %}
 ]
 
-# Host that run cronjobs (use hostname)
+# Host(s) that run jobs
 {% set cron_servers = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
 $jobs_host = [
 {% for hostname, network_settings in cron_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}", {% endfor %}
 ]
 
-# Enable solr indexing?
-$use_solr = true
-
-# Host that runs the dwh (use hostname)
+# Host that runs the dwh
 {% set dwh_server = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items()[0] %}
+{% if dwh_server }}
 $dwh_host = "{{ dwh_server[netif]['inet'][0]['address'] }}"
+{% endif %}
 
 # List of environments to deploy
 <%- env_rank={"production" => 1, "staging" => 2, "testing" => 3, "development" => -1} -%>
@@ -73,12 +76,10 @@ $environments = %w(<%= config['environments'].map{ |k,v| k }.select{ |e| env_ran
 $newrelic_api_key = "<%= config['monitoring']['newrelic']['api_key'] %>"
 
 ###################
-### Code repository
+### Git code repository
 ###################
 
-$scm_type = "git§"
-
-### Git settings
+$scm_type = "git"
 $ssh_wrapper_path = "/etc/deploy/ssh_wrapper.sh"
 $git_path = $deploy_dir + "/git/"
 $original_git_url = "{{ pillar.get('git_url') }}"
