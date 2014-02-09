@@ -17,17 +17,18 @@ solr {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
 {% endfor %}
 
 {% set solr_master = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() %}
-{% for hostname, network_settings in solr_servers %}
+{% for hostname, network_settings in solr_master %}
 solr_master {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
 {% endfor %}
 
 
 {% set cron_servers = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
-{% for hostname, network_settings in solr_servers %}
+{% for hostname, network_settings in cron_servers %}
 cron {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
 {% endfor %}
 
 {% set dwh_servers = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items() %}
-{% for hostname, network_settings in solr_servers %}
+{% for hostname, network_settings in dwh_servers %}
 dwh {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
 {% endfor %}
+
