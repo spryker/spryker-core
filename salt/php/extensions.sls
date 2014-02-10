@@ -1,8 +1,3 @@
-php-pear:
-  pkg.installed
-  require:
-    - pkg: php
-
 # Install memcached extension
 libmemcached-dev:
   pkg.installed
