@@ -37,16 +37,18 @@ $rev_txt_locations = ['.']
 ###################
 
 # List of application environments
-{{ pillar['environments'] }}
 $environments = [
-  "production",
-  "staging",
+{%- for environment, environment_details in pillar['environments'] }
+  "{{ environment }}",
+{%- endfor %}
 ]
 
 # List of stores
 {{ pillar['stores'] }}
 $stores = [
-   { 'store' => 'DE', 'locale' => 'de_DE', 'appdomain' => '00' },
+{%- for store, store_details in pillar['environments'] }
+  "{{ store }}",
+   { 'store' => '{{ store }}', 'locale' => '{{ store_details['locale'] }}, 'appdomain' => '{{ store_details['appdomain'] }} },
 ]
 
 ###################
