@@ -4,11 +4,16 @@ php-pear:
       - pkg: php
 
 # Install memcached extension
-libmemcached-dev:
-  pkg.installed
+libmemcached10:
+  pkg.removed
 
 libmemcached11:
   pkg.installed
+
+libmemcached-dev:
+  pkg.installed
+   - require:
+     - pkg:libmemcached11
 
 memcached:
   pecl.installed:

@@ -35,7 +35,7 @@ dotdeb:
     - name: deb http://packages.dotdeb.org wheezy all
     - file: /etc/apt/sources.list.d/dotdeb.list
     - key_url: http://www.dotdeb.org/dotdeb.gpg
-    
+
 include:
   - .minion
   - .sudoers
