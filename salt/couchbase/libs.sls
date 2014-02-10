@@ -5,17 +5,16 @@ couchbase-oneiric:
   pkgrepo.managed:
     - humanname: Couchbase - Ubuntu Oneiric repo 
     - name: deb http://packages.couchbase.com/ubuntu oneiric oneiric/main
-    - file: /etc/apt/sources.list.d/project-a.list
+    - file: /etc/apt/sources.list.d/couchbase.list
     - key_url: http://packages.couchbase.com/ubuntu/couchbase.key
+    - require_in:
+      - pkg: libcouchbase-dev
+      - pkg: libcouchbase2-libevent
 
 libcouchbase-dev:
   pkg.installed:
     - fromrepo: couchbase-oneiric
-    - require:
-      - couchbase-oneiric.pkgrepo
 
 libcouchbase2-libevent:
   pkg.installed:
     - fromrepo: couchbase-oneiric
-    - require:
-      - couchbase-oneiric.pkgrepo
