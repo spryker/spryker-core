@@ -47,7 +47,7 @@ $environments = [
 {{ pillar['stores'] }}
 $stores = [
 {%- for store, store_details in pillar['stores'].items() %}
-   { 'store' => '{{ store }}', 'locale' => '{{ store_details['locale'] }}', 'appdomain' => '{{ store_details['appdomain'] }} },
+   { 'store' => '{{ store }}', 'locale' => '{{ store_details['locale'] }}', 'appdomain' => '{{ store_details['appdomain'] }}' },
 {%- endfor %}
 ]
 
