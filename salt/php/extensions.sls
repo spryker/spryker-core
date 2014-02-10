@@ -21,7 +21,7 @@ memcached:
     - mode: 644
 
 # Install Zend OpCache extension
-zendopcache:
+ZendOpcache:
   pecl.installed:
     - require: 
       - pkg: php-pear
