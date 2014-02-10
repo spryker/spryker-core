@@ -6,7 +6,6 @@ php:
       - php5-dev      
       - php5-cli
       - php5-fpm
-      - php54-zend-optimizer-plus
       - php-pear
       - php5-curl
       - php5-gd
