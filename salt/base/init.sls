@@ -29,6 +29,13 @@ pav-v2:
     - file: /etc/apt/sources.list.d/project-a-wheezy.list
     - key_url: http://apt.test-a-team.com/key.gpg
 
+dotdeb:
+  pkgrepo.managed:
+    - humanname: DotDeb repo (wheezy)
+    - name: deb http://packages.dotdeb.org wheezy all
+    - file: /etc/apt/sources.list.d/dotdeb.list
+    - key_url: http://www.dotdeb.org/dotdeb.gpg
+    
 include:
   - .minion
   - .sudoers

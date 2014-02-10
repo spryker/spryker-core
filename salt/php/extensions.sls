@@ -7,11 +7,15 @@ php-pear:
 libmemcached-dev:
   pkg.installed
 
+libmemcached11:
+  pkg.installed
+
 memcached:
   pecl.installed:
     - require:
       - pkg: php-pear
       - pkg: libmemcached-dev
+      - pkg: libmemcached11
 
 /etc/php5/conf.d/memcached.ini:
   file.managed:
