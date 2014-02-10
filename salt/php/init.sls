@@ -50,7 +50,8 @@ zendopcache:
     - mode: 644
 
 # Install couchbase extension
-include couchbase.libs
+include:
+  - couchbase.libs
 
 couchbase:
   pecl.installed:
