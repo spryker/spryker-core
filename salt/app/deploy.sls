@@ -27,9 +27,9 @@
     - group: root
     - mode: 644
             
-/etc/deploy/ssh_wrapper:
+/etc/deploy/ssh_wrapper.sh:
   file.managed:
-    - source: salt://app/files/deploy/ssh_wrapper
+    - source: salt://app/files/deploy/ssh_wrapper.sh
     - user: root
     - group: root
     - mode: 755
