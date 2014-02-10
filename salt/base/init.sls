@@ -13,6 +13,7 @@ base:
       - iotop
       - dstat
       - telnet
+      - make
 
 pav-v1:
   pkgrepo.managed:
