@@ -11,7 +11,7 @@ libmemcached11:
   pkg.installed
 
 libmemcached-dev:
-  pkg.installed
+  pkg.installed:
    - require:
      - pkg:libmemcached11
 
