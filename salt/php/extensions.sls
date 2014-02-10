@@ -20,8 +20,8 @@ memcached:
     - group: root
     - mode: 644
 
-# Install Zend OpCache extension
-ZendOpcache:
+# Install Zend OpCache extension - as it's not yet stable, we have to explicityly specify version number
+ZendOpcache-7.0.3:
   pecl.installed:
     - require: 
       - pkg: php-pear
