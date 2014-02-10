@@ -39,7 +39,8 @@ memcached:
 # Install Zend OpCache extension
 zendopcache:
   pecl.installed:
-    - require: pkg: php-pear
+    - require: 
+      - pkg: php-pear
 
 /etc/php5/conf.d/opcache.ini:
   file.managed:
@@ -49,7 +50,12 @@ zendopcache:
     - mode: 644
 
 # Install couchbase extension
+include couchbase.libs
+
 couchbase:
   pecl.installed:
     - require:
       - pkg: php-pear
+      - pkg: libcouchbase-dev
+      - pkg: libcouchbase2-libevent
+
