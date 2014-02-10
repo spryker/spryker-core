@@ -38,7 +38,7 @@ $rev_txt_locations = ['.']
 
 # List of application environments
 $environments = [
-{%- for environment, environment_details in pillar['environments'] %}
+{%- for environment, environment_details in pillar['environments'].items() %}
   "{{ environment }}",
 {%- endfor %}
 ]
