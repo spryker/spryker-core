@@ -11,10 +11,10 @@ couchbase-oneiric:
       - pkg: libcouchbase-dev
       - pkg: libcouchbase2-libevent
 
-libcouchbase-dev:
+install libraries:
   pkg.installed:
     - fromrepo: couchbase-oneiric
-
-libcouchbase2-libevent:
-  pkg.installed:
-    - fromrepo: couchbase-oneiric
+    - pkgs:
+      - libcouchbase-dev
+      - libcouchbase2-core
+      - libcouchbase2-libevent
