@@ -4,4 +4,4 @@ deploy:
 stores:
   DE:
     locale: de_DE
-    appdomain: 00
+    appdomain: '00'
