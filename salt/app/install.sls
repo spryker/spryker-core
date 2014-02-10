@@ -1,4 +1,4 @@
-install app:
+install helper app utilities:
   pkg.installed:
     - pkgs:
       - doxygen
@@ -26,6 +26,3 @@ install app:
     - group: www-data
     - dir_mode: 755
 
-include:
-  - .nodejs
-  - .ruby

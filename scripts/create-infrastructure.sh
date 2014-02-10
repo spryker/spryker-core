@@ -18,7 +18,11 @@ if [ ! -f /srv/maps/$1.yaml ]; then
   exit 2
 fi
 
-time salt-cloud -m /srv/maps/$1.yaml -P
+date=`date +"%Y%m%d-%H%M%S"`
+outfile="/tmp/salt-cloud-${date}.yaml"
+time salt-cloud --out=yaml --out-file=${outfile} -m /srv/maps/$1.yaml -P
+
+echo "Infrastructure created, output saved in ${outfile}"
 
 sleep 10s
 salt '*' test.ping
