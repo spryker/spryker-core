@@ -9,7 +9,7 @@ source /root/nova-credentials
 
 # Check for parameters
 if [ -z $1 ]; then
-  echo "Usage: $1 <map_name>"
+  echo "Usage: $1 <map_name> [-d]"
   exit 1
 fi
 
@@ -20,9 +20,9 @@ fi
 
 date=`date +"%Y%m%d-%H%M%S"`
 outfile="/tmp/salt-cloud-${date}.yaml"
-time salt-cloud --out=yaml --out-file=${outfile} -m /srv/maps/$1.yaml -P
+time salt-cloud --out=yaml --out-file=${outfile} -m /srv/maps/$1.yaml -P $2
 
-echo "Infrastructure created, output saved in ${outfile}"
+echo "salt-cloud finished - output saved in ${outfile}"
 
 sleep 10s
 salt '*' test.ping
