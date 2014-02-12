@@ -1,0 +1,12 @@
+#!/usr/bin/php -q
+<?php
+require 'vendor/autoload.php';
+
+use ProjectA\OpenStack\Loadbalancer\ListCommand;
+use ProjectA\OpenStack\Loadbalancer\UpdateNodeCommand;
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+$application->add(new ListCommand(null, $application));
+$application->add(new UpdateNodeCommand(null, $application));
+$application->run();

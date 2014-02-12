@@ -52,3 +52,10 @@ base:
   'roles:elasticsearch':
     - match: grain
 #    - elasticsearch
+
+  # dev tools
+  'roles:dev':
+    - match: grain
+#    - dev
+# database, pound (ssl),
+

@@ -6,3 +6,7 @@ base:
   'deployment:prod':
     - match: grain
     - app.prod
+
+  'deployment:dev':
+    - match: grain
+    - app.dev
