@@ -10,19 +10,32 @@ class Factory
     const SERVICE_CLOUD_LOAD_BALANCERS = 'cloudLoadBalancers';
     const LOCATION_LON = 'LON';
 
-    public static function getLoadBalancerService()
+    /**
+     * @param null|string $username
+     * @param null|string $apiKey
+     * @return \OpenCloud\LoadBalancer\Service
+     */
+    public static function getLoadBalancerService($username = null, $apiKey = null)
     {
-        return self::getClient()->loadBalancerService(self::SERVICE_CLOUD_LOAD_BALANCERS, self::LOCATION_LON);
+        return self::getClient($username, $apiKey)->loadBalancerService(self::SERVICE_CLOUD_LOAD_BALANCERS, self::LOCATION_LON);
     }
 
     /**
+     * @param null|string $username
+     * @param null|string $apiKey
      * @return Rackspace
      */
-    protected static function getClient()
+    protected static function getClient($username = null, $apiKey = null)
     {
+        if (null === $username || null === $apiKey) {
+            $config = parse_ini_file(__DIR__ . '/../../../config.ini');
+            $username = $config['username'];
+            $apiKey = $config['apiKey'];
+        }
+
         return new Rackspace(Rackspace::US_IDENTITY_ENDPOINT, array(
-            'username' => 'michael.kugele',
-            'apiKey'   => '47a00583299742beb2c8407be70027a3'
+            'username' => $username,
+            'apiKey'   => $apiKey
         ));
     }
 } 

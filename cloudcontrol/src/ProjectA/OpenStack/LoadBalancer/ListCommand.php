@@ -15,6 +15,8 @@ class ListCommand extends Command
 {
 
     const CLI_OPTION_VERBOSE = 'verbose';
+    const CLI_OPTION_USERNAME = 'username';
+    const CLI_OPTION_API_KEY = 'apiKey';
 
     /**
      * @var \Symfony\Component\Console\Application
@@ -35,6 +37,20 @@ class ListCommand extends Command
     {
         $this->setName('loadBalancer:list')
              ->setDescription('Show all configured load balancers');
+
+        $this->addOption(
+            self::CLI_OPTION_USERNAME,
+            null,
+            InputOption::VALUE_REQUIRED,
+            'Add this option to override the username which is defined in config.ini'
+        );
+
+        $this->addOption(
+            self::CLI_OPTION_API_KEY,
+            null,
+            InputOption::VALUE_REQUIRED,
+            'Add this option to override the apiKey which is defined in config.ini'
+        );
     }
 
     /**
@@ -44,7 +60,7 @@ class ListCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $loadBalancerService = Factory::getLoadBalancerService();
+        $loadBalancerService = Factory::getLoadBalancerService($input->getOption(self::CLI_OPTION_USERNAME), $input->getOption(self::CLI_OPTION_API_KEY));
         $loadBalancers = $loadBalancerService->loadBalancerList();
 
         $helper = new Helper();

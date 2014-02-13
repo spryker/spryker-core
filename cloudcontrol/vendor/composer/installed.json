@@ -7,12 +7,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Console.git",
-            "reference": "ce1d9d51cbb9f7c5d8b7b43ab93673cda4f2e5bd"
+            "reference": "ceb261293b65e9df55b98a9665ef29d56de0c48f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/Console/zipball/ce1d9d51cbb9f7c5d8b7b43ab93673cda4f2e5bd",
-            "reference": "ce1d9d51cbb9f7c5d8b7b43ab93673cda4f2e5bd",
+            "url": "https://api.github.com/repos/symfony/Console/zipball/ceb261293b65e9df55b98a9665ef29d56de0c48f",
+            "reference": "ceb261293b65e9df55b98a9665ef29d56de0c48f",
             "shasum": ""
         },
         "require": {
@@ -24,7 +24,7 @@
         "suggest": {
             "symfony/event-dispatcher": ""
         },
-        "time": "2014-02-03 17:15:42",
+        "time": "2014-02-11 13:52:21",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -58,18 +58,18 @@
     },
     {
         "name": "symfony/event-dispatcher",
-        "version": "v2.4.1",
-        "version_normalized": "2.4.1.0",
+        "version": "v2.4.2",
+        "version_normalized": "2.4.2.0",
         "target-dir": "Symfony/Component/EventDispatcher",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/EventDispatcher.git",
-            "reference": "e3ba42f6a70554ed05749e61b829550f6ac33601"
+            "reference": "4708b8cd41984a5ba29fe7dd40716f7f761ac501"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/e3ba42f6a70554ed05749e61b829550f6ac33601",
-            "reference": "e3ba42f6a70554ed05749e61b829550f6ac33601",
+            "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/4708b8cd41984a5ba29fe7dd40716f7f761ac501",
+            "reference": "4708b8cd41984a5ba29fe7dd40716f7f761ac501",
             "shasum": ""
         },
         "require": {
@@ -82,7 +82,7 @@
             "symfony/dependency-injection": "",
             "symfony/http-kernel": ""
         },
-        "time": "2013-12-28 08:12:03",
+        "time": "2014-02-11 13:52:09",
         "type": "library",
         "extra": {
             "branch-alias": {

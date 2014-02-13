@@ -102,29 +102,35 @@ class Helper
     }
 
     /**
+     * @param null|string $username
+     * @param null|string $apiKey
      * @return \OpenCloud\Common\Collection
      */
-    protected function getLoadBalancers()
+    protected function getLoadBalancers($username = null, $apiKey = null)
     {
-        $loadBalancerService = Factory::getLoadBalancerService();
+        $loadBalancerService = Factory::getLoadBalancerService($username, $apiKey);
         return $loadBalancerService->loadBalancerList();
     }
 
     /**
      * @param string $loadBalancerName
+     * @param null|string $username
+     * @param null|string $apiKey
      * @return bool
      */
-    public function loadBalancerExists($loadBalancerName)
+    public function loadBalancerExists($loadBalancerName, $username = null, $apiKey = null)
     {
-        return null !== $this->getLoadBalancerByName($loadBalancerName);
+        return null !== $this->getLoadBalancerByName($loadBalancerName, $username, $apiKey);
     }
 
     /**
      * @param string $loadBalancerName
-     * @return null|LoadBalancer
+     * @param null|string $username
+     * @param null|string $apiKey
+     * @return null
      */
-    public function getLoadBalancerByName($loadBalancerName) {
-        $loadBalancers = $this->getLoadBalancers();
+    public function getLoadBalancerByName($loadBalancerName, $username = null, $apiKey = null) {
+        $loadBalancers = $this->getLoadBalancers($username, $apiKey);
 
         foreach ($loadBalancers as $loadBalancer) {
             if ($loadBalancer->name() == $loadBalancerName) {
@@ -140,16 +146,17 @@ class Helper
      * @param string $address
      * @param string $port
      * @param string $condition
-     * @param null $type
-     * @param null $weight
+     * @param null|string $username
+     * @param null|string $apiKey
+     * @param null|string $type
+     * @param null|string $weight
      * @return bool
      */
-    public function createNode($loadBalancerName, $address, $port, $condition = 'ENABLED', $type = null, $weight = null)
+    public function createNode($loadBalancerName, $address, $port, $condition = 'ENABLED', $username = null, $apiKey = null, $type = null, $weight = null)
     {
-        $loadBalancer = $this->getLoadBalancerByName($loadBalancerName);
-        $status = $loadBalancer->status;
+        $loadBalancer = $this->getLoadBalancerByName($loadBalancerName, $username, $apiKey);
 
-        if ($this->isLoadBalancerActive($loadBalancerName)) {
+        if ($this->isLoadBalancerActive($loadBalancerName, $username, $apiKey)) {
             $loadBalancer->addNode($address, $port, $condition, $type, $weight);
             $loadBalancer->addNodes();
 
@@ -160,13 +167,15 @@ class Helper
     }
 
     /**
-     * @param string $loadBalancerName
+     * @param string$loadBalancerName
      * @param Node $nodeToDelete
+     * @param null|string $username
+     * @param null|string $apiKey
      * @return bool
      */
-    public function deleteNode($loadBalancerName, Node $nodeToDelete)
+    public function deleteNode($loadBalancerName, Node $nodeToDelete, $username = null, $apiKey = null)
     {
-        if ($this->isLoadBalancerActive($loadBalancerName)) {
+        if ($this->isLoadBalancerActive($loadBalancerName, $username, $apiKey)) {
             $nodeToDelete->delete();
             return true;
         }
@@ -176,11 +185,13 @@ class Helper
 
     /**
      * @param string $loadBalancerName
+     * @param null $username
+     * @param null $apiKey
      * @return bool
      */
-    protected function isLoadBalancerActive($loadBalancerName)
+    protected function isLoadBalancerActive($loadBalancerName, $username = null, $apiKey = null)
     {
-        $loadBalancer = $this->getLoadBalancerByName($loadBalancerName);
+        $loadBalancer = $this->getLoadBalancerByName($loadBalancerName, $username, $apiKey);
 
         return $loadBalancer->status == self::LOAD_BALANCER_STATUS_ACTIVE;
     }

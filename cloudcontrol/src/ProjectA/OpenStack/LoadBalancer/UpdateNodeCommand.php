@@ -15,14 +15,17 @@ class UpdateNodeCommand extends Command
 {
 
     const CLI_OPTION_DRY_RUN = 'dry-run';
-    const CLI_ARGUMENT_LOAD_BALANCER_NAME = 'loadBalancer';
-    const CLI_ARGUMENT_IP_ADDRESSES_AND_PORTS = 'ipAddressesAndPorts';
+    const CLI_OPTION_USERNAME = 'username';
+    const CLI_OPTION_API_KEY = 'apiKey';
     const CLI_OPTION_CREATE = 'create';
     const CLI_OPTION_DELETE = 'delete';
+    const CLI_ARGUMENT_LOAD_BALANCER_NAME = 'loadBalancer';
+    const CLI_ARGUMENT_IP_ADDRESSES_AND_PORTS = 'ipAddressesAndPorts';
     const KEY_ADDRESS = 'address';
     const KEY_PORT = 'port';
     const ACTION_CREATE = 'create';
     const ACTION_DELETE = 'delete';
+    const CONDITION_ENABLED = 'ENABLED';
 
     /**
      * @var \Symfony\Component\Console\Application
@@ -42,7 +45,7 @@ class UpdateNodeCommand extends Command
     protected function configure()
     {
         $this->setName('loadBalancer:update-nodes')
-             ->setDescription('Updates a given load balancer (create and delete nodes)')
+             ->setDescription('Updates a given load balancer (--create and --delete nodes)')
              ->addArgument(
                 self::CLI_ARGUMENT_LOAD_BALANCER_NAME,
                 InputArgument::REQUIRED,
@@ -71,7 +74,18 @@ class UpdateNodeCommand extends Command
                 InputOption::VALUE_NONE,
                 'Add this option just to see how the load balancer would be configured without changing anything'
             )
-        ;
+            ->addOption(
+                self::CLI_OPTION_USERNAME,
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Add this option to override the username which is defined in config.ini'
+            )
+            ->addOption(
+                self::CLI_OPTION_API_KEY,
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Add this option to override the apiKey which is defined in config.ini'
+            );
     }
 
     /**
@@ -83,8 +97,9 @@ class UpdateNodeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $loadBalancerName = $input->getArgument(self::CLI_ARGUMENT_LOAD_BALANCER_NAME);
+        $username = $input->getOption(self::CLI_OPTION_USERNAME);
+        $apiKey = $input->getOption(self::CLI_OPTION_API_KEY);
         $config = [];
 
         foreach ($input->getArgument(self::CLI_ARGUMENT_IP_ADDRESSES_AND_PORTS) as $ipAndPort) {
@@ -105,7 +120,7 @@ class UpdateNodeCommand extends Command
         }
 
         $helper = new Helper();
-        $loadBalancer = $helper->getLoadBalancerByName($loadBalancerName);
+        $loadBalancer = $helper->getLoadBalancerByName($loadBalancerName, $username, $apiKey);
 
         if (null === $loadBalancer) {
             throw new InstanceNotFound('Cannot find load balancer: ' . $loadBalancerName);
@@ -145,36 +160,44 @@ class UpdateNodeCommand extends Command
         }
 
         $result = [];
+        $result['created']['count'] = 0;
+        $result['deleted']['count'] = 0;
+
         if ($input->getOption(self::CLI_OPTION_CREATE)) {
             foreach ($nodesToCreate as $node) {
-                while (($status = $helper->createNode($loadBalancerName, $node[self::KEY_ADDRESS], $node[self::KEY_PORT])) !== true) {
+                while ($helper->createNode(
+                        $loadBalancerName,
+                        $node[self::KEY_ADDRESS],
+                        $node[self::KEY_PORT],
+                        self::CONDITION_ENABLED,
+                        $username,
+                        $apiKey
+                    ) !== true) {
                     sleep(1);
                 }
-                $result['created'][] = [
+                $result['created']['nodes'] = [
                     'address' => $node[self::KEY_ADDRESS],
                     'port' => $node[self::KEY_PORT]
                 ];
                 $result['created']['count'] += 1;
             }
-        } else {
-            $result['created']['count'] = 0;
         }
 
         if ($input->getOption(self::CLI_OPTION_DELETE)) {
             foreach ($nodesToDelete as $nodeToDelete) {
-                while (($status = $helper->deleteNode($loadBalancerName, $nodeToDelete)) !== true) {
+                while ($helper->deleteNode($loadBalancerName, $nodeToDelete, $username, $apiKey) !== true) {
                     sleep(1);
                 }
 
-                $result['created'][] = [
+                $result['deleted']['nodes'] = [
                     'address' => $nodeToDelete->address,
                     'port' => $nodeToDelete->port
                 ];
                 $result['deleted']['count'] += 1;
             }
-        } else {
-            $result['deleted']['count'] = 0;
         }
+
+        $output->writeln(json_encode($result));
     }
 
     /**
@@ -193,15 +216,6 @@ class UpdateNodeCommand extends Command
         }
 
         return false;
-    }
-
-    /**
-     * @param mixed $data
-     * @param OutputInterface $output
-     */
-    protected function dumpJsonResult($data, OutputInterface $output)
-    {
-        $output->writeln(json_encode($data), $output);
     }
 
     /**
