@@ -1,4 +1,4 @@
-nginx:
+logstash:
   pkg.installed:
     - name: logstash
   service:
@@ -6,11 +6,11 @@ nginx:
     - require:
       - pkg: logstash
 #    - watch:
-#      - file: /etc/nginx/nginx.conf
+#      - file: /etc/logstash/logstash.conf
 
-#/etc/nginx/nginx.conf:
+#/etc/logstash/logstash.conf:
 #  file.managed:
-#    - source: salt://nginx/files/nginx.conf
+#    - source: salt://logstash/files/logstash.conf
 
 #/etc/nginx/fastcgi_params:
 #  file.managed:
