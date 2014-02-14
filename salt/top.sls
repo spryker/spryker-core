@@ -7,7 +7,7 @@ base:
   '*':
     - base
     - user
-#    - logstash
+    - logstash
 #    - newrelic
 
   # couchbase
