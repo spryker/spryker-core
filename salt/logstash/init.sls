@@ -14,7 +14,7 @@ logstash:
 
 /etc/logstash/conf.d/logstash.conf:
   file.managed:
-    - source: salt://logstash/files/etc/logstash/conf.d/logstash.conf
+    - source: salt://logstash/files/etc/logstash/conf.d/lumberjack.conf
 
 #/etc/nginx/fastcgi_params:
 #  file.managed:
