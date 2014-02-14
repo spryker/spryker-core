@@ -12,6 +12,10 @@ logstash:
   file.managed:
     - source: salt://logstash/files/etc/default/logstash
 
+/etc/logstash/conf.d/logstash.conf:
+  file.managed:
+    - source: salt://logstash/files/etc/logstash/conf.d/logstash.conf
+
 #/etc/nginx/fastcgi_params:
 #  file.managed:
 #    - source: salt://nginx/files/fastcgi_params
