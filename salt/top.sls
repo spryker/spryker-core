@@ -56,6 +56,6 @@ base:
   # dev tools
   'roles:dev':
     - match: grain
-#    - dev
+    - mysql
 # database, pound (ssl),
 
