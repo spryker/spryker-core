@@ -36,6 +36,13 @@ dotdeb:
     - file: /etc/apt/sources.list.d/dotdeb.list
     - key_url: http://www.dotdeb.org/dotdeb.gpg
 
+elasticsearch:
+  pkgrepo.managed:
+    - humanname: Elasticsearch (also for logstash)
+    - name:  deb http://packages.elasticsearch.org/logstash/1.3/debian stable main
+    - file: /etc/apt/sources.list.d/elasticsearch.list
+    - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+
 include:
   - .minion
   - .sudoers
