@@ -13,6 +13,6 @@ logstash:
   file.managed:
     - source: salt://logstash/files/etc/default/logstash
 
-/etc/logstash/conf.d/logstash.conf:
+/etc/logstash/conf.d/lumberjack.conf:
   file.managed:
     - source: salt://logstash/files/etc/logstash/conf.d/lumberjack.conf
