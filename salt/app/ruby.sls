@@ -6,7 +6,7 @@ install system ruby:
       - rails
       - libncurses5-dev
 
-# Ruby gems required for deployment:
+# Ruby gems required for deploy.rb
 highline:
   gem.installed
 
