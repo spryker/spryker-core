@@ -17,6 +17,8 @@ environments:
       port: 15007
     solr:
       hostname: xx
+    queue:
+      stomp_port: 45006
     files:
       provider: rackspace
       api_username: xxx
