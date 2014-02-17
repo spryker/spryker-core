@@ -59,4 +59,10 @@ pear-ctwig:
   cmd.run:
     - name: pear channel-discover pear.twig-project.org && pear install twig/CTwig
 
-    
+/etc/php5/conf.d/twig.ini:
+  file.managed:
+    - source: salt://php/files/twig.ini
+    - user: root
+    - group: root
+    - mode: 644
+
