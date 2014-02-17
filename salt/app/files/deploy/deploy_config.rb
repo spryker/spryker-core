@@ -94,7 +94,7 @@ $newrelic_api_key = "{{ pillar['newrelic']['api_key'] }}"
 $scm_type = "git"
 $ssh_wrapper_path = "/etc/deploy/ssh_wrapper.sh"
 $git_path = $deploy_dir + "/git/"
-$original_git_url = "{{ pillar.get('git_url') }}"
+$original_git_url = "{{ pillar['deploy']['git_url'] }}"
 
 ###################
 ### Project custom parameters
