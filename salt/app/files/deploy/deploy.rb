@@ -339,7 +339,7 @@ def activate_cronjobs
   result = multi_ssh_exec(hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/enable_cronjobs")
 
   # Legacy - Yves+Zed 1.0
-  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/enable_local_cronjobs")
+  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/enable_local_cronjobs") unless $frontend_hosts.nil?
 end
 
 def deactivate_cronjobs
@@ -348,7 +348,7 @@ def deactivate_cronjobs
   result = multi_ssh_exec(hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/disable_cronjobs")
 
   # Legacy - Yves+Zed 1.0
-  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/disable_local_cronjobs")
+  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/disable_local_cronjobs") unless $frontend_hosts.nil?
 end 
 
 ###
@@ -360,7 +360,7 @@ def reindex_full
     put_status "Reindexing solr..."
     hosts = $jobs_hosts || [$solr_host]
     host = hosts[0]
-    result = multi_ssh_exec($solr_host, "cd #{$destination_release_dir} && [ -f deploy/reindex_solr ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/reindex_solr\" ")
+    result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f deploy/reindex_solr ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/reindex_solr\" ")
   end
 
   put_status "Reindexing KV-store..."
@@ -375,7 +375,7 @@ def reindex_full
   result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f #{script_name} ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} #{script_name}\" ")
 
   # Legacy - Yves+Zed 1.0
-  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && [ -f deploy/reindex_memcache ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/reindex_memcache\" ")
+  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && [ -f deploy/reindex_memcache ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/reindex_memcache\" ") unless $frontend_hosts.nil?
 end
 
 def ask_reindex
