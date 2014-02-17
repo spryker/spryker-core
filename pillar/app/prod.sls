@@ -13,6 +13,10 @@ environments:
         hostname: 28c61f41c4b7d139868cb9190e557f3e3c9a7cce.rackspaceclouddb.com
         username: production                                
         password: pjbO7aSUm0
+    tomcat:
+      port: 15007
+    solr:
+      hostname: xx
     files:
       provider: rackspace
       api_username: xxx

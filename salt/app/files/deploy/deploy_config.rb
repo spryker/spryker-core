@@ -1,4 +1,4 @@
-{%- set netif = pillar['network']['project_interface'] %}
+{%- set netif = pillar.network.project_interface %}
 {%- set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
 {%- set solr_servers = salt['mine.get']('roles:solr', 'network.interfaces', expr_form = 'grain').items() %}
 {%- set solr_masters = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() %}
@@ -38,15 +38,15 @@ $rev_txt_locations = ['.']
 
 # List of application environments
 $environments = [
-{%- for environment, environment_details in pillar['environments'].items() %}
+{%- for environment, environment_details in pillar.environments.items() %}
   "{{ environment }}",
 {%- endfor %}
 ]
 
 # List of stores
 $stores = [
-{%- for store, store_details in pillar['stores'].items() %}
-   { 'store' => '{{ store }}', 'locale' => '{{ store_details['locale'] }}', 'appdomain' => '{{ store_details['appdomain'] }}' },
+{%- for store, store_details in pillar.stores.items() %}
+   { 'store' => '{{ store }}', 'locale' => '{{ store_details.locale }}', 'appdomain' => '{{ store_details.appdomain }}' },
 {%- endfor %}
 ]
 
@@ -85,7 +85,7 @@ $dwh_host = "{{ dwh_servers[0][netif]['inet'][0]['address'] }}"
 
 
 # Deploy notifications (it's NOT same as Newrelic License Key!)
-$newrelic_api_key = "{{ pillar['newrelic']['api_key'] }}"
+$newrelic_api_key = "{{ pillar.newrelic.api_key|default('', true) }}"
 
 ###################
 ### Git code repository
@@ -94,7 +94,7 @@ $newrelic_api_key = "{{ pillar['newrelic']['api_key'] }}"
 $scm_type = "git"
 $ssh_wrapper_path = "/etc/deploy/ssh_wrapper.sh"
 $git_path = $deploy_dir + "/git/"
-$original_git_url = "{{ pillar['deploy']['git_url'] }}"
+$original_git_url = "{{ pillar.deploy.git_url }}"
 
 ###################
 ### Project custom parameters
