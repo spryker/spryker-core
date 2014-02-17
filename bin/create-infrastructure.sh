@@ -20,7 +20,7 @@ fi
 
 date=`date +"%Y%m%d-%H%M%S"`
 outfile="/tmp/salt-cloud-${date}.yaml"
-time salt-cloud --out=yaml --out-file=${outfile} -m /srv/maps/$1.yaml -P $2
+time salt-cloud --out-file=${outfile} -m /srv/maps/$1.yaml -P $2
 
 echo "salt-cloud finished - output saved in ${outfile}"
 
