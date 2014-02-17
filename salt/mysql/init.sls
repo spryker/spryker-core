@@ -22,6 +22,9 @@ mysql:
   file.managed:
     - source: salt://mysql/files/etc/mysql/conf.d/strict.cnf
 
+python-mysqldb:
+  pkg.installed
+
 #  mysql_user:
 #    - present
 #    - name: root
@@ -40,7 +43,7 @@ mysql_database_{{eachdb}}:
   mysql_database.present:
     - name: {{eachdb}}
     - require:
-      - module: mysqld-manager
+      - pkg: python-mysqldb
       - service: mysql
 {% endfor %}
 {% endif %}
@@ -55,7 +58,7 @@ mysql_users_{{username}}:
     - host: {{eachuser['host']}}
     - password: {{eachuser['password']}}
     - require:
-      - module: mysqld-manager
+      - pkg: python-mysqldb
       - service: mysql
 
 ## mysql user permission
