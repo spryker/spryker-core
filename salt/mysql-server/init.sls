@@ -1,4 +1,4 @@
-mysql:
+mysql-server:
   pkg:
     - installed
     - name: mysql-server
@@ -12,33 +12,22 @@ mysql:
 
 /etc/mysql/my.cnf:
   file.managed:
-    - source: salt://mysql/files/etc/mysql/my.cnf
+    - source: salt://mysql-server/files/etc/mysql/my.cnf
 
 /etc/mysql/conf.d/binlog.cnf:
   file.managed:
-    - source: salt://mysql/files/etc/mysql/conf.d/binlog.cnf
+    - source: salt://mysql-server/files/etc/mysql/conf.d/binlog.cnf
 
 /etc/mysql/conf.d/strict.cnf:
   file.managed:
-    - source: salt://mysql/files/etc/mysql/conf.d/strict.cnf
+    - source: salt://mysql-server/files/etc/mysql/conf.d/strict.cnf
 
 python-mysqldb:
   pkg.installed
 
-#  mysql_user:
-#    - present
-#    - name: root
-#    - password_hash: '*F3A2A51A9B0F2BE2468926B4132313728C250DBF'
-#    - require:
-#      - service: mysql
-
-#{% if salt['config.get']('mysql.pass') %}
-#{% if 'mysql-server' in pillar %}
-
-
 ## mysql database states
-{% if 'databases' in pillar['mysql'] %}
-{% for eachdb in pillar['mysql']['databases'] %}
+{% if 'databases' in pillar['mysql-server'] %}
+{% for eachdb in pillar['mysql-server']['databases'] %}
 mysql_database_{{eachdb}}:
   mysql_database.present:
     - name: {{eachdb}}
@@ -49,8 +38,8 @@ mysql_database_{{eachdb}}:
 {% endif %}
 
 ## mysql user states
-{% if 'users' in pillar['mysql'] %}
-{% for eachuser in pillar['mysql']['users'] %}
+{% if 'users' in pillar['mysql-server'] %}
+{% for eachuser in pillar['mysql-server']['users'] %}
 {% set username = eachuser['user'] %}
 mysql_users_{{username}}:
   mysql_user.present:
