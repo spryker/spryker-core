@@ -65,8 +65,8 @@
     - require:
       - file: /data/shop/{{ environment }}/shared/data/common
     - context:
-      - environment: {{ environment }}
-      - environment_details: {{ environment_details }}
+      environment: {{ environment }}
+#      environment_details: {{ environment_details }}
 
 
 {%- endfor %}
