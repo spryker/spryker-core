@@ -54,3 +54,9 @@ couchbase:
       - pkg: libcouchbase-dev
       - pkg: libcouchbase2-libevent
 
+# Install CTwig extension
+pear-ctwig:
+  cmd.run:
+    - name: pear channel-discover pear.twig-project.org && pear install twig/CTwig
+
+    
