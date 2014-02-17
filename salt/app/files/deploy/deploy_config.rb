@@ -85,7 +85,7 @@ $dwh_host = "{{ dwh_servers[0][netif]['inet'][0]['address'] }}"
 
 
 # Deploy notifications (it's NOT same as Newrelic License Key!)
-$newrelic_api_key = "{{ pillar.newrelic.api_key }}"
+$newrelic_api_key = "{{ pillar.newrelic.api_key|default('') }}"
 
 ###################
 ### Git code repository
