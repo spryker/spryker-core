@@ -42,10 +42,11 @@
     - mode: 400
 
 # Use this to copy /root/.ssh/id_rsa from Salt Master to Salt Minions
+{{ if server_env.ssh.id_rsa is defined }}
 /root/.ssh/id_rsa:
   file.managed:
     - user: root
     - group: root
     - mode: 400
-    - contents: |
-      {{ salt['cmd.run']('cat /root/.ssh/id_rsa') | indent(6) }}
+    - contents_pillar: server_env:ssh:id_rsa
+{{ endif }}
