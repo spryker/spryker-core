@@ -1,5 +1,6 @@
 {%- set netif = pillar.network.project_interface %}
 {%- set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
+{%- set web_servers = salt['mine.get']('roles:web', 'network.interfaces', expr_form = 'grain').items() %}
 {%- set solr_servers = salt['mine.get']('roles:solr', 'network.interfaces', expr_form = 'grain').items() %}
 {%- set solr_masters = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() %}
 {%- set cron_servers = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
@@ -60,14 +61,21 @@ $use_solr = true
 # Enable data warehouse?
 $use_dwh = {{ has_dwh|lower }}
 
-# Hosts that get Yves and Zed application code
+# Hosts that have the application code
 $app_hosts = [
-{% for hostname, network_settings in app_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}", {% endfor %}
+{% for hostname, network_settings in app_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}",
+{% endfor %}
+]
+
+# Hosts that run web server
+$web_hosts = [
+{% for hostname, network_settings in web_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}",
+{% endfor %}
 ]
 
 # Host(s) that run jobs
 $jobs_hosts = [
-{% for hostname, network_settings in cron_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}", 
+{% for hostname, network_settings in cron_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}",
 {% endfor %}
 ]
 
@@ -81,7 +89,6 @@ $solr_hosts = [
 {%- if has_dwh %}
 $dwh_host = "{{ dwh_servers[0][netif]['inet'][0]['address'] }}"
 {% endif %}
-
 
 # Deploy notifications (API key - it's NOT same as Newrelic License Key!)
 $newrelic_api_key = "{{ pillar.newrelic.api_key|default('', true) }}"
