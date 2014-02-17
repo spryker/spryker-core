@@ -1,6 +1,7 @@
 ### This file is maintained by Salt!
 ###
 ### Project A sudo configuration
+
 Defaults        env_reset
 Defaults        exempt_group=adm
 Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -14,13 +15,14 @@ Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/
 # User privilege specification
 root    ALL=(ALL:ALL) ALL
 
-# Members of the admin group may gain root privileges
+# Allow members of group adm to execute any command, without password authentication
 %adm  ALL=(ALL) NOPASSWD:ALL
 
-# Allow members of group sudo to execute any command
+# Allow members of group sudo to execute any command, with password authentication
 %sudo  ALL=(ALL:ALL) ALL
 
 # See sudoers(5) for more information on "#include" directives:
-
 #includedir /etc/sudoers.d
-rack  ALL=(ALL) NOPASSWD: ALL		# Rackspace support
+
+# Rackspace support - don't remove for managed VM's
+rack  ALL=(ALL) NOPASSWD: ALL
