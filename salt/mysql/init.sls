@@ -28,3 +28,49 @@ mysql:
 #    - password_hash: '*F3A2A51A9B0F2BE2468926B4132313728C250DBF'
 #    - require:
 #      - service: mysql
+
+#{% if salt['config.get']('mysql.pass') %}
+#{% if 'mysql-server' in pillar %}
+
+
+## mysql database states
+{% if 'databases' in pillar['mysql'] %}
+{% for eachdb in pillar['mysql']['databases'] %}
+mysql_database_{{eachdb}}:
+  mysql_database.present:
+    - name: {{eachdb}}
+    - require:
+      - module: mysqld-manager
+      - service: mysql
+{% endfor %}
+{% endif %}
+
+## mysql user states
+{% if 'users' in pillar['mysql'] %}
+{% for eachuser in pillar['mysql']['users'] %}
+{% set username = eachuser['user'] %}
+mysql_users_{{username}}:
+  mysql_user.present:
+    - name: {{username}}
+    - host: {{eachuser['host']}}
+    - password: {{eachuser['password']}}
+    - require:
+      - module: mysqld-manager
+      - service: mysql
+
+## mysql user permission
+{% if 'permissions' in eachuser%}
+{% for eachgrant in eachuser['permissions'] %}
+mysql_grants_{{username}}_{{eachgrant['database']}}:
+  mysql_grants.present:
+    - grant: {{eachgrant['grant']}}
+    - database: {{eachgrant['database']}}
+    - user: {{username}}
+    - host: {{eachuser['host']}}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endif %}
