@@ -14,6 +14,14 @@ mysql:
   file.managed:
     - source: salt://mysql/files/etc/mysql/my.cnf
 
+/etc/mysql/conf.d/binlog.cnf:
+  file.managed:
+    - source: salt://mysql/files/etc/mysql/conf.d/binlog.cnf
+
+/etc/mysql/conf.d/strict.cnf:
+  file.managed:
+    - source: salt://mysql/files/etc/mysql/conf.d/strict.cnf
+
 #  mysql_user:
 #    - present
 #    - name: root
