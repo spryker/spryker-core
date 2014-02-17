@@ -3,3 +3,4 @@ include:
   - .nodejs
   - .ruby
   - .deploy
+  - .environments
