@@ -5,6 +5,7 @@
     - group: www-data
     - dir_mode: 755
     - file_mode: 755
+    - makedirs: true
     - recurse:
       - user
       - group
@@ -16,6 +17,7 @@
     - group: www-data
     - dir_mode: 755
     - file_mode: 755
+    - makedirs: true
     - recurse:
       - user
       - group
@@ -27,6 +29,7 @@
     - group: www-data
     - dir_mode: 755
     - file_mode: 755
+    - makedirs: true
     - recurse:
       - user
       - group
@@ -38,6 +41,7 @@
     - group: www-data
     - dir_mode: 755
     - file_mode: 755
+    - makedirs: true
     - recurse:
       - user
       - group
@@ -47,6 +51,9 @@
   file.symlink:
     - target: /data/storage/{{ environment }}/static
     - force: true
+    - require:
+      - file: /data/shop/{{ environment }}/shared/data/common
+      - file: /data/storage/{{ environment }}/static
 
 /data/shop/{{ environment }}/shared/config_local.php:
   file.managed:
@@ -55,7 +62,8 @@
     - user: www-data
     - group: www-data
     - mode: 640
+    - require:
+      - file: /data/shop/{{ environment }}/shared/data/common
 
- 
 {%- endfor %}
 
