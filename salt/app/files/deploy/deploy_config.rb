@@ -65,18 +65,20 @@ $use_dwh = {{ has_dwh|lower }}
 
 # Hosts that get Yves and Zed application code
 $app_hosts = [
-  {% for hostname, network_settings in app_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}", {% endfor %}
+{% for hostname, network_settings in app_servers %}"  {{ network_settings[netif]['inet'][0]['address'] }}", {% endfor %}
 ]
 
 # Host(s) that run jobs
-$jobs_host = [
-  {% for hostname, network_settings in cron_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}",
-{% endfor %}]
+$jobs_hosts = [
+{% for hostname, network_settings in cron_servers %}"  {{ network_settings[netif]['inet'][0]['address'] }}", 
+{% endfor %}
+]
 
 # Host(s) that run solr
 $solr_hosts = [
-  {% for hostname, network_settings in solr_servers %}"{{ network_settings[netif]['inet'][0]['address'] }}",
-{% endfor %}]
+{% for hostname, network_settings in solr_servers %}"  {{ network_settings[netif]['inet'][0]['address'] }}", 
+{% endfor %}
+]
 
 # Host that runs the dwh
 {%- if has_dwh %}

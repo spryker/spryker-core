@@ -278,28 +278,47 @@ end
 
 def check_configuration
   put_status "Checking hosts ..."
-  result = multi_ssh_exec!($zed_hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/check_configuration\" ")
+  hosts = $app_hosts || $zed_hosts
+  result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/check_configuration\" ")
 end
 
 def configure_hosts
   put_status "Configuring hosts...."
-  result = multi_ssh_exec!($zed_hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/configure_host\" ")
+
+
+  # Version 1.0 uses "configure_host" action to setup solr as well 
+  hosts = $app_hosts || $zed_hosts
+  result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/configure_host\" ")
+
+  # In 2.0 configuring solr and jenkins is seperate action/file
+  hosts = $solr_hosts || []
+  result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/setup_solr\" ")
+
+  hosts = $jobs_hosts || []
+  result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/setup_jenkins\" ")
+
 end
 
 def check_for_migrations
   put_status "Checking for migrations"
-  result = multi_ssh_exec($tools_host, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/check_for_migrations\" ", {:dont_display_failed => 1})
+  hosts = $job_hosts || [$tools_host]
+  host = hosts[0]
+  result = multi_ssh_exec(host, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/check_for_migrations\" ", {:dont_display_failed => 1})
   return true # result
 end
 
 def perform_migrations
   put_status "Executing migrations"
-  result = multi_ssh_exec!($tools_host, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/perform_migrations\" ")
+  hosts = $job_hosts || [$tools_host]
+  host = hosts[0]
+  result = multi_ssh_exec!(host, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/perform_migrations\" ")
 end
 
 def initialize_database
   put_status "Initializing database"
-  result = multi_ssh_exec!($tools_host, "cd #{$destination_release_dir} && [ -f deploy/initialize_database ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/initialize_database\" ")
+  hosts = $job_hosts || [$tools_host]
+  host = hosts[0]
+  result = multi_ssh_exec!(host, "cd #{$destination_release_dir} && [ -f deploy/initialize_database ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/initialize_database\" ")
 end
 
 def activate_maintenance
@@ -316,26 +335,46 @@ end
 
 def activate_cronjobs
   put_status "Activating cronjobs"
-  result = multi_ssh_exec($tools_host, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/enable_cronjobs")
+  hosts = $job_hosts || [$tools_host]
+  result = multi_ssh_exec(hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/enable_cronjobs")
+
+  # Legacy - Yves+Zed 1.0
   result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/enable_local_cronjobs")
 end
 
 def deactivate_cronjobs
   put_status "Deactivating cronjobs"
-  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/disable_cronjobs")
+  hosts = $job_hosts || [$tools_host]
+  result = multi_ssh_exec(hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/disable_cronjobs")
+
+  # Legacy - Yves+Zed 1.0
   result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/disable_local_cronjobs")
 end 
 
 ###
-### SOLR
+### SOLR and KV-Store
 ###
 
 def reindex_full
   if ($use_solr) 
     put_status "Reindexing solr..."
+    hosts = $job_hosts || [$solr_host]
+    host = hosts[0]
     result = multi_ssh_exec($solr_host, "cd #{$destination_release_dir} && [ -f deploy/reindex_solr ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/reindex_solr\" ")
   end
-  put_status "Reindexing memcache..."
+
+  put_status "Reindexing KV-store..."
+  hosts = $job_hosts || [$tools_host]
+  host = hosts[0]
+  if File.exists? "deploy/reindex_memcache"
+    script_name = "deploy/reindex_memcache"
+  else
+    script_name = "deploy/reindex_kv"
+    puts yellow "Please rename deploy/reindex_memcache to deploy/reindex_kv  (workaround activated)"
+  end
+  result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f #{script_name} ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} #{script_name}\" ")
+
+  # Legacy - Yves+Zed 1.0
   result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && [ -f deploy/reindex_memcache ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/reindex_memcache\" ")
 end
 
@@ -413,8 +452,10 @@ end
 
 def send_notifications_after
   put_status "Sending notifications after deployment"
-  result = multi_ssh_exec($tools_host, "cd #{$destination_release_dir} && [ -f deploy/send_notifications ] && deploy/send_notifications", {:dont_display_failed => 1})
-  result = multi_ssh_exec($tools_host, "cd #{$destination_release_dir} && [ -f deploy/send_notifications_after ] && deploy/send_notifications_after", {:dont_display_failed => 1})
+  hosts = $job_hosts || [$tools_host]
+  host = hosts[0]
+  result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f deploy/send_notifications ] && deploy/send_notifications", {:dont_display_failed => 1})
+  result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f deploy/send_notifications_after ] && deploy/send_notifications_after", {:dont_display_failed => 1})
 end
 
 ###
@@ -512,6 +553,6 @@ end
 ### Main
 ###
 
-puts yellow "Project-A Ventures - Yves&Zed 2 - #{$project_name}"
+puts yellow "Project-A Ventures - Yves & Zed - #{$project_name}"
 parse_commandline_parameters
 display_main_menu
