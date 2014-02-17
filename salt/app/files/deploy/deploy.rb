@@ -301,7 +301,7 @@ end
 
 def check_for_migrations
   put_status "Checking for migrations"
-  hosts = $job_hosts || [$tools_host]
+  hosts = $jobs_hosts || [$tools_host]
   host = hosts[0]
   result = multi_ssh_exec(host, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/check_for_migrations\" ", {:dont_display_failed => 1})
   return true # result
@@ -309,14 +309,14 @@ end
 
 def perform_migrations
   put_status "Executing migrations"
-  hosts = $job_hosts || [$tools_host]
+  hosts = $jobs_hosts || [$tools_host]
   host = hosts[0]
   result = multi_ssh_exec!(host, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/perform_migrations\" ")
 end
 
 def initialize_database
   put_status "Initializing database"
-  hosts = $job_hosts || [$tools_host]
+  hosts = $jobs_hosts || [$tools_host]
   host = hosts[0]
   result = multi_ssh_exec!(host, "cd #{$destination_release_dir} && [ -f deploy/initialize_database ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/initialize_database\" ")
 end
@@ -335,7 +335,7 @@ end
 
 def activate_cronjobs
   put_status "Activating cronjobs"
-  hosts = $job_hosts || [$tools_host]
+  hosts = $jobs_hosts || [$tools_host]
   result = multi_ssh_exec(hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/enable_cronjobs")
 
   # Legacy - Yves+Zed 1.0
@@ -344,7 +344,7 @@ end
 
 def deactivate_cronjobs
   put_status "Deactivating cronjobs"
-  hosts = $job_hosts || [$tools_host]
+  hosts = $jobs_hosts || [$tools_host]
   result = multi_ssh_exec(hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/disable_cronjobs")
 
   # Legacy - Yves+Zed 1.0
@@ -358,13 +358,13 @@ end
 def reindex_full
   if ($use_solr) 
     put_status "Reindexing solr..."
-    hosts = $job_hosts || [$solr_host]
+    hosts = $jobs_hosts || [$solr_host]
     host = hosts[0]
     result = multi_ssh_exec($solr_host, "cd #{$destination_release_dir} && [ -f deploy/reindex_solr ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/reindex_solr\" ")
   end
 
   put_status "Reindexing KV-store..."
-  hosts = $job_hosts || [$tools_host]
+  hosts = $jobs_hosts || [$tools_host]
   host = hosts[0]
   if File.exists? "deploy/reindex_memcache"
     script_name = "deploy/reindex_memcache"
@@ -452,7 +452,7 @@ end
 
 def send_notifications_after
   put_status "Sending notifications after deployment"
-  hosts = $job_hosts || [$tools_host]
+  hosts = $jobs_hosts || [$tools_host]
   host = hosts[0]
   result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f deploy/send_notifications ] && deploy/send_notifications", {:dont_display_failed => 1})
   result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f deploy/send_notifications_after ] && deploy/send_notifications_after", {:dont_display_failed => 1})
