@@ -17,7 +17,5 @@
       store: {{ store }}
       store_details: {{ store_details }}
 
-
-
 {%- endfor %}
 {%- endfor %}

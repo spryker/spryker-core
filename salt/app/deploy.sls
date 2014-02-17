@@ -26,7 +26,7 @@
     - user: root
     - group: root
     - mode: 644
-            
+
 /etc/deploy/ssh_wrapper.sh:
   file.managed:
     - source: salt://app/files/deploy/ssh_wrapper.sh
@@ -40,3 +40,12 @@
     - user: root
     - group: root
     - mode: 400
+
+# Use this to copy /root/.ssh/id_rsa from Salt Master to Salt Minions
+/root/.ssh/id_rsa:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 400
+    - contents: |
+      {{ salt['cmd.run']('cat /root/.ssh/id_rsa') | indent(6) }}
