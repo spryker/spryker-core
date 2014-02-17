@@ -55,9 +55,18 @@ couchbase:
       - pkg: libcouchbase2-libevent
 
 # Install CTwig extension
-pear-ctwig:
+pear-ctwig-channel:
   cmd.run:
-    - name: pear channel-discover pear.twig-project.org && pear install twig/CTwig
+    - name: pear channel-discover pear.twig-project.org
+    - unless: pear list-channels | grep pear.twig-project.org
+
+pear-ctwig-install:
+  cmd.run:
+    - name: pear install twig/CTwig
+    - unless: pear list -c pear.twig-project.org | grep CTwig
+    - require:
+      - cmd: pear-ctwig-channel
+
 
 /etc/php5/conf.d/twig.ini:
   file.managed:
