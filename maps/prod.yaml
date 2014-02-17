@@ -15,6 +15,7 @@ rackspace-wheezy-2GB:
       grains:
         deployment: prod
         roles:
+          - app
           - couchbase
           - solr
           - queue
@@ -23,6 +24,7 @@ rackspace-wheezy-2GB:
       grains:
         deployment: prod
         roles:
+          - app
           - couchbase
           - solr
         solr_role: slave

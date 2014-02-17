@@ -10,11 +10,18 @@ install system ruby:
 highline:
   gem.installed
 
+# Install fixed versions, as the 2.8.0+ had problems with changed packet sizes
+net-ssh:
+  gem.installed:
+    - version: 2.7.0
+
 net-scp:
-  gem.installed
+  gem.installed:
+    - version: 1.1.2
 
 net-ssh-multi:
   gem.installed
+    - version: 1.2.0
 
 compass:
   gem.installed

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
-# Project-A Ventures
+# Project-A Ventures - Yves & Zed 2.0
 # 
 # Application deployment
 # Warning! Modifying this file will disable automatic upgrading of deploy software.
