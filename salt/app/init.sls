@@ -4,3 +4,4 @@ include:
   - .ruby
   - .deploy
   - .environments
+  - .stores

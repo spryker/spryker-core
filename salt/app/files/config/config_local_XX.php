@@ -6,12 +6,12 @@
 
 /** Database: ZED operations */
 $config['db'] = [
-    'username' => 'production',
-    'password' => 'Cjr4p12ruGEf',
-    'database' => 'US_production_zed',
-    'host' => 'projectyz-int-db1',
+    'username' => '{{ environment_details.database.zed.username }}',
+    'password' => '{{ environment_details.database.zed.password }}',
+    'database' => '{{ store }}_{{ environment}}_zed',
+    'host' => '{{ environment_details.database.zed.hostname }}',
 ];
-
+// Fixme
 /** Memcache as KeyValue store */
 $config['storage']['kv'] = [
     'source' => 'memcached',
@@ -21,6 +21,7 @@ $config['storage']['kv'] = [
         'prefix' => ''
     ]
 ];
+// Fixme
 
 /** Public URL's */
 $config['host'] = $config['host_ssl'] = [
@@ -31,15 +32,18 @@ $config['host'] = $config['host_ssl'] = [
     'static_media' => 'static.project-yz.com',
 ];
 
+// Fixme
 $config['yves']['session'] = [
     'save_handler' => 'memcached',
     'save_path' => 'projectyz-int-db1:15108,projectyz-int-db2:15108',
 ];
 
+// Fixme
 $config['zed']['session'] = $config['yves']['session'];
 
 /** Payment gateways */
 
+// Fixme
 $config['payone'] = [
   'mode' => 'test',
   'mid' => '24047',
