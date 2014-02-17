@@ -66,6 +66,7 @@
       - file: /data/shop/{{ environment }}/shared/data/common
     - context:
       environment: {{ environment }}
+      environment_details: x
 #      environment_details: {{ environment_details }}
 
 
