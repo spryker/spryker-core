@@ -85,7 +85,7 @@ $dwh_host = "{{ dwh_servers[0][netif]['inet'][0]['address'] }}"
 
 
 # Deploy notifications (it's NOT same as Newrelic License Key!)
-$newrelic_api_key = "<%= config['monitoring']['newrelic']['api_key'] %>"
+$newrelic_api_key = "{{ pillar['newrelic']['api_key'] }}"
 
 ###################
 ### Git code repository
@@ -106,27 +106,4 @@ $project_options = {}
 $project_options = [
   { :question => "Use debug mode", :ask_question => false, :options => %w(true), :variable => "debug", :cmdline => "--debug" },
 ]
-
-
-
-
-{% for hostname, network_settings in app_servers %}
-{{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
-{% endfor %}
-
-{% for hostname, network_settings in solr_servers %}
-solr {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
-{% endfor %}
-
-{% for hostname, network_settings in solr_masters %}
-solr_master {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
-{% endfor %}
-
-{% for hostname, network_settings in cron_servers %}
-cron {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
-{% endfor %}
-
-{% for hostname, network_settings in dwh_servers %}
-dwh {{ hostname }} {{ network_settings[netif]['inet'][0]['address'] }}
-{% endfor %}
 
