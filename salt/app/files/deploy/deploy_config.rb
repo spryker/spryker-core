@@ -57,26 +57,23 @@ $stores = [
 # Enable solr indexing?
 $use_solr = true
 
-# Enable job server?
-$use_jobs = true
-
 # Enable data warehouse?
 $use_dwh = {{ has_dwh|lower }}
 
 # Hosts that get Yves and Zed application code
 $app_hosts = [
-{% for hostname, network_settings in app_servers %}"  {{ network_settings[netif]['inet'][0]['address'] }}", {% endfor %}
+{% for hostname, network_settings in app_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}", {% endfor %}
 ]
 
 # Host(s) that run jobs
 $jobs_hosts = [
-{% for hostname, network_settings in cron_servers %}"  {{ network_settings[netif]['inet'][0]['address'] }}", 
+{% for hostname, network_settings in cron_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}", 
 {% endfor %}
 ]
 
 # Host(s) that run solr
 $solr_hosts = [
-{% for hostname, network_settings in solr_servers %}"  {{ network_settings[netif]['inet'][0]['address'] }}", 
+{% for hostname, network_settings in solr_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}", 
 {% endfor %}
 ]
 
@@ -86,7 +83,7 @@ $dwh_host = "{{ dwh_servers[0][netif]['inet'][0]['address'] }}"
 {% endif %}
 
 
-# Deploy notifications (it's NOT same as Newrelic License Key!)
+# Deploy notifications (API key - it's NOT same as Newrelic License Key!)
 $newrelic_api_key = "{{ pillar.newrelic.api_key|default('', true) }}"
 
 ###################
