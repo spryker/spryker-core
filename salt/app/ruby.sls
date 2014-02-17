@@ -1,3 +1,5 @@
+# Ruby 1.9 + gems required for deployment
+
 install system ruby:
   pkg.installed:
     - pkgs:
@@ -6,7 +8,6 @@ install system ruby:
       - rails
       - libncurses5-dev
 
-# Ruby gems required for deploy.rb
 highline:
   gem.installed
 
@@ -14,11 +15,9 @@ highline:
 net-ssh:
   gem.installed:
     - version: 2.7.0
-
 net-scp:
   gem.installed:
     - version: 1.1.2
-
 net-ssh-multi:
   gem.installed
     - version: 1.2.0
