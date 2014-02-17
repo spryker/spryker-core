@@ -304,12 +304,14 @@ end
 
 def activate_maintenance
   put_status "Activating maintenance mode"
-  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_default_store} #{$debug} deploy/enable_maintenance\" ")
+  hosts = $web_hosts || $frontend_hosts || $zed_hosts
+  result = multi_ssh_exec(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_default_store} #{$debug} deploy/enable_maintenance\" ")
 end
 
 def deactivate_maintenance
   put_status "Dectivating maintenance mode"
-  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_default_store} #{$debug} deploy/disable_maintenance\" ")
+  hosts = $web_hosts || $frontend_hosts || $zed_hosts
+  result = multi_ssh_exec(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_default_store} #{$debug} deploy/disable_maintenance\" ")
 end
 
 def activate_cronjobs
@@ -367,23 +369,28 @@ end
 def distribute_tarball(tarfile)
   put_status "Distributing tarball"
   destination_tar_dir = $destination_dir + '/' + $environment + '/releases'
-  multi_ssh_exec($zed_hosts, "[ -d #{destination_tar_dir} ] || mkdir #{destination_tar_dir}")
+  hosts = $app_hosts || $zed_hosts
+  multi_ssh_exec(hosts, "[ -d #{destination_tar_dir} ] || mkdir #{destination_tar_dir}")
   rsync_commands = []
-  $zed_hosts.each do |host|
+  hosts.each do |host|
     rsync_commands.push "rsync -ra #{tarfile} #{$rsync_user}@#{host}:#{destination_tar_dir}/#{$environment}.tar"
   end
   multi_exec! rsync_commands
 
   put_status "Uncompressing tarballs"
-  multi_ssh_exec($zed_hosts, "rm -rf #{$destination_release_dir}")
-  multi_ssh_exec!($zed_hosts, "cd #{destination_tar_dir} && tar xf #{$environment}.tar")
-  multi_ssh_exec!($zed_hosts, "rm -f #{destination_tar_dir}/#{$environment}.tar")
+  multi_ssh_exec(hosts, "rm -rf #{$destination_release_dir}")
+  multi_ssh_exec!(hosts, "cd #{destination_tar_dir} && tar xf #{$environment}.tar")
+  multi_ssh_exec!(hosts, "rm -f #{destination_tar_dir}/#{$environment}.tar")
 end
 
 def activate_release
   put_status "Activating new release"
   restart_fpm_command = "/etc/init.d/php5-fpm restart"
-  multi_ssh_exec!($zed_hosts, "ln -bns #{$destination_release_dir} #{$destination_current_dir} && #{restart_fpm_command}")
+  web_hosts = $web_hosts || $zed_hosts
+  app_hosts = $app_hosts || $zed_hosts
+  app_only_hosts = app_hosts - web_hosts
+  multi_ssh_exec!(web_hosts, "ln -bns #{$destination_release_dir} #{$destination_current_dir} && #{restart_fpm_command}")
+  multi_ssh_exec!(app_only_hosts, "ln -bns #{$destination_release_dir} #{$destination_current_dir}")
 end
 
 def create_lockfile
@@ -505,6 +512,6 @@ end
 ### Main
 ###
 
-puts yellow "Project-A Ventures - Yves&Zed - #{$project_name}"
+puts yellow "Project-A Ventures - Yves&Zed 2 - #{$project_name}"
 parse_commandline_parameters
 display_main_menu

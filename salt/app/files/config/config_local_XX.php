@@ -41,15 +41,8 @@ $config['yves']['session'] = [
 // Fixme
 $config['zed']['session'] = $config['yves']['session'];
 
-/** Payment gateways */
-
 // Fixme
-$config['payone'] = [
-  'mode' => 'test',
-  'mid' => '24047',
-  'portalid' => '2017184',
-  'key' => '3AHSu99Q7Bi2H03n',
-  'aid' => '24058',
-  'encoding'   => 'UTF-8',
-  'gatewayurl' => 'https://api.pay1.de/post-gateway/',
-];
+/** Payment gateways */
+/** Logistic partners */
+/** MCM, tracking */
+/** Facebook / external auth providers */
