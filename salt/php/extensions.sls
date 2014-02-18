@@ -67,11 +67,9 @@ pear-ctwig-install:
     - require:
       - cmd: pear-ctwig-channel
 
-
 /etc/php5/conf.d/twig.ini:
   file.managed:
     - source: salt://php/files/twig.ini
     - user: root
     - group: root
     - mode: 644
-

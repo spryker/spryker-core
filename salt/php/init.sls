@@ -18,4 +18,5 @@ php:
       - libssh2-php
 
 include:
+  - .config
   - .extensions

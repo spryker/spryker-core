@@ -1,17 +1,25 @@
 rackspace-wheezy-2GB:
-  - app01.project-boss.net:
+  - app01.prod.project-boss.net:
       grains:
         deployment: prod
         roles:
           - app
           - web
-  - app02.project-boss.net:
+  - app02.prod.project-boss.net:
       grains:
         deployment: prod
         roles:
           - app
           - web
-  - data01.project-boss.net:
+  - jobs01.prod.project-boss.net:
+      grains:
+        deployment: prod
+        roles:
+          - app
+          - cronjobs
+
+rackspace-wheezy-4GB:
+  - data01.prod.project-boss.net:
       grains:
         deployment: prod
         roles:
@@ -19,22 +27,19 @@ rackspace-wheezy-2GB:
           - couchbase
           - solr
           - queue
+          - elasticsearch
         solr_role: master
-  - data02.project-boss.net:
+  - data02.prod.project-boss.net:
       grains:
         deployment: prod
         roles:
           - app
           - couchbase
           - solr
+          - elasticsearch
         solr_role: slave
-  - jobs01.project-boss.net:
-      grains:
-        deployment: prod
-        roles:
-          - app
-          - cronjobs
-        solr_role: slave
+
+
 
 #  - dwh01.project-boss.net:
 
