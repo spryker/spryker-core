@@ -2,6 +2,6 @@ deploy:
   git_url: git@codebasehq.com:project-a/core/pyz.git
 
 stores:
-  US:
-    locale: en_US
-    appdomain: '10'
+  DE:
+    locale: de_DE
+    appdomain: '00'
