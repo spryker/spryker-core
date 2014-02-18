@@ -35,7 +35,7 @@ environments:
           htpasswd_file: /etc/nginx/htpasswd-zed
         dwh:
           hostname: dwh-production.project-boss.net
- staging:
+  staging:
     database:
       zed:
         hostname: 28c61f41c4b7d139868cb9190e557f3e3c9a7cce.rackspaceclouddb.com
