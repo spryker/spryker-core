@@ -46,13 +46,12 @@ mysql_users_{{store}}_{{environment}}:
       - pkg: python-mysqldb
       - service: mysql
 
-mysql_grants_{{username}}_{{eachgrant['database']}}:
+mysql_grants_{{store}}_{{environment}}_zed:
   mysql_grants.present:
     - grant: all
     - database: {{store}}_{{environment}}_zed
     - user: {{environment}}
     - host: localhost
-
 
 {% endfor %}
 {% endfor %}
