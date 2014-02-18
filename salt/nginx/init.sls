@@ -15,3 +15,7 @@ nginx:
 /etc/nginx/fastcgi_params:
   file.managed:
     - source: salt://nginx/files/fastcgi_params
+
+/etc/nginx/sites-enabled/default:
+  file.absent
+
