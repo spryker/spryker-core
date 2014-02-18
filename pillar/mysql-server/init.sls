@@ -1,20 +1,12 @@
 mysql-server:
-  databases:
-    - US_testing_zed
-    - US_production_zed
+  environments:
+    - testing
+    - development
   users:
-    - user: testing
-      password: mate20mg
-      host: localhost
-      permissions:
-#        - grant: select,insert,update
-#          database: pengyao.*
-        - grant: all
-          database: US_testing_zed.*
+    - testing:
+        password: mate20mg
+        host: localhost
 
-    - user: production
-      password: mate20mg
-      host: localhost
-      permissions:
-        - grant: all
-          database: US_production_zed.*
+    - development:
+        password: mate20mg
+        host: localhost
