@@ -1,5 +1,7 @@
-### This file is maintained by Salt!
-###
+###############################################################################
+##       This file is managed by saltstack - DO NOT MANUALLY CHANGE IT       ##
+###############################################################################
+
 ### Project A sudo configuration
 
 Defaults        env_reset
