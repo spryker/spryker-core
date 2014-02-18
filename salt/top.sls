@@ -57,5 +57,6 @@ base:
   'roles:dev':
     - match: grain
     - mysql-server
+    - elasticsearch
 # database, pound (ssl),
 
