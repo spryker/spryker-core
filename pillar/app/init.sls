@@ -5,3 +5,7 @@ stores:
   DE:
     locale: de_DE
     appdomain: '00'
+
+  US:
+    locale: en_US
+    appdomain: '10'
