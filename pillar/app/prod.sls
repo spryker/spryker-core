@@ -29,13 +29,48 @@ environments:
       DE:
         yves:
           hostnames:
-            - www.project-boss.net
+            - www-production.project-boss.net
         zed:
-          hostname: zed.project-boss.net
+          hostname: zed-production.project-boss.net
           htpasswd_file: /etc/nginx/htpasswd-zed
         dwh:
-          hostname: dwh.project-boss.net
+          hostname: dwh-production.project-boss.net
+ staging:
+    database:
+      zed:
+        hostname: 28c61f41c4b7d139868cb9190e557f3e3c9a7cce.rackspaceclouddb.com
+        username: staging                                
+        password: tkVM0EysbN64
+    static:
+      hostname: cdn-1234.hostname.project-yz.com
+    tomcat:
+      port: 13007
+    solr:
+      hostname: xx
+    queue:
+      stomp_port: 43006
+    files:
+      provider: rackspace
+      api_username: xxx
+      api_key: xxx
+    stores:
+      DE:
+        yves:
+          hostnames:
+            - www-staging.project-boss.net
+        zed:
+          hostname: zed-staging.project-boss.net
+          htpasswd_file: /etc/nginx/htpasswd-zed
+        dwh:
+          hostname: dwh-staging.project-boss.net
 
+
+# The key below is used for deployment - from deployment server user root must be able to log in to all other
+# servers as user root.
+# If we're using salt-cloud to create cloud VM's - it will automatically generate /root/.ssh/id_rsa
+# on salt master and copy appropiate id_rsa.pub to minions to /root/.ssh/authorized_keys.
+#
+# Paste the content of /root/.ssh/id_rsa from salt-master here:
 server_env:
   ssh:
     id_rsa: |
