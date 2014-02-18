@@ -14,4 +14,5 @@ base:
   'roles:dev':
     - match: grain
     - mysql-server
+    - elasticsearch
     - app.dev
