@@ -3,10 +3,10 @@ mysql-server:
     - testing
     - development
   users:
-    - testing:
-        password: mate20mg
-        host: localhost
+    testing:
+      password: mate20mg
+      host: localhost
 
-    - development:
-        password: mate20mg
-        host: localhost
+    development:
+      password: mate20mg
+      host: localhost
