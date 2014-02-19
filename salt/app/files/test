@@ -1,2 +1,0 @@
-{% from "app/parser.jinja" import environments_parsed with context %}
-{{ environments_parsed }}

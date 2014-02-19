@@ -20,3 +20,4 @@ php:
 include:
   - .config
   - .extensions
+  - .fpm

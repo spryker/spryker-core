@@ -29,6 +29,8 @@
       environment_details: {{ environment_details }}
       store: {{ store }}
       store_details: {{ store_details }}
+    - watch_in:
+      - service: nginx
 
 /etc/nginx/sites-available/{{ store }}_{{ environment }}_yves:
   file.managed:
@@ -42,6 +44,9 @@
       environment_details: {{ environment_details }}
       store: {{ store }}
       store_details: {{ store_details }}
+    - watch_in:
+      - service: nginx
+
 
 /etc/nginx/sites-enabled/{{ store }}_{{ environment }}_zed:
   file.symlink:
@@ -49,6 +54,8 @@
     - force: true
     - require:
       - file: /etc/nginx/sites-available/{{ store }}_{{ environment }}_zed
+    - watch_in:
+      - service: nginx
 
 /etc/nginx/sites-enabled/{{ store }}_{{ environment }}_yves:
   file.symlink:
@@ -56,6 +63,8 @@
     - force: true
     - require:
       - file: /etc/nginx/sites-available/{{ store }}_{{ environment }}_yves
+    - watch_in:
+      - service: nginx
 
 {%- endif %}
 {%- endfor %}

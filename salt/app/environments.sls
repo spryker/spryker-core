@@ -81,6 +81,9 @@
     - mode: 644
     - context:
       environment: {{ environment }}
+    - watch_in:
+      - service: php5-fpm
+
 /etc/php5/fpm/pool.d/{{ environment }}-yves.conf:
   file.managed:
     - source: salt://app/files/fpm/yves.conf
@@ -90,6 +93,9 @@
     - mode: 644
     - context:
       environment: {{ environment }}
+    - watch_in:
+      - service: php5-fpm
+
 
 
 # NginX configs
@@ -102,6 +108,9 @@
     - mode: 644
     - context:
       environment: {{ environment }}
+    - watch_in:
+      - service: nginx
+
 {%- endif %}
 {%- endfor %}
 
