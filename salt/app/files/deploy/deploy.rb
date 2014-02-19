@@ -193,6 +193,9 @@ end
 ###
 
 def create_deploy_vars_file
+  tools_hosts = $jobs_hosts || [$tools_host]
+  tools_host = tools_hosts[0]
+
   File.open("#{$deploy_source_dir}/deploy/vars", "w") do |f|
     f.puts "# Deployment configuration variables"
     f.puts "# This file is generated automatically by deploy.rb, do not modify"
@@ -203,13 +206,12 @@ def create_deploy_vars_file
     f.puts "newrelic_api_key=\"#{$newrelic_api_key}\""
     f.puts "revision=\"#{$revision}\""
     f.puts "shared_dir=\"/data/shop/#{$environment}/shared\""
-    f.puts "static_dir=\"/data/static/#{$environment}\"" unless $static_dir.nil?  ### Deprecated, used by Donut#1, to be relocated to storage_dir!
     f.puts "environment=\"#{$environment}\""
     f.puts "verbose=\"#{$parameters[:verbose]}\""
     f.puts "storage_dir=\"#{$storage_dir}/#{$environment}\"" unless $storage_dir.nil?
     f.puts "deploy_user=\"#{get_current_user}\""
     f.puts "stores=\"#{$stores.map { |a| a['store'] }.join " "}\"" unless $stores.nil?
-    f.puts "admin_host=\"#{$tools_host}\""
+    f.puts "admin_host=\"#{tools_host}\""
     f.puts "dwh_host=\"#{$dwh_host}\"" unless $dwh_host.nil?
     f.puts "scm_path=\"#{$scm_path}\""
     f.puts "changelog=\"#{$changelog}\""
