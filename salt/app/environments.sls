@@ -1,4 +1,5 @@
 {%- for environment, environment_details in pillar.environments.items() %}
+# Directories
 /data/shop/{{ environment }}/shared/Generated:
   file.directory:
     - user: www-data
@@ -55,6 +56,7 @@
       - file: /data/shop/{{ environment }}/shared/data/common
       - file: /data/storage/{{ environment }}/static
 
+# Application config
 /data/shop/{{ environment }}/shared/config_local.php:
   file.managed:
     - source: salt://app/files/config/config_local.php
@@ -67,8 +69,12 @@
     - context:
       environment: {{ environment }}
       environment_details: {{ environment_details }}
-#      environment_details: {{ environment_details }}
 
+{%- if 'web' in grains.roles %}
+# FPM config
+
+# NginX config
+{%- endif %}
 
 {%- endfor %}
 
