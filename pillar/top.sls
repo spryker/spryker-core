@@ -17,5 +17,5 @@ base:
     - elasticsearch
     - app.dev
 
-  '*':
+  generated:
     - app.generate
