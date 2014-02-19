@@ -2,7 +2,7 @@
 # We follow the DRY rule - each information is entered only once
 #
 # Example - database names - sample name is DE_production_zed
-# This actually can be generated as {{ store }}_{{ environment }}_zed
+# This actually can be generated as { store }_{ environment }_zed
 {% set c="yes" %}
 {% set env_ports = { 'production': 5, 'staging': 3, 'testing': 1, 'development': 0 } %}
 
