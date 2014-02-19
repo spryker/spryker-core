@@ -16,6 +16,7 @@
       store: {{ store }}
       store_details: {{ store_details }}
 
+{%- if 'web' in grains.roles %}
 /etc/nginx/sites-available/{{ store }}_{{ environment }}_zed:
   file.managed:
     - source: salt://app/files/nginx/sites-available/XX-zed.conf
@@ -56,5 +57,6 @@
     - require:
       - file: /etc/nginx/sites-available/{{ store }}_{{ environment }}_yves
 
+{%- endif %}
 {%- endfor %}
 {%- endfor %}
