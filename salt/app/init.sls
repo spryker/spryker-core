@@ -5,3 +5,4 @@ include:
   - .deploy
   - .environments
   - .stores
+  - .htpasswd

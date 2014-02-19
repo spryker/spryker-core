@@ -61,10 +61,11 @@ environments:
           port: 13000
           hostnames:
             - www-staging.project-boss.net
+          htpasswd_file: /etc/nginx/htpasswd-staging
         zed:
           port: 13001
           hostname: zed-staging.project-boss.net
-          htpasswd_file: /etc/nginx/htpasswd-zed
+          htpasswd_file: /etc/nginx/htpasswd-staging
         dwh:
           hostname: dwh-staging.project-boss.net
 

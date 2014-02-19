@@ -97,7 +97,6 @@
       - service: php5-fpm
 
 
-
 # NginX configs
 /etc/nginx/conf.d/{{ environment }}-backend.conf:
   file.managed:
