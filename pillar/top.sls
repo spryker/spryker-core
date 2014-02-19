@@ -16,3 +16,6 @@ base:
     - mysql-server
     - elasticsearch
     - app.dev
+
+  '*':
+    - app.generate
