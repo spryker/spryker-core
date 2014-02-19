@@ -42,6 +42,19 @@
       store: {{ store }}
       store_details: {{ store_details }}
 
+/etc/nginx/sites-enabled/{{ store }}_{{ environment }}_zed:
+  file.symlink:
+    - target: /etc/nginx/sites-available/{{ store }}_{{ environment }}_zed
+    - force: true
+    - require:
+      - file: /etc/nginx/sites-available/{{ store }}_{{ environment }}_zed
+
+/etc/nginx/sites-enabled/{{ store }}_{{ environment }}_yves:
+  file.symlink:
+    - target: /etc/nginx/sites-available/{{ store }}_{{ environment }}_yves
+    - force: true
+    - require:
+      - file: /etc/nginx/sites-available/{{ store }}_{{ environment }}_yves
 
 {%- endfor %}
 {%- endfor %}
