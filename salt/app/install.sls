@@ -4,6 +4,7 @@ install helper app utilities:
       - doxygen
       - graphviz
       - libjpeg-progs
+      - apache2-utils
 
 /data/shop:
   file.directory:

@@ -5,4 +5,7 @@ include:
   - .deploy
   - .environments
   - .stores
+{% if 'web' in grains.roles %}
+  - .nginx
   - .htpasswd
+{% endif %}
