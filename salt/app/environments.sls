@@ -82,8 +82,16 @@
     - context:
       environment: {{ environment }}
 
-# NginX config
+# NginX configs
+/etc/nginx/conf.d/{{ environment }}-backend.conf:
+  file.managed:
+    - source: salt://app/files/nginx/conf.d/backend.conf
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: 644
+    - context:
+      environment: {{ environment }}
 {%- endif %}
-
 {%- endfor %}
 
