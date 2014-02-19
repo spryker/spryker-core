@@ -10,7 +10,7 @@
 gen:
   a: yes
   b: {{ "yes" }}
-  c: "{{ c }}
+  c: "{{ c }}"
   d: {{ env_ports }}
   e: "{{ pillar }}"
 
