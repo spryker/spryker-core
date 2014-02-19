@@ -72,6 +72,15 @@
 
 {%- if 'web' in grains.roles %}
 # FPM config
+/etc/php5/fpm/pool.d/{{ environment }}-zed.conf:
+  file.managed:
+    - source: salt://app/files/fpm/zed.conf
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: 644
+    - context:
+      environment: {{ environment }}
 
 # NginX config
 {%- endif %}
