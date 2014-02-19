@@ -12,13 +12,14 @@ gen:
   b: {{ "yes" }}
   c: "{{ c }}
   d: {{ env_ports }}
+  e: "{{ pillar }}"
 
 environments:
   t: {{ env_ports }}
   a: m
 # { % - for environment, environment_details in pillar.environments.items() %}
   tomcat:
-    generated_port: {{ env_ports }}
+    generated_port: "{{ env_ports }}"
 # { % - for store, store_details in pillar.stores.items() %}
 # { % - endfor %}
 # { % - endfor %}
