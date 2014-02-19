@@ -28,9 +28,11 @@ environments:
     stores:
       DE:
         yves:
+          port: 15000
           hostnames:
             - www-production.project-boss.net
         zed:
+          port: 15001
           hostname: zed-production.project-boss.net
           htpasswd_file: /etc/nginx/htpasswd-zed
         dwh:
@@ -56,9 +58,11 @@ environments:
     stores:
       DE:
         yves:
+          port: 13000
           hostnames:
             - www-staging.project-boss.net
         zed:
+          port: 13001
           hostname: zed-staging.project-boss.net
           htpasswd_file: /etc/nginx/htpasswd-zed
         dwh:
