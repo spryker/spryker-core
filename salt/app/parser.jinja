@@ -3,6 +3,3 @@ set environments_parsed = {
 	foo: 'bar'
 }
 %}
-{%
-set environments = (environments_parsed, merge=salt['pillar.get']('environments'))
-%}
