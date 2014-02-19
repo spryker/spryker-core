@@ -11,7 +11,7 @@ apache2:
     - dead
     - enable: False
     - require:
-      - pkg: apache
+      - pkg: apache2
 
 /etc/nginx/yzed:
   file.recurse:
