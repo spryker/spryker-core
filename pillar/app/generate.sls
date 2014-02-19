@@ -7,6 +7,7 @@
 {% set env_ports = { 'production' => 5, 'staging' => 3, 'testing' => 1, 'development' => 0 %}
 
 environments:
+  t: {{ env_ports }}
 {%- for environment, environment_details in pillar.environments.items() %}
   tomcat:
     generated_port: {{ env_ports }}
