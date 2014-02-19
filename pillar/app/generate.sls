@@ -12,7 +12,6 @@ gen:
   b: {{ "yes" }}
   c: "{{ c }}
   d: {{ env_ports }}
-  all: {{ pillar }}
 
 environments:
   t: {{ env_ports }}
