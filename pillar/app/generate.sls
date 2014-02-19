@@ -14,7 +14,7 @@ gen:
   d: {{ env_ports }}
   e: "{{ pillar }}"
 
-environments:
+environments_parsed:
   t: {{ env_ports }}
   a: m
 # { % - for environment, environment_details in pillar.environments.items() %}
