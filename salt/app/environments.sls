@@ -81,6 +81,16 @@
     - mode: 644
     - context:
       environment: {{ environment }}
+/etc/php5/fpm/pool.d/{{ environment }}-yves.conf:
+  file.managed:
+    - source: salt://app/files/fpm/yves.conf
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: 644
+    - context:
+      environment: {{ environment }}
+
 
 # NginX configs
 /etc/nginx/conf.d/{{ environment }}-backend.conf:
