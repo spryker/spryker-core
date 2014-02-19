@@ -5,7 +5,11 @@
 # defaults for logstash
 
 # Start logstash on boot?
+{% if grains['roles'] == 'dev'] %}
 START=yes
+{% else %}
+START=no
+{% endif %}
 
 # pulled in from the init script; makes things easier.
 NAME=logstash-web
