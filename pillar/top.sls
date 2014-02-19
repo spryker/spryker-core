@@ -2,6 +2,7 @@ base:
   '*':
     - user
     - app
+    - app.generate
 
   'deployment:prod':
     - match: grain
@@ -17,5 +18,3 @@ base:
     - elasticsearch
     - app.dev
 
-  generated:
-    - app.generate
