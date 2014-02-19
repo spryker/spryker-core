@@ -15,15 +15,17 @@ nginx:
 /etc/nginx/fastcgi_params:
   file.managed:
     - source: salt://nginx/files/fastcgi_params
+    - watch_in:
+      - service: nginx
 
 /etc/nginx/conf.d:
   file.recurse:
     - source: salt://nginx/files/conf.d
-
-/etc/nginx/yzed:
-  file.recurse:
-    - source: salt://nginx/files/yzed
+    - watch_in:
+      - service: nginx
 
 /etc/nginx/sites-enabled/default:
-  file.absent
+  file.absent:
+    - watch_in:
+      - service: nginx
 
