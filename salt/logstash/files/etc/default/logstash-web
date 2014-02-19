@@ -5,7 +5,7 @@
 # defaults for logstash
 
 # Start logstash on boot?
-{% if grains['roles'] == 'dev'] %}
+{% if grains['roles'] == 'dev' %}
 START=yes
 {% else %}
 START=no
