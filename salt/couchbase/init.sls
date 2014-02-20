@@ -5,4 +5,4 @@ include:
   - .install
   - .node-init
   - .cluster-init
-
+  - .cluster-setup
