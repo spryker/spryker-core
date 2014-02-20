@@ -6,9 +6,9 @@ couchbase:
   ramsize: 2000
   data_path: /data/couchbase
   buckets:
-    - yves:
+    yves:
       bucket_size: 1024
       bucket_replica: 0
-    - sessions:
+    sessions:
       bucket_size: 256
       bucket_replica: 0
