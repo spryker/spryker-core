@@ -5,5 +5,10 @@ couchbase:
   port: 8091
   ramsize: 2000
   data_path: /data/couchbase
-  bucket_size: 512
-  bucket_replica: 1
+  buckets:
+    - yves:
+      bucket_size: 1024
+      bucket_replica: 0
+    - sessions:
+      bucket_size: 256
+      bucket_replica: 0
