@@ -5,3 +5,5 @@ couchbase:
   port: 8091
   ramsize: 2000
   data_path: /data/couchbase
+  bucket_size: 512
+  bucket_replica: 0

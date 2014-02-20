@@ -67,5 +67,20 @@
       - service: nginx
 
 {%- endif %}
+
+{%- if couchbase in grains.roles and grains.data_role == 'master' %}
+bucket_{{ store }}_{{ environment }}_yves:
+  couchbase_bucket.present:
+    - name: {{ store }}_{{ environment }}_yves
+    - server: {{ pillar.couchbase.host. }}:{{ pillar.couchbase.port }}
+    - user: {{ pillar.couchbase.user }}
+    - password: {{ pillar.couchbase.password }}
+    - size: {{ pillar.couchbase.bucket_size }}
+    - replica: {{ pillar.couchbase.replica_size }}
+    - bucket_password: {{ pillar.couchbase.password }}
+    - require:
+      - service: couchbase-server
+{%- endif %}
+
 {%- endfor %}
 {%- endfor %}

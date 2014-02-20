@@ -1,4 +1,4 @@
-# Install couchbase server
+# Install couchbase server, setup cluster, create buckets
 
 include:
   - .libs
@@ -6,3 +6,4 @@ include:
   - .node-init
   - .cluster-init
   - .cluster-setup
+  - .buckets

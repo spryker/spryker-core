@@ -13,5 +13,6 @@ couchbase_cluster_hosts:
     - server: {{ pillar['couchbase']['host'] }}:{{ pillar['couchbase']['port'] }}
     - user: {{ pillar['couchbase']['user'] }}
     - password: {{ pillar['couchbase']['password'] }}
-
+    - require:
+      - service: couchbase-server
 {% endif %}
