@@ -14,3 +14,8 @@ user:
     fullname: Michael Kugele
     ssh_key: |
       ssh-dss AAAAB3NzaC1kc3MAAACBANlqvMwT+YjXpHrD9OrOV5fYdf22YPogvpumazCsv9gd9653BbNxOh+Pw5COJw6g4PYWt8BQp20CmuJ1y/xLkBxZLalW33o4b+UySI5JMSHBHvkHYpmBZJaw3dr++R8LmjNubkJQCOAPd76UoOOH4LTce2au9/uNNo5/5CGgiYH3AAAAFQCmroK7fgBCFVkl8ZmwYLH5FFmNSwAAAIBOWpPsW7dr4a8RE3M07K/R/txdN8Fn8dga8DtTidvHzTVXw0iT2Im/71aBcSNniigCfIez6TnCx/aiaXVAFno51GJ0PRAxeMgg0B184LvaWnMpTFh4GBntL49OqZ1Suu80hOdzOvhci6oQj7eS3kBTk7ia6+r41Fggva9oriR1yAAAAIAR5cnYYmVQXLQsZ7LXs+7+GMvHTb2WQsidcq2RuFG2Q+8drqAZj6DnLXvGXUYpsf866AZcyQPdNRsNV2/xajO8rd3T7wWGjpY5iq/vpa9kpiS1O9LEbrPUqasxyKS7KXAKc888T0VA+3Ogf3MTSrQBXvBa4kbYOoQk0Y7LsQcCtA== michael.kugele@project-a.com
+
+  fabian.wesner:
+    fullname: Fabian Wesner
+    ssh_key: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClukGZpIrY3sQM2n/alRzuYoaUwiomE1//7UWDQNNQQQh7dw0q28YtY3wkcjvep1Jq8gS6zBwgGIQO0EOMyoF5wgodg0D4kBVvkjxGBw92Ia+KMhFNo0LHc1rz2Qh38RAGKzP4dolbGQ1HeyC8KcKe0cuzO/gk36v5/2JPchqovAZLYYJytW4tLvPHm3r4x+OMytwYxxCPf4ohtjuOOKUuoFf19V/v9z0RAphZwPuPYWskiHbDx+nM/biKHQIQEa0oYKyprGM+YEUEam4BSJ8jdoF9amvyLSaSl06Aic6HN5fiARbcU2jVqa55qL/Aw7f9FEKh0T60Ec5ZZvlGH0T5 fabian.wesner@project-a.com
