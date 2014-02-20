@@ -34,7 +34,7 @@ environments:
         zed:
           port: 15001
           hostname: zed-production.project-boss.net
-          htpasswd_file: /etc/nginx/htpasswd-zed
+#          htpasswd_file: /etc/nginx/htpasswd-zed
         dwh:
           hostname: dwh-production.project-boss.net
   staging:
