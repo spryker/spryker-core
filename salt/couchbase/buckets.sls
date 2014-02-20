@@ -1,7 +1,7 @@
 {%- if grains.data_role == 'master' %}
 {%- for environment, environment_details in pillar.environments.items() %}
 {%- for store, store_details in pillar.stores.items() %}
-{%- for bucket, bucket_details in pillar.couchbase.buckets.items() }
+{%- for bucket, bucket_details in pillar.couchbase.buckets.items() %}
 
 bucket_{{ store }}_{{ environment }}_{{ bucket }}:
   couchbase_bucket.present:
