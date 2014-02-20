@@ -12,7 +12,7 @@ node-init:
         /opt/couchbase/bin/couchbase-cli node-init \
         -u {{ pillar['couchbase']['user'] }} \
         -p {{ pillar['couchbase']['password']}} \
-        --node-init-data-path={{ pillar['couchbase']['data_path'] }}
+        --node-init-data-path={{ pillar['couchbase']['data_path'] }} \
         -c 127.0.0.1:8091
     - unless: |
         /opt/couchbase/bin/couchbase-cli server-list \
