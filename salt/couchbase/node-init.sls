@@ -15,9 +15,9 @@ node-init:
         --node-init-data-path={{ pillar['couchbase']['data_path'] }} \
         -c 127.0.0.1:8091
     - unless: |
-        /opt/couchbase/bin/couchbase-cli server-list \
+        /opt/couchbase/bin/couchbase-cli server-info \
         -u {{ pillar['couchbase']['user'] }} \
         -p {{ pillar['couchbase']['password']}} \
-        -c 127.0.0.1:{{ pillar['couchbase']['port'] }} | egrep 'healthy active' 
+        -c 127.0.0.1:{{ pillar['couchbase']['port'] }} | egrep '{{ pillar['couchbase']['data_path'] }}' 
     - require:
       - service: couchbase-server
