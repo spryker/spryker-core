@@ -4,4 +4,5 @@ include:
   - .libs
   - .install
   - .node-init
+  - .cluster-init
 
