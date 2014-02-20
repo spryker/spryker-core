@@ -6,7 +6,7 @@
 bucket_{{ store }}_{{ environment }}_{{ bucket }}:
   couchbase_bucket.present:
     - name: {{ store }}_{{ environment }}_yves
-    - server: {{ pillar.couchbase.host. }}:{{ pillar.couchbase.port }}
+    - server: {{ pillar.couchbase.host }}:{{ pillar.couchbase.port }}
     - user: {{ pillar.couchbase.user }}
     - password: {{ pillar.couchbase.password }}
     - size: {{ bucket_details.bucket_size }}
