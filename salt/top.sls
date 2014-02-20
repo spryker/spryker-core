@@ -60,3 +60,12 @@ base:
     - elasticsearch
 # database, pound (ssl),
 
+  # newrelic for server monitoring (?)
+  'deployment:prod':
+    - match: grain
+    - newrelic    
+
+  # newrelic for app monitoring
+  'G@deployment:prod and (G@roles:web or G@roles:cronjob)':
+    - match: compound
+    - newrelic.php

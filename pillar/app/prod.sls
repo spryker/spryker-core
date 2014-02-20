@@ -3,15 +3,16 @@ network:
   project_interface: eth2
 
 newrelic:
-  license_key:
-  api_key:
+  license_key: 769f3d671612d86ce2a72fafe14a65103f43818f
+  api_key: 
+  appname: Demo Shop
 
 environments:
   production:
     database:
       zed:
         hostname: 28c61f41c4b7d139868cb9190e557f3e3c9a7cce.rackspaceclouddb.com
-        username: production                                
+        username: production
         password: pjbO7aSUm0
     static:
       hostname: cdn-1234.hostname.project-yz.com
