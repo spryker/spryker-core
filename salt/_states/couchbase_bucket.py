@@ -46,6 +46,7 @@ def present(name,
 		options.append('--bucket-password=' + str(bucket_password))
 		
 	options.append('--bucket-type=couchbase')
+	options.append('--enable-flush=1')
 
 	ret = __salt__['couchbase.cli']('bucket-create', server, user, password, binary, options)
 
