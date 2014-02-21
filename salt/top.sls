@@ -66,6 +66,10 @@ base:
     - newrelic    
 
   # newrelic for app monitoring
-  'G@deployment:prod and (G@roles:web or G@roles:cronjob)':
+  'G@deployment:prod and G@roles:web':
+    - match: compound
+    - newrelic.php
+
+  'G@deployment:prod and G@roles:cronjobs':
     - match: compound
     - newrelic.php
