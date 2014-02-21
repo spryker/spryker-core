@@ -6,19 +6,19 @@
 /** Solr - search engine */
 $config['storage']['solr']['defaultEndpointSetup'] = [
     'host' => '{{ environment_details.solr.hostname }}',
-    'port' => {{ environment_details.tomcat.port }},
+    'port' => 1{{ environment_details.tomcat.port_suffix }},
 ];
 /** FIXME */
 $config['storage']['solr']['masterEndpointSetup'] = [
     'host' => '{{ environment_details.solr.hostname }}',
-    'port' => {{ environment_details.tomcat.port }},
+    'port' => 1{{ environment_details.tomcat.port_suffix }},
 ];
 $config['storage']['solr']['data_dir'] = '/data/shop/{{ environment }}/shared/data/common/solr';
 
 /** Jenkins - job manager */
 /** FIXME */
 $config['jenkins'] = array(
-    'base_url' => 'http://fixme__jobs_hostname:{{ environment_details.tomcat.port }}/jenkins',
+    'base_url' => 'http://fixme__jobs_hostname:1{{ environment_details.tomcat.port_suffix }}/jenkins',
     'notify_email' => '',
 );
 
