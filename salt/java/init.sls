@@ -1,2 +1,4 @@
-openjdk-7-jre-headless:
-  pkg.installed
+java:
+  pkg.installed:
+   - name: openjdk-7-jre-headless:
+
