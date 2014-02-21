@@ -13,6 +13,8 @@ newrelic-php5:
       - service: php5-fpm
     - require:
       - pkgrepo: newrelic-sysmond
+  file.absent:
+    - name: /etc/php5/conf.d/newrelic.ini
   cmd.wait:
     - name: php5enmod newrelic
     - watch:
