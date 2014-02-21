@@ -12,6 +12,7 @@
     - makedirs: true
 
 /data/logs/{{ environment }}/tomcat:
+  file.directory:
     - user: www-data
     - group: www-data
     - dir_mode: 755
@@ -19,6 +20,7 @@
     - makedirs: true
 
 /data/shop/{{ environment }}/shared/tomcat/logs:
+  file.symlink:
     - target: /data/logs/{{ environment }}/tomcat
     - force: true
     - require:
@@ -26,6 +28,7 @@
       - file: /data/shop/{{ environment }}/shared/tomcat
 
 /data/shop/{{ environment }}/shared/tomcat/bin:
+  file.symlink:
     - target: /usr/share/tomcat7/bin
     - force: true
     - require:
@@ -33,6 +36,7 @@
       - pkg: tomcat
 
 /data/shop/{{ environment }}/shared/tomcat/lib:
+  file.symlink:
     - target: /usr/share/tomcat7/lib
     - force: true
     - require:
