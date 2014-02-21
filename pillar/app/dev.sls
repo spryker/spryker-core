@@ -13,6 +13,12 @@ environments:
         hostname: localhost
         username: development
         password: mate20mg
+    tomcat:
+      port_suffix: 1007
+    solr:
+      hostname: localhost
+    queue:
+      stomp_port: 41006
     files:
       provider: rackspace
       api_username: xxx
@@ -34,6 +40,12 @@ environments:
         hostname: localhost
         username: development
         password: mate20mg
+    tomcat:
+      port_suffix: 0007
+    solr:
+      hostname: localhost
+    queue:
+      stomp_port: 40006
     files:
       provider: rackspace
       api_username: xxx
