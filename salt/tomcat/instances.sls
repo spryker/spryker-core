@@ -1,69 +1,50 @@
 {%- for environment, environment_details in pillar.environments.items() %}
 #
-# Directories
+# Directories for tomcat instance
 #
-/data/shop/{{ environment }}/shared/Generated:
-  file.directory:
+/data/shop/{{ environment }}/shared/tomcat:
+  file.recurse:
+    - source: salt://tomcat/files/tomcat_home
     - user: www-data
     - group: www-data
     - dir_mode: 755
     - file_mode: 755
     - makedirs: true
-    - recurse:
-      - user
-      - group
-      - mode
 
-/data/shop/{{ environment }}/shared/data/common:
-  file.directory:
+/data/logs/{{ environment }}/tomcat:
     - user: www-data
     - group: www-data
     - dir_mode: 755
     - file_mode: 755
     - makedirs: true
-    - recurse:
-      - user
-      - group
-      - mode
 
-/data/logs/{{ environment }}:
-  file.directory:
-    - user: www-data
-    - group: www-data
-    - dir_mode: 755
-    - file_mode: 755
-    - makedirs: true
-    - recurse:
-      - user
-      - group
-      - mode
-
-/data/storage/{{ environment }}/static:
-  file.directory:
-    - user: www-data
-    - group: www-data
-    - dir_mode: 755
-    - file_mode: 755
-    - makedirs: true
-    - recurse:
-      - user
-      - group
-      - mode
-
-/data/shop/{{ environment }}/shared/data/static:
-  file.symlink:
-    - target: /data/storage/{{ environment }}/static
+/data/shop/{{ environment }}/shared/tomcat/logs:
+    - target: /data/logs/{{ environment }}/tomcat
     - force: true
     - require:
-      - file: /data/shop/{{ environment }}/shared/data/common
-      - file: /data/storage/{{ environment }}/static
+      - file: /data/logs/{{ environment }}/tomcat
+      - file: /data/shop/{{ environment }}/shared/tomcat
+
+/data/shop/{{ environment }}/shared/tomcat/bin:
+    - target: /usr/share/tomcat7/bin
+    - force: true
+    - require:
+      - file: /data/shop/{{ environment }}/shared/tomcat
+      - pkg: tomcat
+
+/data/shop/{{ environment }}/shared/tomcat/lib:
+    - target: /usr/share/tomcat7/lib
+    - force: true
+    - require:
+      - file: /data/shop/{{ environment }}/shared/tomcat
+      - pkg: tomcat
 
 #
-# Application config
+# Tomcat config
 #
-/data/shop/{{ environment }}/shared/config_local.php:
+/data/shop/{{ environment }}/shared/tomcat/conf/server.xml:
   file.managed:
-    - source: salt://app/files/config/config_local.php
+    - source: salt://tomcat/files/conf/server.xml
     - template: jinja
     - user: www-data
     - group: www-data
@@ -74,49 +55,7 @@
       environment: {{ environment }}
       environment_details: {{ environment_details }}
 
-{%- if 'web' in grains.roles %}
-#
-# PHP-FPM config
-#
-/etc/php5/fpm/pool.d/{{ environment }}-zed.conf:
-  file.managed:
-    - source: salt://app/files/fpm/zed.conf
-    - template: jinja
-    - user: root
-    - group: root
-    - mode: 644
-    - context:
-      environment: {{ environment }}
-    - watch_in:
-      - service: php5-fpm
 
-/etc/php5/fpm/pool.d/{{ environment }}-yves.conf:
-  file.managed:
-    - source: salt://app/files/fpm/yves.conf
-    - template: jinja
-    - user: root
-    - group: root
-    - mode: 644
-    - context:
-      environment: {{ environment }}
-    - watch_in:
-      - service: php5-fpm
-#
-# NginX configs
-#
-/etc/nginx/conf.d/{{ environment }}-backend.conf:
-  file.managed:
-    - source: salt://app/files/nginx/conf.d/backend.conf
-    - template: jinja
-    - user: root
-    - group: root
-    - mode: 644
-    - context:
-      environment: {{ environment }}
-    - watch_in:
-      - service: nginx
-
-{%- endif %}
 
 
 {%- endfor %}
