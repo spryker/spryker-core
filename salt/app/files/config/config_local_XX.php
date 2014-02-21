@@ -14,11 +14,12 @@ $config['db'] = [
 // Fixme
 /** Memcache as KeyValue store */
 $config['storage']['kv'] = [
-    'source' => 'memcached',
-    'memcached' => [
-        'host'   => 'localhost',
-        'port'   => '15109',
-        'prefix' => ''
+    'source' => 'couchbase',
+    'couchbase' => [
+        'host'   => '10.16.0.31:8091',
+        'user'   => 'Administrator',
+        'password' => 'Wn0Ow6vHhKW8RUut',
+        'bucket' => 'DE_production_yves'
     ]
 ];
 // Fixme
