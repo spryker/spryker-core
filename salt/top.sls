@@ -8,7 +8,6 @@ base:
     - base
     - user
     - logstash
-#    - newrelic
 
   # couchbase
   'roles:couchbase':
@@ -25,32 +24,29 @@ base:
   'roles:web':
     - match: grain
     - nginx
-#    - php-fpm
 
   # jenkins to run cronjob and indexers
   'roles:cronjobs':
     - match: grain
     - app
-#    - tomcat
+    - java
+    - tomcat
 
-  # solr master
-  'roles:solr_master':
-    - match: grain
-#    - tomcat
-
-  # solr slave
+  # solr
   'roles:solr':
     - match: grain
-#    - tomcat
+    - java
+    - tomcat
 
   # activemq
   'roles:queue':
     - match: grain
-#    - tomcat
+    - java
 
   # elasticsearch
   'roles:elasticsearch':
     - match: grain
+    - java
 #    - elasticsearch
 
   # dev tools
@@ -58,18 +54,19 @@ base:
     - match: grain
     - mysql-server
     - elasticsearch
-# database, pound (ssl),
+# pound (ssl),
 
-  # newrelic for server monitoring (?)
+  # newrelic for server monitoring - prod only
   'deployment:prod':
     - match: grain
-    - newrelic    
+    - newrelic
 
-  # newrelic for app monitoring
+  # newrelic for app monitoring - prod only, web servers
   'G@deployment:prod and G@roles:web':
     - match: compound
     - newrelic.php
 
+  # newrelic for app monitoring - prod only, job servers
   'G@deployment:prod and G@roles:cronjobs':
     - match: compound
     - newrelic.php
