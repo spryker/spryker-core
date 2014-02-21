@@ -11,4 +11,6 @@ tomcat:
     - require:
       - pkg: tomcat
 
-
+libtcnative-1:
+  pkg.installed
+  

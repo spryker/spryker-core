@@ -1,2 +1,3 @@
 include:
   - .install
+  - .instances

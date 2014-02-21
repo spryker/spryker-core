@@ -17,7 +17,7 @@ environments:
     static:
       hostname: cdn-1234.hostname.project-yz.com
     tomcat:
-      port: 15007
+      port_suffix: 5007
     solr:
       hostname: xx
     queue:
@@ -47,7 +47,7 @@ environments:
     static:
       hostname: cdn-1234.hostname.project-yz.com
     tomcat:
-      port: 13007
+      port: 3007
     solr:
       hostname: xx
     queue:
