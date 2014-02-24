@@ -1,6 +1,7 @@
 {% if grains.data_role == 'master' %}
 {% set netif = pillar.network.project_interface %}
 {% set couchbase_servers = salt['mine.get']('roles:couchbase', 'network.interfaces', expr_form = 'grain').items() %}
+{% if couchbase_servers|length > 1 %}
 
 couchbase_cluster_hosts:
   couchbase_cluster.add_host:
@@ -15,4 +16,5 @@ couchbase_cluster_hosts:
     - password: {{ pillar['couchbase']['password'] }}
     - require:
       - service: couchbase-server
+{% endif %}
 {% endif %}
