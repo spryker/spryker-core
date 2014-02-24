@@ -10,5 +10,5 @@ couchbase:
       bucket_size: 256
       bucket_replica: 0
     sessions:
-      bucket_size: 32
+      bucket_size: 100
       bucket_replica: 0

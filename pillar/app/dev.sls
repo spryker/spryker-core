@@ -14,11 +14,14 @@ environments:
         username: development
         password: mate20mg
     tomcat:
-      port_suffix: 1007
+      port_suffix: '0007'
+      min_heap_size: 128m
+      max_heap_size: 512m
+      max_perm_size: 256m
     solr:
       hostname: localhost
     queue:
-      stomp_port: 41006
+      stomp_port: 40006
     files:
       provider: rackspace
       api_username: xxx
@@ -26,9 +29,11 @@ environments:
     stores:
       DE:
         yves:
+          port: 10000
           hostnames:
             - www-development.project-boss.net
         zed:
+          port: 10001
           hostname: zed-development.project-boss.net
           htpasswd_file:
         dwh:
@@ -41,11 +46,14 @@ environments:
         username: development
         password: mate20mg
     tomcat:
-      port_suffix: 0007
+      port_suffix: '1007'
+      min_heap_size: 128m
+      max_heap_size: 512m
+      max_perm_size: 256m
     solr:
       hostname: localhost
     queue:
-      stomp_port: 40006
+      stomp_port: 41006
     files:
       provider: rackspace
       api_username: xxx
@@ -53,9 +61,11 @@ environments:
     stores:
       DE:
         yves:
+          port: 11000
           hostnames:
             - www-development.project-boss.net
         zed:
+          port: 11001
           hostname: zed-development.project-boss.net
           htpasswd_file:
         dwh:
