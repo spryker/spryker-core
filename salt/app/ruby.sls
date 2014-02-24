@@ -8,8 +8,13 @@ install system ruby:
       - rails
       - libncurses5-dev
 
-highline:
+psych:
   gem.installed
+
+highline:
+  gem.installed:
+    - required:
+      - gem: psych
 
 compass:
   gem.installed

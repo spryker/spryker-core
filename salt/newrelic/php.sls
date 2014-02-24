@@ -22,4 +22,5 @@ newrelic-php5:
 
 /etc/php5/conf.d/newrelic.ini:
   file.absent:
-    - require: pkg:newrelic-php5
+    - require:
+      - pkg: newrelic-php5
