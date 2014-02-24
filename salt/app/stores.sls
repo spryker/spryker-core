@@ -16,6 +16,11 @@
       store: {{ store }}
       store_details: {{ store_details }}
 
+/data/logs/{{ environment }}/{{ store }}:
+  file.symlink:
+    - target: /data/shop/production/shared/data/{{ store }}/logs
+    - force: True
+
 {%- if 'web' in grains.roles %}
 /etc/nginx/sites-available/{{ store }}_{{ environment }}_zed:
   file.managed:
