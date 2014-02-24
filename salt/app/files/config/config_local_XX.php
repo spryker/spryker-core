@@ -9,15 +9,17 @@ $config['db'] = [
     'username' => '{{ environment_details.database.zed.username }}',
     'password' => '{{ environment_details.database.zed.password }}',
     'database' => '{{ store }}_{{ environment}}_zed',
-    'host' => '{{ environment_details.database.zed.hostname }}',
+    'host'     => '{{ environment_details.database.zed.hostname }}',
 ];
 
-$config['db_dump'] = array_merge($config['db_dump'], [
+$config['db_dump'] = [
     'username' => '{{ environment_details.database.zed.username }}',
     'password' => '{{ environment_details.database.zed.password }}',
     'database' => '{{ store }}_{{ environment}}_dump',
-    'host' => '{{ environment_details.database.zed.hostname }}',
-]);
+    'host'     => '{{ environment_details.database.zed.hostname }}',
+    'mysqldump_bin' => '/usr/bin/mysqldump',
+    'mysql_bin'     => '/usr/bin/mysql',
+];
 
 // Fixme
 /** Memcache as KeyValue store */
