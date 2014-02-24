@@ -1,0 +1,33 @@
+####################################
+# This file is managed by salt
+####################################
+
+CATALINA_BASE="/data/shop/{{ environment }}/shared/tomcat"
+
+#ulimit -n 102400
+HOSTNAME={{ grains.host }}
+JVM_TMP="/tmp/tomcat7/{{ environment }}"
+
+### Typical settings
+JAVA_OPTS="-Djava.awt.headless=true -server -verbose:gc"
+JAVA_OPTS="$JAVA_OPTS -Xmx{{ environment_details.tomcat.max_heap_size }}"
+JAVA_OPTS="$JAVA_OPTS -Xms{{ environment_details.tomcat.min_heap_size }}"
+JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize={{ environment_details.tomcat.max_perm_size }}"
+JAVA_OPTS="$JAVA_OPTS -Djvm.process.name={{ environment }} -Djvm.host.name={{ grains.host }}"
+JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps"
+JAVA_OPTS="$JAVA_OPTS -XX:+UseCompressedOops"
+
+### Garbage collector settings
+JAVA_OPTS="$JAVA_OPTS -XX:+DisableExplicitGC"
+JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC"
+
+#### defaults from /etc
+TOMCAT7_USER=www-data
+TOMCAT7_GROUP=www-data
+JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
+
+{% if False }
+# Newrelic Agent
+JAVA_OPTS="$JAVA_OPTS -Dnewrelic.environment={{ environment }}"
+JAVA_OPTS="$JAVA_OPTS -javaagent:{{ environment }}/newrelic/newrelic.jar"
+{% endif }

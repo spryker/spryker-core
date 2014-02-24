@@ -1,18 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<Server port="3<%= tomcat_instance_port %>" shutdown="SHUTDOWN">
-
-  <!--APR library loader. Documentation at /docs/apr.html -->
-  <!--
-  <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
-  -->
+<Server port="3{{ environment_details.tomcat.port_suffix }}" shutdown="SHUTDOWN">
   <!--Initialize Jasper prior to webapps are loaded. Documentation at /docs/jasper-howto.html -->
   <Listener className="org.apache.catalina.core.JasperListener" />
   <!-- Prevent memory leaks due to use of particular java/javax APIs-->
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
   <!-- JMX Support for the Tomcat server. Documentation at /docs/non-existent.html -->
-<% if tomcat_service_name != "tomcat7" %>
-  <Listener className="org.apache.catalina.mbeans.ServerLifecycleListener" />
-<% end %>
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
 
   <GlobalNamingResources>
@@ -29,7 +21,7 @@
 
     <!-- HTTP connector -->
     <Connector
-        port="1<%= tomcat_instance_port %>"
+        port="1{{ environment_details.tomcat.port_suffix }}"
         protocol="HTTP/1.1"
         connectionTimeout="20000"
         redirectPort="8443"
@@ -45,11 +37,12 @@
             unpackWARs="true" autoDeploy="true"
             xmlValidation="false" xmlNamespaceAware="false">
       </Host>
-<%- if has_dwh %>
+
+{% if 'dwh' in grains.roles %}
 <!-- Datawarehouse -->
 <%= dwh_settings['tomcat_vhosts'].map{ |store, vhostname| "<Host name=\"#{vhostname}\" unpackWARs=\"false\" autoDeploy=\"true\"> <Context path=\"\" docBase=\"/data/shop/#{environment}/current/vendor/project-a/dwh-package/src/ProjectA/Zed/Dwh/File/cubes.war\" crossContext=\"true\" swallowOutput=\"true\" reloadable=\"false\" ><Parameter name=\"cubes.config\" value=\"/data/shop/#{environment}/shared/cubes_#{store}.properties\" override=\"false\"/></Context></Host>\n" } %>
 <!-- /Datawarehouse -->
-<%- end %>
+{% endif %}
     </Engine>
 
   </Service>
