@@ -11,6 +11,14 @@ $config['db'] = [
     'database' => '{{ store }}_{{ environment}}_zed',
     'host' => '{{ environment_details.database.zed.hostname }}',
 ];
+
+$config['db_dump'] = array_merge($config['db_dump'], [
+    'username' => '{{ environment_details.database.zed.username }}',
+    'password' => '{{ environment_details.database.zed.password }}',
+    'database' => '{{ store }}_{{ environment}}_dump',
+    'host' => '{{ environment_details.database.zed.hostname }}',
+]);
+
 // Fixme
 /** Memcache as KeyValue store */
 $config['storage']['kv'] = [
@@ -22,7 +30,6 @@ $config['storage']['kv'] = [
         'bucket' => 'DE_production_yves'
     ]
 ];
-// Fixme
 
 /** Public URL's */
 $config['host'] = $config['host_ssl'] = [
@@ -34,11 +41,6 @@ $config['host'] = $config['host_ssl'] = [
 ];
 
 // Fixme
-#$config['yves']['session'] = [
-#    'save_handler' => 'memcached',
-#    'save_path' => 'projectyz-int-db1:15108,projectyz-int-db2:15108',
-#];
-
 $config['yves']['session'] = [
     'save_handler' => 'files',
     'save_path' => '/tmp',

@@ -21,7 +21,7 @@ environments:
       max_heap_size: 512m
       max_perm_size: 256m
     solr:
-      hostname: localhost
+      lb_hostname: localhost
     queue:
       stomp_port: 40006
     files:
@@ -55,7 +55,7 @@ environments:
       max_heap_size: 512m
       max_perm_size: 256m
     solr:
-      hostname: localhost
+      lb_hostname: localhost
     queue:
       stomp_port: 41006
     files:
