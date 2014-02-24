@@ -13,6 +13,8 @@ environments:
         hostname: localhost
         username: development
         password: mate20mg
+    static:
+      hostname: static-development.project-boss.net
     tomcat:
       port_suffix: '0007'
       min_heap_size: 128m
@@ -45,6 +47,8 @@ environments:
         hostname: localhost
         username: development
         password: mate20mg
+    static:
+      hostname: static-testing.project-boss.net
     tomcat:
       port_suffix: '1007'
       min_heap_size: 128m
