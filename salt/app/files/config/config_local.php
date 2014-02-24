@@ -31,7 +31,7 @@ $config['jenkins'] = array(
 /** ActiveMQ - message queue */
 /** FIXME */
 $config['activemq'] = array (
-  array('host' => '{{ cron_master }}', 'port' => '{{ environment_details.queue.stomp_port }}')
+  array('host' => '{{ queue_host }}', 'port' => '{{ environment_details.queue.stomp_port }}')
 );
 
 /** Amazon AWS api keys */
