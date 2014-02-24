@@ -92,7 +92,7 @@ tomcat7-{{ environment }}:
     - require:
       - pkg: tomcat
       - file: /etc/init.d/tomcat7-{{ environment }}
-      - file: /etc/defaults/tomcat7-{{ environment }}
+      - file: /etc/default/tomcat7-{{ environment }}
       - file: /data/shop/{{ environment }}/shared/tomcat/conf/server.xml
 
 
