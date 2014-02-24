@@ -27,7 +27,7 @@ $config['storage']['kv'] = [
 /** Public URL's */
 $config['host'] = $config['host_ssl'] = [
     'zed_gui' => '{{ environment_details.stores[store].zed.hostname }}',
-    'zed_api' => 'localhost:fixme', 
+    'zed_api' => 'localhost:{{ environment_details.stores[store].zed.port }}', 
     'yves' => '{{ environment_details.stores[store].yves.hostnames[0] }}',
     'static_assets' => '{{ environment_details.static.hostname }}',
     'static_media' => '{{ environment_details.static.hostname }}',
