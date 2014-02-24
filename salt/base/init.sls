@@ -14,6 +14,7 @@ base:
       - dstat
       - telnet
       - make
+      - python-apt
 
 pav-v1:
   pkgrepo.managed:
