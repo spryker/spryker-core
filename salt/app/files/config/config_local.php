@@ -1,7 +1,7 @@
 {%- set netif = pillar.network.project_interface %}
-{%- set solr_master = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items()[0][1].network_settings[netif]['inet'][0].address %}
-{%- set cron_master = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items()[0][1].network_settings[netif]['inet'][0].address %}
-{%- set queue_host = salt['mine.get']('roles:queue', 'network.interfaces', expr_form = 'grain').items()[0][1].network_settings[netif]['inet'][0].address %}
+{%- set solr_master = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address %}
+{%- set cron_master = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address %}
+{%- set queue_host = salt['mine.get']('roles:queue', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address %}
 <?php
 /**
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
