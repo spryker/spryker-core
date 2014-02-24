@@ -1,4 +1,4 @@
-{% if grains.data_role == 'master' %}
+{% if grains.data_role is defined and grains.data_role == 'master' %}
 cluster_setup:
   cmd:
     - run

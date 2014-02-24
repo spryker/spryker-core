@@ -1,4 +1,4 @@
-{% if grains.data_role == 'master' %}
+{% if grains.data_role is defined and grains.data_role == 'master' %}
 {% set netif = pillar.network.project_interface %}
 {% set couchbase_servers = salt['mine.get']('roles:couchbase', 'network.interfaces', expr_form = 'grain').items() %}
 {% if couchbase_servers|length > 1 %}
