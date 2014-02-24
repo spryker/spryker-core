@@ -28,7 +28,8 @@ rackspace-wheezy-4GB:
           - solr
           - queue
           - elasticsearch
-        data_role: master
+        solr_role: master
+        couchbase_role: master
   - data02.project-boss.net:
       grains:
         deployment: prod
@@ -37,7 +38,7 @@ rackspace-wheezy-4GB:
           - couchbase
           - solr
           - elasticsearch
-        data_role: slave
+        solr_role: slave
 
 
 

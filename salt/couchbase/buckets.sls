@@ -1,4 +1,4 @@
-{%- if grains.data_role is defined and grains.data_role == 'master' %}
+{%- if grains.couchbase_role is defined and grains.couchbase_role == 'master' %}
 {%- for environment, environment_details in pillar.environments.items() %}
 {%- for store, store_details in pillar.stores.items() %}
 {%- for bucket, bucket_details in pillar.couchbase.buckets.items() %}
