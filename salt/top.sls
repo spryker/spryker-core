@@ -70,3 +70,14 @@ base:
   'G@deployment:prod and G@roles:cronjobs':
     - match: compound
     - newrelic.php
+
+  # vagrant box for development
+  'pyz-vagrant':
+    - couchbase
+    - php
+    - app
+    - nginx
+    - java
+    - tomcat
+    - mysql-server
+    - elasticsearch
