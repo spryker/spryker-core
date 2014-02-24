@@ -1,4 +1,5 @@
 {% if grains.couchbase_role is defined and grains.couchbase_role == 'master' %}
+
 cluster_setup:
   cmd:
     - run
@@ -18,4 +19,5 @@ cluster_setup:
         -c 127.0.0.1:{{ pillar['couchbase']['port'] }} | egrep 'healthy active' 
     - require:
       - service: couchbase-server
+
 {% endif %}
