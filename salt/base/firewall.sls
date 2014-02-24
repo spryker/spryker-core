@@ -7,15 +7,19 @@ ufw:
 # Allow all traffic on private Project Network
 ufw allow in on eth2:
   cmd.run:
+    - unless: ufw status | grep 'Anywhere on eth2 *ALLOW *Anywhere'
     - require:
       - pkg: ufw
 
 # Allow traffic from cloud load balancers on shared Service Network
+# The IP's here are valid for Rackspace Cloud - London and have been provided by support
 ufw allow from 10.190.254.0/23:
   cmd.run:
+    - unless: ufw status | grep 'Anywhere *ALLOW *10.190.254.0/23'
     - require:
       - pkg: ufw
 ufw allow from 10.189.246.0/23:
   cmd.run:
+    - unless: ufw status | grep 'Anywhere *ALLOW *10.189.246.0/23'
     - require:
       - pkg: ufw
