@@ -98,5 +98,17 @@
       environment: {{ environment }}
       environment_details: {{ environment_details }}
 
+tomcat7-{{ environment }}:
+  service:
+    - running
+    - enable: True
+    - require:
+      - file: /data/shop/{{ environment }}/shared/tomcat/logs
+      - file: /data/shop/{{ environment }}/shared/tomcat/bin
+      - file: /data/shop/{{ environment }}/shared/tomcat/lib
+      - file: /data/shop/{{ environment }}/shared/tomcat/conf/server.xml
+      - file: /etc/init.d/tomcat7-{{ environment }}
+      - file: /etc/default/tomcat7-{{ environment }}
+
 {%- endfor %}
 
