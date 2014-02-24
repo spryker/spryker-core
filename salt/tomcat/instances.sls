@@ -61,6 +61,19 @@
       environment: {{ environment }}
       environment_details: {{ environment_details }}
 
+/data/shop/{{ environment }}/shared/tomcat/newrelic/newrelic.yml:
+  file.managed:
+    - source: salt://tomcat/files/newrelic/newrelic.yml
+    - template: jinja
+    - user: www-data
+    - group: www-data
+    - mode: 640
+    - watch_in:
+      - service: tomcat7-{{ environment }}
+    - context:
+      environment: {{ environment }}
+      environment_details: {{ environment_details }}
+
 /etc/default/tomcat7-{{ environment }}:
   file.managed:
     - source: salt://tomcat/files/instance/defaults
@@ -85,15 +98,16 @@
       environment: {{ environment }}
       environment_details: {{ environment_details }}
 
-tomcat7-{{ environment }}:
-  service:
-    - running
-    - enable: True
-    - require:
-      - pkg: tomcat
-      - file: /etc/init.d/tomcat7-{{ environment }}
-      - file: /etc/default/tomcat7-{{ environment }}
-      - file: /data/shop/{{ environment }}/shared/tomcat/conf/server.xml
+/etc/init.d/tomcat7-{{ environment }}:
+  file.managed:
+    - source: salt://tomcat/files/instance/init
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: 755
+    - context:
+      environment: {{ environment }}
+      environment_details: {{ environment_details }}
 
 
 {%- endfor %}
