@@ -31,10 +31,10 @@ $config['jenkins'] = array(
 /** ActiveMQ - message queue */
 /** FIXME */
 $config['activemq'] = array (
-  array('host' => 'fixme__queue_hostname', 'port' => '{{ environment_details.queue.stomp_port }}')
+  array('host' => '{{ queue_host }}', 'port' => '{{ environment_details.queue.stomp_port }}')
 );
 
-/** Amazon AWS api keys */
-$config['productImage']['amazonS3Key'] = 'AKIAIFH6VVOUVCIUSAVA';
-$config['productImage']['amazonS3Secret'] = '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';
-$config['productImage']['amazonS3BucketName'] = 'pyz-production-upload';
+/** Amazon AWS api keys - not used for rackspace projects */
+// $config['productImage']['amazonS3Key'] = 'AKIAIFH6VVOUVCIUSAVA';
+// $config['productImage']['amazonS3Secret'] = '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';
+// $config['productImage']['amazonS3BucketName'] = 'pyz-production-upload';
