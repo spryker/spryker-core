@@ -98,17 +98,5 @@
       environment: {{ environment }}
       environment_details: {{ environment_details }}
 
-/etc/init.d/tomcat7-{{ environment }}:
-  file.managed:
-    - source: salt://tomcat/files/instance/init
-    - template: jinja
-    - user: root
-    - group: root
-    - mode: 755
-    - context:
-      environment: {{ environment }}
-      environment_details: {{ environment_details }}
-
-
 {%- endfor %}
 
