@@ -15,20 +15,20 @@ environments:
         username: production
         password: pjbO7aSUm0
     static:
-      hostname: cdn-1234.hostname.project-yz.com
+      hostname: FIXME-cdn-1234.hostname.project-yz.com
     tomcat:
       port_suffix: 5007
       min_heap_size: 512m
       max_heap_size: 1536m
       max_perm_size: 256m
     solr:
-      lb_hostname: xx
+      lb_hostname: FIXME
     queue:
       stomp_port: 45006
     files:
       provider: rackspace
-      api_username: xxx
-      api_key: xxx
+      api_username: FIXME
+      api_key: FIXME
     stores:
       DE:
         yves:
@@ -48,20 +48,20 @@ environments:
         username: staging                                
         password: tkVM0EysbN64
     static:
-      hostname: cdn-1234.hostname.project-yz.com
+      hostname: FIXME-cdn-1234.hostname.project-yz.com
     tomcat:
       port_suffix: 3007
       min_heap_size: 256m
       max_heap_size: 768m
       max_perm_size: 256m
     solr:
-      lb_hostname: xx
+      lb_hostname: FIXME
     queue:
       stomp_port: 43006
     files:
       provider: rackspace
-      api_username: xxx
-      api_key: xxx
+      api_username: FIXME
+      api_key: FIXME
     stores:
       DE:
         yves:
@@ -82,7 +82,7 @@ environments:
 # If we're using salt-cloud to create cloud VM's - it will automatically generate /root/.ssh/id_rsa
 # on salt master and copy appropiate id_rsa.pub to minions to /root/.ssh/authorized_keys.
 #
-# Paste the content of /root/.ssh/id_rsa from salt-master here:
+# Paste here the content of /root/.ssh/id_rsa from salt-master:
 server_env:
   ssh:
     id_rsa: |
