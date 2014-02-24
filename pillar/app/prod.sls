@@ -18,6 +18,9 @@ environments:
       hostname: cdn-1234.hostname.project-yz.com
     tomcat:
       port_suffix: 5007
+      min_heap_size: 512m
+      max_heap_size: 1536m
+      max_perm_size: 256m
     solr:
       hostname: xx
     queue:
@@ -48,6 +51,9 @@ environments:
       hostname: cdn-1234.hostname.project-yz.com
     tomcat:
       port_suffix: 3007
+      min_heap_size: 256m
+      max_heap_size: 768m
+      max_perm_size: 256m
     solr:
       hostname: xx
     queue:

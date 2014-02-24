@@ -53,12 +53,47 @@
     - user: www-data
     - group: www-data
     - mode: 640
+    - watch_in:
+      - service: tomcat7-{{ environment }}
     - require:
       - file: /data/shop/{{ environment }}/shared/data/common
     - context:
       environment: {{ environment }}
       environment_details: {{ environment_details }}
 
+/etc/default/tomcat7-{{ environment }}:
+  file.managed:
+    - source: salt://tomcat/files/instance/defaults
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: 644
+    - watch_in:
+      - service: tomcat7-{{ environment }}
+    - context:
+      environment: {{ environment }}
+      environment_details: {{ environment_details }}
+
+/etc/init.d/tomcat7-{{ environment }}:
+  file.managed:
+    - source: salt://tomcat/files/instance/init
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: 755
+    - context:
+      environment: {{ environment }}
+      environment_details: {{ environment_details }}
+
+tomcat7-{{ environment }}:
+  service:
+    - running
+    - enable: True
+    - require:
+      - pkg: tomcat
+      - file: /etc/init.d/tomcat7-{{ environment }}
+      - file: /etc/default/tomcat7-{{ environment }}
+      - file: /data/shop/{{ environment }}/shared/tomcat/conf/server.xml
 
 
 
