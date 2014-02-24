@@ -79,10 +79,10 @@
     - user: root
     - group: root
     - mode: 644
-    - context:
-      environment: {{ environment }}
     - watch_in:
       - service: php5-fpm
+    - context:
+      environment: {{ environment }}
 
 /etc/php5/fpm/pool.d/{{ environment }}-yves.conf:
   file.managed:
@@ -91,10 +91,10 @@
     - user: root
     - group: root
     - mode: 644
-    - context:
-      environment: {{ environment }}
     - watch_in:
       - service: php5-fpm
+    - context:
+      environment: {{ environment }}
 
 
 # NginX configs
@@ -105,10 +105,10 @@
     - user: root
     - group: root
     - mode: 644
-    - context:
-      environment: {{ environment }}
     - watch_in:
       - service: nginx
+    - context:
+      environment: {{ environment }}
 
 {%- endif %}
 {%- endfor %}
