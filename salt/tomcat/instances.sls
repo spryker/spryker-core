@@ -96,6 +96,5 @@ tomcat7-{{ environment }}:
       - file: /data/shop/{{ environment }}/shared/tomcat/conf/server.xml
 
 
-
 {%- endfor %}
 
