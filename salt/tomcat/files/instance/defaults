@@ -13,7 +13,7 @@ JAVA_OPTS="-Djava.awt.headless=true -server -verbose:gc"
 JAVA_OPTS="$JAVA_OPTS -Xmx{{ environment_details.tomcat.max_heap_size }}"
 JAVA_OPTS="$JAVA_OPTS -Xms{{ environment_details.tomcat.min_heap_size }}"
 JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize={{ environment_details.tomcat.max_perm_size }}"
-JAVA_OPTS="$JAVA_OPTS -Djvm.process.name={{ environment }} -Djvm.host.name={{ grains.host }}"
+JAVA_OPTS="$JAVA_OPTS -Djvm.process.name={{ environment }} -Djvm.host.name=${HOSTNAME}"
 JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps"
 JAVA_OPTS="$JAVA_OPTS -XX:+UseCompressedOops"
 
@@ -29,5 +29,5 @@ JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
 {% if grains.deployment == 'prod' %}
 # Newrelic Agent
 JAVA_OPTS="$JAVA_OPTS -Dnewrelic.environment={{ environment }}"
-JAVA_OPTS="$JAVA_OPTS -javaagent:{{ environment }}/newrelic/newrelic.jar"
+JAVA_OPTS="$JAVA_OPTS -javaagent:${CATALINA_BASE}/newrelic/newrelic.jar"
 {% endif %}
