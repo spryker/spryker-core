@@ -26,8 +26,8 @@ TOMCAT7_USER=www-data
 TOMCAT7_GROUP=www-data
 JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
 
-{% if False }
+{% if False %}
 # Newrelic Agent
 JAVA_OPTS="$JAVA_OPTS -Dnewrelic.environment={{ environment }}"
 JAVA_OPTS="$JAVA_OPTS -javaagent:{{ environment }}/newrelic/newrelic.jar"
-{% endif }
+{% endif %}
