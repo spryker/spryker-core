@@ -61,7 +61,7 @@
       environment: {{ environment }}
       environment_details: {{ environment_details }}
 
-/etc/defaults/tomcat7-{{ environment }}:
+/etc/default/tomcat7-{{ environment }}:
   file.managed:
     - source: salt://tomcat/files/instance/defaults
     - template: jinja
