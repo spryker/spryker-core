@@ -3,7 +3,7 @@ php:
   pkg.installed:
     - pkgs:
       - php5
-      - php5-dev      
+      - php5-dev
       - php5-cli
       - php5-fpm
       - php5-curl
@@ -16,6 +16,9 @@ php:
       - php5-mysql
       - php5-pgsql
       - libssh2-php
+{% if 'dev' in grains.roles %}
+      - php5-xdebug
+{% endif %}
 
 include:
   - .config
