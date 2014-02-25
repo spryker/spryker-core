@@ -31,10 +31,7 @@
     - dir_mode: 755
     - file_mode: 755
     - makedirs: true
-    - recurse:
-      - user
-      - group
-      - mode
+
 
 /data/storage/{{ environment }}/static:
   file.directory:
@@ -43,10 +40,6 @@
     - dir_mode: 755
     - file_mode: 755
     - makedirs: true
-    - recurse:
-      - user
-      - group
-      - mode
 
 /data/shop/{{ environment }}/shared/data/static:
   file.symlink:
