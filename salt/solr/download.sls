@@ -25,4 +25,3 @@ unpack-solr.tgz:
     - source: /data/deploy/download/solr/solr-{{ pillar.solr.version }}/dist/solr-{{ pillar.solr.version }}.war
     - require:
       - cmd: unpack-solr.tgz
-
