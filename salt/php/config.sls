@@ -3,6 +3,10 @@
   file.managed:
     - source: salt://php/files/php.ini
 
+/etc/php5:
+  file.directory:
+  - mode: 755
+
 # php.ini - for CLI
 /etc/php5/cli/php.ini:
   file.managed:
