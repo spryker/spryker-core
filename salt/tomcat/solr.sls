@@ -44,7 +44,7 @@
       environment: {{ environment }}
 
 /data/shop/{{ environment }}/shared/tomcat/webapps/solr.war:
-  file.symlink:
+  file.copy:
     - target: /data/deploy/download/solr-{{ pillar.solr.version }}.war
     - require:
       - file: /data/deploy/download/solr-{{ pillar.solr.version }}.war
