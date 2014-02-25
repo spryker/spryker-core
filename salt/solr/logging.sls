@@ -38,7 +38,7 @@ copy-slf4j-jdk14.jar:
     - require:
       - cmd: unpack-slf4j.zip
 
-copy-slf4j-jdk14.jar:
+copy-log4j-over-slf4j.jar:
   cmd.run:
     - name: cp /data/deploy/download/solr/slf4j-1.6.6/log4j-over-slf4j-1.6.6.jar /usr/share/tomcat7/lib/
     - unless: test -f /usr/share/tomcat7/lib/log4j-over-slf4j-1.6.6.jar
