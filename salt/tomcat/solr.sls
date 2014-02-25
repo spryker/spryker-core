@@ -52,6 +52,6 @@
       - file: /data/shop/{{ environment }}/shared/data/common/solr/replication.xml
       - file: /data/shop/{{ environment }}/shared/data/common/solr/solr.xml
     - watch_in:
-      - service: tomcat-{{ environment }}
+      - service: tomcat7-{{ environment }}
 
 {%- endfor %}
