@@ -22,6 +22,15 @@ memcached:
       - pkg: libmemcached-dev
       - pkg: libmemcached11
 
+{%- if 'dev' in grains.roles %}
+/etc/php5/conf.d/xdebug.ini:
+  file.managed:
+    - source: salt://php/files/xdebug.ini
+    - user: root
+    - group: root
+    - mode: 644
+{%- endif %}
+
 /etc/php5/conf.d/memcached.ini:
   file.managed:
     - source: salt://php/files/memcached.ini
