@@ -3,7 +3,7 @@
 
 copy-solr-logging-jars:
   cmd.run:
-    - name: cp -R /data/deploy/download/solr/solr-{{ pillar.solr.version }}/example/lib/ext/ /usr/share/tomcat7/lib/
+    - name: cp /data/deploy/download/solr/solr-{{ pillar.solr.version }}/example/lib/ext/*.jar /usr/share/tomcat7/lib/
     - unless: find /usr/share/tomcat7/lib/ -name slf4j-log4j* -print -quit | grep jar
     - require:
       - cmd: unpack-solr.tgz
