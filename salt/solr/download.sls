@@ -3,10 +3,11 @@
     - mode: 700
     - makedirs: True
 
-solr.tgz:
-  file.managed:
-    - name: /data/deploy/download/solr/solr-{{ pillar.solr.version }}.tar.gz
-    - source: {{ pillar.solr.source }}
+download-solr.tgz:
+  cmd.run:
+    - cwd: /data/deploy/download/solr
+    - name: wget -q {{ pillar.solr.source }}
+    - creates: /data/deploy/download/solr/solr-{{ pillar.solr.version }}.tar.gz
     - require:
       - file: /data/deploy/download/solr
 
