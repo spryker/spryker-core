@@ -1,16 +1,46 @@
 # The default .war file in solr distribution doesn't contain logging classes and configuration
-# We have to copy the files from solr examples to ClassPath - we use default tomcat classpath directory
+# We have to copy the files from solr and slf4j examples to ClassPath - we use default tomcat classpath directory
 
-copy-solr-logging-jars:
+copy-jcl-over-slf4j.jar:
   cmd.run:
-    - name: cp /data/deploy/download/solr/solr-{{ pillar.solr.version }}/example/lib/ext/*.jar /usr/share/tomcat7/lib/
-    - unless: find /usr/share/tomcat7/lib/ -name slf4j-log4j* -print -quit | grep jar
+    - name: cp /data/deploy/download/solr/solr-{{ pillar.solr.version }}/example/lib/ext/jcl-over-slf4j-1.6.6.jar /usr/share/tomcat7/lib/
+    - unless: test -f /usr/share/tomcat7/lib/jcl-over-slf4j-1.6.6.jar
     - require:
       - cmd: unpack-solr.tgz
 
-copy-solr-logging-config:
-  file.copy:
-    - source: /data/deploy/download/solr/solr-{{ pillar.solr.version }}/example/resources/log4j.properties
-    - name: /usr/share/tomcat7/lib/log4j.properties
+copy-slf4j-api.jar:
+  cmd.run:
+    - name: cp /data/deploy/download/solr/solr-{{ pillar.solr.version }}/example/lib/ext/slf4j-api-1.6.6.jar /usr/share/tomcat7/lib/
+    - unless: test -f /usr/share/tomcat7/lib/slf4j-api-1.6.6.jar
     - require:
       - cmd: unpack-solr.tgz
+
+download-slf4j.zip:
+  cmd.run:
+    - cwd: /data/deploy/download/solr
+    - name: wget -q http://www.slf4j.org/dist/slf4j-1.6.6.zip
+    - creates: /data/deploy/download/solr/slf4j-1.6.6.zip
+    - require:
+      - file: /data/deploy/download/solr
+
+unpack-slf4j.zip:
+  cmd.run:
+    - cwd: /data/deploy/download/solr
+    - require:
+      - cmd: download-slf4j.zip
+    - name: unzip slf4j-1.6.6.zip
+    - creates: /data/deploy/download/solr/slf4j-1.6.6/pom.xml
+
+copy-slf4j-jdk14.jar:
+  cmd.run:
+    - name: cp /data/deploy/download/solr/slf4j-1.6.6/slf4j-jdk14-1.6.6.jar /usr/share/tomcat7/lib/
+    - unless: test -f /usr/share/tomcat7/lib/slf4j-jdk14-1.6.6.jar
+    - require:
+      - cmd: unpack-slf4j.zip
+
+copy-slf4j-jdk14.jar:
+  cmd.run:
+    - name: cp /data/deploy/download/solr/slf4j-1.6.6/log4j-over-slf4j-1.6.6.jar /usr/share/tomcat7/lib/
+    - unless: test -f /usr/share/tomcat7/lib/log4j-over-slf4j-1.6.6.jar
+    - require:
+      - cmd: unpack-slf4j.zip
