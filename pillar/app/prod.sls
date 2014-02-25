@@ -7,6 +7,10 @@ newrelic:
   api_key: 
   appname: Demo Shop
 
+solr:
+  version: 4.6.1
+  source: http://apache.mirrors.pair.com/lucene/solr/4.6.1/solr-4.6.1.tgz
+
 environments:
   production:
     database:
