@@ -1,0 +1,15 @@
+<!-- This file is maintained by salt! -->
+<!-- Solr Replication - Master
+
+     The SolrReplicationHandler supports replicating indexes from a
+     "master" used for indexing and "slaves" used for queries.
+
+     http://wiki.apache.org/solr/SolrReplication
+  -->
+<requestHandler name="/replication" class="solr.ReplicationHandler" >
+   <lst name="master">
+      <str name="replicateAfter">startup</str>
+      <str name="replicateAfter">commit</str>
+      <!--<str name="commitReserveDuration">00:00:10</str>-->
+   </lst>
+</requestHandler>
