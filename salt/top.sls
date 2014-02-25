@@ -37,6 +37,7 @@ base:
     - match: grain
     - java
     - tomcat
+    - solr
 
   # activemq
   'roles:queue':
