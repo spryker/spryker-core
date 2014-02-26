@@ -8,7 +8,7 @@
   -->
 <requestHandler name="/replication" class="solr.ReplicationHandler" >
   <lst name="slave">
-      <str name="masterUrl">http://{{ solr_master }}:1{{ environment_details.tomcat.port_suffix }}/solr/${solr.core.name}/replication</str>
+      <str name="masterUrl">http://{{ solr_master }}:1{{ environment_details.tomcat.port_suffix }}/solr/${solr.core.name}</str>
       <str name="pollInterval">00:00:40</str>
    </lst>
 </requestHandler>
