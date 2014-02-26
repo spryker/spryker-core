@@ -11,8 +11,8 @@
 /** default - used for queries */
 // Fixme - use cloud loadbalancer instead of single server
 $config['storage']['solr']['defaultEndpointSetup'] = [
-//    'host' => '{{ environment_details.solr.lb_hostname }}',
-    'host' => '{{ solr_master }}',
+    'host' => '{{ environment_details.solr.lb_hostname }}',
+//    'host' => '{{ solr_master }}',
     'port' => 1{{ environment_details.tomcat.port_suffix }},
 ];
 /** master - used for updates */
