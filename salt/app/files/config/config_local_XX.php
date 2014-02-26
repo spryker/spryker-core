@@ -38,7 +38,7 @@ $config['storage']['kv'] = [
         ],
         'user'   => '{{ store }}_{{ environment }}_yves',
         'password' => '{{ pillar.couchbase.password }}',
-        'bucket' => '',
+        'bucket' => NULL,
         'timeout' => '0'
     ]
 ];
