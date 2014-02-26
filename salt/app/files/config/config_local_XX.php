@@ -29,7 +29,7 @@ $config['storage']['kv'] = [
     'source' => 'couchbase',
     'couchbase' => [
         'hosts' => [
-{% for hostname, network_settings in couchbase_servers -%}
+{-% for hostname, network_settings in couchbase_servers %}
             [
                 'host' => '{{ network_settings[netif]['inet'][0]['address'] }}',
                 'port' => '{{ pillar.couchbase.port }}',
