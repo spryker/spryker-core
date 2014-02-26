@@ -1,5 +1,5 @@
 {%- set netif = pillar.network.project_interface -%}
-{%- set couchbase_servers = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() -%}
+{%- set couchbase_servers = salt['mine.get']('roles:couchbase', 'network.interfaces', expr_form = 'grain').items() -%}
 <?php
 /**
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
