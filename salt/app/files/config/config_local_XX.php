@@ -34,7 +34,7 @@ $config['storage']['kv'] = [
                 'host' => '{{ network_settings[netif]['inet'][0]['address'] }}',
                 'port' => '{{ pillar.couchbase.port }}',
             ],
-{% endfor -%}
+{% endfor %}
         ],
         'user'   => '{{ store }}_{{ environment }}_yves',
         'password' => '{{ pillar.couchbase.password }}',
