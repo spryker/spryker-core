@@ -20,6 +20,11 @@ $config['storage']['solr']['masterEndpointSetup'] = [
     'host' => '{{ solr_master }}',
     'port' => 1{{ environment_details.tomcat.port_suffix }},
 ];
+/** local - used for setup */
+$config['storage']['solr']['localEndpointSetup'] = [
+    'host' => 'localhost',
+    'port' => 1{{ environment_details.tomcat.port_suffix }},
+];
 $config['storage']['solr']['data_dir'] = '/data/shop/{{ environment }}/shared/data/common/solr';
 
 /** Jenkins - job manager */
