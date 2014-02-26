@@ -217,8 +217,8 @@ def create_deploy_vars_file
     f.puts "dwh_host=\"#{$dwh_host}\"" unless $dwh_host.nil?
     f.puts "scm_path=\"#{$scm_path}\""
     f.puts "solr_hosts=(\"#{solr_hosts}\")"
-    f.puts "cron_hosts=(\"#{cron_hosts}\")"
     f.puts "jobs_hosts=(\"#{jobs_hosts}\")"
+    f.puts "jobs_master=\"#{tools_host}\""
     f.puts "changelog=\"#{$changelog}\""
     $project_options.each { |o| f.puts o[:variable] + "=\"" + (o[:value].nil? ? "":o[:value]) + "\"" }
     f.puts ""
