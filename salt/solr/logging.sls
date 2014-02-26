@@ -29,7 +29,8 @@ unpack-slf4j.zip:
     - require:
       - cmd: download-slf4j.zip
     - name: unzip slf4j-1.6.6.zip
-    - creates: /data/deploy/download/solr/slf4j-1.6.6/pom.xml
+    - unless: test -f /data/deploy/download/solr/slf4j-1.6.6/pom.xml
+#    - creates: /data/deploy/download/solr/slf4j-1.6.6/pom.xml
 
 copy-slf4j-jdk14.jar:
   cmd.run:
