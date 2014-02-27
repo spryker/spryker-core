@@ -297,12 +297,9 @@ def configure_hosts
   hosts = $app_hosts || $zed_hosts
   result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/configure_host\" ")
 
-  # In 2.0 configuring solr and jenkins is seperate action/file
+  # In 2.0 configuring solr is seperate action/file
   hosts = $solr_hosts || []
   result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_default_store} #{$debug} deploy/setup_solr\" ")
-
-  #hosts = $jobs_hosts || []
-  #result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_default_store} #{$debug} deploy/setup_jenkins\" ")
 end
 
 def check_for_migrations
