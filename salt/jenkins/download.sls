@@ -3,7 +3,7 @@
     - mode: 700
     - makedirs: True
 
-download-jenkins.war:
+/data/deploy/download/jenkins-{{ pillar.jenkins.version }}.war:
   cmd.run:
     - cwd: /data/deploy/download
     - name: wget -q -O jenkins-{{ pillar.jenkins.version }}.war {{ pillar.jenkins.source }}
