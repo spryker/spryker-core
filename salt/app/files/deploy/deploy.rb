@@ -113,7 +113,7 @@ if $scm_type == "svn"
 end
 
 ###
-### Git
+### Git 
 ###
 
 if $scm_type == "git" # If $scm_type is declared in config.rb as "git"
