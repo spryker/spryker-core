@@ -40,7 +40,7 @@ $config['activemq'] = array (
 
 /** Session storage */
 //$config['zed']['session']['save_handler'] = 'couchbase';
-//$config['zed']['session']['save_path'] = '{{ couchbase_servers|join(',', attribute='1.eth2') }}'
+//$config['zed']['session']['save_path'] = '{{ couchbase_servers|join(',', attribute='[1]') }}'
 
 $config['yves']['session']['save_handler'] = 'couchbase';
 $config['yves']['session']['save_path'] = '192.168.33.10:8091;192.168.33.11:8091;192.168.45.35:8091';
