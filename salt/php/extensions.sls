@@ -30,7 +30,7 @@ memcached:
     - mode: 644
 {% endif %}
 
-/etc/php5/conf.d/@20-xdebug.ini:
+/etc/php5/conf.d/20-xdebug.ini:
   file.absent
 
 /etc/php5/conf.d/memcached.ini:
