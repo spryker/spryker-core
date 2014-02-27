@@ -1,6 +1,6 @@
 /data/deploy/download/solr:
   file.directory:
-    - mode: 700
+    - mode: 755
     - makedirs: True
 
 download-solr.tgz:
