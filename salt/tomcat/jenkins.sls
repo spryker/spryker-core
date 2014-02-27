@@ -21,7 +21,7 @@
   file.copy:
     - source: /data/deploy/download/jenkins-{{ pillar.jenkins.version }}.war
     - require:
-      - file: /data/deploy/download/jenkins-{{ pillar.jenkins.version }}.war
+      - file: download-jenkins.war
       - file: /data/shop/{{ environment }}/shared/tomcat/conf/Catalina/localhost/jenkins.xml
     - watch_in:
       - service: tomcat7-{{ environment }}
