@@ -2,6 +2,7 @@
 {%- set solr_master = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address -%}
 {%- set cron_master = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address -%}
 {%- set queue_host = salt['mine.get']('roles:queue', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address -%}
+{%- set couchbase_servers = salt['mine.get']('roles:couchbase', 'network.interfaces', expr_form = 'grain').items() -%}
 <?php
 /**
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
@@ -33,10 +34,17 @@ $config['jenkins'] = array(
 );
 
 /** ActiveMQ - message queue */
-/** FIXME */
 $config['activemq'] = array (
   array('host' => '{{ queue_host }}', 'port' => '{{ environment_details.queue.stomp_port }}')
 );
+
+/** Session storage */
+//$config['zed']['session']['save_handler'] = 'couchbase';
+//$config['zed']['session']['save_path'] = '{{ couchbase_servers|join(',', attribute='1.eth2') }}'
+
+$config['yves']['session']['save_handler'] = 'couchbase';
+$config['yves']['session']['save_path'] = '192.168.33.10:8091;192.168.33.11:8091;192.168.45.35:8091';
+
 
 /** Amazon AWS api keys - not used for rackspace projects */
 // $config['productImage']['amazonS3Key'] = 'AKIAIFH6VVOUVCIUSAVA';
