@@ -39,13 +39,11 @@ $config['activemq'] = array (
 );
 
 /** Session storage */
-//$config['zed']['session']['save_handler'] = 'couchbase';
-//$config['zed']['session']['save_path'] = '{%- for hostname, network_settings in couchbase_servers -%}
+$config['zed']['session']['save_handler'] = 'couchbase';
+$config['zed']['session']['save_path'] = '{%- for hostname, network_settings in couchbase_servers -%}
 {{ network_settings[netif]['inet'][0]['address'] }}:{{ pillar.couchbase.port }}{% if not loop.last %};{% endif -%}{% endfor %}'
 
-$config['yves']['session']['save_handler'] = 'couchbase';
-$config['yves']['session']['save_path'] = '192.168.33.10:8091;192.168.33.11:8091;192.168.45.35:8091';
-
+$config['yves']['session'] = $config['zed']['session'];
 
 /** Amazon AWS api keys - not used for rackspace projects */
 // $config['productImage']['amazonS3Key'] = 'AKIAIFH6VVOUVCIUSAVA';
