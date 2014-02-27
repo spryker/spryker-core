@@ -1,3 +1,5 @@
+{%- set netif = pillar.network.project_interface -%}
+{%- set couchbase_servers = salt['mine.get']('roles:couchbase', 'network.interfaces', expr_form = 'grain').items() -%}
 <?php
 /**
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
@@ -26,12 +28,21 @@ $config['db_dump'] = [
 $config['storage']['kv'] = [
     'source' => 'couchbase',
     'couchbase' => [
-        'host'   => '10.16.0.31:8091',
-        'user'   => 'Administrator',
-        'password' => 'Wn0Ow6vHhKW8RUut',
-        'bucket' => 'DE_production_yves'
+        'hosts' => [
+{%- for hostname, network_settings in couchbase_servers %}
+            [
+                'host' => '{{ network_settings[netif]['inet'][0]['address'] }}',
+                'port' => '{{ pillar.couchbase.port }}',
+            ],
+{% endfor %}
+        ],
+        'user'   => '{{ store }}_{{ environment }}_yves',
+        'password' => '{{ pillar.couchbase.password }}',
+        'bucket' => '{{ store }}_{{ environment }}_yves',
+        'timeout' => 0
     ]
 ];
+
 
 /** Public URL's */
 $config['host'] = $config['host_ssl'] = [

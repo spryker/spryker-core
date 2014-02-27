@@ -7,17 +7,21 @@
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
  */
 
-/** Solr - search engine */
-/** default - used for queries */
-// Fixme - use cloud loadbalancer instead of single server
+/** Solr - default - used for queries */
 $config['storage']['solr']['defaultEndpointSetup'] = [
-//    'host' => '{{ environment_details.solr.lb_hostname }}',
+    'host' => '{{ environment_details.solr.lb_hostname }}',
+    'port' => 1{{ environment_details.tomcat.port_suffix }},
+];
+
+/** Solr - master - used for updates */
+$config['storage']['solr']['masterEndpointSetup'] = [
     'host' => '{{ solr_master }}',
     'port' => 1{{ environment_details.tomcat.port_suffix }},
 ];
-/** master - used for updates */
-$config['storage']['solr']['masterEndpointSetup'] = [
-    'host' => '{{ solr_master }}',
+
+/** Solr - local - used for setup */
+$config['storage']['solr']['localEndpointSetup'] = [
+    'host' => 'localhost',
     'port' => 1{{ environment_details.tomcat.port_suffix }},
 ];
 $config['storage']['solr']['data_dir'] = '/data/shop/{{ environment }}/shared/data/common/solr';

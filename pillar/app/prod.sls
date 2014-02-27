@@ -26,7 +26,7 @@ environments:
       max_heap_size: 1536m
       max_perm_size: 256m
     solr:
-      lb_hostname: FIXME
+      lb_hostname: 10.189.246.59
     queue:
       stomp_port: 45006
     files:
@@ -59,7 +59,7 @@ environments:
       max_heap_size: 768m
       max_perm_size: 256m
     solr:
-      lb_hostname: FIXME
+      lb_hostname: 10.189.246.66
     queue:
       stomp_port: 43006
     files:

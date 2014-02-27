@@ -195,6 +195,8 @@ end
 def create_deploy_vars_file
   tools_hosts = $jobs_hosts || [$tools_host]
   tools_host = tools_hosts[0]
+  solr_hosts = $solr_hosts . join ' '
+  jobs_hosts = tools_hosts . join ' '
 
   File.open("#{$deploy_source_dir}/deploy/vars", "w") do |f|
     f.puts "# Deployment configuration variables"
@@ -214,6 +216,9 @@ def create_deploy_vars_file
     f.puts "admin_host=\"#{tools_host}\""
     f.puts "dwh_host=\"#{$dwh_host}\"" unless $dwh_host.nil?
     f.puts "scm_path=\"#{$scm_path}\""
+    f.puts "solr_hosts=(\"#{solr_hosts}\")"
+    f.puts "jobs_hosts=(\"#{jobs_hosts}\")"
+    f.puts "jobs_master=\"#{tools_host}\""
     f.puts "changelog=\"#{$changelog}\""
     $project_options.each { |o| f.puts o[:variable] + "=\"" + (o[:value].nil? ? "":o[:value]) + "\"" }
     f.puts ""
@@ -294,10 +299,10 @@ def configure_hosts
 
   # In 2.0 configuring solr and jenkins is seperate action/file
   hosts = $solr_hosts || []
-  result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/setup_solr\" ")
+  result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_default_store} #{$debug} deploy/setup_solr\" ")
 
   hosts = $jobs_hosts || []
-  result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/setup_jenkins\" ")
+  result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_default_store} #{$debug} deploy/setup_jenkins\" ")
 
 end
 
