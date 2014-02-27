@@ -341,11 +341,13 @@ end
 
 def activate_cronjobs
   put_status "Activating cronjobs"
-  hosts = $jobs_hosts || [$tools_host]
+  hosts = $jobs_hosts.first || [$tools_host]
+  hosts = (hosts + $dwh_host).uniq if $use_dwh
+
   result = multi_ssh_exec(hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/enable_cronjobs")
 
   # Legacy - Yves+Zed 1.0
-  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/enable_local_cronjobs") unless $frontend_hosts.nil?
+  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && [ -f deploy/enable_local_cronjobs ] && #{$exec_default_store} #{$debug} deploy/enable_local_cronjobs") unless $frontend_hosts.nil?
 end
 
 def deactivate_cronjobs
@@ -354,7 +356,7 @@ def deactivate_cronjobs
   result = multi_ssh_exec(hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/disable_cronjobs")
 
   # Legacy - Yves+Zed 1.0
-  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && #{$exec_default_store} #{$debug} deploy/disable_local_cronjobs") unless $frontend_hosts.nil?
+  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && [ -f deploy/disable_local_cronjobs ] && #{$exec_default_store} #{$debug} deploy/disable_local_cronjobs") unless $frontend_hosts.nil?
 end 
 
 ###
