@@ -31,6 +31,7 @@ base:
     - app
     - java
     - tomcat
+    - jenkins
 
   # solr
   'roles:solr':

@@ -1,7 +1,6 @@
-# This state downloads and prepares to run solr.
+# This state downloads and prepares to run jenkins.
 # It does not deploy solr in any specific application server - this is done
-# in tomcat.solr state
+# in tomcat.jenkins state
 
 include:
   - .download
-  - .logging
