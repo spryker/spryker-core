@@ -7,10 +7,6 @@
     - dir_mode: 755
     - file_mode: 755
     - makedirs: true
-    - recurse:
-      - user
-      - group
-      - mode
 
 /data/shop/{{ environment }}/shared/data/common:
   file.directory:
@@ -19,10 +15,6 @@
     - dir_mode: 755
     - file_mode: 755
     - makedirs: true
-    - recurse:
-      - user
-      - group
-      - mode
 
 /data/logs/{{ environment }}:
   file.directory:
