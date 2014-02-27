@@ -41,7 +41,7 @@ $config['activemq'] = array (
 /** Session storage */
 $config['zed']['session']['save_handler'] = 'couchbase';
 $config['zed']['session']['save_path'] = '{%- for hostname, network_settings in couchbase_servers -%}
-{{ network_settings[netif]['inet'][0]['address'] }}:{{ pillar.couchbase.port }}{% if not loop.last %};{% endif -%}{% endfor %}'
+{{ network_settings[netif]['inet'][0]['address'] }}:{{ pillar.couchbase.port }}{% if not loop.last %};{% endif -%}{% endfor %}';
 
 $config['yves']['session'] = $config['zed']['session'];
 
