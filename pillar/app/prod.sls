@@ -29,10 +29,23 @@ environments:
       lb_hostname: 10.189.246.59
     queue:
       stomp_port: 45006
-    files:
-      provider: rackspace
-      api_username: FIXME
-      api_key: FIXME
+    cloud:
+      enabled: true
+      object_storage:
+        enabled: true
+        rackspace:
+          api_username: demoshop
+          api_key: 23b61a877f0f4efaaae2243d90ce63ab
+      cdn:
+        enabled: true
+        static_media:
+          http: http://297c1a453f0d7fe3ce3f-dd1913cd0a99febb0196b0c1e549aacc.r0.cf3.rackcdn.com
+          https: https://70f8c68435971fca9f1a-dd1913cd0a99febb0196b0c1e549aacc.ssl.cf3.rackcdn.com
+        static_assets:
+          http: http://297c1a453f0d7fe3ce3f-dd1913cd0a99febb0196b0c1e549aacc.r0.cf3.rackcdn.com
+          https: https://70f8c68435971fca9f1a-dd1913cd0a99febb0196b0c1e549aacc.ssl.cf3.rackcdn.com
+        delete_local_processed_images: true
+        delete_original_images: true
     stores:
       DE:
         yves:
@@ -62,10 +75,23 @@ environments:
       lb_hostname: 10.189.246.66
     queue:
       stomp_port: 43006
-    files:
-      provider: rackspace
-      api_username: FIXME
-      api_key: FIXME
+    cloud:
+      enabled: true
+      object_storage:
+        enabled: true
+        rackspace:
+          api_username: demoshop
+          api_key: 23b61a877f0f4efaaae2243d90ce63ab
+      cdn:
+        enabled: true
+        static_media:
+          http: http://0c760426ec7d7a09dda3-02dbfcd920021bdbd5f7e8ead1e4fb90.r8.cf3.rackcdn.com
+          https: https://006422bc21d07bd1e745-02dbfcd920021bdbd5f7e8ead1e4fb90.ssl.cf3.rackcdn.com
+        static_assets:
+          http: http://0c760426ec7d7a09dda3-02dbfcd920021bdbd5f7e8ead1e4fb90.r8.cf3.rackcdn.com
+          https: https://006422bc21d07bd1e745-02dbfcd920021bdbd5f7e8ead1e4fb90.ssl.cf3.rackcdn.com
+        delete_local_processed_images: true
+        delete_original_images: true
     stores:
       DE:
         yves:
