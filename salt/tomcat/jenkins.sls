@@ -15,6 +15,8 @@
     - source: salt://tomcat/files/jenkins/config.xml
     - replace: False
     - template: jinja
+    - context:
+      environment: {{ environment }}
     - require:
       - file: /data/shop/{{ environment }}/shared/data/common/jenkins
     - watch_in:
