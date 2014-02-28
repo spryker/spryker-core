@@ -372,10 +372,10 @@ def reindex_full
   hosts = $jobs_hosts || [$tools_host]
   host = hosts[0]
   if File.exists? "deploy/reindex_memcache"
+    puts yellow "Please rename deploy/reindex_memcache to deploy/reindex_kv  (workaround activated)"
     script_name = "deploy/reindex_memcache"
   else
     script_name = "deploy/reindex_kv"
-    puts yellow "Please rename deploy/reindex_memcache to deploy/reindex_kv  (workaround activated)"
   end
   result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f #{script_name} ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} #{script_name}\" ")
 
