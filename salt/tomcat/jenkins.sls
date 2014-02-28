@@ -7,6 +7,18 @@
     - group: www-data
     - makedirs: True
 
+/data/shop/{{ environment }}/shared/data/common/jenkins/config.xml:
+  file.managed:
+    - mode: 644
+    - user: www-data
+    - group: www-data
+    - source: salt://tomcat/files/jenkins/config.xml
+    - replace: False
+    - require:
+      - file: /data/shop/{{ environment }}/shared/data/common/jenkins
+    - watch_in:
+      - service: tomcat7-{{ environment }}
+
 /data/shop/{{ environment }}/shared/tomcat/conf/Catalina/localhost/jenkins.xml:
   file.managed:
     - mode: 644
