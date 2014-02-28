@@ -14,6 +14,7 @@ $config['db'] = [
     'host'     => '{{ environment_details.database.zed.hostname }}',
 ];
 
+/** Database: ZED dump */
 $config['db_dump'] = [
     'username' => '{{ environment_details.database.zed.username }}',
     'password' => '{{ environment_details.database.zed.password }}',
@@ -23,7 +24,6 @@ $config['db_dump'] = [
     'mysql_bin'     => '/usr/bin/mysql',
 ];
 
-// Fixme
 /** Memcache as KeyValue store */
 $config['storage']['kv'] = [
     'source' => 'couchbase',
