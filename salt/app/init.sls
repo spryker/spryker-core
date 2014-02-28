@@ -3,6 +3,7 @@ include:
   - .nodejs
   - .ruby
   - .deploy
+  - .cleanup-cronjobs
   - .environments
   - .stores
   - .nginx
