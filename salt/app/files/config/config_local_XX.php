@@ -54,16 +54,6 @@ $config['host'] = $config['host_ssl'] = [
 ];
 
 // Fixme
-$config['yves']['session'] = [
-    'save_handler' => 'files',
-    'save_path' => '/tmp',
-];
-
-
-// Fixme
-$config['zed']['session'] = $config['yves']['session'];
-
-// Fixme
 /** Payment gateways */
 /** Logistic partners */
 /** MCM, tracking */
