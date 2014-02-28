@@ -1,3 +1,13 @@
+{% set max_heap_size = environment_details.tomcat.max_heap_size %}
+{% set min_heap_size = environment_details.tomcat.min_heap_size %}
+{% set max_perm_size = environment_details.tomcat.max_perm_size %}
+{% set gc = '-XX:+UseConcMarkSweepGC' %}
+{% if (deployment=='prod') and ('cronjobs' in grains.roles) and ('solr' not in grains.roles) %}
+{% set max_heap_size = '256m' %}
+{% set min_heap_size = '256m' %}
+{% set max_perm_size = '128m' %}
+{% set gc = '-Xincgc' %}
+{% endif %}
 ####################################
 # This file is managed by salt
 ####################################
@@ -10,16 +20,16 @@ JVM_TMP="/tmp/tomcat7/{{ environment }}"
 
 ### Typical settings
 JAVA_OPTS="-Djava.awt.headless=true -server -verbose:gc"
-JAVA_OPTS="$JAVA_OPTS -Xmx{{ environment_details.tomcat.max_heap_size }}"
-JAVA_OPTS="$JAVA_OPTS -Xms{{ environment_details.tomcat.min_heap_size }}"
-JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize={{ environment_details.tomcat.max_perm_size }}"
+JAVA_OPTS="$JAVA_OPTS -Xmx{{ max_heap_size }}"
+JAVA_OPTS="$JAVA_OPTS -Xms{{ min_heap_size }}"
+JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize={{ max_perm_size }}"
 JAVA_OPTS="$JAVA_OPTS -Djvm.process.name={{ environment }} -Djvm.host.name=${HOSTNAME}"
 JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps"
 JAVA_OPTS="$JAVA_OPTS -XX:+UseCompressedOops"
 
 ### Garbage collector settings
 JAVA_OPTS="$JAVA_OPTS -XX:+DisableExplicitGC"
-JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC"
+JAVA_OPTS="$JAVA_OPTS {{ gc }}"
 
 #### defaults from /etc
 TOMCAT7_USER=www-data
