@@ -53,6 +53,13 @@ $config['host'] = $config['host_ssl'] = [
     'static_media' => '{{ environment_details.static.hostname }}',
 ];
 
+/** Session storage */
+$config['zed']['session']['save_handler'] = 'couchbase';
+$config['zed']['session']['save_path'] = '{%- for hostname, network_settings in couchbase_servers -%}
+{{store}}_{{environment}}_sessions:{{ pillar.couchbase.password }}@{{ network_settings[netif]['inet'][0]['address'] }}:{{ pillar.couchbase.port }}{% if not loop.last %};{% endif -%}{% endfor %}';
+
+$config['yves']['session'] = $config['zed']['session'];
+
 // Fixme
 /** Payment gateways */
 /** Logistic partners */
