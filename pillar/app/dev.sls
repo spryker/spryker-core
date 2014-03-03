@@ -58,7 +58,7 @@ environments:
     database:
       zed:
         hostname: localhost
-        username: development
+        username: testing
         password: mate20mg
     static:
       hostname: static-testing.project-boss.net
