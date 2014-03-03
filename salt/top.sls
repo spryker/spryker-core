@@ -56,6 +56,7 @@ base:
     - match: grain
     - mysql-server
     - elasticsearch
+    - development
 # pound (ssl),
 
   # newrelic for server monitoring - prod only
