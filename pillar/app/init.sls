@@ -1,5 +1,6 @@
 deploy:
   git_url: git@codebasehq.com:project-a/core/pyz.git
+  git_hostname: codebasehq.com
 
 # Use apache archive to download older versions - mirros have only latest releases
 solr:
