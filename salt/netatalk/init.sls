@@ -1,3 +1,8 @@
+/home/vagrant/dev:
+  file.symlink:
+    - target: /data/shop/development/current
+    - force: true
+
 netatalk:
   pkg:
     - installed
