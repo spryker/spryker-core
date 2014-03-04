@@ -33,3 +33,16 @@ git-clone:
 #    - name: cd /data/shop/development/current;vendor/bin/console setup:install -e development -s {{ store }}
 #    - creates: /data/shop/development/current/src/Generated
 #{%- endfor -%}
+
+
+# Install Oh-My-Zsh
+oh-my-zsh:
+  cmd.run:
+    - name: sudo -u vagrant git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh;chsh -s /bin/zsh
+    - creates: /home/vagrant/.oh-my-zsh
+
+  file.managed:
+    - source: salt://development/files/home/vagrant/.zshrc
+    - user: vagrant
+    - group: vagrant
+    - mode: 600
