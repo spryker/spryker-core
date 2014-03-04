@@ -3,7 +3,6 @@
 {{ username }}:
   user.present:
     - fullname: {{ user.fullname }}
-    - shell: user.shell
     - groups:
       - adm
 {% if user.ssh_key is defined %}
