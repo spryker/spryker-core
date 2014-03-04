@@ -41,6 +41,7 @@ oh-my-zsh:
     - name: sudo -u vagrant git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh;chsh -s /bin/zsh
     - creates: /home/vagrant/.oh-my-zsh
 
+/home/vagrant/.zshrc:
   file.managed:
     - source: salt://development/files/home/vagrant/.zshrc
     - user: vagrant
