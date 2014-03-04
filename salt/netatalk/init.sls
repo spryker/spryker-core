@@ -18,3 +18,4 @@ netatalk:
 /etc/netatalk/afpd.conf:
   file.managed:
     - source: salt://netatalk/files/etc/afpd.conf
+    - template: jinja
