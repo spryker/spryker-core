@@ -57,6 +57,7 @@ base:
     - mysql-server
     - elasticsearch
     - development
+    - netatalk
 # pound (ssl),
 
   # newrelic for server monitoring - prod only

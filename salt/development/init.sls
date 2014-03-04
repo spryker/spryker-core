@@ -7,7 +7,10 @@ git-clone:
   file.symlink:
     - target: /data/shop/development/shared/config_local.php
     - force: true
+
+/data/shop/development/current/config/Shared/config_local-permission:
   file.managed:
+    - name: /data/shop/development/current/config/Shared/config_local.php
     - user: vagrant
     - group: www-data
     - mode: 664
@@ -25,7 +28,10 @@ git-clone:
   file.symlink:
     - target: /data/shop/development/shared/config_local_{{ store }}.php
     - force: true
+
+/data/shop/development/current/config/Shared/config_local_{{ store }}-permission:
   file.managed:
+    - name: /data/shop/development/current/config/Shared/config_local_{{ store }}.php
     - user: vagrant
     - group: www-data
     - mode: 664
