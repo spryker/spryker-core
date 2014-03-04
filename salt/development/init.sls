@@ -7,6 +7,7 @@ git-clone:
   file.symlink:
     - target: /data/shop/development/shared/config_local.php
     - force: true
+  file.managed:
     - user: vagrant
     - group: www-data
     - mode: 664
@@ -24,6 +25,7 @@ git-clone:
   file.symlink:
     - target: /data/shop/development/shared/config_local_{{ store }}.php
     - force: true
+  file.managed:
     - user: vagrant
     - group: www-data
     - mode: 664
