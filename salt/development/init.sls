@@ -4,6 +4,9 @@
     - user: vagrant
     - group: vagrant
     - mode: 400
+  cmd.run:
+    - name: ssh-keyscan -H {{ pillar.deploy.git_hostname }} >> /home/vagrant/.ssh/known_hosts
+    - created: /home/vagrant/.ssh/id_rsa
 
 # Install Oh-My-Zsh
 oh-my-zsh:
@@ -17,3 +20,8 @@ oh-my-zsh:
     - user: vagrant
     - group: vagrant
     - mode: 600
+
+# install grunt
+grunt-install:
+  cmd.run:
+    - name: npm install -g grunt-cli
