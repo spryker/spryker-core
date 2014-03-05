@@ -56,8 +56,8 @@ base:
     - match: grain
     - mysql-server
     - elasticsearch
-    - development
-    - netatalk
+#    - development
+#    - netatalk
 # pound (ssl),
 
   # newrelic for server monitoring - prod only
