@@ -19,3 +19,8 @@ user:
     fullname: Fabian Wesner
     ssh_key: |
       ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClukGZpIrY3sQM2n/alRzuYoaUwiomE1//7UWDQNNQQQh7dw0q28YtY3wkcjvep1Jq8gS6zBwgGIQO0EOMyoF5wgodg0D4kBVvkjxGBw92Ia+KMhFNo0LHc1rz2Qh38RAGKzP4dolbGQ1HeyC8KcKe0cuzO/gk36v5/2JPchqovAZLYYJytW4tLvPHm3r4x+OMytwYxxCPf4ohtjuOOKUuoFf19V/v9z0RAphZwPuPYWskiHbDx+nM/biKHQIQEa0oYKyprGM+YEUEam4BSJ8jdoF9amvyLSaSl06Aic6HN5fiARbcU2jVqa55qL/Aw7f9FEKh0T60Ec5ZZvlGH0T5 fabian.wesner@project-a.com
+
+  marco.rossdeutscher:
+    fullname: Marco Rossdeutscher
+    ssh_key: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQwkNp9aTlUOjWIrb9Lc6ewj63gPM1o/WWi/nk0f8ZflEb/CKuwf3NedELLZry5bw225JISAMcBzyPUEB1RasPSJ926ezaNgN/8N1OUYAXNvhmEIsm8BIVdV4idJFqf9Y9gaByItNbQ+ZUJzIHN+7hKsZLQABMmOKc4g+bA5ZWHfAk4yJaoNbkgG12Iq+g3KQLWXZo9M7xsdC2c0sHNjSQKvEiRLIDHvKOw5Wrh8o8ObgtYMQQeYTTQ4vGeQINW4woJXtR6XUkl7rK6+NV2qqSwU64zGAnwuhI2P8oZxDsrEiHqRy6VjYtXm6gcZ8KoUmhzUMBdhWf2eULBUXXhBfj marcorossdeutscher@MacBook-Project-A.local
