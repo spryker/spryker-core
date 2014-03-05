@@ -56,7 +56,7 @@ base:
     - match: grain
     - mysql-server
     - elasticsearch
-#    - development
+    - development
 #    - netatalk
 # pound (ssl),
 
