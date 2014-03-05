@@ -3,7 +3,7 @@
 ###############################################################################
 
 [mysqld]
-log_bin                        = /data/mysql/logs/binlogs
+# log_bin                        = /data/mysql/logs/binlogs
 expire_logs_days               = 3
 sync_binlog                    = 1
 max_binlog_size                = 512M
