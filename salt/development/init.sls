@@ -25,3 +25,8 @@ oh-my-zsh:
 grunt-install:
   cmd.run:
     - name: npm install -g grunt-cli
+
+# restart nginx
+restart-nginx:
+  cmd.run:
+    - name: /etc/init.d/nginx restart
