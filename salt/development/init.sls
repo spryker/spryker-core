@@ -30,3 +30,7 @@ grunt-install:
 restart-nginx:
   cmd.run:
     - name: /etc/init.d/nginx restart
+
+/etc/resolv.conf:
+  file.managed:
+    - source: salt://development/files/etc/resolv.conf
