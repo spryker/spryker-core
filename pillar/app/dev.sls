@@ -14,7 +14,7 @@ environments:
         username: development
         password: mate20mg
     static:
-      hostname: static-development.project-boss.net
+      hostname: static-development.project-yz.com
     tomcat:
       port_suffix: '0007'
       min_heap_size: 128m
@@ -46,13 +46,13 @@ environments:
         yves:
           port: 10000
           hostnames:
-            - www-development.project-boss.net
+            - www-development.project-yz.com
         zed:
           port: 10001
-          hostname: zed-development.project-boss.net
+          hostname: zed-development.project-yz.com
           htpasswd_file:
         dwh:
-          hostname: dwh.project-boss.net
+          hostname: dwh.project-yz.com
 
   testing:
     database:
@@ -61,7 +61,7 @@ environments:
         username: testing
         password: mate20mg
     static:
-      hostname: static-testing.project-boss.net
+      hostname: static-testing.project-yz.com
     tomcat:
       port_suffix: '1007'
       min_heap_size: 128m
@@ -93,13 +93,13 @@ environments:
         yves:
           port: 11000
           hostnames:
-            - www-development.project-boss.net
+            - www-development.project-yz.com
         zed:
           port: 11001
-          hostname: zed-development.project-boss.net
+          hostname: zed-development.project-yz.com
           htpasswd_file:
         dwh:
-          hostname: dwh.project-boss.net
+          hostname: dwh.project-yz.com
 
 # The key below is used for deployment - from deployment server user root must be able to log in to all other
 # servers as user root.

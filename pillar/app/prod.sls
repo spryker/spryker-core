@@ -51,13 +51,13 @@ environments:
         yves:
           port: 15000
           hostnames:
-            - www-production.project-boss.net
+            - www-production.project-yz.com
         zed:
           port: 15001
-          hostname: zed-production.project-boss.net
+          hostname: zed-production.project-yz.com
 #          htpasswd_file: /etc/nginx/htpasswd-zed
         dwh:
-          hostname: dwh-production.project-boss.net
+          hostname: dwh-production.project-yz.com
   staging:
     database:
       zed:
@@ -97,14 +97,14 @@ environments:
         yves:
           port: 13000
           hostnames:
-            - www-staging.project-boss.net
+            - www-staging.project-yz.com
           htpasswd_file: /etc/nginx/htpasswd-staging
         zed:
           port: 13001
-          hostname: zed-staging.project-boss.net
+          hostname: zed-staging.project-yz.com
           htpasswd_file: /etc/nginx/htpasswd-staging
         dwh:
-          hostname: dwh-staging.project-boss.net
+          hostname: dwh-staging.project-yz.com
 
 
 # The key below is used for deployment - from deployment server user root must be able to log in to all other

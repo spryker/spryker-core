@@ -8,7 +8,7 @@
 # Settings
 RACKSPACE_API_USERNAME="fabianwesner"
 RACKSPACE_API_KEY="14d002abd595109f2f383b8287098a00"
-DOMAIN_NAME="project-boss.net"
+DOMAIN_NAME="project-yz.com"
 RACKSPACE_REGION="LON"
 RACKSPACE_API_URL="https://lon.identity.api.rackspacecloud.com/v2.0/tokens"
 RACKSPACE_PROJECT_NET_UUID="37d4cda3-fe86-4231-b69a-7a5401e7c96d"
