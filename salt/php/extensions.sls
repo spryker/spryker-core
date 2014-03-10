@@ -50,6 +50,7 @@ zendopcache:
 /etc/php5/conf.d/opcache.ini:
   file.managed:
     - source: salt://php/files/opcache.ini
+    - template: jinja
     - user: root
     - group: root
     - mode: 644
