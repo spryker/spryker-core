@@ -2,6 +2,7 @@ base:
   '*':
     - app
     - couchbase
+    - postfix
 
   'deployment:prod':
     - match: grain
