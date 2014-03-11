@@ -6,7 +6,7 @@ deploy:
 {%- if 'dev' in grains.roles %}
 solr:
   version: 4.6.1
-  source: http://vagrant:mate20mg@salt.project-yz.com/solr/4.6.1/solr-4.6.1.tgz
+  source: "http://vagrant:mate20mg@salt.project-yz.com/solr/4.6.1/solr-4.6.1.tgz"
 {%- else -%}
 solr:
   version: 4.6.1
@@ -16,7 +16,7 @@ solr:
 {%- if 'dev' in grains.roles %}
 jenkins:
   version: 1.532.2
-  source: http://vagrant:mate20mg@salt.project-yz.com/jenkins/war-stable/1.532.2/jenkins.war
+  source: "http://vagrant:mate20mg@salt.project-yz.com/jenkins/war-stable/1.532.2/jenkins.war"
 {%- else -%}
 jenkins:
   version: 1.532.2
