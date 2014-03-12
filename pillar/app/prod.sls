@@ -4,7 +4,7 @@ network:
 
 newrelic:
   license_key: 769f3d671612d86ce2a72fafe14a65103f43818f
-  api_key: 
+  api_key: 0710865a297806b3417533d11ec95978be35aa43f43818f
   appname: Demo Shop
 
 solr:
