@@ -93,10 +93,10 @@ environments:
         yves:
           port: 11000
           hostnames:
-            - www-development.project-yz.com
+            - www-testing.project-yz.com
         zed:
           port: 11001
-          hostname: zed-development.project-yz.com
+          hostname: zed-testing.project-yz.com
           htpasswd_file:
         dwh:
           hostname: dwh.project-yz.com
