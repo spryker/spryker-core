@@ -8,6 +8,12 @@
     - name: ssh-keyscan -H {{ pillar.deploy.git_hostname }} >> /home/vagrant/.ssh/known_hosts
     - created: /home/vagrant/.ssh/id_rsa
 
+/home/vagrant/.ssh/known_hosts:
+  file.managed:
+    - user: vagrant
+    - group: vagrant
+    - mode: 644
+
 # Install Oh-My-Zsh
 oh-my-zsh:
   cmd.run:
