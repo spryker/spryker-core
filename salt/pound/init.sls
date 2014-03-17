@@ -6,7 +6,7 @@ pound:
     - require:
       - pkg: pound
     - watch:
-      - file: /etc/pound.conf
+      - file: /etc/pound/pound.conf
 
 /etc/pound/pound.conf:
   file.managed:
