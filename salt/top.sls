@@ -57,6 +57,7 @@ base:
     - mysql-server
     - elasticsearch
     - development
+    - pound
 
   # newrelic for server monitoring - prod only
   'deployment:prod':

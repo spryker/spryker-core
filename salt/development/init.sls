@@ -40,21 +40,3 @@ restart-nginx:
 /etc/resolv.conf:
   file.managed:
     - source: salt://development/files/etc/resolv.conf
-
-pound:
-  pkg.installed:
-    - name: pound
-  service:
-    - running
-    - require:
-      - pkg: pound
-    - watch:
-      - file: /etc/pound.conf
-
-#/etc/pound/nginx.conf:
-#  file.managed:
-#    - source: salt://development/files/etc/pound.conf
-
-#/etc/default/pound:
-#  file.managed:
-#    - source: salt://development/files/etc/default/pound
