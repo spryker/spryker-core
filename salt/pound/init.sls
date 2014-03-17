@@ -15,3 +15,7 @@ pound:
 /etc/default/pound:
   file.managed:
     - source: salt://pound/files/etc/default/pound
+
+/etc/pound/certs/star_migusta_de:
+  file.managed:
+    - source: salt://pound/files/etc/pound/certs/star_migusta_de
