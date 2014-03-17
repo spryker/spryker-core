@@ -8,9 +8,9 @@ pound:
     - watch:
       - file: /etc/pound.conf
 
-/etc/pound.conf:
+/etc/pound/pound.conf:
   file.managed:
-    - source: salt://pound/files/etc/pound.conf
+    - source: salt://pound/files/etc/pound/pound.conf
 
 /etc/default/pound:
   file.managed:
