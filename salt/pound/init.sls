@@ -6,11 +6,11 @@ pound:
     - require:
       - pkg: pound
     - watch:
-      - file: /etc/pound/pound.conf
+      - file: /etc/pound/pound.cfg
 
-/etc/pound/pound.conf:
+/etc/pound/pound.cfg:
   file.managed:
-    - source: salt://pound/files/etc/pound/pound.conf
+    - source: salt://pound/files/etc/pound/pound.cfg
 
 /etc/default/pound:
   file.managed:
