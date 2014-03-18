@@ -11,15 +11,15 @@ logstash:
 
 /etc/default/logstash:
   file.managed:
-    - source: salt://logstash/files/etc/default/logstash
+    - source: salt://base/logstash/files/etc/default/logstash
     - template: jinja
 
 /etc/default/logstash-web:
   file.managed:
-    - source: salt://logstash/files/etc/default/logstash-web
+    - source: salt://base/logstash/files/etc/default/logstash-web
     - template: jinja
 
 /etc/logstash/conf.d/lumberjack.conf:
   file.managed:
-    - source: salt://logstash/files/etc/logstash/conf.d/lumberjack.conf
+    - source: salt://base/logstash/files/etc/logstash/conf.d/lumberjack.conf
     - template: jinja

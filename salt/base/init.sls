@@ -52,12 +52,12 @@ elasticsearch-repo:
     - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
 
 include:
-  - .minion
-  - .sudoers
-  - .vim
-  - .time
-  - .firewall
-  - .sysctl
+  - ./system/minion
+  - ./system/sudoers
+  - ./system/vim
+  - ./system/time
+  - ./system/firewall
+  - ./system/sysctl
 
 # Preferences (editors, skel, .bashrc, etc)
 # sysctl # Max number of sockets net.core.somaxconn = 4096

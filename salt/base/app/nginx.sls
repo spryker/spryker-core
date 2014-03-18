@@ -5,5 +5,5 @@
 {% if 'web' in grains.roles %}
 /etc/nginx/yzed:
   file.recurse:
-    - source: salt://app/files/nginx/yzed
+    - source: salt://base/app/files/nginx/yzed
 {% endif %}

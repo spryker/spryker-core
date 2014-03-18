@@ -1,3 +1,20 @@
+deploy:
+  git_url: git@codebasehq.com:project-a/core/pyz.git
+  git_hostname: codebasehq.com
+
+solr:
+  version: 4.6.1
+  source: "http://vagrant:mate20mg@salt.project-yz.com/solr/4.6.1/solr-4.6.1.tgz"
+
+jenkins:
+  version: 1.532.2
+  source: "http://vagrant:mate20mg@salt.project-yz.com/jenkins/war-stable/1.532.2/jenkins.war"
+
+stores:
+  DE:
+    locale: de_DE
+    appdomain: '00'
+
 network:
   loadbalancers_interface: lo
   project_interface: lo
@@ -137,4 +154,3 @@ server_env:
       nK6pZcl5Cm0Exn6PRsiuhuqgZ7w2OcV4L3wld2Ro8aNsnTthqwe2TUsW0Bjzy+tx
       D2U7XJ1kDaA8iCexqsJmUGjSJ8p2wERuolPo0cGEEZq9c3g84FC6
       -----END RSA PRIVATE KEY-----
-

@@ -4,20 +4,25 @@ base:
     - couchbase
     - postfix
 
-  'deployment:prod':
-    - match: grain
-    - app.prod
-    - couchbase.prod
-    - user.prod
+prod:
+  '*':
+    - app
+    - couchbase
+    - user
+    - postfix
 
-  'deployment:dev':
-    - match: grain
-    - app.dev
-    - user.dev
-
-  'roles:dev':
-    - match: grain
+dev:
+  '*':
+    - app
+    - couchbase
+    - user
     - mysql-server
     - elasticsearch
-    - app.dev
-    - user.dev
+
+qa:
+  '*':
+    - app
+    - couchbase
+    - user
+    - mysql-server
+    - elasticsearch

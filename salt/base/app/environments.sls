@@ -44,7 +44,7 @@
 # Application config
 /data/shop/{{ environment }}/shared/config_local.php:
   file.managed:
-    - source: salt://app/files/config/config_local.php
+    - source: salt://base/app/files/config/config_local.php
     - template: jinja
     - user: www-data
     - group: www-data
@@ -59,7 +59,7 @@
 # FPM config
 /etc/php5/fpm/pool.d/{{ environment }}-zed.conf:
   file.managed:
-    - source: salt://app/files/fpm/zed.conf
+    - source: salt://base/app/files/fpm/zed.conf
     - template: jinja
     - user: root
     - group: root
@@ -71,7 +71,7 @@
 
 /etc/php5/fpm/pool.d/{{ environment }}-yves.conf:
   file.managed:
-    - source: salt://app/files/fpm/yves.conf
+    - source: salt://base/app/files/fpm/yves.conf
     - template: jinja
     - user: root
     - group: root
@@ -85,7 +85,7 @@
 # NginX configs
 /etc/nginx/conf.d/{{ environment }}-backend.conf:
   file.managed:
-    - source: salt://app/files/nginx/conf.d/backend.conf
+    - source: salt://base/app/files/nginx/conf.d/backend.conf
     - template: jinja
     - user: root
     - group: root
