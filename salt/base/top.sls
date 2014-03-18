@@ -51,14 +51,7 @@ base:
     - java
 #    - elasticsearch
 
-  # dev tools
-  'roles:dev':
-    - match: grain
-    - mysql-server
-    - elasticsearch
-    - development
-    - pound
-
+prod:
   # newrelic for server monitoring - prod only
   'deployment:prod':
     - match: grain
@@ -74,3 +67,12 @@ base:
     - match: compound
     - newrelic.php
 
+dev:
+
+  # dev tools
+  'roles:dev':
+    - match: grain
+    - mysql-server
+    - elasticsearch
+    - development
+    - pound
