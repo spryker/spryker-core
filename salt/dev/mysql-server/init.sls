@@ -12,15 +12,15 @@ mysql-server:
 
 #/etc/mysql/my.cnf:
 #  file.managed:
-#    - source: salt://mysql-server/files/etc/mysql/my.cnf
+#    - source: salt://dev/mysql-server/files/etc/mysql/my.cnf
 
 #/etc/mysql/conf.d/binlog.cnf:
 #  file.managed:
-#    - source: salt://mysql-server/files/etc/mysql/conf.d/binlog.cnf
+#    - source: salt://dev/mysql-server/files/etc/mysql/conf.d/binlog.cnf
 
 /etc/mysql/conf.d/strict.cnf:
   file.managed:
-    - source: salt://mysql-server/files/etc/mysql/conf.d/strict.cnf
+    - source: salt://dev/mysql-server/files/etc/mysql/conf.d/strict.cnf
 
 python-mysqldb:
   pkg.installed
