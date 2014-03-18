@@ -5,7 +5,7 @@
 base:
   # apply to all roles
   '*':
-    - base
+    - system
     - user
     - logstash
 
