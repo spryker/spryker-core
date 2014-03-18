@@ -20,7 +20,7 @@ def multi_ssh_exec(servers, command, options={})
   end
 end
 
-## Execute command (parralel) on ssh hosts, throw exception if failed
+## Execute command (parralel) on ssh hosts. Throw exception any command or host failed
 def multi_ssh_exec!(servers, command)
   if !multi_ssh_exec(servers, command)
     puts red "Command failed on one or more servers. Aborting."
@@ -39,6 +39,7 @@ def multi_exec(commands)
   return true
 end
 
+# Execute commands, locally, in parallel. Throw exception if any of them failed.
 def multi_exec!(commands)
   if !multi_exec(commands)
     puts red "Command failed. Aborting."
@@ -47,7 +48,7 @@ def multi_exec!(commands)
   return true
 end
 
-## Parse commandline parameters
+# Parser for commandline parameters
 def parse_commandline_parameters
   $parameters={}
   $opt_parser = OptionParser.new do |opt|
@@ -83,6 +84,7 @@ def parse_commandline_parameters
       exit
     end
 
+    # Parser for custom options
     $project_options.select {|o| o.has_key? :cmdline }.each do |option|
       option[:cli_options] = option[:options] unless option.has_key? :cli_options
       option[:value] = option[:cli_options][1] || ''
@@ -94,41 +96,39 @@ def parse_commandline_parameters
   $opt_parser.parse!
 end
 
-## Execute SVN with given args, passing credentials from configfile
+# Execute SVN with given args, passing credentials from configfile
 def svn(args)
   return `svn --username=#{$svn_user} --password=#{$svn_password} --no-auth-cache --non-interactive --trust-server-cert #{args}`
 end
 
+# Execute SVNSYNC with given args, passing credentials from configfile
 def svnsync(args)
   return `svnsync --username=#{$svn_user} --password=#{$svn_password} --no-auth-cache --non-interactive --trust-server-cert #{args}`
 end
 
+# SVN helpers
 def svn_get_revision(url)
   return (svn "info #{url}").map(&:split).select{ |i| i[0]=="Revision:"}.flatten[1]
 end
 
-## Execute Git commands
+# GIT helpers
 def git_list_tags
   return `git --git-dir #{$git_path}/.git tag -l | sed -e 's/\*//g' -e 's/^ *//g'`
 end
-
 def git_list_branches
   return `git --git-dir #{$git_path}/.git branch -r | grep -v HEAD | sed -e 's/^[ ]*\//g' -e 's/origin[/]//g'`
 end
-
 def git_pull
   return `cd #{$git_path}/ && git checkout -q master && git pull --all --tags -q --force`
 end
-
 def git_prune
   return `git --git-dir=#{$git_path}/.git remote prune origin`
 end
-
 def git_get_revision
   return `git --git-dir=#{$git_path}/.git rev-parse HEAD`.chomp
 end
 
-## Show menu with all items from argument array, return choosen array element
+# Show menu with all items from argument array, return choosen array element
 def choose_item_from_array(prompt, items)
   puts ""
   choose do |menu|
@@ -145,16 +145,15 @@ def ask_project_options
   end
 end
 
-## Return string based on current time for directory namings
+# Return string with current time, for directory namings
 def current_time_dirname
   return Time.new().strftime('%Y%m%d-%H%M%S')
 end
 
-# Create directory and change ownership to wwww-data
+# Create directory and change ownership to www-data
 def mkdir(dir)
   system "install -d -o #{$www_user} -g #{$www_group} #{dir}"
 end
-
 def mkdir_if_missing(dir)
   if !File.directory? dir
     puts "### Creating directory: #{dir}"
@@ -172,6 +171,7 @@ def colorize(text, color_code)
   "#{color_code}#{text}\033[0m"
 end
 
+# Helpers for colorized output
 def red(text); colorize(text, "\033[31m"); end
 def yellow(text); colorize(text, "\033[33m"); end
 def green(text); colorize(text, "\033[32m"); end

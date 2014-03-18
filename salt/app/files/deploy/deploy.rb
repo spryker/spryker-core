@@ -12,7 +12,7 @@
 ###
 ### Configuration parsing - global variables
 ###
-
+(puts "\033[31m!!! FATAL: You must deploy as user root:\033[0m\nsudo #{$0}"; exit 1) if Process.euid
 if File.exists? "config.rb"; path_prefix="./"; else path_prefix="/etc/deploy/"; end
 
 require path_prefix+'config.rb'
@@ -113,7 +113,7 @@ if $scm_type == "svn"
 end
 
 ###
-### Git 
+### GIT
 ###
 
 if $scm_type == "git" # If $scm_type is declared in config.rb as "git"
@@ -180,12 +180,6 @@ if $scm_type == "git" # If $scm_type is declared in config.rb as "git"
     put_status "Exporting source code from local Git repository"
     system "rsync -a --delete --exclude=.git #{$git_path} #{$deploy_source_dir}"
   end
-  
-  # Todo:
-  # - print git revision + branch to rev.txt and skype chat
-  
-  # git --git-dir=/data/deploy/git/.git show v5.0.0 | head -n1
-  # git --git-dir=/data/deploy/git/.git show v5.0.0 | head -n1 | cut -d ' ' -f2
 end
 
 ###
@@ -264,8 +258,22 @@ def create_rev_txt
   end
 end
 
+# Get application code from scm (git/svn) repository
+def get_application_code
+  case $scm_type
+    when 'svn' then
+      export_source_from_svn ($svn_host + $scm_path)
+      $revision = svn_get_revision($svn_host + $scm_path)
+      $changelog = get_scm_changelog($svn_host + $scm_path)
+    when 'git' then
+      export_source_from_git $scm_path
+      $revision = git_get_revision
+  end
+end
+
+# Build application code
 def prepare_code
-  put_status "Preparing application code and symlinks..."
+  put_status "Preparing application code"
   old_dir = Dir.getwd
   Dir.chdir $deploy_source_dir
   if File.exists? "deploy/prepare_code"
@@ -284,14 +292,13 @@ def prepare_code
 end
 
 def check_configuration
-  put_status "Checking hosts ..."
+  put_status "Checking hosts"
   hosts = $app_hosts || $zed_hosts
   result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/check_configuration\" ")
 end
 
 def configure_hosts
-  put_status "Configuring hosts...."
-
+  put_status "Configuring hosts"
 
   # Version 1.0 uses "configure_host" action to setup solr as well 
   hosts = $app_hosts || $zed_hosts
@@ -362,13 +369,13 @@ end
 
 def reindex_full
   if ($use_solr) 
-    put_status "Reindexing solr..."
+    put_status "Reindexing solr"
     hosts = $jobs_hosts || [$solr_host]
     host = hosts[0]
     result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f deploy/reindex_solr ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/reindex_solr\" ")
   end
 
-  put_status "Reindexing KV-store..."
+  put_status "Reindexing KV-store"
   hosts = $jobs_hosts || [$tools_host]
   host = hosts[0]
   if File.exists? "deploy/reindex_memcache"
@@ -516,22 +523,12 @@ def perform_deploy
   tarfile = "#{$deploy_tmp_dir}/#{$environment}.tar"
   $lockfile = $deploy_dir + '/.lock.' + $environment
 
+  # Deployment actions
   $scm_path = ask_scm_dir
   create_lockfile
   perform_full_import = ask_reindex
   ask_project_options
-
-  if $scm_type == "svn"
-    export_source_from_svn ($svn_host + $scm_path)
-    $revision = svn_get_revision($svn_host + $scm_path)
-    $changelog = get_scm_changelog($svn_host + $scm_path)
-  end
-  if $scm_type == "git"
-    export_source_from_git $scm_path
-    $revision = git_get_revision
-    # TODO: $changelog=
-  end
-
+  get_application_code  
   create_deploy_vars_file
   create_deploy_stores_file
   create_rev_txt

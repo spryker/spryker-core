@@ -9,8 +9,7 @@
     - source: salt://app/files/deploy/deploy.rb
     - user: root
     - group: root
-    - mode: 700
-
+    - mode: 755
 
 /etc/deploy/functions.rb:
   file.managed:
@@ -32,7 +31,7 @@
     - source: salt://app/files/deploy/ssh_wrapper.sh
     - user: root
     - group: root
-    - mode: 755
+    - mode: 700
 
 /etc/deploy/deploy.key:
   file.managed:
