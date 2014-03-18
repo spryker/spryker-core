@@ -2,4 +2,4 @@
 
 /etc/cron.d:
   file.recurse:
-    - source: salt://base/app/files/cron.d
+    - source: salt://app/files/cron.d
