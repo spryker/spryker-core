@@ -1,9 +1,3 @@
-base:
-  '*':
-    - app
-    - couchbase
-    - postfix
-
 prod:
   '*':
     - app
