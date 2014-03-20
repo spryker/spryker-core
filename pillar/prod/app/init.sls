@@ -5,6 +5,7 @@ deploy:
 solr:
   version: 4.6.1
   source: http://archive.apache.org/dist/lucene/solr/4.6.1/solr-4.6.1.tgz
+
 jenkins:
   version: 1.532.2
   source: http://mirrors.jenkins-ci.org/war-stable/1.532.2/jenkins.war
@@ -17,10 +18,6 @@ newrelic:
   license_key: 769f3d671612d86ce2a72fafe14a65103f43818f
   api_key: 0710865a297806b3417533d11ec95978be35aa43f43818f
   appname: Demo Shop
-
-solr:
-  version: 4.6.1
-  source: http://apache.mirrors.pair.com/lucene/solr/4.6.1/solr-4.6.1.tgz
 
 environments:
   production:
