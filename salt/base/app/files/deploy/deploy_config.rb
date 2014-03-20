@@ -1,11 +1,5 @@
-{%- set netif = pillar.network.project_interface %}
-{%- set app_servers = salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
-{%- set web_servers = salt['mine.get']('roles:web', 'network.interfaces', expr_form = 'grain').items() %}
-{%- set solr_servers = salt['mine.get']('roles:solr', 'network.interfaces', expr_form = 'grain').items() %}
-{%- set solr_masters = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items() %}
-{%- set cron_servers = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
-{%- set dwh_servers = salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items() %}
-{%- set has_dwh = (dwh_servers|count > 0) -%}
+{% from 'settings/init.sls' import settings with context %}
+{%- set has_dwh = (settings.hosts.dwh|count > 0) -%}
 # This file is maintained by salt
 # deploy_config.rb
 
@@ -63,31 +57,31 @@ $use_dwh = {{ has_dwh|lower }}
 
 # Hosts that have the application code
 $app_hosts = [
-{% for hostname, network_settings in app_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}",
+{% for host in settings.hosts.app %}  "{{ host }}",
 {% endfor %}
 ]
 
 # Hosts that run web server
 $web_hosts = [
-{% for hostname, network_settings in web_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}",
+{% for host in settings.hosts.web %}  "{{ host }}",
 {% endfor %}
 ]
 
 # Host(s) that run jobs
 $jobs_hosts = [
-{% for hostname, network_settings in cron_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}",
+{% for host in settings.hosts.job %}  "{{ host }}",
 {% endfor %}
 ]
 
 # Host(s) that run solr
 $solr_hosts = [
-{% for hostname, network_settings in solr_servers %}  "{{ network_settings[netif]['inet'][0]['address'] }}", 
+{% for host in settings.hosts.solr %}  "{{ host }}", 
 {% endfor %}
 ]
 
 # Host that runs the dwh
 {%- if has_dwh %}
-$dwh_host = "{{ dwh_servers[0][netif]['inet'][0]['address'] }}"
+$dwh_host = "{{ settings.hosts.dwh|first }}"
 {% endif %}
 
 # Deploy notifications (API key - it's NOT same as Newrelic License Key!)

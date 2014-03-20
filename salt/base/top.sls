@@ -57,6 +57,7 @@ prod:
     - system
     - user
     - logstash
+    - newrelic
 
   # couchbase
   'roles:couchbase':
@@ -100,19 +101,12 @@ prod:
     - java
   # - elasticsearch
 
-  # newrelic for server monitoring - prod only
-  'deployment:prod':
+  # newrelic for app monitoring - web/job servers
+  'roles:web':
     - match: grain
-    - newrelic
-
-  # newrelic for app monitoring - prod only, web servers
-  'G@deployment:prod and G@roles:web':
-    - match: compound
     - newrelic.php
-
-  # newrelic for app monitoring - prod only, job servers
-  'G@deployment:prod and G@roles:cronjobs':
-    - match: compound
+  'roles:cronjobs':
+    - match: grain
     - newrelic.php
 
 dev:

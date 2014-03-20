@@ -1,5 +1,4 @@
-{%- set netif = pillar.network.project_interface -%}
-{%- set solr_master = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address -%}
+{% from 'settings/init.sls' import settings with context %}
 {%- for environment, environment_details in pillar.environments.items() %}
 
 /data/shop/{{ environment }}/shared/data/common/solr:
@@ -21,7 +20,7 @@
     - context:
       environment: {{ environment }}
       environment_details: {{ environment_details }}
-      solr_master: {{ solr_master }}
+      solr_master: {{ settings.host.solr_master }}
 
 /data/shop/{{ environment }}/shared/data/common/solr/solr.xml:
   file.managed:

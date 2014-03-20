@@ -1,8 +1,4 @@
-{%- set netif = pillar.network.project_interface -%}
-{%- set solr_master = salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address -%}
-{%- set cron_master = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address -%}
-{%- set queue_host = salt['mine.get']('roles:queue', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address -%}
-{%- set couchbase_servers = salt['mine.get']('roles:couchbase', 'network.interfaces', expr_form = 'grain').items() -%}
+{% from 'settings/init.sls' import settings with context %}
 <?php
 /**
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
@@ -16,7 +12,7 @@ $config['storage']['solr']['defaultEndpointSetup'] = [
 
 /** Solr - master - used for updates */
 $config['storage']['solr']['masterEndpointSetup'] = [
-    'host' => '{{ solr_master }}',
+    'host' => '{{ settings.host.solr_master }}',
     'port' => 1{{ environment_details.tomcat.port_suffix }},
 ];
 
@@ -29,13 +25,13 @@ $config['storage']['solr']['data_dir'] = '/data/shop/{{ environment }}/shared/da
 
 /** Jenkins - job manager */
 $config['jenkins'] = array(
-    'base_url' => 'http://{{ cron_master }}:1{{ environment_details.tomcat.port_suffix }}/jenkins',
+    'base_url' => 'http://{{ settings.host.cron_master }}:1{{ environment_details.tomcat.port_suffix }}/jenkins',
     'notify_email' => '',
 );
 
 /** ActiveMQ - message queue */
 $config['activemq'] = array (
-  array('host' => '{{ queue_host }}', 'port' => '{{ environment_details.queue.stomp_port }}')
+  array('host' => '{{ settings.host.queue }}', 'port' => '{{ environment_details.queue.stomp_port }}')
 );
 
 /** Amazon AWS api keys - not used for rackspace projects */

@@ -1,6 +1,4 @@
-{%- set netif = pillar.network.project_interface -%}
-{%- set couchbase_servers = salt['mine.get']('roles:couchbase', 'network.interfaces', expr_form = 'grain').items() -%}
-<?php
+{% from 'settings/init.sls' import settings with context %}<?php
 /**
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
  *
@@ -29,9 +27,9 @@ $config['storage']['kv'] = [
     'source' => 'couchbase',
     'couchbase' => [
         'hosts' => [
-{%- for hostname, network_settings in couchbase_servers %}
+{%- for host in settings.hosts.couchbase %}
             [
-                'host' => '{{ network_settings[netif]['inet'][0]['address'] }}',
+                'host' => '{{ host }}',
                 'port' => '{{ pillar.couchbase.port }}',
             ],
 {% endfor %}
@@ -55,8 +53,8 @@ $config['host'] = $config['host_ssl'] = [
 
 /** Session storage */
 $config['zed']['session']['save_handler'] = 'couchbase';
-$config['zed']['session']['save_path'] = '{%- for hostname, network_settings in couchbase_servers -%}
-{{store}}_{{environment}}_sessions:{{ pillar.couchbase.password }}@{{ network_settings[netif]['inet'][0]['address'] }}:{{ pillar.couchbase.port }}{% if not loop.last %};{% endif -%}{% endfor %}';
+$config['zed']['session']['save_path'] = '{%- for host in settings.hosts.couchbase -%}
+{{store}}_{{environment}}_sessions:{{ pillar.couchbase.password }}@{{ host }}:{{ pillar.couchbase.port }}{% if not loop.last %};{% endif -%}{% endfor %}';
 
 $config['yves']['session'] = $config['zed']['session'];
 

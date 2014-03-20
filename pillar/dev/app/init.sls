@@ -19,10 +19,6 @@ network:
   loadbalancers_interface: lo
   project_interface: lo
 
-newrelic:
-  license_key:
-  api_key:
-
 environments:
   development:
     database:
