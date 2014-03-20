@@ -9,6 +9,6 @@ vim:
 
 /etc/vim/vimrc.local:
   file.managed:
-    - source: salt://files/vimrc
+    - source: salt://system/files/vimrc
     - require:
       - pkg: vim
