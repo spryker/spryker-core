@@ -6,18 +6,18 @@
 
 /** Database: ZED operations */
 $config['db'] = [
-    'username' => '{{ environment_details.database.zed.username }}',
-    'password' => '{{ environment_details.database.zed.password }}',
-    'database' => '{{ store }}_{{ environment}}_zed',
-    'host'     => '{{ environment_details.database.zed.hostname }}',
+    'username' => '{{ environment_details.stores[store].zed.database.username }}',
+    'password' => '{{ environment_details.stores[store].zed.database.password }}',
+    'database' => '{{ environment_details.stores[store].zed.database.database }}',
+    'host'     => '{{ environment_details.stores[store].zed.database.hostname }}',
 ];
 
 /** Database: ZED dump */
 $config['db_dump'] = [
-    'username' => '{{ environment_details.database.zed.username }}',
-    'password' => '{{ environment_details.database.zed.password }}',
-    'database' => '{{ store }}_{{ environment}}_dump',
-    'host'     => '{{ environment_details.database.zed.hostname }}',
+    'username' => '{{ environment_details.stores[store].zed.database.username }}',
+    'password' => '{{ environment_details.stores[store].zed.database.password }}',
+    'database' => '{{ environment_details.stores[store].zed.database.database }}',
+    'host'     => '{{ environment_details.stores[store].zed.database.hostname }}',
     'mysqldump_bin' => '/usr/bin/mysqldump',
     'mysql_bin'     => '/usr/bin/mysql',
 ];

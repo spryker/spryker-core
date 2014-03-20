@@ -1,4 +1,5 @@
-{%- for environment, environment_details in pillar.environments.items() %}
+{% from 'settings/init.sls' import settings with context %}
+{%- for environment, environment_details in settings.environments.items() %}
 {%- for store, store_details in pillar.stores.items() %}
 
 /data/shop/{{ environment }}/shared/config_local_{{ store }}.php:

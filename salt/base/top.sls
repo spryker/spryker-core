@@ -69,11 +69,13 @@ prod:
     - match: grain
     - php
     - app
+    - newrelic.php
 
   # nginx and web components
   'roles:web':
     - match: grain
     - nginx
+    - newrelic.php
 
   # jenkins to run cronjob and indexers
   'roles:cronjobs':
@@ -101,10 +103,6 @@ prod:
     - java
   # - elasticsearch
 
-  # newrelic for app monitoring - web/job servers
-  'roles:web':
-    - match: grain
-    - newrelic.php
   'roles:cronjobs':
     - match: grain
     - newrelic.php

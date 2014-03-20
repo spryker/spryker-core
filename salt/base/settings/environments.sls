@@ -31,5 +31,14 @@
     'username': environment_details.database.zed.username,
     'password': environment_details.database.zed.password }
   }) %}
+{%- do environments[environment]['stores'][store].update({
+  'dump': {
+    'database': {
+      'database': store + '_' + environment + '_dump',
+      'hostname': environment_details.database.zed.hostname,
+      'username': environment_details.database.zed.username,
+      'password': environment_details.database.zed.password }
+    }
+  }) %}
 {%- endfor %}
 {%- endfor %}
