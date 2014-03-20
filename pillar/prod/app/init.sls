@@ -19,6 +19,11 @@ newrelic:
   api_key: 0710865a297806b3417533d11ec95978be35aa43f43818f
   appname: Demo Shop
 
+stores:
+  DE:
+    locale: de_DE
+    appdomain: '00'
+
 environments:
   production:
     database:
