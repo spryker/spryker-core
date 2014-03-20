@@ -52,6 +52,54 @@ base:
 #    - elasticsearch
 
 prod:
+  # apply to all roles
+  '*':
+    - system
+    - user
+    - logstash
+
+  # couchbase
+  'roles:couchbase':
+    - match: grain
+    - couchbase
+
+  # php and application code
+  'roles:app':
+    - match: grain
+    - php
+    - app
+
+  # nginx and web components
+  'roles:web':
+    - match: grain
+    - nginx
+
+  # jenkins to run cronjob and indexers
+  'roles:cronjobs':
+    - match: grain
+    - app
+    - java
+    - tomcat
+    - jenkins
+
+  # solr
+  'roles:solr':
+    - match: grain
+    - java
+    - tomcat
+    - solr
+
+  # activemq
+  'roles:queue':
+    - match: grain
+    - java
+
+  # elasticsearch
+  'roles:elasticsearch':
+    - match: grain
+    - java
+  # - elasticsearch
+
   # newrelic for server monitoring - prod only
   'deployment:prod':
     - match: grain
