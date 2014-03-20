@@ -5,4 +5,4 @@ salt-minion:
       - file: /etc/salt/minion.d/mine.conf
   file.managed:
     - name: /etc/salt/minion.d/mine.conf
-    - source: salt://base/files/mine.conf
+    - source: salt://files/mine.conf
