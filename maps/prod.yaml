@@ -1,4 +1,4 @@
-rackspace-wheezy-2GB:
+prod-rackspace-wheezy-2GB:
   - app01.project-yz.com:
       grains:
         deployment: prod
@@ -18,7 +18,7 @@ rackspace-wheezy-2GB:
           - app
           - cronjobs
 
-rackspace-wheezy-4GB:
+prod-rackspace-wheezy-4GB:
   - data01.project-yz.com:
       grains:
         deployment: prod

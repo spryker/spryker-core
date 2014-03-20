@@ -42,9 +42,10 @@ pip -q install rackspace-novaclient salt-cloud apache_libcloud
 # Prepare cloud credentials
 mkdir -p /etc/salt/cloud.providers.d
 [ -f /etc/salt/cloud.providers.d/rackspace.conf ] || cat > /etc/salt/cloud.providers.d/rackspace.conf << EOF
-rackspace:
+prod-rackspace:
   minion:
     master: salt.${DOMAIN_NAME}
+    environment: prod
   identity_url: '${RACKSPACE_API_URL}'
   compute_name: cloudServersOpenStack
   protocol: ipv4
@@ -57,6 +58,19 @@ rackspace:
   networks:
     - project:
       - ${RACKSPACE_PROJECT_NET_UUID}
+qa-rackspace:
+  minion:
+    master: salt.${DOMAIN_NAME}
+    environment: qa
+  identity_url: '${RACKSPACE_API_URL}'
+  compute_name: cloudServersOpenStack
+  protocol: ipv4
+  compute_region: ${RACKSPACE_REGION}
+  user: ${RACKSPACE_API_USERNAME}
+  apikey: ${RACKSPACE_API_KEY}
+  provider: openstack
+  ssh_key_name: marconi
+  ssh_key_file: /root/.ssh/id_rsa
 EOF
 
 [ -f /root/nova-credentials ] || cat > /root/nova-credentials << EOF
