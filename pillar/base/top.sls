@@ -3,6 +3,7 @@ prod:
     - app
     - couchbase
     - user
+    - elasticsearch
     - postfix
     - system
 
@@ -11,13 +12,13 @@ dev:
     - app
     - couchbase
     - user
-    - mysql-server
     - elasticsearch
+    - mysql-server
 
 qa:
   '*':
     - app
     - couchbase
     - user
-    - mysql-server
     - elasticsearch
+    - mysql-server
