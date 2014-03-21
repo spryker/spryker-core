@@ -1,4 +1,5 @@
 prepare-system:
   match: '*'
   sls:
-    - system
+    - system.filesystems
+    

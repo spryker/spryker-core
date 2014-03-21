@@ -7,5 +7,5 @@ filesystems:
     mount_options: noatime,nobarrier,compress=zlib
 
 swap:
-  /data/_SWAP:
+  /SWAP:
     size: 2048
