@@ -48,11 +48,11 @@ node.name: {{ grains['host'] }}
 #
 # Allow this node to be eligible as a master node (enabled by default):
 #
-# node.master: true
+node.master: true
 #
 # Allow this node to store data (enabled by default):
 #
-# node.data: true
+node.data: true
 
 # You can exploit these settings to design advanced cluster topologies.
 #
@@ -90,7 +90,7 @@ node.name: {{ grains['host'] }}
 
 # By default, multiple nodes are allowed to start from the same installation location
 # to disable it, set the following:
-# node.max_local_storage_nodes: 1
+node.max_local_storage_nodes: 1
 
 
 #################################### Index ####################################
@@ -108,11 +108,11 @@ node.name: {{ grains['host'] }}
 
 # Set the number of shards (splits) of an index (5 by default):
 #
-# index.number_of_shards: 5
+index.number_of_shards: 6
 
 # Set the number of replicas (additional copies) of an index (1 by default):
 #
-# index.number_of_replicas: 1
+index.number_of_replicas: 1
 
 # Note, that for development on a local machine, with small indices, it usually
 # makes sense to "disable" the distributed features:
@@ -185,7 +185,7 @@ node.name: {{ grains['host'] }}
 #
 # Set this property to true to lock the memory:
 #
-# bootstrap.mlockall: true
+bootstrap.mlockall: true
 
 # Make sure that the ES_MIN_MEM and ES_MAX_MEM environment variables are set
 # to the same value, and that the machine has enough memory to allocate
@@ -213,7 +213,7 @@ node.name: {{ grains['host'] }}
 
 # Set both 'bind_host' and 'publish_host':
 #
-# network.host: 192.168.0.1
+network.host: {{ grains.ip_interfaces.eth2|first }}
 
 # Set a custom port for the node to node communication (9300 by default):
 #
@@ -256,18 +256,18 @@ node.name: {{ grains['host'] }}
 
 # Allow recovery process after N nodes in a cluster are up:
 #
-# gateway.recover_after_nodes: 1
+gateway.recover_after_nodes: {{ pillar.elasticsearch.minimum_nodes }}
 
 # Set the timeout to initiate the recovery process, once the N nodes
 # from previous setting are up (accepts time value):
 #
-# gateway.recover_after_time: 5m
+gateway.recover_after_time: 5m
 
 # Set how many nodes are expected in this cluster. Once these N nodes
 # are up (and recover_after_nodes is met), begin recovery process immediately
 # (without waiting for recover_after_time to expire):
 #
-# gateway.expected_nodes: 2
+gateway.expected_nodes: {{ pillar.elasticsearch.expected_nodes }}
 
 
 ############################# Recovery Throttling #############################
@@ -284,16 +284,16 @@ node.name: {{ grains['host'] }}
 #
 # 2. During adding/removing nodes, rebalancing, etc
 #
-# cluster.routing.allocation.node_concurrent_recoveries: 2
+cluster.routing.allocation.node_concurrent_recoveries: 2
 
 # Set to throttle throughput when recovering (eg. 100mb, by default 20mb):
 #
-# indices.recovery.max_bytes_per_sec: 20mb
+indices.recovery.max_bytes_per_sec: 200mb
 
 # Set to limit the number of open concurrent streams when
 # recovering a shard from a peer:
 #
-# indices.recovery.concurrent_streams: 5
+indices.recovery.concurrent_streams: 5
 
 
 ################################## Discovery ##################################
@@ -305,13 +305,13 @@ node.name: {{ grains['host'] }}
 # operational within the cluster. Its recommended to set it to a higher value
 # than 1 when running more than 2 nodes in the cluster.
 #
-# discovery.zen.minimum_master_nodes: 1
+discovery.zen.minimum_master_nodes: {{ pillar.elasticsearch.minimum_nodes }}
 
 # Set the time to wait for ping responses from other nodes when discovering.
 # Set this option to a higher value on a slow or congested network
 # to minimize discovery failures:
 #
-# discovery.zen.ping.timeout: 3s
+discovery.zen.ping.timeout: 5s
 
 # For more information, see
 # <http://elasticsearch.org/guide/en/elasticsearch/reference/current/modules-discovery-zen.html>
@@ -322,34 +322,13 @@ node.name: {{ grains['host'] }}
 #
 # 1. Disable multicast discovery (enabled by default):
 #
-# discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping.multicast.enabled: {{ pillar.elasticsearch.enable_multicast_discovery }}
 #
 # 2. Configure an initial list of master nodes in the cluster
 #    to perform discovery when new nodes (master or data) are started:
 #
 # discovery.zen.ping.unicast.hosts: ["host1", "host2:port"]
 
-# EC2 discovery allows to use AWS EC2 API in order to perform discovery.
-#
-# You have to install the cloud-aws plugin for enabling the EC2 discovery.
-#
-# For more information, see
-# <http://elasticsearch.org/guide/en/elasticsearch/reference/current/modules-discovery-ec2.html>
-#
-# See <http://elasticsearch.org/tutorials/elasticsearch-on-ec2/>
-# for a step-by-step tutorial.
-
-# GCE discovery allows to use Google Compute Engine API in order to perform discovery.
-#
-# You have to install the cloud-gce plugin for enabling the GCE discovery.
-#
-# For more information, see <https://github.com/elasticsearch/elasticsearch-cloud-gce>.
-
-# Azure discovery allows to use Azure API in order to perform discovery.
-#
-# You have to install the cloud-azure plugin for enabling the Azure discovery.
-#
-# For more information, see <https://github.com/elasticsearch/elasticsearch-cloud-azure>.
 
 ################################## Slow Log ##################################
 
@@ -372,10 +351,21 @@ node.name: {{ grains['host'] }}
 
 ################################## GC Logging ################################
 
-#monitor.jvm.gc.young.warn: 1000ms
-#monitor.jvm.gc.young.info: 700ms
-#monitor.jvm.gc.young.debug: 400ms
+monitor.jvm.gc.young.warn: 1000ms
+monitor.jvm.gc.young.info: 700ms
+monitor.jvm.gc.young.debug: 400ms
 
-#monitor.jvm.gc.old.warn: 10s
-#monitor.jvm.gc.old.info: 5s
-#monitor.jvm.gc.old.debug: 2s
+monitor.jvm.gc.old.warn: 10s
+monitor.jvm.gc.old.info: 5s
+monitor.jvm.gc.old.debug: 2s
+
+# Security
+action.disable_delete_all_indices: true
+
+# Field cache
+indices.cache.filter.size: 100M
+indices.fielddata.cache.size: 100M
+indices.fielddata.cache.expire: 30m
+
+# Limit IO
+indices.store.throttle.max_bytes_per_sec: 100mb
