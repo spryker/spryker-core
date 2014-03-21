@@ -31,3 +31,24 @@ mount-fs-{{ fs }}:
       - file: {{ fs_details.mount_point }}
 
 {% endfor %}
+
+{% for path, details in pillar.get('swap', {}).items() %}
+init-swap-{{ path }}:
+  cmd.run:
+    - name: dd if=/dev/zero of={{ path }} bs=1048576 count={{ details.size }} && mkswap {{ path }}
+    - unless: test -f {{ path }}
+
+fstab-for-swap-{{ path }}:
+  file.append:
+    - name: /etc/fstab
+    - text: {{ path }} none swap sw 0 0
+    - require:
+      - cmd: init-swap-{{ path }}
+
+mount-swap-{{ path }}:
+  cmd.wait:
+    - name: swapon {{ path }}
+    - watch:
+      - file: fstab-for-swap-{{ path }}
+
+{% endfor %}
