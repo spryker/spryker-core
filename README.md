@@ -1,5 +1,12 @@
 # Salt repository for Project-YZ (demo shop)
 
+##
+* 2014-03-xx | Marek Obuchowicz, Michael Kugele
+
+- Added overstate
+- Added salt environments
+- Centralized, refactored settings
+
 ## x.x.x
 *2014-03-10 | Marco Roßdeutscher*
 
