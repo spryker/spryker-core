@@ -6,7 +6,7 @@ couchbase_cluster_hosts:
   couchbase_cluster.add_host:
     - names: 
 {% for host in settings.hosts.couchbase %}
-{% if grains.ip_interfaces[netif][0] != host %}
+{% if not host in grains.ipv4 %}
         - {{ host }}
 {% endif %}
 {% endfor %}
