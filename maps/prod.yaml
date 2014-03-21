@@ -18,7 +18,7 @@ prod-rackspace-wheezy-2GB:
           - app
           - cronjobs
 
-prod-rackspace-wheezy-4GB:
+prod-rackspace-wheezy-2GB:
   - data01.project-yz.com:
       grains:
         deployment: prod
@@ -31,6 +31,15 @@ prod-rackspace-wheezy-4GB:
         solr_role: master
         couchbase_role: master
   - data02.project-yz.com:
+      grains:
+        deployment: prod
+        roles:
+          - app
+          - couchbase
+          - solr
+          - elasticsearch
+        solr_role: slave
+  - data03.project-yz.com:
       grains:
         deployment: prod
         roles:
