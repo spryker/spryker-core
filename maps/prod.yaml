@@ -17,8 +17,6 @@ prod-rackspace-wheezy-2GB:
         roles:
           - app
           - cronjobs
-
-prod-rackspace-wheezy-2GB:
   - data01.project-yz.com:
       grains:
         deployment: prod
