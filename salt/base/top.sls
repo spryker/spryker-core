@@ -101,7 +101,7 @@ prod:
   'roles:elasticsearch':
     - match: grain
     - java
-  # - elasticsearch
+    - elasticsearch
 
 dev:
   # apply to all roles
