@@ -52,6 +52,7 @@ elasticsearch-repo:
     - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
 
 include:
+  - .filesystems
   - .minion
   - .sudoers
   - .vim

@@ -12,6 +12,8 @@ install helper app utilities:
     - user: www-data
     - group: www-data
     - dir_mode: 755
+    - requires:
+      - file: /data
 
 /data/logs:
   file.directory:
@@ -19,6 +21,8 @@ install helper app utilities:
     - user: www-data
     - group: www-data
     - dir_mode: 755
+    - requires:
+      - file: /data
 
 /data/storage:
   file.directory:
@@ -26,4 +30,5 @@ install helper app utilities:
     - user: www-data
     - group: www-data
     - dir_mode: 755
-
+    - requires:
+      - file: /data

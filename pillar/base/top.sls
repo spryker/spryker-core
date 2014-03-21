@@ -4,6 +4,7 @@ prod:
     - couchbase
     - user
     - postfix
+    - system
 
 dev:
   '*':
