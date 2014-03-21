@@ -69,7 +69,6 @@ prod:
     - match: grain
     - php
     - app
-    - newrelic.php
 
   # nginx and web components
   'roles:web':
@@ -84,6 +83,7 @@ prod:
     - java
     - tomcat
     - jenkins
+    - newrelic.php
 
   # solr
   'roles:solr':
@@ -102,10 +102,6 @@ prod:
     - match: grain
     - java
   # - elasticsearch
-
-  'roles:cronjobs':
-    - match: grain
-    - newrelic.php
 
 dev:
   # apply to all roles
