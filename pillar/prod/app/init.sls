@@ -35,9 +35,9 @@ environments:
       hostname: FIXME-cdn-1234.hostname.project-yz.com
     tomcat:
       port_suffix: 5007
-      min_heap_size: 512m
-      max_heap_size: 1536m
-      max_perm_size: 256m
+      min_heap_size: 128m
+      max_heap_size: 384m
+      max_perm_size: 128m
     solr:
       lb_hostname: 10.189.246.59
     queue:
@@ -81,9 +81,9 @@ environments:
       hostname: FIXME-cdn-1234.hostname.project-yz.com
     tomcat:
       port_suffix: 3007
-      min_heap_size: 256m
-      max_heap_size: 768m
-      max_perm_size: 256m
+      min_heap_size: 128m
+      max_heap_size: 384m
+      max_perm_size: 128m
     solr:
       lb_hostname: 10.189.246.66
     queue:
