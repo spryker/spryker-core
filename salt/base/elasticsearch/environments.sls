@@ -27,7 +27,7 @@
     - group: root
     - template: jinja
     - context:
-      - environment: {{ environment }}
+      environment: {{ environment }}
 #    - watch_in:
 #      - service: elasticsearch-{{ environment }}
 
@@ -53,7 +53,7 @@
     - group: root
     - template: jinja
     - context:
-      - environment: {{ environment }}
+      environment: {{ environment }}
 #    - watch_in:
 #      - service: elasticsearch-{{ environment }}
 
