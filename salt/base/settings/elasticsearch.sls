@@ -1,6 +1,6 @@
 {%- from 'settings/hosts.sls' import hosts with context %}
 
-{%- set total_nodes = hosts.elasticsearch_data|count %}
+{%- set total_nodes = 3 %}
 {%- set minumum_nodes = 2 %}
 
 {%- if total_nodes > 1 %}
