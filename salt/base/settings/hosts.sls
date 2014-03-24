@@ -32,6 +32,12 @@
 {%- do dwh_hosts.append(network_settings[netif]['inet'][0]['address']) %}
 {% endfor %}
 
+{%- set es_data_hosts = [] %}
+{%- for hostname, network_settings in salt['mine.get']('roles:elasticsearch_data', 'network.interfaces', expr_form = 'grain').items() %}
+{%- do es_data_hosts.append(network_settings[netif]['inet'][0]['address']) %}
+{% endfor %}
+
+
 {%- set host = {} %}
 {%- do host.update ({
   'solr_master'          : salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address,
@@ -47,6 +53,7 @@
   'solr'                 : solr_hosts,
   'job'                  : job_hosts,
   'dwh'                  : dwh_hosts,
+  'elasticsearch_data'   : es_data_hosts,
 }) %}
 
 {%- set publish_ip = grains.ip_interfaces[netif]|first }
