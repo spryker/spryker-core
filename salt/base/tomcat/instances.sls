@@ -61,6 +61,7 @@
       environment: {{ environment }}
       environment_details: {{ environment_details }}
 
+{% if grains.deployment == 'prod' %}
 /data/shop/{{ environment }}/shared/tomcat/newrelic/newrelic.yml:
   file.managed:
     - source: salt://tomcat/files/newrelic/newrelic.yml
@@ -73,6 +74,8 @@
     - context:
       environment: {{ environment }}
       environment_details: {{ environment_details }}
+{% endif %}
+
 
 /etc/default/tomcat7-{{ environment }}:
   file.managed:
