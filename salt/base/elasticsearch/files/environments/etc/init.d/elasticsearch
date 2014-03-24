@@ -55,7 +55,7 @@ done
 export JAVA_HOME
 
 # Directory where the Elasticsearch binary distribution resides
-ES_HOME=/usr/share/${NAME/-*/}
+ES_HOME=/usr/share/elasticsearch
 
 # Heap Size (defaults to 256m min, 1g max)
 #ES_HEAP_SIZE=2g
