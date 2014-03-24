@@ -19,7 +19,7 @@
     - group: elasticsearch
     - mode: 755
 
-/etc/default/elasticsearch:
+/etc/default/elasticsearch-{{ environment }}:
   file.managed:
     - source: salt://elasticsearch/files/environments/etc/default/elasticsearch
     - mode: 644
