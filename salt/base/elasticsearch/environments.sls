@@ -85,4 +85,9 @@ elasticsearch-{{ environment }}:
       - file: /data/shop/{{ environment }}/shared/elasticsearch
       - file: /data/logs/{{ environment }}/elasticsearch
 
+# For easier location of ES configs
+/etc/elasticsearch/{{ environment }}:
+  file.symlink:
+    - target: /etc/elasticsearch-{{ environment }}
+
 {%- endfor %}
