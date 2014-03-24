@@ -37,6 +37,25 @@
 {%- do es_data_hosts.append(network_settings[netif]['inet'][0]['address']) %}
 {% endfor %}
 
+### Based on host info, prepare numbers for elasticsearch
+{%- set es_total_nodes = (hosts.elasticsearch_data)|count %}
+{%- set es_minimum_nodes = ( es_total_nodes / 2 )|round|int %}
+
+{%- if es_total_nodes > 1 %}
+{%-   set es_replicas = 1 %}
+{%-   set es_shards = 6 %}
+{%- else %}
+{%-   set es_replicas = 0 %}
+{%-   set es_shards = 1 %}
+{%- endif %}
+
+{%- set elasticsearch = {} %}
+{%- do elasticsearch.update ({
+  'minimum_nodes'        : es_minimum_nodes,
+  'total_nodes'          : es_total_nodes,
+  'shards'               : es_shards,
+  'replicas'             : es_replicas,
+}) %}
 
 {%- set host = {} %}
 {%- do host.update ({
