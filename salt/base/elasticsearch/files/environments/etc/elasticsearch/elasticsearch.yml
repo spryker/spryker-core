@@ -34,7 +34,7 @@
 # Cluster name identifies your cluster for auto-discovery. If you're running
 # multiple clusters on the same network, make sure you're using unique names.
 #
-cluster.name: {{ pillar['elasticsearch'][environment]['clustername'] }}
+cluster.name: {{ pillar['elasticsearch.' + environment]['clustername'] }}
 
 
 #################################### Node #####################################
@@ -257,7 +257,7 @@ http.port: {{ settings.environments[environment].elasticsearch.http_port }}
 
 # Allow recovery process after N nodes in a cluster are up:
 #
-gateway.recover_after_nodes: {{ pillar.elasticsearch[environment].minimum_nodes }}
+gateway.recover_after_nodes: {{ pillar['elasticsearch.' + environment].minimum_nodes }}
 
 # Set the timeout to initiate the recovery process, once the N nodes
 # from previous setting are up (accepts time value):
@@ -268,7 +268,7 @@ gateway.recover_after_time: 5m
 # are up (and recover_after_nodes is met), begin recovery process immediately
 # (without waiting for recover_after_time to expire):
 #
-gateway.expected_nodes: {{ pillar.elasticsearch[environment].expected_nodes }}
+gateway.expected_nodes: {{ pillar['elasticsearch.' + environment].expected_nodes }}
 
 
 ############################# Recovery Throttling #############################
@@ -306,7 +306,7 @@ indices.recovery.concurrent_streams: 5
 # operational within the cluster. Its recommended to set it to a higher value
 # than 1 when running more than 2 nodes in the cluster.
 #
-discovery.zen.minimum_master_nodes: {{ pillar.elasticsearch[environment].minimum_nodes }}
+discovery.zen.minimum_master_nodes: {{ pillar['elasticsearch.' + environment].minimum_nodes }}
 
 # Set the time to wait for ping responses from other nodes when discovering.
 # Set this option to a higher value on a slow or congested network
@@ -323,7 +323,7 @@ discovery.zen.ping.timeout: 5s
 #
 # 1. Disable multicast discovery (enabled by default):
 #
-discovery.zen.ping.multicast.enabled: {{ pillar.elasticsearch[environment].enable_multicast_discovery }}
+discovery.zen.ping.multicast.enabled: {{ pillar['elasticsearch.' + environment].enable_multicast_discovery }}
 #
 # 2. Configure an initial list of master nodes in the cluster
 #    to perform discovery when new nodes (master or data) are started:
