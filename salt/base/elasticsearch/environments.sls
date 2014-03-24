@@ -76,7 +76,6 @@ elasticsearch-{{ environment }}:
   service:
     - running
     - enable: true
-    - watch:
     - require:
       - pkg: elasticsearch
       - file: /etc/init.d/elasticsearch-{{ environment }}
