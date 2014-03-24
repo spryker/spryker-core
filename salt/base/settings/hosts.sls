@@ -38,7 +38,7 @@
 {% endfor %}
 
 ### Based on host info, prepare numbers for elasticsearch
-{%- set es_total_nodes = (hosts.elasticsearch_data)|count %}
+{%- set es_total_nodes = (es_data_hosts)|count %}
 {%- set es_minimum_nodes = ( es_total_nodes / 2 )|round|int %}
 
 {%- if es_total_nodes > 1 %}
