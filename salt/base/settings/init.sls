@@ -8,6 +8,7 @@
   'host'                 : host,
   'hosts'                : hosts,
   'publish_ip'           : publish_ip,
+  'elasticsearch'        : elasticsearch,
 }) %}
 
 
