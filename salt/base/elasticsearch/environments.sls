@@ -2,7 +2,7 @@
 {%- for environment, environment_details in pillar.environments.items() %}
 
 /tmp/es-{{ environment }}:
-  - file.managed
+  file.managed
 
 /data/shop/{{ environment }}/shared/elasticsearch:
   file.directory:
