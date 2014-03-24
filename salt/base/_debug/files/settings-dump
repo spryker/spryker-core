@@ -1,1 +1,2 @@
-{{ a }}
+{%- from 'settings/init.sls' import settings with context %}
+{{ settings|json }}

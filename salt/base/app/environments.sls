@@ -1,3 +1,4 @@
+{% from 'settings/init.sls' import settings with context %}
 {%- for environment, environment_details in pillar.environments.items() %}
 # Directories
 /data/shop/{{ environment }}/shared/Generated:
@@ -53,7 +54,7 @@
       - file: /data/shop/{{ environment }}/shared/data/common
     - context:
       environment: {{ environment }}
-      environment_details: {{ environment_details }}
+      settings: {{ settings }}
 
 {%- if 'web' in grains.roles %}
 # FPM config

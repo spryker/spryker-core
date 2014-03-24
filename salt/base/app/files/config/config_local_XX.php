@@ -1,4 +1,4 @@
-{% from 'settings/init.sls' import settings with context %}<?php
+<?php
 /**
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
  *

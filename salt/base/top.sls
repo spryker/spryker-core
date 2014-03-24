@@ -1,4 +1,3 @@
-{% from 'settings/init.sls' import settings with context %}
 #
 # Topfile - used by salt ... state.highstate
 #

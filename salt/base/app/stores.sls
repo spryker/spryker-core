@@ -13,7 +13,7 @@
       - file: /data/shop/{{ environment }}/shared/data/common
     - context:
       environment: {{ environment }}
-      environment_details: {{ environment_details }}
+      settings: {{ settings }}
       store: {{ store }}
       store_details: {{ store_details }}
 
@@ -32,7 +32,7 @@
     - mode: 644
     - context:
       environment: {{ environment }}
-      environment_details: {{ environment_details }}
+      settings: {{ settings }}
       store: {{ store }}
       store_details: {{ store_details }}
     - watch_in:
@@ -47,7 +47,7 @@
     - mode: 644
     - context:
       environment: {{ environment }}
-      environment_details: {{ environment_details }}
+      settings: {{ settings }}
       store: {{ store }}
       store_details: {{ store_details }}
     - watch_in:

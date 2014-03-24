@@ -4,6 +4,4 @@
     - mode: 600
     - template: jinja
     - source: salt://_debug/files/settings-dump
-    - context:
-      a: {{ settings.publish_ip }}
 
