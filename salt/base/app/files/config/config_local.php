@@ -6,26 +6,26 @@
 
 /** Solr - default - used for queries */
 $config['storage']['solr']['defaultEndpointSetup'] = [
-    'host' => '{{ environment_details.solr.lb_hostname }}',
-    'port' => 1{{ settings.environment[environment].tomcat.port_suffix }},
+    'host' => '{{ settings.environments[environment].solr.lb_hostname }}',
+    'port' => 1{{ settings.environments[environment].tomcat.port_suffix }},
 ];
 
 /** Solr - master - used for updates */
 $config['storage']['solr']['masterEndpointSetup'] = [
     'host' => '{{ settings.host.solr_master }}',
-    'port' => 1{{ settings.environment[environment].tomcat.port_suffix }},
+    'port' => 1{{ settings.environments[environment].tomcat.port_suffix }},
 ];
 
 /** Solr - local - used for setup */
 $config['storage']['solr']['localEndpointSetup'] = [
     'host' => 'localhost',
-    'port' => 1{{ settings.environment[environment].tomcat.port_suffix }},
+    'port' => 1{{ settings.environments[environment].tomcat.port_suffix }},
 ];
 $config['storage']['solr']['data_dir'] = '/data/shop/{{ environment }}/shared/data/common/solr';
 
 /** Jenkins - job manager */
 $config['jenkins'] = array(
-    'base_url' => 'http://{{ settings.host.cron_master }}:1{{ settings.environment[environment].tomcat.port_suffix }}/jenkins',
+    'base_url' => 'http://{{ settings.host.cron_master }}:1{{ settings.environments[environment].tomcat.port_suffix }}/jenkins',
     'notify_email' => '',
 );
 
@@ -43,15 +43,15 @@ $config['activemq'] = array (
 /**
  * Cloud specific setup - in this case Rackspace only
  */
-$config['cloud']['enabled'] = {{ settings.environment[environment].cloud.enabled }};
-$config['cloud']['objectStorage']['enabled'] = {{ settings.environment[environment].cloud.object_storage.enabled }};
+$config['cloud']['enabled'] = {{ settings.environments[environment].cloud.enabled }};
+$config['cloud']['objectStorage']['enabled'] = {{ settings.environments[environment].cloud.object_storage.enabled }};
 
-$config['cloud']['objectStorage']['rackspace']['username'] = '{{ settings.environment[environment].cloud.object_storage.rackspace.api_username }}';
-$config['cloud']['objectStorage']['rackspace']['apiKey'] = '{{ settings.environment[environment].cloud.object_storage.rackspace.api_key }}';
+$config['cloud']['objectStorage']['rackspace']['username'] = '{{ settings.environments[environment].cloud.object_storage.rackspace.api_username }}';
+$config['cloud']['objectStorage']['rackspace']['apiKey'] = '{{ settings.environments[environment].cloud.object_storage.rackspace.api_key }}';
 
-$config['cloud']['cdn']['enabled'] = {{ settings.environment[environment].cloud.cdn.enabled }};
-$config['cloud']['cdn']['static_media']['http'] = '{{ settings.environment[environment].cloud.cdn.static_media.http }}';
-$config['cloud']['cdn']['static_media']['https'] = '{{ settings.environment[environment].cloud.cdn.static_media.https }}';
+$config['cloud']['cdn']['enabled'] = {{ settings.environments[environment].cloud.cdn.enabled }};
+$config['cloud']['cdn']['static_media']['http'] = '{{ settings.environments[environment].cloud.cdn.static_media.http }}';
+$config['cloud']['cdn']['static_media']['https'] = '{{ settings.environments[environment].cloud.cdn.static_media.https }}';
 
-$config['cloud']['cdn']['static_assets']['http'] = '{{ settings.environment[environment].cloud.cdn.static_assets.http }}';
-$config['cloud']['cdn']['static_assets']['https'] = '{{ settings.environment[environment].cloud.cdn.static_assets.https }}';
+$config['cloud']['cdn']['static_assets']['http'] = '{{ settings.environments[environment].cloud.cdn.static_assets.http }}';
+$config['cloud']['cdn']['static_assets']['https'] = '{{ settings.environments[environment].cloud.cdn.static_assets.https }}';

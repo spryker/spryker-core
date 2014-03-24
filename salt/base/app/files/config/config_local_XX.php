@@ -6,18 +6,18 @@
 
 /** Database: ZED operations */
 $config['db'] = [
-    'username' => '{{ environment_details.stores[store].zed.database.username }}',
-    'password' => '{{ environment_details.stores[store].zed.database.password }}',
-    'database' => '{{ environment_details.stores[store].zed.database.database }}',
-    'host'     => '{{ environment_details.stores[store].zed.database.hostname }}',
+    'username' => '{{ settings.environments[environment].stores[store].zed.database.username }}',
+    'password' => '{{ settings.environments[environment].stores[store].zed.database.password }}',
+    'database' => '{{ settings.environments[environment].stores[store].zed.database.database }}',
+    'host'     => '{{ settings.environments[environment].stores[store].zed.database.hostname }}',
 ];
 
 /** Database: ZED dump */
 $config['db_dump'] = [
-    'username' => '{{ environment_details.stores[store].zed.database.username }}',
-    'password' => '{{ environment_details.stores[store].zed.database.password }}',
-    'database' => '{{ environment_details.stores[store].zed.database.database }}',
-    'host'     => '{{ environment_details.stores[store].zed.database.hostname }}',
+    'username' => '{{ settings.environments[environment].stores[store].zed.database.username }}',
+    'password' => '{{ settings.environments[environment].stores[store].zed.database.password }}',
+    'database' => '{{ settings.environments[environment].stores[store].zed.database.database }}',
+    'host'     => '{{ settings.environments[environment].stores[store].zed.database.hostname }}',
     'mysqldump_bin' => '/usr/bin/mysqldump',
     'mysql_bin'     => '/usr/bin/mysql',
 ];
@@ -44,9 +44,9 @@ $config['storage']['kv'] = [
 
 /** Public URL's */
 $config['host'] = $config['host_ssl'] = [
-    'zed_gui' => '{{ environment_details.stores[store].zed.hostname }}',
-    'zed_api' => 'localhost:{{ environment_details.stores[store].zed.port }}', 
-    'yves' => '{{ environment_details.stores[store].yves.hostnames[0] }}',
+    'zed_gui' => '{{ settings.environments[environment].stores[store].zed.hostname }}',
+    'zed_api' => 'localhost:{{ settings.environments[environment].stores[store].zed.port }}', 
+    'yves' => '{{ settings.environments[environment].stores[store].yves.hostnames[0] }}',
 ];
 
 /** Session storage */
