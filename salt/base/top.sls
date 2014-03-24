@@ -5,6 +5,7 @@
 base:
   # apply to all roles
   '*':
+    - _debug
     - system
     - user
     - logstash
@@ -49,7 +50,7 @@ base:
   'roles:elasticsearch':
     - match: grain
     - java
-#    - elasticsearch
+#    - elasticsearch.single
 
 prod:
   # apply to all roles
@@ -101,7 +102,7 @@ prod:
   'roles:elasticsearch':
     - match: grain
     - java
-    - elasticsearch
+    - elasticsearch.single
 
   # elasticsearch
   'roles:elasticsearch_data':
@@ -157,13 +158,13 @@ dev:
   'roles:elasticsearch':
     - match: grain
     - java
-#    - elasticsearch
+    - elasticsearch.single
+    - elasticsearch.environments
 
   # dev tools
   'roles:dev':
     - match: grain
     - mysql-server
-    - elasticsearch
     - development
     - pound
  

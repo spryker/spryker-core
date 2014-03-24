@@ -1,5 +1,8 @@
 # Setup for multiple environments
 
+include:
+  - .install
+
 /etc/logrotate.d/elasticsearch-environments:
   file.managed:
     - source: salt://elasticsearch/files/environments/etc/logrotate.d/elasticsearch-environments

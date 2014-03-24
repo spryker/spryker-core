@@ -1,5 +1,8 @@
 # Setup for single instance on default ports (i.e. for logging or shared ES cluster for environments)
 
+include:
+  - .install
+
 elasticsearch:
   service:
     - running
