@@ -1,4 +1,4 @@
-# Static files, included in NginX Vhosts
+# Static configuration files, included in NginX Vhosts
 #
 # Note: nginx vhosts and fpm-upstream's are created in environments.sls / stores.sls
 
