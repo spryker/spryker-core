@@ -28,8 +28,8 @@
     - template: jinja
     - context:
       environment: {{ environment }}
-#    - watch_in:
-#      - service: elasticsearch-{{ environment }}
+    - watch_in:
+      - service: elasticsearch-{{ environment }}
 
 /etc/init.d/elasticsearch-{{ environment }}:
   file.managed:
@@ -57,7 +57,30 @@
     - template: jinja
     - context:
       environment: {{ environment }}
-#    - watch_in:
-#      - service: elasticsearch-{{ environment }}
+    - watch_in:
+      - service: elasticsearch-{{ environment }}
+
+/etc/elasticsearch-{{ environment }}/logging.yml:
+  file.managed:
+    - source: salt://elasticsearch/files/environments/etc/elasticsearch/elasticsearch.yml
+    - mode: 644
+    - user: root
+    - group: root
+    - template: jinja
+    - context:
+      environment: {{ environment }}
+    - watch_in:
+      - service: elasticsearch-{{ environment }}
+
+elasticsearch-{{ environment }}:
+  service:
+    - running
+    - enable: true
+    - watch:
+    - require:
+      - pkg: elasticsearch
+      - file: /etc/init.d/elasticsearch-{{ environment }}
+      - file: /data/shop/{{ environment }}/shared/elasticsearch
+      - file: /data/logs/{{ environment }}/elasticsearch
 
 {%- endfor %}
