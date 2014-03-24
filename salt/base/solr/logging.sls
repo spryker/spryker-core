@@ -19,7 +19,7 @@ download-slf4j.zip:
   cmd.run:
     - cwd: /data/deploy/download/solr
     - name: wget -q http://www.slf4j.org/dist/slf4j-1.6.6.zip
-    - creates: /data/deploy/download/solr/slf4j-1.6.6.zip
+    - unless: test -f /data/deploy/download/solr/slf4j-1.6.6.zip
     - require:
       - file: /data/deploy/download/solr
 
@@ -30,7 +30,6 @@ unpack-slf4j.zip:
       - cmd: download-slf4j.zip
     - name: unzip slf4j-1.6.6.zip
     - unless: test -f /data/deploy/download/solr/slf4j-1.6.6/pom.xml
-#    - creates: /data/deploy/download/solr/slf4j-1.6.6/pom.xml
 
 copy-slf4j-jdk14.jar:
   cmd.run:

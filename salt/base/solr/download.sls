@@ -18,7 +18,7 @@ unpack-solr.tgz:
     - require:
       - cmd: download-solr.tgz
     - name: tar zxf solr-{{ pillar.solr.version }}.tgz
-    - creates: /data/deploy/download/solr/solr-{{ pillar.solr.version }}/dist/solr-{{ pillar.solr.version }}.war
+    - unless: test -f /data/deploy/download/solr/solr-{{ pillar.solr.version }}/dist/solr-{{ pillar.solr.version }}.war
 
 /data/deploy/download/solr-{{ pillar.solr.version }}.war:
   file.copy:
