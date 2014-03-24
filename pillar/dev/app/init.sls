@@ -26,17 +26,14 @@ environments:
         hostname: localhost
         username: development
         password: mate20mg
-    static:
-      hostname: static-development.project-yz.com
     tomcat:
-      port_suffix: '0007'
       min_heap_size: 128m
       max_heap_size: 512m
       max_perm_size: 256m
+    elasticsearch:
+      heap_size: 384m
     solr:
       lb_hostname: localhost
-    queue:
-      stomp_port: 40006
     cloud:
       enabled: true
       object_storage:
@@ -57,11 +54,9 @@ environments:
     stores:
       DE:
         yves:
-          port: 10000
           hostnames:
             - www-development.project-yz.com
         zed:
-          port: 10001
           hostname: zed-development.project-yz.com
           htpasswd_file:
         dwh:
@@ -73,17 +68,14 @@ environments:
         hostname: localhost
         username: testing
         password: mate20mg
-    static:
-      hostname: static-testing.project-yz.com
     tomcat:
-      port_suffix: '1007'
       min_heap_size: 128m
       max_heap_size: 512m
       max_perm_size: 256m
+    elasticsearch:
+      heap_size: 384m
     solr:
       lb_hostname: localhost
-    queue:
-      stomp_port: 41006
     cloud:
       enabled: true
       object_storage:
@@ -104,11 +96,9 @@ environments:
     stores:
       DE:
         yves:
-          port: 11000
           hostnames:
             - www-testing.project-yz.com
         zed:
-          port: 11001
           hostname: zed-testing.project-yz.com
           htpasswd_file:
         dwh:

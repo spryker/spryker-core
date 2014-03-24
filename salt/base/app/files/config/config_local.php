@@ -31,7 +31,7 @@ $config['jenkins'] = array(
 
 /** ActiveMQ - message queue */
 $config['activemq'] = array (
-  array('host' => '{{ settings.host.queue }}', 'port' => '{{ environment_details.queue.stomp_port }}')
+  array('host' => '{{ settings.host.queue }}', 'port' => '{{ settings.environments[environment].queue.stomp_port }}')
 );
 
 /** Amazon AWS api keys - not used for rackspace projects */

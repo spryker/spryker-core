@@ -257,12 +257,12 @@ http.port: {{ settings.environments[environment].elasticsearch.http_port }}
 
 # Allow recovery process after N nodes in a cluster are up:
 #
-gateway.recover_after_nodes: {{ settings.elasticsearch.minimum_nodes }}
+gateway.recover_after_nodes: {{ settings.elasticsearch.minimum_nodes  }}
 
 # Set the timeout to initiate the recovery process, once the N nodes
 # from previous setting are up (accepts time value):
 #
-gateway.recover_after_time: 5m
+gateway.recover_after_time: 3m
 
 # Set how many nodes are expected in this cluster. Once these N nodes
 # are up (and recover_after_nodes is met), begin recovery process immediately

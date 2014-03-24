@@ -4,8 +4,9 @@
 include:
   - .install
 
-elasticsearch:
+elasticsearch-service:
   service:
+    - name: elasticsearch
     - running
     - enable: true
     - watch:
@@ -26,7 +27,7 @@ elasticsearch:
     - template: jinja
     - source: salt://elasticsearch/files/single/etc/default/elasticsearch
     - watch_in:
-      - service: elasticsearch
+      - service: elasticsearch-service
 
 /data/elasticsearch:
   file.directory:
@@ -39,8 +40,7 @@ elasticsearch:
 /etc/logrotate.d/elasticsearch:
   file.managed:
     - source: salt://elasticsearch/files/single/etc/logrotate.d/elasticsearch
-    - require:
-      - service: elasticsearch
+
 
 
 {% for shortname, plugin in pillar.get('elasticsearch.plugins', {}).items() %}
@@ -50,6 +50,6 @@ elasticsearch:
     - require:
       - pkg: elasticsearch
     - watch_in:
-      - service: elasticsearch
+      - service: elasticsearch-service
 {% endfor %}
 
