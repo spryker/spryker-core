@@ -37,6 +37,9 @@
     - mode: 755
     - user: root
     - group: root
+    - template: jinja
+    - context:
+      environment: {{ environment }}
 
 
 /etc/elasticsearch-{{ environment }}:
