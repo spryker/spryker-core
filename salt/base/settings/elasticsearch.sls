@@ -1,7 +1,7 @@
 {%- from 'settings/hosts.sls' import hosts with context %}
 
 {%- set total_nodes = (hosts.elasticsearch_data)|count %}
-{%- set minumum_nodes = ( (hosts.elasticsearch_data)|count )|round|int %}
+{%- set minimum_nodes = ( total_nodes / 2 )|round|int %}
 
 {%- if total_nodes > 1 %}
 {%-   set replicas = 1 %}
