@@ -56,4 +56,4 @@
   'elasticsearch_data'   : es_data_hosts,
 }) %}
 
-{%- set publish_ip = grains.ip_interfaces[netif]|first }
+{%- set publish_ip = grains.ip_interfaces[netif]|first %}
