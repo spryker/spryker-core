@@ -15,6 +15,16 @@
 # Generate ActiveMQ ports
 {%- do environments[environment]['queue'].update ({ 'stomp_port': '4' + port['environment'][environment]['port'] + '00' + '6' }) %}
 
+# Generate Elasticsearch ports
+{%- do environments[environment].update ( 
+  {'elasticsearch':
+    { 
+      'http_port': '1' + port['environment'][environment]['port'] + '00' + '5',
+      'transport_port': '2' + port['environment'][environment]['port'] + '00' + '5',
+    }
+  }
+) %}
+
 ###
 ### Parse store settings
 ###

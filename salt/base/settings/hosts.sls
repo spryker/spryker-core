@@ -48,3 +48,5 @@
   'job'                  : job_hosts,
   'dwh'                  : dwh_hosts,
 }) %}
+
+{%- set publish_ip = grains.ip_interfaces[netif]|first }

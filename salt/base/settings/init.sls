@@ -1,4 +1,4 @@
-{% from 'settings/hosts.sls' import host, hosts with context %}
+{% from 'settings/hosts.sls' import host, hosts, publish_ip with context %}
 {% from 'settings/environments.sls' import environments with context %}
 
 {%- set settings = {} %}
@@ -6,6 +6,7 @@
   'environments'         : environments,
   'host'                 : host,
   'hosts'                : hosts,
+  'publish_ip'           : publish_ip
 }) %}
 
 
