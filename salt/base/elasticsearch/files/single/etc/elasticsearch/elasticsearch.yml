@@ -1,3 +1,4 @@
+{% from 'settings/init.sls' import settings with context %}
 ###############################################################################
 ##       This file is managed by saltstack - DO NOT MANUALLY CHANGE IT       ##
 ###############################################################################
@@ -213,7 +214,7 @@ bootstrap.mlockall: true
 
 # Set both 'bind_host' and 'publish_host':
 #
-network.host: {{ grains.ip_interfaces.eth2|first }}
+network.host: {{ settings.publish_ip }}
 
 # Set a custom port for the node to node communication (9300 by default):
 #
