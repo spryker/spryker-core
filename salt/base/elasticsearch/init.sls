@@ -6,5 +6,4 @@
 # For multiple instances setup, don't include this state - use elasticsearch.environments only!
 
 include:
-  - .install
   - .single

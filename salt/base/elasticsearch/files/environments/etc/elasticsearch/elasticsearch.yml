@@ -34,7 +34,7 @@
 # Cluster name identifies your cluster for auto-discovery. If you're running
 # multiple clusters on the same network, make sure you're using unique names.
 #
-cluster.name: {{ pillar['elasticsearch.' + environment]['clustername'] }}
+cluster.name: yz-{{ environment }}
 
 
 #################################### Node #####################################
@@ -109,11 +109,11 @@ node.max_local_storage_nodes: 1
 
 # Set the number of shards (splits) of an index (5 by default):
 #
-index.number_of_shards: 6
+index.number_of_shards: {{ settings.elasticsearch.shards }}
 
 # Set the number of replicas (additional copies) of an index (1 by default):
 #
-index.number_of_replicas: 1
+index.number_of_replicas: {{ settings.elasticsearch.replicas }}
 
 # Note, that for development on a local machine, with small indices, it usually
 # makes sense to "disable" the distributed features:
@@ -257,7 +257,7 @@ http.port: {{ settings.environments[environment].elasticsearch.http_port }}
 
 # Allow recovery process after N nodes in a cluster are up:
 #
-gateway.recover_after_nodes: {{ pillar['elasticsearch.' + environment].minimum_nodes }}
+gateway.recover_after_nodes: {{ settings.elasticsearch.minimum_nodes }}
 
 # Set the timeout to initiate the recovery process, once the N nodes
 # from previous setting are up (accepts time value):
@@ -268,7 +268,7 @@ gateway.recover_after_time: 5m
 # are up (and recover_after_nodes is met), begin recovery process immediately
 # (without waiting for recover_after_time to expire):
 #
-gateway.expected_nodes: {{ pillar['elasticsearch.' + environment].expected_nodes }}
+gateway.expected_nodes: {{ settings.elasticsearch.total_nodes }}
 
 
 ############################# Recovery Throttling #############################
@@ -306,7 +306,7 @@ indices.recovery.concurrent_streams: 5
 # operational within the cluster. Its recommended to set it to a higher value
 # than 1 when running more than 2 nodes in the cluster.
 #
-discovery.zen.minimum_master_nodes: {{ pillar['elasticsearch.' + environment].minimum_nodes }}
+discovery.zen.minimum_master_nodes: {{ settings.elasticsearch.minimum_nodes }}
 
 # Set the time to wait for ping responses from other nodes when discovering.
 # Set this option to a higher value on a slow or congested network
@@ -323,8 +323,13 @@ discovery.zen.ping.timeout: 5s
 #
 # 1. Disable multicast discovery (enabled by default):
 #
-discovery.zen.ping.multicast.enabled: {{ pillar['elasticsearch.' + environment].enable_multicast_discovery }}
-#
+{%- if grains.deployment == 'prod' %}
+discovery.zen.ping.multicast.enabled: true
+{%- else %}
+discovery.zen.ping.multicast.enabled: false
+{%- end %}
+
+
 # 2. Configure an initial list of master nodes in the cluster
 #    to perform discovery when new nodes (master or data) are started:
 #

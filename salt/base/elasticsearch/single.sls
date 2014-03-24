@@ -1,4 +1,5 @@
 # Setup for single instance on default ports (i.e. for logging or shared ES cluster for environments)
+# Takes configuration from pillar.elasticsearch
 
 include:
   - .install
