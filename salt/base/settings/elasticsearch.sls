@@ -15,8 +15,6 @@
 
 {%- set elasticsearch = {} %}
 {%- do elasticsearch.update ({
-  'total_nodes'          : total_nodes,
-  'minimum_nodes'        : minimum_nodes,
   'shards'               : shards,
   'replicas'             : replicas,
 }) %}
