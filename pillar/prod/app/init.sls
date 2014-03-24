@@ -19,11 +19,13 @@ newrelic:
   api_key: 0710865a297806b3417533d11ec95978be35aa43f43818f
   appname: Demo Shop
 
+# List enabled stores
 stores:
   DE:
     locale: de_DE
     appdomain: '00'
 
+# List enabled environments
 environments:
   production:
     database:
@@ -31,17 +33,14 @@ environments:
         hostname: 28c61f41c4b7d139868cb9190e557f3e3c9a7cce.rackspaceclouddb.com
         username: production
         password: pjbO7aSUm0
-    static:
-      hostname: FIXME-cdn-1234.hostname.project-yz.com
     tomcat:
-      port_suffix: 5007
       min_heap_size: 128m
       max_heap_size: 384m
       max_perm_size: 128m
+    elasticsearch:
+      heap_size: 384m
     solr:
       lb_hostname: 10.189.246.59
-    queue:
-      stomp_port: 45006
     cloud:
       enabled: true
       object_storage:
@@ -62,11 +61,9 @@ environments:
     stores:
       DE:
         yves:
-          port: 15000
           hostnames:
             - www-production.project-yz.com
         zed:
-          port: 15001
           hostname: zed-production.project-yz.com
 #          htpasswd_file: /etc/nginx/htpasswd-zed
         dwh:
@@ -77,17 +74,14 @@ environments:
         hostname: 28c61f41c4b7d139868cb9190e557f3e3c9a7cce.rackspaceclouddb.com
         username: staging                                
         password: tkVM0EysbN64
-    static:
-      hostname: FIXME-cdn-1234.hostname.project-yz.com
     tomcat:
-      port_suffix: 3007
       min_heap_size: 128m
       max_heap_size: 384m
       max_perm_size: 128m
+    elasticsearch:
+      heap_size: 384m
     solr:
       lb_hostname: 10.189.246.66
-    queue:
-      stomp_port: 43006
     cloud:
       enabled: true
       object_storage:
@@ -108,12 +102,10 @@ environments:
     stores:
       DE:
         yves:
-          port: 13000
           hostnames:
             - www-staging.project-yz.com
           htpasswd_file: /etc/nginx/htpasswd-staging
         zed:
-          port: 13001
           hostname: zed-staging.project-yz.com
           htpasswd_file: /etc/nginx/htpasswd-staging
         dwh:

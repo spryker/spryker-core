@@ -327,7 +327,7 @@ discovery.zen.ping.timeout: 5s
 discovery.zen.ping.multicast.enabled: true
 {%- else %}
 discovery.zen.ping.multicast.enabled: false
-{%- end %}
+{%- endif %}
 
 
 # 2. Configure an initial list of master nodes in the cluster

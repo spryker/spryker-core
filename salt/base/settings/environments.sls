@@ -13,17 +13,13 @@
 {%- do environments[environment]['tomcat'].update ({ 'port_suffix': port['environment'][environment]['port'] + '00' + '7' }) %}
 
 # Generate ActiveMQ ports
-{%- do environments[environment]['queue'].update ({ 'stomp_port': '4' + port['environment'][environment]['port'] + '00' + '6' }) %}
+{%- do environments[environment].update ({ 'queue': { 'stomp_port': '4' + port['environment'][environment]['port'] + '00' + '6' }}) %}
 
 # Generate Elasticsearch ports
-{%- do environments[environment].update ( 
-  {'elasticsearch':
-    { 
+{%- do environments[environment]['elasticsearch'].update ({ 
       'http_port': '1' + port['environment'][environment]['port'] + '00' + '5',
       'transport_port': '2' + port['environment'][environment]['port'] + '00' + '5',
-    }
-  }
-) %}
+}) %}
 
 ###
 ### Parse store settings

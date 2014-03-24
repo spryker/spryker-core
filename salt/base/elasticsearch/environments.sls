@@ -66,7 +66,7 @@ include:
 
 /etc/elasticsearch-{{ environment }}/logging.yml:
   file.managed:
-    - source: salt://elasticsearch/files/environments/etc/elasticsearch/elasticsearch.yml
+    - source: salt://elasticsearch/files/environments/etc/elasticsearch/logging.yml
     - mode: 644
     - user: root
     - group: root
