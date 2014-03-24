@@ -1,6 +1,6 @@
 {% import_yaml 'settings/port_numbering.sls' as port %}
 {% include 'settings/hosts.sls' %}
-{% include 'settings/environments.sls' %}
+{% include 'settings/environments.sls' with context %}
 {% include 'settings/elasticsearch.sls' %}
 
 
