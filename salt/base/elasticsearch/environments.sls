@@ -45,7 +45,7 @@
     - group: root
     - mode: 755
 
-/etc/elasticsearch-{{ name }}/elasticsearch.yml:
+/etc/elasticsearch-{{ environment }}/elasticsearch.yml:
   file.managed:
     - source: salt://elasticsearch/files/environments/etc/elasticsearch/elasticsearch.yml
     - mode: 644
