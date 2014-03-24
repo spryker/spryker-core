@@ -1,5 +1,6 @@
+{% from 'settings/init.sls' import settings with context %}
 <?xml version='1.0' encoding='utf-8'?>
-<Server port="3{{ environment_details.tomcat.port_suffix }}" shutdown="SHUTDOWN">
+<Server port="3{{ settings.environments[environment].tomcat.port_suffix }}" shutdown="SHUTDOWN">
   <!--Initialize Jasper prior to webapps are loaded. Documentation at /docs/jasper-howto.html -->
   <Listener className="org.apache.catalina.core.JasperListener" />
   <!-- Prevent memory leaks due to use of particular java/javax APIs-->
@@ -21,7 +22,7 @@
 
     <!-- HTTP connector -->
     <Connector
-        port="1{{ environment_details.tomcat.port_suffix }}"
+        port="1{{ settings.environments[environment].tomcat.port_suffix }}"
         protocol="HTTP/1.1"
         connectionTimeout="20000"
         redirectPort="8443"
