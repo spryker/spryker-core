@@ -25,7 +25,7 @@ prod-rackspace-wheezy-2GB:
           - couchbase
           - solr
           - queue
-          - elasticsearch
+          - elasticsearch_data
         solr_role: master
         couchbase_role: master
   - data02.project-yz.com:
@@ -35,7 +35,7 @@ prod-rackspace-wheezy-2GB:
           - app
           - couchbase
           - solr
-          - elasticsearch
+          - elasticsearch_data
         solr_role: slave
   - data03.project-yz.com:
       grains:
@@ -44,7 +44,7 @@ prod-rackspace-wheezy-2GB:
           - app
           - couchbase
           - solr
-          - elasticsearch
+          - elasticsearch_data
         solr_role: slave
 
 

@@ -103,6 +103,13 @@ prod:
     - java
     - elasticsearch
 
+  # elasticsearch
+  'roles:elasticsearch_data':
+    - match: grain
+    - java
+    - elasticsearch.environments
+
+
 dev:
   # apply to all roles
   '*':
