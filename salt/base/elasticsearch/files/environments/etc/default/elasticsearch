@@ -1,6 +1,7 @@
+{% from 'settings/init.sls' import settings with context %}
 ES_USER=elasticsearch
 ES_GROUP=elasticsearch
-ES_HEAP_SIZE={{ pillar['elasticsearch.' + environment].heap_size }}
+ES_HEAP_SIZE={{ settings.environments[environment].elasticsearch.heap_size }}
 MAX_OPEN_FILES=65535
 MAX_LOCKED_MEMORY=unlimited
 LOG_DIR=/data/logs/{{ environment }}/elasticsearch
