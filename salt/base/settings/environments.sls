@@ -1,6 +1,7 @@
 ###
 ### Load constant definitions
 ###
+{% import_yaml 'settings/port_numbering.sls' as port %}
 
 
 ###

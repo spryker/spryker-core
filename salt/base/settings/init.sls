@@ -1,8 +1,5 @@
-{% import_yaml 'settings/port_numbering.sls' as port %}
 {% from 'settings/hosts.sls' import host, hosts, elasticsearch, publish_ip with context %}
 {% from 'settings/environments.sls' import environments with context %}
-
-
 
 {%- set settings = {} %}
 {%- do settings.update ({
