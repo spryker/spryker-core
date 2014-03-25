@@ -43,5 +43,3 @@
       - file: /etc/nginx/sites-available/kibana.conf
     - watch_in:
       - service: nginx
-
-{%- if %}
