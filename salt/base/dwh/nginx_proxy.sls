@@ -14,6 +14,7 @@
     - mode: 600
     - user: root
     - group: root
+    - require:
       - file: /etc/nginx/ssl
 
 {%- for environment, environment_details in settings.environments.items() %}
