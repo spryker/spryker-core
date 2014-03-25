@@ -19,7 +19,7 @@ data-dir:
     - require:
       - pkg: postgresql-9.3
   cmd.run:
-    - name: rm -f /etc/postgresql/9.3/main/postgresql.conf && pg_createcluster --datadir /data/pgsql 9.3 main
+    - name: rm -f /etc/postgresql/9.3/main/* && pg_createcluster --datadir /data/pgsql 9.3 main
     - unless: test -d /data/pgsql/base
     - cwd: /data/pgsql
     - require:
@@ -31,6 +31,7 @@ data-dir:
     - template: jinja
     - require:
       - pkg: postgresql-9.3
+      - cmd: data-dir
 
 /etc/postgresql/9.3/main/postgresql.conf:
   file.managed:
