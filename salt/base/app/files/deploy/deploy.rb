@@ -12,7 +12,7 @@
 ###
 ### Configuration parsing - global variables
 ###
-(puts "\033[31m!!! FATAL: You must deploy as user root:\033[0m\nsudo #{$0}"; exit 1) if Process.euid
+(puts "\033[31m!!! FATAL: You must deploy as user root:\033[0m\nsudo #{$0}"; exit 1) if Process.euid != 0
 if File.exists? "config.rb"; path_prefix="./"; else path_prefix="/etc/deploy/"; end
 
 require path_prefix+'config.rb'

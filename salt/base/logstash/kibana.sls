@@ -44,9 +44,9 @@
     - watch_in:
       - service: nginx
 
-/var/www/kibana3:
+/etc/kibana3:
   file.directory
 
-/var/www/kibana3/config.js:
+/etc/kibana3/config.js:
   file.managed:
-    - source: salt://logstash/files/var/www/kibana3/config.js
+    - source: salt://logstash/files/etc/kibana3/config.js
