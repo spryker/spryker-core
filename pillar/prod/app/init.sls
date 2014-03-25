@@ -67,7 +67,7 @@ environments:
           hostname: zed-production.project-yz.com
 #          htpasswd_file: /etc/nginx/htpasswd-zed
         dwh:
-          hostname: dwh-production.project-yz.com
+          saiku_hostname: dwh-production.project-yz.com
   staging:
     database:
       zed:
@@ -109,7 +109,7 @@ environments:
           hostname: zed-staging.project-yz.com
           htpasswd_file: /etc/nginx/htpasswd-staging
         dwh:
-          hostname: dwh-staging.project-yz.com
+          saiku_hostname: saiku-staging.project-yz.com
 
 
 # The key below is used for deployment - from deployment server user root must be able to log in to all other
