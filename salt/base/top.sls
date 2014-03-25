@@ -116,6 +116,7 @@ prod:
     - nginx
     - java
     - tomcat
+    - dwh
 
 dev:
   # apply to all roles
@@ -173,6 +174,7 @@ dev:
     - nginx
     - java
     - tomcat
+    - dwh
 
   # dev tools
   'roles:dev':

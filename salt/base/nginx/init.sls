@@ -17,6 +17,9 @@ nginx:
     - user: root
     - group: www-data
     - mode: 640
+    - require:
+      - pkg: nginx-extras
+
 
 /etc/nginx/fastcgi_params:
   file.managed:
