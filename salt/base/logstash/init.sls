@@ -17,7 +17,7 @@ logstash-web:
 {%- else %}
     - dead
     - enable: False
-{%- end %}
+{%- endif %}
 
 /etc/default/logstash:
   file.managed:
