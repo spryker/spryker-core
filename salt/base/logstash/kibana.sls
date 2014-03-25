@@ -1,6 +1,6 @@
 /etc/nginx/ssl/kibana.crt:
   file.managed:
-    - source: salt://dwh/files/etc/nginx/ssl/kibana.crt
+    - source: salt://logstash/files/etc/nginx/ssl/kibana.crt
     - mode: 600
     - user: root
     - group: root
@@ -9,7 +9,7 @@
 
 /etc/nginx/ssl/kibana.key:
   file.managed:
-    - source: salt://dwh/files/etc/nginx/ssl/kibana.key
+    - source: salt://logstash/files/etc/nginx/ssl/kibana.key
     - mode: 600
     - user: root
     - group: root
