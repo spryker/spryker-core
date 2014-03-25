@@ -17,6 +17,14 @@
     - require:
       - file: /etc/nginx/ssl
 
+# The default password for dwh (cubes)
+/etc/nginx/htpasswd-dwh:
+  file.managed:
+    - source: salt://dwh/files/etc/nginx/htpasswd-nginx
+    - user: www-data
+    - group: www-data
+    - mode: 640
+
 {%- for environment, environment_details in settings.environments.items() %}
 {%- for store, store_details in pillar.stores.items() %}
 /etc/nginx/sites-available/{{ store }}_{{ environment }}_dwh.conf:
@@ -42,14 +50,6 @@
       - file: /etc/nginx/sites-available/{{ store }}_{{ environment }}_dwh.conf
     - watch_in:
       - service: nginx
-
-# The default password for dwh (cubes)
-/etc/nginx/htpasswd-dwh:
-  file.managed:
-    - source: salt://dwh/files/etc/nginx/htpasswd-nginx
-    - user: www-data
-    - group: www-data
-    - mode: 640
 
 {%- endfor %}
 {%- endfor %}
