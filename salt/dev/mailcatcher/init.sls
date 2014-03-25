@@ -1,6 +1,16 @@
 mailcatcher:
-  gem.installed
+  gem:
+    - installed
+  service:
+    - running
+    - enabled
+    - require:
+      - file: mailcatcher-init-script
 
-/etc/init/mailcatcher.conf:
+mailcatcher-init-script:
   file.managed:
-    - source: salt://mailcatcher/etc/init/mailcatcher.conf
+    - name: /etc/init.d/mailcatcher
+    - source: salt://mailcatcher/etc/init.d/mailcatcher
+
+
+
