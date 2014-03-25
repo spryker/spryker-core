@@ -20,7 +20,7 @@
 # The default password for dwh (cubes)
 /etc/nginx/htpasswd-dwh:
   file.managed:
-    - source: salt://dwh/files/etc/nginx/htpasswd-nginx
+    - source: salt://dwh/files/etc/nginx/htpasswd-dwh
     - user: www-data
     - group: www-data
     - mode: 640
