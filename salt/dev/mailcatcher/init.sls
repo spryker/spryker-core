@@ -1,6 +1,19 @@
-mailcatcher:
-  gem.installed
+libsqlite3-dev:
+  pkg.installed:
+    - require_in:
+      - pkg: mailcatcher
 
-/etc/init/mailcatcher.conf:
+mailcatcher-init-script:
   file.managed:
-    - source: salt://mailcatcher/etc/init/mailcatcher.conf
+    - name: /etc/init.d/mailcatcher
+    - mode: 0755
+    - source: salt://mailcatcher/etc/init.d/mailcatcher
+
+mailcatcher:
+  gem:
+    - installed
+  service:
+    - running
+    - enable: True
+    - require:
+      - file: mailcatcher-init-script
