@@ -24,8 +24,6 @@ data-dir:
     - cwd: /data/pgsql
     - require:
       - file: data-dir
-      - file: /etc/postgresql/9.3/main/postgresql.conf
-
 
 /etc/postgresql/9.3/main/pg_hba.conf:
   file.managed:
