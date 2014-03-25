@@ -3,6 +3,7 @@ logstash:
     - name: logstash
   service:
     - running
+    - enable: True
     - require:
       - pkg: logstash
     - watch:

@@ -1,7 +1,7 @@
 prod:
   '*':
     - app
-    - app.dwh
+    - dwh
     - couchbase
     - user
     - elasticsearch
@@ -11,7 +11,7 @@ prod:
 dev:
   '*':
     - app
-    - app.dwh
+    - dwh
     - couchbase
     - user
     - elasticsearch
