@@ -1,0 +1,76 @@
+#!/bin/bash
+#
+# mailcatcher Startup script for the Mailcatcher SMTP srever
+#
+# chkconfig: - 20 80
+# description: The Mailcatcher server receives SMTP emails and provides \
+# the ability to view them in a web browser instead of relaying.
+# processname: mailcatcher
+# pidfile: /var/run/mailcatcher.pid
+#
+### BEGIN INIT INFO
+# Provides: mailcatcher
+# Required-Start: $local_fs $remote_fs $network $named
+# Required-Stop: $local_fs $remote_fs $network
+# Short-Description: start and stop Mailcatcher SMTP server
+# Description: The Mailcatcher server receives SMTP emails and provides
+# the ability to view them in a web browser instead of relaying.
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+mailcatcher="/usr/local/rvm/bin/mailcatcher"
+prog=mailcatcher
+pidfile=/var/run/mailcatcher.pid
+OPTIONS="-f --ip 0.0.0.0"
+RETVAL=0
+STOP_TIMEOUT=10
+
+start() {
+    echo -n $"Starting $prog: "
+    if [ -s ${pidfile} ]; then
+        RETVAL=1
+        echo -n "Already running!" && warning
+        echo
+    else
+        nohup ${mailcatcher} ${OPTIONS} >/dev/null 2>&1 &
+        REVAL=$?
+        PID=$!
+        [ $RETVAL = 0 ] && success || failure
+        echo
+        echo $PID > ${pidfile}
+    fi
+    return $RETVAL
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc -p ${pidfile} -d $STOP_TIMEOUT $mailcatcher
+    RETVAL=$?
+    echo
+    [ $RETVAL = 0 ] && rm -f ${pidfile}
+}
+
+# See how we were called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+          status -p ${pidfile} $mailcatcher
+          RETVAL=$?
+          ;;
+    restart)
+          stop
+          start
+          ;;
+    *)
+        echo $"Usage: $0 $prog {start|stop|restart|status}"
+        RETVAL=2
+esac
+
+exit $RETVAL
