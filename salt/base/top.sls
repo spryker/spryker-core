@@ -127,7 +127,7 @@ prod:
     - jenkins
 
   # DWH - PostgreSQL database
-  'roles:dwh_pgsql':
+  'roles:dwh_database':
     - match: grain
     - dwh
 
@@ -198,7 +198,7 @@ dev:
     - jenkins
 
   # DWH - PostgreSQL database
-  'roles:dwh_pgsql':
+  'roles:dwh_database':
     - match: grain
     - dwh
 
@@ -209,4 +209,3 @@ dev:
     - development
     - pound
     - mailcatcher
- 

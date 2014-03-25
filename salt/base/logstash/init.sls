@@ -9,6 +9,16 @@ logstash:
       - file: /etc/default/logstash
       - file: /etc/logstash/conf.d/lumberjack.conf
 
+logstash-web:
+  service:
+{%- if 'kibana' in grains.roles %}
+    - running
+    - enable: True
+{%- else %}
+    - dead
+    - enable: False
+{%- end %}
+
 /etc/default/logstash:
   file.managed:
     - source: salt://logstash/files/etc/default/logstash

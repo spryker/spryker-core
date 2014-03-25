@@ -18,7 +18,7 @@ NAME=logstash-web
 JAVA=/usr/bin/java
 
 # arguments to pass to java
-LS_JAVA_OPTS="-Xmx256m -Djava.io.tmpdir=/var/lib/logstash/"
+LS_JAVA_OPTS="-Xms64m -Xmx256m -XX:+UseConcMarkSweepGC -Djava.io.tmpdir=/var/lib/logstash/ -Djvm.process.name=logstash-web -Djvm.host.name=`hostname`"
 
 PIDFILE=/var/run/logstash-web.pid
 

@@ -37,6 +37,12 @@
 {%- do es_data_hosts.append(network_settings[netif]['inet'][0]['address']) %}
 {% endfor %}
 
+{%- set es_log_hosts = [] %}
+{%- for hostname, network_settings in salt['mine.get']('roles:elasticsearch', 'network.interfaces', expr_form = 'grain').items() %}
+{%- do es_log_hosts.append(network_settings[netif]['inet'][0]['address']) %}
+{% endfor %}
+
+
 ### Based on host info, prepare numbers for elasticsearch
 {%- set es_total_nodes = (es_data_hosts)|count %}
 {%- set es_minimum_nodes = ( es_total_nodes / 2 )|round|int %}
@@ -73,6 +79,7 @@
   'job'                  : job_hosts,
   'dwh'                  : dwh_hosts,
   'elasticsearch_data'   : es_data_hosts,
+  'elasticsearch_logs'   : es_log_hosts,
 }) %}
 
 {%- set publish_ip = grains.ip_interfaces[netif]|first %}
