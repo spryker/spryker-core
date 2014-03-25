@@ -3,7 +3,7 @@ mailcatcher:
     - installed
   service:
     - running
-    - enabled
+    - enable: True
     - require:
       - file: mailcatcher-init-script
 
