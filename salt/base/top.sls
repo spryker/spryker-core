@@ -118,6 +118,12 @@ prod:
     - tomcat
     - dwh
 
+  'roles:dwh_jobs':
+    - match: grain
+    - java
+    - tomcat
+    - jenkins
+
 dev:
   # apply to all roles
   '*':
