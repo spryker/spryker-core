@@ -1,0 +1,2 @@
+mailcatcher:
+  - gem.installed

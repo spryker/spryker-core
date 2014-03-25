@@ -167,4 +167,5 @@ dev:
     - mysql-server
     - development
     - pound
+    - mailcatcher
  
