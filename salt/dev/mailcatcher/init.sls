@@ -1,7 +1,6 @@
 mailcatcher:
   gem.installed
 
-/etc/init.d/mailcatcher:
+/etc/init/mailcatcher.conf:
   file.managed:
-    - source: salt://mailcatcher/etc/init.d/mailcatcher
-    - mode: 0755
+    - source: salt://mailcatcher/etc/init/mailcatcher.conf
