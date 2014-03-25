@@ -31,6 +31,7 @@ oh-my-zsh:
 grunt-install:
   cmd.run:
     - name: npm install -g grunt-cli
+    - unless: grunt --version
 
 # restart nginx
 restart-nginx:
