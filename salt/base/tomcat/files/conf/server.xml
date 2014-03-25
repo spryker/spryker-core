@@ -1,4 +1,4 @@
-{%- from 'settings/init.sls' import settings with context %}
+{%- from 'settings/init.sls' import settings with context -%}
 <?xml version='1.0' encoding='utf-8'?>
 <Server port="3{{ settings.environments[environment].tomcat.port_suffix }}" shutdown="SHUTDOWN">
   <!--Initialize Jasper prior to webapps are loaded. Documentation at /docs/jasper-howto.html -->
