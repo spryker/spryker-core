@@ -46,8 +46,14 @@ prod-rackspace-wheezy-2GB:
           - solr
           - elasticsearch_data
         solr_role: slave
-
-
-
-#  - dwh01.project-yz.com:
-
+prod-rackspace-wheezy-4GB:
+  - reporting01.project-yz.com:
+      grains:
+        deployment: prod
+        roles:
+          - elasticsearch
+          - kibana
+          - app
+          - dwh_database
+          - dwh_jobs
+          - dwh_saiku
