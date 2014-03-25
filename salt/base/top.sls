@@ -98,13 +98,13 @@ prod:
     - match: grain
     - java
 
-  # elasticsearch
+  # elasticsearch (for logs)
   'roles:elasticsearch':
     - match: grain
     - java
     - elasticsearch.single
 
-  # elasticsearch
+  # elasticsearch (for yves&zed)
   'roles:elasticsearch_data':
     - match: grain
     - java
@@ -118,11 +118,18 @@ prod:
     - tomcat
     - dwh
 
+  # DWH - ETL Jobs
   'roles:dwh_jobs':
     - match: grain
+    - app
     - java
     - tomcat
     - jenkins
+
+  # DWH - PostgreSQL database
+  'roles:dwh_pgsql':
+    - match: grain
+    - dwh
 
 dev:
   # apply to all roles
@@ -180,6 +187,19 @@ dev:
     - nginx
     - java
     - tomcat
+    - dwh
+
+  # DWH - ETL Jobs
+  'roles:dwh_jobs':
+    - match: grain
+    - app
+    - java
+    - tomcat
+    - jenkins
+
+  # DWH - PostgreSQL database
+  'roles:dwh_pgsql':
+    - match: grain
     - dwh
 
   # dev tools
