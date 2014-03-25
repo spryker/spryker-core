@@ -6,5 +6,7 @@ dwh:
     work_mem: 250MB
     maintenance_work_mem: 128MB
     effective_cache_size: 1GB
-
+  cubes:
+    locale: de_DE
+    currency: EUR
 

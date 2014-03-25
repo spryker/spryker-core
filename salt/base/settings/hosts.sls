@@ -42,6 +42,10 @@
 {%- do es_log_hosts.append(network_settings[netif]['inet'][0]['address']) %}
 {% endfor %}
 
+{%- set dwh_db_hosts = [] %}
+{%- for hostname, network_settings in salt['mine.get']('roles:dwh_database', 'network.interfaces', expr_form = 'grain').items() %}
+{%- do dwh_db_hosts.append(network_settings[netif]['inet'][0]['address']) %}
+{% endfor %}
 
 ### Based on host info, prepare numbers for elasticsearch
 {%- set es_total_nodes = (es_data_hosts)|count %}
@@ -78,6 +82,7 @@
   'solr'                 : solr_hosts,
   'job'                  : job_hosts,
   'dwh'                  : dwh_hosts,
+  'dwh_database'         : dwh_db_hosts,
   'elasticsearch_data'   : es_data_hosts,
   'elasticsearch_logs'   : es_log_hosts,
 }) %}
