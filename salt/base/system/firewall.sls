@@ -23,3 +23,11 @@ ufw allow from 10.189.246.0/23:
     - unless: ufw status | grep 'Anywhere *ALLOW *10.189.246.0/23'
     - require:
       - pkg: ufw
+
+{% if 'dwh_saiku' in grains.roles %}
+ufw allow 443/tcp:
+  cmd.run:
+    - unless: ufw status | grep '443/tcp *ALLOW *Anywhere'
+    - require:
+      - pkg: ufw
+{% endif %}

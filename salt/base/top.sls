@@ -110,6 +110,12 @@ prod:
     - java
     - elasticsearch.environments
 
+  # DWH - Saiku
+  'roles:dwh_saiku':
+    - match: grain
+    - nginx
+    - java
+    - tomcat
 
 dev:
   # apply to all roles
@@ -160,6 +166,13 @@ dev:
     - java
     - elasticsearch.single
     - elasticsearch.environments
+
+  # DWH - Saiku
+  'roles:dwh_saiku':
+    - match: grain
+    - nginx
+    - java
+    - tomcat
 
   # dev tools
   'roles:dev':
