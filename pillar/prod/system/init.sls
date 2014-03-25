@@ -6,7 +6,7 @@ filesystems:
     mount_point: /data
     mount_options: noatime,nobarrier,compress=zlib
 # This example shows how to add volumes on specific machines - volumes must be first created in cloud admin panel!
-{% if grains.id='some-wired-id-of-machine' %}
+{% if grains.id == 'some-wired-id-of-machine' %}
   data_elasticsearch:
     disk: /dev/xvdf
     partition: 1
