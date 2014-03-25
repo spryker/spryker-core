@@ -17,4 +17,5 @@ elasticsearch.environments:
     bigdesk:
       name: lukas-vlcek/bigdesk
 
-
+kibana:
+  hostname: kibana.project-yz.com
