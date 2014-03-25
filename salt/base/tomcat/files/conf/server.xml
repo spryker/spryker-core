@@ -41,7 +41,7 @@
 
 {%- if 'dwh_saiku' in grains.roles %}
       <!-- Datawarehouse - Saiku VHosts -->
-{%- for store, store_details in settings.environments[environment].stores.items() }
+{%- for store, store_details in settings.environments[environment].stores.items() %}
       <Host 
         name="{{ store_details.dwh.saiku_hostname }}" unpackWARs="false" autoDeploy="true">
           <Context 

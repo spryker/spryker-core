@@ -12,6 +12,12 @@ nginx:
   file.managed:
     - source: salt://nginx/files/nginx.conf
 
+/etc/nginx/ssl:
+  file.directory:
+    - user: root
+    - group: www-data
+    - mode: 640
+
 /etc/nginx/fastcgi_params:
   file.managed:
     - source: salt://nginx/files/fastcgi_params
