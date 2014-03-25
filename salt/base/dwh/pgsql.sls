@@ -24,6 +24,7 @@ data-dir:
     - cwd: /data/pgsql
     - require:
       - file: data-dir
+      - file: /etc/postgresql/9.3/main/postgresql.conf
 
 
 /etc/postgresql/9.3/main/pg_hba.conf:
@@ -35,7 +36,7 @@ data-dir:
 
 /etc/postgresql/9.3/main/postgresql.conf:
   file.managed:
-    - source: salt://dwh/files/etc/postgresql.conf
+    - source: salt://dwh/files/etc/postgresql/postgresql.conf
     - template: jinja
     - require:
       - pkg: postgresql-9.3
