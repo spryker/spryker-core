@@ -51,6 +51,13 @@ elasticsearch-repo:
     - file: /etc/apt/sources.list.d/elasticsearch.list
     - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
 
+wheezy-backports-repo:
+  pkgrepo.managed:
+    - humanname: Debian Wheezy Backports repository
+    - name:  deb http://uk.debian.org/debian wheezy-backports main
+    - file: /etc/apt/sources.list.d/backports.list
+  
+
 include:
   - .filesystems
   - .minion
