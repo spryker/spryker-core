@@ -45,3 +45,11 @@ marcorossdeutscher-root:
     - user: root
     - name: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQwkNp9aTlUOjWIrb9Lc6ewj63gPM1o/WWi/nk0f8ZflEb/CKuwf3NedELLZry5bw225JISAMcBzyPUEB1RasPSJ926ezaNgN/8N1OUYAXNvhmEIsm8BIVdV4idJFqf9Y9gaByItNbQ+ZUJzIHN+7hKsZLQABMmOKc4g+bA5ZWHfAk4yJaoNbkgG12Iq+g3KQLWXZo9M7xsdC2c0sHNjSQKvEiRLIDHvKOw5Wrh8o8ObgtYMQQeYTTQ4vGeQINW4woJXtR6XUkl7rK6+NV2qqSwU64zGAnwuhI2P8oZxDsrEiHqRy6VjYtXm6gcZ8KoUmhzUMBdhWf2eULBUXXhBfj marcorossdeutscher@MacBook-Project-A.local
 
+{% if pillar.server_env.ssh.id_rsa is defined %}
+/root/.ssh/id_rsa:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 400
+    - contents_pillar: server_env:ssh:id_rsa
+{% endif %}
