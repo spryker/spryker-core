@@ -7,7 +7,7 @@ mailcatcher-init-script:
   file.managed:
     - name: /etc/init.d/mailcatcher
     - mode: 0755
-    - source: salt://mailcatcher/etc/init.d/mailcatcher
+    - source: salt://mailcatcher/files/etc/init.d/mailcatcher
 
 mailcatcher:
   gem:
