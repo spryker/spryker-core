@@ -13,11 +13,11 @@ linux-image-{{ version }}:
 shutdown -r now:
   cmd.wait:
     - watch:
-      - pkg: linux-image-amd64
+      - pkg: linux-image-{{ version }}
 
 sleep 10m:
   cmd.wait:
     - watch:
-      - pkg: linux-image-amd64
+      - pkg: linux-image-{{ version }}
 
 {%- endif %}

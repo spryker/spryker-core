@@ -1,3 +1,5 @@
+# !!! Warning: after changing version here, running OverState will do kernel upgrade on all machines at the same time,
+# rebooting all servers at the same time. To avoid it, use salt '...' state.sls system.kernel_upgrade (one host at a time)
 kernel:
   version: 3.12
   repository: wheezy-backports
