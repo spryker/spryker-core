@@ -4,6 +4,10 @@ kernel:
   version: 3.13-0.bpo.1-amd64
   repository: wheezy-backports
 
+rackspace:
+  username: projectaventure
+  apikey: 5bacf8c555ebd9a929b1880fa605beb2
+
 filesystems:
   data:
     disk: /dev/xvde

@@ -36,9 +36,8 @@ apt-get -qq install salt-master python-pip
 ufw allow 4505/tcp
 ufw allow 4506/tcp
 
-
 # Workaround to get latest pip on wheezy
-pip install pip
+pip install --upgrade pip
 ln -sf /usr/local/bin/pip /usr/bin/pip
 
 # Install python extensions for rackspace cloud
@@ -113,7 +112,7 @@ export OS_PASSWORD=${RACKSPACE_API_KEY}
 export OS_PROJECT_ID=${RACKSPACE_API_USERNAME}
 export OS_NO_CACHE=1
 EOF
-source /root/nova-credentials
+#source /root/nova-credentials
 
 # Prepare cloud profiles (from git repo)
 if [ ! -L /etc/salt/cloud.profiles.d ]; then

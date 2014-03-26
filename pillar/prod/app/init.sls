@@ -30,7 +30,7 @@ environments:
   production:
     database:
       zed:
-        hostname: 28c61f41c4b7d139868cb9190e557f3e3c9a7cce.rackspaceclouddb.com
+        hostname: c5a1dde99bbb1cc815296418cbf56da234d74e33.rackspaceclouddb.com
         username: production
         password: pjbO7aSUm0
     tomcat:
@@ -71,7 +71,7 @@ environments:
   staging:
     database:
       zed:
-        hostname: 28c61f41c4b7d139868cb9190e557f3e3c9a7cce.rackspaceclouddb.com
+        hostname: c5a1dde99bbb1cc815296418cbf56da234d74e33.rackspaceclouddb.com
         username: staging                                
         password: tkVM0EysbN64
     tomcat:
