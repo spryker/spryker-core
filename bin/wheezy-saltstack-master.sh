@@ -6,12 +6,12 @@
 ###
 
 # Settings
-RACKSPACE_API_USERNAME="fabianwesner"
-RACKSPACE_API_KEY="14d002abd595109f2f383b8287098a00"
-DOMAIN_NAME="project-yz.com"
+RACKSPACE_API_USERNAME="projectaventure"
+RACKSPACE_API_KEY="5bacf8c555ebd9a929b1880fa605beb2"
 RACKSPACE_REGION="LON"
 RACKSPACE_API_URL="https://lon.identity.api.rackspacecloud.com/v2.0/tokens"
-RACKSPACE_PROJECT_NET_UUID="37d4cda3-fe86-4231-b69a-7a5401e7c96d"
+DOMAIN_NAME="project-yz.com"
+RACKSPACE_PROJECT_NET_UUID="423be9d4-dbb6-40ca-ae63-eb456d4ace8f"
 
 # Implementation starts here
 set -e
