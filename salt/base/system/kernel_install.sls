@@ -8,7 +8,12 @@ linux-image-amd64:
     - fromrepo: {{ repository }}
 {%- endif %}
 
-shutdown -r now && sleep 10m:
+shutdown -r now:
+  cmd.wait:
+    - watch:
+      - pkg: linux-image-amd64
+
+sleep 10m:
   cmd.wait:
     - watch:
       - pkg: linux-image-amd64
