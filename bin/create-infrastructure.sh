@@ -26,3 +26,6 @@ echo "salt-cloud finished - output saved in ${outfile}"
 
 sleep 10s
 salt '*' test.ping
+
+salt-run state.over base
+
