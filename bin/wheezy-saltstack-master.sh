@@ -77,6 +77,10 @@ pillar_roots:
     - /srv/pillar/base
 EOF
 
+echo "environment: prod" > /etc/salt/minion
+echo "roles: 
+  - master" > /etc/salt/grains
+
 # Prepare cloud credentials
 mkdir -p /etc/salt/cloud.providers.d
 [ -f /etc/salt/cloud.providers.d/rackspace.conf ] || cat > /etc/salt/cloud.providers.d/rackspace.conf << EOF
@@ -120,8 +124,11 @@ if [ ! -L /etc/salt/cloud.profiles.d ]; then
   ln -sf /srv/cloud.profiles.d /etc/salt/cloud.profiles.d
 fi
 
+# Setup key for local salt calls
+salt-key -ya `hostname`
+
 # Setup utilities
-salt-call -l error --file-root=/srv/salt/base --local state.sls system.master
+salt-call -l error state.sls system.master
 
 # Start salt-master
 /etc/init.d/salt-master restart
