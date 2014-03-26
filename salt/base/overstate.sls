@@ -1,6 +1,7 @@
 kernel_install:
   match: '*'
   sls:
+    - system.repositories
     - system.kernel_install
 
 prepare-system:
@@ -20,4 +21,3 @@ provision-all-nodes:
   match: '*'
   require:
     - provision-data-nodes
-    
