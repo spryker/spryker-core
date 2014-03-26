@@ -9,7 +9,7 @@
 
 linux-image-amd64:
   pkg.latest:
-{%- repository = salt['pillar.get']('kernel:repository', '') %}
+{%- repository = salt['pillar.get']('kernel_repository', '') %}
 {%- if repository != '' %}
     - fromrepo: {{ pillar.kernel.}}
 {%- endif %}

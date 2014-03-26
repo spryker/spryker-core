@@ -1,5 +1,4 @@
-kernel:
-  repository: wheezy-backports
+kernel_repository: wheezy-backports
 
 filesystems:
   data:
