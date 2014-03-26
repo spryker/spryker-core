@@ -28,7 +28,7 @@
 {% endfor %}
 
 {%- set dwh_hosts = [] %}
-{%- for hostname, network_settings in salt['mine.get']('roles:dwh', 'network.interfaces', expr_form = 'grain').items() %}
+{%- for hostname, network_settings in salt['mine.get']('roles:dwh_jobs', 'network.interfaces', expr_form = 'grain').items() %}
 {%- do dwh_hosts.append(network_settings[netif]['inet'][0]['address']) %}
 {% endfor %}
 
