@@ -11,7 +11,7 @@ linux-image-amd64:
   pkg.latest:
 {%- set repository = salt['pillar.get']('kernel_repository', '') %}
 {%- if repository != '' %}
-    - fromrepo: {{ pillar.kernel.}}
+    - fromrepo: {{ repository }}
 {%- endif %}
 
 shutdown -r now && sleep 10m:
