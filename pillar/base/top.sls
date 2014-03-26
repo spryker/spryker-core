@@ -16,6 +16,7 @@ dev:
     - user
     - elasticsearch
     - mysql-server
+    - postfix
 
 qa:
   '*':
