@@ -54,9 +54,8 @@ elasticsearch-repo:
 wheezy-backports-repo:
   pkgrepo.managed:
     - humanname: Debian Wheezy Backports repository
-    - name:  deb http://uk.debian.org/debian wheezy-backports main
+    - name:  deb http://ftp.uk.debian.org/debian wheezy-backports main
     - file: /etc/apt/sources.list.d/backports.list
-  
 
 include:
   - .filesystems
