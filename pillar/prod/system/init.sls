@@ -1,4 +1,6 @@
-kernel_repository: wheezy-backports
+kernel:
+  version: 3.12
+  repository: wheezy-backports
 
 filesystems:
   data:

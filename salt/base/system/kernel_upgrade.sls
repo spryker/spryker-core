@@ -7,9 +7,12 @@
 # It's generally good idea to execute it on one host at a time, as it will reboot the machine. So don't use salt '*' - or you will reboot the whole server farm
 # and cause website offline for some time!
 
-linux-image-amd64:
+{%- set version = salt['pillar.get']('kernel:version', '') %}
+{%- set repository = salt['pillar.get']('kernel:repository', '') %}
+
+{%- if version != '' %}
+linux-image-{{ version }}:
   pkg.latest:
-{%- set repository = salt['pillar.get']('kernel_repository', '') %}
 {%- if repository != '' %}
     - fromrepo: {{ repository }}
 {%- endif %}
@@ -23,3 +26,5 @@ sleep 10m:
   cmd.wait:
     - watch:
       - pkg: linux-image-amd64
+
+{%- endif %}

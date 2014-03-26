@@ -1,9 +1,11 @@
 # This state will ensure that backports kernel is installed and should be executed just after provisioning VM's (by Overstate).
 # After new kernel is upgraded, the machine will be rebooted.
+{%- set version = salt['pillar.get']('kernel:version', '') %}
+{%- set repository = salt['pillar.get']('kernel:repository', '') %}
 
-linux-image-amd64:
+{%- if version != '' %}
+linux-image-{{ version }}:
   pkg.installed:
-{%- set repository = salt['pillar.get']('kernel_repository', '') %}
 {%- if repository != '' %}
     - fromrepo: {{ repository }}
 {%- endif %}
@@ -17,3 +19,5 @@ sleep 10m:
   cmd.wait:
     - watch:
       - pkg: linux-image-amd64
+
+{%- endif %}
