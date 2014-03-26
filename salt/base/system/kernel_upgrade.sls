@@ -22,7 +22,7 @@ shutdown -r now:
     - watch:
       - pkg: linux-image-{{ version }}
 
-sleep 10m:
+sleep 10s:
   cmd.wait:
     - watch:
       - pkg: linux-image-{{ version }}

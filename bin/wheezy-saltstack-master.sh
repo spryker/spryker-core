@@ -6,15 +6,15 @@
 ###
 
 # Settings
-RACKSPACE_API_USERNAME="fabianwesner"
-RACKSPACE_API_KEY="14d002abd595109f2f383b8287098a00"
-DOMAIN_NAME="project-yz.com"
+RACKSPACE_API_USERNAME="projectaventure"
+RACKSPACE_API_KEY="5bacf8c555ebd9a929b1880fa605beb2"
 RACKSPACE_REGION="LON"
-RACKSPACE_API_URL="https://lon.identity.api.rackspacecloud.com/v2.0/tokens"
-RACKSPACE_PROJECT_NET_UUID="37d4cda3-fe86-4231-b69a-7a5401e7c96d"
+RACKSPACE_API_URL="https://lon.identity.api.rackspacecloud.com/v2.0"
+DOMAIN_NAME="project-yz.com"
+RACKSPACE_PROJECT_NET_UUID="423be9d4-dbb6-40ca-ae63-eb456d4ace8f"
 
 # Implementation starts here
-set -e
+
 echo "###"
 echo "### Instaling SaltStack master on this host"
 echo "###"
@@ -36,8 +36,47 @@ apt-get -qq install salt-master python-pip
 ufw allow 4505/tcp
 ufw allow 4506/tcp
 
+
+# Workaround to get latest pip on wheezy
+pip install pip
+ln -sf /usr/local/bin/pip /usr/bin/pip
+
 # Install python extensions for rackspace cloud
 pip -q install rackspace-novaclient salt-cloud apache_libcloud
+pip install --upgrade distribute
+
+# Default settings for salt-master
+cat > /etc/salt/master << EOF
+job_cache: True
+state_output: mixed
+state_events: False
+log_level: warning
+log_level_logfile: warning
+file_roots:
+  base:
+    - /srv/salt/base
+  dev:
+    - /srv/salt/dev
+    - /srv/salt/base
+  qa:
+    - /srv/salt/qa
+    - /srv/salt/base
+  prod:
+    - /srv/salt/prod
+    - /srv/salt/base
+pillar_roots:
+  base:
+    - /srv/pillar/base
+  dev:
+    - /srv/pillar/dev
+    - /srv/pillar/base
+  qa:
+    - /srv/pillar/qa
+    - /srv/pillar/base
+  prod:
+    - /srv/pillar/prod
+    - /srv/pillar/base
+EOF
 
 # Prepare cloud credentials
 mkdir -p /etc/salt/cloud.providers.d
@@ -53,24 +92,14 @@ prod-rackspace:
   user: ${RACKSPACE_API_USERNAME}
   apikey: ${RACKSPACE_API_KEY}
   provider: openstack
-  ssh_key_name: marconi
+  ssh_key_name: master
   ssh_key_file: /root/.ssh/id_rsa
   networks:
-    - project:
+    - fixed:
+      - 00000000-0000-0000-0000-000000000000
+      - 11111111-1111-1111-1111-111111111111
       - ${RACKSPACE_PROJECT_NET_UUID}
-qa-rackspace:
-  minion:
-    master: salt.${DOMAIN_NAME}
-    environment: qa
-  identity_url: '${RACKSPACE_API_URL}'
-  compute_name: cloudServersOpenStack
-  protocol: ipv4
-  compute_region: ${RACKSPACE_REGION}
-  user: ${RACKSPACE_API_USERNAME}
-  apikey: ${RACKSPACE_API_KEY}
-  provider: openstack
-  ssh_key_name: marconi
-  ssh_key_file: /root/.ssh/id_rsa
+
 EOF
 
 [ -f /root/nova-credentials ] || cat > /root/nova-credentials << EOF
@@ -92,10 +121,11 @@ if [ ! -L /etc/salt/cloud.profiles.d ]; then
   ln -sf /srv/cloud.profiles.d /etc/salt/cloud.profiles.d
 fi
 
-# Generate ssh keypair, will be used for creating new instances
-if [ ! -f /root/.ssh/id_rsa ]; then
-  ssh-keygen -f /root/.ssh/id_rsa -P ''
-fi
+# Setup utilities
+salt-call -l error --file-root=/srv/salt/base --local state.sls system.master
 
-# Upload key pair to OpenStack
-nova keypair-add --pub-key /root/.ssh/id_rsa.pub rackspace-default || true
+# Start salt-master
+/etc/init.d/salt-master restart
+
+echo "Master setup successful!"
+
