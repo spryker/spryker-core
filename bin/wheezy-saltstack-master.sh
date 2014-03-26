@@ -9,12 +9,11 @@
 RACKSPACE_API_USERNAME="projectaventure"
 RACKSPACE_API_KEY="5bacf8c555ebd9a929b1880fa605beb2"
 RACKSPACE_REGION="LON"
-RACKSPACE_API_URL="https://lon.identity.api.rackspacecloud.com/v2.0/tokens"
+RACKSPACE_API_URL="https://lon.identity.api.rackspacecloud.com/v2.0"
 DOMAIN_NAME="project-yz.com"
 RACKSPACE_PROJECT_NET_UUID="423be9d4-dbb6-40ca-ae63-eb456d4ace8f"
 
 # Implementation starts here
-set -e
 
 echo "###"
 echo "### Instaling SaltStack master on this host"
@@ -37,8 +36,14 @@ apt-get -qq install salt-master python-pip
 ufw allow 4505/tcp
 ufw allow 4506/tcp
 
+
+# Workaround to get latest pip on wheezy
+pip install pip
+ln -sf /usr/local/bin/pip /usr/bin/pip
+
 # Install python extensions for rackspace cloud
 pip -q install rackspace-novaclient salt-cloud apache_libcloud
+pip install --upgrade distribute
 
 # Default settings for salt-master
 cat > /etc/salt/master << EOF
@@ -115,6 +120,9 @@ if [ ! -L /etc/salt/cloud.profiles.d ]; then
   [ -d /etc/salt/cloud.profiles.d ] && mv /etc/salt/cloud.profiles.d /etc/salt/cloud.profiles.bak
   ln -sf /srv/cloud.profiles.d /etc/salt/cloud.profiles.d
 fi
+
+# Setup utilities
+salt-call -l error --file-root=/srv/salt/base --local state.sls system.master
 
 # Start salt-master
 /etc/init.d/salt-master restart
