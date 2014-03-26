@@ -3,7 +3,7 @@
 
 linux-image-amd64:
   pkg.installed:
-{%- repository = salt['pillar.get']('kernel_repository', '') %}
+{%- set repository = salt['pillar.get']('kernel_repository', '') %}
 {%- if repository != '' %}
     - fromrepo: {{ pillar.kernel.}}
 {%- endif %}
