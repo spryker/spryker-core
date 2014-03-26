@@ -208,4 +208,5 @@ dev:
     - mysql-server
     - development
     - pound
+    - postfix
     - mailcatcher
