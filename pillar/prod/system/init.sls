@@ -12,9 +12,9 @@ filesystems:
   data:
     disk: /dev/xvde
     partition: 1
-    filesystem: ext4
+    filesystem: btrfs
     mount_point: /data
-    mount_options: noatime,nobarrier
+    mount_options: noatime,nobarrier,compress=lzo
 # This example shows how to add volumes on specific machines - volumes must be first created in cloud admin panel!
 {% if grains.id == 'some-wired-id-of-machine' %}
   data_elasticsearch:

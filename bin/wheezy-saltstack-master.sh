@@ -88,7 +88,7 @@ prod-rackspace:
   minion:
     master: salt.${DOMAIN_NAME}
     environment: prod
-  identity_url: '${RACKSPACE_API_URL}'
+  identity_url: '${RACKSPACE_API_URL}/tokens'
   compute_name: cloudServersOpenStack
   protocol: ipv4
   compute_region: ${RACKSPACE_REGION}

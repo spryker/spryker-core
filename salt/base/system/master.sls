@@ -2,7 +2,7 @@
 # Note - pillars are not available here
 #
 # Command to run it:
-# salt-call -l error --file-root=/srv/salt/base --local state.sls system.repositories
+# salt-call -l error state.sls system.master
 
 include:
   - .repositories
