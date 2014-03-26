@@ -33,6 +33,9 @@ $config['activemq'] = array (
   array('host' => '{{ settings.host.queue }}', 'port' => '{{ settings.environments[environment].queue.stomp_port }}')
 );
 
+$config['kibana'] = [
+    'base_url' => 'https://'{{ pillar.kibana.hostname }},
+];
 /** Amazon AWS api keys - not used for rackspace projects */
 // $config['productImage']['amazonS3Key'] = 'AKIAIFH6VVOUVCIUSAVA';
 // $config['productImage']['amazonS3Secret'] = '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';
