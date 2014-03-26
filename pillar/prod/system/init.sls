@@ -1,7 +1,7 @@
 # !!! Warning: after changing version here, running OverState will do kernel upgrade on all machines at the same time,
 # rebooting all servers at the same time. To avoid it, use salt '...' state.sls system.kernel_upgrade (one host at a time)
 kernel:
-  version: 3.12-0.bpo.1-amd64
+  version: 3.13-0.bpo.1-amd64
   repository: wheezy-backports
 
 filesystems:
