@@ -35,7 +35,7 @@ logstash-web:
     - source: salt://logstash/files/etc/logstash/conf.d/lumberjack.conf
     - template: jinja
 
-{%- if 'kibana' in grains.roles %}
+{%- if 'kibana' in grains.roles and 'dev' not in grains.roles %}
 include:
   - .kibana
 {%- endif %}
