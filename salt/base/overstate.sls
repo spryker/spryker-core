@@ -10,3 +10,14 @@ prepare-system:
   sls:
     - system.minion
     - system.filesystems
+
+provision-data-nodes:
+  match: 'data*'
+  require:
+    - prepare-system
+
+provision-all-nodes:
+  match: '*'
+  require:
+    - provision-data-nodes
+    
