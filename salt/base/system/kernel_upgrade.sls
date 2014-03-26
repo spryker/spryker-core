@@ -1,6 +1,6 @@
 # !!! Dangerous !!!
 #
-# This state will ensure that latest kernel is installed.
+# This state will ensure that latest kernel minor version is installed.
 # After new kernel is upgraded, the machine will be rebooted.
 # This state is NOT included in highstate and should be executed manually (salt '...' state.sls system.kernel_upgrade)
 #
@@ -20,11 +20,11 @@ linux-image-{{ version }}:
 shutdown -r now:
   cmd.wait:
     - watch:
-      - pkg: linux-image-amd64
+      - pkg: linux-image-{{ version }}
 
 sleep 10m:
   cmd.wait:
     - watch:
-      - pkg: linux-image-amd64
+      - pkg: linux-image-{{ version }}
 
 {%- endif %}
