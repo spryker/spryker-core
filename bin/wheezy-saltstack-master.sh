@@ -15,6 +15,7 @@ RACKSPACE_PROJECT_NET_UUID="423be9d4-dbb6-40ca-ae63-eb456d4ace8f"
 
 # Implementation starts here
 set -e
+
 echo "###"
 echo "### Instaling SaltStack master on this host"
 echo "###"
@@ -39,6 +40,39 @@ ufw allow 4506/tcp
 # Install python extensions for rackspace cloud
 pip -q install rackspace-novaclient salt-cloud apache_libcloud
 
+# Default settings for salt-master
+cat > /etc/salt/master << EOF
+job_cache: True
+state_output: mixed
+state_events: False
+log_level: warning
+log_level_logfile: warning
+file_roots:
+  base:
+    - /srv/salt/base
+  dev:
+    - /srv/salt/dev
+    - /srv/salt/base
+  qa:
+    - /srv/salt/qa
+    - /srv/salt/base
+  prod:
+    - /srv/salt/prod
+    - /srv/salt/base
+pillar_roots:
+  base:
+    - /srv/pillar/base
+  dev:
+    - /srv/pillar/dev
+    - /srv/pillar/base
+  qa:
+    - /srv/pillar/qa
+    - /srv/pillar/base
+  prod:
+    - /srv/pillar/prod
+    - /srv/pillar/base
+EOF
+
 # Prepare cloud credentials
 mkdir -p /etc/salt/cloud.providers.d
 [ -f /etc/salt/cloud.providers.d/rackspace.conf ] || cat > /etc/salt/cloud.providers.d/rackspace.conf << EOF
@@ -53,24 +87,14 @@ prod-rackspace:
   user: ${RACKSPACE_API_USERNAME}
   apikey: ${RACKSPACE_API_KEY}
   provider: openstack
-  ssh_key_name: marconi
+  ssh_key_name: master
   ssh_key_file: /root/.ssh/id_rsa
   networks:
-    - project:
+    - fixed:
+      - 00000000-0000-0000-0000-000000000000
+      - 11111111-1111-1111-1111-111111111111
       - ${RACKSPACE_PROJECT_NET_UUID}
-qa-rackspace:
-  minion:
-    master: salt.${DOMAIN_NAME}
-    environment: qa
-  identity_url: '${RACKSPACE_API_URL}'
-  compute_name: cloudServersOpenStack
-  protocol: ipv4
-  compute_region: ${RACKSPACE_REGION}
-  user: ${RACKSPACE_API_USERNAME}
-  apikey: ${RACKSPACE_API_KEY}
-  provider: openstack
-  ssh_key_name: marconi
-  ssh_key_file: /root/.ssh/id_rsa
+
 EOF
 
 [ -f /root/nova-credentials ] || cat > /root/nova-credentials << EOF
@@ -92,10 +116,8 @@ if [ ! -L /etc/salt/cloud.profiles.d ]; then
   ln -sf /srv/cloud.profiles.d /etc/salt/cloud.profiles.d
 fi
 
-# Generate ssh keypair, will be used for creating new instances
-if [ ! -f /root/.ssh/id_rsa ]; then
-  ssh-keygen -f /root/.ssh/id_rsa -P ''
-fi
+# Start salt-master
+/etc/init.d/salt-master restart
 
-# Upload key pair to OpenStack
-nova keypair-add --pub-key /root/.ssh/id_rsa.pub rackspace-default || true
+echo "Master setup successful!"
+

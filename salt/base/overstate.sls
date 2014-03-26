@@ -12,12 +12,7 @@ prepare-system:
     - system.minion
     - system.filesystems
 
-provision-data-nodes:
-  match: 'data*'
-  require:
-    - prepare-system
-
-provision-all-nodes:
+highstate-on-all-nodes:
   match: '*'
   require:
-    - provision-data-nodes
+    - prepare-system
