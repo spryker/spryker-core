@@ -1,3 +1,6 @@
+kernel:
+  repository: wheezy-backports
+
 filesystems:
   data:
     disk: /dev/xvde

@@ -1,12 +1,12 @@
-upgrade-kernel:
+kernel_install:
   match: '*'
   sls:
-    - system.kernel_upgrade
+    - system.kernel_install
 
 prepare-system:
   match: '*'
   require:
-    - upgrade-kernel
+    - kernel_install
   sls:
     - system.minion
     - system.filesystems
