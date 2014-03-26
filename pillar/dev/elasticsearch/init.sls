@@ -9,3 +9,6 @@ elasticsearch:
       name: mobz/elasticsearch-head
     bigdesk:
       name: lukas-vlcek/bigdesk
+
+kibana:
+  hostname: kibana-development.project-yz.com
