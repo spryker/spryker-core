@@ -1,6 +1,5 @@
 include:
   - .repositories
-  - .filesystems
   - .minion
   - .utils
   - .sudoers
@@ -8,6 +7,9 @@ include:
   - .time
   - .firewall
   - .sysctl
-{%- if 'dev' not in grains.roles -%}
+{% if 'dev' not in grains.roles %}
   - .rackspace
-{%- endif -%}
+{% endif %}
+
+
+
