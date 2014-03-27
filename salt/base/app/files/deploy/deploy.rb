@@ -345,8 +345,8 @@ end
 
 def activate_cronjobs
   put_status "Activating cronjobs"
-  hosts = $jobs_hosts.first || [$tools_host]
-  hosts = (hosts + $dwh_host).uniq if $use_dwh
+  hosts = [$jobs_hosts.first] || [$tools_host]
+  hosts = (hosts + [$dwh_host]).uniq if $use_dwh
 
   result = multi_ssh_exec(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_default_store} #{$debug} deploy/enable_cronjobs\" ")
 
