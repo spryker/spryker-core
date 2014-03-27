@@ -45,8 +45,8 @@ environments:
       object_storage:
         enabled: true
         rackspace:
-          api_username: demoshop
-          api_key: 23b61a877f0f4efaaae2243d90ce63ab
+          api_username: demoshop.cloudfiles
+          api_key: a9d62990a9d74e6f88d3344555bd2a85
       cdn:
         enabled: true
         static_media:
@@ -87,8 +87,8 @@ environments:
       object_storage:
         enabled: true
         rackspace:
-          api_username: demoshop
-          api_key: 23b61a877f0f4efaaae2243d90ce63ab
+          api_username: demoshop.cloudfiles
+          api_key: a9d62990a9d74e6f88d3344555bd2a85
       cdn:
         enabled: true
         static_media:
