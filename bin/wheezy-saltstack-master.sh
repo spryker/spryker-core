@@ -49,8 +49,8 @@ cat > /etc/salt/master << EOF
 job_cache: True
 state_output: mixed
 state_events: False
-log_level: warning
-log_level_logfile: warning
+log_level: info
+log_level_logfile: info
 file_roots:
   base:
     - /srv/salt/base
