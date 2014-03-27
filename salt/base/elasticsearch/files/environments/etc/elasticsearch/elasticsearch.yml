@@ -186,7 +186,7 @@ index.number_of_replicas: {{ settings.elasticsearch.replicas }}
 #
 # Set this property to true to lock the memory:
 #
-bootstrap.mlockall: true
+bootstrap.mlockall: {{ salt['pillar.get']('elasticsearch.environments:mlockall', 'true') }}
 
 # Make sure that the ES_MIN_MEM and ES_MAX_MEM environment variables are set
 # to the same value, and that the machine has enough memory to allocate

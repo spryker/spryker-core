@@ -11,6 +11,8 @@ elasticsearch:
       name: lukas-vlcek/bigdesk
 
 elasticsearch.environments:
+  # Temporarly disabled mlockall until we'll start using elasticsearch - normally it should be true (that's default setting)
+  mlockall: false
   plugins:
     head:
       name: mobz/elasticsearch-head
