@@ -46,16 +46,16 @@ environments:
       object_storage:
         enabled: true
         rackspace:
-          api_username: demoshop
-          api_key: 23b61a877f0f4efaaae2243d90ce63ab
+          api_username: demoshop.cloudfiles
+          api_key: a9d62990a9d74e6f88d3344555bd2a85
       cdn:
         enabled: true
         static_media:
-          http: http://297c1a453f0d7fe3ce3f-dd1913cd0a99febb0196b0c1e549aacc.r0.cf3.rackcdn.com
-          https: https://70f8c68435971fca9f1a-dd1913cd0a99febb0196b0c1e549aacc.ssl.cf3.rackcdn.com
+          http: http://static.project-yz.com
+          https: https://static-secure.project-yz.com
         static_assets:
-          http: http://297c1a453f0d7fe3ce3f-dd1913cd0a99febb0196b0c1e549aacc.r0.cf3.rackcdn.com
-          https: https://70f8c68435971fca9f1a-dd1913cd0a99febb0196b0c1e549aacc.ssl.cf3.rackcdn.com
+          http: http://static.project-yz.com
+          https: https://static-secure.project-yz.com
         delete_local_processed_images: true
         delete_original_images: true
     stores:
@@ -87,16 +87,16 @@ environments:
       object_storage:
         enabled: true
         rackspace:
-          api_username: demoshop
-          api_key: 23b61a877f0f4efaaae2243d90ce63ab
+          api_username: demoshop.cloudfiles
+          api_key: a9d62990a9d74e6f88d3344555bd2a85
       cdn:
         enabled: true
         static_media:
-          http: http://0c760426ec7d7a09dda3-02dbfcd920021bdbd5f7e8ead1e4fb90.r8.cf3.rackcdn.com
-          https: https://006422bc21d07bd1e745-02dbfcd920021bdbd5f7e8ead1e4fb90.ssl.cf3.rackcdn.com
+          http: http://static-staging.project-yz.com
+          https: https://static-staging-secure.project-yz.com
         static_assets:
-          http: http://0c760426ec7d7a09dda3-02dbfcd920021bdbd5f7e8ead1e4fb90.r8.cf3.rackcdn.com
-          https: https://006422bc21d07bd1e745-02dbfcd920021bdbd5f7e8ead1e4fb90.ssl.cf3.rackcdn.com
+          http: http://static-staging.project-yz.com
+          https: https://static-staging-secure.project-yz.com
         delete_local_processed_images: true
         delete_original_images: true
     stores:

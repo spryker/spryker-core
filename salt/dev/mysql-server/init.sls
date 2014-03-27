@@ -9,10 +9,11 @@ mysql-server:
     - enable: True
     - watch:
       - pkg: mysql-server
+      - file: /etc/mysql/my.cnf
 
-#/etc/mysql/my.cnf:
-#  file.managed:
-#    - source: salt://mysql-server/files/etc/mysql/my.cnf
+/etc/mysql/my.cnf:
+  file.managed:
+    - source: salt://mysql-server/files/etc/mysql/my.cnf
 
 #/etc/mysql/conf.d/binlog.cnf:
 #  file.managed:
