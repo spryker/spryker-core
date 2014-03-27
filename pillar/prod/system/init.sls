@@ -42,4 +42,4 @@ filesystems:
 # Note - swapspace must be on ext3/ext4/xfs partitions, btrfs doesn't support it
 swap:
   /SWAP:
-    size: 2048
+    size: 4096
