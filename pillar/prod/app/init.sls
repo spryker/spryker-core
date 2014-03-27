@@ -38,7 +38,7 @@ environments:
       max_heap_size: 384m
       max_perm_size: 128m
     elasticsearch:
-      heap_size: 384m
+      heap_size: 256m
     solr:
       lb_hostname: 10.189.246.59
     cloud:
@@ -76,10 +76,10 @@ environments:
         password: tkVM0EysbN64
     tomcat:
       min_heap_size: 128m
-      max_heap_size: 384m
+      max_heap_size: 256m
       max_perm_size: 128m
     elasticsearch:
-      heap_size: 384m
+      heap_size: 256m
     solr:
       lb_hostname: 10.189.246.66
     cloud:

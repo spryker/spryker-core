@@ -60,6 +60,8 @@
     - force: true
     - require:
       - file: /etc/nginx/sites-available/{{ store }}_{{ environment }}_zed
+      - file: /etc/nginx/htpasswd-zed
+      - file: /etc/nginx/htpasswd-staging
     - watch_in:
       - service: nginx
 

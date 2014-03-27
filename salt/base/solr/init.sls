@@ -3,5 +3,5 @@
 # in tomcat.solr state
 
 include:
-  - .download
   - .logging
+  - .download

@@ -15,5 +15,6 @@ couchbase_cluster_hosts:
     - password: {{ pillar.couchbase.password }}
     - require:
       - service: couchbase-server
+      - cmd: cluster_setup
 {% endif %}
 {% endif %}

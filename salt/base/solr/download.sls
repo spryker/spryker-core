@@ -25,3 +25,5 @@ unpack-solr.tgz:
     - source: /data/deploy/download/solr/solr-{{ pillar.solr.version }}/dist/solr-{{ pillar.solr.version }}.war
     - require:
       - cmd: unpack-solr.tgz
+      - cmd: copy-log4j-over-slf4j.jar
+      - cmd: copy-slf4j-jdk14.jar
