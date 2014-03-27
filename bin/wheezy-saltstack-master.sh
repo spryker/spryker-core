@@ -36,9 +36,8 @@ apt-get -qq install salt-master python-pip
 ufw allow 4505/tcp
 ufw allow 4506/tcp
 
-
 # Workaround to get latest pip on wheezy
-pip install pip
+pip install --upgrade pip
 ln -sf /usr/local/bin/pip /usr/bin/pip
 
 # Install python extensions for rackspace cloud
@@ -78,6 +77,10 @@ pillar_roots:
     - /srv/pillar/base
 EOF
 
+echo "environment: prod" > /etc/salt/minion
+echo "roles: 
+  - master" > /etc/salt/grains
+
 # Prepare cloud credentials
 mkdir -p /etc/salt/cloud.providers.d
 [ -f /etc/salt/cloud.providers.d/rackspace.conf ] || cat > /etc/salt/cloud.providers.d/rackspace.conf << EOF
@@ -85,7 +88,7 @@ prod-rackspace:
   minion:
     master: salt.${DOMAIN_NAME}
     environment: prod
-  identity_url: '${RACKSPACE_API_URL}'
+  identity_url: '${RACKSPACE_API_URL}/tokens'
   compute_name: cloudServersOpenStack
   protocol: ipv4
   compute_region: ${RACKSPACE_REGION}
@@ -113,7 +116,7 @@ export OS_PASSWORD=${RACKSPACE_API_KEY}
 export OS_PROJECT_ID=${RACKSPACE_API_USERNAME}
 export OS_NO_CACHE=1
 EOF
-source /root/nova-credentials
+#source /root/nova-credentials
 
 # Prepare cloud profiles (from git repo)
 if [ ! -L /etc/salt/cloud.profiles.d ]; then
@@ -121,8 +124,11 @@ if [ ! -L /etc/salt/cloud.profiles.d ]; then
   ln -sf /srv/cloud.profiles.d /etc/salt/cloud.profiles.d
 fi
 
+# Setup key for local salt calls
+salt-key -ya `hostname`
+
 # Setup utilities
-salt-call -l error --file-root=/srv/salt/base --local state.sls system.master
+salt-call -l error state.sls system.master
 
 # Start salt-master
 /etc/init.d/salt-master restart

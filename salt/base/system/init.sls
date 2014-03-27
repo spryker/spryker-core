@@ -8,3 +8,4 @@ include:
   - .time
   - .firewall
   - .sysctl
+  - .rackspace
