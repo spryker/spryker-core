@@ -34,7 +34,7 @@ $config['activemq'] = array (
 );
 
 $config['kibana'] = [
-    'base_url' => 'https://'{{ pillar.kibana.hostname }},
+    'base_url' => 'https://{{ pillar.kibana.hostname }}',
 ];
 /** Amazon AWS api keys - not used for rackspace projects */
 // $config['productImage']['amazonS3Key'] = 'AKIAIFH6VVOUVCIUSAVA';
