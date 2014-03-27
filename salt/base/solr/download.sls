@@ -27,3 +27,5 @@ unpack-solr.tgz:
       - cmd: unpack-solr.tgz
       - cmd: copy-log4j-over-slf4j.jar
       - cmd: copy-slf4j-jdk14.jar
+      - cmd: copy-jcl-over-slf4j.jar
+      - cmd: copy-slf4j-api.jar

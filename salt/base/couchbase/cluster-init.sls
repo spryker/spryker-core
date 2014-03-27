@@ -11,7 +11,7 @@ cluster_setup:
         --cluster-init-username={{ pillar['couchbase']['user'] }} \
         --cluster-init-password={{ pillar['couchbase']['password'] }} \
         --cluster-init-port={{ pillar['couchbase']['port'] }} \
-        --cluster-init-ramsize={{ pillar['couchbase']['ramsize'] }} && sleep 15s
+        --cluster-init-ramsize={{ pillar['couchbase']['ramsize'] }} && sleep 60s
     - unless: |
         /opt/couchbase/bin/couchbase-cli server-list \
         -u {{ pillar['couchbase']['user'] }} \

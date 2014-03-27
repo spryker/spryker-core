@@ -14,6 +14,7 @@ bucket_{{ store }}_{{ environment }}_{{ bucket }}:
     - bucket_password: {{ pillar.couchbase.password }}
     - require:
       - service: couchbase-server
+      - couchbase_cluster: couchbase_cluster_hosts
 
 {%- endfor %}
 {%- endfor %}
