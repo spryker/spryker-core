@@ -50,11 +50,11 @@ environments:
       cdn:
         enabled: true
         static_media:
-          http: http://9698dbe5c1e046e04fc8-c1bca077eee36c1d1fe23ff9120dbd8a.r14.cf3.rackcdn.com
-          https: https://2ee910d2a631138bd3dc-c1bca077eee36c1d1fe23ff9120dbd8a.ssl.cf3.rackcdn.com
+          http: http://static-development.project-yz.com
+          https: https://static-development-secure.project-yz.com
         static_assets:
-          http: http://9698dbe5c1e046e04fc8-c1bca077eee36c1d1fe23ff9120dbd8a.r14.cf3.rackcdn.com
-          https: https://2ee910d2a631138bd3dc-c1bca077eee36c1d1fe23ff9120dbd8a.ssl.cf3.rackcdn.com
+          http: http://static-development.project-yz.com
+          https: https://static-development-secure.project-yz.com
         delete_local_processed_images: true
         delete_original_images: true
     stores:
@@ -92,11 +92,11 @@ environments:
       cdn:
         enabled: true
         static_media:
-          http: http://3b4beede3cff33aa3258-dddf66e13bf17683250186c9728b6016.r74.cf3.rackcdn.com
-          https: https://302cad94bc53eb3dae90-dddf66e13bf17683250186c9728b6016.ssl.cf3.rackcdn.com
+          http: http://static-testing.project-yz.com
+          https: https://static-testing-secure.project-yz.com
         static_assets:
-          http: http://3b4beede3cff33aa3258-dddf66e13bf17683250186c9728b6016.r74.cf3.rackcdn.com
-          https: https://302cad94bc53eb3dae90-dddf66e13bf17683250186c9728b6016.ssl.cf3.rackcdn.com
+          http: http://static-testing.project-yz.com
+          https: https://static-testing-secure.project-yz.com
         delete_local_processed_images: true
         delete_original_images: true
     stores:
