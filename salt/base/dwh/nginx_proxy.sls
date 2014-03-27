@@ -39,6 +39,10 @@
       settings: {{ settings }}
       store: {{ store }}
       store_details: {{ store_details }}
+    - require:
+      - file: /etc/nginx/htpasswd-dwh
+      - file: /etc/nginx/ssl/saiku.key
+      - file: /etc/nginx/ssl/saiku.crt
     - watch_in:
       - service: nginx
 

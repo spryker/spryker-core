@@ -34,6 +34,10 @@
     - mode: 644
     - watch_in:
       - service: nginx
+    - require:
+      - file: /etc/nginx/htpasswd-kibana
+      - file: /etc/nginx/ssl/kibana.key
+      - file: /etc/nginx/ssl/kibana.crt
 
 /etc/nginx/sites-enabled/kibana.conf:
   file.symlink:
