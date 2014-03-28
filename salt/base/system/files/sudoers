@@ -13,18 +13,24 @@ Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/
 # User alias specification
 
 # Cmnd alias specification
+# Yves&Zed application specific - allow deployment, remove lock, restart php
+Cmnd_Alias APP    = /etc/deploy/deploy.rb *, \
+					rm -f /data/deploy/.lock.production, \
+					rm -f /data/deploy/.lock.staging, \
+					rm -f /data/deploy/.lock.testing, \
+					/etc/init.d/php5-fpm restart
 
 # User privilege specification
-root    ALL=(ALL:ALL) ALL
+root  ALL=(ALL) ALL
 
 # Allow members of group adm to execute any command, without password authentication
 %adm  ALL=(ALL) NOPASSWD:ALL
 
+# Allow members of group dev to execute specified APP commands, without password authentication
+%dev  ALL=(root) NOPASSWD:APP
+
 # Allow members of group sudo to execute any command, with password authentication
-%sudo  ALL=(ALL:ALL) ALL
+%sudo ALL=(ALL) ALL
 
-# See sudoers(5) for more information on "#include" directives:
-#includedir /etc/sudoers.d
-
-# Rackspace support - don't remove for managed VM's
+# Rackspace support - don't remove for managed VM's - allow to execute any command without password authentication
 rack  ALL=(ALL) NOPASSWD: ALL

@@ -1,10 +1,27 @@
+dev:
+  group.present:
+    - system: true
+
 {% for username, user in pillar.get('user', {}).items() %}
 
 {{ username }}:
   user.present:
     - fullname: {{ user.fullname }}
     - groups:
+{% if user.admin is defined AND user.admin %}
       - adm
+      - dev
+{% else %}
+      - dev
+{% endif}
+
+    - shell:
+{% if user.shell is defined %}
+      - {{ user.shell }}
+{% else %}
+      - /bin/bash
+{% endif %}
+
 {% if user.ssh_key is defined %}
   ssh_auth:
     - present
