@@ -6,8 +6,6 @@
 /etc/nginx/yzed:
   file.recurse:
     - source: salt://app/files/nginx/yzed
-    - require:
-      - package: nginx-extras
     - watch_in:
       - service: nginx
 {% endif %}
