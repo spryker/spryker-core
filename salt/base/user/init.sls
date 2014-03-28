@@ -8,12 +8,10 @@ dev:
   user.present:
     - fullname: {{ user.fullname }}
     - groups:
+      - dev
 {% if (user.admin is defined) and user.admin %}
       - adm
-      - dev
-{% else %}
-      - dev
-{% endif}
+{% endif %}
 
     - shell:
 {% if user.shell is defined %}
