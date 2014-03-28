@@ -40,7 +40,7 @@ environments:
     elasticsearch:
       heap_size: 256m
     solr:
-      lb_hostname: 10.189.246.59
+      lb_hostname: solr-production-lb.project-yz.com
     cloud:
       enabled: true
       object_storage:
@@ -81,7 +81,7 @@ environments:
     elasticsearch:
       heap_size: 256m
     solr:
-      lb_hostname: 10.189.246.66
+      lb_hostname: solr-staging-lb.project-yz.com
     cloud:
       enabled: true
       object_storage:
