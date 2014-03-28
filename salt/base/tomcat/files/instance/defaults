@@ -31,6 +31,9 @@ JAVA_OPTS="$JAVA_OPTS -XX:+UseCompressedOops"
 JAVA_OPTS="$JAVA_OPTS -XX:+DisableExplicitGC"
 JAVA_OPTS="$JAVA_OPTS {{ gc }}"
 
+### Solr - allow XI:Include for replication
+JAVA_OPTS="$JAVA_OPTS -Dsolr.allow.unsafe.resourceloading=true"
+
 #### defaults from /etc
 TOMCAT7_USER=www-data
 TOMCAT7_GROUP=www-data
