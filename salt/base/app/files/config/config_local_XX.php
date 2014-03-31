@@ -56,6 +56,12 @@ $config['zed']['session']['save_path'] = '{%- for host in settings.hosts.couchba
 
 $config['yves']['session'] = $config['zed']['session'];
 
+$config['cloud']['cdn']['static_media']['http'] = '{{ settings.environments[environment].cloud.cdn.static_media.{{store}}.http }}';
+$config['cloud']['cdn']['static_media']['https'] = '{{ settings.environments[environment].cloud.cdn.static_media.{{store}}.https }}';
+
+$config['cloud']['cdn']['static_assets']['http'] = '{{ settings.environments[environment].cloud.cdn.static_assets.{{store}}.http }}';
+$config['cloud']['cdn']['static_assets']['https'] = '{{ settings.environments[environment].cloud.cdn.static_assets.{{store}}.https }}';
+
 // Fixme
 /** Payment gateways */
 /** Logistic partners */
