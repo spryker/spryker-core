@@ -13,12 +13,7 @@ dev:
       - adm
 {% endif %}
 
-    - shell:
-{% if user.shell is defined %}
-      - {{ user.shell }}
-{% else %}
-      - /bin/bash
-{% endif %}
+    - shell: {% if user.shell is defined %}{{ user.shell }}{% else %}/bin/bash{% endif %}
 
 {% if user.ssh_key is defined %}
   ssh_auth:
