@@ -52,8 +52,3 @@ $config['cloud']['objectStorage']['rackspace']['username'] = '{{ settings.enviro
 $config['cloud']['objectStorage']['rackspace']['apiKey'] = '{{ settings.environments[environment].cloud.object_storage.rackspace.api_key }}';
 
 $config['cloud']['cdn']['enabled'] = {{ settings.environments[environment].cloud.cdn.enabled }};
-//$config['cloud']['cdn']['static_media']['http'] = '{{ settings.environments[environment].cloud.cdn.static_media.http }}';
-//$config['cloud']['cdn']['static_media']['https'] = '{{ settings.environments[environment].cloud.cdn.static_media.https }}';
-//
-//$config['cloud']['cdn']['static_assets']['http'] = '{{ settings.environments[environment].cloud.cdn.static_assets.http }}';
-//$config['cloud']['cdn']['static_assets']['https'] = '{{ settings.environments[environment].cloud.cdn.static_assets.https }}';
