@@ -68,7 +68,6 @@ $config['storage']['solr']['endpoint'] = [
         'core' => '{{ store }}'
     ],
     {%- endfor %}
-    ],
 ];
 
 //$config['dwh'] = array(
