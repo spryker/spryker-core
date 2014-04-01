@@ -52,3 +52,41 @@ $config['cloud']['objectStorage']['rackspace']['username'] = '{{ settings.enviro
 $config['cloud']['objectStorage']['rackspace']['apiKey'] = '{{ settings.environments[environment].cloud.object_storage.rackspace.api_key }}';
 
 $config['cloud']['cdn']['enabled'] = {{ settings.environments[environment].cloud.cdn.enabled }};
+
+
+$config['storage']['solr']['endpointGroups'] = [
+    'stores' => [
+        {%- for store, store_details in pillar.stores.items() %}
+        '{{ store }}',
+        {%- endfor -%}
+    ],
+];
+
+$config['storage']['solr']['endpoint'] = [
+    {%- for store, store_details in pillar.stores.items() %}
+    '{{ store }}' => [
+        'core' => '{{ store }}',
+    {%- endfor -%}
+    ],
+];
+
+//$config['dwh'] = array(
+//    'mysql-binary' => '/usr/bin/mysql',
+//    'mysql-dbs' => array(
+//        'zed' => $config['db'],
+//    ),
+//
+//    'postgresql-binary' => '/usr/bin/psql',
+//    'postgresql-username' => 'de_production_dwh', // store
+//// FIXME:    'postgresql-password' => '', pgsql doesnt support non-interactive password
+//    'postgresql-database' => 'de_production_dwh', // store
+//    'postgresql-host' => '10.15.8.3', //dwh.project-yz.com
+//
+//    'data-dir'   => '/data/storage/production/static/DE/protected/dwh/data', // local
+//    'work-dir'   => '/data/storage/production/static/DE/protected/dwh/work', // loka
+//    'export-dir' => '/data/storage/production/static/DE/protected/dwh/export',
+//
+//    'cubes-url' => 'https://dwh-de.migusta.de', // dwh.project-yz.com extern
+//
+//    'decimal-mark-for-numbers' => ",",
+//);
