@@ -15,9 +15,9 @@ Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/
 # Cmnd alias specification
 # Yves&Zed application specific - allow deployment, remove lock, restart php
 Cmnd_Alias APP    = /etc/deploy/deploy.rb *, \
-					rm -f /data/deploy/.lock.production, \
-					rm -f /data/deploy/.lock.staging, \
-					rm -f /data/deploy/.lock.testing, \
+					/bin/rm -f /data/deploy/.lock.production, \
+					/bin/rm -f /data/deploy/.lock.staging, \
+					/bin/rm -f /data/deploy/.lock.testing, \
 					/etc/init.d/php5-fpm restart
 
 # User privilege specification
