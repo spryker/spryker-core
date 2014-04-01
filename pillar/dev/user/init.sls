@@ -2,6 +2,7 @@ user:
 
   vagrant:
     fullname: Vagrant User
+    admin: True
 
   root:
     fullname: Root Account
