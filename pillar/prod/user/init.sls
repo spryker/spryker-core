@@ -35,9 +35,8 @@ user:
     ssh_key: |
       ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAu6B/194wiz1Phd1tGGnlPJaFwHUm+Fyc2Ku8mMuPIodwqLjTa+ZZ3lhOmxHgO2VTeC/46p7HprlatSWBiS3rm28HW3tM0wLyxazUNN5xmUjRuYRun7IGlo9Q9BvBMdgNTZ464DWPbidRqHFoYG6Qh8+Tt2orEc/YcwKLzkjcvRYWuFRsf0yQr25Ouoweq+hXEetYPn67yWNndqfzBOvPDAYKcLy2rvnLNlE0GSlD52dLJ3uPFLa7IGlg9uI0wW9shyeLy04P+197rqRoMkeMHRrvgBIud3Z8Xz0nOxEivD+nFXnpaV4wHxEPaViWhuFXvRrsSltDU7+jGyrJbV5GpQ== marek.obuchowicz@project-a.com
 
-martin.loetzsch:
+  martin.loetzsch:
     fullname: Martin Loetzsch
     admin: True
     ssh_key: |
       ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAu98hEHUHa2GGSKYR6GHZTbQTvNNPiOkHf5Zg6ZJ1fFyWsBKF9L96PygLoF/wHN6EPVu/SGaP4zf39WN507KdNL2jg6Z22hFOjP7MNIosgHTTAkJVvQSyASyTmvH9llJrLQCmUhHk6dkFJ51RVMw61dasxZbW5fztDvMilZDzpj8= loetzsch@dhcp-blue-36.csl.sony.fr
-  
