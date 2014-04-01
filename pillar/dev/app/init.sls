@@ -14,9 +14,9 @@ stores:
   DE:
     locale: de_DE
     appdomain: '00'
-  AT:
-    locale: de_AT
-    appdomain: '03'
+  US:
+    locale: en_US
+    appdomain: '10'
 
 network:
   loadbalancers_interface: lo
@@ -54,22 +54,31 @@ environments:
         enabled: true
         static_media:
           DE:
+            http: http://static-development.project-yz.de
+            https: https://static-development-secure.project-yz.de
+          US:
             http: http://static-development.project-yz.com
             https: https://static-development-secure.project-yz.com
-          AT:
-            http: http://static-development.project-yz.at
-            https: https://static-development-secure.project-yz.at
         static_assets:
           DE:
+            http: http://static-development.project-yz.de
+            https: https://static-development-secure.project-yz.de
+          US:
             http: http://static-development.project-yz.com
             https: https://static-development-secure.project-yz.com
-          AT:
-            http: http://static-development.project-yz.at
-            https: https://static-development-secure.project-yz.at
         delete_local_processed_images: true
         delete_original_images: true
     stores:
       DE:
+        yves:
+          hostnames:
+            - www-development.project-yz.de
+        zed:
+          hostname: zed-development.project-yz.de
+          htpasswd_file:
+        dwh:
+          hostname: dwh.project-yz.de
+      US:
         yves:
           hostnames:
             - www-development.project-yz.com
@@ -78,15 +87,6 @@ environments:
           htpasswd_file:
         dwh:
           hostname: dwh.project-yz.com
-      AT:
-        yves:
-          hostnames:
-            - www-development.project-yz.at
-        zed:
-          hostname: zed-development.project-yz.at
-          htpasswd_file:
-        dwh:
-          hostname: dwh.project-yz.at
   testing:
     database:
       zed:
@@ -112,23 +112,32 @@ environments:
         enabled: true
         static_media:
           DE:
+            http: http://static-testing.project-yz.de
+            https: https://static-testing-secure.project-yz.de
+          US:
             http: http://static-testing.project-yz.com
             https: https://static-testing-secure.project-yz.com
-          AT:
-            http: http://static-testing.project-yz.at
-            https: https://static-testing-secure.project-yz.at
 
         static_assets:
           DE:
+            http: http://static-testing.project-yz.de
+            https: https://static-testing-secure.project-yz.de
+          US:
             http: http://static-testing.project-yz.com
             https: https://static-testing-secure.project-yz.com
-          AT:
-            http: http://static-testing.project-yz.at
-            https: https://static-testing-secure.project-yz.at
         delete_local_processed_images: true
         delete_original_images: true
     stores:
       DE:
+        yves:
+          hostnames:
+            - www-testing.project-yz.de
+        zed:
+          hostname: zed-testing.project-yz.de
+          htpasswd_file:
+        dwh:
+          hostname: dwh.project-yz.de
+      US:
         yves:
           hostnames:
             - www-testing.project-yz.com
@@ -137,15 +146,6 @@ environments:
           htpasswd_file:
         dwh:
           hostname: dwh.project-yz.com
-      AT:
-        yves:
-          hostnames:
-            - www-testing.project-yz.at
-        zed:
-          hostname: zed-testing.project-yz.at
-          htpasswd_file:
-        dwh:
-          hostname: dwh.project-yz.at
 # The key below is used for deployment - from deployment server user root must be able to log in to all other
 # servers as user root.
 # If we're using salt-cloud to create cloud VM's - it will automatically generate /root/.ssh/id_rsa

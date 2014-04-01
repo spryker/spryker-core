@@ -24,9 +24,9 @@ stores:
   DE:
     locale: de_DE
     appdomain: '00'
-  AT:
-    locale: de_AT
-    appdomain: '03'
+  US:
+    locale: en_US
+    appdomain: '10'
 
 # List enabled environments
 environments:
@@ -55,23 +55,32 @@ environments:
         enabled: true
         static_media:
           DE:
+            http: http://static.project-yz.de
+            https: https://static-secure.project-yz.de
+          US:
             http: http://static.project-yz.com
             https: https://static-secure.project-yz.com
-          AT:
-            http: http://static.project-yz.at
-            https: https://static-secure.project-yz.at
 
         static_assets:
           DE:
+            http: http://static.project-yz.de
+            https: https://static-secure.project-yz.de
+          US:
             http: http://static.project-yz.com
             https: https://static-secure.project-yz.com
-          AT:
-            http: http://static.project-yz.at
-            https: https://static-secure.project-yz.at
         delete_local_processed_images: true
         delete_original_images: true
     stores:
       DE:
+        yves:
+          hostnames:
+            - www-production.project-yz.de
+        zed:
+          hostname: zed-production.project-yz.de
+#          htpasswd_file: /etc/nginx/htpasswd-zed
+        dwh:
+          saiku_hostname: dwh.project-yz.de
+      US:
         yves:
           hostnames:
             - www-production.project-yz.com
@@ -80,15 +89,6 @@ environments:
 #          htpasswd_file: /etc/nginx/htpasswd-zed
         dwh:
           saiku_hostname: dwh.project-yz.com
-      AT:
-        yves:
-          hostnames:
-            - www-production.project-yz.at
-        zed:
-          hostname: zed-production.project-yz.at
-#          htpasswd_file: /etc/nginx/htpasswd-zed
-        dwh:
-          saiku_hostname: dwh.project-yz.at
   staging:
     database:
       zed:
@@ -114,22 +114,32 @@ environments:
         enabled: true
         static_media:
           DE:
+            http: http://static-staging.project-yz.de
+            https: https://static-staging-secure.project-yz.de
+          US:
             http: http://static-staging.project-yz.com
             https: https://static-staging-secure.project-yz.com
-          AT:
-            http: http://static-staging.project-yz.at
-            https: https://static-staging-secure.project-yz.at
         static_assets:
           DE:
+            http: http://static-staging.project-yz.de
+            https: https://static-staging-secure.project-yz.de
+          US:
             http: http://static-staging.project-yz.com
             https: https://static-staging-secure.project-yz.com
-          DE:
-            http: http://static-staging.project-yz.at
-            https: https://static-staging-secure.project-yz.at
         delete_local_processed_images: true
         delete_original_images: true
     stores:
       DE:
+        yves:
+          hostnames:
+            - www-staging.project-yz.de
+          htpasswd_file: /etc/nginx/htpasswd-staging
+        zed:
+          hostname: zed-staging.project-yz.de
+          htpasswd_file: /etc/nginx/htpasswd-staging
+        dwh:
+          saiku_hostname: dwh-staging.project-yz.de
+      US:
         yves:
           hostnames:
             - www-staging.project-yz.com
@@ -139,16 +149,6 @@ environments:
           htpasswd_file: /etc/nginx/htpasswd-staging
         dwh:
           saiku_hostname: dwh-staging.project-yz.com
-      AT:
-        yves:
-          hostnames:
-            - www-staging.project-yz.at
-          htpasswd_file: /etc/nginx/htpasswd-staging
-        zed:
-          hostname: zed-staging.project-yz.at
-          htpasswd_file: /etc/nginx/htpasswd-staging
-        dwh:
-          saiku_hostname: dwh-staging.project-yz.at
 
 # The key below is used for deployment - from deployment server user root must be able to log in to all other
 # servers as user root.
