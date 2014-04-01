@@ -15,6 +15,9 @@ libmemcached-dev:
    - require:
      - pkg: libmemcached11
 
+php5-pgsql:
+  pkg.installed:
+
 memcached:
   pecl.installed:
     - require:
@@ -89,6 +92,13 @@ pear-ctwig-install:
 /etc/php5/conf.d/twig.ini:
   file.managed:
     - source: salt://php/files/twig.ini
+    - user: root
+    - group: root
+    - mode: 644
+
+/etc/php5/conf.d/pgsql.ini:
+  file.managed:
+    - source: salt://php/files/pgsql.ini
     - user: root
     - group: root
     - mode: 644
