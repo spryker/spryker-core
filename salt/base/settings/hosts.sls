@@ -1,3 +1,9 @@
+# FIXME:
+# in mine.get we should change 'roles:xxx', 'network.interfaces', expr_form = 'grain' to something like:
+# 'G@roles:xxx AND G@deployment:' + env -  so that on prod we only select here minions from prod env, etc.
+# see:
+# http://salt.readthedocs.org/en/latest/ref/states/vars.html   (env variable)
+# http://docs.saltstack.com/en/latest/topics/targeting/compound.html - compound matches
 ### Easy settings copy
 {%- set netif = pillar.network.project_interface %}
 
