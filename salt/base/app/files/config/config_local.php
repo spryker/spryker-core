@@ -65,7 +65,8 @@ $config['storage']['solr']['endpointGroups'] = [
 $config['storage']['solr']['endpoint'] = [
     {%- for store, store_details in pillar.stores.items() %}
     '{{ store }}' => [
-        'core' => '{{ store }}',
+        'core' => '{{ store }}'
+    ],
     {%- endfor %}
     ],
 ];
