@@ -17,6 +17,8 @@ libmemcached-dev:
 
 php5-pgsql:
   pkg.installed:
+    - require:
+      - pkg: php
 
 memcached:
   pecl.installed:
