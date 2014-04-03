@@ -324,6 +324,13 @@ def perform_migrations
   result = multi_ssh_exec!(host, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/perform_migrations\" ")
 end
 
+def update_cdn
+  put_status "Update CDN"
+  hosts = $jobs_hosts || [$tools_host]
+  host = hosts[0]
+  result = multi_ssh_exec!(host, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/update_cdn\" ")
+end
+
 def initialize_database
   put_status "Initializing database"
   hosts = $jobs_hosts || [$tools_host]
@@ -542,6 +549,7 @@ def perform_deploy
   deactivate_cronjobs
   activate_maintenance if show_maintenance
   perform_migrations if have_migrations
+  update_cdn
   deactivate_maintenance
   initialize_database
   activate_release
