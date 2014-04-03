@@ -40,3 +40,9 @@ user:
     admin: True
     ssh_key: |
       ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAu98hEHUHa2GGSKYR6GHZTbQTvNNPiOkHf5Zg6ZJ1fFyWsBKF9L96PygLoF/wHN6EPVu/SGaP4zf39WN507KdNL2jg6Z22hFOjP7MNIosgHTTAkJVvQSyASyTmvH9llJrLQCmUhHk6dkFJ51RVMw61dasxZbW5fztDvMilZDzpj8= loetzsch@dhcp-blue-36.csl.sony.fr
+
+  tina.neumann:
+    fullname: Tina Neumann
+    admin: True
+    ssh_key: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDqunsehMv9WSOny/OpWGCDWuK9ouqIxhuUOYmscfexpynaOF8eWAnZ3CPR0rO2wOCFVdMhLKvX4f9Cd5rT273wAzOd8IveuGsN0h/jG1MXCftNY2GZ9t+f1X0UeAVKJra5jg5zoDRq0PS/KCYh6l3vxeVMkjh9w9wzRFkJN4lPAZoS/JHhQ04yZN87ja6PibjRt8kj0ReDrmH+KQT1ChS3kiXzJ2uttn6Pb66BwutFEDBjMwmmjIeDrCXeZw+REXVfiMuLnK65vg2Ybkin4xN3EdYRe2woCLqjnF5UuujfkRiA9/tHr6aHes3WdvNU3PSWHJ9wWo7i/EO2p5665HAD tina.neumann@project-a.com
