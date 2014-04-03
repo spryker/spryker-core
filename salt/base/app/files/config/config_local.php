@@ -70,6 +70,8 @@ $config['storage']['solr']['endpoint'] = [
     {%- endfor %}
 ];
 
+$config['lumberjack']['elasticsearch']['host'] = '{{ settings.hosts.elasticsearch_logs|first }}';
+
 //$config['dwh'] = array(
 //    'mysql-binary' => '/usr/bin/mysql',
 //    'mysql-dbs' => array(
