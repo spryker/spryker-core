@@ -56,18 +56,18 @@ environments:
         static_media:
           DE:
             http: http://static.project-yz.de
-            https: https://static-secure.project-yz.de
+            https: https://d8c570a75c3f0172aa83-cafc7b6bb6aa6cd48eab4c1683373025.ssl.cf3.rackcdn.com
           US:
             http: http://static.project-yz.com
-            https: https://static-secure.project-yz.com
+            https: https://280eec0e470d74a52757-9d50a0bd32e20509da2ab0e86faf9dfe.ssl.cf3.rackcdn.com
 
         static_assets:
           DE:
             http: http://static.project-yz.de
-            https: https://static-secure.project-yz.de
+            https: https://d8c570a75c3f0172aa83-cafc7b6bb6aa6cd48eab4c1683373025.ssl.cf3.rackcdn.com
           US:
             http: http://static.project-yz.com
-            https: https://static-secure.project-yz.com
+            https: https://280eec0e470d74a52757-9d50a0bd32e20509da2ab0e86faf9dfe.ssl.cf3.rackcdn.com
         delete_local_processed_images: true
         delete_original_images: true
     stores:
@@ -115,17 +115,17 @@ environments:
         static_media:
           DE:
             http: http://static-staging.project-yz.de
-            https: https://static-staging-secure.project-yz.de
+            https: https://d3d22d4c9f2c4f411161-8fb13e9b852389e0543f2c0802d4997e.ssl.cf3.rackcdn.com
           US:
             http: http://static-staging.project-yz.com
-            https: https://static-staging-secure.project-yz.com
+            https: https://aabd028975c755cf7589-5eb80ff65465225f76de3b568e724ebe.ssl.cf3.rackcdn.com
         static_assets:
           DE:
             http: http://static-staging.project-yz.de
-            https: https://static-staging-secure.project-yz.de
+            https: https://d3d22d4c9f2c4f411161-8fb13e9b852389e0543f2c0802d4997e.ssl.cf3.rackcdn.com
           US:
             http: http://static-staging.project-yz.com
-            https: https://static-staging-secure.project-yz.com
+            https: https://aabd028975c755cf7589-5eb80ff65465225f76de3b568e724ebe.ssl.cf3.rackcdn.com
         delete_local_processed_images: true
         delete_original_images: true
     stores:

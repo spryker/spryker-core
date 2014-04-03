@@ -113,18 +113,18 @@ environments:
         static_media:
           DE:
             http: http://static-testing.project-yz.de
-            https: https://static-testing-secure.project-yz.de
+            https: https://3963947472a6621adbcb-fb198443397976013dfa73b29d41f433.ssl.cf3.rackcdn.com
           US:
             http: http://static-testing.project-yz.com
-            https: https://static-testing-secure.project-yz.com
+            https: https://61862c85d035b0cdd7b8-73dfe4b3babcf6d381f8fa0527f882da.ssl.cf3.rackcdn.com
 
         static_assets:
           DE:
             http: http://static-testing.project-yz.de
-            https: https://static-testing-secure.project-yz.de
+            https: https://3963947472a6621adbcb-fb198443397976013dfa73b29d41f433.ssl.cf3.rackcdn.com
           US:
             http: http://static-testing.project-yz.com
-            https: https://static-testing-secure.project-yz.com
+            https: https://61862c85d035b0cdd7b8-73dfe4b3babcf6d381f8fa0527f882da.ssl.cf3.rackcdn.com
         delete_local_processed_images: true
         delete_original_images: true
     stores:
