@@ -7,7 +7,7 @@ couchbase:
   data_path: /data/couchbase
   buckets:
     yves:
-      bucket_size: 256
+      bucket_size: 128
       bucket_replica: 1
     sessions:
       bucket_size: 128
