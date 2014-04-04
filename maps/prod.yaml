@@ -17,6 +17,17 @@ prod-rackspace-wheezy-2GB:
         roles:
           - app
           - cronjobs
+prod-rackspace-wheezy-4GB:
+  - reporting01.project-yz.com:
+      grains:
+        deployment: prod
+        roles:
+          - elasticsearch
+          - kibana
+          - app
+          - dwh_database
+          - dwh_jobs
+          - dwh_saiku
   - data01.project-yz.com:
       grains:
         deployment: prod
@@ -46,14 +57,3 @@ prod-rackspace-wheezy-2GB:
           - solr
           - elasticsearch_data
         solr_role: slave
-prod-rackspace-wheezy-4GB:
-  - reporting01.project-yz.com:
-      grains:
-        deployment: prod
-        roles:
-          - elasticsearch
-          - kibana
-          - app
-          - dwh_database
-          - dwh_jobs
-          - dwh_saiku
