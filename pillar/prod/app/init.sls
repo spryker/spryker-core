@@ -74,18 +74,18 @@ environments:
       DE:
         yves:
           hostnames:
-            - www-production.project-yz.de
+            - www.project-yz.de
         zed:
-          hostname: zed-production.project-yz.de
+          hostname: zed.project-yz.de
 #          htpasswd_file: /etc/nginx/htpasswd-zed
         dwh:
           saiku_hostname: dwh.project-yz.de
       US:
         yves:
           hostnames:
-            - www-production.project-yz.com
+            - www.project-yz.com
         zed:
-          hostname: zed-production.project-yz.com
+          hostname: zed.project-yz.com
 #          htpasswd_file: /etc/nginx/htpasswd-zed
         dwh:
           saiku_hostname: dwh.project-yz.com
