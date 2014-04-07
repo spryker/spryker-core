@@ -1,3 +1,3 @@
 clear-couchbase-client-configuration-cache:
   cmd.run:
-    - name: rm /tmp/*.cache
+    - name: rm -f /tmp/*.cache
