@@ -12,7 +12,14 @@ prepare-system:
     - system.minion
     - system.filesystems
 
-highstate-on-all-nodes:
+clear-couchbase-client-configuration-cache:
   match: '*'
   require:
     - prepare-system
+  sls:
+    - system.clear-couchbase-client-configuration-cache
+
+highstate-on-all-nodes:
+  match: '*'
+  require:
+    - clear-couchbase-client-configuration-cache
