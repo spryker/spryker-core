@@ -1,4 +1,12 @@
 # Install PHP and extensions
+libmysqlclient18:
+  pkg.installed:
+    - version: 5.5.35+dfsg-0+wheezy1
+
+mysql-common:
+  pkg.installed:
+    - version: 5.5.35+dfsg-0+wheezy1
+
 php:
   pkg.installed:
     - pkgs:
