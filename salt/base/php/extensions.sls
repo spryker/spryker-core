@@ -20,7 +20,7 @@ php5-pgsql:
     - require:
       - pkg: php
 
-pkg-repo:
+pkg-config:
   pkg.installed
 
 memcached:
@@ -29,7 +29,7 @@ memcached:
       - pkg: php-pear
       - pkg: libmemcached-dev
       - pkg: libmemcached11
-      - pkg: pkg-repo
+      - pkg: pkg-config
 {% if 'dev' in grains.roles %}
 /etc/php5/conf.d/xdebug.ini:
   file.managed:
