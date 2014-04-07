@@ -17,7 +17,7 @@ clear-couchbase-client-configuration-cache:
   require:
     - prepare-system
   sls:
-    - system.clear-couchbase-client-configuration-cache
+    - system.clear_couchbase_client_configuration_cache
 
 highstate-on-all-nodes:
   match: '*'
