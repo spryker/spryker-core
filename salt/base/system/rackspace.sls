@@ -31,7 +31,7 @@ driveclient:
 
 setup-rackspace-backup-agent:
   cmd.run:
-    - name: driveclient --configure -u {{ pillar.rackspace.username }} -k {{ pillar.rackspace.apikey }} -t LON && service driveclient restart && update-rc.d driveclient defaults
+    - name: /usr/local/bin/driveclient --configure -u {{ pillar.rackspace.username }} -k {{ pillar.rackspace.apikey }} -t LON && service driveclient restart && update-rc.d driveclient defaults
     - unless: test -f /var/run/driveclient.pid
     - requires:
       - pkg: driveclient
