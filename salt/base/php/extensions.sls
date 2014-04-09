@@ -25,6 +25,7 @@ pkg-config:
 
 memcached:
   pecl.installed:
+    - defaults: True
     - require:
       - pkg: php-pear
       - pkg: libmemcached-dev
