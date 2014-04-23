@@ -19,3 +19,7 @@ pound:
 /etc/pound/certs/star_project_yz_com:
   file.managed:
     - source: salt://pound/files/etc/pound/certs/star_project_yz_com
+
+/etc/pound/certs/star_project_yz_de:
+  file.managed:
+    - source: salt://pound/files/etc/pound/certs/star_project_yz_de
