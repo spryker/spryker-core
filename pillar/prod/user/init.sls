@@ -53,3 +53,9 @@ user:
     admin: True
     ssh_key: |
       ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDRcbGowS8UVA/bVOmChJ7me+ufahRdhfV+/Vqj5x9AWvq9RRr9qxDpp9S0VUSDmkec8a1K5qwcDmPaJvQQ1/N3yW0SQmkWMul3qAh9WkZcqsaPyMVUyUu4+6DNNQsEvGNQO2yZn9ccVeI6qd6goOSP2slO6R0INPwQBn6L4qSex1pssV4keAV6IPBdLNJDrbwLfDK+dCvV70jAq0hngOWGYteIoVen0PoteZjtaiCYD9Wg9v80sgf5A0SJDuRnSppew7tJ7MvTTEm7ShXnIj7IbyQYztZTDM9K7lmTbCIfv8G8kxTgSdEMt4Um35ZJ2rx/T0LRZyRSfWlgLygmP5Vb0BPdeoB+LjV5WRF2gLFGDsXKmcCF54EFwWPgvj+pAVJHxnQW3OPJGCm2ujl+vapr0hQh7ioudHqUKbxZNcR64nWok++D/L1j10i8wjM67vXSdubjeIhr8oc5lJ/uH3aN7/2vahwH2IBrYZtZH7uCMtFx+fh1bjQsYnMsLDE+/O+d2hBeXB8PXA5hNKEtGvYLW4rn1GXZ/5sluR7qXlwplIaqw+cnFCqIzOhJqrgc3yFJVmAUhF9z49r6oeLRrOeuKb+ayXbDXYe4ZiuHCFtiTKLAlCB3tElFGuqWyfbsnHHXVp9hTm4MiNkvkfy5dDXs2jnQTKe6IfyG/PNNVka8eQ== paul.sturm@project-a.com
+
+  rene.klatt:
+    fullname: Rene Klatt
+    admin: True
+    ssh_key: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRvNma4zWF+tTltvU3jSJ+y+m9rrJ27+y11aWni86Cnh7kHUeJuxtVGaEA073wNFcfhVtHXrQCgJ63cg5DWvWeBFop8R8Wchue+xIhtc0JgjyKsiNx0E4FXXxXGXF6L328N/L5OUuOnA88lYFol91zYJE7mt6Dg1YijPk3u1Aoyu48zB/wnUHuvDDPa4HqOuMsjvJd+zrjpsBuua8gx8jTkyw6P/9Cq4tp89i3Z7ybBklwtBSPf32HN+OSckAXuo2pVT9nIJiKUVjuYKQ1zek+lFLJRfuCW6XXc1sZqosjRg0uxwzhqAqhIdcQPLKqKjRFmiU7Dqqlgt/+ndmHp+Lb rene.klatt@project-a.com
