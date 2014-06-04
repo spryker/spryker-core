@@ -49,7 +49,7 @@
     - template: jinja
     - user: www-data
     - group: www-data
-    - mode: 640
+    - mode: 644
     - require:
       - file: /data/shop/{{ environment }}/shared/data/common
     - context:
