@@ -12,6 +12,12 @@ pound:
   file.managed:
     - source: salt://pound/files/etc/pound/pound.cfg
 
+/etc/pound/certs:
+  file.directory:
+    - user: root
+    - group: root
+    - mode: 755
+
 /etc/default/pound:
   file.managed:
     - source: salt://pound/files/etc/default/pound
