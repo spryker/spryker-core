@@ -15,4 +15,6 @@ base:
       - telnet
       - make
       - python-apt
-      
+      {% if 'cronjobs' in grains.roles %}
+        - mysql-client
+      {% endif %}
