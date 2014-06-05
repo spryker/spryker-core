@@ -39,6 +39,13 @@ mysql_database_{{store}}_{{environment}}_zed:
       - pkg: python-mysqldb
       - service: mysql
 
+mysql_database_{{store}}_{{environment}}_zed_dump:
+  mysql_database.present:
+    - name: {{store}}_{{environment}}_zed_dump
+    - require:
+      - pkg: python-mysqldb
+      - service: mysql
+
 # create database users
 mysql_users_{{store}}_{{environment}}:
   mysql_user.present:
@@ -57,5 +64,12 @@ mysql_grants_{{store}}_{{environment}}_zed:
     - user: {{environment}}
     - host: localhost
 
+# create database permissions
+mysql_grants_{{store}}_{{environment}}_zed:
+  mysql_grants.present:
+    - grant: all
+    - database: {{store}}_{{environment}}_zed_dump.*
+    - user: {{environment}}
+    - host: localhost
 {% endfor %}
 {% endfor %}
