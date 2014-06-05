@@ -65,7 +65,7 @@ mysql_grants_{{store}}_{{environment}}_zed:
     - host: localhost
 
 # create database permissions
-mysql_grants_{{store}}_{{environment}}_zed:
+mysql_grants_{{store}}_{{environment}}_zed_dump:
   mysql_grants.present:
     - grant: all
     - database: {{store}}_{{environment}}_zed_dump.*
