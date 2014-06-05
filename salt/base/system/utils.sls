@@ -15,6 +15,6 @@ base:
       - telnet
       - make
       - python-apt
-      {% if 'cronjobs' in grains.roles %}
-        - mysql-client
-      {% endif %}
+{% if 'cronjobs' in grains.roles and 'dev' not in grains.roles %}
+      - mysql-client
+{% endif %}
