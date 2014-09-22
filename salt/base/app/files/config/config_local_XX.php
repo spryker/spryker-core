@@ -43,9 +43,9 @@ $config['host'] = $config['host_ssl'] = [
 ];
 
 /** Session storage */
-$config['zed']['session']['save_handler'] = 'couchbase';
-$config['zed']['session']['save_path'] = '{%- for host in settings.hosts.couchbase -%}
-{{store}}_{{environment}}_sessions:{{ pillar.couchbase.password }}@{{ host }}:{{ pillar.couchbase.port }}{% if not loop.last %};{% endif -%}{% endfor %}';
+$config['zed']['session']['save_handler'] = 'mysql';
+$config['zed']['session']['save_path'] = '{{ settings.environments[environment].database.shared_data.username }}:{{ settings.environments[environment].database.shared_data.password }}@{{ settings.environments[environment].database.shared_data.hostname }}:{{ settings.environments[environment].database.shared_data.port }}';
+
 
 $config['yves']['session'] = $config['zed']['session'];
 
