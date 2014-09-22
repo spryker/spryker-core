@@ -12,7 +12,6 @@ dev:
   '*':
     - app
     - dwh
-    - couchbase
     - user
     - elasticsearch
     - mysql-server
