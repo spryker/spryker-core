@@ -1,7 +1,7 @@
 mysql-server:
   pkg:
     - installed
-    - name: mysql-server
+    - name: mysql-server-5.6
 
   service:
     - running
@@ -25,6 +25,32 @@ mysql-server:
 
 python-mysqldb:
   pkg.installed
+
+# create shared-data database (used for sessions and KV)
+mysql_database_shared_data:
+  mysql_database.present:
+    - name: shared_data
+    - require:
+      - pkg: python-mysqldb
+      - service: mysql
+
+# create database users for shared-data
+mysql_users_shared_data:
+  mysql_user.present:
+    - name: shared-data
+    - host: localhost
+    - password: mate20mg
+    - require:
+      - pkg: python-mysqldb
+      - service: mysql
+
+# create database permissions
+mysql_grants_shared_data:
+  mysql_grants.present:
+    - grant: all
+    - database: shared_data.*
+    - user: shared-data
+    - host: localhost
 
 {%- for environment, environment_details in pillar.environments.items() %}
 {%- for store, store_details in pillar.stores.items() %}

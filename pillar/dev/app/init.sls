@@ -35,6 +35,13 @@ environments:
         hostname: localhost
         username: development
         password: mate20mg
+      shared_data:
+        hostname: localhost
+        username: shared-data
+        password: mate20mg
+        database: shared_data
+        table: development_kv
+        port: 3306
     tomcat:
       min_heap_size: 128m
       max_heap_size: 512m
@@ -93,6 +100,13 @@ environments:
         hostname: localhost
         username: testing
         password: mate20mg
+      shared_data:
+        hostname: localhost
+        username: shared-data
+        password: mate20mg
+        database: shared_data
+        table: testing_kv
+        port: 3306
     tomcat:
       min_heap_size: 128m
       max_heap_size: 512m

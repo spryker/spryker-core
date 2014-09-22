@@ -22,25 +22,18 @@ $config['db_dump'] = [
     'mysql_bin'     => '/usr/bin/mysql',
 ];
 
-/** Memcache as KeyValue store */
+/** Mysql as KeyValue store */
 $config['storage']['kv'] = [
-    'source' => 'couchbase',
-    'couchbase' => [
-        'hosts' => [
-{%- for host in settings.hosts.couchbase %}
-            [
-                'host' => '{{ host }}',
-                'port' => '{{ pillar.couchbase.port }}',
-            ],
-{% endfor %}
-        ],
-        'user'   => '{{ store }}_{{ environment }}_yves',
-        'password' => '{{ pillar.couchbase.password }}',
-        'bucket' => '{{ store }}_{{ environment }}_yves',
-        'timeout' => 0
+    'source' => 'mysql',
+    'mysql' => [
+        'host' => '{{ settings.environments[environment].database.shared_data.hostname }}',
+        'user' => '{{ settings.environments[environment].database.shared_data.username }}',
+        'password' => '{{ settings.environments[environment].database.shared_data.password }}',
+        'database' => '{{ settings.environments[environment].database.shared_data.database }}',
+        'port' => '{{ settings.environments[environment].database.shared_data.port }}',
+        'table' => '{{ settings.environments[environment].database.shared_data.table }}',
     ]
 ];
-
 
 /** Public URL's */
 $config['host'] = $config['host_ssl'] = [
