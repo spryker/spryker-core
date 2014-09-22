@@ -2,7 +2,6 @@ prod:
   '*':
     - app
     - dwh
-    - couchbase
     - user
     - elasticsearch
     - postfix
@@ -20,7 +19,6 @@ dev:
 qa:
   '*':
     - app
-    - couchbase
     - user
     - elasticsearch
     - mysql-server
