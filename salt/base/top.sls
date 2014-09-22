@@ -10,11 +10,6 @@ base:
     - user
     - logstash
 
-  # couchbase
-  'roles:couchbase':
-    - match: grain
-    - couchbase
-
   # php and application code
   'roles:app':
     - match: grain
@@ -59,11 +54,6 @@ prod:
     - user
     - logstash
     - newrelic
-
-  # couchbase
-  'roles:couchbase':
-    - match: grain
-    - couchbase
 
   # php and application code
   'roles:app':
@@ -137,11 +127,6 @@ dev:
     - system
     - user
     - logstash
-
-  # couchbase
-  'roles:couchbase':
-    - match: grain
-    - couchbase
 
   # php and application code
   'roles:app':

@@ -65,24 +65,6 @@ zendopcache:
     - group: root
     - mode: 644
 
-# Install couchbase extension
-include:
-  - couchbase.libs
-
-couchbase:
-  pecl.installed:
-    - require:
-      - pkg: php-pear
-      - pkg: libcouchbase-dev
-      - pkg: libcouchbase2-libevent
-
-/etc/php5/conf.d/couchbase.ini:
-  file.managed:
-    - source: salt://php/files/couchbase.ini
-    - user: root
-    - group: root
-    - mode: 644
-
 # Install CTwig extension
 pear-ctwig-channel:
   cmd.run:
