@@ -3,25 +3,6 @@
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
  */
 
-/** Solr - default - used for queries */
-$config['storage']['solr']['defaultEndpointSetup'] = [
-    'host' => '{{ settings.environments[environment].solr.lb_hostname }}',
-    'port' => 1{{ settings.environments[environment].tomcat.port_suffix }},
-];
-
-/** Solr - master - used for updates */
-$config['storage']['solr']['masterEndpointSetup'] = [
-    'host' => '{{ settings.host.solr_master }}',
-    'port' => 1{{ settings.environments[environment].tomcat.port_suffix }},
-];
-
-/** Solr - local - used for setup */
-$config['storage']['solr']['localEndpointSetup'] = [
-    'host' => 'localhost',
-    'port' => 1{{ settings.environments[environment].tomcat.port_suffix }},
-];
-$config['storage']['solr']['data_dir'] = '/data/shop/{{ environment }}/shared/data/common/solr';
-
 /** Jenkins - job manager */
 $config['jenkins'] = array(
     'base_url' => 'http://{{ settings.host.cron_master }}:1{{ settings.environments[environment].tomcat.port_suffix }}/jenkins',
@@ -52,23 +33,6 @@ $config['cloud']['objectStorage']['rackspace']['username'] = '{{ settings.enviro
 $config['cloud']['objectStorage']['rackspace']['apiKey'] = '{{ settings.environments[environment].cloud.object_storage.rackspace.api_key }}';
 
 $config['cloud']['cdn']['enabled'] = {{ settings.environments[environment].cloud.cdn.enabled }};
-
-
-$config['storage']['solr']['endpointGroups'] = [
-    'stores' => [
-        {%- for store, store_details in pillar.stores.items() %}
-        '{{ store }}',
-        {%- endfor %}
-    ],
-];
-
-$config['storage']['solr']['endpoint'] = [
-    {%- for store, store_details in pillar.stores.items() %}
-    '{{ store }}' => [
-        'core' => '{{ store }}'
-    ],
-    {%- endfor %}
-];
 
 $config['lumberjack']['elasticsearch']['host'] = '{{ settings.hosts.elasticsearch_logs|first }}';
 

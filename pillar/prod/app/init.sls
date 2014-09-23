@@ -2,10 +2,6 @@ deploy:
   git_url: git@codebasehq.com:project-a/core/pyz.git
   git_hostname: codebasehq.com
 
-solr:
-  version: 4.6.1
-  source: http://archive.apache.org/dist/lucene/solr/4.6.1/solr-4.6.1.tgz
-
 jenkins:
   version: 1.532.2
   source: http://mirrors.jenkins-ci.org/war-stable/1.532.2/jenkins.war
@@ -42,8 +38,6 @@ environments:
       max_perm_size: 128m
     elasticsearch:
       heap_size: 256m
-    solr:
-      lb_hostname: solr-production-lb.project-yz.com
     cloud:
       enabled: true
       object_storage:
@@ -101,8 +95,6 @@ environments:
       max_perm_size: 128m
     elasticsearch:
       heap_size: 256m
-    solr:
-      lb_hostname: solr-staging-lb.project-yz.com
     cloud:
       enabled: true
       object_storage:

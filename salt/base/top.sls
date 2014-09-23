@@ -8,7 +8,6 @@ base:
     - _debug
     - system
     - user
-    - logstash
 
   # php and application code
   'roles:app':
@@ -29,13 +28,6 @@ base:
     - tomcat
     - jenkins
 
-  # solr
-  'roles:solr':
-    - match: grain
-    - java
-    - tomcat
-    - solr
-
   # activemq
   'roles:queue':
     - match: grain
@@ -52,7 +44,6 @@ prod:
   '*':
     - system
     - user
-    - logstash
     - newrelic
 
   # php and application code
@@ -77,22 +68,22 @@ prod:
     - newrelic.php
 
   # solr
-  'roles:solr':
-    - match: grain
-    - java
-    - tomcat
-    - solr
+#  'roles:solr':
+#    - match: grain
+#    - java
+#    - tomcat
+#    - solr
 
   # activemq
-  'roles:queue':
-    - match: grain
-    - java
+#  'roles:queue':
+#    - match: grain
+#    - java
 
   # elasticsearch (for logs)
-  'roles:elasticsearch':
-    - match: grain
-    - java
-    - elasticsearch.single
+#  'roles:elasticsearch':
+#    - match: grain
+#    - java
+#    - elasticsearch.single
 
   # elasticsearch (for yves&zed)
   'roles:elasticsearch_data':
@@ -126,7 +117,6 @@ dev:
   '*':
     - system
     - user
-    - logstash
 
   # php and application code
   'roles:app':
@@ -147,17 +137,17 @@ dev:
     - tomcat
     - jenkins
 
-  # solr
-  'roles:solr':
-    - match: grain
-    - java
-    - tomcat
-    - solr
+#  # solr
+#  'roles:solr':
+#    - match: grain
+#    - java
+#    - tomcat
+#    - solr
 
-  # activemq
-  'roles:queue':
-    - match: grain
-    - java
+#  # activemq
+#  'roles:queue':
+#    - match: grain
+#    - java
 
   # elasticsearch
   'roles:elasticsearch':

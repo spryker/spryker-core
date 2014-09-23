@@ -23,11 +23,6 @@
 {%- do web_hosts.append(network_settings[netif]['inet'][0]['address']) %}
 {% endfor %}
 
-{%- set solr_hosts = [] %}
-{%- for hostname, network_settings in salt['mine.get']('roles:solr', 'network.interfaces', expr_form = 'grain').items() %}
-{%- do solr_hosts.append(network_settings[netif]['inet'][0]['address']) %}
-{% endfor %}
-
 {%- set job_hosts = [] %}
 {%- for hostname, network_settings in salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
 {%- do job_hosts.append(network_settings[netif]['inet'][0]['address']) %}
@@ -75,7 +70,6 @@
 
 {%- set host = {} %}
 {%- do host.update ({
-  'solr_master'          : salt['mine.get']('solr_role:master', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address,
   'cron_master'          : salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address,
   'queue'                : salt['mine.get']('roles:queue', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address,
 }) %}
@@ -85,7 +79,6 @@
   'couchbase'            : couchbase_hosts,
   'app'                  : app_hosts,
   'web'                  : web_hosts,
-  'solr'                 : solr_hosts,
   'job'                  : job_hosts,
   'dwh'                  : dwh_hosts,
   'dwh_database'         : dwh_db_hosts,

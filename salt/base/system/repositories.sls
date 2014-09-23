@@ -19,13 +19,6 @@ dotdeb:
     - file: /etc/apt/sources.list.d/dotdeb.list
     - key_url: http://www.dotdeb.org/dotdeb.gpg
 
-logstash-repo:
-  pkgrepo.managed:
-    - humanname: Official Logstash Repository @Elasticsearch
-    - name:  deb http://packages.elasticsearch.org/logstash/1.3/debian stable main
-    - file: /etc/apt/sources.list.d/elasticsearch.list
-    - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
-
 elasticsearch-repo:
   pkgrepo.managed:
     - humanname: Official Elasticsearch Repository
