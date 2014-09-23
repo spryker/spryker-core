@@ -49,9 +49,6 @@ $stores = [
 ### Hosts and roles
 ###################
 
-# Enable solr indexing?
-$use_solr = true
-
 # Enable data warehouse?
 $use_dwh = {{ has_dwh|lower }}
 
@@ -70,12 +67,6 @@ $web_hosts = [
 # Host(s) that run jobs
 $jobs_hosts = [
 {% for host in settings.hosts.job %}  "{{ host }}",
-{% endfor %}
-]
-
-# Host(s) that run solr
-$solr_hosts = [
-{% for host in settings.hosts.solr %}  "{{ host }}", 
 {% endfor %}
 ]
 

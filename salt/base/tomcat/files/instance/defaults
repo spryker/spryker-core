@@ -2,7 +2,7 @@
 {%- set min_heap_size = environment_details.tomcat.min_heap_size -%}
 {%- set max_perm_size = environment_details.tomcat.max_perm_size -%}
 {%- set gc = '-XX:+UseConcMarkSweepGC' -%}
-{%- if (grains.deployment=='prod') and ('cronjobs' in grains.roles) and ('solr' not in grains.roles) -%}
+{%- if (grains.deployment=='prod') and ('cronjobs' in grains.roles) -%}
 {%- set max_heap_size = '256m' -%}
 {%- set min_heap_size = '256m' -%}
 {%- set max_perm_size = '128m' -%}

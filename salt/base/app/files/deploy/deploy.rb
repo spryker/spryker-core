@@ -189,7 +189,6 @@ end
 def create_deploy_vars_file
   tools_hosts = $jobs_hosts || [$tools_host]
   tools_host = tools_hosts[0]
-  solr_hosts = $solr_hosts . join ' '
   jobs_hosts = tools_hosts . join ' '
 
   File.open("#{$deploy_source_dir}/deploy/vars", "w") do |f|
@@ -210,7 +209,6 @@ def create_deploy_vars_file
     f.puts "admin_host=\"#{tools_host}\""
     f.puts "dwh_host=\"#{$dwh_host}\"" unless $dwh_host.nil?
     f.puts "scm_path=\"#{$scm_path}\""
-    f.puts "solr_hosts=\"#{solr_hosts}\""
     f.puts "jobs_hosts=\"#{jobs_hosts}\""
     f.puts "jobs_master=\"#{tools_host}\""
     f.puts "changelog=\"#{$changelog}\""
@@ -303,10 +301,6 @@ def configure_hosts
   # Version 1.0 uses "configure_host" action to setup solr as well 
   hosts = $app_hosts || $zed_hosts
   result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/configure_host\" ")
-
-  # In 2.0 configuring solr is seperate action/file
-  hosts = $solr_hosts || []
-  result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_default_store} #{$debug} deploy/setup_solr\" ")
 end
 
 def check_for_migrations
@@ -371,17 +365,10 @@ def deactivate_cronjobs
 end 
 
 ###
-### SOLR and KV-Store
+### KV-Store
 ###
 
 def reindex_full
-  if ($use_solr) 
-    put_status "Reindexing solr"
-    hosts = $jobs_hosts || [$solr_host]
-    host = hosts[0]
-    result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f deploy/reindex_solr ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/reindex_solr\" ")
-  end
-
   put_status "Reindexing KV-store"
   hosts = $jobs_hosts || [$tools_host]
   host = hosts[0]
@@ -403,7 +390,7 @@ def ask_reindex
     puts "Perform full reindex: #{value}"
     return value
   end
-  if choose_item_from_array("Perform FULL solr/memcache import? ", %w(yes no)) == "yes"
+  if choose_item_from_array("Perform FULL KV import? ", %w(yes no)) == "yes"
     if $environment == "production"
       puts red "Warning, this will cause downtime while performing reindex." 	
       return false if choose_item_from_array("Proceed anyway? ", %w(yes no)) != "yes"
