@@ -12,6 +12,7 @@ dev:
     - app
     - dwh
     - user
+    - redis
     - elasticsearch
     - mysql-server
     - postfix
