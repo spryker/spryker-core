@@ -1,11 +1,11 @@
 # Install PHP and extensions
 libmysqlclient18:
   pkg.installed:
-    - version: 5.6.19-1~dotdeb.1
+    - version: 5.6.21-1~dotdeb.1
 
 mysql-common:
   pkg.installed:
-    - version: 5.6.19-1~dotdeb.1
+    - version: 5.6.21-1~dotdeb.1
 
 php:
   pkg.installed:
