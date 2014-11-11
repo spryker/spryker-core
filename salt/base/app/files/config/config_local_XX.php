@@ -60,3 +60,8 @@ $config['cloud']['cdn']['static_assets']['https'] = '{{ settings.environments[en
 /** Logistic partners */
 /** MCM, tracking */
 /** Facebook / external auth providers */
+
+$config['storage']['kv']['source'] = 'redis';
+$config['storage']['kv']['redis']['protocol'] = 'tcp';
+$config['storage']['kv']['redis']['host'] = '{{ settings.environments[environment].redis.host }}';
+$config['storage']['kv']['redis']['port'] = '{{ settings.environments[environment].redis.port }}';

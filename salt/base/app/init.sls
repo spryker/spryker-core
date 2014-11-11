@@ -5,6 +5,6 @@ include:
   - .deploy
   - .cleanup-cronjobs
   - .environments
-  - .stores
   - .nginx
+  - .stores
   - .htpasswd
