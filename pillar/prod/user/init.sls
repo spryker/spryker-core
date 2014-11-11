@@ -59,3 +59,9 @@ user:
     admin: True
     ssh_key: |
       ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRvNma4zWF+tTltvU3jSJ+y+m9rrJ27+y11aWni86Cnh7kHUeJuxtVGaEA073wNFcfhVtHXrQCgJ63cg5DWvWeBFop8R8Wchue+xIhtc0JgjyKsiNx0E4FXXxXGXF6L328N/L5OUuOnA88lYFol91zYJE7mt6Dg1YijPk3u1Aoyu48zB/wnUHuvDDPa4HqOuMsjvJd+zrjpsBuua8gx8jTkyw6P/9Cq4tp89i3Z7ybBklwtBSPf32HN+OSckAXuo2pVT9nIJiKUVjuYKQ1zek+lFLJRfuCW6XXc1sZqosjRg0uxwzhqAqhIdcQPLKqKjRFmiU7Dqqlgt/+ndmHp+Lb rene.klatt@project-a.com
+
+  alberto.assmann:
+    fullname: Alberto Assmann
+    admin: True
+    ssh_key: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDF3S4P3ZqfBoI7AbcjbzqSxhmyIrCXk1k+NIClbK+fxG3NJLBZfV7Sh3QSUZrqeEYUi5MCtEqvDDVIvmZokwi35CfI7YZVC9PVc53QeoL8qq7wBRvOnasZ9PQAmQkt2hhSqTBqg0ZR+qj5gOp+qKeMU6ck12x2E4YJcOkrCrRWZtR4zTtLbW9hH5Dk63W1aWgQlTiRBxsvHRZSblJoJKa2j8Boo/vNdlRSgP6HMQTDKYiS7FRGrzkwE6Zo+/UOPGlUvvw3fzcFQF1S375tA+dkrFiKRthEDhGl+Ck5CfPqlHy63AxY42IEPxRDODygAiKsR93SuCKxPiHx/Gp/DChz alberto.assmann@project-a.com
