@@ -8,6 +8,7 @@ base:
     - _debug
     - system
     - user
+    - redis
 
   # php and application code
   'roles:app':
