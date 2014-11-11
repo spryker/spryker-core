@@ -110,6 +110,9 @@ environments:
       max_perm_size: 256m
     elasticsearch:
       heap_size: 384m
+    redis:
+      host: 127.0.0.1
+      port: ''
     cloud:
       enabled: true
       object_storage:
