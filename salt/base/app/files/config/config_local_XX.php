@@ -22,19 +22,6 @@ $config['db_dump'] = [
     'mysql_bin'     => '/usr/bin/mysql',
 ];
 
-/** Mysql as KeyValue store */
-$config['storage']['kv'] = [
-    'source' => 'mysql',
-    'mysql' => [
-        'host' => '{{ settings.environments[environment].database.shared_data.hostname }}',
-        'user' => '{{ settings.environments[environment].database.shared_data.username }}',
-        'password' => '{{ settings.environments[environment].database.shared_data.password }}',
-        'database' => '{{ settings.environments[environment].database.shared_data.database }}',
-        'port' => '{{ settings.environments[environment].database.shared_data.port }}',
-        'table' => '{{ settings.environments[environment].database.shared_data.table }}',
-    ]
-];
-
 /** Public URL's */
 $config['host'] = $config['host_ssl'] = [
     'zed_gui' => '{{ settings.environments[environment].stores[store].zed.hostname }}',
