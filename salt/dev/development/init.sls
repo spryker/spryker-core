@@ -41,3 +41,7 @@ restart-nginx:
 /etc/resolv.conf:
   file.managed:
     - source: salt://development/files/etc/resolv.conf
+
+/etc/hosts:
+  file.managed:
+    - source: salt://development/files/etc/hosts
