@@ -7,7 +7,9 @@ For all services, there is a constant port numbering scheme. Each of the digit h
 LEDDC
 
 Where:
-### L - Listener (1 for applications with one / default listener only, 1/2/3 for Java applications)
+### L - Listener
+1 for applications with one / default listener only, 1/2/... for applications with more than one
+possible listenere (for example, Elasticsearch has both HTTP and Transport ports).
 
 | ID     | Listener                                  |
 | ------ | ----------------------------------------- |
@@ -24,7 +26,8 @@ Where:
 | 0      | Development                               |
 
 
-### DD - AppDomain for multiple country instances, default value: 00 (appropiate for ALL single-languages projects)
+### DD - AppDomain for multiple country instances
+Default value: 00 (appropiate for ALL single-languages components)
 
 | AppDomain | Country name (English) | Store | Default language |
 | ------ | ------------------------- | ----- | ---------------- |
@@ -80,7 +83,7 @@ Where:
 | 9      | K/V Datastore (redis)                     |
 
 Examples:
-15000 - Production YVES, Germany, HTTP
-15101 - Production ZED, USA, HTTP
-13007 - Staging Jenkins, HTTP
-10006 - Development Elasticsearch, HTTP
+ - 15000 - Production YVES, Germany, HTTP
+ - 15101 - Production ZED, USA, HTTP
+ - 13007 - Staging Jenkins, HTTP
+ - 10006 - Development Elasticsearch, HTTP
