@@ -1,3 +1,0 @@
-# This file is managed by salt!
-
-{{ postfix.relay.host }}      {{ postfix.relay.user }}:{{ postfix.relay.api_key}}
