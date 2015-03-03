@@ -1,5 +1,39 @@
 # Spryker SaltStack
 
+## Using AgentForwarding for deployment SSH keys
+For previous Spryker/Yves&Zed project, we have been using "deployment ssh key", which allowed checking out code from github/codebase during deployment.
+As this is potential security issue, deployment key is not mandatory anymore. If the /etc/deploy/deploy.key file is present, the key will be used.
+If the file is not present, deployment will use SSH Agent Forwarding to use directly developer's key for getting the code from repositories.
+To enable SSH Agent Forwarding, add the following line to .ssh/config configuration file:
+`ForwardAgent yes`
+This option can also be enabled on windows PuTTY ssh client.
+If in doubt, there is always the possibility to fallback to deployment key in file /etc/deploy/deploy.key
+
+Background information: https://developer.github.com/guides/using-ssh-agent-forwarding/
+
+## IP Addresses and DNS records
+Spryker development VM uses some pre-registered DNS records on the project-yz.com and project-yz.de domains:
+ - www-development.project-yz.(com|de)
+ - zed-development.project-yz.(com|de)
+ - static-development.project-yz.(com|de)
+ - www-testing.project-yz.(com|de)
+ - zed-testing.project-yz.(com|de)
+ - static-testing.project-yz.(com|de)
+ - kibana-development.project-yz.com
+Those DNS records point to private IP address assigned to the VM - 10.10.0.66.
+The VM also includes valid wildcard SSL certificates for both domains.
+
+It is possible to switch the domain to *.spryker.dev. The self-signed SSL certificate is already in the VM and Pound configuration.
+Using this domain requires adding records to /etc/hosts file on your host. It can be automated in the future using Vagrant plugins.
+At the time being, there is a bug which prevents those plugins from installing correctly. It can be fixed in the future.
+
+
+## Services in the VM:
+Kibana - http://kibana-development.project-yz.com:9292/
+Elasticsearch with logs - http://kibana-development.project-yz.com:9200/
+MailCatcher - http://www-development.project-yz.com:1080/
+
+
 ## Notes for production deployments
 This SaltStack repository includes all the components required to run multi-environment,
 multi-store setup of Spryker on development VM. It also can be used to setup QA and
