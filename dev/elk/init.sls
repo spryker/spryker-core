@@ -7,4 +7,4 @@ elk:
 #    heap_size: 384m                       # Default: 384m
 
   kibana:
-    hostname: kibana-development.project-yz.com
+    hostname: kibana.spryker.dev
