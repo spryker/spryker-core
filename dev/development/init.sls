@@ -22,5 +22,14 @@ clone-oh-my-zsh:
     - user: vagrant
     - group: vagrant
     - mode: 600
+    - replace: False
+
+/home/vagrant/.oh-my-zsh/plugins/spryker:
+  file.recurse:
+    - source: salt://development/files/home/vagrant/oh-my-zsh/plugins/spryker
+    - user: vagrant
+    - group: vagrant
+    - file_mode: 600
+    - dir_mode: 755
 
 
