@@ -22,6 +22,5 @@ clone-oh-my-zsh:
     - user: vagrant
     - group: vagrant
     - mode: 600
-    - replace: False
 
 
