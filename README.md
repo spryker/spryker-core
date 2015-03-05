@@ -13,12 +13,12 @@ Background information: https://developer.github.com/guides/using-ssh-agent-forw
 
 ## IP Addresses and DNS records
 Spryker development VM uses some pre-registered DNS records on the project-yz.com and project-yz.de domains:
- - www.spryker.(com|de).dev
- - zed.spryker.(com|de).dev
- - static.spryker.(com|de).dev
- - www.spryker.(com|de).test
- - zed.spryker.(com|de).test
- - static.spryker.(com|de).test
+ - www.(com|de).spryker.dev
+ - zed.(com|de).spryker.dev
+ - static.(com|de).spryker.dev
+ - www.(com|de).spryker.test
+ - zed.(com|de).spryker.test
+ - static.(com|de).spryker.test
  - kibana.spryker.dev
 Those DNS records point to private IP address assigned to the VM - 10.10.0.66.
 The VM also includes valid wildcard SSL certificates for both domains.
