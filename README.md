@@ -13,19 +13,17 @@ Background information: https://developer.github.com/guides/using-ssh-agent-forw
 
 ## IP Addresses and DNS records
 Spryker development VM uses some pre-registered DNS records on the project-yz.com and project-yz.de domains:
- - www-development.project-yz.(com|de)
- - zed-development.project-yz.(com|de)
- - static-development.project-yz.(com|de)
- - www-testing.project-yz.(com|de)
- - zed-testing.project-yz.(com|de)
- - static-testing.project-yz.(com|de)
- - kibana-development.project-yz.com
+ - www.spryker.(com|de).dev
+ - zed.spryker.(com|de).dev
+ - static.spryker.(com|de).dev
+ - www.spryker.(com|de).test
+ - zed.spryker.(com|de).test
+ - static.spryker.(com|de).test
+ - kibana.spryker.dev
 Those DNS records point to private IP address assigned to the VM - 10.10.0.66.
 The VM also includes valid wildcard SSL certificates for both domains.
 
-It is possible to switch the domain to *.spryker.dev. The self-signed SSL certificate is already in the VM and Pound configuration.
-Using this domain requires adding records to /etc/hosts file on your host. It can be automated in the future using Vagrant plugins.
-At the time being, there is a bug which prevents those plugins from installing correctly. It can be fixed in the future.
+The self-signed SSL certificate for spryker.dev is already in the VM and Pound configuration.
 
 
 ## Services in the VM:
