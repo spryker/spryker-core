@@ -100,9 +100,9 @@ environments:
       DE:
         yves:
           hostnames:
-            - www.spryker.de
+            - www.spryker.dev
         zed:
-          hostname: zed.spryker.de
+          hostname: zed.spryker.dev
           # Optional: path to htpasswd file. Comment out to disable http auth
           # htpasswd_file:
       # US:
