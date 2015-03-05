@@ -82,15 +82,15 @@ environments:
         enabled: true
         static_media:
           DE:
-            http: http://static.spryker.dev
-            https: https://static.spryker.dev
+            http: http://static.spryker.de.dev
+            https: https://static.spryker.de.dev
           # US:
           #   http: http://static.spryker.com.dev
           #   https: https://static.spryker.com.dev
         static_assets:
           DE:
-            http: http://static.spryker.dev
-            https: https://static.spryker.dev
+            http: http://static.spryker.de.dev
+            https: https://static.spryker.de.dev
           # US:
           #   http: http://static.spryker.com.dev
           #   https: https://static.spryker.com.dev
@@ -100,17 +100,17 @@ environments:
       DE:
         yves:
           hostnames:
-            - www.spryker.dev
+            - www.spryker.de.dev
         zed:
-          hostname: zed.spryker.dev
+          hostname: zed.spryker.de.dev
           # Optional: path to htpasswd file. Comment out to disable http auth
           # htpasswd_file:
       # US:
       #   yves:
       #     hostnames:
-      #       - www.spryker.devcom
+      #       - www.spryker.de.devcom
       #   zed:
-      #     hostname: zed.spryker.devcom
+      #     hostname: zed.spryker.de.devcom
       #     # Optional: path to htpasswd file. Comment out to disable http auth
       #     # htpasswd_file:
   testing:
@@ -130,7 +130,7 @@ environments:
       enable_local_vhost: true
       # Hostname for local static files virtual host in nginx,
       # Required if enable_local_vhost is set to true, no default value
-      hostname: static.spryker.com.dev
+      hostname: static.spryker.com.test
     cloud:
       enabled: true
       object_storage:
@@ -142,18 +142,18 @@ environments:
         enabled: true
         static_media:
           DE:
-            http: http://static.spryker.test
+            http: http://static.spryker.de.test
             https: https://3963947472a6621adbcb-fb198443397976013dfa73b29d41f433.ssl.cf3.rackcdn.com
           # US:
-          #   http: http://static-testing.project-yz.com
+          #   http: http://static.spryker.com.test
           #   https: https://61862c85d035b0cdd7b8-73dfe4b3babcf6d381f8fa0527f882da.ssl.cf3.rackcdn.com
 
         static_assets:
           DE:
-            http: http://static.spryker.test
+            http: http://static.spryker.de.test
             https: https://3963947472a6621adbcb-fb198443397976013dfa73b29d41f433.ssl.cf3.rackcdn.com
           # US:
-          #   http: http://static-testing.project-yz.com
+          #   http: http://static.spryker.com.test
           #   https: https://61862c85d035b0cdd7b8-73dfe4b3babcf6d381f8fa0527f882da.ssl.cf3.rackcdn.com
         delete_local_processed_images: true
         delete_original_images: true
@@ -161,9 +161,9 @@ environments:
       DE:
         yves:
           hostnames:
-            - www.spryker.test
+            - www.spryker.de.test
         zed:
-          hostname: zed.spryker.test
+          hostname: zed.spryker.de.test
           #htpasswd_file:
       # US:
       #   yves:
