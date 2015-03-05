@@ -12,7 +12,7 @@ If in doubt, there is always the possibility to fallback to deployment key in fi
 Background information: https://developer.github.com/guides/using-ssh-agent-forwarding/
 
 ## IP Addresses and DNS records
-Spryker development VM uses some pre-registered DNS records on the project-yz.com and project-yz.de domains:
+Spryker development VM uses some domains:
  - www.(com|de).spryker.dev
  - zed.(com|de).spryker.dev
  - static.(com|de).spryker.dev
@@ -25,11 +25,10 @@ The VM also includes valid wildcard SSL certificates for both domains.
 
 The self-signed SSL certificate for spryker.dev is already in the VM and Pound configuration.
 
-
 ## Services in the VM:
-Kibana - http://kibana-development.project-yz.com:9292/
-Elasticsearch with logs - http://kibana-development.project-yz.com:9200/
-MailCatcher - http://www-development.project-yz.com:1080/
+Kibana - http://kibana.spryker.dev:9292/
+Elasticsearch with logs - http://kibana.spryker.dev:9200/
+MailCatcher - http://kibana.spryker.dev:1080/
 
 
 ## Notes for production deployments
