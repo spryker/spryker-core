@@ -20,4 +20,5 @@ php:
       - php5-pgsql
       - php5-redis
       - php5-ssh2
+      - php5-sqlite
       - php-pear
