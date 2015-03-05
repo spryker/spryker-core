@@ -70,7 +70,7 @@ environments:
       enable_local_vhost: true
       # Hostname for local static files virtual host in nginx,
       # Required if enable_local_vhost is set to true, no default value
-      hostname: static.spryker.com.dev
+      hostname: static.com.spryker.dev
     cloud:
       enabled: true
       object_storage:
@@ -82,35 +82,35 @@ environments:
         enabled: true
         static_media:
           DE:
-            http: http://static.spryker.de.dev
-            https: https://static.spryker.de.dev
+            http: http://static.de.spryker.dev
+            https: https://static.de.spryker.dev
           # US:
-          #   http: http://static.spryker.com.dev
-          #   https: https://static.spryker.com.dev
+          #   http: http://static.com.spryker.dev
+          #   https: https://static.com.spryker.dev
         static_assets:
           DE:
-            http: http://static.spryker.de.dev
-            https: https://static.spryker.de.dev
+            http: http://static.de.spryker.dev
+            https: https://static.de.spryker.dev
           # US:
-          #   http: http://static.spryker.com.dev
-          #   https: https://static.spryker.com.dev
+          #   http: http://static.com.spryker.dev
+          #   https: https://static.com.spryker.dev
         delete_local_processed_images: true
         delete_original_images: true
     stores:
       DE:
         yves:
           hostnames:
-            - www.spryker.de.dev
+            - www.de.spryker.dev
         zed:
-          hostname: zed.spryker.de.dev
+          hostname: zed.de.spryker.dev
           # Optional: path to htpasswd file. Comment out to disable http auth
           # htpasswd_file:
       # US:
       #   yves:
       #     hostnames:
-      #       - www.spryker.de.devcom
+      #       - www.de.spryker.devcom
       #   zed:
-      #     hostname: zed.spryker.de.devcom
+      #     hostname: zed.de.spryker.devcom
       #     # Optional: path to htpasswd file. Comment out to disable http auth
       #     # htpasswd_file:
   testing:
@@ -130,7 +130,7 @@ environments:
       enable_local_vhost: true
       # Hostname for local static files virtual host in nginx,
       # Required if enable_local_vhost is set to true, no default value
-      hostname: static.spryker.com.test
+      hostname: static.com.spryker.test
     cloud:
       enabled: true
       object_storage:
@@ -142,18 +142,18 @@ environments:
         enabled: true
         static_media:
           DE:
-            http: http://static.spryker.de.test
+            http: http://static.de.spryker.test
             https: https://3963947472a6621adbcb-fb198443397976013dfa73b29d41f433.ssl.cf3.rackcdn.com
           # US:
-          #   http: http://static.spryker.com.test
+          #   http: http://static.com.spryker.test
           #   https: https://61862c85d035b0cdd7b8-73dfe4b3babcf6d381f8fa0527f882da.ssl.cf3.rackcdn.com
 
         static_assets:
           DE:
-            http: http://static.spryker.de.test
+            http: http://static.de.spryker.test
             https: https://3963947472a6621adbcb-fb198443397976013dfa73b29d41f433.ssl.cf3.rackcdn.com
           # US:
-          #   http: http://static.spryker.com.test
+          #   http: http://static.com.spryker.test
           #   https: https://61862c85d035b0cdd7b8-73dfe4b3babcf6d381f8fa0527f882da.ssl.cf3.rackcdn.com
         delete_local_processed_images: true
         delete_original_images: true
@@ -161,14 +161,14 @@ environments:
       DE:
         yves:
           hostnames:
-            - www.spryker.de.test
+            - www.de.spryker.test
         zed:
-          hostname: zed.spryker.de.test
+          hostname: zed.de.spryker.test
           #htpasswd_file:
       # US:
       #   yves:
       #     hostnames:
-      #       - www.spryker.com.test
+      #       - www.com.spryker.test
       #   zed:
       #     hostname: zed.spryker.test
       #     #htpasswd_file:
