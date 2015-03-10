@@ -12,13 +12,10 @@ include:
   file.managed:
     - source: salt://hosting/files/simple/etc/resolv.conf
 
-{% from 'settings/init.sls' import settings with context %}
 /etc/hosts:
   file.managed:
     - source: salt://hosting/files/simple/etc/hosts
     - template: jinja
-    - context:
-      hosts: {{ hosts }}
 
 # Monitoring: nothing to do
 

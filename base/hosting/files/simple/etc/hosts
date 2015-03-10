@@ -8,14 +8,8 @@
 ff02::1         ip6-allnodes
 ff02::2         ip6-allrouters
 
-
-{%- for environment, environment_details in pillar.environments.items() %}
-    {%- if loop.first %}
-        {%- for store in pillar.stores %}
-            {%- for appname,host in pillar.hosts %)
+{% from 'settings/init.sls' import settings with context %}
+{%- for appname,host in settings.hosts %)
 127.0.0.1       {{ host }} # {{ appname }}
 ::1             {{ host }} # {{ appname }}
-            {%- endfor %}
-        {%- endfor %}
-    {%- endif %}
 {%- endfor %}
