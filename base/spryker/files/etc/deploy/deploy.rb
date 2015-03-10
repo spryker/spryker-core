@@ -170,6 +170,7 @@ def create_deploy_stores_file
     f.puts "locales=(#{val_locales.strip})"
     f.puts "appdomains=(#{val_appdomains.strip})"
     f.puts "stores_array_max=#{stores_array_max}"
+    f.puts "environment=#{$environment}"
   end
 end
 

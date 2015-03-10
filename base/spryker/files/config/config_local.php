@@ -2,22 +2,18 @@
 /**
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
  */
+use ProjectA\Shared\System\SystemConfig;
+use ProjectA\Shared\Yves\YvesConfig;
 
-/** Jenkins - (cron)job manager */
-$config['jenkins'] = array(
-    'base_url' => 'http://{{ settings.host.cron_master }}:{{ settings.environments[environment].jenkins.port }}',
-    'notify_email' => '',
-);
+/** Session storage */
+$config[SystemConfig::ZED_SESSION_SAVE_HANDLER]
+    = $config[YvesConfig::YVES_SESSION_SAVE_HANDLER]
+    = 'redis';
+$config[SystemConfig::YVES_STORAGE_SESSION_REDIS_PROTOCOL] = 'tcp';
+$config[SystemConfig::YVES_STORAGE_SESSION_REDIS_HOST] = '{{ settings.host.redis }}';
+$config[SystemConfig::YVES_STORAGE_SESSION_REDIS_PORT] = '{{ settings.environments[environment].redis.port }}';
 
-/**
- * Cloud-specific setup - in this case Rackspace only
- */
-$config['cloud']['enabled'] = {{ settings.environments[environment].cloud.enabled }};
-$config['cloud']['objectStorage']['enabled'] = {{ settings.environments[environment].cloud.object_storage.enabled }};
 
-$config['cloud']['objectStorage']['rackspace']['username'] = '{{ settings.environments[environment].cloud.object_storage.rackspace.api_username }}';
-$config['cloud']['objectStorage']['rackspace']['apiKey'] = '{{ settings.environments[environment].cloud.object_storage.rackspace.api_key }}';
-
-$config['cloud']['cdn']['enabled'] = {{ settings.environments[environment].cloud.cdn.enabled }};
-
-// $config['lumberjack']['elasticsearch']['host'] = '{{ settings.hosts.elasticsearch_logs|first }}';
+$config[SystemConfig::ZED_STORAGE_SESSION_REDIS_PROTOCOL] = $config[SystemConfig::YVES_STORAGE_SESSION_REDIS_PROTOCOL];
+$config[SystemConfig::ZED_STORAGE_SESSION_REDIS_HOST] = $config[SystemConfig::YVES_STORAGE_SESSION_REDIS_HOST];
+$config[SystemConfig::ZED_STORAGE_SESSION_REDIS_PORT] = $config[SystemConfig::YVES_STORAGE_SESSION_REDIS_PORT];
