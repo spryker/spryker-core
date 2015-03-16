@@ -19,6 +19,6 @@ ufw default deny:
 {{ ufw_rule('allow 80/tcp', '80/tcp') }}
 {{ ufw_rule('allow proto tcp from any to any port 22', '22/tcp')}}
 
-force enable:
+force --force enable:
   cmd.run:
     - name: "ufw --force enable"
