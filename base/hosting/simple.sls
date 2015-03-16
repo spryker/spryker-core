@@ -17,12 +17,6 @@ include:
     - source: salt://hosting/files/simple/etc/hosts
     - template: jinja
 
-/data/shop/production:
-  file.directory:
-    - user: www-data
-    - group: www-data
-    - dir_mode: 755
-
 # Monitoring: nothing to do
 
 # Backup: nothing to do

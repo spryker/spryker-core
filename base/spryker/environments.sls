@@ -6,6 +6,11 @@
 {% from 'spryker/macros/jenkins_instance.sls' import jenkins_instance with context %}
 
 {%- for environment, environment_details in pillar.environments.items() %}
+/data/shop/{{ environment }}/:
+  file.directory:
+    - user: www-data
+    - group: www-data
+    - dir_mode: 755
 
 /data/shop/{{ environment }}/shared:
   file.directory:
