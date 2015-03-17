@@ -24,6 +24,9 @@ $config[SystemConfig::HOST_STATIC_ASSETS] = $config[SystemConfig::HOST_STATIC_ME
 $config[SystemConfig::HOST_SSL_YVES] = 'https://' . $yvesHost;
 $config[SystemConfig::HOST_SSL_STATIC_ASSETS] = $config[SystemConfig::HOST_SSL_STATIC_MEDIA] = $yvesHost;
 
+$config[SystemConfig::ELASTICA_PARAMETER__HOST] = 'localhost';
+$config[SystemConfig::ELASTICA_PARAMETER__TRANSPORT] = 'http';
+$config[SystemConfig::ELASTICA_PARAMETER__PORT] = '{{ settings.environments[environment].elasticsearch.http_port }}';
 $config[SystemConfig::ELASTICA_PARAMETER__INDEX_NAME] = 'de_development_catalog';
 $config[SystemConfig::ELASTICA_PARAMETER__DOCUMENT_TYPE] = 'page';
 
