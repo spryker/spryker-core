@@ -61,8 +61,10 @@ xhprof:
     - group: root
     - mode: 644
 
+{% if 'development' not in grains.roles %}
 {{ php_module('opcache', true, 'fpm') }}
 {{ php_module('opcache', true, 'cli') }}
+{% endif %}
 
 # Install CTwig extension
 pear-ctwig-channel:
