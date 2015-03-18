@@ -38,4 +38,4 @@ $config[SystemConfig::HOST_SSL_ZED_GUI]
     = $config[SystemConfig::HOST_SSL_ZED_API]
     = 'https://' . $zedHost;
 
-$config[YvesConfig::YVES_SESSION_COOKIE_DOMAIN] = $config[SystemConfig::HOST_YVES];
+$config[YvesConfig::YVES_SESSION_COOKIE_DOMAIN] = $yvesHost;
