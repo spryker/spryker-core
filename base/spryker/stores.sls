@@ -22,7 +22,7 @@
 # Create logs directory for environment
 /data/logs/{{ environment }}/{{ store }}:
   file.symlink:
-    - target: /data/shop/{{ environment }}/shared/data/{{ store }}/logs
+    - target: /data/shop/{{ environment }}/current/data/{{ store }}/logs
     - force: True
 
 {%- if 'web' in grains.roles %}
