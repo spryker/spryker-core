@@ -17,6 +17,7 @@ ufw:
 /etc/hosts:
   file.managed:
     - source: salt://hosting/files/vagrant/etc/hosts
+    - template: jinja
 
 # Disk drives: nothing to do, we're just using easy vagrant setup
 
