@@ -2,7 +2,7 @@ alias composer='php composer.phar'
 alias ci='php composer.phar install'
 alias cu='php composer.phar update'
 
-codeception () {
+codecept () {
     pushd /data/shop/development/current
     APPLICATION_ENV=development APPLICATION_STORE=DE vendor/bin/codecept run $*
     popd
