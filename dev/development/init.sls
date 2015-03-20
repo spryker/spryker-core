@@ -7,6 +7,7 @@ get-github-ssh-hostkey:
   cmd.run:
     - name: ssh-keyscan -H {{ pillar.deploy.git_hostname }} >> /home/vagrant/.ssh/known_hosts
     - unless: test -f /home/vagrant/.ssh/known_hosts
+    - user: vagrant
 
 # Install / Configure Oh-My-Zsh for user vagrant
 clone-oh-my-zsh:
