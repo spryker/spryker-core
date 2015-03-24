@@ -32,8 +32,8 @@ $config[SystemConfig::ELASTICA_PARAMETER__DOCUMENT_TYPE] = 'page';
 
 $zedHost = '{{ settings.environments[environment].stores[store].zed.hostname }}';
 $config[SystemConfig::HOST_ZED_GUI]
-    = $config[SystemConfig::HOST_ZED_API]
     = 'http://' . $zedHost;
+$config[SystemConfig::HOST_ZED_API] = $zedHost;
 $config[SystemConfig::HOST_SSL_ZED_GUI]
     = $config[SystemConfig::HOST_SSL_ZED_API]
     = 'https://' . $zedHost;
