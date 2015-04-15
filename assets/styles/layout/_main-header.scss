@@ -1,0 +1,53 @@
+.main-header {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding: $step*.5;
+  background-color: $light-color;
+  color: $dark-color;
+
+  @include fixed-nav-shadow();
+
+  @include bounce-transition(.3s, padding);
+
+  .scrolled & {
+    padding: 0 $step*.5;
+  }
+
+  .wrapper {
+    position: relative;
+  }
+
+  @include media-query('medium') {
+    height: $step*2.5;
+    padding: $step*.75;
+  }
+
+  .shop-logo {
+    display: block;
+    position: relative;
+    height: $step*.75;
+    padding: 0;
+    color: transparent !important;
+
+    background: url('/images/logo.png') no-repeat;
+    background-size: contain;
+
+    @include media-query('medium') {
+      height: $step;
+    }
+  }
+
+  .cart-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: $step*2.5;
+    height: 100%;
+    background-color: $darker-color;
+    color: transparent !important;
+  }
+}
