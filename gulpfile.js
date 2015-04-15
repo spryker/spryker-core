@@ -92,7 +92,7 @@ gulp.task('dev-css', ['clean-css'], function() {
     .src(paths.source.css)
     .pipe(maps.init())
     .pipe(sass({
-      'errorLogToConsole' : true,
+      errLogToConsole: true,
       'outputStyle' : 'nested',
       'precision' : 3
     }))
@@ -133,7 +133,10 @@ gulp.task('dist-css', ['clean-css'], function() {
   return gulp
     .src(paths.source.css)
     .pipe(sass({
-      'errorLogToConsole' : true,
+      errLogToConsole: false,
+      onError: function(err) {
+        return notify().write(err);
+      },
       'outputStyle' : 'compressed',
       'precision' : 3
     }))
