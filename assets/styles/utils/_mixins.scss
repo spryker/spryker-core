@@ -1,0 +1,129 @@
+@mixin media-query($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media screen and (min-width: #{inspect(map-get($breakpoints, $breakpoint))}) {
+      @content;
+    }
+  }
+}
+
+// use rarely, if ever
+@mixin max-media-query($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media screen and (max-width: #{inspect(map-get($breakpoints, $breakpoint))}) {
+      @content;
+    }
+  }
+}
+
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// a 30px underline, often used on h1's
+@mixin short_underline {
+  &::after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: $step / 2 - 2px;
+    border-bottom: 2px solid;
+  }
+}
+
+@mixin bounce-transition($duration: .2s, $property: all) {
+  transition: $property $duration cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@mixin fixed-nav-shadow() {
+  box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+}
+
+// a block (usually a section) containing an image on one side and text on the other
+@mixin block-text-image($text-side, $bg-color, $image-size: normal) {
+
+  // on mobile, images are full width
+  img {
+    width: 80%;
+    margin: $step 10%;
+  }
+
+  // the markdown processor places standalone images in paragraphs
+  // so this selector effectively means "img + h1"
+  p + h1 {
+    position: relative;
+    z-index: 2;
+    margin-top: -$step*4;
+    // margin-right: -$step*.5;
+    padding-top: $step;
+    background-image: linear-gradient(to top, $bg-color, $bg-color 50%, transparentize($bg-color, 1));
+
+    & + h2 {
+      position: relative;
+      background-color: $bg-color;
+      margin-top: -$step;
+      margin-right: -$step*.5;
+      padding-top: $step;
+    }
+  }
+
+  // at 'medium', image is floated
+  @include media-query('medium') {
+
+    p + h1 {
+      position: static;
+      margin-top: 0;
+      padding-top: 0;
+      background-image: none;
+
+      & + h2 {
+        position: static;
+        background-color: transparent;
+        margin: 0 0 $step;
+        padding: 0;
+      }
+    }
+
+    .wrapper > p:first-child {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+
+      img {
+        @if $image-size == 'small' {
+          max-height: $step*12;
+        }
+        max-width: 90%;
+        width: auto;
+        padding: 0;
+        margin: 0;
+      }
+    }
+
+    @if $text-side == 'left' {
+      h1, h2, h3, p, ul, .github-link {
+        float: left;
+        clear: left;
+        width: 50%;
+      }
+
+      p:first-child {
+        float: right;
+      }
+    } @else {
+      h1, h2, h3, p, ul, .github-link {
+        float: right;
+        clear: right;
+        width: 50%;
+      }
+
+      .wrapper > p:first-child {
+        float: left;
+      }
+    }
+
+  }
+}
