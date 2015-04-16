@@ -1,0 +1,36 @@
+.overlay {
+  @include clearfix();
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 110%;
+  z-index: 10;
+  overflow: scroll;
+  padding: $step*2 $step $step * 2;
+  background-color: rgba(0,0,0,0.85);
+  // transform: translateY(-110%);
+  transition: opacity 200ms ease-in-out;
+  pointer-events: none;
+}
+
+// showing/hiding overlay
+// need to add class to html to avoid scrolling of underlying content when the overlay is visible
+html.overlay-visible {
+  height: 100%;
+  overflow: hidden;
+
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .overlay {
+    opacity: 1;
+    transform: none;
+    -webkit-overflow-scrolling: touch;
+    pointer-events: all;
+
+  }
+}
