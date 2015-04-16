@@ -1,0 +1,11 @@
+{{!-- partial takes some optional arguments: --}}
+{{!-- class: additional classname(s) for the spinner element --}}
+{{!-- style: minimal (default) | caplet       --}}
+{{!-- color: dark (default) | light           --}}
+{{!-- name: name for the number form element  --}}
+{{!-- value: initial value for the number form element  --}}
+<div class="spinner {{#if style}}{{style}}{{/if}} {{#if class}}{{class}}{{/if}} {{#if color}}{{color}}{{/if}}">
+  <input type="button" value="-"class="spinner__decrement js-spinner__decrement"></input>
+  <input type="number" value="{{#if value}}{{value}}{{else}}1{{/if}}" min="1" class="spinner__number js-spinner__number"{{#if name}} name="{{name}}"{{/if}}></input>
+  <input type="button" value="+" class="spinner__increment js-spinner__increment"></input>
+</div>

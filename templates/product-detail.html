@@ -7,11 +7,7 @@
     <p>Batman ist der dunkle Held Gotham Citys. Er hat geschworen, die Stadt vom Verbrechen zu befreien. Immer wenn ein neuer Schurke in der Stadt auftaucht, zieht Batman los, um ihn zu bekämpfen.</p>
     <p class="product__price">€12,99</p>
     <form class="product__add-to-cart">
-      <div class="spinner">
-        <input type="button" value="-"class="spinner__decrement js-spinner__decrement"></input>
-        <input type="number" value="1" min="1" class="spinner__number js-spinner__number"></input>
-        <input type="button" value="+" class="spinner__increment js-spinner__increment"></input>
-      </div>
+      {{> spinner class="product__quantity" style="caplet" name="product__quantity" value="10"}}
       <input type="submit" class="product__add-button cta" value="In den Warenkorb"></input>
     </form>
   </section>

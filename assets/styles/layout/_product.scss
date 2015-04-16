@@ -32,6 +32,10 @@
     color: $dark-color;
   }
 
+  .product__quantity {
+    margin-bottom: $step;
+  }
+
   .product__add-button {
     width: 80%;
     padding: $step*.5;
