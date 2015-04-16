@@ -12,10 +12,6 @@
     color: $dark-color;
   }
 
-  &.light .spinner__number, &.light .spinner__increment, &.light .spinner__decrement {
-    color: $light-color;
-  }
-
   .spinner__number {
     height: $step;
     width: $step;
@@ -36,6 +32,7 @@
     width: $base-font-size;
     border: 1px solid;
     border-radius: $step*.5;
+    border: 1px solid $dark-color;
   }
 
   &.caplet {
@@ -43,7 +40,6 @@
     .spinner__number {
       height: $step*2;
       width: $step*2;
-      padding: $step*.5;
       border-radius: 0;
       border-top: 1px solid $dark-color;
       border-bottom: 1px solid $dark-color;
@@ -70,5 +66,12 @@
       border-radius: 0 $step $step 0;
     }
   }
+
+  &.light .spinner__number, &.light .spinner__increment, &.light .spinner__decrement {
+    color: $light-color;
+    border-color: $light-color;
+  }
+
+
 }
 
