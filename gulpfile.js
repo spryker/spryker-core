@@ -1,10 +1,12 @@
-// NB. reload doesn't currently work with partials
-// so after editing a partial, you will need to stop and restart the watch task
-
 'use strict';
 
 var gulp        = require('gulp'),
+    source      = require('vinyl-source-stream'),
     sass        = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
+    browserify  = require('browserify'),
+    uglify      = require('gulp-uglify'),
+    sourcemaps  = require('gulp-sourcemaps'),
     jshint      = require('gulp-jshint'),
     maps        = require('gulp-sourcemaps'),
     hb          = require('gulp-hb'),
@@ -96,16 +98,13 @@ gulp.task('dev-css', ['clean-css'], function() {
       'outputStyle' : 'nested',
       'precision' : 3
     }))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }))
     .pipe(maps.write())
     .pipe(gulp.dest(paths.dest.css))
     .pipe(reload({stream: true}));
-});
-
-gulp.task('dev-js', ['clean-js'], function() {
-  return _copy(
-    paths.source.js,
-    paths.dest.js
-  );
 });
 
 gulp.task('dev-images', ['clean-images'], function() {
@@ -113,6 +112,13 @@ gulp.task('dev-images', ['clean-images'], function() {
     paths.source.img,
     paths.dest.img
   );
+});
+
+gulp.task('dev-js', ['clean-js'], function() {
+  return browserify(dirAssets+dirJs+'/main.js')
+    .bundle()
+    .pipe(source('main.js'))
+    .pipe(gulp.dest(paths.dest.js));
 });
 
 gulp.task('dev-fonts', ['clean-fonts'], function() {
