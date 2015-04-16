@@ -1,4 +1,4 @@
-.main-header {
+.header {
 
   position: fixed;
   top: 0;
@@ -12,6 +12,10 @@
   @include fixed-nav-shadow();
 
   @include bounce-transition(.3s, padding);
+
+  .overlay-visible & {
+    position: static;
+  }
 
   .scrolled & {
     padding: 0 $step*.5;
@@ -41,13 +45,4 @@
     }
   }
 
-  .cart-toggle {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: $step*2.5;
-    height: 100%;
-    background-color: $darker-color;
-    color: transparent !important;
-  }
 }
