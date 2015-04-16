@@ -27,13 +27,33 @@
 
   @include media-query('medium') {
     height: $step*2.5;
-    padding: $step*.75;
+    padding: $step*.5;
+
+    // the dynamic elements (login button, search) are aligned right
+    text-align: right;
+    padding-right: $step*3.5;
+  }
+
+  button {
+    height: 100%;
+    padding: 2px $step*.5 0;
+  }
+
+  & > button, & > div:not(.shopping-cart) {
+    margin-right: $step*.5;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
   }
 
   .shop-logo {
     display: block;
-    position: relative;
+    position: absolute;
+    left: $step;
+    top: 20px;
     height: $step*.75;
+    width: 200px;
     padding: 0;
     color: transparent !important;
 
@@ -43,6 +63,16 @@
     @include media-query('medium') {
       height: $step;
     }
+  }
+
+  .main-nav {
+    display: none;
+  }
+
+  .header__search, .header__user {
+    display: inline-block;
+    height: 100%;
+    text-align: right;
   }
 
 }
