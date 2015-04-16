@@ -2,11 +2,16 @@
 
 @import 'utils/variables';
 @import 'utils/mixins';
+@import 'utils/icon-font';
 
 @import 'base/reset';
 @import 'base/typography';
 // @import 'base/icon-font';
 @import 'base/base';
+
+@import 'components/spinner';
+@import 'components/overlay';
+@import 'components/shopping-cart';
 
 @import 'layout/header';
 @import 'layout/footer';
