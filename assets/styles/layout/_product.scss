@@ -32,47 +32,6 @@
     color: $dark-color;
   }
 
-  .product__quantity {
-
-    -webkit-appearance: none;
-
-    // get rid of those spinners...
-    &::-webkit-inner-spin-button,
-    &::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    -moz-appearance:textfield;
-
-    margin: 0 0 $step;
-    width: $step*2;
-    height: $step*2;
-    padding: $step*.5;
-    text-align: center;
-    border-radius: 0;
-    border-top: 1px solid $dark-color;
-    border-bottom: 1px solid $dark-color;
-  }
-
-  .product__quantity-decrease, .product__quantity-increase {
-    position: relative;
-    height: $step*2;
-    width: $step*1.5;
-    background-color: $dark-color;
-    color: $light-color;
-    font-weight: $bold-font-weight;
-  }
-
-  .product__quantity-decrease {
-    right: -5px;
-    border-radius: $step 0 0 $step;
-  }
-
-  .product__quantity-increase {
-    left: -5px;
-    border-radius: 0 $step $step 0;
-  }
-
   .product__add-button {
     width: 80%;
     padding: $step*.5;
