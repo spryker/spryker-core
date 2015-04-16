@@ -5,6 +5,10 @@ var $ = require('jquery'),
 
 module.exports = {
 
+  init: function() {
+    $('.js-overlay-close').click(module.exports.hide);
+  },
+
   show: function() {
     scrollPosition = $(window).scrollTop();
     $(window).scrollTop(0);
@@ -14,6 +18,7 @@ module.exports = {
   hide: function() {
     $('html').toggleClass('overlay-visible');
     $(window).scrollTop(scrollPosition);
+    $('.overlay').removeClass('overlay--login');
     scrollPosition = 0;
   }
 };

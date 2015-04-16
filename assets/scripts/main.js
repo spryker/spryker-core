@@ -2,9 +2,15 @@
 
 var $ = require('jquery'),
     spinner = require('./spinner'),
-    cart = require('./shopping-cart');
+    search = require('./search'),
+    cart = require('./shopping-cart'),
+    overlay = require('./overlay'),
+    loginForm = require('./login-form');
 
 $(function() {
-  spinner.init($('.spinner'));
+  spinner.init();
+  search.init();
   cart.init();
+  overlay.init();
+  loginForm.init();
 });

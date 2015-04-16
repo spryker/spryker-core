@@ -16,7 +16,7 @@ button, input[type="submit"] {
 
   padding: $step * .375 $step * .5 $step * .25;
   margin: 0;
-  border-radius: 3px;
+  border-radius: $step;
   border: 1px solid $text-color;
   color: $text-color;
   background-color: transparent;
@@ -57,7 +57,7 @@ a, a:visited {
   }
 }
 
-a.cta-light {
+a.cta-light, input.cta-light {
   display: inline-block;
   padding: $step*.3 $step*2 $step*.2;
   border-radius: 5px;
