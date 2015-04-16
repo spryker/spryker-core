@@ -1,0 +1,44 @@
+.spinner {
+
+  .spinner__number {
+    -webkit-appearance: none;
+
+    // get rid of the default spinners...
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    -moz-appearance:textfield;
+
+    margin: 0 0 $step;
+    width: $step*2;
+    height: $step*2;
+    padding: $step*.5;
+    text-align: center;
+    border-radius: 0;
+    border-top: 1px solid $dark-color;
+    border-bottom: 1px solid $dark-color;
+  }
+
+  .spinner__decrement, .spinner__increment {
+    position: relative;
+    height: $step*2;
+    width: $step*1.5;
+    outline: none;
+    background-color: $dark-color;
+    color: $light-color;
+    font-weight: $bold-font-weight;
+  }
+
+  .spinner__decrement {
+    right: -5px;
+    border-radius: $step 0 0 $step;
+  }
+
+  .spinner__increment {
+    left: -5px;
+    border-radius: 0 $step $step 0;
+  }
+}
+
