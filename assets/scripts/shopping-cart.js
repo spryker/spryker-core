@@ -1,24 +1,33 @@
 'use strict';
 
 var $ = require('jquery'),
-    overlay = require('./overlay');
+    overlay = require('./overlay'),
+    $cart,
+    isExpanded = false;
 
 module.exports = {
 
   init: function() {
-    var $cart = $('.js-shopping-cart'),
-        $toggle = $('.js-cart-toggle'),
-        isExpanded = false;
-    $toggle.on('click', function() {
+    $cart = $('.js-shopping-cart');
+    $('.js-cart-toggle').on('click', function() {
       if (isExpanded) {
-        $cart.removeClass('cart--expanded');
-        overlay.hide();
-        isExpanded = false;
+        hideCart()
       } else {
-        $cart.addClass('cart--expanded');
-        overlay.show();
-        isExpanded = true;
+        showCart();
       }
     });
+    $('.js-cart-close').on('click', hideCart);
   }
 };
+
+var showCart = function() {
+  $cart.addClass('cart--expanded');
+  overlay.show();
+  isExpanded = true;
+};
+
+var hideCart = function() {
+  $cart.removeClass('cart--expanded');
+  overlay.hide();
+  isExpanded = false;
+}

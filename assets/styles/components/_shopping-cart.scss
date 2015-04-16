@@ -18,13 +18,12 @@
     width: $step*2.5;
   }
 
-  .cart__toggle {
+  .cart__toggle, .cart__close {
     display: block;
     height: 100%;
     color: transparent !important;
 
     &::before {
-      content: '\f07a';
       font-family: 'icomoon';
       position: relative;
       top: $step*.4;
@@ -43,6 +42,19 @@
     }
   }
 
+  .cart__toggle {
+    &::before {
+      content: '\f07a';
+    }
+  }
+
+  .cart__close {
+    display: none;
+    &::before {
+      content: '\e602';
+    }
+  }
+
   .cart__contents {
     @include bounce-transition(opacity, .2s);
     transition-delay: .2s;
@@ -58,13 +70,20 @@
 
     background-color: $mid-color;
 
-
-    .cart__toggle {
+    .cart__toggle, .cart__close {
       position: absolute;
       top: 0;
-      left: $step*.5;
       height: $step*2;
       width: $step*2;
+    }
+
+    .cart__toggle {
+      left: $step*.5;
+    }
+
+    .cart__close {
+      display: block;
+      right: $step*.5;
     }
 
     .cart__contents {
