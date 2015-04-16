@@ -5,21 +5,6 @@ var $ = require('jquery'),
     $cart,
     isExpanded = false;
 
-module.exports = {
-
-  init: function() {
-    $cart = $('.js-shopping-cart');
-    $('.js-cart-toggle').on('click', function() {
-      if (isExpanded) {
-        hideCart()
-      } else {
-        showCart();
-      }
-    });
-    $('.js-cart-close').on('click', hideCart);
-  }
-};
-
 var showCart = function() {
   $cart.addClass('cart--expanded');
   overlay.show();
@@ -30,4 +15,19 @@ var hideCart = function() {
   $cart.removeClass('cart--expanded');
   overlay.hide();
   isExpanded = false;
-}
+};
+
+module.exports = {
+
+  init: function() {
+    $cart = $('.js-shopping-cart');
+    $('.js-cart-toggle').on('click', function() {
+      if (isExpanded) {
+        hideCart();
+      } else {
+        showCart();
+      }
+    });
+    $('.js-cart-close').on('click', hideCart);
+  }
+};
