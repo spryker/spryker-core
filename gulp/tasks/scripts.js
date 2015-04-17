@@ -13,10 +13,11 @@ var mergeStreams = require('merge-stream');
 
 gulp.task('scripts', function() {
 
-  var browserified = browserify('./'+config.paths.source.scripts)
+  var browserified = browserify('./'+config.paths.source.scripts_entry)
       .bundle()
       .pipe(source('main.js'))
-      .pipe(gulp.dest(config.paths.dest.scripts));
+      .pipe(gulp.dest(config.paths.dest.scripts))
+      .pipe(browserSync.reload({stream:true}));
 
   var vendor = gulp.src(config.paths.source.scripts_vendor)
       .pipe(maps.init())

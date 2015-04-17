@@ -23,5 +23,6 @@ gulp.task('styles', function(done) {
       cascade: false
     }))
     .pipe(maps.write())
-    .pipe(gulp.dest(config.paths.dest.styles));
+    .pipe(gulp.dest(config.paths.dest.styles))
+    .pipe(browserSync.reload({stream:true}));
 });

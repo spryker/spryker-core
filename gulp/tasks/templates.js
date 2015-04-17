@@ -12,5 +12,6 @@ gulp.task('templates', function(done) {
     .pipe(hb({
       partials: [config.paths.source.partials]
     }))
-    .pipe(gulp.dest(config.paths.dest.templates));
+    .pipe(gulp.dest(config.paths.dest.templates))
+    .pipe(browserSync.reload({stream:true}));
 });
