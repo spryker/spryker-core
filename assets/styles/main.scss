@@ -18,20 +18,7 @@
 @import 'layout/footer';
 @import 'layout/product';
 @import 'layout/layout';
-// @import 'layout/subnav';
-// @import 'layout/overlay';
-// @import 'layout/diagrams';
-// @import 'layout/signup-form';
-// @import 'layout/contact-details';
-// @import 'layout/description-lists';
-// @import 'layout/background-images';
-// @import 'layout/about-us';
-// @import 'layout/faq';
-// @import 'layout/press';
-// @import 'layout/404';
-// @import 'layout/subscription-list';
-// @import 'layout/block-list';
-// @import 'layout/cta-section';
-// @import 'layout/architecture-diagram';
-// @import 'layout/github-link';
-// @import 'layout/blockquote';
+
+@import 'vendor/jquery-ui';
+@import 'vendor/jquery-ui.structure';
+@import 'vendor/jquery-ui.theme';
