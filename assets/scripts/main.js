@@ -1,11 +1,11 @@
 'use strict';
 
 var $ = require('jquery'),
-    spinner = require('./spinner'),
-    search = require('./search'),
-    cart = require('./shopping-cart'),
-    overlay = require('./overlay'),
-    loginForm = require('./login-form');
+    spinner = require('./ui/spinner'),
+    search = require('./ui/search'),
+    cart = require('./ui/shopping-cart'),
+    overlay = require('./ui/overlay'),
+    loginForm = require('./ui/login-form');
 
 $(function() {
   spinner.init();
