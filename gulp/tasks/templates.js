@@ -10,7 +10,9 @@ gulp.task('templates', function(done) {
   return gulp
     .src('./' + config.paths.source.templates)
     .pipe(hb({
-      partials: [config.paths.source.partials]
+      partials: [config.paths.source.partials],
+      bustCache: true,
+      debug: true
     }))
     .pipe(gulp.dest(config.paths.dest.templates))
     .pipe(browserSync.reload({stream:true}));
