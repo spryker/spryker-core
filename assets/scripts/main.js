@@ -17,4 +17,7 @@ $(function() {
 
   // TODO only call this on catalog page
   catalog.init();
+
+  // TODO remove
+  window.$ = $;
 });
