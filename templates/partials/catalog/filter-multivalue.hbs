@@ -1,9 +1,8 @@
-<input type="radio"
+<input type="checkbox"
        id="filter-{{filter-id}}-{{id}}"
        name="filter-{{filter-id}}"
-       data-color="{{hex}}"
        value="{{id}}"
        {{#if checked}} checked=true{{/if}}>
-<label for="filter-{{filter-id}}-{{id}}" class="js-color-name">{{hex}}
+<label for="filter-{{filter-id}}-{{id}}">{{name}}
   <span class="filter__quantity">{{quantity}}</span>
 </label>
