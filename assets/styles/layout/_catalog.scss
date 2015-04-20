@@ -83,7 +83,7 @@
         margin-right: $step*.5;
       }
 
-      .filter__color-name {
+      label {
         display: block;
         width: $step;
         height: $step;
@@ -121,4 +121,66 @@
     }
 
   }
+
+  .active-filters {
+
+    padding: $step 0;
+
+    &, h1 {
+      font-size: $base-font-size;
+    }
+
+    h1 {
+      display: inline;
+      margin-right: $step*.5;
+
+      &::after {
+        content: ':';
+      }
+    }
+
+    ul, li {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      display: inline;
+    }
+
+    .active-filter {
+      display: inline-block;
+    }
+
+    .active-filter {
+      height: $step;
+      margin-right: $step*.5;
+      padding: 0 $step*.25;
+      padding-top: #{($step - $base-font-size - 2) *.25};
+      border-radius: $step*.25;
+      background-color: $muted-color;
+      color: $light-color;
+      text-transform: uppercase;
+
+      // hide inactive filters
+      &[data-filter-value=''] {
+        display: none;
+      }
+    }
+
+    .active-filter__remove {
+      height: $base-font-size;
+      width: $base-font-size;
+      padding: 0;
+      margin-top: -3px;
+      background-color: $dark-color;
+      color: $light-color;
+
+      &::after {
+        // multiply sign
+        content: '\00d7';
+      }
+    }
+  }
+
 }
