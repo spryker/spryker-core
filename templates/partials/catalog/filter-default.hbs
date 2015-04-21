@@ -2,7 +2,10 @@
         id="filter-{{filter-id}}-{{id}}"
         name="filter-{{filter-id}}"
         value="{{id}}"
-        {{#if checked}} checked=true{{/if}}>
+        {{#if default}}
+          checked=true
+          class="js-filter-default-value"
+        {{/if}}>
 <label for="filter-{{filter-id}}-{{id}}">{{name}}
   <span class="filter__quantity">{{quantity}}</span>
 </label>

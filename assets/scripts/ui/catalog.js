@@ -61,6 +61,12 @@ var getFilterValue = function($filter) {
   } else {
     // any other kinds of filter required?
   }
+
+  // if it's the default value, don't show an active filter
+  if ($selected.hasClass('js-filter-default-value')) {
+    return '';
+  }
+
   $selected.each(function() {
     $(this).siblings('label').contents().each(function() {
       if (this.nodeType == Node.TEXT_NODE && this.textContent.trim().length > 0) {
@@ -73,14 +79,25 @@ var getFilterValue = function($filter) {
 
 var clearFilter = function(filterId) {
   var $filter = $('.js-filter[data-filter-id="'+filterId+'"');
-  $filter.find('[type="radio"]:checked').attr('checked', false);
+
+  // turn off all checkboxes
   $filter.find('[type="checkbox"]:checked').attr('checked', false);
+
+  // is there a default radio option? if so, select it
+  if ($filter.hasClass('js-filter-default')) {
+    $filter.find('.js-filter-default-value').prop('checked', true);
+  } else {
+    $filter.find('[type="radio"]:checked').prop('checked', false);
+  }
+
+  // reset price filter
   if ($filter.find('.ui-slider').length) {
     $filter.find('.ui-slider').slider('values', [0, 200]);
     $('.active-filter[data-filter-id="'+filterId+'"]').attr('data-filter-value', '');
     updatePriceValues(null, { values: [0, 200]});
 
   }
+
   $filter.trigger('change');
 }
 
