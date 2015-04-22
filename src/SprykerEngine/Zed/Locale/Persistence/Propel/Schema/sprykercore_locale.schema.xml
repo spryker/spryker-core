@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          defaultIdMethod="native"
+          defaultPhpNamingMethod="underscore"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          namespace="SprykerEngine\Zed\Locale\Persistence\Propel"
+          package="vendor.spryker.zed-package.src.SprykerEngine.Zed.Locale.Persistence.Propel">
+
+    <table name="spy_locale" idMethod="native" phpName="SpyLocale">
+        <column name="id_locale" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="locale_name" required="true" size="5" type="VARCHAR"/>
+        <column name="is_active" required="true" type="BOOLEAN" defaultValue="true"/>
+
+        <index>
+            <index-column name="locale_name"/>
+        </index>
+
+        <unique>
+            <unique-column name="locale_name"/>
+        </unique>
+    </table>
+
+</database>
