@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<database name="zed"
+          defaultIdMethod="native"
+          defaultPhpNamingMethod="underscore"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          namespace="SprykerFeature\Zed\ProductCategory\Persistence\Propel"
+          package="vendor.spryker.zed-package.src.SprykerFeature.Zed.ProductCategory.Persistence.Propel">
+
+    <table name="spy_product_category" idMethod="native" phpName="SpyProductCategory">
+        <column name="id_product_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_product" required="true" type="INTEGER"/>
+        <column name="fk_category_node" required="true" type="INTEGER"/>
+
+        <foreign-key foreignTable="spy_category_node">
+            <reference foreign="id_category_node" local="fk_category_node"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="spy_product">
+            <reference foreign="id_product" local="fk_product"/>
+        </foreign-key>
+
+        <unique>
+            <unique-column name="fk_product"/>
+            <unique-column name="fk_category_node"/>
+        </unique>
+    </table>
+</database>
