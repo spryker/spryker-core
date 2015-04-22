@@ -5,7 +5,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\FrontendExporter\Persistence\Propel"
-          package="vendor.spryker.zed-package.src.SprykerFeature.Zed.FrontendExporter.Persistence.Propel">
+          package="vendor.spryker.frontend-exporter.src.SprykerFeature.Zed.FrontendExporter.Persistence.Propel">
 
     <table name="spy_frontend_exporter_touch" idMethod="native" allowPkInsert="true" phpName="SpyFrontendExporterTouch">
         <column name="id_frontend_exporter_touch" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
