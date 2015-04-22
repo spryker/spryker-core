@@ -164,26 +164,12 @@ abstract class BaseCommand extends Console
     {
         if ($this->input->getOption($this->packageOption)) {
             $packages = $this->input->getOption($this->packageOption);
-            $class = $this;
-            $callback = function ($packageName) use ($class) {
-                return $class->normalizePackageName($packageName);
+            $callback = function ($packageName) {
+                return $packageName;
             };
             $this->packages = array_map($callback, $packages);
         }
         return $this->packages;
-    }
-
-    /**
-     * @param string $packageName
-     * @return string
-     */
-    protected function normalizePackageName($packageName)
-    {
-        if (strpos($packageName, '-package') === false) {
-            return $packageName . '-package';
-        } else {
-            return $packageName;
-        }
     }
 
     /**å
@@ -192,7 +178,7 @@ abstract class BaseCommand extends Console
     protected function getPackageDirs()
     {
         $finder = new Finder();
-        $finder->depth(0)->directories()->in(PACKAGE_DIR)->exclude('silex-routing');
+        $finder->depth(0)->directories()->in(APPLICATION_VENDOR_DIR . '/spryker')->exclude('silex-routing');
         if (!in_array('all', $this->getPackages())) {
             $finder->filter($this->getCallback());
         }
