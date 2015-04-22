@@ -1,0 +1,9 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+{{ panel('Order Matrix'|trans, widget('/sales/matrix-grid'), {'noWrap': true}) }}
+
+<div>
+    <strong>Columns:</strong> < 24h | < 1 week | > 1 week
+</div>
+{% endblock %}

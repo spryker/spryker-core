@@ -1,0 +1,17 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+<ul class="list-group">
+    <li class="list-group-item">
+        <h4 class="sub-header">{{ 'Customer'|trans }}</h4>
+        {{ include('/Sales/Partials/customer.twig', {'order': order}) }}
+    <li class="list-group-item">
+        <h4 class="sub-header">{{ 'Billing Address'|trans }}</h4>
+        {{ include('/Sales/Partials/address.twig', {'address': billingAddress, 'type': 'billing'}) }}
+    <li class="list-group-item">
+        <h4 class="sub-header">{{ 'Shipping Address'|trans }}</h4>
+        {{ include('/Sales/Partials/address.twig', {address': shippingAddress, 'type': 'shipping}) }}
+</ul>
+
+
+{% endblock %}

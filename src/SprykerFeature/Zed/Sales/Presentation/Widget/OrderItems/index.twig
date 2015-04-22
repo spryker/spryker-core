@@ -1,0 +1,189 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+<ul class="list-group">
+    <li class="list-group-item">
+        {{ include('/Sales/Partials/state-machine-order-trigger.twig', {'order': order, 'orderEvents': orderEvents}) }}
+
+    <li class="list-group-item">
+        {#{% set criteria = new Criteria() %}#}
+        {#{% set criteria->addDescendingOrderByColumn(\#}
+        {#SprykerFeature\Zed\Oms\Persistence\Propel\Map\PacOmsOrderItemStatusHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATUS_HISTORY) ?>#}
+
+        <form action="/sales/order-details/fire-event-group/" method="GET" id="order_items_form">
+        <input type="hidden" name="order_id" value="{{ order.primaryKey }}"/>
+        <table id="order-items-table" class="table table-striped table-bordered table-s table-no-margin">
+            <thead>
+            <tr>
+                <th>{{ 'Image'|trans }}
+                <th>{{ 'Variety'|trans }}
+                <th>{{ 'Product / Pricing'|trans }}
+                <th>{{ 'Process'|trans }}
+                <th>
+                    {% if items|length > 1 %}
+                    <div class="clearfix">
+                                    <span class="pull-left">
+                                        {{ 'Status'|trans }}
+                                    </span>
+                        <a href="#" class="pull-right"
+                           data-trigger-on-click="{'target': '#order-items-table .status-history-table', 'class': 'hidden'}">
+                            <i class="icon-time"></i>
+                            {{ 'Histories'|trans }}
+                        </a>
+                    </div>
+                    {% else %}
+                        {{ 'Status'|trans }}
+                    {% endif %}
+                <th>{{ 'Last Status Change'|trans }}
+                <th>{{ 'Item Trigger'|trans }}
+                    {% if itemCount > 1 %}
+                <th>{{ 'Group'|trans }}
+                    {% endif %}
+                    <tbody>
+
+                    {% set lastBundleId = null %}
+                    {% for index, item in items %}
+                        {% if item.getIsBundle %}
+                            {% set bundle = item.salesOrderItemBundle %}
+                            {% if bundle %}
+                                {% set currentBundleId = bundle.primaryKey %}
+                                {% if currentBundleId = null == false and currentBundleId = lastBundleId == false %}
+                                    <tr>
+                                        <td colspan="8">
+                                            <b>
+                                                {{ 'Bundle'|trans }} - {{ 'Type'|trans }}: {{ bundle.bundleType }}, {{ 'Sku'|trans) }}: {{ bundle.sku }}
+                                            </b>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% set lastBundleId = currentBundleId %}
+                            {% endif %}
+                        {% endif %}
+
+                        {% set productModel = products[item.sku].productModel %}
+            <tr id="order-items-table__item-{{ index }}">
+                <td>{{ include('/Sales/Partials/product-image.twig', {'product': productModel}) }}
+                <td>{{ item.variety }}</td>
+                <td class="table-container">{{ include('/Sales/Partials/product-pricing.twig', {'item': item, 'product': productModel, 'itemIndex': index}) }}
+                <td>{{ item.process.name }}
+                <td>
+                    <p class="clearfix">
+                        <span class="current-status pull-left">{{ item.status.name }}</span>
+                        <a href="#" class="pull-right"
+                           data-trigger-on-click="{'target': '#order-items-table__item-{{ index }}status-history-table', 'class': 'hidden'}"><i class="icon-time"></i> {{ 'History'|trans }}</a>
+                    </p>
+                    {{ partial('Partials/status-history.twig', {'statusHistory': item.statusHistories(criteria))) }}
+                    <a href="/oms/index/draw-item?id={{ item.primaryKey }}" target="_blank"><i class="icon-cogs"></i> {{ 'View State Machine'|trans }}</a>
+                <td>{{ item.lastStatusChange }}
+                <td>
+                    {% for event in itemEvents[item.primaryKey] %}
+                        <a href="/sales/order-details/fire-event?id_sales_order_item={{ item.primaryKey }}&event={{ event }}" class="btn btn-default btn-xs action-statemachine">
+                            <i class="icon-cogs"></i>
+                            {{ event }}
+                        </a>
+                    {% endfor %}
+
+                    {% if itemCount > 1 %}
+                        <td class="event-group" style="width:50px;">
+                    {% if itemEvents[item.primaryKey] %}
+                    <input id="{{ item.primaryKey }}" class="group-selector-item" data-selector-group="event"
+                           type="checkbox" name="item_ids[{{ item.primaryKey }}]"/>
+                    {% endif %}
+                    {% endif %}
+
+                    {% endfor %}
+                    {% if itemCount > 1 %}
+            <tr>
+                <td colspan="8" class="event-group text-right">
+                    {{ 'Trigger event for selected group of items'|trans }}:
+                    {% for event in orderEvents %}
+                        <input id="{{ event }}" name="event" type="submit"
+                               class="group-submit btn btn-default btn-xs action-statemachine" value="{{ event }}"
+                               style="display: none;"/>
+                    {% endfor %}
+
+
+                    {% endif %}
+        </table>
+        </form>
+</ul>
+<script>
+
+    var eventsByItemStorage = new Array();
+    {% for itemId, eventArray in itemEvents %}
+    eventsByItemStorage[{{ itemId }}] = new Array();
+    {% for idx, event in eventArray %}
+    eventsByItemStorage[{{ itemId }}][{{ idx }}] = "{{ event }}";
+    {% endfor %}
+    {% endfor %}
+
+    function arrayIntersect(arr1, arr2) {
+        var r = [], o = {}, l = arr2.length, i, v;
+        for (i = 0; i < l; i++) {
+            o[arr2[i]] = true;
+        }
+        l = arr1.length;
+        for (i = 0; i < l; i++) {
+            v = arr1[i];
+            if (v in o) {
+                r.push(v);
+            }
+        }
+        return r;
+    }
+
+    function getEventIntersection(itemIds) {
+        var intersectedEvents = new Array();
+        $.each(itemIds, function (index, itemId) {
+            var possibleItemEvents = eventsByItemStorage[itemId];
+            if (!index) {
+                intersectedEvents = possibleItemEvents;
+            } else {
+                intersectedEvents = arrayIntersect(intersectedEvents, possibleItemEvents);
+            }
+        });
+        return intersectedEvents;
+    }
+
+    function toggleEventButtons() {
+
+        var ids = getSelectedGroupSelectorIds();
+        var intersectedEvents = getEventIntersection(ids);
+
+        $(".group-submit").each(function (index, element) {
+            var submitEventName = $(element).attr("value");
+            if ($.inArray(submitEventName, intersectedEvents) == -1) {
+                $(element).hide();
+            } else {
+                $(element).show();
+            }
+        });
+    }
+
+    function getSelectedGroupSelectorIds() {
+        var ids = new Array();
+        $('.group-selector-item[data-selector-group="event"]:checked').each(function (index, element) {
+            ids[index] = $(element).attr('id');
+        });
+        return ids;
+    }
+
+    $('.group-selector').change(function () {
+        var selectorGroup = $(this).data('selectorGroup');
+        var items = $('.group-selector-item[data-selector-group="' + selectorGroup + '"]');
+        items.prop("checked", ($(this).prop("checked")));
+        items.change();
+    });
+
+    $('.group-selector-item').change(function () {
+        var selectorGroup = $(this).data('selectorGroup');
+        var items = $('.group-selector-item[data-selector-group="' + selectorGroup + '"]:not(:checked)');
+        $('.group-selector[data-selector-group="' + selectorGroup + '"]').prop('checked', items.size() == 0);
+    });
+
+    $('.group-selector-item[data-selector-group="event"]').change(function () {
+        toggleEventButtons();
+    });
+
+</script>
+{% endblock %}

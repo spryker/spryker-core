@@ -1,0 +1,5 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+{{ widget('/sales/widgets/activity-log', {'id_sales_order': idSalesOrder}) }}
+{% endblock %}

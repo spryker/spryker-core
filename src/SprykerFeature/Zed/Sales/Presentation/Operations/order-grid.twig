@@ -1,0 +1,31 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+<div>
+    <a href="/sales/operations">Back to overview</a>
+</div>
+
+<br /><br />
+
+<div style="margin-bottom: 16px;">
+    {{ statusSelectorForm }}
+    <br /> <br /><br />
+</div>
+
+{% if grid %}
+    {{ grid(grid) }}
+{% endif %}
+
+<script>
+    $('#status-selector').change(function() {
+        $(this).closest("form").submit();
+    });
+    $(".has_comment span").tooltip({
+        bodyHandler: function() {
+            return $(this).parent().find('span').last().html();
+        },
+        showURL: false,
+        delay: 0
+    });
+</script>
+{% endblock %}
