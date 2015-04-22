@@ -1,0 +1,36 @@
+<script type="text/javascript" src="{{ staticPath('Salesrule/scripts/conditionTabEvents.js') }}"></script>
+<div style="display:none">
+    <div id="id-sales-rule">{{ idSalesRule }}</div>
+    <div id="add-context">{{ addContext }}</div>
+    <div id="add-codes">{{ addCodes }}</div>
+    <div id="id-code-pool">{{ idCodePool }}</div>
+</div>
+{% if form.name == 'ConditionVoucherCodeInPool' %}
+    <ul class="nav nav-tabs" id="codes">
+        <li><a id="existing-code-pool-tab" class="active" href="#existing-code-pool"
+               data-toggle="tab">{{ 'Use existing codes'|trans }}</a></li>
+        {% if addContext == false %}
+            <li><a id="edit-code-pool-tab" href="#edit-code-pool" data-toggle="tab">{{ 'Edit code group'|trans }}</a></li>
+        {% else %}
+            <li><a id="create-code-pool-tab" href="#create-code-pool"
+                   data-toggle="tab">{{ 'Create new code group'|trans }}</a></li>
+        {% endif %}
+        {% if addContext == false or addCodes %}
+            <li><a id="manage-codes-tab" href="#manage-codes" data-toggle="tab">{{ 'Manage codes'|trans }}</a></li>
+        {% endif %}
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="existing-code-pool">
+            {{ form|raw }}
+        </div>
+        {% if addContext == false %}
+            <div class="tab-pane" id="edit-code-pool"></div>
+        {% endif %}
+        <div class="tab-pane" id="create-code-pool"></div>
+        {% if addContext == false or addCodes %}
+            <div class="tab-pane" id="manage-codes"></div>
+        {% endif %}
+    </div>
+{% else %}
+    {{ form|raw }}
+{% endif %}
