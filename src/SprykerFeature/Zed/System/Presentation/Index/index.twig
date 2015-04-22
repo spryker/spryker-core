@@ -1,0 +1,19 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+<h1>Please select a backend host</h1>
+
+<table>
+    <th>Application server</th>
+    <th>ZED</th>
+    <th>YVES</th>
+
+    {% for host, value in mappings %}
+    <tr>
+        <td><b>{{ host }}</b>, port ({{ value.zed_port }})</td>
+        <td><a href="/system/index/set-cookie?cookie_name={{ value.zed_cookie_name }}&cookie_value={{ value.zed_cookie_value }}">Enable ZED on {{ host }}</a></td>
+        <td><a target="_new" href="http://{{ yvesUrl }}/system/index?name={{ value.yves_cookie_name }}&value={{ value.yves_cookie_value }}">Enable YVES on {{ host }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

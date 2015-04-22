@@ -1,0 +1,27 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+{% set grid = grid %}
+
+{{ grid.render }}
+
+<script id="details" type="text/x-kendo-template">
+    {% set tabItem1 = new \Kendo\UI\TabStripItem
+
+    tabItem1 = new \Kendo\UI\TabStripItem
+
+    tabItem1.text(__('Changes'))
+    tabItem1.selected(true)
+    tabItem1.startContent %}
+    <div class="usage-details">
+        <code style="display: block">
+            #= stat#
+        </code>
+    </div>
+    {% set tabItem1->endContent();
+
+    $tabstrip = new \Kendo\UI\TabStrip('tabstrip_#=nr#')
+    tabstrip.addItem(tabItem1)
+    echo tabstrip.renderInTemplate %}
+</script>
+{% endblock %}

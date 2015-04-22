@@ -1,0 +1,39 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+{% set grid = grid %}
+
+{{ grid.render }}
+
+<script id="details" type="text/x-kendo-template">
+    {% set classname = new \Kendo\UI\TabStripItem
+
+    classname.text(__('Classname'))
+    classname.selected(true)
+    classname.startContent %}
+    <div class="facade-details">
+        <code style="display: block">
+            #: classname#
+        </code>
+    </div>
+    {% set classname->endContent();
+
+    $usages = new \Kendo\UI\TabStripItem
+
+    usages.text(__('Usages'))
+    usages.startContent %}
+    <div class="usage-details">
+        <code style="display: block">
+            #= usages#
+        </code>
+    </div>
+    {% set usages->endContent();
+
+
+
+    $tabstrip = new \Kendo\UI\TabStrip('tabstrip_#=nr#')
+    tabstrip.addItem(classname)
+    tabstrip.addItem(usages)
+    echo tabstrip.renderInTemplate %}
+</script>
+{% endblock %}
