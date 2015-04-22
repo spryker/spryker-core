@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<database name="zed"
+          defaultIdMethod="native"
+          defaultPhpNamingMethod="underscore"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          namespace="SprykerFeature\Zed\Auth\Persistence\Propel"
+          namespaceAutoPackage="false"
+          package="vendor.spryker.zed-package.src.SprykerFeature.Zed.Auth.Persistence.Propel">
+
+    <table name="spy_auth_reset_password" idMethod="native" phpName="SpyResetPassword">
+        <column name="id_auth_reset_password" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_user_id" type="integer" primaryKey="true"/>
+        <column name="code" required="true" size="35" type="VARCHAR"/>
+        <column name="status" required="true" size="10" type="ENUM" valueSet="active,expired,used"/>
+        <unique>
+            <unique-column name="code"/>
+        </unique>
+        <behavior name="timestampable"/>
+        <behavior name="archivable"/>
+        <foreign-key foreignTable="spy_user_user" phpName="User" refPhpName="User" onDelete="CASCADE">
+            <reference foreign="id_user_user" local="fk_user_id"/>
+        </foreign-key>
+    </table>
+
+</database>
