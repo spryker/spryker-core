@@ -1,0 +1,25 @@
+{% extends '@Application/layout.twig' %}
+
+
+{% block body_class %}spy-page{% endblock %}
+
+
+{% block content %}
+    <div
+        spy-app="spyFormat, spyGrid, spyForm, spyLayout"
+        ng-strict-di
+        ng-controller="ComController"
+    >
+        <div spy-form-update="update()" scope="voucher-grid" channel="voucher-form"></div>
+        <div spy-form-update="closeLayer()" scope="voucher-form" channel="voucher-form"></div>
+        <div spy-form-abort="closeLayer()" scope="voucher-form" channel="voucher-form"></div>
+
+        <spy-listen on="voucher-create-click" do="create = true ; read($argument); openLayer()" scope="voucher-form" channel="voucher-form"></spy-listen>
+        <spy-listen on="voucher-update-click" do="create = false; read($argument); openLayer()" scope="voucher-form" channel="voucher-form"></spy-listen>
+
+        {% include '@Discount/Partials/navigation.twig' %}
+
+        {% include '@Discount/Grid/voucher-grid.twig' %}
+        {% include '@Discount/Form/voucher-form.twig' %}
+    </div>
+{% endblock %}
