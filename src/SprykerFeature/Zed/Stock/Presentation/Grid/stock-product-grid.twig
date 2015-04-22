@@ -1,0 +1,38 @@
+<section
+        class="spy-layout compact"
+        ng-controller="GridController"
+        src="/stock/grid/stock-product"
+        name="stockproduct"
+        ng-class="{ query : queryActive }"
+        >
+
+    <table class="spy-grid spy-interactive">
+        <thead>
+        <tr>
+            <th spy-grid-head="columns['sku']" label="Product SKU"></th>
+            <th spy-grid-head="columns['name']" label="Stock Type"></th>
+            <th spy-grid-head="columns['quantity']" label="Quantity"></th>
+            <th spy-grid-head="columns['is_never_out_of_stock']" label="Is never out of stock"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr ng-repeat="row in rows" ng-click="$emitAsChannel('stock_product_grid_row_click', 'stock-product-form', row)">
+            <td>{[{ row['sku'] }]}</td>
+            <td>{[{ row['name'] }]}</td>
+            <td>{[{ row['quantity'] }]}</td>
+            <td>{[{ row['is_never_out_of_stock'] }]}</td>
+        </tr>
+
+        <tr ng-if="!rows.length">
+            <td colspan="4">No results found</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+    
+</section>

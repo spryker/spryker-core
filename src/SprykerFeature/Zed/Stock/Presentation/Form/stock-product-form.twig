@@ -1,0 +1,29 @@
+
+<div
+    class="spy-layer"
+    spy-layer="context.entity"
+    name="stock-product-form"
+>
+    <form
+    class="spy-layout sparse"
+    ng-controller="FormController"
+    src="/stock/form/stock-product"
+    context="entity"
+    channel="stock-product-form"
+    >
+    <h3>Edit Product Stock</h3>
+
+    <fieldset class="spy-layout controls">
+        <div spy-input-integer="field.quantity" options="{ label : 'Quantity', min : 0 }"></div>
+        <div spy-input-select="field.fk_product" options="{ label : 'Product' }"></div>
+        <div spy-input-select="field.fk_stock" options="{ label : 'Stock Type' }"></div>
+        <div spy-input-switch="field.is_never_out_of_stock" options="{ label : 'Is never out of stock' }"></div>
+    </fieldset>
+
+    <fieldset class="spy-layout controls">
+        <button class="button default" type="button" ng-disabled="query" ng-click="update()">Update</button>
+        <button class="button cancel" type="button" ng-disabled="query" ng-click="abort()">Cancel</button>
+    </fieldset>
+    </form>
+
+</div>

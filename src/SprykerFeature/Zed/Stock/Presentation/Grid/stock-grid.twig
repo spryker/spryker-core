@@ -1,0 +1,28 @@
+<div class="spy-layout sparse">
+
+    <h3>Available Stock Types</h3>
+
+    <table class="spy-grid"
+           ng-controller="GridController"
+           src="/stock/grid/stock"
+           name="stock"
+           ng-class="{ query : queryActive }"
+    >
+        <thead>
+        <tr>
+            <th spy-grid-head="columns['name']" label="Name"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="row in rows">
+            <td>{[{ row['name'] }]}</td>
+        </tr>
+        <tr ng-if="!rows.length">
+            <td colspan="1">No results found</td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
