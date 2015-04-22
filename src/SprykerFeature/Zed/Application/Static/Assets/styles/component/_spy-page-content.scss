@@ -1,0 +1,10 @@
+main.spy-page-content {
+	@include fitem(2, 1px, null, 1);
+	min-height:calc(100vh - #{($_ySpacing * 2)} );
+	background:$_rgbSpyAthens;
+	padding:$_ySpacing $_xSpacing;
+}
+
+nav.spy-page-nav+main.spy-page-content {
+	min-height:calc(100vh - #{($_ySpacing * 2 + 50px )} );
+}

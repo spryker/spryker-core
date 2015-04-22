@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="{% block document_language %}en{% endblock document_language %}">
+    <head>
+        {% block head %}
+            {% block head_meta %}
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            {% endblock %}
+
+            <title>{% block head_title %}{{ title }}{% endblock %}</title>
+            <link rel="shortcut icon" href="{{ staticPath('/favicon.ico') }}">
+
+            {% block head_css %}
+                {% include '@Application/Partials/styles.twig' %}
+            {% endblock %}
+
+            {% block head_js %}
+                {% include '@Application/Partials/scripts.twig' %}
+            {% endblock %}
+        {% endblock %}
+    </head>
+
+    <body class="{% block body_class %}spy-page{% endblock %}">
+        {% block body %}
+            {% block body_header %}
+                {% include '@Application/Partials/header.twig' %}
+            {% endblock %}
+
+            {% block body_menu %}
+                {% include '@Application/Partials/menu.twig' %}
+            {% endblock %}
+
+            <main class="{% block content_class %}spy-page-content{% endblock %}" role="main">
+                {% block content %}{% endblock %}
+            </main>
+        {% endblock %}
+    </body>
+</html>
