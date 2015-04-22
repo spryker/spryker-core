@@ -91,7 +91,7 @@ class Environment
         }
 
         self::initializeErrorHandler();
-        require_once(APPLICATION_VENDOR_DIR . '/spryker/zed-package/src/SprykerFeature/Shared/Library/Autoloader.php');
+        require_once(APPLICATION_VENDOR_DIR . '/spryker/library/src/SprykerFeature/Shared/Library/Autoloader.php');
 
         // Replaced constant with variable for testing purposes
         Autoloader::register(APPLICATION_ROOT_DIR, APPLICATION_VENDOR_DIR, $application);
