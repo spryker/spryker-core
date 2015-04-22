@@ -1,0 +1,36 @@
+<?php
+
+namespace SprykerFeature\Zed\CategoryExporter\Persistence;
+
+use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+
+/**
+ * Class CategoryExporterQueryContainer
+ * @package SprykerFeature\Zed\CategoryExporter\Persistence
+ */
+/**
+ * @method CategoryExporterDependencyContainer getDependencyContainer()
+ */
+class CategoryExporterQueryContainer extends AbstractQueryContainer
+{
+    /**
+     * @param ModelCriteria $query
+     * @param $locale
+     * @return ModelCriteria
+     */
+    public function expandCategoryNodeQuery(ModelCriteria $query, $locale)
+    {
+        return $this->getDependencyContainer()->createCategoryNodeQueryExpander($locale)->expandQuery($query);
+    }
+
+    /**
+     * @param ModelCriteria $query
+     * @param $locale
+     * @return ModelCriteria
+     */
+    public function expandNavigationQuery(ModelCriteria $query, $locale)
+    {
+        return $this->getDependencyContainer()->createNavigationQueryExpander($locale)->expandQuery($query);
+    }
+}
