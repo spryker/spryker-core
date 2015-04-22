@@ -3,10 +3,10 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-namespace Kernel;
+namespace KernelDE;
 use \Codeception\Maybe;
 use Codeception\Module\PhpBrowser;
-use Kernel\Codeception\Module\WebHelper;
+use KernelDE\Codeception\Module\WebHelper;
 
 /**
  * Inherited methods

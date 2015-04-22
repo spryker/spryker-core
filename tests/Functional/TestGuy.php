@@ -3,11 +3,11 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-namespace Kernel;
+namespace KernelDE;
 
 use \Codeception\Maybe;
 use Codeception\Module\Filesystem;
-use Kernel\Codeception\Module\TestHelper;
+use KernelDE\Codeception\Module\TestHelper;
 
 /**
  * Inherited methods

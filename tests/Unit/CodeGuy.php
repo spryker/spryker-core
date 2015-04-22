@@ -3,10 +3,10 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-namespace Kernel;
+namespace KernelDE;
 
 use \Codeception\Maybe;
-use Kernel\Codeception\Module\CodeHelper;
+use KernelDE\Codeception\Module\CodeHelper;
 
 /**
  * Inherited methods
