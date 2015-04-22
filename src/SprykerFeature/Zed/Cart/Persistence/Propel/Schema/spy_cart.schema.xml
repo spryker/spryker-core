@@ -5,7 +5,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\Cart\Persistence\Propel"
-          package="vendor.spryker.zed-package.src.SprykerFeature.Zed.Cart.Persistence.Propel">
+          package="vendor.spryker.cart.src.SprykerFeature.Zed.Cart.Persistence.Propel">
 
     <table name="spy_cart" idMethod="native" phpName="SpyCart">
         <column name="id_cart" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
