@@ -5,7 +5,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\ProductCategory\Persistence\Propel"
-          package="vendor.spryker.zed-package.src.SprykerFeature.Zed.ProductCategory.Persistence.Propel">
+          package="vendor.spryker.product-category.src.SprykerFeature.Zed.ProductCategory.Persistence.Propel">
 
     <table name="spy_product_category" idMethod="native" phpName="SpyProductCategory">
         <column name="id_product_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
