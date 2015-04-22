@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerEngine\Yves\Kernel\Communication;
+namespace YvesUnit\SprykerEngine\Yves\Kernel\Communication;
 
 use SprykerEngine\Yves\Kernel\Communication\BundleControllerAction;
 use SprykerEngine\Yves\Kernel\Communication\ControllerLocator;
@@ -28,7 +28,7 @@ class ControllerLocatorTest extends \PHPUnit_Framework_TestCase
         $bundleControllerAction = new \SprykerEngine\Yves\Kernel\Communication\BundleControllerAction('Kernel', 'Foo', 'index');
         $locator = new \SprykerEngine\Yves\Kernel\Communication\ControllerLocator(
             $bundleControllerAction,
-            '\\Unit\\SprykerEngine\\Yves\\{{bundle}}{{store}}\\Communication\\Fixtures\\{{controller}}Controller'
+            '\\YvesUnit\\SprykerEngine\\Yves\\{{bundle}}{{store}}\\Communication\\Fixtures\\{{controller}}Controller'
         );
 
         $this->assertTrue($locator->canLocate());
@@ -49,11 +49,11 @@ class ControllerLocatorTest extends \PHPUnit_Framework_TestCase
         $bundleControllerAction = new \SprykerEngine\Yves\Kernel\Communication\BundleControllerAction('Kernel', 'Foo', 'index');
         $locator = new \SprykerEngine\Yves\Kernel\Communication\ControllerLocator(
             $bundleControllerAction,
-            '\\Unit\\SprykerEngine\\Yves\\{{bundle}}{{store}}\\Communication\\Fixtures\\{{controller}}Controller'
+            '\\YvesUnit\\SprykerEngine\\Yves\\{{bundle}}{{store}}\\Communication\\Fixtures\\{{controller}}Controller'
         );
 
         $this->assertInstanceOf(
-            'Unit\SprykerEngine\Yves\Kernel\Communication\Fixtures\FooController',
+            'YvesUnit\SprykerEngine\Yves\Kernel\Communication\Fixtures\FooController',
             $locator->locate(new \Pimple(), Locator::getInstance())
         );
     }

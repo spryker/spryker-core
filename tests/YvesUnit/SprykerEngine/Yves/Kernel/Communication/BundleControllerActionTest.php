@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerEngine\Yves\Kernel\Communication;
+namespace YvesUnit\SprykerEngine\Yves\Kernel\Communication;
 
 use SprykerFeature\Shared\Library\Autoloader;
 use SprykerEngine\Yves\Kernel\Communication\BundleControllerAction;

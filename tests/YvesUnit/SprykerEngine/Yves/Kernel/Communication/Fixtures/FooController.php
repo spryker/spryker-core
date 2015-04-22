@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerEngine\Yves\Kernel\Communication\Fixtures;
+namespace YvesUnit\SprykerEngine\Yves\Kernel\Communication\Fixtures;
 
 class FooController
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerEngine\Yves\Kernel;
+namespace YvesUnit\SprykerEngine\Yves\Kernel;
 
 use SprykerEngine\Yves\Kernel\Locator;
 

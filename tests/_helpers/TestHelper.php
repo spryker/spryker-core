@@ -1,6 +1,6 @@
 <?php
 
-namespace KernelDE\Codeception\Module;
+namespace Kernel\Codeception\Module;
 
 use Codeception\Module;
 use Codeception\TestCase;
