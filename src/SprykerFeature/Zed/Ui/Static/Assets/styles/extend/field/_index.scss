@@ -1,0 +1,79 @@
+%field-default {
+	@extend %font-field;
+
+	position:relative;
+	max-width:$_wMaxControl;
+	margin:0 0 19px;
+	padding:0 0 19px;
+}
+
+
+%field-label {
+	display:block;
+	@include font(null, null, $_rgbSpyRiverBed, null, $_ffCutBold);
+	@include pre(transition, color $_tFast ease-in);
+	cursor:pointer;
+}
+
+%field-label-hover {
+	color:$_rgbSpyBostonBlue;
+	@include pre(transition-timing-function, ease-out);
+}
+
+%field-label-optional {
+	color:$_rgbSpyCasper;
+	font-size:11px;
+}
+
+%field-label-disabled {
+	color:$_rgbSpyGrayChateau;
+	cursor:default;
+}
+
+
+%field-messages {
+	@include absolute(null, 0, null, null, 19px, null, 0);
+	color:$_rgbUiMonza;
+}
+
+%field-message {
+	&:after {
+		content:' \00B7';
+	}
+
+	&:last-child:after {
+		content:none;
+	}
+}
+
+
+
+@import 'text.scss';
+@import 'select.scss';
+@import 'textselect.scss';
+@import 'area.scss';
+
+
+
+%field-rc-control-common {
+	position:relative;
+	margin-top:$_ySpacing;
+}
+
+%field-rc-label-common {
+	@include font(null, null, $_rgbCopy, null, $_ffCutReg);
+}
+
+%field-rc-label-disabled-common {
+	color:$_rgbSpyGrayChateau;
+	cursor:default;
+}
+
+%field-rc-common {
+	@include absolute(null, 0, 0, 0, 0);
+	opacity:0;
+}
+
+@import 'radio.scss';
+@import 'check.scss';
+@import 'switch.scss';

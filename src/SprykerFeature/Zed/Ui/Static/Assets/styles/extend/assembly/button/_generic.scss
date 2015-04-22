@@ -1,0 +1,13 @@
+%button-generic-assembly {
+	@extend %button-generic;
+
+	&:hover,
+	&:focus {
+		@extend %button-generic-hover;
+	}
+
+	&:disabled,
+	&.disabled {
+		@extend %button-generic-disabled;
+	}
+}
