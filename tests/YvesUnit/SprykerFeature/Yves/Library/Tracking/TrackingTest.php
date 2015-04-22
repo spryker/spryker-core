@@ -1,10 +1,10 @@
 <?php
 
-namespace Unit\SprykerFeature\Yves\Library\Tracking;
+namespace YvesUnit\SprykerFeature\Yves\Library\Tracking;
 
-use Unit\SprykerFeature\Yves\Library\Tracking\Fixture\DataProvider\DummyDataProvider;
-use Unit\SprykerFeature\Yves\Library\Tracking\Fixture\Provider\HelloProvider;
-use Unit\SprykerFeature\Yves\Library\Tracking\Fixture\Provider\WorldProvider;
+use YvesUnit\SprykerFeature\Yves\Library\Tracking\Fixture\DataProvider\DummyDataProvider;
+use YvesUnit\SprykerFeature\Yves\Library\Tracking\Fixture\Provider\HelloProvider;
+use YvesUnit\SprykerFeature\Yves\Library\Tracking\Fixture\Provider\WorldProvider;
 use SprykerFeature\Yves\Library\Tracking\PageTypeInterface;
 use SprykerFeature\Yves\Library\Tracking\Tracking;
 

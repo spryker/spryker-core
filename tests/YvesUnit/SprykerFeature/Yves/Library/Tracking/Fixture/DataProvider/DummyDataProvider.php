@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerFeature\Yves\Library\Tracking\Fixture\DataProvider;
+namespace YvesUnit\SprykerFeature\Yves\Library\Tracking\Fixture\DataProvider;
 
 use SprykerFeature\Yves\Library\Tracking\DataProvider\AbstractDataProvider;
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Unit\SprykerFeature\Yves\Library\Tracking\Fixture\Provider;
+namespace YvesUnit\SprykerFeature\Yves\Library\Tracking\Fixture\Provider;
 
 use SprykerFeature\Yves\Library\Tracking\PageTypeInterface;
 use SprykerFeature\Yves\Library\Tracking\Provider\ProviderInterface;
 use SprykerFeature\Yves\Library\Tracking\Tracking;
 
-class FooProvider implements ProviderInterface, PageTypeInterface
+class WorldProvider implements ProviderInterface, PageTypeInterface
 {
 
     /**
@@ -17,7 +17,9 @@ class FooProvider implements ProviderInterface, PageTypeInterface
     public function getTrackingOutput(array $dataProvider, $pageType)
     {
         if ($pageType === self::PAGE_TYPE_HOME) {
-            return 'Foo';
+            return 'World';
+        } else {
+            return 'Welt';
         }
     }
 
@@ -26,6 +28,6 @@ class FooProvider implements ProviderInterface, PageTypeInterface
      */
     public function getPosition()
     {
-        return Tracking::POSITION_AFTER_OPENING_BODY;
+        return Tracking::POSITION_BEFORE_CLOSING_HEAD;
     }
 }

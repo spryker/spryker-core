@@ -1,25 +1,23 @@
 <?php
 
-namespace Unit\SprykerFeature\Yves\Library\Tracking\Fixture\Provider;
+namespace YvesUnit\SprykerFeature\Yves\Library\Tracking\Fixture\Provider;
 
 use SprykerFeature\Yves\Library\Tracking\PageTypeInterface;
 use SprykerFeature\Yves\Library\Tracking\Provider\ProviderInterface;
 use SprykerFeature\Yves\Library\Tracking\Tracking;
 
-class HelloProvider implements ProviderInterface, PageTypeInterface
+class FooProvider implements ProviderInterface, PageTypeInterface
 {
 
     /**
      * @param array $dataProvider
      * @param $pageType
-     * @return mixed|string
+     * @return string
      */
     public function getTrackingOutput(array $dataProvider, $pageType)
     {
         if ($pageType === self::PAGE_TYPE_HOME) {
-            return 'Hello';
-        } else {
-            return 'Hallo';
+            return 'Foo';
         }
     }
 
@@ -28,6 +26,6 @@ class HelloProvider implements ProviderInterface, PageTypeInterface
      */
     public function getPosition()
     {
-        return Tracking::POSITION_BEFORE_CLOSING_HEAD;
+        return Tracking::POSITION_AFTER_OPENING_BODY;
     }
 }

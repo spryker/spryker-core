@@ -1,8 +1,8 @@
 <?php
 
-namespace Unit\SprykerFeature\Yves\Library\Tracking\DataProvider;
+namespace YvesUnit\SprykerFeature\Yves\Library\Tracking\DataProvider;
 
-use Unit\SprykerFeature\Yves\Library\Tracking\Fixture\DataProvider\DummyDataProvider;
+use YvesUnit\SprykerFeature\Yves\Library\Tracking\Fixture\DataProvider\DummyDataProvider;
 use SprykerFeature\Yves\Library\Tracking\DataProvider\OrderDataProvider;
 
 /**
