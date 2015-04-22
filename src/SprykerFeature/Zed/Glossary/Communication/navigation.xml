@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <content>
+        <bundle>glossary</bundle>
+        <controller>glossary</controller>
+        <action>keys</action>
+    </content>
+</config>

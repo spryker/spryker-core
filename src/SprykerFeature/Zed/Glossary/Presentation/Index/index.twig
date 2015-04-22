@@ -1,0 +1,27 @@
+{% extends '@Application/layout.twig' %}
+
+
+{% block body_class %}spy-page{% endblock %}
+
+
+{% block content %}
+    <section
+        spy-app="spyLayout,spyFormat,spyGrid,spyForm"
+        ng-controller="ComController"
+    >
+        <div spy-form-update="openLayer(); read($argument)" scope="key_edit" channel="glossary"></div>
+        <div spy-form-update="closeLayer()" scope="key_edit" channel="glossary"></div>
+        <div spy-form-abort="closeLayer()" scope="key_edit" channel="glossary"></div>
+        <div spy-form-update="read()" scope="grid" channel="glossary"></div>
+
+        <spy-listen on="glossary_edit" do="openLayer(); read($argument)" scope="key_edit" channel="glossary"></spy-listen>
+
+        <div class="spy-layout n4 f2">
+            {% include '@Glossary/Partials/form-add-translation.twig' %}
+
+            {% include '@Glossary/Partials/glossary-grid.twig' %}
+        </div>
+
+        {% include '@Glossary/Partials/form-edit-translation.twig' %}
+    </section>
+{% endblock %}
