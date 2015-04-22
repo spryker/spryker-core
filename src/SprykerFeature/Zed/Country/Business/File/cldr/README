@@ -1,0 +1,15 @@
+CLDR - Unicode Common Locale Data Repository
+--------------------------------------------
+
+All this files in this directory are copies from CLDR.
+NEVER change them by hand.
+
+--------------------------------------------
+################## UPDATE ##################
+--------------------------------------------
+
+got to:
+http://cldr.unicode.org/index/downloads
+and download latest version and replace all the files here with the newest version.
+
+Check the changes!
