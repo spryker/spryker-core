@@ -5,7 +5,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\Country\Persistence\Propel"
-          package="vendor.spryker.zed-package.src.SprykerFeature.Zed.Country.Persistence.Propel">
+          package="vendor.spryker.country.src.SprykerFeature.Zed.Country.Persistence.Propel">
 
     <table name="spy_country" phpName="SpyCountry">
         <column name="id_country" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
