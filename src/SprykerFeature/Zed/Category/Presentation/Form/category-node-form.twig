@@ -1,0 +1,37 @@
+<div
+        class="spy-layer"
+        spy-layer="context.category_node"
+        name="category-node-form"
+        >
+    <form
+            class="spy-layout sparse"
+            ng-controller="FormController"
+            src="/category/form/category-node"
+            context="category_node"
+            channel="category-node-form"
+            >
+        <h3 ng-if="context.category_node.id_category_node">Edit Node</h3>
+        <h3 ng-if="!context.category_node.id_category_node">Create Node</h3>
+
+        <fieldset class="spy-layout controls">
+            <div spy-input-switch="field.is_root" options="{ label : 'Is Root' }"></div>
+            <div spy-input-select="field.fk_category" options="{ label : 'Category Name' }"></div>
+            <div ng-if="!field.is_root.value" spy-input-select="field.fk_parent_category_node" options="{ label : 'Parent Category Name' }"></div>
+        </fieldset>
+
+        <button ng-if="!context.category_node.id_category_node"
+                class="button default"
+                type="submit"
+                ng-disabled="query"
+                ng-click="update()">
+            Create
+        </button>
+
+        <div ng-if="context.category_node.id_category_node">
+            <button class="button default" type="submit" ng-disabled="query" ng-click="update()">Update</button>
+            <button class="button cancel" type="button" ng-disabled="query" ng-click="abort()">Cancel</button>
+        </div>
+
+    </form>
+
+</div>

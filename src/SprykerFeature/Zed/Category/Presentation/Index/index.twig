@@ -1,0 +1,54 @@
+{% extends '@Application/layout.twig' %}
+
+
+{% block body_class %}spy-page{% endblock %}
+
+
+{% block title_content %}Category{% endblock %}
+
+{% block content %}
+<div
+        spy-app="spyFormat, spyGrid, spyLayout, spyForm"
+        ng-strict-di
+        ng-controller="ComController"
+        >
+
+    <spy-listen on="form_success" do="update()" scope="category-grid" channel="category-form"></spy-listen>
+    <spy-listen on="form_success" do="close()" scope="category-form" channel="category-form"></spy-listen>
+    <spy-listen on="form_abort" do="close()" scope="category-form" channel="category-form"></spy-listen>
+
+    <spy-listen on="category-update-click" do="context.category = $argument" channel="category-form"></spy-listen>
+
+    <spy-listen on="form_success" do="update()" scope="category-node-grid" channel="category-node-form"></spy-listen>
+    <spy-listen on="form_success" do="close()" scope="category-node-form" channel="category-node-form"></spy-listen>
+    <spy-listen on="form_abort" do="close()" scope="category-node-form" channel="category-node-form"></spy-listen>
+
+    <spy-listen on="category-node-update-click" do="context.category_node = $argument" channel="category-node-form"></spy-listen>
+
+    <div class="spy-layout n2">
+
+        {% include '@Category/Grid/category-grid.twig' %}
+
+        {% include '@Category/Grid/category-node-grid.twig' %}
+
+        {% include '@Category/Form/category-form.twig' %}
+
+        {% include '@Category/Form/category-node-form.twig' %}
+
+    </div>
+
+
+    <div class="spy-layout sparse">
+
+        <h3>Category Tree</h3>
+
+        <div>
+            <iframe src="/category/index/render" frameBorder="0" style="width: 100%; height: 500px;" ></iframe>
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

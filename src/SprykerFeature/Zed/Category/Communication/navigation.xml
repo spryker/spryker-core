@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <category>
+        <label>Category</label>
+        <title>Category</title>
+        <bundle>category</bundle>
+        <controller>index</controller>
+        <action>index</action>
+        <order>0</order>
+        <shortcut>c</shortcut>
+    </category>
+</config>

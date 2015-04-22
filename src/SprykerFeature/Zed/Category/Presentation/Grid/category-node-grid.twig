@@ -1,0 +1,48 @@
+<div
+        class="spy-layout sparse"
+        ng-controller="GridController"
+        ng-strict-di
+        src="/category/grid/category-node"
+        name="category-node-grid"
+        ng-class="{ query : queryActive }"
+        >
+
+    <h3>Nodes</h3>
+
+    <button class="button default" ng-click="$emitAsChannel('category-node-update-click', 'category-node-form', '')">Add Category-Node</button>
+
+    <br/>
+    <br/>
+
+    <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+
+    <table class="spy-grid spy-interactive">
+
+        <thead>
+            <tr>
+                <th spy-grid-head="columns['id_category_node']" label="Category Node Id"></th>
+                <th spy-grid-head="columns['category_name']" label="Category Name"></th>
+                <th spy-grid-head="columns['parent_category_name']" label="Parent Category Name"></th>
+                <th spy-grid-head="columns['is_root']" label="Root"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr ng-repeat="row in rows" ng-click="$emitAsChannel('category-node-update-click', 'category-node-form', row)">
+                <td>{[{ row['id_category_node'] }]}</td>
+                <td>{[{ row['category_name'] }]}</td>
+                <td>{[{ row['parent_category_name'] }]}</td>
+                <td><spy-format-boolean content="row['is_root']"></spy-format-boolean></td>
+            </tr>
+
+            <tr ng-if="!rows.length">
+                <td colspan="4">No results found</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+
+</div>
