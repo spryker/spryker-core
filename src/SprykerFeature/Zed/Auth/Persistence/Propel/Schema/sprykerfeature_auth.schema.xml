@@ -6,7 +6,7 @@
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\Auth\Persistence\Propel"
           namespaceAutoPackage="false"
-          package="vendor.spryker.zed-package.src.SprykerFeature.Zed.Auth.Persistence.Propel">
+          package="vendor.spryker.auth.src.SprykerFeature.Zed.Auth.Persistence.Propel">
 
     <table name="spy_auth_reset_password" idMethod="native" phpName="SpyResetPassword">
         <column name="id_auth_reset_password" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
