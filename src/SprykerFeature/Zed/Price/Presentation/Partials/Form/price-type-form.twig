@@ -1,0 +1,14 @@
+<form
+    class="spy-layout sparse"
+    ng-controller="FormController"
+    src="/price/priceform/pricetype"
+    channel="price_type_form"
+    >
+    <h3>Add Price Type</h3>
+
+    <div spy-input-text="field.name" options="{ label : 'Name' }"></div>
+
+    <div class="spy-layout buttons">
+        <button class="button default" type="submit" ng-click="update()">Add</button>
+    </div>
+</form>

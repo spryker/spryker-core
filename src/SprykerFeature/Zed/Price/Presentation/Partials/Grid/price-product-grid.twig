@@ -1,0 +1,35 @@
+<section
+    class="spy-grid spy-interactive"
+    ng-controller="GridController"
+    src="/price/price-grid/price"
+    name="price_product_grid"
+    ng-class="{ query : queryActive }"
+>
+    <table>
+        <thead>
+            <tr>
+                <th spy-grid-head="columns['id_price_product']" label="Id"></th>
+                <th spy-grid-head="columns['sku_product']" label="Product Sku"></th>
+                <th spy-grid-head="columns['price']" label="Price"></th>
+                <th spy-grid-head="columns['price_type_name']" label="Price Type"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="row in rows" ng-click="$emitAsChannel('price_grid_row_click', 'price_product_grid', row)">
+                <td>{[{ row['id_price_product'] }]}</td>
+                <td>
+                    {[{ row['sku_product'] }]}
+                    <i><p ng-show="'{[{ row['abstract'] }]}' == 'true'" style="color: #CBCBCB">(abstract)<p></i>
+                </td>
+                <td>{[{ row['price'] }]}</td>
+                <td>{[{ row['price_type_name'] }]}</td>
+            </tr>
+            <tr ng-if="!rows.length">
+                <td colspan="4">No results found</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
+</section>

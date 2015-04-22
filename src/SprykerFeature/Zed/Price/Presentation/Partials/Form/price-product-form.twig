@@ -1,0 +1,22 @@
+<spy-layer>
+    <form
+        class="spy-layout sparse"
+        ng-controller="FormController"
+        src="/price/price-form/price"
+        name="price_product_form"
+        channel="price_product_form"
+        >
+
+        <h3>Edit Price Product</h3>
+
+        <div spy-input-hidden="field.id_price_product"></div>
+        <div spy-input-select="field.sku_product" options="{ label : 'Sku' }"></div>
+        <div spy-input-integer="field.price" options="{ label : 'Price' }"></div>
+        <div spy-input-select="field.price_type_name" options="{ label : 'Price Type' }"></div>
+
+        <div class="spy-layout buttons">
+            <button class="button default" type="button" ng-disabled="query" ng-click="update()">Update</button>
+            <button class="button cancel" type="button" ng-disabled="query" ng-click="abort()">Cancel</button>
+        </div>
+    </form>
+</spy-layer>

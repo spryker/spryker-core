@@ -1,0 +1,34 @@
+{% extends '@Application/layout.twig' %}
+
+
+{% block body_class %}spy-page{% endblock %}
+
+
+{% block content %}
+    <div
+        spy-app="spyFormat, spyGrid, spyLayout, spyForm"
+        ng-strict-di
+        ng-controller="ComController"
+    >
+        <div spy-form-update="update()" scope="price_type_grid" channel="price_type_form"></div>
+
+        <div spy-form-update="update()" scope="price_product_grid" channel="price_product_form"></div>
+        <div spy-form-update="closeLayer()" scope="price_product_form" channel="price_product_form"></div>
+        <div spy-form-abort="closeLayer()" scope="price_product_form" channel="price_product_form"></div>
+
+        <spy-listen on="price_grid_row_click" do="read($argument); openLayer()" scope="price_product_form" channel="price_product_grid"></spy-listen>
+
+        <section class="spy-layout n3 f2">
+            <div>
+                {% include '@Price/Partials/Form/price-type-form.twig' %}
+
+                {% include '@Price/Partials/Grid/price-type-grid.twig' %}
+            </div>
+            <div>
+                {% include '@Price/Partials/Grid/price-product-grid.twig' %}
+
+                {% include '@Price/Partials/Form/price-product-form.twig' %}
+            </div>
+        </section>
+</div>
+{% endblock %}
