@@ -57,18 +57,6 @@
   // specifics are in components/_catalog-filters.scss
 }
 
-.catalog__products {
-  margin: 0;
-  padding: 0;
-
-  @include media-query('medium') {
-    margin-left: 50%;
-  }
-  @include media-query('large') {
-    margin-left: 25%;
-  }
-}
-
 .catalog__summary {
   margin: $step 0;
   text-transform: uppercase;
@@ -83,9 +71,64 @@
   text-align: right;
 }
 
+.catalog__products-holder {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
 .catalog__products {
   display: flex;
   flex-wrap: wrap;
+  transition: transform .5s;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  transform: scale3d(1,1,1);
+}
+
+@keyframes loading {
+  0% { transform: scale3d(0.05, 0.05, 1) rotate(0deg); }
+  10% { transform: scale3d(0.05, 0.05, 1) rotate(90deg); }
+  25% { transform: scale3d(0.05, 0.05, 1) rotate(90deg); }
+  35% { transform: scale3d(0.05, 0.05, 1) rotate(180deg); }
+  50% { transform: scale3d(0.05, 0.05, 1) rotate(180deg); }
+  60% { transform: scale3d(0.05, 0.05, 1) rotate(270deg); }
+  75% { transform: scale3d(0.05, 0.05, 1) rotate(270deg); }
+  85% { transform: scale3d(0.05, 0.05, 1) rotate(360deg); }
+}
+
+.js-products-prev {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(calc(-100% - #{$step}));
+}
+
+.js-products-next {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(calc(100% + #{$step}));
+}
+
+.js-products-loading {
+  transform: scale3d(0.05, 0.05, 1);
+
+  &.js-products-prev {
+    transform: translateX(calc(-100% - #{$step})) scale3d(0.05, 0.05, 1);
+  }
+
+  &.js-products-next {
+    transform: translateX(calc(100% + #{$step})) scale3d(0.05, 0.05, 1);
+  }
+
+  &.js-products-spinning.js-products-current {
+    animation-duration: 4s;
+    animation-name: loading;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(.3,-2,.7,1.5);
+  }
 }
 
 .catalog__product {
@@ -134,4 +177,17 @@ h1.product__name {
   bottom: $step*.5;
   color: $brand-color;
   font-size: $step;
+}
+
+.catalog__pagination {
+  margin: 0;
+
+  @include media-query('medium') {
+    margin-left: 50%;
+  }
+  @include media-query('large') {
+    margin-left: 25%;
+  }
+  padding: 0 0 $step;
+  text-align: center;
 }
