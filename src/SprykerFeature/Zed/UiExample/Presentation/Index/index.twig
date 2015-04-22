@@ -1,0 +1,28 @@
+{% extends '@Application/layout.twig' %}
+
+
+{% block body_class %}spy-page spy-example{% endblock %}
+
+
+{% block content %}
+    {% include '@UiExample/Partials/Layout/layout.twig'          %}
+    {% include '@UiExample/Partials/Layout/spacing-sparse.twig'  %}
+    {% include '@UiExample/Partials/Layout/spacing-compact.twig' %}
+    {% include '@UiExample/Partials/Layout/spacing-plain.twig'   %}
+
+    <section
+        spy-app="spyAction,spyGrid,spyForm,spyTemplate,spyFormat"
+        ng-strict-di
+        ng-controller="ComController"
+    >
+        {% include '@UiExample/Partials/Ng/index.twig' %}
+
+        {% include '@UiExample/Partials/Action/index.twig' %}
+
+        {% include '@UiExample/Partials/Grid/index.twig' %}
+
+        {% include '@UiExample/Partials/Form/index.twig' %}
+
+        {% include '@UiExample/Partials/Template/index.twig' %}
+    </section>
+{% endblock %}
