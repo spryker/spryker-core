@@ -1,0 +1,25 @@
+<?php
+
+namespace Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion;
+
+use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
+use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\TransferMethodTagBuilder;
+
+/**
+ * @group Kernel
+ * @group MethodTagBuilder
+ */
+class GeneratedInterfaceMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
+{
+
+    public function testBuildMethodTagsShouldReturnArrayWithMethodsToGetGeneratedBundleInterface()
+    {
+        $expectedMethodTag = ' * @method \\Generated\Zed\Ide\Bundle bundle()';
+
+        $this->assertContains(
+            $expectedMethodTag,
+            (new GeneratedInterfaceMethodTagBuilder())->buildMethodTags('Bundle')
+        );
+    }
+
+}

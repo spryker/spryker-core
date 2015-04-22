@@ -1,0 +1,24 @@
+<?php
+
+namespace Unit\SprykerEngine\Shared\Kernel\Fixtures;
+
+use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+
+class LocatorWithoutMatcher implements LocatorInterface
+{
+
+    /**
+     * @param $bundle
+     * @param LocatorLocatorInterface $locator
+     * @param null|string $className
+     *
+     * @return object
+     */
+    public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
+    {
+
+    }
+
+
+}
