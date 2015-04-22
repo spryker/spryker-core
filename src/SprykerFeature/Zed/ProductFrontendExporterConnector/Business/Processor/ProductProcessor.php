@@ -1,0 +1,75 @@
+<?php
+
+namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor;
+
+use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Zed\ProductFrontendExporterConnector\Dependency\Facade\ProductFrontendExporterToProductInterface;
+
+/**
+ * Class ProductProcessor
+ *
+ * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor
+ */
+class ProductProcessor implements ProductProcessorInterface
+{
+    /**
+     * @var ProductFrontendExporterToProductInterface
+     */
+    protected $productBuilder;
+    /**
+     * @var KeyBuilderInterface
+     */
+    private $productKeyGenerator;
+
+    /**
+     * @param ProductFrontendExporterToProductInterface   $productBuilder
+     * @param KeyBuilderInterface                         $productKeyBuilder
+     */
+    public function __construct(
+        ProductFrontendExporterToProductInterface $productBuilder,
+        KeyBuilderInterface $productKeyBuilder
+    ) {
+        $this->productBuilder = $productBuilder;
+        $this->productKeyGenerator = $productKeyBuilder;
+    }
+
+    /**
+     * @param array  $products
+     * @param string $locale
+     *
+     * @return array
+     */
+    public function buildProducts(array $products, $locale)
+    {
+        $products = $this->productBuilder->buildProducts($products);
+
+        $exportChunk = [];
+
+        foreach ($products as $index => $productData) {
+            $productKey = $this->productKeyGenerator->generateKey(
+                [
+                    'resourceType' => 'product',
+                    'value' => $productData['id_product']
+                ],
+                $locale
+            );
+            $productData['url'] = $productData['product_url'];
+            $exportChunk[$productKey] = $this->filterProductData($productData);
+        }
+
+        return $exportChunk;
+    }
+
+    /**
+     * @param array $productData
+     *
+     * @return array
+     */
+    protected function filterProductData(array $productData)
+    {
+        //TODO get this from the settings, instead of hardcoding it
+        $allowedFields = ['sku' => true, 'attributes' => true, 'name' => true, 'url' => true];
+
+        return array_intersect_key($productData, $allowedFields);
+    }
+}
