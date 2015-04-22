@@ -1,0 +1,41 @@
+<form
+        class="spy-form spy-layout sparse"
+        spy-app="spyForm,spyGrid,spyLayout"
+        ng-controller="FormController"
+        src="/customer/profile/edit"
+        name="customer-form"
+        model="{{ customerJson }}"
+        >
+
+    <h3>{{ "customer.profile.edit" | trans }}</h3>
+
+    <div class="spy-layout n3">
+        <div>Customer ID: {[{ field.id_customer.value }]}</div>
+        <div>Registered on {[{ field.registered.value.date }]}</div>
+        <div></div>
+    </div>
+
+    <div class="spy-layout n3">
+        <div>
+            <div spy-input-text="field.email" options="{ label: 'E-Mail' }"></div>
+            <div spy-input-text="field.salutation" options="{ label: 'Salutation' }"></div>
+            <div>
+                <button class="button default" ng-disabled="query" type="submit" ng-click="update()">{{ "customer.profile.update" | trans }}</button>
+                <p>
+                    <a href="/customer/profile/sendPasswordRestoreToken?id={[{ field.id_customer.value}]}">
+                        {{ "customer.profile.send.registertoken" | trans }}
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div>
+            <div spy-input-select="field.gender" options="{ label : 'Gender' }"></div>
+            <div spy-input-text="field.first_name" options="{ label : 'First Name' }"></div>
+        </div>
+        <div>
+            <!--div spy-input-text="field.date_of_birth" options="{ label : 'Date of Birth' }"></div-->
+            <div spy-input-text="field.last_name" options="{ label : 'Last Name' }"></div>
+        </div>
+    </div>
+
+</form>

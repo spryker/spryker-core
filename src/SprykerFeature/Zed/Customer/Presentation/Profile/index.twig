@@ -1,0 +1,10 @@
+{% extends '@Application/layout.twig' %}
+
+{% block body_class %}spy-page{% endblock %}
+
+{% block title_content %}Customer{% endblock %}
+
+{% block content %}
+    {% include "@Customer/Partial/customer.twig" %}
+    {% include "@Customer/Partial/addressbook.twig" %}
+{% endblock %}

@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<database name="zed"
+          defaultIdMethod="native"
+          defaultPhpNamingMethod="underscore"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          namespace="SprykerFeature\Zed\Customer\Persistence\Propel"
+          package="vendor.spryker.zed-package.src.SprykerFeature.Zed.Customer.Persistence.Propel">
+
+
+    <table name="spy_customer" idMethod="native" phpName="SpyCustomer">
+        <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="email" required="true" size="255" type="VARCHAR"/>
+        <column name="increment_id" size="45" type="VARCHAR"/>
+        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr"/>
+        <column name="first_name" size="100" type="VARCHAR"/>
+        <column name="middle_name" size="100" type="VARCHAR"/>
+        <column name="last_name" size="100" type="VARCHAR"/>
+        <column name="company" size="100" type="VARCHAR"/>
+        <column name="gender" type="ENUM" valueSet="Male, Female"/>
+        <column name="date_of_birth" type="DATE" default="NULL"/>
+        <column name="password" required="true" size="255" type="VARCHAR"/>
+        <column name="restore_password_key" size="150" type="VARCHAR" default="NULL"/>
+        <column name="restore_password_date" type="TIMESTAMP" default="NULL"/>
+        <column name="registered" type="DATE" default="NULL" />
+        <column name="registration_key" size="150" type="VARCHAR" default="NULL"/>
+        <column name="default_billing_address" type="INTEGER" />
+        <column name="default_shipping_address" type="INTEGER"/>
+        <behavior name="timestampable"/>
+        <behavior name="archivable"/>
+        <unique>
+            <unique-column name="email"/>
+        </unique>
+        <unique>
+            <unique-column name="increment_id"/>
+        </unique>
+        <foreign-key foreignTable="spy_customer_address" phpName="BillingAddress" refPhpName="CustomerBillingAddress">
+            <reference foreign="id_customer_address" local="default_billing_address"/>
+        </foreign-key>
+        <foreign-key foreignTable="spy_customer_address" phpName="ShippingAddress" refPhpName="CustomerShippingAddress">
+            <reference foreign="id_customer_address" local="default_shipping_address"/>
+        </foreign-key>
+        <!--validator column="email">
+            <rule name="unique" message="This email address already exists!"/>
+        </validator-->
+    </table>
+
+    <table name="spy_customer_address" idMethod="native" phpName="SpyCustomerAddress">
+        <column name="id_customer_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="fk_customer" required="true" type="INTEGER"/>
+        <column name="fk_country" type="INTEGER" required="true"/>
+
+        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, "/>
+        <column name="name" required="true" size="100" type="VARCHAR"/>
+        <column name="address1" size="255" type="VARCHAR"/>
+        <column name="address2" size="255" type="VARCHAR"/>
+        <column name="address3" size="255" type="VARCHAR"/>
+        <column name="company" size="255" type="VARCHAR"/>
+        <column name="city" size="255" type="VARCHAR"/>
+        <column name="zip_code" size="15" type="VARCHAR"/>
+        <column name="po_box" size="255" type="VARCHAR"/>
+        <column name="phone" size="255" type="VARCHAR"/>
+        <column name="cell_phone" size="255" type="VARCHAR"/>
+        <column name="comment" size="255" type="VARCHAR"/>
+        <column name="deleted_at" required="false" type="TIMESTAMP"/>
+
+        <foreign-key foreignTable="spy_customer" phpName="Customer" refPhpName="Address">
+            <reference foreign="id_customer" local="fk_customer"/>
+        </foreign-key>
+        <foreign-key foreignTable="spy_country" phpName="Country" refPhpName="CustomerAddress">
+            <reference local="fk_country" foreign="id_country"/>
+        </foreign-key>
+
+        <index>
+            <index-column name="fk_customer"/>
+        </index>
+
+        <behavior name="timestampable"/>
+        <behavior name="archivable"/>
+
+    </table>
+</database>
