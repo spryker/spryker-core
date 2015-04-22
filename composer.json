@@ -13,5 +13,8 @@
   "require": {
   },
   "require-dev": {
-  }
+  },
+  "bin": [
+    "bin/console"
+  ]
 }
