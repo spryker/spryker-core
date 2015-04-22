@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<transfers
+        xmlns="http://www.w3schools.com"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.w3schools.com
+        ../../../../../../infrastructure-package/src/SprykerFeature/Shared/Application/File/Transfer/transfer.xsd">
+
+    <transfer name="Attribute" createCollection="true">
+        <property name="idCategoryAttribute" type="int"/>
+        <property name="fkCategory" type="int"/>
+        <property name="fkCategoryAttributeKey" type="int"/>
+        <property name="value" type="string"/>
+    </transfer>
+    <transfer name="Product" createCollection="true">
+        <property name="idCatalogProduct" type="int"/>
+        <property name="name" type="int"/>
+        <property name="sku" type="string"/>
+    </transfer>
+    <transfer name="Scope" createCollection="true">
+        <property name="idCategoryScope" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+</transfers>
