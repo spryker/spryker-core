@@ -3,7 +3,7 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-namespace YvesPackage;
+namespace ProductImage;
 
 use \Codeception\Maybe;
 
