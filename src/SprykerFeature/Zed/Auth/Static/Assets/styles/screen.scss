@@ -65,6 +65,19 @@ body.spy-login {
 			border-color:$_rgbSpyRiverBed;
 			background:transparent;
 			padding:8px 16px 8px 32px;
+			@include pre(transition, border-color $_tFast ease-in);
+
+			&:hover,
+			&:focus {
+				border-color:$_rgbWhite;
+				@include pre(transition-timing-function, ease-out);
+			}
+
+			&:-webkit-autofill {	//Chrome login highlighting
+				-webkit-box-shadow:0 0 0 20px $_rgbSpyEbonyClay inset;
+				background-color:#f00;
+				color:#0f0;
+			}
 		}
 
 		div.messages {

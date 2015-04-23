@@ -36,7 +36,7 @@ class LoginController extends AbstractController
      */
     public function checkAction(Request $request)
     {
-        $statusCode = 200; //@TODO change it for 400 as soon as frontend is ready to handle 4xx
+        $statusCode = 401;
         $headers = [];
 
         $facade = $this->getDependencyContainer()->locateAuthFacade();
@@ -59,7 +59,7 @@ class LoginController extends AbstractController
             $headers['Spy-Location'] = '/';
         } else {
             $response['fields'][0]['messages'][] = Messages::ERROR_LOGIN_NOT_FOUND;
-            $statusCode = 200; //@TODO change it for 400 as soon as frontend is ready to handle 4xx
+            $statusCode = 401;
         }
 
         return $this->jsonResponse([ "content" => $response], $statusCode, $headers);
