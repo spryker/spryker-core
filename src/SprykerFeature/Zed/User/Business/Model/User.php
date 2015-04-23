@@ -82,7 +82,7 @@ class User implements UserInterface
      */
     public function encryptPassword($password)
     {
-        return base64_encode(password_hash($password, PASSWORD_DEFAULT));
+        return base64_encode(password_hash($password, PASSWORD_BCRYPT));
     }
 
     /**

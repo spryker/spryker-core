@@ -12,7 +12,7 @@ use SprykerFeature\Shared\User\Transfer\UserCollection;
 class UserFacade extends AbstractFacade
 {
 
-            public function install()
+    public function install()
     {
         $this->getDependencyContainer()
             ->getInstallerModel()
@@ -39,8 +39,8 @@ class UserFacade extends AbstractFacade
     public function getUserByUsername($username)
     {
         return $this->getDependencyContainer()
-                    ->getUserModel()
-                    ->getUserByUsername($username);
+            ->getUserModel()
+            ->getUserByUsername($username);
     }
 
     /**
@@ -51,8 +51,8 @@ class UserFacade extends AbstractFacade
     public function getUserById($idUser)
     {
         return $this->getDependencyContainer()
-                    ->getUserModel()
-                    ->getUserById($idUser);
+            ->getUserModel()
+            ->getUserById($idUser);
     }
 
     /**
@@ -66,8 +66,8 @@ class UserFacade extends AbstractFacade
     public function addUser($firstName, $lastName, $username, $password)
     {
         return $this->getDependencyContainer()
-                    ->getUserModel()
-                    ->addUser($firstName, $lastName, $username, $password);
+            ->getUserModel()
+            ->addUser($firstName, $lastName, $username, $password);
     }
 
     /**
@@ -79,8 +79,8 @@ class UserFacade extends AbstractFacade
     public function updateUser(User $user)
     {
         return $this->getDependencyContainer()
-                    ->getUserModel()
-                    ->save($user);
+            ->getUserModel()
+            ->save($user);
     }
 
     /**
@@ -91,8 +91,8 @@ class UserFacade extends AbstractFacade
     public function setCurrentUser(User $user)
     {
         return $this->getDependencyContainer()
-                    ->getUserModel()
-                    ->setCurrentUser($user);
+            ->getUserModel()
+            ->setCurrentUser($user);
     }
 
     /**
@@ -101,8 +101,8 @@ class UserFacade extends AbstractFacade
     public function getCurrentUser()
     {
         return $this->getDependencyContainer()
-                    ->getUserModel()
-                    ->getCurrentUser();
+            ->getUserModel()
+            ->getCurrentUser();
     }
 
     /**
@@ -111,8 +111,8 @@ class UserFacade extends AbstractFacade
     public function hasCurrentUser()
     {
         return $this->getDependencyContainer()
-                    ->getUserModel()
-                    ->hasCurrentUser();
+            ->getUserModel()
+            ->hasCurrentUser();
     }
 
     /**
@@ -124,8 +124,8 @@ class UserFacade extends AbstractFacade
     public function isValidPassword($password, $hash)
     {
         return $this->getDependencyContainer()
-                    ->getUserModel()
-                    ->validatePassword($password, $hash);
+            ->getUserModel()
+            ->validatePassword($password, $hash);
     }
 
     /**
@@ -136,8 +136,8 @@ class UserFacade extends AbstractFacade
     public function isSystemUser(User $user)
     {
         return $this->getDependencyContainer()
-                    ->getUserModel()
-                    ->isSystemUser($user);
+            ->getUserModel()
+            ->isSystemUser($user);
     }
 
     /**
@@ -146,8 +146,8 @@ class UserFacade extends AbstractFacade
     public function getSystemUsers()
     {
         return $this->getDependencyContainer()
-                    ->getUserModel()
-                    ->getSystemUsers();
+            ->getUserModel()
+            ->getSystemUsers();
     }
 
     /**
