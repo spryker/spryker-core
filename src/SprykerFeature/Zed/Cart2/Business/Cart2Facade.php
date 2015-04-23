@@ -47,10 +47,27 @@ class Cart2Facade extends AbstractFacade
         return $removeOperator->executeOperation($cartChange);
     }
 
+    /**
+     * @param CartChangeInterface $cartChange
+     *
+     * @return CartInterface
+     */
     public function decreaseQuantity(CartChangeInterface $cartChange)
     {
         $decreaseOperator = $this->getDependencyContainer()->createDecreaseOperator();
 
         return $decreaseOperator->executeOperation($cartChange);
+    }
+
+    /**
+     * @param CartInterface $cart
+     *
+     * @return CartInterface
+     */
+    public function recalculateCart(CartInterface  $cart)
+    {
+        $calculator = $this->getDependencyContainer()->createCartCalculator();
+
+        return $calculator->recalculate($cart);
     }
 }

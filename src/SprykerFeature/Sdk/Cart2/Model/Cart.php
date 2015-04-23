@@ -114,6 +114,15 @@ class Cart implements CartInterface
     }
 
     /**
+     * @return CartTransferInterface
+     */
+    public function recalculate()
+    {
+        //@todo $this->storageProvider->getCart();
+    }
+
+
+    /**
      * @return StorageProviderInterface
      */
     protected function getStorageProvider()

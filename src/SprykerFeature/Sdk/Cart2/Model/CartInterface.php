@@ -34,4 +34,9 @@ interface CartInterface
      * @return CartTransferInterface
      */
     public function increaseItemQuantity($sku, $quantity = 1);
+
+    /**
+     * @return CartTransferInterface
+     */
+    public function recalculate();
 }

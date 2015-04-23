@@ -3,7 +3,6 @@
 namespace SprykerFeature\Sdk\Cart2;
 
 use SprykerEngine\Sdk\Kernel\AbstractSdk;
-use SprykerEngine\Sdk\Kernel\DependencyContainer\DependencyContainerInterface;
 use SprykerFeature\Sdk\Cart2\StorageProvider\StorageProviderInterface;
 
 /**
@@ -20,5 +19,4 @@ class Cart2Sdk extends AbstractSdk
     {
         return $this->getDependencyContainer()->createCart($storageProvider);
     }
-
-    }
+}

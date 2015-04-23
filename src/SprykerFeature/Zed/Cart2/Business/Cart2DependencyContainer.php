@@ -2,11 +2,9 @@
 
 namespace SprykerFeature\Zed\Cart2\Business;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\Cart2Business;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use Pyz\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Cart2\Business\Operator\OperatorInterface;
 use SprykerFeature\Zed\Cart2\Business\StorageProvider\StorageProviderInterface;
@@ -82,7 +80,7 @@ class Cart2DependencyContainer extends AbstractDependencyContainer
     /**
      * @return CalculationFacade
      */
-    private function createCartCalculator()
+    public function createCartCalculator()
     {
         return $this->getLocator()->calculation()->facade();
     }

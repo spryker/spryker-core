@@ -66,4 +66,14 @@ class SdkController extends AbstractSdkController
     {
         return $this->facade->removeFromCart($cartChange);
     }
+
+    /**
+     * @param CartInterface $cart
+     *
+     * @return CartInterface
+     */
+    public function recalculateCart(CartInterface $cart)
+    {
+        return $this->facade->recalculateCart($cart);
+    }
 }
