@@ -1,6 +1,6 @@
 'use strict';
 
-var _hl = require('highlight.js');
+var _hl = require('../../../../../../../../ui/node_modules/highlight.js');
 
 
 
