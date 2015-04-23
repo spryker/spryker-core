@@ -1,24 +1,19 @@
-<div
-        class="spy-layer"
-        spy-layer="context.category"
-        name="category-form"
-        >
+<spy-layer>
+
     <form
             class="spy-layout sparse"
             ng-controller="FormController"
             src="/category/form/category"
-            context="category"
-            channel="category-form"
+            channel="category"
+            name="category-form"
             >
-        <h3 ng-if="context.category.id_category">Edit Category</h3>
-        <h3 ng-if="!context.category.id_category">Create Category</h3>
+        <h3 ng-if="create">Create Category</h3>
+        <h3 ng-if="!create">Edit Category</h3>
 
-        <fieldset class="spy-layout controls">
-            <div spy-input-text="field.name" options="{ label : 'Category Name' }"></div>
-            <div spy-input-switch="field.is_active" options="{ label : 'Is active' }"></div>
-        </fieldset>
+        <div spy-input-text="field.name" options="{ label : 'Category Name' }"></div>
+        <div spy-input-switch="field.is_active" options="{ label : 'Is active' }"></div>
 
-        <button ng-if="!context.category.id_category"
+        <button ng-if="create"
                 class="button default"
                 type="submit"
                 ng-disabled="query"
@@ -26,11 +21,11 @@
             Create
         </button>
 
-        <div ng-if="context.category.id_category">
+        <div ng-if="!create">
             <button class="button default" type="submit" ng-disabled="query" ng-click="update()">Update</button>
             <button class="button cancel" type="button" ng-disabled="query" ng-click="abort()">Cancel</button>
         </div>
 
     </form>
 
-</div>
+</spy-layer>

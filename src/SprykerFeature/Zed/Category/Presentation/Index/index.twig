@@ -7,23 +7,27 @@
 {% block title_content %}Category{% endblock %}
 
 {% block content %}
+
 <div
         spy-app="spyFormat, spyGrid, spyLayout, spyForm"
         ng-strict-di
         ng-controller="ComController"
         >
 
-    <spy-listen on="form_success" do="update()" scope="category-grid" channel="category-form"></spy-listen>
-    <spy-listen on="form_success" do="close()" scope="category-form" channel="category-form"></spy-listen>
-    <spy-listen on="form_abort" do="close()" scope="category-form" channel="category-form"></spy-listen>
+    <div spy-form-update="read()" scope="category-grid" channel="category"></div>
+    <div spy-form-update="read()" scope="category-node-grid" channel="category"></div>
+    <div spy-form-update="closeLayer()" scope="category-form" channel="category"></div>
+    <div spy-form-abort="closeLayer()" scope="category-form" channel="category"></div>
 
-    <spy-listen on="category-update-click" do="context.category = $argument" channel="category-form"></spy-listen>
+    <div spy-form-update="read()" scope="category-node-grid" channel="category-node"></div>
+    <div spy-form-update="closeLayer()" scope="category-node-form" channel="category-node"></div>
+    <div spy-form-abort="closeLayer()" scope="category-node-form" channel="category-node"></div>
 
-    <spy-listen on="form_success" do="update()" scope="category-node-grid" channel="category-node-form"></spy-listen>
-    <spy-listen on="form_success" do="close()" scope="category-node-form" channel="category-node-form"></spy-listen>
-    <spy-listen on="form_abort" do="close()" scope="category-node-form" channel="category-node-form"></spy-listen>
+    <spy-listen on="category-create-click" scope="category-form" do="create = true; read($argument); openLayer()" channel="category"></spy-listen>
+    <spy-listen on="category-update-click" scope="category-form" do="openLayer(); read($argument);" channel="category"></spy-listen>
 
-    <spy-listen on="category-node-update-click" do="context.category_node = $argument" channel="category-node-form"></spy-listen>
+    <spy-listen on="category-node-create-click" scope="category-node-form" do="create = true; read($argument); openLayer();" channel="category-node"></spy-listen>
+    <spy-listen on="category-node-update-click" scope="category-node-form" do="openLayer(); read($argument);" channel="category-node"></spy-listen>
 
     <div class="spy-layout n2">
 

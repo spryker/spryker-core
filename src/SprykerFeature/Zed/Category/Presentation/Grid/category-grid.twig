@@ -5,11 +5,12 @@
         src="/category/grid/category"
         name="category-grid"
         ng-class="{ query : queryActive }"
+        channel="category"
         >
 
     <h3>Categories</h3>
 
-    <button class="button default" ng-click="$emitAsChannel('category-update-click', 'category-form', '')">Add Category</button>
+    <button class="button default" ng-click="$emitAllChannels('category-create-click', '')">Add Category</button>
 
     <br/>
     <br/>
@@ -27,7 +28,7 @@
         </thead>
 
         <tbody>
-        <tr ng-repeat="row in rows" ng-click="$emitAsChannel('category-update-click', 'category-form', row)">
+        <tr ng-repeat="row in rows" ng-click="$emitAllChannels('category-update-click', row)">
             <td>{[{ row['id_category'] }]}</td>
             <td>{[{ row['name'] }]}</td>
             <td><spy-format-boolean content="row['category_is_active']"></spy-format-boolean></td>

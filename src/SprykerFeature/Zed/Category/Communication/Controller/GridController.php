@@ -21,7 +21,7 @@ class GridController extends AbstractController
     {
         $grid = $this->getDependencyContainer()->createCategoryGrid($request);
 
-        return $this->jsonResponse($grid->toArray());
+        return $this->jsonResponse($grid->renderData());
     }
 
     /**
@@ -32,6 +32,6 @@ class GridController extends AbstractController
     {
         $grid = $this->getDependencyContainer()->createCategoryNodeGrid($request);
 
-        return $this->jsonResponse($grid->toArray());
+        return $this->jsonResponse($grid->renderData());
     }
 }

@@ -34,10 +34,9 @@ class FormController extends AbstractController
             } else {
                 $this->getCategoryFacade()->updateCategory($category, $idLocale);
             }
-            $form->setActiveValuesToDefault();
         }
 
-        return $this->jsonResponse($form->toArray());
+        return $this->jsonResponse($form->renderData());
     }
 
     /**
@@ -61,10 +60,9 @@ class FormController extends AbstractController
             } else {
                 $this->getCategoryFacade()->moveCategoryNode($categoryNode);
             }
-            $form->setActiveValuesToDefault();
         }
 
-        return $this->jsonResponse($form->toArray());
+        return $this->jsonResponse($form->renderData());
     }
 
     /**
