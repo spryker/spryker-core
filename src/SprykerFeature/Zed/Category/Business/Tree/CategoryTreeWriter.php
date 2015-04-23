@@ -82,7 +82,7 @@ class CategoryTreeWriter
         $idNode = $this->nodeWriter->create($categoryNode);
         $this->closureTableWriter->create($categoryNode);
         $this->touchCategoryActive($categoryNode->getIdCategoryNode());
-        $this->touchNavigationActive(self::ID_NAVIGATION);
+        $this->touchNavigationActive();
         if ($createUrlPath) {
             $this->nodeUrlManager->createUrl($categoryNode, $idLocale, $idNode);
         }
@@ -160,11 +160,8 @@ class CategoryTreeWriter
         $this->touchFacade->touchActive(CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
 
-    /**
-     * @param $idNavigation
-     */
-    protected function touchNavigationActive($idNavigation)
+    protected function touchNavigationActive()
     {
-        $this->touchFacade->touchActive(self::TOUCH_CATEGORY_NAVIGATION, $idNavigation);
+        $this->touchFacade->touchActive(CategoryResourceSettings::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
     }
 }
