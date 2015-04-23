@@ -104,10 +104,14 @@ class User implements UserInterface
      */
     public function save(TransferUser $data)
     {
-        $entity = $this->locator->user()->entitySpyUserUser();
-
         if ($data->getIdUserUser() !== null && $this->getUserById($data->getIdUserUser()) === null) {
             throw new UserNotFoundException();
+        }
+
+        if ($data->getIdUserUser() !== null) {
+            $entity = $this->getEntityUserById($data->getIdUserUser());
+        } else {
+            $entity = $this->locator->user()->entitySpyUserUser();
         }
 
         $entity->setFirstName($data->getFirstName());
@@ -222,6 +226,23 @@ class User implements UserInterface
         }
 
         return $this->entityToTransfer($entity);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return TransferUser
+     * @throws UserNotFoundException
+     */
+    public function getEntityUserById($id)
+    {
+        $entity = $this->queryContainer->queryUserById($id)->findOne();
+
+        if ($entity === null) {
+            throw new UserNotFoundException();
+        }
+
+        return $entity;
     }
 
     /**
