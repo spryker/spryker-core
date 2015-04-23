@@ -251,7 +251,7 @@ class AclQueryContainer extends AbstractQueryContainer
         );
 
         $query->withColumn(SpyAclGroupTableMap::COL_NAME, 'group_name');
-        $query->withColumn(SpyAclGroupTableMap::COL_NAME, 'id_acl_group');
+        $query->withColumn(SpyAclGroupTableMap::COL_ID_ACL_GROUP, 'id_acl_group');
 
         return $query;
     }

@@ -184,6 +184,17 @@ class Group implements GroupInterface
     }
 
     /**
+     * @param $idGroup
+     * @param $idUser
+     */
+    public function removeUser($idGroup, $idUser)
+    {
+        $entity = $this->queryContainer->queryUserHasGroupById($idGroup, $idUser)->findOne();
+
+        $entity->delete();
+    }
+
+    /**
      * @return GroupCollection
      */
     public function getAllGroups()

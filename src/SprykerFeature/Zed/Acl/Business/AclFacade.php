@@ -142,6 +142,42 @@ class AclFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idUser
+     * @param int $idGroup
+     *
+     * @return bool
+     */
+    public function userHasGroupId($idUser, $idGroup)
+    {
+        return $this->getDependencyContainer()
+            ->createGroupModel()
+            ->hasUser($idGroup, $idUser);
+    }
+
+    /**
+     * @param $idUser
+     *
+     * @return Group
+     */
+    public function getUserGroup($idUser)
+    {
+        return $this->getDependencyContainer()
+            ->createGroupModel()
+            ->getUserGroup($idUser);
+    }
+
+    /**
+     * @param int $idUser
+     * @param int $idGroup
+     */
+    public function removeUserFromGroup($idUser, $idGroup)
+    {
+        $this->getDependencyContainer()
+            ->createGroupModel()
+            ->removeUser($idGroup, $idUser);
+    }
+
+    /**
      * @param string $bundle
      * @param string $controller
      * @param string $action
@@ -191,18 +227,6 @@ class AclFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createRuleModel()
             ->getRoleRules($idRole);
-    }
-
-    /**
-     * @param int $idUser
-     *
-     * @return Group
-     */
-    public function getUserGroup($idUser)
-    {
-        return $this->getDependencyContainer()
-            ->createGroupModel()
-            ->getUserGroup($idUser);
     }
 
     /**

@@ -69,10 +69,11 @@ class AclDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param Request $request
+     * @param int $idUser
      *
      * @return UserForm
      */
-    public function createUserWithGroupForm(Request $request)
+    public function createUserWithGroupForm(Request $request, $idUser = null)
     {
         return $this->getFactory()->createFormUserForm(
             $request,
