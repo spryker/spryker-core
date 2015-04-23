@@ -30,10 +30,10 @@
             </thead>
 
             <tbody>
-            <tr ng-repeat="row in rows" ng-click="openLocation('/customer/profile?id=' + row['id_customer'])">
-                <td>{[{ row['email'] }]}</td>
-                <td>{[{ row['first_name'] }]}</td>
-                <td>{[{ row['last_name'] }]}</td>
+            <tr ng-repeat="row in rows">
+                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] ]}]">{[{ row['email'] }]}</a></td>
+                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] ]}]">{[{ row['first_name'] }]}</a></td>
+                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] ]}]">{[{ row['last_name'] }]}</a></td>
             </tr>
             <tr ng-if="!rows.length">
                 <td colspan="4">{{ "grid.no.results" | trans }}</td>
