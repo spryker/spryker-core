@@ -130,12 +130,14 @@ abstract class AbstractForm
      * @return array|mixed
      * @throws Exception
      */
-    public function renderData() {
+    public function renderData()
+    {
         return [self::OUTPUT_PAYLOAD => $this->toArray()];
     }
 
     /**
-     * @return array
+     * @return array|mixed
+     * @throws Exception
      */
     public function toArray()
     {
@@ -155,6 +157,7 @@ abstract class AbstractForm
 
     /**
      * @param $name
+     *
      * @return Field
      */
     public function addField($name)
@@ -172,6 +175,7 @@ abstract class AbstractForm
 
     /**
      * @param $name
+     *
      * @return SubForm
      */
     public function addSubForm($name)
@@ -189,6 +193,7 @@ abstract class AbstractForm
 
     /**
      * @param $name
+     *
      * @return SubForm
      */
     public function getSubFormByName($name)
@@ -198,6 +203,7 @@ abstract class AbstractForm
 
     /**
      * @param $name
+     *
      * @return Field
      */
     public function getFieldByName($name)

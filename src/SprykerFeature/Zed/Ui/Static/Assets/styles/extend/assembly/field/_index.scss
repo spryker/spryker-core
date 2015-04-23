@@ -27,6 +27,22 @@
 		span.message {
 			@extend %field-message;
 		}
+
+		&.ng-enter {
+			@extend %field-messages-enter;
+		}
+
+		&.ng-enter-active {
+			@extend %field-messages-enter-active;
+		}
+
+		&.ng-leave {
+			@extend %field-messages-leave;
+		}
+
+		&.ng-leave-active {
+			@extend %field-messages-leave-active;
+		}
 	}
 }
 

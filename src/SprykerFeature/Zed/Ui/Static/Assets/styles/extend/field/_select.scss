@@ -76,7 +76,7 @@
 
 
 %field-select-disabled {
-	display:block;
+	@include wh(block, null, null, 19px);
 	border-width:1px;
 	border-style:none none dotted;
 	border-color:$_rgbSpyGrayChateau;

@@ -32,8 +32,35 @@
 
 
 %field-messages {
-	@include absolute(null, 0, null, null, 19px, null, 0);
+	@include abs(null, 0, null, null, null, null, 20px);
+	@include pre(transform, translate(0px, 100%));
 	color:$_rgbUiMonza;
+}
+
+%field-messages-enter {
+	bottom:0;
+	opacity:0.0;
+	@include pre(transition-property       , (opacity, bottom));
+	@include pre(transition-duration       , $_tFast);
+	@include pre(transition-timing-function, ease-out);
+}
+
+%field-messages-enter-active {
+	bottom:20px;
+	opacity:1.0;
+}
+
+%field-messages-leave {
+	bottom:20px;
+	opacity:1.0;
+	@include pre(transition-property       , (opacity, bottom));
+	@include pre(transition-duration       , $_tFast);
+	@include pre(transition-timing-function, ease-in);
+}
+
+%field-messages-leave-active {
+	bottom:0;
+	opacity:0.0;
 }
 
 %field-message {

@@ -47,6 +47,13 @@ table.spy-grid {
 					&[target] {
 						@extend %link-external;
 					}
+
+					&.cell {
+						display:block;
+						margin:-11px -14px;
+						padding:11px 14px;
+						color:inherit;
+					}
 				}
 			}
 		}
