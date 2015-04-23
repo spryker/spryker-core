@@ -22,10 +22,10 @@ var _chalk = require('chalk');
 
 
 var _dirBase = [
-	'src/SprykerFeature/Zed',
-	'src/SprykerCore/Zed',
-	'src/SprykerFeature/Zed'
+	'..'
 ];
+
+var _dirBundle = 'src/SprykerFeature/Zed/%s/Static';
 
 var _dirCss = '/styles';
 var _dirJs  = '/scripts';
@@ -34,8 +34,8 @@ var _dirImg = '/images';
 var _dirFnt = '/fonts';
 
 var _directories = {
-	'source' : 'Static/Assets',
-	'target' : 'Static/Public'
+	'source' : 'Assets',
+	'target' : 'Public'
 };
 
 var _bundlePaths = [];
@@ -52,6 +52,22 @@ function _getSourceGlobs(path) {
 	return _dirBase.map(function(item, index, source) {
 		return _path.join(item, path);
 	});
+}
+
+
+/**
+ * Returns a CamelCase transformed representation of camel-case
+ * @param {String} name The snake-cased input
+ * @returns {String}
+ */
+function _snakeToCamel(name) {
+	return name
+		.replace(/^[a-z]/, function(match) {
+			return match.toUpperCase();
+		})
+		.replace(/\-[a-z]/g, function(match) {
+			return match[1].toUpperCase();
+		});
 }
 
 
@@ -78,13 +94,18 @@ function _buildBundles(directories) {
 			.then(function(files) {
 				return _q
 					.all(files.map(function(item, index, source) {
+						var name = _snakeToCamel(item);
+						var path = _path.join(dir, item, _dirBundle.replace('%s', name));
+
 						return _q
-							.nfcall(_fs.stat, _path.join(dir, item))
+							.nfcall(_fs.stat, path)
 							.then(function(stat) {
 								if (stat.isDirectory()) bundles.push({
-									name : item,
-									path : _path.join(dir, item)
+									name : name,
+									path : path
 								});
+							}, function(why) {
+								return _q(true);
 							});
 					}))
 			})
