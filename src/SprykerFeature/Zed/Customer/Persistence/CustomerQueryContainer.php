@@ -7,6 +7,9 @@ use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
 use Propel\Runtime\Exception\PropelException;
 
+/**
+ * @method CustomerDependencyContainer getDependencyContainer()
+ */
 class CustomerQueryContainer extends AbstractQueryContainer
 {
     /**
@@ -14,7 +17,7 @@ class CustomerQueryContainer extends AbstractQueryContainer
      *
      * @return SpyCustomerQuery
      */
-    public function getCustomerByEmail($email)
+    public function queryCustomerByEmail($email)
     {
         $query = $this->getDependencyContainer()->createSpyCustomerQuery();
         $query->filterByEmail($email);
@@ -27,7 +30,7 @@ class CustomerQueryContainer extends AbstractQueryContainer
      *
      * @return SpyCustomerQuery
      */
-    public function getCustomerById($id)
+    public function queryCustomerById($id)
     {
         $query = $this->getDependencyContainer()->createSpyCustomerQuery();
         $query->filterByIdCustomer($id);
@@ -40,7 +43,7 @@ class CustomerQueryContainer extends AbstractQueryContainer
      *
      * @return SpyCustomerQuery
      */
-    public function getCustomerByRegistrationKey($token)
+    public function queryCustomerByRegistrationKey($token)
     {
         $query = $this->getDependencyContainer()->createSpyCustomerQuery();
         $query->filterByRegistrationKey($token);
@@ -53,7 +56,7 @@ class CustomerQueryContainer extends AbstractQueryContainer
      *
      * @return SpyCustomerQuery
      */
-    public function getCustomerByRestorePasswordKey($token)
+    public function queryCustomerByRestorePasswordKey($token)
     {
         $query = $this->getDependencyContainer()->createSpyCustomerQuery();
         $query->filterByRestorePasswordKey($token);
@@ -62,33 +65,33 @@ class CustomerQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param int $addressId
+     * @param int $id_address
      * @param string $email
      *
      * @return SpyCustomerAddressQuery
      * @throws PropelException
      */
-    public function getAddressForCustomer($addressId, $email)
+    public function queryAddressForCustomer($id_address, $email)
     {
-        $customer = $this->getCustomerByEmail($email)->findOne();
+        $customer = $this->queryCustomerByEmail($email)->findOne();
 
         $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();
-        $query->filterByIdCustomerAddress($addressId);
+        $query->filterByIdCustomerAddress($id_address);
         $query->filterByCustomer($customer);
 
         return $query;
     }
 
     /**
-     * @param int $addressId
+     * @param int $id_address
      *
      * @return SpyCustomerAddressQuery
      * @throws PropelException
      */
-    public function getAddress($addressId)
+    public function queryAddress($id_address)
     {
         $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();
-        $query->filterByIdCustomerAddress($addressId);
+        $query->filterByIdCustomerAddress($id_address);
 
         return $query;
     }
@@ -98,9 +101,9 @@ class CustomerQueryContainer extends AbstractQueryContainer
      *
      * @return SpyCustomerAddressQuery
      */
-    public function getAddressesForCustomer($email)
+    public function queryAddressesForCustomer($email)
     {
-        $customer = $this->getCustomerByEmail($email)->findOne();
+        $customer = $this->queryCustomerByEmail($email)->findOne();
 
         $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();
         $query->filterByCustomer($customer);
@@ -111,7 +114,7 @@ class CustomerQueryContainer extends AbstractQueryContainer
     /**
      * @return SpyCustomerAddressQuery
      */
-    public function getAddresses()
+    public function queryAddresses()
     {
         $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();
 
@@ -121,7 +124,7 @@ class CustomerQueryContainer extends AbstractQueryContainer
     /**
      * @return SpyCustomerQuery
      */
-    public function getCustomers()
+    public function queryCustomers()
     {
         $query = $this->getDependencyContainer()->createSpyCustomerQuery();
 

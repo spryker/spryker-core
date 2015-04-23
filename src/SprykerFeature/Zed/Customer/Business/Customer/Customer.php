@@ -81,9 +81,6 @@ class Customer
     public function get(CustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomer($customerTransfer);
-        if (!$customer) {
-            return $customerTransfer;
-        }
 
         $customerTransfer->fromArray($customer->toArray());
         $addresses = $customer->getAddresses();
@@ -120,7 +117,7 @@ class Customer
             return $customerTransfer;
         }
 
-        throw new EmailAlreadyRegisteredException('Email already registered.');
+        throw new EmailAlreadyRegisteredException;
     }
 
     /**
@@ -168,15 +165,16 @@ class Customer
      * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerTransfer
+     * @throws CustomerNotFoundException
      * @throws PropelException
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
         $customer = $this->queryContainer
-            ->getCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
+            ->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
             ->findOne();
         if (!$customer) {
-            return $customerTransfer;
+            throw new CustomerNotFoundException('Customer not found.');
         }
 
         $customer->setRegistered(new DateTime());
@@ -196,13 +194,7 @@ class Customer
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
-        $customer = $this->queryContainer
-            ->getCustomerByEmail($customerTransfer->getEmail())
-            ->findOne();
-        if (!$customer) {
-            throw new CustomerNotFoundException('Customer not found.');
-        }
-
+        $customer = $this->getCustomer($customerTransfer);
         $customer->setRestorePasswordDate(new DateTime());
         $customer->setRestorePasswordKey($this->generateKey());
         $customer->save();
@@ -221,13 +213,7 @@ class Customer
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
-        $customer = $this->queryContainer
-            ->getCustomerByRestorePasswordKey($customerTransfer->getRestorePasswordKey())
-            ->findOne();
-        if (!$customer) {
-            throw new CustomerNotFoundException('Customer not found.');
-        }
-
+        $customer = $this->getCustomer($customerTransfer);
         $customer->setRestorePasswordDate(null);
         $customer->setRestorePasswordKey(null);
         $customer->setPassword($customerTransfer->getPassword());
@@ -247,10 +233,6 @@ class Customer
     public function delete(CustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomer($customerTransfer);
-        if (!$customer) {
-            throw new CustomerNotFoundException('Customer not found.');
-        }
-
         $customer->delete();
 
         return true;
@@ -267,20 +249,13 @@ class Customer
     public function update(CustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomer($customerTransfer);
-        if (!$customer) {
-            throw new CustomerNotFoundException('Customer not found.');
-        }
-
         $customer->setFirstName($customerTransfer->getFirstName());
         $customer->setMiddleName($customerTransfer->getMiddleName());
         $customer->setLastName($customerTransfer->getLastName());
         $customer->setCompany($customerTransfer->getCompany());
         $customer->setDateOfBirth($customerTransfer->getDateOfBirth());
         $customer->setSalutation($customerTransfer->getSalutation());
-
-        if (!$customer->save()) {
-            throw new CustomerNotUpdatedException('Unable to update Customer.');
-        }
+        $customer->save();
 
         return true;
     }
@@ -330,11 +305,11 @@ class Customer
     {
         if ($customerTransfer->getIdCustomer()) {
             $customer = $this->queryContainer
-                ->getCustomerById($customerTransfer->getIdCustomer())
+                ->queryCustomerById($customerTransfer->getIdCustomer())
                 ->findOne();
         } elseif ($customerTransfer->getEmail()) {
             $customer = $this->queryContainer
-                ->getCustomerByEmail($customerTransfer->getEmail())
+                ->queryCustomerByEmail($customerTransfer->getEmail())
                 ->findOne();
         }
 
@@ -342,6 +317,6 @@ class Customer
             return $customer;
         }
 
-        throw new CustomerNotFoundException('Customer not found.');
+        throw new CustomerNotFoundException;
     }
 }

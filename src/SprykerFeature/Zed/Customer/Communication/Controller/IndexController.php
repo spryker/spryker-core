@@ -26,6 +26,6 @@ class IndexController extends AbstractController
     {
         $grid = $this->getDependencyContainer()->createCustomerGrid($request);
 
-        return $this->jsonResponse($grid->toArray());
+        return $this->jsonResponse($grid->renderData());
     }
 }

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 
 class CustomerForm extends AbstractForm
@@ -14,7 +14,7 @@ class CustomerForm extends AbstractForm
     {
         $this->addField('id_customer')
             ->setConstraints([
-                new Assert\Type([
+                new Constraints\Type([
                     'type' => 'integer'
                 ])
             ])
@@ -22,18 +22,18 @@ class CustomerForm extends AbstractForm
 
         $this->addField('email')
             ->setConstraints([
-                new Assert\Required([
-                    new Assert\Type([
+                new Constraints\Required([
+                    new Constraints\Type([
                         'type' => 'string'
                     ]),
-                    new Assert\NotBlank()
+                    new Constraints\NotBlank()
                 ])
             ])
         ;
 
         $this->addField('salutation')
             ->setConstraints([
-                new Assert\Type([
+                new Constraints\Type([
                     'type' => 'string'
                 ])
             ])
@@ -41,7 +41,7 @@ class CustomerForm extends AbstractForm
 
         $this->addField('first_name')
             ->setConstraints([
-                new Assert\Type([
+                new Constraints\Type([
                     'type' => 'string'
                 ]),
             ])
@@ -49,7 +49,7 @@ class CustomerForm extends AbstractForm
 
         $this->addField('last_name')
             ->setConstraints([
-                new Assert\Type([
+                new Constraints\Type([
                     'type' => 'string'
                 ]),
             ])
@@ -58,10 +58,10 @@ class CustomerForm extends AbstractForm
         $this->addField('gender')
             ->setAccepts($this->getGenderOptions())
             ->setConstraints([
-                new Assert\Type([
+                new Constraints\Type([
                     'type' => 'integer'
                 ]),
-                new Assert\Choice([
+                new Constraints\Choice([
                     'choices' => array_column($this->getGenderOptions(), 'value'),
                 ])
             ])

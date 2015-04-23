@@ -7,18 +7,16 @@
         model="{{ customerJson }}"
         >
 
-    <h3>{{ "customer.profile.edit" | trans }}</h3>
-
     <div class="spy-layout n3">
-        <div>Customer ID: {[{ field.id_customer.value }]}</div>
-        <div>Registered on {[{ field.registered.value.date }]}</div>
+        <div>{{ "customer.profile.id" | trans }} {[{ field.id_customer.value }]}</div>
+        <div>{{ "customer.profile.registered" | trans }} {{ registered | date }}</div>
         <div></div>
     </div>
 
     <div class="spy-layout n3">
         <div>
-            <div spy-input-text="field.email" options="{ label: 'E-Mail' }"></div>
-            <div spy-input-text="field.salutation" options="{ label: 'Salutation' }"></div>
+            <div spy-input-text="field.email" options="{ label: '{{ "customer.profile.email" | trans }}'}"></div>
+            <div spy-input-text="field.salutation" options="{ label: '{{ "customer.profile.salutation" | trans }}' }"></div>
             <div>
                 <button class="button default" ng-disabled="query" type="submit" ng-click="update()">{{ "customer.profile.update" | trans }}</button>
                 <p>
@@ -29,12 +27,12 @@
             </div>
         </div>
         <div>
-            <div spy-input-select="field.gender" options="{ label : 'Gender' }"></div>
-            <div spy-input-text="field.first_name" options="{ label : 'First Name' }"></div>
+            <div spy-input-select="field.gender" options="{ label : '{{ "customer.profile.gender" | trans }}' }"></div>
+            <div spy-input-text="field.first_name" options="{ label : '{{ "customer.profile.first_name" | trans }}' }"></div>
         </div>
         <div>
-            <!--div spy-input-text="field.date_of_birth" options="{ label : 'Date of Birth' }"></div-->
-            <div spy-input-text="field.last_name" options="{ label : 'Last Name' }"></div>
+            <!--div spy-input-text="field.date_of_birth" options="{ label : '{{ "customer.profile.date_of_birth" | trans }}' }"></div-->
+            <div spy-input-text="field.last_name" options="{ label : '{{ "customer.profile.last_name" | trans }}' }"></div>
         </div>
     </div>
 

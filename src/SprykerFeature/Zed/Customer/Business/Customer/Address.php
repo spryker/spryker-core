@@ -3,7 +3,11 @@
 namespace SprykerFeature\Zed\Customer\Business\Customer;
 
 use SprykerFeature\Shared\Customer\Transfer\Address as AddressTransfer;
+use SprykerFeature\Shared\Customer\Transfer\Customer as CustomerTransfer;
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
+use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
+use SprykerFeature\Zed\Customer\Business\Exception\CountryNotFoundException;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddress;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
@@ -34,43 +38,51 @@ class Address
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return bool
+     * @return AddressTransfer
+     * @throws CustomerNotFoundException
      * @throws PropelException
      */
     public function newAddress(AddressTransfer $addressTransfer)
     {
-        $customer = $this->getCustomer($addressTransfer);
-        if (!$customer) {
-            return false;
-        }
+        $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
         $entity = new SpyCustomerAddress();
         $entity->fromArray($addressTransfer->toArray());
         $entity->setFkCountry($this->getCustomerCountryId());
         $entity->setCustomer($customer);
-        if (!$entity->save()) {
-            return false;
+        $entity->save();
+
+        if ($customer->getDefaultShippingAddress() === null) {
+            $customer->setDefaultShippingAddress($entity->getIdCustomerAddress());
         }
 
-        return true;
+        if ($customer->getDefaultBillingAddress() === null) {
+            $customer->setDefaultBillingAddress($entity->getIdCustomerAddress());
+        }
+
+        $customer->save();
+
+        $addressTransfer = $this->entityToTransfer($entity);
+
+        return $addressTransfer;
     }
 
     /**
      * @param AddressTransfer $addressTransfer
      *
      * @return AddressTransfer
-     * @throws \Exception
+     * @throws AddressNotFoundException
      */
     public function getAddress(AddressTransfer $addressTransfer)
     {
         $entity = $this->queryContainer
-            ->getAddress(
+            ->queryAddress(
                 $addressTransfer->getIdCustomerAddress()
             )
             ->findOne();
 
         if (!$entity) {
-            throw new \Exception('Address not found.');
+            throw new AddressNotFoundException;
         }
 
         return $this->entityToTransfer($entity);
@@ -80,25 +92,23 @@ class Address
      * @param AddressTransfer $addressTransfer
      *
      * @return AddressTransfer
+     * @throws AddressNotFoundException
+     * @throws CustomerNotFoundException
      * @throws PropelException
-     * @throws \Exception
      */
     public function updateAddress(AddressTransfer $addressTransfer)
     {
-        $customer = $this->getCustomer($addressTransfer);
-        if (!$customer) {
-            throw new \Exception('Customer not found.');
-        }
+        $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
         $entity = $this->queryContainer
-            ->getAddressForCustomer(
+            ->queryAddressForCustomer(
                 $addressTransfer->getIdCustomerAddress(),
                 $customer->getEmail()
             )
             ->findOne();
 
         if (!$entity) {
-            throw new \Exception('Address not found.');
+            throw new AddressNotFoundException;
         }
 
         $entity->fromArray($addressTransfer->toArray());
@@ -108,10 +118,7 @@ class Address
             $country = $this->getCustomerCountryId();
         }
         $entity->setCountry($country);
-
-        if (!$entity->save()) {
-            throw new \Exception('Unable to save Address.');
-        }
+        $entity->save();
 
         return $this->entityToTransfer($entity);
     }
@@ -120,30 +127,27 @@ class Address
      * @param AddressTransfer $addressTransfer
      *
      * @return bool
+     * @throws AddressNotFoundException
+     * @throws CustomerNotFoundException
      * @throws PropelException
      */
     public function setDefaultShippingAddress(AddressTransfer $addressTransfer)
     {
-        $customer = $this->getCustomer($addressTransfer);
-        if (!$customer) {
-            return false;
-        }
+        $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
         $entity = $this->queryContainer
-            ->getAddressForCustomer(
+            ->queryAddressForCustomer(
                 $addressTransfer->getIdCustomerAddress(),
                 $customer->getEmail()
             )
             ->findOne();
 
         if (!$entity) {
-            return false;
+            throw new AddressNotFoundException;
         }
 
         $customer->setDefaultShippingAddress($addressTransfer->getIdCustomerAddress());
-        if (!$customer->save()) {
-            return false;
-        }
+        $customer->save();
 
         return true;
     }
@@ -152,30 +156,27 @@ class Address
      * @param AddressTransfer $addressTransfer
      *
      * @return bool
+     * @throws AddressNotFoundException
+     * @throws CustomerNotFoundException
      * @throws PropelException
      */
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer)
     {
-        $customer = $this->getCustomer($addressTransfer);
-        if (!$customer) {
-            return false;
-        }
+        $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
         $entity = $this->queryContainer
-            ->getAddressForCustomer(
+            ->queryAddressForCustomer(
                 $addressTransfer->getIdCustomerAddress(),
                 $customer->getEmail()
             )
             ->findOne();
 
         if (!$entity) {
-            return false;
+            throw new AddressNotFoundException;
         }
 
         $customer->setDefaultBillingAddress($addressTransfer->getIdCustomerAddress());
-        if (!$customer->save()) {
-            return false;
-        }
+        $customer->save();
 
         return true;
     }
@@ -198,6 +199,10 @@ class Address
     public function getFormattedAddressArray(AddressTransfer $addressTransfer)
     {
         $address = [];
+
+        if (count($addressTransfer->getCompany()) > 0) {
+            $address[] = $addressTransfer->getCompany();
+        }
 
         $address[] = sprintf(
             '%s %s',
@@ -245,6 +250,7 @@ class Address
      * @param ObjectCollection $entities
      *
      * @return AddressTransferCollection
+     * @throws AddressNotFoundException
      */
     protected function entityCollectionToTransferCollection(ObjectCollection $entities)
     {
@@ -262,16 +268,47 @@ class Address
      * @param AddressTransfer $addressTransfer
      *
      * @return SpyCustomer
+     * @throws CustomerNotFoundException
      */
-    protected function getCustomer(AddressTransfer $addressTransfer)
+    protected function getCustomerFromAddressTransfer(AddressTransfer $addressTransfer)
     {
-        $customer = $this->queryContainer
-            ->getCustomerByEmail($addressTransfer->getEmail())
-            ->findOne();
-        if (!$customer) {
+        if ($addressTransfer->getEmail()) {
             $customer = $this->queryContainer
-                ->getCustomerById($addressTransfer->getFkCustomer())
+                ->queryCustomerByEmail($addressTransfer->getEmail())
                 ->findOne();
+        } elseif ($addressTransfer->getFkCustomer()) {
+            $customer = $this->queryContainer
+                ->queryCustomerById($addressTransfer->getFkCustomer())
+                ->findOne();
+        }
+
+        if (!isset($customer) || $customer == null) {
+            throw new CustomerNotFoundException;
+        }
+
+        return $customer;
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return SpyCustomer
+     * @throws CustomerNotFoundException
+     */
+    protected function getCustomerFromCustomerTransfer(CustomerTransfer $customerTransfer)
+    {
+        if ($customerTransfer->getEmail()) {
+            $customer = $this->queryContainer
+                ->queryCustomerByEmail($customerTransfer->getEmail())
+                ->findOne();
+        } elseif ($customerTransfer->getIdCustomer()) {
+            $customer = $this->queryContainer
+                ->queryCustomerById($customerTransfer->getIdCustomer())
+                ->findOne();
+        }
+
+        if (!isset($customer) || $customer == null) {
+            throw new CustomerNotFoundException;
         }
 
         return $customer;
@@ -279,6 +316,7 @@ class Address
 
     /**
      * @return int
+     * @throws CountryNotFoundException
      */
     protected function getCustomerCountryId()
     {
@@ -295,6 +333,46 @@ class Address
             ->facade()
             ->getIdCountryByIso2Code($isoCode);
 
+        if ($id_country == null) {
+            throw new CountryNotFoundException;
+        }
+
         return $id_country;
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return AddressTransfer
+     * @throws AddressNotFoundException
+     */
+    public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
+    {
+        $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
+        $id_address = $customer->getDefaultShippingAddress();
+        $address = $this->queryContainer->queryAddress($id_address)->findOne();
+        if ($address === null) {
+            throw new AddressNotFoundException;
+        }
+
+        return $this->entityToTransfer($address);
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return AddressTransfer
+     * @throws AddressNotFoundException
+     */
+    public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
+    {
+        $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
+        $id_address = $customer->getDefaultBillingAddress();
+        $address = $this->queryContainer->queryAddress($id_address)->findOne();
+        if ($address === null) {
+            throw new AddressNotFoundException;
+        }
+
+        return $this->entityToTransfer($address);
     }
 }

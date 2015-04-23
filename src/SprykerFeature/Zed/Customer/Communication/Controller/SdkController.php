@@ -5,7 +5,6 @@ namespace SprykerFeature\Zed\Customer\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
 use SprykerFeature\Shared\Customer\Transfer\Customer as CustomerTransfer;
 use SprykerFeature\Shared\Customer\Transfer\Address as AddressTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 
 class SdkController extends AbstractSdkController
 {

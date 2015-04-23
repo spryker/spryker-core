@@ -113,7 +113,7 @@ class CustomerFacade extends AbstractFacade
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return bool
+     * @return AddressTransfer
      */
     public function newAddress(AddressTransfer $addressTransfer)
     {
@@ -152,5 +152,25 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createAddress()
             ->getFormattedAddressString($addressTransfer);
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     * @return AddressTransfer
+     */
+    public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
+    {
+        return $this->getDependencyContainer()->createAddress()
+            ->getDefaultShippingAddress($customerTransfer);
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     * @return AddressTransfer
+     */
+    public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
+    {
+        return $this->getDependencyContainer()->createAddress()
+            ->getDefaultBillingAddress($customerTransfer);
     }
 }

@@ -7,6 +7,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Shared\Customer\Transfer\Customer as CustomerTransfer;
+use SprykerFeature\Shared\Customer\Transfer\Address as AddressTransfer;
 use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredException;
 
 /**
@@ -18,6 +19,8 @@ class CustomerFacadeTest extends Test
     const TESTER_PASSWORD = 'tester';
     const TESTER_NAME = 'Tester';
     const TESTER_CITY = 'Testcity';
+    const TESTER_ADDRESS1 = 'Testerstreet 23';
+    const TESTER_ZIP_CODE = '42';
 
     /** @var AutoCompletion */
     protected $locator;
@@ -45,6 +48,24 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return AddressTransfer
+     */
+    protected function createTestAddressTransfer(CustomerTransfer $customerTransfer)
+    {
+        $addressTransfer = $this->locator->customer()->transferAddress();
+        $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
+        $addressTransfer->setEmail(self::TESTER_EMAIL);
+        $addressTransfer->setName(self::TESTER_NAME);
+        $addressTransfer->setAddress1(self::TESTER_ADDRESS1);
+        $addressTransfer->setCity(self::TESTER_CITY);
+        $addressTransfer->setZipCode(self::TESTER_ZIP_CODE);
+
+        return $addressTransfer;
+    }
+
+    /**
      * @return CustomerTransfer
      */
     protected function createTestCustomer()
@@ -54,6 +75,19 @@ class CustomerFacadeTest extends Test
         $customerTransfer = $this->customerFacade->confirmRegistration($customerTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return AddressTransfer
+     */
+    protected function createTestAddress(CustomerTransfer $customerTransfer)
+    {
+        $addressTransfer = $this->createTestAddressTransfer($customerTransfer);
+        $addressTransfer = $this->locator->customer()->facade()->newAddress($addressTransfer);
+
+        return $addressTransfer;
     }
 
     /**
@@ -148,8 +182,8 @@ class CustomerFacadeTest extends Test
         $addressTransfer = $this->locator->customer()->transferAddress();
         $addressTransfer->setEmail($customerTransfer->getEmail());
         $addressTransfer->setName(self::TESTER_NAME);
-        $isSuccess = $this->customerFacade->newAddress($addressTransfer);
-        $this->assertTrue($isSuccess);
+        $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
+        $this->assertNotNull($addressTransfer);
     }
 
     public function testUpdateAddress()
@@ -158,8 +192,8 @@ class CustomerFacadeTest extends Test
         $addressTransfer = $this->locator->customer()->transferAddress();
         $addressTransfer->setEmail($customerTransfer->getEmail());
         $addressTransfer->setName(self::TESTER_NAME);
-        $isSuccess = $this->customerFacade->newAddress($addressTransfer);
-        $this->assertTrue($isSuccess);
+        $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
+        $this->assertNotNull($addressTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
         $addressTransfer = $customerTransfer->getAddresses()->getFirstItem();
         $addressTransfer->setCity(self::TESTER_CITY);
@@ -174,8 +208,8 @@ class CustomerFacadeTest extends Test
         $addressTransfer = $this->locator->customer()->transferAddress();
         $addressTransfer->setEmail($customerTransfer->getEmail());
         $addressTransfer->setName(self::TESTER_NAME);
-        $isSuccess = $this->customerFacade->newAddress($addressTransfer);
-        $this->assertTrue($isSuccess);
+        $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
+        $this->assertNotNull($addressTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
         $addressTransfer = $customerTransfer->getAddresses()->getFirstItem();
         $isSuccess = $this->customerFacade->setDefaultShippingAddress($addressTransfer);
@@ -188,11 +222,36 @@ class CustomerFacadeTest extends Test
         $addressTransfer = $this->locator->customer()->transferAddress();
         $addressTransfer->setEmail($customerTransfer->getEmail());
         $addressTransfer->setName(self::TESTER_NAME);
-        $isSuccess = $this->customerFacade->newAddress($addressTransfer);
-        $this->assertTrue($isSuccess);
+        $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
+        $this->assertNotNull($addressTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
         $addressTransfer = $customerTransfer->getAddresses()->getFirstItem();
         $isSuccess = $this->customerFacade->setDefaultBillingAddress($addressTransfer);
         $this->assertTrue($isSuccess);
+    }
+
+    public function testGetDefaultShippingAddress()
+    {
+        $customerTransfer = $this->createTestCustomer();
+        $this->createTestAddress($customerTransfer);
+        $addressTransfer = $this->locator->customer()->facade()->getDefaultShippingAddress($customerTransfer);
+        $this->assertNotNull($addressTransfer);
+    }
+
+    public function testGetDefaultBillingAddress()
+    {
+        $customerTransfer = $this->createTestCustomer();
+        $this->createTestAddress($customerTransfer);
+        $addressTransfer = $this->locator->customer()->facade()->getDefaultBillingAddress($customerTransfer);
+        $this->assertNotNull($addressTransfer);
+    }
+
+    public function testRenderAddress()
+    {
+        $customerTransfer = $this->createTestCustomer();
+        $addressTransfer = $this->createTestAddress($customerTransfer);
+        $addressTransfer = $this->locator->customer()->facade()->getAddress($addressTransfer);
+        $renderedAddress = $this->locator->customer()->facade()->renderAddress($addressTransfer);
+        $this->assertNotNull($renderedAddress);
     }
 }
