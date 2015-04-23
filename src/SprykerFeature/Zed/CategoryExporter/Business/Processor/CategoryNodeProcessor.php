@@ -40,13 +40,7 @@ class CategoryNodeProcessor implements CategoryNodeProcessorInterface
     {
         $exportData = [];
         foreach ($categoryNodes as $index => $categoryNode) {
-            $categoryKey = $this->resourceKeyBuilder->generateKey(
-                [
-                    'resourceType' => CategoryResourceSettings::ITEM_TYPE,
-                    'value' => $categoryNode['node_id']
-                ],
-                $locale
-            );
+            $categoryKey = $this->resourceKeyBuilder->generateKey($categoryNode['node_id'], $locale);
             $exportData[$categoryKey] = $this->nodeFormatter->formatCategoryNode($categoryNode);
             unset($categoryNodes[$index]);
         }
