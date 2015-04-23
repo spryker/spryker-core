@@ -6,5 +6,11 @@ use SprykerFeature\Shared\UrlExporter\Code\KeyBuilder\ResourceKeyBuilder as Shar
 
 class ResourceKeyBuilder extends SharedKeyBuilder
 {
-
+    /**
+     * @return string
+     */
+    protected function getResourceType()
+    {
+        return 'page';
+    }
 }
