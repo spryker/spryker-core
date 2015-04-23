@@ -74,9 +74,10 @@ body.spy-login {
 			}
 
 			&:-webkit-autofill {	//Chrome login highlighting
-				-webkit-box-shadow:0 0 0 20px $_rgbSpyEbonyClay inset;
-				background-color:#f00;
-				color:#0f0;
+				-webkit-filter:unquote('invert()');
+				-webkit-box-shadow:0 0 0 20px invert($_rgbSpyEbonyClay) inset;
+				border-color:invert($_rgbSpyEbonyClay);
+				color:invert(_$rgbSpyRiverBed);
 			}
 		}
 
