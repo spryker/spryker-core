@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Plugin\TransferObject;
 
+use SprykerFeature\Shared\Library\Communication\Response;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 use SprykerFeature\Shared\ZedRequest\Client\ResponseInterface;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
@@ -34,7 +35,7 @@ class TransferServer
     private $httpRequest;
 
     /**
-     * @var ResponseInterface
+     * @var ResponseInterface|Response
      */
     protected $response;
 
@@ -49,7 +50,7 @@ class TransferServer
     public static function getInstance()
     {
         if (!self::$instance) {
-            self::$instance = new self;
+            self::$instance = new static();
         }
 
         return self::$instance;
