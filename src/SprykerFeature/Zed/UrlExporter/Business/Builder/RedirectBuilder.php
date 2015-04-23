@@ -29,7 +29,10 @@ class RedirectBuilder implements RedirectBuilderInterface
     {
         $returnedResultSet = [];
         foreach ($redirectResultSet as $index => $redirect) {
-            $redirectKey = $this->redirectKeyBuilder->generateKey(['resourceType' => 'redirect', 'value' => $redirect['redirect_id']], $localeName);
+            //TODO make this more pretty
+            $this->redirectKeyBuilder->setResourceType('redirect');
+
+            $redirectKey = $this->redirectKeyBuilder->generateKey($redirect['redirect_id'], $localeName);
             $returnedResultSet[$redirectKey] = [
                 'from_url' => $redirect['from_url'],
                 'to_url' => $redirect['to_url'],

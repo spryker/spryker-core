@@ -1,24 +1,22 @@
 <?php
 
-
 namespace SprykerFeature\Shared\UrlExporter\Code\KeyBuilder;
-
 
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderTrait;
 
-class ResourceKeyBuilder implements KeyBuilderInterface
+abstract class ResourceKeyBuilder implements KeyBuilderInterface
 {
     use KeyBuilderTrait;
 
     /**
-     * @param array $data
+     * @param array $identifier
      *
      * @return string
      */
-    protected function buildKey($data)
+    protected function buildKey($identifier)
     {
-        return $data['resourceType'] . '.' . $data['value'];
+        return $this->getResourceType() . '.' . $identifier;
     }
 
     /**
@@ -28,4 +26,9 @@ class ResourceKeyBuilder implements KeyBuilderInterface
     {
         return 'resource';
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function getResourceType();
 }
