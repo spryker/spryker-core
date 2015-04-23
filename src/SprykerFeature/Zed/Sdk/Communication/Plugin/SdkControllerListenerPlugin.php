@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Sdk\Communication\Plugin;
 
-use SprykerFeature\Shared\Library\CodeGenerator\ClassnameExplanation;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Sdk\Communication\SdkControllerListenerInterface;
@@ -18,7 +17,6 @@ class SdkControllerListenerPlugin extends AbstractPlugin implements SdkControlle
 
     /**
      * @param FilterControllerEvent $event
-     * @return callable
      */
     public function onKernelController(FilterControllerEvent $event)
     {
@@ -57,7 +55,7 @@ class SdkControllerListenerPlugin extends AbstractPlugin implements SdkControlle
         $parameters = $methodRef->getParameters();
         $countParameters = count($parameters);
 
-        if ($countParameters > 2 || $countParameters === 2 && end($parameters)->getClass() === 'SprykerFeature\\Shared\\Library\\Transfer\\Request') {
+        if ($countParameters > 2 || $countParameters === 2 && end($parameters)->getClass() !== 'SprykerFeature\\Shared\\Library\\Transfer\\Request') {
             throw new \LogicException('Only one transfer object can be received in yves-action');
         }
 
@@ -105,7 +103,7 @@ class SdkControllerListenerPlugin extends AbstractPlugin implements SdkControlle
     {
         $namespaceParts = explode('\\', $class->getNamespaceName());
 
-        if ((count($namespaceParts) > 4) && $namespaceParts[1] === 'Shared' && $namespaceParts[3] === 'Transfer') {
+        if ((count($namespaceParts) < 4) || $namespaceParts[1] !== 'Shared' || $namespaceParts[3] !== 'Transfer') {
             throw new \LogicException('Only transfer classes are allowed in yves action as parameter');
         }
     }
