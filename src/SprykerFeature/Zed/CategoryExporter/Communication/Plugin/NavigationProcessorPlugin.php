@@ -5,15 +5,9 @@ namespace SprykerFeature\Zed\CategoryExporter\Communication\Plugin;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 
-/**
- * Class CategoryNodeDataProcessorPlugin
- *
- * @package SprykerFeature\Zed\CategoryExporter\Communication\Plugin
- */
 /**
  * @method CategoryExporterDependencyContainer getDependencyContainer()
  */

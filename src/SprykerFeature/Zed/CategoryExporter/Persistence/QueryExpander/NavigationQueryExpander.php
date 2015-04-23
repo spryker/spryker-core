@@ -9,10 +9,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 
-/**
- * Class NavigationQueryExpander
- * @package SprykerFeature\Zed\CategoryExporter\Business\QueryExpander
- */
 class NavigationQueryExpander
 {
     /**

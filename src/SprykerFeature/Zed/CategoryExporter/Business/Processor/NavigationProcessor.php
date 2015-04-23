@@ -5,11 +5,6 @@ namespace SprykerFeature\Zed\CategoryExporter\Business\Processor;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\CategoryExporter\Business\Formatter\CategoryNodeFormatterInterface;
 
-/**
- * Class NavigationProcessor
- *
- * @package SprykerFeature\Zed\CategoryExporter\Business\Processor
- */
 class NavigationProcessor implements NavigationProcessorInterface
 {
     /**

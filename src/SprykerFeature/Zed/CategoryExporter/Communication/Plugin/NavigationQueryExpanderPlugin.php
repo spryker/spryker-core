@@ -9,10 +9,6 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 /**
- * Class CategoryNodeQueryExpanderPlugin
- * @package SprykerFeature\Zed\CategoryExporter\Communication\Plugin
- */
-/**
  * @method CategoryExporterDependencyContainer getDependencyContainer()
  */
 class NavigationQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
