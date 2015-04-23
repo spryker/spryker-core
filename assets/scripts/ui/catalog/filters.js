@@ -1,14 +1,14 @@
 'use strict';
 
 require ('jquery-ui/slider');
-var $ = require('jquery');
+var $ = require('jquery'),
+    catalog = require('./index');
 
-var updatePriceValues = function(event, ui) {
+var updatePriceValueDisplay = function(event, ui) {
   var min = ui.values[0];
   var max = ui.values[1];
   $('.js-filter-price-min').html(min);
   $('.js-filter-price-max').html(max);
-
 };
 
 var triggerPriceChange = function(event, ui) {
@@ -25,6 +25,10 @@ var initColorFilter = function() {
 var initActiveFilterList = function() {
   $('.js-filter').on('change', function(e) {
     updateActiveFilterList($(e.currentTarget));
+
+    var $filtered = $(catalog.template);
+    $filtered.addClass('js-products-current').replaceAll('.js-products-current');
+    catalog.loadProducts('/catalog-mock.html', $filtered);
   });
 
   $('.js-filter-remove').on('click', function(e) {
@@ -94,8 +98,7 @@ var clearFilter = function(filterId) {
   if ($filter.find('.ui-slider').length) {
     $filter.find('.ui-slider').slider('values', [0, 200]);
     $('.active-filter[data-filter-id="'+filterId+'"]').attr('data-filter-value', '');
-    updatePriceValues(null, { values: [0, 200]});
-
+    updatePriceValueDisplay(null, { values: [0, 200]});
   }
 
   $filter.trigger('change');
@@ -108,7 +111,7 @@ module.exports = {
       max: 200,
       values: [0, 200],
       animate: 'fast',
-      slide: updatePriceValues,
+      slide: updatePriceValueDisplay,
       change: triggerPriceChange
     });
 

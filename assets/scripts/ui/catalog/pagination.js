@@ -1,29 +1,19 @@
 'use strict';
 
 var $ = require('jquery'),
+    catalog = require('./index'),
     URLManager = require('./URLManager'),
     animationTime = 500;
 
-var page = URLManager.getParam('page') || 1;
-var template = '<ul class="catalog__products">'+
-'  <li class="catalog__product"></li>'+
-'  <li class="catalog__product"></li>'+
-'  <li class="catalog__product"></li>'+
-'  <li class="catalog__product"></li>'+
-'  <li class="catalog__product"></li>'+
-'  <li class="catalog__product"></li>'+
-'  <li class="catalog__product"></li>'+
-'  <li class="catalog__product"></li>'+
-'  <li class="catalog__product"></li>'+
-'</ul>';
+var currentPage = URLManager.getParam('page') || 1;
 
 var paginate = function(forward) {
-  if (!forward && page === 1) {
+  if (!forward && currentPage === 1) {
     return;
   }
-  var $current =   $('.js-products-current');
-  var $prev =   $('.js-products-prev');
-  var $next =   $('.js-products-next');
+  var $current = $('.js-products-current');
+  var $prev = $('.js-products-prev');
+  var $next = $('.js-products-next');
 
   if (forward) {
     $prev.remove();
@@ -33,7 +23,7 @@ var paginate = function(forward) {
       $next.addClass('js-products-current');
     }, animationTime);
     insertNext();
-    page++;
+    currentPage++;
   } else {
     $next.remove();
     $current.removeClass('js-products-current').addClass('js-products-next');
@@ -42,27 +32,26 @@ var paginate = function(forward) {
       $prev.addClass('js-products-current');
     }, animationTime);
     insertPrev();
-    page--;
+    currentPage--;
   }
 
   updateURL();
 };
 
 var insertNext = function() {
-  var $next = $(template);
-  $next.addClass('js-products-next js-products-loading js-products-spinning');
-  $next.appendTo('.js-products-holder');
-  loadProducts('/catalog-mock.html', $next);
+  var $next = $(catalog.template);
+  $next.addClass('js-products-next').appendTo('.js-products-holder');
+  catalog.loadProducts('/catalog-mock.html', $next);
 };
 
 var insertPrev = function() {
-  var $prev = $(template);
-  $prev.addClass('js-products-prev js-products-loading js-products-spinning');
-  $prev.prependTo('.js-products-holder');
-  loadProducts('/catalog-mock.html', $prev);
+  var $prev = $(catalog.template);
+  $prev.addClass('js-products-prev').prependTo('.js-products-holder');
+  catalog.loadProducts('/catalog-mock.html', $prev);
 };
 
 var loadProducts = function(url, $products) {
+  $products.addClass('js-products-loading js-products-spinning');
   window.setTimeout(function() {
     $.ajax({
       url: url
@@ -79,7 +68,7 @@ var loadProducts = function(url, $products) {
 
 var updateURL = function() {
   var params = URLManager.getParams();
-  params.page = page;
+  params.page = currentPage;
   URLManager.setParams(params);
 };
 
