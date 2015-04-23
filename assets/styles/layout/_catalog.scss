@@ -131,6 +131,22 @@
   }
 }
 
+.catalog__loading-text {
+  position: absolute;
+  top: calc(50% - #{$step*5});
+  left: 50%;
+  transform: translateX(-50%);
+  color: $light-color;
+  font-size: $step*2;
+
+  opacity: 0;
+  transition: opacity .2s;
+
+  .js-products-loading + & {
+    opacity: 1;
+  }
+}
+
 .catalog__product {
   position: relative;
   display: block;
