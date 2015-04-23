@@ -17,7 +17,6 @@ use Exception;
 
 abstract class AbstractForm
 {
-
     const STATE_NEW = 'new';
     const STATE_SUCCESS = 'success';
     const STATE_FAIL = 'fail';
@@ -80,6 +79,22 @@ abstract class AbstractForm
         $this->addFormFields();
 
         $this->isInitialized = true;
+    }
+
+    /**
+     * @return AutoCompletion
+     */
+    public function getLocator()
+    {
+        return $this->locator;
+    }
+
+    /**
+     * @return $this|StateContainerInterface
+     */
+    public function getStateContainer()
+    {
+        return $this->stateContainer;
     }
 
     /**

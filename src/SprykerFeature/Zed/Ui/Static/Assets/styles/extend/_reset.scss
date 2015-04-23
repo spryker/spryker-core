@@ -17,6 +17,7 @@
 }
 
 %reset-input {
+	outline:none;
 	@include font(inherit, inherit, inherit, inherit, inherit, inherit);
 }
 
