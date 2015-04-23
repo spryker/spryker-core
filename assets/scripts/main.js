@@ -20,6 +20,6 @@ $(function() {
   filter.init();
   pagination.init();
 
-  // TODO remove
+  // TODO remove, probably
   window.$ = $;
 });
