@@ -98,8 +98,9 @@ class StockProductForm extends AbstractForm
         $idStockProduct = $this->getIdStockProduct();
         if (!is_null($idStockProduct)) {
             $stockProduct = $this->queryContainer
-                ->queryStockProductByIdStockProduct($idStockProduct)
-                ->findOne();
+                ->queryStockProductByIdStockProduct((int)$idStockProduct)
+                ->findOne()
+            ;
 
             return [
                 self::ID_STOCK_PRODUCT => $stockProduct->getIdStockProduct(),
@@ -120,7 +121,8 @@ class StockProductForm extends AbstractForm
     {
         $stockTypes = $this->queryContainer
             ->queryAllStockTypes()
-            ->find();
+            ->find()
+        ;
 
         $stockTypeOptions = [];
         foreach ($stockTypes as $stockType) {

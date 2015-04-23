@@ -1,10 +1,11 @@
-<section
-        class="spy-layout compact"
-        ng-controller="GridController"
-        src="/stock/grid/stock-product"
-        name="stockproduct"
-        ng-class="{ query : queryActive }"
-        >
+<div
+    class="spy-layout compact"
+    ng-controller="GridController"
+    src="/stock/grid/stock-product"
+    name="stock-product-grid"
+    ng-class="{ query : queryActive }"
+    channel="stock-product"
+>
 
     <table class="spy-grid spy-interactive">
         <thead>
@@ -18,7 +19,7 @@
 
         <tbody>
 
-        <tr ng-repeat="row in rows" ng-click="$emitAsChannel('stock_product_grid_row_click', 'stock-product-form', row)">
+        <tr ng-repeat="row in rows" ng-click="$emitAllChannels('stock-product-update-click', row)">
             <td>{[{ row['sku'] }]}</td>
             <td>{[{ row['name'] }]}</td>
             <td>{[{ row['quantity'] }]}</td>
@@ -34,5 +35,5 @@
     </table>
 
     <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
-    
-</section>
+
+</div>

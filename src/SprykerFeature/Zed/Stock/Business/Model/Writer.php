@@ -70,7 +70,8 @@ class Writer implements WriterInterface
     {
         Propel::getConnection()->beginTransaction();
         $stockEntity = $this->locator->stock()->entitySpyStock();
-        $stockEntity->setName($stockTypeTransfer->getName())
+        $stockEntity
+            ->setName($stockTypeTransfer->getName())
             ->save()
         ;
         $this->insertActiveTouchRecordStockType($stockEntity);

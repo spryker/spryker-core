@@ -1,21 +1,15 @@
-<div
-    class="spy-layer"
-    spy-layer="context.entity"
+<form
+    class="spy-layout sparse"
+    ng-controller="FormController"
+    src="/stock/form/stock"
+    context="null"
+    channel="stock"
     name="stock-form"
 >
-    <form
-        class="spy-layout sparse"
-        ng-controller="FormController"
-        src="/stock/form/stock"
-        context="null"
-        channel="stock-form"
-    >
     <h3>Add Stock Type</h3>
 
     <div spy-input-text="field.name" options="{ label : 'Name' }"></div>
 
     <button class="button default" type="submit" ng-click="update()">Add</button>
 
-    </form>
-
-</div>
+</form>

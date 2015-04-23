@@ -27,16 +27,17 @@ class FormController extends AbstractController
 
         if ($form->isValid()) {
             $stockTypeTransfer = $this->getLocator()->stock()->transferStockType();
-            $stockTypeTransfer->fromArray($stockTypeTransfer->toArray());
+            $stockTypeTransfer->fromArray($form->getRequestData());
 
             if (null === $stockTypeTransfer->getIdStock()) {
                 $this->getStockFacade()->createStockType($stockTypeTransfer);
             } else {
                 $this->getStockFacade()->updateStockType($stockTypeTransfer);
             }
+            $form->setActiveValuesToDefault();
         }
 
-        return $this->jsonResponse($form->toArray());
+        return $this->jsonResponse($form->renderData());
     }
 
     /**
@@ -59,9 +60,10 @@ class FormController extends AbstractController
             } else {
                 $this->getStockFacade()->updateStockProduct($stockProduct);
             }
+            $form->setActiveValuesToDefault();
         }
 
-        return $this->jsonResponse($form->toArray());
+        return $this->jsonResponse($form->renderData());
     }
 
     /**

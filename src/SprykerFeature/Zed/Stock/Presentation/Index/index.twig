@@ -13,13 +13,14 @@
         ng-strict-di
         ng-controller="ComController"
     >
-        <spy-listen on="form_success" do="update()" scope="stock" channel="stock"></spy-listen>
 
-        <spy-listen on="stock_product_grid_row_click" do="context.entity = $argument" channel="stock-product-form"></spy-listen>
+        <div spy-form-update="read()" scope="stock-grid" channel="stock"></div>
 
-        <spy-listen on="form_success" do="update()" scope="stock-product-grid" channel="stock-product-form"></spy-listen>
-        <spy-listen on="form_success" do="close()" scope="stock_product-form" channel="stock-product-form"></spy-listen>
-        <spy-listen on="form_abort" do="close()" scope="stock-product-form" channel="stock-product-form"></spy-listen>
+        <spy-listen on="stock-product-update-click" scope="stock-product-form" do="openLayer(); read($argument);" channel="stock-product"></spy-listen>
+
+        <div spy-form-update="read()" scope="stock-product-grid" channel="stock-product"></div>
+        <div spy-form-update="closeLayer()" scope="stock-product-form" channel="stock-product"></div>
+        <div spy-form-abort="closeLayer()" scope="stock-product-form" channel="stock-product"></div>
 
         <section class="spy-layout n4 f2">
             <div>

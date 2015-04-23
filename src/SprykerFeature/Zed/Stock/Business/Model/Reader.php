@@ -129,15 +129,13 @@ class Reader implements ReaderInterface
         ;
 
         if ($stockProductEntity) {
-            // TODO check after refactoring
-//            throw new StockProductNotFoundException(
-//                sprintf(
-//                    'There is no Stock %s for a product with sku: %s',
-//                    [
-//                        $sku, $stockType
-//                    ]
-//                )
-//            );
+            throw new StockProductNotFoundException(
+                sprintf(
+                    'There is no Stock %s for a product with sku: %s',
+                    $stockType,
+                    $sku
+                )
+            );
         }
 
         return $stockProductEntity->getIdStockProduct();
@@ -193,7 +191,8 @@ class Reader implements ReaderInterface
     {
         $stockProductEntity = $this->queryContainer
             ->queryStockProductByIdStockProduct($idStockProduct)
-            ->findOne();
+            ->findOne()
+        ;
 
         if (is_null($stockProductEntity)) {
             throw new StockProductNotFoundException();
