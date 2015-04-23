@@ -7,10 +7,14 @@ use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
 use SprykerFeature\Zed\Acl\Business\AclSettings;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclUserHasGroupQuery;
+use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclGroupTableMap;
+use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclUserHasGroupTableMap;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRolesQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRuleQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRoleQuery;
+use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserUserTableMap;
+use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUserQuery;
 
 /**
  * Class AclQueryContainer
@@ -29,7 +33,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryGroupByName($name)
     {
-        $query = $this->getDependencyContainer()->createGroupQuery();
+        $query = $this->queryGroup();
 
         $query->filterByName($name);
 
@@ -43,11 +47,19 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryGroupById($id)
     {
-        $query = $this->getDependencyContainer()->createGroupQuery();
+        $query = $this->queryGroup();
 
         $query->filterByIdAclGroup($id);
 
         return $query;
+    }
+
+    /**
+     * @return SpyAclGroupQuery
+     */
+    public function queryGroup()
+    {
+        return $this->getDependencyContainer()->createGroupQuery();
     }
 
     /**
@@ -215,6 +227,31 @@ class AclQueryContainer extends AbstractQueryContainer
         $query->useSpyAclUserHasGroupQuery()
             ->filterByFkUserUser($idUser)
             ->endUse();
+
+        return $query;
+    }
+
+    /**
+     * @return SpyUserUserQuery
+     */
+    public function queryUsersWithGroup()
+    {
+        $query = $this->getDependencyContainer()->createUserQuery();
+
+        $query->addJoin(
+            SpyUserUserTableMap::COL_ID_USER_USER,
+            SpyAclUserHasGroupTableMap::COL_FK_USER_USER,
+            Criteria::LEFT_JOIN
+        );
+
+        $query->addJoin(
+            SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP,
+            SpyAclGroupTableMap::COL_ID_ACL_GROUP,
+            Criteria::LEFT_JOIN
+        );
+
+        $query->withColumn(SpyAclGroupTableMap::COL_NAME, 'group_name');
+        $query->withColumn(SpyAclGroupTableMap::COL_NAME, 'id_acl_group');
 
         return $query;
     }

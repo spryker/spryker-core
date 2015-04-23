@@ -9,6 +9,7 @@ use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclRoleQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclRuleQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclUserHasGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRolesQuery;
+use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUserQuery;
 
 /**
  * @method AclPersistence getFactory()
@@ -54,6 +55,14 @@ class AclDependencyContainer extends AbstractDependencyContainer
     public function createUserHasRoleQuery()
     {
         return $this->getFactory()->createPropelSpyAclUserHasGroupQuery();
+    }
+
+    /**
+     * @return SpyUserUserQuery
+     */
+    public function createUserQuery()
+    {
+        return $this->getLocator()->user()->queryContainer()->queryUsers();
     }
 
 }

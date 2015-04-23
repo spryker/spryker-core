@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
+use SprykerFeature\Shared\Acl\Transfer\GroupCollection;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclGroup;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
@@ -150,13 +151,11 @@ class Group implements GroupInterface
         }
 
         $entity = $this->locator
-                       ->acl()
-                       ->entitySpyAclGroupsHasRoles()
-        ;
+            ->acl()
+            ->entitySpyAclGroupsHasRoles();
 
         $entity->setFkAclGroup($idGroup)
-               ->setFkAclRole($idRole)
-        ;
+            ->setFkAclRole($idRole);
 
         return $entity->save();
     }
@@ -175,15 +174,31 @@ class Group implements GroupInterface
         }
 
         $entity = $this->locator
-                       ->acl()
-                       ->entitySpyAclUserHasGroup()
-        ;
+            ->acl()
+            ->entitySpyAclUserHasGroup();
 
         $entity->setFkAclGroup($idGroup)
-               ->setFkUserUser($idUser)
-        ;
+            ->setFkUserUser($idUser);
 
         return $entity->save();
+    }
+
+    /**
+     * @return GroupCollection
+     */
+    public function getAllGroups()
+    {
+        $collection = $this->locator
+            ->acl()
+            ->transferGroupCollection();
+
+        $results = $this->queryContainer
+            ->queryGroup()
+            ->find();
+
+        $collection = Copy::entityCollectionToTransferCollection($collection, $results, true);
+
+        return $collection;
     }
 
     /**
@@ -196,9 +211,8 @@ class Group implements GroupInterface
         $entity = $this->queryContainer->queryGroupByName($name)->findOne();
 
         $transfer = $this->locator
-                         ->acl()
-                         ->transferGroup()
-        ;
+            ->acl()
+            ->transferGroup();
 
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
@@ -216,9 +230,8 @@ class Group implements GroupInterface
         $entity = $this->getGroupEntityById($id);
 
         $transfer = $this->locator
-                         ->acl()
-                         ->transferGroup()
-        ;
+            ->acl()
+            ->transferGroup();
 
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
@@ -234,9 +247,8 @@ class Group implements GroupInterface
     public function removeGroupById($id)
     {
         $entity = $this->queryContainer
-                       ->queryGroupById($id)
-                       ->delete()
-        ;
+            ->queryGroupById($id)
+            ->delete();
 
         if ($entity <= 0) {
             throw new GroupNotFoundException();
@@ -271,14 +283,12 @@ class Group implements GroupInterface
     public function getRoles($idGroup)
     {
         $results = $this->queryContainer
-                        ->queryGroupRoles($idGroup)
-                        ->find()
-        ;
+            ->queryGroupRoles($idGroup)
+            ->find();
 
         $collection = $this->locator
-                           ->acl()
-                           ->transferRoleCollection()
-        ;
+            ->acl()
+            ->transferRoleCollection();
 
         $collection = Copy::entityCollectionToTransferCollection($collection, $results, true);
 
