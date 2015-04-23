@@ -33,4 +33,3 @@ class ProductKeyBuilder implements KeyBuilderInterface
         return 'product-search';
     }
 }
- 
