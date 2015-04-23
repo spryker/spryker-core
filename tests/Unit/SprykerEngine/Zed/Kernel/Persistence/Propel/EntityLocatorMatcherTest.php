@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerEngine\Zed\Kernel\Persistence\Propel;
 
-use SprykerEngine\Zed\Kernel\Persistence\Propel\SpyityLocatorMatcher;
+use SprykerEngine\Zed\Kernel\Persistence\Propel\EntityLocatorMatcher;
 
 /**
  * @group Kernel
@@ -16,21 +16,21 @@ class EntityLocatorMatcherTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchShouldReturnTrueIfMethodStartsWithFacade()
     {
-        $this->assertTrue((new SpyityLocatorMatcher())->match('entityFoo'));
+        $this->assertTrue((new EntityLocatorMatcher())->match('entityFoo'));
     }
 
     public function testMatchShouldReturnFalseIfMethodNotStartsWithEntity()
     {
-        $this->assertFalse((new SpyityLocatorMatcher())->match('locatorFoo'));
+        $this->assertFalse((new EntityLocatorMatcher())->match('locatorFoo'));
     }
 
     public function testMatchShouldReturnFalseIfMethodNotStartsWithEntityButEntityInString()
     {
-        $this->assertFalse((new SpyityLocatorMatcher())->match('locatorEntity'));
+        $this->assertFalse((new EntityLocatorMatcher())->match('locatorEntity'));
     }
 
     public function testFilterShouldReturnClassName()
     {
-        $this->assertSame('Foo', (new SpyityLocatorMatcher())->filter('entityFoo'));
+        $this->assertSame('Foo', (new EntityLocatorMatcher())->filter('entityFoo'));
     }
 }

@@ -4,7 +4,7 @@ namespace SprykerEngine\Zed\Kernel\Persistence\Propel;
 
 use SprykerEngine\Shared\Kernel\Locator\LocatorMatcherInterface;
 
-class SpyityLocatorMatcher implements LocatorMatcherInterface
+class EntityLocatorMatcher implements LocatorMatcherInterface
 {
 
     const METHOD_PREFIX = 'entity';

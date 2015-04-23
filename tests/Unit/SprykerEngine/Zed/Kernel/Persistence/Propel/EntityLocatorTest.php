@@ -3,7 +3,7 @@
 namespace Unit\SprykerEngine\Zed\Kernel\Persistence\Propel;
 
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Persistence\Propel\SpyityLocator;
+use SprykerEngine\Zed\Kernel\Persistence\Propel\EntityLocator;
 
 /**
  * @group Kernel
@@ -16,7 +16,7 @@ class EntityLocatorTest extends \PHPUnit_Framework_TestCase
 
     public function testLocateEntityShouldReturnEntityOfGivenBundle()
     {
-        $entityLocator = new SpyityLocator(
+        $entityLocator = new EntityLocator(
             '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Persistence\\Propel\\Fixtures\\'
         );
         $entity = $entityLocator->locate('Kernel', Locator::getInstance(), 'FooEntity');

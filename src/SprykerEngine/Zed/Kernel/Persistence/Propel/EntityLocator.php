@@ -8,7 +8,7 @@ use SprykerEngine\Shared\Kernel\IdentityMapClassResolver;
 use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
-class SpyityLocator implements LocatorInterface
+class EntityLocator implements LocatorInterface
 {
 
     /**
