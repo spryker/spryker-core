@@ -70,6 +70,7 @@
   .filter__price {
     .filter__price-slider {
       margin-bottom: $step;
+      background-image: none;
     }
 
     .filter__price-min, .filter__price-max {
