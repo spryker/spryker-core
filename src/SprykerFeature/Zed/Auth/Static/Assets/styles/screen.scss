@@ -67,6 +67,37 @@ body.spy-login {
 			padding:8px 16px 8px 32px;
 		}
 
+		div.messages {
+			@include abs(null, 0, null, null, null, null, 47px);
+			@include pre(transform, translate(0, 100%));
+
+			&.ng-enter {
+				bottom:27px;
+				opacity:0.0;
+				@include pre(transition-property       , (bottom, opacity));
+				@include pre(transition-duration       , $_tFast);
+				@include pre(transition-timing-function, ease-out);
+			}
+
+			&.ng-enter-active {
+				bottom:47px;
+				opacity:1.0;
+			}
+
+			&.ng-leave {
+				bottom:47px;
+				opacity:1.0;
+				@include pre(transition-property       , (bottom, opacity));
+				@include pre(transition-duration       , $_tFast);
+				@include pre(transition-timing-function, ease-in);
+			}
+
+			&.ng-leave-active {
+				bottom:27px;
+				opacity:0.0;
+			}
+		}
+
 		&.text {
 			&:before {
 				@extend %svg-mail;
