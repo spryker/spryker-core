@@ -3,7 +3,6 @@
 namespace SprykerFeature\Shared\Library\Bundle;
 
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
 use SprykerFeature\Shared\System\SystemConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -89,7 +88,7 @@ class BundleConfig
     protected function getBundleSchemaPath($namespace, $bundleName)
     {
         $finder = new Finder();
-        $filter = new CamelCaseToSeparatorFilter('_');
+        $filter = new \Zend_Filter_Word_CamelCaseToUnderscore();
         $filteredBundleName = strtolower($filter->filter($bundleName));
 
         $dirs = [];

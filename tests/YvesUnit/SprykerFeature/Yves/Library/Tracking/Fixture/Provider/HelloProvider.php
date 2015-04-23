@@ -16,7 +16,7 @@ class HelloProvider implements ProviderInterface, PageTypeInterface
      */
     public function getTrackingOutput(array $dataProvider, $pageType)
     {
-        if ($pageType === 'home') {
+        if ($pageType === self::PAGE_TYPE_HOME) {
             return 'Hello';
         } else {
             return 'Hallo';
