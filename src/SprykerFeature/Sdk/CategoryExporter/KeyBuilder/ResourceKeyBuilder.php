@@ -12,6 +12,6 @@ class ResourceKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return CategoryResourceSettings::ITEM_TYPE;
+        return CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE;
     }
 }

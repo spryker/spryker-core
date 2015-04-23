@@ -31,7 +31,7 @@ class CategoryResourceCreator implements ResourceCreatorInterface
      */
     public function getType()
     {
-        return CategoryResourceSettings::ITEM_TYPE;
+        return CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE;
     }
 
     /**

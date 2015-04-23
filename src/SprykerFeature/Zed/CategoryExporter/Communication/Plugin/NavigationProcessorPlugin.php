@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Communication\Plugin;
 
+use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -23,7 +24,7 @@ class NavigationProcessorPlugin extends AbstractPlugin implements DataProcessorP
      */
     public function getProcessableType()
     {
-        return 'navigation';
+        return CategoryResourceSettings::RESOURCE_TYPE_NAVIGATION;
     }
 
     /**

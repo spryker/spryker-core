@@ -43,7 +43,7 @@ class CategoryTreeBuilder
         foreach ($parents as $parent) {
             $storageKey = $this->keyBuilder->generateKey(
                 [
-                    'resourceType' => CategoryResourceSettings::ITEM_TYPE,
+                    'resourceType' => CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE,
                     'value' => $parent['node_id']
                 ],
                 $locale
