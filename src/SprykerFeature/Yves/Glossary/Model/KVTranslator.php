@@ -7,7 +7,6 @@ use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
 use SprykerFeature\Yves\Glossary\Exception\KeyBuilderNotFoundException;
 use SprykerFeature\Yves\Glossary\Exception\StorageKeyGeneratorNotFoundException;
 use SprykerFeature\Sdk\Glossary\Exception\TranslationNotFoundException;
-use SprykerFeature\Yves\KVStoreAware;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class KVTranslator implements TranslatorInterface, KVStoreAware
