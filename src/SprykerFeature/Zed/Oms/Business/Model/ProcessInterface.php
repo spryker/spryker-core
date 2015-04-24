@@ -6,16 +6,13 @@ use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
 
-/**
- * Interface ProcessInterface
- * @package SprykerFeature\Zed\Oms\Business\Model
- */
 interface ProcessInterface
 {
     /**
      * @param string $highlightStatus
-     * @param null   $format
-     * @param int    $fontsize
+     * @param null $format
+     * @param int $fontsize
+     *
      * @return bool
      */
     public function draw($highlightStatus = null, $format = null, $fontsize = null);
@@ -72,18 +69,21 @@ interface ProcessInterface
 
     /**
      * @param string $statusId
+     *
      * @return StatusInterface
      */
     public function getStatus($statusId);
 
     /**
      * @param string $statusId
+     *
      * @return bool
      */
     public function hasStatus($statusId);
 
     /**
      * @param string $statusId
+     *
      * @return StatusInterface
      * @throws \Exception
      */
