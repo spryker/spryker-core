@@ -159,4 +159,14 @@ class UserFacade extends AbstractFacade
             ->getUserModel()
             ->getUsers();
     }
+
+    /**
+     * @return void
+     */
+    public function removeUser($idUser)
+    {
+        $this->getDependencyContainer()
+            ->getUserModel()
+            ->removeUser($idUser);
+    }
 }
