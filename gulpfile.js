@@ -173,6 +173,8 @@ function _resolveTasks(tasks, done) {
  */
 exports.createBundledCss = function(base, dev, done) {
 	return _getBundles(base).then(function(bundles) {
+		var global = _path.join(__dirname, 'src/SprykerFeature/Zed/Ui/Static/Assets/styles/_shared.scss');
+
 		var tasks = bundles.map(function(bundle) {
 			var source = _path.join(bundle.path, _directories['source'], _dirCss, '/**/*.{scss,css}');
 			var target = _path.join(bundle.path, _directories['target'], _dirCss);
@@ -183,10 +185,14 @@ exports.createBundledCss = function(base, dev, done) {
 				if (dev) stream = stream.pipe(_maps.init());
 
 				stream = stream
+					.on('data', function(file)  {
+						file.contents = Buffer.concat([new Buffer("@import '" + global + "';"), file.contents]);
+					})
 					.pipe(_sass({
-						'errLogToConsole' : dev,
-						'outputStyle' : dev ? 'nested' : 'compressed',
-						'precision' : 3
+						includePaths    : [ global ],
+						errLogToConsole : dev,
+						outputStyle     : dev ? 'nested' : 'compressed',
+						precision       : 3
 					}))
 					.pipe(_concat('bundle.css'));
 
