@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Acl\Communication;
 
 use Generated\Zed\Ide\AutoCompletion;
-use Pyz\Zed\Acl\Communication\Form\UserForm;
-use Pyz\Zed\Acl\Communication\Grid\UserGrid;
+use SprykerFeature\Zed\Acl\Communication\Form\UserForm;
+use SprykerFeature\Zed\Acl\Communication\Grid\UserGrid;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Business\AclSettings;

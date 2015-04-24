@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 class IndexController extends AbstractController
 {
 
-            public function indexAction()
+    public function indexAction()
     {
 
     }
