@@ -51,6 +51,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param array $logContext
+     *
      * @return OrderStateMachineInterface
      */
     public function createModelOrderStateMachine(array $logContext)
@@ -72,6 +73,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param string $xmlFolder
+     *
      * @return BuilderInterface
      */
     public function createModelBuilder($xmlFolder = null)
@@ -129,16 +131,15 @@ class OmsDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param array $logContext
+     *
      * @return TransitionLogInterface
      */
     public function createModelUtilTransitionLog(array $logContext)
     {
         $queryContainer = $this->createQueryContainer();
 
-        return $this->getFactory()->createModelUtilTransitionLog(
-            $queryContainer,
-            $logContext
-        );
+        return $this->getFactory()
+            ->createModelUtilTransitionLog($queryContainer, $logContext);
     }
 
     /**
@@ -178,9 +179,8 @@ class OmsDependencyContainer extends AbstractDependencyContainer
      */
     public function createModelProcess()
     {
-        return $this->getFactory()->createModelProcess(
-            $this->createModelUtilDrawer()
-        );
+        return $this->getFactory()
+            ->createModelProcess($this->createModelUtilDrawer());
     }
 
     /**
@@ -188,8 +188,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
      */
     public function createModelUtilDrawer()
     {
-        return $this->getFactory()->createModelUtilDrawer(
-            $this->createSettings()
-        );
+        return $this->getFactory()
+            ->createModelUtilDrawer($this->createSettings());
     }
 }
