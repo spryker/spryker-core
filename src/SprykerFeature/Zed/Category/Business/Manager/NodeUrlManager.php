@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Manager;
 
+use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Shared\Category\Transfer\CategoryNode;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
@@ -9,9 +10,6 @@ use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 
 class NodeUrlManager implements NodeUrlManagerInterface
 {
-
-    const URL_CATEGORY_NODE = 'categorynode';
-
     /**
      * @var CategoryTreeReaderInterface
      */
@@ -58,9 +56,9 @@ class NodeUrlManager implements NodeUrlManagerInterface
     {
         $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $idLocale);
         $categoryUrl = $this->urlPathGenerator->generate($path);
-        $nodeId = $categoryNode->getIdCategoryNode();
+        $idNode = $categoryNode->getIdCategoryNode();
 
-        $this->urlFacade->createUrl($categoryUrl, $this->localeName, self::URL_CATEGORY_NODE, $nodeId);
-        $this->urlFacade->touchUrlActive($nodeId);
+        $this->urlFacade->createUrl($categoryUrl, $this->localeName, CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
+        $this->urlFacade->touchUrlActive($idNode);
     }
 }

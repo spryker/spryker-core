@@ -2,21 +2,16 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
+use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Shared\Category\Transfer\CategoryNode;
-use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use SprykerFeature\Zed\Category\Business\Model\CategoryWriterInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
-use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Propel\Runtime\Propel;
 
 class CategoryTreeWriter
 {
-
-    const TOUCH_CATEGORY_NAVIGATION = 'navigation';
     const ID_NAVIGATION = 1;
-    const TOUCH_CATEGORY_NODE = 'category-node';
 
     /**
      * @var CategoryWriterInterface
@@ -77,29 +72,30 @@ class CategoryTreeWriter
      * @param int $idLocale
      * @param bool $createUrlPath
      *
-     * @return int $nodeId
+     * @return int
      */
     public function createCategoryNode(CategoryNode $categoryNode, $idLocale, $createUrlPath = true)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
 
-        $nodeId = $this->nodeWriter->create($categoryNode);
+        $idNode = $this->nodeWriter->create($categoryNode);
         $this->closureTableWriter->create($categoryNode);
         $this->touchCategoryActive($categoryNode->getIdCategoryNode());
-        $this->touchNavigationActive(self::ID_NAVIGATION);
+        $this->touchNavigationActive();
         if ($createUrlPath) {
-            $this->nodeUrlManager->createUrl($categoryNode, $idLocale, $nodeId);
+            $this->nodeUrlManager->createUrl($categoryNode, $idLocale, $idNode);
         }
 
         $connection->commit();
 
-        return $nodeId;
+        return $idNode;
     }
 
     /**
      * @param int $idNode
      * @param int $idLocale
+     *
      * @return bool
      */
     public function deleteCategoryByNodeId($idNode, $idLocale)
@@ -157,18 +153,15 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param int $idCategory
+     * @param int $idCategoryNode
      */
-    protected function touchCategoryActive($idCategory)
+    protected function touchCategoryActive($idCategoryNode)
     {
-        $this->touchFacade->touchActive(self::TOUCH_CATEGORY_NODE, $idCategory);
+        $this->touchFacade->touchActive(CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
 
-    /**
-     * @param $idNavigation
-     */
-    protected function touchNavigationActive($idNavigation)
+    protected function touchNavigationActive()
     {
-        $this->touchFacade->touchActive(self::TOUCH_CATEGORY_NAVIGATION, $idNavigation);
+        $this->touchFacade->touchActive(CategoryResourceSettings::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
     }
 }
