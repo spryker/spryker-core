@@ -4,6 +4,9 @@ namespace SprykerFeature\Zed\Oms\Business\Model;
 
 use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 class Finder implements FinderInterface
 {
@@ -25,8 +28,8 @@ class Finder implements FinderInterface
 
     /**
      * @param OmsQueryContainer $queryContainer
-     * @param BuilderInterface  $builder
-     * @param array             $activeProcesses
+     * @param BuilderInterface $builder
+     * @param array $activeProcesses
      */
     public function __construct(OmsQueryContainer $queryContainer, BuilderInterface $builder, array $activeProcesses)
     {
@@ -37,7 +40,7 @@ class Finder implements FinderInterface
 
     /**
      * @param string $sku
-     * @return \SprykerFeature_Zed_Library_Propel_ClearAllReferencesIterator
+     * @return SpySalesOrderItemQuery
      */
     public function getReservedOrderItemsForSku($sku)
     {
@@ -46,7 +49,8 @@ class Finder implements FinderInterface
 
     /**
      * @param string $sku
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem
+     *
+     * @return SpySalesOrderItem
      */
     public function countReservedOrderItemsForSku($sku)
     {
@@ -58,7 +62,7 @@ class Finder implements FinderInterface
      * @param $sku
      * @param bool $returnTest
      *
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery
+     * @return SpySalesOrderItemQuery
      */
     protected function getOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
@@ -71,7 +75,8 @@ class Finder implements FinderInterface
      * @param StatusInterface[] $states
      * @param string $sku
      * @param bool $returnTest
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem
+     *
+     * @return SpySalesOrderItem
      */
     protected function countOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
@@ -79,9 +84,10 @@ class Finder implements FinderInterface
     }
 
     /**
-     * FIXME Cleanup code
+     * FIXME core-121 refactor method
      *
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order
+     * @param SpySalesOrder $order
+     *
      * @return array
      */
     public function getGroupedManuallyExecutableEvents(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order)
@@ -127,29 +133,31 @@ class Finder implements FinderInterface
         $uniqueItemEvents = array();
         $orderEvents = array_unique($allEvents);
 
-        $result = ['order_events' => $orderEvents,
+        $result = [
+            'order_events' => $orderEvents,
             'unique_item_events' => $uniqueItemEvents,
-            'item_events' => $eventsByItem];
+            'item_events' => $eventsByItem
+        ];
 
         return $result;
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order
-     * @param string                                               $flag
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[]
+     * @param SpySalesOrder $order
+     * @param string $flag
+     * @return SpySalesOrderItem[]
      */
-    public function getItemsWithFlag(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order, $flag)
+    public function getItemsWithFlag(SpySalesOrder $order, $flag)
     {
         return $this->getItemsByFlag($order, $flag, true);
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order
-     * @param string                                               $flag
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[]
+     * @param SpySalesOrder $order
+     * @param string $flag
+     * @return SpySalesOrderItem[]
      */
-    public function getItemsWithoutFlag(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order, $flag)
+    public function getItemsWithoutFlag(SpySalesOrder $order, $flag)
     {
         return $this->getItemsByFlag($order, $flag, false);
     }
@@ -169,12 +177,13 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order
+     * @param SpySalesOrder $order
      * @param string $flag
      * @param bool $hasFlag
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[]
+     *
+     * @return SpySalesOrderItem[]
      */
-    protected function getItemsByFlag(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order, $flag, $hasFlag)
+    protected function getItemsByFlag(SpySalesOrder $order, $flag, $hasFlag)
     {
         $items = $order->getItems();
         $item = current($items);
@@ -194,6 +203,7 @@ class Finder implements FinderInterface
      * @param string $processName
      * @param string $flag
      * @param boolean $hasFlag
+     *
      * @return StatusInterface[]
      */
     protected function getStatusesByFlag($processName, $flag, $hasFlag)
@@ -226,10 +236,11 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem
+     * @param SpySalesOrderItem $orderItem
+     *
      * @return string
      */
-    public function getStatusDisplayName(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem)
+    public function getStatusDisplayName(SpySalesOrderItem $orderItem)
     {
         $processName = $orderItem->getProcess()->getName();
         $builder = clone $this->builder;
