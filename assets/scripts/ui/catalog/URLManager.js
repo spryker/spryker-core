@@ -23,7 +23,9 @@ module.exports = {
     var URL, param;
     var paramString = '';
     for (param in params) {
-      paramString += param+'='+params[param]+'&';
+      if (params[param].length > 0) {
+        paramString += param+'='+params[param]+'&';
+      }
     }
     paramString = paramString.substr(0, paramString.length-1);
     URL = URLUtils.init().origin+URLUtils.pathname+'?'+paramString;

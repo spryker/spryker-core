@@ -1,8 +1,10 @@
-<input type="checkbox"
-       id="filter-{{filter-id}}-{{id}}"
-       name="filter-{{filter-id}}"
-       value="{{id}}"
-       {{#if checked}} checked=true{{/if}}>
-<label for="filter-{{filter-id}}-{{id}}">{{name}}
-  <span class="filter__quantity">{{quantity}}</span>
-</label>
+<section class="filter js-filter filter__{{filter-name}}" data-filter-name="{{filter-name}}" data-filter-type="multivalue">
+  <h1 class="filter__title">Sonstige Merkmale</h1>
+  <ul class="filter__{{filter-name}}-list">
+    <li>{{> catalog/filter-multivalue-value filter-name=filter-name display-value='Neu' value='neu' quantity='40'}}</li>
+    <li>{{> catalog/filter-multivalue-value filter-name=filter-name display-value='Sale' value='sale' quantity='12'}}</li>
+    <li>{{> catalog/filter-multivalue-value filter-name=filter-name display-value='Besonders toll' value='besonders%20toll' quantity='8'}}</li>
+    <li>{{> catalog/filter-multivalue-value filter-name=filter-name display-value='Aus Kunststoff' value='aus%20kunststoff' quantity='5'}}</li>
+    <li>{{> catalog/filter-multivalue-value filter-name=filter-name display-value='Aus Holz' value='aus%20holz' quantity='7'}}</li>
+  </ul>
+</section>
