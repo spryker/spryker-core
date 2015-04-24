@@ -1,0 +1,43 @@
+<?php
+
+namespace {{ namespace }};
+
+{% for ue in useExternal %}
+use {{ ue }};
+{% endfor %}
+
+/**
+ * Class {{ className }}
+ *
+ * @author SprykerGenerator
+ */
+class {{ className }}{% if extendsClass is defined %} extends {{ extendsClass }}{% endif %} implements {{ interfacesToImplement }}
+{
+    {% for prop in properties %}
+
+    /**
+     * @var{% if prop.parameterDataType != '' %} {{ prop.parameterDataType }}{% endif %} ${{ prop.propertyName }}
+     */
+    protected ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = '{{ prop.defaultValue }}'{% endif %};
+    {% endfor %}
+
+    {% for sag in settersAndGetters %}
+
+    /**
+     * @var {{ sag.parameterDataTypeDoc }}${{ sag.passedParameter }}
+     */
+    public function set{{ sag.propertyName }}({{ sag.parameterDataType }}${{ sag.passedParameter }})
+    {
+        $this->{{ sag.passedParameter }} = ${{ sag.passedParameter }};
+    }
+
+    /**
+    * @return {{ sag.parameterDataTypeDoc }}${{ sag.passedParameter }}
+    */
+    public function get{{ sag.propertyName }}()
+    {
+        return $this->{{ sag.passedParameter }};
+    }
+    {% endfor %}
+
+}
