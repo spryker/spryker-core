@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander;
 
+use Propel\Runtime\ActiveQuery\Join;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
@@ -39,12 +40,16 @@ class NavigationQueryExpander
     public function expandQuery(ModelCriteria $expandableQuery)
     {
         $expandableQuery->clearSelectColumns();
+
+        $join = new Join();
+        $join
+            ->setLeftTableName(SpyTouchTableMap::TABLE_NAME)
+            ->setRightTableName(SpyCategoryNodeTableMap::TABLE_NAME)
+            ->addCondition('is_root', 1)
+        ;
+
         $expandableQuery
-            ->addJoin(
-                SpyTouchTableMap::COL_ITEM_ID,
-                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
-                Criteria::LEFT_JOIN
-            );
+            ->addJoinObject($join);
 
         $expandableQuery->addAnd(
             SpyCategoryAttributeTableMap::COL_FK_LOCALE,
