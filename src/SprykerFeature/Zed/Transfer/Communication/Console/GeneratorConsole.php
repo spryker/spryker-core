@@ -10,6 +10,8 @@ use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
 use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use SprykerFeature\Zed\Transfer\Business\Model\External\Sofee\SofeeXmlParser;
 
+
+
 class GeneratorConsole extends Console
 {
 
@@ -31,32 +33,35 @@ class GeneratorConsole extends Console
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        echo '-transfer-';
-        echo "\n";
-
         $this->manager = new ClassCollectionManager();
 
         $file = dirname(__DIR__) . '/Console/data/transfer.xml';
 
         $fileContent = file_get_contents($file);
-//
+
         $xml = new SofeeXmlParser();
         $xml->parseString($fileContent);
 
         $this->xmlTree = $xml->getTree();
 
-        foreach ($this->xmlTree['transfers']['transfer'] as $item) {
-            $this->manager->setClassDefinition($item);
+        if ( isset($this->xmlTree['transfers']['transfer'][0]) ) {
+            // will generate more classes
+            foreach ($this->xmlTree['transfers']['transfer'] as $item) {
+                $this->manager->setClassDefinition($item);
+            }
+        } else {
+            // will generate only one class
+            $this->manager->setClassDefinition($this->xmlTree['transfers']['transfer']);
         }
 
-        $defs = $this->manager->getCollections();
-
+        $definitions = $this->manager->getCollections();
         $generator = new ClassGenerator();
         $generator->setTargetFolder(dirname(__DIR__) . '/target/');
-        foreach ($defs as $classDefinition) {
-            $phpCode = $generator->generateClass($classDefinition);
 
+        foreach ($definitions as $classDefinition) {
+            $phpCode = $generator->generateClass($classDefinition);
             echo $phpCode;
+
             echo "\n";
 die;
             $target = dirname(__DIR__) . '/Generated/';

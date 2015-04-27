@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\Transfer\Business\Model\Generator;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
+
 class ClassGenerator
 {
     const TWIG_TEMPLATES_LOCATION = '/Templates/';
@@ -114,11 +116,24 @@ class ClassGenerator
                 'parameterDataTypeDoc' => 'doc',
                 'parameterDataType' => $this->getParameterDataType($props['type']),
                 'propertyName' => $this->getPassedParameter($props),
-                'defaultValue' => $props['default'],
+                'defaultValue' => $this->getDefaultValue($props),
             ];
         }
 
         return $declarations;
+    }
+
+    protected function getDefaultValue(array $properties)
+    {
+        if ( preg_match('/(array|\[\])/', $properties['type']) ) {
+            return 'array()';
+        }
+
+        if ( ! empty($properties['default']) ) {
+            return $properties['default'];
+        }
+
+        return null;
     }
 
     public function getPropertyName($dataArray)
@@ -139,6 +154,9 @@ class ClassGenerator
 
     public function getPassedParameter(array $dataArray)
     {
+        if ( ! isset($dataArray['name']) ) {
+            throw new Exception('name not found in ' . var_export($dataArray, true));
+        }
         $name = $dataArray['name'];
 
         return $name;

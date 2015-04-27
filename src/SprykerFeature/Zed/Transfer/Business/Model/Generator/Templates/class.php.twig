@@ -16,9 +16,9 @@ class {{ className }}{% if extendsClass is defined %} extends {{ extendsClass }}
     {% for prop in properties %}
 
     /**
-     * @var{% if prop.parameterDataType != '' %} {{ prop.parameterDataType }}{% endif %} ${{ prop.propertyName }}
+     * @var{% if prop.parameterDataType != '' %} {{ prop.parameterDataType }}{% endif %}${{ prop.propertyName }}
      */
-    protected ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = '{{ prop.defaultValue }}'{% endif %};
+    protected ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue }}{% endif %};
     {% endfor %}
 
     {% for sag in settersAndGetters %}

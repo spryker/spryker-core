@@ -4,6 +4,8 @@ namespace SprykerFeature\Zed\Transfer\Business\Model\Generator;
 
 use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 
+
+
 class ClassCollectionManager
 {
     protected $definitionCollections = [];
@@ -15,7 +17,10 @@ class ClassCollectionManager
         }
 
         $cd = $this->definitionCollections[$data['name']];
-        $cd->setInterface($data['implementsInterface']);
+
+        if ( isset($data['interface']) ) {
+            $cd->setInterface($data['interface']);
+        }
 
         if ( isset($data['property'][0]) ) {
             foreach ($data['property'] as $prop) {
