@@ -60,7 +60,7 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     {
         return SpySearchPageAttributeTemplateQuery::create()
             ->filterByIdSearchPageAttributeTemplate($idTemplate)
-            ;
+        ;
     }
 
     /**
@@ -72,6 +72,6 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     {
         return SpySearchPageAttributeTemplateQuery::create()
             ->filterByTypeName($templateName)
-            ;
+        ;
     }
 }
