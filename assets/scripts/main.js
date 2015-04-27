@@ -10,6 +10,11 @@ var $ = require('jquery'),
     pagination = require('./ui/catalog/pagination');
 
 $(function() {
+
+  if (window.innerWidth < 1000) {
+    $('html').addClass('mobile');
+  }
+
   spinner.init();
   search.init();
   cart.init();

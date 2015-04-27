@@ -148,3 +148,43 @@
     }
   }
 }
+
+// filter hiding
+
+.js-filters {
+  @include bounce-transition(.3s, height);
+  overflow: hidden;
+}
+
+.js-toggle-filters {
+  display: block;
+  margin: 0 auto $step;
+}
+
+// text for the show filters button
+.js-hide-filters {
+  display: inline;
+}
+.js-show-filters {
+  display: none;
+}
+
+.js-filters-hidden {
+  height: 0 !important;
+
+  & + .js-toggle-filters > .js-hide-filters {
+    display: none;
+  }
+  & + .js-toggle-filters > .js-show-filters {
+    display: inline;
+  }
+}
+
+@include media-query('medium') {
+  .js-toggle-filters {
+    display: none;
+  }
+  .js-filters {
+    height: auto !important;
+  }
+}

@@ -35,6 +35,10 @@ var paginate = function(forward) {
     currentPage--;
   }
 
+  $('html, body').delay(500).animate({
+    scrollTop: $current.offset().top - 143
+  }, 300);
+
   updateURL();
 };
 

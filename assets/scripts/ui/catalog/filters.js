@@ -84,6 +84,20 @@ var updateURL = function() {
   URLManager.setParams(params);
 }
 
+var initMobileFilterHiding = function() {
+  var $filtersEl;
+  var filtersHidden = false;
+
+  $filtersEl = $('.js-filters');
+  $filtersEl.css('height', $filtersEl.innerHeight())
+  $filtersEl.addClass('js-filters-hidden');
+  filtersHidden = true;
+
+  $('.js-toggle-filters').click(function(e) {
+    $filtersEl.toggleClass('js-filters-hidden');
+  });
+};
+
 module.exports = {
   init: function() {
     $('.js-filter').each(function() {
@@ -91,7 +105,8 @@ module.exports = {
     });
 
     initActiveFilterList();
-
     selectRequiredFilters();
+
+    initMobileFilterHiding();
   }
 }

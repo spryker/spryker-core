@@ -3,12 +3,16 @@
 <div class="catalog">
   <h1 class="catalog__section-title">Wild life</h1>
 
-  <aside class="catalog__filter">
+  <aside class="catalog__filter js-filters">
     {{> catalog/filter-default filter-name='category' }}
     {{> catalog/filter-color filter-name='color' }}
     {{> catalog/filter-range filter-name='price' min='0' max='200' }}
     {{> catalog/filter-multivalue filter-name='extras' }}
   </aside>
+  <button class="catalog__toggle-filters js-toggle-filters">
+    <span class="js-show-filters">Show filters</span>
+    <span class="js-hide-filters">Hide filters</span>
+  </button>
 
   <section class="catalog__active-filters">
     <h1>Aktive filter</h1>
