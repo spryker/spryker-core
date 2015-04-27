@@ -79,7 +79,7 @@ class ProductCategoryFacadeTest extends Test
         $categoryName = 'ATestCategory';
         $localeName = 'ABCDE';
 
-        $idLocale = $this->localeFacade->createLocale($localeName);
+        $idLocale = $this->localeFacade->createLocale($localeName)->getIdLocale();
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractSku);
         $this->productFacade->createConcreteProduct($concreteSku, $idAbstractProduct);
 
