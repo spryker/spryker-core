@@ -1,6 +1,15 @@
 {% extends '@Application/layout.twig' %}
 
 
+{% block head_css_bundles -%}
+    <link rel="stylesheet" type="text/css" href="{{ staticPath('Uiexample/styles/bundle.css') }}">
+{%- endblock %}
+
+{% block head_js_bundles -%}
+    <script type="text/javascript" src="{{ staticPath('Uiexample/scripts/bundle.js') }}"></script>
+{%- endblock %}
+
+
 {% block body_class %}spy-page spy-example{% endblock %}
 
 
