@@ -21,4 +21,11 @@ interface StockToProductInterface
      * @throws MissingProductException
      */
     public function getConcreteProductIdBySku($sku);
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasConcreteProduct($sku);
 }

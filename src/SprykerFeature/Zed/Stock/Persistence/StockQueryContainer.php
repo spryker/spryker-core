@@ -51,6 +51,27 @@ class StockQueryContainer extends AbstractQueryContainer
     }
 
     /**
+     * @param string $sku
+     * @param string $type
+     *
+     * @return SpyStockProductQuery
+     */
+    public function queryStockProductBySkuAndType($sku, $type)
+    {
+        $query = $this->queryAllStockProducts();
+        $query
+            ->useSpyProductQuery()
+            ->filterBySku($sku)
+            ->endUse()
+            ->useStockQuery()
+            ->filterByName($type)
+            ->endUse()
+        ;
+
+        return $query;
+    }
+
+    /**
      * @param string $name
      *
      * @return SpyStockQuery
