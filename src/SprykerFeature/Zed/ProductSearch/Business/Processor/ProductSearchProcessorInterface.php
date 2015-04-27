@@ -1,13 +1,9 @@
 <?php
+
 namespace SprykerFeature\Zed\ProductSearch\Business\Processor;
 
 use SprykerEngine\Shared\Dto\LocaleDto;
 
-/**
- * Class ProductSearchProcessor
- *
- * @package SprykerFeature\Zed\ProductSearch\Business\Processor
- */
 interface ProductSearchProcessorInterface
 {
     /**

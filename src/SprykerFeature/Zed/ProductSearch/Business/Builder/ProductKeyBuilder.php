@@ -2,15 +2,9 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Business\Builder;
 
-
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderTrait;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
-/**
- * Class ProductKeyBuilder
- *
- * @package SprykerFeature\Zed\ProductSearch\Business\Builder
- */
 class ProductKeyBuilder implements KeyBuilderInterface
 {
     use KeyBuilderTrait;

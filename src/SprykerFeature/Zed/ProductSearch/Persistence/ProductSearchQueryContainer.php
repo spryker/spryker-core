@@ -35,7 +35,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param array     $productIds
+     * @param array $productIds
      * @param LocaleDto $locale
      *
      * @return SpyProductQuery

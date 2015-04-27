@@ -29,8 +29,8 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
     }
 
     /**
-     * @param array  $productsRaw
-     * @param array  $processedProducts
+     * @param array $productsRaw
+     * @param array $processedProducts
      * @param LocaleDto $locale
      *
      * @return array
@@ -46,7 +46,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
     }
 
     /**
-     * @param array  $productData
+     * @param array $productData
      * @param LocaleDto $locale
      *
      * @return array
