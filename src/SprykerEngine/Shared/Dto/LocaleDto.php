@@ -17,7 +17,7 @@ class LocaleDto
     /**
      * @var bool
      */
-    protected $isActive;
+    protected $isActive = true;
 
     /**
      * @return int
