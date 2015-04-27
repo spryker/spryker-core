@@ -55,6 +55,7 @@ function _buildBundles(directories) {
 				return _q
 					.all(files.map(function(item, index, source) {
 						var name = _snakeToCamel(item);
+						var base = _path.join(dir, item);
 						var path = _path.join(dir, item, _dirBundle.replace('%s', name));
 
 						return _q
@@ -62,6 +63,7 @@ function _buildBundles(directories) {
 							.then(function(stat) {
 								if (stat.isDirectory()) bundles.push({
 									name : name,
+									base : base,
 									path : path
 								});
 							}, function(why) {
