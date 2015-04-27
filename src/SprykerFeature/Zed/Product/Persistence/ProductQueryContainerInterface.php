@@ -16,18 +16,21 @@ interface ProductQueryContainerInterface
     /**
      * @param string $skus
      * @param LocaleDto $locale
+     *
      * @return SpyProductQuery
      */
     public function getProductWithAttributeQuery($skus, LocaleDto $locale);
 
     /**
      * @param string $sku
+     *
      * @return SpyProductQuery
      */
     public function queryConcreteProductBySku($sku);
 
     /**
      * @param string $sku
+     *
      * @return SpyAbstractProductQuery
      */
     public function queryAbstractProductBySku($sku);

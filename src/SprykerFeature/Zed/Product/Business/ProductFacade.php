@@ -259,7 +259,9 @@ class ProductFacade extends AbstractFacade
 
     /**
      * @param string $sku
+     *
      * @return string
+     * @todo examine this as the product sku mapper is gone
      */
     public function getAbstractSkuFromConcreteProduct($sku)
     {

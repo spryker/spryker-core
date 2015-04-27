@@ -49,6 +49,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
     /**
      * @param string $sku
+     *
      * @return SpyProductQuery
      */
     public function queryConcreteProductBySku($sku)
@@ -59,6 +60,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
     /**
      * @param string $sku
+     *
      * @return SpyAbstractProductQuery
      */
     public function queryAbstractProductBySku($sku)
