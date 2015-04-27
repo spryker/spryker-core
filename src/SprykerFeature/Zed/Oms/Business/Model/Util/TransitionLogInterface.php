@@ -59,7 +59,7 @@ interface TransitionLogInterface
     /**
      * @param SpySalesOrderItem $orderItem
      */
-    public function save($orderItem);
+    public function save(SpySalesOrderItem $orderItem);
 
     /**
      * @return void
