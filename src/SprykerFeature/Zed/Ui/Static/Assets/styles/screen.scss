@@ -28,11 +28,8 @@
 ));
 
 
-@import 'extend/index.scss';
-
-@import 'spy-directive/index.scss';
-@import 'spy-format/index.scss';
-
-@import 'spy-layout/index.scss';
-
-@import 'spy-grid/index.scss';
+@import 'bundle/extend/index.scss';
+@import 'bundle/spy-directive/index.scss';
+@import 'bundle/spy-format/index.scss';
+@import 'bundle/spy-layout/index.scss';
+@import 'bundle/spy-grid/index.scss';
