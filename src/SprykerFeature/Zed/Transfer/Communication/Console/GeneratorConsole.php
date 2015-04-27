@@ -9,7 +9,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
 use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use SprykerFeature\Zed\Transfer\Business\Model\External\Sofee\SofeeXmlParser;
-
+use Zend\Config\Config;
+use Zend\Config\Factory;
 
 
 class GeneratorConsole extends Console
@@ -27,17 +28,62 @@ class GeneratorConsole extends Console
     protected function configure()
     {
         parent::configure();
-        $this->setName(self::COMMAND_NAME)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>');
+        $this
+            ->setName(self::COMMAND_NAME)
+            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
+        ;
+    }
+
+    protected function mergeAndGetBundlesXmlDefinitions()
+    {
+        $directory = APPLICATION_VENDOR_DIR . 'spryker/';
+
+        $bundlesList = scandir($directory);
+
+        $xmlDefinition = new Config([], true);
+
+//        print_r($xmlDefinition);
+//        die;
+
+        foreach ($bundlesList as $bundle) {
+            if ( '.' !== $bundle && '..' !== $bundle  ) {
+//                print_r($bundle);
+//                echo "\n";
+
+                $xmlDefinitionFile = $directory . $bundle . '/transferDefinitions.xml';
+//                print_r($xmlDefinitionFile);
+//                echo "\n";
+                if ( is_file($xmlDefinitionFile) ) {
+                    var_dump($bundle);
+//                    $newDefinition = Factory::fromFile($xmlDefinitionFile, true);
+//                    $xmlDefinition->merge($newDefinition);
+                }
+//                return $navigationDefinition->toArray();
+            }
+        }
+
+//        print_r($xmlDefinition);
+die;
+//        print_r($bundles);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->manager = new ClassCollectionManager();
 
-        $file = dirname(__DIR__) . '/Console/data/transfer.xml';
+        $fileContent = $this->mergeAndGetBundlesXmlDefinitions();
+
+
+        echo $fileContent;
+        echo "\n";
+        die;
+
+
+        $file = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__)))))) . '/Console/data/transfer.xml';
 
         $fileContent = file_get_contents($file);
+
+
 
         $xml = new SofeeXmlParser();
         $xml->parseString($fileContent);

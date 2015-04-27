@@ -27,7 +27,7 @@ class {{ className }} extends AbstractTransfer implements {{ interfacesToImpleme
     /**
      * @var {{ writeIfNot(sag.parameterDataType ~ ' ', '(^array|^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }}
      */
-    public function set{{ sag.propertyName }}({{ writeIfNot(sag.parameterDataType ~ ' ', '(^array|^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }})
+    public function set{{ sag.propertyName }}({{ writeIfNot(sag.parameterDataType ~ ' ', '(^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }})
     {
         $this->{{ sag.passedParameter }}{{ writeIf('[]', 'array', sag.parameterDataType) }} = ${{ sag.passedParameter }};
         $this->addModifiedProperty('{{ sag.passedParameter }}');
