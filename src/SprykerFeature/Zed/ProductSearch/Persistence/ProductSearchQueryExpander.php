@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Persistence;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
 use SprykerFeature\Zed\ProductSearch\Persistence\Propel\Map\SpySearchableProductsTableMap;
@@ -28,11 +29,11 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return ModelCriteria
      */
-    public function expandProductQuery(ModelCriteria $expandableQuery, $localeName)
+    public function expandProductQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
     {
         $expandableQuery->clearSelectColumns();
         $expandableQuery
@@ -48,7 +49,7 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
         );
         $expandableQuery->addAnd(
             SpyLocaleTableMap::COL_LOCALE_NAME,
-            $localeName,
+            $locale->getLocaleName(),
             Criteria::EQUAL
         );
         $expandableQuery->addAnd(
@@ -57,7 +58,7 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
             Criteria::EQUAL
         );
 
-        $expandableQuery = $this->productQueryContainer->joinLocalizedProductQueryWithAttributes($expandableQuery, $localeName);
+        $expandableQuery = $this->productQueryContainer->joinLocalizedProductQueryWithAttributes($expandableQuery, $locale);
 
         $expandableQuery->addJoinObject(
             new Join(

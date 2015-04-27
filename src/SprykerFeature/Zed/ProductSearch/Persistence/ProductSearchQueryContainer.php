@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Persistence;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedProductAttributesTableMap;
@@ -35,30 +36,26 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param array     $productIds
-     * @param string    $locale
+     * @param LocaleDto $locale
      *
      * @return SpyProductQuery
      */
-    public function getExportableProductsByLocale(array $productIds, $locale)
+    public function getExportableProductsByLocale(array $productIds, LocaleDto $locale)
     {
         $query = SpyProductQuery::create();
         $query
             ->filterByIdProduct($productIds)
             ->useSpyLocalizedProductAttributesQuery()
-                ->useLocaleQuery()
-                    ->filterByLocaleName($locale)
-                ->endUse()
+            ->filterByFkLocale($locale->getIdLocale())
             ->endUse()
             ->addSelectColumn(SpyProductTableMap::COL_SKU)
             ->addSelectColumn(SpyLocalizedProductAttributesTableMap::COL_ATTRIBUTES)
             ->addSelectColumn(SpyLocalizedProductAttributesTableMap::COL_NAME);
         $query
             ->useSpyAbstractProductQuery()
-                ->useSpyLocalizedAbstractProductAttributesQuery()
-                    ->useLocaleQuery()
-                        ->filterByLocaleName($locale)
-                    ->endUse()
-                ->endUse()
+            ->useSpyLocalizedAbstractProductAttributesQuery()
+            ->filterByFkLocale($locale->getIdLocale())
+            ->endUse()
             ->endUse()
             ->addAsColumn(
                 '/**
@@ -90,14 +87,14 @@ abstract_attributes',
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return ModelCriteria
      */
-    public function expandProductQuery(ModelCriteria $expandableQuery, $localeName)
+    public function expandProductQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
     {
         $productSearchQueryExpander = $this->getDependencyContainer()->createProductSearchQueryExpander();
 
-        return $productSearchQueryExpander->expandProductQuery($expandableQuery, $localeName);
+        return $productSearchQueryExpander->expandProductQuery($expandableQuery, $locale);
     }
 }

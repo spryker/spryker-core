@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Business\Processor;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class ProductSearchProcessor implements ProductSearchProcessorInterface
@@ -30,11 +31,11 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
     /**
      * @param array  $productsRaw
      * @param array  $processedProducts
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function buildProducts(array $productsRaw, array $processedProducts, $locale)
+    public function buildProducts(array $productsRaw, array $processedProducts, LocaleDto $locale)
     {
         foreach ($productsRaw as $index => $productData) {
             $productKey = $this->keyBuilder->generateKey($productData['sku'], $locale);
@@ -46,11 +47,11 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
 
     /**
      * @param array  $productData
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    protected function buildBaseProduct(array $productData, $locale)
+    protected function buildBaseProduct(array $productData, LocaleDto $locale)
     {
         return [
             'search-result-data' => [
@@ -74,7 +75,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
                 'name' => $productData['name']
             ],
             'store' => $this->storeName,
-            'locale' => $locale
+            'locale' => $locale->getLocaleName()
         ];
     }
 }
