@@ -58,11 +58,11 @@ class UrlFacadeTest extends Test
     public function testCreateUrlInsertsAndReturnsSomething()
     {
         $urlQuery = $this->urlQueryContainer->queryUrls();
-        $this->localeFacade->createLocale('CBCDE');
+        $locale = $this->localeFacade->createLocale('CBCDE');
         $redirect = $this->urlFacade->createRedirect('/some/url/like/string2');
 
         $urlCountBeforeCreation = $urlQuery->count();
-        $newUrl = $this->urlFacade->createUrl('/some/url/like/string', 'CBCDE', 'redirect', $redirect->getIdRedirect());
+        $newUrl = $this->urlFacade->createUrl('/some/url/like/string', $locale, 'redirect', $redirect->getIdRedirect());
         $urlCountAfterCreation = $urlQuery->count();
 
         $this->assertTrue($urlCountAfterCreation > $urlCountBeforeCreation);
@@ -112,48 +112,48 @@ class UrlFacadeTest extends Test
 
     public function testHasUrlId()
     {
-        $this->localeFacade->createLocale('UNIXA');
+        $locale = $this->localeFacade->createLocale('UNIXA');
         $redirect = $this->urlFacade->createRedirect('/SoManyPageUrls4');
 
-        $idPageUrl = $this->urlFacade->createUrl('/abcdefg', 'UNIXA', 'redirect', $redirect->getIdRedirect())->getIdUrl();
+        $idPageUrl = $this->urlFacade->createUrl('/abcdefg', $locale, 'redirect', $redirect->getIdRedirect())->getIdUrl();
 
         $this->assertTrue($this->urlFacade->hasUrlId($idPageUrl));
     }
 
     public function testGetUrlByPath()
     {
-        $localeId = $this->localeFacade->createLocale('DFGHE')->getIdLocale();
+        $locale = $this->localeFacade->createLocale('DFGHE');
         $redirect = $this->urlFacade->createRedirect('/SoManyPageUrls5');
 
-        $this->urlFacade->createUrl('/someOtherPageUrl', 'DFGHE', 'redirect', $redirect->getIdRedirect());
+        $this->urlFacade->createUrl('/someOtherPageUrl', $locale, 'redirect', $redirect->getIdRedirect());
 
         $url = $this->urlFacade->getUrlByPath('/someOtherPageUrl');
         $this->assertNotNull($url);
 
         $this->assertEquals('/someOtherPageUrl', $url->getUrl());
-        $this->assertEquals($localeId, $url->getFkLocale());
+        $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
     }
 
     public function testGetUrlById()
     {
-        $localeId = $this->localeFacade->createLocale('DFGHX')->getIdLocale();
+        $locale = $this->localeFacade->createLocale('DFGHX');
         $redirect = $this->urlFacade->createRedirect('/SoManyPageUrls5');
 
-        $id = $this->urlFacade->createUrl('/someOtherPageUrl2', 'DFGHX', 'redirect', $redirect->getIdRedirect())->getIdUrl();
+        $id = $this->urlFacade->createUrl('/someOtherPageUrl2', $locale, 'redirect', $redirect->getIdRedirect())->getIdUrl();
 
         $url = $this->urlFacade->getUrlById($id);
         $this->assertNotNull($url);
 
         $this->assertEquals('/someOtherPageUrl2', $url->getUrl());
-        $this->assertEquals($localeId, $url->getFkLocale());
+        $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
     }
 
     public function testTouchUrlActive()
     {
-        $this->localeFacade->createLocale('ABCDE');
+        $locale = $this->localeFacade->createLocale('ABCDE');
         $redirect = $this->urlFacade->createRedirect('/ARedirectUrl');
 
-        $idUrl = $this->urlFacade->createUrl('/aPageUrl', 'ABCDE', 'redirect', $redirect->getIdRedirect())->getIdUrl();
+        $idUrl = $this->urlFacade->createUrl('/aPageUrl', $locale, 'redirect', $redirect->getIdRedirect())->getIdUrl();
 
         $touchQuery = $this->touchQueryContainer->queryTouchEntry('url', $idUrl);
         $this->assertEquals(0, $touchQuery->count());
