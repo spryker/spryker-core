@@ -130,10 +130,10 @@ class GlossaryTest extends Test
     {
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $this->glossaryFacade->createKey('AKey');
-        $this->localeFacade->createLocale('Local');
+        $locale = $this->localeFacade->createLocale('Local');
 
         $translationCountBeforeCreation = $translationQuery->count();
-        $this->glossaryFacade->createTranslation('AKey', 'Local', 'ATranslation', true);
+        $this->glossaryFacade->createTranslation('AKey', $locale, 'ATranslation', true);
         $translationCountAfterCreation = $translationQuery->count();
 
         $this->assertTrue($translationCountAfterCreation > $translationCountBeforeCreation);
@@ -144,11 +144,11 @@ class GlossaryTest extends Test
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
         $this->glossaryFacade->createKey('AKey2');
-        $this->localeFacade->createLocale('Locaz');
+        $locale = $this->localeFacade->createLocale('Locaz');
 
         $translationCountBeforeCreation = $translationQuery->count();
         $touchCountBeforeCreation = $touchQuery->count();
-        $this->glossaryFacade->createAndTouchTranslation('AKey2', 'Locaz', 'ATranslation', true);
+        $this->glossaryFacade->createAndTouchTranslation('AKey2', $locale, 'ATranslation', true);
         $translationCountAfterCreation = $translationQuery->count();
         $touchCountAfterCreation = $touchQuery->count();
 
@@ -158,31 +158,31 @@ class GlossaryTest extends Test
 
     public function testUpdateTranslationUpdatesSomething()
     {
-        $this->localeFacade->createLocale('Local');
+        $locale = $this->localeFacade->createLocale('Local');
 
-        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('AnotherKey', 'Local');
+        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('AnotherKey', $locale->getLocaleName());
         $this->glossaryFacade->createKey('AnotherKey');
-        $this->glossaryFacade->createTranslation('AnotherKey', 'Local', 'Some Translation', true);
+        $this->glossaryFacade->createTranslation('AnotherKey', $locale, 'Some Translation', true);
 
         $this->assertEquals('Some Translation', $specificTranslationQuery->findOne()->getValue());
 
-        $this->glossaryFacade->updateTranslation('AnotherKey', 'Local', 'Some other Translation', true);
+        $this->glossaryFacade->updateTranslation('AnotherKey', $locale, 'Some other Translation', true);
 
         $this->assertEquals('Some other Translation', $specificTranslationQuery->findOne()->getValue());
     }
 
     public function testUpdateAndTouchTranslationUpdatesSomethingAndTouchesIt()
     {
-        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('AnotherKey2', 'Locaz');
-        $this->localeFacade->createLocale('Locaz');
+        $locale = $this->localeFacade->createLocale('Locaz');
+        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('AnotherKey2', $locale->getLocaleName());
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
         $this->glossaryFacade->createKey('AnotherKey2');
-        $this->glossaryFacade->createTranslation('AnotherKey2', 'Locaz', 'Some Translation', true);
+        $this->glossaryFacade->createTranslation('AnotherKey2', $locale, 'Some Translation', true);
 
         $this->assertEquals('Some Translation', $specificTranslationQuery->findOne()->getValue());
         $touchCountBeforeCreation = $touchQuery->count();
 
-        $this->glossaryFacade->updateAndTouchTranslation('AnotherKey2', 'Locaz', 'Some other Translation', true);
+        $this->glossaryFacade->updateAndTouchTranslation('AnotherKey2', $locale, 'Some other Translation', true);
         $touchCountAfterCreation = $touchQuery->count();
 
         $this->assertEquals('Some other Translation', $specificTranslationQuery->findOne()->getValue());
@@ -191,12 +191,13 @@ class GlossaryTest extends Test
 
     public function testDeleteTranslationDeletesSoftly()
     {
-        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('KeyWithTranslation', 'de_DE');
+        $locale = $this->localeFacade->createLocale('yx_qw');
+        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('KeyWithTranslation', $locale->getLocaleName());
         $this->glossaryFacade->createKey('KeyWithTranslation');
-        $this->glossaryFacade->createTranslation('KeyWithTranslation', 'de_DE', 'A Translation...', true);
+        $this->glossaryFacade->createTranslation('KeyWithTranslation', $locale, 'A Translation...', true);
         $this->assertTrue($specificTranslationQuery->findOne()->getIsActive());
 
-        $this->glossaryFacade->deleteTranslation('KeyWithTranslation', 'de_DE');
+        $this->glossaryFacade->deleteTranslation('KeyWithTranslation', $locale);
 
         $this->assertFalse($specificTranslationQuery->findOne()->getIsActive());
     }
@@ -204,12 +205,12 @@ class GlossaryTest extends Test
     public function testSaveTranslationDoesACreate()
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey');
-        $localeId = $this->localeFacade->createLocale('ab_xy')->getIdLocale();
-        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeId);
+        $locale = $this->localeFacade->createLocale('ab_xy');
+        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $locale->getIdLocale());
 
         $transferTranslation = new Translation($this->locator);
         $transferTranslation->setFkGlossaryKey($keyId);
-        $transferTranslation->setFkLocale($localeId);
+        $transferTranslation->setFkLocale($locale->getIdLocale());
         $transferTranslation->setValue('some Value');
 
         $this->assertEquals(0, $specificTranslationQuery->count());
@@ -223,15 +224,15 @@ class GlossaryTest extends Test
     public function testSaveTranslationDoesAnUpdate()
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey2');
-        $localeId = $this->localeFacade->createLocale('ab_yz')->getIdLocale();
+        $locale = $this->localeFacade->createLocale('ab_yz');
         $transferTranslation = $this->glossaryFacade->createTranslation(
             'SomeNonExistentKey2',
-            'ab_yz',
+            $locale,
             'some translation'
         );
         $this->assertNotNull($transferTranslation->getIdGlossaryTranslation());
 
-        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeId);
+        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $locale->getIdLocale());
         $this->assertEquals(1, $specificTranslationQuery->count());
 
         $transferTranslation->setValue('someOtherTranslation');
@@ -268,10 +269,10 @@ class GlossaryTest extends Test
     public function testSaveAndTouchTranslationDoesATouchForUpdate()
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey4');
-        $localeId = $this->localeFacade->createLocale('ab_fg')->getIdLocale();
-        $transferTranslation = $this->glossaryFacade->createTranslation('SomeNonExistentKey4', 'ab_fg', 'some Value', true);
+        $locale = $this->localeFacade->createLocale('ab_fg');
+        $transferTranslation = $this->glossaryFacade->createTranslation('SomeNonExistentKey4', $locale, 'some Value', true);
 
-        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeId);
+        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $locale->getIdLocale());
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
 
         $this->assertEquals(1, $specificTranslationQuery->count());

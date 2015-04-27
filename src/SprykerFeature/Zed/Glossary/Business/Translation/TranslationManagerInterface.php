@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
 use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Shared\Glossary\Transfer\Translation;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
@@ -17,7 +18,7 @@ interface TranslationManagerInterface
 {
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -26,7 +27,7 @@ interface TranslationManagerInterface
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function createTranslation($keyName, $localeName, $value, $isActive);
+    public function createTranslation($keyName, LocaleDto $locale, $value, $isActive);
 
     /**
      * @param string $keyName
@@ -42,7 +43,7 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -51,11 +52,11 @@ interface TranslationManagerInterface
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function createAndTouchTranslation($keyName, $localeName, $value, $isActive = true);
+    public function createAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true);
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -64,11 +65,11 @@ interface TranslationManagerInterface
      * @throws \Exception
      * @throws PropelException
      */
-    public function updateTranslation($keyName, $localeName, $value, $isActive);
+    public function updateTranslation($keyName, LocaleDto $locale, $value, $isActive);
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -77,7 +78,7 @@ interface TranslationManagerInterface
      * @throws MissingLocaleException
      * @throws MissingTranslationException
      */
-    public function updateAndTouchTranslation($keyName, $localeName, $value, $isActive = true);
+    public function updateAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true);
 
     /**
      * @param Translation $transferTranslation
@@ -103,19 +104,19 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function hasTranslation($keyName, $localeName);
+    public function hasTranslation($keyName, LocaleDto $locale);
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function deleteTranslation($keyName, $localeName);
+    public function deleteTranslation($keyName, LocaleDto $locale);
 
     /**
      * @param string $keyName
@@ -135,12 +136,12 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return Translation
      * @throws MissingTranslationException
      */
-    public function getTranslationByNames($keyName, $localeName);
+    public function getTranslationByKeyName($keyName, LocaleDto $locale);
 
     /**
      * @param int $idKey

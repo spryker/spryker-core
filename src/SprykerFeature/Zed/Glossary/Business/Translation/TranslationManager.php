@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
@@ -73,7 +74,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -82,10 +83,14 @@ class TranslationManager implements TranslationManagerInterface
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function createTranslation($keyName, $localeName, $value, $isActive)
+    public function createTranslation($keyName, LocaleDto $locale, $value, $isActive)
     {
         $idKey = $this->keyManager->getKey($keyName)->getPrimaryKey();
-        $idLocale = $this->localeFacade->getLocale($localeName)->getIdLocale();
+        $idLocale = $locale->getIdLocale();
+
+        if (null === $idLocale) {
+            $idLocale = $this->localeFacade->getLocale($locale->getLocaleName())->getIdLocale();
+        }
 
         return $this->createTranslationByIds($idKey, $idLocale, $value, $isActive);
     }
@@ -127,14 +132,14 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function hasTranslation($keyName, $localeName)
+    public function hasTranslation($keyName, LocaleDto $locale)
     {
         $translationCount = $this->glossaryQueryContainer
-            ->queryTranslationByNames($keyName, $localeName)
+            ->queryTranslationByNames($keyName, $locale->getLocaleName())
             ->count()
         ;
 
@@ -195,7 +200,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -203,25 +208,25 @@ class TranslationManager implements TranslationManagerInterface
      * @throws MissingTranslationException
      * @throws PropelException
      */
-    public function updateTranslation($keyName, $localeName, $value, $isActive)
+    public function updateTranslation($keyName, LocaleDto $locale, $value, $isActive)
     {
-        $translation = $this->getUpdatedTranslationEntity($keyName, $localeName, $value, $isActive);
+        $translation = $this->getUpdatedTranslationEntity($keyName, $locale, $value, $isActive);
 
         return $this->doUpdateTranslation($translation);
     }
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
      * @return SpyGlossaryTranslation
      * @throws MissingTranslationException
      */
-    protected function getUpdatedTranslationEntity($keyName, $localeName, $value, $isActive)
+    protected function getUpdatedTranslationEntity($keyName, $locale, $value, $isActive)
     {
-        $translation = $this->getTranslationEntityByNames($keyName, $localeName);
+        $translation = $this->getTranslationEntityByNames($keyName, $locale->getLocaleName());
 
         $translation->setValue($value);
         $translation->setIsActive($isActive);
@@ -231,14 +236,14 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return Translation
      * @throws MissingTranslationException
      */
-    public function getTranslationByNames($keyName, $localeName)
+    public function getTranslationByKeyName($keyName, LocaleDto $locale)
     {
-        $translation = $this->getTranslationEntityByNames($keyName, $localeName);
+        $translation = $this->getTranslationEntityByNames($keyName, $locale->getLocaleName());
 
         return $this->convertEntityToTranslationTransfer($translation);
     }
@@ -256,17 +261,17 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function deleteTranslation($keyName, $localeName)
+    public function deleteTranslation($keyName, LocaleDto $locale)
     {
-        if (!$this->hasTranslation($keyName, $localeName)) {
+        if (!$this->hasTranslation($keyName, $locale)) {
             return true;
         }
 
-        $translation = $this->getTranslationEntityByNames($keyName, $localeName);
+        $translation = $this->getTranslationEntityByNames($keyName, $locale->getLocaleName());
 
         $translation->setIsActive(false);
 
@@ -287,8 +292,8 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function translate($keyName, array $data = [])
     {
-        $localeName = $this->localeFacade->getCurrentLocale()->getLocaleName();
-        $translation = $this->getTranslationByNames($keyName, $localeName);
+        $locale = $this->localeFacade->getCurrentLocale();
+        $translation = $this->getTranslationByKeyName($keyName, $locale);
 
         return str_replace(array_keys($data), array_values($data), $translation->getValue());
     }
@@ -450,7 +455,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -459,11 +464,11 @@ class TranslationManager implements TranslationManagerInterface
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function createAndTouchTranslation($keyName, $localeName, $value, $isActive = true)
+    public function createAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true)
     {
         Propel::getConnection()->beginTransaction();
 
-        $translation = $this->createTranslation($keyName, $localeName, $value, $isActive);
+        $translation = $this->createTranslation($keyName, $locale, $value, $isActive);
         if ($isActive) {
             $this->insertActiveTouchRecord($translation->getIdGlossaryTranslation());
         }
@@ -474,7 +479,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -483,9 +488,9 @@ class TranslationManager implements TranslationManagerInterface
      * @throws MissingLocaleException
      * @throws MissingTranslationException
      */
-    public function updateAndTouchTranslation($keyName, $localeName, $value, $isActive = true)
+    public function updateAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true)
     {
-        $translation = $this->getUpdatedTranslationEntity($keyName, $localeName, $value, $isActive);
+        $translation = $this->getUpdatedTranslationEntity($keyName, $locale, $value, $isActive);
 
         return $this->doUpdateAndTouchTranslation($translation);
     }
