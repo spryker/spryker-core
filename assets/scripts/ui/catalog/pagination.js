@@ -68,7 +68,7 @@ var loadProducts = function(url, $products) {
 
 var updateURL = function() {
   var params = URLManager.getParams();
-  params.page = currentPage;
+  params.page = currentPage.toString();
   URLManager.setParams(params);
 };
 

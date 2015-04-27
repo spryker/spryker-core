@@ -146,7 +146,7 @@ Filter.prototype.clear = function() {
     if (this.hasDefaultValue()) {
       this.$el.find('.js-filter-default-value').prop('checked', true);
     }
-  } else if (this.type == range) {
+  } else if (this.type == 'range') {
     var $slider = this.$el.find('.ui-slider');
     $slider.slider('values', [this.min, this.max]);
     $('.active-filter[data-filter-id="'+this.id+'"]').attr('data-filter-value', '');
