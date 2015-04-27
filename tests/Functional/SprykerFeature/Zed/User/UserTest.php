@@ -4,6 +4,7 @@ namespace Functional\SprykerFeature\Zed\User;
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 
@@ -87,6 +88,31 @@ class UserTest extends Test
         $this->assertEquals($data['lastName'], $user->getLastName());
         $this->assertEquals($data['username'], $user->getUsername());
         $this->assertNotEquals($data['password'], $user->getPassword());
+    }
+
+    /**
+     * @group User
+     */
+    public function testRemoveUser()
+    {
+        $data = $this->mockUserData();
+
+        $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
+
+        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $user);
+        $this->assertNotNull($user->getIdUserUser());
+        $this->assertEquals($data['firstName'], $user->getFirstName());
+        $this->assertEquals($data['lastName'], $user->getLastName());
+        $this->assertEquals($data['username'], $user->getUsername());
+        $this->assertNotEquals($data['password'], $user->getPassword());
+
+        $this->userFacade->removeUser($user->getIdUserUser());
+
+        try {
+            $this->userFacade->getUserById($user->getIdUserUser());
+        } catch (UserNotFoundException $e) {
+            $this->assertInstanceOf('\SprykerFeature\Zed\User\Business\Exception\UserNotFoundException', $e);
+        }
     }
 
     /**
