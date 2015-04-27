@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcessQuery;
 
 // FIXME core-120 move queries to queryContainer
-
 class Dummy implements DummyInterface
 {
 

@@ -13,7 +13,14 @@ use SprykerFeature\Zed\Oms\Business\Model\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Model\Util\TransitionLogInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Util\CollectionToArrayTransformerInterface;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
-use Pyz\Zed\Oms\Communication\Plugin\Oms\FakeAuthPayment;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatusQuery;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus;
+use DateTime;
+use Exception;
+use LogicException;
+use Propel\Runtime\Propel;
+use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
 class OrderStateMachine implements OrderStateMachineInterface
 {
@@ -77,15 +84,15 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $factory;
 
     /**
-     * @param OmsQueryContainer                     $queryContainer
-     * @param BuilderInterface                      $builder
-     * @param TransitionLogInterface                $transitionLog
-     * @param TimeoutInterface                      $timeout
+     * @param OmsQueryContainer $queryContainer
+     * @param BuilderInterface $builder
+     * @param TransitionLogInterface $transitionLog
+     * @param TimeoutInterface $timeout
      * @param CollectionToArrayTransformerInterface $collectionToArrayTransformer
-     * @param ReadOnlyArrayObject                   $activeProcesses
-     * @param array                                 $conditions
-     * @param array                                 $commands
-     * @param FactoryInterface                      $factory
+     * @param ReadOnlyArrayObject $activeProcesses
+     * @param array $conditions
+     * @param array $commands
+     * @param FactoryInterface $factory
      */
     public function __construct(
         OmsQueryContainer $queryContainer,
@@ -110,10 +117,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param string                                                     $eventId
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
-     * @param array                                                      $data
-     * @param array                                                      $logContext
+     * @param string $eventId
+     * @param SpySalesOrderItem[] $orderItems
+     * @param array $data
+     * @param array $logContext
+     *
      * @return array
      */
     public function triggerEvent($eventId, array $orderItems, $data, array $logContext = array())
@@ -146,7 +154,6 @@ class OrderStateMachine implements OrderStateMachineInterface
         $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($orderItems, $processes, $sourceStatusBuffer);
 
         $log->saveAll();
-//        $this->facadeSales->saveAllNotes();
 
         $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent, $data, $logContext);
 
@@ -154,9 +161,9 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
-     * @param array                                                      $data
-     * @param array                                                      $logContext
+     * @param SpySalesOrderItem[] $orderItems
+     * @param array $data
+     * @param array $logContext
      * @return array
      */
     public function triggerEventForNewItem(array $orderItems, array $data, array $logContext = array())
@@ -172,6 +179,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param array $logContext
+     *
      * @return int
      */
     public function checkConditions(array $logContext = array())
@@ -188,7 +196,8 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param ProcessInterface $process
-     * @param array            $logContext
+     * @param array $logContext
+     *
      * @return int
      */
     protected function checkConditionsForProcess(ProcessInterface $process, array $logContext = null)
@@ -226,11 +235,12 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param TransitionInterface[] $transitions
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem
+     * @param SpySalesOrderItem $orderItem
      * @param StatusInterface $sourceStatus
      * @param TransitionLogInterface $log
+     *
      * @return StatusInterface
-     * @throws \Exception
+     * @throws Exception
      */
     protected function checkCondition(array $transitions, $orderItem, StatusInterface $sourceStatus, TransitionLogInterface $log)
     {
@@ -243,7 +253,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
                 try {
                     $conditionCheck = $conditionModel->check($orderItem);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $log->setError(true);
                     $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
                     $log->saveAll();
@@ -270,7 +280,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
+     * @param SpySalesOrderItem[] $orderItems
      * @return ProcessInterface[]
      */
     protected function getProcesses(array $orderItems)
@@ -290,9 +300,10 @@ class OrderStateMachine implements OrderStateMachineInterface
      * Filters out all items that are not affected by the current event
      *
      * @param $eventId
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
+     * @param SpySalesOrderItem[] $orderItems
      * @param ProcessInterface[] $processes
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[]
+     *
+     * @return SpySalesOrderItem[]
      */
     protected function filterAffectedOrderItems($eventId, array $orderItems, $processes)
     {
@@ -314,8 +325,9 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param $eventId
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
+     * @param SpySalesOrderItem[] $orderItems
      * @param Process[] $processes
+     *
      * @return array
      */
     protected function groupByOrderAndStatus($eventId, array $orderItems, $processes)
@@ -341,6 +353,12 @@ class OrderStateMachine implements OrderStateMachineInterface
         return $orderEventGroup;
     }
 
+    /**
+     * @param CommandInterface $command
+     * @return string
+     *
+     * @throws LogicException
+     */
     protected function getCommandType(CommandInterface $command)
     {
         if ($command instanceof CommandByOrderInterface) {
@@ -348,20 +366,21 @@ class OrderStateMachine implements OrderStateMachineInterface
         } elseif ($command instanceof CommandByItemInterface) {
             return self::BY_ITEM;
         } else {
-            throw new \LogicException('Unknown type of command: ' . get_class($command));
+            throw new LogicException('Unknown type of command: ' . get_class($command));
 
         }
     }
 
     /**
      * @param $eventId
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
-     * @param Process[] $processes
+     * @param SpySalesOrderItem[] $orderItems
+     * @param ProcessInterface[] $processes
      * @param ReadOnlyArrayObject $data
      * @param TransitionLogInterface $log
-     * @throws \Exception
+     *
+     * @throws Exception
      */
-    protected function runCommand($eventId, $orderItems, $processes, ReadOnlyArrayObject $data, TransitionLogInterface $log)
+    protected function runCommand($eventId, array $orderItems, array $processes, ReadOnlyArrayObject $data, TransitionLogInterface $log)
     {
         $orderEntity = current($orderItems)->getOrder();
         foreach ($orderItems as $orderItem) {
@@ -390,7 +409,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                         }
                         break;
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $log->setError(true);
                     $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
                     $log->saveAll();
@@ -402,9 +421,10 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param $eventId
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
+     * @param SpySalesOrderItem[] $orderItems
      * @param array $sourceStatusBuffer
      * @param TransitionLogInterface $log
+     *
      * @return array
      */
     protected function updateStatusByEvent($eventId, array $orderItems, array $sourceStatusBuffer, TransitionLogInterface $log)
@@ -443,12 +463,13 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param array $stateToTransitionsMap
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
+     * @param SpySalesOrderItem[] $orderItems
      * @param array $sourceStatusBuffer
      * @param TransitionLogInterface $log
+     *
      * @return array
      */
-    protected function updateStatusByTransition($stateToTransitionsMap, $orderItems, array $sourceStatusBuffer, TransitionLogInterface $log)
+    protected function updateStatusByTransition($stateToTransitionsMap, array $orderItems, array $sourceStatusBuffer, TransitionLogInterface $log)
     {
         if (is_null($sourceStatusBuffer)) {
             $sourceStatusBuffer = array();
@@ -482,7 +503,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem
+     * @param SpySalesOrderItem $orderItem
      * @param $statusName
      */
     protected function setStatus($orderItem, $statusName)
@@ -490,9 +511,9 @@ class OrderStateMachine implements OrderStateMachineInterface
         if (isset($this->statuses[$statusName])) {
             $status = $this->statuses[$statusName];
         } else {
-            $status = \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatusQuery::create()->findOneByName($statusName);
+            $status = SpyOmsOrderItemStatusQuery::create()->findOneByName($statusName);
             if (!isset($status)) {
-                $status = new \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus();
+                $status = new SpyOmsOrderItemStatus();
                 $status->setName($statusName);
                 $status->save();
             }
@@ -505,8 +526,9 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param array $orderItems
      * @param $processes
      * @param array $sourceStatusBuffer
+     *
      * @return array
-     * @throws \LogicException
+     * @throws LogicException
      */
     protected function filterItemsWithOnEnterEvent(array $orderItems, $processes, array $sourceStatusBuffer)
     {
@@ -516,7 +538,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             $processId = $orderItem->getProcess()->getName();
 
             if (!isset($processes[$processId])) {
-                throw new \LogicException("Unknown process $processId");
+                throw new LogicException("Unknown process $processId");
             }
 
             $process = $processes[$processId];
@@ -544,12 +566,13 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param $data
+     *
      * @return ReadOnlyArrayObject
      */
     protected function makeDataReadOnly($data)
     {
         if (is_array($data)) {
-            $data = $this->factory->create('Model\\Util\\ReadOnlyArrayObject', $data);
+            $data = $this->factory->createModelUtilReadOnlyArrayObject($data);
 
             return $data;
         }
@@ -561,6 +584,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      * To protect of loops, every event can only be used some times
      *
      * @param $eventId
+     *
      * @return bool
      */
     protected function checkForEventRepetitions($eventId)
@@ -574,8 +598,8 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param $data
      * @param $orderItemsWithOnEnterEvent
+     * @param ReadOnlyArrayObject $data
      */
     protected function triggerOnEnterEvents($orderItemsWithOnEnterEvent, ReadOnlyArrayObject $data)
     {
@@ -589,11 +613,11 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param TransitionInterface[] $transitions
+     *
      * @return array
      */
     protected function createStateToTransitionMap(array $transitions)
     {
-
         $stateToTransitionsMap = array();
         foreach ($transitions as $transition) {
             $sourceId = $transition->getSource()->getName();
@@ -609,7 +633,8 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param $states
      * @param ProcessInterface $process
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[]
+     *
+     * @return SpySalesOrderItem[]
      */
     protected function getOrderItemsByStatus($states, ProcessInterface $process)
     {
@@ -619,17 +644,17 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
+     * @param SpySalesOrderItem[] $orderItems
      * @param TransitionLogInterface $log
-     * @param Process[] $processes
+     * @param ProcessInterface[] $processes
      * @param array $sourceStatusBuffer
      */
-    protected function saveOrderItems(array $orderItems, TransitionLogInterface $log, $processes, array $sourceStatusBuffer)
+    protected function saveOrderItems(array $orderItems, TransitionLogInterface $log, array $processes, array $sourceStatusBuffer)
     {
-        $connection = \Propel\Runtime\Propel::getConnection();
+        $connection = Propel::getConnection();
         $connection->beginTransaction();
 
-        $currentTime = new \DateTime('now');
+        $currentTime = new DateTime('now');
 
         $timeoutModel = clone $this->timeout;
 
@@ -655,23 +680,28 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param $commandString
+     *
      * @return CommandByOrderInterface|CommandByItemInterface
-     * @throws \LogicException
+     * @throws LogicException
      */
     protected function getCommand($commandString)
     {
-        $this->commands["FakeProvider/AuthPay"] = new FakeAuthPayment(); //FIXME REMOVE ME
         if (!isset($this->commands[$commandString])) {
-            throw new \LogicException('Command ' . $commandString . ' not found in Settings');
+            throw new LogicException('Command ' . $commandString . ' not found in Settings');
         }
 
         return $this->commands[$commandString];
     }
 
+    /**
+     * @param $conditionString
+     *
+     * @return ConditionInterface
+     */
     protected function getCondition($conditionString)
     {
         if (!isset($this->conditions[$conditionString])) {
-            throw new \LogicException('Condition ' . $conditionString . ' not found in Settings');
+            throw new LogicException('Condition ' . $conditionString . ' not found in Settings');
         }
 
         return $this->conditions[$conditionString];

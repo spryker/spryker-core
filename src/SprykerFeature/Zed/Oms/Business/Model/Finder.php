@@ -40,6 +40,7 @@ class Finder implements FinderInterface
 
     /**
      * @param string $sku
+     *
      * @return SpySalesOrderItemQuery
      */
     public function getReservedOrderItemsForSku($sku)
@@ -145,6 +146,7 @@ class Finder implements FinderInterface
     /**
      * @param SpySalesOrder $order
      * @param string $flag
+     *
      * @return SpySalesOrderItem[]
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag)
@@ -155,6 +157,7 @@ class Finder implements FinderInterface
     /**
      * @param SpySalesOrder $order
      * @param string $flag
+     *
      * @return SpySalesOrderItem[]
      */
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag)

@@ -2,10 +2,17 @@
 
 namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition;
 
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+
 class AlwaysFalse implements ConditionInterface
 {
 
-    public function check(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem)
+    /**
+     * @param SpySalesOrderItem $orderItem
+     *
+     * @return bool
+     */
+    public function check(SpySalesOrderItem $orderItem)
     {
         return false;
     }

@@ -3,6 +3,11 @@
 namespace SprykerFeature\Zed\Oms\Business\Model;
 
 use SprykerFeature\Zed\Oms\Business\OmsSettings;
+use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcessQuery;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatusQuery;
 
 class PersistenceManager implements PersistenceManagerInterface
 {
@@ -12,7 +17,9 @@ class PersistenceManager implements PersistenceManagerInterface
 
     /**
      * @param string $statusName
-     * @return \SprykerFeature_Zed_Oms_Persistence_SpyOmsOrderItemStatus
+     * @return SpyOmsOrderItemStatus
+     *
+     * @throws PropelException
      */
     public function getStatusEntity($statusName)
     {
@@ -20,10 +27,10 @@ class PersistenceManager implements PersistenceManagerInterface
             return self::$statusEntityBuffer[$statusName];
         }
 
-        $statusEntity = \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatusQuery::create()->findOneByName($statusName);
+        $statusEntity = SpyOmsOrderItemStatusQuery::create()->findOneByName($statusName);
 
         if (!isset($statusEntity)) {
-            $statusEntity = new \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus();
+            $statusEntity = new SpyOmsOrderItemStatus();
             $statusEntity->setName($statusName);
             $statusEntity->save();
         }
@@ -35,7 +42,9 @@ class PersistenceManager implements PersistenceManagerInterface
 
     /**
      * @param string $processName
-     * @return \SprykerFeature_Zed_Oms_Persistence_SpyOmsOrderProcess
+     *
+     * @return SpyOmsOrderProcess
+     * @throws PropelException
      */
     public function getProcessEntity($processName)
     {
@@ -43,10 +52,10 @@ class PersistenceManager implements PersistenceManagerInterface
             return self::$processEntityBuffer[$processName];
         }
 
-        $processEntity = \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcessQuery::create()->findOneByName($processName);
+        $processEntity = SpyOmsOrderProcessQuery::create()->findOneByName($processName);
 
         if (!isset($processEntity)) {
-            $processEntity = new \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess();
+            $processEntity = new SpyOmsOrderProcess();
             $processEntity->setName($processName);
             $processEntity->save();
         }
@@ -58,7 +67,7 @@ class PersistenceManager implements PersistenceManagerInterface
     }
 
     /**
-     * @return \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus
+     * @return SpyOmsOrderItemStatus
      */
     public function getInitialStatusEntity()
     {

@@ -2,10 +2,6 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Model\Process;
 
-/**
- * Interface EventInterface
- * @package SprykerFeature\Zed\Oms\Business\Model\Process
- */
 interface EventInterface
 {
     /**
@@ -60,6 +56,7 @@ interface EventInterface
 
     /**
      * @param StatusInterface $sourceStatus
+     *
      * @return TransitionInterface[]
      */
     public function getTransitionsBySource(StatusInterface $sourceStatus);

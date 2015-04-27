@@ -4,10 +4,6 @@ namespace SprykerFeature\Zed\Oms\Business\Model\Process;
 
 use SprykerFeature\Zed\Oms\Business\Model\Process;
 
-/**
- * Class Event
- * @package SprykerFeature\Zed\Oms\Business\Model\Process
- */
 class Event implements EventInterface
 {
 
@@ -27,7 +23,7 @@ class Event implements EventInterface
 
     protected $timeout;
 
-    /*+
+    /**
      * @var bool
      */
     protected $manual;
@@ -114,6 +110,7 @@ class Event implements EventInterface
 
     /**
      * @param StatusInterface $sourceStatus
+     *
      * @return TransitionInterface[]
      */
     public function getTransitionsBySource(StatusInterface $sourceStatus)

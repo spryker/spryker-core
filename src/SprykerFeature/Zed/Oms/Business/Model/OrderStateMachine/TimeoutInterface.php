@@ -32,6 +32,7 @@ interface TimeoutInterface
      * @param ProcessInterface $process
      * @param string $statusId
      * @param $orderItem
+     *
      * @throws Exception
      * @throws PropelException
      */
