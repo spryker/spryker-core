@@ -236,7 +236,7 @@ class GlossaryTest extends Test
     public function testSaveTranslationDoesACreate()
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey');
-        $localeId = $this->localeFacade->createLocale('ab_xy');
+        $localeId = $this->localeFacade->createLocale('ab_xy')->getIdLocale();
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeId);
 
         $transferTranslation = new Translation($this->locator);
@@ -258,7 +258,7 @@ class GlossaryTest extends Test
     public function testSaveTranslationDoesAnUpdate()
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey2');
-        $localeId = $this->localeFacade->createLocale('ab_yz');
+        $localeId = $this->localeFacade->createLocale('ab_yz')->getIdLocale();
         $transferTranslation = $this->glossaryFacade->createTranslation(
             'SomeNonExistentKey2',
             'ab_yz',
@@ -282,7 +282,7 @@ class GlossaryTest extends Test
     public function testSaveAndTouchTranslationDoesATouchForCreation()
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey3');
-        $localeId = $this->localeFacade->createLocale('ab_ef');
+        $localeId = $this->localeFacade->createLocale('ab_ef')->getIdLocale();
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeId);
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
 
@@ -309,7 +309,7 @@ class GlossaryTest extends Test
     public function testSaveAndTouchTranslationDoesATouchForUpdate()
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey4');
-        $localeId = $this->localeFacade->createLocale('ab_fg');
+        $localeId = $this->localeFacade->createLocale('ab_fg')->getIdLocale();
         $transferTranslation = $this->glossaryFacade->createTranslation('SomeNonExistentKey4', 'ab_fg', 'some Value', true);
 
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeId);
