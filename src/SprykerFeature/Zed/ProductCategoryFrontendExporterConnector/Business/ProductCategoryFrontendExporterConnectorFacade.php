@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,10 +17,10 @@ class ProductCategoryFrontendExporterConnectorFacade extends AbstractFacade
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param $locale
+     * @param LocaleDto $locale
      * @return array
      */
-    public function processProductCategoryBreadcrumbs(array &$resultSet, array $processedResultSet, $locale)
+    public function processProductCategoryBreadcrumbs(array &$resultSet, array $processedResultSet, LocaleDto $locale)
     {
         $breadcumbProcessor = $this->getDependencyContainer()->createProductCategoryBreadcrumbProcessor();
 
