@@ -79,25 +79,25 @@ class ProductCategoryFacadeTest extends Test
         $categoryName = 'ATestCategory';
         $localeName = 'ABCDE';
 
-        $idLocale = $this->localeFacade->createLocale($localeName)->getIdLocale();
+        $locale = $this->localeFacade->createLocale($localeName);
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractSku);
         $this->productFacade->createConcreteProduct($concreteSku, $idAbstractProduct);
 
         $categoryTransfer = $this->locator->category()->transferCategory();
         $categoryTransfer->setName($categoryName);
-        $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $idLocale);
+        $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $locale);
 
         $categoryNodeTransfer = $this->locator->category()->transferCategoryNode();
         $categoryNodeTransfer->setFkCategory($idCategory);
         $categoryNodeTransfer->setIsRoot(true);
-        $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $idLocale);
-        $this->productCategoryFacade->createProductCategoryMapping($concreteSku, $categoryName, $idLocale);
+        $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $locale);
+        $this->productCategoryFacade->createProductCategoryMapping($concreteSku, $categoryName, $locale);
 
         $this->assertTrue(
             $this->productCategoryFacade->hasProductCategoryMapping(
                 $concreteSku,
                 $categoryName,
-                $idLocale
+                $locale
             )
         );
     }
