@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          defaultIdMethod="native"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          namespace="SprykerFeature\Zed\SearchPage\Persistence\Propel"
+          package="vendor.spryker.zed-package.src.SprykerFeature.Zed.SearchPage.Persistence.Propel">
+
+    <table name="spy_search_page_attribute" phpName="SpySearchPageAttribute">
+
+        <column name="id_search_page_attribute" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="name" type="VARCHAR" required="true"/>
+        <column name="is_attribute_active" type="BOOLEAN" required="true" default="false" />
+        <column name="fk_search_document_attribute" type="INTEGER" required="true" />
+        <column name="fk_search_page_attribute_template" type="INTEGER" required="true" />
+
+        <foreign-key foreignTable="spy_search_document_attribute" phpName="DocumentAttribute">
+            <reference foreign="id_search_document_attribute" local="fk_search_document_attribute"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="spy_search_page_attribute_template" phpName="AttributeTemplate">
+            <reference foreign="id_search_page_attribute_template" local="fk_search_page_attribute_template"/>
+        </foreign-key>
+
+    </table>
+
+    <table name="spy_search_document_attribute" phpName="SpySearchDocumentAttribute">
+
+        <column name="id_search_document_attribute" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="attribute_name" type="VARCHAR" required="true"/>
+        <column name="document_type" type="ENUM" valueSet="sort, filter" required="true" />
+
+        <unique>
+            <unique-column name="attribute_name"/>
+        </unique>
+
+    </table>
+
+    <table name="spy_search_page_attribute_template" phpName="SpySearchPageAttributeTemplate">
+
+        <column name="id_search_page_attribute_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="type_name" type="VARCHAR" required="true"/>
+
+        <unique>
+            <unique-column name="type_name"/>
+        </unique>
+
+    </table>
+
+</database>
