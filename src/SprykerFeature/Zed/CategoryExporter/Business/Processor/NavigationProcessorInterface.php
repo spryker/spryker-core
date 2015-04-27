@@ -2,11 +2,6 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business\Processor;
 
-/**
- * Class NavigationProcessor
- *
- * @package SprykerFeature\Zed\CategoryExporter\Business\Processor
- */
 use SprykerEngine\Shared\Dto\LocaleDto;
 
 interface NavigationProcessorInterface

@@ -7,10 +7,6 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 /**
- * Class CategoryExporterQueryContainer
- * @package SprykerFeature\Zed\CategoryExporter\Persistence
- */
-/**
  * @method CategoryExporterDependencyContainer getDependencyContainer()
  */
 class CategoryExporterQueryContainer extends AbstractQueryContainer

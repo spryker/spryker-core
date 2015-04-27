@@ -10,10 +10,6 @@ use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\NavigationQuer
 use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
 
 /**
- * Class CategoryExporterDependencyContainer
- * @package SprykerFeature\Zed\CategoryExporter\Persistence
- */
-/**
  * @method CategoryExporterPersistence getFactory()
  */
 class CategoryExporterDependencyContainer extends AbstractDependencyContainer
