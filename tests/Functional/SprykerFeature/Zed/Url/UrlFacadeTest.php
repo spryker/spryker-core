@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Functional\SprykerFeature\Zed\Url;
-
 
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
@@ -14,6 +12,12 @@ use SprykerFeature\Zed\Url\Business\UrlFacade;
 use SprykerFeature\Zed\Url\Persistence\UrlQueryContainer;
 use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
 
+/**
+ * @group SprykerFeature
+ * @group Zed
+ * @group Url
+ * @group UrlFacadeTest
+ */
 class UrlFacadeTest extends Test
 {
     /**
@@ -51,9 +55,6 @@ class UrlFacadeTest extends Test
         $this->touchQueryContainer = new TouchQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Touch'), $this->locator);
     }
 
-    /**
-     * @group Url
-     */
     public function testCreateUrlInsertsAndReturnsSomething()
     {
         $urlQuery = $this->urlQueryContainer->queryUrls();
@@ -69,9 +70,6 @@ class UrlFacadeTest extends Test
         $this->assertNotNull($newUrl->getIdUrl());
     }
 
-    /**
-     * @group Url
-     */
     public function testSaveUrlInsertsAndReturnsSomethingOnCreate()
     {
         $urlQuery = $this->urlQueryContainer->queryUrls();
@@ -79,7 +77,7 @@ class UrlFacadeTest extends Test
 
         $url = $this->locator->url()->transferUrl();
         $url->setUrl('/YetSomeOtherPageUrl');
-        $url->setFkLocale($this->localeFacade->createLocale('QWERT'));
+        $url->setFkLocale($this->localeFacade->createLocale('QWERT')->getIdLocale());
         $url->setResource('redirect', $redirect->getIdRedirect());
 
         $urlCountBeforeCreation = $urlQuery->count();
@@ -91,9 +89,6 @@ class UrlFacadeTest extends Test
         $this->assertNotNull($url->getIdUrl());
     }
 
-    /**
-     * @group Url
-     */
     public function testSaveUrlUpdatesSomething()
     {
         $url = $this->locator->url()->transferUrl();
@@ -102,7 +97,7 @@ class UrlFacadeTest extends Test
         $redirect2 = $this->urlFacade->createRedirect('/SoManyPageUrls3');
 
         $url->setUrl('/SoManyPageUrls');
-        $url->setFkLocale($this->localeFacade->createLocale('WERTZ'));
+        $url->setFkLocale($this->localeFacade->createLocale('WERTZ')->getIdLocale());
         $url->setResource('redirect', $redirect1->getIdRedirect());
 
         $url = $this->urlFacade->saveUrl($url);
@@ -115,9 +110,6 @@ class UrlFacadeTest extends Test
         $this->assertEquals($redirect2->getIdRedirect(), $urlQuery->findOne()->getResourceId());
     }
 
-    /**
-     * @group Url
-     */
     public function testHasUrlId()
     {
         $this->localeFacade->createLocale('UNIXA');
@@ -128,12 +120,9 @@ class UrlFacadeTest extends Test
         $this->assertTrue($this->urlFacade->hasUrlId($idPageUrl));
     }
 
-    /**
-     * @group Url
-     */
     public function testGetUrlByPath()
     {
-        $localeId = $this->localeFacade->createLocale('DFGHE');
+        $localeId = $this->localeFacade->createLocale('DFGHE')->getIdLocale();
         $redirect = $this->urlFacade->createRedirect('/SoManyPageUrls5');
 
         $this->urlFacade->createUrl('/someOtherPageUrl', 'DFGHE', 'redirect', $redirect->getIdRedirect());
@@ -145,12 +134,9 @@ class UrlFacadeTest extends Test
         $this->assertEquals($localeId, $url->getFkLocale());
     }
 
-    /**
-     * @group Url
-     */
     public function testGetUrlById()
     {
-        $localeId = $this->localeFacade->createLocale('DFGHX');
+        $localeId = $this->localeFacade->createLocale('DFGHX')->getIdLocale();
         $redirect = $this->urlFacade->createRedirect('/SoManyPageUrls5');
 
         $id = $this->urlFacade->createUrl('/someOtherPageUrl2', 'DFGHX', 'redirect', $redirect->getIdRedirect())->getIdUrl();
@@ -162,9 +148,6 @@ class UrlFacadeTest extends Test
         $this->assertEquals($localeId, $url->getFkLocale());
     }
 
-    /**
-     * @group Url
-     */
     public function testTouchUrlActive()
     {
         $this->localeFacade->createLocale('ABCDE');
@@ -180,9 +163,6 @@ class UrlFacadeTest extends Test
         $this->assertEquals(1, $touchQuery->count());
     }
 
-    /**
-     * @group Url
-     */
     public function testCreateRedirectInsertsAndReturnsSomething()
     {
         $redirectQuery = $this->urlQueryContainer->queryRedirects();
@@ -196,9 +176,6 @@ class UrlFacadeTest extends Test
         $this->assertNotNull($newRedirect->getIdRedirect());
     }
 
-    /**
-     * @group Url
-     */
     public function testSaveRedirectInsertsAndReturnsSomethingOnCreate()
     {
         $redirect = $this->locator->url()->transferRedirect();
@@ -215,9 +192,6 @@ class UrlFacadeTest extends Test
         $this->assertNotNull($redirect->getIdRedirect());
     }
 
-    /**
-     * @group Url
-     */
     public function testSaveRedirectUpdatesSomething()
     {
         $redirect = $this->locator->url()->transferRedirect();
