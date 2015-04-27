@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Communication\Plugin;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Communication\ProductFrontendExporterConnectorDependencyContainer;
@@ -22,15 +23,15 @@ class ProductQueryExpanderPlugin extends AbstractPlugin implements QueryExpander
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, $localeName)
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
     {
         $queryContainer = $this->getDependencyContainer()->getProductFrontendExporterConnectorQueryContainer();
 
-        return $queryContainer->expandQuery($expandableQuery, $localeName);
+        return $queryContainer->expandQuery($expandableQuery, $locale);
     }
 
     /**

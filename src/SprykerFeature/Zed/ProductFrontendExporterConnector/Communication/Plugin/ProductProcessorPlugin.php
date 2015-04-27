@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Communication\Plugin;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -26,13 +27,13 @@ class ProductProcessorPlugin extends AbstractPlugin implements DataProcessorPlug
     }
 
     /**
-     * @param string $locale
      * @param array $resultSet
      * @param array $processedResultSet
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
     {
         $processedResultSet = $this->productProcessor->buildProducts($resultSet, $locale);
 
