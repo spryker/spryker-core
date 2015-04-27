@@ -68,6 +68,7 @@ class Reader implements ReaderInterface
      * @param string $sku
      *
      * @return SpyStockProduct[]
+     * @throws InvalidArgumentException
      */
     public function getStocksProduct($sku)
     {
@@ -82,10 +83,12 @@ class Reader implements ReaderInterface
             return $stockEntities;
         }
     }
+
     /**
      * @param string $stockType
      *
      * @return int
+     * @throws InvalidArgumentException
      */
     public function getStockTypeIdByName($stockType)
     {
