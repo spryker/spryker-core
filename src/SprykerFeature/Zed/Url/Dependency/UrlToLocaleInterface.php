@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Url\Dependency;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface UrlToLocaleInterface
@@ -9,18 +10,13 @@ interface UrlToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @return int
+     * @return LocaleDto
      * @throws MissingLocaleException
      */
-    public function getIdLocale($localeName);
+    public function getLocale($localeName);
 
     /**
-     * @return string
+     * @return LocaleDto
      */
     public function getCurrentLocale();
-
-    /**
-     * @return int
-     */
-    public function getCurrentIdLocale();
 }

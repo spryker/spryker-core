@@ -71,7 +71,7 @@ class UrlManager implements UrlManagerInterface
     public function createUrl($url, $localeName, $resourceType, $idResource)
     {
         $this->checkUrlDoesNotExist($url);
-        $fkLocale = $this->localeFacade->getIdLocale($localeName);
+        $fkLocale = $this->localeFacade->getLocale($localeName)->getIdLocale();
 
         $urlEntity = $this->locator->url()->entitySpyUrl();
         $urlEntity
@@ -317,7 +317,7 @@ class UrlManager implements UrlManagerInterface
     {
         $this->checkUrlDoesNotExist($url);
 
-        $fkLocale = $this->localeFacade->getCurrentIdLocale();
+        $fkLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
         $urlEntity = $this->locator->url()->entitySpyUrl();
         $urlEntity
             ->setFkLocale($fkLocale)
