@@ -2,10 +2,6 @@
 
 namespace SprykerFeature\Zed\ProductCategorySearch\Business\Processor;
 
-/**
- * Class ProductCategoryProcessor
- * @package SprykerFeature\Zed\ProductCategory\Business\Processor
- */
 use SprykerEngine\Shared\Dto\LocaleDto;
 
 interface ProductCategorySearchProcessorInterface
