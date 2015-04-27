@@ -2,10 +2,6 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Model\Process;
 
-/**
- * Interface TransitionInterface
- * @package SprykerFeature\Zed\Oms\Business\Model\Process
- */
 interface TransitionInterface
 {
     /**

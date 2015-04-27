@@ -3,28 +3,25 @@ namespace SprykerFeature\Zed\Oms\Business\Model\Util;
 
 use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Zed\Auth\Business\Model\Auth;
-use SprykerFeature\Zed\Library\Silex\HttpFoundation\Request;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
-use PropelObjectCollection;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLog;
 
-/**
- * Class TransitionLog
- * @package SprykerFeature\Zed\Oms\Business\Model\Util
- */
 class TransitionLog implements TransitionLogInterface
 {
 
     /**
-     * @var \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemTransitionLog[]
+     * @var array
      */
     protected $logItems = array();
 
     /**
-     * @var \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[]
+     * @var SpySalesOrderItem[]
      */
     protected $items = array();
 
@@ -75,7 +72,7 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param OmsQueryContainer $queryContainer
-     * @param array             $logContext
+     * @param array $logContext
      */
     public function __construct(OmsQueryContainer $queryContainer, array $logContext)
     {
@@ -92,7 +89,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $items
+     * @param SpySalesOrderItem[] $items
      */
     public function addItems(array $items)
     {
@@ -100,43 +97,43 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $item
-     * @param CommandInterface                                         $command
+     * @param SpySalesOrderItem $item
+     * @param CommandInterface $command
      */
-    public function addCommand(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $item, CommandInterface $command)
+    public function addCommand(SpySalesOrderItem $item, CommandInterface $command)
     {
         $this->commands[$item->getIdSalesOrderItem()] = $command;
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $item
-     * @param ConditionInterface                                       $condition
+     * @param SpySalesOrderItem $item
+     * @param ConditionInterface $condition
      */
-    public function addCondition(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $item, ConditionInterface $condition)
+    public function addCondition(SpySalesOrderItem $item, ConditionInterface $condition)
     {
         $this->conditions[$item->getIdSalesOrderItem()] = $condition;
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $item
-     * @param StatusInterface                                          $status
+     * @param SpySalesOrderItem $item
+     * @param StatusInterface $status
      */
-    public function addSourceStatus(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $item, StatusInterface $status)
+    public function addSourceStatus(SpySalesOrderItem $item, StatusInterface $status)
     {
         $this->sources[$item->getIdSalesOrderItem()] = $status;
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $item
-     * @param StatusInterface                                          $status
+     * @param SpySalesOrderItem $item
+     * @param StatusInterface $status
      */
-    public function addTargetStatus(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $item, StatusInterface $status)
+    public function addTargetStatus(SpySalesOrderItem $item, StatusInterface $status)
     {
         $this->targets[$item->getIdSalesOrderItem()] = $status;
     }
 
     /**
-     * @param TODO $error
+     * @param boolean $error
      */
     public function setError($error)
     {
@@ -152,9 +149,9 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem
+     * @param SpySalesOrderItem $orderItem
      */
-    public function save($orderItem)
+    public function save(SpySalesOrderItem $orderItem)
     {
         $logItem = $this->getEntity();
         $this->logItems[] = $logItem;
@@ -165,7 +162,7 @@ class TransitionLog implements TransitionLogInterface
             $eventStr = $this->event->getName();
 
             if ($this->event->isOnEnter()) {
-                $eventStr .= ' (on enter)'; // TODO die Aussage ist nicht korrekt
+                $eventStr .= ' (on enter)';
             }
             $logItem->setEvent($eventStr);
 
@@ -261,18 +258,19 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @return \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLog
+     * @return SpyOmsTransitionLog
      */
     protected function getEntity()
     {
-        return new \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLog();
+        return new SpyOmsTransitionLog();
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order
-     * @return array|mixed|PropelObjectCollection
+     * @param SpySalesOrder $order
+     *
+     * @return SpyOmsTransitionLog[]
      */
-    public function getLogForOrder(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order)
+    public function getLogForOrder(SpySalesOrder $order)
     {
         return $this->queryContainer->getLogForOrder($order)->find();
     }

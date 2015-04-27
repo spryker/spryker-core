@@ -2,16 +2,13 @@
 namespace SprykerFeature\Zed\Oms\Business\Model\Util;
 
 use Propel\Runtime\Collection\ObjectCollection;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
-/**
- * Class CollectionToArrayTransformer
- * @package SprykerFeature\Zed\Oms\Business\Model\Util
- */
 class CollectionToArrayTransformer implements CollectionToArrayTransformerInterface
 {
     /**
      * @param ObjectCollection $orderItems
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
+     * @return SpySalesOrderItem[] $orderItems
      */
     public function transformCollectionToArray(ObjectCollection $orderItems)
     {

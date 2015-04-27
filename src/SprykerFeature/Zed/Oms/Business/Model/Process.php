@@ -6,6 +6,7 @@ use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Util\DrawerInterface;
+use Exception;
 
 class Process implements ProcessInterface
 {
@@ -48,6 +49,7 @@ class Process implements ProcessInterface
      * @param bool   $highlightStatus
      * @param string $format
      * @param int    $fontsize
+     *
      * @return bool
      */
     public function draw($highlightStatus = false, $format = null, $fontsize = null)
@@ -137,6 +139,7 @@ class Process implements ProcessInterface
 
     /**
      * @param string $statusId
+     *
      * @return StatusInterface
      */
     public function getStatus($statusId)
@@ -146,6 +149,7 @@ class Process implements ProcessInterface
 
     /**
      * @param string $statusId
+     *
      * @return bool
      */
     public function hasStatus($statusId)
@@ -155,8 +159,9 @@ class Process implements ProcessInterface
 
     /**
      * @param string $statusId
+     *
      * @return StatusInterface
-     * @throws \Exception
+     * @throws Exception
      */
     public function getStatusFromAllProcesses($statusId)
     {
@@ -166,7 +171,7 @@ class Process implements ProcessInterface
                 return $process->getStatus($statusId);
             }
         }
-        throw new \Exception('Unknown status: ' . $statusId);
+        throw new Exception('Unknown status: ' . $statusId);
     }
 
     /**

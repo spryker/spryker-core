@@ -2,25 +2,24 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Model;
 
-/**
- * Interface OrderStateMachineInterface
- * @package SprykerFeature\Zed\Oms\Business\Model
- */
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+
 interface OrderStateMachineInterface
 {
     /**
-     * @param string                                                     $eventId
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
-     * @param array                                                      $data
-     * @param array                                                      $logContext
+     * @param string $eventId
+     * @param SpySalesOrderItem[] $orderItems
+     * @param array $data
+     * @param array $logContext
+     *
      * @return array
      */
     public function triggerEvent($eventId, array $orderItems, $data, array $logContext = array());
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[] $orderItems
-     * @param array                                                      $data
-     * @param array                                                      $logContext
+     * @param SpySalesOrderItem[] $orderItems
+     * @param array $data
+     * @param array $logContext
      * @return array
      */
     public function triggerEventForNewItem(array $orderItems, array $data, array $logContext = array());

@@ -2,6 +2,16 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Model;
 
+use Propel\Runtime\Exception\PropelException;
+use Exception;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus;
+use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcessQuery;
+
+// FIXME core-120 move queries to queryContainer
 class Dummy implements DummyInterface
 {
 
@@ -11,18 +21,19 @@ class Dummy implements DummyInterface
     protected $builder;
 
     /**
-     * @param Builder $builder
+     * @param BuilderInterface $builder
      */
-    public function __construct(Builder $builder)
+    public function __construct(BuilderInterface $builder)
     {
         $this->builder = $builder;
     }
 
     /**
      * @param string $processName
+     *
      * @return array
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws Exception
+     * @throws PropelException
      */
     public function prepareItems($processName)
     {
@@ -33,20 +44,20 @@ class Dummy implements DummyInterface
         $txtArray = array();
         foreach ($orderItemsArray as $orderItemArray) {
             if (!isset($orders[$orderItemArray['orderId']])) {
-                $order = new \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder();
+                $order = new SpySalesOrder();
 
                 $order->setGrandTotal(10000);
                 $order->setSubtotal(9900);
                 $order->setIsTest(false);
 
-                $address = new \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress();
+                $address = new SpySalesOrderAddress();
                 $address->setLastName('Doe');
                 $address->setFirstName('John');
                 $address->setCity('Berlin');
                 $address->setZipCode('12345');
                 $address->setAddress1('Blastr 1');
 
-                $country = \SprykerFeature\Zed\Misc\Persistence\Propel\SpyMiscCountryQuery::create()->findOneByIdMiscCountry(1);
+                $country = SpyCountryQuery::create()->findOneByIdCountry(1);
                 $address->setCountry($country);
 
                 $order->setBillingAddress($address);
@@ -63,7 +74,7 @@ class Dummy implements DummyInterface
             if (isset($statuses[$orderItemArray['status']])) {
                 $status = $statuses[$orderItemArray['status']];
             } else {
-                $status = new \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus();
+                $status = new SpyOmsOrderItemStatus();
                 $status->setName($orderItemArray['status']);
                 $status->save();
                 $statuses[$orderItemArray['status']] = $status;
@@ -71,12 +82,12 @@ class Dummy implements DummyInterface
 
             $txtArray[] = 'Status: ' . $status->getName();
 
-            $process = \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcessQuery::create()->filterByName($orderItemArray['process'])->findOneOrCreate();
+            $process = SpyOmsOrderProcessQuery::create()->filterByName($orderItemArray['process'])->findOneOrCreate();
             $process->setName($orderItemArray['process']);
             $process->save();
             $txtArray[] = 'Process: ' . $process->getName();
 
-            $item = new \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem();
+            $item = new SpySalesOrderItem();
             $item->setStatus($status);
             $item->setProcess($process);
 
@@ -101,11 +112,11 @@ class Dummy implements DummyInterface
 
     /**
      * @param string $processName
+     *
      * @return array
      */
     public function getOrderItems($processName)
     {
-
         $orderItemsArray = array();
         $c = 0;
         $process = $this->builder->createProcess($processName);

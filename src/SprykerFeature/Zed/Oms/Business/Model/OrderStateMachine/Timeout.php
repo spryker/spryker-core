@@ -1,4 +1,5 @@
 <?php
+
 namespace SprykerFeature\Zed\Oms\Business\Model\OrderStateMachine;
 
 use DateInterval;
@@ -7,6 +8,15 @@ use SprykerFeature\Zed\Oms\Business\Model\OrderStateMachineInterface;
 use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsEventTimeout;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsEventTimeoutQuery;
+use DateTime;
+use Exception;
+use ErrorException;
+use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Exception\PropelException;
+use SprykerFeature_Shared_Library_Log;
 
 class Timeout implements TimeoutInterface
 {
@@ -17,7 +27,7 @@ class Timeout implements TimeoutInterface
     protected $queryContainer;
 
     /**
-     * @var \DateTime[]
+     * @var DateTime[]
      */
     protected $eventToTimeoutBuffer = array();
 
@@ -36,6 +46,7 @@ class Timeout implements TimeoutInterface
 
     /**
      * @param OrderStateMachineInterface $orderStateMachine
+     *
      * @return int
      */
     public function checkTimeouts(OrderStateMachineInterface $orderStateMachine)
@@ -54,13 +65,14 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param ProcessInterface                                         $process
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem
-     * @param \DateTime                                                $currentTime
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @param ProcessInterface $process
+     * @param SpySalesOrderItem $orderItem
+     * @param DateTime $currentTime
+     *
+     * @throws Exception
+     * @throws PropelException
      */
-    public function setNewTimeout(ProcessInterface $process, \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem, \DateTime $currentTime)
+    public function setNewTimeout(ProcessInterface $process, SpySalesOrderItem $orderItem, DateTime $currentTime)
     {
         $targetStatusEntity = $orderItem->getStatus();
 
@@ -72,7 +84,7 @@ class Timeout implements TimeoutInterface
             foreach ($events as $event) {
                 $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event);
 
-                (new \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsEventTimeout())
+                (new SpyOmsEventTimeout())
                     ->setTimeout($timeoutDate)
                     ->setFkSalesOrderItem($orderItem->getPrimaryKey())
                     ->setStatus($targetStatusEntity)
@@ -83,29 +95,31 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param ProcessInterface                                         $process
-     * @param string                                                   $statusId
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @param ProcessInterface $process
+     * @param string $statusId
+     * @param SpySalesOrderItem $orderItem
+     *
+     * @throws Exception
+     * @throws PropelException
      */
-    public function dropOldTimeout(ProcessInterface $process, $statusId, \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem)
+    public function dropOldTimeout(ProcessInterface $process, $statusId, SpySalesOrderItem $orderItem)
     {
         $sourceStatus = $this->getStatusFromProcess($statusId, $process);
 
         if ($sourceStatus->hasTimeoutEvent()) {
-            \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsEventTimeoutQuery::create()
+            SpyOmsEventTimeoutQuery::create()
                 ->filterByOrderItem($orderItem)
                 ->delete();
         }
     }
 
     /**
-     * @param \DateTime       $currentTime
+     * @param DateTime $currentTime
      * @param EventInterface $event
-     * @return \DateTime
+     *
+     * @return DateTime
      */
-    protected function calculateTimeoutDateFromEvent(\DateTime $currentTime, EventInterface $event)
+    protected function calculateTimeoutDateFromEvent(DateTime $currentTime, EventInterface $event)
     {
         $currentTime = clone $currentTime;
 
@@ -117,7 +131,7 @@ class Timeout implements TimeoutInterface
 
             $this->eventToTimeoutBuffer[$event->getName()] = $currentTime->add($interval);
 
-            \SprykerFeature_Shared_Library_Log::log($this->eventToTimeoutBuffer, 'timeout.log');
+            SprykerFeature_Shared_Library_Log::log($this->eventToTimeoutBuffer, 'timeout.log');
         }
 
         return $this->eventToTimeoutBuffer[$event->getName()];
@@ -126,6 +140,7 @@ class Timeout implements TimeoutInterface
     /**
      * @param $statusId
      * @param ProcessInterface $process
+     *
      * @return StatusInterface
      */
     protected function getStatusFromProcess($statusId, ProcessInterface $process)
@@ -139,9 +154,10 @@ class Timeout implements TimeoutInterface
 
     /**
      * @param $orderItems
+     *
      * @return array
      */
-    protected function groupItemsByEvent(\PropelObjectCollection $orderItems)
+    protected function groupItemsByEvent(ObjectCollection $orderItems)
     {
         $groupedOrderItems = array();
         foreach ($orderItems as $orderItem) {
@@ -156,11 +172,11 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @return \PropelObjectCollection
+     * @return ObjectCollection
      */
     protected function findItemsWithExpiredTimeouts()
     {
-        $now = new \DateTime('now');
+        $now = new DateTime('now');
 
         return $this->queryContainer->findItemsWithExpiredTimeouts($now)->find();
     }
@@ -168,8 +184,9 @@ class Timeout implements TimeoutInterface
     /**
      * @param $interval
      * @param $timeout
+     *
      * @return int
-     * @throws \ErrorException
+     * @throws ErrorException
      */
     protected function validateTimeout($interval, $timeout)
     {
@@ -179,7 +196,7 @@ class Timeout implements TimeoutInterface
             $vSum += (int) $v;
         }
         if ($vSum === 0) {
-            throw new \ErrorException('Invalid format for timeout "' . $timeout . '"');
+            throw new ErrorException('Invalid format for timeout "' . $timeout . '"');
         }
 
         return $vSum;

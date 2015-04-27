@@ -5,24 +5,21 @@ namespace SprykerFeature\Zed\Oms\Business\Model\Util;
 use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
 use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
 
-/**
- * Interface DrawerInterface
- * @package SprykerFeature\Zed\Oms\Business\Model\Util
- */
 interface DrawerInterface
 {
     /**
      * @param ProcessInterface $process
-     * @param string           $highlightStatus
-     * @param null             $format
-     * @param int              $fontsize
+     * @param string $highlightStatus
+     * @param null $format
+     * @param int $fontsize
+     *
      * @return bool
      */
     public function draw(ProcessInterface $process, $highlightStatus = null, $format = null, $fontsize = null);
 
     /**
      * @param ProcessInterface $process
-     * @param string           $highlightStatus
+     * @param string $highlightStatus
      */
     public function drawStatuses(ProcessInterface $process, $highlightStatus = null);
 

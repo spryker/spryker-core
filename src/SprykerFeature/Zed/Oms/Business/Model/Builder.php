@@ -5,16 +5,14 @@ namespace SprykerFeature\Zed\Oms\Business\Model;
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
+use SimpleXMLElement;
+use LogicException;
 
-/**
- * TODO Checks
- * unique status id, event ids
- */
 class Builder implements BuilderInterface
 {
 
     /**
-     * @var \SimpleXMLElement
+     * @var SimpleXMLElement
      */
     protected $rootElement;
 
@@ -64,12 +62,14 @@ class Builder implements BuilderInterface
         if ($xmlFolder) {
             $this->xmlFolder = $xmlFolder;
         } else {
+            // TODO core-122 move to settings
             $this->xmlFolder = APPLICATION_ROOT_DIR . '/config/Zed/oms/';
         }
     }
 
     /**
      * @param string $processName
+     *
      * @return ProcessInterface
      */
     public function createProcess($processName)
@@ -101,7 +101,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     *
+     * @return void
      */
     protected function mergeSubProcessFiles()
     {
@@ -115,8 +115,8 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param $fromXmlElement \SimpleXMLElement
-     * @param $intoXmlNode \SimpleXMLElement
+     * @param $fromXmlElement SimpleXMLElement
+     * @param $intoXmlNode SimpleXMLElement
      */
     protected function recursiveMerge($fromXmlElement, $intoXmlNode)
     {
@@ -126,7 +126,7 @@ class Builder implements BuilderInterface
         }
 
         foreach ($xmlElements as $xmlElement) {
-            /* @var $xmlElement \SimpleXMLElement */
+            /* @var $xmlElement SimpleXMLElement */
             $child = $intoXmlNode->addChild($xmlElement->getName(), $xmlElement);
             $attributes = $xmlElement->attributes();
             foreach ($attributes as $k => $v) {
@@ -139,7 +139,8 @@ class Builder implements BuilderInterface
 
     /**
      * @param string $fileName
-     * @return \SimpleXMLElement
+     *
+     * @return SimpleXMLElement
      */
     protected function loadXmlFromFileName($fileName)
     {
@@ -150,7 +151,8 @@ class Builder implements BuilderInterface
 
     /**
      * @param $processName
-     * @return \SimpleXMLElement
+     *
+     * @return SimpleXMLElement
      */
     protected function loadXmlFromProcessName($processName)
     {
@@ -159,11 +161,12 @@ class Builder implements BuilderInterface
 
     /**
      * @param string $xml
-     * @return \SimpleXMLElement
+     *
+     * @return SimpleXMLElement
      */
     protected function loadXml($xml)
     {
-        return new \SimpleXMLElement($xml);
+        return new SimpleXMLElement($xml);
     }
 
     /**
@@ -200,6 +203,7 @@ class Builder implements BuilderInterface
 
     /**
      * @param ProcessInterface[] $processMap
+     *
      * @return array
      */
     protected function createSubProcess(array $processMap)
@@ -207,7 +211,7 @@ class Builder implements BuilderInterface
         $mainProcess = null;
         $xmlProcesses = $this->rootElement->children();
         foreach ($xmlProcesses as $xmlProcess) {
-            /* @var $xmlProcess \SimpleXMLElement */
+            /* @var $xmlProcess SimpleXMLElement */
 
             $process = clone $this->process;
             $processName = $this->getAttributeString($xmlProcess, 'name');
@@ -250,6 +254,7 @@ class Builder implements BuilderInterface
 
     /**
      * @param ProcessInterface[] $processMap
+     *
      * @return ProcessInterface[]
      */
     protected function createStatuses(array $processMap)
@@ -264,7 +269,7 @@ class Builder implements BuilderInterface
             if (!empty($xmlProcess->statuses)) {
                 $xmlStatuses = $xmlProcess->statuses->children();
                 foreach ($xmlStatuses as $xmlStatus) {
-                    /* @var $xmlStatus \SimpleXMLElement */
+                    /* @var $xmlStatus SimpleXMLElement */
                     $status = clone $this->status;
                     $status->setName($this->getAttributeString($xmlStatus, 'name'));
                     $status->setDisplay($this->getAttributeString($xmlStatus, 'display'));
@@ -291,7 +296,8 @@ class Builder implements BuilderInterface
      * @param ProcessInterface[] $statusToProcessMap
      * @param ProcessInterface[] $processMap
      * @param EventInterface[] $eventMap
-     * @throws \LogicException
+     *
+     * @throws LogicException
      */
     protected function createTransitions(array $statusToProcessMap, array $processMap, array $eventMap)
     {
@@ -317,7 +323,7 @@ class Builder implements BuilderInterface
                     $targetName = (string) $xmlTransition->target;
 
                     if (!isset($statusToProcessMap[$targetName])) {
-                        throw new \LogicException('Target: "' . $targetName . '" does not exist from source: "' . $sourceName . '"');
+                        throw new LogicException('Target: "' . $targetName . '" does not exist from source: "' . $sourceName . '"');
                     }
                     $targetProcess = $statusToProcessMap[$targetName];
                     $targetStatus = $targetProcess->getStatus($targetName);
@@ -328,7 +334,7 @@ class Builder implements BuilderInterface
                         $eventId = (string) $xmlTransition->event;
 
                         if (!isset($eventMap[$eventId])) {
-                            throw new \LogicException('Event: "' . $eventId . '" does not exist from source: "' . $sourceName . '"');
+                            throw new LogicException('Event: "' . $eventId . '" does not exist from source: "' . $sourceName . '"');
                         }
 
                         $event = $eventMap[$eventId];
@@ -343,11 +349,12 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \SimpleXMLElement $xmlElement
+     * @param SimpleXMLElement $xmlElement
      * @param $attributeName
+     *
      * @return string
      */
-    protected function getAttributeString(\SimpleXMLElement $xmlElement, $attributeName)
+    protected function getAttributeString(SimpleXMLElement $xmlElement, $attributeName)
     {
         $string = (string) $xmlElement->attributes()[$attributeName];
         $string = ($string === '') ? null : $string;
@@ -356,11 +363,12 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \SimpleXMLElement $xmlElement
+     * @param SimpleXMLElement $xmlElement
      * @param $attributeName
+     *
      * @return bool
      */
-    protected function getAttributeBoolean(\SimpleXMLElement $xmlElement, $attributeName)
+    protected function getAttributeBoolean(SimpleXMLElement $xmlElement, $attributeName)
     {
         return 'true' === (string) $xmlElement->attributes()[$attributeName];
     }

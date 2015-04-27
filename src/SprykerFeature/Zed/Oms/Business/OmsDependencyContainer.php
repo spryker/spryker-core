@@ -13,11 +13,16 @@ use SprykerFeature\Zed\Oms\Business\Model\OrderStateMachine\TimeoutInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Util\CollectionToArrayTransformerInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Util\DrawerInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Util\TransitionLogInterface;
+use SprykerFeature\Zed\Oms\Business\Model\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
+use Generated\Zed\Ide\FactoryAutoCompletion\OmsBusiness;
 
+/**
+ * @method OmsBusiness getFactory()
+ */
 class OmsDependencyContainer extends AbstractDependencyContainer
 {
     /**
@@ -29,7 +34,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return Model\Util\ReadOnlyArrayObject
+     * @return ReadOnlyArrayObject
      */
     public function createModelUtilReadOnlyArrayObject()
     {
@@ -46,6 +51,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param array $logContext
+     *
      * @return OrderStateMachineInterface
      */
     public function createModelOrderStateMachine(array $logContext)
@@ -67,6 +73,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param string $xmlFolder
+     *
      * @return BuilderInterface
      */
     public function createModelBuilder($xmlFolder = null)
@@ -109,7 +116,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
      */
     public function createSettings()
     {
-        return $this->getFactory()->createSettings();
+        return $this->getFactory()->createOmsSettings();
     }
 
     /**
@@ -124,16 +131,15 @@ class OmsDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param array $logContext
+     *
      * @return TransitionLogInterface
      */
     public function createModelUtilTransitionLog(array $logContext)
     {
         $queryContainer = $this->createQueryContainer();
 
-        return $this->getFactory()->createModelUtilTransitionLog(
-            $queryContainer,
-            $logContext
-        );
+        return $this->getFactory()
+            ->createModelUtilTransitionLog($queryContainer, $logContext);
     }
 
     /**
@@ -173,9 +179,8 @@ class OmsDependencyContainer extends AbstractDependencyContainer
      */
     public function createModelProcess()
     {
-        return $this->getFactory()->createModelProcess(
-            $this->createModelUtilDrawer()
-        );
+        return $this->getFactory()
+            ->createModelProcess($this->createModelUtilDrawer());
     }
 
     /**
@@ -183,8 +188,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
      */
     public function createModelUtilDrawer()
     {
-        return $this->getFactory()->createModelUtilDrawer(
-            $this->createSettings()
-        );
+        return $this->getFactory()
+            ->createModelUtilDrawer($this->createSettings());
     }
 }

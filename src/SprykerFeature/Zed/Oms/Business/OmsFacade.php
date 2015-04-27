@@ -3,10 +3,15 @@
 namespace SprykerFeature\Zed\Oms\Business;
 
 use SprykerFeature\Shared\Sales\Transfer\Order;
+use SprykerFeature\Zed\Oms\Business\Model\Dummy;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Oms\Business\Model\Process;
 use SprykerFeature\Zed\Oms\Business\Model\Process\Event;
 use Propel\Runtime\Collection\ObjectCollection;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus;
 use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 
 /**
@@ -19,27 +24,37 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      * @param ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
+     *
      * @return array
      */
     public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = array())
     {
         assert(is_string($eventId));
-        $orderItemsArray = $this->getDependencyContainer()->createModelUtilCollectionToArrayTransformer()->transformCollectionToArray($orderItems);
+        $orderItemsArray = $this->getDependencyContainer()
+            ->createModelUtilCollectionToArrayTransformer()
+            ->transformCollectionToArray($orderItems);
 
-        return $this->getDependencyContainer()->createModelOrderStateMachine($logContext)->triggerEvent($eventId, $orderItemsArray, $data);
+        return $this->getDependencyContainer()
+            ->createModelOrderStateMachine($logContext)
+            ->triggerEvent($eventId, $orderItemsArray, $data);
     }
 
     /**
      * @param ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
+     *
      * @return array
      */
     public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = array())
     {
-        $orderItemsArray = $this->getDependencyContainer()->createModelUtilCollectionToArrayTransformer()->transformCollectionToArray($orderItems);
+        $orderItemsArray = $this->getDependencyContainer()
+            ->createModelUtilCollectionToArrayTransformer()
+            ->transformCollectionToArray($orderItems);
 
-        return $this->getDependencyContainer()->createModelOrderStateMachine($logContext)->triggerEventForNewItem($orderItemsArray, $data);
+        return $this->getDependencyContainer()
+            ->createModelOrderStateMachine($logContext)
+            ->triggerEventForNewItem($orderItemsArray, $data);
     }
 
     /**
@@ -64,9 +79,10 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @param string $eventId
-     * @param Order  $orderItem
-     * @param array  $logContext
-     * @param array  $data
+     * @param Order $orderItem
+     * @param array $logContext
+     * @param array $data
+     *
      * @return array
      */
     public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = array())
@@ -80,6 +96,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @param array $logContext
+     *
      * @return int
      */
     public function checkConditions(array $logContext)
@@ -91,20 +108,25 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @param array $logContext
+     *
      * @return int
      */
     public function checkTimeouts(array $logContext)
     {
+        $orderStateMachine = $this->getDependencyContainer()
+            ->createModelOrderStateMachine($logContext);
+
         return $this->getDependencyContainer()
             ->createModelOrderStateMachineTimeout($logContext)
-            ->checkTimeouts();
+            ->checkTimeouts($orderStateMachine);
     }
 
     /**
      * @param string $processName
-     * @param bool   $highlightStatus
-     * @param null   $format
-     * @param null   $fontsize
+     * @param bool $highlightStatus
+     * @param null $format
+     * @param null $fontsize
+     *
      * @return bool
      */
     public function drawProcess($processName, $highlightStatus = null, $format = null, $fontsize = null)
@@ -117,9 +139,9 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * TODO remove
      * @deprecated
      * @param string $processName
+     *
      * @return Process
      */
     public function getProcess($processName)
@@ -130,9 +152,9 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * TODO remove
      * @deprecated
-     * @return Model\Dummy
+     *
+     * @return Dummy
      */
     public function getDummy()
     {
@@ -141,10 +163,11 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order
+     * @param SpySalesOrder $order
+     *
      * @return Event[]
      */
-    public function getGroupedManuallyExecutableEvents(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order)
+    public function getGroupedManuallyExecutableEvents(SpySalesOrder $order)
     {
         return $this->getDependencyContainer()
             ->createModelFinder()
@@ -152,11 +175,12 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order
-     * @param string                                               $flag
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[]
+     * @param SpySalesOrder $order
+     * @param string $flag
+     *
+     * @return SpySalesOrderItem[]
      */
-    public function getItemsWithFlag(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order, $flag)
+    public function getItemsWithFlag(SpySalesOrder $order, $flag)
     {
         return $this->getDependencyContainer()
             ->createModelFinder()
@@ -164,11 +188,12 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order
-     * @param string                                               $flag
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem[]
+     * @param SpySalesOrder $order
+     * @param string $flag
+     *
+     * @return SpySalesOrderItem[]
      */
-    public function getItemsWithoutFlag(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order, $flag)
+    public function getItemsWithoutFlag(SpySalesOrder $order, $flag)
     {
         return $this->getDependencyContainer()
             ->createModelFinder()
@@ -176,11 +201,13 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order
+     * @param SpySalesOrder $order
+     *
      * @return PropelObjectCollection
      */
-    public function getLogForOrder(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order)
+    public function getLogForOrder(SpySalesOrder $order)
     {
+        // FIXME Ticket core-119
         return $this->getDependencyContainer()
             ->createModelUtilTransitionLog()
             ->getLogForOrder($order);
@@ -188,6 +215,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @param string $sku
+     *
      * @return \SprykerFeature_Zed_Library_Propel_ClearAllReferencesIterator
      */
     public function getReservedOrderItemsForSku($sku)
@@ -199,7 +227,8 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @param string $sku
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem
+     *
+     * @return SpySalesOrderItem
      */
     public function countReservedOrderItemsForSku($sku)
     {
@@ -210,7 +239,8 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @param string $statusName
-     * @return \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus
+     *
+     * @return SpyOmsOrderItemStatus
      */
     public function getStatusEntity($statusName)
     {
@@ -221,7 +251,8 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @param string $processName
-     * @return \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess
+     *
+     * @return SpyOmsOrderProcess
      */
     public function getProcessEntity($processName)
     {
@@ -231,7 +262,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @return \SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus
+     * @return SpyOmsOrderItemStatus
      */
     public function getInitialStatusEntity()
     {
@@ -242,6 +273,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @param Order $transferOrder
+     *
      * @return string
      */
     public function selectProcess(Order $transferOrder)
@@ -252,10 +284,11 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem
+     * @param SpySalesOrderItem $orderItem
+     *
      * @return string
      */
-    public function getStatusDisplayName(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem $orderItem)
+    public function getStatusDisplayName(SpySalesOrderItem $orderItem)
     {
         return $this->getDependencyContainer()
             ->createModelFinder()

@@ -2,15 +2,17 @@
 
 namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command;
 
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+
 abstract class AbstractCommand
 {
 
     /**
      * @param $message
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $orderEntity
+     * @param SpySalesOrder $orderEntity
      * @param bool $isSuccess
      */
-    protected function addNote($message, \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $orderEntity, $isSuccess = true)
+    protected function addNote($message, SpySalesOrder $orderEntity, $isSuccess = true)
     {
         $this->facadeSales->addNote($message, $orderEntity, $isSuccess, get_class($this));
     }

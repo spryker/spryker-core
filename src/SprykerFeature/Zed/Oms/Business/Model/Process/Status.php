@@ -3,11 +3,8 @@
 namespace SprykerFeature\Zed\Oms\Business\Model\Process;
 
 use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
+use Exception;
 
-/**
- * Class Status
- * @package SprykerFeature\Zed\Oms\Business\Model\Process
- */
 class Status implements StatusInterface
 {
 
@@ -82,6 +79,7 @@ class Status implements StatusInterface
 
     /**
      * @param EventInterface $event
+     *
      * @return TransitionInterface[]
      */
     public function getOutgoingTransitionsByEvent(EventInterface $event)
@@ -115,8 +113,9 @@ class Status implements StatusInterface
 
     /**
      * @param string $id
+     *
      * @return EventInterface
-     * @throws \Exception
+     * @throws Exception
      */
     public function getEvent($id)
     {
@@ -128,11 +127,12 @@ class Status implements StatusInterface
                 }
             }
         }
-        throw new \Exception('Event '.$id.' not found.');
+        throw new Exception('Event '.$id.' not found.');
     }
 
     /**
      * @param string $id
+     *
      * @return bool
      */
     public function hasEvent($id)
@@ -246,7 +246,8 @@ class Status implements StatusInterface
 
     /**
      * @return EventInterface
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getOnEnterEvent()
     {
@@ -258,7 +259,7 @@ class Status implements StatusInterface
                 }
             }
         }
-        throw new \Exception('There is no onEnter event for status '.$this->getName());
+        throw new Exception('There is no onEnter event for status '.$this->getName());
     }
 
     /**
@@ -280,7 +281,7 @@ class Status implements StatusInterface
 
     /**
      * @return EventInterface[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function getTimeoutEvents()
     {
@@ -308,6 +309,7 @@ class Status implements StatusInterface
 
     /**
      * @param string $flag
+     *
      * @return bool
      */
     public function hasFlag($flag)

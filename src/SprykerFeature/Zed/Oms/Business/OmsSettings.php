@@ -10,13 +10,14 @@ class OmsSettings
 {
 
     const INITIAL_STATUS = 'new';
+    const DEFAULT_PROCESS_LOCATION = '/config/Zed/oms';
 
     /**
      * @return string
      */
     public function getProcessDefinitionLocation()
     {
-        return APPLICATION_ROOT_DIR . '/config/Zed/oms/';
+        return APPLICATION_ROOT_DIR . self::DEFAULT_PROCESS_LOCATION;
     }
 
     /**
@@ -29,6 +30,7 @@ class OmsSettings
 
     /**
      * @param OrderTransfer $orderTransfer
+     *
      * @return mixed
      */
     public function selectProcess(OrderTransfer $orderTransfer)

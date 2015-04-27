@@ -4,10 +4,6 @@ namespace SprykerFeature\Zed\Oms\Business\Model\Process;
 
 use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
 
-/**
- * Interface StatusInterface
- * @package SprykerFeature\Zed\Oms\Business\Model\Process
- */
 interface StatusInterface
 {
     /**
@@ -42,6 +38,7 @@ interface StatusInterface
 
     /**
      * @param EventInterface $event
+     *
      * @return TransitionInterface[]
      */
     public function getOutgoingTransitionsByEvent(EventInterface $event);
@@ -53,6 +50,7 @@ interface StatusInterface
 
     /**
      * @param string $id
+     *
      * @return EventInterface
      * @throws \Exception
      */
@@ -60,6 +58,7 @@ interface StatusInterface
 
     /**
      * @param string $id
+     *
      * @return bool
      */
     public function hasEvent($id);
@@ -138,6 +137,7 @@ interface StatusInterface
 
     /**
      * @param string $flag
+     *
      * @return bool
      */
     public function hasFlag($flag);
