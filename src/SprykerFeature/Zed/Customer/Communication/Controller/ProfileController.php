@@ -21,11 +21,20 @@ class ProfileController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $idCustomer = $request->query->get('id');
+        $customerUri = '/customer';
+
+        $this->clearBreadcrumbs();
+        $this->addBreadcrumb('Customer', $customerUri);
+        $this->addBreadcrumb('Customer ID '.$idCustomer, '/customer/profile?id='.$idCustomer);
+
+        $this->setMenuHighlight($customerUri);
+
         $form = $this->getDependencyContainer()->createCustomerForm($request);
         $form->init();
 
         $customerTransfer = $this->getLocator()->customer()->transferCustomer();
-        $customerTransfer->setIdCustomer($request->query->get('id'));
+        $customerTransfer->setIdCustomer($idCustomer);
         $customerTransfer = $this->getLocator()->customer()->facade()->getCustomer($customerTransfer);
 
         try {
