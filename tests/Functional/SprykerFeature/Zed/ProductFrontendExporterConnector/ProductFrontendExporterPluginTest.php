@@ -5,6 +5,7 @@ namespace Functional\SprykerFeature\Zed\ProductFrontendExporterConnector;
 
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\Category\Transfer\Category;
 use SprykerFeature\Shared\Category\Transfer\CategoryNode;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
@@ -72,14 +73,9 @@ class ProductFrontendExporterPluginTest extends Test
     protected $productCategoryFacade;
 
     /**
-     * @var string
+     * @var LocaleDto
      */
-    protected $localeName;
-
-    /**
-     * @var int
-     */
-    protected $idLocale;
+    protected $locale;
 
     /**
      * @group Exporter
@@ -87,8 +83,8 @@ class ProductFrontendExporterPluginTest extends Test
     public function testSoleProductExporter()
     {
         $this->createAttributeType();
-        $idProduct = $this->createProduct('TestSku', 'TestProductName', $this->idLocale);
-        $this->urlFacade->createUrl('/some-url', $this->localeName, 'product', $idProduct);
+        $idProduct = $this->createProduct('TestSku', 'TestProductName', $this->locale);
+        $this->urlFacade->createUrl('/some-url', $this->locale, 'product', $idProduct);
         $this->touchFacade->touchActive('test', $idProduct);
 
         $this->doExporterTest(
@@ -140,14 +136,14 @@ class ProductFrontendExporterPluginTest extends Test
     /**
      * @param string $sku
      * @param string $name
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return int
      */
-    protected function createProduct($sku, $name, $idLocale)
+    protected function createProduct($sku, $name, LocaleDto $locale)
     {
-        $idAbstractProduct = $this->createAbstractProductWithAttributes('Abstract' . $sku, 'Abstract' . $name, $idLocale);
-        $idConcreteProduct = $this->createConcreteProductWithAttributes($idAbstractProduct, $sku, $name, $idLocale);
+        $idAbstractProduct = $this->createAbstractProductWithAttributes('Abstract' . $sku, 'Abstract' . $name, $locale);
+        $idConcreteProduct = $this->createConcreteProductWithAttributes($idAbstractProduct, $sku, $name, $locale);
 
         return $idConcreteProduct;
     }
@@ -155,17 +151,17 @@ class ProductFrontendExporterPluginTest extends Test
     /**
      * @param string $sku
      * @param string $name
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return int
      */
-    protected function createAbstractProductWithAttributes($sku, $name, $idLocale)
+    protected function createAbstractProductWithAttributes($sku, $name, $locale)
     {
         $idAbstractProduct = $this->productFacade->createAbstractProduct($sku);
 
         $this->productFacade->createAbstractProductAttributes(
             $idAbstractProduct,
-            $idLocale,
+            $locale,
             $name,
             json_encode(
                 [
@@ -189,16 +185,17 @@ class ProductFrontendExporterPluginTest extends Test
      * @param int $idAbstractProduct
      * @param string $sku
      * @param string $name
-     * @param int $idLocale
+     * @param LocaleDto $locale
+     *
      * @return int
      */
-    protected function createConcreteProductWithAttributes($idAbstractProduct, $sku, $name, $idLocale)
+    protected function createConcreteProductWithAttributes($idAbstractProduct, $sku, $name, LocaleDto $locale)
     {
         $idConcreteProduct = $this->productFacade->createConcreteProduct($sku, $idAbstractProduct, true);
 
         $this->productFacade->createConcreteProductAttributes(
             $idConcreteProduct,
-            $idLocale,
+            $locale,
             $name,
             json_encode(
                 [
@@ -216,8 +213,6 @@ class ProductFrontendExporterPluginTest extends Test
     }
 
     /**
-     * @group Exporter
-     *
      * @param QueryExpanderPluginInterface[] $expanderCollection
      * @param DataProcessorPluginInterface[] $processors
      * @param array $expectedResult
@@ -227,14 +222,14 @@ class ProductFrontendExporterPluginTest extends Test
         $query = $this->prepareQuery();
 
         foreach ($expanderCollection as $expander) {
-            $query = $expander->expandQuery($query, $this->localeName);
+            $query = $expander->expandQuery($query, $this->locale);
         }
 
         $results = $query->find();
 
         $processedResultSet = [];
         foreach ($processors as $processor) {
-            $processedResultSet = $processor->processData($results, $processedResultSet, $this->localeName);
+            $processedResultSet = $processor->processData($results, $processedResultSet, $this->locale);
         }
 
         $this->assertEquals($expectedResult, $processedResultSet);
@@ -265,28 +260,28 @@ class ProductFrontendExporterPluginTest extends Test
 
         $idRootCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('RootCategory'),
-            $this->idLocale
+            $this->locale
         );
         $idCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('TestCategory'),
-            $this->idLocale
+            $this->locale
         );
         $idChildCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('ChildCategory'),
-            $this->idLocale
+            $this->locale
         );
 
         $idRootCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idRootCategory, null, true),
-            $this->idLocale
+            $this->locale
         );
         $idCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idCategory, $idRootCategoryNode),
-            $this->idLocale
+            $this->locale
         );
         $idChildCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idChildCategory, $idCategoryNode),
-            $this->idLocale
+            $this->locale
         );
 
         $this->touchFacade->touchActive('test', $idCategoryNode);
@@ -346,39 +341,36 @@ class ProductFrontendExporterPluginTest extends Test
         );
     }
 
-    /**
-     * @group Exporter
-     */
     public function testProductsWithCategoryNodes()
     {
         $this->eraseUrlsAndCategories();
 
         $this->createAttributeType();
-        $idProduct = $this->createProduct('TestSku', 'TestProductName', $this->idLocale);
-        $this->urlFacade->createUrl('/some-url', $this->localeName, 'product', $idProduct);
+        $idProduct = $this->createProduct('TestSku', 'TestProductName', $this->locale);
+        $this->urlFacade->createUrl('/some-url', $this->locale, 'product', $idProduct);
         $this->touchFacade->touchActive('test', $idProduct);
 
         $idRootCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('ARootCategory'),
-            $this->idLocale
+            $this->locale
         );
 
         $idRootCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idRootCategory, null, true),
-            $this->idLocale
+            $this->locale
         );
 
         $idCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('ACategory'),
-            $this->idLocale
+            $this->locale
         );
 
         $idCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idCategory, $idRootCategoryNode),
-            $this->idLocale
+            $this->locale
         );
 
-        $this->productCategoryFacade->createProductCategoryMapping('TestSku', 'ACategory', $this->idLocale);
+        $this->productCategoryFacade->createProductCategoryMapping('TestSku', 'ACategory', $this->locale);
 
         $this->doExporterTest(
             [
@@ -423,74 +415,71 @@ class ProductFrontendExporterPluginTest extends Test
         );
     }
 
-    /**
-     * @group Exporter
-     */
     public function testNavigationExporter()
     {
         $this->eraseUrlsAndCategories();
 
         $idToysCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('Toys1'),
-            $this->idLocale
+            $this->locale
         );
         $idToysCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idToysCategory, null, true),
-            $this->idLocale
+            $this->locale
         );
 
         $idSoftToyCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('Soft Toy1'),
-            $this->idLocale
+            $this->locale
         );
         $idSoftToyCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idSoftToyCategory, $idToysCategoryNode),
-            $this->idLocale
+            $this->locale
         );
 
         $idRobotCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('Robot1'),
-            $this->idLocale
+            $this->locale
         );
         $idRobotCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idRobotCategory, $idToysCategoryNode),
-            $this->idLocale
+            $this->locale
         );
 
         $idWindupCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('Wind-Up1'),
-            $this->idLocale
+            $this->locale
         );
         $idWindupCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idWindupCategory, $idRobotCategoryNode),
-            $this->idLocale
+            $this->locale
         );
 
         $idNoWindupCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('No Wind-up1'),
-            $this->idLocale
+            $this->locale
         );
         $idNoWindupCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idNoWindupCategory, $idRobotCategoryNode),
-            $this->idLocale
+            $this->locale
         );
 
         $idExoticCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('Exotic1'),
-            $this->idLocale
+            $this->locale
         );
         $idExoticCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idExoticCategory, $idSoftToyCategoryNode),
-            $this->idLocale
+            $this->locale
         );
 
         $idLocalCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('Local1'),
-            $this->idLocale
+            $this->locale
         );
         $idLocalCategoryNode = $this->categoryFacade->createCategoryNode(
             $this->createCategoryNodeTransfer($idLocalCategory, $idSoftToyCategoryNode),
-            $this->idLocale
+            $this->locale
         );
 
         $this->touchFacade->touchActive('test', $idToysCategoryNode);
@@ -561,14 +550,13 @@ class ProductFrontendExporterPluginTest extends Test
     {
         parent::setUp();
         $this->locator = Locator::getInstance();
-        $this->localeName = 'ABCDE';
         $this->localeFacade = $this->locator->locale()->facade();
         $this->productFacade = $this->locator->product()->facade();
         $this->categoryFacade = $this->locator->category()->facade();
         $this->touchFacade = $this->locator->touch()->facade();
         $this->urlFacade = $this->locator->url()->facade();
         $this->productCategoryFacade = $this->locator->productCategory()->facade();
-        $this->idLocale = $this->localeFacade->createLocale($this->localeName);
+        $this->locale = $this->localeFacade->createLocale('ABCDE');
     }
 
     protected function eraseUrlsAndCategories()
