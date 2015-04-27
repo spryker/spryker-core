@@ -18,7 +18,7 @@ class CategoryNameExistsValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        $idLocale = $constraint->getIdLocale();
+        $idLocale = $constraint->getLocale()->getIdLocale();
         $idCategory = $constraint->getIdCategory();
         $categoryQueryContainer = $constraint->getQueryContainer();
         $categoryEntity = $categoryQueryContainer

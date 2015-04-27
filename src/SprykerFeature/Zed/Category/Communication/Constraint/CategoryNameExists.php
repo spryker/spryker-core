@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Constraint;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\Validator\Constraint;
 
@@ -21,26 +22,26 @@ class CategoryNameExists extends Constraint
     protected $idCategory;
 
     /**
-     * @var int
+     * @var LocaleDto
      */
-    protected $idLocale;
+    protected $locale;
 
     /**
      * @param CategoryQueryContainer $queryContainer
      * @param $idCategory
-     * @param $idLocale
      * @param null $options
+     * @param LocaleDto $locale
      */
     public function __construct(
         CategoryQueryContainer $queryContainer,
         $idCategory,
-        $idLocale,
+        LocaleDto $locale,
         $options = null
     ) {
         $this->queryContainer= $queryContainer;
         $this->idCategory = $idCategory;
-        $this->idLocale = $idLocale;
         parent::__construct($options);
+        $this->locale = $locale;
     }
 
     /**
@@ -52,11 +53,11 @@ class CategoryNameExists extends Constraint
     }
 
     /**
-     * @return string
+     * @return LocaleDto
      */
-    public function getIdLocale()
+    public function getLocale()
     {
-        return $this->idLocale;
+        return $this->locale;
     }
 
     /**

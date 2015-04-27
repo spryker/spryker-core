@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Renderer;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
@@ -37,16 +38,16 @@ class CategoryTreeRenderer
     /**
      * @var CategoryToLocaleInterface
      */
-    protected $idLocale;
+    protected $locale;
 
     /**
      * @param CategoryQueryContainer $queryContainer
-     * @param int $idLocale
+     * @param LocaleDto $locale
      */
-    public function __construct(CategoryQueryContainer $queryContainer, $idLocale)
+    public function __construct(CategoryQueryContainer $queryContainer, LocaleDto $locale)
     {
         $this->queryContainer = $queryContainer;
-        $this->idLocale = $idLocale;
+        $this->locale = $locale;
     }
 
     /**
@@ -72,7 +73,7 @@ class CategoryTreeRenderer
     protected function renderChildren(SpyCategoryNode $node)
     {
         $children = $this->queryContainer
-            ->queryFirstLevelChildrenByIdLocale($node->getPrimaryKey(), $this->idLocale)
+            ->queryFirstLevelChildrenByIdLocale($node->getPrimaryKey(), $this->locale->getIdLocale())
             ->find()
         ;
 

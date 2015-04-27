@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Controller;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
@@ -25,14 +26,14 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $idLocale = $this->getLocaleIdentifier();
+            $locale = $this->getLocale();
             $category = $this->getLocator()->category()->transferCategory();
             $category->fromArray($form->getRequestData());
 
             if (is_null($category->getIdCategory())) {
-                $this->getCategoryFacade()->createCategory($category, $idLocale);
+                $this->getCategoryFacade()->createCategory($category, $locale);
             } else {
-                $this->getCategoryFacade()->updateCategory($category, $idLocale);
+                $this->getCategoryFacade()->updateCategory($category, $locale);
             }
         }
 
@@ -51,12 +52,12 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $idLocale = $this->getLocaleIdentifier();
+            $locale = $this->getLocale();
             $categoryNode = $this->getLocator()->category()->transferCategoryNode();
             $categoryNode->fromArray($form->getRequestData());
 
             if (is_null($categoryNode->getIdCategoryNode())) {
-                $this->getCategoryFacade()->createCategoryNode($categoryNode, $idLocale);
+                $this->getCategoryFacade()->createCategoryNode($categoryNode, $locale);
             } else {
                 $this->getCategoryFacade()->moveCategoryNode($categoryNode);
             }
@@ -74,10 +75,10 @@ class FormController extends AbstractController
     }
 
     /**
-     * @return int
+     * @return LocaleDto
      */
-    protected function getLocaleIdentifier()
+    protected function getLocale()
     {
-        return $this->getDependencyContainer()->createLocaleIdentifier();
+        return $this->getDependencyContainer()->getCurrentLocale();
     }
 }

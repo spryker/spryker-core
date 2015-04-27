@@ -53,11 +53,11 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
      */
     public function createCategoryTreeRenderer()
     {
-        $idLocale = $this->createLocaleFacade()->getCurrentLocale()->getIdLocale();
+        $locale = $this->createLocaleFacade()->getCurrentLocale();
 
         return $this->getFactory()->createRendererCategoryTreeRenderer(
             $this->createQueryContainer(),
-            $idLocale
+            $locale
         );
     }
 
@@ -107,13 +107,10 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
      */
     protected function createNodeUrlManager()
     {
-        $localeName = $this->createLocaleFacade()->getCurrentLocale()->getLocaleName();
-
         return $this->getFactory()->createManagerNodeUrlManager(
             $this->createCategoryTreeReader(),
             $this->createUrlPathGenerator(),
-            $this->createUrlFacade(),
-            $localeName
+            $this->createUrlFacade()
         );
     }
 

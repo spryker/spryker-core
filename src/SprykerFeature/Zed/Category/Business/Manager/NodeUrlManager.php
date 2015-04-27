@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Manager;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Shared\Category\Transfer\CategoryNode;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
@@ -26,39 +27,31 @@ class NodeUrlManager implements NodeUrlManagerInterface
     protected $urlFacade;
 
     /**
-     * @var string
-     */
-    protected $localeName;
-
-    /**
      * @param CategoryTreeReaderInterface $categoryTreeReader
      * @param UrlPathGeneratorInterface $urlPathGenerator
      * @param CategoryToUrlInterface $urlFacade
-     * @param string $localeName
      */
     public function __construct(
         CategoryTreeReaderInterface $categoryTreeReader,
         UrlPathGeneratorInterface $urlPathGenerator,
-        CategoryToUrlInterface $urlFacade,
-        $localeName
+        CategoryToUrlInterface $urlFacade
     ) {
         $this->categoryTreeReader = $categoryTreeReader;
         $this->urlPathGenerator = $urlPathGenerator;
         $this->urlFacade = $urlFacade;
-        $this->localeName = $localeName;
     }
 
     /**
      * @param CategoryNode $categoryNode
-     * @param int $idLocale
+     * @param LocaleDto $locale
      */
-    public function createUrl(CategoryNode $categoryNode, $idLocale)
+    public function createUrl(CategoryNode $categoryNode, LocaleDto $locale)
     {
-        $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $idLocale);
+        $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
         $categoryUrl = $this->urlPathGenerator->generate($path);
         $idNode = $categoryNode->getIdCategoryNode();
 
-        $url = $this->urlFacade->createUrl($categoryUrl, $this->localeName, CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
+        $url = $this->urlFacade->createUrl($categoryUrl, $locale, CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
         $this->urlFacade->touchUrlActive($url->getIdUrl());
     }
 }

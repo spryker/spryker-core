@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Model;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\Category\Transfer\Category as CategoryTransfer;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttribute;
@@ -11,19 +12,19 @@ interface CategoryWriterInterface
 {
     /**
      * @param CategoryTransfer $category
-     * @param string $idLocale
+     * @param LocaleDto $locale
      *
      * @return int
      */
-    public function create(CategoryTransfer $category, $idLocale);
+    public function create(CategoryTransfer $category, LocaleDto $locale);
 
     /**
      * @param CategoryTransfer $category
-     * @param string $idLocale
+     * @param LocaleDto $locale
      *
      * @return int
      */
-    public function update(CategoryTransfer $category, $idLocale);
+    public function update(CategoryTransfer $category, LocaleDto $locale);
 
     /**
      * @param int $idCategory

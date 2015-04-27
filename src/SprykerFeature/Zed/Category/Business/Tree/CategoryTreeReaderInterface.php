@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 
 interface CategoryTreeReaderInterface
@@ -9,22 +10,22 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param int $idLocale
+     * @param LocaleDto $locale
      * @param bool $onlyOneLevel
      * @param bool $excludeStartNode
      *
      * @return SpyCategoryNode[]
      */
-    public function getChildren($idNode, $idLocale, $onlyOneLevel = true, $excludeStartNode = true);
+    public function getChildren($idNode, LocaleDto $locale, $onlyOneLevel = true, $excludeStartNode = true);
 
     /**
      * @param int       $idNode
-     * @param string    $idLocale
      * @param bool      $excludeRootNode
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function getParents($idNode, $idLocale, $excludeRootNode = true);
+    public function getParents($idNode, LocaleDto $locale, $excludeRootNode = true);
 
     /**
      * @param int $idNode
@@ -34,23 +35,23 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int       $idNode
-     * @param string    $idLocale
      * @param bool      $excludeRootNode
      * @param bool      $onlyParents
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function getPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false);
+    public function getPath($idNode, LocaleDto $locale, $excludeRootNode = true, $onlyParents = false);
 
     /**
      * @param int       $idNode
-     * @param string    $idLocale
      * @param bool      $excludeRootNode
      * @param bool      $onlyParents
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function getGroupedPaths($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false);
+    public function getGroupedPaths($idNode, LocaleDto $locale, $excludeRootNode = true, $onlyParents = false);
 
     /**
      * @param int $idNode
