@@ -1,6 +1,6 @@
-alias composer='php composer.phar'
-alias ci='php composer.phar install'
-alias cu='php composer.phar update'
+alias composer='php -d xdebug.remote_enable=0 composer.phar'
+alias ci='php -d xdebug.remote_enable=0 composer.phar install'
+alias cu='php -d xdebug.remote_enable=0 composer.phar update'
 
 codecept () {
     pushd /data/shop/development/current
