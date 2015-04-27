@@ -29,6 +29,7 @@ class ClassGenerator
 
         $loader = new \Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
         $this->twig = new \Twig_Environment($loader, []);
+        $this->twig->addExtension(new TransferTwigExtensions());
     }
 
     public function setTargetFolder($path)
@@ -113,7 +114,6 @@ class ClassGenerator
 
         foreach ($properties as $props) {
             $declarations[] = [
-                'parameterDataTypeDoc' => 'doc',
                 'parameterDataType' => $this->getParameterDataType($props['type']),
                 'propertyName' => $this->getPassedParameter($props),
                 'defaultValue' => $this->getDefaultValue($props),
@@ -143,10 +143,17 @@ class ClassGenerator
 
     public function getParameterDataType($type, $isForDocumentation=false)
     {
-        if ( !preg_match('/(string|integer|int|bool)/', $type) && !$isForDocumentation ) {
+        if ( 'array' === $type ) {
+            return ClassDefinition::TYPE_ARRAY;
+        }
+        if ( 'bool' === $type || 'boolean' === $type ) {
+            return ClassDefinition::TYPE_BOOLEAN;
+        }
+
+        if ( ! preg_match('/(string|integer|int)/', $type) && ! $isForDocumentation ) {
             $this->addExternalResource($type);
 
-            return $this->getNamespaceBaseName($type) . ' ';
+            return $this->getNamespaceBaseName($type);
         }
 
         return '';
@@ -175,6 +182,9 @@ class ClassGenerator
                 'parameterDataType' => $this->getParameterDataType($props['type']),
             ];
         }
+
+//        print_r($settersAndGetters);
+//        die;
 
         return $settersAndGetters;
     }

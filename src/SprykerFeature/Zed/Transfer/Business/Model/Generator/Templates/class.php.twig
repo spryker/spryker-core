@@ -16,7 +16,7 @@ class {{ className }}{% if extendsClass is defined %} extends {{ extendsClass }}
     {% for prop in properties %}
 
     /**
-     * @var{% if prop.parameterDataType != '' %} {{ prop.parameterDataType }}{% endif %}${{ prop.propertyName }}
+     * @var {{ writeIfNot(prop.parameterDataType ~ ' ', '(^string|^int)', prop.parameterDataType) }}${{ prop.propertyName }}
      */
     protected ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue }}{% endif %};
     {% endfor %}
@@ -24,15 +24,15 @@ class {{ className }}{% if extendsClass is defined %} extends {{ extendsClass }}
     {% for sag in settersAndGetters %}
 
     /**
-     * @var {{ sag.parameterDataTypeDoc }}${{ sag.passedParameter }}
+     * @var {{ writeIfNot(sag.parameterDataType ~ ' ', '(^array|^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }}
      */
-    public function set{{ sag.propertyName }}({{ sag.parameterDataType }}${{ sag.passedParameter }})
+    public function set{{ sag.propertyName }}({{ writeIfNot(sag.parameterDataType ~ ' ', '(^array|^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }})
     {
-        $this->{{ sag.passedParameter }} = ${{ sag.passedParameter }};
+        $this->{{ sag.passedParameter }}{{ writeIf('[]', 'array', sag.parameterDataType) }} = ${{ sag.passedParameter }};
     }
 
     /**
-    * @return {{ sag.parameterDataTypeDoc }}${{ sag.passedParameter }}
+    * @return {{ writeIfNot(sag.parameterDataType ~ ' ', '(^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }}
     */
     public function get{{ sag.propertyName }}()
     {

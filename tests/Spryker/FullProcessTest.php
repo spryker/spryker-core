@@ -1,9 +1,9 @@
 <?php
 
-use Spryker\ClassDefinition;
-use Spryker\ClassCollectionManager;
-use External\Sofee\SofeeXmlParser;
-use Spryker\ClassGenerator;
+use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
+use SprykerFeature\Zed\Transfer\Business\Model\External\Sofee\SofeeXmlParser;
+use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 
 class FullProcessTest extends PHPUnit_Framework_TestCase
 {
@@ -13,15 +13,17 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
     protected $xmlTree;
 
     /**
-     * @var Spryker\ClassCollectionManager
+     * @var ClassCollectionManager
      */
     protected $manager;
+
+    protected $generatedClasses = [];
 
     public function setUp()
     {
         $this->manager = new ClassCollectionManager();
 
-        $fileContent = file_get_contents(dirname(__DIR__) . '/data/alfa.transfer.xml');
+        $fileContent = file_get_contents(dirname(__DIR__) . '/data/template.xml');
 
         $xml = new SofeeXmlParser();
         $xml->parseString($fileContent);
@@ -32,20 +34,55 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             $this->manager->setClassDefinition($item);
         }
 
-        $defs = $this->manager->getCollections();
+        $definitions = $this->manager->getCollections();
 
         $generator = new ClassGenerator();
         $generator->setTargetFolder(dirname(__DIR__) . '/target/');
-        foreach ($defs as $classDefinition) {
-            $phpCode = $generator->generateClass($classDefinition);
-            $target = dirname(__DIR__) . '/';
-            file_put_contents($target, $phpCode);
+        foreach ($definitions as $classDefinition) {
+            $this->generatedClasses[] = [
+                'definition' => $classDefinition,
+                'code' => $generator->generateClass($classDefinition),
+            ];
         }
     }
 
 
-    public function test_first()
+    public function test_class_name()
     {
-        $this->assertGreaterThan(0, count($this->xmlTree));
+        $this->assertSame('AlfaTransfer', $this->generatedClasses[0]['definition']->getClassName());
+    }
+
+    public function test_get_interfaces()
+    {
+        $this->assertEquals(3, count($this->generatedClasses[0]['definition']->getInterfaces()));
+    }
+
+    /**
+     * @dataProvider codeSampleValidationProvider
+     * @param $codeSample
+     */
+    public function test_properties_type_array($codeSample)
+    {
+        $this->assertContains($codeSample, $this->generatedClasses[0]['code']);
+    }
+
+    public function codeSampleValidationProvider()
+    {
+        return [
+            ['$properties = array();'],
+            ['@var array $properties'],
+            ['@return array $properties'],
+            ['@var Customer $customer'],
+            ['@return Customer $customer'],
+            ['$this->properties[] = $properties;'],
+            ['setCustomer(Customer $customer)'],
+            ['public function setPublished(boolean $published)'],
+            ['class AlfaTransfer implements FirstInterface, SecondInterface, ThirdInterface'],
+            ['use Spryker\Demo\FirstInterface'],
+            ['use Spryker\Demo\SecondInterface'],
+            ['use Spryker\Demo\ThirdInterface'],
+            ['use CartItem'],
+            ['use Customer'],
+        ];
     }
 }

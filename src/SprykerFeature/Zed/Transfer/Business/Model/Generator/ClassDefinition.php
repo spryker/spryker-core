@@ -5,10 +5,7 @@ namespace SprykerFeature\Zed\Transfer\Business\Model\Generator;
 class ClassDefinition
 {
     const TYPE_ARRAY    = 'array';
-    const TYPE_STRING   = 'string';
-    const TYPE_INTEGER  = 'int';
-    const TYPE_OBJECT   = 'object';
-    const TYPE_BOOL     = 'bool';
+    const TYPE_BOOLEAN  = 'boolean';
 
     protected $className;
     protected $interfaces = [];
@@ -21,7 +18,6 @@ class ClassDefinition
 
     public function setInterface($implementsInterface)
     {
-
         if ( isset($implementsInterface[0]) ) {
             foreach ($implementsInterface as $newInterface) {
                 $this->addInterface($newInterface);
