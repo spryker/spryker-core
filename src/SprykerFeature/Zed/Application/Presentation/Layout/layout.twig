@@ -11,11 +11,27 @@
             <link rel="shortcut icon" href="{{ staticPath('/favicon.ico') }}">
 
             {% block head_css %}
-                {% include '@Application/Partials/styles.twig' %}
+                {% block head_css_application -%}
+                    <link rel="stylesheet" type="text/css" href="{{ staticPath('Application/styles/bundle.css') }}">
+                {%- endblock %}
+
+                {% block head_css_ui -%}
+                    <link rel="stylesheet" type="text/css" href="{{ staticPath('Ui/styles/bundle.css') }}">
+                {%- endblock %}
+
+                {% block head_css_bundles %}{% endblock %}
             {% endblock %}
 
             {% block head_js %}
-                {% include '@Application/Partials/scripts.twig' %}
+                {% block head_js_application -%}
+                    <script type="application/javascript" src="{{ staticPath('Application/scripts/bundle.js') }}"></script>
+                {%- endblock %}
+
+                {% block head_js_ui -%}
+                    <script type="application/javascript" src="{{ staticPath('Ui/scripts/bundle.js') }}"></script>
+                {%- endblock %}
+
+                {% block head_js_bundles %}{% endblock %}
             {% endblock %}
         {% endblock %}
     </head>
