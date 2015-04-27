@@ -185,4 +185,12 @@ abstract class AbstractController
     {
         $this->getTwig()->addGlobal('breadcrumbs', $breadcrumbs);
     }
+
+    /**
+     * @param string $uri
+     */
+    protected function setMenuHighlight($uri)
+    {
+        $this->getTwig()->addGlobal('menu_highlight', $uri);
+    }
 }

@@ -1,6 +1,14 @@
 {%- macro leaf(node) -%}
     {%- if node is defined %}
+        {%- if menu_highlight is defined -%}
+            {%- if menu_highlight == node.uri -%}
+                <li class="item active">
+            {%- else -%}
+                <li class="item">
+            {%- endif -%}
+        {%- else-%}
         <li class="item{{ node.is_active is defined and node.is_active ? " active" : "" }}">
+        {%- endif -%}
             <a
                 href="{{ node.uri }}"
                 {% if node.shortcut is defined %}data-hotkey="{{ node.shortcut }}"{% endif %}
