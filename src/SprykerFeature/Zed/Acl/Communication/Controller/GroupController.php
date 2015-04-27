@@ -48,14 +48,15 @@ class GroupController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
+            $data = $form->getRequestData();
+            $group = $this->getLocator()->acl()->transferGroup();
+            $group->setName($data['name']);
+
             if (!empty($idGroup)) {
-                $data = $form->getRequestData();
-                $group = $this->getLocator()->acl()->transferGroup();
                 $group->setIdAclGroup($idGroup);
-                $group->setName($data['name']);
                 $this->getLocator()->acl()->facade()->updateGroup($group);
             } else {
-                $statusCode = 400;
+                $this->getLocator()->acl()->facade()->addGroup($group->getName());
             }
         }
 
