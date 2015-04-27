@@ -8,10 +8,6 @@ use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInt
 use SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Communication\ProductCategoryFrontendExporterConnectorDependencyContainer;
 
 /**
- * Class ProductBreadcrumProcessorPlugin
- * @package SprykerFeature\Zed\ProductCategory\Communication\Plugin
- */
-/**
  * @method ProductCategoryFrontendExporterConnectorDependencyContainer getDependencyContainer()
  */
 class ProductCategoryBreadcrumbProcessorPlugin extends AbstractPlugin implements

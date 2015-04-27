@@ -2,10 +2,6 @@
 
 namespace SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business\Processor;
 
-/**
- * Class BreadcrumProcessor
- * @package SprykerFeature\Zed\ProductCategory\Business\Processor
- */
 use SprykerEngine\Shared\Dto\LocaleDto;
 
 interface ProductCategoryBreadcrumbProcessorInterface

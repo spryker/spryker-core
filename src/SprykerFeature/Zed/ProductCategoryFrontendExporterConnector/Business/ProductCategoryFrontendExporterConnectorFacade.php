@@ -6,10 +6,6 @@ use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * Class ProductCategoryFacade
- * @package SprykerFeature\Zed\ProductCategory\Business
- */
-/**
  * @method ProductCategoryFrontendExporterConnectorDependencyContainer getDependencyContainer()
  */
 class ProductCategoryFrontendExporterConnectorFacade extends AbstractFacade

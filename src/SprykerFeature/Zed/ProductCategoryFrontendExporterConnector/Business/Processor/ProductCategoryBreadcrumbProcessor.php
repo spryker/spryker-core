@@ -13,7 +13,7 @@ class ProductCategoryBreadcrumbProcessor implements ProductCategoryBreadcrumbPro
     protected $nodeExploder;
 
     /**
-     * @param $nodeExploder
+     * @param ProductCategoryFrontendExporterToCategoryExporterInterface $nodeExploder
      */
     public function __construct(ProductCategoryFrontendExporterToCategoryExporterInterface $nodeExploder)
     {
