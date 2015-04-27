@@ -16,6 +16,10 @@ class ClassDefinition
         $this->className = $className;
     }
 
+    /**
+     * @param array|string $implementsInterface
+     * @return $this
+     */
     public function setInterface($implementsInterface)
     {
         if ( isset($implementsInterface[0]) ) {
@@ -29,6 +33,11 @@ class ClassDefinition
         return $this;
     }
 
+    /**
+     * Add interface to list if it doesn't exists already
+     *
+     * @param string $interface
+     */
     protected function addInterface($interface)
     {
         if ( ! in_array($interface, $this->interfaces) ) {
@@ -36,7 +45,9 @@ class ClassDefinition
         }
     }
 
-
+    /**
+     * @param array $properties
+     */
     public function setProperty(array $properties)
     {
         $this->properties[$properties['name']] = [
@@ -46,6 +57,10 @@ class ClassDefinition
         ];
     }
 
+    /**
+     * @param string $type
+     * @return string
+     */
     protected function getType($type)
     {
         if ( preg_match('/\[\]/', $type) ) {
@@ -62,16 +77,25 @@ class ClassDefinition
         return $type;
     }
 
+    /**
+     * @return string
+     */
     public function getClassName()
     {
         return $this->className;
     }
 
+    /**
+     * @return array
+     */
     public function getInterfaces()
     {
         return $this->interfaces;
     }
 
+    /**
+     * @return array
+     */
     public function getProperties()
     {
         return $this->properties;

@@ -1,8 +1,6 @@
 <?php
 
-use Spryker\ClassDefinition;
-use Spryker\ClassDefinitionCollection;
-use External\Sofee\SofeeXmlParser;
+use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 
 class ClassDefinitionTest extends PHPUnit_Framework_TestCase
 {
@@ -11,20 +9,62 @@ class ClassDefinitionTest extends PHPUnit_Framework_TestCase
      */
     protected $xmlTree;
 
+    protected $definition;
+
     public function setUp()
     {
-//        $fileContent = file_get_contents(dirname(__DIR__) . '/data/alfa.transfer.xml');
-//
-//        $xml = new SofeeXmlParser();
-//        $xml->parseString($fileContent);
-//
-//        $this->xmlTree = $xml->getTree();
+        $definition = new ClassDefinition('TestClass');
+        $definition->setInterface([
+            ['value' => 'Demo\AlfaInterface'],
+            ['value' => 'Demo\BetaInterface'],
+        ]);
+
+        $definition->setProperty([
+            'name' => 'id',
+            'type' => 'integer',
+            'default' => '0',
+        ]);
+        $definition->setProperty([
+            'name' => 'published',
+            'type' => 'boolean',
+            'default' => true,
+        ]);
+
+        $this->definition = $definition;
     }
 
 
-    public function test_first()
+    public function test_class_name()
     {
-        //$this->assertGreaterThan(0, count($this->xmlTree));
-        $this->assertTrue(true);
+        $this->assertSame('TestClass', $this->definition->getClassName());
+    }
+
+    public function test_interfaces_number()
+    {
+        $this->assertEquals(2, count($this->definition->getInterfaces()));
+    }
+
+    public function test_properties_number()
+    {
+        $this->assertEquals(2, count($this->definition->getProperties()));
+    }
+
+    /**
+     * @dataProvider propertiesKeysProvider
+     */
+    public function test_properties_keys($key)
+    {
+        $this->assertArrayHasKey($key, $this->definition->getProperties());
+    }
+
+    /**
+     * @return array
+     */
+    public function propertiesKeysProvider()
+    {
+        return [
+            ['id'],
+            ['published'],
+        ];
     }
 }

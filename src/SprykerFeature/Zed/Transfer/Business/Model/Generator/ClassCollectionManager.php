@@ -4,12 +4,20 @@ namespace SprykerFeature\Zed\Transfer\Business\Model\Generator;
 
 use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 
-
-
+/**
+ * Class ClassCollectionManager
+ * @package SprykerFeature\Zed\Transfer\Business\Model\Generator
+ */
 class ClassCollectionManager
 {
+    /**
+     * @var array definitionCollections
+     */
     protected $definitionCollections = [];
 
+    /**
+     * @param array $data
+     */
     public function setClassDefinition(array $data)
     {
         if ( ! isset($this->definitionCollections[$data['name']]) ) {
@@ -31,6 +39,9 @@ class ClassCollectionManager
         }
     }
 
+    /**
+     * @return array definitionCollections
+     */
     public function getCollections()
     {
         return $this->definitionCollections;

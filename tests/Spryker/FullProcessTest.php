@@ -1,6 +1,5 @@
 <?php
 
-use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
 use SprykerFeature\Zed\Transfer\Business\Model\External\Sofee\SofeeXmlParser;
 use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassGenerator;
@@ -17,6 +16,9 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
      */
     protected $manager;
 
+    /**
+     * @var array
+     */
     protected $generatedClasses = [];
 
     public function setUp()
@@ -44,6 +46,7 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
                 'code' => $generator->generateClass($classDefinition),
             ];
         }
+        print_r($this->generatedClasses[0]['code']);
     }
 
 
@@ -77,12 +80,16 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             ['$this->properties[] = $properties;'],
             ['setCustomer(Customer $customer)'],
             ['public function setPublished(boolean $published)'],
-            ['class AlfaTransfer implements FirstInterface, SecondInterface, ThirdInterface'],
+            ['class AlfaTransfer extends AbstractTransfer implements FirstInterface, SecondInterface, ThirdInterface'],
             ['use Spryker\Demo\FirstInterface'],
             ['use Spryker\Demo\SecondInterface'],
             ['use Spryker\Demo\ThirdInterface'],
             ['use CartItem'],
             ['use Customer'],
+            ['$this->addModifiedProperty(\'published\');'],
+            ['$this->addModifiedProperty(\'customer\');'],
+            ['$this->addModifiedProperty(\'properties\');'],
+            ['$this->addModifiedProperty(\'cartItems\');'],
         ];
     }
 }

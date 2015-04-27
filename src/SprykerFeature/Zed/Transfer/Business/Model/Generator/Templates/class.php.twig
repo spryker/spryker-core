@@ -2,6 +2,7 @@
 
 namespace {{ namespace }};
 
+use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 {% for ue in useExternal %}
 use {{ ue }};
 {% endfor %}
@@ -11,7 +12,7 @@ use {{ ue }};
  *
  * @author SprykerGenerator
  */
-class {{ className }}{% if extendsClass is defined %} extends {{ extendsClass }}{% endif %} implements {{ interfacesToImplement }}
+class {{ className }} extends AbstractTransfer implements {{ interfacesToImplement }}
 {
     {% for prop in properties %}
 
@@ -29,6 +30,9 @@ class {{ className }}{% if extendsClass is defined %} extends {{ extendsClass }}
     public function set{{ sag.propertyName }}({{ writeIfNot(sag.parameterDataType ~ ' ', '(^array|^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }})
     {
         $this->{{ sag.passedParameter }}{{ writeIf('[]', 'array', sag.parameterDataType) }} = ${{ sag.passedParameter }};
+        $this->addModifiedProperty('{{ sag.passedParameter }}');
+
+        return $this;
     }
 
     /**
