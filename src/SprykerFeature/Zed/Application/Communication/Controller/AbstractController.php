@@ -10,6 +10,8 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use LogicException;
+use Twig_Environment;
 
 abstract class AbstractController
 {
@@ -160,5 +162,57 @@ abstract class AbstractController
     protected function getApplication()
     {
         return $this->application;
+    }
+
+    /**
+     * @return Twig_Environment
+     * @throws LogicException
+     */
+    private function getTwig()
+    {
+        $twig = $this->getApplication()['twig'];
+        if ($twig === null) {
+            throw new LogicException('Twig environment not set up.');
+        }
+
+        return $twig;
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearBreadcrumbs()
+    {
+        $this->getTwig()->addGlobal('breadcrumbs', []);
+    }
+
+    /**
+     * @param string $label
+     * @param string $uri
+     */
+    protected function addBreadcrumb($label, $uri)
+    {
+        $twig = $this->getTwig();
+        $globals = $twig->getGlobals();
+        $breadcrumbs = $globals['breadcrumbs'];
+
+        if ($breadcrumbs === null) {
+            $breadcrumbs = [];
+        }
+
+        $breadcrumbs[] = [
+            'label' => $label,
+            'uri' => $uri,
+        ];
+
+        $twig->addGlobal('breadcrumbs', $breadcrumbs);
+    }
+
+    /**
+     * @param string $uri
+     */
+    protected function setMenuHighlight($uri)
+    {
+        $this->getTwig()->addGlobal('menu_highlight', $uri);
     }
 }
