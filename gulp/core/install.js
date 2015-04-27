@@ -21,8 +21,6 @@ var _resolveTasks = require('./resolve');
 exports.installModules = function(base, dev, done) {
 	return _getBundles(base).then(function(bundles) {
 		var tasks = bundles.map(function(bundle) {
-			console.log(_path.join(bundle.base, 'package.json'));
-
 			return _q
 				.nfcall(_fs.stat, _path.join(bundle.base, 'package.json'))
 				.then(function(stat) {
