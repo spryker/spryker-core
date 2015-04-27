@@ -168,7 +168,7 @@ abstract class AbstractController
      * @return Twig_Environment
      * @throws LogicException
      */
-    protected function getTwig()
+    private function getTwig()
     {
         $twig = $this->getApplication()['twig'];
         if ($twig === null) {
