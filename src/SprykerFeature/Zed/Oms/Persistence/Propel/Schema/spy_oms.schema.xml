@@ -51,8 +51,8 @@
         </unique>
     </table>
 
-    <table name="spy_oms_order_item_status" phpName="SpyOmsOrderItemStatus">
-        <column name="id_oms_order_item_status" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+    <table name="spy_oms_order_item_state" phpName="SpyOmsOrderItemState">
+        <column name="id_oms_order_item_state" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
 
         <column name="name" type="VARCHAR" size="255" required="true" />
         <column name="description" type="VARCHAR" size="255" required="false" default="NULL"/>
@@ -63,26 +63,26 @@
         </unique>
     </table>
 
-    <table name="spy_oms_order_item_status_history" phpName="SpyOmsOrderItemStatusHistory">
-        <column name="id_oms_order_item_status_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+    <table name="spy_oms_order_item_state_history" phpName="SpyOmsOrderItemStateHistory">
+        <column name="id_oms_order_item_state_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
         <column name="fk_sales_order_item" type="INTEGER" required="true" />
-        <column name="fk_oms_order_item_status" type="INTEGER" required="true" />
+        <column name="fk_oms_order_item_state" type="INTEGER" required="true" />
 
         <behavior name="timestampable"/>
 
 
-        <foreign-key foreignTable="spy_sales_order_item" phpName="OrderItem" refPhpName="StatusHistory">
+        <foreign-key foreignTable="spy_sales_order_item" phpName="OrderItem" refPhpName="StateHistory">
             <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_oms_order_item_status" phpName="Status" refPhpName="StatusHistory">
-            <reference local="fk_oms_order_item_status" foreign="id_oms_order_item_status"/>
+        <foreign-key foreignTable="spy_oms_order_item_state" phpName="State" refPhpName="StateHistory">
+            <reference local="fk_oms_order_item_state" foreign="id_oms_order_item_state"/>
         </foreign-key>
     </table>
 
     <table name="spy_oms_event_timeout" phpName="SpyOmsEventTimeout">
         <column name="id_oms_event_timeout" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
         <column name="fk_sales_order_item" type="INTEGER" required="true" />
-        <column name="fk_oms_order_item_status" type="INTEGER" required="true" />
+        <column name="fk_oms_order_item_state" type="INTEGER" required="true" />
 
         <column name="timeout" type="TIMESTAMP" required="true" />
         <column name="event" type="VARCHAR" size="255" required="true" />
@@ -90,15 +90,15 @@
         <foreign-key foreignTable="spy_sales_order_item" phpName="OrderItem" refPhpName="EventTimeout">
             <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_oms_order_item_status" phpName="Status" refPhpName="EventTimeout">
-            <reference local="fk_oms_order_item_status" foreign="id_oms_order_item_status"/>
+        <foreign-key foreignTable="spy_oms_order_item_state" phpName="State" refPhpName="EventTimeout">
+            <reference local="fk_oms_order_item_state" foreign="id_oms_order_item_state"/>
         </foreign-key>
 
         <behavior name="timestampable"/>
 
         <unique>
             <unique-column name="fk_sales_order_item"/>
-            <unique-column name="fk_oms_order_item_status"/>
+            <unique-column name="fk_oms_order_item_state"/>
             <unique-column name="event"/>
         </unique>
 
