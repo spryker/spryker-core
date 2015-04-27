@@ -85,7 +85,7 @@ class TranslationManager implements TranslationManagerInterface
     public function createTranslation($keyName, $localeName, $value, $isActive)
     {
         $idKey = $this->keyManager->getKey($keyName)->getPrimaryKey();
-        $idLocale = $this->localeFacade->getIdLocale($localeName);
+        $idLocale = $this->localeFacade->getLocale($localeName)->getIdLocale();
 
         return $this->createTranslationByIds($idKey, $idLocale, $value, $isActive);
     }
@@ -287,7 +287,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function translate($keyName, array $data = [])
     {
-        $localeName = $this->localeFacade->getCurrentLocale();
+        $localeName = $this->localeFacade->getCurrentLocale()->getLocaleName();
         $translation = $this->getTranslationByNames($keyName, $localeName);
 
         return str_replace(array_keys($data), array_values($data), $translation->getValue());
@@ -424,7 +424,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function translateByKeyId($idKey, array $data = [])
     {
-        $idLocale = $this->localeFacade->getIdLocale($this->localeFacade->getCurrentLocale());
+        $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
         $translation = $this->getTranslationByIds($idKey, $idLocale);
 
         return str_replace(array_keys($data), array_values($data), $translation->getValue());
@@ -442,9 +442,10 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function createTranslationForCurrentLocale($keyName, $value, $isActive = true)
     {
-        $localeName = $this->localeFacade->getCurrentLocale();
+        $idKey = $this->keyManager->getKey($keyName)->getPrimaryKey();
+        $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
 
-        return $this->createTranslation($keyName, $localeName, $value, $isActive);
+        return $this->createTranslationByIds($idKey, $idLocale, $value, $isActive);
     }
 
     /**
@@ -553,7 +554,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function touchCurrentTranslationForKeyId($idKey)
     {
-        $idLocale = $this->localeFacade->getCurrentIdLocale();
+        $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
         $translation = $this->getTranslationByIds($idKey, $idLocale);
         $this->insertActiveTouchRecord($translation->getIdGlossaryTranslation());
     }
