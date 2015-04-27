@@ -7,18 +7,13 @@ use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * Class ProductFrontendExporterConnectorFacade
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector
- */
-/**
  * @method ProductFrontendExporterConnectorDependencyContainer getDependencyContainer()
  */
 class ProductFrontendExporterConnectorFacade extends AbstractFacade
 {
     /**
-     * @param array  $products
      * @param string $locale
+     * @param array $products
      *
      * @return array
      */

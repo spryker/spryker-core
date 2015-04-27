@@ -10,11 +10,6 @@ use SprykerFeature\Zed\ProductFrontendExporterConnector\Business\ProductFrontend
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Communication\ProductFrontendExporterConnectorDependencyContainer;
 
 /**
- * Class ProductDataProcessorPlugin
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Communication\Plugin
- */
-/**
  * @method ProductFrontendExporterConnectorDependencyContainer getDependencyContainer()
  */
 class ProductProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
@@ -31,9 +26,9 @@ class ProductProcessorPlugin extends AbstractPlugin implements DataProcessorPlug
     }
 
     /**
-     * @param array  $resultSet
-     * @param array  $processedResultSet
      * @param string $locale
+     * @param array $resultSet
+     * @param array $processedResultSet
      *
      * @return array
      */

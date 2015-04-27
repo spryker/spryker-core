@@ -1,17 +1,13 @@
 <?php
+
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor;
 
 
-/**
- * Class ProductProcessor
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor
- */
 interface ProductProcessorInterface
 {
     /**
-     * @param array  $products
      * @param string $locale
+     * @param array $products
      *
      * @return array
      */
