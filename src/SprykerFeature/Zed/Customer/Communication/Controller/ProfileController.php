@@ -28,6 +28,8 @@ class ProfileController extends AbstractController
             ['label' => sprintf('Customer ID %s', $id_customer), 'uri' => sprintf('/customer/profile?id=%s', $id_customer)]
         ]);
 
+        $this->setMenuHighlight('/customer');
+
         $form = $this->getDependencyContainer()->createCustomerForm($request);
         $form->init();
 
