@@ -36,7 +36,7 @@ class CategoryTreeRenderer
     protected $queryContainer;
 
     /**
-     * @var CategoryToLocaleInterface
+     * @var int
      */
     protected $locale;
 

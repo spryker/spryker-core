@@ -6,11 +6,11 @@ use Generated\Zed\Ide\FactoryAutoCompletion\CategoryBusiness;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManager;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Business\Model\CategoryWriterInterface;
-use SprykerFeature\Zed\Category\Business\Renderer;
-use SprykerFeature\Zed\Category\Business\Tree;
+use SprykerFeature\Zed\Category\Business\Renderer\CategoryTreeRenderer;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReader;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeWriter;
 use SprykerFeature\Zed\Category\Business\Tree\ClosureTableWriterInterface;
+use SprykerFeature\Zed\Category\Business\Tree\NodeWriterInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
@@ -49,7 +49,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return Renderer\CategoryTreeRenderer
+     * @return CategoryTreeRenderer
      */
     public function createCategoryTreeRenderer()
     {
@@ -81,7 +81,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return Tree\NodeWriterInterface
+     * @return NodeWriterInterface
      */
     protected function createNodeWriter()
     {

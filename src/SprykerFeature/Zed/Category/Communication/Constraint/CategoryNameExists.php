@@ -28,9 +28,9 @@ class CategoryNameExists extends Constraint
 
     /**
      * @param CategoryQueryContainer $queryContainer
-     * @param $idCategory
-     * @param null $options
+     * @param int $idCategory
      * @param LocaleDto $locale
+     * @param mixed $options
      */
     public function __construct(
         CategoryQueryContainer $queryContainer,
@@ -38,9 +38,9 @@ class CategoryNameExists extends Constraint
         LocaleDto $locale,
         $options = null
     ) {
+        parent::__construct($options);
         $this->queryContainer= $queryContainer;
         $this->idCategory = $idCategory;
-        parent::__construct($options);
         $this->locale = $locale;
     }
 

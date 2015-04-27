@@ -42,8 +42,8 @@ class CategoryForm extends AbstractForm
         LocaleDto $locale,
         QueryContainerInterface $queryContainer = null
     ) {
-        $this->factory = $factory;
         parent::__construct($request, $locator, $queryContainer);
+        $this->factory = $factory;
         $this->locale = $locale;
     }
 

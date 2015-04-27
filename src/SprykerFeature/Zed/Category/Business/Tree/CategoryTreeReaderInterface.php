@@ -19,9 +19,9 @@ interface CategoryTreeReaderInterface
     public function getChildren($idNode, LocaleDto $locale, $onlyOneLevel = true, $excludeStartNode = true);
 
     /**
-     * @param int       $idNode
-     * @param bool      $excludeRootNode
+     * @param int $idNode
      * @param LocaleDto $locale
+     * @param bool $excludeRootNode
      *
      * @return array
      */
@@ -34,20 +34,20 @@ interface CategoryTreeReaderInterface
     public function hasChildren($idNode);
 
     /**
-     * @param int       $idNode
-     * @param bool      $excludeRootNode
-     * @param bool      $onlyParents
+     * @param int $idNode
      * @param LocaleDto $locale
+     * @param bool $excludeRootNode
+     * @param bool $onlyParents
      *
      * @return array
      */
     public function getPath($idNode, LocaleDto $locale, $excludeRootNode = true, $onlyParents = false);
 
     /**
-     * @param int       $idNode
-     * @param bool      $excludeRootNode
-     * @param bool      $onlyParents
+     * @param int $idNode
      * @param LocaleDto $locale
+     * @param bool $excludeRootNode
+     * @param bool $onlyParents
      *
      * @return array
      */
