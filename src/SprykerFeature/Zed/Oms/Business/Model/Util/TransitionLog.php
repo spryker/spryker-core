@@ -133,7 +133,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param $error
+     * @param boolean $error
      */
     public function setError($error)
     {
