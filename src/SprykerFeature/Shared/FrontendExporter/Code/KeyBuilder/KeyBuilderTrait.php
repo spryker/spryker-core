@@ -7,6 +7,7 @@ namespace SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder;
  *
  * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Builder
  */
+use SprykerEngine\Shared\Dto\LocaleDto;
 trait KeyBuilderTrait
 {
     /**
@@ -15,16 +16,16 @@ trait KeyBuilderTrait
     protected $keySeparator = '.';
 
     /**
-     * @param mixed     $data
-     * @param string    $locale
+     * @param mixed $data
+     * @param LocaleDto $locale
      *
      * @return string
      */
-    public function generateKey($data, $locale)
+    public function generateKey($data, LocaleDto $locale)
     {
         $keyParts = [
             \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName(),
-            $locale,
+            $locale->getLocaleName(),
             $this->getBundleName(),
             $this->buildKey($data)
         ];

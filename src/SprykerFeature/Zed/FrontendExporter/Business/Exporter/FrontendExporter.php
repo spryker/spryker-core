@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\BatchResultException;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResult;
 use SprykerFeature\Zed\FrontendExporter\Persistence\FrontendExporterQueryContainer;
@@ -32,11 +33,11 @@ class FrontendExporter
     }
 
     /**
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array|BatchResult[]
      */
-    public function exportForLocale($locale)
+    public function exportForLocale(LocaleDto $locale)
     {
         $types = $this->queryContainer->queryExportTypes()->find();
 
