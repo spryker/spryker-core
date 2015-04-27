@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
@@ -17,7 +18,7 @@ class ProductCategoryFacade extends AbstractFacade
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param int $localeId
+     * @param LocaleDto $locale
      * @return int
      *
      * @throws ProductCategoryMappingExistsException
@@ -25,26 +26,26 @@ class ProductCategoryFacade extends AbstractFacade
      * @throws MissingCategoryNodeException
      * @throws PropelException
      */
-    public function createProductCategoryMapping($sku, $categoryName, $localeId)
+    public function createProductCategoryMapping($sku, $categoryName, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->createProductCategoryMapping($sku, $categoryName, $localeId)
+            ->createProductCategoryMapping($sku, $categoryName, $locale)
             ;
     }
 
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param int $localeId
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function hasProductCategoryMapping($sku, $categoryName, $localeId)
+    public function hasProductCategoryMapping($sku, $categoryName, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->hasProductCategoryMapping($sku, $categoryName, $localeId)
+            ->hasProductCategoryMapping($sku, $categoryName, $locale)
             ;
     }
 }

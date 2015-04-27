@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Communication\Plugin;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
@@ -26,15 +27,15 @@ class ProductCategoryPathQueryExpanderPlugin extends AbstractPlugin implements Q
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, $localeName)
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
     {
         $queryContainer = $this->getDependencyContainer()->getProductCategoryQueryContainer();
 
-        return $queryContainer->expandProductCategoryPathQuery($expandableQuery, $localeName);
+        return $queryContainer->expandProductCategoryPathQuery($expandableQuery, $locale);
     }
 
     /**
