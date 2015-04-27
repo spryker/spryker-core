@@ -84,7 +84,7 @@ class CategoryTreeWriter
         $this->touchCategoryActive($categoryNode->getIdCategoryNode());
         $this->touchNavigationActive();
         if ($createUrlPath) {
-            $this->nodeUrlManager->createUrl($categoryNode, $idLocale, $idNode);
+            $this->nodeUrlManager->createUrl($categoryNode, $idLocale);
         }
 
         $connection->commit();
