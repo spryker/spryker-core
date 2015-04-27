@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Zed\Locale\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Locale\Business\Exception\LocaleExistsException;
@@ -31,19 +32,20 @@ class LocaleFacade extends AbstractFacade
     /**
      * @param string $localeName
      *
-     * @return int
+     * @return LocaleDto
      * @throws MissingLocaleException
      */
-    public function getIdLocale($localeName)
+    public function getLocale($localeName)
     {
         $localeManager = $this->getDependencyContainer()->getLocaleManager();
-        return $localeManager->getLocale($localeName)->getPrimaryKey();
+
+        return $localeManager->getLocale($localeName);
     }
 
     /**
      * @return string
      */
-    public function getCurrentLocale()
+    public function getCurrentLocaleName()
     {
         return \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale();
     }
@@ -51,7 +53,7 @@ class LocaleFacade extends AbstractFacade
     /**
      * @return array
      */
-    public function getRelevantLocales()
+    public function getRelevantLocaleNames()
     {
         //TODO retrieve this
         //just some different locales
@@ -59,19 +61,19 @@ class LocaleFacade extends AbstractFacade
     }
 
     /**
-     * @return int
+     * @return LocaleDto
      */
-    public function getCurrentIdLocale()
+    public function getCurrentLocale()
     {
-        $localeName = $this->getCurrentLocale();
+        $localeName = $this->getCurrentLocaleName();
 
-        return $this->getIdLocale($localeName);
+        return $this->getLocale($localeName);
     }
 
     /**
      * @param string $localeName
      *
-     * @return int
+     * @return LocaleDto
      * @throws LocaleExistsException
      */
     public function createLocale($localeName)
