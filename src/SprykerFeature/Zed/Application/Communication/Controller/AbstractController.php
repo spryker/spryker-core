@@ -179,11 +179,33 @@ abstract class AbstractController
     }
 
     /**
-     * @param array $breadcrumbs
+     * @return void
      */
-    protected function setBreadcrumbs(array $breadcrumbs)
+    protected function clearBreadcrumbs()
     {
-        $this->getTwig()->addGlobal('breadcrumbs', $breadcrumbs);
+        $this->getTwig()->addGlobal('breadcrumbs', []);
+    }
+
+    /**
+     * @param string $label
+     * @param string $uri
+     */
+    protected function addBreadcrumb($label, $uri)
+    {
+        $twig = $this->getTwig();
+        $globals = $twig->getGlobals();
+        $breadcrumbs = $globals['breadcrumbs'];
+
+        if ($breadcrumbs === null) {
+            $breadcrumbs = [];
+        }
+
+        $breadcrumbs[] = [
+            'label' => $label,
+            'uri' => $uri,
+        ];
+
+        $twig->addGlobal('breadcrumbs', $breadcrumbs);
     }
 
     /**
