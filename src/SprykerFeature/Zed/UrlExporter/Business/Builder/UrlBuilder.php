@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\UrlExporter\Business\Builder;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class UrlBuilder implements UrlBuilderInterface
@@ -27,11 +28,11 @@ class UrlBuilder implements UrlBuilderInterface
 
     /**
      * @param array $urlResultSet
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function buildUrls(array $urlResultSet, $locale)
+    public function buildUrls(array $urlResultSet, LocaleDto $locale)
     {
         $returnedResultSet = [];
         foreach ($urlResultSet as $index => $url) {

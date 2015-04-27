@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\UrlExporter\Communication\Plugin;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -22,11 +23,11 @@ class UrlQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPlug
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, $localeName)
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
     {
         $queryContainer = $this->getDependencyContainer()->getUrlExporterQueryContainer();
 
