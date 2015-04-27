@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\GlossaryExporter\Communication\Plugin;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\GlossaryExporter\Communication\GlossaryExporterDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
@@ -41,11 +42,11 @@ class TranslationProcessorPlugin extends AbstractPlugin implements DataProcessor
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
     {
         foreach ($resultSet as $index => $translation) {
             $key = $this->keyBuilder->generateKey($translation['translation_key'], $locale);
