@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Oms\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
+use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -21,13 +21,13 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return ModelCriteria
      */
-    public function getOrderItemsByStatus($states, $processName)
+    public function getOrderItemsByState($states, $processName)
     {
         return SpySalesOrderItemQuery::create()
             ->joinProcess(null, $joinType = Criteria::INNER_JOIN)
             ->joinProcess(null, $joinType = Criteria::INNER_JOIN)
             ->where("Process.name = ?", $processName)
-            ->where("Status.name IN ('" . implode("', '", $states) . "')");
+            ->where("State.name IN ('" . implode("', '", $states) . "')");
     }
 
     /**
@@ -57,7 +57,7 @@ class OmsQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param StatusInterface[] $states
+     * @param StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
      *
@@ -74,18 +74,18 @@ class OmsQueryContainer extends AbstractQueryContainer
         }
 
         $stateNames = [];
-        foreach ($states as $status) {
-            $stateNames[] = $status->getName();
+        foreach ($states as $state) {
+            $stateNames[] = $state->getName();
         }
 
-        $query->useStatusQuery()->filterByName($stateNames)->endUse();
+        $query->useStateQuery()->filterByName($stateNames)->endUse();
         $query->filterBySku($sku);
 
         return $query;
     }
 
     /**
-     * @param StatusInterface[] $states
+     * @param StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
      *
@@ -100,11 +100,11 @@ class OmsQueryContainer extends AbstractQueryContainer
         }
 
         $stateNames = [];
-        foreach ($states as $status) {
-            $stateNames[] = $status->getName();
+        foreach ($states as $state) {
+            $stateNames[] = $state->getName();
         }
 
-        $query->useStatusQuery()->filterByName($stateNames)->endUse();
+        $query->useStateQuery()->filterByName($stateNames)->endUse();
         $query->filterBySku($sku);
 
         return $query;

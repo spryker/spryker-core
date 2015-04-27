@@ -55,11 +55,11 @@ interface EventInterface
     public function addTransition(TransitionInterface $transition);
 
     /**
-     * @param StatusInterface $sourceStatus
+     * @param StateInterface $sourceState
      *
      * @return TransitionInterface[]
      */
-    public function getTransitionsBySource(StatusInterface $sourceStatus);
+    public function getTransitionsBySource(StateInterface $sourceState);
 
     /**
      * @return TransitionInterface[]

@@ -3,19 +3,19 @@
 namespace SprykerFeature\Zed\Oms\Business\Model;
 
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
+use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
 
 interface ProcessInterface
 {
     /**
-     * @param string $highlightStatus
+     * @param string $highlightState
      * @param null $format
      * @param int $fontsize
      *
      * @return bool
      */
-    public function draw($highlightStatus = null, $format = null, $fontsize = null);
+    public function draw($highlightState = null, $format = null, $fontsize = null);
 
     /**
      * @param ProcessInterface[] $subprocesses
@@ -58,46 +58,46 @@ interface ProcessInterface
     public function getName();
 
     /**
-     * @param StatusInterface[] $statuses
+     * @param StateInterface[] $states
      */
-    public function setStatuses($statuses);
+    public function setStates($states);
 
     /**
-     * @param StatusInterface $status
+     * @param StateInterface $state
      */
-    public function addStatus(StatusInterface $status);
+    public function addState(StateInterface $state);
 
     /**
-     * @param string $statusId
+     * @param string $stateId
      *
-     * @return StatusInterface
+     * @return StateInterface
      */
-    public function getStatus($statusId);
+    public function getState($stateId);
 
     /**
-     * @param string $statusId
+     * @param string $stateId
      *
      * @return bool
      */
-    public function hasStatus($statusId);
+    public function hasState($stateId);
 
     /**
-     * @param string $statusId
+     * @param string $stateId
      *
-     * @return StatusInterface
+     * @return StateInterface
      * @throws \Exception
      */
-    public function getStatusFromAllProcesses($statusId);
+    public function getStateFromAllProcesses($stateId);
 
     /**
-     * @return StatusInterface[]
+     * @return StateInterface[]
      */
-    public function getStatuses();
+    public function getStates();
 
     /**
      * @return bool
      */
-    public function hasStatuses();
+    public function hasStates();
 
     /**
      * @param TransitionInterface $transition
@@ -120,14 +120,14 @@ interface ProcessInterface
     public function hasTransitions();
 
     /**
-     * @return StatusInterface[]
+     * @return StateInterface[]
      */
-    public function getAllStatuses();
+    public function getAllStates();
 
     /**
-     * @return StatusInterface[]
+     * @return StateInterface[]
      */
-    public function getAllReservedStatuses();
+    public function getAllReservedStates();
 
     /**
      * @return TransitionInterface[]

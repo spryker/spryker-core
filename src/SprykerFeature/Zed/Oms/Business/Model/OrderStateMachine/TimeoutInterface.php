@@ -30,11 +30,11 @@ interface TimeoutInterface
 
     /**
      * @param ProcessInterface $process
-     * @param string $statusId
+     * @param string $stateId
      * @param $orderItem
      *
      * @throws Exception
      * @throws PropelException
      */
-    public function dropOldTimeout(ProcessInterface $process, $statusId, SpySalesOrderItem $orderItem);
+    public function dropOldTimeout(ProcessInterface $process, $stateId, SpySalesOrderItem $orderItem);
 }

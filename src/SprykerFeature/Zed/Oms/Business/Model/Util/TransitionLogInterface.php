@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Oms\Business\Model\Util;
 
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
+use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -36,15 +36,15 @@ interface TransitionLogInterface
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StatusInterface $status
+     * @param StateInterface $state
      */
-    public function addSourceStatus(SpySalesOrderItem $item, StatusInterface $status);
+    public function addSourceState(SpySalesOrderItem $item, StateInterface $state);
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StatusInterface $status
+     * @param StateInterface $state
      */
-    public function addTargetStatus(SpySalesOrderItem $item, StatusInterface $status);
+    public function addTargetState(SpySalesOrderItem $item, StateInterface $state);
 
     /**
      * @param $error

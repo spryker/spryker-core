@@ -72,7 +72,7 @@ class IndexController extends AbstractController
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();
 
-        echo $this->getLocator()->oms()->facade()->drawProcess($processEntity->getName(), $orderItem->getStatus()->getName()), $format, $fontsize;
+        echo $this->getLocator()->oms()->facade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName()), $format, $fontsize;
     }
 
     /**
@@ -114,20 +114,20 @@ class IndexController extends AbstractController
         echo '<td><b>Order</td>';
         echo '<td><b>OrderItem</td>';
         echo '<td><b>Process</td>';
-        echo '<td><b>Status</td>';
+        echo '<td><b>State</td>';
         echo '<td><b>Events</td>';
         echo '</tr>';
 
         foreach ($orderItems as $orderItem) {
             $process = $this->getLocator()->oms()->facade()->getProcess($orderItem->getProcess()->getName());
-            $events = $process->getStatusFromAllProcesses($orderItem->getStatus()->getName())->getEvents();
+            $events = $process->getStateFromAllProcesses($orderItem->getState()->getName())->getEvents();
 
             /* @var $orderItem SpySalesOrderItem */
             echo '<tr>';
             echo '<td><a href="/sales/order-details/activity-log?id_sales_order=' . $orderItem->getOrder()->getIdSalesOrder() . '">' . $orderItem->getOrder()->getIdSalesOrder() . '</a></td>';
             echo '<td>' . $orderItem->getIdSalesOrderItem() . '</td>';
             echo '<td>' . $orderItem->getProcess()->getName() . '</td>';
-            echo '<td>' . $orderItem->getStatus()->getName() . '</td>';
+            echo '<td>' . $orderItem->getState()->getName() . '</td>';
 
             echo '<td>';
             foreach ($events as $event) {
@@ -185,7 +185,7 @@ class IndexController extends AbstractController
     protected function debug($orderItems)
     {
         foreach ($orderItems as $orderItem) {
-            echo $orderItem->getIdSalesOrderItem() . $orderItem->getStatus()->getName() . '<br />';
+            echo $orderItem->getIdSalesOrderItem() . $orderItem->getState()->getName() . '<br />';
         }
 
         echo '<pre>';

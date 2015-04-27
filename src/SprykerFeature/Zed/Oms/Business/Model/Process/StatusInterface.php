@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Oms\Business\Model\Process;
 
 use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
 
-interface StatusInterface
+interface StateInterface
 {
     /**
      * @param TransitionInterface[] $incomingTransitions

@@ -7,7 +7,7 @@ use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
+use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLog;
@@ -41,12 +41,12 @@ class TransitionLog implements TransitionLogInterface
     protected $conditions = array();
 
     /**
-     * @var StatusInterface[]
+     * @var StateInterface[]
      */
     protected $sources = array();
 
     /**
-     * @var StatusInterface[]
+     * @var StateInterface[]
      */
     protected $targets = array();
 
@@ -116,20 +116,20 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StatusInterface $status
+     * @param StateInterface $state
      */
-    public function addSourceStatus(SpySalesOrderItem $item, StatusInterface $status)
+    public function addSourceState(SpySalesOrderItem $item, StateInterface $state)
     {
-        $this->sources[$item->getIdSalesOrderItem()] = $status;
+        $this->sources[$item->getIdSalesOrderItem()] = $state;
     }
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StatusInterface $status
+     * @param StateInterface $state
      */
-    public function addTargetStatus(SpySalesOrderItem $item, StatusInterface $status)
+    public function addTargetState(SpySalesOrderItem $item, StateInterface $state)
     {
-        $this->targets[$item->getIdSalesOrderItem()] = $status;
+        $this->targets[$item->getIdSalesOrderItem()] = $state;
     }
 
     /**
