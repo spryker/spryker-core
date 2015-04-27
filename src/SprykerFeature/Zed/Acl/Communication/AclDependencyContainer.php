@@ -3,7 +3,9 @@
 namespace SprykerFeature\Zed\Acl\Communication;
 
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
 use SprykerFeature\Zed\Acl\Communication\Form\UserForm;
+use SprykerFeature\Zed\Acl\Communication\Grid\RulesetGrid;
 use SprykerFeature\Zed\Acl\Communication\Grid\UserGrid;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
@@ -69,13 +71,44 @@ class AclDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param Request $request
-     * @param int $idUser
+     *
+     * @return RulesetGrid
+     */
+    public function createRulesetGrid(Request $request, $idGroup)
+    {
+        $aclQueryContainer = $this->createAclQueryContainer();
+        $query = $aclQueryContainer->queryRulesFromGroup($idGroup);
+
+        return $this->getFactory()->createGridRulesetGrid(
+            $query,
+            $request,
+            $this->getLocator()
+        );
+    }
+
+    /**
+     * @param Request $request
      *
      * @return UserForm
      */
-    public function createUserWithGroupForm(Request $request, $idUser = null)
+    public function createUserWithGroupForm(Request $request)
     {
         return $this->getFactory()->createFormUserForm(
+            $request,
+            $this->getLocator(),
+            $this->getFactory(),
+            $this->createAclQueryContainer()
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return GroupForm
+     */
+    public function createGroupForm(Request $request)
+    {
+        return $this->getFactory()->createFormGroupForm(
             $request,
             $this->getLocator(),
             $this->getFactory(),

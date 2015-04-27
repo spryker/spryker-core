@@ -1,0 +1,12 @@
+{% extends '@Application/layout.twig' %}
+
+
+{% block body_class %}spy-page{% endblock %}
+
+
+{% block content %}
+
+    {% include '@Acl/Group/form.twig' %}
+    {% include '@Acl/Group/rules.twig' %}
+
+{% endblock %}

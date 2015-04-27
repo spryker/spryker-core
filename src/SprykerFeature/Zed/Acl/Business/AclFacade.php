@@ -53,7 +53,7 @@ class AclFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createGroupModel()
-            ->save($data);
+            ->updateGroup($data);
     }
 
     /**
@@ -152,6 +152,18 @@ class AclFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createGroupModel()
             ->hasUser($idGroup, $idUser);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasGroupByName($name)
+    {
+        return $this->getDependencyContainer()
+            ->createGroupModel()
+            ->hasGroupName($name);
     }
 
     /**
