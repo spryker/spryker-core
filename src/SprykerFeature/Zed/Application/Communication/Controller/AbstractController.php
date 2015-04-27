@@ -10,6 +10,8 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use LogicException;
+use Twig_Environment;
 
 abstract class AbstractController
 {
@@ -160,5 +162,27 @@ abstract class AbstractController
     protected function getApplication()
     {
         return $this->application;
+    }
+
+    /**
+     * @return Twig_Environment
+     * @throws LogicException
+     */
+    protected function getTwig()
+    {
+        $twig = $this->getApplication()['twig'];
+        if ($twig === null) {
+            throw new LogicException('Twig environment not set up.');
+        }
+
+        return $twig;
+    }
+
+    /**
+     * @param array $breadcrumbs
+     */
+    protected function setBreadcrumbs(array $breadcrumbs)
+    {
+        $this->getTwig()->addGlobal('breadcrumbs', $breadcrumbs);
     }
 }
