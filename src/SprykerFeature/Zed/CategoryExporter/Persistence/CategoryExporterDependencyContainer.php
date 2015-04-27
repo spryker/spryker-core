@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\CategoryExporter\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryExporterPersistence;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\CategoryNodeQueryExpander;
 use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\NavigationQueryExpander;
@@ -18,28 +19,28 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
 class CategoryExporterDependencyContainer extends AbstractDependencyContainer
 {
     /**
-     * @param $locale
+     * @param LocaleDto $locale
      *
      * @return CategoryNodeQueryExpander
      */
-    public function createCategoryNodeQueryExpander($locale)
+    public function createCategoryNodeQueryExpander(LocaleDto $locale)
     {
         return $this->getFactory()->createQueryExpanderCategoryNodeQueryExpander(
             $this->getCategoryQueryContainer(),
-            $this->getLocaleIdentifier($locale)
+            $locale->getIdLocale()
         );
     }
 
     /**
-     * @param $locale
+     * @param LocaleDto $locale
      *
      * @return NavigationQueryExpander
      */
-    public function createNavigationQueryExpander($locale)
+    public function createNavigationQueryExpander(LocaleDto $locale)
     {
         return $this->getFactory()->createQueryExpanderNavigationQueryExpander(
             $this->getCategoryQueryContainer(),
-            $this->getLocaleIdentifier($locale)
+            $locale->getIdLocale()
         );
     }
 
@@ -49,14 +50,5 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     protected function getCategoryQueryContainer()
     {
         return $this->getLocator()->category()->queryContainer();
-    }
-
-    /**
-     * @param string $localeName
-     * @return int
-     */
-    protected function getLocaleIdentifier($localeName)
-    {
-        return $this->getLocator()->locale()->facade()->getLocale($localeName)->getIdLocale();
     }
 }

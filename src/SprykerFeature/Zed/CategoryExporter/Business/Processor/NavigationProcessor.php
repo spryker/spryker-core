@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business\Processor;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\CategoryExporter\Business\Formatter\CategoryNodeFormatterInterface;
 
@@ -31,10 +32,11 @@ class NavigationProcessor implements NavigationProcessorInterface
 
     /**
      * @param array $categoryNodes
-     * @param string $locale
+     * @param LocaleDto $locale
+     *
      * @return array
      */
-    public function process(array $categoryNodes, $locale)
+    public function process(array $categoryNodes, LocaleDto $locale)
     {
         $navigationKey = $this->navigationKeyBuilder->generateKey('', $locale);
         $formattedCategoryNodes = [];
