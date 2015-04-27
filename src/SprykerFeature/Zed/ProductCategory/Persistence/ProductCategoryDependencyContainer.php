@@ -33,7 +33,7 @@ class ProductCategoryDependencyContainer extends AbstractDependencyContainer
      */
     protected function getLocaleIdentifier($locale)
     {
-        $localeId = $this->getLocator()->locale()->facade()->getIdLocale($locale);
+        $localeId = $this->getLocator()->locale()->facade()->getLocale($locale)->getIdLocale();
 
         return $localeId;
     }
