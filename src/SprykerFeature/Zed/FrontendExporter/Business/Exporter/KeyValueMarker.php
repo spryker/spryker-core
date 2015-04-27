@@ -23,9 +23,9 @@ class KeyValueMarker implements MarkerInterface
     private $keyBuilder;
 
     /**
-     * @param WriterInterface       $writer
-     * @param ReaderInterface       $reader
-     * @param KeyBuilderInterface   $keyBuilder
+     * @param WriterInterface $writer
+     * @param ReaderInterface $reader
+     * @param KeyBuilderInterface $keyBuilder
      */
     public function __construct(
         WriterInterface $writer,

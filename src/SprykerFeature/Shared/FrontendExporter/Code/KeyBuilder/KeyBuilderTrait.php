@@ -2,12 +2,9 @@
 
 namespace SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder;
 
-/**
- * Trait KeyAware
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Builder
- */
 use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Kernel\Store;
+
 trait KeyBuilderTrait
 {
     /**
@@ -24,7 +21,7 @@ trait KeyBuilderTrait
     public function generateKey($data, LocaleDto $locale)
     {
         $keyParts = [
-            \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName(),
+            Store::getInstance()->getStoreName(),
             $locale->getLocaleName(),
             $this->getBundleName(),
             $this->buildKey($data)
