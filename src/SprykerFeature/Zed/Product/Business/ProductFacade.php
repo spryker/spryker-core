@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Product\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
@@ -151,18 +152,18 @@ class ProductFacade extends AbstractFacade
 
     /**
      * @param int $idAbstractProduct
-     * @param int $fkLocale
+     * @param LocaleDto $locale
      * @param string $name
      * @param string $attributes
      *
      * @return int
      * @throws AbstractProductAttributesExistException
      */
-    public function createAbstractProductAttributes($idAbstractProduct, $fkLocale, $name, $attributes)
+    public function createAbstractProductAttributes($idAbstractProduct, LocaleDto $locale, $name, $attributes)
     {
         $productManager = $this->getDependencyContainer()->createProductManager();
 
-        return $productManager->createAbstractProductAttributes($idAbstractProduct, $fkLocale, $name, $attributes);
+        return $productManager->createAbstractProductAttributes($idAbstractProduct, $locale, $name, $attributes);
     }
 
     /**
@@ -194,18 +195,18 @@ class ProductFacade extends AbstractFacade
 
     /**
      * @param int $idConcreteProduct
-     * @param int $fkLocale
+     * @param LocaleDto $locale
      * @param string $name
      * @param string $attributes
      *
      * @return int
      * @throws ConcreteProductAttributesExistException
      */
-    public function createConcreteProductAttributes($idConcreteProduct, $fkLocale, $name, $attributes)
+    public function createConcreteProductAttributes($idConcreteProduct, LocaleDto $locale, $name, $attributes)
     {
         $productManager = $this->getDependencyContainer()->createProductManager();
 
-        return $productManager->createConcreteProductAttributes($idConcreteProduct, $fkLocale, $name, $attributes);
+        return $productManager->createConcreteProductAttributes($idConcreteProduct, $locale, $name, $attributes);
     }
 
     /**
@@ -221,31 +222,31 @@ class ProductFacade extends AbstractFacade
     /**
      * @param string $sku
      * @param string $url
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return Url
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createProductUrl($sku, $url, $localeName)
+    public function createProductUrl($sku, $url, LocaleDto $locale)
     {
-        return $this->getDependencyContainer()->createProductManager()->createProductUrl($sku, $url, $localeName);
+        return $this->getDependencyContainer()->createProductManager()->createProductUrl($sku, $url, $locale);
     }
 
     /**
      * @param string $sku
      * @param string $url
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return Url
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createAndTouchProductUrl($sku, $url, $localeName)
+    public function createAndTouchProductUrl($sku, $url, LocaleDto $locale)
     {
-        return $this->getDependencyContainer()->createProductManager()->createAndTouchProductUrl($sku, $url, $localeName);
+        return $this->getDependencyContainer()->createProductManager()->createAndTouchProductUrl($sku, $url, $locale);
     }
 
     /**
