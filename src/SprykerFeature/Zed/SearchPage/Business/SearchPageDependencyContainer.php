@@ -22,9 +22,9 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
     /**
      * @return PageAttributeTypeWriter
      */
-    public function createPageAttributeTypeWriter()
+    public function createPageAttributeTemplateWriter()
     {
-        return $this->getFactory()->createPageAttributeTypeWriter();
+        return $this->getFactory()->createPageAttributeTemplateWriter();
     }
 
     /**

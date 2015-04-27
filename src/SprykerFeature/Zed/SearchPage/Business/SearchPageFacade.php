@@ -20,23 +20,4 @@ class SearchPageFacade extends AbstractFacade
 
     }
 
-    public function createPageAttributeType()
-    {
-
-    }
-
-    public function updatePageAttributeType()
-    {
-
-    }
-
-    public function createDocumentAttribute()
-    {
-
-    }
-
-    public function updateDocumentAttribute()
-    {
-
-    }
 }
