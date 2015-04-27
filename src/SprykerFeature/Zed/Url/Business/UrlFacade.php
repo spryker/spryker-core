@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Url\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
@@ -17,7 +18,7 @@ class UrlFacade extends AbstractFacade
 {
     /**
      * @param string $url
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $resourceType
      * @param int $idResource
      *
@@ -25,28 +26,10 @@ class UrlFacade extends AbstractFacade
      * @throws PropelException
      * @throws UrlExistsException
      */
-    public function createUrl($url, $localeName, $resourceType, $idResource)
+    public function createUrl($url, LocaleDto $locale, $resourceType, $idResource)
     {
         $urlManager = $this->getDependencyContainer()->getUrlManager();
-        $pageUrl = $urlManager->createUrl($url, $localeName, $resourceType, $idResource);
-
-        return $urlManager->convertUrlEntityToTransfer($pageUrl);
-    }
-
-    /**
-     * @param string $url
-     * @param int $fkLocale
-     * @param string $resourceType
-     * @param int $idResource
-     *
-     * @return Url
-     * @throws PropelException
-     * @throws UrlExistsException
-     */
-    public function createUrlByLocaleFk($url, $fkLocale, $resourceType, $idResource)
-    {
-        $urlManager = $this->getDependencyContainer()->getUrlManager();
-        $pageUrl = $urlManager->createUrlByLocaleFk($url, $fkLocale, $resourceType, $idResource);
+        $pageUrl = $urlManager->createUrl($url, $locale, $resourceType, $idResource);
 
         return $urlManager->convertUrlEntityToTransfer($pageUrl);
     }
@@ -159,18 +142,18 @@ class UrlFacade extends AbstractFacade
 
     /**
      * @param string $url
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param int $idRedirect
      *
      * @return Url
      * @throws UrlExistsException
      * @throws MissingLocaleException
      */
-    public function createRedirectUrl($url, $localeName, $idRedirect)
+    public function createRedirectUrl($url, LocaleDto $locale, $idRedirect)
     {
         $redirectManager = $this->getDependencyContainer()->getRedirectManager();
 
-        return $redirectManager->createRedirectUrl($url, $localeName, $idRedirect);
+        return $redirectManager->createRedirectUrl($url, $locale, $idRedirect);
     }
 
     /**

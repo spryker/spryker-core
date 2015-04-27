@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
@@ -59,7 +60,7 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param string $url
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $resourceType
      * @param int $idResource
      *
@@ -68,36 +69,14 @@ class UrlManager implements UrlManagerInterface
      * @throws UrlExistsException
      * @throws MissingLocaleException
      */
-    public function createUrl($url, $localeName, $resourceType, $idResource)
+    public function createUrl($url, LocaleDto $locale, $resourceType, $idResource)
     {
         $this->checkUrlDoesNotExist($url);
-        $fkLocale = $this->localeFacade->getLocale($localeName)->getIdLocale();
 
-        $urlEntity = $this->locator->url()->entitySpyUrl();
-        $urlEntity
-            ->setUrl($url)
-            ->setFkLocale($fkLocale)
-            ->setResource($resourceType, $idResource)
-
-            ->save()
-        ;
-
-        return $urlEntity;
-    }
-
-    /**
-     * @param string $url
-     * @param int $fkLocale
-     * @param string $resourceType
-     * @param int $idResource
-     *
-     * @return SpyUrl
-     * @throws PropelException
-     * @throws UrlExistsException
-     */
-    public function createUrlByLocaleFk($url, $fkLocale, $resourceType, $idResource)
-    {
-        $this->checkUrlDoesNotExist($url);
+        $fkLocale = $locale->getIdLocale();
+        if (null === $fkLocale) {
+            $fkLocale = $this->localeFacade->getLocale($locale->getLocaleName())->getIdLocale();
+        }
 
         $urlEntity = $this->locator->url()->entitySpyUrl();
         $urlEntity
