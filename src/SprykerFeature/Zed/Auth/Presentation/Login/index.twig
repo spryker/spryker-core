@@ -1,5 +1,11 @@
 {% extends '@Application/layout.twig' %}
 
+
+{% block head_css %}
+    <link rel="stylesheet" type="text/css" href="{{ staticPath('Auth/styles/bundle.css') }}">
+{% endblock %}
+
+
 {% block body_header %}{% endblock %}
 {% block body_menu   %}{% endblock %}
 
