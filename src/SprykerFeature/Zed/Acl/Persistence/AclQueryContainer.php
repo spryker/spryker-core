@@ -1,6 +1,7 @@
 <?php
 namespace SprykerFeature\Zed\Acl\Persistence;
 
+use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -40,6 +41,7 @@ class AclQueryContainer extends AbstractQueryContainer
     const SPY_ACL_GROUPS_HAS_ROLES = 'SpyAclGroupsHasRoles';
     const GROUP_NAME = 'group_name';
     const ID_ACL_GROUP = 'id_acl_group';
+    const GROUP_JOIN = 'groupJoin';
 
     /**
      * @param string $name
@@ -133,6 +135,33 @@ class AclQueryContainer extends AbstractQueryContainer
 
         $query->filterByFkAclGroup($idGroup)
               ->filterByFkUserUser($idUser);
+
+        return $query;
+    }
+
+    /**
+     * @param int $idGroup
+     *
+     * @return SpyUserUserQuery
+     */
+    public function queryGroupUsers($idGroup)
+    {
+        $query = $this->getDependencyContainer()->createUserQuery();
+
+        $join = new Join();
+
+        $join->addCondition(
+            SpyUserUserTableMap::COL_ID_USER_USER,
+            SpyAclUserHasGroupTableMap::COL_FK_USER_USER
+        );
+
+        $query->addJoinObject($join, self::GROUP_JOIN);
+
+        $condition = sprintf('%s = %s', SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP, $idGroup);
+        $query->addJoinCondition(
+            self::GROUP_JOIN,
+            $condition
+        );
 
         return $query;
     }
@@ -267,6 +296,19 @@ class AclQueryContainer extends AbstractQueryContainer
 
         $query->withColumn(SpyAclGroupTableMap::COL_NAME, self::GROUP_NAME);
         $query->withColumn(SpyAclGroupTableMap::COL_ID_ACL_GROUP, self::ID_ACL_GROUP);
+
+        return $query;
+    }
+
+    /**
+     * @param int $idGroup
+     *
+     * @return SpyUserUserQuery
+     */
+    public function queryUsersWithGroupByGroupId($idGroup)
+    {
+        $query = $this->queryUsersWithGroup();
+        $query->filterBy(SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP, $idGroup);
 
         return $query;
     }

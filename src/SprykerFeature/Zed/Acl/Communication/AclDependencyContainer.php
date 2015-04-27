@@ -71,6 +71,24 @@ class AclDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param Request $request
+     * @param int $idGroup
+     *
+     * @return UserGrid
+     */
+    public function createUserGridByGroupId(Request $request, $idGroup)
+    {
+        $aclQueryContainer = $this->createAclQueryContainer();
+        $query = $aclQueryContainer->queryGroupUsers($idGroup);
+
+        return $this->getFactory()->createGridUserGrid(
+            $query,
+            $request,
+            $this->getLocator()
+        );
+    }
+
+    /**
+     * @param Request $request
      *
      * @return RulesetGrid
      */

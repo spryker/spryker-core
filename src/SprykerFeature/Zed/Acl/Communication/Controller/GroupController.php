@@ -77,8 +77,12 @@ class GroupController extends AbstractController
         return $this->jsonResponse($data);
     }
 
-    public function rolesAction(Request $request)
+    public function usersAction(Request $request)
     {
         $idGroup = $request->get('id');
+        $grid = $this->getDependencyContainer()->createUserGridByGroupId($request, $idGroup);
+        $data = $grid->renderData();
+
+        return $this->jsonResponse($data);
     }
 }
