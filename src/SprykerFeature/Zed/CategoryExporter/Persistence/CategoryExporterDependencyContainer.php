@@ -57,6 +57,6 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
      */
     protected function getLocaleIdentifier($localeName)
     {
-        return $this->getLocator()->locale()->facade()->getIdLocale($localeName);
+        return $this->getLocator()->locale()->facade()->getLocale($localeName)->getIdLocale();
     }
 }
