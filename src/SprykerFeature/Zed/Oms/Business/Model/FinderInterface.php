@@ -54,5 +54,5 @@ interface FinderInterface
      *
      * @return string
      */
-    public function getStatusDisplayName(SpySalesOrderItem $orderItem);
+    public function getStateDisplayName(SpySalesOrderItem $orderItem);
 }

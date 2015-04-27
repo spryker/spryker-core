@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Oms\Business\Model;
 
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
+use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
 use SimpleXMLElement;
 use LogicException;
@@ -27,9 +27,9 @@ class Builder implements BuilderInterface
     protected $event;
 
     /**
-     * @var StatusInterface
+     * @var StateInterface
      */
-    protected $status;
+    protected $state;
 
     /**
      * @var TransitionInterface
@@ -48,15 +48,15 @@ class Builder implements BuilderInterface
 
     /**
      * @param EventInterface      $event
-     * @param StatusInterface     $status
+     * @param StateInterface     $state
      * @param TransitionInterface $transition
      * @param ProcessInterface    $process
      * @param string              $xmlFolder
      */
-    public function __construct(EventInterface $event, StatusInterface $status, TransitionInterface $transition, $process, $xmlFolder = null)
+    public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, $process, $xmlFolder = null)
     {
         $this->event = $event;
-        $this->status = $status;
+        $this->state = $state;
         $this->transition = $transition;
         $this->process = $process;
         if ($xmlFolder) {
@@ -84,13 +84,13 @@ class Builder implements BuilderInterface
 
             list($processMap, $mainProcess) = $this->createSubProcess($processMap);
 
-            $statusToProcessMap = $this->createStatuses($processMap);
+            $stateToProcessMap = $this->createStates($processMap);
 
             $this->createSubprocesses($processMap);
 
             $eventMap = $this->createEvents();
 
-            $this->createTransitions($statusToProcessMap, $processMap, $eventMap);
+            $this->createTransitions($stateToProcessMap, $processMap, $eventMap);
 
             assert('isset($mainProcess)');
 
@@ -257,49 +257,49 @@ class Builder implements BuilderInterface
      *
      * @return ProcessInterface[]
      */
-    protected function createStatuses(array $processMap)
+    protected function createStates(array $processMap)
     {
-        $statusToProcessMap = array();
+        $stateToProcessMap = array();
 
         $xmlProcesses = $this->rootElement->children();
         foreach ($xmlProcesses as $xmlProcess) {
             $processName = $this->getAttributeString($xmlProcess, 'name');
             $process = $processMap[$processName];
 
-            if (!empty($xmlProcess->statuses)) {
-                $xmlStatuses = $xmlProcess->statuses->children();
-                foreach ($xmlStatuses as $xmlStatus) {
-                    /* @var $xmlStatus SimpleXMLElement */
-                    $status = clone $this->status;
-                    $status->setName($this->getAttributeString($xmlStatus, 'name'));
-                    $status->setDisplay($this->getAttributeString($xmlStatus, 'display'));
-                    $status->setReserved($this->getAttributeBoolean($xmlStatus, 'reserved'));
-                    $status->setProcess($process);
+            if (!empty($xmlProcess->states)) {
+                $xmlStates = $xmlProcess->states->children();
+                foreach ($xmlStates as $xmlState) {
+                    /* @var $xmlState SimpleXMLElement */
+                    $state = clone $this->state;
+                    $state->setName($this->getAttributeString($xmlState, 'name'));
+                    $state->setDisplay($this->getAttributeString($xmlState, 'display'));
+                    $state->setReserved($this->getAttributeBoolean($xmlState, 'reserved'));
+                    $state->setProcess($process);
 
-                    if ($xmlStatus->flag) {
-                        $flags = $xmlStatus->children();
+                    if ($xmlState->flag) {
+                        $flags = $xmlState->children();
                         foreach ($flags->flag as $flag) {
-                            $status->addFlag((string) $flag);
+                            $state->addFlag((string) $flag);
                         }
                     }
 
-                    $process->addStatus($status);
-                    $statusToProcessMap[$status->getName()] = $process;
+                    $process->addState($state);
+                    $stateToProcessMap[$state->getName()] = $process;
                 }
             }
         }
 
-        return $statusToProcessMap;
+        return $stateToProcessMap;
     }
 
     /**
-     * @param ProcessInterface[] $statusToProcessMap
+     * @param ProcessInterface[] $stateToProcessMap
      * @param ProcessInterface[] $processMap
      * @param EventInterface[] $eventMap
      *
      * @throws LogicException
      */
-    protected function createTransitions(array $statusToProcessMap, array $processMap, array $eventMap)
+    protected function createTransitions(array $stateToProcessMap, array $processMap, array $eventMap)
     {
         foreach ($this->rootElement as $xmlProcess) {
             if (!empty($xmlProcess->transitions)) {
@@ -315,20 +315,20 @@ class Builder implements BuilderInterface
                     $transition->setHappy($this->getAttributeBoolean($xmlTransition, 'happy'));
 
                     $sourceName = (string) $xmlTransition->source;
-                    $sourceProcess = $statusToProcessMap[$sourceName];
-                    $sourceStatus = $sourceProcess->getStatus($sourceName);
-                    $transition->setSource($sourceStatus);
-                    $sourceStatus->addOutgoingTransition($transition);
+                    $sourceProcess = $stateToProcessMap[$sourceName];
+                    $sourceState = $sourceProcess->getState($sourceName);
+                    $transition->setSource($sourceState);
+                    $sourceState->addOutgoingTransition($transition);
 
                     $targetName = (string) $xmlTransition->target;
 
-                    if (!isset($statusToProcessMap[$targetName])) {
+                    if (!isset($stateToProcessMap[$targetName])) {
                         throw new LogicException('Target: "' . $targetName . '" does not exist from source: "' . $sourceName . '"');
                     }
-                    $targetProcess = $statusToProcessMap[$targetName];
-                    $targetStatus = $targetProcess->getStatus($targetName);
-                    $transition->setTarget($targetStatus);
-                    $targetStatus->addIncomingTransition($transition);
+                    $targetProcess = $stateToProcessMap[$targetName];
+                    $targetState = $targetProcess->getState($targetName);
+                    $transition->setTarget($targetState);
+                    $targetState->addIncomingTransition($transition);
 
                     if (isset($xmlTransition->event)) {
                         $eventId = (string) $xmlTransition->event;

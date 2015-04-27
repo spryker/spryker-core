@@ -7,7 +7,7 @@ use Exception;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcessQuery;
 
@@ -67,20 +67,20 @@ class Dummy implements DummyInterface
             }
         }
 
-        $statuses = array();
+        $states = array();
 
         $orderItems = array();
         foreach ($orderItemsArray as $orderItemArray) {
-            if (isset($statuses[$orderItemArray['status']])) {
-                $status = $statuses[$orderItemArray['status']];
+            if (isset($states[$orderItemArray['state']])) {
+                $state = $states[$orderItemArray['state']];
             } else {
-                $status = new SpyOmsOrderItemStatus();
-                $status->setName($orderItemArray['status']);
-                $status->save();
-                $statuses[$orderItemArray['status']] = $status;
+                $state = new SpyOmsOrderItemState();
+                $state->setName($orderItemArray['state']);
+                $state->save();
+                $states[$orderItemArray['state']] = $state;
             }
 
-            $txtArray[] = 'Status: ' . $status->getName();
+            $txtArray[] = 'State: ' . $state->getName();
 
             $process = SpyOmsOrderProcessQuery::create()->filterByName($orderItemArray['process'])->findOneOrCreate();
             $process->setName($orderItemArray['process']);
@@ -88,7 +88,7 @@ class Dummy implements DummyInterface
             $txtArray[] = 'Process: ' . $process->getName();
 
             $item = new SpySalesOrderItem();
-            $item->setStatus($status);
+            $item->setState($state);
             $item->setProcess($process);
 
             $item->setName('Testproduct');
@@ -121,11 +121,11 @@ class Dummy implements DummyInterface
         $c = 0;
         $process = $this->builder->createProcess($processName);
         for ($i = 0; $i < 2; $i++) {
-            foreach ($process->getAllStatuses() as $status) {
+            foreach ($process->getAllStates() as $state) {
                 $orderItemsArray[] = array(
                     'id' => $c,
                     'process' => $processName,
-                    'status' => $status->getName(),
+                    'state' => $state->getName(),
                     'orderId' => $i
                 );
                 $c++;

@@ -11,7 +11,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
 use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 
 /**
@@ -123,19 +123,19 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @param string $processName
-     * @param bool $highlightStatus
+     * @param bool $highlightState
      * @param null $format
      * @param null $fontsize
      *
      * @return bool
      */
-    public function drawProcess($processName, $highlightStatus = null, $format = null, $fontsize = null)
+    public function drawProcess($processName, $highlightState = null, $format = null, $fontsize = null)
     {
         $process = $this->getDependencyContainer()
             ->createModelBuilder()
             ->createProcess($processName);
 
-        return $process->draw($highlightStatus, $format, $fontsize);
+        return $process->draw($highlightState, $format, $fontsize);
     }
 
     /**
@@ -238,15 +238,15 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @param string $statusName
+     * @param string $stateName
      *
-     * @return SpyOmsOrderItemStatus
+     * @return SpyOmsOrderItemState
      */
-    public function getStatusEntity($statusName)
+    public function getStateEntity($stateName)
     {
         return $this->getDependencyContainer()
             ->createModelPersistenceManager()
-            ->getStatusEntity($statusName);
+            ->getStateEntity($stateName);
     }
 
     /**
@@ -262,13 +262,13 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @return SpyOmsOrderItemStatus
+     * @return SpyOmsOrderItemState
      */
-    public function getInitialStatusEntity()
+    public function getInitialStateEntity()
     {
         return $this->getDependencyContainer()
             ->createModelPersistenceManager()
-            ->getInitialStatusEntity();
+            ->getInitialStateEntity();
     }
 
     /**
@@ -288,11 +288,11 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      *
      * @return string
      */
-    public function getStatusDisplayName(SpySalesOrderItem $orderItem)
+    public function getStateDisplayName(SpySalesOrderItem $orderItem)
     {
         return $this->getDependencyContainer()
             ->createModelFinder()
-            ->getStatusDisplayName($orderItem);
+            ->getStateDisplayName($orderItem);
     }
 
 }

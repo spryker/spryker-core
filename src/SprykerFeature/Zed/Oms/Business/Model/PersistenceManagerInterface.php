@@ -2,17 +2,17 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Model;
 
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
 
 interface PersistenceManagerInterface
 {
     /**
-     * @param string $statusName
+     * @param string $stateName
      *
-     * @return SpyOmsOrderItemStatus
+     * @return SpyOmsOrderItemState
      */
-    public function getStatusEntity($statusName);
+    public function getStateEntity($stateName);
 
     /**
      * @param string $processName
@@ -22,7 +22,7 @@ interface PersistenceManagerInterface
     public function getProcessEntity($processName);
 
     /**
-     * @return SpyOmsOrderItemStatus
+     * @return SpyOmsOrderItemState
      */
-    public function getInitialStatusEntity();
+    public function getInitialStateEntity();
 }

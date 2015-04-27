@@ -18,12 +18,12 @@ class Transition implements TransitionInterface
     protected $happy;
 
     /**
-     * @var StatusInterface
+     * @var StateInterface
      */
     private $source;
 
     /**
-     * @var StatusInterface
+     * @var StateInterface
      */
     protected $target;
 
@@ -92,7 +92,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @param StatusInterface $source
+     * @param StateInterface $source
      */
     public function setSource($source)
     {
@@ -100,7 +100,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @return StatusInterface
+     * @return StateInterface
      */
     public function getSource()
     {
@@ -108,7 +108,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @param StatusInterface $target
+     * @param StateInterface $target
      */
     public function setTarget($target)
     {
@@ -116,7 +116,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @return StatusInterface
+     * @return StateInterface
      */
     public function getTarget()
     {

@@ -15,7 +15,7 @@ use SprykerFeature\Zed\Oms\Business\Model\Util\DrawerInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Util\TransitionLogInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
+use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use Generated\Zed\Ide\FactoryAutoCompletion\OmsBusiness;
@@ -80,7 +80,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelBuilder(
             $this->createModelProcessEvent(),
-            $this->createModelProcessStatus(),
+            $this->createModelProcessState(),
             $this->createModelProcessTransition(),
             $this->createModelProcess(),
             $xmlFolder
@@ -159,11 +159,11 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return StatusInterface
+     * @return StateInterface
      */
-    public function createModelProcessStatus()
+    public function createModelProcessState()
     {
-        return $this->getFactory()->createModelProcessStatus();
+        return $this->getFactory()->createModelProcessState();
     }
 
     /**
