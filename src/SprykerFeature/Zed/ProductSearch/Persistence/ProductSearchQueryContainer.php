@@ -58,10 +58,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
             ->endUse()
             ->endUse()
             ->addAsColumn(
-                '/**
- * @method ProductSearchDependencyContainer getDependencyContainer()
- */
-abstract_attributes',
+                'abstract_attributes',
                 SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES
             );
 
