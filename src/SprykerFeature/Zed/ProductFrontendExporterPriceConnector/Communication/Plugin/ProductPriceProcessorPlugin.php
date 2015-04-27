@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Communication\Plugin;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Communication\ProductFrontendExporterPriceConnectorDependencyContainer;
@@ -22,10 +23,11 @@ class ProductPriceProcessorPlugin extends AbstractPlugin implements DataProcesso
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param string $locale
+     * @param LocaleDto $locale
+     *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->getPriceProcessor()
