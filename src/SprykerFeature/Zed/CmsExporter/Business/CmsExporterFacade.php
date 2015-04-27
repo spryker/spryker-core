@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\CmsExporter\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -11,11 +12,11 @@ class CmsExporterFacade extends AbstractFacade
 {
     /**
      * @param array $pageResultSet
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function buildPages(array $pageResultSet, $locale)
+    public function buildPages(array $pageResultSet, LocaleDto $locale)
     {
         $pageBuilder = $this->getDependencyContainer()->createPageBuilder();
 
