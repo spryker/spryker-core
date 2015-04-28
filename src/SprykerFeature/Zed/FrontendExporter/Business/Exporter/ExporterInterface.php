@@ -1,6 +1,7 @@
 <?php
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResult;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
@@ -19,9 +20,9 @@ interface ExporterInterface
 
     /**
      * @param string $type
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return BatchResult
      */
-    public function exportByType($type, $locale);
+    public function exportByType($type, LocaleDto $locale);
 }

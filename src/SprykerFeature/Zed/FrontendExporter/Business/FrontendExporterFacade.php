@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResult;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
@@ -12,11 +13,11 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 class FrontendExporterFacade extends AbstractFacade
 {
     /**
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array|BatchResult[]
      */
-    public function exportKeyValueForLocale($locale)
+    public function exportKeyValueForLocale(LocaleDto $locale)
     {
         $exporter = $this->getDependencyContainer()->createYvesKeyValueExporter();
 
@@ -24,11 +25,11 @@ class FrontendExporterFacade extends AbstractFacade
     }
 
     /**
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array|BatchResult[]
      */
-    public function exportSearchForLocale($locale)
+    public function exportSearchForLocale(LocaleDto $locale)
     {
         $exporter = $this->getDependencyContainer()->getYvesSearchExporter();
 
@@ -36,11 +37,11 @@ class FrontendExporterFacade extends AbstractFacade
     }
 
     /**
-     * @param string $locale
+     * @param LocaleDto $locale
 
      * @return array|BatchResult[]
      */
-    public function updateSearchForLocale($locale)
+    public function updateSearchForLocale(LocaleDto $locale)
     {
         $exporter = $this->getDependencyContainer()->getYvesSearchUpdateExporter();
 

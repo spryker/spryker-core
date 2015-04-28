@@ -26,7 +26,7 @@ class ExportKeyValueConsole extends AbstractExporterConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $locale = \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale();
+        $locale = $this->locator->locale()->facade()->getCurrentLocale();
         $exportResults = $this->locator->frontendExporter()->facade()->exportKeyValueForLocale($locale);
 
         $this->info($this->buildSummary($exportResults));
