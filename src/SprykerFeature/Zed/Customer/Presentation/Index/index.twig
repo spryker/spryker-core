@@ -31,9 +31,9 @@
 
             <tbody>
             <tr ng-repeat="row in rows">
-                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] ]}]">{[{ row['email'] }]}</a></td>
-                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] ]}]">{[{ row['first_name'] }]}</a></td>
-                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] ]}]">{[{ row['last_name'] }]}</a></td>
+                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] }]}">{[{ row['email'] }]}</a></td>
+                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] }]}">{[{ row['first_name'] }]}</a></td>
+                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] }]}">{[{ row['last_name'] }]}</a></td>
             </tr>
             <tr ng-if="!rows.length">
                 <td colspan="4">{{ "grid.no.results" | trans }}</td>
