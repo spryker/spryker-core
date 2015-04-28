@@ -21,6 +21,7 @@ require('./config/interpolateProvider');
 require('./config/redirectInterceptor');
 require('./config/errorInterceptor');
 
+require('./service/BooleanService');
 require('./service/JSONModelDenormalizeService');
 require('./service/ArrayModelTransformService');
 
