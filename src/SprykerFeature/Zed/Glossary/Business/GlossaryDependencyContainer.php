@@ -19,6 +19,7 @@ use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
  * @method GlossaryBusiness getFactory()
+ * @method GlossaryConfig getConfig()
  */
 class GlossaryDependencyContainer extends AbstractDependencyContainer
 {
@@ -78,15 +79,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     protected function createKeySource()
     {
         return $this->getFactory()->createKeyFileKeySource(
-            $this->createSettings()->getGlossaryKeyFileName()
+            $this->getConfig()->getGlossaryKeyFileName()
         );
-    }
-
-    /**
-     * @return GlossarySettings
-     */
-    protected function createSettings()
-    {
-        return $this->getFactory()->createGlossarySettings();
     }
 }

@@ -4,9 +4,11 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerFeature\Zed\Glossary\Business;
+namespace SprykerFeature\Zed\Glossary;
 
-class GlossarySettings
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+
+class GlossaryConfig extends AbstractBundleConfig
 {
     /**
      * @return string
