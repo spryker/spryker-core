@@ -2,22 +2,24 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Dependency\Facade;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
+
 interface ProductCategoryToCategoryInterface
 {
 
     /**
      * @param string $categoryName
-     * @param int $localeId
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function hasCategoryNode($categoryName, $localeId);
+    public function hasCategoryNode($categoryName, LocaleDto $locale);
 
     /**
      * @param string $categoryName
-     * @param int $localeId
+     * @param LocaleDto $locale
      *
      * @return int
      */
-    public function getCategoryNodeIdentifier($categoryName, $localeId);
+    public function getCategoryNodeIdentifier($categoryName, LocaleDto $locale);
 }

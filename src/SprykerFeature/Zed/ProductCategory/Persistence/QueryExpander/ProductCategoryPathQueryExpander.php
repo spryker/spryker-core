@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Persistence\QueryExpander;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
@@ -14,9 +15,9 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 class ProductCategoryPathQueryExpander
 {
     /**
-     * @var int
+     * @var LocaleDto
      */
-    protected $localeId;
+    protected $locale;
 
     /**
      * @var CategoryQueryContainer
@@ -25,13 +26,13 @@ class ProductCategoryPathQueryExpander
 
     /**
      * @param CategoryQueryContainer $categoryQueryContainer
-     * @param int $localeId
+     * @param LocaleDto $locale
      */
     public function __construct(
         CategoryQueryContainer $categoryQueryContainer,
-        $localeId
+        LocaleDto $locale
     ) {
-        $this->localeId = $localeId;
+        $this->locale = $locale;
         $this->categoryQueryContainer = $categoryQueryContainer;
     }
 
@@ -65,7 +66,7 @@ class ProductCategoryPathQueryExpander
             );
         $expandableQuery->addAnd(
             SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-            $this->localeId,
+            $this->locale->getIdLocale(),
             Criteria::EQUAL
         );
 

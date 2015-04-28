@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
@@ -55,22 +56,22 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param string $localeId
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function hasProductCategoryMapping($sku, $categoryName, $localeId)
+    public function hasProductCategoryMapping($sku, $categoryName, LocaleDto $locale)
     {
         if (!$this->productFacade->hasConcreteProduct($sku)) {
             return false;
         }
 
-        if (!$this->categoryFacade->hasCategoryNode($categoryName, $localeId)) {
+        if (!$this->categoryFacade->hasCategoryNode($categoryName, $locale)) {
             return false;
         }
 
         $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
-        $idCategoryNode = $this->categoryFacade->getCategoryNodeIdentifier($categoryName, $localeId);
+        $idCategoryNode = $this->categoryFacade->getCategoryNodeIdentifier($categoryName, $locale);
 
         $mappingQuery = $this->productCategoryQueryContainer
             ->queryProductCategoryMappingByIds($idProduct, $idCategoryNode)
@@ -82,7 +83,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param string $localeId
+     * @param LocaleDto $locale
      * @return int
      *
      * @throws ProductCategoryMappingExistsException
@@ -90,12 +91,12 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @throws MissingCategoryNodeException
      * @throws PropelException
      */
-    public function createProductCategoryMapping($sku, $categoryName, $localeId)
+    public function createProductCategoryMapping($sku, $categoryName, LocaleDto $locale)
     {
-        $this->checkMappingDoesNotExist($sku, $categoryName, $localeId);
+        $this->checkMappingDoesNotExist($sku, $categoryName, $locale);
 
         $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
-        $idCategoryNode = $this->categoryFacade->getCategoryNodeIdentifier($categoryName, $localeId);
+        $idCategoryNode = $this->categoryFacade->getCategoryNodeIdentifier($categoryName, $locale);
 
         $mappingEntity = $this->locator->productCategory()->entitySpyProductCategory();
         $mappingEntity
@@ -111,19 +112,19 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param int $localeId
+     * @param LocaleDto $locale
      *
      * @throws ProductCategoryMappingExistsException
      */
-    protected function checkMappingDoesNotExist($sku, $categoryName, $localeId)
+    protected function checkMappingDoesNotExist($sku, $categoryName, LocaleDto $locale)
     {
-        if ($this->hasProductCategoryMapping($sku, $categoryName, $localeId)) {
+        if ($this->hasProductCategoryMapping($sku, $categoryName, $locale)) {
             throw new ProductCategoryMappingExistsException(
                 sprintf(
                     'Tried to create a product category mapping that already exists: Product: %s, Category: %s, Locale: %s',
                     $sku,
                     $categoryName,
-                    $localeId
+                    $locale->getLocaleName()
                 )
             );
         }

@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\ProductCategory\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryPersistence;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -14,28 +15,16 @@ use SprykerFeature\Zed\ProductCategory\Persistence\QueryExpander\ProductCategory
 class ProductCategoryDependencyContainer extends AbstractDependencyContainer
 {
     /**
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return ProductCategoryPathQueryExpander
      */
-    public function createProductCategoryPathQueryExpander($locale)
+    public function createProductCategoryPathQueryExpander(LocaleDto $locale)
     {
         return $this->getFactory()->createQueryExpanderProductCategoryPathQueryExpander(
             $this->getCategoryQueryContainer(),
-            $this->getLocaleIdentifier($locale)
+            $locale
         );
-    }
-
-    /**
-     * @param string $locale
-     *
-     * @return int
-     */
-    protected function getLocaleIdentifier($locale)
-    {
-        $localeId = $this->getLocator()->locale()->facade()->getIdLocale($locale);
-
-        return $localeId;
     }
 
     /**

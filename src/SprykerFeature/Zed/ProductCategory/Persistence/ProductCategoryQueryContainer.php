@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Persistence;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -13,7 +14,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
 {
     /**
      * @param ModelCriteria $query
-     * @param string $locale
+     * @param LocaleDto $locale
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      *
@@ -21,7 +22,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      */
     public function expandProductCategoryPathQuery(
         ModelCriteria $query,
-        $locale,
+        LocaleDto $locale,
         $excludeDirectParent = true,
         $excludeRoot = true
     ) {
