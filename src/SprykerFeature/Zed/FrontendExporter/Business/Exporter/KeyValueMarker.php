@@ -45,7 +45,7 @@ class KeyValueMarker implements MarkerInterface
      */
     public function getLastExportMarkByTypeAndLocale($exportType, LocaleDto $locale)
     {
-        $lastTimeStamp = $this->reader->read($this->keyBuilder->generateKey($exportType, $locale));
+        $lastTimeStamp = $this->reader->read($this->keyBuilder->generateKey($exportType, $locale->getLocaleName()));
 
         if ($lastTimeStamp) {
             $lastDateTime = \DateTime::createFromFormat('Y-m-d H:i:s', $lastTimeStamp);
@@ -62,7 +62,7 @@ class KeyValueMarker implements MarkerInterface
      */
     public function setLastExportMarkByTypeAndLocale($exportType, LocaleDto $locale)
     {
-        $timestampKey = $this->keyBuilder->generateKey($exportType, $locale);
+        $timestampKey = $this->keyBuilder->generateKey($exportType, $locale->getLocaleName());
         $this->writer->write([ $timestampKey => (new \DateTime())->format('Y-m-d H:i:s')]);
     }
 }
