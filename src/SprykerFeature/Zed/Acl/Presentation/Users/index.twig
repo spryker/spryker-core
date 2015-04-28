@@ -5,7 +5,9 @@
 
 
 {% block content %}
+<section ng-controller="ComController" spy-app="spyFormat, spyGrid, spyForm, spyLayout">
 
     {% include "@Acl/Users/grid.twig" %}
 
+</section>
 {% endblock %}

@@ -15,6 +15,9 @@ class UsernameExistsConstraint extends Constraint
      */
     protected $username;
 
+    /** @var  int */
+    protected $idUser;
+
     /**
      * @var AutoCompletion
      */
@@ -22,6 +25,7 @@ class UsernameExistsConstraint extends Constraint
 
     /**
      * @param string $username
+     * @param int $idUser
      * @param AutoCompletion $locator
      * @param null $options
      */
