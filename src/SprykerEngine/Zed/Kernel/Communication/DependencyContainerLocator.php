@@ -28,10 +28,7 @@ class DependencyContainerLocator extends AbstractLocator
     {
         $factory = $this->getFactory($bundle);
 
-        $configLocator = new BundleConfigLocator();
-        $bundleConfig = $configLocator->locate($bundle, $locator);
-
-        return $factory->create($bundle . self::DEPENDENCY_CONTAINER_SUFFIX, [$bundleConfig]);
+        return $factory->create($bundle . self::DEPENDENCY_CONTAINER_SUFFIX);
     }
 
 
