@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          defaultIdMethod="native"
+          defaultPhpNamingMethod="underscore"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          identifierQuoting="true"
+          namespace="SprykerFeature\Zed\Payone\Persistence\Propel"
+          package="vendor.spryker.payone.src.SprykerFeature.Zed.Payone.Persistence.Propel">
+
+
+    <table name="spy_payment_payone" phpName="SpyPaymentPayone" identifierQuoting="true">
+        <column name="id_payment_payone" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="payment_method" required="true" type="VARCHAR"/>
+        <column name="transaction_id" required="false" type="INTEGER" comment="payone txid"/>
+
+        <behavior name="timestampable" />
+    </table>
+
+    <table name="spy_payment_payone_api_log" phpName="SpyPaymentPayoneApiLog" identifierQuoting="true">
+
+        <column name="id_payment_payone_api_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <!--  <column name="fk_payment_payone" required="true" type="INTEGER"/> -->
+
+        <column name="request" required="true" type="VARCHAR"/>
+        <column name="mode" required="true" type="VARCHAR"/>
+        <column name="status" required="false" type="VARCHAR"/>
+        <column name="transaction_id" required="false" type="INTEGER" comment="payone txid"/>
+        <column name="user_id" required="false" type="VARCHAR"/>
+        <column name="merchant_id" required="true" type="VARCHAR" comment="payone mid"/>
+        <column name="portal_id" required="true" type="VARCHAR" comment="payone portalid"/>
+<!--
+        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone">
+            <reference foreign="id_payment_payone" local="fk_payment_payone"/>
+        </foreign-key>
+-->
+        <behavior name="timestampable" />
+    </table>
+
+    <table name="spy_payment_payone_transaction_status_log" phpName="SpyPaymentPayoneTransactionStatusLog" identifierQuoting="true">
+
+        <column name="id_payment_payone_transaction_status_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <!-- <column name="fk_payment_payone"  required="true" type="INTEGER" /> -->
+
+        <column name="transaction_id" required="false" type="INTEGER" comment="payone txid"/>
+        <column name="reference_id" required="false" type="INTEGER" comment="payone txid"/>
+        <column name="mode" required="false" type="VARCHAR"/>
+
+        <column name="status" required="false" type="VARCHAR" comment="payone txaction"/>
+        <column name="transaction_time" required="false" type="TIMESTAMP" comment="payone txtime"/>
+        <column name="sequence_number" required="false" type="INTEGER" comment="payone sequencenumber"/>
+
+        <column name="clearing_type" required="false" type="VARCHAR" comment="payone clearingtype"/>
+        <column name="portal_id" required="false" type="VARCHAR" comment="payone portalid"/>
+
+        <column name="balance" required="false" type="INTEGER"/>
+        <column name="receivable" required="false" type="INTEGER"/>
+<!--
+        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone">
+            <reference foreign="id_payment_payone" local="fk_payment_payone"/>
+        </foreign-key>
+-->
+        <behavior name="timestampable" />
+    </table>
+
+
+</database>

@@ -1,0 +1,143 @@
+<?php
+
+namespace SprykerFeature\Zed\Payone\Business\Api\Adapter\Http;
+use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+
+
+abstract class AbstractHttpAdapter implements AdapterInterface
+{
+
+    const DEFAULT_TIMEOUT = 45;
+
+    /**
+     * @var string
+     */
+    protected $url;
+    /**
+     * @var array
+     */
+    protected $params = array();
+    /**
+     * @var string
+     */
+    protected $rawResponse;
+
+    /**
+     * @param $paymentGatewayUrl
+     */
+    public function __construct($paymentGatewayUrl)
+    {
+        $this->url = $paymentGatewayUrl;
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    public function sendRawRequest(array $params)
+    {
+        $rawResponse = $this->performRequest($params);
+        $result = $this->parseResponse($rawResponse);
+
+        return $result;
+    }
+
+    /**
+     * @param AbstractRequestContainer $container
+     * @return array
+     */
+    public function sendRequest(AbstractRequestContainer $container)
+    {
+        return $this->sendRawRequest($container->toArray());
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    abstract protected function performRequest(array $params);
+
+    /**
+     * @param array $params
+     * @return mixed
+     */
+    protected function generateUrlArray(array $params)
+    {
+        $urlRequest = $this->getUrl() . '?' . http_build_query($params, null, '&');
+        $urlArray = parse_url($urlRequest);
+
+        return $urlArray;
+    }
+
+    /**
+     * @param array $responseRaw
+     * @return array
+     */
+    protected function parseResponse(array $responseRaw = array())
+    {
+        $result = array();
+
+        if (count($responseRaw) == 0) {
+            return $result;
+        }
+
+        foreach ($responseRaw as $key => $line) {
+            $pos = strpos($line, "=");
+
+            if ($pos === false) {
+                if (strlen($line) > 0) {
+                    $result[$key] = $line;
+                }
+                continue;
+            }
+
+            $lineArray = explode('=', $line);
+            $resultKey = array_shift($lineArray);
+            $result[$resultKey] = implode('=', $lineArray);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param array $params
+     */
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawResponse()
+    {
+        return $this->rawResponse;
+    }
+
+    /**
+     * @param string $rawResponse
+     */
+    protected function setRawResponse($rawResponse)
+    {
+        $this->rawResponse = $rawResponse;
+    }
+
+}
