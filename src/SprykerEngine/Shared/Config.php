@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerEngine\Shared\Config;
+namespace SprykerEngine\Shared;
 
 class Config
 {
