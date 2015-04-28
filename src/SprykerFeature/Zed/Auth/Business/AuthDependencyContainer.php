@@ -39,7 +39,7 @@ class AuthDependencyContainer extends AbstractDependencyContainer
             $this->getLocator(),
             $this->getLocator()->application()->pluginSession(),
             $this->getLocator()->user()->facade(),
-            $this->createSettings(),
+            $this->getConfig(),
             $this->createStaticTokenClient()
         );
     }
@@ -50,15 +50,5 @@ class AuthDependencyContainer extends AbstractDependencyContainer
     public function createStaticTokenClient()
     {
         return $this->getFactory()->createClientStaticToken();
-    }
-
-    /**
-     * @return AuthSettings
-     */
-    public function createSettings()
-    {
-        return $this->getFactory()->createAuthSettings(
-            $this->getLocator()
-        );
     }
 }

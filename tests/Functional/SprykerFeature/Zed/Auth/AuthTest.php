@@ -3,9 +3,10 @@ namespace Functional\SprykerFeature\Zed\Auth;
 
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Auth\AuthConfig;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
-use SprykerFeature\Zed\Auth\Business\AuthSettings;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
 use SprykerEngine\Zed\Kernel\Business\Factory;
@@ -154,7 +155,7 @@ class AuthTest extends Test
      */
     public function testDoLoginWithToken()
     {
-        $settings = new AuthSettings($this->locator);
+        $settings = new AuthConfig(Config::getInstance(), $this->locator);
         $token = new StaticToken();
         $credentials = $settings->getUsersCredentials();
 

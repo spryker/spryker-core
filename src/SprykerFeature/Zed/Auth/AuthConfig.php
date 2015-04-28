@@ -1,23 +1,24 @@
 <?php
 
-namespace SprykerFeature\Zed\Auth\Business;
+namespace SprykerFeature\Zed\Auth;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Shared\Auth\AuthConfig;
+use SprykerFeature\Shared\Auth\AuthConfig as AuthSharedConfig;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Library\Config;
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-class AuthSettings
+class AuthConfig extends AbstractBundleConfig
 {
     const AUTH_SESSION_KEY = "auth";
     const AUTH_CURRENT_USER_KEY = "%s:currentUser:%s";
 
     const AUTHORIZATION_WILDCARD = '*';
 
-    /**
-     * @var AutoCompletion
-     */
-    protected $locator;
+    public function getLoginPageUrl()
+    {
+        return '/auth/login';
+    }
 
     /**
      * @var array
@@ -51,14 +52,6 @@ class AuthSettings
     protected $envConfigurations = [];
 
     /**
-     * @param Locator $locator
-     */
-    public function __construct(Locator $locator)
-    {
-        $this->locator = $locator;
-    }
-
-    /**
      * @return array
      */
     public function getIgnorable()
@@ -82,8 +75,8 @@ class AuthSettings
     {
         $response = [];
 
-        $users = $this->locator->user()->facade()->getSystemUsers();
-        $credentials = Config::get(AuthConfig::AUTH_DEFAULT_CREDENTIALS);
+        $users = $this->getLocator()->user()->facade()->getSystemUsers();
+        $credentials = Config::get(AuthSharedConfig::AUTH_DEFAULT_CREDENTIALS);
 
         foreach ($users as $user) {
             if (isset($credentials[$user->getUsername()])) {

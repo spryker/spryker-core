@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\Auth\Business\Model;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Application\Communication\Plugin\Session;
-use SprykerFeature\Zed\Auth\Business\AuthSettings;
+use SprykerFeature\Zed\Auth\AuthConfig;
 use SprykerFeature\Zed\Auth\Business\AuthDependencyContainer;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
 use SprykerFeature\Zed\Auth\Business\Exception\UserNotLoggedException;
@@ -40,14 +40,14 @@ class Auth implements AuthInterface
      * @param LocatorLocatorInterface $locator
      * @param Session $session
      * @param UserFacade $userFacade
-     * @param AuthSettings $settings
+     * @param AuthConfig $settings
      * @param StaticToken $staticToken
      */
     public function __construct(
         LocatorLocatorInterface $locator,
         Session $session,
         UserFacade $userFacade,
-        AuthSettings $settings,
+        AuthConfig $settings,
         StaticToken $staticToken
     ) {
         $this->locator = $locator;
@@ -101,7 +101,7 @@ class Auth implements AuthInterface
      */
     protected function getSessionKey($token)
     {
-        return sprintf(AuthSettings::AUTH_CURRENT_USER_KEY, AuthSettings::AUTH_SESSION_KEY, $token);
+        return sprintf(AuthConfig::AUTH_CURRENT_USER_KEY, AuthConfig::AUTH_SESSION_KEY, $token);
     }
 
     /**
@@ -297,9 +297,9 @@ class Auth implements AuthInterface
     {
         $ignorable = $this->bundleSettings->getIgnorable();
         foreach ($ignorable as $ignore) {
-            if (($bundle === $ignore['bundle'] || $ignore['bundle'] === AuthSettings::AUTHORIZATION_WILDCARD) &&
-                ($controller === $ignore['controller'] || $ignore['controller'] === AuthSettings::AUTHORIZATION_WILDCARD) &&
-                ($action === $ignore['action'] || $ignore['action'] === AuthSettings::AUTHORIZATION_WILDCARD)
+            if (($bundle === $ignore['bundle'] || $ignore['bundle'] === AuthConfig::AUTHORIZATION_WILDCARD) &&
+                ($controller === $ignore['controller'] || $ignore['controller'] === AuthConfig::AUTHORIZATION_WILDCARD) &&
+                ($action === $ignore['action'] || $ignore['action'] === AuthConfig::AUTHORIZATION_WILDCARD)
             ) {
                 return true;
             }

@@ -26,7 +26,7 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
      */
     public function boot(Application $app)
     {
-        $settings = $this->getDependencyContainer()->createSettings();
+        $settings = $this->getDependencyContainer()->getConfig();
         $facade = $this->getDependencyContainer()->locateAuthFacade();
         $userFacade = $this->getDependencyContainer()->locateUserFacade();
 

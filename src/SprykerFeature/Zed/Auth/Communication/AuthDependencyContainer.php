@@ -33,16 +33,6 @@ class AuthDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return AuthSettings
-     */
-    public function createSettings()
-    {
-        return $this->getFactory()->createAuthSettings(
-            $this->getLocator()
-        );
-    }
-
-    /**
      * @param Request $request
      *
      * @return LoginForm
