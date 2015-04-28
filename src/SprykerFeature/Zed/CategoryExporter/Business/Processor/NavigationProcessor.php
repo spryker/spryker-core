@@ -38,7 +38,7 @@ class NavigationProcessor implements NavigationProcessorInterface
      */
     public function process(array $categoryNodes, LocaleDto $locale)
     {
-        $navigationKey = $this->navigationKeyBuilder->generateKey('', $locale);
+        $navigationKey = $this->navigationKeyBuilder->generateKey('', $locale->getLocaleName());
         $formattedCategoryNodes = [];
         foreach ($categoryNodes as $categoryNode) {
             $formattedCategoryNodes[] = $this->nodeFormatter->formatCategoryNode($categoryNode);

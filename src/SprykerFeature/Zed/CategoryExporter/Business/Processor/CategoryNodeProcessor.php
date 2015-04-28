@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business\Processor;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\CategoryExporter\Business\Formatter\CategoryNodeFormatterInterface;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
@@ -32,15 +33,15 @@ class CategoryNodeProcessor implements CategoryNodeProcessorInterface
 
     /**
      * @param array $categoryNodes
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function process(array $categoryNodes, $locale)
+    public function process(array $categoryNodes, LocaleDto $locale)
     {
         $exportData = [];
         foreach ($categoryNodes as $index => $categoryNode) {
-            $categoryKey = $this->resourceKeyBuilder->generateKey($categoryNode['node_id'], $locale);
+            $categoryKey = $this->resourceKeyBuilder->generateKey($categoryNode['node_id'], $locale->getLocaleName());
             $exportData[$categoryKey] = $this->nodeFormatter->formatCategoryNode($categoryNode);
             unset($categoryNodes[$index]);
         }
