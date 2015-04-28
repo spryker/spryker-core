@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Transfer\Business\Model\Generator;
+namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
 class ClassDefinition implements ClassDefinitionInterface
 {

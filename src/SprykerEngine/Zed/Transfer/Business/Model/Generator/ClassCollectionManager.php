@@ -1,12 +1,12 @@
 <?php
 
-namespace SprykerFeature\Zed\Transfer\Business\Model\Generator;
+namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
-use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 
 /**
  * Class ClassCollectionManager
- * @package SprykerFeature\Zed\Transfer\Business\Model\Generator
+ * @package SprykerEngine\Zed\Transfer\Business\Model\Generator
  */
 class ClassCollectionManager
 {

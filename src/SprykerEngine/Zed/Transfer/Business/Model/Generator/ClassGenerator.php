@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Transfer\Business\Model\Generator;
+namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
 use Symfony\Component\Config\Definition\Exception\Exception;
 
@@ -154,7 +154,7 @@ class ClassGenerator
 
     /**
      * if an array is passed as a parameter, then it will loop each member and add it
-     * 
+     *
      * @param array|string $resourceNamespace
      */
     protected function addExternalResource($resourceNamespace)

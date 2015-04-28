@@ -1,13 +1,13 @@
 <?php
 
-namespace SprykerFeature\Zed\Transfer\Communication\Console;
+namespace SprykerEngine\Zed\Transfer\Communication\Console;
 
-use SprykerFeature\Zed\Console\Business\Model\Console;
+use SprykerEngine\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
-use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Zend\Config\Config;
 use Zend\Config\Factory;
 

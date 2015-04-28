@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Transfer\Business;
+namespace SprykerEngine\Zed\Transfer\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
