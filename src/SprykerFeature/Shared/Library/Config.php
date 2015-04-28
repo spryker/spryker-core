@@ -4,6 +4,8 @@ namespace SprykerFeature\Shared\Library;
 
 /**
  * Runtime-Config for Yves and Zed
+ *
+ * @deprecated Please use SprykerEngine\Shared\Config
  */
 class Config
 {
