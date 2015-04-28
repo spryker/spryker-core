@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Cart\Business\Model;
 
-use SprykerFeature\Shared\Library\TransferLoader;
 use SprykerFeature\Shared\Sales\Transfer\Order;
 use SprykerFeature\Shared\Sales\Transfer\OrderItem;
 use SprykerFeature\Shared\Sales\Transfer\OrderItemCollection;
@@ -30,15 +29,6 @@ class CartStorage
      * @var bool
      */
     protected $cartStorageEnabled;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function initAfterDependencyInjection()
-    {
-        $settings = $this->factory->createSettings();
-        $this->cartStorageEnabled = $settings->getCartStorageEnabled();
-    }
 
     /**
      * @param CartChange $cart

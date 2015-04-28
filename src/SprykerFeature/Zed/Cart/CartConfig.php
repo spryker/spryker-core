@@ -1,13 +1,12 @@
 <?php
 
-namespace SprykerFeature\Zed\Cart\Business;
+namespace SprykerFeature\Zed\Cart;
 
 use SprykerEngine\Zed\Kernel\Business;
-use SprykerEngine\Zed\Kernel\Locator;
-
 use SprykerFeature\Zed\Cart\Dependency\Plugin\CheckAvailabilityPluginInterface;
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-class CartSettings
+class CartConfig extends AbstractBundleConfig
 {
 
     /**
