@@ -6,13 +6,9 @@ use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Dependency\Facade\ProductFrontendExporterToProductInterface;
 
-/**
- * Class ProductProcessor
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor
- */
 class ProductProcessor implements ProductProcessorInterface
 {
+
     /**
      * @var ProductFrontendExporterToProductInterface
      */
@@ -23,8 +19,8 @@ class ProductProcessor implements ProductProcessorInterface
     private $productKeyGenerator;
 
     /**
-     * @param ProductFrontendExporterToProductInterface   $productBuilder
-     * @param KeyBuilderInterface                         $productKeyBuilder
+     * @param ProductFrontendExporterToProductInterface $productBuilder
+     * @param KeyBuilderInterface $productKeyBuilder
      */
     public function __construct(
         ProductFrontendExporterToProductInterface $productBuilder,
