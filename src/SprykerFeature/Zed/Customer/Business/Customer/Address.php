@@ -326,6 +326,7 @@ class Address
                 ->locale()
                 ->facade()
                 ->getCurrentLocale()
+                ->getLocaleName()
         )[1];
 
         $id_country = $this->locator
