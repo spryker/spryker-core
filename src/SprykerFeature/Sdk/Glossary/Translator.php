@@ -31,13 +31,13 @@ class Translator
     /**
      * @param ReadInterface $kvStorage
      * @param KeyBuilderInterface $keyBuilder
-     * @param string $locale
+     * @param string $localeName
      */
-    public function __construct($kvStorage, $keyBuilder, $locale)
+    public function __construct($kvStorage, $keyBuilder, $localeName)
     {
         $this->kvStorage = $kvStorage;
         $this->keyBuilder = $keyBuilder;
-        $this->locale = $locale;
+        $this->locale = $localeName;
     }
 
     public function translate($keyName, array $parameters = [])
