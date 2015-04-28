@@ -10,9 +10,11 @@ use SprykerFeature\Zed\Stock\Business\Model\ReaderInterface;
 use SprykerFeature\Zed\Stock\Business\Model\WriterInterface;
 use SprykerFeature\Zed\Stock\Business\Model\CalculatorInterface;
 use SprykerFeature\Zed\Stock\Dependency\Facade\StockToTouchInterface;
+use SprykerFeature\Zed\Stock\StockConfig;
 
 /**
  * @method StockBusiness getFactory()
+ * @method StockConfig getConfig()
  */
 class StockDependencyContainer extends AbstractDependencyContainer
 {
@@ -49,14 +51,6 @@ class StockDependencyContainer extends AbstractDependencyContainer
             $this->getTouchFacade(),
             $this->getLocator()
         );
-    }
-
-    /**
-     * @return StockSettings
-     */
-    protected function getSettings()
-    {
-        return $this->getFactory()->createStockSettings($this->getLocator());
     }
 
     /**
