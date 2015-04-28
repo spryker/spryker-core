@@ -2,7 +2,7 @@
 
 require('Ui').ng
 	.module('spyBase')
-	.factory('errorInterceptor', [function() {
+	.factory('errorInterceptor', ['$q', function($q) {
 		return {
 			response : function(response) {
 				return response;
@@ -19,6 +19,8 @@ require('Ui').ng
 					setTimeout(function (f, r) {
 						f.contentWindow.document.documentElement.innerHTML = r.data;
 					}, 200, f, response);
+
+					return $q.reject(response);
 				}
 
 				return response;
