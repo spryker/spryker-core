@@ -1,12 +1,14 @@
 <?php
 
-namespace SprykerFeature\Zed\User\Business;
+namespace SprykerFeature\Zed\User;
 
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\User\UserConfig;
+use SprykerFeature\Shared\User\UserConfig as UserSharedConfig;
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-class UserSettings
+class UserConfig extends AbstractBundleConfig
 {
+
     const KEY_INSTALLER_DATA = 'installer_data';
 
     /**
@@ -15,7 +17,7 @@ class UserSettings
     public function getSystemUsers()
     {
         $systemUser = [];
-        $users = Config::get(UserConfig::USER_SYSTEM_USERS);
+        $users = $this->getUserFromGlobalConfig();
 
         foreach ($users as $username) {
             $systemUser[] = $username;
@@ -34,5 +36,15 @@ class UserSettings
                 "password" => "change123"
             ]
         ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getUserFromGlobalConfig()
+    {
+        $users = $this->get(UserSharedConfig::USER_SYSTEM_USERS);
+
+        return $users;
     }
 }

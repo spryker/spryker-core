@@ -4,8 +4,8 @@ namespace SprykerFeature\Zed\User\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Zed\User\Business\UserSettings;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
+use SprykerFeature\Zed\User\UserConfig;
 
 class Installer implements InstallerInterface
 {
@@ -20,19 +20,19 @@ class Installer implements InstallerInterface
     protected $locator;
 
     /**
-     * @var UserSettings
+     * @var UserConfig
      */
     protected $settings;
 
     /**
      * @param UserQueryContainer $queryContainer
      * @param LocatorLocatorInterface $locator
-     * @param UserSettings $settings
+     * @param UserConfig $settings
      */
     public function __construct(
         UserQueryContainer $queryContainer,
         LocatorLocatorInterface $locator,
-        UserSettings $settings
+        UserConfig $settings
     ) {
         $this->queryContainer = $queryContainer;
         $this->locator = $locator;

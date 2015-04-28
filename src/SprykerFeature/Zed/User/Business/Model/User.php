@@ -8,7 +8,7 @@ use SprykerFeature\Zed\Library\Copy;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Shared\User\Transfer\User as TransferUser;
 use SprykerFeature\Shared\User\Transfer\UserCollection;
-use SprykerFeature\Zed\User\Business\UserSettings;
+use SprykerFeature\Zed\User\UserConfig;
 use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUser;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
@@ -30,19 +30,19 @@ class User implements UserInterface
     protected $locator;
 
     /**
-     * @var UserSettings
+     * @var UserConfig
      */
     protected $settings;
 
     /**
      * @param UserQueryContainer $queryContainer
      * @param LocatorLocatorInterface $locator
-     * @param UserSettings $settings
+     * @param UserConfig $settings
      */
     public function __construct(
         UserQueryContainer $queryContainer,
         LocatorLocatorInterface $locator,
-        UserSettings $settings
+        UserConfig $settings
     ) {
         $this->queryContainer = $queryContainer;
         $this->locator = $locator;
