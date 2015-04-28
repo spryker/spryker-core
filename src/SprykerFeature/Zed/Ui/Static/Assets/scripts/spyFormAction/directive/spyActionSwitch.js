@@ -16,8 +16,9 @@ require('Ui').ng
 				'$controller',
 				'$scope',
 				'$attrs',
+				'BooleanService',
 
-				function($controller, $scope, $attrs) {
+				function($controller, $scope, $attrs, bool) {
 					$controller('ActionController', {
 						$scope             : $scope,
 						$attrs             : $attrs
@@ -45,7 +46,7 @@ require('Ui').ng
 
 
 					$scope.$watch('state', function(now, was, scope) {
-						scope.switchModel.value = Boolean(now);
+						scope.switchModel.value = bool(now);
 					});
 
 					$scope.$watch('switchModel.value', function(now, was, scope) {
