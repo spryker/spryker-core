@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\FrontendExporter\Business;
+namespace SprykerFeature\Zed\FrontendExporter;
 
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\System;
@@ -8,9 +8,11 @@ use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\ExportFailedDeciderPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-class FrontendExporterSettings
+class FrontendExporterConfig extends AbstractBundleConfig
 {
+
     /**
      * @return DataProcessorPluginInterface[]
      */

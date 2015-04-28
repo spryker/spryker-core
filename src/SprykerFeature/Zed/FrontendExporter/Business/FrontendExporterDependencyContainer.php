@@ -22,11 +22,13 @@ use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\WriterInterface
 use SprykerFeature\Zed\FrontendExporter\Business\Internal\InstallElasticsearch;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\FailedResultInterface;
+use SprykerFeature\Zed\FrontendExporter\FrontendExporterConfig;
 use SprykerFeature\Zed\FrontendExporter\Persistence\FrontendExporterQueryContainer;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 
 /**
  * @method FrontendExporterBusiness getFactory()
+ * @method FrontendExporterConfig getConfig()
  */
 class FrontendExporterDependencyContainer extends AbstractDependencyContainer
 {
@@ -62,17 +64,17 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
             $this->createBatchResultModel()
         );
 
-        $settings = $this->createSettings();
+        $config = $this->getConfig();
 
-        foreach ($settings->getKeyValueProcessors() as $keyValueProcessor) {
+        foreach ($config->getKeyValueProcessors() as $keyValueProcessor) {
             $keyValueExporter->addDataProcessor($keyValueProcessor);
         }
 
-        foreach ($settings->getKeyValueQueryExpander() as $queryExpander) {
+        foreach ($config->getKeyValueQueryExpander() as $queryExpander) {
             $keyValueExporter->addQueryExpander($queryExpander);
         }
 
-        foreach ($settings->getKeyValueExportFailedDeciders() as $decider) {
+        foreach ($config->getKeyValueExportFailedDeciders() as $decider) {
             $keyValueExporter->addDecider($decider);
         }
 
@@ -112,7 +114,7 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return KvMarkerKeyBuilder|
+     * @return KvMarkerKeyBuilder
      */
     protected function createKvMarkerKeyBuilder()
     {
@@ -136,26 +138,18 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return FrontendExporterSettings
-     */
-    public function createSettings()
-    {
-        return $this->getFactory()->createFrontendExporterSettings($this->getLocator());
-    }
-
-    /**
      * @return FrontendExporter
      */
     public function getYvesSearchExporter()
     {
         $searchWriter = $this->createSearchWriter();
-        $settings = $this->createSettings();
+        $config = $this->getConfig();
 
         return $this->getFactory()->createExporterFrontendExporter(
             $this->createFrontendExporterQueryContainer(),
             $this->createElasticsearchExporter(
                 $searchWriter,
-                $settings
+                $config
             )
         );
     }
@@ -169,18 +163,18 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
             $this->createFrontendExporterQueryContainer(),
             $this->createElasticsearchExporter(
                 $this->createSearchUpdateWriter(),
-                $this->createSettings()
+                $this->getConfig()
             )
         );
     }
 
     /**
      * @param WriterInterface $searchWriter
-     * @param FrontendExporterSettings $settings
+     * @param FrontendExporterConfig $config
      *
      * @return SearchExporter
      */
-    protected function createElasticsearchExporter(WriterInterface $searchWriter, FrontendExporterSettings $settings)
+    protected function createElasticsearchExporter(WriterInterface $searchWriter, FrontendExporterConfig $config)
     {
         $searchExporter = $this->getFactory()->createExporterSearchExporter(
             $this->createFrontendExporterQueryContainer(),
@@ -190,15 +184,15 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
             $this->createBatchResultModel()
         );
 
-        foreach ($settings->getSearchExportFailedDeciders() as $searchDecider) {
+        foreach ($config->getSearchExportFailedDeciders() as $searchDecider) {
             $searchExporter->addDecider($searchDecider);
         }
 
-        foreach ($settings->getSearchQueryExpander() as $queryExpander) {
+        foreach ($config->getSearchQueryExpander() as $queryExpander) {
             $searchExporter->addQueryExpander($queryExpander);
         }
 
-        foreach ($settings->getSearchProcessors() as $processor) {
+        foreach ($config->getSearchProcessors() as $processor) {
             $searchExporter->addDataProcessor($processor);
         }
 
@@ -210,7 +204,7 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
      */
     protected function createSearchWriter()
     {
-        $settings = $this->createSettings();
+        $settings = $this->getConfig();
 
         $elasticsearchWriter = $this->getFactory()->createExporterWriterSearchElasticsearchWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
@@ -226,7 +220,7 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
      */
     protected function createSearchUpdateWriter()
     {
-        $settings = $this->createSettings();
+        $settings = $this->getConfig();
 
         $elasticsearchUpdateWriter = $this->getFactory()->createExporterWriterSearchElasticsearchUpdateWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
@@ -258,7 +252,7 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     {
         $installer = $this->getFactory()->createInternalInstallElasticsearch(
             StorageInstanceBuilder::getElasticsearchInstance(),
-            $this->createSettings()->getSearchIndexName()
+            $this->getConfig()->getSearchIndexName()
         );
 
         $installer->setMessenger($messenger);

@@ -62,7 +62,7 @@ class FrontendExporterFacade extends AbstractFacade
      */
     public function getSearchIndexName()
     {
-        return $this->getDependencyContainer()->createSettings()->getSearchIndexName();
+        return $this->getDependencyContainer()->getConfig()->getSearchIndexName();
     }
 
     /**
@@ -70,6 +70,6 @@ class FrontendExporterFacade extends AbstractFacade
      */
     public function getSearchDocumentType()
     {
-        return $this->getDependencyContainer()->createSettings()->getSearchDocumentType();
+        return $this->getDependencyContainer()->getConfig()->getSearchDocumentType();
     }
 }
