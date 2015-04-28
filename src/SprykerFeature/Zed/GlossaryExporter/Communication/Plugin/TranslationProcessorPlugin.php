@@ -49,7 +49,7 @@ class TranslationProcessorPlugin extends AbstractPlugin implements DataProcessor
     public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
     {
         foreach ($resultSet as $index => $translation) {
-            $key = $this->keyBuilder->generateKey($translation['translation_key'], $locale);
+            $key = $this->keyBuilder->generateKey($translation['translation_key'], $locale->getLocaleName());
             $processedResultSet[$key] = $translation['translation_value'];
             $resultSet[$key] = $translation;
             unset($resultSet[$index]);
