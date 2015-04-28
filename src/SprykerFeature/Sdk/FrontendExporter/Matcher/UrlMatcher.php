@@ -33,12 +33,13 @@ class UrlMatcher implements UrlMatcherInterface
 
     /**
      * @param string $url
-     * @param string $locale
-     * @return mixed
+     * @param string $localeName
+     *
+     * @return array|bool
      */
-    public function matchUrl($url, $locale)
+    public function matchUrl($url, $localeName)
     {
-        $urlKey = $this->urlKeyBuilder->generateKey($url, $locale);
+        $urlKey = $this->urlKeyBuilder->generateKey($url, $localeName);
         $urlDetails = $this->keyValueReader->get($urlKey);
         if ($urlDetails) {
             $data = $this->keyValueReader->get($urlDetails['reference_key']);

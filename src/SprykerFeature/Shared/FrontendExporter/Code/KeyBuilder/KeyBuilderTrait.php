@@ -14,15 +14,15 @@ trait KeyBuilderTrait
 
     /**
      * @param mixed $data
-     * @param LocaleDto $locale
+     * @param string $localeName
      *
      * @return string
      */
-    public function generateKey($data, LocaleDto $locale)
+    public function generateKey($data, $localeName)
     {
         $keyParts = [
             Store::getInstance()->getStoreName(),
-            $locale->getLocaleName(),
+            $localeName,
             $this->getBundleName(),
             $this->buildKey($data)
         ];
