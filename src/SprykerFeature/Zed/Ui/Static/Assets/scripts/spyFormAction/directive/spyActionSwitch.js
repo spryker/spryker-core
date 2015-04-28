@@ -16,14 +16,11 @@ require('Ui').ng
 				'$controller',
 				'$scope',
 				'$attrs',
-				'ActionModelService',
 
-				function($controller, $scope, $attrs, service) {
+				function($controller, $scope, $attrs) {
 					$controller('ActionController', {
-						$controller        : $controller,
 						$scope             : $scope,
-						$attrs             : $attrs,
-						ActionModelService : service
+						$attrs             : $attrs
 					});
 
 
@@ -59,6 +56,8 @@ require('Ui').ng
 							.then(function(model) {
 								$scope.state = model.state;
 							}, function(why) {
+								$scope.switchModel.value = $scope.state;
+
 								console.warn('SPY - model state unknown, not updating state');		//jshint ignore:line
 							});
 					});
