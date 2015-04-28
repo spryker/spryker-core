@@ -25,14 +25,6 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @return AclSettings
-     */
-    public function getSettings()
-    {
-        return $this->getDependencyContainer()->createSettings();
-    }
-
-    /**
      * @param string $name
      *
      * @return Group

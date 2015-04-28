@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use SprykerFeature\Shared\Acl\Transfer\Rule;
 use SprykerFeature\Shared\Acl\Transfer\RuleCollection;
+use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\AclSettings;
 
 class RuleValidator implements RuleValidatorInterface
@@ -138,9 +139,9 @@ class RuleValidator implements RuleValidatorInterface
      */
     public function assert(Rule $rule, $bundle, $controller, $action)
     {
-        if (($rule->getBundle() === $bundle || $rule->getBundle() === AclSettings::VALIDATOR_WILDCARD) &&
-            ($rule->getController() === $controller || $rule->getController() === AclSettings::VALIDATOR_WILDCARD) &&
-            ($rule->getAction() === $action || $rule->getAction() === AclSettings::VALIDATOR_WILDCARD)
+        if (($rule->getBundle() === $bundle || $rule->getBundle() === AclConfig::VALIDATOR_WILDCARD) &&
+            ($rule->getController() === $controller || $rule->getController() === AclConfig::VALIDATOR_WILDCARD) &&
+            ($rule->getAction() === $action || $rule->getAction() === AclConfig::VALIDATOR_WILDCARD)
         ) {
             return true;
         }

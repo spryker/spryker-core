@@ -9,17 +9,13 @@ use SprykerFeature\Zed\Acl\Communication\Grid\RulesetGrid;
 use SprykerFeature\Zed\Acl\Communication\Grid\UserGrid;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
-use SprykerFeature\Zed\Acl\Business\AclSettings;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 class AclDependencyContainer extends AbstractDependencyContainer
 {
-    /**
-     * @var AutoCompletion
-     */
-    protected $locator;
+
     /**
      * @return AclFacade
      */
@@ -34,14 +30,6 @@ class AclDependencyContainer extends AbstractDependencyContainer
     public function locateUserFacade()
     {
         return $this->getLocator()->user()->facade();
-    }
-
-    /**
-     * @return AclSettings
-     */
-    public function createSettings()
-    {
-        return $this->locateAclFacade()->getSettings();
     }
 
     /**

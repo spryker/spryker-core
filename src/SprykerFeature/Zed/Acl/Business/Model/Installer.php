@@ -6,7 +6,7 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Acl\Transfer\GroupCollection;
 use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
 use SprykerFeature\Shared\Acl\Transfer\RuleCollection;
-use SprykerFeature\Zed\Acl\Business\AclSettings;
+use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 
 class Installer implements InstallerInterface
@@ -22,19 +22,19 @@ class Installer implements InstallerInterface
     protected $locator;
 
     /**
-     * @var AclSettings
+     * @var AclConfig
      */
     protected $settings;
 
     /**
      * @param AclQueryContainer $queryContainer
      * @param LocatorLocatorInterface $locator
-     * @param AclSettings $settings
+     * @param AclConfig $settings
      */
     public function __construct(
         AclQueryContainer $queryContainer,
         LocatorLocatorInterface $locator,
-        AclSettings $settings
+        AclConfig $settings
     ) {
         $this->queryContainer = $queryContainer;
         $this->locator = $locator;
