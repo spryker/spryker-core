@@ -6,9 +6,11 @@ use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInt
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Zed\Calculation\CalculationConfig;
 
 /**
  * @method CalculationDependencyContainer getDependencyContainer()
+ * @method CalculationConfig getConfig()
  */
 class CalculationFacade extends AbstractFacade
 {
@@ -20,7 +22,7 @@ class CalculationFacade extends AbstractFacade
     public function recalculate(CalculableContainerInterface $calculableContainer)
     {
 
-        $calculatorStack = $this->getDependencyContainer()->getSettings()->getCalculatorStack();
+        $calculatorStack = $this->getDependencyContainer()->getConfig()->getCalculatorStack();
 
         return $this->getDependencyContainer()->getStackExecutor()->recalculate($calculatorStack, $calculableContainer);
     }
@@ -31,7 +33,7 @@ class CalculationFacade extends AbstractFacade
      */
     public function performSoftRecalculation(CalculableContainerInterface $calculableContainer)
     {
-        $calculatorStack = $this->getDependencyContainer()->getSettings()->getSoftCalculatorStack();
+        $calculatorStack = $this->getDependencyContainer()->getConfig()->getSoftCalculatorStack();
 
         return $this->getDependencyContainer()->getStackExecutor()->recalculate($calculatorStack, $calculableContainer);
     }
@@ -45,7 +47,7 @@ class CalculationFacade extends AbstractFacade
         CalculableContainerInterface $calculableContainer,
         CalculableItemCollectionInterface $calculableItems = null
     ) {
-        $calculatorStack = $this->getDependencyContainer()->getSettings()->getCalculatorStack();
+        $calculatorStack = $this->getDependencyContainer()->getConfig()->getCalculatorStack();
 
         return $this->getDependencyContainer()->getStackExecutor()->recalculateTotals(
             $calculatorStack,

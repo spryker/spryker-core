@@ -15,17 +15,14 @@ use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalcu
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerFeature\Zed\Calculation\CalculationConfig;
 
 /**
  * @method CalculationBusiness getFactory()
+ * @method CalculationConfig getConfig()
  */
 class CalculationDependencyContainer extends AbstractDependencyContainer
 {
-
-    /**
-     * @var CalculationSettings
-     */
-    protected $settings;
 
     /**
      * @return StackExecutor
