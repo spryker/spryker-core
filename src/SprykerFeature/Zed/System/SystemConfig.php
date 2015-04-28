@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\System\Business;
+namespace SprykerFeature\Zed\System;
 
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-
-class SystemSettings
+class SystemConfig extends AbstractBundleConfig
 {
 
     const KEY_HOST = 'host';
@@ -87,7 +87,7 @@ class SystemSettings
     public function orderCheckShouldBePerformed()
     {
         $date = Zend_Date::now();
-        $hour = (int) ($date->get('HH'));
+        $hour = (int)($date->get('HH'));
 
         // there is no minimum amount for orders between 22h - 6h
         return ($hour > 6 && $hour < 22);
