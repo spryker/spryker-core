@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business\Processor;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Dependency\Facade\ProductCategoryFrontendExporterToCategoryExporterInterface;
 
 class ProductCategoryBreadcrumbProcessor implements ProductCategoryBreadcrumbProcessorInterface
@@ -12,7 +13,7 @@ class ProductCategoryBreadcrumbProcessor implements ProductCategoryBreadcrumbPro
     protected $nodeExploder;
 
     /**
-     * @param $nodeExploder
+     * @param ProductCategoryFrontendExporterToCategoryExporterInterface $nodeExploder
      */
     public function __construct(ProductCategoryFrontendExporterToCategoryExporterInterface $nodeExploder)
     {
@@ -22,11 +23,11 @@ class ProductCategoryBreadcrumbProcessor implements ProductCategoryBreadcrumbPro
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function process(array &$resultSet, array $processedResultSet, $locale)
+    public function process(array &$resultSet, array $processedResultSet, LocaleDto $locale)
     {
         foreach ($resultSet as $index => $product) {
             $processedResultSet[$index]['category'] = $this->nodeExploder->explodeGroupedNodes(

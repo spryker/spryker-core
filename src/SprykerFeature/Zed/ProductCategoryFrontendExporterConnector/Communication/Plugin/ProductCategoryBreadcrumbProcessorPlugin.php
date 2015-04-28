@@ -2,14 +2,11 @@
 
 namespace SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Communication\Plugin;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Communication\ProductCategoryFrontendExporterConnectorDependencyContainer;
 
-/**
- * Class ProductBreadcrumProcessorPlugin
- * @package SprykerFeature\Zed\ProductCategory\Communication\Plugin
- */
 /**
  * @method ProductCategoryFrontendExporterConnectorDependencyContainer getDependencyContainer()
  */
@@ -27,11 +24,11 @@ class ProductCategoryBreadcrumbProcessorPlugin extends AbstractPlugin implements
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
     {
         $facade = $this->getDependencyContainer()->getProductCategoryFrontendExporterFacade();
 
