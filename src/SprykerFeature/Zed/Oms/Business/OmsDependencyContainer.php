@@ -56,8 +56,6 @@ class OmsDependencyContainer extends AbstractDependencyContainer
      */
     public function createModelOrderStateMachine(array $logContext)
     {
-        $settings = $this->createSettings();
-
         return $this->getFactory()->createModelOrderStateMachine(
             $this->createQueryContainer(),
             $this->createModelBuilder(),
@@ -65,8 +63,8 @@ class OmsDependencyContainer extends AbstractDependencyContainer
             $this->createModelOrderStateMachineTimeout(),
             $this->createModelUtilCollectionToArrayTransformer(),
             $this->createModelUtilReadOnlyArrayObject(),
-            $settings->getConditions(),
-            $settings->getCommands(),
+            $this->getConfig()->getConditions(),
+            $this->getConfig()->getCommands(),
             $this->getFactory()
         );
     }
@@ -109,14 +107,6 @@ class OmsDependencyContainer extends AbstractDependencyContainer
             $this->createModelBuilder(),
             $settings->getActiveProcesses()
         );
-    }
-
-    /**
-     * @return OmsSettings
-     */
-    public function createSettings()
-    {
-        return $this->getFactory()->createOmsSettings();
     }
 
     /**

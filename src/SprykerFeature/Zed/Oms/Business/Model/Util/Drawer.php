@@ -7,6 +7,7 @@ use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
 use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\Business\OmsSettings;
+use SprykerFeature\Zed\Oms\OmsConfig;
 
 class Drawer implements DrawerInterface
 {
@@ -41,7 +42,7 @@ class Drawer implements DrawerInterface
     const EDGE_LOWER_HALF = 'lower half';
     const EDGE_FULL = 'edge full';
 
-    /** @var OmsSettings */
+    /** @var OmsConfig */
     protected $settings;
 
     /**
@@ -50,9 +51,9 @@ class Drawer implements DrawerInterface
     protected $graph;
 
     /**
-     * @param OmsSettings $settings
+     * @param OmsConfig $settings
      */
-    public function __construct(OmsSettings $settings)
+    public function __construct(OmsConfig $settings)
     {
         $this->settings = $settings;
         $this->graph = new \SprykerFeature_Zed_Library_Service_GraphViz(true, $this->graphDefault, 'G', false, true);

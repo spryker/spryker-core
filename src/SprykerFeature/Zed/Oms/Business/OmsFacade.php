@@ -73,7 +73,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getProcessList()
     {
         return $this->getDependencyContainer()
-            ->createSettings()
+            ->getConfig()
             ->getActiveProcesses();
     }
 
@@ -279,7 +279,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function selectProcess(Order $transferOrder)
     {
         return $this->getDependencyContainer()
-            ->createSettings()
+            ->getConfig()
             ->selectProcess($transferOrder);
     }
 

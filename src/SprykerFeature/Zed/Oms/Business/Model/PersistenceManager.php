@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Model;
 
-use SprykerFeature\Zed\Oms\Business\OmsSettings;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;

@@ -1,12 +1,13 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business;
+namespace SprykerFeature\Zed\Oms;
 
 use SprykerFeature\Shared\Sales\Transfer\Order as OrderTransfer;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-class OmsSettings
+class OmsConfig extends AbstractBundleConfig
 {
 
     const INITIAL_STATUS = 'new';
