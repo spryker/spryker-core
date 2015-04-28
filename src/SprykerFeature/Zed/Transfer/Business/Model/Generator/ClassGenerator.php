@@ -153,12 +153,22 @@ class ClassGenerator
     }
 
     /**
-     * @param string $resourceNamespace
+     * if an array is passed as a parameter, then it will loop each member and add it
+     * 
+     * @param array|string $resourceNamespace
      */
     protected function addExternalResource($resourceNamespace)
     {
-        if ( ! in_array($resourceNamespace, $this->externalResourcesToUse) ) {
-            $this->externalResourcesToUse[] = $resourceNamespace;
+        if ( is_array($resourceNamespace) ) {
+            foreach ($resourceNamespace as $item) {
+                $this->addExternalResource($item);
+            }
+        } else {
+            if ( ! in_array($resourceNamespace, $this->externalResourcesToUse)
+                && strpos($resourceNamespace, '\\') !== false
+            ) {
+                $this->externalResourcesToUse[] = $resourceNamespace;
+            }
         }
     }
 

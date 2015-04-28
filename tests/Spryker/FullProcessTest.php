@@ -38,7 +38,6 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             } else {
                 $this->manager->setClassDefinition($item);
             }
-
         }
 
         $definitions = $this->manager->getCollections();
@@ -69,11 +68,16 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
      * @dataProvider codeSampleValidationProvider
      * @param $codeSample
      */
-    public function test_properties_type_array($codeSample)
+    public function test_generated_class_content($codeSample)
     {
         $this->assertContains($codeSample, $this->generatedClasses[0]['code']);
     }
 
+    /**
+     * Those strings should be in the generated code class
+     *
+     * @return array
+     */
     public function codeSampleValidationProvider()
     {
         return [
@@ -90,12 +94,40 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             ['use Spryker\Demo\FirstInterface'],
             ['use Spryker\Demo\SecondInterface'],
             ['use Spryker\Demo\ThirdInterface'],
-            ['use CartItem'],
-            ['use Customer'],
             ['$this->addModifiedProperty(\'published\');'],
             ['$this->addModifiedProperty(\'customer\');'],
             ['$this->addModifiedProperty(\'properties\');'],
             ['$this->addModifiedProperty(\'cartItems\');'],
+        ];
+    }
+
+    /**
+     * @dataProvider codeSampleValidationProviderInexistance
+     * @param $codeSample
+     */
+    public function test_generated_class_content_should_not_exists($codeSample)
+    {
+        $this->assertNotContains($codeSample, $this->generatedClasses[0]['code']);
+    }
+
+    /**
+     * Those strings should not be in the generated code class
+     *
+     * @return array
+     */
+    public function codeSampleValidationProviderInexistance()
+    {
+        return [
+            ['namespace ;'],
+            ['use CartItem'],
+            ['use Customer'],
+            ['use FirstInterface'],
+            ['setCustomer(Customer$customer)'],
+            ['setPublished(boolean$published)'],
+            ['setProperties(array$properties)'],
+            ['setCartItems(CartItem$cartItems)'],
+            ['setCartItems($cartItems)'],
+            ['setCartItems( $cartItems)'],
         ];
     }
 }

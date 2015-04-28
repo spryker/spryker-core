@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Transfer\Business\Model\Generator;
 
-class ClassDefinition
+class ClassDefinition implements ClassDefinitionInterface
 {
     const TYPE_ARRAY    = 'array';
     const TYPE_BOOLEAN  = 'boolean';
