@@ -3,10 +3,14 @@
 namespace SprykerFeature\Zed\Customer\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerFeature\Shared\Customer\CustomerConfig;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
 use SprykerFeature\Zed\Customer\Business\Customer\Customer;
 use SprykerFeature\Zed\Customer\Business\Customer\Address;
 
+/**
+ * @method CustomerConfig getConfig()
+ */
 class CustomerDependencyContainer extends AbstractDependencyContainer
 {
     /**
@@ -18,31 +22,23 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return CustomerSettings
-     */
-    public function createSettings()
-    {
-        return $this->getFactory()->createSettings($this->getLocator());
-    }
-
-    /**
      * @return Customer
      */
     public function createCustomer()
     {
         $customer = $this->getFactory()->createCustomerCustomer($this->createQueryContainer(), $this->getLocator());
 
-        $settings = $this->createSettings();
+        $config = $this->getConfig();
 
-        foreach ($settings->getPasswordRestoredConfirmationSenders() as $sender) {
+        foreach ($config->getPasswordRestoredConfirmationSenders() as $sender) {
             $customer->addPasswordRestoredConfirmationSender($sender);
         }
 
-        foreach ($settings->getPasswordRestoreTokenSenders() as $sender) {
+        foreach ($config->getPasswordRestoreTokenSenders() as $sender) {
             $customer->addPasswordRestoreTokenSender($sender);
         }
 
-        foreach ($settings->getRegistrationTokenSenders() as $sender) {
+        foreach ($config->getRegistrationTokenSenders() as $sender) {
             $customer->addRegistrationTokenSender($sender);
         }
 

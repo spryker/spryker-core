@@ -1,22 +1,14 @@
 <?php
 
-namespace SprykerFeature\Zed\Customer\Business;
+namespace SprykerFeature\Zed\Customer;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-class CustomerSettings
+class CustomerConfig extends AbstractBundleConfig
 {
-    /** @var AutoCompletion */
-    protected $locator;
-
-    public function __construct(LocatorLocatorInterface $locator)
-    {
-        $this->locator = $locator;
-    }
 
     /**
      * @return PasswordRestoredConfirmationSenderPluginInterface[]
