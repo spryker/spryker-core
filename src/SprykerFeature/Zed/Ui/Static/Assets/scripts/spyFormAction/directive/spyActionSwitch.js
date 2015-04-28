@@ -52,6 +52,8 @@ require('Ui').ng
 					$scope.$watch('switchModel.value', function(now, was, scope) {
 						if (now === scope.state) return;
 
+						$scope.switchModel.disabled = true;
+
 						$scope
 							.trigger()
 							.then(function(model) {
@@ -60,6 +62,9 @@ require('Ui').ng
 								$scope.switchModel.value = $scope.state;
 
 								console.warn('SPY - model state unknown, not updating state');		//jshint ignore:line
+							})
+							.finally(function() {
+								$scope.switchModel.disabled = false;
 							});
 					});
 				}
