@@ -5,9 +5,11 @@ namespace SprykerFeature\Zed\Installer\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\InstallerBusiness;
 use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerFeature\Zed\Installer\InstallerConfig;
 
 /**
  * @method InstallerBusiness getFactory()
+ * @method InstallerConfig getConfig()
  */
 class InstallerDependencyContainer extends AbstractDependencyContainer
 {
@@ -17,7 +19,7 @@ class InstallerDependencyContainer extends AbstractDependencyContainer
      */
     public function getInstaller()
     {
-        return $this->getFactory()->createInstallerSettings($this->getLocator())->getInstallerStack();
+        return $this->getConfig()->getInstallerStack();
     }
 
     /**
@@ -25,6 +27,6 @@ class InstallerDependencyContainer extends AbstractDependencyContainer
      */
     public function getDemoDataInstaller()
     {
-        return $this->getFactory()->createInstallerSettings($this->getLocator())->getDemoDataInstallerStack();
+        return $this->getConfig()->getDemoDataInstallerStack();
     }
 }
