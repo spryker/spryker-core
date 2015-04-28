@@ -38,7 +38,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
     public function buildProducts(array $productsRaw, array $processedProducts, LocaleDto $locale)
     {
         foreach ($productsRaw as $index => $productData) {
-            $productKey = $this->keyBuilder->generateKey($productData['sku'], $locale);
+            $productKey = $this->keyBuilder->generateKey($productData['sku'], $locale->getLocaleName());
             $processedProducts[$productKey] = $this->buildBaseProduct($productData, $locale);
         }
 
