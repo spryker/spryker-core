@@ -23,7 +23,7 @@ class UrlMatcher implements UrlMatcherInterface
 
     /**
      * @param KeyBuilderInterface $urlKeyBuilder
-     * @param ReadInterface       $keyValueReader
+     * @param ReadInterface $keyValueReader
      */
     public function __construct(KeyBuilderInterface $urlKeyBuilder, ReadInterface $keyValueReader)
     {
@@ -33,12 +33,13 @@ class UrlMatcher implements UrlMatcherInterface
 
     /**
      * @param string $url
-     * @param string $locale
+     * @param string $localeName
+     *
      * @return mixed
      */
-    public function matchUrl($url, $locale)
+    public function matchUrl($url, $localeName)
     {
-        $urlKey = $this->urlKeyBuilder->generateKey($url, $locale);
+        $urlKey = $this->urlKeyBuilder->generateKey($url, $localeName);
 
         return $this->keyValueReader->get($urlKey);
     }
