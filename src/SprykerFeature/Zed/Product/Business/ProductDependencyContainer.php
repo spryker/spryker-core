@@ -131,6 +131,7 @@ class ProductDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param MessengerInterface $messenger
+     *
      * @return Install
      */
     public function createInstaller(MessengerInterface $messenger)

@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Product\Persistence;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
@@ -24,16 +25,16 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 {
     /**
      * @param string $skus
-     * @param int $localeId
+     * @param LocaleDto $locale
      * 
      * @return SpyProductQuery
      */
-    public function getProductWithAttributeQuery($skus, $localeId)
+    public function getProductWithAttributeQuery($skus, LocaleDto $locale)
     {
         $query = SpyProductQuery::create();
         $query->filterBySku($skus);
         $query->useSpyLocalizedProductAttributesQuery()
-                    ->filterByFkLocale($localeId)
+                    ->filterByFkLocale($locale->getIdLocale())
                 ->endUse()
 
             ->addSelectColumn(SpyProductTableMap::COL_SKU)
@@ -48,6 +49,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
     /**
      * @param string $sku
+     *
      * @return SpyProductQuery
      */
     public function queryConcreteProductBySku($sku)
@@ -58,6 +60,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
     /**
      * @param string $sku
+     *
      * @return SpyAbstractProductQuery
      */
     public function queryAbstractProductBySku($sku)

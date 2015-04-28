@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Product\Business\Product;
 
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
@@ -130,21 +131,21 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idAbstractProduct
-     * @param int $fkLocale
+     * @param LocaleDto $locale
      * @param string $name
      * @param string $attributes
      *
      * @return int
      * @throws AbstractProductAttributesExistException
      */
-    public function createAbstractProductAttributes($idAbstractProduct, $fkLocale, $name, $attributes)
+    public function createAbstractProductAttributes($idAbstractProduct, LocaleDto $locale, $name, $attributes)
     {
-        $this->checkAbstractProductAttributesDoNotExist($idAbstractProduct, $fkLocale);
+        $this->checkAbstractProductAttributesDoNotExist($idAbstractProduct, $locale);
 
         $abstractProductAttributesEntity = $this->locator->product()->entitySpyLocalizedAbstractProductAttributes();
         $abstractProductAttributesEntity
             ->setFkAbstractProduct($idAbstractProduct)
-            ->setFkLocale($fkLocale)
+            ->setFkLocale($locale->getIdLocale())
             ->setName($name)
             ->setAttributes($attributes)
         ;
@@ -156,18 +157,18 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idAbstractProduct
-     * @param int $fkCurrentLocale
+     * @param LocaleDto $locale
      *
      * @throws AbstractProductAttributesExistException
      */
-    protected function checkAbstractProductAttributesDoNotExist($idAbstractProduct, $fkCurrentLocale)
+    protected function checkAbstractProductAttributesDoNotExist($idAbstractProduct, $locale)
     {
-        if ($this->hasAbstractProductAttributes($idAbstractProduct, $fkCurrentLocale)) {
+        if ($this->hasAbstractProductAttributes($idAbstractProduct, $locale)) {
             throw new AbstractProductAttributesExistException(
                 sprintf(
                     'Tried to create abstract attributes for abstract product %s, locale id %s, but it already exists',
                     $idAbstractProduct,
-                    $fkCurrentLocale
+                    $locale->getIdLocale()
                 )
             );
         }
@@ -175,13 +176,13 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idAbstractProduct
-     * @param int $fkCurrentLocale
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    protected function hasAbstractProductAttributes($idAbstractProduct, $fkCurrentLocale)
+    protected function hasAbstractProductAttributes($idAbstractProduct, LocaleDto $locale)
     {
-        $query = $this->productQueryContainer->queryAbstractProductAttributeCollection($idAbstractProduct, $fkCurrentLocale);
+        $query = $this->productQueryContainer->queryAbstractProductAttributeCollection($idAbstractProduct, $locale->getIdLocale());
 
         return $query->count() > 0;
     }
@@ -263,21 +264,21 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idConcreteProduct
-     * @param int $fkLocale
+     * @param LocaleDto $locale
      * @param string $name
      * @param string $attributes
      *
      * @return int
      * @throws ConcreteProductAttributesExistException
      */
-    public function createConcreteProductAttributes($idConcreteProduct, $fkLocale, $name, $attributes)
+    public function createConcreteProductAttributes($idConcreteProduct, LocaleDto $locale, $name, $attributes)
     {
-        $this->checkConcreteProductAttributesDoNotExist($idConcreteProduct, $fkLocale);
+        $this->checkConcreteProductAttributesDoNotExist($idConcreteProduct, $locale);
 
         $productAttributeEntity = $this->locator->product()->entitySpyLocalizedProductAttributes();
         $productAttributeEntity
             ->setFkProduct($idConcreteProduct)
-            ->setFkLocale($fkLocale)
+            ->setFkLocale($locale->getIdLocale())
             ->setName($name)
             ->setAttributes($attributes)
         ;
@@ -289,18 +290,18 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idConcreteProduct
-     * @param int $fkCurrentLocale
+     * @param LocaleDto $locale
      *
      * @throws ConcreteProductAttributesExistException
      */
-    protected function checkConcreteProductAttributesDoNotExist($idConcreteProduct, $fkCurrentLocale)
+    protected function checkConcreteProductAttributesDoNotExist($idConcreteProduct, LocaleDto $locale)
     {
-        if ($this->hasConcreteProductAttributes($idConcreteProduct, $fkCurrentLocale)) {
+        if ($this->hasConcreteProductAttributes($idConcreteProduct, $locale)) {
             throw new ConcreteProductAttributesExistException(
                 sprintf(
                     'Tried to create concrete product attributes for product id %s, locale id %s, but they exist',
                     $idConcreteProduct,
-                    $fkCurrentLocale
+                    $locale->getIdLocale()
                 )
             );
         }
@@ -308,13 +309,13 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idConcreteProduct
-     * @param int $fkCurrentLocale
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    protected function hasConcreteProductAttributes($idConcreteProduct, $fkCurrentLocale)
+    protected function hasConcreteProductAttributes($idConcreteProduct, LocaleDto $locale)
     {
-        $query = $this->productQueryContainer->queryConcreteProductAttributeCollection($idConcreteProduct, $fkCurrentLocale);
+        $query = $this->productQueryContainer->queryConcreteProductAttributeCollection($idConcreteProduct, $locale->getIdLocale());
 
         return $query->count() > 0;
     }
@@ -330,48 +331,48 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      * @param string $url
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return Url
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createProductUrl($sku, $url, $localeName)
+    public function createProductUrl($sku, $url, LocaleDto $locale)
     {
         $idConcreteProduct = $this->getConcreteProductIdBySku($sku);
 
-        return $this->urlFacade->createUrl($url, $localeName, 'product', $idConcreteProduct);
+        return $this->createProductUrlByIdProduct($idConcreteProduct, $url, $locale);
     }
 
     /**
      * @param int $idConcreteProduct
      * @param string $url
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return Url
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createProductUrlByIds($idConcreteProduct, $url, $idLocale)
+    public function createProductUrlByIdProduct($idConcreteProduct, $url, LocaleDto $locale)
     {
-        return $this->urlFacade->createUrlByLocaleFk($url, $idLocale, 'product', $idConcreteProduct);
+        return $this->urlFacade->createUrl($url, $locale, 'product', $idConcreteProduct);
     }
 
     /**
      * @param string $sku
      * @param string $url
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return Url
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createAndTouchProductUrl($sku, $url, $localeName)
+    public function createAndTouchProductUrl($sku, $url, LocaleDto $locale)
     {
-        $url = $this->createProductUrl($sku, $url, $localeName);
+        $url = $this->createProductUrl($sku, $url, $locale);
         $this->urlFacade->touchUrlActive($url->getIdUrl());
 
         return $url;
@@ -380,16 +381,16 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param int $idConcreteProduct
      * @param string $url
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return Url
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createAndTouchProductUrlByIds($idConcreteProduct, $url, $idLocale)
+    public function createAndTouchProductUrlByIdProduct($idConcreteProduct, $url, LocaleDto $locale)
     {
-        $url = $this->createProductUrlByIds($idConcreteProduct, $url, $idLocale);
+        $url = $this->createProductUrlByIdProduct($idConcreteProduct, $url, $locale);
         $this->urlFacade->touchUrlActive($url->getIdUrl());
 
         return $url;
