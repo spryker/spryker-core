@@ -5,7 +5,7 @@
       "SprykerFeature": "src/",
       "SprykerEngine": "src/",
       "Acceptance": "tests/",
-      "Function": "tests/",
+      "Functional": "tests/",
       "Integration": "tests/",
       "Unit": "tests/",
       "YvesUnit": "tests/"
