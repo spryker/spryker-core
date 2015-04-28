@@ -1,17 +1,17 @@
-%button-warning {
+%shared-button-warning {
 	@extend %button;
 
 	$rgbb: $_rgbUiMonza;
 	$rgbf: $_rgbWhite;
 
-	@include pre(box-shadow, (0 2px 0 $_rgbUiCrownOfThorns));
+	@include pre(box-shadow, 0 2px 0 $_rgbUiCrownOfThorns);
 	border-color:$rgbb;
 	background:$rgbb;
 	color:$rgbf;
 	@include pre(transition-property, (box-shadow, border-color, background));
 }
 
-%button-warning-hover {
+%shared-button-warning-hover {
 	$rgbb: $_rgbUiCrownOfThorns;
 
 	border-color:$rgbb;
@@ -20,7 +20,7 @@
 	@include pre(transition-timing-function, ease-in);
 }
 
-%button-warning-disabled {
+%shared-button-warning-disabled {
 	$rgbb: $_rgbSpyGrayChateau;
 
 	border-color:$rgbb;

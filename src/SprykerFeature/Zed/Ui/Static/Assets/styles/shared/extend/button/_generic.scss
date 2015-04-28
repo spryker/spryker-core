@@ -1,4 +1,4 @@
-%button-generic {
+%shared-button-generic {
 	@extend %button;
 
 	$rgbb: $_rgbWhite;
@@ -10,7 +10,7 @@
 	@include pre(transition-property, (background, color));
 }
 
-%button-generic-hover {
+%shared-button-generic-hover {
 	$rgbb: $_rgbSpyDodgerBlue;
 	$rgbf: $_rgbWhite;
 
@@ -19,7 +19,7 @@
 	color:$rgbf;
 }
 
-%button-generic-disabled {
+%shared-button-generic-disabled {
 	$rgbb: $_rgbWhite;
 	$rgbf: $_rgbSpyGrayChateau;
 

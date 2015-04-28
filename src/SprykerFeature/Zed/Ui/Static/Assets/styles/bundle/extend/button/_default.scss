@@ -1,0 +1,11 @@
+%button-default {
+	@extend %shared-button-default;
+}
+
+%button-default-hover {
+	@extend %shared-button-default-hover;
+}
+
+%button-default-disabled {
+	@extend %shared-button-default-disabled;
+}

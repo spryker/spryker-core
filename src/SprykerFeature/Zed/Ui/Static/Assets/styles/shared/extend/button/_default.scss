@@ -1,17 +1,17 @@
-%button-default {
+%shared-button-default {
 	@extend %button;
 
 	$rgbb: $_rgbSpyDodgerBlue;
 	$rgbf: $_rgbWhite;
 
-	@include pre(box-shadow, (0 2px 0 $_rgbSpyBostonBlue));
+	@include pre(box-shadow, 0 2px 0 $_rgbSpyBostonBlue);
 	border-color:$rgbb;
 	background:$rgbb;
 	color:$rgbf;
 	@include pre(transition-property, (box-shadow, border-color, background));
 }
 
-%button-default-hover {
+%shared-button-default-hover {
 	$rgbb: $_rgbSpyBostonBlue;
 
 	border-color:$rgbb;
@@ -20,7 +20,7 @@
 	@include pre(transition-timing-function, ease-in);
 }
 
-%button-default-disabled {
+%shared-button-default-disabled {
 	$rgbb: $_rgbSpyGrayChateau;
 
 	border-color:$rgbb;

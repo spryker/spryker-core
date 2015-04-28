@@ -1,7 +1,6 @@
-%button {
-	@include wh(inline-block, border-box, null, 32px);
-	vertical-align:baseline;
-	border-radius: 4px;
+%shared-button {
+ 	@include h(border-box, baseline, null, 32px);
+	@include pre(border-radius, 4px);
 	border:1px solid transparent;
 	padding:8px;
 	@include font(15px, 12px, null, inherit);
