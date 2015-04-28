@@ -1,20 +1,14 @@
 <?php
 
-namespace SprykerEngine\Zed\Kernel\Communication;
+namespace SprykerEngine\Zed\Kernel;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\AbstractLocator;
-use SprykerEngine\Zed\Kernel\BundleConfigLocator;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
-class DependencyContainerLocator extends AbstractLocator
+abstract class AbstractDependencyContainerLocator extends AbstractLocator
 {
 
     const DEPENDENCY_CONTAINER_SUFFIX = 'DependencyContainer';
-
-    /**
-     * @var string
-     */
-    protected $factoryClassNamePattern = '\\{{namespace}}\\Zed\\{{bundle}}\\Communication\\Factory';
 
     /**
      * @param $bundle
@@ -33,6 +27,4 @@ class DependencyContainerLocator extends AbstractLocator
 
         return $factory->create($bundle . self::DEPENDENCY_CONTAINER_SUFFIX, [$bundleConfig]);
     }
-
-
 }
