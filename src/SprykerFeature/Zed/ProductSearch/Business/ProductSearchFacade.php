@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 
@@ -24,13 +25,13 @@ class ProductSearchFacade extends AbstractFacade
     }
 
     /**
-     * @param array  $productsRaw
-     * @param array  $processedProducts
-     * @param string $locale
+     * @param array $productsRaw
+     * @param array $processedProducts
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function createSearchProducts(array $productsRaw, array $processedProducts, $locale)
+    public function createSearchProducts(array $productsRaw, array $processedProducts, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->getProductSearchProcessor()
