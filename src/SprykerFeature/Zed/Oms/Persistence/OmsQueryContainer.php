@@ -78,7 +78,7 @@ class OmsQueryContainer extends AbstractQueryContainer
             $stateNames[] = $state->getName();
         }
 
-        $query->useStateQuery()->filterByName($stateNames)->endUse();
+        $query->useStatusQuery()->filterByName($stateNames)->endUse();
         $query->filterBySku($sku);
 
         return $query;
