@@ -22,9 +22,6 @@ class GeneratorConsole extends Console
 
     protected $xmlTree;
 
-    /**
-     *
-     */
     protected function configure()
     {
         parent::configure();
@@ -34,92 +31,57 @@ class GeneratorConsole extends Console
         ;
     }
 
-    protected function mergeAndGetBundlesXmlDefinitions()
+    protected function getXmlDefinitions()
     {
         $directory = APPLICATION_VENDOR_DIR . 'spryker/';
 
         $bundlesList = scandir($directory);
 
-        $xmlDefinition = new Config([], true);
-
-//        print_r($xmlDefinition);
-//        die;
+        $definitions = array();
 
         foreach ($bundlesList as $bundle) {
             if ( '.' !== $bundle && '..' !== $bundle  ) {
-//                print_r($bundle);
-//                echo "\n";
-
                 $xmlDefinitionFile = $directory . $bundle . '/transferDefinitions.xml';
-//                print_r($xmlDefinitionFile);
-//                echo "\n";
                 if ( is_file($xmlDefinitionFile) ) {
-                    var_dump($bundle);
-//                    $newDefinition = Factory::fromFile($xmlDefinitionFile, true);
-//                    $xmlDefinition->merge($newDefinition);
+                    $definitions[] = Factory::fromFile($xmlDefinitionFile, true)->toArray();
                 }
-//                return $navigationDefinition->toArray();
             }
         }
 
-//        print_r($xmlDefinition);
-die;
-//        print_r($bundles);
+        return $definitions;
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->manager = new ClassCollectionManager();
 
-        $fileContent = $this->mergeAndGetBundlesXmlDefinitions();
+        $xmlDefinitions = $this->getXmlDefinitions();
 
+        if ( empty($xmlDefinitions) ) {
+            throw new \Exception('No XML configuration transfer files found');
+        }
 
-        echo $fileContent;
-        echo "\n";
-        die;
-
-
-        $file = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__)))))) . '/Console/data/transfer.xml';
-
-        $fileContent = file_get_contents($file);
-
-
-
-        $xml = new SofeeXmlParser();
-        $xml->parseString($fileContent);
-
-        $this->xmlTree = $xml->getTree();
-
-        if ( isset($this->xmlTree['transfers']['transfer'][0]) ) {
-            // will generate more classes
-            foreach ($this->xmlTree['transfers']['transfer'] as $item) {
-                $this->manager->setClassDefinition($item);
+        foreach ($xmlDefinitions as $configObject) {
+            if ( isset($configObject['transfer'][0]) ) {
+                foreach ($configObject['transfer'] as $trasnferArray) {
+                    $this->manager->setClassDefinition($trasnferArray);
+                }
+            } else {
+                $this->manager->setClassDefinition($configObject['transfer']);
             }
-        } else {
-            // will generate only one class
-            $this->manager->setClassDefinition($this->xmlTree['transfers']['transfer']);
         }
 
         $definitions = $this->manager->getCollections();
         $generator = new ClassGenerator();
-        $generator->setTargetFolder(dirname(__DIR__) . '/target/');
+        $generator->setTargetFolder(APPLICATION_SOURCE_DIR . 'Generated/Shared/Transfer/');
 
         foreach ($definitions as $classDefinition) {
             $phpCode = $generator->generateClass($classDefinition);
-            echo $phpCode;
-
-            echo "\n";
-die;
-            $target = dirname(__DIR__) . '/Generated/';
-            if ( ! is_dir($target) ) {
-                mkdir($target, 0755, true);
+            if ( ! is_dir($generator->getTargetFolder()) ) {
+                mkdir($generator->getTargetFolder(), 0755, true);
             }
-            file_put_contents($target . $classDefinition->getClassName() . '.php', $phpCode);
-
-//            echo $phpCode . "\n\n";
+            file_put_contents($generator->getTargetFolder() . $classDefinition->getClassName() . '.php', $phpCode);
+            $output->writeln(sprintf('<info>%s.php</info> was generated', $classDefinition->getClassName()));
         }
-
-        //$this->locator->transfer()->facade;
-
     }
 }

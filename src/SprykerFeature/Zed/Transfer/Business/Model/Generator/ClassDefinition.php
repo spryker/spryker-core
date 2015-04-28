@@ -13,7 +13,7 @@ class ClassDefinition
 
     public function __construct($className)
     {
-        $this->className = $className;
+        $this->setClassName($className);
     }
 
     /**
@@ -22,7 +22,7 @@ class ClassDefinition
      */
     public function setInterface($implementsInterface)
     {
-        if ( isset($implementsInterface[0]) ) {
+        if ( isset($implementsInterface[0]) && is_array($implementsInterface[0]) ) {
             foreach ($implementsInterface as $newInterface) {
                 $this->addInterface($newInterface);
             }
@@ -41,7 +41,7 @@ class ClassDefinition
     protected function addInterface($interface)
     {
         if ( ! in_array($interface, $this->interfaces) ) {
-            $this->interfaces[] = $interface['value'];
+            $this->interfaces[] = $interface;
         }
     }
 
@@ -75,6 +75,14 @@ class ClassDefinition
         }
 
         return $type;
+    }
+
+    public function setClassName($name)
+    {
+        if ( strpos($name, 'Transfer') === false ) {
+            $name .= 'Transfer';
+        }
+        $this->className = $name;
     }
 
     /**

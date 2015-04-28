@@ -36,7 +36,7 @@ class ClassDefinitionTest extends PHPUnit_Framework_TestCase
 
     public function test_class_name()
     {
-        $this->assertSame('TestClass', $this->definition->getClassName());
+        $this->assertSame('TestClassTransfer', $this->definition->getClassName());
     }
 
     public function test_interfaces_number()

@@ -46,7 +46,6 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
                 'code' => $generator->generateClass($classDefinition),
             ];
         }
-//        print_r($this->generatedClasses[0]['code']);
     }
 
 

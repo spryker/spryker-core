@@ -8,14 +8,29 @@ class ClassGenerator
 {
     const TWIG_TEMPLATES_LOCATION = '/Templates/';
 
+    /**
+     * @var ClassDefinition
+     */
     protected $classDefinition;
 
+    /**
+     * @var null
+     */
     protected $targetFolder = null;
 
+    /**
+     * @var \Twig_Environment
+     */
     protected $twig;
 
+    /**
+     * @var array
+     */
     protected $externalResourcesToUse = [];
 
+    /**
+     * @var array
+     */
     protected $translations = [];
 
     /**
@@ -32,11 +47,27 @@ class ClassGenerator
         $this->twig->addExtension(new TransferTwigExtensions());
     }
 
+    /**
+     * set path where generated classes will be written
+     * @param string $path
+     */
     public function setTargetFolder($path)
     {
         $this->targetFolder = $path;
     }
 
+    /**
+     * @return string
+     */
+    public function getTargetFolder()
+    {
+        return $this->targetFolder;
+    }
+
+    /**
+     * @param ClassDefinition $definition
+     * @return string
+     */
     public function generateClass(ClassDefinition $definition)
     {
         $this->classDefinition = $definition;
@@ -49,38 +80,59 @@ class ClassGenerator
         return $this->twig->render('class.php.twig', $translations);
     }
 
+    /**
+     * @return array
+     */
     public function getTranslations()
     {
         return $this->translations;
     }
 
+    /**
+     * @return array
+     */
     public function getExternalResourcesToUse()
     {
         return $this->externalResourcesToUse;
     }
 
+    /**
+     * generate array that will be used in twig template to generate class file
+     */
     protected function buildTwigData()
     {
-        $this->translations = array(
-            'namespace'     => 'Generated',
-            'className'     => $this->classDefinition->getClassName(),
+        $this->translations = [
+            'namespace'             => 'Generated',
+            'className'             => $this->classDefinition->getClassName(),
             'interfacesToImplement' => $this->getInterfacesToImplement(),
-            'properties'    => $this->generatePropertiesDeclarations(),
-            'settersAndGetters' => $this->generateSettersAndGetters(),
-            'useExternal'   => $this->getExternalResourcesToUse(),
-        );
+            'properties'            => $this->generatePropertiesDeclarations(),
+            'settersAndGetters'     => $this->generateSettersAndGetters(),
+            'useExternal'           => $this->getExternalResourcesToUse(),
+        ];
     }
 
+    /**
+     * @return $this
+     */
     public function generateExternalResourcesToUse()
     {
         $interfaces = $this->classDefinition->getInterfaces();
         foreach ($interfaces as $int) {
-            $this->addExternalResource($int);
+            if (is_array($int)) {
+                foreach ($int as $interfaceItem) {
+                    $this->addExternalResource($interfaceItem);
+                }
+            } else {
+                $this->addExternalResource($int);
+            }
         }
 
         return $this;
     }
 
+    /**
+     * @param string $resourceNamespace
+     */
     protected function addExternalResource($resourceNamespace)
     {
         if ( ! in_array($resourceNamespace, $this->externalResourcesToUse) ) {
@@ -88,18 +140,35 @@ class ClassGenerator
         }
     }
 
+    /**
+     * @return string
+     */
     public function getInterfacesToImplement()
     {
         $interfaces = $this->classDefinition->getInterfaces();
 
         $interfacesNames = [];
         foreach ($interfaces as $int) {
-            $this->addExternalResource($int);
-            $interfacesNames[] = $this->getNamespaceBaseName($int);
+            if (is_array($int)) {
+                foreach ($int as $interfaceItem) {
+                    $this->addExternalResource($interfaceItem);
+                    $interfacesNames[] = $this->getNamespaceBaseName($interfaceItem);
+                }
+            } else {
+                $this->addExternalResource($int);
+                $interfacesNames[] = $this->getNamespaceBaseName($int);
+            }
         }
+
         return implode(', ', $interfacesNames);
     }
 
+    /**
+     * returns the name of a class from namespace
+     *
+     * @param string $name
+     * @return string
+     */
     protected function getNamespaceBaseName($name)
     {
         $temporary = explode('\\', $name);
@@ -107,6 +176,11 @@ class ClassGenerator
         return end($temporary);
     }
 
+    /**
+     * returns a list of properties that new class should have
+     *
+     * @return array
+     */
     public function generatePropertiesDeclarations()
     {
         $declarations = [];
@@ -123,6 +197,10 @@ class ClassGenerator
         return $declarations;
     }
 
+    /**
+     * @param array $properties
+     * @return null|string
+     */
     protected function getDefaultValue(array $properties)
     {
         if ( preg_match('/(array|\[\])/', $properties['type']) ) {
@@ -136,11 +214,20 @@ class ClassGenerator
         return null;
     }
 
+    /**
+     * @param $dataArray
+     * @return string
+     */
     public function getPropertyName($dataArray)
     {
         return ucfirst($this->getPassedParameter($dataArray));
     }
 
+    /**
+     * @param string $type
+     * @param bool $isForDocumentation
+     * @return mixed|string
+     */
     public function getParameterDataType($type, $isForDocumentation=false)
     {
         if ( 'array' === $type ) {
@@ -156,9 +243,13 @@ class ClassGenerator
             return $this->getNamespaceBaseName($type);
         }
 
-        return '';
+        return null;
     }
 
+    /**
+     * @param array $dataArray
+     * @return mixed
+     */
     public function getPassedParameter(array $dataArray)
     {
         if ( ! isset($dataArray['name']) ) {
@@ -169,6 +260,9 @@ class ClassGenerator
         return $name;
     }
 
+    /**
+     * @return array
+     */
     protected function generateSettersAndGetters()
     {
         $properties = $this->classDefinition->getProperties();
@@ -183,29 +277,6 @@ class ClassGenerator
             ];
         }
 
-//        print_r($settersAndGetters);
-//        die;
-
         return $settersAndGetters;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
