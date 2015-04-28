@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductSearchBusiness;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
@@ -19,9 +20,11 @@ use SprykerFeature\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInte
 use SprykerFeature\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
 use SprykerFeature\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerFeature\Zed\ProductSearch\ProductSearchConfig;
 
 /**
  * @method ProductSearchBusiness getFactory()
+ * @method ProductSearchConfig getConfig()
  */
 class ProductSearchDependencyContainer extends AbstractDependencyContainer
 {
@@ -76,22 +79,14 @@ class ProductSearchDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return ProductSearchSettings
-     */
-    protected function getSettings()
-    {
-        return $this->getFactory()->createProductSearchSettings();
-    }
-
-    /**
      * @return OperationLocatorInterface
      */
     protected function createOperationLocator()
     {
         $locator = $this->getFactory()->createLocatorOperationLocator();
-        $settings = $this->getSettings();
+        $config = $this->getConfig();
 
-        foreach ($settings->getPossibleOperations() as $operation) {
+        foreach ($config->getPossibleOperations() as $operation) {
             $locator->addOperation($operation);
         }
 
@@ -154,6 +149,6 @@ class ProductSearchDependencyContainer extends AbstractDependencyContainer
      */
     protected function getStoreName()
     {
-        return \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
+        return Store::getInstance()->getStoreName();
     }
 }
