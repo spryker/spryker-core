@@ -11,9 +11,10 @@ _ng
 		'$controller',
 		'$scope',
 		'$attrs',
+		'$q',
 		'ActionModelService',
 
-		function($controller, $scope, $attrs, service) {
+		function($controller, $scope, $attrs, $q, service) {
 			$controller('ComController', {
 				$scope : $scope,
 				$attrs : $attrs
@@ -34,9 +35,11 @@ _ng
 					}, function(why) {
 						$scope.query = true;
 
-						console.warn('SPY - action returned with errors: ' + why);	//jshint ignore:line
+						console.warn('SPY - action returned with errors');	//jshint ignore:line
 
 						$scope.$emitAllChannels(_event.E_ERROR, why);
+
+						return $q.reject(why);
 					});
 			};
 		}
