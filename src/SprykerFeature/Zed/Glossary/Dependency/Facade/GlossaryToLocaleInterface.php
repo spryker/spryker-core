@@ -6,29 +6,26 @@
 
 namespace SprykerFeature\Zed\Glossary\Dependency\Facade;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface GlossaryToLocaleInterface
 {
     /**
      * @param string $localeName
-     * @return int
+     *
+     * @return LocaleDto
      * @throws MissingLocaleException
      */
-    public function getIdLocale($localeName);
+    public function getLocale($localeName);
 
     /**
-     * @return string
+     * @return LocaleDto
      */
     public function getCurrentLocale();
 
     /**
-     * @return int
-     */
-    public function getCurrentIdLocale();
-
-    /**
      * @return array
      */
-    public function getRelevantLocales();
+    public function getRelevantLocaleNames();
 }
