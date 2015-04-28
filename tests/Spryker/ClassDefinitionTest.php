@@ -1,6 +1,6 @@
 <?php
 
-use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 
 class ClassDefinitionTest extends PHPUnit_Framework_TestCase
 {

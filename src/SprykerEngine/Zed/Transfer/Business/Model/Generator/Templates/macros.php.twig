@@ -1,0 +1,49 @@
+{% macro method_set(sag) -%}
+{% import _self as mcr %}
+{# create setMethod() #}
+{%- if sag.is_special == 1 -%}{{ mcr.method_set_header(sag, 'array') }}{% else %}{{ mcr.method_set_header(sag, sag.parameterDataType) }}{%- endif %}
+    {
+        $this->{{ sag.passedParameter }}{{ writeIf('[]', 'array', sag.parameterDataType) }} = ${{ sag.passedParameter }};
+        $this->addModifiedProperty('{{ sag.passedParameter }}');
+
+        return $this;
+    }
+{% if sag.is_special == 1 %}{# create addMethod(ClassType $methodParameter) #}
+
+    /**
+     * @var {{ writeIfNot(sag.parameterDataType ~ ' ', '(^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }}
+     */
+    public function add{{ sag.propertyName }}({{ writeIfNot(sag.parameterDataType ~ ' ', '(^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }})
+    {
+        $this->{{ sag.passedParameter }}[] = ${{ sag.passedParameter }};
+        $this->addModifiedProperty('{{ sag.passedParameter }}');
+
+        return $this;
+    }
+{% endif %}
+{%- endmacro %}
+
+{% macro method_set_header(sag, type) %}
+    /**
+     * @var {{ writeIfNot(type ~ ' ', '(^string|^int)', type) }}${{ sag.passedParameter }}
+     */
+    public function set{{ sag.propertyName }}({{ writeIfNot(type ~ ' ', '(^string|^int)', type) }}${{ sag.passedParameter }})
+{% endmacro %}
+
+{% macro method_get(sag) %}
+    /**
+     * @return {{ writeIfNot(sag.parameterDataType ~ ' ', '(^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }}
+     */
+    public function get{{ sag.propertyName }}()
+    {
+        return $this->{{ sag.passedParameter }};
+    }
+{% endmacro %}
+
+{% macro write_property(prop) %}
+
+    /**
+     * @var {{ writeIfNot(prop.parameterDataType ~ ' ', '(^string|^int)', prop.parameterDataType) }}${{ prop.propertyName }}
+     */
+    protected ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue }}{% endif %};
+{% endmacro %}

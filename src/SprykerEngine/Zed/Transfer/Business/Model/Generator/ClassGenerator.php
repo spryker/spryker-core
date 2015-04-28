@@ -230,6 +230,15 @@ class ClassGenerator
     }
 
     /**
+     * @param string $type
+     * @return bool
+     */
+    public function isSpecialProperty($type)
+    {
+        return !preg_match('/(^int|^bool|array|float|double|object|string|null)/', $type);
+    }
+
+    /**
      * @param array $properties
      * @return null|string
      */
@@ -306,6 +315,7 @@ class ClassGenerator
                 'propertyName' => $this->getPropertyName($props),
                 'passedParameter' => $this->getPassedParameter($props),
                 'parameterDataType' => $this->getParameterDataType($props['type']),
+                'is_special'    => $this->isSpecialProperty($props['type']),
             ];
         }
 

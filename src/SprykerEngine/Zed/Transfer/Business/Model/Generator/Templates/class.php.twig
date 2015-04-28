@@ -1,3 +1,4 @@
+{% import 'macros.php.twig' as mcr %}
 <?php
 
 namespace {{ namespace }};
@@ -14,34 +15,14 @@ use {{ ue }};
  */
 class {{ className }} extends AbstractTransfer implements {{ interfacesToImplement }}
 {
-    {% for prop in properties %}
+{# write properties #}
+{% for prop in properties %}
+{{- mcr.write_property(prop) -}}
+{% endfor %}
 
-    /**
-     * @var {{ writeIfNot(prop.parameterDataType ~ ' ', '(^string|^int)', prop.parameterDataType) }}${{ prop.propertyName }}
-     */
-    protected ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue }}{% endif %};
-    {% endfor %}
-
-    {% for sag in settersAndGetters %}
-
-    /**
-     * @var {{ writeIfNot(sag.parameterDataType ~ ' ', '(^array|^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }}
-     */
-    public function set{{ sag.propertyName }}({{ writeIfNot(sag.parameterDataType ~ ' ', '(^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }})
-    {
-        $this->{{ sag.passedParameter }}{{ writeIf('[]', 'array', sag.parameterDataType) }} = ${{ sag.passedParameter }};
-        $this->addModifiedProperty('{{ sag.passedParameter }}');
-
-        return $this;
-    }
-
-    /**
-    * @return {{ writeIfNot(sag.parameterDataType ~ ' ', '(^string|^int)', sag.parameterDataType) }}${{ sag.passedParameter }}
-    */
-    public function get{{ sag.propertyName }}()
-    {
-        return $this->{{ sag.passedParameter }};
-    }
-    {% endfor %}
-
+{# write setters and getters #}
+{% for sag in settersAndGetters %}
+{{ mcr.method_set(sag) }}
+{{ mcr.method_get(sag) }}
+{% endfor %}
 }

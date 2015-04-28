@@ -1,7 +1,7 @@
 <?php
 
-use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
-use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Zend\Config\Config;
 use Zend\Config\Factory;
 
@@ -88,9 +88,9 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             ['@var Customer $customer'],
             ['@return Customer $customer'],
             ['$this->properties[] = $properties;'],
-            ['setCustomer(Customer $customer)'],
+            ['setCustomer(array $customer)'],
+            ['addCustomer(Customer $customer)'],
             ['public function setPublished(boolean $published)'],
-            ['class AlfaTransfer extends AbstractTransfer implements FirstInterface, SecondInterface, ThirdInterface'],
             ['use Spryker\Demo\FirstInterface'],
             ['use Spryker\Demo\SecondInterface'],
             ['use Spryker\Demo\ThirdInterface'],
@@ -98,6 +98,7 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             ['$this->addModifiedProperty(\'customer\');'],
             ['$this->addModifiedProperty(\'properties\');'],
             ['$this->addModifiedProperty(\'cartItems\');'],
+            ['class AlfaTransfer extends AbstractTransfer implements FirstInterface, SecondInterface, ThirdInterface'],
         ];
     }
 
@@ -122,6 +123,7 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             ['use CartItem'],
             ['use Customer'],
             ['use FirstInterface'],
+            ['setCustomer(Customer $customer)'],
             ['setCustomer(Customer$customer)'],
             ['setPublished(boolean$published)'],
             ['setProperties(array$properties)'],
