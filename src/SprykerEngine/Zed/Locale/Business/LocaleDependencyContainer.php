@@ -11,10 +11,12 @@ use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Locale\Business\Internal\Install\LocaleInstaller;
 use SprykerEngine\Zed\Locale\Business\Manager\LocaleManager;
+use SprykerEngine\Zed\Locale\LocaleConfig;
 use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 /**
  * @method LocaleBusiness getFactory()
+ * @method LocaleConfig getConfig()
  */
 class LocaleDependencyContainer extends AbstractDependencyContainer
 {
@@ -47,18 +49,10 @@ class LocaleDependencyContainer extends AbstractDependencyContainer
     {
         $installer = $this->getFactory()->createInternalInstallLocaleInstaller(
             $this->getQueryContainer(),
-            $this->getSettings()->getLocaleFile()
+            $this->getConfig()->getLocaleFile()
         );
         $installer->setMessenger($messenger);
 
         return $installer;
-    }
-
-    /**
-     * @return LocaleSettings
-     */
-    protected function getSettings()
-    {
-        return $this->getFactory()->createLocaleSettings();
     }
 }
