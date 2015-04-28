@@ -1,14 +1,15 @@
 <?php
 
-namespace SprykerFeature\Zed\Acl\Business;
+namespace SprykerFeature\Zed\Acl;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Shared\Acl\AclConfig;
-use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\Acl\AclConfig as AclSharedConfig;
 use SprykerFeature\Shared\Library\Config;
 
-class AclSettings
+class AclConfig extends AbstractBundleConfig
 {
+
     const VALIDATOR_WILDCARD = '*';
 
     const ACL_SESSION_KEY = 'acl';
@@ -27,19 +28,11 @@ class AclSettings
     protected $rules = [];
 
     /**
-     * @param Locator $locator
-     */
-    public function __construct(Locator $locator)
-    {
-        $this->locator = $locator;
-    }
-
-    /**
      * @return array
      */
     public function getRules()
     {
-        $default = Config::get(AclConfig::ACL_DEFAULT_RULES);
+        $default = Config::get(AclSharedConfig::ACL_DEFAULT_RULES);
 
         return array_merge($default, $this->rules);
     }
@@ -65,7 +58,7 @@ class AclSettings
      */
     public function getCredentials()
     {
-        return Config::get(AclConfig::ACL_DEFAULT_CREDENTIALS);
+        return Config::get(AclSharedConfig::ACL_DEFAULT_CREDENTIALS);
     }
 
     /**

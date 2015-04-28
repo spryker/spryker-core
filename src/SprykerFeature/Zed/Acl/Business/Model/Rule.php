@@ -5,11 +5,11 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
+use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
 use SprykerFeature\Shared\Acl\Transfer\RuleCollection;
 use SprykerFeature\Shared\User\Transfer\User;
-use SprykerFeature\Zed\Acl\Business\AclSettings;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Shared\Acl\Transfer\Rule as TransferRule;
 
@@ -34,7 +34,7 @@ class Rule implements RuleInterface
     protected $rulesValidator;
 
     /**
-     * @var AclSettings
+     * @var AclConfig
      */
     protected $settings;
 
@@ -42,13 +42,13 @@ class Rule implements RuleInterface
      * @param AclQueryContainer $queryContainer
      * @param LocatorLocatorInterface $locator
      * @param RuleValidator $rulesValidator
-     * @param AclSettings $settings
+     * @param AclConfig $settings
      */
     public function __construct(
         AclQueryContainer $queryContainer,
         LocatorLocatorInterface $locator,
         RuleValidator $rulesValidator,
-        AclSettings $settings
+        AclConfig $settings
     ) {
         $this->queryContainer = $queryContainer;
         $this->locator = $locator;
@@ -151,9 +151,9 @@ class Rule implements RuleInterface
      */
     public function findByRoles(
         RoleCollection $roles,
-        $bundle = AclSettings::VALIDATOR_WILDCARD,
-        $controller = AclSettings::VALIDATOR_WILDCARD,
-        $action = AclSettings::VALIDATOR_WILDCARD
+        $bundle = AclConfig::VALIDATOR_WILDCARD,
+        $controller = AclConfig::VALIDATOR_WILDCARD,
+        $action = AclConfig::VALIDATOR_WILDCARD
     ) {
         $results = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();
 

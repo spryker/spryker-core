@@ -6,8 +6,8 @@ use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
+use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
-use SprykerFeature\Zed\Acl\Business\AclSettings;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclUserHasGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclGroupsHasRolesTableMap;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclGroupTableMap;
@@ -22,11 +22,6 @@ use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserUserTableMap;
 use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUserQuery;
 
-/**
- * Class AclQueryContainer
- *
- * @package SprykerFeature\Zed\Acl\Persistence
- */
 /**
  * @method AclDependencyContainer getDependencyContainer()
  */
@@ -232,21 +227,21 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryRuleByPathAndRoles(
         RoleCollection $roles,
-        $bundle = AclSettings::VALIDATOR_WILDCARD,
-        $controller = AclSettings::VALIDATOR_WILDCARD,
-        $action = AclSettings::VALIDATOR_WILDCARD
+        $bundle = AclConfig::VALIDATOR_WILDCARD,
+        $controller = AclConfig::VALIDATOR_WILDCARD,
+        $action = AclConfig::VALIDATOR_WILDCARD
     ) {
         $query = $this->getDependencyContainer()->createRuleQuery();
 
-        if ($bundle !== AclSettings::VALIDATOR_WILDCARD) {
+        if ($bundle !== AclConfig::VALIDATOR_WILDCARD) {
             $query->filterByBundle($bundle);
         }
 
-        if ($controller !== AclSettings::VALIDATOR_WILDCARD) {
+        if ($controller !== AclConfig::VALIDATOR_WILDCARD) {
             $query->filterByController($controller);
         }
 
-        if ($action !== AclSettings::VALIDATOR_WILDCARD) {
+        if ($action !== AclConfig::VALIDATOR_WILDCARD) {
             $query->filterByAction($action);
         }
 

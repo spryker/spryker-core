@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Acl\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\AclBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Model\RuleValidator;
 use SprykerFeature\Zed\Acl\Business\Model\Group;
 use SprykerFeature\Zed\Acl\Business\Model\Installer;
@@ -13,6 +14,7 @@ use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 
 /**
  * @method AclBusiness getFactory()
+ * @method AclConfig getConfig()
  */
 class AclDependencyContainer extends AbstractDependencyContainer
 {
@@ -52,7 +54,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
             $this->locateQueryContainer(),
             $this->getLocator(),
             $this->createRuleValidatorHelper(),
-            $this->createSettings()
+            $this->getConfig()
         );
     }
 
@@ -77,16 +79,6 @@ class AclDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return AclSettings
-     */
-    public function createSettings()
-    {
-        return $this->getFactory()->createAclSettings(
-            $this->getLocator()
-        );
-    }
-
-    /**
      * @return Installer
      */
     public function createInstallerModel()
@@ -94,7 +86,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createModelInstaller(
             $this->locateQueryContainer(),
             $this->getLocator(),
-            $this->createSettings()
+            $this->getConfig()
         );
     }
 }

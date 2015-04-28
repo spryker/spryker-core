@@ -6,7 +6,7 @@ use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
 use SprykerFeature\Shared\Acl\Transfer\Rule as transferRule;
 use SprykerFeature\Shared\Acl\Transfer\RuleCollection;
 use SprykerFeature\Shared\User\Transfer\User;
-use SprykerFeature\Zed\Acl\Business\AclSettings;
+use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 
@@ -56,9 +56,9 @@ interface RuleInterface
      */
     public function findByRoles(
         RoleCollection $roles,
-        $bundle = AclSettings::VALIDATOR_WILDCARD,
-        $controller = AclSettings::VALIDATOR_WILDCARD,
-        $action = AclSettings::VALIDATOR_WILDCARD
+        $bundle = AclConfig::VALIDATOR_WILDCARD,
+        $controller = AclConfig::VALIDATOR_WILDCARD,
+        $action = AclConfig::VALIDATOR_WILDCARD
     );
     /**
      * @param int $idGroup
