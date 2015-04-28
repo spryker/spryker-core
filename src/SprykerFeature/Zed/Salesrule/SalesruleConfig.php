@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\Salesrule\Business;
 
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-
-class SalesruleSettings
+class SalesruleConfig extends AbstractBundleConfig
 {
 
     /**

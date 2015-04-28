@@ -13,11 +13,6 @@ use SprykerFeature\Zed\Salesrule\Business\Model\DiscountableItemInterface;
 class SalesruleFacade extends AbstractFacade
 {
 
-    public function createSettings()
-    {
-        return $this->factory->createSettings();
-    }
-
     /**
      * @return Calculator\SalesruleCalculator
      */
