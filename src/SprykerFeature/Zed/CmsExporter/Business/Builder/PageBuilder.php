@@ -30,7 +30,7 @@ class PageBuilder implements PageBuilderInterface
     {
         $returnedResultSet = [];
         foreach ($pageResultSet as $index => $page) {
-            $pageKey = $this->pageKeyBuilder->generateKey($page['page_id'], $locale);
+            $pageKey = $this->pageKeyBuilder->generateKey($page['page_id'], $locale->getLocaleName());
             $returnedResultSet[$pageKey] = isset($returnedResultSet[$pageKey]) ? $returnedResultSet[$pageKey] : [];
             $returnedResultSet[$pageKey]['url'] = $page['page_url'];
             $returnedResultSet[$pageKey]['id'] = $page['page_id'];
