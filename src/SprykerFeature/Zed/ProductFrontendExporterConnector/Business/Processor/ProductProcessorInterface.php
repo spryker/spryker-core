@@ -1,19 +1,16 @@
 <?php
+
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 
-/**
- * Class ProductProcessor
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor
- */
 interface ProductProcessorInterface
 {
     /**
-     * @param array  $products
-     * @param string $locale
+     * @param array $products
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function buildProducts(array $products, $locale);
+    public function buildProducts(array $products, LocaleDto $locale);
 }

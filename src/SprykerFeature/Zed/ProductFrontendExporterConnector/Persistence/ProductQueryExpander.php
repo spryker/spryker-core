@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Persistence;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -26,11 +27,11 @@ class ProductQueryExpander implements ProductQueryExpanderInterface
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, $localeName)
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
     {
         $expandableQuery->clearSelectColumns();
         $expandableQuery
@@ -47,7 +48,7 @@ class ProductQueryExpander implements ProductQueryExpanderInterface
         );
         $expandableQuery->addAnd(
             SpyLocaleTableMap::COL_LOCALE_NAME,
-            $localeName,
+            $locale->getLocaleName(),
             Criteria::EQUAL
         );
         $expandableQuery->addAnd(
@@ -56,6 +57,6 @@ class ProductQueryExpander implements ProductQueryExpanderInterface
             Criteria::EQUAL
         );
 
-        return $this->productQueryContainer->joinLocalizedProductQueryWithAttributes($expandableQuery, $localeName);
+        return $this->productQueryContainer->joinLocalizedProductQueryWithAttributes($expandableQuery);
     }
 }

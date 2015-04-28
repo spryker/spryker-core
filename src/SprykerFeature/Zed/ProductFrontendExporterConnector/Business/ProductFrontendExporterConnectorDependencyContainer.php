@@ -4,19 +4,10 @@ namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductFrontendExporterConnectorBusiness;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerFeature\Shared\ProductFrontendExporterConnector\Code\KeyBuilder\ProductKeyBuilder;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\UrlKeyBuilder;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
-use SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Builder\ProductUrlKeyBuilder;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Decider\ProductExportDeciderInterface;
-use SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor\ProductUrlMapProcessorInterface;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Dependency\Facade\ProductFrontendExporterToProductInterface;
 
-/**
- * Class ProductFrontendExporterConnectorDependencyContainer
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Business
- */
 /**
  * @method ProductFrontendExporterConnectorBusiness getFactory()
  */
