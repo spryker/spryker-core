@@ -23,9 +23,11 @@ use SprykerFeature\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use SprykerFeature\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerFeature\Zed\Product\ProductConfig;
 
 /**
  * @method ProductBusiness getFactory()
+ * @method ProductConfig getConfig()
  */
 class ProductDependencyContainer extends AbstractDependencyContainer
 {
@@ -35,7 +37,7 @@ class ProductDependencyContainer extends AbstractDependencyContainer
     public function createHttpFileImporter()
     {
         return $this->getFactory()->createImporterUploadUploadedFileImporter(
-            $this->createSettings()->getDestinationDirectoryForUploads()
+            $this->getConfig()->getDestinationDirectoryForUploads()
         );
     }
 
@@ -53,14 +55,6 @@ class ProductDependencyContainer extends AbstractDependencyContainer
         );
 
         return $importer;
-    }
-
-    /**
-     * @return ProductSettings
-     */
-    protected function createSettings()
-    {
-        return $this->getFactory()->createProductSettings();
     }
 
     /**
@@ -104,7 +98,7 @@ class ProductDependencyContainer extends AbstractDependencyContainer
     protected function createAbstractProductWriter()
     {
         return $this->getFactory()->createImporterWriterDbAbstractProductWriter(
-            $this->createSettings()->getProductDefaultLocale()
+            $this->getConfig()->getProductDefaultLocale()
         );
     }
 
@@ -114,7 +108,7 @@ class ProductDependencyContainer extends AbstractDependencyContainer
     protected function createConcreteProductWriter()
     {
         return $this->getFactory()->createImporterWriterDbConcreteProductWriter(
-            $this->createSettings()->getProductDefaultLocale()
+            $this->getConfig()->getProductDefaultLocale()
         );
     }
 

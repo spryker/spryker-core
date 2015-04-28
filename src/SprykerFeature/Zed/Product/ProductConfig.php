@@ -1,14 +1,12 @@
 <?php
 
-namespace SprykerFeature\Zed\Product\Business;
+namespace SprykerFeature\Zed\Product;
 
-/**
- * Class ProductSettings
- *
- * @package SprykerFeature\Zed\Product\Business
- */
-class ProductSettings
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+
+class ProductConfig extends AbstractBundleConfig
 {
+
     /**
      * @return string
      */
@@ -25,4 +23,3 @@ class ProductSettings
         return 'de_DE';
     }
 }
- 
