@@ -1,19 +1,28 @@
 <?php
 
-namespace SprykerFeature\Zed\Discount\Business;
+namespace SprykerFeature\Zed\Discount;
 
+use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerFeature\Zed\Discount\Business\Collector\CollectorInterface;
+use SprykerFeature\Zed\Discount\Business\DiscountDependencyContainer;
+use SprykerFeature\Zed\Discount\Business\DiscountSettingsInterface;
+use SprykerFeature\Zed\Discount\Business\Model\CalculatorInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
-class DiscountSettings implements
-    DiscountSettingsInterface
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+
+class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInterface
 {
-    /**
-     * @var LocatorLocatorInterface
-     */
-    protected $locator;
+
+    const PLUGIN_DECISION_RULE_VOUCHER = 'PLUGIN_DECISION_RULE_VOUCHER';
+    const PLUGIN_COLLECTOR_ITEM = 'PLUGIN_COLLECTOR_ITEM';
+    const PLUGIN_COLLECTOR_ORDER_EXPENSE = 'PLUGIN_COLLECTOR_ORDER_EXPENSE';
+    const PLUGIN_COLLECTOR_ITEM_EXPENSE = 'PLUGIN_COLLECTOR_ITEM_EXPENSE';
+    const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
+    const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
 
     /**
      * @var DiscountDecisionRulePluginInterface[]
@@ -31,21 +40,36 @@ class DiscountSettings implements
     protected $collectorPlugins = [];
 
     /**
-     * @param LocatorLocatorInterface $locator
-     * @param array $decisionRulePlugins
-     * @param array $calculatorPlugins
-     * @param array $collectorPlugins
+     * @return array
      */
-    public function __construct(
-        LocatorLocatorInterface $locator,
-        array $decisionRulePlugins,
-        array $calculatorPlugins,
-        array $collectorPlugins
-    ) {
-        $this->locator = $locator;
-        $this->decisionRulePlugins = $decisionRulePlugins;
-        $this->calculatorPlugins = $calculatorPlugins;
-        $this->collectorPlugins = $collectorPlugins;
+    public function getAvailableDecisionRulePlugins()
+    {
+        return [
+            self::PLUGIN_DECISION_RULE_VOUCHER => $this->getLocator()->discount()->pluginDecisionRuleVoucher()
+        ];
+    }
+
+    /**
+     * @return CalculatorInterface[]
+     */
+    public function getAvailableCalculatorPlugins()
+    {
+        return [
+            self::PLUGIN_CALCULATOR_PERCENTAGE => $this->getLocator()->discount()->pluginCalculatorPercentage(),
+            self::PLUGIN_CALCULATOR_FIXED => $this->getLocator()->discount()->pluginCalculatorFixed(),
+        ];
+    }
+
+    /**
+     * @return CollectorInterface[]
+     */
+    public function getAvailableCollectorPlugins()
+    {
+        return [
+            self::PLUGIN_COLLECTOR_ITEM => $this->getLocator()->discount()->pluginCollectorItem(),
+            self::PLUGIN_COLLECTOR_ORDER_EXPENSE => $this->getLocator()->discount()->pluginCollectorOrderExpense(),
+            self::PLUGIN_COLLECTOR_ITEM_EXPENSE => $this->getLocator()->discount()->pluginCollectorItemExpense(),
+        ];
     }
 
     /**
@@ -54,11 +78,11 @@ class DiscountSettings implements
      */
     public function getDefaultVoucherDecisionRulePlugin()
     {
-        if (! array_key_exists(DiscountDependencyContainer::PLUGIN_DECISION_RULE_VOUCHER, $this->decisionRulePlugins)) {
+        if (! array_key_exists(self::PLUGIN_DECISION_RULE_VOUCHER, $this->decisionRulePlugins)) {
             throw new \ErrorException('No default voucher decision rule plugin registered');
         }
 
-        return $this->decisionRulePlugins[DiscountDependencyContainer::PLUGIN_DECISION_RULE_VOUCHER];
+        return $this->decisionRulePlugins[self::PLUGIN_DECISION_RULE_VOUCHER];
     }
 
     /**

@@ -3,18 +3,18 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
+use SprykerEngine\Shared\Config;
 use SprykerFeature\Zed\Discount\Business\Model\Calculator;
 use SprykerFeature\Zed\Discount\Business\DecisionRule;
 use SprykerFeature\Zed\Discount\Business\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Business\Model\Distributor;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Discount\DiscountConfig;
 
 /**
- * Class VoucherEngineTest
  * @group VoucherEngineTest
  * @group Discount
- * @package Unit\SprykerFeature\Zed\Discount\Business\Model
  */
 class VoucherEngineTest extends Test
 {
@@ -27,7 +27,7 @@ class VoucherEngineTest extends Test
 
     public function testCalculationWithoutAnyDiscountShouldNotReturnMatchingDiscounts()
     {
-        $settings = (new DiscountDependencyContainer(new Factory('Discount'), Locator::getInstance()))->getDiscountSettings();
+        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = new Calculator();
 
         $order = $this->getOrderWithTwoItems();
@@ -41,14 +41,14 @@ class VoucherEngineTest extends Test
     {
         $discount = $this->initializeDiscount(
             'name 1',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
-        $settings = (new DiscountDependencyContainer(new Factory('Discount'), Locator::getInstance()))->getDiscountSettings();
+        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = new Calculator();
 
         $order = $this->getOrderWithTwoItems();
@@ -63,23 +63,23 @@ class VoucherEngineTest extends Test
     {
         $discount1 = $this->initializeDiscount(
             'name 1',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
         $discount2 = $this->initializeDiscount(
             'name 2',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
-        $settings = (new DiscountDependencyContainer(new Factory('Discount'), Locator::getInstance()))->getDiscountSettings();
+        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = new Calculator();
 
         $order = $this->getOrderWithTwoItems();
@@ -94,32 +94,32 @@ class VoucherEngineTest extends Test
     {
         $discount1 = $this->initializeDiscount(
             'name 1',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
         $discount2 = $this->initializeDiscount(
             'name 2',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount3 = $this->initializeDiscount(
             'name 3',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
-        $settings = (new DiscountDependencyContainer(new Factory('Discount'), Locator::getInstance()))->getDiscountSettings();
+        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = new Calculator();
 
         $order = $this->getOrderWithTwoItems();
@@ -137,41 +137,41 @@ class VoucherEngineTest extends Test
     {
         $discount1 = $this->initializeDiscount(
             'name 1',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
         $discount2 = $this->initializeDiscount(
             'name 2',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount3 = $this->initializeDiscount(
             'name 3',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount4 = $this->initializeDiscount(
             'name 4',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             70,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
-        $settings = (new DiscountDependencyContainer(new Factory('Discount'), Locator::getInstance()))->getDiscountSettings();
+        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = new Calculator();
 
         $order = $this->getOrderWithTwoItems();
@@ -188,50 +188,50 @@ class VoucherEngineTest extends Test
     {
         $discount1 = $this->initializeDiscount(
             'name 1',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
         $discount2 = $this->initializeDiscount(
             'name 2',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount3 = $this->initializeDiscount(
             'name 3',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount4 = $this->initializeDiscount(
             'name 4',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             70,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount5 = $this->initializeDiscount(
             'name 5',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             80,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM,
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
-        $settings = (new DiscountDependencyContainer(new Factory('Discount'), Locator::getInstance()))->getDiscountSettings();
+        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = new Calculator();
 
         $order = $this->getOrderWithTwoItems();

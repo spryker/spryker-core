@@ -12,13 +12,11 @@ use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
+use SprykerFeature\Zed\Discount\DiscountConfig;
 
 /**
- * Class DiscountFacadeTest
  * @group DiscountFacadeTest
  * @group Discount
- * @package Functional\SprykerFeature\Zed\Discount\Business
- * @property AutoCompletion $locator
  */
 class DiscountFacadeTest extends Test
 {
@@ -117,10 +115,10 @@ class DiscountFacadeTest extends Test
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_6);
         $discount = $this->initializeDiscount(
             'TEST-DISCOUNT',
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             self::DISCOUNT_AMOUNT_PERCENTAGE_50,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM
         );
 
         $discount->setVoucherPool($voucherPool);
@@ -137,10 +135,10 @@ class DiscountFacadeTest extends Test
     {
         $discount = $this->initializeDiscount(
             self::DISCOUNT_NAME_MINIMUM_CART_SUBTOTAL,
-            DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             self::DISCOUNT_AMOUNT_PERCENTAGE_50,
             true,
-            DiscountDependencyContainer::PLUGIN_COLLECTOR_ITEM
+            DiscountConfig::PLUGIN_COLLECTOR_ITEM
         );
 
         $decisionRule = new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule();
@@ -148,7 +146,7 @@ class DiscountFacadeTest extends Test
             ->setName(self::DECISION_RULE_MINIMUM_CART_SUBTOTAL_AMOUNT)
             ->setValue(self::MINIMUM_CART_AMOUNT_1000)
             ->setDiscount($discount)
-            ->setDecisionRulePlugin(DiscountDependencyContainer::PLUGIN_DECISION_RULE_VOUCHER)
+            ->setDecisionRulePlugin(DiscountConfig::PLUGIN_DECISION_RULE_VOUCHER)
             ->save();
 
         $order = $this->getOrderWithFixtureData();
@@ -305,12 +303,12 @@ class DiscountFacadeTest extends Test
     public function testGetCalculatorPluginByName()
     {
         $plugin = $this->discountFacade
-            ->getCalculatorPluginByName(DiscountDependencyContainer::PLUGIN_CALCULATOR_FIXED);
+            ->getCalculatorPluginByName(DiscountConfig::PLUGIN_CALCULATOR_FIXED);
 
         $this->assertEquals($plugin->getMinValue(), Fixed::MIN_VALUE);
 
         $plugin = $this->discountFacade
-            ->getCalculatorPluginByName(DiscountDependencyContainer::PLUGIN_CALCULATOR_PERCENTAGE);
+            ->getCalculatorPluginByName(DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE);
 
         $this->assertEquals($plugin->getMinValue(), Percentage::MIN_VALUE);
         $this->assertEquals($plugin->getMaxValue(), Percentage::MAX_VALUE);

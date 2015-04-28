@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
@@ -61,7 +62,7 @@ class Discount
      * @param DiscountableContainerInterface $discountContainer
      * @param DiscountQueryContainer $queryContainer
      * @param DecisionRuleInterface $decisionRule
-     * @param DiscountSettings $discountSettings
+     * @param DiscountConfig $discountSettings
      * @param CalculatorInterface $calculator
      * @param DistributorInterface $distributor
      */
@@ -69,7 +70,7 @@ class Discount
         DiscountableContainerInterface $discountContainer,
         DiscountQueryContainer $queryContainer,
         DecisionRuleInterface $decisionRule,
-        DiscountSettings $discountSettings,
+        DiscountConfig $discountSettings,
         CalculatorInterface $calculator,
         DistributorInterface $distributor
     ) {

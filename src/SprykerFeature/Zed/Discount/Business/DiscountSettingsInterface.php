@@ -15,19 +15,6 @@ interface DiscountSettingsInterface
     const KEY_VOUCHER_CODE_SPECIAL_CHARACTERS = 'special-characters';
 
     /**
-     * @param LocatorLocatorInterface $locator
-     * @param array $decisionRulePlugins
-     * @param array $calculatorPlugins
-     * @param array $collectorPlugins
-     */
-    public function __construct(
-        LocatorLocatorInterface $locator,
-        array $decisionRulePlugins,
-        array $calculatorPlugins,
-        array $collectorPlugins
-    );
-
-    /**
      * @return DiscountDecisionRulePluginInterface
      * @throws \ErrorException
      */

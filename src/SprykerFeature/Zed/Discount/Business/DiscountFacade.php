@@ -20,12 +20,11 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 /**
- * Class DiscountFacade
- * @property DiscountDependencyContainer $dependencyContainer
- * @package SprykerFeature\Zed\Discount\Business
+ * @method DiscountDependencyContainer getDependencyContainer()
  */
 class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 {
+
     /**
      * @param DiscountableContainerInterface $container
      * @return SpyDiscount[]
@@ -111,7 +110,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function getDecisionRulePluginNames()
     {
-        return $this->getDependencyContainer()->getDiscountSettings()->getDecisionPluginNames();
+        return $this->getDependencyContainer()->getConfig()->getDecisionPluginNames();
     }
 
     /**
@@ -212,7 +211,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function getCalculatorPluginByName($pluginName)
     {
-        return $this->getDependencyContainer()->getDiscountSettings()->getCalculatorPluginByName($pluginName);
+        return $this->getDependencyContainer()->getConfig()->getCalculatorPluginByName($pluginName);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Unit\SprykerFeature\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Sales\Transfer\OrderItem;
@@ -36,7 +37,7 @@ class DistributorTest extends Test
     protected $discountFacade;
 
     /**
-     * @var Locator
+     * @var Locator|AutoCompletion
      */
     protected $locator;
 

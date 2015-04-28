@@ -16,6 +16,7 @@ use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\Voucher;
+use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
 use SprykerFeature\Zed\Discount\Business\Model\Discount;
@@ -28,15 +29,10 @@ use SprykerFeature\Zed\Discount\Business\Model\DecisionRuleEngine;
 
 /**
  * @method DiscountBusiness getFactory()
+ * @method DiscountConfig getConfig()
  */
 class DiscountDependencyContainer extends AbstractDependencyContainer
 {
-    const PLUGIN_DECISION_RULE_VOUCHER = 'PLUGIN_DECISION_RULE_VOUCHER';
-    const PLUGIN_COLLECTOR_ITEM = 'PLUGIN_COLLECTOR_ITEM';
-    const PLUGIN_COLLECTOR_ORDER_EXPENSE = 'PLUGIN_COLLECTOR_ORDER_EXPENSE';
-    const PLUGIN_COLLECTOR_ITEM_EXPENSE = 'PLUGIN_COLLECTOR_ITEM_EXPENSE';
-    const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
-    const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
 
     /**
      * @return Voucher
@@ -66,22 +62,9 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
             $container,
             $this->getQueryContainer(),
             $this->getDecisionRule(),
-            $this->getDiscountSettings(),
+            $this->getConfig(),
             $this->getCalculator(),
             $this->getDistributor()
-        );
-    }
-
-    /**
-     * @return DiscountSettings
-     */
-    public function getDiscountSettings()
-    {
-        return  $this->getFactory()->createDiscountSettings(
-            $this->getLocator(),
-            $this->getAvailableDecisionRulePlugins(),
-            $this->getAvailableCalculatorPlugins(),
-            $this->getAvailableCollectorPlugins()
         );
     }
 
@@ -98,9 +81,7 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
      */
     public function getAvailableDecisionRulePlugins()
     {
-        return [
-            self::PLUGIN_DECISION_RULE_VOUCHER => $this->getLocator()->discount()->pluginDecisionRuleVoucher()
-        ];
+        return $this->getConfig()->getAvailableDecisionRulePlugins();
     }
 
     /**
@@ -108,10 +89,7 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
      */
     public function getAvailableCalculatorPlugins()
     {
-        return [
-            self::PLUGIN_CALCULATOR_PERCENTAGE => $this->getLocator()->discount()->pluginCalculatorPercentage(),
-            self::PLUGIN_CALCULATOR_FIXED => $this->getLocator()->discount()->pluginCalculatorFixed(),
-        ];
+        return $this->getConfig()->getAvailableCalculatorPlugins();
     }
 
     /**
@@ -119,11 +97,7 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
      */
     public function getAvailableCollectorPlugins()
     {
-        return [
-            self::PLUGIN_COLLECTOR_ITEM => $this->getLocator()->discount()->pluginCollectorItem(),
-            self::PLUGIN_COLLECTOR_ORDER_EXPENSE => $this->getLocator()->discount()->pluginCollectorOrderExpense(),
-            self::PLUGIN_COLLECTOR_ITEM_EXPENSE => $this->getLocator()->discount()->pluginCollectorItemExpense(),
-        ];
+        return $this->getConfig()->getAvailableCollectorPlugins();
     }
 
     /**
@@ -232,7 +206,7 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     public function getVoucherEngine()
     {
         return $this->getFactory()->createModelVoucherEngine(
-            $this->getDiscountSettings(),
+            $this->getConfig(),
             $this->getQueryContainer()
         );
     }
