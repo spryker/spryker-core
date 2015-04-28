@@ -36,18 +36,6 @@ class CalculationDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return CalculationSettings
-     */
-    public function getSettings()
-    {
-        if (empty($this->settings)) {
-            $this->settings = $this->getFactory()->createCalculationSettings($this->getLocator());
-        }
-
-        return $this->settings;
-    }
-
-    /**
      * @return ExpensePriceToPayCalculator
      */
     public function getExpensePriceToPayCalculator()
