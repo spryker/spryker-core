@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Url\Business;
 
 use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
@@ -14,7 +15,7 @@ interface UrlManagerInterface
 {
     /**
      * @param string $url
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $resourceType
      * @param int $idResource
      *
@@ -23,19 +24,7 @@ interface UrlManagerInterface
      * @throws UrlExistsException
      * @throws MissingLocaleException
      */
-    public function createUrl($url, $localeName, $resourceType, $idResource);
-
-    /**
-     * @param string $url
-     * @param int $fkLocale
-     * @param string $resourceType
-     * @param int $idResource
-     *
-     * @return SpyUrl
-     * @throws PropelException
-     * @throws UrlExistsException
-     */
-    public function createUrlByLocaleFk($url, $fkLocale, $resourceType, $idResource);
+    public function createUrl($url, LocaleDto $locale, $resourceType, $idResource);
 
     /**
      * @param Url $url

@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
@@ -190,7 +191,7 @@ class RedirectManager implements RedirectManagerInterface
 
     /**
      * @param string $url
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param int $idRedirect
      *
      * @return Url
@@ -198,10 +199,10 @@ class RedirectManager implements RedirectManagerInterface
      * @throws MissingLocaleException
      * @throws MissingRedirectException
      */
-    public function createRedirectUrl($url, $localeName, $idRedirect)
+    public function createRedirectUrl($url, LocaleDto $locale, $idRedirect)
     {
         $this->checkRedirectExists($idRedirect);
-        $urlEntity = $this->urlManager->createUrl($url, $localeName, 'redirect', $idRedirect);
+        $urlEntity = $this->urlManager->createUrl($url, $locale, 'redirect', $idRedirect);
 
         return $this->urlManager->convertUrlEntityToTransfer($urlEntity);
     }
