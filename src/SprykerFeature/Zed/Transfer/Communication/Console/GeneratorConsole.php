@@ -8,7 +8,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
 use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassGenerator;
-use SprykerFeature\Zed\Transfer\Business\Model\External\Sofee\SofeeXmlParser;
 use Zend\Config\Config;
 use Zend\Config\Factory;
 
@@ -40,7 +39,7 @@ class GeneratorConsole extends Console
         $definitions = array();
 
         foreach ($bundlesList as $bundle) {
-            if ( '.' !== $bundle && '..' !== $bundle  ) {
+            if ( '.' !== $bundle && '..' !== $bundle ) {
                 $xmlDefinitionFile = $directory . $bundle . '/transferDefinitions.xml';
                 if ( is_file($xmlDefinitionFile) ) {
                     $definitions[] = Factory::fromFile($xmlDefinitionFile, true)->toArray();
@@ -73,6 +72,7 @@ class GeneratorConsole extends Console
 
         $definitions = $this->manager->getCollections();
         $generator = new ClassGenerator();
+        $generator->setNamespace('Generated\Shared\Transfer');
         $generator->setTargetFolder(APPLICATION_SOURCE_DIR . 'Generated/Shared/Transfer/');
 
         foreach ($definitions as $classDefinition) {
@@ -80,6 +80,7 @@ class GeneratorConsole extends Console
             if ( ! is_dir($generator->getTargetFolder()) ) {
                 mkdir($generator->getTargetFolder(), 0755, true);
             }
+
             file_put_contents($generator->getTargetFolder() . $classDefinition->getClassName() . '.php', $phpCode);
             $output->writeln(sprintf('<info>%s.php</info> was generated', $classDefinition->getClassName()));
         }

@@ -14,6 +14,12 @@ class ClassGenerator
     protected $classDefinition;
 
     /**
+     * don't add ending basckslash
+     * @var string|null
+     */
+    protected $namespace = null;
+
+    /**
      * @var null
      */
     protected $targetFolder = null;
@@ -45,6 +51,22 @@ class ClassGenerator
         $loader = new \Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
         $this->twig = new \Twig_Environment($loader, []);
         $this->twig->addExtension(new TransferTwigExtensions());
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
+    }
+
+    /**
+     * @param null|string $namespace
+     */
+    public function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
     }
 
     /**
@@ -102,7 +124,7 @@ class ClassGenerator
     protected function buildTwigData()
     {
         $this->translations = [
-            'namespace'             => 'Generated',
+            'namespace'             => $this->getNamespace(),
             'className'             => $this->classDefinition->getClassName(),
             'interfacesToImplement' => $this->getInterfacesToImplement(),
             'properties'            => $this->generatePropertiesDeclarations(),

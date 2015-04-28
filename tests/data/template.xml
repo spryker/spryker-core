@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="AlfaTransfer">
+    <transfer name="Alfa">
         <interface>Spryker\Demo\FirstInterface</interface>
         <interface>Spryker\Demo\SecondInterface</interface>
         <property name="cartItems" type="CartItem[]" />
@@ -11,7 +11,7 @@
         <property name="published" type="boolean" default="true" />
     </transfer>
 
-    <transfer name="AlfaTransfer">
+    <transfer name="Alfa">
         <interface>Spryker\Demo\ThirdInterface</interface>
         <property name="customer" type="Customer" />
     </transfer>

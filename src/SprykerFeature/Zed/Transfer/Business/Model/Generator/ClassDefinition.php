@@ -22,9 +22,9 @@ class ClassDefinition
      */
     public function setInterface($implementsInterface)
     {
-        if ( isset($implementsInterface[0]) && is_array($implementsInterface[0]) ) {
+        if ( is_array($implementsInterface) ) {
             foreach ($implementsInterface as $newInterface) {
-                $this->addInterface($newInterface);
+                $this->setInterface($newInterface);
             }
         } else {
             $this->addInterface($implementsInterface);

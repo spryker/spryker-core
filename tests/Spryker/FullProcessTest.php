@@ -1,8 +1,9 @@
 <?php
 
 use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
-use SprykerFeature\Zed\Transfer\Business\Model\External\Sofee\SofeeXmlParser;
 use SprykerFeature\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use Zend\Config\Config;
+use Zend\Config\Factory;
 
 class FullProcessTest extends PHPUnit_Framework_TestCase
 {
@@ -25,20 +26,25 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
     {
         $this->manager = new ClassCollectionManager();
 
-        $fileContent = file_get_contents(dirname(__DIR__) . '/data/template.xml');
+        $file = dirname(__DIR__) . '/data/template.xml';
 
-        $xml = new SofeeXmlParser();
-        $xml->parseString($fileContent);
+        $definitions = Factory::fromFile($file, true)->toArray();
 
-        $this->xmlTree = $xml->getTree();
+        foreach ($definitions as $item) {
+            if ( is_array($item) ) {
+                foreach ($item as $itemComponent) {
+                    $this->manager->setClassDefinition($itemComponent);
+                }
+            } else {
+                $this->manager->setClassDefinition($item);
+            }
 
-        foreach ($this->xmlTree['transfers']['transfer'] as $item) {
-            $this->manager->setClassDefinition($item);
         }
 
         $definitions = $this->manager->getCollections();
 
         $generator = new ClassGenerator();
+        $generator->setNamespace('Generated\Shared\Transfer');
         $generator->setTargetFolder(dirname(__DIR__) . '/target/');
         foreach ($definitions as $classDefinition) {
             $this->generatedClasses[] = [
@@ -71,6 +77,7 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
     public function codeSampleValidationProvider()
     {
         return [
+            ['namespace Generated\Shared\Transfer;'],
             ['$properties = array();'],
             ['@var array $properties'],
             ['@return array $properties'],
