@@ -118,7 +118,8 @@ class User implements UserInterface
         $entity->setLastName($data->getLastName());
         $entity->setUsername($data->getUsername());
 
-        if ($this->isRawPassword($data->getPassword())) {
+        $password = $data->getPassword();
+        if (!empty($password) && true === $this->isRawPassword($data->getPassword())) {
             $entity->setPassword($this->encryptPassword($data->getPassword()));
         }
 
