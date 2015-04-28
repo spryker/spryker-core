@@ -43,7 +43,9 @@ _ng
 				if ('label' in now) scope.label = now.label;
 				if ('placeholder' in now) scope.placeholder = now.placeholder;
 
-				scope.disabled = 'disabled' in now && now.disabled === true;
+				if ('disabled' in now) scope.disabled = Boolean(now.disabled);
+				else if ('model' in scope && scope.model instanceof Object) scope.disabled = scope.model.disabled;
+				else scope.disabled = false;
 
 				if ('reload' in now) scope.read = Boolean(now.reload);
 				else if ('model' in scope && scope.model instanceof Object) scope.read = scope.model.refresh;
@@ -60,6 +62,9 @@ _ng
 				var opts = 'options' in scope &&  scope.options !== undefined ? scope.options : {};
 
 				if (!('label' in opts) && now.label !== null) scope.label = now.label;
+
+				if ('disabled' in opts) scope.disabled = Boolean(opts.disabled);
+				else scope.disabled = now.disabled;
 
 				if ('reload' in opts) scope.read = Boolean(opts.reload);
 				else scope.read = now.refresh;
