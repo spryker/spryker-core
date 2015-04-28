@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\Category\Transfer\Category;
 use SprykerFeature\Shared\Category\Transfer\CategoryNode;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
@@ -14,83 +15,83 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param string $categoryName
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function hasCategoryNode($categoryName, $idLocale)
+    public function hasCategoryNode($categoryName, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->hasCategoryNode($categoryName, $idLocale)
+            ->hasCategoryNode($categoryName, $locale)
         ;
     }
 
     /**
      * @param string $categoryName
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return int
      */
-    public function getCategoryNodeIdentifier($categoryName, $idLocale)
+    public function getCategoryNodeIdentifier($categoryName, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getCategoryNodeIdentifier($categoryName, $idLocale)
+            ->getCategoryNodeIdentifier($categoryName, $locale)
         ;
     }
 
     /**
      * @param Category $category
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return int
      */
-    public function createCategory(Category $category, $idLocale)
+    public function createCategory(Category $category, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->createCategoryWriter()
-            ->create($category, $idLocale)
+            ->create($category, $locale)
         ;
     }
 
     /**
      * @param Category $category
-     * @param int $idLocale
+     * @param LocaleDto $locale
      */
-    public function updateCategory(Category $category, $idLocale)
+    public function updateCategory(Category $category, LocaleDto $locale)
     {
         $this->getDependencyContainer()
             ->createCategoryWriter()
-            ->update($category, $idLocale)
+            ->update($category, $locale)
         ;
     }
 
     /**
      * @param int $idNode
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function deleteCategoryByNodeId($idNode, $idLocale)
+    public function deleteCategoryByNodeId($idNode, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeWriter()
-            ->deleteCategoryByNodeId($idNode, $idLocale)
+            ->deleteCategoryByNodeId($idNode, $locale)
         ;
     }
 
     /**
      * @param CategoryNode $categoryNode
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return int $nodeId
      */
-    public function createCategoryNode(CategoryNode $categoryNode, $idLocale)
+    public function createCategoryNode(CategoryNode $categoryNode, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeWriter()
-            ->createCategoryNode($categoryNode, $idLocale)
+            ->createCategoryNode($categoryNode, $locale)
         ;
     }
 
@@ -108,16 +109,16 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param int $idNode
-     * @param int $idLocale
+     * @param LocaleDto $locale
      * @param bool $deleteChildren
      *
      * @return int
      */
-    public function deleteNode($idNode, $idLocale, $deleteChildren = false)
+    public function deleteNode($idNode, LocaleDto $locale, $deleteChildren = false)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeWriter()
-            ->deleteNode($idNode, $idLocale, $deleteChildren)
+            ->deleteNode($idNode, $locale, $deleteChildren)
         ;
     }
 
@@ -134,32 +135,32 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param int $idNode
-     * @param int $idLocale
+     * @param LocaleDto $locale
      * @param bool $onlyOneLevel
      * @param bool $excludeStartNode
      *
      * @return array
      */
-    public function getChildren($idNode, $idLocale, $onlyOneLevel = true, $excludeStartNode = true)
+    public function getChildren($idNode, LocaleDto $locale, $onlyOneLevel = true, $excludeStartNode = true)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getChildren($idNode, $idLocale, $onlyOneLevel, $excludeStartNode)
+            ->getChildren($idNode, $locale, $onlyOneLevel, $excludeStartNode)
         ;
     }
 
     /**
      * @param int $idNode
-     * @param string $idLocale
+     * @param LocaleDto $locale
      * @param bool $excludeStartNode
      *
      * @return array
      */
-    public function getParents($idNode, $idLocale, $excludeStartNode = true)
+    public function getParents($idNode, LocaleDto $locale, $excludeStartNode = true)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getParents($idNode, $idLocale, $excludeStartNode)
+            ->getParents($idNode, $locale, $excludeStartNode)
         ;
     }
 }

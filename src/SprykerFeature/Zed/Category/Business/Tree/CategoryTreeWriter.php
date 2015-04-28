@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Shared\Category\Transfer\CategoryNode;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
@@ -69,12 +70,12 @@ class CategoryTreeWriter
 
     /**
      * @param CategoryNode $categoryNode
-     * @param int $idLocale
+     * @param LocaleDto $locale
      * @param bool $createUrlPath
      *
      * @return int
      */
-    public function createCategoryNode(CategoryNode $categoryNode, $idLocale, $createUrlPath = true)
+    public function createCategoryNode(CategoryNode $categoryNode, LocaleDto $locale, $createUrlPath = true)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
@@ -84,7 +85,7 @@ class CategoryTreeWriter
         $this->touchCategoryActive($categoryNode->getIdCategoryNode());
         $this->touchNavigationActive();
         if ($createUrlPath) {
-            $this->nodeUrlManager->createUrl($categoryNode, $idLocale, $idNode);
+            $this->nodeUrlManager->createUrl($categoryNode, $locale);
         }
 
         $connection->commit();
@@ -94,11 +95,11 @@ class CategoryTreeWriter
 
     /**
      * @param int $idNode
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function deleteCategoryByNodeId($idNode, $idLocale)
+    public function deleteCategoryByNodeId($idNode, LocaleDto $locale)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
@@ -108,7 +109,7 @@ class CategoryTreeWriter
         $categoryNodes = $this->categoryTreeReader->getNodesByIdCategory($idCategory);
 
         foreach ($categoryNodes as $node) {
-            $this->deleteNode($node->getPrimaryKey(), $idLocale, true);
+            $this->deleteNode($node->getPrimaryKey(), $locale, true);
         }
         $this->categoryWriter->delete($idCategory);
 
@@ -134,17 +135,17 @@ class CategoryTreeWriter
 
     /**
      * @param int $idNode
-     * @param int $idLocale
+     * @param LocaleDto $locale
      * @param bool $deleteChildren
      *
      * @return int
      */
-    public function deleteNode($idNode, $idLocale, $deleteChildren = false)
+    public function deleteNode($idNode, LocaleDto $locale, $deleteChildren = false)
     {
         if ($this->categoryTreeReader->hasChildren($idNode) && $deleteChildren) {
-            $childNodes = $this->categoryTreeReader->getChildren($idNode, $idLocale);
+            $childNodes = $this->categoryTreeReader->getChildren($idNode, $locale);
             foreach ($childNodes as $childNode) {
-                $this->deleteNode($childNode->getIdCategoryNode(), $idLocale, true);
+                $this->deleteNode($childNode->getIdCategoryNode(), $locale, true);
             }
         }
         $this->closureTableWriter->delete($idNode);
