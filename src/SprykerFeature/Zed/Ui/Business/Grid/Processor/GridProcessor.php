@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Ui\Business\Grid\Processor;
 
+use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Ui\Business\Grid\StateContainer\Bean\StateContainerBeanInterface;
 use SprykerFeature\Zed\Ui\Business\Grid\StateContainer\Bean\StateContainerBeanTrait;
 use SprykerFeature\Zed\Ui\Business\Grid\StateContainer\StateContainerInterface;
@@ -86,9 +87,11 @@ class GridProcessor implements GridProcessorInterface, StateContainerBeanInterfa
 
     protected function injectQueryResult()
     {
+        Propel::disableInstancePooling();
         $this->getStateContainer()->setQueryResult(
             $this->getStateContainer()->getTerminatedQuery()->find()
         );
+        Propel::enableInstancePooling();
     }
 
     /**
