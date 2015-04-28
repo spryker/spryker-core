@@ -182,14 +182,18 @@
         @include media-query('small') {
           display: table-cell;
           width: auto;
+          padding: $step 0;
         }
       }
 
       .cart__total-label {
-        padding-right: $step;
         color: $dark-color;
         text-align: right;
         text-transform: uppercase;
+
+        @include media-query('small') {
+          padding-right: $step;
+        }
       }
     }
 
