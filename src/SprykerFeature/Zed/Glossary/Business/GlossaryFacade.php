@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Glossary\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Shared\Glossary\Transfer\Translation;
@@ -92,7 +93,7 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -101,11 +102,11 @@ class GlossaryFacade extends AbstractFacade
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function createTranslation($keyName, $localeName, $value, $isActive = true)
+    public function createTranslation($keyName, LocaleDto $locale, $value, $isActive = true)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
-        return $translationManager->createTranslation($keyName, $localeName, $value, $isActive);
+        return $translationManager->createTranslation($keyName, $locale, $value, $isActive);
     }
 
     /**
@@ -127,7 +128,7 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -136,71 +137,70 @@ class GlossaryFacade extends AbstractFacade
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function createAndTouchTranslation($keyName, $localeName, $value, $isActive = true)
+    public function createAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
-        return $translationManager->createAndTouchTranslation($keyName, $localeName, $value, $isActive);
+        return $translationManager->createAndTouchTranslation($keyName, $locale, $value, $isActive);
     }
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function hasTranslation($keyName, $localeName)
+    public function hasTranslation($keyName, LocaleDto $locale)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
-        return $translationManager->hasTranslation($keyName, $localeName);
+        return $translationManager->hasTranslation($keyName, $locale);
     }
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return Translation
      * @throws MissingTranslationException
      */
-    public function getTranslation($keyName, $localeName)
+    public function getTranslation($keyName, LocaleDto $locale)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
-        $translationEntity = $translationManager->getTranslationByNames($keyName, $localeName);
 
-        return $translationManager->convertEntityToTranslationTransfer($translationEntity);
+        return $translationManager->getTranslationByKeyName($keyName, $locale);
     }
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
      * @return Translation
      * @throws MissingTranslationException
      */
-    public function updateTranslation($keyName, $localeName, $value, $isActive = true)
+    public function updateTranslation($keyName, $locale, $value, $isActive = true)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
-        return $translationManager->updateTranslation($keyName, $localeName, $value, $isActive);
+        return $translationManager->updateTranslation($keyName, $locale, $value, $isActive);
     }
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      * @param string $value
      * @param bool $isActive
      *
      * @return Translation
      * @throws MissingTranslationException
      */
-    public function updateAndTouchTranslation($keyName, $localeName, $value, $isActive = true)
+    public function updateAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
-        return $translationManager->updateAndTouchTranslation($keyName, $localeName, $value, $isActive);
+        return $translationManager->updateAndTouchTranslation($keyName, $locale, $value, $isActive);
     }
 
     /**
@@ -235,15 +235,15 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function deleteTranslation($keyName, $localeName)
+    public function deleteTranslation($keyName, LocaleDto $locale)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
-        return $translationManager->deleteTranslation($keyName, $localeName);
+        return $translationManager->deleteTranslation($keyName, $locale);
     }
 
     /**
