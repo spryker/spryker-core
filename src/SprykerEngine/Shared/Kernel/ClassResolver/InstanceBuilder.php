@@ -6,8 +6,6 @@ class InstanceBuilder
 {
 
     /**
-     * @TODO check performance here, maybe Reflection is to slow
-     *
      * @param $className
      * @param array $arguments
      *

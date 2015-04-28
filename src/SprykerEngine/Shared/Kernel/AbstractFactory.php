@@ -5,6 +5,7 @@ namespace SprykerEngine\Shared\Kernel;
 use SprykerEngine\Shared\Kernel\ClassResolver;
 use SprykerEngine\Shared\Kernel\Factory\FactoryException;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
+use SprykerEngine\Zed\Kernel\BundleConfigLocator;
 
 abstract class AbstractFactory implements FactoryInterface
 {
@@ -31,7 +32,7 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * @var bool
      */
-    private $isMagicCall = false;
+    protected $isMagicCall = false;
 
     /**
      * @param $bundle
@@ -98,6 +99,7 @@ abstract class AbstractFactory implements FactoryInterface
     public function create($class)
     {
         $arguments = func_get_args();
+
         array_shift($arguments);
 
         if ($this->isMagicCall) {

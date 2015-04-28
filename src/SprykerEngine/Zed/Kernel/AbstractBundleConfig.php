@@ -2,7 +2,8 @@
 
 namespace SprykerEngine\Zed\Kernel;
 
-use SprykerEngine\Shared\Config\Config;
+use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\ClassResolver;
 use SprykerEngine\Shared\Kernel\IdentityMapClassResolver;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
@@ -18,7 +19,7 @@ abstract class AbstractBundleConfig
     private $config;
 
     /**
-     * @var LocatorLocatorInterface
+     * @var AutoCompletion|LocatorLocatorInterface
      */
     private $locator;
 
@@ -44,7 +45,7 @@ abstract class AbstractBundleConfig
     }
 
     /**
-     * @return LocatorLocatorInterface
+     * @return AutoCompletion|LocatorLocatorInterface
      */
     protected function getLocator()
     {

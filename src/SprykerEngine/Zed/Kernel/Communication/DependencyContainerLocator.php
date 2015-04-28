@@ -31,6 +31,8 @@ class DependencyContainerLocator extends AbstractLocator
         $configLocator = new BundleConfigLocator();
         $bundleConfig = $configLocator->locate($bundle, $locator);
 
+        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($bundleConfig) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+
         return $factory->create($bundle . self::DEPENDENCY_CONTAINER_SUFFIX, [$bundleConfig]);
     }
 

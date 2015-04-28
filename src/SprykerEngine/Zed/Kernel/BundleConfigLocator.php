@@ -2,7 +2,7 @@
 
 namespace SprykerEngine\Zed\Kernel;
 
-use SprykerEngine\Shared\Config\Config;
+use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\AbstractLocator;
 
@@ -26,7 +26,7 @@ class BundleConfigLocator extends AbstractLocator
     {
         $factory = $this->getFactory($bundle);
 
-        return $factory->create($bundle . 'Config', [Config::getInstance()]);
+        return $factory->create($bundle . 'Config', Config::getInstance(), $locator);
     }
 
 }
