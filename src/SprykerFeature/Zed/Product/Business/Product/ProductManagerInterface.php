@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Product\Business\Product;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductAttributesExistException;
@@ -38,14 +39,14 @@ interface ProductManagerInterface
 
     /**
      * @param int $idAbstractProduct
-     * @param int $fkLocale
+     * @param LocaleDto $locale
      * @param string $name
      * @param string $attributes
      *
      * @return int
      * @throws AbstractProductAttributesExistException
      */
-    public function createAbstractProductAttributes($idAbstractProduct, $fkLocale, $name, $attributes);
+    public function createAbstractProductAttributes($idAbstractProduct, LocaleDto $locale, $name, $attributes);
 
     /**
      * @param string $sku
@@ -74,14 +75,14 @@ interface ProductManagerInterface
 
     /**
      * @param int $idConcreteProduct
-     * @param int $fkLocale
+     * @param LocaleDto $locale
      * @param string $name
      * @param string $attributes
      *
      * @return int
      * @throws ConcreteProductAttributesExistException
      */
-    public function createConcreteProductAttributes($idConcreteProduct, $fkLocale, $name, $attributes);
+    public function createConcreteProductAttributes($idConcreteProduct, LocaleDto $locale, $name, $attributes);
 
     /**
      * @param int $idConcreteProduct
@@ -91,48 +92,48 @@ interface ProductManagerInterface
     /**
      * @param string $sku
      * @param string $url
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return Url
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createProductUrl($sku, $url, $localeName);
+    public function createProductUrl($sku, $url, LocaleDto $locale);
 
     /**
      * @param int $idConcreteProduct
      * @param string $url
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return Url
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createProductUrlByIds($idConcreteProduct, $url, $idLocale);
+    public function createProductUrlByIdProduct($idConcreteProduct, $url, LocaleDto $locale);
 
     /**
      * @param string $sku
      * @param string $url
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return Url
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createAndTouchProductUrl($sku, $url, $localeName);
+    public function createAndTouchProductUrl($sku, $url, LocaleDto $locale);
 
     /**
      * @param int $idConcreteProduct
      * @param string $url
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return Url
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createAndTouchProductUrlByIds($idConcreteProduct, $url, $idLocale);
+    public function createAndTouchProductUrlByIdProduct($idConcreteProduct, $url, LocaleDto $locale);
 }

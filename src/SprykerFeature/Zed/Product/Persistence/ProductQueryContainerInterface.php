@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Product\Persistence;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedAbstractProductAttributesQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributesQuery;
@@ -14,19 +15,22 @@ interface ProductQueryContainerInterface
 {
     /**
      * @param string $skus
-     * @param int $localeId
+     * @param LocaleDto $locale
+     *
      * @return SpyProductQuery
      */
-    public function getProductWithAttributeQuery($skus, $localeId);
+    public function getProductWithAttributeQuery($skus, LocaleDto $locale);
 
     /**
      * @param string $sku
+     *
      * @return SpyProductQuery
      */
     public function queryConcreteProductBySku($sku);
 
     /**
      * @param string $sku
+     *
      * @return SpyAbstractProductQuery
      */
     public function queryAbstractProductBySku($sku);

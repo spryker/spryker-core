@@ -157,10 +157,10 @@ class ProductFacadeTest extends Test
      */
     public function testCreateProductUrlCreatesAndReturnsCorrectUrl()
     {
-        $this->localeFacade->createLocale('ABCDE');
+        $locale = $this->localeFacade->createLocale('ABCDE');
         $idAbstractProduct = $this->productFacade->createAbstractProduct('AnAbstractProduct');
         $idConcreteProduct = $this->productFacade->createConcreteProduct('AConcreteProduct', $idAbstractProduct);
-        $url = $this->productFacade->createProductUrl('AConcreteProduct', '/someUrl', 'ABCDE');
+        $url = $this->productFacade->createProductUrl('AConcreteProduct', '/someUrl', $locale);
 
         $this->assertTrue($this->urlFacade->hasUrl('/someUrl'));
 
