@@ -2,10 +2,12 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Dependency\Facade;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
+
 interface ProductSearchToLocaleInterface
 {
     /**
-     * @return int
+     * @return LocaleDto
      */
-    public function getCurrentIdLocale();
+    public function getCurrentLocale();
 }
