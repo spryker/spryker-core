@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Sales\Business;
+namespace SprykerFeature\Zed\Sales;
 
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-
-class SalesSettings
+class SalesConfig extends AbstractBundleConfig
 {
 
     /**
