@@ -108,11 +108,11 @@
     <table name="spy_sales_order_item" phpName="SpySalesOrderItem">
         <column name="id_sales_order_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
         <column name="fk_sales_order" type="INTEGER" required="true"/>
-        <column name="fk_oms_order_item_status" type="INTEGER" required="true"/>
+        <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
         <column name="fk_oms_order_process" type="INTEGER" required="false"/>
         <column name="fk_sales_order_item_bundle" type="INTEGER" required="false"/>
 
-        <column name="last_status_change" type="TIMESTAMP" required="true" defaultExpr="CURRENT_TIMESTAMP" />
+        <column name="last_state_change" type="TIMESTAMP" required="true" defaultExpr="CURRENT_TIMESTAMP" />
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" description="/price for one unit including tax, without shipping, coupons/"/>
@@ -125,8 +125,8 @@
         <foreign-key foreignTable="spy_sales_order" phpName="Order" refPhpName="Item">
             <reference local="fk_sales_order" foreign="id_sales_order"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_oms_order_item_status" phpName="Status" refPhpName="Order">
-            <reference local="fk_oms_order_item_status" foreign="id_oms_order_item_status"/>
+        <foreign-key foreignTable="spy_oms_order_item_state" phpName="Status" refPhpName="Order">
+            <reference local="fk_oms_order_item_state" foreign="id_oms_order_item_state"/>
         </foreign-key>
         <foreign-key foreignTable="spy_oms_order_process" phpName="Process" refPhpName="Item">
             <reference local="fk_oms_order_process" foreign="id_oms_order_process"/>
