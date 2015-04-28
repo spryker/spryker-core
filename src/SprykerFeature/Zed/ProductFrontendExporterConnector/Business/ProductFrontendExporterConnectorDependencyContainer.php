@@ -11,22 +11,14 @@ use SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Builder\Product
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Decider\ProductExportDeciderInterface;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor\ProductUrlMapProcessorInterface;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Dependency\Facade\ProductFrontendExporterToProductInterface;
+use SprykerFeature\Zed\ProductFrontendExporterConnector\ProductFrontendExporterConnectorConfig;
 
 /**
- * Class ProductFrontendExporterConnectorDependencyContainer
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Business
- */
-/**
  * @method ProductFrontendExporterConnectorBusiness getFactory()
+ * @method ProductFrontendExporterConnectorConfig getConfig()
  */
 class ProductFrontendExporterConnectorDependencyContainer extends AbstractDependencyContainer
 {
-    /**
-     * @var ProductFrontendExporterConnectorSettings
-     */
-    //TODO remove state
-    protected $settings;
 
     /**
      * @return Processor\ProductProcessor
@@ -61,19 +53,8 @@ class ProductFrontendExporterConnectorDependencyContainer extends AbstractDepend
     public function getProductExportDecider()
     {
         return $this->getFactory()->createDeciderProductExportDecider(
-            $this->getSettings()->getPercentageOfFaultToleranceForExport()
+            $this->getConfig()->getPercentageOfFaultToleranceForExport()
         );
     }
 
-    /**
-     * @return ProductFrontendExporterConnectorSettings
-     */
-    protected function getSettings()
-    {
-        if (is_null($this->settings)) {
-            $this->settings = $this->getFactory()->createProductFrontendExporterConnectorSettings();
-        }
-
-        return $this->settings;
-    }
 }
