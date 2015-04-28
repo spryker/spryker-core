@@ -12,4 +12,6 @@ module.exports.events = require('./event/ActionEvent');
 
 require('./service/ActionModelService');
 
+require('./controller/ActionController');
+
 require('./directive/spyAction');
