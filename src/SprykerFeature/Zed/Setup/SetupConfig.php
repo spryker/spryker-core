@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\Setup\Business;
 
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-
-class SetupSettings
+class SetupConfig extends AbstractBundleConfig
 {
 
     /**
