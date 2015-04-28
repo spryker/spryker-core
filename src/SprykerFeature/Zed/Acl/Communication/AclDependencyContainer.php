@@ -89,6 +89,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param Request $request
+     * @param int $idGroup
      *
      * @return RulesetGrid
      */

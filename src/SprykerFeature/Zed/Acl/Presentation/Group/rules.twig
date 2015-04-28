@@ -25,7 +25,9 @@
 
         <tbody>
         <tr ng-repeat="row in rows">
-            <td>{[{ row['has_role'] }]}</td>
+            <td>
+                <div spy-action-switch="/acl/group/ruleset" state="row['id_acl_role']"></div>
+            </td>
             <td>{[{ row['role_name'] }]}</td>
             <td>{[{ row['type'] }]}</td>
             <td>{[{ row['bundle'] }]}</td>

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method AclDependencyContainer getDependencyContainer()
  */
-class GroupController extends AbstractController
+class RulesetController extends AbstractController
 {
     const USER_LIST_URL = '/acl/users';
 
@@ -78,16 +78,6 @@ class GroupController extends AbstractController
         return $this->jsonResponse($data);
     }
 
-    public function rulesetAction(Request $request)
-    {
-
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function usersAction(Request $request)
     {
         $idGroup = $request->get('id');

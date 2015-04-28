@@ -6,10 +6,10 @@
 
 {% block content %}
 
-<section spy-app="spyFormat, spyGrid, spyForm, spyLayout, spyFormAction">
+<section spy-app="spyFormat, spyGrid, spyForm, spyLayout">
 
-    {% include '@Acl/Group/form.twig' %}
     {% include '@Acl/Group/rules.twig' %}
+    {% include '@Acl/Rulset/form.twig' %}
     {% include '@Acl/Group/users.twig' %}
 
 </section>

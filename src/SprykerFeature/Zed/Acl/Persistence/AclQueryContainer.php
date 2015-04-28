@@ -330,12 +330,14 @@ class AclQueryContainer extends AbstractQueryContainer
             $condition
         );
 
+        $hasRole = sprintf("COUNT(%s)", SpyAclGroupsHasRolesTableMap::COL_FK_ACL_ROLE);
+
         $query->withColumn(SpyAclRoleTableMap::COL_NAME, self::ROLE_NAME);
         $query->withColumn(SpyAclRuleTableMap::COL_TYPE, self::TYPE);
         $query->withColumn(SpyAclRuleTableMap::COL_BUNDLE, self::BUNDLE);
         $query->withColumn(SpyAclRuleTableMap::COL_CONTROLLER, self::CONTROLLER);
         $query->withColumn(SpyAclRuleTableMap::COL_ACTION, self::ACTION);
-        $query->withColumn(SpyAclGroupsHasRolesTableMap::COL_FK_ACL_ROLE, self::HAS_ROLE);
+        $query->withColumn($hasRole, self::HAS_ROLE);
 
         return $query;
     }
