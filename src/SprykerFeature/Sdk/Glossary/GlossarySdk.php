@@ -10,12 +10,12 @@ use SprykerEngine\Sdk\Kernel\AbstractSdk;
 class GlossarySdk extends AbstractSdk
 {
     /**
-     * @param $locale
+     * @param string $localeName
      *
      * @return Translator
      */
-    public function createTranslator($locale)
+    public function createTranslator($localeName)
     {
-        return $this->getDependencyContainer()->createTranslator($locale);
+        return $this->getDependencyContainer()->createTranslator($localeName);
     }
 }
