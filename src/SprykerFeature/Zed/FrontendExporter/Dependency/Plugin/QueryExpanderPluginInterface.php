@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\FrontendExporter\Dependency\Plugin;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Dto\LocaleDto;
 
 interface QueryExpanderPluginInterface
 {
@@ -13,11 +14,11 @@ interface QueryExpanderPluginInterface
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, $localeName);
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale);
 
     /**
      * @return int

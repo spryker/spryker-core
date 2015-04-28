@@ -2,19 +2,21 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
+
 interface MarkerInterface
 {
     /**
      * @param string $exportType
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return \DateTime
      */
-    public function getLastExportMarkByTypeAndLocale($exportType, $locale);
+    public function getLastExportMarkByTypeAndLocale($exportType, LocaleDto $locale);
 
     /**
      * @param string $exportType
-     * @param string $locale
+     * @param LocaleDto $locale
      */
-    public function setLastExportMarkByTypeAndLocale($exportType, $locale);
+    public function setLastExportMarkByTypeAndLocale($exportType, LocaleDto $locale);
 }

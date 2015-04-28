@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
 use Criteria;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\ProcessException;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\WriteException;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
@@ -100,11 +101,11 @@ abstract class AbstractExporter implements ExporterInterface
 
     /**
      * @param string $type
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return BatchResultInterface|null
      */
-    public function exportByType($type, $locale)
+    public function exportByType($type, LocaleDto $locale)
     {
         $result = clone $this->batchResultPrototype;
         $result->setProcessedLocale($locale);
