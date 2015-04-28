@@ -2,11 +2,6 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business\Processor;
 
-/**
- * Class CategoryNodeProcessor
- *
- * @package SprykerFeature\Zed\CategoryExporter\Business\Processor
- */
 interface CategoryNodeProcessorInterface
 {
     /**

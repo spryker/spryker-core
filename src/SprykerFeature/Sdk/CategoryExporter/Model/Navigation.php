@@ -5,10 +5,6 @@ namespace SprykerFeature\Sdk\CategoryExporter\Model;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Shared\KvStorage\Client\ReadInterface;
 
-/**
- * Class Navigation
- * @package SprykerFeature\Sdk\CategoryExporter\Model
- */
 class Navigation
 {
 
@@ -23,8 +19,8 @@ class Navigation
     private $urlBuilder;
 
     /**
-     * @param $keyValueReader
-     * @param $urlBuilder
+     * @param ReadInterface $keyValueReader
+     * @param KeyBuilderInterface $urlBuilder
      */
     public function __construct(ReadInterface $keyValueReader, KeyBuilderInterface $urlBuilder)
     {
