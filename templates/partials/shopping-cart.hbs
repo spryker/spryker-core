@@ -8,26 +8,9 @@
         <th class="cart__item-quantity"></th>
         <th class="cart__item-price">Preis</th>
       </tr>
-      <tr>
-        <td class="cart__item-name">Batman</td>
-        <td class="cart__item-quantity">{{> spinner color="light" value="10"}}</td>
-        <td class="cart__item-price">€ 12,99</td>
-      </tr>
-      <tr>
-        <td class="cart__item-name">Brillenpinguin</td>
-        <td class="cart__item-quantity">{{> spinner color="light" value="1"}}</td>
-        <td class="cart__item-price">€ 8,99</td>
-      </tr>
-      <tr>
-        <td class="cart__item-name">Drachenritter Berserker</td>
-        <td class="cart__item-quantity">{{> spinner color="light" value="2"}}</td>
-        <td class="cart__item-price">€ 28,99</td>
-      </tr>
-      <tr>
-        <td class="cart__item-name">+ Versand</td>
-        <td class="cart__item-quantity"></td>
-        <td class="cart__item-price">€ 2,50</td>
-      </tr>
+      {{> cartItem name='Batman' quantity='1' price='€ 12,99'}}
+      {{> cartItem name='Brillenpinguin' quantity='1' price='€ 8,99'}}
+      {{> cartItem name='Drachenritter Berserker' quantity='1' price='€ 28,99'}}
       <tr class="cart__totals">
         <td class="cart__total-label" colspan="2">Gesamt</td>
         <td class="cart__total-price">€ 53,47</td>
