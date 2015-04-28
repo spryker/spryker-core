@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Application\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ApplicationBusiness;
 use SprykerFeature\Shared\Library\Bundle\BundleConfig;
+use SprykerFeature\Zed\Application\ApplicationConfig;
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep;
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption;
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase;
@@ -24,6 +25,7 @@ use Psr\Log\LoggerInterface;
 
 /**
  * @method ApplicationBusiness getFactory()
+ * @method ApplicationConfig getConfig()
  */
 class ApplicationDependencyContainer extends AbstractDependencyContainer
 {
@@ -33,7 +35,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      */
     public function getCheckSteps()
     {
-        return $this->getSettings()->getCheckSteps();
+        return $this->getConfig()->getCheckSteps();
     }
 
     /**
@@ -145,14 +147,6 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return ApplicationSettings
-     */
-    protected function getSettings()
-    {
-        return $this->getFactory()->createApplicationSettings($this->getLocator());
-    }
-
-    /**
      * @return MenuFormatter
      */
     protected function getMenuFormatter()
@@ -205,7 +199,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      */
     protected function getMenuLevelValidator()
     {
-        $maxMenuCount = $this->getSettings()->getMaxMenuLevelCount();
+        $maxMenuCount = $this->getConfig()->getMaxMenuLevelCount();
 
         return $this->getFactory()->createModelNavigationValidatorMenuLevelValidator($maxMenuCount);
     }
