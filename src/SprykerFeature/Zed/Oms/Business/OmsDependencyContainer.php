@@ -17,11 +17,13 @@ use SprykerFeature\Zed\Oms\Business\Model\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
+use SprykerFeature\Zed\Oms\OmsConfig;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use Generated\Zed\Ide\FactoryAutoCompletion\OmsBusiness;
 
 /**
  * @method OmsBusiness getFactory()
+ * @method OmsConfig getConfig()
  */
 class OmsDependencyContainer extends AbstractDependencyContainer
 {
@@ -100,12 +102,12 @@ class OmsDependencyContainer extends AbstractDependencyContainer
      */
     public function createModelFinder()
     {
-        $settings = $this->createSettings();
+        $config = $this->getConfig();
 
         return $this->getFactory()->createModelFinder(
             $this->createQueryContainer(),
             $this->createModelBuilder(),
-            $settings->getActiveProcesses()
+            $config->getActiveProcesses()
         );
     }
 
@@ -179,6 +181,6 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     public function createModelUtilDrawer()
     {
         return $this->getFactory()
-            ->createModelUtilDrawer($this->createSettings());
+            ->createModelUtilDrawer($this->getConfig());
     }
 }
