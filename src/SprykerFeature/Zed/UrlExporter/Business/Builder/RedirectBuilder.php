@@ -33,7 +33,7 @@ class RedirectBuilder implements RedirectBuilderInterface
             //TODO make this more pretty
             $this->redirectKeyBuilder->setResourceType('redirect');
 
-            $redirectKey = $this->redirectKeyBuilder->generateKey($redirect['redirect_id'], $locale);
+            $redirectKey = $this->redirectKeyBuilder->generateKey($redirect['redirect_id'], $locale->getLocaleName());
             $returnedResultSet[$redirectKey] = [
                 'from_url' => $redirect['from_url'],
                 'to_url' => $redirect['to_url'],
