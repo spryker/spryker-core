@@ -10,10 +10,12 @@ use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use Psr\Log\LoggerInterface;
 use SprykerFeature\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use SprykerFeature\Zed\Country\Business\Internal\Install;
+use SprykerFeature\Zed\Country\CountryConfig;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
 
 /**
  * @method CountryBusiness getFactory()
+ * @method CountryConfig getConfig()
  */
 class CountryDependencyContainer extends AbstractDependencyContainer
 {
@@ -28,15 +30,15 @@ class CountryDependencyContainer extends AbstractDependencyContainer
             $this->createCountryManager(),
             $this->createRegionManager(),
             $this->createCldrDataProvider(
-                $this->createSettings()->getCldrDir() . '/en/territories.json'
+                $this->getConfig()->getCldrDir() . '/en/territories.json'
             ),
             $this->createCldrDataProvider(
-                $this->createSettings()->getCldrDir() . '/supplemental/codeMappings.json'
+                $this->getConfig()->getCldrDir() . '/supplemental/codeMappings.json'
             ),
             $this->createCldrDataProvider(
-                $this->createSettings()->getCldrDir() . '/supplemental/postalCodeData.json'
+                $this->getConfig()->getCldrDir() . '/supplemental/postalCodeData.json'
             ),
-            $this->createSettings()
+            $this->getConfig()
         );
 
         $installer->setMessenger($messenger);
@@ -72,14 +74,6 @@ class CountryDependencyContainer extends AbstractDependencyContainer
     protected function createCountryQueryContainer()
     {
         return $this->getLocator()->country()->queryContainer();
-    }
-
-    /**
-     * @return CountrySettings
-     */
-    protected function createSettings()
-    {
-        return $this->getFactory()->createCountrySettings();
     }
 
     /**

@@ -1,10 +1,11 @@
 <?php
 
-namespace SprykerFeature\Zed\Country\Business;
+namespace SprykerFeature\Zed\Country;
 
 use SprykerFeature\Zed\Country\Business\Internal\Regions\RegionInstallInterface;
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-class CountrySettings
+class CountryConfig extends AbstractBundleConfig
 {
     /**
      * @return array
@@ -28,6 +29,6 @@ class CountrySettings
 
     public function getCldrDir()
     {
-        return __DIR__ . '/File/cldr';
+        return __DIR__ . '/Business/File/cldr';
     }
 }

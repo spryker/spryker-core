@@ -2,17 +2,17 @@
 
 namespace SprykerFeature\Zed\Country\Business\Internal;
 
+use SprykerFeature\Zed\Country\CountryConfig;
 use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 use SprykerFeature\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use SprykerFeature\Zed\Country\Business\CountryManagerInterface;
-use SprykerFeature\Zed\Country\Business\CountrySettings;
 use SprykerFeature\Zed\Country\Business\Internal\Regions\RegionInstallInterface;
 use SprykerFeature\Zed\Country\Business\RegionManagerInterface;
 
 class Install extends AbstractInstaller
 {
     /**
-     * @var CountrySettings
+     * @var CountryConfig
      */
     protected $countrySettings;
 
@@ -67,7 +67,7 @@ class Install extends AbstractInstaller
      * @param CldrDataProviderInterface $cldrDataProvider
      * @param CldrDataProviderInterface $codeMappingsProvider
      * @param CldrDataProviderInterface $postalCodeDataProvider
-     * @param CountrySettings $countrySettings
+     * @param CountryConfig $countrySettings
      */
     public function __construct(
         CountryManagerInterface $countryManager,
@@ -75,7 +75,7 @@ class Install extends AbstractInstaller
         CldrDataProviderInterface $cldrDataProvider,
         CldrDataProviderInterface $codeMappingsProvider,
         CldrDataProviderInterface $postalCodeDataProvider,
-        CountrySettings $countrySettings
+        CountryConfig $countrySettings
     ) {
         //parent::__construct();
         $this->countrySettings = $countrySettings;
