@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\UrlExporter\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -11,11 +12,11 @@ class UrlExporterFacade extends AbstractFacade
 {
     /**
      * @param array $resultSet
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function buildUrlMap(array $resultSet, $locale)
+    public function buildUrlMap(array $resultSet, LocaleDto $locale)
     {
         $redirectUrlMapBuilder = $this->getDependencyContainer()->getUrlMapBuilder();
 
@@ -24,11 +25,11 @@ class UrlExporterFacade extends AbstractFacade
 
     /**
      * @param array $redirectResultSet
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function buildRedirects(array $redirectResultSet, $locale)
+    public function buildRedirects(array $redirectResultSet, LocaleDto $locale)
     {
         $redirectBuilder = $this->getDependencyContainer()->getRedirectBuilder();
 
