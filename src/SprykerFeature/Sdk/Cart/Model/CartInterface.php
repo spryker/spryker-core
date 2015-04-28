@@ -7,10 +7,11 @@ interface CartInterface
 {
     /**
      * @param string $sku
+     * @param int $quantity
      *
      * @return CartTransferInterface
      */
-    public function addToCart($sku);
+    public function addToCart($sku, $quantity = 1);
 
     /**
      * @param string $sku

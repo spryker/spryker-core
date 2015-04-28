@@ -6,7 +6,7 @@ use SprykerEngine\Sdk\Kernel\AbstractSdk;
 use SprykerFeature\Sdk\Cart\StorageProvider\StorageProviderInterface;
 
 /**
- * @method Cart2DependencyContainer getDependencyContainer()
+ * @method CartDependencyContainer getDependencyContainer()
  */
 class CartSdk extends AbstractSdk
 {

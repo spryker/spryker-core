@@ -11,7 +11,7 @@ use SprykerFeature\Sdk\ZedRequest\Client\ZedClient;
 use SprykerFeature\Shared\Cart\Transfer\CartChangeInterface;
 use SprykerFeature\Shared\Cart\Transfer\CartInterface as CartTransferInterface;
 use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
+use SprykerFeature\Shared\ZedRequest\Client\AbstractZedClient;
 
 class Cart implements CartInterface
 {
@@ -30,10 +30,10 @@ class Cart implements CartInterface
     private $locator;
 
     /**
-     * @param ZedClient $zedClient
+     * @param AbstractZedClient $zedClient
      * @param StorageProviderInterface $storageProvider
      */
-    public function __construct(ZedClient $zedClient, StorageProviderInterface $storageProvider)
+    public function __construct(AbstractZedClient $zedClient, StorageProviderInterface $storageProvider)
     {
 
         $this->zedClient = $zedClient;
@@ -118,7 +118,10 @@ class Cart implements CartInterface
      */
     public function recalculate()
     {
-        //@todo $this->storageProvider->getCart();
+        $cart = $this->storageProvider->getCart();
+        $this->getZedClient()->call('/cart/recalculate', $cart);
+
+        return $this->handleCartResponse();
     }
 
 
@@ -144,8 +147,7 @@ class Cart implements CartInterface
     protected function createCartChange()
     {
         $cart = $this->storageProvider->getCart();
-        /** @var CartChangeInterface $cartChange */
-        $cartChange = $this->locator->Cart()->transferCartChange();
+        $cartChange = $this->getLocator()->Cart()->transferCartChange();
         $cartChange->setCart($cart);
 
         return $cartChange;
@@ -159,12 +161,10 @@ class Cart implements CartInterface
      */
     protected function createChangedItems($sku, $quantity = 1)
     {
-        /** @var ItemInterface|AbstractTransfer $changedItem */
-        $changedItem = $this->locator->Cart()->transferItem();
+        $changedItem = $this->getLocator()->Cart()->transferItem();
         $changedItem->setId($sku);
         $changedItem->setQuantity($quantity);
-        /** @var ItemCollectionInterface|AbstractTransfer $changedItems */
-        $changedItems = $this->locator->Cart()->transferItemCollection();
+        $changedItems = $this->getLocator()->Cart()->transferItemCollection();
         $changedItems->add($changedItem);
 
         return $changedItems;
@@ -201,5 +201,13 @@ class Cart implements CartInterface
         $this->getStorageProvider()->setCart($cart);
 
         return $cart;
+    }
+
+    /**
+     * @return AutoCompletion|AbstractLocatorLocator
+     */
+    protected function getLocator()
+    {
+        return $this->locator;
     }
 }

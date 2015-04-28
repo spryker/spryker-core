@@ -2,12 +2,14 @@
 
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
+use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Shared\Cart\Transfer\CartChangeInterface;
 use SprykerFeature\Shared\Cart\Transfer\CartInterface;
 use Psr\Log\LoggerInterface;
 use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
+use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 abstract class AbstractOperator implements OperatorInterface
 {
@@ -24,6 +26,11 @@ abstract class AbstractOperator implements OperatorInterface
      * @var CalculationFacade
      */
     private $cartCalculator;
+
+    /**
+     * @var ItemExpanderPluginInterface[]
+     */
+    private $itemExpanderPlugins = [];
 
     /**
      * @param StorageProviderInterface $storageProvider
@@ -47,7 +54,9 @@ abstract class AbstractOperator implements OperatorInterface
      */
     public function executeOperation(CartChangeInterface $cartChange)
     {
-        $cart = $this->changeCart($cartChange->getCart(), $cartChange->getChangedItems());
+        $changedItems = $this->expandChangedItems($cartChange->getChangedItems());
+        $cart = $this->changeCart($cartChange->getCart(), $changedItems);
+
         if ($this->messenger) {
             $this->messenger->info($this->createSuccessMessage());
         }
@@ -81,4 +90,27 @@ abstract class AbstractOperator implements OperatorInterface
      * @return string
      */
     abstract protected function createSuccessMessage();
+
+    /**
+     * @param ItemCollectionInterface|ItemInterface[] $changedItems
+     *
+     * @return ItemCollectionInterface|ItemInterface[]
+     */
+    protected function expandChangedItems(ItemCollectionInterface $changedItems)
+    {
+        foreach ($this->itemExpanderPlugins as $itemExpander) {
+            $changedItems = $itemExpander->expandItems($changedItems);
+        }
+
+        return $changedItems;
+    }
+
+    /**
+     * @param ItemExpanderPluginInterface $itemExpander
+     *
+     */
+    public function addItemExpanderPlugin(ItemExpanderPluginInterface $itemExpander)
+    {
+        $this->itemExpanderPlugins[] = $itemExpander;
+    }
 }
