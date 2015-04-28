@@ -3,26 +3,22 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
-/**
- * Class ProductFrontendExporterConnectorFacade
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector
- */
 /**
  * @method ProductFrontendExporterConnectorDependencyContainer getDependencyContainer()
  */
 class ProductFrontendExporterConnectorFacade extends AbstractFacade
 {
     /**
-     * @param array  $products
-     * @param string $locale
+     * @param array $products
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function buildProducts(array $products, $locale)
+    public function buildProducts(array $products, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->getProductProcessor()

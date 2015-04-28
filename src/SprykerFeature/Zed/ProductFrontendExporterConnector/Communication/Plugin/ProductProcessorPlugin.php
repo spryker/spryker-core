@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Communication\Plugin;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -9,11 +10,6 @@ use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInt
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Business\ProductFrontendExporterConnectorFacade;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Communication\ProductFrontendExporterConnectorDependencyContainer;
 
-/**
- * Class ProductDataProcessorPlugin
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Communication\Plugin
- */
 /**
  * @method ProductFrontendExporterConnectorDependencyContainer getDependencyContainer()
  */
@@ -31,13 +27,13 @@ class ProductProcessorPlugin extends AbstractPlugin implements DataProcessorPlug
     }
 
     /**
-     * @param array  $resultSet
-     * @param array  $processedResultSet
-     * @param string $locale
+     * @param array $resultSet
+     * @param array $processedResultSet
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
     {
         $processedResultSet = $this->productProcessor->buildProducts($resultSet, $locale);
 
