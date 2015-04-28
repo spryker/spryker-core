@@ -2,12 +2,9 @@
 
 namespace SprykerFeature\Zed\ProductCategorySearch\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
-/**
- * Class ProductCategorySearchDependencyContainer
- * @package SprykerFeature\Zed\ProductCategory\Business
- */
 /**
  * @method ProductCategorySearchDependencyContainer getDependencyContainer()
  */
@@ -17,10 +14,10 @@ class ProductCategorySearchFacade extends AbstractFacade
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param string $locale
+     * @param LocaleDto $locale
      * @return array
      */
-    public function processProductCategorySearchData(array &$resultSet, array $processedResultSet, $locale)
+    public function processProductCategorySearchData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->createProductCategorySearchProcessor()
