@@ -40,8 +40,7 @@ class GroupForm extends AbstractForm
         LocatorLocatorInterface $locator,
         FactoryInterface $factory,
         AclQueryContainer $queryContainer = null
-    )
-    {
+    ) {
         $this->factory = $factory;
         $this->aclQueryContainer = $queryContainer;
         parent::__construct($request, $locator);

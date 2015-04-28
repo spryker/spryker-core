@@ -27,12 +27,22 @@ class UsernameExistsConstraint extends Constraint
      */
     public function __construct(
         $username,
+        $idUser,
         $locator,
         $options = null
     ) {
         $this->username = $username;
+        $this->idUser = $idUser;
         $this->locator = $locator;
         parent::__construct($options);
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdUser()
+    {
+        return $this->idUser;
     }
 
     /**

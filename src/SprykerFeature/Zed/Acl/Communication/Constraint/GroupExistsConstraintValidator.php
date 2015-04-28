@@ -15,11 +15,11 @@ class GroupExistsConstraintValidator extends ConstraintValidator
     {
         $exists = $constraint->getLocator()->acl()->facade()->hasGroupByName($value);
 
-        if ($exists === true) {
+        if ($exists === true && $constraint->getGroupId()) {
             $original = $constraint->getLocator()->acl()->facade()->getGroup($constraint->getGroupId());
         }
 
-        if (true === $exists && $original->getName() !== $value) {
+        if (true === $exists && $constraint->getGroupId() && $original->getName() !== $value) {
             $this->addViolation($value, $constraint);
         }
     }

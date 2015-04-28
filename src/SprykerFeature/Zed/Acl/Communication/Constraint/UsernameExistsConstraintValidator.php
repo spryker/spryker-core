@@ -15,7 +15,11 @@ class UsernameExistsConstraintValidator extends ConstraintValidator
     {
         $exists = $constraint->getLocator()->user()->facade()->hasUserByUsername($value);
 
-        if (true === $exists) {
+        if ($exists === true && $constraint->getIdUser() !== null) {
+            $original = $constraint->getLocator()->user()->facade()->getUserById($constraint->getIdUser());
+        }
+
+        if (true === $exists && $constraint->getIdUser() !== null && $original->getUsername() !== $value) {
             $this->addViolation($value, $constraint);
         }
     }
