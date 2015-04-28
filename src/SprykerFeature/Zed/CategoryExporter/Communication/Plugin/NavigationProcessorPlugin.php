@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Communication\Plugin;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
@@ -34,11 +35,11 @@ class NavigationProcessorPlugin extends AbstractPlugin implements DataProcessorP
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
     {
         $facade = $this->getDependencyContainer()->getCategoryExporterFacade();
 
