@@ -1,13 +1,12 @@
 <section
         class="spy-grid spy-layout sparse"
-        spy-app="spyFormat, spyGrid, spyForm, spyLayout"
         ng-controller="GridController"
         ng-strict-di
         src="/acl/group/users/{{ query | default ('') }}"
         name="users"
         on="{ form_success : 'update' }"
         >
-    <h3>Users</h3>
+    <h3>Users in this group</h3>
 
     <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
 

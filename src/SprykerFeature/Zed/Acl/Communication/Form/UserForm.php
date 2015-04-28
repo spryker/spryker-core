@@ -136,6 +136,7 @@ class UserForm extends AbstractForm
         if (true === empty($idUser)) {
             $usernameConstraints[] = $this->factory->createConstraintUsernameExistsConstraint(
                 $this->getUsername(),
+                $this->getUserId(),
                 $this->getLocator()
             );
         }
