@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductSearchAvailabilityConnector\Communication\Plugin;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
@@ -26,11 +27,11 @@ class ProductAvailabilityQueryExpanderPlugin extends AbstractPlugin implements Q
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, $localeName)
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
     {
         $expandableQuery->addJoin(
             SpyProductTableMap::COL_ID_PRODUCT,
