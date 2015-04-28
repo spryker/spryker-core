@@ -23,7 +23,7 @@ class UrlMatcher implements UrlMatcherInterface
 
     /**
      * @param KeyBuilderInterface $urlKeyBuilder
-     * @param ReadInterface       $keyValueReader
+     * @param ReadInterface $keyValueReader
      */
     public function __construct(KeyBuilderInterface $urlKeyBuilder, ReadInterface $keyValueReader)
     {
