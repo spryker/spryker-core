@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\GlossaryExporter\Communication\Plugin;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerFeature\Zed\GlossaryExporter\Communication\GlossaryExporterDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
@@ -22,13 +23,13 @@ class TranslationQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param string $localeName
+     * @param LocaleDto $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, $localeName)
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
     {
-        return $this->getDependencyContainer()->getGlossaryQueryContainer()->expandQuery($expandableQuery, $localeName);
+        return $this->getDependencyContainer()->getGlossaryQueryContainer()->expandQuery($expandableQuery, $locale);
     }
 
     /**

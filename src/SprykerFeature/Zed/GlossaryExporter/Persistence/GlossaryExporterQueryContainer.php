@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\GlossaryExporter\Persistence;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -14,11 +15,11 @@ class GlossaryExporterQueryContainer extends AbstractQueryContainer implements G
 {
     /**
      * @param ModelCriteria $expandableQuery
-     * @param string $locale
+     * @param LocaleDto $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, $locale)
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
     {
         $expandableQuery->addJoin(
             SpyTouchTableMap::COL_ITEM_ID,
@@ -36,7 +37,7 @@ class GlossaryExporterQueryContainer extends AbstractQueryContainer implements G
             Criteria::INNER_JOIN
         );
 
-        $expandableQuery->addAnd(SpyLocaleTableMap::COL_LOCALE_NAME, $locale, Criteria::EQUAL);
+        $expandableQuery->addAnd(SpyLocaleTableMap::COL_LOCALE_NAME, $locale->getLocaleName(), Criteria::EQUAL);
         $expandableQuery->addAnd(SpyLocaleTableMap::COL_IS_ACTIVE, true, Criteria::EQUAL);
         $expandableQuery->addAnd(SpyGlossaryKeyTableMap::COL_IS_ACTIVE, true, Criteria::EQUAL);
         $expandableQuery->addAnd(SpyGlossaryTranslationTableMap::COL_IS_ACTIVE, true, Criteria::EQUAL);
