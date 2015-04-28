@@ -9,6 +9,7 @@ var $ = require('jquery'),
     filter = require('./ui/catalog/filters'),
     pagination = require('./ui/catalog/pagination'),
     homepage = require('./ui/homepage'),
+    mainNav = require('./ui/main-nav'),
     slick = require('slick-carousel');
 
 $(function() {
@@ -17,6 +18,7 @@ $(function() {
     $('html').addClass('mobile');
   }
 
+  mainNav.init();
   spinner.init();
   search.init();
   cart.init();
