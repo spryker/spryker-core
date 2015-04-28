@@ -58,7 +58,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $categoryUrl = $this->urlPathGenerator->generate($path);
         $idNode = $categoryNode->getIdCategoryNode();
 
-        $this->urlFacade->createUrl($categoryUrl, $this->localeName, CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
-        $this->urlFacade->touchUrlActive($idNode);
+        $url = $this->urlFacade->createUrl($categoryUrl, $this->localeName, CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
+        $this->urlFacade->touchUrlActive($url->getIdUrl());
     }
 }
