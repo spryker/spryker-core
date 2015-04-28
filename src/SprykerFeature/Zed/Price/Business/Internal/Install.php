@@ -6,6 +6,7 @@ use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Price\Business\PriceSettings;
+use SprykerFeature\Zed\Price\PriceConfig;
 
 class Install extends AbstractInstaller
 {
@@ -18,16 +19,16 @@ class Install extends AbstractInstaller
     /**
      * @var PriceSettings
      */
-    protected $settings;
+    protected $config;
 
     /**
      * @param PriceFacade $priceFacade
-     * @param PriceSettings $settings
+     * @param PriceConfig $config
      */
-    public function __construct(PriceFacade $priceFacade, PriceSettings $settings)
+    public function __construct(PriceFacade $priceFacade, PriceConfig $config)
     {
         $this->priceFacade = $priceFacade;
-        $this->settings = $settings;
+        $this->config = $config;
     }
 
     public function install()
@@ -37,7 +38,7 @@ class Install extends AbstractInstaller
 
     protected function createPriceType()
     {
-        $this->priceFacade->createPriceType($this->settings->getPriceTypeDefaultName());
+        $this->priceFacade->createPriceType($this->config->getPriceTypeDefaultName());
     }
 
 }

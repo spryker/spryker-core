@@ -12,9 +12,11 @@ use SprykerFeature\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use SprykerFeature\Zed\Price\Business\PriceSettings;
 use SprykerFeature\Zed\Price\Business\Internal\Install;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerFeature\Zed\Price\PriceConfig;
 
 /**
  * @method PriceBusiness getFactory()
+ * @method PriceConfig getConfig()
  */
 class PriceDependencyContainer extends AbstractDependencyContainer
 {
@@ -35,11 +37,6 @@ class PriceDependencyContainer extends AbstractDependencyContainer
     protected $productFacade;
 
     /**
-     * @var PriceSettings
-     */
-    protected $settings;
-
-    /**
      * @return ReaderInterface
      */
     public function getReaderModel()
@@ -47,7 +44,7 @@ class PriceDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createModelReader(
             $this->getQueryContainer(),
             $this->getProductFacade(),
-            $this->getPriceSettings()
+            $this->getConfig()
         );
     }
 
@@ -61,7 +58,7 @@ class PriceDependencyContainer extends AbstractDependencyContainer
             $this->getQueryContainer(),
             $this->getReaderModel(),
             $this->getTouchFacade(),
-            $this->getPriceSettings()
+            $this->getConfig()
         );
     }
 
@@ -106,23 +103,11 @@ class PriceDependencyContainer extends AbstractDependencyContainer
     {
         $installer = $this->getFactory()->createInternalInstall(
             $this->getLocator()->price()->facade(),
-            $this->getPriceSettings()
+            $this->getConfig()
         );
         $installer->setMessenger($messenger);
 
         return $installer;
-    }
-
-    /**
-     * @return PriceSettings
-     */
-    public function getPriceSettings()
-    {
-        if (empty($this->settings)) {
-            $this->settings = $this->getFactory()->createPriceSettings($this->getLocator());
-        }
-
-        return $this->settings;
     }
 
 }

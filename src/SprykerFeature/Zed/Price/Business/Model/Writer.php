@@ -6,11 +6,11 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
 use SprykerFeature\Zed\Price\Dependency\Facade\PriceToTouchInterface;
-use SprykerFeature\Zed\Price\Business\PriceSettings;
 use SprykerFeature\Shared\Price\Transfer\Product;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Price\PriceConfig;
 
 class Writer implements WriterInterface
 {
@@ -39,7 +39,7 @@ class Writer implements WriterInterface
     protected $touchFacade;
 
     /**
-     * @var PriceSettings
+     * @var PriceConfig
      */
     protected $priceSettings;
 
@@ -48,14 +48,14 @@ class Writer implements WriterInterface
      * @param PriceQueryContainer $queryContainer
      * @param ReaderInterface $reader
      * @param PriceToTouchInterface $touchFacade
-     * @param PriceSettings $priceSettings
+     * @param PriceConfig $priceSettings
      */
     public function __construct(
         LocatorLocatorInterface $locator,
         PriceQueryContainer $queryContainer,
         ReaderInterface $reader,
         PriceToTouchInterface $touchFacade,
-        PriceSettings $priceSettings
+        PriceConfig $priceSettings
     ) {
         $this->locator = $locator;
         $this->queryContainer = $queryContainer;
@@ -81,7 +81,7 @@ class Writer implements WriterInterface
 
     /**
      * @param Product $transferPriceProduct
-     * 
+     *
      * @return SpyPriceProduct
      * @throws \Exception
      */
@@ -100,7 +100,7 @@ class Writer implements WriterInterface
 
     /**
      * @param Product $transferPriceProduct
-     * 
+     *
      * @throws \Exception
      */
     public function setPriceForProduct(Product $transferPriceProduct)
@@ -119,7 +119,7 @@ class Writer implements WriterInterface
     /**
      * @param Product $transferPriceProduct
      * @param SpyPriceProduct $productEntity
-     * 
+     *
      * @return SpyPriceProduct
      */
     protected function savePriceProductEntity(Product $transferPriceProduct, SpyPriceProduct $productEntity)
@@ -152,7 +152,7 @@ class Writer implements WriterInterface
 
     /**
      * @param Product $transferPriceProduct
-     * 
+     *
      * @return Product
      * @throws \Exception
      * @throws PropelException
@@ -168,7 +168,7 @@ class Writer implements WriterInterface
 
     /**
      * @param $idPriceProduct
-     * 
+     *
      * @return SpyPriceProduct
      * @throws \Exception
      */
@@ -184,7 +184,7 @@ class Writer implements WriterInterface
 
     /**
      * @param Product $transferPriceProduct
-     * 
+     *
      * @return bool
      */
     protected function isPriceTypeExistingForAbstractProduct(Product $transferPriceProduct)
@@ -214,7 +214,7 @@ class Writer implements WriterInterface
 
     /**
      * @param Product $transferPriceProduct
-     * 
+     *
      * @return bool
      */
     protected function isPriceTypeExistingForConcreteProduct(Product $transferPriceProduct)

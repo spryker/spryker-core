@@ -4,9 +4,9 @@ namespace SprykerFeature\Zed\Price\Business\Model;
 
 use SprykerFeature\Zed\Price\Dependency\Facade\PriceToProductInterface;
 use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
-use SprykerFeature\Zed\Price\Business\PriceSettings;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
+use SprykerFeature\Zed\Price\PriceConfig;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 
 class Reader implements ReaderInterface
@@ -26,14 +26,14 @@ class Reader implements ReaderInterface
     protected $productFacade;
 
     /**
-     * @var PriceSettings
+     * @var PriceConfig
      */
     protected $priceSettings;
 
     /**
      * @param PriceQueryContainer $queryContainer
      * @param PriceToProductInterface $productFacade
-     * @param PriceSettings $priceSettings
+     * @param PriceConfig $priceSettings
      */
     public function __construct(
         $queryContainer,
@@ -64,7 +64,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      * @param string|null $priceTypeName
-     * 
+     *
      * @return int
      * @throws \Exception
      */
@@ -78,7 +78,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $priceTypeName
-     * 
+     *
      * @return SpyPriceType
      * @throws \Exception
      */
@@ -95,7 +95,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      * @param string|null $priceTypeName
-     * 
+     *
      * @return bool
      * @throws \Exception
      */
@@ -114,7 +114,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * 
+     *
      * @return bool
      */
     public function hasConcreteProduct($sku)
@@ -124,7 +124,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * 
+     *
      * @return bool
      */
     public function hasAbstractProduct($sku)
@@ -135,7 +135,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      * @param string $priceTypeName
-     * 
+     *
      * @return int
      * @throws \Exception
      */
@@ -161,7 +161,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      * @param SpyPriceType $priceType
-     * 
+     *
      * @return SpyPriceProduct
      * @throws \Exception
      */
@@ -200,7 +200,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      * @param SpyPriceType $priceType
-     * 
+     *
      * @return bool
      */
     protected function hasPriceForAbstractProduct($sku, $priceType)
@@ -216,7 +216,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      * @param SpyPriceType $priceType
-     * 
+     *
      * @return SpyPriceProduct
      */
     protected function getPriceEntityForConcreteProduct($sku, $priceType)
@@ -230,7 +230,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      * @param SpyPriceType $priceType
-     * 
+     *
      * @return SpyPriceProduct
      */
     protected function getPriceEntityForAbstractProduct($sku, $priceType)
@@ -243,7 +243,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $priceType
-     * 
+     *
      * @return SpyPriceType
      */
     protected function handleDefaultPriceType($priceType = null)
