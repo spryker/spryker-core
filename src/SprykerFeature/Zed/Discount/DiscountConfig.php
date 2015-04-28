@@ -82,7 +82,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
             throw new \ErrorException('No default voucher decision rule plugin registered');
         }
 
-        return $this->decisionRulePlugins[self::PLUGIN_DECISION_RULE_VOUCHER];
+        return $this->getAvailableDecisionRulePlugins()[self::PLUGIN_DECISION_RULE_VOUCHER];
     }
 
     /**
@@ -91,7 +91,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
      */
     public function getDecisionRulePluginByName($pluginName)
     {
-        return $this->decisionRulePlugins[$pluginName];
+        return $this->getAvailableDecisionRulePlugins()[$pluginName];
     }
 
     /**
@@ -99,7 +99,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
      */
     public function getDecisionPluginNames()
     {
-        return array_keys($this->decisionRulePlugins);
+        return array_keys($this->getAvailableDecisionRulePlugins());
     }
 
     /**
@@ -108,7 +108,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
      */
     public function getCalculatorPluginByName($pluginName)
     {
-        return $this->calculatorPlugins[$pluginName];
+        return $this->getAvailableCalculatorPlugins()[$pluginName];
     }
 
     /**
@@ -117,7 +117,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
      */
     public function getCollectorPluginByName($pluginName)
     {
-        return $this->collectorPlugins[$pluginName];
+        return $this->getAvailableCollectorPlugins()[$pluginName];
     }
 
     /**
