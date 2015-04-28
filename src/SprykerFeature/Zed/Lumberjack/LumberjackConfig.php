@@ -1,11 +1,12 @@
 <?php
 
-namespace SprykerFeature\Zed\Lumberjack\Business;
+namespace SprykerFeature\Zed\Lumberjack;
 
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Lumberjack\LumberjackConfig;
+use SprykerFeature\Shared\Lumberjack\LumberjackConfig as LumberjackSharedConfig;
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-class LumberjackSettings
+class LumberjackConfig extends AbstractBundleConfig
 {
 
     /**
@@ -23,7 +24,7 @@ class LumberjackSettings
      */
     public function getIndexName($includeWildcard = false, $includeDate = false)
     {
-        $config = Config::get(LumberjackConfig::LUMBERJACK);
+        $config = Config::get(LumberjackSharedConfig::LUMBERJACK);
 
         if ($includeDate) {
             $index = $config->elasticsearch->index
