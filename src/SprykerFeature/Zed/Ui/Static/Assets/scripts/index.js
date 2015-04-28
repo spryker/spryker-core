@@ -14,4 +14,5 @@ module.exports.spyTemplate = require('./spyTemplate');
 module.exports.spyGrid     = require('./spyGrid');
 module.exports.spyForm     = require('./spyForm');
 
+require('./spyFormAction');
 require('./spyFormComponent');
