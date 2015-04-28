@@ -16,12 +16,14 @@ interface ReaderInterface
 
     /**
      * @param string $sku
+     *
      * @return bool
      */
     public function isNeverOutOfStock($sku);
 
     /**
      * @param string $sku
+     *
      * @return array|\PropelObjectCollection
      */
     public function getStocksProduct($sku);
@@ -29,6 +31,7 @@ interface ReaderInterface
     /**
      * @param string $sku
      * @param string $stockType
+     *
      * @return bool
      */
     public function hasStockProduct($sku, $stockType);
@@ -36,12 +39,14 @@ interface ReaderInterface
     /**
      * @param $sku
      * @param $stockType
+     *
      * @return int
      */
     public function getIdStockProduct($sku, $stockType);
 
     /**
      * @param string $stockType
+     *
      * @return int
      */
     public function getStockTypeIdByName($stockType);
@@ -63,14 +68,16 @@ interface ReaderInterface
     public function getConcreteProductIdBySku($sku);
 
     /**
-     * @param $idStockType
-     * @param $idProduct
+     * @param int $idStockType
+     * @param int $idProduct
+     *
      * @throws StockProductAlreadyExistsException
      */
     public function checkStockDoesNotExist($idStockType, $idProduct);
 
     /**
-     * @param $idStockProduct
+     * @param int $idStockProduct
+     *
      * @return SpyStockProduct
      * @throws StockProductNotFoundException
      */

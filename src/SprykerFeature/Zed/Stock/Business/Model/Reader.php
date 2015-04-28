@@ -68,6 +68,7 @@ class Reader implements ReaderInterface
      * @param string $sku
      *
      * @return SpyStockProduct[]
+     * @throws InvalidArgumentException
      */
     public function getStocksProduct($sku)
     {
@@ -82,10 +83,12 @@ class Reader implements ReaderInterface
             return $stockEntities;
         }
     }
+
     /**
      * @param string $stockType
      *
      * @return int
+     * @throws InvalidArgumentException
      */
     public function getStockTypeIdByName($stockType)
     {
@@ -105,9 +108,7 @@ class Reader implements ReaderInterface
      */
     public function hasStockProduct($sku, $stockType)
     {
-        $idStockType = $this->getStockTypeIdByName($stockType);
-        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
-        $entityCount = $this->queryContainer->queryStockProductByStockAndProduct($idStockType, $idProduct)->count();
+        $entityCount = $this->queryContainer->queryStockProductBySkuAndType($sku, $stockType)->count();
 
         return $entityCount > 0;
     }
@@ -198,5 +199,17 @@ class Reader implements ReaderInterface
             throw new StockProductNotFoundException();
         }
         return $stockProductEntity;
+    }
+
+    /**
+     * @param string $stockType
+     *
+     * @return bool
+     */
+    protected function hasStockType($stockType)
+    {
+        $stockTypeCount = $this->queryContainer->queryStockByName($stockType)->count();
+
+        return $stockTypeCount > 0;
     }
 }
