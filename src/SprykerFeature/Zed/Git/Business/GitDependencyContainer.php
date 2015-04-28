@@ -8,6 +8,7 @@ use Symfony\Component\Console\Command\Command;
 
 /**
  * @method GitBusiness getFactory()
+ * @method GitConfig getConfig()
  */
 class GitDependencyContainer extends AbstractDependencyContainer
 {
@@ -17,6 +18,6 @@ class GitDependencyContainer extends AbstractDependencyContainer
      */
     public function getConsoleCommands()
     {
-        return $this->getFactory()->createGitSettings($this->getLocator())->getConsoleCommands();
+        return $this->getConfig()->getConsoleCommands();
     }
 }
