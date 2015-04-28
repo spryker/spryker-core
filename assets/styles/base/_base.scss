@@ -29,6 +29,12 @@ button, input[type="submit"] {
     color: $light-color;
     border-color: $light-color;
   }
+
+  &:hover {
+    background-color: $muted-color;
+    color: $light-color;
+    border-color: $muted-color;
+  }
 }
 
 input, textarea, select {
