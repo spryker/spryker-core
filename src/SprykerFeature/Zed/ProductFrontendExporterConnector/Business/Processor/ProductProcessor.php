@@ -6,13 +6,9 @@ use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Dependency\Facade\ProductFrontendExporterToProductInterface;
 
-/**
- * Class ProductProcessor
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor
- */
 class ProductProcessor implements ProductProcessorInterface
 {
+
     /**
      * @var ProductFrontendExporterToProductInterface
      */
@@ -23,8 +19,8 @@ class ProductProcessor implements ProductProcessorInterface
     private $productKeyGenerator;
 
     /**
-     * @param ProductFrontendExporterToProductInterface   $productBuilder
-     * @param KeyBuilderInterface                         $productKeyBuilder
+     * @param ProductFrontendExporterToProductInterface $productBuilder
+     * @param KeyBuilderInterface $productKeyBuilder
      */
     public function __construct(
         ProductFrontendExporterToProductInterface $productBuilder,
@@ -47,7 +43,7 @@ class ProductProcessor implements ProductProcessorInterface
         $exportChunk = [];
 
         foreach ($products as $index => $productData) {
-            $productKey = $this->productKeyGenerator->generateKey($productData['id_product'], $locale);
+            $productKey = $this->productKeyGenerator->generateKey($productData['id_product'], $locale->getLocaleName());
             $productData['url'] = $productData['product_url'];
             $exportChunk[$productKey] = $this->filterProductData($productData);
         }
