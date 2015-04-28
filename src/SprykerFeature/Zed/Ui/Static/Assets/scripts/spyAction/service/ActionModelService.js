@@ -27,7 +27,7 @@ require('Ui').ng
 						transformResponse : denormalizeResponse,
 						interceptor : {
 							response : function(response) {
-								if (status >= 400) return $q.reject(response);
+								if (response.status >= 400) return $q.reject(response);
 
 								return response;
 							}
