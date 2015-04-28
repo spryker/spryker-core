@@ -43,9 +43,9 @@ class UrlBuilder implements UrlBuilderInterface
                 //log a warning about a faulty url here
             }
 
-            $indexKey = $this->urlKeyBuilder->generateKey($url['url'], $locale);
+            $indexKey = $this->urlKeyBuilder->generateKey($url['url'], $locale->getLocaleName());
             $this->resourceKeyBuilder->setResourceType($resourceArguments['resourceType']);
-            $referenceKey = $this->resourceKeyBuilder->generateKey($resourceArguments['value'], $locale);
+            $referenceKey = $this->resourceKeyBuilder->generateKey($resourceArguments['value'], $locale->getLocaleName());
             $returnedResultSet[$indexKey] = [
                 'reference_key' => $referenceKey,
                 'type' => $resourceArguments['resourceType']
