@@ -7,6 +7,7 @@
 namespace SprykerEngine\Zed\Locale\Business\Manager;
 
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Locale\Business\Exception\LocaleExistsException;
@@ -35,7 +36,7 @@ class LocaleManager
     /**
      * @param string $localeName
      *
-     * @return SpyLocale
+     * @return LocaleDto
      * @throws MissingLocaleException
      */
     public function getLocale($localeName)
@@ -51,12 +52,13 @@ class LocaleManager
             );
         }
 
-        return $locale;
+        return $this->convertEntityToDto($locale);
     }
 
     /**
      * @param string $localeName
-     * @return int
+     *
+     * @return LocaleDto
      * @throws LocaleExistsException
      * @throws \Exception
      * @throws PropelException
@@ -77,7 +79,7 @@ class LocaleManager
 
         $locale->save();
 
-        return $locale->getPrimaryKey();
+        return $this->convertEntityToDto($locale);
     }
 
     /**
@@ -112,5 +114,23 @@ class LocaleManager
         $locale->save();
 
         return true;
+    }
+
+    /**
+     * @param SpyLocale $locale
+     *
+     * @return LocaleDto
+     */
+    protected function convertEntityToDto($locale)
+    {
+        $dto = new LocaleDto();
+
+        $dto
+            ->setIdLocale($locale->getPrimaryKey())
+            ->setLocaleName($locale->getLocaleName())
+            ->setIsActive($locale->getIsActive())
+        ;
+
+        return $dto;
     }
 }

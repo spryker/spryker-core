@@ -6,19 +6,19 @@
 
 namespace SprykerEngine\Zed\Locale\Persistence;
 
-use SprykerEngine\Zed\Locale\Persistence\Propel\PacLocaleQuery;
+use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocaleQuery;
 
 interface LocaleQueryContainerInterface
 {
     /**
-     * @param $localeName
+     * @param string $localeName
      *
-     * @return PacLocaleQuery
+     * @return SpyLocaleQuery
      */
     public function queryLocaleByName($localeName);
 
     /**
-     * @return PacLocaleQuery
+     * @return SpyLocaleQuery
      */
     public function queryLocales();
 }
