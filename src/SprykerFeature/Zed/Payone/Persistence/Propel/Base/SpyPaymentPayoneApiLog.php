@@ -17,8 +17,10 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone as ChildSpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog as ChildSpyPaymentPayoneApiLog;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLogQuery as ChildSpyPaymentPayoneApiLogQuery;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneQuery as ChildSpyPaymentPayoneQuery;
 use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneApiLogTableMap;
 
 /**
@@ -67,6 +69,12 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
      * @var        int
      */
     protected $id_payment_payone_api_log;
+
+    /**
+     * The value for the fk_payment_payone field.
+     * @var        int
+     */
+    protected $fk_payment_payone;
 
     /**
      * The value for the request field.
@@ -145,6 +153,11 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
      * @var        \DateTime
      */
     protected $updated_at;
+
+    /**
+     * @var        ChildSpyPaymentPayone
+     */
+    protected $aSpyPaymentPayone;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -382,6 +395,16 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
     }
 
     /**
+     * Get the [fk_payment_payone] column value.
+     *
+     * @return int
+     */
+    public function getFkPaymentPayone()
+    {
+        return $this->fk_payment_payone;
+    }
+
+    /**
      * Get the [request] column value.
      *
      * @return string
@@ -550,6 +573,30 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
 
         return $this;
     } // setIdPaymentPayoneApiLog()
+
+    /**
+     * Set the value of [fk_payment_payone] column.
+     *
+     * @param  int $v new value
+     * @return $this|\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog The current object (for fluent API support)
+     */
+    public function setFkPaymentPayone($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->fk_payment_payone !== $v) {
+            $this->fk_payment_payone = $v;
+            $this->modifiedColumns[SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE] = true;
+        }
+
+        if ($this->aSpyPaymentPayone !== null && $this->aSpyPaymentPayone->getIdPaymentPayone() !== $v) {
+            $this->aSpyPaymentPayone = null;
+        }
+
+        return $this;
+    } // setFkPaymentPayone()
 
     /**
      * Set the value of [request] column.
@@ -850,46 +897,49 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('IdPaymentPayoneApiLog', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id_payment_payone_api_log = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('Request', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('FkPaymentPayone', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->fk_payment_payone = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('Request', TableMap::TYPE_PHPNAME, $indexType)];
             $this->request = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('Mode', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('Mode', TableMap::TYPE_PHPNAME, $indexType)];
             $this->mode = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
             $this->status = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('TransactionId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('TransactionId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->transaction_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->user_id = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('MerchantId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('MerchantId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->merchant_id = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('PortalId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('PortalId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->portal_id = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('ErrorCode', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('ErrorCode', TableMap::TYPE_PHPNAME, $indexType)];
             $this->error_code = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('ErrorMessageInternal', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('ErrorMessageInternal', TableMap::TYPE_PHPNAME, $indexType)];
             $this->error_message_internal = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('ErrorMessageUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('ErrorMessageUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->error_message_user = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('RedirectUrl', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('RedirectUrl', TableMap::TYPE_PHPNAME, $indexType)];
             $this->redirect_url = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
@@ -902,7 +952,7 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 14; // 14 = SpyPaymentPayoneApiLogTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 15; // 15 = SpyPaymentPayoneApiLogTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\SprykerFeature\\Zed\\Payone\\Persistence\\Propel\\SpyPaymentPayoneApiLog'), 0, $e);
@@ -924,6 +974,9 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aSpyPaymentPayone !== null && $this->fk_payment_payone !== $this->aSpyPaymentPayone->getIdPaymentPayone()) {
+            $this->aSpyPaymentPayone = null;
+        }
     } // ensureConsistency
 
     /**
@@ -963,6 +1016,7 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aSpyPaymentPayone = null;
         } // if (deep)
     }
 
@@ -1074,6 +1128,18 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aSpyPaymentPayone !== null) {
+                if ($this->aSpyPaymentPayone->isModified() || $this->aSpyPaymentPayone->isNew()) {
+                    $affectedRows += $this->aSpyPaymentPayone->save($con);
+                }
+                $this->setSpyPaymentPayone($this->aSpyPaymentPayone);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -1113,6 +1179,9 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
          // check the columns in natural order for more readable SQL queries
         if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_ID_PAYMENT_PAYONE_API_LOG)) {
             $modifiedColumns[':p' . $index++]  = '`id_payment_payone_api_log`';
+        }
+        if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE)) {
+            $modifiedColumns[':p' . $index++]  = '`fk_payment_payone`';
         }
         if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_REQUEST)) {
             $modifiedColumns[':p' . $index++]  = '`request`';
@@ -1166,6 +1235,9 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
                 switch ($columnName) {
                     case '`id_payment_payone_api_log`':
                         $stmt->bindValue($identifier, $this->id_payment_payone_api_log, PDO::PARAM_INT);
+                        break;
+                    case '`fk_payment_payone`':
+                        $stmt->bindValue($identifier, $this->fk_payment_payone, PDO::PARAM_INT);
                         break;
                     case '`request`':
                         $stmt->bindValue($identifier, $this->request, PDO::PARAM_STR);
@@ -1272,42 +1344,45 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
                 return $this->getIdPaymentPayoneApiLog();
                 break;
             case 1:
-                return $this->getRequest();
+                return $this->getFkPaymentPayone();
                 break;
             case 2:
-                return $this->getMode();
+                return $this->getRequest();
                 break;
             case 3:
-                return $this->getStatus();
+                return $this->getMode();
                 break;
             case 4:
-                return $this->getTransactionId();
+                return $this->getStatus();
                 break;
             case 5:
-                return $this->getUserId();
+                return $this->getTransactionId();
                 break;
             case 6:
-                return $this->getMerchantId();
+                return $this->getUserId();
                 break;
             case 7:
-                return $this->getPortalId();
+                return $this->getMerchantId();
                 break;
             case 8:
-                return $this->getErrorCode();
+                return $this->getPortalId();
                 break;
             case 9:
-                return $this->getErrorMessageInternal();
+                return $this->getErrorCode();
                 break;
             case 10:
-                return $this->getErrorMessageUser();
+                return $this->getErrorMessageInternal();
                 break;
             case 11:
-                return $this->getRedirectUrl();
+                return $this->getErrorMessageUser();
                 break;
             case 12:
-                return $this->getCreatedAt();
+                return $this->getRedirectUrl();
                 break;
             case 13:
+                return $this->getCreatedAt();
+                break;
+            case 14:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1327,10 +1402,11 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_FIELDNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_FIELDNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
+    public function toArray($keyType = TableMap::TYPE_FIELDNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
         if (isset($alreadyDumpedObjects['SpyPaymentPayoneApiLog'][$this->hashCode()])) {
@@ -1340,25 +1416,43 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
         $keys = SpyPaymentPayoneApiLogTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getIdPaymentPayoneApiLog(),
-            $keys[1] => $this->getRequest(),
-            $keys[2] => $this->getMode(),
-            $keys[3] => $this->getStatus(),
-            $keys[4] => $this->getTransactionId(),
-            $keys[5] => $this->getUserId(),
-            $keys[6] => $this->getMerchantId(),
-            $keys[7] => $this->getPortalId(),
-            $keys[8] => $this->getErrorCode(),
-            $keys[9] => $this->getErrorMessageInternal(),
-            $keys[10] => $this->getErrorMessageUser(),
-            $keys[11] => $this->getRedirectUrl(),
-            $keys[12] => $this->getCreatedAt(),
-            $keys[13] => $this->getUpdatedAt(),
+            $keys[1] => $this->getFkPaymentPayone(),
+            $keys[2] => $this->getRequest(),
+            $keys[3] => $this->getMode(),
+            $keys[4] => $this->getStatus(),
+            $keys[5] => $this->getTransactionId(),
+            $keys[6] => $this->getUserId(),
+            $keys[7] => $this->getMerchantId(),
+            $keys[8] => $this->getPortalId(),
+            $keys[9] => $this->getErrorCode(),
+            $keys[10] => $this->getErrorMessageInternal(),
+            $keys[11] => $this->getErrorMessageUser(),
+            $keys[12] => $this->getRedirectUrl(),
+            $keys[13] => $this->getCreatedAt(),
+            $keys[14] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
+        if ($includeForeignObjects) {
+            if (null !== $this->aSpyPaymentPayone) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'spyPaymentPayone';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'spy_payment_payone';
+                        break;
+                    default:
+                        $key = 'SpyPaymentPayone';
+                }
+
+                $result[$key] = $this->aSpyPaymentPayone->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+        }
 
         return $result;
     }
@@ -1396,42 +1490,45 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
                 $this->setIdPaymentPayoneApiLog($value);
                 break;
             case 1:
-                $this->setRequest($value);
+                $this->setFkPaymentPayone($value);
                 break;
             case 2:
-                $this->setMode($value);
+                $this->setRequest($value);
                 break;
             case 3:
-                $this->setStatus($value);
+                $this->setMode($value);
                 break;
             case 4:
-                $this->setTransactionId($value);
+                $this->setStatus($value);
                 break;
             case 5:
-                $this->setUserId($value);
+                $this->setTransactionId($value);
                 break;
             case 6:
-                $this->setMerchantId($value);
+                $this->setUserId($value);
                 break;
             case 7:
-                $this->setPortalId($value);
+                $this->setMerchantId($value);
                 break;
             case 8:
-                $this->setErrorCode($value);
+                $this->setPortalId($value);
                 break;
             case 9:
-                $this->setErrorMessageInternal($value);
+                $this->setErrorCode($value);
                 break;
             case 10:
-                $this->setErrorMessageUser($value);
+                $this->setErrorMessageInternal($value);
                 break;
             case 11:
-                $this->setRedirectUrl($value);
+                $this->setErrorMessageUser($value);
                 break;
             case 12:
-                $this->setCreatedAt($value);
+                $this->setRedirectUrl($value);
                 break;
             case 13:
+                $this->setCreatedAt($value);
+                break;
+            case 14:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1464,43 +1561,46 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
             $this->setIdPaymentPayoneApiLog($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setRequest($arr[$keys[1]]);
+            $this->setFkPaymentPayone($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setMode($arr[$keys[2]]);
+            $this->setRequest($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setStatus($arr[$keys[3]]);
+            $this->setMode($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setTransactionId($arr[$keys[4]]);
+            $this->setStatus($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setUserId($arr[$keys[5]]);
+            $this->setTransactionId($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setMerchantId($arr[$keys[6]]);
+            $this->setUserId($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setPortalId($arr[$keys[7]]);
+            $this->setMerchantId($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setErrorCode($arr[$keys[8]]);
+            $this->setPortalId($arr[$keys[8]]);
         }
         if (array_key_exists($keys[9], $arr)) {
-            $this->setErrorMessageInternal($arr[$keys[9]]);
+            $this->setErrorCode($arr[$keys[9]]);
         }
         if (array_key_exists($keys[10], $arr)) {
-            $this->setErrorMessageUser($arr[$keys[10]]);
+            $this->setErrorMessageInternal($arr[$keys[10]]);
         }
         if (array_key_exists($keys[11], $arr)) {
-            $this->setRedirectUrl($arr[$keys[11]]);
+            $this->setErrorMessageUser($arr[$keys[11]]);
         }
         if (array_key_exists($keys[12], $arr)) {
-            $this->setCreatedAt($arr[$keys[12]]);
+            $this->setRedirectUrl($arr[$keys[12]]);
         }
         if (array_key_exists($keys[13], $arr)) {
-            $this->setUpdatedAt($arr[$keys[13]]);
+            $this->setCreatedAt($arr[$keys[13]]);
+        }
+        if (array_key_exists($keys[14], $arr)) {
+            $this->setUpdatedAt($arr[$keys[14]]);
         }
     }
 
@@ -1545,6 +1645,9 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
 
         if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_ID_PAYMENT_PAYONE_API_LOG)) {
             $criteria->add(SpyPaymentPayoneApiLogTableMap::COL_ID_PAYMENT_PAYONE_API_LOG, $this->id_payment_payone_api_log);
+        }
+        if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE)) {
+            $criteria->add(SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE, $this->fk_payment_payone);
         }
         if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_REQUEST)) {
             $criteria->add(SpyPaymentPayoneApiLogTableMap::COL_REQUEST, $this->request);
@@ -1671,6 +1774,7 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
+        $copyObj->setFkPaymentPayone($this->getFkPaymentPayone());
         $copyObj->setRequest($this->getRequest());
         $copyObj->setMode($this->getMode());
         $copyObj->setStatus($this->getStatus());
@@ -1713,13 +1817,68 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildSpyPaymentPayone object.
+     *
+     * @param  ChildSpyPaymentPayone $v
+     * @return $this|\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setSpyPaymentPayone(ChildSpyPaymentPayone $v = null)
+    {
+        if ($v === null) {
+            $this->setFkPaymentPayone(NULL);
+        } else {
+            $this->setFkPaymentPayone($v->getIdPaymentPayone());
+        }
+
+        $this->aSpyPaymentPayone = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildSpyPaymentPayone object, it will not be re-added.
+        if ($v !== null) {
+            $v->addSpyPaymentPayoneApiLog($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildSpyPaymentPayone object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildSpyPaymentPayone The associated ChildSpyPaymentPayone object.
+     * @throws PropelException
+     */
+    public function getSpyPaymentPayone(ConnectionInterface $con = null)
+    {
+        if ($this->aSpyPaymentPayone === null && ($this->fk_payment_payone !== null)) {
+            $this->aSpyPaymentPayone = ChildSpyPaymentPayoneQuery::create()->findPk($this->fk_payment_payone, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aSpyPaymentPayone->addSpyPaymentPayoneApiLogs($this);
+             */
+        }
+
+        return $this->aSpyPaymentPayone;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
+        if (null !== $this->aSpyPaymentPayone) {
+            $this->aSpyPaymentPayone->removeSpyPaymentPayoneApiLog($this);
+        }
         $this->id_payment_payone_api_log = null;
+        $this->fk_payment_payone = null;
         $this->request = null;
         $this->mode = null;
         $this->status = null;
@@ -1753,6 +1912,7 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
+        $this->aSpyPaymentPayone = null;
     }
 
     /**

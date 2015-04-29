@@ -8,12 +8,11 @@ namespace SprykerFeature\Zed\Payone;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Zed\Payone\Business\Api\ApiConstants;
 use \SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Payone\Transfer\StandardParameterInterface;
 
 
-class PayoneConfig extends AbstractBundleConfig implements ApiConstants
+class PayoneConfig extends AbstractBundleConfig
 {
 
     const PAYONE_CREDENTIALS = 'PAYONE_CREDENTIALS';

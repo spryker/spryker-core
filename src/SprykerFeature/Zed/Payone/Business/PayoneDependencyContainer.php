@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Payone\Business;
 
 use SprykerFeature\Shared\Payone\Transfer\StandardParameterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payone\Business\Api\ApiConstants;
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayoneBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
@@ -118,9 +118,9 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     protected function getAvailablePaymentMethods()
     {
         return [
-            ApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createMapperPaymentMethodPrePayment(),
-            ApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createMapperPaymentMethodCreditCardPseudo(),
-            ApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createMapperPaymentMethodPayPal()
+            PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createMapperPaymentMethodPrePayment(),
+            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createMapperPaymentMethodCreditCardPseudo(),
+            PayoneApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createMapperPaymentMethodPayPal()
         ];
     }
 

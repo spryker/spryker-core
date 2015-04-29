@@ -7,6 +7,7 @@ use \PDO;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -20,6 +21,7 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneApiLogTable
  *
  *
  * @method     ChildSpyPaymentPayoneApiLogQuery orderByIdPaymentPayoneApiLog($order = Criteria::ASC) Order by the id_payment_payone_api_log column
+ * @method     ChildSpyPaymentPayoneApiLogQuery orderByFkPaymentPayone($order = Criteria::ASC) Order by the fk_payment_payone column
  * @method     ChildSpyPaymentPayoneApiLogQuery orderByRequest($order = Criteria::ASC) Order by the request column
  * @method     ChildSpyPaymentPayoneApiLogQuery orderByMode($order = Criteria::ASC) Order by the mode column
  * @method     ChildSpyPaymentPayoneApiLogQuery orderByStatus($order = Criteria::ASC) Order by the status column
@@ -35,6 +37,7 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneApiLogTable
  * @method     ChildSpyPaymentPayoneApiLogQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
  * @method     ChildSpyPaymentPayoneApiLogQuery groupByIdPaymentPayoneApiLog() Group by the id_payment_payone_api_log column
+ * @method     ChildSpyPaymentPayoneApiLogQuery groupByFkPaymentPayone() Group by the fk_payment_payone column
  * @method     ChildSpyPaymentPayoneApiLogQuery groupByRequest() Group by the request column
  * @method     ChildSpyPaymentPayoneApiLogQuery groupByMode() Group by the mode column
  * @method     ChildSpyPaymentPayoneApiLogQuery groupByStatus() Group by the status column
@@ -53,10 +56,17 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneApiLogTable
  * @method     ChildSpyPaymentPayoneApiLogQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildSpyPaymentPayoneApiLogQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
+ * @method     ChildSpyPaymentPayoneApiLogQuery leftJoinSpyPaymentPayone($relationAlias = null) Adds a LEFT JOIN clause to the query using the SpyPaymentPayone relation
+ * @method     ChildSpyPaymentPayoneApiLogQuery rightJoinSpyPaymentPayone($relationAlias = null) Adds a RIGHT JOIN clause to the query using the SpyPaymentPayone relation
+ * @method     ChildSpyPaymentPayoneApiLogQuery innerJoinSpyPaymentPayone($relationAlias = null) Adds a INNER JOIN clause to the query using the SpyPaymentPayone relation
+ *
+ * @method     \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ *
  * @method     ChildSpyPaymentPayoneApiLog findOne(ConnectionInterface $con = null) Return the first ChildSpyPaymentPayoneApiLog matching the query
  * @method     ChildSpyPaymentPayoneApiLog findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyPaymentPayoneApiLog matching the query, or a new ChildSpyPaymentPayoneApiLog object populated from the query conditions when no match is found
  *
  * @method     ChildSpyPaymentPayoneApiLog findOneByIdPaymentPayoneApiLog(int $id_payment_payone_api_log) Return the first ChildSpyPaymentPayoneApiLog filtered by the id_payment_payone_api_log column
+ * @method     ChildSpyPaymentPayoneApiLog findOneByFkPaymentPayone(int $fk_payment_payone) Return the first ChildSpyPaymentPayoneApiLog filtered by the fk_payment_payone column
  * @method     ChildSpyPaymentPayoneApiLog findOneByRequest(string $request) Return the first ChildSpyPaymentPayoneApiLog filtered by the request column
  * @method     ChildSpyPaymentPayoneApiLog findOneByMode(string $mode) Return the first ChildSpyPaymentPayoneApiLog filtered by the mode column
  * @method     ChildSpyPaymentPayoneApiLog findOneByStatus(string $status) Return the first ChildSpyPaymentPayoneApiLog filtered by the status column
@@ -73,6 +83,7 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneApiLogTable
  *
  * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyPaymentPayoneApiLog objects based on current ModelCriteria
  * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByIdPaymentPayoneApiLog(int $id_payment_payone_api_log) Return ChildSpyPaymentPayoneApiLog objects filtered by the id_payment_payone_api_log column
+ * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByFkPaymentPayone(int $fk_payment_payone) Return ChildSpyPaymentPayoneApiLog objects filtered by the fk_payment_payone column
  * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByRequest(string $request) Return ChildSpyPaymentPayoneApiLog objects filtered by the request column
  * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByMode(string $mode) Return ChildSpyPaymentPayoneApiLog objects filtered by the mode column
  * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByStatus(string $status) Return ChildSpyPaymentPayoneApiLog objects filtered by the status column
@@ -177,7 +188,7 @@ abstract class SpyPaymentPayoneApiLogQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT `id_payment_payone_api_log`, `request`, `mode`, `status`, `transaction_id`, `user_id`, `merchant_id`, `portal_id`, `error_code`, `error_message_internal`, `error_message_user`, `redirect_url`, `created_at`, `updated_at` FROM `spy_payment_payone_api_log` WHERE `id_payment_payone_api_log` = :p0';
+        $sql = 'SELECT `id_payment_payone_api_log`, `fk_payment_payone`, `request`, `mode`, `status`, `transaction_id`, `user_id`, `merchant_id`, `portal_id`, `error_code`, `error_message_internal`, `error_message_user`, `redirect_url`, `created_at`, `updated_at` FROM `spy_payment_payone_api_log` WHERE `id_payment_payone_api_log` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -310,6 +321,49 @@ abstract class SpyPaymentPayoneApiLogQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_ID_PAYMENT_PAYONE_API_LOG, $idPaymentPayoneApiLog, $comparison);
+    }
+
+    /**
+     * Filter the query on the fk_payment_payone column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByFkPaymentPayone(1234); // WHERE fk_payment_payone = 1234
+     * $query->filterByFkPaymentPayone(array(12, 34)); // WHERE fk_payment_payone IN (12, 34)
+     * $query->filterByFkPaymentPayone(array('min' => 12)); // WHERE fk_payment_payone > 12
+     * </code>
+     *
+     * @see       filterBySpyPaymentPayone()
+     *
+     * @param     mixed $fkPaymentPayone The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildSpyPaymentPayoneApiLogQuery The current query, for fluid interface
+     */
+    public function filterByFkPaymentPayone($fkPaymentPayone = null, $comparison = null)
+    {
+        if (is_array($fkPaymentPayone)) {
+            $useMinMax = false;
+            if (isset($fkPaymentPayone['min'])) {
+                $this->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE, $fkPaymentPayone['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($fkPaymentPayone['max'])) {
+                $this->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE, $fkPaymentPayone['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE, $fkPaymentPayone, $comparison);
     }
 
     /**
@@ -727,6 +781,83 @@ abstract class SpyPaymentPayoneApiLogQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_UPDATED_AT, $updatedAt, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone object
+     *
+     * @param \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone|ObjectCollection $spyPaymentPayone The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildSpyPaymentPayoneApiLogQuery The current query, for fluid interface
+     */
+    public function filterBySpyPaymentPayone($spyPaymentPayone, $comparison = null)
+    {
+        if ($spyPaymentPayone instanceof \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone) {
+            return $this
+                ->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE, $spyPaymentPayone->getIdPaymentPayone(), $comparison);
+        } elseif ($spyPaymentPayone instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE, $spyPaymentPayone->toKeyValue('PrimaryKey', 'IdPaymentPayone'), $comparison);
+        } else {
+            throw new PropelException('filterBySpyPaymentPayone() only accepts arguments of type \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the SpyPaymentPayone relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildSpyPaymentPayoneApiLogQuery The current query, for fluid interface
+     */
+    public function joinSpyPaymentPayone($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('SpyPaymentPayone');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'SpyPaymentPayone');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the SpyPaymentPayone relation SpyPaymentPayone object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneQuery A secondary query class using the current class as primary query
+     */
+    public function useSpyPaymentPayoneQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinSpyPaymentPayone($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'SpyPaymentPayone', '\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneQuery');
     }
 
     /**

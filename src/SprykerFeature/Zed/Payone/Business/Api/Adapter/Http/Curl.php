@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Adapter\Http;
 
+
 class Curl extends AbstractHttpAdapter
 {
 
@@ -26,7 +27,7 @@ class Curl extends AbstractHttpAdapter
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl, CURLOPT_TIMEOUT, self::DEFAULT_TIMEOUT);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $this->getTimeout());
 
         $result = curl_exec($curl);
 

@@ -6,7 +6,7 @@ use SprykerFeature\Shared\Payone\Transfer\CaptureDataInterface;
 use SprykerFeature\Shared\Payone\Transfer\DebitDataInterface;
 use SprykerFeature\Shared\Payone\Transfer\RefundDataInterface;
 use SprykerFeature\Shared\Payone\Transfer\StandardParameterInterface;
-use SprykerFeature\Zed\Payone\Business\Api\ApiConstants;
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
@@ -14,7 +14,7 @@ use SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 
 
-abstract class AbstractMapper implements PaymentMethodMapperInterface, ApiConstants
+abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApiConstants
 {
 
     /**

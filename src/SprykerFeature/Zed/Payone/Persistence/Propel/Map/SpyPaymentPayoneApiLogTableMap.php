@@ -59,7 +59,7 @@ class SpyPaymentPayoneApiLogTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 14;
+    const NUM_COLUMNS = 15;
 
     /**
      * The number of lazy-loaded columns
@@ -69,12 +69,17 @@ class SpyPaymentPayoneApiLogTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 14;
+    const NUM_HYDRATE_COLUMNS = 15;
 
     /**
      * the column name for the id_payment_payone_api_log field
      */
     const COL_ID_PAYMENT_PAYONE_API_LOG = 'spy_payment_payone_api_log.id_payment_payone_api_log';
+
+    /**
+     * the column name for the fk_payment_payone field
+     */
+    const COL_FK_PAYMENT_PAYONE = 'spy_payment_payone_api_log.fk_payment_payone';
 
     /**
      * the column name for the request field
@@ -153,11 +158,11 @@ class SpyPaymentPayoneApiLogTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('IdPaymentPayoneApiLog', 'Request', 'Mode', 'Status', 'TransactionId', 'UserId', 'MerchantId', 'PortalId', 'ErrorCode', 'ErrorMessageInternal', 'ErrorMessageUser', 'RedirectUrl', 'CreatedAt', 'UpdatedAt', ),
-        self::TYPE_CAMELNAME     => array('idPaymentPayoneApiLog', 'request', 'mode', 'status', 'transactionId', 'userId', 'merchantId', 'portalId', 'errorCode', 'errorMessageInternal', 'errorMessageUser', 'redirectUrl', 'createdAt', 'updatedAt', ),
-        self::TYPE_COLNAME       => array(SpyPaymentPayoneApiLogTableMap::COL_ID_PAYMENT_PAYONE_API_LOG, SpyPaymentPayoneApiLogTableMap::COL_REQUEST, SpyPaymentPayoneApiLogTableMap::COL_MODE, SpyPaymentPayoneApiLogTableMap::COL_STATUS, SpyPaymentPayoneApiLogTableMap::COL_TRANSACTION_ID, SpyPaymentPayoneApiLogTableMap::COL_USER_ID, SpyPaymentPayoneApiLogTableMap::COL_MERCHANT_ID, SpyPaymentPayoneApiLogTableMap::COL_PORTAL_ID, SpyPaymentPayoneApiLogTableMap::COL_ERROR_CODE, SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_INTERNAL, SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_USER, SpyPaymentPayoneApiLogTableMap::COL_REDIRECT_URL, SpyPaymentPayoneApiLogTableMap::COL_CREATED_AT, SpyPaymentPayoneApiLogTableMap::COL_UPDATED_AT, ),
-        self::TYPE_FIELDNAME     => array('id_payment_payone_api_log', 'request', 'mode', 'status', 'transaction_id', 'user_id', 'merchant_id', 'portal_id', 'error_code', 'error_message_internal', 'error_message_user', 'redirect_url', 'created_at', 'updated_at', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+        self::TYPE_PHPNAME       => array('IdPaymentPayoneApiLog', 'FkPaymentPayone', 'Request', 'Mode', 'Status', 'TransactionId', 'UserId', 'MerchantId', 'PortalId', 'ErrorCode', 'ErrorMessageInternal', 'ErrorMessageUser', 'RedirectUrl', 'CreatedAt', 'UpdatedAt', ),
+        self::TYPE_CAMELNAME     => array('idPaymentPayoneApiLog', 'fkPaymentPayone', 'request', 'mode', 'status', 'transactionId', 'userId', 'merchantId', 'portalId', 'errorCode', 'errorMessageInternal', 'errorMessageUser', 'redirectUrl', 'createdAt', 'updatedAt', ),
+        self::TYPE_COLNAME       => array(SpyPaymentPayoneApiLogTableMap::COL_ID_PAYMENT_PAYONE_API_LOG, SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE, SpyPaymentPayoneApiLogTableMap::COL_REQUEST, SpyPaymentPayoneApiLogTableMap::COL_MODE, SpyPaymentPayoneApiLogTableMap::COL_STATUS, SpyPaymentPayoneApiLogTableMap::COL_TRANSACTION_ID, SpyPaymentPayoneApiLogTableMap::COL_USER_ID, SpyPaymentPayoneApiLogTableMap::COL_MERCHANT_ID, SpyPaymentPayoneApiLogTableMap::COL_PORTAL_ID, SpyPaymentPayoneApiLogTableMap::COL_ERROR_CODE, SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_INTERNAL, SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_USER, SpyPaymentPayoneApiLogTableMap::COL_REDIRECT_URL, SpyPaymentPayoneApiLogTableMap::COL_CREATED_AT, SpyPaymentPayoneApiLogTableMap::COL_UPDATED_AT, ),
+        self::TYPE_FIELDNAME     => array('id_payment_payone_api_log', 'fk_payment_payone', 'request', 'mode', 'status', 'transaction_id', 'user_id', 'merchant_id', 'portal_id', 'error_code', 'error_message_internal', 'error_message_user', 'redirect_url', 'created_at', 'updated_at', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
     );
 
     /**
@@ -167,11 +172,11 @@ class SpyPaymentPayoneApiLogTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('IdPaymentPayoneApiLog' => 0, 'Request' => 1, 'Mode' => 2, 'Status' => 3, 'TransactionId' => 4, 'UserId' => 5, 'MerchantId' => 6, 'PortalId' => 7, 'ErrorCode' => 8, 'ErrorMessageInternal' => 9, 'ErrorMessageUser' => 10, 'RedirectUrl' => 11, 'CreatedAt' => 12, 'UpdatedAt' => 13, ),
-        self::TYPE_CAMELNAME     => array('idPaymentPayoneApiLog' => 0, 'request' => 1, 'mode' => 2, 'status' => 3, 'transactionId' => 4, 'userId' => 5, 'merchantId' => 6, 'portalId' => 7, 'errorCode' => 8, 'errorMessageInternal' => 9, 'errorMessageUser' => 10, 'redirectUrl' => 11, 'createdAt' => 12, 'updatedAt' => 13, ),
-        self::TYPE_COLNAME       => array(SpyPaymentPayoneApiLogTableMap::COL_ID_PAYMENT_PAYONE_API_LOG => 0, SpyPaymentPayoneApiLogTableMap::COL_REQUEST => 1, SpyPaymentPayoneApiLogTableMap::COL_MODE => 2, SpyPaymentPayoneApiLogTableMap::COL_STATUS => 3, SpyPaymentPayoneApiLogTableMap::COL_TRANSACTION_ID => 4, SpyPaymentPayoneApiLogTableMap::COL_USER_ID => 5, SpyPaymentPayoneApiLogTableMap::COL_MERCHANT_ID => 6, SpyPaymentPayoneApiLogTableMap::COL_PORTAL_ID => 7, SpyPaymentPayoneApiLogTableMap::COL_ERROR_CODE => 8, SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_INTERNAL => 9, SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_USER => 10, SpyPaymentPayoneApiLogTableMap::COL_REDIRECT_URL => 11, SpyPaymentPayoneApiLogTableMap::COL_CREATED_AT => 12, SpyPaymentPayoneApiLogTableMap::COL_UPDATED_AT => 13, ),
-        self::TYPE_FIELDNAME     => array('id_payment_payone_api_log' => 0, 'request' => 1, 'mode' => 2, 'status' => 3, 'transaction_id' => 4, 'user_id' => 5, 'merchant_id' => 6, 'portal_id' => 7, 'error_code' => 8, 'error_message_internal' => 9, 'error_message_user' => 10, 'redirect_url' => 11, 'created_at' => 12, 'updated_at' => 13, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+        self::TYPE_PHPNAME       => array('IdPaymentPayoneApiLog' => 0, 'FkPaymentPayone' => 1, 'Request' => 2, 'Mode' => 3, 'Status' => 4, 'TransactionId' => 5, 'UserId' => 6, 'MerchantId' => 7, 'PortalId' => 8, 'ErrorCode' => 9, 'ErrorMessageInternal' => 10, 'ErrorMessageUser' => 11, 'RedirectUrl' => 12, 'CreatedAt' => 13, 'UpdatedAt' => 14, ),
+        self::TYPE_CAMELNAME     => array('idPaymentPayoneApiLog' => 0, 'fkPaymentPayone' => 1, 'request' => 2, 'mode' => 3, 'status' => 4, 'transactionId' => 5, 'userId' => 6, 'merchantId' => 7, 'portalId' => 8, 'errorCode' => 9, 'errorMessageInternal' => 10, 'errorMessageUser' => 11, 'redirectUrl' => 12, 'createdAt' => 13, 'updatedAt' => 14, ),
+        self::TYPE_COLNAME       => array(SpyPaymentPayoneApiLogTableMap::COL_ID_PAYMENT_PAYONE_API_LOG => 0, SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE => 1, SpyPaymentPayoneApiLogTableMap::COL_REQUEST => 2, SpyPaymentPayoneApiLogTableMap::COL_MODE => 3, SpyPaymentPayoneApiLogTableMap::COL_STATUS => 4, SpyPaymentPayoneApiLogTableMap::COL_TRANSACTION_ID => 5, SpyPaymentPayoneApiLogTableMap::COL_USER_ID => 6, SpyPaymentPayoneApiLogTableMap::COL_MERCHANT_ID => 7, SpyPaymentPayoneApiLogTableMap::COL_PORTAL_ID => 8, SpyPaymentPayoneApiLogTableMap::COL_ERROR_CODE => 9, SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_INTERNAL => 10, SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_USER => 11, SpyPaymentPayoneApiLogTableMap::COL_REDIRECT_URL => 12, SpyPaymentPayoneApiLogTableMap::COL_CREATED_AT => 13, SpyPaymentPayoneApiLogTableMap::COL_UPDATED_AT => 14, ),
+        self::TYPE_FIELDNAME     => array('id_payment_payone_api_log' => 0, 'fk_payment_payone' => 1, 'request' => 2, 'mode' => 3, 'status' => 4, 'transaction_id' => 5, 'user_id' => 6, 'merchant_id' => 7, 'portal_id' => 8, 'error_code' => 9, 'error_message_internal' => 10, 'error_message_user' => 11, 'redirect_url' => 12, 'created_at' => 13, 'updated_at' => 14, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
     );
 
     /**
@@ -192,6 +197,7 @@ class SpyPaymentPayoneApiLogTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id_payment_payone_api_log', 'IdPaymentPayoneApiLog', 'INTEGER', true, null, null);
+        $this->addForeignKey('fk_payment_payone', 'FkPaymentPayone', 'INTEGER', 'spy_payment_payone', 'id_payment_payone', true, null, null);
         $this->addColumn('request', 'Request', 'VARCHAR', true, 255, null);
         $this->addColumn('mode', 'Mode', 'VARCHAR', true, 255, null);
         $this->addColumn('status', 'Status', 'VARCHAR', false, 255, null);
@@ -212,6 +218,7 @@ class SpyPaymentPayoneApiLogTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('SpyPaymentPayone', '\\SprykerFeature\\Zed\\Payone\\Persistence\\Propel\\SpyPaymentPayone', RelationMap::MANY_TO_ONE, array('fk_payment_payone' => 'id_payment_payone', ), null, null);
     } // buildRelations()
 
     /**
@@ -375,6 +382,7 @@ class SpyPaymentPayoneApiLogTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(SpyPaymentPayoneApiLogTableMap::COL_ID_PAYMENT_PAYONE_API_LOG);
+            $criteria->addSelectColumn(SpyPaymentPayoneApiLogTableMap::COL_FK_PAYMENT_PAYONE);
             $criteria->addSelectColumn(SpyPaymentPayoneApiLogTableMap::COL_REQUEST);
             $criteria->addSelectColumn(SpyPaymentPayoneApiLogTableMap::COL_MODE);
             $criteria->addSelectColumn(SpyPaymentPayoneApiLogTableMap::COL_STATUS);
@@ -390,6 +398,7 @@ class SpyPaymentPayoneApiLogTableMap extends TableMap
             $criteria->addSelectColumn(SpyPaymentPayoneApiLogTableMap::COL_UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.id_payment_payone_api_log');
+            $criteria->addSelectColumn($alias . '.fk_payment_payone');
             $criteria->addSelectColumn($alias . '.request');
             $criteria->addSelectColumn($alias . '.mode');
             $criteria->addSelectColumn($alias . '.status');

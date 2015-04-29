@@ -1,10 +1,10 @@
 <?php
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Response\Container;
-use SprykerFeature\Zed\Payone\Business\Api\ApiConstants;
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
 
-abstract class AbstractResponseContainer
+abstract class AbstractResponseContainer implements PayoneApiConstants
 {
 
     /**

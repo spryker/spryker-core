@@ -158,6 +158,8 @@ class SpyPaymentPayoneTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('SpyPaymentPayoneApiLog', '\\SprykerFeature\\Zed\\Payone\\Persistence\\Propel\\SpyPaymentPayoneApiLog', RelationMap::ONE_TO_MANY, array('id_payment_payone' => 'fk_payment_payone', ), null, null, 'SpyPaymentPayoneApiLogs');
+        $this->addRelation('SpyPaymentPayoneTransactionStatusLog', '\\SprykerFeature\\Zed\\Payone\\Persistence\\Propel\\SpyPaymentPayoneTransactionStatusLog', RelationMap::ONE_TO_MANY, array('id_payment_payone' => 'fk_payment_payone', ), null, null, 'SpyPaymentPayoneTransactionStatusLogs');
     } // buildRelations()
 
     /**

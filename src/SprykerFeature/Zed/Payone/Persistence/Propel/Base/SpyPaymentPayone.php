@@ -10,6 +10,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -18,7 +19,11 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone as ChildSpyPaymentPayone;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog as ChildSpyPaymentPayoneApiLog;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLogQuery as ChildSpyPaymentPayoneApiLogQuery;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneQuery as ChildSpyPaymentPayoneQuery;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog as ChildSpyPaymentPayoneTransactionStatusLog;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogQuery as ChildSpyPaymentPayoneTransactionStatusLogQuery;
 use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneTableMap;
 
 /**
@@ -93,12 +98,36 @@ abstract class SpyPaymentPayone implements ActiveRecordInterface
     protected $updated_at;
 
     /**
+     * @var        ObjectCollection|ChildSpyPaymentPayoneApiLog[] Collection to store aggregation of ChildSpyPaymentPayoneApiLog objects.
+     */
+    protected $collSpyPaymentPayoneApiLogs;
+    protected $collSpyPaymentPayoneApiLogsPartial;
+
+    /**
+     * @var        ObjectCollection|ChildSpyPaymentPayoneTransactionStatusLog[] Collection to store aggregation of ChildSpyPaymentPayoneTransactionStatusLog objects.
+     */
+    protected $collSpyPaymentPayoneTransactionStatusLogs;
+    protected $collSpyPaymentPayoneTransactionStatusLogsPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
      * @var boolean
      */
     protected $alreadyInSave = false;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildSpyPaymentPayoneApiLog[]
+     */
+    protected $spyPaymentPayoneApiLogsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildSpyPaymentPayoneTransactionStatusLog[]
+     */
+    protected $spyPaymentPayoneTransactionStatusLogsScheduledForDeletion = null;
 
     /**
      * Initializes internal state of SprykerFeature\Zed\Payone\Persistence\Propel\Base\SpyPaymentPayone object.
@@ -612,6 +641,10 @@ abstract class SpyPaymentPayone implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->collSpyPaymentPayoneApiLogs = null;
+
+            $this->collSpyPaymentPayoneTransactionStatusLogs = null;
+
         } // if (deep)
     }
 
@@ -732,6 +765,40 @@ abstract class SpyPaymentPayone implements ActiveRecordInterface
                 }
                 $affectedRows += 1;
                 $this->resetModified();
+            }
+
+            if ($this->spyPaymentPayoneApiLogsScheduledForDeletion !== null) {
+                if (!$this->spyPaymentPayoneApiLogsScheduledForDeletion->isEmpty()) {
+                    \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLogQuery::create()
+                        ->filterByPrimaryKeys($this->spyPaymentPayoneApiLogsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->spyPaymentPayoneApiLogsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collSpyPaymentPayoneApiLogs !== null) {
+                foreach ($this->collSpyPaymentPayoneApiLogs as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->spyPaymentPayoneTransactionStatusLogsScheduledForDeletion !== null) {
+                if (!$this->spyPaymentPayoneTransactionStatusLogsScheduledForDeletion->isEmpty()) {
+                    \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogQuery::create()
+                        ->filterByPrimaryKeys($this->spyPaymentPayoneTransactionStatusLogsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->spyPaymentPayoneTransactionStatusLogsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collSpyPaymentPayoneTransactionStatusLogs !== null) {
+                foreach ($this->collSpyPaymentPayoneTransactionStatusLogs as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
             }
 
             $this->alreadyInSave = false;
@@ -895,10 +962,11 @@ abstract class SpyPaymentPayone implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_FIELDNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_FIELDNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
+    public function toArray($keyType = TableMap::TYPE_FIELDNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
         if (isset($alreadyDumpedObjects['SpyPaymentPayone'][$this->hashCode()])) {
@@ -918,6 +986,38 @@ abstract class SpyPaymentPayone implements ActiveRecordInterface
             $result[$key] = $virtualColumn;
         }
 
+        if ($includeForeignObjects) {
+            if (null !== $this->collSpyPaymentPayoneApiLogs) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'spyPaymentPayoneApiLogs';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'spy_payment_payone_api_logs';
+                        break;
+                    default:
+                        $key = 'SpyPaymentPayoneApiLogs';
+                }
+
+                $result[$key] = $this->collSpyPaymentPayoneApiLogs->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collSpyPaymentPayoneTransactionStatusLogs) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'spyPaymentPayoneTransactionStatusLogs';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'spy_payment_payone_transaction_status_logs';
+                        break;
+                    default:
+                        $key = 'SpyPaymentPayoneTransactionStatusLogs';
+                }
+
+                $result[$key] = $this->collSpyPaymentPayoneTransactionStatusLogs->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+        }
 
         return $result;
     }
@@ -1153,6 +1253,26 @@ abstract class SpyPaymentPayone implements ActiveRecordInterface
         $copyObj->setTransactionId($this->getTransactionId());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
+
+        if ($deepCopy) {
+            // important: temporarily setNew(false) because this affects the behavior of
+            // the getter/setter methods for fkey referrer objects.
+            $copyObj->setNew(false);
+
+            foreach ($this->getSpyPaymentPayoneApiLogs() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addSpyPaymentPayoneApiLog($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getSpyPaymentPayoneTransactionStatusLogs() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addSpyPaymentPayoneTransactionStatusLog($relObj->copy($deepCopy));
+                }
+            }
+
+        } // if ($deepCopy)
+
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setIdPaymentPayone(NULL); // this is a auto-increment column, so set to default value
@@ -1179,6 +1299,461 @@ abstract class SpyPaymentPayone implements ActiveRecordInterface
         $this->copyInto($copyObj, $deepCopy);
 
         return $copyObj;
+    }
+
+
+    /**
+     * Initializes a collection based on the name of a relation.
+     * Avoids crafting an 'init[$relationName]s' method name
+     * that wouldn't work when StandardEnglishPluralizer is used.
+     *
+     * @param      string $relationName The name of the relation to initialize
+     * @return void
+     */
+    public function initRelation($relationName)
+    {
+        if ('SpyPaymentPayoneApiLog' == $relationName) {
+            return $this->initSpyPaymentPayoneApiLogs();
+        }
+        if ('SpyPaymentPayoneTransactionStatusLog' == $relationName) {
+            return $this->initSpyPaymentPayoneTransactionStatusLogs();
+        }
+    }
+
+    /**
+     * Clears out the collSpyPaymentPayoneApiLogs collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addSpyPaymentPayoneApiLogs()
+     */
+    public function clearSpyPaymentPayoneApiLogs()
+    {
+        $this->collSpyPaymentPayoneApiLogs = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collSpyPaymentPayoneApiLogs collection loaded partially.
+     */
+    public function resetPartialSpyPaymentPayoneApiLogs($v = true)
+    {
+        $this->collSpyPaymentPayoneApiLogsPartial = $v;
+    }
+
+    /**
+     * Initializes the collSpyPaymentPayoneApiLogs collection.
+     *
+     * By default this just sets the collSpyPaymentPayoneApiLogs collection to an empty array (like clearcollSpyPaymentPayoneApiLogs());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initSpyPaymentPayoneApiLogs($overrideExisting = true)
+    {
+        if (null !== $this->collSpyPaymentPayoneApiLogs && !$overrideExisting) {
+            return;
+        }
+        $this->collSpyPaymentPayoneApiLogs = new ObjectCollection();
+        $this->collSpyPaymentPayoneApiLogs->setModel('\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog');
+    }
+
+    /**
+     * Gets an array of ChildSpyPaymentPayoneApiLog objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildSpyPaymentPayone is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildSpyPaymentPayoneApiLog[] List of ChildSpyPaymentPayoneApiLog objects
+     * @throws PropelException
+     */
+    public function getSpyPaymentPayoneApiLogs(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSpyPaymentPayoneApiLogsPartial && !$this->isNew();
+        if (null === $this->collSpyPaymentPayoneApiLogs || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collSpyPaymentPayoneApiLogs) {
+                // return empty collection
+                $this->initSpyPaymentPayoneApiLogs();
+            } else {
+                $collSpyPaymentPayoneApiLogs = ChildSpyPaymentPayoneApiLogQuery::create(null, $criteria)
+                    ->filterBySpyPaymentPayone($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collSpyPaymentPayoneApiLogsPartial && count($collSpyPaymentPayoneApiLogs)) {
+                        $this->initSpyPaymentPayoneApiLogs(false);
+
+                        foreach ($collSpyPaymentPayoneApiLogs as $obj) {
+                            if (false == $this->collSpyPaymentPayoneApiLogs->contains($obj)) {
+                                $this->collSpyPaymentPayoneApiLogs->append($obj);
+                            }
+                        }
+
+                        $this->collSpyPaymentPayoneApiLogsPartial = true;
+                    }
+
+                    return $collSpyPaymentPayoneApiLogs;
+                }
+
+                if ($partial && $this->collSpyPaymentPayoneApiLogs) {
+                    foreach ($this->collSpyPaymentPayoneApiLogs as $obj) {
+                        if ($obj->isNew()) {
+                            $collSpyPaymentPayoneApiLogs[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collSpyPaymentPayoneApiLogs = $collSpyPaymentPayoneApiLogs;
+                $this->collSpyPaymentPayoneApiLogsPartial = false;
+            }
+        }
+
+        return $this->collSpyPaymentPayoneApiLogs;
+    }
+
+    /**
+     * Sets a collection of ChildSpyPaymentPayoneApiLog objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $spyPaymentPayoneApiLogs A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildSpyPaymentPayone The current object (for fluent API support)
+     */
+    public function setSpyPaymentPayoneApiLogs(Collection $spyPaymentPayoneApiLogs, ConnectionInterface $con = null)
+    {
+        /** @var ChildSpyPaymentPayoneApiLog[] $spyPaymentPayoneApiLogsToDelete */
+        $spyPaymentPayoneApiLogsToDelete = $this->getSpyPaymentPayoneApiLogs(new Criteria(), $con)->diff($spyPaymentPayoneApiLogs);
+
+
+        $this->spyPaymentPayoneApiLogsScheduledForDeletion = $spyPaymentPayoneApiLogsToDelete;
+
+        foreach ($spyPaymentPayoneApiLogsToDelete as $spyPaymentPayoneApiLogRemoved) {
+            $spyPaymentPayoneApiLogRemoved->setSpyPaymentPayone(null);
+        }
+
+        $this->collSpyPaymentPayoneApiLogs = null;
+        foreach ($spyPaymentPayoneApiLogs as $spyPaymentPayoneApiLog) {
+            $this->addSpyPaymentPayoneApiLog($spyPaymentPayoneApiLog);
+        }
+
+        $this->collSpyPaymentPayoneApiLogs = $spyPaymentPayoneApiLogs;
+        $this->collSpyPaymentPayoneApiLogsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related SpyPaymentPayoneApiLog objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related SpyPaymentPayoneApiLog objects.
+     * @throws PropelException
+     */
+    public function countSpyPaymentPayoneApiLogs(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSpyPaymentPayoneApiLogsPartial && !$this->isNew();
+        if (null === $this->collSpyPaymentPayoneApiLogs || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collSpyPaymentPayoneApiLogs) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getSpyPaymentPayoneApiLogs());
+            }
+
+            $query = ChildSpyPaymentPayoneApiLogQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterBySpyPaymentPayone($this)
+                ->count($con);
+        }
+
+        return count($this->collSpyPaymentPayoneApiLogs);
+    }
+
+    /**
+     * Method called to associate a ChildSpyPaymentPayoneApiLog object to this object
+     * through the ChildSpyPaymentPayoneApiLog foreign key attribute.
+     *
+     * @param  ChildSpyPaymentPayoneApiLog $l ChildSpyPaymentPayoneApiLog
+     * @return $this|\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone The current object (for fluent API support)
+     */
+    public function addSpyPaymentPayoneApiLog(ChildSpyPaymentPayoneApiLog $l)
+    {
+        if ($this->collSpyPaymentPayoneApiLogs === null) {
+            $this->initSpyPaymentPayoneApiLogs();
+            $this->collSpyPaymentPayoneApiLogsPartial = true;
+        }
+
+        if (!$this->collSpyPaymentPayoneApiLogs->contains($l)) {
+            $this->doAddSpyPaymentPayoneApiLog($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildSpyPaymentPayoneApiLog $spyPaymentPayoneApiLog The ChildSpyPaymentPayoneApiLog object to add.
+     */
+    protected function doAddSpyPaymentPayoneApiLog(ChildSpyPaymentPayoneApiLog $spyPaymentPayoneApiLog)
+    {
+        $this->collSpyPaymentPayoneApiLogs[]= $spyPaymentPayoneApiLog;
+        $spyPaymentPayoneApiLog->setSpyPaymentPayone($this);
+    }
+
+    /**
+     * @param  ChildSpyPaymentPayoneApiLog $spyPaymentPayoneApiLog The ChildSpyPaymentPayoneApiLog object to remove.
+     * @return $this|ChildSpyPaymentPayone The current object (for fluent API support)
+     */
+    public function removeSpyPaymentPayoneApiLog(ChildSpyPaymentPayoneApiLog $spyPaymentPayoneApiLog)
+    {
+        if ($this->getSpyPaymentPayoneApiLogs()->contains($spyPaymentPayoneApiLog)) {
+            $pos = $this->collSpyPaymentPayoneApiLogs->search($spyPaymentPayoneApiLog);
+            $this->collSpyPaymentPayoneApiLogs->remove($pos);
+            if (null === $this->spyPaymentPayoneApiLogsScheduledForDeletion) {
+                $this->spyPaymentPayoneApiLogsScheduledForDeletion = clone $this->collSpyPaymentPayoneApiLogs;
+                $this->spyPaymentPayoneApiLogsScheduledForDeletion->clear();
+            }
+            $this->spyPaymentPayoneApiLogsScheduledForDeletion[]= clone $spyPaymentPayoneApiLog;
+            $spyPaymentPayoneApiLog->setSpyPaymentPayone(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Clears out the collSpyPaymentPayoneTransactionStatusLogs collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addSpyPaymentPayoneTransactionStatusLogs()
+     */
+    public function clearSpyPaymentPayoneTransactionStatusLogs()
+    {
+        $this->collSpyPaymentPayoneTransactionStatusLogs = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collSpyPaymentPayoneTransactionStatusLogs collection loaded partially.
+     */
+    public function resetPartialSpyPaymentPayoneTransactionStatusLogs($v = true)
+    {
+        $this->collSpyPaymentPayoneTransactionStatusLogsPartial = $v;
+    }
+
+    /**
+     * Initializes the collSpyPaymentPayoneTransactionStatusLogs collection.
+     *
+     * By default this just sets the collSpyPaymentPayoneTransactionStatusLogs collection to an empty array (like clearcollSpyPaymentPayoneTransactionStatusLogs());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initSpyPaymentPayoneTransactionStatusLogs($overrideExisting = true)
+    {
+        if (null !== $this->collSpyPaymentPayoneTransactionStatusLogs && !$overrideExisting) {
+            return;
+        }
+        $this->collSpyPaymentPayoneTransactionStatusLogs = new ObjectCollection();
+        $this->collSpyPaymentPayoneTransactionStatusLogs->setModel('\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog');
+    }
+
+    /**
+     * Gets an array of ChildSpyPaymentPayoneTransactionStatusLog objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildSpyPaymentPayone is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildSpyPaymentPayoneTransactionStatusLog[] List of ChildSpyPaymentPayoneTransactionStatusLog objects
+     * @throws PropelException
+     */
+    public function getSpyPaymentPayoneTransactionStatusLogs(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSpyPaymentPayoneTransactionStatusLogsPartial && !$this->isNew();
+        if (null === $this->collSpyPaymentPayoneTransactionStatusLogs || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collSpyPaymentPayoneTransactionStatusLogs) {
+                // return empty collection
+                $this->initSpyPaymentPayoneTransactionStatusLogs();
+            } else {
+                $collSpyPaymentPayoneTransactionStatusLogs = ChildSpyPaymentPayoneTransactionStatusLogQuery::create(null, $criteria)
+                    ->filterBySpyPaymentPayone($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collSpyPaymentPayoneTransactionStatusLogsPartial && count($collSpyPaymentPayoneTransactionStatusLogs)) {
+                        $this->initSpyPaymentPayoneTransactionStatusLogs(false);
+
+                        foreach ($collSpyPaymentPayoneTransactionStatusLogs as $obj) {
+                            if (false == $this->collSpyPaymentPayoneTransactionStatusLogs->contains($obj)) {
+                                $this->collSpyPaymentPayoneTransactionStatusLogs->append($obj);
+                            }
+                        }
+
+                        $this->collSpyPaymentPayoneTransactionStatusLogsPartial = true;
+                    }
+
+                    return $collSpyPaymentPayoneTransactionStatusLogs;
+                }
+
+                if ($partial && $this->collSpyPaymentPayoneTransactionStatusLogs) {
+                    foreach ($this->collSpyPaymentPayoneTransactionStatusLogs as $obj) {
+                        if ($obj->isNew()) {
+                            $collSpyPaymentPayoneTransactionStatusLogs[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collSpyPaymentPayoneTransactionStatusLogs = $collSpyPaymentPayoneTransactionStatusLogs;
+                $this->collSpyPaymentPayoneTransactionStatusLogsPartial = false;
+            }
+        }
+
+        return $this->collSpyPaymentPayoneTransactionStatusLogs;
+    }
+
+    /**
+     * Sets a collection of ChildSpyPaymentPayoneTransactionStatusLog objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $spyPaymentPayoneTransactionStatusLogs A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildSpyPaymentPayone The current object (for fluent API support)
+     */
+    public function setSpyPaymentPayoneTransactionStatusLogs(Collection $spyPaymentPayoneTransactionStatusLogs, ConnectionInterface $con = null)
+    {
+        /** @var ChildSpyPaymentPayoneTransactionStatusLog[] $spyPaymentPayoneTransactionStatusLogsToDelete */
+        $spyPaymentPayoneTransactionStatusLogsToDelete = $this->getSpyPaymentPayoneTransactionStatusLogs(new Criteria(), $con)->diff($spyPaymentPayoneTransactionStatusLogs);
+
+
+        $this->spyPaymentPayoneTransactionStatusLogsScheduledForDeletion = $spyPaymentPayoneTransactionStatusLogsToDelete;
+
+        foreach ($spyPaymentPayoneTransactionStatusLogsToDelete as $spyPaymentPayoneTransactionStatusLogRemoved) {
+            $spyPaymentPayoneTransactionStatusLogRemoved->setSpyPaymentPayone(null);
+        }
+
+        $this->collSpyPaymentPayoneTransactionStatusLogs = null;
+        foreach ($spyPaymentPayoneTransactionStatusLogs as $spyPaymentPayoneTransactionStatusLog) {
+            $this->addSpyPaymentPayoneTransactionStatusLog($spyPaymentPayoneTransactionStatusLog);
+        }
+
+        $this->collSpyPaymentPayoneTransactionStatusLogs = $spyPaymentPayoneTransactionStatusLogs;
+        $this->collSpyPaymentPayoneTransactionStatusLogsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related SpyPaymentPayoneTransactionStatusLog objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related SpyPaymentPayoneTransactionStatusLog objects.
+     * @throws PropelException
+     */
+    public function countSpyPaymentPayoneTransactionStatusLogs(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSpyPaymentPayoneTransactionStatusLogsPartial && !$this->isNew();
+        if (null === $this->collSpyPaymentPayoneTransactionStatusLogs || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collSpyPaymentPayoneTransactionStatusLogs) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getSpyPaymentPayoneTransactionStatusLogs());
+            }
+
+            $query = ChildSpyPaymentPayoneTransactionStatusLogQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterBySpyPaymentPayone($this)
+                ->count($con);
+        }
+
+        return count($this->collSpyPaymentPayoneTransactionStatusLogs);
+    }
+
+    /**
+     * Method called to associate a ChildSpyPaymentPayoneTransactionStatusLog object to this object
+     * through the ChildSpyPaymentPayoneTransactionStatusLog foreign key attribute.
+     *
+     * @param  ChildSpyPaymentPayoneTransactionStatusLog $l ChildSpyPaymentPayoneTransactionStatusLog
+     * @return $this|\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone The current object (for fluent API support)
+     */
+    public function addSpyPaymentPayoneTransactionStatusLog(ChildSpyPaymentPayoneTransactionStatusLog $l)
+    {
+        if ($this->collSpyPaymentPayoneTransactionStatusLogs === null) {
+            $this->initSpyPaymentPayoneTransactionStatusLogs();
+            $this->collSpyPaymentPayoneTransactionStatusLogsPartial = true;
+        }
+
+        if (!$this->collSpyPaymentPayoneTransactionStatusLogs->contains($l)) {
+            $this->doAddSpyPaymentPayoneTransactionStatusLog($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildSpyPaymentPayoneTransactionStatusLog $spyPaymentPayoneTransactionStatusLog The ChildSpyPaymentPayoneTransactionStatusLog object to add.
+     */
+    protected function doAddSpyPaymentPayoneTransactionStatusLog(ChildSpyPaymentPayoneTransactionStatusLog $spyPaymentPayoneTransactionStatusLog)
+    {
+        $this->collSpyPaymentPayoneTransactionStatusLogs[]= $spyPaymentPayoneTransactionStatusLog;
+        $spyPaymentPayoneTransactionStatusLog->setSpyPaymentPayone($this);
+    }
+
+    /**
+     * @param  ChildSpyPaymentPayoneTransactionStatusLog $spyPaymentPayoneTransactionStatusLog The ChildSpyPaymentPayoneTransactionStatusLog object to remove.
+     * @return $this|ChildSpyPaymentPayone The current object (for fluent API support)
+     */
+    public function removeSpyPaymentPayoneTransactionStatusLog(ChildSpyPaymentPayoneTransactionStatusLog $spyPaymentPayoneTransactionStatusLog)
+    {
+        if ($this->getSpyPaymentPayoneTransactionStatusLogs()->contains($spyPaymentPayoneTransactionStatusLog)) {
+            $pos = $this->collSpyPaymentPayoneTransactionStatusLogs->search($spyPaymentPayoneTransactionStatusLog);
+            $this->collSpyPaymentPayoneTransactionStatusLogs->remove($pos);
+            if (null === $this->spyPaymentPayoneTransactionStatusLogsScheduledForDeletion) {
+                $this->spyPaymentPayoneTransactionStatusLogsScheduledForDeletion = clone $this->collSpyPaymentPayoneTransactionStatusLogs;
+                $this->spyPaymentPayoneTransactionStatusLogsScheduledForDeletion->clear();
+            }
+            $this->spyPaymentPayoneTransactionStatusLogsScheduledForDeletion[]= clone $spyPaymentPayoneTransactionStatusLog;
+            $spyPaymentPayoneTransactionStatusLog->setSpyPaymentPayone(null);
+        }
+
+        return $this;
     }
 
     /**
@@ -1211,8 +1786,20 @@ abstract class SpyPaymentPayone implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collSpyPaymentPayoneApiLogs) {
+                foreach ($this->collSpyPaymentPayoneApiLogs as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
+            if ($this->collSpyPaymentPayoneTransactionStatusLogs) {
+                foreach ($this->collSpyPaymentPayoneTransactionStatusLogs as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
+        $this->collSpyPaymentPayoneApiLogs = null;
+        $this->collSpyPaymentPayoneTransactionStatusLogs = null;
     }
 
     /**

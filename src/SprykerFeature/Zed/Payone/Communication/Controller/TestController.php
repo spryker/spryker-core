@@ -3,9 +3,9 @@
 namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Payone\Business\Api\ApiConstants;
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
-class TestController extends AbstractController implements ApiConstants
+class TestController extends AbstractController implements PayoneApiConstants
 {
 
     public function prepaymentAction()
@@ -78,7 +78,7 @@ class TestController extends AbstractController implements ApiConstants
         $order = $this->getOrder();
 
         $authorization = $this->getLocator()->payone()->transferAuthorization();
-        $authorization->setPaymentMethod(ApiConstants::PAYMENT_METHOD_PAYPAL);
+        $authorization->setPaymentMethod(self::PAYMENT_METHOD_PAYPAL);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
         $authorization->setReferenceId($order->getIncrementId());
 
@@ -99,7 +99,7 @@ class TestController extends AbstractController implements ApiConstants
         $order->setLastName('wurst');
         $order->setEmail('horst@wurst.de');
         $order->setIsTest(true);
-        $order->setIncrementId('DY999991002');
+        $order->setIncrementId('DY999991004');
         $order->setIdSalesOrder(1);
         $order->setSalutation('Mr');
 

@@ -50,10 +50,14 @@ class CreditCardPseudo extends AbstractMapper
     {
         $authorizationContainer = new PreAuthorizationContainer();
 
-        $paymentMethodContainer = new CreditCardContainer();
-        // @todo get pseudo card pan... !
-        //$paymentMethodContainer->setPseudoCardPan();
-        $authorizationContainer->setPaymentMethod($paymentMethodContainer);
+        $authorizationContainer->setAid($this->getStandardParameter()->getAid());
+        $authorizationContainer->setReference($authorizationData->getReferenceId());
+        $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
+        $authorizationContainer->setClearingType(self::CLEARING_TYPE_CREDITCARD);
+        $authorizationContainer->setAmount($authorizationData->getAmount());
+
+        $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
+        $authorizationContainer->setPaymentMethod($this->createPaymentMethodContainer($authorizationData));
 
         return $authorizationContainer;
     }

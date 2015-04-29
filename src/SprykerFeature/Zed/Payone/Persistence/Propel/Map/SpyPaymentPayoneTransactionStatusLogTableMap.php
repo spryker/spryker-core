@@ -59,7 +59,7 @@ class SpyPaymentPayoneTransactionStatusLogTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 13;
+    const NUM_COLUMNS = 14;
 
     /**
      * The number of lazy-loaded columns
@@ -69,12 +69,17 @@ class SpyPaymentPayoneTransactionStatusLogTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 13;
+    const NUM_HYDRATE_COLUMNS = 14;
 
     /**
      * the column name for the id_payment_payone_transaction_status_log field
      */
     const COL_ID_PAYMENT_PAYONE_TRANSACTION_STATUS_LOG = 'spy_payment_payone_transaction_status_log.id_payment_payone_transaction_status_log';
+
+    /**
+     * the column name for the fk_payment_payone field
+     */
+    const COL_FK_PAYMENT_PAYONE = 'spy_payment_payone_transaction_status_log.fk_payment_payone';
 
     /**
      * the column name for the transaction_id field
@@ -148,11 +153,11 @@ class SpyPaymentPayoneTransactionStatusLogTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('IdPaymentPayoneTransactionStatusLog', 'TransactionId', 'ReferenceId', 'Mode', 'Status', 'TransactionTime', 'SequenceNumber', 'ClearingType', 'PortalId', 'Balance', 'Receivable', 'CreatedAt', 'UpdatedAt', ),
-        self::TYPE_CAMELNAME     => array('idPaymentPayoneTransactionStatusLog', 'transactionId', 'referenceId', 'mode', 'status', 'transactionTime', 'sequenceNumber', 'clearingType', 'portalId', 'balance', 'receivable', 'createdAt', 'updatedAt', ),
-        self::TYPE_COLNAME       => array(SpyPaymentPayoneTransactionStatusLogTableMap::COL_ID_PAYMENT_PAYONE_TRANSACTION_STATUS_LOG, SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_ID, SpyPaymentPayoneTransactionStatusLogTableMap::COL_REFERENCE_ID, SpyPaymentPayoneTransactionStatusLogTableMap::COL_MODE, SpyPaymentPayoneTransactionStatusLogTableMap::COL_STATUS, SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_TIME, SpyPaymentPayoneTransactionStatusLogTableMap::COL_SEQUENCE_NUMBER, SpyPaymentPayoneTransactionStatusLogTableMap::COL_CLEARING_TYPE, SpyPaymentPayoneTransactionStatusLogTableMap::COL_PORTAL_ID, SpyPaymentPayoneTransactionStatusLogTableMap::COL_BALANCE, SpyPaymentPayoneTransactionStatusLogTableMap::COL_RECEIVABLE, SpyPaymentPayoneTransactionStatusLogTableMap::COL_CREATED_AT, SpyPaymentPayoneTransactionStatusLogTableMap::COL_UPDATED_AT, ),
-        self::TYPE_FIELDNAME     => array('id_payment_payone_transaction_status_log', 'transaction_id', 'reference_id', 'mode', 'status', 'transaction_time', 'sequence_number', 'clearing_type', 'portal_id', 'balance', 'receivable', 'created_at', 'updated_at', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+        self::TYPE_PHPNAME       => array('IdPaymentPayoneTransactionStatusLog', 'FkPaymentPayone', 'TransactionId', 'ReferenceId', 'Mode', 'Status', 'TransactionTime', 'SequenceNumber', 'ClearingType', 'PortalId', 'Balance', 'Receivable', 'CreatedAt', 'UpdatedAt', ),
+        self::TYPE_CAMELNAME     => array('idPaymentPayoneTransactionStatusLog', 'fkPaymentPayone', 'transactionId', 'referenceId', 'mode', 'status', 'transactionTime', 'sequenceNumber', 'clearingType', 'portalId', 'balance', 'receivable', 'createdAt', 'updatedAt', ),
+        self::TYPE_COLNAME       => array(SpyPaymentPayoneTransactionStatusLogTableMap::COL_ID_PAYMENT_PAYONE_TRANSACTION_STATUS_LOG, SpyPaymentPayoneTransactionStatusLogTableMap::COL_FK_PAYMENT_PAYONE, SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_ID, SpyPaymentPayoneTransactionStatusLogTableMap::COL_REFERENCE_ID, SpyPaymentPayoneTransactionStatusLogTableMap::COL_MODE, SpyPaymentPayoneTransactionStatusLogTableMap::COL_STATUS, SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_TIME, SpyPaymentPayoneTransactionStatusLogTableMap::COL_SEQUENCE_NUMBER, SpyPaymentPayoneTransactionStatusLogTableMap::COL_CLEARING_TYPE, SpyPaymentPayoneTransactionStatusLogTableMap::COL_PORTAL_ID, SpyPaymentPayoneTransactionStatusLogTableMap::COL_BALANCE, SpyPaymentPayoneTransactionStatusLogTableMap::COL_RECEIVABLE, SpyPaymentPayoneTransactionStatusLogTableMap::COL_CREATED_AT, SpyPaymentPayoneTransactionStatusLogTableMap::COL_UPDATED_AT, ),
+        self::TYPE_FIELDNAME     => array('id_payment_payone_transaction_status_log', 'fk_payment_payone', 'transaction_id', 'reference_id', 'mode', 'status', 'transaction_time', 'sequence_number', 'clearing_type', 'portal_id', 'balance', 'receivable', 'created_at', 'updated_at', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
     );
 
     /**
@@ -162,11 +167,11 @@ class SpyPaymentPayoneTransactionStatusLogTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('IdPaymentPayoneTransactionStatusLog' => 0, 'TransactionId' => 1, 'ReferenceId' => 2, 'Mode' => 3, 'Status' => 4, 'TransactionTime' => 5, 'SequenceNumber' => 6, 'ClearingType' => 7, 'PortalId' => 8, 'Balance' => 9, 'Receivable' => 10, 'CreatedAt' => 11, 'UpdatedAt' => 12, ),
-        self::TYPE_CAMELNAME     => array('idPaymentPayoneTransactionStatusLog' => 0, 'transactionId' => 1, 'referenceId' => 2, 'mode' => 3, 'status' => 4, 'transactionTime' => 5, 'sequenceNumber' => 6, 'clearingType' => 7, 'portalId' => 8, 'balance' => 9, 'receivable' => 10, 'createdAt' => 11, 'updatedAt' => 12, ),
-        self::TYPE_COLNAME       => array(SpyPaymentPayoneTransactionStatusLogTableMap::COL_ID_PAYMENT_PAYONE_TRANSACTION_STATUS_LOG => 0, SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_ID => 1, SpyPaymentPayoneTransactionStatusLogTableMap::COL_REFERENCE_ID => 2, SpyPaymentPayoneTransactionStatusLogTableMap::COL_MODE => 3, SpyPaymentPayoneTransactionStatusLogTableMap::COL_STATUS => 4, SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_TIME => 5, SpyPaymentPayoneTransactionStatusLogTableMap::COL_SEQUENCE_NUMBER => 6, SpyPaymentPayoneTransactionStatusLogTableMap::COL_CLEARING_TYPE => 7, SpyPaymentPayoneTransactionStatusLogTableMap::COL_PORTAL_ID => 8, SpyPaymentPayoneTransactionStatusLogTableMap::COL_BALANCE => 9, SpyPaymentPayoneTransactionStatusLogTableMap::COL_RECEIVABLE => 10, SpyPaymentPayoneTransactionStatusLogTableMap::COL_CREATED_AT => 11, SpyPaymentPayoneTransactionStatusLogTableMap::COL_UPDATED_AT => 12, ),
-        self::TYPE_FIELDNAME     => array('id_payment_payone_transaction_status_log' => 0, 'transaction_id' => 1, 'reference_id' => 2, 'mode' => 3, 'status' => 4, 'transaction_time' => 5, 'sequence_number' => 6, 'clearing_type' => 7, 'portal_id' => 8, 'balance' => 9, 'receivable' => 10, 'created_at' => 11, 'updated_at' => 12, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+        self::TYPE_PHPNAME       => array('IdPaymentPayoneTransactionStatusLog' => 0, 'FkPaymentPayone' => 1, 'TransactionId' => 2, 'ReferenceId' => 3, 'Mode' => 4, 'Status' => 5, 'TransactionTime' => 6, 'SequenceNumber' => 7, 'ClearingType' => 8, 'PortalId' => 9, 'Balance' => 10, 'Receivable' => 11, 'CreatedAt' => 12, 'UpdatedAt' => 13, ),
+        self::TYPE_CAMELNAME     => array('idPaymentPayoneTransactionStatusLog' => 0, 'fkPaymentPayone' => 1, 'transactionId' => 2, 'referenceId' => 3, 'mode' => 4, 'status' => 5, 'transactionTime' => 6, 'sequenceNumber' => 7, 'clearingType' => 8, 'portalId' => 9, 'balance' => 10, 'receivable' => 11, 'createdAt' => 12, 'updatedAt' => 13, ),
+        self::TYPE_COLNAME       => array(SpyPaymentPayoneTransactionStatusLogTableMap::COL_ID_PAYMENT_PAYONE_TRANSACTION_STATUS_LOG => 0, SpyPaymentPayoneTransactionStatusLogTableMap::COL_FK_PAYMENT_PAYONE => 1, SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_ID => 2, SpyPaymentPayoneTransactionStatusLogTableMap::COL_REFERENCE_ID => 3, SpyPaymentPayoneTransactionStatusLogTableMap::COL_MODE => 4, SpyPaymentPayoneTransactionStatusLogTableMap::COL_STATUS => 5, SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_TIME => 6, SpyPaymentPayoneTransactionStatusLogTableMap::COL_SEQUENCE_NUMBER => 7, SpyPaymentPayoneTransactionStatusLogTableMap::COL_CLEARING_TYPE => 8, SpyPaymentPayoneTransactionStatusLogTableMap::COL_PORTAL_ID => 9, SpyPaymentPayoneTransactionStatusLogTableMap::COL_BALANCE => 10, SpyPaymentPayoneTransactionStatusLogTableMap::COL_RECEIVABLE => 11, SpyPaymentPayoneTransactionStatusLogTableMap::COL_CREATED_AT => 12, SpyPaymentPayoneTransactionStatusLogTableMap::COL_UPDATED_AT => 13, ),
+        self::TYPE_FIELDNAME     => array('id_payment_payone_transaction_status_log' => 0, 'fk_payment_payone' => 1, 'transaction_id' => 2, 'reference_id' => 3, 'mode' => 4, 'status' => 5, 'transaction_time' => 6, 'sequence_number' => 7, 'clearing_type' => 8, 'portal_id' => 9, 'balance' => 10, 'receivable' => 11, 'created_at' => 12, 'updated_at' => 13, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
     );
 
     /**
@@ -187,6 +192,7 @@ class SpyPaymentPayoneTransactionStatusLogTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id_payment_payone_transaction_status_log', 'IdPaymentPayoneTransactionStatusLog', 'INTEGER', true, null, null);
+        $this->addForeignKey('fk_payment_payone', 'FkPaymentPayone', 'INTEGER', 'spy_payment_payone', 'id_payment_payone', true, null, null);
         $this->addColumn('transaction_id', 'TransactionId', 'INTEGER', false, null, null);
         $this->addColumn('reference_id', 'ReferenceId', 'INTEGER', false, null, null);
         $this->addColumn('mode', 'Mode', 'VARCHAR', false, 255, null);
@@ -206,6 +212,7 @@ class SpyPaymentPayoneTransactionStatusLogTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('SpyPaymentPayone', '\\SprykerFeature\\Zed\\Payone\\Persistence\\Propel\\SpyPaymentPayone', RelationMap::MANY_TO_ONE, array('fk_payment_payone' => 'id_payment_payone', ), null, null);
     } // buildRelations()
 
     /**
@@ -369,6 +376,7 @@ class SpyPaymentPayoneTransactionStatusLogTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(SpyPaymentPayoneTransactionStatusLogTableMap::COL_ID_PAYMENT_PAYONE_TRANSACTION_STATUS_LOG);
+            $criteria->addSelectColumn(SpyPaymentPayoneTransactionStatusLogTableMap::COL_FK_PAYMENT_PAYONE);
             $criteria->addSelectColumn(SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_ID);
             $criteria->addSelectColumn(SpyPaymentPayoneTransactionStatusLogTableMap::COL_REFERENCE_ID);
             $criteria->addSelectColumn(SpyPaymentPayoneTransactionStatusLogTableMap::COL_MODE);
@@ -383,6 +391,7 @@ class SpyPaymentPayoneTransactionStatusLogTableMap extends TableMap
             $criteria->addSelectColumn(SpyPaymentPayoneTransactionStatusLogTableMap::COL_UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.id_payment_payone_transaction_status_log');
+            $criteria->addSelectColumn($alias . '.fk_payment_payone');
             $criteria->addSelectColumn($alias . '.transaction_id');
             $criteria->addSelectColumn($alias . '.reference_id');
             $criteria->addSelectColumn($alias . '.mode');

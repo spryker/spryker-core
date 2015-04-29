@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
-use SprykerFeature\Zed\Payone\Business\Api\ApiConstants;
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
 
-abstract class AbstractRequestContainer extends AbstractContainer implements ApiConstants
+abstract class AbstractRequestContainer extends AbstractContainer implements PayoneApiConstants
 {
 
     /**

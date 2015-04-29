@@ -17,6 +17,8 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone as ChildSpyPaymentPayone;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneQuery as ChildSpyPaymentPayoneQuery;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog as ChildSpyPaymentPayoneTransactionStatusLog;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogQuery as ChildSpyPaymentPayoneTransactionStatusLogQuery;
 use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneTransactionStatusLogTableMap;
@@ -67,6 +69,12 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
      * @var        int
      */
     protected $id_payment_payone_transaction_status_log;
+
+    /**
+     * The value for the fk_payment_payone field.
+     * @var        int
+     */
+    protected $fk_payment_payone;
 
     /**
      * The value for the transaction_id field.
@@ -139,6 +147,11 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
      * @var        \DateTime
      */
     protected $updated_at;
+
+    /**
+     * @var        ChildSpyPaymentPayone
+     */
+    protected $aSpyPaymentPayone;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -376,6 +389,16 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
     }
 
     /**
+     * Get the [fk_payment_payone] column value.
+     *
+     * @return int
+     */
+    public function getFkPaymentPayone()
+    {
+        return $this->fk_payment_payone;
+    }
+
+    /**
      * Get the [transaction_id] column value.
      *
      * @return int
@@ -544,6 +567,30 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
 
         return $this;
     } // setIdPaymentPayoneTransactionStatusLog()
+
+    /**
+     * Set the value of [fk_payment_payone] column.
+     *
+     * @param  int $v new value
+     * @return $this|\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog The current object (for fluent API support)
+     */
+    public function setFkPaymentPayone($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->fk_payment_payone !== $v) {
+            $this->fk_payment_payone = $v;
+            $this->modifiedColumns[SpyPaymentPayoneTransactionStatusLogTableMap::COL_FK_PAYMENT_PAYONE] = true;
+        }
+
+        if ($this->aSpyPaymentPayone !== null && $this->aSpyPaymentPayone->getIdPaymentPayone() !== $v) {
+            $this->aSpyPaymentPayone = null;
+        }
+
+        return $this;
+    } // setFkPaymentPayone()
 
     /**
      * Set the value of [transaction_id] column.
@@ -824,46 +871,49 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('IdPaymentPayoneTransactionStatusLog', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id_payment_payone_transaction_status_log = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('TransactionId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('FkPaymentPayone', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->fk_payment_payone = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('TransactionId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->transaction_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('ReferenceId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('ReferenceId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->reference_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('Mode', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('Mode', TableMap::TYPE_PHPNAME, $indexType)];
             $this->mode = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
             $this->status = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('TransactionTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('TransactionTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->transaction_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('SequenceNumber', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('SequenceNumber', TableMap::TYPE_PHPNAME, $indexType)];
             $this->sequence_number = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('ClearingType', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('ClearingType', TableMap::TYPE_PHPNAME, $indexType)];
             $this->clearing_type = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('PortalId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('PortalId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->portal_id = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('Balance', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('Balance', TableMap::TYPE_PHPNAME, $indexType)];
             $this->balance = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('Receivable', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('Receivable', TableMap::TYPE_PHPNAME, $indexType)];
             $this->receivable = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : SpyPaymentPayoneTransactionStatusLogTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
@@ -876,7 +926,7 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
                 $this->ensureConsistency();
             }
 
-            return $startcol + 13; // 13 = SpyPaymentPayoneTransactionStatusLogTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 14; // 14 = SpyPaymentPayoneTransactionStatusLogTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\SprykerFeature\\Zed\\Payone\\Persistence\\Propel\\SpyPaymentPayoneTransactionStatusLog'), 0, $e);
@@ -898,6 +948,9 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
      */
     public function ensureConsistency()
     {
+        if ($this->aSpyPaymentPayone !== null && $this->fk_payment_payone !== $this->aSpyPaymentPayone->getIdPaymentPayone()) {
+            $this->aSpyPaymentPayone = null;
+        }
     } // ensureConsistency
 
     /**
@@ -937,6 +990,7 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aSpyPaymentPayone = null;
         } // if (deep)
     }
 
@@ -1048,6 +1102,18 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aSpyPaymentPayone !== null) {
+                if ($this->aSpyPaymentPayone->isModified() || $this->aSpyPaymentPayone->isNew()) {
+                    $affectedRows += $this->aSpyPaymentPayone->save($con);
+                }
+                $this->setSpyPaymentPayone($this->aSpyPaymentPayone);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -1087,6 +1153,9 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
          // check the columns in natural order for more readable SQL queries
         if ($this->isColumnModified(SpyPaymentPayoneTransactionStatusLogTableMap::COL_ID_PAYMENT_PAYONE_TRANSACTION_STATUS_LOG)) {
             $modifiedColumns[':p' . $index++]  = '`id_payment_payone_transaction_status_log`';
+        }
+        if ($this->isColumnModified(SpyPaymentPayoneTransactionStatusLogTableMap::COL_FK_PAYMENT_PAYONE)) {
+            $modifiedColumns[':p' . $index++]  = '`fk_payment_payone`';
         }
         if ($this->isColumnModified(SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_ID)) {
             $modifiedColumns[':p' . $index++]  = '`transaction_id`';
@@ -1137,6 +1206,9 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
                 switch ($columnName) {
                     case '`id_payment_payone_transaction_status_log`':
                         $stmt->bindValue($identifier, $this->id_payment_payone_transaction_status_log, PDO::PARAM_INT);
+                        break;
+                    case '`fk_payment_payone`':
+                        $stmt->bindValue($identifier, $this->fk_payment_payone, PDO::PARAM_INT);
                         break;
                     case '`transaction_id`':
                         $stmt->bindValue($identifier, $this->transaction_id, PDO::PARAM_INT);
@@ -1240,39 +1312,42 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
                 return $this->getIdPaymentPayoneTransactionStatusLog();
                 break;
             case 1:
-                return $this->getTransactionId();
+                return $this->getFkPaymentPayone();
                 break;
             case 2:
-                return $this->getReferenceId();
+                return $this->getTransactionId();
                 break;
             case 3:
-                return $this->getMode();
+                return $this->getReferenceId();
                 break;
             case 4:
-                return $this->getStatus();
+                return $this->getMode();
                 break;
             case 5:
-                return $this->getTransactionTime();
+                return $this->getStatus();
                 break;
             case 6:
-                return $this->getSequenceNumber();
+                return $this->getTransactionTime();
                 break;
             case 7:
-                return $this->getClearingType();
+                return $this->getSequenceNumber();
                 break;
             case 8:
-                return $this->getPortalId();
+                return $this->getClearingType();
                 break;
             case 9:
-                return $this->getBalance();
+                return $this->getPortalId();
                 break;
             case 10:
-                return $this->getReceivable();
+                return $this->getBalance();
                 break;
             case 11:
-                return $this->getCreatedAt();
+                return $this->getReceivable();
                 break;
             case 12:
+                return $this->getCreatedAt();
+                break;
+            case 13:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1292,10 +1367,11 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
      *                    Defaults to TableMap::TYPE_FIELDNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_FIELDNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
+    public function toArray($keyType = TableMap::TYPE_FIELDNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
         if (isset($alreadyDumpedObjects['SpyPaymentPayoneTransactionStatusLog'][$this->hashCode()])) {
@@ -1305,24 +1381,42 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
         $keys = SpyPaymentPayoneTransactionStatusLogTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getIdPaymentPayoneTransactionStatusLog(),
-            $keys[1] => $this->getTransactionId(),
-            $keys[2] => $this->getReferenceId(),
-            $keys[3] => $this->getMode(),
-            $keys[4] => $this->getStatus(),
-            $keys[5] => $this->getTransactionTime(),
-            $keys[6] => $this->getSequenceNumber(),
-            $keys[7] => $this->getClearingType(),
-            $keys[8] => $this->getPortalId(),
-            $keys[9] => $this->getBalance(),
-            $keys[10] => $this->getReceivable(),
-            $keys[11] => $this->getCreatedAt(),
-            $keys[12] => $this->getUpdatedAt(),
+            $keys[1] => $this->getFkPaymentPayone(),
+            $keys[2] => $this->getTransactionId(),
+            $keys[3] => $this->getReferenceId(),
+            $keys[4] => $this->getMode(),
+            $keys[5] => $this->getStatus(),
+            $keys[6] => $this->getTransactionTime(),
+            $keys[7] => $this->getSequenceNumber(),
+            $keys[8] => $this->getClearingType(),
+            $keys[9] => $this->getPortalId(),
+            $keys[10] => $this->getBalance(),
+            $keys[11] => $this->getReceivable(),
+            $keys[12] => $this->getCreatedAt(),
+            $keys[13] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
+        if ($includeForeignObjects) {
+            if (null !== $this->aSpyPaymentPayone) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'spyPaymentPayone';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'spy_payment_payone';
+                        break;
+                    default:
+                        $key = 'SpyPaymentPayone';
+                }
+
+                $result[$key] = $this->aSpyPaymentPayone->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+        }
 
         return $result;
     }
@@ -1360,39 +1454,42 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
                 $this->setIdPaymentPayoneTransactionStatusLog($value);
                 break;
             case 1:
-                $this->setTransactionId($value);
+                $this->setFkPaymentPayone($value);
                 break;
             case 2:
-                $this->setReferenceId($value);
+                $this->setTransactionId($value);
                 break;
             case 3:
-                $this->setMode($value);
+                $this->setReferenceId($value);
                 break;
             case 4:
-                $this->setStatus($value);
+                $this->setMode($value);
                 break;
             case 5:
-                $this->setTransactionTime($value);
+                $this->setStatus($value);
                 break;
             case 6:
-                $this->setSequenceNumber($value);
+                $this->setTransactionTime($value);
                 break;
             case 7:
-                $this->setClearingType($value);
+                $this->setSequenceNumber($value);
                 break;
             case 8:
-                $this->setPortalId($value);
+                $this->setClearingType($value);
                 break;
             case 9:
-                $this->setBalance($value);
+                $this->setPortalId($value);
                 break;
             case 10:
-                $this->setReceivable($value);
+                $this->setBalance($value);
                 break;
             case 11:
-                $this->setCreatedAt($value);
+                $this->setReceivable($value);
                 break;
             case 12:
+                $this->setCreatedAt($value);
+                break;
+            case 13:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1425,40 +1522,43 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
             $this->setIdPaymentPayoneTransactionStatusLog($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setTransactionId($arr[$keys[1]]);
+            $this->setFkPaymentPayone($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setReferenceId($arr[$keys[2]]);
+            $this->setTransactionId($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setMode($arr[$keys[3]]);
+            $this->setReferenceId($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setStatus($arr[$keys[4]]);
+            $this->setMode($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setTransactionTime($arr[$keys[5]]);
+            $this->setStatus($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setSequenceNumber($arr[$keys[6]]);
+            $this->setTransactionTime($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setClearingType($arr[$keys[7]]);
+            $this->setSequenceNumber($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setPortalId($arr[$keys[8]]);
+            $this->setClearingType($arr[$keys[8]]);
         }
         if (array_key_exists($keys[9], $arr)) {
-            $this->setBalance($arr[$keys[9]]);
+            $this->setPortalId($arr[$keys[9]]);
         }
         if (array_key_exists($keys[10], $arr)) {
-            $this->setReceivable($arr[$keys[10]]);
+            $this->setBalance($arr[$keys[10]]);
         }
         if (array_key_exists($keys[11], $arr)) {
-            $this->setCreatedAt($arr[$keys[11]]);
+            $this->setReceivable($arr[$keys[11]]);
         }
         if (array_key_exists($keys[12], $arr)) {
-            $this->setUpdatedAt($arr[$keys[12]]);
+            $this->setCreatedAt($arr[$keys[12]]);
+        }
+        if (array_key_exists($keys[13], $arr)) {
+            $this->setUpdatedAt($arr[$keys[13]]);
         }
     }
 
@@ -1503,6 +1603,9 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
 
         if ($this->isColumnModified(SpyPaymentPayoneTransactionStatusLogTableMap::COL_ID_PAYMENT_PAYONE_TRANSACTION_STATUS_LOG)) {
             $criteria->add(SpyPaymentPayoneTransactionStatusLogTableMap::COL_ID_PAYMENT_PAYONE_TRANSACTION_STATUS_LOG, $this->id_payment_payone_transaction_status_log);
+        }
+        if ($this->isColumnModified(SpyPaymentPayoneTransactionStatusLogTableMap::COL_FK_PAYMENT_PAYONE)) {
+            $criteria->add(SpyPaymentPayoneTransactionStatusLogTableMap::COL_FK_PAYMENT_PAYONE, $this->fk_payment_payone);
         }
         if ($this->isColumnModified(SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_ID)) {
             $criteria->add(SpyPaymentPayoneTransactionStatusLogTableMap::COL_TRANSACTION_ID, $this->transaction_id);
@@ -1626,6 +1729,7 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
+        $copyObj->setFkPaymentPayone($this->getFkPaymentPayone());
         $copyObj->setTransactionId($this->getTransactionId());
         $copyObj->setReferenceId($this->getReferenceId());
         $copyObj->setMode($this->getMode());
@@ -1667,13 +1771,68 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
     }
 
     /**
+     * Declares an association between this object and a ChildSpyPaymentPayone object.
+     *
+     * @param  ChildSpyPaymentPayone $v
+     * @return $this|\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setSpyPaymentPayone(ChildSpyPaymentPayone $v = null)
+    {
+        if ($v === null) {
+            $this->setFkPaymentPayone(NULL);
+        } else {
+            $this->setFkPaymentPayone($v->getIdPaymentPayone());
+        }
+
+        $this->aSpyPaymentPayone = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildSpyPaymentPayone object, it will not be re-added.
+        if ($v !== null) {
+            $v->addSpyPaymentPayoneTransactionStatusLog($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildSpyPaymentPayone object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildSpyPaymentPayone The associated ChildSpyPaymentPayone object.
+     * @throws PropelException
+     */
+    public function getSpyPaymentPayone(ConnectionInterface $con = null)
+    {
+        if ($this->aSpyPaymentPayone === null && ($this->fk_payment_payone !== null)) {
+            $this->aSpyPaymentPayone = ChildSpyPaymentPayoneQuery::create()->findPk($this->fk_payment_payone, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aSpyPaymentPayone->addSpyPaymentPayoneTransactionStatusLogs($this);
+             */
+        }
+
+        return $this->aSpyPaymentPayone;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
+        if (null !== $this->aSpyPaymentPayone) {
+            $this->aSpyPaymentPayone->removeSpyPaymentPayoneTransactionStatusLog($this);
+        }
         $this->id_payment_payone_transaction_status_log = null;
+        $this->fk_payment_payone = null;
         $this->transaction_id = null;
         $this->reference_id = null;
         $this->mode = null;
@@ -1706,6 +1865,7 @@ abstract class SpyPaymentPayoneTransactionStatusLog implements ActiveRecordInter
         if ($deep) {
         } // if ($deep)
 
+        $this->aSpyPaymentPayone = null;
     }
 
     /**

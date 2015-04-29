@@ -128,14 +128,6 @@ class Simulator extends AbstractHttpAdapter
     }
 
     /**
-     * @param string $url
-     */
-    public function setUrl($url)
-    {
-
-    }
-
-    /**
      * @return string
      */
     public function getUrl()

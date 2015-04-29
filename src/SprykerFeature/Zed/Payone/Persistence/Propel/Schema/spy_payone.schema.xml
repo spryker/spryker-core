@@ -20,7 +20,7 @@
     <table name="spy_payment_payone_api_log" phpName="SpyPaymentPayoneApiLog" identifierQuoting="true">
 
         <column name="id_payment_payone_api_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <!--  <column name="fk_payment_payone" required="true" type="INTEGER"/> -->
+        <column name="fk_payment_payone" required="true" type="INTEGER"/>
 
         <column name="request" required="true" type="VARCHAR"/>
         <column name="mode" required="true" type="VARCHAR"/>
@@ -36,18 +36,17 @@
 
         <column name="redirect_url" required="false" type="VARCHAR" comment="payone redirecturl"/>
 
-<!--
-        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone">
+        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone" refPhpName="SpyPaymentPayoneApiLog">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
         </foreign-key>
--->
+
         <behavior name="timestampable" />
     </table>
 
     <table name="spy_payment_payone_transaction_status_log" phpName="SpyPaymentPayoneTransactionStatusLog" identifierQuoting="true">
 
         <column name="id_payment_payone_transaction_status_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <!-- <column name="fk_payment_payone"  required="true" type="INTEGER" /> -->
+        <column name="fk_payment_payone"  required="true" type="INTEGER" />
 
         <column name="transaction_id" required="false" type="INTEGER" comment="payone txid"/>
         <column name="reference_id" required="false" type="INTEGER" comment="payone txid"/>
@@ -66,11 +65,11 @@
         <index>
             <index-column name="transaction_id" />
         </index>
-<!--
-        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone">
+
+        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone" refPhpName="SpyPaymentPayoneTransactionStatusLog">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
         </foreign-key>
--->
+
         <behavior name="timestampable" />
     </table>
 

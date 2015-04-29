@@ -11,6 +11,10 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     const DEFAULT_TIMEOUT = 45;
 
     /**
+     * @var int
+     */
+    protected $timeout = self::DEFAULT_TIMEOUT;
+    /**
      * @var string
      */
     protected $url;
@@ -29,6 +33,22 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     public function __construct($paymentGatewayUrl)
     {
         $this->url = $paymentGatewayUrl;
+    }
+
+    /**
+     * @param int $timeout
+     */
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeout()
+    {
+        return $this->timeout;
     }
 
     /**

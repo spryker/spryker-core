@@ -7,6 +7,7 @@ use \PDO;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -34,6 +35,16 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneTableMap;
  * @method     ChildSpyPaymentPayoneQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildSpyPaymentPayoneQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildSpyPaymentPayoneQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ *
+ * @method     ChildSpyPaymentPayoneQuery leftJoinSpyPaymentPayoneApiLog($relationAlias = null) Adds a LEFT JOIN clause to the query using the SpyPaymentPayoneApiLog relation
+ * @method     ChildSpyPaymentPayoneQuery rightJoinSpyPaymentPayoneApiLog($relationAlias = null) Adds a RIGHT JOIN clause to the query using the SpyPaymentPayoneApiLog relation
+ * @method     ChildSpyPaymentPayoneQuery innerJoinSpyPaymentPayoneApiLog($relationAlias = null) Adds a INNER JOIN clause to the query using the SpyPaymentPayoneApiLog relation
+ *
+ * @method     ChildSpyPaymentPayoneQuery leftJoinSpyPaymentPayoneTransactionStatusLog($relationAlias = null) Adds a LEFT JOIN clause to the query using the SpyPaymentPayoneTransactionStatusLog relation
+ * @method     ChildSpyPaymentPayoneQuery rightJoinSpyPaymentPayoneTransactionStatusLog($relationAlias = null) Adds a RIGHT JOIN clause to the query using the SpyPaymentPayoneTransactionStatusLog relation
+ * @method     ChildSpyPaymentPayoneQuery innerJoinSpyPaymentPayoneTransactionStatusLog($relationAlias = null) Adds a INNER JOIN clause to the query using the SpyPaymentPayoneTransactionStatusLog relation
+ *
+ * @method     \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLogQuery|\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildSpyPaymentPayone findOne(ConnectionInterface $con = null) Return the first ChildSpyPaymentPayone matching the query
  * @method     ChildSpyPaymentPayone findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyPaymentPayone matching the query, or a new ChildSpyPaymentPayone object populated from the query conditions when no match is found
@@ -430,6 +441,152 @@ abstract class SpyPaymentPayoneQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(SpyPaymentPayoneTableMap::COL_UPDATED_AT, $updatedAt, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog object
+     *
+     * @param \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog|ObjectCollection $spyPaymentPayoneApiLog  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildSpyPaymentPayoneQuery The current query, for fluid interface
+     */
+    public function filterBySpyPaymentPayoneApiLog($spyPaymentPayoneApiLog, $comparison = null)
+    {
+        if ($spyPaymentPayoneApiLog instanceof \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog) {
+            return $this
+                ->addUsingAlias(SpyPaymentPayoneTableMap::COL_ID_PAYMENT_PAYONE, $spyPaymentPayoneApiLog->getFkPaymentPayone(), $comparison);
+        } elseif ($spyPaymentPayoneApiLog instanceof ObjectCollection) {
+            return $this
+                ->useSpyPaymentPayoneApiLogQuery()
+                ->filterByPrimaryKeys($spyPaymentPayoneApiLog->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterBySpyPaymentPayoneApiLog() only accepts arguments of type \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the SpyPaymentPayoneApiLog relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildSpyPaymentPayoneQuery The current query, for fluid interface
+     */
+    public function joinSpyPaymentPayoneApiLog($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('SpyPaymentPayoneApiLog');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'SpyPaymentPayoneApiLog');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the SpyPaymentPayoneApiLog relation SpyPaymentPayoneApiLog object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLogQuery A secondary query class using the current class as primary query
+     */
+    public function useSpyPaymentPayoneApiLogQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinSpyPaymentPayoneApiLog($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'SpyPaymentPayoneApiLog', '\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLogQuery');
+    }
+
+    /**
+     * Filter the query by a related \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog object
+     *
+     * @param \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog|ObjectCollection $spyPaymentPayoneTransactionStatusLog  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildSpyPaymentPayoneQuery The current query, for fluid interface
+     */
+    public function filterBySpyPaymentPayoneTransactionStatusLog($spyPaymentPayoneTransactionStatusLog, $comparison = null)
+    {
+        if ($spyPaymentPayoneTransactionStatusLog instanceof \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog) {
+            return $this
+                ->addUsingAlias(SpyPaymentPayoneTableMap::COL_ID_PAYMENT_PAYONE, $spyPaymentPayoneTransactionStatusLog->getFkPaymentPayone(), $comparison);
+        } elseif ($spyPaymentPayoneTransactionStatusLog instanceof ObjectCollection) {
+            return $this
+                ->useSpyPaymentPayoneTransactionStatusLogQuery()
+                ->filterByPrimaryKeys($spyPaymentPayoneTransactionStatusLog->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterBySpyPaymentPayoneTransactionStatusLog() only accepts arguments of type \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the SpyPaymentPayoneTransactionStatusLog relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildSpyPaymentPayoneQuery The current query, for fluid interface
+     */
+    public function joinSpyPaymentPayoneTransactionStatusLog($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('SpyPaymentPayoneTransactionStatusLog');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'SpyPaymentPayoneTransactionStatusLog');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the SpyPaymentPayoneTransactionStatusLog relation SpyPaymentPayoneTransactionStatusLog object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogQuery A secondary query class using the current class as primary query
+     */
+    public function useSpyPaymentPayoneTransactionStatusLogQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinSpyPaymentPayoneTransactionStatusLog($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'SpyPaymentPayoneTransactionStatusLog', '\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogQuery');
     }
 
     /**

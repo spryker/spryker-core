@@ -38,7 +38,7 @@ class PayPal extends AbstractMapper
         $authorizationContainer->setAmount($authorizationData->getAmount());
 
         $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
-        $authorizationContainer->setPaymentMethod($this->createPaymentMethodContainer());
+        $authorizationContainer->setPaymentMethod($this->createPaymentMethodContainer($authorizationData));
 
         return $authorizationContainer;
     }

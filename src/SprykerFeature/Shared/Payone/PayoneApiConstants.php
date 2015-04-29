@@ -1,9 +1,9 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business\Api;
+namespace SprykerFeature\Shared\Payone;
 
 
-interface ApiConstants
+interface PayoneApiConstants
 {
 
     // GENERAL
