@@ -45,22 +45,22 @@ interface TransitionInterface
     public function hasEvent();
 
     /**
-     * @param StatusInterface $source
+     * @param StateInterface $source
      */
     public function setSource($source);
 
     /**
-     * @return StatusInterface
+     * @return StateInterface
      */
     public function getSource();
 
     /**
-     * @param StatusInterface $target
+     * @param StateInterface $target
      */
     public function setTarget($target);
 
     /**
-     * @return StatusInterface
+     * @return StateInterface
      */
     public function getTarget();
 }

@@ -3,40 +3,40 @@
 namespace SprykerFeature\Zed\Oms\Business\Model;
 
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatus;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcessQuery;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStatusQuery;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStateQuery;
 
 class PersistenceManager implements PersistenceManagerInterface
 {
 
-    protected static $statusEntityBuffer = array();
+    protected static $stateEntityBuffer = array();
     protected static $processEntityBuffer = array();
 
     /**
-     * @param string $statusName
-     * @return SpyOmsOrderItemStatus
+     * @param string $stateName
+     * @return SpyOmsOrderItemState
      *
      * @throws PropelException
      */
-    public function getStatusEntity($statusName)
+    public function getStateEntity($stateName)
     {
-        if (array_key_exists($statusName, self::$statusEntityBuffer)) {
-            return self::$statusEntityBuffer[$statusName];
+        if (array_key_exists($stateName, self::$stateEntityBuffer)) {
+            return self::$stateEntityBuffer[$stateName];
         }
 
-        $statusEntity = SpyOmsOrderItemStatusQuery::create()->findOneByName($statusName);
+        $stateEntity = SpyOmsOrderItemStateQuery::create()->findOneByName($stateName);
 
-        if (!isset($statusEntity)) {
-            $statusEntity = new SpyOmsOrderItemStatus();
-            $statusEntity->setName($statusName);
-            $statusEntity->save();
+        if (!isset($stateEntity)) {
+            $stateEntity = new SpyOmsOrderItemState();
+            $stateEntity->setName($stateName);
+            $stateEntity->save();
         }
 
-        $statusBuffer[$statusName] = $statusEntity;
+        $stateBuffer[$stateName] = $stateEntity;
 
-        return $statusEntity;
+        return $stateEntity;
     }
 
     /**
@@ -66,11 +66,11 @@ class PersistenceManager implements PersistenceManagerInterface
     }
 
     /**
-     * @return SpyOmsOrderItemStatus
+     * @return SpyOmsOrderItemState
      */
-    public function getInitialStatusEntity()
+    public function getInitialStateEntity()
     {
-        return $this->getStatusEntity(OmsSettings::INITIAL_STATUS);
+        return $this->getStateEntity(OmsSettings::INITIAL_STATUS);
     }
 
 }

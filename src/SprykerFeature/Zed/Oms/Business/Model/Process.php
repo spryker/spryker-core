@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Oms\Business\Model;
 
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
+use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Util\DrawerInterface;
 use Exception;
@@ -14,9 +14,9 @@ class Process implements ProcessInterface
     protected $name;
 
     /**
-     * @var StatusInterface[]
+     * @var StateInterface[]
      */
-    protected $statuses = array();
+    protected $states = array();
 
     /**
      * @var TransitionInterface[]
@@ -46,15 +46,15 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param bool   $highlightStatus
+     * @param bool $highlightState
      * @param string $format
-     * @param int    $fontsize
+     * @param int $fontsize
      *
      * @return bool
      */
-    public function draw($highlightStatus = false, $format = null, $fontsize = null)
+    public function draw($highlightState = false, $format = null, $fontsize = null)
     {
-        return $this->drawer->draw($this, $highlightStatus, $format, $fontsize);
+        return $this->drawer->draw($this, $highlightState, $format, $fontsize);
     }
 
     /**
@@ -122,72 +122,72 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param StatusInterface[] $statuses
+     * @param StateInterface[] $states
      */
-    public function setStatuses($statuses)
+    public function setStates($states)
     {
-        $this->statuses = $statuses;
+        $this->states = $states;
     }
 
     /**
-     * @param StatusInterface $status
+     * @param StateInterface $state
      */
-    public function addStatus(StatusInterface $status)
+    public function addState(StateInterface $state)
     {
-        $this->statuses[$status->getName()] = $status;
+        $this->states[$state->getName()] = $state;
     }
 
     /**
-     * @param string $statusId
+     * @param string $stateId
      *
-     * @return StatusInterface
+     * @return StateInterface
      */
-    public function getStatus($statusId)
+    public function getState($stateId)
     {
-        return $this->statuses[$statusId];
+        return $this->states[$stateId];
     }
 
     /**
-     * @param string $statusId
+     * @param string $stateId
      *
      * @return bool
      */
-    public function hasStatus($statusId)
+    public function hasState($stateId)
     {
-        return array_key_exists($statusId, $this->statuses);
+        return array_key_exists($stateId, $this->states);
     }
 
     /**
-     * @param string $statusId
+     * @param string $stateId
      *
-     * @return StatusInterface
+     * @return StateInterface
      * @throws Exception
      */
-    public function getStatusFromAllProcesses($statusId)
+    public function getStateFromAllProcesses($stateId)
     {
         $processes = $this->getAllProcesses();
         foreach ($processes as $process) {
-            if ($process->hasStatus($statusId)) {
-                return $process->getStatus($statusId);
+            if ($process->hasState($stateId)) {
+                return $process->getState($stateId);
             }
         }
-        throw new Exception('Unknown status: ' . $statusId);
+        throw new Exception('Unknown state: ' . $stateId);
     }
 
     /**
-     * @return StatusInterface[]
+     * @return StateInterface[]
      */
-    public function getStatuses()
+    public function getStates()
     {
-        return $this->statuses;
+        return $this->states;
     }
 
     /**
      * @return bool
      */
-    public function hasStatuses()
+    public function hasStates()
     {
-        return !empty($this->statuses);
+        return !empty($this->states);
     }
 
     /**
@@ -223,39 +223,39 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return StatusInterface[]
+     * @return StateInterface[]
      */
-    public function getAllStatuses()
+    public function getAllStates()
     {
-        $statuses = array();
-        if ($this->hasStatuses()) {
-            $statuses = $this->getStatuses();
+        $states = array();
+        if ($this->hasStates()) {
+            $states = $this->getStates();
         }
         if ($this->hasSubprocesses()) {
             foreach ($this->getSubprocesses() as $subProcess) {
-                if ($subProcess->hasStatuses()) {
-                    $statuses = array_merge($statuses, $subProcess->getStatuses());
+                if ($subProcess->hasStates()) {
+                    $states = array_merge($states, $subProcess->getStates());
                 }
             }
         }
 
-        return $statuses;
+        return $states;
     }
 
     /**
-     * @return StatusInterface[]
+     * @return StateInterface[]
      */
-    public function getAllReservedStatuses()
+    public function getAllReservedStates()
     {
-        $reservedStatuses = array();
-        $statuses = $this->getAllStatuses();
-        foreach ($statuses as $status) {
-            if ($status->isReserved()) {
-                $reservedStatuses[] = $status;
+        $reservedStates = array();
+        $states = $this->getAllStates();
+        foreach ($states as $state) {
+            if ($state->isReserved()) {
+                $reservedStates[] = $state;
             }
         }
 
-        return $reservedStatuses;
+        return $reservedStates;
     }
 
     /**

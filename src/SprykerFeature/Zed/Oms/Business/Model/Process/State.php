@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\Oms\Business\Model\Process;
 use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
 use Exception;
 
-class Status implements StatusInterface
+class State implements StateInterface
 {
 
     /** @var string */
@@ -259,7 +259,7 @@ class Status implements StatusInterface
                 }
             }
         }
-        throw new Exception('There is no onEnter event for status '.$this->getName());
+        throw new Exception('There is no onEnter event for state '.$this->getName());
     }
 
     /**

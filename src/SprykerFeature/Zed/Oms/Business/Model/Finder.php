@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Model;
 
-use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
+use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
@@ -73,7 +73,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param StatusInterface[] $states
+     * @param StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
      *
@@ -101,20 +101,20 @@ class Finder implements FinderInterface
         $eventsByItem = array();
         foreach ($order->getItems() as $item) {
             $itemId = $item->getIdSalesOrderItem();
-            $statusName = $item->getStatus()->getName();
+            $stateName = $item->getState()->getName();
             $eventsByItem[$itemId] = array();
 
-            if (!isset($eventsBySource[$statusName])) {
+            if (!isset($eventsBySource[$stateName])) {
                 continue;
             }
-            $manualEvents = $eventsBySource[$statusName];
+            $manualEvents = $eventsBySource[$stateName];
             $eventsByItem[$itemId] = $manualEvents;
         }
 
         $allEvents = array();
         foreach ($order->getItems() as $item) {
-            $statusName = $item->getStatus()->getName();
-            $events = $process->getStatusFromAllProcesses($statusName)->getEvents();
+            $stateName = $item->getState()->getName();
+            $events = $process->getStateFromAllProcesses($stateName)->getEvents();
             foreach ($events as $event) {
                 if ($event->isManual()) {
                     $allEvents[] = $event->getName();
@@ -124,9 +124,9 @@ class Finder implements FinderInterface
 
         $allEventsByItem = array();
         foreach ($order->getItems() as $item) {
-            $statusName = $item->getStatus()->getName();
-            if (isset($eventsBySource[$statusName])) {
-                $events = $eventsBySource[$statusName];
+            $stateName = $item->getState()->getName();
+            if (isset($eventsBySource[$stateName])) {
+                $events = $eventsBySource[$stateName];
                 $allEventsByItem[$item->getIdSalesOrderItem()] = $events;
             }
         }
@@ -190,11 +190,11 @@ class Finder implements FinderInterface
     {
         $items = $order->getItems();
         $item = current($items);
-        $statuses = $this->getStatusesByFlag($item->getProcess()->getName(), $flag, $hasFlag);
+        $states = $this->getStatesByFlag($item->getProcess()->getName(), $flag, $hasFlag);
 
         $selectedItems = [];
         foreach ($items as $item) {
-            if (array_key_exists($item->getStatus()->getName(), $statuses)) {
+            if (array_key_exists($item->getState()->getName(), $states)) {
                 $selectedItems[] = $item;
             }
         }
@@ -207,20 +207,20 @@ class Finder implements FinderInterface
      * @param string $flag
      * @param boolean $hasFlag
      *
-     * @return StatusInterface[]
+     * @return StateInterface[]
      */
-    protected function getStatusesByFlag($processName, $flag, $hasFlag)
+    protected function getStatesByFlag($processName, $flag, $hasFlag)
     {
-        $selectedStatuses = [];
+        $selectedStates = [];
         $builder = clone $this->builder;
-        $processStatusList = $builder->createProcess($processName)->getAllStatuses();
-        foreach ($processStatusList as $status) {
-            if (($hasFlag && $status->hasFlag($flag)) || (!$hasFlag && !$status->hasFlag($flag))) {
-                $selectedStatuses[$status->getName()] = $status;
+        $processStateList = $builder->createProcess($processName)->getAllStates();
+        foreach ($processStateList as $state) {
+            if (($hasFlag && $state->hasFlag($flag)) || (!$hasFlag && !$state->hasFlag($flag))) {
+                $selectedStates[$state->getName()] = $state;
             }
         }
 
-        return $selectedStatuses;
+        return $selectedStates;
     }
 
     /**
@@ -232,7 +232,7 @@ class Finder implements FinderInterface
         foreach ($this->activeProcesses as $processName) {
             $builder = clone $this->builder;
             $process = $builder->createProcess($processName);
-            $reservedStates = array_merge($reservedStates, $process->getAllReservedStatuses());
+            $reservedStates = array_merge($reservedStates, $process->getAllReservedStates());
         }
 
         return $reservedStates;
@@ -243,15 +243,15 @@ class Finder implements FinderInterface
      *
      * @return string
      */
-    public function getStatusDisplayName(SpySalesOrderItem $orderItem)
+    public function getStateDisplayName(SpySalesOrderItem $orderItem)
     {
         $processName = $orderItem->getProcess()->getName();
         $builder = clone $this->builder;
         $process = $builder->createProcess($processName);
-        $statusName = $orderItem->getStatus()->getName();
-        $status = $process->getStatus($statusName);
+        $stateName = $orderItem->getState()->getName();
+        $state = $process->getState($stateName);
 
-        return $status->getDisplay();
+        return $state->getDisplay();
     }
 
 }

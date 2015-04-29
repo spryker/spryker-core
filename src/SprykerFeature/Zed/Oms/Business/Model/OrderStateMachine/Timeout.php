@@ -6,7 +6,7 @@ use DateInterval;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Oms\Business\Model\OrderStateMachineInterface;
 use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
+use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsEventTimeout;
@@ -32,9 +32,9 @@ class Timeout implements TimeoutInterface
     protected $eventToTimeoutBuffer = array();
 
     /**
-     * @var StatusInterface[]
+     * @var StateInterface[]
      */
-    protected $statusIdToModelBuffer = array();
+    protected $stateIdToModelBuffer = array();
 
     /**
      * @param OmsQueryContainer $queryContainer
@@ -74,12 +74,12 @@ class Timeout implements TimeoutInterface
      */
     public function setNewTimeout(ProcessInterface $process, SpySalesOrderItem $orderItem, DateTime $currentTime)
     {
-        $targetStatusEntity = $orderItem->getStatus();
+        $targetStateEntity = $orderItem->getState();
 
-        $targetStatus = $this->getStatusFromProcess($targetStatusEntity->getName(), $process);
+        $targetState = $this->getStateFromProcess($targetStateEntity->getName(), $process);
 
-        if ($targetStatus->hasTimeoutEvent()) {
-            $events = $targetStatus->getTimeoutEvents();
+        if ($targetState->hasTimeoutEvent()) {
+            $events = $targetState->getTimeoutEvents();
 
             foreach ($events as $event) {
                 $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event);
@@ -87,7 +87,7 @@ class Timeout implements TimeoutInterface
                 (new SpyOmsEventTimeout())
                     ->setTimeout($timeoutDate)
                     ->setFkSalesOrderItem($orderItem->getPrimaryKey())
-                    ->setStatus($targetStatusEntity)
+                    ->setState($targetStateEntity)
                     ->setEvent($event->getName())
                     ->save();
             }
@@ -96,17 +96,17 @@ class Timeout implements TimeoutInterface
 
     /**
      * @param ProcessInterface $process
-     * @param string $statusId
+     * @param string $stateId
      * @param SpySalesOrderItem $orderItem
      *
      * @throws Exception
      * @throws PropelException
      */
-    public function dropOldTimeout(ProcessInterface $process, $statusId, SpySalesOrderItem $orderItem)
+    public function dropOldTimeout(ProcessInterface $process, $stateId, SpySalesOrderItem $orderItem)
     {
-        $sourceStatus = $this->getStatusFromProcess($statusId, $process);
+        $sourceState = $this->getStateFromProcess($stateId, $process);
 
-        if ($sourceStatus->hasTimeoutEvent()) {
+        if ($sourceState->hasTimeoutEvent()) {
             SpyOmsEventTimeoutQuery::create()
                 ->filterByOrderItem($orderItem)
                 ->delete();
@@ -138,18 +138,18 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param $statusId
+     * @param $stateId
      * @param ProcessInterface $process
      *
-     * @return StatusInterface
+     * @return StateInterface
      */
-    protected function getStatusFromProcess($statusId, ProcessInterface $process)
+    protected function getStateFromProcess($stateId, ProcessInterface $process)
     {
-        if (!isset($this->statusIdToModelBuffer[$statusId])) {
-            $this->statusIdToModelBuffer[$statusId] = $process->getStatusFromAllProcesses($statusId);
+        if (!isset($this->stateIdToModelBuffer[$stateId])) {
+            $this->stateIdToModelBuffer[$stateId] = $process->getStateFromAllProcesses($stateId);
         }
 
-        return $this->statusIdToModelBuffer[$statusId];
+        return $this->stateIdToModelBuffer[$stateId];
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Oms\Business\Model\Util;
 
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StatusInterface;
+use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
 use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\Business\OmsSettings;
@@ -16,7 +16,7 @@ class Drawer implements DrawerInterface
 
     protected $attributesProcess = array('fontname' => 'Verdana', 'fillcolor' => '#cfcfcf', 'style' => 'filled', 'color' => '#ffffff', 'fontsize' => 12, 'fontcolor' => 'black');
 
-    protected $attributesStatus = array('fontname' => 'Verdana', 'fontsize' => 14, 'style' => 'filled', 'fillcolor' => '#f9f9f9');
+    protected $attributesState = array('fontname' => 'Verdana', 'fontsize' => 14, 'style' => 'filled', 'fillcolor' => '#f9f9f9');
 
     protected $attributesDiamond = array('fontname' => 'Verdana', 'label' => '?', 'shape' => 'diamond', 'fontcolor' => 'white', 'fontsize' => '1', 'style' => 'filled', 'fillcolor' => '#f9f9f9');
 
@@ -61,18 +61,18 @@ class Drawer implements DrawerInterface
 
     /**
      * @param ProcessInterface $process
-     * @param string $highlightStatus
+     * @param string $highlightState
      * @param null $format
      * @param int $fontsize
      *
      * @return bool
      */
-    public function draw(ProcessInterface $process, $highlightStatus = null, $format = null, $fontsize = null)
+    public function draw(ProcessInterface $process, $highlightState = null, $format = null, $fontsize = null)
     {
 
         $this->init($format, $fontsize);
 
-        $this->drawStatuses($process, $highlightStatus);
+        $this->drawStates($process, $highlightState);
 
         $this->drawTransitions($process);
 
@@ -83,14 +83,14 @@ class Drawer implements DrawerInterface
 
     /**
      * @param ProcessInterface $process
-     * @param string $highlightStatus
+     * @param string $highlightState
      */
-    public function drawStatuses(ProcessInterface $process, $highlightStatus = null)
+    public function drawStates(ProcessInterface $process, $highlightState = null)
     {
-        $statuses = $process->getAllStatuses();
-        foreach ($statuses as $status) {
-            $highlight = $highlightStatus === $status->getName();
-            $this->addNode($status, array(), null, $highlight);
+        $states = $process->getAllStates();
+        foreach ($states as $state) {
+            $highlight = $highlightState === $state->getName();
+            $this->addNode($state, array(), null, $highlight);
         }
     }
 
@@ -99,26 +99,26 @@ class Drawer implements DrawerInterface
      */
     public function drawTransitions(ProcessInterface $process)
     {
-        $statuses = $process->getAllStatuses();
-        foreach ($statuses as $status) {
-            $this->drawTransitionsEvents($status);
-            $this->drawTransitionsConditions($status);
+        $states = $process->getAllStates();
+        foreach ($states as $state) {
+            $this->drawTransitionsEvents($state);
+            $this->drawTransitionsConditions($state);
         }
     }
 
     /**
-     * @param StatusInterface $status
+     * @param StateInterface $state
      */
-    public function drawTransitionsEvents(StatusInterface $status)
+    public function drawTransitionsEvents(StateInterface $state)
     {
-        $events = $status->getEvents();
+        $events = $state->getEvents();
         foreach ($events as $event) {
-            $transitions = $status->getOutgoingTransitionsByEvent($event);
+            $transitions = $state->getOutgoingTransitionsByEvent($event);
 
             if (count($transitions) > 1) {
                 $diamondId = uniqid();
 
-                $this->graph->addNode($diamondId, $this->attributesDiamond, $status->getProcess()->getName());
+                $this->graph->addNode($diamondId, $this->attributesDiamond, $state->getProcess()->getName());
 
                 $this->addEdge(current($transitions), self::EDGE_UPPER_HALF, array(), null, $diamondId);
 
@@ -133,11 +133,11 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param StatusInterface $status
+     * @param StateInterface $state
      */
-    public function drawTransitionsConditions(StatusInterface $status)
+    public function drawTransitionsConditions(StateInterface $state)
     {
-        $transitions = $status->getOutgoingTransitions();
+        $transitions = $state->getOutgoingTransitions();
         foreach ($transitions as $transition) {
             if ($transition->hasEvent()) {
                 continue;
@@ -159,30 +159,30 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param StatusInterface $status
+     * @param StateInterface $state
      * @param array $attributes
      * @param string $name
      * @param bool $highlight
      */
-    protected function addNode(StatusInterface $status, $attributes = array(), $name = null, $highlight = false)
+    protected function addNode(StateInterface $state, $attributes = array(), $name = null, $highlight = false)
     {
-        $name = is_null($name) ? $status->getName() : $name;
+        $name = is_null($name) ? $state->getName() : $name;
 
         $label = array();
         $label[] = str_replace(' ', $this->br, trim($name));
 
-        if ($status->isReserved()) {
+        if ($state->isReserved()) {
             $label[] = '<FONT color="blue" point-size="' . $this->fontsizeSmall . '">' . 'reserved' . '</FONT>';
         }
 
-        if ($status->hasFlags()) {
-            $flags = implode(', ', $status->getFlags());
+        if ($state->hasFlags()) {
+            $flags = implode(', ', $state->getFlags());
             $label[] = '<FONT color="violet" point-size="' . $this->fontsizeSmall . '">' . $flags . '</FONT>';
         }
 
         $attributes['label'] = implode($this->br, $label);
 
-        if (!$status->hasOutgoingTransitions() || $this->hasOnlySelfReferences($status)) {
+        if (!$state->hasOutgoingTransitions() || $this->hasOnlySelfReferences($state)) {
             $attributes['peripheries'] = 2;
         }
 
@@ -190,21 +190,21 @@ class Drawer implements DrawerInterface
             $attributes['fillcolor'] = '#FFFFCC';
         }
 
-        $attributes = array_merge($this->attributesStatus, $attributes);
-        $this->graph->addNode($name, $attributes, $status->getProcess()->getName());
+        $attributes = array_merge($this->attributesState, $attributes);
+        $this->graph->addNode($name, $attributes, $state->getProcess()->getName());
     }
 
     /**
-     * @param StatusInterface $status
+     * @param StateInterface $state
      *
      * @return bool
      */
-    protected function hasOnlySelfReferences(StatusInterface $status)
+    protected function hasOnlySelfReferences(StateInterface $state)
     {
         $hasOnlySelfReferences = true;
-        $transitions = $status->getOutgoingTransitions();
+        $transitions = $state->getOutgoingTransitions();
         foreach ($transitions as $transition) {
-            if ($transition->getTarget()->getName() !== $status->getName()) {
+            if ($transition->getTarget()->getName() !== $state->getName()) {
                 $hasOnlySelfReferences = false;
                 break;
             }
@@ -400,7 +400,7 @@ class Drawer implements DrawerInterface
         }
 
         if (isset($fontsize)) {
-            $this->attributesStatus['fontsize'] = $fontsize;
+            $this->attributesState['fontsize'] = $fontsize;
             $this->attributesProcess['fontsize'] = $fontsize - 2;
             $this->attributesTransition['fontsize'] = $fontsize - 2;
             $this->fontsizeBig = $fontsize;

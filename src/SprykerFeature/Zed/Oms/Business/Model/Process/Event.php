@@ -109,16 +109,16 @@ class Event implements EventInterface
     }
 
     /**
-     * @param StatusInterface $sourceStatus
+     * @param StateInterface $sourceState
      *
      * @return TransitionInterface[]
      */
-    public function getTransitionsBySource(StatusInterface $sourceStatus)
+    public function getTransitionsBySource(StateInterface $sourceState)
     {
         $transitions = array();
 
         foreach ($this->transitions as $transition) {
-            if ($transition->getSource()->getName() === $sourceStatus->getName()) {
+            if ($transition->getSource()->getName() === $sourceState->getName()) {
                 $transitions[] = $transition;
             }
         }
