@@ -56,12 +56,12 @@ require('Ui').ng
 
 						$scope
 							.update({
-								state : scope.state
+								value : switchModel.value
 							})
 							.then(function(model) {
 								$scope.state = model.state;
 							}, function(why) {
-								$scope.switchModel.value = $scope.state;
+								$scope.switchModel.value = $scope.value;
 
 								console.warn('SPY - model state unknown, not updating state');		//jshint ignore:line
 							})
