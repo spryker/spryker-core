@@ -164,6 +164,7 @@ class ClassGenerator
                 $this->addExternalResource($item);
             }
         } else {
+            $resourceNamespace = strtr($resourceNamespace, ['\\\\' => '\\']);
             if ( ! in_array($resourceNamespace, $this->externalResourcesToUse)
                 && strpos($resourceNamespace, '\\') !== false
             ) {
