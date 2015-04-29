@@ -35,8 +35,7 @@ class StockDependencyContainer extends AbstractDependencyContainer
     public function getStockForm(Request $request)
     {
         return $this->getFactory()->createFormStockForm(
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -49,7 +48,6 @@ class StockDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormStockProductForm(
             $request,
-            $this->getLocator(),
             $this->getQueryContainer()
         );
     }
@@ -63,8 +61,7 @@ class StockDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridStockGrid(
             $this->getQueryContainer()->queryAllStockTypes(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -77,8 +74,7 @@ class StockDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridStockProductGrid(
             $this->getQueryContainer()->queryAllStockProductsJoinedStockJoinedProduct(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
