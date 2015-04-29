@@ -33,6 +33,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param string $locale
+     *
      * @return Translator
      */
     public function createTranslator($locale)
