@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Payone;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Payone\Business\Api\ApiConstants;
 use \SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Payone\Transfer\StandardParameterInterface;
@@ -47,7 +48,6 @@ class PayoneConfig extends AbstractBundleConfig implements ApiConstants
         return '/checkout/regular-redirect-payment-cancellation/';
     }
 
-
     /**
      * @return StandardParameterInterface
      */
@@ -61,14 +61,14 @@ class PayoneConfig extends AbstractBundleConfig implements ApiConstants
         $standardParameter->setAid($credentials[PayoneConfig::PAYONE_CREDENTIALS_AID]);
         $standardParameter->setPortalId($credentials[PayoneConfig::PAYONE_CREDENTIALS_PORTAL_ID]);
         $standardParameter->setKey($credentials[PayoneConfig::PAYONE_CREDENTIALS_KEY]);
-
         $standardParameter->setPaymentGatewayUrl($credentials[PayoneConfig::PAYONE_PAYMENT_GATEWAY_URL]);
+
         $standardParameter->setCurrency(Store::getInstance()->getCurrencyIsoCode());
         $standardParameter->setLanguage(Store::getInstance()->getCurrentLanguage());
 
-        $standardParameter->setRedirectSuccessUrl($this->getRedirectSuccessUrl());
-        $standardParameter->setRedirectBackUrl($this->getRedirectBackUrl());
-        $standardParameter->setRedirectErrorUrl($this->getRedirectErrorUrl());
+        $standardParameter->setRedirectSuccessUrl($this->get(SystemConfig::HOST_YVES) . '/' . $this->getRedirectSuccessUrl());
+        $standardParameter->setRedirectBackUrl($this->get(SystemConfig::HOST_YVES) . '/' . $this->getRedirectBackUrl());
+        $standardParameter->setRedirectErrorUrl($this->get(SystemConfig::HOST_YVES) . '/' . $this->getRedirectErrorUrl());
 
         return $standardParameter;
     }

@@ -3,97 +3,44 @@
 namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Payone\Business\Api\ApiConstants;
 
-class TestController extends AbstractController
+class TestController extends AbstractController implements ApiConstants
 {
 
-    public function indexAction()
+    public function prepaymentAction()
     {
-        $order = $this->getLocator()->sales()->transferOrder();
-        $order->setFirstName('horst');
-        $order->setLastName('wurst');
-        $order->setEmail('horst@wurst.de');
-        $order->setIsTest(true);
-        $order->setIncrementId('DY999999997');
-        $order->setIdSalesOrder(1);
-        $order->setSalutation('Mr');
-
-        $totals = $this->getLocator()->calculation()->transferTotals();
-        $totals->setGrandTotal(10000);
-        //$totals->setTax(300);
-        $totals->setSubtotal(10000);
-
-        $order->setTotals($totals);
-
-
+        $order = $this->getOrder();
 
         $authorization = $this->getLocator()->payone()->transferAuthorization();
         $authorization->setPaymentMethod('payment.payone.prepayment');
-        $authorization->setAmount($totals->getGrandTotal());
-        $authorization->setReferenceId('DY999999997');
-
+        $authorization->setAmount($order->getTotals()->getGrandTotal());
+        $authorization->setReferenceId($order->getIncrementId());
         $authorization->setOrder($order);
 
-
-
-        $payoneFacade = $this->getLocator()->payone()->facade();
-        $payoneFacade->authorize($authorization);
+        $this->getLocator()->payone()->facade()->authorize($authorization);
 
         die('motherfucker');
     }
 
     public function preAuthAction()
     {
-        $order = $this->getLocator()->sales()->transferOrder();
-        $order->setFirstName('horst');
-        $order->setLastName('wurst');
-        $order->setEmail('horst@wurst.de');
-        $order->setIsTest(true);
-        $order->setIncrementId('DY999991000');
-        $order->setIdSalesOrder(1);
-        $order->setSalutation('Mr');
-
-        $totals = $this->getLocator()->calculation()->transferTotals();
-        $totals->setGrandTotal(10000);
-        //$totals->setTax(300);
-        $totals->setSubtotal(10000);
-
-        $order->setTotals($totals);
-
-
+        $order = $this->getOrder();
 
         $authorization = $this->getLocator()->payone()->transferAuthorization();
         $authorization->setPaymentMethod('payment.payone.prepayment');
-        $authorization->setAmount($totals->getGrandTotal());
-        $authorization->setReferenceId('DY999991000');
+        $authorization->setAmount($order->getTotals()->getGrandTotal());
+        $authorization->setReferenceId($order->getIncrementId());
+        $authorization->setOrder($this->getOrder());
 
-        $authorization->setOrder($order);
-
-
-
-        $payoneFacade = $this->getLocator()->payone()->facade();
-        $payoneFacade->preAuthorize($authorization);
+        $this->getLocator()->payone()->facade()->preAuthorize($authorization);
 
         die('motherfucker');
     }
 
     public function captureAction()
     {
-        $order = $this->getLocator()->sales()->transferOrder();
-        $order->setFirstName('horst');
-        $order->setLastName('wurst');
-        $order->setEmail('horst@wurst.de');
-        $order->setIsTest(true);
-        $order->setIncrementId('DY999991000');
-        $order->setIdSalesOrder(1);
-        $order->setSalutation('Mr');
-
-        $totals = $this->getLocator()->calculation()->transferTotals();
-        $totals->setGrandTotal(10000);
-        //$totals->setTax(300);
-        $totals->setSubtotal(10000);
-        $order->setTotals($totals);
-
+        $order = $this->getOrder();
 
         $payment = $this->getLocator()->payone()->transferPayment();
         $payment->setTransactionId('161237526');
@@ -102,25 +49,57 @@ class TestController extends AbstractController
         $capture = $this->getLocator()->payone()->transferCapture();
         $capture->setPaymentMethod('payment.payone.prepayment');
         $capture->setPayment($payment);
-        $capture->setAmount($totals->getGrandTotal());
+        $capture->setAmount($order->getTotals()->getGrandTotal());
         $capture->setOrder($order);
 
-
-
-        $payoneFacade = $this->getLocator()->payone()->facade();
-        $payoneFacade->capture($capture);
+        $this->getLocator()->payone()->facade()->capture($capture);
 
         die('motherfucker');
     }
 
     public function debitAction()
     {
+        $payment = $this->getLocator()->payone()->transferPayment();
+        $payment->setTransactionId('161237526');
+        $payment->setPaymentMethod('payment.payone.prepayment');
+
+        $debit = $this->getLocator()->payone()->transferDebit();
+        $debit->setPaymentMethod('payment.payone.prepayment');
+        $debit->setPayment($payment);
+        $debit->setAmount(1000);
+
+        $this->getLocator()->payone()->facade()->debit($debit);
+
+        die('motherfucker');
+    }
+
+    public function paypalAction()
+    {
+        $order = $this->getOrder();
+
+        $authorization = $this->getLocator()->payone()->transferAuthorization();
+        $authorization->setPaymentMethod(ApiConstants::PAYMENT_METHOD_PAYPAL);
+        $authorization->setAmount($order->getTotals()->getGrandTotal());
+        $authorization->setReferenceId($order->getIncrementId());
+
+        $authorization->setOrder($order);
+
+        $this->getLocator()->payone()->facade()->authorize($authorization);
+
+        die('motherfucker');
+    }
+
+    /**
+     * @return \SprykerFeature\Shared\Sales\Transfer\Order
+     */
+    protected function getOrder()
+    {
         $order = $this->getLocator()->sales()->transferOrder();
         $order->setFirstName('horst');
         $order->setLastName('wurst');
         $order->setEmail('horst@wurst.de');
         $order->setIsTest(true);
-        $order->setIncrementId('DY999991000');
+        $order->setIncrementId('DY999991002');
         $order->setIdSalesOrder(1);
         $order->setSalutation('Mr');
 
@@ -130,23 +109,7 @@ class TestController extends AbstractController
         $totals->setSubtotal(10000);
         $order->setTotals($totals);
 
-
-        $payment = $this->getLocator()->payone()->transferPayment();
-        $payment->setTransactionId('161237526');
-        $payment->setPaymentMethod('payment.payone.prepayment');
-
-        $debit = $this->getLocator()->payone()->transferDebit();
-        $debit->setPaymentMethod('payment.payone.prepayment');
-        $debit->setPayment($payment);
-        $debit->setAmount(1000);
-        $debit->setOrder($order);
-
-
-
-        $payoneFacade = $this->getLocator()->payone()->facade();
-        $payoneFacade->debit($debit);
-
-        die('motherfucker');
+        return $order;
     }
 
     public function myTestAction()

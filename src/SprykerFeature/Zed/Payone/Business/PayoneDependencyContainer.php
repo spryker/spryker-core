@@ -118,8 +118,9 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     protected function getAvailablePaymentMethods()
     {
         return [
-            ApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createPaymentMethodMapperPrePayment(),
-            ApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createPaymentMethodMapperCreditCardPseudo()
+            ApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createMapperPaymentMethodPrePayment(),
+            ApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createMapperPaymentMethodCreditCardPseudo(),
+            ApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createMapperPaymentMethodPayPal()
         ];
     }
 

@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
+use SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethodMapperInterface;
+
 
 class PaymentMethodRegistry implements PaymentMethodRegistryInterface
 {

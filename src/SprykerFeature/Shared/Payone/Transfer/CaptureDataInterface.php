@@ -3,7 +3,7 @@
 namespace SprykerFeature\Shared\Payone\Transfer;
 
 
-interface CaptureDataInterface extends TransactionInterface
+interface CaptureDataInterface
 {
 
     /**

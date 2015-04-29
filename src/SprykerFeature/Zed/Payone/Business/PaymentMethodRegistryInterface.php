@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
+use SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethodMapperInterface;
 
 
 interface PaymentMethodRegistryInterface

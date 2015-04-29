@@ -29,6 +29,13 @@
         <column name="user_id" required="false" type="VARCHAR"/>
         <column name="merchant_id" required="true" type="VARCHAR" comment="payone mid"/>
         <column name="portal_id" required="true" type="VARCHAR" comment="payone portalid"/>
+
+        <column name="error_code" required="false" type="VARCHAR" comment="payone errorcode"/>
+        <column name="error_message_internal" required="false" type="VARCHAR" comment="payone errormessage"/>
+        <column name="error_message_user" required="false" type="VARCHAR" comment="payone customermessage"/>
+
+        <column name="redirect_url" required="false" type="VARCHAR" comment="payone redirecturl"/>
+
 <!--
         <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
@@ -55,6 +62,10 @@
 
         <column name="balance" required="false" type="INTEGER"/>
         <column name="receivable" required="false" type="INTEGER"/>
+
+        <index>
+            <index-column name="transaction_id" />
+        </index>
 <!--
         <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>

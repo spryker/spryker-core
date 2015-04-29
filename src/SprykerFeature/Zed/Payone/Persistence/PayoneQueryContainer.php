@@ -13,13 +13,13 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 
     /**
      * @todo think of doing it with MAX(sequence_number) ?
-     * @param $idPaymentPayone
+     * @param $transactionId
      * @return SpyPaymentPayoneTransactionStatusLogQuery
      */
-    public function getCurrentSequenceNumberQuery($idPaymentPayone)
+    public function getCurrentSequenceNumberQuery($transactionId)
     {
         $query = SpyPaymentPayoneTransactionStatusLogQuery::create();
-        $query->filterByFkPaymentPayone($idPaymentPayone)
+        $query->filterByTransactionId($transactionId)
               ->orderBySequencenumber(Criteria::DESC);
 
         return $query;

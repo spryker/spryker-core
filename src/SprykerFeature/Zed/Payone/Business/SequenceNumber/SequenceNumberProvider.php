@@ -25,19 +25,19 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
      * @param string $transactionId
      * @return int
      */
-    public function getNextSequenceNumber($idPaymentPayone)
+    public function getNextSequenceNumber($transactionId)
     {
-        return $this->getCurrentSequenceNumber($idPaymentPayone) + 1;
+        return $this->getCurrentSequenceNumber($transactionId) + 1;
     }
 
     /**
      * @param string $transactionId
      * @return int
      */
-    public function getCurrentSequenceNumber($idPaymentPayone)
+    public function getCurrentSequenceNumber($transactionId)
     {
         $transactionEntity = $this->queryContainer
-            ->getCurrentSequenceNumberQuery($idPaymentPayone)
+            ->getCurrentSequenceNumberQuery($transactionId)
             ->findOne();
 
         if (!$transactionEntity || !$transactionEntity->getSequenceNumber()) {

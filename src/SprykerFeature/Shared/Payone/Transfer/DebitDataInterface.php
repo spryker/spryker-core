@@ -3,9 +3,8 @@
 namespace SprykerFeature\Shared\Payone\Transfer;
 
 
-interface DebitDataInterface extends TransactionInterface
+interface DebitDataInterface
 {
-
 
     /**
      * @return PaymentInterface

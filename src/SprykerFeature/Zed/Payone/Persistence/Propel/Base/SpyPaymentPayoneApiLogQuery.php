@@ -27,6 +27,10 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneApiLogTable
  * @method     ChildSpyPaymentPayoneApiLogQuery orderByUserId($order = Criteria::ASC) Order by the user_id column
  * @method     ChildSpyPaymentPayoneApiLogQuery orderByMerchantId($order = Criteria::ASC) Order by the merchant_id column
  * @method     ChildSpyPaymentPayoneApiLogQuery orderByPortalId($order = Criteria::ASC) Order by the portal_id column
+ * @method     ChildSpyPaymentPayoneApiLogQuery orderByErrorCode($order = Criteria::ASC) Order by the error_code column
+ * @method     ChildSpyPaymentPayoneApiLogQuery orderByErrorMessageInternal($order = Criteria::ASC) Order by the error_message_internal column
+ * @method     ChildSpyPaymentPayoneApiLogQuery orderByErrorMessageUser($order = Criteria::ASC) Order by the error_message_user column
+ * @method     ChildSpyPaymentPayoneApiLogQuery orderByRedirectUrl($order = Criteria::ASC) Order by the redirect_url column
  * @method     ChildSpyPaymentPayoneApiLogQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method     ChildSpyPaymentPayoneApiLogQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
@@ -38,6 +42,10 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneApiLogTable
  * @method     ChildSpyPaymentPayoneApiLogQuery groupByUserId() Group by the user_id column
  * @method     ChildSpyPaymentPayoneApiLogQuery groupByMerchantId() Group by the merchant_id column
  * @method     ChildSpyPaymentPayoneApiLogQuery groupByPortalId() Group by the portal_id column
+ * @method     ChildSpyPaymentPayoneApiLogQuery groupByErrorCode() Group by the error_code column
+ * @method     ChildSpyPaymentPayoneApiLogQuery groupByErrorMessageInternal() Group by the error_message_internal column
+ * @method     ChildSpyPaymentPayoneApiLogQuery groupByErrorMessageUser() Group by the error_message_user column
+ * @method     ChildSpyPaymentPayoneApiLogQuery groupByRedirectUrl() Group by the redirect_url column
  * @method     ChildSpyPaymentPayoneApiLogQuery groupByCreatedAt() Group by the created_at column
  * @method     ChildSpyPaymentPayoneApiLogQuery groupByUpdatedAt() Group by the updated_at column
  *
@@ -56,6 +64,10 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneApiLogTable
  * @method     ChildSpyPaymentPayoneApiLog findOneByUserId(string $user_id) Return the first ChildSpyPaymentPayoneApiLog filtered by the user_id column
  * @method     ChildSpyPaymentPayoneApiLog findOneByMerchantId(string $merchant_id) Return the first ChildSpyPaymentPayoneApiLog filtered by the merchant_id column
  * @method     ChildSpyPaymentPayoneApiLog findOneByPortalId(string $portal_id) Return the first ChildSpyPaymentPayoneApiLog filtered by the portal_id column
+ * @method     ChildSpyPaymentPayoneApiLog findOneByErrorCode(string $error_code) Return the first ChildSpyPaymentPayoneApiLog filtered by the error_code column
+ * @method     ChildSpyPaymentPayoneApiLog findOneByErrorMessageInternal(string $error_message_internal) Return the first ChildSpyPaymentPayoneApiLog filtered by the error_message_internal column
+ * @method     ChildSpyPaymentPayoneApiLog findOneByErrorMessageUser(string $error_message_user) Return the first ChildSpyPaymentPayoneApiLog filtered by the error_message_user column
+ * @method     ChildSpyPaymentPayoneApiLog findOneByRedirectUrl(string $redirect_url) Return the first ChildSpyPaymentPayoneApiLog filtered by the redirect_url column
  * @method     ChildSpyPaymentPayoneApiLog findOneByCreatedAt(string $created_at) Return the first ChildSpyPaymentPayoneApiLog filtered by the created_at column
  * @method     ChildSpyPaymentPayoneApiLog findOneByUpdatedAt(string $updated_at) Return the first ChildSpyPaymentPayoneApiLog filtered by the updated_at column
  *
@@ -68,6 +80,10 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\Map\SpyPaymentPayoneApiLogTable
  * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByUserId(string $user_id) Return ChildSpyPaymentPayoneApiLog objects filtered by the user_id column
  * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByMerchantId(string $merchant_id) Return ChildSpyPaymentPayoneApiLog objects filtered by the merchant_id column
  * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByPortalId(string $portal_id) Return ChildSpyPaymentPayoneApiLog objects filtered by the portal_id column
+ * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByErrorCode(string $error_code) Return ChildSpyPaymentPayoneApiLog objects filtered by the error_code column
+ * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByErrorMessageInternal(string $error_message_internal) Return ChildSpyPaymentPayoneApiLog objects filtered by the error_message_internal column
+ * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByErrorMessageUser(string $error_message_user) Return ChildSpyPaymentPayoneApiLog objects filtered by the error_message_user column
+ * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByRedirectUrl(string $redirect_url) Return ChildSpyPaymentPayoneApiLog objects filtered by the redirect_url column
  * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildSpyPaymentPayoneApiLog objects filtered by the created_at column
  * @method     ChildSpyPaymentPayoneApiLog[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildSpyPaymentPayoneApiLog objects filtered by the updated_at column
  * @method     ChildSpyPaymentPayoneApiLog[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -161,7 +177,7 @@ abstract class SpyPaymentPayoneApiLogQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT `id_payment_payone_api_log`, `request`, `mode`, `status`, `transaction_id`, `user_id`, `merchant_id`, `portal_id`, `created_at`, `updated_at` FROM `spy_payment_payone_api_log` WHERE `id_payment_payone_api_log` = :p0';
+        $sql = 'SELECT `id_payment_payone_api_log`, `request`, `mode`, `status`, `transaction_id`, `user_id`, `merchant_id`, `portal_id`, `error_code`, `error_message_internal`, `error_message_user`, `redirect_url`, `created_at`, `updated_at` FROM `spy_payment_payone_api_log` WHERE `id_payment_payone_api_log` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -509,6 +525,122 @@ abstract class SpyPaymentPayoneApiLogQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_PORTAL_ID, $portalId, $comparison);
+    }
+
+    /**
+     * Filter the query on the error_code column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByErrorCode('fooValue');   // WHERE error_code = 'fooValue'
+     * $query->filterByErrorCode('%fooValue%'); // WHERE error_code LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $errorCode The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildSpyPaymentPayoneApiLogQuery The current query, for fluid interface
+     */
+    public function filterByErrorCode($errorCode = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($errorCode)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $errorCode)) {
+                $errorCode = str_replace('*', '%', $errorCode);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_ERROR_CODE, $errorCode, $comparison);
+    }
+
+    /**
+     * Filter the query on the error_message_internal column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByErrorMessageInternal('fooValue');   // WHERE error_message_internal = 'fooValue'
+     * $query->filterByErrorMessageInternal('%fooValue%'); // WHERE error_message_internal LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $errorMessageInternal The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildSpyPaymentPayoneApiLogQuery The current query, for fluid interface
+     */
+    public function filterByErrorMessageInternal($errorMessageInternal = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($errorMessageInternal)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $errorMessageInternal)) {
+                $errorMessageInternal = str_replace('*', '%', $errorMessageInternal);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_INTERNAL, $errorMessageInternal, $comparison);
+    }
+
+    /**
+     * Filter the query on the error_message_user column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByErrorMessageUser('fooValue');   // WHERE error_message_user = 'fooValue'
+     * $query->filterByErrorMessageUser('%fooValue%'); // WHERE error_message_user LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $errorMessageUser The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildSpyPaymentPayoneApiLogQuery The current query, for fluid interface
+     */
+    public function filterByErrorMessageUser($errorMessageUser = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($errorMessageUser)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $errorMessageUser)) {
+                $errorMessageUser = str_replace('*', '%', $errorMessageUser);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_USER, $errorMessageUser, $comparison);
+    }
+
+    /**
+     * Filter the query on the redirect_url column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByRedirectUrl('fooValue');   // WHERE redirect_url = 'fooValue'
+     * $query->filterByRedirectUrl('%fooValue%'); // WHERE redirect_url LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $redirectUrl The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildSpyPaymentPayoneApiLogQuery The current query, for fluid interface
+     */
+    public function filterByRedirectUrl($redirectUrl = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($redirectUrl)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $redirectUrl)) {
+                $redirectUrl = str_replace('*', '%', $redirectUrl);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(SpyPaymentPayoneApiLogTableMap::COL_REDIRECT_URL, $redirectUrl, $comparison);
     }
 
     /**

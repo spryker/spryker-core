@@ -7,15 +7,15 @@ interface SequenceNumberProviderInterface
 {
 
     /**
-     * @param string $idPaymentPayone
+     * @param string $transactionId
      * @return int
      */
-    public function getNextSequenceNumber($idPaymentPayone);
+    public function getNextSequenceNumber($transactionId);
 
     /**
-     * @param $idPaymentPayone
+     * @param string $transactionId
      * @return int
      */
-    public function getCurrentSequenceNumber($idPaymentPayone);
+    public function getCurrentSequenceNumber($transactionId);
 
 }

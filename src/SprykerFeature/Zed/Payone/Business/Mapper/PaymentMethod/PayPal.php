@@ -7,6 +7,7 @@ use SprykerFeature\Shared\Payone\Transfer\AuthorizationDataInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\EWalletContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
@@ -30,16 +31,14 @@ class PayPal extends AbstractMapper
     {
         $authorizationContainer = new AuthorizationContainer();
 
-        $redirectContainer = new RedirectContainer();
-        $redirectContainer->setSuccessUrl($this->getStandardParameter()->getRedirectSuccessUrl());
-        $redirectContainer->setBackUrl($this->getStandardParameter()->getRedirectBackUrl());
-        $redirectContainer->setErrorUrl($this->getStandardParameter()->getRedirectErrorUrl());
+        $authorizationContainer->setAid($this->getStandardParameter()->getAid());
+        $authorizationContainer->setReference($authorizationData->getReferenceId());
+        $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
+        $authorizationContainer->setClearingType(self::CLEARING_TYPE_EWALLET);
+        $authorizationContainer->setAmount($authorizationData->getAmount());
 
-        $paymentMethodContainer = new EWalletContainer();
-        $paymentMethodContainer->setWalletType(self::EWALLET_TYPE_PAYPAL);
-        $paymentMethodContainer->setRedirect($redirectContainer);
-
-        $authorizationContainer->setPaymentMethod($paymentMethodContainer);
+        $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
+        $authorizationContainer->setPaymentMethod($this->createPaymentMethodContainer());
 
         return $authorizationContainer;
     }
@@ -52,18 +51,59 @@ class PayPal extends AbstractMapper
     {
         $authorizationContainer = new PreAuthorizationContainer();
 
+        $authorizationContainer->setAid($this->getStandardParameter()->getAid());
+        $authorizationContainer->setReference($authorizationData->getReferenceId());
+        $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
+        $authorizationContainer->setClearingType(self::CLEARING_TYPE_EWALLET);
+        $authorizationContainer->setAmount($authorizationData->getAmount());
+
+        $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
+        $authorizationContainer->setPaymentMethod($this->createPaymentMethodContainer($authorizationData));
+
+        return $authorizationContainer;
+    }
+
+    /**
+     * @return EWalletContainer
+     */
+    protected function createPaymentMethodContainer(AuthorizationDataInterface $authorizationData)
+    {
+        $paymentMethodContainer = new EWalletContainer();
+
+        $paymentMethodContainer->setWalletType(self::EWALLET_TYPE_PAYPAL);
+        $paymentMethodContainer->setRedirect($this->createRedirectContainer());
+
+        return $paymentMethodContainer;
+    }
+
+    /**
+     * @return RedirectContainer
+     */
+    protected function createRedirectContainer()
+    {
         $redirectContainer = new RedirectContainer();
+
         $redirectContainer->setSuccessUrl($this->getStandardParameter()->getRedirectSuccessUrl());
         $redirectContainer->setBackUrl($this->getStandardParameter()->getRedirectBackUrl());
         $redirectContainer->setErrorUrl($this->getStandardParameter()->getRedirectErrorUrl());
 
-        $paymentMethodContainer = new EWalletContainer();
-        $paymentMethodContainer->setWalletType(self::EWALLET_TYPE_PAYPAL);
-        $paymentMethodContainer->setRedirect($redirectContainer);
+        return $redirectContainer;
+    }
 
-        $authorizationContainer->setPaymentMethod($paymentMethodContainer);
+    /**
+     * @param AuthorizationDataInterface $authorizationData
+     * @return PersonalContainer
+     */
+    protected function createAuthorizationPersonalData(AuthorizationDataInterface $authorizationData)
+    {
+        $personalContainer = new PersonalContainer();
 
-        return $authorizationContainer;
+        // @todo fix country and order transfer interface (sales refactoring?)
+        $personalContainer->setFirstName($authorizationData->getOrder()->getFirstName());
+        $personalContainer->setLastName($authorizationData->getOrder()->getLastName());
+        $personalContainer->setCountry('DE');
+
+        return $personalContainer;
     }
 
 }

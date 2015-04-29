@@ -4,7 +4,6 @@ namespace SprykerFeature\Zed\Payone\Business;
 
 
 use Generated\Zed\Ide\AutoCompletion;
-use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Payone\Transfer\AuthorizationDataInterface;
 use SprykerFeature\Shared\Payone\Transfer\CaptureDataInterface;
@@ -19,6 +18,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationRespo
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\PreAuthorizationResponseContainer;
+use SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
@@ -100,6 +100,10 @@ class PaymentManager implements ApiConstants
         $apiLogEntity->setStatus($responseContainer->getStatus());
         $apiLogEntity->setUserId($responseContainer->getUserid());
         $apiLogEntity->setTransactionId($responseContainer->getTxid());
+        $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
+        $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
+        $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
+        $apiLogEntity->setRedirectUrl($responseContainer->getRedirecturl());
         $apiLogEntity->save();
 
         $paymentEntity->setTransactionId($responseContainer->getTxid());
@@ -128,6 +132,10 @@ class PaymentManager implements ApiConstants
         $apiLogEntity->setStatus($responseContainer->getStatus());
         $apiLogEntity->setUserId($responseContainer->getUserid());
         $apiLogEntity->setTransactionId($responseContainer->getTxid());
+        $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
+        $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
+        $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
+        $apiLogEntity->setRedirectUrl($responseContainer->getRedirecturl());
         $apiLogEntity->save();
 
         $paymentEntity->setTransactionId($responseContainer->getTxid());
@@ -154,6 +162,9 @@ class PaymentManager implements ApiConstants
 
         $apiLogEntity->setStatus($responseContainer->getStatus());
         $apiLogEntity->setTransactionId($responseContainer->getTxid());
+        $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
+        $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
+        $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
         $apiLogEntity->save();
 
         echo '<pre>' . print_r($responseContainer, false) . '</pre>';die;
@@ -177,6 +188,9 @@ class PaymentManager implements ApiConstants
 
         $apiLogEntity->setStatus($responseContainer->getStatus());
         $apiLogEntity->setTransactionId($responseContainer->getTxid());
+        $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
+        $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
+        $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
         $apiLogEntity->save();
 
         echo '<pre>' . print_r($responseContainer, false) . '</pre>';die;

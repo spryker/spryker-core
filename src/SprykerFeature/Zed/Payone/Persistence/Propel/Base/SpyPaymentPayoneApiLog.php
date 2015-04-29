@@ -111,6 +111,30 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
     protected $portal_id;
 
     /**
+     * The value for the error_code field.
+     * @var        string
+     */
+    protected $error_code;
+
+    /**
+     * The value for the error_message_internal field.
+     * @var        string
+     */
+    protected $error_message_internal;
+
+    /**
+     * The value for the error_message_user field.
+     * @var        string
+     */
+    protected $error_message_user;
+
+    /**
+     * The value for the redirect_url field.
+     * @var        string
+     */
+    protected $redirect_url;
+
+    /**
      * The value for the created_at field.
      * @var        \DateTime
      */
@@ -428,6 +452,46 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
     }
 
     /**
+     * Get the [error_code] column value.
+     *
+     * @return string
+     */
+    public function getErrorCode()
+    {
+        return $this->error_code;
+    }
+
+    /**
+     * Get the [error_message_internal] column value.
+     *
+     * @return string
+     */
+    public function getErrorMessageInternal()
+    {
+        return $this->error_message_internal;
+    }
+
+    /**
+     * Get the [error_message_user] column value.
+     *
+     * @return string
+     */
+    public function getErrorMessageUser()
+    {
+        return $this->error_message_user;
+    }
+
+    /**
+     * Get the [redirect_url] column value.
+     *
+     * @return string
+     */
+    public function getRedirectUrl()
+    {
+        return $this->redirect_url;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [created_at] column value.
      *
      *
@@ -628,6 +692,86 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
     } // setPortalId()
 
     /**
+     * Set the value of [error_code] column.
+     *
+     * @param  string $v new value
+     * @return $this|\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog The current object (for fluent API support)
+     */
+    public function setErrorCode($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->error_code !== $v) {
+            $this->error_code = $v;
+            $this->modifiedColumns[SpyPaymentPayoneApiLogTableMap::COL_ERROR_CODE] = true;
+        }
+
+        return $this;
+    } // setErrorCode()
+
+    /**
+     * Set the value of [error_message_internal] column.
+     *
+     * @param  string $v new value
+     * @return $this|\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog The current object (for fluent API support)
+     */
+    public function setErrorMessageInternal($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->error_message_internal !== $v) {
+            $this->error_message_internal = $v;
+            $this->modifiedColumns[SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_INTERNAL] = true;
+        }
+
+        return $this;
+    } // setErrorMessageInternal()
+
+    /**
+     * Set the value of [error_message_user] column.
+     *
+     * @param  string $v new value
+     * @return $this|\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog The current object (for fluent API support)
+     */
+    public function setErrorMessageUser($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->error_message_user !== $v) {
+            $this->error_message_user = $v;
+            $this->modifiedColumns[SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_USER] = true;
+        }
+
+        return $this;
+    } // setErrorMessageUser()
+
+    /**
+     * Set the value of [redirect_url] column.
+     *
+     * @param  string $v new value
+     * @return $this|\SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog The current object (for fluent API support)
+     */
+    public function setRedirectUrl($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->redirect_url !== $v) {
+            $this->redirect_url = $v;
+            $this->modifiedColumns[SpyPaymentPayoneApiLogTableMap::COL_REDIRECT_URL] = true;
+        }
+
+        return $this;
+    } // setRedirectUrl()
+
+    /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
@@ -727,13 +871,25 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('PortalId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->portal_id = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('ErrorCode', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->error_code = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('ErrorMessageInternal', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->error_message_internal = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('ErrorMessageUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->error_message_user = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('RedirectUrl', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->redirect_url = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : SpyPaymentPayoneApiLogTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
@@ -746,7 +902,7 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 10; // 10 = SpyPaymentPayoneApiLogTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 14; // 14 = SpyPaymentPayoneApiLogTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\SprykerFeature\\Zed\\Payone\\Persistence\\Propel\\SpyPaymentPayoneApiLog'), 0, $e);
@@ -979,6 +1135,18 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
         if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_PORTAL_ID)) {
             $modifiedColumns[':p' . $index++]  = '`portal_id`';
         }
+        if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_ERROR_CODE)) {
+            $modifiedColumns[':p' . $index++]  = '`error_code`';
+        }
+        if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_INTERNAL)) {
+            $modifiedColumns[':p' . $index++]  = '`error_message_internal`';
+        }
+        if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_USER)) {
+            $modifiedColumns[':p' . $index++]  = '`error_message_user`';
+        }
+        if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_REDIRECT_URL)) {
+            $modifiedColumns[':p' . $index++]  = '`redirect_url`';
+        }
         if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`created_at`';
         }
@@ -1019,6 +1187,18 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
                         break;
                     case '`portal_id`':
                         $stmt->bindValue($identifier, $this->portal_id, PDO::PARAM_STR);
+                        break;
+                    case '`error_code`':
+                        $stmt->bindValue($identifier, $this->error_code, PDO::PARAM_STR);
+                        break;
+                    case '`error_message_internal`':
+                        $stmt->bindValue($identifier, $this->error_message_internal, PDO::PARAM_STR);
+                        break;
+                    case '`error_message_user`':
+                        $stmt->bindValue($identifier, $this->error_message_user, PDO::PARAM_STR);
+                        break;
+                    case '`redirect_url`':
+                        $stmt->bindValue($identifier, $this->redirect_url, PDO::PARAM_STR);
                         break;
                     case '`created_at`':
                         $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1113,9 +1293,21 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
                 return $this->getPortalId();
                 break;
             case 8:
-                return $this->getCreatedAt();
+                return $this->getErrorCode();
                 break;
             case 9:
+                return $this->getErrorMessageInternal();
+                break;
+            case 10:
+                return $this->getErrorMessageUser();
+                break;
+            case 11:
+                return $this->getRedirectUrl();
+                break;
+            case 12:
+                return $this->getCreatedAt();
+                break;
+            case 13:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1155,8 +1347,12 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
             $keys[5] => $this->getUserId(),
             $keys[6] => $this->getMerchantId(),
             $keys[7] => $this->getPortalId(),
-            $keys[8] => $this->getCreatedAt(),
-            $keys[9] => $this->getUpdatedAt(),
+            $keys[8] => $this->getErrorCode(),
+            $keys[9] => $this->getErrorMessageInternal(),
+            $keys[10] => $this->getErrorMessageUser(),
+            $keys[11] => $this->getRedirectUrl(),
+            $keys[12] => $this->getCreatedAt(),
+            $keys[13] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1221,9 +1417,21 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
                 $this->setPortalId($value);
                 break;
             case 8:
-                $this->setCreatedAt($value);
+                $this->setErrorCode($value);
                 break;
             case 9:
+                $this->setErrorMessageInternal($value);
+                break;
+            case 10:
+                $this->setErrorMessageUser($value);
+                break;
+            case 11:
+                $this->setRedirectUrl($value);
+                break;
+            case 12:
+                $this->setCreatedAt($value);
+                break;
+            case 13:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1277,10 +1485,22 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
             $this->setPortalId($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setCreatedAt($arr[$keys[8]]);
+            $this->setErrorCode($arr[$keys[8]]);
         }
         if (array_key_exists($keys[9], $arr)) {
-            $this->setUpdatedAt($arr[$keys[9]]);
+            $this->setErrorMessageInternal($arr[$keys[9]]);
+        }
+        if (array_key_exists($keys[10], $arr)) {
+            $this->setErrorMessageUser($arr[$keys[10]]);
+        }
+        if (array_key_exists($keys[11], $arr)) {
+            $this->setRedirectUrl($arr[$keys[11]]);
+        }
+        if (array_key_exists($keys[12], $arr)) {
+            $this->setCreatedAt($arr[$keys[12]]);
+        }
+        if (array_key_exists($keys[13], $arr)) {
+            $this->setUpdatedAt($arr[$keys[13]]);
         }
     }
 
@@ -1346,6 +1566,18 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
         }
         if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_PORTAL_ID)) {
             $criteria->add(SpyPaymentPayoneApiLogTableMap::COL_PORTAL_ID, $this->portal_id);
+        }
+        if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_ERROR_CODE)) {
+            $criteria->add(SpyPaymentPayoneApiLogTableMap::COL_ERROR_CODE, $this->error_code);
+        }
+        if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_INTERNAL)) {
+            $criteria->add(SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_INTERNAL, $this->error_message_internal);
+        }
+        if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_USER)) {
+            $criteria->add(SpyPaymentPayoneApiLogTableMap::COL_ERROR_MESSAGE_USER, $this->error_message_user);
+        }
+        if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_REDIRECT_URL)) {
+            $criteria->add(SpyPaymentPayoneApiLogTableMap::COL_REDIRECT_URL, $this->redirect_url);
         }
         if ($this->isColumnModified(SpyPaymentPayoneApiLogTableMap::COL_CREATED_AT)) {
             $criteria->add(SpyPaymentPayoneApiLogTableMap::COL_CREATED_AT, $this->created_at);
@@ -1446,6 +1678,10 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
         $copyObj->setUserId($this->getUserId());
         $copyObj->setMerchantId($this->getMerchantId());
         $copyObj->setPortalId($this->getPortalId());
+        $copyObj->setErrorCode($this->getErrorCode());
+        $copyObj->setErrorMessageInternal($this->getErrorMessageInternal());
+        $copyObj->setErrorMessageUser($this->getErrorMessageUser());
+        $copyObj->setRedirectUrl($this->getRedirectUrl());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
         if ($makeNew) {
@@ -1491,6 +1727,10 @@ abstract class SpyPaymentPayoneApiLog implements ActiveRecordInterface
         $this->user_id = null;
         $this->merchant_id = null;
         $this->portal_id = null;
+        $this->error_code = null;
+        $this->error_message_internal = null;
+        $this->error_message_user = null;
+        $this->redirect_url = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;

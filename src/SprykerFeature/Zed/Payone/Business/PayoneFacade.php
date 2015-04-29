@@ -40,7 +40,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function capture(CaptureDataInterface $captureData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager($captureData->getPaymentMethod());
+        $paymentManager = $this->getDependencyContainer()->createPaymentManager($captureData->getPayment()->getPaymentMethod());
 
         $paymentManager->capture($captureData);
     }
@@ -50,7 +50,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function debit(DebitDataInterface $debitData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager($debitData->getPaymentMethod());
+        $paymentManager = $this->getDependencyContainer()->createPaymentManager($debitData->getPayment()->getPaymentMethod());
 
         $paymentManager->debit($debitData);
     }
@@ -60,7 +60,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function refund(RefundDataInterface $refundData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager($refundData->getPaymentMethod());
+        $paymentManager = $this->getDependencyContainer()->createPaymentManager($refundData->getPayment()->getPaymentMethod());
 
         $paymentManager->refund($refundData);
     }
