@@ -2,17 +2,13 @@
 
 namespace SprykerFeature\Zed\Discount;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Zed\Discount\Business\Collector\CollectorInterface;
-use SprykerFeature\Zed\Discount\Business\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Business\DiscountSettingsInterface;
 use SprykerFeature\Zed\Discount\Business\Model\CalculatorInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInterface
 {
@@ -78,7 +74,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
      */
     public function getDefaultVoucherDecisionRulePlugin()
     {
-        if (! array_key_exists(self::PLUGIN_DECISION_RULE_VOUCHER, $this->decisionRulePlugins)) {
+        if (!array_key_exists(self::PLUGIN_DECISION_RULE_VOUCHER, $this->getAvailableDecisionRulePlugins())) {
             throw new \ErrorException('No default voucher decision rule plugin registered');
         }
 
