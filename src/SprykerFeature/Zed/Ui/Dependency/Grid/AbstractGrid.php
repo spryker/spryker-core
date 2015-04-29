@@ -3,7 +3,12 @@
 namespace SprykerFeature\Zed\Ui\Dependency\Grid;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Ui\Communication\Plugin\Grid\BooleanColumn;
+use SprykerFeature\Zed\Ui\Communication\Plugin\Grid\DateTimeColumn;
+use SprykerFeature\Zed\Ui\Communication\Plugin\Grid\DefaultColumn;
+use SprykerFeature\Zed\Ui\Communication\Plugin\Grid\DefaultRowsRenderer;
+use SprykerFeature\Zed\Ui\Communication\Plugin\Grid\Pagination;
 use SprykerFeature\Zed\Ui\Dependency\Plugin\GridPluginInterface;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +20,7 @@ abstract class AbstractGrid
     /**
      * @var AutoCompletion
      */
-    protected $locator;
+    private $locator;
 
     /**
      * @var Request
@@ -35,13 +40,12 @@ abstract class AbstractGrid
     /**
      * @param ModelCriteria $query
      * @param Request $request
-     * @param LocatorLocatorInterface $locator
      */
-    public function __construct(ModelCriteria $query, Request $request, LocatorLocatorInterface $locator)
+    public function __construct(ModelCriteria $query, Request $request)
     {
         $this->query = $query;
         $this->request = $request;
-        $this->locator = $locator;
+        $this->locator = Locator::getInstance();
     }
 
     /**
@@ -62,5 +66,40 @@ abstract class AbstractGrid
             $this->request->query->all(),
             $this->query
         );
+    }
+
+    /**
+     * @return DefaultRowsRenderer
+     */
+    public function createDefaultRowRenderer(){
+        return $this->locator->ui()->pluginGridDefaultRowsRenderer();
+    }
+
+    /**
+     * @return Pagination
+     */
+    public function createPagination(){
+        return $this->locator->ui()->pluginGridPagination();
+    }
+
+    /**
+     * @return DefaultColumn
+     */
+    public function createDefaultColumn(){
+        return $this->locator->ui()->pluginGridDefaultColumn();
+    }
+
+    /**
+     * @return BooleanColumn
+     */
+    public function createBooleanColumn(){
+        return $this->locator->ui()->pluginGridBooleanColumn();
+    }
+
+    /**
+     * @return DateTimeColumn
+     */
+    public function createDateColumn(){
+        return $this->locator->ui()->pluginGridDateTimeColumn();
     }
 }
