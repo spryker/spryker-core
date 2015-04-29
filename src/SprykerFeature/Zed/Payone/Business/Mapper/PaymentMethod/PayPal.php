@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business\PaymentMethodMapper;
+namespace SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethod;
 
 
 use SprykerFeature\Shared\Payone\Transfer\AuthorizationDataInterface;

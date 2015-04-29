@@ -2,17 +2,18 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
-use SprykerFeature\Shared\Payone\PayoneConfig;
 use SprykerFeature\Shared\Payone\Transfer\StandardParameterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\ApiConstants;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayoneBusiness;
-use \SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethodMapperInterface;
+use SprykerFeature\Zed\Payone\PayoneConfig;
 
 /**
  * @method Factory|PayoneBusiness getFactory()
+ * @method PayoneConfig getConfig()
  */
 class PayoneDependencyContainer extends AbstractDependencyContainer
 {
@@ -47,14 +48,6 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     public function createPayoneFacade()
     {
         return $this->getLocator()->payone()->facade();
-    }
-
-    /**
-     * @return PayoneSettings
-     */
-    protected function createSettings()
-    {
-        return $this->getFactory()->createPayoneSettings();
     }
 
     /**
@@ -115,50 +108,29 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
      */
     protected function createModeDetector()
     {
-        return $this->getFactory()
-                ->createModeDetector();
+        return $this->getFactory()->createModeDetector();
     }
 
     /**
-     * @todo implemetation in PayoneSettings???
+     * @todo move implementation in PayoneConfig
      * @return array
      */
     protected function getAvailablePaymentMethods()
     {
         return [
-            ApiConstants::PAYMENT_METHOD_PREPAYMENT
-                => $this->getFactory()->createPaymentMethodMapperPrePayment(),
-            ApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO
-                => $this->getFactory()->createPaymentMethodMapperCreditCardPseudo()
+            ApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createPaymentMethodMapperPrePayment(),
+            ApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createPaymentMethodMapperCreditCardPseudo()
         ];
     }
 
     /**
-     * @todo implemetation in PayoneSettings???
      * @todo is it allowed to cache like this???
      * @return StandardParameterInterface
      */
     protected function createStandardParameter()
     {
         if ($this->standardParameter === null) {
-            $settings = $config = $this->createSettings();
-            $config = $settings->getCredentials();
-
-            $this->standardParameter = $this->getLocator()->payone()->transferStandardParameter();
-
-            $this->standardParameter->setEncoding($config[PayoneConfig::PAYONE_CREDENTIALS_ENCODING]);
-            $this->standardParameter->setMid($config[PayoneConfig::PAYONE_CREDENTIALS_MID]);
-            $this->standardParameter->setAid($config[PayoneConfig::PAYONE_CREDENTIALS_AID]);
-            $this->standardParameter->setPortalId($config[PayoneConfig::PAYONE_CREDENTIALS_PORTAL_ID]);
-            $this->standardParameter->setKey($config[PayoneConfig::PAYONE_CREDENTIALS_KEY]);
-
-            $this->standardParameter->setPaymentGatewayUrl($config[PayoneConfig::PAYONE_PAYMENT_GATEWAY_URL]);
-            $this->standardParameter->setCurrency(Store::getInstance()->getCurrencyIsoCode());
-            $this->standardParameter->setLanguage(Store::getInstance()->getCurrentLanguage());
-
-            $this->standardParameter->setRedirectSuccessUrl($settings->getRedirectSuccessUrl());
-            $this->standardParameter->setRedirectBackUrl($settings->getRedirectBackUrl());
-            $this->standardParameter->setRedirectErrorUrl($settings->getRedirectErrorUrl());
+            $this->standardParameter = $this->getConfig()->getRequestStandardParameter();
         }
 
         return $this->standardParameter;

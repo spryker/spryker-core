@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business\PaymentMethodMapper;
+namespace SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethod;
 
 use SprykerFeature\Shared\Payone\Transfer\CaptureDataInterface;
 use SprykerFeature\Shared\Payone\Transfer\DebitDataInterface;
@@ -10,7 +10,7 @@ use SprykerFeature\Zed\Payone\Business\Api\ApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
-use SprykerFeature\Zed\Payone\Business\PaymentMethodMapperInterface;
+use SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 
 
@@ -28,11 +28,11 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, ApiConsta
 
 
     /**
-     * @param StandardParameterInterface $standardParamter
+     * @param StandardParameterInterface $standardParameter
      */
-    public function setStandardParameter(StandardParameterInterface $standardParamter)
+    public function setStandardParameter(StandardParameterInterface $standardParameter)
     {
-        $this->standardParameter = $standardParamter;
+        $this->standardParameter = $standardParameter;
     }
 
     /**
