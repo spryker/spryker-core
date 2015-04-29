@@ -40,7 +40,6 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormTranslationForm(
             $request,
-            $this->getLocator(),
             $this->getQueryContainer(),
             $this->getLocaleFacade()
         );
@@ -57,8 +56,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
         $translationQuery = $glossaryQueryContainer->joinTranslationQueryWithKeysAndLocales($glossaryQueryContainer->queryTranslations());
         return $this->getFactory()->createGridTranslationGrid(
             $translationQuery,
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 

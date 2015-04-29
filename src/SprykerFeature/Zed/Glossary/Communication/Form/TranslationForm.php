@@ -37,11 +37,10 @@ class TranslationForm extends AbstractForm
      */
     public function __construct(
         Request $request,
-        LocatorLocatorInterface $locator,
         QueryContainerInterface $queryContainer,
         GlossaryToLocaleInterface $localeFacade
     ) {
-        parent::__construct($request, $locator, $queryContainer);
+        parent::__construct($request, $queryContainer);
         $this->localeFacade = $localeFacade;
     }
 

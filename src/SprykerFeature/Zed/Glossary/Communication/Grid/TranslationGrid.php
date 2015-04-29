@@ -22,25 +22,25 @@ class TranslationGrid extends AbstractGrid
     public function definePlugins()
     {
         $plugins = [
-            $this->locator->ui()->pluginGridDefaultRowsRenderer(),
-            $this->locator->ui()->pluginGridPagination(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultRowRenderer(),
+            $this->createPagination(),
+            $this->createDefaultColumn()
                 ->setName(self::LOCALE)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::TRANSLATION)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::TRANSLATION_IS_ACTIVE)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::GLOSSARY_KEY)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::GLOSSARY_KEY_IS_ACTIVE)
                 ->filterable()
                 ->sortable()
