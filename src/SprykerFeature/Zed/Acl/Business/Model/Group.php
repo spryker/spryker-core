@@ -48,7 +48,25 @@ class Group implements GroupInterface
         $data = $this->locator->acl()->transferGroup();
         $data->setName($name);
 
+        $this->assertGroupHasName($data);
+
         return $this->save($data);
+    }
+
+    /**
+     * @param TransferGroup $group
+     *
+     * @return TransferGroup
+     */
+    public function updateGroup(TransferGroup $group)
+    {
+        $original = $this->getGroupById($group->getIdAclGroup());
+
+        if ($group->getName() !== $original->getName()) {
+            $this->assertGroupHasName($group);
+        }
+
+        return $this->save($group);
     }
 
     /**
@@ -58,10 +76,13 @@ class Group implements GroupInterface
      */
     public function save(TransferGroup $group)
     {
-        $entity = $this->locator->acl()->entitySpyAclGroup();
-
         $this->assertGroupExists($group);
-        $this->assertGroupHasName($group);
+
+        if ($group->getIdAclGroup() !== null) {
+            $entity = $this->getEntityGroupById($group->getIdAclGroup());
+        } else {
+            $entity = $this->locator->acl()->entitySpyAclGroup();
+        }
 
         $entity->setName($group->getName());
         $entity->save();
@@ -70,6 +91,23 @@ class Group implements GroupInterface
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return TransferGroup
+     * @throws GroupNotFoundException
+     */
+    public function getEntityGroupById($id)
+    {
+        $entity = $this->queryContainer->queryGroupById($id)->findOne();
+
+        if ($entity === null) {
+            throw new GroupNotFoundException();
+        }
+
+        return $entity;
     }
 
     /**
@@ -181,6 +219,17 @@ class Group implements GroupInterface
             ->setFkUserUser($idUser);
 
         return $entity->save();
+    }
+
+    /**
+     * @param $idGroup
+     * @param $idUser
+     */
+    public function removeUser($idGroup, $idUser)
+    {
+        $entity = $this->queryContainer->queryUserHasGroupById($idGroup, $idUser)->findOne();
+
+        $entity->delete();
     }
 
     /**

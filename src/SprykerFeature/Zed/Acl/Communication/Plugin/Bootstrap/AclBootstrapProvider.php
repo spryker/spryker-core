@@ -28,7 +28,7 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
     {
         $aclFacade = $this->getDependencyContainer()->locateAclFacade();
         $userFacade = $this->getDependencyContainer()->locateUserFacade();
-        $settings = $this->getDependencyContainer()->createSettings();
+        $settings = $this->getDependencyContainer()->getConfig();
 
         $app->before(function (Request $request) use ($app, $aclFacade, $userFacade, $settings) {
             $bundle = $request->attributes->get('module');

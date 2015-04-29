@@ -1,31 +1,43 @@
 <?php
 namespace SprykerFeature\Zed\Acl\Persistence;
 
+use Propel\Runtime\ActiveQuery\Join;
+use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
+use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
-use SprykerFeature\Zed\Acl\Business\AclSettings;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclUserHasGroupQuery;
+use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclGroupsHasRolesTableMap;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclGroupTableMap;
+use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclRoleTableMap;
+use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclRuleTableMap;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclUserHasGroupTableMap;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRolesQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRuleQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRoleQuery;
+use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserUserTableMap;
 use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUserQuery;
 
-/**
- * Class AclQueryContainer
- *
- * @package SprykerFeature\Zed\Acl\Persistence
- */
 /**
  * @method AclDependencyContainer getDependencyContainer()
  */
 class AclQueryContainer extends AbstractQueryContainer
 {
+    const ROLE_NAME = 'role_name';
+    const TYPE = 'type';
+    const BUNDLE = 'bundle';
+    const CONTROLLER = 'controller';
+    const ACTION = 'action';
+    const HAS_ROLE = 'has_role';
+    const SPY_ACL_GROUPS_HAS_ROLES = 'SpyAclGroupsHasRoles';
+    const GROUP_NAME = 'group_name';
+    const ID_ACL_GROUP = 'id_acl_group';
+    const GROUP_JOIN = 'groupJoin';
+
     /**
      * @param string $name
      *
@@ -125,6 +137,33 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idGroup
      *
+     * @return SpyUserUserQuery
+     */
+    public function queryGroupUsers($idGroup)
+    {
+        $query = $this->getDependencyContainer()->createUserQuery();
+
+        $join = new Join();
+
+        $join->addCondition(
+            SpyUserUserTableMap::COL_ID_USER_USER,
+            SpyAclUserHasGroupTableMap::COL_FK_USER_USER
+        );
+
+        $query->addJoinObject($join, self::GROUP_JOIN);
+
+        $condition = sprintf('%s = %s', SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP, $idGroup);
+        $query->addJoinCondition(
+            self::GROUP_JOIN,
+            $condition
+        );
+
+        return $query;
+    }
+
+    /**
+     * @param int $idGroup
+     *
      * @return SpyAclRoleQuery
      */
     public function queryGroupRoles($idGroup)
@@ -188,21 +227,21 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryRuleByPathAndRoles(
         RoleCollection $roles,
-        $bundle = AclSettings::VALIDATOR_WILDCARD,
-        $controller = AclSettings::VALIDATOR_WILDCARD,
-        $action = AclSettings::VALIDATOR_WILDCARD
+        $bundle = AclConfig::VALIDATOR_WILDCARD,
+        $controller = AclConfig::VALIDATOR_WILDCARD,
+        $action = AclConfig::VALIDATOR_WILDCARD
     ) {
         $query = $this->getDependencyContainer()->createRuleQuery();
 
-        if ($bundle !== AclSettings::VALIDATOR_WILDCARD) {
+        if ($bundle !== AclConfig::VALIDATOR_WILDCARD) {
             $query->filterByBundle($bundle);
         }
 
-        if ($controller !== AclSettings::VALIDATOR_WILDCARD) {
+        if ($controller !== AclConfig::VALIDATOR_WILDCARD) {
             $query->filterByController($controller);
         }
 
-        if ($action !== AclSettings::VALIDATOR_WILDCARD) {
+        if ($action !== AclConfig::VALIDATOR_WILDCARD) {
             $query->filterByAction($action);
         }
 
@@ -250,8 +289,50 @@ class AclQueryContainer extends AbstractQueryContainer
             Criteria::LEFT_JOIN
         );
 
-        $query->withColumn(SpyAclGroupTableMap::COL_NAME, 'group_name');
-        $query->withColumn(SpyAclGroupTableMap::COL_NAME, 'id_acl_group');
+        $query->withColumn(SpyAclGroupTableMap::COL_NAME, self::GROUP_NAME);
+        $query->withColumn(SpyAclGroupTableMap::COL_ID_ACL_GROUP, self::ID_ACL_GROUP);
+
+        return $query;
+    }
+
+    /**
+     * @param int $idGroup
+     *
+     * @return SpyUserUserQuery
+     */
+    public function queryUsersWithGroupByGroupId($idGroup)
+    {
+        $query = $this->queryUsersWithGroup();
+        $query->filterBy(SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP, $idGroup);
+
+        return $query;
+    }
+
+    /**
+     * @param int $idGroup
+     *
+     * @return SpyAclRoleQuery
+     */
+    public function queryRulesFromGroup($idGroup)
+    {
+        $query = $this->getDependencyContainer()->createRoleQuery();
+        $query->joinAclRule();
+        $query->leftJoinSpyAclGroupsHasRoles();
+
+        $condition = sprintf('%s = %s', SpyAclGroupsHasRolesTableMap::COL_FK_ACL_GROUP, $idGroup);
+        $query->addJoinCondition(
+            self::SPY_ACL_GROUPS_HAS_ROLES,
+            $condition
+        );
+
+        $hasRole = sprintf("COUNT(%s)", SpyAclGroupsHasRolesTableMap::COL_FK_ACL_ROLE);
+
+        $query->withColumn(SpyAclRoleTableMap::COL_NAME, self::ROLE_NAME);
+        $query->withColumn(SpyAclRuleTableMap::COL_TYPE, self::TYPE);
+        $query->withColumn(SpyAclRuleTableMap::COL_BUNDLE, self::BUNDLE);
+        $query->withColumn(SpyAclRuleTableMap::COL_CONTROLLER, self::CONTROLLER);
+        $query->withColumn(SpyAclRuleTableMap::COL_ACTION, self::ACTION);
+        $query->withColumn($hasRole, self::HAS_ROLE);
 
         return $query;
     }
