@@ -46,6 +46,7 @@ require('Ui').ng
 
 
 					$scope.$watch('state', function(now, was, scope) {
+						scope.state             = bool(now);
 						scope.switchModel.value = bool(now);
 					});
 
