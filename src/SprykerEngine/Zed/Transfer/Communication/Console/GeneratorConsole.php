@@ -2,7 +2,7 @@
 
 namespace SprykerEngine\Zed\Transfer\Communication\Console;
 
-use SprykerEngine\Zed\Console\Business\Model\Console;
+use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -50,8 +50,15 @@ class GeneratorConsole extends Console
         return $definitions;
     }
 
+    private function removeGeneratedTransferObjects($targetFolder)
+    {
+        // @todo
+        // will remove only php files
+    }
+
     public function execute(InputInterface $input, OutputInterface $output)
     {
+
         $this->manager = new ClassCollectionManager();
 
         $xmlDefinitions = $this->getXmlDefinitions();
@@ -74,6 +81,8 @@ class GeneratorConsole extends Console
         $generator = new ClassGenerator();
         $generator->setNamespace('Generated\Shared\Transfer');
         $generator->setTargetFolder(APPLICATION_SOURCE_DIR . 'Generated/Shared/Transfer/');
+
+        $this->removeGeneratedTransferObjects($generator->getTargetFolder());
 
         foreach ($definitions as $classDefinition) {
             $phpCode = $generator->generateClass($classDefinition);
