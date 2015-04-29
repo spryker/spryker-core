@@ -62,7 +62,7 @@ require('Ui').ng
 							.then(function(model) {
 								$scope.state = model.value;
 							}, function(why) {
-								$scope.switchModel.value = $scope.value;
+								$scope.switchModel.value = $scope.state;
 
 								console.warn('SPY - model state unknown, not updating state');		//jshint ignore:line
 							})
