@@ -11,6 +11,7 @@ use SprykerFeature\Zed\SearchPage\Business\Reader\TemplateReader;
 use SprykerFeature\Zed\SearchPage\Business\Writer\DocumentAttributeWriter;
 use SprykerFeature\Zed\SearchPage\Business\Writer\TemplateWriter;
 use SprykerFeature\Zed\SearchPage\Business\Writer\PageElementWriter;
+use SprykerFeature\Zed\SearchPage\Dependency\Facade\SearchPageToTouchInterface;
 use SprykerFeature\Zed\SearchPage\Persistence\SearchPageQueryContainer;
 
 /**
@@ -25,7 +26,8 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
     public function createPageElementWriter()
     {
         return $this->getFactory()->createWriterPageElementWriter(
-            $this->createPageElementReader()
+            $this->createPageElementReader(),
+            $this->createTouchFacade()
         );
     }
 
@@ -109,5 +111,13 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
     private function getQueryContainer()
     {
         return $this->getLocator()->searchPage()->queryContainer();
+    }
+
+    /**
+     * @return SearchPageToTouchInterface
+     */
+    private function createTouchFacade()
+    {
+        return $this->getLocator()->touch()->facade();
     }
 }

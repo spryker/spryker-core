@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\SearchPage\Business\Writer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Shared\SearchPage\Dependency\PageElementInterface;
 use SprykerFeature\Zed\SearchPage\Business\Reader\PageElementReaderInterface;
+use SprykerFeature\Zed\SearchPage\Dependency\Facade\SearchPageToTouchInterface;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement;
 
 class PageElementWriter implements PageElementWriterInterface
@@ -15,11 +16,20 @@ class PageElementWriter implements PageElementWriterInterface
     private $elementReader;
 
     /**
-     * @param PageElementReaderInterface $elementReader
+     * @var SearchPageToTouchInterface
      */
-    public function __construct(PageElementReaderInterface $elementReader)
-    {
+    private $touchFacade;
+
+    /**
+     * @param PageElementReaderInterface $elementReader
+     * @param SearchPageToTouchInterface $touchFacade
+     */
+    public function __construct(
+        PageElementReaderInterface $elementReader,
+        SearchPageToTouchInterface $touchFacade
+    ) {
         $this->elementReader = $elementReader;
+        $this->touchFacade = $touchFacade;
     }
 
     /**
@@ -34,6 +44,8 @@ class PageElementWriter implements PageElementWriterInterface
 
         $pageElementEntity->fromArray($pageElement->toArray());
         $pageElementEntity->save();
+
+        $this->touchFacade->touchActive('search-page-config', 1);
 
         return $pageElementEntity->getPrimaryKey();
     }
