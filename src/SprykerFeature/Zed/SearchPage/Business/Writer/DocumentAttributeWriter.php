@@ -1,13 +1,12 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Business\Writer;
+namespace SprykerFeature\Zed\SearchPage\Business\Writer;
 
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\SearchPage\Business\DocumentAttributeWriterInterface;
-use SprykerFeature\SearchPage\Business\Exception\DocumentAttributeDoesNotExistException;
-use SprykerFeature\SearchPage\Business\Reader\DocumentAttributeReaderInterface;
-use SprykerFeature\Shared\SearchPage\Dependency\DocumentAttributeInterface;
+use SprykerFeature\Zed\SearchPage\Business\Exception\DocumentAttributeDoesNotExistException;
+use SprykerFeature\Zed\SearchPage\Business\Reader\DocumentAttributeReaderInterface;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute;
+use SprykerFeature\Shared\SearchPage\Dependency\DocumentAttributeInterface;
 
 class DocumentAttributeWriter implements DocumentAttributeWriterInterface
 {
@@ -30,11 +29,11 @@ class DocumentAttributeWriter implements DocumentAttributeWriterInterface
      *
      * @return int
      */
-    public function create(DocumentAttributeInterface $documentAttribute)
+    public function createDocumentAttribute(DocumentAttributeInterface $documentAttribute)
     {
         $documentAttributeEntity = new SpySearchDocumentAttribute();
         $documentAttributeEntity->setAttributeName($documentAttribute->getAttributeName());
-        $documentAttributeEntity->setDocumentType($documentAttribute->getDocumentType());
+        $documentAttributeEntity->setAttributeType($documentAttribute->getAttributeType());
         $documentAttributeEntity->save();
 
         return $documentAttributeEntity->getPrimaryKey();
@@ -47,7 +46,7 @@ class DocumentAttributeWriter implements DocumentAttributeWriterInterface
      * @throws DocumentAttributeDoesNotExistException
      * @throws PropelException
      */
-    public function update(DocumentAttributeInterface $documentAttribute)
+    public function updateDocumentAttribute(DocumentAttributeInterface $documentAttribute)
     {
         $idDocumentAttribute = $documentAttribute->getIdSearchDocumentAttribute();
         $documentAttributeEntity = $this->documentAttributeReader
@@ -58,7 +57,7 @@ class DocumentAttributeWriter implements DocumentAttributeWriterInterface
             throw new DocumentAttributeDoesNotExistException('The document-attribute does not exist in the DB');
         }
         $documentAttributeEntity->setAttributeName($documentAttribute->getAttributeName());
-        $documentAttributeEntity->setDocumentType($documentAttribute->getDocumentType());
+        $documentAttributeEntity->setAttributeType($documentAttribute->getAttributeType());
         $documentAttributeEntity->save();
 
         return $idDocumentAttribute;

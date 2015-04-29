@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\SearchPage\Business\Exception;
 
-class TemplateAlreadyExistsException extends \Exception
+class PageElementDoesNotExistException extends \Exception
 {
 
 }

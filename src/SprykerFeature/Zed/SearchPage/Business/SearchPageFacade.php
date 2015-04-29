@@ -1,8 +1,9 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Business;
+namespace SprykerFeature\Zed\SearchPage\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Shared\SearchPage\Dependency\PageElementInterface;
 
 /**
  * @method SearchPageDependencyContainer getDependencyContainer()
@@ -10,14 +11,58 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 class SearchPageFacade extends AbstractFacade
 {
 
-    public function createPageAttribute()
+    /**
+     * @param PageElementInterface $pageElement
+     *
+     * @return int
+     */
+    public function createPageElement(PageElementInterface $pageElement)
     {
-
+        return $this->getDependencyContainer()
+            ->createPageElementWriter()
+            ->createPageElement($pageElement)
+        ;
     }
 
-    public function updatePageAttribute()
+    /**
+     * @param PageElementInterface $pageElement
+     *
+     * @return int
+     */
+    public function updatePageElement(PageElementInterface $pageElement)
     {
-
+        return $this->getDependencyContainer()
+            ->createPageElementWriter()
+            ->createPageElement($pageElement)
+        ;
     }
 
+    /**
+     * @param PageElementInterface $pageElement
+     *
+     * @return int
+     */
+    public function deletePageElement(PageElementInterface $pageElement)
+    {
+        return $this->getDependencyContainer()
+            ->createPageElementWriter()
+            ->createPageElement($pageElement)
+        ;
+    }
+
+    public function installDocumentAttributes()
+    {
+        $this->getDependencyContainer()
+            ->getDocumentAttributeInstaller()
+            ->install()
+        ;
+    }
+
+    public function installTemplates()
+    {
+        $this->getDependencyContainer()
+            ->getTemplateInstaller()
+            ->install()
+        ;
+    }
 }

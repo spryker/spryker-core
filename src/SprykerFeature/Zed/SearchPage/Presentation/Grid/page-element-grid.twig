@@ -1,0 +1,38 @@
+<div
+        class="spy-grid interactive"
+        ng-controller="GridController"
+        src="/search-page/grid/page-element"
+        name="grid"
+        channel="page-element"
+        >
+    <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
+
+    <table>
+        <thead>
+        <tr>
+            <th spy-grid-head="columns['id_search_page_attribute']" label="Id"></th>
+            <th spy-grid-head="columns['key_name']" label="Key Name"></th>
+            <th spy-grid-head="columns['is_attribute_active']" label="Active"></th>
+            <th spy-grid-head="columns['template_name']" label="Template Name"></th>
+            <th spy-grid-head="columns['attribute_name']" label="Document Attribute Name"></th>
+            <th spy-grid-head="columns['attribute_type']" label="Document Attribute Type"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="row in rows" ng-click="$emitAllChannels('glossary_edit', row)">
+            <td>{[{ row['id_search_page_attribute'] }]}</td>
+            <td>{[{ row['key_name'] }]}</td>
+            <td><spy-format-boolean content="row['is_attribute_active']"></spy-format-boolean></td>
+            <td>{[{ row['template_name'] }]}</td>
+            <td>{[{ row['attribute_name'] }]}</td>
+            <td>{[{ row['attribute_type'] }]}</td>
+        </tr>
+        <tr ng-if="!rows.length">
+            <td colspan="5">No results found</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
+</div>

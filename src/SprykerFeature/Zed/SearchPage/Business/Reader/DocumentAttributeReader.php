@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Business\Reader;
+namespace SprykerFeature\Zed\SearchPage\Business\Reader;
 
-use SprykerFeature\SearchPage\Persistence\SearchPageQueryContainer;
+use SprykerFeature\Zed\SearchPage\Persistence\SearchPageQueryContainer;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute;
 
 class DocumentAttributeReader implements DocumentAttributeReaderInterface
@@ -22,15 +22,15 @@ class DocumentAttributeReader implements DocumentAttributeReaderInterface
     }
 
     /**
-     * @param string $documentName
+     * @param string $name
      * @param string $type
      *
      * @return bool
      */
-    public function hasDocumentAttributeByNameAndType($documentName, $type)
+    public function hasDocumentAttributeByNameAndType($name, $type)
     {
         $documentAttributeQuery = $this->searchPageQueryContainer
-            ->queryDocumentAttributeByNameAndType($documentName, $type)
+            ->queryDocumentAttributeByNameAndType($name, $type)
         ;
 
         return $documentAttributeQuery->count() > 0;

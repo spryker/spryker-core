@@ -3,15 +3,15 @@
 namespace SprykerFeature\Shared\SearchPage\Transfer;
 
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
-use SprykerFeature\Shared\SearchPage\Dependency\PageAttributeTemplateInterface;
+use SprykerFeature\Shared\SearchPage\Dependency\TemplateInterface;
 
-class PageAttributeTemplate extends AbstractTransfer implements PageAttributeTemplateInterface
+class Template extends AbstractTransfer implements TemplateInterface
 {
 
     /**
      * @var int
      */
-    protected $idPageAttributeTemplate = null;
+    protected $idPageElementTemplate = null;
 
     /**
      * @var string
@@ -21,20 +21,20 @@ class PageAttributeTemplate extends AbstractTransfer implements PageAttributeTem
     /**
      * @return int
      */
-    public function getIdPageAttributeTemplate()
+    public function getIdPageElementTemplate()
     {
-        return $this->idPageAttributeTemplate;
+        return $this->idPageElementTemplate;
     }
 
     /**
-     * @param int $idPageAttributeTemplate
+     * @param int $idPageElementTemplate
      *
      * @return $this
      */
-    public function setIdPageAttributeTemplate($idPageAttributeTemplate)
+    public function setIdPageElementTemplate($idPageElementTemplate)
     {
-        $this->idPageAttributeTemplate = $idPageAttributeTemplate;
-        $this->addModifiedProperty('idPageAttributeTemplate');
+        $this->idPageElementTemplate = $idPageElementTemplate;
+        $this->addModifiedProperty('idPageElementTemplate');
 
         return $this;
     }

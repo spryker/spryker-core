@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\SearchPage\Persistence\Propel;
 
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\Base\SpySearchPageAttribute as BaseSpySearchPageAttribute;
+use SprykerFeature\Zed\SearchPage\Persistence\Propel\Base\SpySearchPageElement as BaseSpySearchPageElement;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_search_page_attribute' table.
+ * Skeleton subclass for representing a row from the 'spy_search_page_element' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use SprykerFeature\Zed\SearchPage\Persistence\Propel\Base\SpySearchPageAttribute
  * long as it does not already exist in the output directory.
  *
  */
-class SpySearchPageAttribute extends BaseSpySearchPageAttribute
+class SpySearchPageElement extends BaseSpySearchPageElement
 {
 
 }

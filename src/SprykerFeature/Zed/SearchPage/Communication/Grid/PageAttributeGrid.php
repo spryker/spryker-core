@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Communication\Grid;
+namespace SprykerFeature\Zed\SearchPage\Communication\Grid;
 
 use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
 use SprykerFeature\Zed\Ui\Dependency\Plugin\GridPluginInterface;

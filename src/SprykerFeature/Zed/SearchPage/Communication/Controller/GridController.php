@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Communication\Controller;
+namespace SprykerFeature\Zed\SearchPage\Communication\Controller;
 
-use SprykerFeature\SearchPage\Communication\SearchPageDependencyContainer;
+use SprykerFeature\Zed\SearchPage\Communication\SearchPageDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
 /**
@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 class GridController extends AbstractController
 {
 
-    public function pageAttributeAction()
+    public function pageElementAction()
     {
 
     }

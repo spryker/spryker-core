@@ -1,15 +1,15 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Business\Installer;
+namespace SprykerFeature\Zed\SearchPage\Business\Installer;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\SearchPage\Business\Exception\TemplateAlreadyExistsException;
-use SprykerFeature\SearchPage\Business\Reader\PageAttributeTemplateReaderInterface;
-use SprykerFeature\SearchPage\Business\Writer\PageAttributeTemplateWriterInterface;
+use SprykerFeature\Zed\SearchPage\Business\Exception\TemplateAlreadyExistsException;
+use SprykerFeature\Zed\SearchPage\Business\Reader\TemplateReaderInterface;
+use SprykerFeature\Zed\SearchPage\Business\Writer\TemplateWriterInterface;
 use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 
-class PageAttributeTemplateInstaller extends AbstractInstaller
+class TemplateInstaller extends AbstractInstaller
 {
     const RANGE_SLIDER = 'range_slider';
     const DROP_DOWN = 'drop_down';
@@ -20,23 +20,23 @@ class PageAttributeTemplateInstaller extends AbstractInstaller
     private $locator;
 
     /**
-     * @var PageAttributeTemplateWriterInterface
+     * @var TemplateWriterInterface
      */
     private $templateWriter;
 
     /**
-     * @var PageAttributeTemplateReaderInterface
+     * @var TemplateReaderInterface
      */
     private $templateReader;
 
     /**
-     * @param PageAttributeTemplateWriterInterface $templateWriter
-     * @param PageAttributeTemplateReaderInterface $templateReader
+     * @param TemplateWriterInterface $templateWriter
+     * @param TemplateReaderInterface $templateReader
      * @param LocatorLocatorInterface $locator
      */
     public function __construct(
-        PageAttributeTemplateWriterInterface $templateWriter,
-        PageAttributeTemplateReaderInterface $templateReader,
+        TemplateWriterInterface $templateWriter,
+        TemplateReaderInterface $templateReader,
         LocatorLocatorInterface $locator
     ) {
         $this->templateWriter = $templateWriter;
@@ -68,6 +68,11 @@ class PageAttributeTemplateInstaller extends AbstractInstaller
         ];
     }
 
+    /**
+     * @param array $templates
+     *
+     * @throws TemplateAlreadyExistsException
+     */
     private function installTemplates(array $templates)
     {
         foreach ($templates as $template) {
@@ -81,8 +86,10 @@ class PageAttributeTemplateInstaller extends AbstractInstaller
                     )
                 );
             }
-//            $templateTransfer = $this->locator->searchPage()->transferDocumentAttribute()
-//            $this->templateWriter->createPageAttributeTemplate();
+            $templateTransfer = $this->locator->searchPage()->transferPageAttributeTemplate();
+            $templateTransfer->setTemplateName($template);
+
+            $this->templateWriter->createTemplate($templateTransfer);
         }
     }
 }

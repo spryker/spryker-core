@@ -1,16 +1,15 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Business\Reader;
+namespace SprykerFeature\Zed\SearchPage\Business\Reader;
 
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageAttributeTemplate;
+use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplate;
 
-interface PageAttributeTemplateReaderInterface
+interface TemplateReaderInterface
 {
-
     /**
      * @param $idTemplate
      *
-     * @return SpySearchPageAttributeTemplate
+     * @return SpySearchPageElementTemplate
      */
     public function getTemplateById($idTemplate);
 

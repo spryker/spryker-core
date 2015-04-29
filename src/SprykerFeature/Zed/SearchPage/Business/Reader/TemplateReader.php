@@ -1,11 +1,11 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Business\Reader;
+namespace SprykerFeature\Zed\SearchPage\Business\Reader;
 
-use SprykerFeature\SearchPage\Persistence\SearchPageQueryContainer;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageAttributeTemplate;
+use SprykerFeature\Zed\SearchPage\Persistence\SearchPageQueryContainer;
+use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplate;
 
-class PageAttributeTemplateReader implements PageAttributeTemplateReaderInterface
+class TemplateReader implements TemplateReaderInterface
 {
 
     /**
@@ -24,12 +24,12 @@ class PageAttributeTemplateReader implements PageAttributeTemplateReaderInterfac
     /**
      * @param $idTemplate
      *
-     * @return SpySearchPageAttributeTemplate
+     * @return SpySearchPageElementTemplate
      */
     public function getTemplateById($idTemplate)
     {
         $templateQuery = $this->searchPageQueryContainer
-            ->queryPageAttributeTemplateByPrimaryKey($idTemplate)
+            ->queryPageElementTemplateByPrimaryKey($idTemplate)
         ;
 
         return $templateQuery->findOne();
@@ -43,7 +43,7 @@ class PageAttributeTemplateReader implements PageAttributeTemplateReaderInterfac
     public function hasTemplateByName($templateName)
     {
         $documentAttributeQuery = $this->searchPageQueryContainer
-            ->queryPageAttributeTemplateByName($templateName)
+            ->queryPageElementTemplateByName($templateName)
         ;
 
         return $documentAttributeQuery->count() > 0;
@@ -54,7 +54,7 @@ class PageAttributeTemplateReader implements PageAttributeTemplateReaderInterfac
      */
     public function hasTemplates()
     {
-        $documentAttributeQuery = $this->searchPageQueryContainer->queryPageAttributeTemplate();
+        $documentAttributeQuery = $this->searchPageQueryContainer->queryPageElementTemplate();
 
         return $documentAttributeQuery->count() > 0;
     }

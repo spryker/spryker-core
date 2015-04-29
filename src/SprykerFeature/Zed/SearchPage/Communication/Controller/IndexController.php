@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Communication\Controller;
+namespace SprykerFeature\Zed\SearchPage\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 

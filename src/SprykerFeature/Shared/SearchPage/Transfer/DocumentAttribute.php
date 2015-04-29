@@ -20,7 +20,7 @@ class DocumentAttribute extends AbstractTransfer implements DocumentAttributeInt
     /**
      * @var string
      */
-    protected $documentType;
+    protected $attributeType;
 
     /**
      * @return int
@@ -67,19 +67,19 @@ class DocumentAttribute extends AbstractTransfer implements DocumentAttributeInt
     /**
      * @return string
      */
-    public function getDocumentType()
+    public function getAttributeType()
     {
-        return $this->documentType;
+        return $this->attributeType;
     }
 
     /**
-     * @param string $documentType
+     * @param string $attributeType
      *
      * @return $this
      */
-    public function setDocumentType($documentType)
+    public function setAttributeType($attributeType)
     {
-        $this->documentType = $documentType;
+        $this->attributeType = $attributeType;
         $this->addModifiedProperty('documentType');
 
         return $this;

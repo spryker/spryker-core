@@ -1,12 +1,12 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Business\Installer;
+namespace SprykerFeature\Zed\SearchPage\Business\Installer;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\SearchPage\Business\DocumentAttributeWriterInterface;
-use SprykerFeature\SearchPage\Business\Exception\DocumentAttributeAlreadyExistsException;
-use SprykerFeature\SearchPage\Business\Reader\DocumentAttributeReaderInterface;
+use SprykerFeature\Zed\SearchPage\Business\Writer\DocumentAttributeWriterInterface;
+use SprykerFeature\Zed\SearchPage\Business\Exception\DocumentAttributeAlreadyExistsException;
+use SprykerFeature\Zed\SearchPage\Business\Reader\DocumentAttributeReaderInterface;
 use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 
 class DocumentAttributeInstaller extends AbstractInstaller
@@ -112,9 +112,9 @@ class DocumentAttributeInstaller extends AbstractInstaller
 
             $documentAttributeTransfer = $this->locator->searchPage()->transferDocumentAttribute();
             $documentAttributeTransfer->setAttributeName($attributeName);
-            $documentAttributeTransfer->setDocumentType($attributeType);
+            $documentAttributeTransfer->setAttributeType($attributeType);
 
-            $this->documentAttributeWriter->create($documentAttributeTransfer);
+            $this->documentAttributeWriter->createDocumentAttribute($documentAttributeTransfer);
         }
     }
 }

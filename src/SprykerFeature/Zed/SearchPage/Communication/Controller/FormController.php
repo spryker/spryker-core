@@ -1,9 +1,11 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Communication\Controller;
+namespace SprykerFeature\Zed\SearchPage\Communication\Controller;
 
-use SprykerFeature\SearchPage\Communication\SearchPageDependencyContainer;
+use SprykerFeature\Zed\SearchPage\Communication\SearchPageDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method SearchPageDependencyContainer getDependencyContainer()
@@ -11,17 +13,53 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 class FormController extends AbstractController
 {
 
-    public function createPageAttributeAction()
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function createPageElementAction(Request $request)
     {
+        $form = $this->getDependencyContainer()->createPageElementPage($request);
 
+        $form->init();
+
+        if ($form->isValid()) {
+            $pageElementTransfer = $this->getLocator()->searchPage()->transferPageElement();
+            $pageElementTransfer->fromArray($form->getRequestData());
+
+            $this->getDependencyContainer()->getSearchPageFacade()->createPageElement($pageElementTransfer);
+            $form->setActiveValuesToDefault();
+        }
+
+        return $this->jsonResponse($form->renderData());
     }
 
-    public function updatePageAttributeAction()
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function updatePageElementAction(Request $request)
     {
+        $form = $this->getDependencyContainer()->createPageElementPage($request);
 
+        $form->init();
+
+        if ($form->isValid()) {
+            $pageElementTransfer = $this->getLocator()->searchPage()->transferPageElement();
+            $pageElementTransfer->fromArray($form->getRequestData());
+
+            $this->getDependencyContainer()->getSearchPageFacade()->updatePageElement($pageElementTransfer);
+            $form->setActiveValuesToDefault();
+        }
+
+        return $this->jsonResponse($form->renderData());
     }
 
-    public function deletePageAttributeAction()
+    public function deletePageElementAction(Request $request)
     {
 
     }

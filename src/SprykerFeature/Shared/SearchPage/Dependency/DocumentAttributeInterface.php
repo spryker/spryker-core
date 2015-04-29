@@ -31,12 +31,21 @@ interface DocumentAttributeInterface
     /**
      * @return string
      */
-    public function getDocumentType();
+    public function getAttributeType();
 
     /**
      * @param string $documentType
      *
      * @return $this
      */
-    public function setDocumentType($documentType);
+    public function setAttributeType($documentType);
+
+    /**
+     * @param bool $includeNullValues
+     * @param bool $recursive
+     * @param bool $formatToUnderscore
+     *
+     * @return array
+     */
+    public function toArray($includeNullValues = true, $recursive = true, $formatToUnderscore = true);
 }

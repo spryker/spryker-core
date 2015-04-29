@@ -1,19 +1,20 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Business;
+namespace SprykerFeature\Zed\SearchPage\Business\Writer;
 
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\SearchPage\Business\Exception\DocumentAttributeDoesNotExistException;
+use SprykerFeature\Zed\SearchPage\Business\Exception\DocumentAttributeDoesNotExistException;
 use SprykerFeature\Shared\SearchPage\Dependency\DocumentAttributeInterface;
 
 interface DocumentAttributeWriterInterface
 {
+
     /**
      * @param DocumentAttributeInterface $documentAttribute
      *
      * @return int
      */
-    public function create(DocumentAttributeInterface $documentAttribute);
+    public function createDocumentAttribute(DocumentAttributeInterface $documentAttribute);
 
     /**
      * @param DocumentAttributeInterface $documentAttribute
@@ -22,5 +23,5 @@ interface DocumentAttributeWriterInterface
      * @throws DocumentAttributeDoesNotExistException
      * @throws PropelException
      */
-    public function update(DocumentAttributeInterface $documentAttribute);
+    public function updateDocumentAttribute(DocumentAttributeInterface $documentAttribute);
 }

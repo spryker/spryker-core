@@ -6,21 +6,25 @@
           namespace="SprykerFeature\Zed\SearchPage\Persistence\Propel"
           package="vendor.spryker.search-page.src.SprykerFeature.Zed.SearchPage.Persistence.Propel">
 
-    <table name="spy_search_page_attribute" phpName="SpySearchPageAttribute">
+    <table name="spy_search_page_element" phpName="SpySearchPageElement">
 
-        <column name="id_search_page_attribute" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="key_name" type="VARCHAR" required="true"/>
-        <column name="is_attribute_active" type="BOOLEAN" required="true" default="false" />
+        <column name="id_search_page_element" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="element_key" type="VARCHAR" required="true"/>
+        <column name="is_element_active" type="BOOLEAN" required="true" default="false" />
         <column name="fk_search_document_attribute" type="INTEGER" required="true" />
-        <column name="fk_search_page_attribute_template" type="INTEGER" required="true" />
+        <column name="fk_search_page_element_template" type="INTEGER" required="true" />
 
         <foreign-key foreignTable="spy_search_document_attribute" phpName="DocumentAttribute">
             <reference foreign="id_search_document_attribute" local="fk_search_document_attribute"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_search_page_attribute_template" phpName="AttributeTemplate">
-            <reference foreign="id_search_page_attribute_template" local="fk_search_page_attribute_template"/>
+        <foreign-key foreignTable="spy_search_page_element_template" phpName="ElementTemplate">
+            <reference foreign="id_search_page_element_template" local="fk_search_page_element_template"/>
         </foreign-key>
+
+        <unique>
+            <unique-column name="element_key"/>
+        </unique>
 
     </table>
 
@@ -28,7 +32,7 @@
 
         <column name="id_search_document_attribute" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="attribute_name" type="VARCHAR" required="true"/>
-        <column name="document_type" type="VARCHAR" required="true" />
+        <column name="attribute_type" type="VARCHAR" required="true" />
 
         <unique>
             <unique-column name="attribute_name"/>
@@ -36,10 +40,10 @@
 
     </table>
 
-    <table name="spy_search_page_attribute_template" phpName="SpySearchPageAttributeTemplate">
+    <table name="spy_search_page_element_template" phpName="SpySearchPageElementTemplate">
 
-        <column name="id_search_page_attribute_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="type_name" type="VARCHAR" required="true"/>
+        <column name="id_search_page_element_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="template_name" type="VARCHAR" required="true"/>
 
         <unique>
             <unique-column name="type_name"/>

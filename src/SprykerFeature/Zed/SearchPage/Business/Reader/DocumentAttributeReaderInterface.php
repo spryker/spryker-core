@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\SearchPage\Business\Reader;
+namespace SprykerFeature\Zed\SearchPage\Business\Reader;
 
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute;
 
@@ -8,12 +8,12 @@ interface DocumentAttributeReaderInterface
 {
 
     /**
-     * @param string $documentName
+     * @param string $name
      * @param string $type
      *
      * @return bool
      */
-    public function hasDocumentAttributeByNameAndType($documentName, $type);
+    public function hasDocumentAttributeByNameAndType($name, $type);
 
     /**
      * @param $idDocumentAttribute
