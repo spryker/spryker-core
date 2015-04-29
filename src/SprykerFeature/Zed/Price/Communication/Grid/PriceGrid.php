@@ -19,21 +19,21 @@ class PriceGrid extends AbstractGrid
     public function definePlugins()
     {
         $plugins = [
-            $this->locator->ui()->pluginGridDefaultRowsRenderer(),
-            $this->locator->ui()->pluginGridPagination(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultRowRenderer(),
+            $this->createPagination(),
+            $this->createDefaultColumn()
                 ->setName(self::ID_PRICE_PRODUCT)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::SKU)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::PRICE)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::PRICE_TYPE)
                 ->filterable()
                 ->sortable(),

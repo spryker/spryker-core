@@ -15,9 +15,9 @@ class PriceTypeGrid extends AbstractGrid
     public function definePlugins()
     {
         $plugins = [
-            $this->locator->ui()->pluginGridDefaultRowsRenderer(),
-            $this->locator->ui()->pluginGridPagination(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultRowRenderer(),
+            $this->createPagination(),
+            $this->createDefaultColumn()
                 ->setName(self::NAME)
                 ->filterable()
                 ->sortable()

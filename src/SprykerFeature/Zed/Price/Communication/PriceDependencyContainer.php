@@ -26,7 +26,6 @@ class PriceDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormPriceForm(
             $request,
-            $this->getLocator(),
             $this->getQueryContainer()
         );
     }
@@ -39,7 +38,6 @@ class PriceDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormPriceTypeForm(
             $request,
-            $this->getLocator(),
             $this->getQueryContainer()
         );
     }
@@ -52,8 +50,7 @@ class PriceDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridPriceGrid(
             $this->getQueryContainer()->queryPriceGrid(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -65,8 +62,7 @@ class PriceDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridPriceTypeGrid(
             $this->getQueryContainer()->queryPriceTypeGrid(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
