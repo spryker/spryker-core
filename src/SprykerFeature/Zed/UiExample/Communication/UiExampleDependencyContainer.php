@@ -25,7 +25,6 @@ class UiExampleDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormUiExampleForm(
             $request,
-            $this->getLocator(),
             $this
         );
     }
@@ -37,8 +36,7 @@ class UiExampleDependencyContainer extends AbstractDependencyContainer
     public function getCarForm(Request $request)
     {
         return $this->getFactory()->createFormCarForm(
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -49,8 +47,7 @@ class UiExampleDependencyContainer extends AbstractDependencyContainer
     public function getCopterForm(Request $request)
     {
         return $this->getFactory()->createFormCopterForm(
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -62,8 +59,7 @@ class UiExampleDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridUiExampleGrid(
             $this->getQueryContainer()->queryUiExample(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 

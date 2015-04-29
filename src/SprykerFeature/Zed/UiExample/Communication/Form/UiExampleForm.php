@@ -19,13 +19,12 @@ class UiExampleForm extends AbstractForm
 
     public function __construct(
         Request $request,
-        LocatorLocatorInterface $locator,
         UiExampleDependencyContainer $dependencyContainer,
         AbstractQueryContainer $queryContainer = null
     ) {
         $this->dependencyContainer = $dependencyContainer;
 
-        parent::__construct($request, $locator, $queryContainer);
+        parent::__construct($request, $queryContainer);
     }
 
     public function addFormFields()

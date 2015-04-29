@@ -17,17 +17,17 @@ class UiExampleGrid extends AbstractGrid
     public function definePlugins()
     {
         $plugins = [
-            $this->locator->ui()->pluginGridDefaultRowsRenderer(),
-            $this->locator->ui()->pluginGridPagination(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultRowRenderer(),
+            $this->createPagination(),
+            $this->createDefaultColumn()
                 ->setName(self::COLUMN_FOR_STRING)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::COLUMN_FOR_BOOLEAN)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::COLUMN_FOR_TIMESTAMP)
                 ->filterable()
                 ->sortable()
