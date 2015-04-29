@@ -34,6 +34,8 @@ _ng
 						$scope.query = false;
 
 						$scope.$emitAllChannels(_event.E_TRIGGER, model);
+
+						return model;
 					}, function(why) {
 						$scope.query = true;
 
