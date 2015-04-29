@@ -523,7 +523,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param array $orderItems
+     * @param SpySalesOrderItem[] $orderItems
      * @param $processes
      * @param array $sourceStateBuffer
      *

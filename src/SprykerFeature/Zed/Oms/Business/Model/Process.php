@@ -46,9 +46,9 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param bool   $highlightState
+     * @param bool $highlightState
      * @param string $format
-     * @param int    $fontsize
+     * @param int $fontsize
      *
      * @return bool
      */
