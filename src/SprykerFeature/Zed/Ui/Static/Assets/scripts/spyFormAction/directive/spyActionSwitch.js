@@ -59,7 +59,7 @@ require('Ui').ng
 								value : switchModel.value
 							})
 							.then(function(model) {
-								$scope.state = model.state;
+								$scope.state = model.value;
 							}, function(why) {
 								$scope.switchModel.value = $scope.value;
 
