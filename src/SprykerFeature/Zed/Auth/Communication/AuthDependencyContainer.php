@@ -40,8 +40,7 @@ class AuthDependencyContainer extends AbstractDependencyContainer
     public function createLoginForm(Request $request)
     {
         return $this->getFactory()->createFormLoginForm(
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -52,8 +51,7 @@ class AuthDependencyContainer extends AbstractDependencyContainer
     public function createResetPasswordForm(Request $request)
     {
         return $this->getFactory()->createFormResetPasswordForm(
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 }
