@@ -62,8 +62,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
 
         return $this->getFactory()->createGridUserGrid(
             $query,
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -76,7 +75,6 @@ class AclDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormUserForm(
             $request,
-            $this->getLocator(),
             $this->getFactory(),
             $this->createAclQueryContainer()
         );
