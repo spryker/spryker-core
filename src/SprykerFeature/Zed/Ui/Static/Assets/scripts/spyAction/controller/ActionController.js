@@ -23,11 +23,13 @@ _ng
 			$scope.query = false;
 
 
-			$scope.trigger = function() {
+			$scope.update = function(model) {
 				$scope.query = true;
 
+				if (!(model instanceof Object)) model = {};
+
 				return service($attrs.spyAction)
-					.get()
+					.update(model)
 					.$promise.then(function(model) {
 						$scope.query = false;
 

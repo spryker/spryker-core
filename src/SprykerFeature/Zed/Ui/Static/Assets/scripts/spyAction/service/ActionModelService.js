@@ -21,8 +21,8 @@ require('Ui').ng
 
 			return function(url) {
 				return $resource(url, {}, {
-					get : {
-						method : 'get',
+					update : {
+						method : 'post',
 						isArray : false,
 						transformResponse : denormalizeResponse,
 						interceptor : {
