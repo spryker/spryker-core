@@ -17,17 +17,17 @@ class CategoryGrid extends AbstractGrid
     public function definePlugins()
     {
         return [
-            $this->locator->ui()->pluginGridDefaultRowsRenderer(),
-            $this->locator->ui()->pluginGridPagination(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultRowRenderer(),
+            $this->createPagination(),
+            $this->createDefaultColumn()
                 ->setName(self::ID_CATEGORY)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::NAME)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridBooleanColumn()
+            $this->createBooleanColumn()
                 ->setName(self::CATEGORY_IS_ACTIVE)
                 ->filterable()
                 ->sortable(),

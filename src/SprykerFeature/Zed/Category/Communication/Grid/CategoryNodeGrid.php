@@ -18,21 +18,21 @@ class CategoryNodeGrid extends AbstractGrid
     public function definePlugins()
     {
         return [
-            $this->locator->ui()->pluginGridDefaultRowsRenderer(),
-            $this->locator->ui()->pluginGridPagination(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultRowRenderer(),
+            $this->createPagination(),
+            $this->createDefaultColumn()
                 ->setName(self::ID_CATEGORY_NODE)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::CATEGORY_NAME)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::PARENT_CATEGORY_NAME)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridBooleanColumn()
+            $this->createBooleanColumn()
                 ->setName(self::IS_ROOT)
                 ->filterable()
                 ->sortable(),

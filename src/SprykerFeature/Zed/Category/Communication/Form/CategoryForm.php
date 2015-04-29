@@ -29,21 +29,19 @@ class CategoryForm extends AbstractForm
 
     /**
      * @param Request $request
-     * @param LocatorLocatorInterface $locator
      * @param FactoryInterface $factory
-     * @param int $idLocale
+     * @param $idLocale
      * @param QueryContainerInterface $queryContainer
      */
     public function __construct(
         Request $request,
-        LocatorLocatorInterface $locator,
         FactoryInterface $factory,
         $idLocale,
         QueryContainerInterface $queryContainer = null
     ) {
         $this->factory = $factory;
         $this->idLocale = $idLocale;
-        parent::__construct($request, $locator, $queryContainer);
+        parent::__construct($request, $queryContainer);
     }
 
     /**

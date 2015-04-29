@@ -47,8 +47,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
 
         return $this->getFactory()->createGridCategoryGrid(
             $this->createQueryContainer()->queryCategory($idLocale),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -62,7 +61,6 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
 
         return $this->getFactory()->createFormCategoryForm(
             $request,
-            $this->getLocator(),
             $this->getFactory(),
             $idLocale,
             $this->createQueryContainer()
@@ -79,8 +77,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
 
         return $this->getFactory()->createGridCategoryNodeGrid(
             $this->createQueryContainer()->queryNodeWithDirectParent($idLocale),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -94,7 +91,6 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
 
         return $this->getFactory()->createFormCategoryNodeForm(
             $request,
-            $this->getLocator(),
             $this->getFactory(),
             $idLocale,
             $this->createQueryContainer()
