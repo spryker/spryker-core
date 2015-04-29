@@ -56,7 +56,7 @@ require('Ui').ng
 
 						$scope
 							.update({
-								value : switchModel.value
+								value : $scope.switchModel.value
 							})
 							.then(function(model) {
 								$scope.state = model.value;
