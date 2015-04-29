@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Ui\Dependency\Form;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field;
@@ -28,7 +29,7 @@ abstract class AbstractForm
     /**
      * @var AutoCompletion
      */
-    protected $locator;
+    private $locator;
 
     /**
      * @var AbstractQueryContainer
@@ -56,16 +57,14 @@ abstract class AbstractForm
     abstract public function addFormFields();
 
     /**
-     * @param LocatorLocatorInterface $locator
      * @param Request $request
      * @param QueryContainerInterface $queryContainer
      */
     public function __construct(
         Request $request,
-        LocatorLocatorInterface $locator,
         QueryContainerInterface $queryContainer = null
     ) {
-        $this->locator = $locator;
+        $this->locator = Locator::getInstance();
         $this->stateContainer = $this->locator->ui()->pluginFormStateContainerStateContainer()->setRequest($request);
         $this->queryContainer = $queryContainer;
     }
