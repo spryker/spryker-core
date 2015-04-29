@@ -55,7 +55,9 @@ require('Ui').ng
 						$scope.switchModel.disabled = true;
 
 						$scope
-							.trigger()
+							.update({
+								state : scope.state
+							})
 							.then(function(model) {
 								$scope.state = model.state;
 							}, function(why) {
