@@ -38,7 +38,6 @@ class VoucherForm extends AbstractForm
     protected $factory;
 
     /**
-     * @param LocatorLocatorInterface $locator
      * @param Request $request
      * @param DiscountQueryContainerInterface $queryContainer
      * @param DiscountFacadeInterface $discountFacade
@@ -46,14 +45,13 @@ class VoucherForm extends AbstractForm
      */
     public function __construct(
         Request $request,
-        LocatorLocatorInterface $locator,
         DiscountQueryContainerInterface $queryContainer,
         DiscountFacadeInterface $discountFacade,
         FactoryInterface $factory
     ) {
         $this->discountFacade = $discountFacade;
         $this->factory = $factory;
-        parent::__construct($request, $locator, $queryContainer);
+        parent::__construct($request, $queryContainer);
     }
 
     /**

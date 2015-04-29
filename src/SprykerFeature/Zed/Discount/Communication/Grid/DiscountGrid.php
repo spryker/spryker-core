@@ -19,26 +19,26 @@ class DiscountGrid extends AbstractGrid
     public function definePlugins()
     {
         $plugins = [
-            $this->locator->ui()->pluginGridDefaultRowsRenderer(),
-            $this->locator->ui()->pluginGridPagination(),
+            $this->createDefaultRowRenderer(),
+            $this->createPagination(),
 
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::DISCOUNT_DISPLAY_NAME)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::DISCOUNT_CALCULATOR_PLUGIN)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::DISCOUNT_COLLECTOR_PLUGIN)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::DISCOUNT_IS_PRIVILEGED)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::DISCOUNT_IS_ACTIVE)
                 ->filterable()
                 ->sortable()

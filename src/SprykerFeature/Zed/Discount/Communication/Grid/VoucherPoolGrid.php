@@ -19,26 +19,26 @@ class VoucherPoolGrid extends AbstractGrid
     public function definePlugins()
     {
         $plugins = [
-            $this->locator->ui()->pluginGridDefaultRowsRenderer(),
-            $this->locator->ui()->pluginGridPagination(),
+            $this->createDefaultRowRenderer(),
+            $this->createPagination(),
 
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::NAME)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::CATEGORY)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::TEMPLATE)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridBooleanColumn()
+            $this->createBooleanColumn()
                 ->setName(self::IS_ACTIVE)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridBooleanColumn()
+            $this->createBooleanColumn()
                 ->setName(self::IS_INFINITELY_USABLE)
                 ->filterable()
                 ->sortable()

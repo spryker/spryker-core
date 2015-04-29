@@ -15,10 +15,10 @@ class VoucherPoolCategoryGrid extends AbstractGrid
     public function definePlugins()
     {
         $plugins = [
-            $this->locator->ui()->pluginGridDefaultRowsRenderer(),
-            $this->locator->ui()->pluginGridPagination(),
+            $this->createDefaultRowRenderer(),
+            $this->createPagination(),
 
-            $this->locator->ui()->pluginGridDefaultColumn()
+            $this->createDefaultColumn()
                 ->setName(self::NAME)
                 ->filterable()
                 ->sortable(),

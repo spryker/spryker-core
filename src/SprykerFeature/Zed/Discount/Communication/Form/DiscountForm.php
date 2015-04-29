@@ -25,19 +25,17 @@ class DiscountForm extends AbstractForm
     protected $discountFacade;
 
     /**
-     * @param LocatorLocatorInterface $locator
      * @param Request $request
      * @param QueryContainerInterface $queryContainer
      * @param DiscountFacadeInterface $discountFacade
      */
     public function __construct(
         Request $request,
-        LocatorLocatorInterface $locator,
         QueryContainerInterface $queryContainer,
         DiscountFacadeInterface $discountFacade
     ) {
         $this->discountFacade = $discountFacade;
-        parent::__construct($request, $locator, $queryContainer);
+        parent::__construct($request, $queryContainer);
     }
 
     /**

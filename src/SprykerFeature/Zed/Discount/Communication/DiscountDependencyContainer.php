@@ -40,7 +40,6 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormDecisionRuleForm(
             $request,
-            $this->getLocator(),
             $this->getQueryContainer(),
             $this->getDiscountFacade()
         );
@@ -54,7 +53,6 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormDiscountForm(
             $request,
-            $this->getLocator(),
             $this->getQueryContainer(),
             $this->getDiscountFacade()
         );
@@ -68,7 +66,6 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormVoucherForm(
             $request,
-            $this->getLocator(),
             $this->getQueryContainer(),
             $this->getDiscountFacade(),
             $this->getFactory()
@@ -83,7 +80,6 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormVoucherPoolCategoryForm(
             $request,
-            $this->getLocator(),
             $this->getQueryContainer(),
             $this->getDiscountFacade()
         );
@@ -97,7 +93,6 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormVoucherPoolForm(
             $request,
-            $this->getLocator(),
             $this->getQueryContainer(),
             $this->getDiscountFacade()
         );
@@ -111,8 +106,7 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridDiscountGrid(
             $this->getQueryContainer()->queryDiscount(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -124,8 +118,7 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridDecisionRuleGrid(
             $this->getQueryContainer()->queryDiscountDecisionRule(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -137,8 +130,7 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridVoucherGrid(
             $this->getQueryContainer()->queryDiscountVoucher(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -150,8 +142,7 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridVoucherGrid(
             $this->getQueryContainer()->queryDiscountVoucherPoolJoinedVoucherPoolCategory(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -163,8 +154,7 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridVoucherGrid(
             $this->getQueryContainer()->queryDiscountVoucherPoolCategory(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
