@@ -5,7 +5,6 @@ namespace SprykerEngine\Shared\Kernel;
 use SprykerEngine\Shared\Kernel\ClassResolver;
 use SprykerEngine\Shared\Kernel\Factory\FactoryException;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Zed\Kernel\BundleConfigLocator;
 
 abstract class AbstractFactory implements FactoryInterface
 {

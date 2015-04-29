@@ -32,8 +32,7 @@ abstract class AbstractFactory implements FactoryInterface
      */
     protected $baseClasses = [
         'DependencyContainer',
-        'Factory',
-        'Config'
+        'Factory'
     ];
 
     /**
