@@ -237,9 +237,7 @@ class Group implements GroupInterface
      */
     public function getAllGroups()
     {
-        $collection = $this->locator
-            ->acl()
-            ->transferGroupCollection();
+        $collection = $this->locator->acl()->transferGroupCollection();
 
         $results = $this->queryContainer
             ->queryGroup()
@@ -259,9 +257,7 @@ class Group implements GroupInterface
     {
         $entity = $this->queryContainer->queryGroupByName($name)->findOne();
 
-        $transfer = $this->locator
-            ->acl()
-            ->transferGroup();
+        $transfer = $this->locator->acl()->transferGroup();
 
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
@@ -278,9 +274,7 @@ class Group implements GroupInterface
     {
         $entity = $this->getGroupEntityById($id);
 
-        $transfer = $this->locator
-            ->acl()
-            ->transferGroup();
+        $transfer = $this->locator->acl()->transferGroup();
 
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
@@ -335,9 +329,7 @@ class Group implements GroupInterface
             ->queryGroupRoles($idGroup)
             ->find();
 
-        $collection = $this->locator
-            ->acl()
-            ->transferRoleCollection();
+        $collection = $this->locator->acl()->transferRoleCollection();
 
         $collection = Copy::entityCollectionToTransferCollection($collection, $results, true);
 
