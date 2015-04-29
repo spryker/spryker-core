@@ -115,7 +115,6 @@ class AclDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormGroupForm(
             $request,
-            $this->getLocator(),
             $this->getFactory(),
             $this->createAclQueryContainer()
         );

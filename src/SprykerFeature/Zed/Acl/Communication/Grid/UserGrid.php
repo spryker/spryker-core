@@ -6,28 +6,33 @@ use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
 
 class UserGrid extends AbstractGrid
 {
+    const USERNAME = 'username';
+    const FIRST_NAME = 'first_name';
+    const LAST_NAME = 'last_name';
+    const GROUP_NAME = 'group_name';
+
     /**
      * @return array
      */
     public function definePlugins()
     {
         $plugins = [
-            $this->locator->ui()->pluginGridDefaultRowsRenderer(),
-            $this->locator->ui()->pluginGridPagination(),
-            $this->locator->ui()->pluginGridDefaultColumn()
-                ->setName('username')
+            $this->createDefaultRowRenderer(),
+            $this->createPagination(),
+            $this->createDefaultColumn()
+                ->setName(self::USERNAME)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
-                ->setName('first_name')
+            $this->createDefaultColumn()
+                ->setName(self::FIRST_NAME)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
-                ->setName('last_name')
+            $this->createDefaultColumn()
+                ->setName(self::LAST_NAME)
                 ->filterable()
                 ->sortable(),
-            $this->locator->ui()->pluginGridDefaultColumn()
-                ->setName('group_name')
+            $this->createDefaultColumn()
+                ->setName(self::GROUP_NAME)
                 ->filterable()
                 ->sortable()
         ];
