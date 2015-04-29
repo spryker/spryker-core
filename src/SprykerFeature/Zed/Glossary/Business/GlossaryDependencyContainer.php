@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Glossary\Business\Key\KeySourceInterface;
 use SprykerFeature\Zed\Glossary\Business\Translation\TranslationManagerInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
+use SprykerFeature\Zed\Glossary\GlossaryConfig;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
