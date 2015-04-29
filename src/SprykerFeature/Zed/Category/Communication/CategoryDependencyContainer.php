@@ -3,8 +3,12 @@
 namespace SprykerFeature\Zed\Category\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
+use SprykerFeature\Zed\Category\Communication\Form\CategoryForm;
+use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
+use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,73 +30,77 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return int
+     * @return LocaleDto
      */
-    public function createLocaleIdentifier()
+    public function getCurrentLocale()
     {
         return $this->getLocator()
             ->locale()
             ->facade()
-            ->getCurrentIdLocale()
+            ->getCurrentLocale()
             ;
     }
 
     /**
      * @param Request $request
-     * @return Grid\CategoryGrid
+     *
+     * @return CategoryGrid
      */
     public function createCategoryGrid(Request $request)
     {
-        $idLocale = $this->createLocaleIdentifier();
+        $locale = $this->getCurrentLocale();
 
         return $this->getFactory()->createGridCategoryGrid(
-            $this->createQueryContainer()->queryCategory($idLocale),
+            $this->createQueryContainer()->queryCategory($locale->getIdLocale()),
             $request
         );
     }
 
     /**
      * @param Request $request
-     * @return Form\CategoryForm
+     *
+     * @return CategoryForm
      */
     public function createCategoryForm(Request $request)
     {
-        $idLocale = $this->createLocaleIdentifier();
+        $locale = $this->getCurrentLocale();
 
         return $this->getFactory()->createFormCategoryForm(
             $request,
             $this->getFactory(),
-            $idLocale,
+            $locale->getIdLocale(),
             $this->createQueryContainer()
         );
     }
 
     /**
      * @param Request $request
-     * @return Grid\CategoryGrid
+     *
+     * @return CategoryGrid
      */
     public function createCategoryNodeGrid(Request $request)
     {
-        $idLocale = $this->createLocaleIdentifier();
+        $locale = $this->getCurrentLocale();
 
         return $this->getFactory()->createGridCategoryNodeGrid(
-            $this->createQueryContainer()->queryNodeWithDirectParent($idLocale),
+            $this->createQueryContainer()->queryNodeWithDirectParent($locale->getIdLocale()),
             $request
         );
     }
 
     /**
      * @param Request $request
-     * @return Form\CategoryNodeForm
+     *
+     * @return CategoryNodeForm
      */
     public function createCategoryNodeForm(Request $request)
     {
-        $idLocale = $this->createLocaleIdentifier();
+        $locale = $this->getCurrentLocale();
 
         return $this->getFactory()->createFormCategoryNodeForm(
             $request,
             $this->getFactory(),
-            $idLocale,
+            $locale,
             $this->createQueryContainer()
         );
     }

@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Category\Communication\Form;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
@@ -27,9 +28,9 @@ class CategoryNodeForm extends AbstractForm
     protected $factory;
 
     /**
-     * @var int
+     * @var LocaleDto
      */
-    protected $idLocale;
+    protected $locale;
 
     /**
      * @var CategoryQueryContainer
@@ -39,18 +40,18 @@ class CategoryNodeForm extends AbstractForm
     /**
      * @param Request $request
      * @param FactoryInterface $factory
-     * @param $idLocale
+     * @param LocaleDto $locale
      * @param CategoryQueryContainer $queryContainer
      */
     public function __construct(
         Request $request,
         FactoryInterface $factory,
-        $idLocale,
+        LocaleDto $locale,
         CategoryQueryContainer $queryContainer = null
     ) {
-        $this->factory = $factory;
-        $this->idLocale = $idLocale;
         parent::__construct($request, $queryContainer);
+        $this->factory = $factory;
+        $this->locale = $locale;
     }
 
     /**
@@ -122,7 +123,7 @@ class CategoryNodeForm extends AbstractForm
     protected function getCategories()
     {
         $categories = $this->queryContainer
-            ->queryCategory($this->idLocale)
+            ->queryCategory($this->locale->getIdLocale())
             ->setFormatter(new PropelArraySetFormatter())
             ->find()
         ;
@@ -148,7 +149,7 @@ class CategoryNodeForm extends AbstractForm
     protected function getParentCategories()
     {
         $categoryNodes = $this->queryContainer
-            ->queryCategoryNode($this->idLocale)
+            ->queryCategoryNode($this->locale->getIdLocale())
             ->setFormatter(new PropelArraySetFormatter())
             ->find()
         ;

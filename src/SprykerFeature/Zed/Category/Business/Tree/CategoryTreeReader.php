@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
@@ -25,59 +26,59 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param string $idLocale
+     * @param LocaleDto $locale
      * @param bool $onlyOneLevel
      * @param bool $excludeStartNode
      *
      * @return SpyCategoryNode[]|ObjectCollection
      */
-    public function getChildren($idNode, $idLocale, $onlyOneLevel = true, $excludeStartNode = true)
+    public function getChildren($idNode, LocaleDto $locale, $onlyOneLevel = true, $excludeStartNode = true)
     {
         return $this->queryContainer
-            ->queryChildren($idNode, $idLocale, $onlyOneLevel, $excludeStartNode)
+            ->queryChildren($idNode, $locale->getIdLocale(), $onlyOneLevel, $excludeStartNode)
             ->find()
             ;
     }
 
     /**
      * @param int $idNode
-     * @param string $idLocale
+     * @param LocaleDto $locale
      * @param bool $excludeRootNode
      *
      * @return array
      */
-    public function getParents($idNode, $idLocale, $excludeRootNode = true)
+    public function getParents($idNode, LocaleDto $locale, $excludeRootNode = true)
     {
-        return $this->getGroupedPaths($idNode, $idLocale, $excludeRootNode, true);
+        return $this->getGroupedPaths($idNode, $locale, $excludeRootNode, true);
     }
 
     /**
      * @param int $idNode
-     * @param string $idLocale
+     * @param LocaleDto $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
      * @return array
      */
-    public function getPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false)
+    public function getPath($idNode, LocaleDto $locale, $excludeRootNode = true, $onlyParents = false)
     {
         return $this->queryContainer
-            ->queryPath($idNode, $idLocale, $excludeRootNode, $onlyParents)
+            ->queryPath($idNode, $locale->getIdLocale(), $excludeRootNode, $onlyParents)
             ->find()
             ;
     }
 
     /**
      * @param int $idNode
-     * @param string $idLocale
+     * @param LocaleDto $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
      * @return array
      */
-    public function getGroupedPaths($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false)
+    public function getGroupedPaths($idNode, LocaleDto $locale, $excludeRootNode = true, $onlyParents = false)
     {
-        $paths = $this->getPath($idNode, $idLocale, $excludeRootNode, $onlyParents);
+        $paths = $this->getPath($idNode, $locale, $excludeRootNode, $onlyParents);
         $groupedPaths = [];
 
         $field = $this->getNodeDescendantColumnName();
@@ -95,16 +96,16 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param $idNode
-     * @param $idLocale
+     * @param int $idNode
+     * @param LocaleDto $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      * @TODO Move getGroupedPathIds and getGroupedPaths to another class, duplicated Code!
      * @return array
      */
-    public function getGroupedPathIds($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false)
+    public function getGroupedPathIds($idNode, LocaleDto $locale, $excludeRootNode = true, $onlyParents = false)
     {
-        $paths = $this->getPath($idNode, $idLocale, $excludeRootNode, $onlyParents);
+        $paths = $this->getPath($idNode, $locale, $excludeRootNode, $onlyParents);
 
         $groupedPathIds = [];
         $field = $this->getNodeDescendantColumnName();
@@ -151,27 +152,27 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param string $categoryName
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return bool
      */
-    public function hasCategoryNode($categoryName, $idLocale)
+    public function hasCategoryNode($categoryName, LocaleDto $locale)
     {
-        $categoryQuery = $this->queryContainer->queryNodeByCategoryName($categoryName, $idLocale);
+        $categoryQuery = $this->queryContainer->queryNodeByCategoryName($categoryName, $locale->getIdLocale());
 
         return $categoryQuery->count() > 0;
     }
 
     /**
      * @param string $categoryName
-     * @param int $idLocale
+     * @param LocaleDto $locale
      *
      * @return int
      * @throws MissingCategoryNodeException
      */
-    public function getCategoryNodeIdentifier($categoryName, $idLocale)
+    public function getCategoryNodeIdentifier($categoryName, LocaleDto $locale)
     {
-        $categoryQuery = $this->queryContainer->queryNodeByCategoryName($categoryName, $idLocale);
+        $categoryQuery = $this->queryContainer->queryNodeByCategoryName($categoryName, $locale->getIdLocale());
         $categoryNode = $categoryQuery->findOne();
 
         if (!$categoryNode) {
@@ -179,7 +180,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
                 sprintf(
                     'Tried to retrieve a missing category node for category %s, locale %s',
                     $categoryName,
-                    $idLocale
+                    $locale->getLocaleName()
                 )
             );
         }

@@ -2,25 +2,12 @@
 
 namespace SprykerFeature\Zed\Category\Dependency\Facade;
 
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
+use SprykerEngine\Shared\Dto\LocaleDto;
 
 interface CategoryToLocaleInterface
 {
     /**
-     * @return string
+     * @return LocaleDto
      */
     public function getCurrentLocale();
-
-    /**
-     * @param string $localeName
-     *
-     * @return int
-     * @throws MissingLocaleException
-     */
-    public function getIdLocale($localeName);
-
-    /**
-     * @return int
-     */
-    public function getCurrentIdLocale();
 }

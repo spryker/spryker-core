@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Category\Communication\Form;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
@@ -23,12 +24,13 @@ class CategoryForm extends AbstractForm
     protected $factory;
 
     /**
-     * @var int
+     * @var LocaleDto
      */
-    protected $idLocale;
+    protected $locale;
 
     /**
      * @param Request $request
+     * @param LocatorLocatorInterface $locator
      * @param FactoryInterface $factory
      * @param $idLocale
      * @param QueryContainerInterface $queryContainer
@@ -36,12 +38,12 @@ class CategoryForm extends AbstractForm
     public function __construct(
         Request $request,
         FactoryInterface $factory,
-        $idLocale,
+        LocaleDto $locale,
         QueryContainerInterface $queryContainer = null
     ) {
-        $this->factory = $factory;
-        $this->idLocale = $idLocale;
         parent::__construct($request, $queryContainer);
+        $this->factory = $factory;
+        $this->locale = $locale;
     }
 
     /**
@@ -75,7 +77,7 @@ class CategoryForm extends AbstractForm
                     $this->factory->createConstraintCategoryNameExists(
                         $this->queryContainer,
                         $this->getIdCategory(),
-                        $this->getIdLocale()
+                        $this->getLocale()
                     ),
                 ]
             );
@@ -99,10 +101,10 @@ class CategoryForm extends AbstractForm
     }
 
     /**
-     * @return int
+     * @return LocaleDto
      */
-    protected function getIdLocale()
+    protected function getLocale()
     {
-        return $this->idLocale;
+        return $this->locale;
     }
 }
