@@ -21,8 +21,7 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridCustomerGrid(
             $this->getQueryContainer()->queryCustomers(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -35,7 +34,6 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormCustomerForm(
             $request,
-            $this->getLocator(),
             $this->getQueryContainer()
         );
     }
@@ -49,8 +47,7 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createGridAddressGrid(
             $this->getQueryContainer()->queryAddresses(),
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -63,7 +60,6 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormAddressForm(
             $request,
-            $this->getLocator(),
             $this->getQueryContainer()
         );
     }
