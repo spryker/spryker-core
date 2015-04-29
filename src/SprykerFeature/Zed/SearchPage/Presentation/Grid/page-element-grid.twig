@@ -2,7 +2,7 @@
         class="spy-grid interactive"
         ng-controller="GridController"
         src="/search-page/grid/page-element"
-        name="grid"
+        name="page-element-grid"
         channel="page-element"
         >
     <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
@@ -10,20 +10,24 @@
     <table>
         <thead>
         <tr>
-            <th spy-grid-head="columns['id_search_page_attribute']" label="Id"></th>
-            <th spy-grid-head="columns['key_name']" label="Key Name"></th>
-            <th spy-grid-head="columns['is_attribute_active']" label="Active"></th>
+            <th spy-grid-head="columns['id_search_page_element']" label="Id"></th>
+            <th spy-grid-head="columns['element_key']" label="Key Name"></th>
+            <th spy-grid-head="columns['is_element_active']" label="Active"></th>
             <th spy-grid-head="columns['template_name']" label="Template Name"></th>
-            <th spy-grid-head="columns['attribute_name']" label="Document Attribute Name"></th>
-            <th spy-grid-head="columns['attribute_type']" label="Document Attribute Type"></th>
+            <th spy-grid-head="columns['attribute_name']" label="Attribute Name"></th>
+            <th spy-grid-head="columns['attribute_type']" label="Attribute Type"></th>
         </tr>
         </thead>
 
         <tbody>
         <tr ng-repeat="row in rows" ng-click="$emitAllChannels('glossary_edit', row)">
-            <td>{[{ row['id_search_page_attribute'] }]}</td>
-            <td>{[{ row['key_name'] }]}</td>
-            <td><spy-format-boolean content="row['is_attribute_active']"></spy-format-boolean></td>
+            <td>{[{ row['id_search_page_element'] }]}</td>
+            <td>{[{ row['element_key'] }]}</td>
+            <td>
+                <div spy-action-switch="/search-page/page-element/switch-active-state?id={[{ row['id_search_page_element'] }]}"
+                     state="row['is_element_active']">
+                </div>
+            </td>
             <td>{[{ row['template_name'] }]}</td>
             <td>{[{ row['attribute_name'] }]}</td>
             <td>{[{ row['attribute_type'] }]}</td>

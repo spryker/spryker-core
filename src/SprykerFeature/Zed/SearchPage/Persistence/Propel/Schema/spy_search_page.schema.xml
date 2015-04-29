@@ -46,7 +46,7 @@
         <column name="template_name" type="VARCHAR" required="true"/>
 
         <unique>
-            <unique-column name="type_name"/>
+            <unique-column name="template_name"/>
         </unique>
 
     </table>

@@ -50,6 +50,20 @@ class SearchPageFacade extends AbstractFacade
         ;
     }
 
+    /**
+     * @param int $idPageElement
+     * @param bool $isElementActive
+     *
+     * @return bool
+     */
+    public function switchActiveState($idPageElement, $isElementActive)
+    {
+        return $this->getDependencyContainer()
+            ->createPageElementWriter()
+            ->switchActiveState($idPageElement, $isElementActive)
+        ;
+    }
+
     public function installDocumentAttributes()
     {
         $this->getDependencyContainer()

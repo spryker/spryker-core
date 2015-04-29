@@ -21,12 +21,13 @@ class FormController extends AbstractController
      */
     public function createPageElementAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createPageElementPage($request);
+        $form = $this->getDependencyContainer()->createPageElementForm($request);
 
         $form->init();
 
         if ($form->isValid()) {
             $pageElementTransfer = $this->getLocator()->searchPage()->transferPageElement();
+
             $pageElementTransfer->fromArray($form->getRequestData());
 
             $this->getDependencyContainer()->getSearchPageFacade()->createPageElement($pageElementTransfer);
@@ -44,7 +45,7 @@ class FormController extends AbstractController
      */
     public function updatePageElementAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createPageElementPage($request);
+        $form = $this->getDependencyContainer()->createPageElementForm($request);
 
         $form->init();
 

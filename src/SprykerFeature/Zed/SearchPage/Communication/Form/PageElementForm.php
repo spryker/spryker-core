@@ -2,50 +2,45 @@
 
 namespace SprykerFeature\Zed\SearchPage\Communication\Form;
 
+use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
+use SprykerFeature\Zed\SearchPage\Persistence\SearchPageQueryContainer;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints;
 
+/**
+ * @property SearchPageQueryContainer $queryContainer
+ */
 class PageElementForm extends AbstractForm
 {
-    /**
-     * @param Request $request
-     * @param LocatorLocatorInterface $locator
-     * @param FactoryInterface $factory
-     * @param int $idLocale
-     * @param CategoryQueryContainer $queryContainer
-     */
-    public function __construct(
-        Request $request,
-        LocatorLocatorInterface $locator,
-        FactoryInterface $factory,
-        $idLocale,
-        CategoryQueryContainer $queryContainer = null
-    ) {
-        $this->factory = $factory;
-        $this->idLocale = $idLocale;
-        parent::__construct($request, $locator, $queryContainer);
-    }
+    const ID_SEARCH_PAGE_ELEMENT = 'id_search_page_element';
+    const IS_ELEMENT_ACTIVE = 'is_element_active';
+    const FK_SEARCH_DOCUMENT_ATTRIBUTE = 'fk_search_document_attribute';
+    const FK_SEARCH_PAGE_ELEMENT_TEMPLATE = 'fk_search_page_element_template';
+    const ELEMENT_KEY = 'element_key';
 
     /**
      * @return array
      */
     protected function getDefaultData()
     {
-        $nodeEntity = $this->queryContainer
-            ->queryNodeById($this->getCategoryIdNode())
-            ->findOne()
-        ;
-        if (!is_null($nodeEntity)) {
-            return $nodeEntity->toArray();
-        }
-
-        return [];
+        return [
+            self::IS_ELEMENT_ACTIVE => false
+        ];
     }
 
     public function addFormFields()
     {
-        $this->addField('id_search_page_element');
-        $this->addField('is_element_active')
+        $this->addField(self::ID_SEARCH_PAGE_ELEMENT);
+        $this->addField(self::ELEMENT_KEY)
+            ->setRefresh(false)
+            ->setConstraints([
+                new Constraints\Type([
+                    'type' => 'string'
+                ]),
+                new Constraints\NotBlank()
+            ])
+        ;
+        $this->addField(self::IS_ELEMENT_ACTIVE)
             ->setRefresh(false)
             ->setConstraints([
                 new Constraints\Type([
@@ -53,8 +48,23 @@ class PageElementForm extends AbstractForm
                 ])
             ])
         ;
-
-        $this->addField('fk_search_page_element_template')
+        $this->addField(self::FK_SEARCH_DOCUMENT_ATTRIBUTE)
+            ->setAccepts($this->getDocumentAttributes())
+            ->setRefresh(false)
+            ->setConstraints([
+                new Constraints\Type([
+                    'type' => 'integer'
+                ]),
+                new Constraints\Choice([
+                    'choices' => array_column($this->getDocumentAttributes(), 'value'),
+                    'message' => 'Please choose one of the given Attributes'
+                ]),
+            ])
+            ->setValueHook(function ($value) {
+                return $value ? (int)$value : null;
+            })
+        ;
+        $this->addField(self::FK_SEARCH_PAGE_ELEMENT_TEMPLATE)
             ->setAccepts($this->getTemplates())
             ->setRefresh(false)
             ->setConstraints([
@@ -71,82 +81,64 @@ class PageElementForm extends AbstractForm
                 return $value ? (int)$value : null;
             })
         ;
-
-        $this->addField('fk_search_document_attribute')
-            ->setAccepts($this->getDocumentAttributes())
-            ->setRefresh(false)
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'integer'
-                ]),
-                new Constraints\Choice([
-                    'choices' => array_column($this->getDocumentAttributes(), 'value'),
-                    'message' => 'Please choose one of the given Attributes'
-                ]),
-            ])
-            ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
-            })
-        ;
-
-        $this->addTemplateField();
     }
 
     /**
      * @return array
      */
-    protected function getCategories()
+    protected function getDocumentAttributes()
     {
-        $categories = $this->queryContainer
-            ->queryCategory($this->idLocale)
+        $attributes = $this->queryContainer
+            ->queryDocumentAttributeNames()
             ->setFormatter(new PropelArraySetFormatter())
             ->find()
         ;
 
-        $data = [];
-        foreach ($categories as $category) {
-            $data[] = $this->formatOption(
-                (int)$category['id_category'],
-                $category['name']
-            );
-        }
-
-        if (empty($data)) {
-            $data[] = $this->formatOption('', '');
-        }
-
-        return $data;
+        return $this->formatOptions($attributes, 'id', 'name');
     }
 
     /**
      * @return array
      */
-    protected function getParentCategories()
+    protected function getTemplates()
     {
-        $categoryNodes = $this->queryContainer
-            ->queryCategoryNode($this->idLocale)
+        $templates = $this->queryContainer
+            ->queryPageElementTemplateNames()
             ->setFormatter(new PropelArraySetFormatter())
             ->find()
         ;
 
-        $data = [];
-        foreach ($categoryNodes as $categoryNode) {
-            $data[] = $this->formatOption(
-                (int)$categoryNode[self::ID_CATEGORY_NODE],
-                $categoryNode[self::CATEGORY_NAME]
+        return $this->formatOptions($templates, 'id', 'name');
+    }
+
+    /**
+     * @param array $options
+     * @param mixed $valueKey
+     * @param mixed $labelKey
+     *
+     * @return array
+     */
+    protected function formatOptions(array $options, $valueKey, $labelKey)
+    {
+        $formattedOptions = [];
+        foreach ($options as $option) {
+            $formattedOptions[] = $this->formatOption(
+                (int)$option[$valueKey],
+                $option[$labelKey]
             );
         }
 
-        if (empty($data)) {
-            $data[] = $this->formatOption('', '');
+        if (empty($formattedOptions)) {
+            $formattedOptions[] = $this->formatOption('', '');
         }
 
-        return $data;
+        return $formattedOptions;
     }
 
     /**
      * @param string $option
      * @param string $label
+     *
      * @return array
      */
     protected function formatOption($option, $label)
@@ -155,35 +147,5 @@ class PageElementForm extends AbstractForm
             'value' => $option,
             'label' => $label,
         ];
-    }
-
-    /**
-     * @return int
-     */
-    protected function getCategoryIdNode()
-    {
-        return $this->stateContainer->getRequestValue(self::ID_CATEGORY_NODE);
-    }
-
-    protected function addTemplateField()
-    {
-        $templates = $this->getTemplates();
-        $constraints = [
-            new Constraints\Type(['type' => 'integer']),
-            new Constraints\NotBlank(),
-            new Constraints\Choice([
-                'choices' => array_column($templates, 'value'),
-                'message' => 'Please choose one of the given Templates'
-            ]),
-        ];
-
-        $this->addField('fk_search_page_element_template')
-            ->setAccepts($templates)
-            ->setRefresh(false)
-            ->setConstraints($constraints)
-            ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
-            })
-        ;
     }
 }

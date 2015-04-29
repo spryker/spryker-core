@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <label>Product</label>
+        <title>Product</title>
+        <pages>
+            <search-page>
+                <label>Search Config</label>
+                <title>Search Config</title>
+                <bundle>search-page</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <order>1</order>
+                <shortcut>p</shortcut>
+            </search-page>
+        </pages>
+    </product>
+</config>

@@ -70,4 +70,20 @@ class PageElementWriter implements PageElementWriterInterface
 
         return $idElement;
     }
+
+    /**
+     * @param int $idPageElement
+     * @param bool $isElementActive
+     *
+     * @return bool
+     * @throws PropelException
+     */
+    public function switchActiveState($idPageElement, $isElementActive)
+    {
+        $pageElementEntity = $this->elementReader->getPageElementById($idPageElement);
+        $pageElementEntity->setIsElementActive($isElementActive);
+        $pageElementEntity->save();
+
+        return true;
+    }
 }

@@ -6,6 +6,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\SearchPageBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\SearchPage\Business\Installer\TemplateInstaller;
 use SprykerFeature\Zed\SearchPage\Business\Reader\DocumentAttributeReader;
+use SprykerFeature\Zed\SearchPage\Business\Reader\PageElementReader;
 use SprykerFeature\Zed\SearchPage\Business\Reader\TemplateReader;
 use SprykerFeature\Zed\SearchPage\Business\Writer\DocumentAttributeWriter;
 use SprykerFeature\Zed\SearchPage\Business\Writer\TemplateWriter;
@@ -23,7 +24,9 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
      */
     public function createPageElementWriter()
     {
-        return $this->getFactory()->createWriterPageElementWriter();
+        return $this->getFactory()->createWriterPageElementWriter(
+            $this->createPageElementReader()
+        );
     }
 
     /**
@@ -47,6 +50,16 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
             $this->createTemplateWriter(),
             $this->createTemplateReader(),
             $this->getLocator()
+        );
+    }
+
+    /**
+     * @return PageElementReader
+     */
+    private function createPageElementReader()
+    {
+        return $this->getFactory()->createReaderPageElementReader(
+            $this->getQueryContainer()
         );
     }
 

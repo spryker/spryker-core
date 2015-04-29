@@ -2,9 +2,11 @@
 
 namespace SprykerFeature\Zed\SearchPage\Persistence;
 
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\Base\SpySearchDocumentAttributeQuery;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\Base\SpySearchPageAttributeTemplateQuery;
+use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchDocumentAttributeTableMap;
+use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchPageElementTemplateTableMap;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementQuery;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplateQuery;
 
@@ -17,6 +19,17 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     public function queryDocumentAttribute()
     {
         return SpySearchDocumentAttributeQuery::create();
+    }
+
+    /**
+     * @return SpySearchDocumentAttributeQuery
+     */
+    public function queryDocumentAttributeNames()
+    {
+        return SpySearchDocumentAttributeQuery::create()
+            ->withColumn(SpySearchDocumentAttributeTableMap::COL_ID_SEARCH_DOCUMENT_ATTRIBUTE, 'id')
+            ->withColumn(SpySearchDocumentAttributeTableMap::COL_ATTRIBUTE_NAME, 'name')
+        ;
     }
 
     /**
@@ -54,6 +67,17 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     }
 
     /**
+     * @return SpySearchPageElementTemplateQuery
+     */
+    public function queryPageElementTemplateNames()
+    {
+        return SpySearchPageElementTemplateQuery::create()
+            ->withColumn(SpySearchPageElementTemplateTableMap::COL_ID_SEARCH_PAGE_ELEMENT_TEMPLATE, 'id')
+            ->withColumn(SpySearchPageElementTemplateTableMap::COL_TEMPLATE_NAME, 'name')
+        ;
+    }
+
+    /**
      * @param int $idTemplate
      *
      * @return SpySearchPageElementTemplateQuery
@@ -85,6 +109,20 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     {
         return SpySearchPageElementQuery::create()
             ->filterByPrimaryKey($idPageElement)
+        ;
+    }
+
+    /**
+     * @return ModelCriteria
+     */
+    public function queryPageElementGrid()
+    {
+        return SpySearchPageElementQuery::create()
+            ->joinElementTemplate()
+            ->withColumn(SpySearchPageElementTemplateTableMap::COL_TEMPLATE_NAME, 'template_name')
+            ->joinDocumentAttribute()
+            ->withColumn(SpySearchDocumentAttributeTableMap::COL_ATTRIBUTE_NAME, 'attribute_name')
+            ->withColumn(SpySearchDocumentAttributeTableMap::COL_ATTRIBUTE_TYPE, 'attribute_type')
         ;
     }
 }

@@ -86,7 +86,7 @@ class TemplateInstaller extends AbstractInstaller
                     )
                 );
             }
-            $templateTransfer = $this->locator->searchPage()->transferPageAttributeTemplate();
+            $templateTransfer = $this->locator->searchPage()->transferTemplate();
             $templateTransfer->setTemplateName($template);
 
             $this->templateWriter->createTemplate($templateTransfer);
