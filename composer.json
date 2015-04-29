@@ -1,5 +1,5 @@
 {
-  "name": "spryker/transfer",
+  "name": "spryker/generator",
   "autoload": {
     "psr-0": {
       "SprykerFeature": "src/",
