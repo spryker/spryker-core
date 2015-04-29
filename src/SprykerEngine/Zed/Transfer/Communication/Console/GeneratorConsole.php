@@ -11,7 +11,6 @@ use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Zend\Config\Config;
 use Zend\Config\Factory;
 
-
 class GeneratorConsole extends Console
 {
 
