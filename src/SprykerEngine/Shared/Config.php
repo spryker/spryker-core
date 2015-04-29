@@ -102,8 +102,6 @@ class Config
         self::buildConfig('local_' . $storeName, $config);
 
         self::$config = $config;
-
-        return self;
     }
 
     /**
