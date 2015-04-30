@@ -83,11 +83,11 @@ class ProductCategoryFacadeTest extends Test
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractSku);
         $this->productFacade->createConcreteProduct($concreteSku, $idAbstractProduct);
 
-        $categoryTransfer = $this->locator->category()->transferCategory();
+        $categoryTransfer = new \Generated\Shared\Transfer\CategoryCategoryTransfer();
         $categoryTransfer->setName($categoryName);
         $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $locale);
 
-        $categoryNodeTransfer = $this->locator->category()->transferCategoryNode();
+        $categoryNodeTransfer = new \Generated\Shared\Transfer\CategoryCategoryNodeTransfer();
         $categoryNodeTransfer->setFkCategory($idCategory);
         $categoryNodeTransfer->setIsRoot(true);
         $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $locale);
