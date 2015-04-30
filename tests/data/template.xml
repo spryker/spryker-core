@@ -9,6 +9,7 @@
         <property name="cartItems" type="CartItem[]" />
         <property name="properties" type="[]" />
         <property name="published" type="boolean" default="true" />
+        <property name="user_id" type="integer" />
     </transfer>
 
     <transfer name="Alfa">

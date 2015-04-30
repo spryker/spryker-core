@@ -24,7 +24,7 @@ class TransferTwigExtensions extends \Twig_Extension
                 return preg_replace('/(s$){1}/', '', $text);
             }),
             new \Twig_SimpleFilter('quotedIfNotIntegers', function ($text) {
-                return (preg_match('/(null|[0-9]+)/', $text)) ? $text : sprintf("'%s'", $text);
+                return (preg_match('/(\[\]|true|false|null|[0-9]+)/', $text)) ? $text : sprintf("'%s'", $text);
             }, [
                 'is_safe' => ['html'],
             ]),

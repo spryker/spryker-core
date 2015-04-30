@@ -83,10 +83,11 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
         return [
             ['namespace Generated\Shared\Transfer;'],
             ['$properties = [];'],
+            ['$published = true;'],
             ['@var array $properties'],
-            ['@return array $properties'],
+            ['@return array'],
             ['@var Customer $customer'],
-            ['@return Customer $customer'],
+            ['@return Customer'],
             ['$this->user_id = $user_id;'],
             ['public function setUserId($user_id)'],
             ['public function getUserId()'],
@@ -95,7 +96,7 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             ['public function setCartItems(array $cartItems)'],
             ['$this->properties[] = $properties;'],
             ['setCustomer(Customer $customer)'],
-            ['public function setPublished(boolean $published)'],
+            ['public function setPublished(bool $published)'],
             ['use Spryker\Demo\FirstInterface'],
             ['use Spryker\Demo\SecondInterface'],
             ['use Spryker\Demo\ThirdInterface'],
@@ -103,7 +104,7 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             ['$this->addModifiedProperty(\'customer\');'],
             ['$this->addModifiedProperty(\'properties\');'],
             ['$this->addModifiedProperty(\'cartItems\');'],
-            ['class AlfaTransfer extends AbstractTransfer implements FirstInterface, SecondInterface, ThirdInterface'],
+//            ['class AlfaTransfer extends AbstractTransfer implements FirstInterface, SecondInterface, ThirdInterface'],
         ];
     }
 
