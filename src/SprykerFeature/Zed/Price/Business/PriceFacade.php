@@ -79,7 +79,7 @@ class PriceFacade extends AbstractFacade
      */
     public function getDefaultPriceTypeName()
     {
-        return $this->getDependencyContainer()->getPriceSettings()->getPriceTypeDefaultName();
+        return $this->getDependencyContainer()->getConfig()->getPriceTypeDefaultName();
     }
 
     /**
