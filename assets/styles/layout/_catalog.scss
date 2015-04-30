@@ -98,7 +98,7 @@
 
 .sorting__button--inc, .sorting__button--dec {
   height: $step;
-  margin-top: -6px;
+  margin-top: - floor($step*.25);
   padding: $step*.2 $step*.5;
   border-color: $muted-color;
   background-color: $pale-color;

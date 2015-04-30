@@ -61,14 +61,15 @@ module.exports = {
     });
 
     $('.js-payment-button').click(function() {
-      // no need to validate
       $('.js-checkout-payment').addClass('js-checkout-collapsed js-checkout-completed');
       $('.js-checkout-confirm').removeClass('js-checkout-collapsed');
+      $('.js-checkout-cart').hide();
     });
 
     $('.js-edit-formblock').click(function(e) {
       $('.js-form-block').addClass('js-checkout-collapsed');
       $(e.currentTarget).parents('.js-form-block').removeClass('js-checkout-collapsed');
+      $('.js-checkout-cart').show();
     });
 
     $('.js-confirm-agb').click(function(e) {
