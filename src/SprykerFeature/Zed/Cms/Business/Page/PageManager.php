@@ -201,7 +201,7 @@ class PageManager implements PageManagerInterface
      */
     public function convertPageEntityToTransfer(SpyCmsPage $page)
     {
-        $pageTransfer = $this->locator->cms()->transferPage();
+        $pageTransfer = new \Generated\Shared\Transfer\CmsPageTransfer();
         $pageTransfer->fromArray($page->toArray());
 
         return $pageTransfer;

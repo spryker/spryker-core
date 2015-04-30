@@ -53,7 +53,7 @@ class SandboxController extends AbstractController
             $cmsTemplate = $cmsFacade->createTemplate('Template1', $templatePath);
         }
 
-        $cmsPage = $this->getLocator()->cms()->transferPage();
+        $cmsPage = new \Generated\Shared\Transfer\CmsPageTransfer();
         $cmsPage->setFkTemplate($cmsTemplate->getIdCmsTemplate());
         $cmsPage->setIsActive(true);
 
@@ -69,7 +69,7 @@ class SandboxController extends AbstractController
         $mappings = [];
 
         if (!$cmsFacade->hasPagePlaceholderMapping($cmsPage->getIdCmsPage(), 'Placeholder1')) {
-            $mapping1 = $this->getLocator()->cms()->transferPageKeyMapping();
+            $mapping1 = new \Generated\Shared\Transfer\CmsPageKeyMappingTransfer();
         } else {
             $mapping1 = $cmsFacade->getPagePlaceholderMapping($cmsPage->getIdCmsPage(), 'Placeholder1');
         }
@@ -80,7 +80,7 @@ class SandboxController extends AbstractController
         $mappings[] = $mapping1->toArray();
 
         if (!$cmsFacade->hasPagePlaceholderMapping($cmsPage->getIdCmsPage(), 'Placeholder2')) {
-            $mapping2 = $this->getLocator()->cms()->transferPageKeyMapping();
+            $mapping2 = new \Generated\Shared\Transfer\CmsPageKeyMappingTransfer();
         } else {
             $mapping2 = $cmsFacade->getPagePlaceholderMapping($cmsPage->getIdCmsPage(), 'Placeholder2');
         }

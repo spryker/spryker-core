@@ -234,7 +234,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
         $idKey = $this->glossaryFacade->createKey($keyName);
         $this->glossaryFacade->createTranslationForCurrentLocale($keyName, $value);
 
-        $pageKeyMapping = $this->locator->cms()->transferPageKeyMapping();
+        $pageKeyMapping = new \Generated\Shared\Transfer\CmsPageKeyMappingTransfer();
         $pageKeyMapping->setFkGlossaryKey($idKey);
         $pageKeyMapping->setPlaceholder($placeholder);
         $pageKeyMapping->setFkPage($page->getIdCmsPage());
@@ -293,7 +293,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      */
     protected function convertMappingEntityToTransfer(SpyCmsGlossaryKeyMapping $mappingEntity)
     {
-        $mappingTransfer = $this->locator->cms()->transferPageKeyMapping();
+        $mappingTransfer = new \Generated\Shared\Transfer\CmsPageKeyMappingTransfer();
         $mappingTransfer->fromArray($mappingEntity->toArray());
 
         return $mappingTransfer;
