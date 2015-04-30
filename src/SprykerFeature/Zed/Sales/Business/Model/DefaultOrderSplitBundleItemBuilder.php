@@ -147,7 +147,7 @@ class DefaultOrderSplitBundleItemBuilder extends OrderItemBuilder implements Pro
      */
     protected function createRecalculationItemTransferCollection(OrderItem $transferItem, $bundleProducts)
     {
-        $itemCollection = Locator::getInstance()->sales()->transferOrderItemCollection();
+        $itemCollection = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         /* @var $bundleProduct \SprykerFeature\Zed\Catalog\Persistence\Propel\PacCatalogProductBundleProduct */
         foreach($bundleProducts as $bundleProduct) {
             $productEntity = $bundleProduct->getBundleProductProduct();
