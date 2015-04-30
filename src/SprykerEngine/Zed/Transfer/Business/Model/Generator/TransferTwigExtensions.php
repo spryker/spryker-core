@@ -23,6 +23,11 @@ class TransferTwigExtensions extends \Twig_Extension
                 // just cut the ending "s" from the word
                 return preg_replace('/(s$){1}/', '', $text);
             }),
+            new \Twig_SimpleFilter('quotedIfNotIntegers', function ($text) {
+                return (preg_match('/(null|[0-9]+)/', $text)) ? $text : sprintf("'%s'", $text);
+            }, [
+                'is_safe' => ['html'],
+            ]),
             new \Twig_SimpleFilter('camelCase', function ($string) {
                 $filter = new UnderscoreToCamelCase();
                 $string = $filter->filter($string);

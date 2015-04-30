@@ -35,7 +35,7 @@
 
 {% macro method_get(sag) %}
     /**
-     * @return {{ sag.parameterDataTyp }}
+     * @return {{ sag.parameterDataType }}
      */
     public function get{{ sag.propertyName|camelCase }}()
     {
@@ -47,5 +47,5 @@
     /**
      * @var {{ prop.parameterDataType }} ${{ prop.propertyName }}
      */
-    protected ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue }}{% endif %};
+    protected ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue|quotedIfNotIntegers }}{% endif %};
 {% endmacro %}
