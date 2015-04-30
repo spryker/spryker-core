@@ -82,14 +82,19 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
     {
         return [
             ['namespace Generated\Shared\Transfer;'],
-            ['$properties = array();'],
+            ['$properties = [];'],
             ['@var array $properties'],
             ['@return array $properties'],
             ['@var Customer $customer'],
             ['@return Customer $customer'],
+            ['$this->user_id = $user_id;'],
+            ['public function setUserId($user_id)'],
+            ['public function getUserId()'],
+            ['public function addCartItem(CartItem $cartItems)'],
+            ['public function getCartItems()'],
+            ['public function setCartItems(array $cartItems)'],
             ['$this->properties[] = $properties;'],
-            ['setCustomer(array $customer)'],
-            ['addCustomer(Customer $customer)'],
+            ['setCustomer(Customer $customer)'],
             ['public function setPublished(boolean $published)'],
             ['use Spryker\Demo\FirstInterface'],
             ['use Spryker\Demo\SecondInterface'],
@@ -123,13 +128,14 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             ['use CartItem'],
             ['use Customer'],
             ['use FirstInterface'],
-            ['setCustomer(Customer $customer)'],
             ['setCustomer(Customer$customer)'],
             ['setPublished(boolean$published)'],
             ['setProperties(array$properties)'],
             ['setCartItems(CartItem$cartItems)'],
             ['setCartItems($cartItems)'],
             ['setCartItems( $cartItems)'],
+            ['setCartItems(CartItems $cartItems)'],
+            ['addCartItems(CartItems $cartItems)'],
         ];
     }
 }
