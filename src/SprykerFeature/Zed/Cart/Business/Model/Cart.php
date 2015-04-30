@@ -240,7 +240,9 @@ class Cart
         $diff = $quantity - $count;
         $orderItemArray = $newOrderItem->toArray();
         for ($i = 0; $i < $diff; $i++) {
-            $orderItems->add($this->locator->sales()->transferOrderItem()->fromArray($orderItemArray));
+            $salesOrderItemTransfer = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+            $salesOrderItemTransfer->fromArray($orderItemArray);
+            $orderItems->add($salesOrderItemTransfer);
         }
     }
 
@@ -322,7 +324,7 @@ class Cart
     {
         /** @var AutoCompletion $locator */
         $locator = $this->locator;
-        $item = $locator->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
 
         $sku = $cartItem->getSku();
 
@@ -372,7 +374,7 @@ class Cart
     protected function createOptionTransfer($optionIdentifier)
     {
         $optionEntity = $this->facadeCatalog->getProductOptionByIdentifier($optionIdentifier);
-        $salesOption = $this->locator->sales()->transferOrderItemOption();
+        $salesOption = new \Generated\Shared\Transfer\SalesOrderItemOptionTransfer();
         $salesOption->setIdentifier($optionIdentifier);
         $salesOption->setName($optionEntity->getName());
         $salesOption->setDescription($optionEntity->getDescription());
@@ -396,8 +398,8 @@ class Cart
         $customerItems = $this->addQuantityOfCartItemsToStoredItems($customerItems, $sessionItems);
         /* @var $customerItem \SprykerFeature\Zed\Cart\Persistence\Propel\SpyCartItem */
         foreach ($customerItems as $customerItem) {
-            $transferCartChange = $this->locator->cart()->transferChange();
-            $transferCartItem = $this->locator->cart()->transferItem();
+            $transferCartChange = new \Generated\Shared\Transfer\CartChangeTransfer();
+            $transferCartItem = new \Generated\Shared\Transfer\CartItemTransfer();
             $transferCartItem = Copy::entityToTransfer($transferCartItem, $customerItem);
             $transferCartChange->getChangedCartItems()->add($transferCartItem);
             if ($this->canPerformCartChange($transferCartChange)->isSuccess()) {

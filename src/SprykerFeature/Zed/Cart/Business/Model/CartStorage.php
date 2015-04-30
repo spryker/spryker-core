@@ -151,7 +151,7 @@ class CartStorage
      */
     protected function mergeItemWithCartCollection(OrderItemCollection $saleItems, CartChange $cart, \SprykerFeature\Zed\Cart\Persistence\Propel\SpyCartItem $itemToAdd)
     {
-        $tmpSaleItem = Locator::getInstance()->sales()->transferOrderItem();
+        $tmpSaleItem = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $oldQuantity = 0;
         /* @var $saleItem OrderItem */
         foreach ($saleItems as $saleItem) {
@@ -166,7 +166,7 @@ class CartStorage
             $tmpSaleItem->setQuantity($oldQuantity);
             $newQuantity = $this->getMergeStrategy()->getQuantity($tmpSaleItem, $itemToAdd);
 
-            $cartItem = Locator::getInstance()->cart()->transferItem();
+            $cartItem = new \Generated\Shared\Transfer\CartItemTransfer();
             $cartItem->setSku($saleItem->getSku());
             $cartItem->setUniqueIdentifier($saleItem->getUniqueIdentifier());
             $cartItem->setQuantity($newQuantity);
@@ -175,7 +175,7 @@ class CartStorage
             return $saleItems;
         }
 
-        $newTransfer = Locator::getInstance()->cart()->transferItem();
+        $newTransfer = new \Generated\Shared\Transfer\CartItemTransfer();
         $newTransfer->setSku($itemToAdd->getSku());
         $newTransfer->setQuantity($itemToAdd->getQuantity());
         $optionArray = [];

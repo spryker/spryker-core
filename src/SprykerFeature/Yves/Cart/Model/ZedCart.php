@@ -203,7 +203,7 @@ class ZedCart implements CartInterface
     public function clear($reason = DeleteReasonConstant::DELETE_REASON_ORDER_PLACEMENT)
     {
         $transferCartChange = $this->createCartChange();
-        $transferCartChange->setOrder($this->locator->sales()->transferOrder());
+        $transferCartChange->setOrder(new \Generated\Shared\Transfer\SalesOrderTransfer());
         $transferCartChange->setDeleteReason($reason);
         $order = $order = $this->zedClient->call('cart/sdk/clear-cart-storage', $transferCartChange);
         $this->setOrder($order);
@@ -225,7 +225,7 @@ class ZedCart implements CartInterface
             throw new \InvalidArgumentException('addItems() expects array or CartItemCollection');
         }
 
-        $transferCartChange = $this->locator->cart()->transferCartChange();
+        $transferCartChange = new \Generated\Shared\Transfer\CartCartChangeTransfer();
         $transferCartChange->setOrder($this->getOrder());
 
         if ($this->cartStorage) {
