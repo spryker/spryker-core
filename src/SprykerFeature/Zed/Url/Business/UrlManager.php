@@ -127,10 +127,11 @@ class UrlManager implements UrlManagerInterface
      */
     public function convertUrlEntityToTransfer(SpyUrl $urlEntity)
     {
-        $transferUrl = $this->locator->url()->transferUrl();
+        $transferUrl = new \Generated\Shared\Transfer\UrlUrlTransfer();
         $transferUrl
             ->setFkLocale($urlEntity->getFkLocale())
-            ->setResource($urlEntity->getResourceType(), $urlEntity->getResourceId())
+            // TODO this is logical code which is forbidden in Transfer Objects
+//            ->setResource($urlEntity->getResourceType(), $urlEntity->getResourceId())
             ->setUrl($urlEntity->getUrl())
             ->setIdUrl($urlEntity->getIdUrl())
         ;

@@ -93,7 +93,7 @@ class RedirectManager implements RedirectManagerInterface
      */
     public function convertRedirectEntityToTransfer(SpyRedirect $redirectEntity)
     {
-        $transferRedirect = $this->locator->url()->transferRedirect();
+        $transferRedirect = new \Generated\Shared\Transfer\UrlRedirectTransfer();
         $transferRedirect->fromArray($redirectEntity->toArray());
 
         return $transferRedirect;

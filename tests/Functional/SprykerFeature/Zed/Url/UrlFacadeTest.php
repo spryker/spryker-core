@@ -75,7 +75,7 @@ class UrlFacadeTest extends Test
         $urlQuery = $this->urlQueryContainer->queryUrls();
         $redirect = $this->urlFacade->createRedirect('/YetSomeOtherPageUrl2');
 
-        $url = $this->locator->url()->transferUrl();
+        $url = new \Generated\Shared\Transfer\UrlUrlTransfer();
         $url->setUrl('/YetSomeOtherPageUrl');
         $url->setFkLocale($this->localeFacade->createLocale('QWERT')->getIdLocale());
         $url->setResource('redirect', $redirect->getIdRedirect());
@@ -91,7 +91,7 @@ class UrlFacadeTest extends Test
 
     public function testSaveUrlUpdatesSomething()
     {
-        $url = $this->locator->url()->transferUrl();
+        $url = new \Generated\Shared\Transfer\UrlUrlTransfer();
         $urlQuery = $this->urlQueryContainer->queryUrl('/SoManyPageUrls');
         $redirect1 = $this->urlFacade->createRedirect('/SoManyPageUrls2');
         $redirect2 = $this->urlFacade->createRedirect('/SoManyPageUrls3');
@@ -178,7 +178,7 @@ class UrlFacadeTest extends Test
 
     public function testSaveRedirectInsertsAndReturnsSomethingOnCreate()
     {
-        $redirect = $this->locator->url()->transferRedirect();
+        $redirect = new \Generated\Shared\Transfer\UrlRedirectTransfer();
         $redirect->setToUrl('/pageToUrl');
 
         $redirectQuery = $this->urlQueryContainer->queryRedirects();
@@ -194,7 +194,7 @@ class UrlFacadeTest extends Test
 
     public function testSaveRedirectUpdatesSomething()
     {
-        $redirect = $this->locator->url()->transferRedirect();
+        $redirect = new \Generated\Shared\Transfer\UrlRedirectTransfer();
         $redirect->setToUrl('/pageToUrl2');
 
         $redirect = $this->urlFacade->saveRedirect($redirect);
