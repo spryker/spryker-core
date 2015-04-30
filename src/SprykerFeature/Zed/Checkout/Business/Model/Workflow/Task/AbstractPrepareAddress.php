@@ -30,7 +30,7 @@ abstract class AbstractPrepareAddress extends AbstractTask
      */
     protected function loadCustomerAddress(Address $salesAddress, Customer $transferCustomer)
     {
-        $transferCustomerAddress = $this->locator->customer()->transferCustomerAddress();
+        $transferCustomerAddress = new \Generated\Shared\Transfer\CustomerCustomerAddressTransfer();
         $transferCustomerAddress->fromArray($salesAddress->toArray(), true);
         $transferCustomerAddress->setFkCustomer($transferCustomer->getIdCustomer());
         $transferCustomerAddress->setFkMiscCountry($this->getFkCountry($salesAddress));

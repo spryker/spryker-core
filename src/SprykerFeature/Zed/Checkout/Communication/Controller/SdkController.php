@@ -52,10 +52,10 @@ class SdkController extends AbstractSdkController
 
     public function saveOrderTestAction(\SprykerFeature\Shared\Sales\Transfer\Order $transferOrder = null, \SprykerFeature\Shared\Library\Communication\Request $requestTransfer = null)
     {
-        $transferOrder = Locator::getInstance()->sales()->transferOrder();
+        $transferOrder = new \Generated\Shared\Transfer\SalesOrderTransfer();
         $transferOrder->setEmail('test+123@spryker.com');
 
-        $address = Locator::getInstance()->sales()->transferAddress();
+        $address = new \Generated\Shared\Transfer\SalesAddressTransfer();
         $address->setFirstName('Max');
         $address->setLastName('Muster');
         $address->setAddress1('Teststr.');
@@ -68,14 +68,14 @@ class SdkController extends AbstractSdkController
         $paymentData = (new \SprykerEngine\Shared\Kernel\TransferLocator())->locatePayonePaymentPayone();
         $paymentData->setMethod(PayoneApiConstants::PAYMENT_METHOD_PAYPAL);
 
-        $payment = Locator::getInstance()->sales()->transferPayment();
+        $payment = new \Generated\Shared\Transfer\SalesPaymentTransfer();
         $payment->setPaymentData($paymentData);
         $payment->setMethod(PayoneApiConstants::PAYMENT_METHOD_PAYPAL);
         $transferOrder->setPayment($payment);
 
         $items = Locator::getInstance()->sales()->transferOrderItemCollection();
 
-        $item = Locator::getInstance()->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setSku('211709');
         $item->setPriceToPay(10500);
         $item->setName('Gewinde-Aussch.Lehrring D2299M1,2 LMW');
@@ -83,7 +83,7 @@ class SdkController extends AbstractSdkController
 
         $items->add($item);
 
-        $item = Locator::getInstance()->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setSku('210105');
         $item->setPriceToPay(722);
         $item->setName('Auflageplatte A-SPCN 12');
@@ -91,7 +91,7 @@ class SdkController extends AbstractSdkController
 
         $items->add($item);
 
-        $item = Locator::getInstance()->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setSku('211815');
         $item->setPriceToPay(3940);
         $item->setName('Gewinde-Reparatur-Satz M14 x 1,25 V-Coil');
@@ -99,7 +99,7 @@ class SdkController extends AbstractSdkController
 
         $items->add($item);
 
-        $item = Locator::getInstance()->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setSku('210105');
         $item->setPriceToPay(722);
         $item->setName('Auflageplatte A-SPCN 12');
@@ -107,7 +107,7 @@ class SdkController extends AbstractSdkController
 
         $items->add($item);
 
-        $item = Locator::getInstance()->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setSku('210403');
         $item->setPriceToPay(26200);
         $item->setName('Aderendhülsensortiment 1250-tlg. 4kt. Knipex');

@@ -39,7 +39,7 @@ class SaveCustomerIfNew extends AbstractTask
      */
     protected function createCustomerTransfer(\SprykerFeature\Zed\Customer\Persistence\Propel\PacCustomer $entity, $enrichment = null)
     {
-        $transfer = Locator::getInstance()->customer()->transferCustomer();
+        $transfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
         Copy::entityToTransfer($transfer, $entity, $enrichment);
         $transfer->setPassword(null); // do not carry around the password hash
         return $transfer;
