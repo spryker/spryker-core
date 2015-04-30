@@ -108,6 +108,7 @@ abstract class BaseCommand extends Console
      */
     protected function runCommand($dir)
     {
+        $this->info($dir);
         if (!$this->checkGit($dir)) {
             return false;
         }
