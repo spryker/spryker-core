@@ -42,7 +42,7 @@ class DiscountsTest extends Test
         $order->addItem($item);
 
         $calculator = new DiscountTotalsCalculator(Locator::getInstance());
-        $totals = $locator->calculation()->transferTotals();
+        $totals = new \Generated\Shared\Transfer\CalculationTotalsTransfer();
         $calculator->recalculateTotals($totals, $order, $order->getItems());
 
         $this->assertEquals(0, $totals->getDiscount()->getTotalAmount());
@@ -122,7 +122,7 @@ class DiscountsTest extends Test
     protected function getOrderWithFixtureData()
     {
         /* @var Order $order */
-        $order = $this->getLocator()->sales()->transferOrder();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
         $order->fillWithFixtureData();
 
         return $order;
@@ -134,7 +134,7 @@ class DiscountsTest extends Test
     protected function getItemWithFixtureData()
     {
         /* @var OrderItem $item */
-        $item = $this->getLocator()->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->fillWithFixtureData();
 
         return $item;
@@ -146,7 +146,7 @@ class DiscountsTest extends Test
     protected function getExpenseWithFixtureData()
     {
         /* @var Expense $expense */
-        $expense = $this->getLocator()->calculation()->transferExpense();
+        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
         $expense->fillWithFixtureData();
 
         return $expense;
@@ -157,7 +157,7 @@ class DiscountsTest extends Test
      */
     protected function getPriceTotals()
     {
-        return $this->getLocator()->calculation()->transferTotals();
+        return new \Generated\Shared\Transfer\CalculationTotalsTransfer();
     }
 
     /**
@@ -165,7 +165,7 @@ class DiscountsTest extends Test
      */
     protected function getPriceDiscount()
     {
-        return $this->getLocator()->calculation()->transferDiscount();
+        return new \Generated\Shared\Transfer\CalculationDiscountTransfer();
     }
 
     /**

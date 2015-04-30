@@ -121,7 +121,7 @@ class GrandTotalTest extends Test
      */
     protected function getPriceTotals()
     {
-        return $this->locator->calculation()->transferTotals();
+        return new \Generated\Shared\Transfer\CalculationTotalsTransfer();
     }
 
     /**
@@ -129,7 +129,7 @@ class GrandTotalTest extends Test
      */
     protected function getPriceDiscount()
     {
-        return $this->locator->calculation()->transferDiscount();
+        return new \Generated\Shared\Transfer\CalculationDiscountTransfer();
     }
 
     /**
@@ -138,7 +138,7 @@ class GrandTotalTest extends Test
     protected function getOrderWithFixtureData()
     {
         /* @var Order $order */
-        $order = $this->locator->sales()->transferOrder();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
         $order->fillWithFixtureData();
 
         return $order;
@@ -150,7 +150,7 @@ class GrandTotalTest extends Test
     protected function getItemWithFixtureData()
     {
         /* @var OrderItem $item */
-        $item = $this->locator->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->fillWithFixtureData();
 
         return $item;
@@ -162,7 +162,7 @@ class GrandTotalTest extends Test
     protected function getExpenseWithFixtureData()
     {
         /* @var Expense $expense */
-        $expense = $this->locator->calculation()->transferExpense();
+        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
         $expense->fillWithFixtureData();
 
         return $expense;

@@ -67,7 +67,7 @@ class DiscountTotalsCalculator extends AbstractCalculator implements DiscountTot
         DiscountableContainerInterface $discountableContainer,
         DiscountableItemCollectionInterface $discountableContainers
     ) {
-        $discountTransfer = $this->locator->calculation()->transferDiscountTotals();
+        $discountTransfer = new \Generated\Shared\Transfer\CalculationDiscountTotalsTransfer();
         $discountTransfer->setTotalAmount($this->calculateDiscount($discountableContainer, $discountableContainers));
 
         foreach ($this->sumDiscountItems($discountableContainer, $discountableContainers) as $discountTotalItem) {
@@ -143,7 +143,7 @@ class DiscountTotalsCalculator extends AbstractCalculator implements DiscountTot
      */
     protected function getDiscountTotalItem()
     {
-        return $this->locator->sales()->transferPriceDiscountTotalItem();
+        return new \Generated\Shared\Transfer\SalesPriceDiscountTotalItemTransfer();
     }
 
     /**

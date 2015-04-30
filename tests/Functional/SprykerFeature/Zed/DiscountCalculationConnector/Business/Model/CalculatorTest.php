@@ -208,7 +208,7 @@ class CalculatorTest extends Test
      */
     protected function getPriceDiscount()
     {
-        return $this->getLocator()->calculation()->transferDiscount();
+        return new \Generated\Shared\Transfer\CalculationDiscountTransfer();
     }
 
     /**
@@ -217,7 +217,7 @@ class CalculatorTest extends Test
     protected function getOrderWithFixtureData()
     {
         /* @var Order $order */
-        $order = $this->getLocator()->sales()->transferOrder();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
         $order->fillWithFixtureData();
 
         return $order;
@@ -229,7 +229,7 @@ class CalculatorTest extends Test
     protected function getItemWithFixtureData()
     {
         /* @var OrderItem $item */
-        $item = $this->getLocator()->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->fillWithFixtureData();
 
         return $item;
@@ -241,7 +241,7 @@ class CalculatorTest extends Test
     protected function getExpenseWithFixtureData()
     {
         /* @var Expense $expense */
-        $expense = $this->getLocator()->calculation()->transferExpense();
+        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
         $expense->fillWithFixtureData();
 
         return $expense;

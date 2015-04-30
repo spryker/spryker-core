@@ -64,7 +64,7 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnEmptyOrder()
     {
-        $order = $this->getLocator()->sales()->transferOrder();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
         $calculator = $this->getCalculatorModel();
         $calculatorStack = $this->createCalculatorStack();
         $calculator->recalculate($calculatorStack, $order);
@@ -73,20 +73,20 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnExampleOrderWithOneItemAndExpenseOnOrder()
     {
-        $order = $this->getLocator()->sales()->transferOrder();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
         $items = $this->getLocator()->sales()->transferOrderItemCollection();
-        $item =  $this->getLocator()->sales()->transferOrderItem();
+        $item =  new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
         $discounts = $this->getLocator()->calculation()->transferDiscountCollection();
-        $discount = $this->getLocator()->calculation()->transferDiscount();
+        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $discounts->add($discount);
-        $discount = $this->getLocator()->calculation()->transferDiscount();
+        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $discounts->add($discount);
 
-        $expense = $this->getLocator()->calculation()->transferExpense();
+        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
         $expense->setName('Shipping Costs')
             ->setType(ExpenseConstants::EXPENSE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS)
@@ -124,19 +124,19 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnExampleOrderWithTwoItemsAndExpenseOnItems()
     {
-        $order = $this->locator->sales()->transferOrder();
-        $item = $this->locator->sales()->transferOrderItem();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $discount = $this->getLocator()->calculation()->transferDiscount();
+        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $discount = $this->getLocator()->calculation()->transferDiscount();
+        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $expense = $this->getLocator()->calculation()->transferExpense();
+        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
         $expense->setName('Shipping Costs')
             ->setType(ExpenseConstants::EXPENSE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS/2)
