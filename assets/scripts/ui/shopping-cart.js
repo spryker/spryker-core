@@ -2,7 +2,7 @@
 
 var $ = require('jquery'),
     _ = require('underscore'),
-    cartData = require('../data/cart'),
+    model = require('../model/cart'),
     overlay = require('./overlay'),
     spinner = require('./spinner'),
     templateSrc = require('../templates/cart-item'),
@@ -27,15 +27,24 @@ var renderCart = function() {
   var $el = $('.js-cart-items');
   var $shipping = $('.js-cart-shipping');
   var $total = $('.js-cart-total');
-  _.each(cartData.cart.items, function(item) {
+  _.each(model.cart.items, function(item) {
     html += template(item);
   });
   $el.children().remove();
   $el.html(html);
-  $shipping.html('€ '+cartData.cart.shipping);
-  $total.html('€ '+cartData.cart.total);
+  $shipping.html('€ '+model.cart.shipping);
+  $total.html('€ '+model.cart.total);
+
+  setItemCount();
   spinner.init();
 }
+
+var setItemCount = function() {
+  var count = _.reduce(model.cart.items, function(total, item) {
+    return total + parseInt(item.quantity);
+  }, 0);
+  $('.js-shopping-cart').addClass('js-cart-has-items').attr('data-item-count', count);
+};
 
 module.exports = {
 
@@ -43,9 +52,8 @@ module.exports = {
     $cart = $('.js-shopping-cart');
     template = _.template(templateSrc);
 
-    cartData.loadCart()
+    model.loadCart()
       .done(function(data) {
-        console.log(data);
         renderCart();
       });
 
