@@ -117,7 +117,7 @@ abstract class AbstractAction
     {
         $discounts = $discountableElement->getDiscounts();
         if (!$discounts instanceof DiscountCollection) {
-            $discounts = Locator::getInstance()->sales()->transferPriceDiscountCollection();
+            $discounts = new \Generated\Shared\Transfer\SalesPriceDiscountTransfer();
         }
         return $discounts;
     }
@@ -154,7 +154,7 @@ abstract class AbstractAction
             return $discounts;
         }
 
-        $newDiscounts = Locator::getInstance()->sales()->transferPriceDiscountCollection();
+        $newDiscounts = new \Generated\Shared\Transfer\SalesPriceDiscountTransfer();
 
         foreach ($discounts as $discount) {
             /* @var Discount $discount */

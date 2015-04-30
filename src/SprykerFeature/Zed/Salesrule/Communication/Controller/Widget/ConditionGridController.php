@@ -41,7 +41,7 @@ class ConditionGridController extends AbstractGridController
      */
     protected function loadTransferCollection()
     {
-        return Locator::getInstance()->sales()->transferruleConditionCollection();
+        return new \Generated\Shared\Transfer\SalesRuleConditionTransfer();
     }
 
     /**
