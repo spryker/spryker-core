@@ -3,10 +3,10 @@
 namespace SprykerFeature\Zed\Oms\Business;
 
 use SprykerFeature\Shared\Sales\Transfer\Order;
-use SprykerFeature\Zed\Oms\Business\Model\Dummy;
+use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Dummy;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Oms\Business\Model\Process;
-use SprykerFeature\Zed\Oms\Business\Model\Process\Event;
+use SprykerFeature\Zed\Oms\Business\Process\Process;
+use SprykerFeature\Zed\Oms\Business\Process\Event;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
@@ -31,11 +31,11 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         assert(is_string($eventId));
         $orderItemsArray = $this->getDependencyContainer()
-            ->createModelUtilCollectionToArrayTransformer()
+            ->createUtilCollectionToArrayTransformer()
             ->transformCollectionToArray($orderItems);
 
         return $this->getDependencyContainer()
-            ->createModelOrderStateMachine($logContext)
+            ->createOrderStateMachineOrderStateMachine($logContext)
             ->triggerEvent($eventId, $orderItemsArray, $data);
     }
 
@@ -49,11 +49,11 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = array())
     {
         $orderItemsArray = $this->getDependencyContainer()
-            ->createModelUtilCollectionToArrayTransformer()
+            ->createUtilCollectionToArrayTransformer()
             ->transformCollectionToArray($orderItems);
 
         return $this->getDependencyContainer()
-            ->createModelOrderStateMachine($logContext)
+            ->createOrderStateMachineOrderStateMachine($logContext)
             ->triggerEventForNewItem($orderItemsArray, $data);
     }
 
@@ -63,7 +63,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getProcesses()
     {
         return $this->getDependencyContainer()
-            ->createModelFinder()
+            ->createOrderStateMachineFinder()
             ->getProcesses();
     }
 
@@ -90,7 +90,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
         $orderItemsArray = array($orderItem);
 
         return $this->getDependencyContainer()
-            ->createModelOrderStateMachine($logContext)
+            ->createOrderStateMachineOrderStateMachine($logContext)
             ->triggerEvent($eventId, $orderItemsArray, $data);
     }
 
@@ -102,7 +102,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function checkConditions(array $logContext)
     {
         return $this->getDependencyContainer()
-            ->createModelOrderStateMachine($logContext)
+            ->createOrderStateMachineOrderStateMachine($logContext)
             ->checkConditions();
     }
 
@@ -114,10 +114,10 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function checkTimeouts(array $logContext)
     {
         $orderStateMachine = $this->getDependencyContainer()
-            ->createModelOrderStateMachine($logContext);
+            ->createOrderStateMachineOrderStateMachine($logContext);
 
         return $this->getDependencyContainer()
-            ->createModelOrderStateMachineTimeout($logContext)
+            ->createOrderStateMachineOrderStateMachineTimeout($logContext)
             ->checkTimeouts($orderStateMachine);
     }
 
@@ -132,7 +132,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function drawProcess($processName, $highlightState = null, $format = null, $fontsize = null)
     {
         $process = $this->getDependencyContainer()
-            ->createModelBuilder()
+            ->createOrderStateMachineBuilder()
             ->createProcess($processName);
 
         return $process->draw($highlightState, $format, $fontsize);
@@ -147,7 +147,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getProcess($processName)
     {
         return $this->getDependencyContainer()
-            ->createModelBuilder()
+            ->createOrderStateMachineBuilder()
             ->createProcess($processName);
     }
 
@@ -159,7 +159,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getDummy()
     {
         return $this->getDependencyContainer()
-            ->createModelDummy();
+            ->createOrderStateMachineDummy();
     }
 
     /**
@@ -170,7 +170,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getGroupedManuallyExecutableEvents(SpySalesOrder $order)
     {
         return $this->getDependencyContainer()
-            ->createModelFinder()
+            ->createOrderStateMachineFinder()
             ->getGroupedManuallyExecutableEvents($order);
     }
 
@@ -183,7 +183,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getItemsWithFlag(SpySalesOrder $order, $flag)
     {
         return $this->getDependencyContainer()
-            ->createModelFinder()
+            ->createOrderStateMachineFinder()
             ->getItemsWithFlag($order, $flag);
     }
 
@@ -196,7 +196,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag)
     {
         return $this->getDependencyContainer()
-            ->createModelFinder()
+            ->createOrderStateMachineFinder()
             ->getItemsWithoutFlag($order, $flag);
     }
 
@@ -209,7 +209,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         // FIXME Ticket core-119
         return $this->getDependencyContainer()
-            ->createModelUtilTransitionLog()
+            ->createUtilTransitionLog()
             ->getLogForOrder($order);
     }
 
@@ -221,7 +221,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getReservedOrderItemsForSku($sku)
     {
         return $this->getDependencyContainer()
-            ->createModelFinder()
+            ->createOrderStateMachineFinder()
             ->getReservedOrderItemsForSku($sku);
     }
 
@@ -233,7 +233,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function countReservedOrderItemsForSku($sku)
     {
         return $this->getDependencyContainer()
-            ->createModelFinder()
+            ->createOrderStateMachineFinder()
             ->countReservedOrderItemsForSku($sku);
     }
 
@@ -245,7 +245,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getStateEntity($stateName)
     {
         return $this->getDependencyContainer()
-            ->createModelPersistenceManager()
+            ->createOrderStateMachinePersistenceManager()
             ->getStateEntity($stateName);
     }
 
@@ -257,7 +257,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getProcessEntity($processName)
     {
         return $this->getDependencyContainer()
-            ->createModelPersistenceManager()
+            ->createOrderStateMachinePersistenceManager()
             ->getProcessEntity($processName);
     }
 
@@ -267,7 +267,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getInitialStateEntity()
     {
         return $this->getDependencyContainer()
-            ->createModelPersistenceManager()
+            ->createOrderStateMachinePersistenceManager()
             ->getInitialStateEntity();
     }
 
@@ -291,7 +291,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getStateDisplayName(SpySalesOrderItem $orderItem)
     {
         return $this->getDependencyContainer()
-            ->createModelFinder()
+            ->createOrderStateMachineFinder()
             ->getStateDisplayName($orderItem);
     }
 
