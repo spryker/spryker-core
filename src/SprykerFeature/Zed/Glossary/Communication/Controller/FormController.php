@@ -27,7 +27,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $translation = $this->getLocator()->glossary()->transferTranslation();
+            $translation = new \Generated\Shared\Transfer\GlossaryTranslationTransfer();
             $translation->fromArray($form->getRequestData());
 
             $this->getLocator()->glossary()->facade()->saveTranslation($translation);

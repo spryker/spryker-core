@@ -192,7 +192,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function convertEntityToTranslationTransfer(SpyGlossaryTranslation $translation)
     {
-        $transferTranslation = $this->locator->glossary()->transferTranslation();
+        $transferTranslation = new \Generated\Shared\Transfer\GlossaryTranslationTransfer();
         $transferTranslation->fromArray($translation->toArray());
 
         return $transferTranslation;
