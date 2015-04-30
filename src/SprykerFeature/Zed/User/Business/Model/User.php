@@ -66,7 +66,7 @@ class User implements UserInterface
             throw new UsernameExistsException();
         }
 
-        $transferUser = $this->locator->user()->transferUser();
+        $transferUser = new \Generated\Shared\Transfer\UserUserTransfer();
         $transferUser->setFirstName($firstName);
         $transferUser->setLastName($lastName);
         $transferUser->setUsername($username);
@@ -299,7 +299,7 @@ class User implements UserInterface
         $collection = $this->locator->user()->transferUserCollection();
 
         foreach ($systemUser as $username) {
-            $transferUser = $this->locator->user()->transferUser();
+            $transferUser = new \Generated\Shared\Transfer\UserUserTransfer();
 
             // TODO why setting the id? why is everything the username?
             $transferUser->setIdUserUser(0);
@@ -340,7 +340,7 @@ class User implements UserInterface
      */
     protected function entityToTransfer(SpyUserUser $entity)
     {
-        $transfer = $this->locator->user()->transferUser();
+        $transfer = new \Generated\Shared\Transfer\UserUserTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;

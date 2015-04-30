@@ -63,7 +63,7 @@ class UserTest extends Test
      */
     private function mockUserDto($data)
     {
-        $dto = $this->locator->user()->transferUser();
+        $dto = new \Generated\Shared\Transfer\UserUserTransfer();
 
         $dto->setFirstName($data['firstName']);
         $dto->setLastName($data['lastName']);
