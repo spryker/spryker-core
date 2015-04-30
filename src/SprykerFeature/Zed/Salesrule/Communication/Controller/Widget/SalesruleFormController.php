@@ -34,7 +34,7 @@ class SalesruleFormController extends AbstractFormController
     {
         $this->initialize($request);
         if ($request->getMethod() === 'POST' && $this->form->isValid()) {
-            $transfer = Locator::getInstance()->sales()->transferruleItem();
+            $transfer = new \Generated\Shared\Transfer\SalesRuleItemTransfer();
             $values = $this->form->getValues();
             $transfer->fromArray($this->form->getValues(), true);
             $entity = $this->facadeSalesrule->saveSalesRule($transfer);

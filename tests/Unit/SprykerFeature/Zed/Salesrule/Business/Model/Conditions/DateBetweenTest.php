@@ -24,7 +24,7 @@ class DateBetweenTest extends \PHPUnit_Framework_TestCase
             'end_date' => date('Y-m-d H:i:s', time() + self::TIME_OFFSET)
         ];
         $condition = new \SprykerFeature\Zed\Salesrule\Business\Model\Condition\DateBetween($configuration);
-        $this->assertTrue($condition->match(Locator::getInstance()->sales()->transferOrder()));
+        $this->assertTrue($condition->match(new \Generated\Shared\Transfer\SalesOrderTransfer()));
     }
 
     public function testDateBetweenShouldReturnFalseForADateBeforeTheGivenRange()
@@ -35,7 +35,7 @@ class DateBetweenTest extends \PHPUnit_Framework_TestCase
             'end_date' => date('Y-m-d H:i:s', $now - self::TIME_OFFSET / 2)
         ];
         $condition = new \SprykerFeature\Zed\Salesrule\Business\Model\Condition\DateBetween($configuration);
-        $this->assertFalse($condition->match(Locator::getInstance()->sales()->transferOrder()));
+        $this->assertFalse($condition->match(new \Generated\Shared\Transfer\SalesOrderTransfer()));
     }
 
     public function testDateBetweenShouldReturnFalseForADateAfterTheGivenRange()
@@ -46,6 +46,6 @@ class DateBetweenTest extends \PHPUnit_Framework_TestCase
             'start_date' => date('Y-m-d H:i:s', $now + self::TIME_OFFSET * 2)
         ];
         $condition = new \SprykerFeature\Zed\Salesrule\Business\Model\Condition\DateBetween($configuration);
-        $this->assertFalse($condition->match(Locator::getInstance()->sales()->transferOrder()));
+        $this->assertFalse($condition->match(new \Generated\Shared\Transfer\SalesOrderTransfer()));
     }
 }

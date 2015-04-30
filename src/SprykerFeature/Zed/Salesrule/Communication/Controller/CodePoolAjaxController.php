@@ -60,7 +60,7 @@ class CodePoolAjaxController extends AbstractController
 
         if ($request->getMethod() === 'POST' && $form->isValid($request->request->all())) {
             $this->addMessageSuccess(__('Code group successfully saved'));
-            $entity = $this->facadeSalesrule->saveCodePool(Locator::getInstance()->sales()->transferruleCodePool($form->getValues()));
+            $entity = $this->facadeSalesrule->saveCodePool(new \Generated\Shared\Transfer\SalesRuleCodePool($form->getValuesTransfer()));
             $idCodePool = $entity->getPrimaryKey();
             if ($request->query->get('add-condition')) {
                 $this->facadeSalesrule->saveCondition($this->getConditionData($idSalesRule, $idCodePool));

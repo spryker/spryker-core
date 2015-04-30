@@ -130,7 +130,7 @@ abstract class AbstractAction
     protected function getDiscount($amount)
     {
         $discountType = $this->getDiscountType($this->salesrule);
-        $discount = Locator::getInstance()->sales()->transferPriceDiscount();
+        $discount = new \Generated\Shared\Transfer\SalesPriceDiscountTransfer();
         $discount->setType($discountType);
         $discount->setSalesruleId($this->salesrule->getIdSalesrule());
         $discount->setScope($this->salesrule->getScope());

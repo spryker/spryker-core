@@ -51,7 +51,7 @@ class CodeGridController extends AbstractGridController
      */
     protected function loadTransfer()
     {
-        return Locator::getInstance()->sales()->transferruleCode();
+        return new \Generated\Shared\Transfer\SalesRuleCodeTransfer();
     }
 
 
