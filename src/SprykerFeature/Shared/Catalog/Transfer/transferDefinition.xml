@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="CatalogAttribute">
+        <property name="idCatalogAttribute" type="int" default="null" />
+        <property name="name" type="string" default="null" />
+    </transfer>
+    <transfer name="CatalogAttributeSet">
+        <property name="idCatalogAttributeSet" type="int" default="null" />
+        <property name="name" type="string" default="null" />
+    </transfer>
+    <transfer name="CatalogAttributeSetGroup">
+        <property name="idCatalogAttributeSetGroup" type="int" default="null" />
+        <property name="fkCatalogGroup" type="int" default="null" />
+        <property name="fkCatalogValueType" type="int" default="null" />
+    </transfer>
+    <transfer name="CatalogValueType">
+        <property name="idCatalogValueType" type="int" default="null" />
+        <property name="variety" type="string" default="null" />
+        <property name="fkCatalogAttribute" type="int" default="null" />
+        <property name="fkCatalogAttributeSet" type="int" default="null" />
+    </transfer>
+
+</transfers>
+
