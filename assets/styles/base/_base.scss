@@ -49,6 +49,51 @@ input, textarea, select {
   line-height: $step;
 }
 
+input.padded, textarea.padded {
+  border-radius: 5px;
+  border: 1px solid $paler-color;
+  padding: $step*.75 $step*.5;
+
+  &:focus {
+    outline: 0;
+    border-color: $brand-color;
+  }
+}
+
+input[type="checkbox"].padded, input[type="radio"].padded {
+  width: $step;
+
+  & + label {
+    float: left;
+    margin-bottom: $step;
+    margin-top: -3px;
+  }
+
+  & + label::before {
+    pointer-events: none;
+    content: '';
+    display: inline-block;
+    position: relative;
+    left: -$step + 4px;
+    padding-right: $step*.5;
+    vertical-align: sub;
+    width: $step - 8px;
+    height: $step - 8px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 3px $light-color, 0 0 0 4px $paler-color;
+    background-color: $light-color;
+  }
+
+  &:checked + label::before {
+    pointer-events: none;
+    background-color: $muted-color;
+  }
+}
+
+input[type="radio"].padded + label::before {
+  border-radius: $step;
+}
+
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -78,13 +123,14 @@ a.cta-light, input.cta-light {
   }
 }
 
-a.cta, input.cta {
+a.cta, input.cta, button.cta {
   @extend .cta-light;
   display: block;
   padding: $step*.6 $step*2 $step*.4;
   background-color: $brand-color;
   color: white;
   border: 0;
+  border-radius: 6px;
   box-shadow: 0 2px 0 darken($brand-color, 30%);
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
