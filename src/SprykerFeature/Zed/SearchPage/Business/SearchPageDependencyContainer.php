@@ -3,7 +3,9 @@
 namespace SprykerFeature\Zed\SearchPage\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SearchPageBusiness;
+use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerFeature\Zed\SearchPage\Business\Installer\DocumentAttributeInstaller;
 use SprykerFeature\Zed\SearchPage\Business\Installer\TemplateInstaller;
 use SprykerFeature\Zed\SearchPage\Business\Reader\DocumentAttributeReader;
 use SprykerFeature\Zed\SearchPage\Business\Reader\PageElementReader;
@@ -32,27 +34,35 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return TemplateInstaller
+     * @param MessengerInterface $messenger
+     *
+     * @return DocumentAttributeInstaller
      */
-    public function getDocumentAttributeInstaller()
+    public function getDocumentAttributeInstaller(MessengerInterface $messenger)
     {
-        return $this->getFactory()->createInstallerDocumentAttributeInstaller(
+        $attributeInstaller = $this->getFactory()->createInstallerDocumentAttributeInstaller(
             $this->createDocumentAttributeWriter(),
             $this->createDocumentAttributeReader(),
             $this->getLocator()
         );
+
+        return $attributeInstaller->setMessenger($messenger);
     }
 
     /**
+     * @param MessengerInterface $messenger
+     *
      * @return TemplateInstaller
      */
-    public function getTemplateInstaller()
+    public function getTemplateInstaller(MessengerInterface $messenger)
     {
-        return $this->getFactory()->createInstallerTemplateInstaller(
+        $templateInstaller = $this->getFactory()->createInstallerTemplateInstaller(
             $this->createTemplateWriter(),
             $this->createTemplateReader(),
             $this->getLocator()
         );
+
+        return $templateInstaller->setMessenger($messenger);
     }
 
     /**

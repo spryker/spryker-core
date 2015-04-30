@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\SearchPage\Business;
 
+use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\SearchPage\Dependency\PageElementInterface;
 
@@ -64,18 +65,24 @@ class SearchPageFacade extends AbstractFacade
         ;
     }
 
-    public function installDocumentAttributes()
+    /**
+     * @param MessengerInterface $messenger
+     */
+    public function installDocumentAttributes(MessengerInterface $messenger)
     {
         $this->getDependencyContainer()
-            ->getDocumentAttributeInstaller()
+            ->getDocumentAttributeInstaller($messenger)
             ->install()
         ;
     }
 
-    public function installTemplates()
+    /**
+     * @param MessengerInterface $messenger
+     */
+    public function installTemplates(MessengerInterface $messenger)
     {
         $this->getDependencyContainer()
-            ->getTemplateInstaller()
+            ->getTemplateInstaller($messenger)
             ->install()
         ;
     }

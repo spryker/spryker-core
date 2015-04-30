@@ -13,6 +13,9 @@ class TemplateInstaller extends AbstractInstallerPlugin
 
     public function install()
     {
-        $this->getDependencyContainer()->getSearchPageFacade()->installTemplates();
+        $this->getDependencyContainer()
+            ->getSearchPageFacade()
+            ->installTemplates($this->messenger)
+        ;
     }
 }

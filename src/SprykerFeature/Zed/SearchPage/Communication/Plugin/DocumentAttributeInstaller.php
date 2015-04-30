@@ -13,6 +13,9 @@ class DocumentAttributeInstaller extends AbstractInstallerPlugin
 
     public function install()
     {
-        $this->getDependencyContainer()->getSearchPageFacade()->installDocumentAttributes();
+        $this->getDependencyContainer()
+            ->getSearchPageFacade()
+            ->installDocumentAttributes($this->messenger)
+        ;
     }
 }
