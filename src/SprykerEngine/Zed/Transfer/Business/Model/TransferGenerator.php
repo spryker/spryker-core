@@ -38,9 +38,9 @@ class TransferGenerator
     private function createTransferObjects()
     {
         $definitions = $this->getTransferDefinitions();
-        $generator = $this->getClassGenerator();
 
         foreach ($definitions as $classDefinition) {
+            $generator = $this->getClassGenerator();
             $phpCode = $generator->generateClass($classDefinition);
             if (!is_dir($generator->getTargetFolder())) {
                 mkdir($generator->getTargetFolder(), 0755, true);
