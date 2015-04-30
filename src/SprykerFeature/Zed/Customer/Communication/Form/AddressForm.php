@@ -115,7 +115,7 @@ class AddressForm extends AbstractForm
             return [];
         }
 
-        $addressTransfer = $this->locator->customer()->transferAddress();
+        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($addressId);
         $addressTransfer = $this->locator->customer()->facade()->getAddress($addressTransfer);
         if ($addressTransfer) {

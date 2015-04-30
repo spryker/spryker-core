@@ -82,7 +82,7 @@ class UserProvider implements UserProviderInterface
      */
     protected function fetchUser($username)
     {
-        $customerTransfer = $this->locator->customer()->transferCustomer();
+        $customerTransfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
         $customerTransfer->setEmail($username);
         $customerTransfer = $this->locator->customer()->sdk()->getCustomer($customerTransfer);
         return [

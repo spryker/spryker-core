@@ -33,7 +33,7 @@ class ProfileController extends AbstractController
         $form = $this->getDependencyContainer()->createCustomerForm($request);
         $form->init();
 
-        $customerTransfer = $this->getLocator()->customer()->transferCustomer();
+        $customerTransfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
         $customerTransfer = $this->getLocator()->customer()->facade()->getCustomer($customerTransfer);
 
@@ -78,7 +78,7 @@ class ProfileController extends AbstractController
      */
     public function sendPasswordRestoreTokenAction(Request $request)
     {
-        $customerTransfer = $this->getLocator()->customer()->transferCustomer();
+        $customerTransfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
         $customerTransfer->setIdCustomer($request->query->get('id'));
         $this->getLocator()->customer()->facade()->forgotPassword($customerTransfer);
 
@@ -96,7 +96,7 @@ class ProfileController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $customerTransfer = $this->getLocator()->customer()->transferCustomer();
+            $customerTransfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
             $customerTransfer->fromArray($form->getRequestData());
             $this->getLocator()->customer()->facade()->updateCustomer($customerTransfer);
         }
@@ -127,7 +127,7 @@ class ProfileController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $addressTransfer = $this->getLocator()->customer()->transferAddress();
+            $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
             $addressTransfer->fromArray($form->getRequestData());
             if ($addressTransfer->getIdCustomerAddress()) {
                 $this->getLocator()->customer()->facade()->updateAddress($addressTransfer);
@@ -148,7 +148,7 @@ class ProfileController extends AbstractController
      */
     public function setDefaultShippingAddressAction(Request $request)
     {
-        $addressTransfer = $this->getLocator()->customer()->transferAddress();
+        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
         $this->getLocator()->customer()->facade()->setDefaultShippingAddress($addressTransfer);
@@ -163,7 +163,7 @@ class ProfileController extends AbstractController
      */
     public function setDefaultBillingAddressAction(Request $request)
     {
-        $addressTransfer = $this->getLocator()->customer()->transferAddress();
+        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
         $this->getLocator()->customer()->facade()->setDefaultBillingAddress($addressTransfer);

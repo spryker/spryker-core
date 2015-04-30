@@ -272,7 +272,7 @@ class Customer
         unset($data["deleted_at"]);
         unset($data["created_at"]);
         unset($data["updated_at"]);
-        $addressTransfer = $this->locator->customer()->transferAddress();
+        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
         $addressTransfer->fromArray($data);
 
         return $addressTransfer;

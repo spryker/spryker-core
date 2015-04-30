@@ -76,7 +76,7 @@ class CustomerForm extends AbstractForm
      */
     public function getDefaultData()
     {
-        $customerTransfer = $this->locator->customer()->transferCustomer();
+        $customerTransfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
         $customerTransfer->setIdCustomer($this->stateContainer->getRequestValue('id'));
         $customerTransfer = $this->locator->customer()->facade()->getCustomer($customerTransfer);
 
