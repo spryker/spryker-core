@@ -74,11 +74,11 @@ class CalculatorTest extends Test
     public function testCanRecalculateAnExampleOrderWithOneItemAndExpenseOnOrder()
     {
         $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
-        $items = $this->getLocator()->sales()->transferOrderItemCollection();
+        $items = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item =  new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $discounts = $this->getLocator()->calculation()->transferDiscountCollection();
+        $discounts = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
         $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $discounts->add($discount);
@@ -92,7 +92,7 @@ class CalculatorTest extends Test
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS)
             ->setGrossPrice(self::ORDER_SHIPPING_COSTS);
 
-        $expensesCollection = $this->getLocator()->calculation()->transferExpenseCollection();
+        $expensesCollection = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
         $expensesCollection->add($expense);
         $order->setExpenses($expensesCollection);
 

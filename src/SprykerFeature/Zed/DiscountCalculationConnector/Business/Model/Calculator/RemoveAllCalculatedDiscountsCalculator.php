@@ -14,20 +14,20 @@ class RemoveAllCalculatedDiscountsCalculator extends AbstractCalculator
     public function recalculate(DiscountableContainerInterface $calculableContainer)
     {
         foreach ($calculableContainer->getItems() as $item) {
-            $item->setDiscounts($this->locator->calculation()->transferDiscountCollection());
+            $item->setDiscounts(new \Generated\Shared\Transfer\CalculationDiscountTransfer());
 
             foreach ($item->getOptions() as $option) {
-                $option->setDiscounts($this->locator->calculation()->transferDiscountCollection());
+                $option->setDiscounts(new \Generated\Shared\Transfer\CalculationDiscountTransfer());
             }
             foreach ($item->getExpenses() as $expense) {
-                $expense->setDiscounts($this->locator->calculation()->transferDiscountCollection());
+                $expense->setDiscounts(new \Generated\Shared\Transfer\CalculationDiscountTransfer());
             }
         }
 
         foreach ($calculableContainer->getExpenses() as $expense) {
-            $expense->setDiscounts($this->locator->calculation()->transferDiscountCollection());
+            $expense->setDiscounts(new \Generated\Shared\Transfer\CalculationDiscountTransfer());
         }
 
-        $calculableContainer->setDiscounts($this->locator->calculation()->transferDiscountCollection());
+        $calculableContainer->setDiscounts(new \Generated\Shared\Transfer\CalculationDiscountTransfer());
     }
 }

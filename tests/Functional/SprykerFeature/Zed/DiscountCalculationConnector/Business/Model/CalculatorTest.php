@@ -183,7 +183,7 @@ class CalculatorTest extends Test
      */
     protected function getItemCollection()
     {
-        return $this->getLocator()->sales()->transferOrderItemCollection();
+        return new \Generated\Shared\Transfer\SalesOrderItemTransfer();
     }
 
     /**
@@ -191,7 +191,7 @@ class CalculatorTest extends Test
      */
     protected function getPriceDiscountCollection()
     {
-        return $this->getLocator()->calculation()->transferDiscountCollection();
+        return new \Generated\Shared\Transfer\CalculationDiscountTransfer();
     }
 
     /**
@@ -200,7 +200,7 @@ class CalculatorTest extends Test
     protected function getExpenseCollection()
     {
         /* @var ExpenseCollection $expenseCollection */
-        return $this->getLocator()->calculation()->transferExpenseCollection();
+        return new \Generated\Shared\Transfer\CalculationExpenseTransfer();
     }
 
     /**
