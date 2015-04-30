@@ -8,9 +8,11 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Cart\Business\Operator\OperatorInterface;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
+use SprykerFeature\Zed\Cart\CartConfig;
 
 /**
  * @method Factory|CartBusiness getFactory()
+ * @method CartConfig getConfig()
  */
 class CartDependencyContainer extends AbstractDependencyContainer
 {
@@ -97,22 +99,12 @@ class CartDependencyContainer extends AbstractDependencyContainer
      */
     private function configureCartOperator(OperatorInterface $operator)
     {
-        $settings = $this->getSettings();
+        $bundleConfig = $this->getConfig();
 
-        foreach ($settings->getCartItemPlugins() as $itemExpanderPlugin) {
+        foreach ($bundleConfig->getCartItemPlugins() as $itemExpanderPlugin) {
             $operator->addItemExpanderPlugin($itemExpanderPlugin);
         }
 
         return $operator;
-    }
-
-    /**
-     * @return CartSettings
-     */
-    protected function getSettings()
-    {
-        $settings = $this->getFactory()->createCartSettings($this->getLocator());
-
-        return $settings;
     }
 }

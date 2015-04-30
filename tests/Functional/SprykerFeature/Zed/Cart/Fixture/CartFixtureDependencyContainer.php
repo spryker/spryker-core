@@ -2,14 +2,15 @@
 
 namespace Functional\SprykerFeature\Zed\Cart\Fixture;
 
+use SprykerEngine\Shared\Config;
 use SprykerFeature\Zed\Cart\Business\CartDependencyContainer;
-use SprykerFeature\Zed\Cart\Business\CartSettings;
+use SprykerFeature\Zed\Cart\CartConfig;
 
 class CartFixtureDependencyContainer extends CartDependencyContainer
 {
-    protected function getSettings()
+    public function getConfig()
     {
-        return  new CartSettings($this->getLocator());
+        return  new CartConfig(Config::getInstance(), $this->getLocator());
     }
 }
  
