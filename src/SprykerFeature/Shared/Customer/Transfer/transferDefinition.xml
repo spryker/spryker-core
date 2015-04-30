@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="CustomerAddress">
+        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
+        <property name="idCustomerAddress" type="int" default="null" />
+        <property name="customerId" type="string" default="null" />
+        <property name="fkCustomer" type="int" default="null" />
+        <property name="email" type="string" default="null" />
+        <property name="salutation" type="string" default="null" />
+        <property name="name" type="string" default="null" />
+        <property name="address1" type="string" default="null" />
+        <property name="address2" type="string" default="null" />
+        <property name="address3" type="string" default="null" />
+        <property name="company" type="string" default="null" />
+        <property name="city" type="string" default="null" />
+        <property name="zipCode" type="string" default="null" />
+        <property name="poBox" type="string" default="null" />
+        <property name="phone" type="string" default="null" />
+        <property name="cellPhone" type="string" default="null" />
+        <property name="comment" type="string" default="null" />
+        <property name="state" type="string" default="null" />
+        <property name="isDeleted" type="string" default="null" />
+        <property name="isDefaultBilling" type="string" default="null" />
+        <property name="isDefaultShipping" type="string" default="null" />
+        <property name="fkCountry" type="int" default="null" />
+        <property name="iso2Country" type="string" default="null" />
+    </transfer>
+    <transfer name="CustomerCustomer">
+        <use name="DateTime" short="DateTime" />
+        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
+        <property name="email" type="string" default="null" />
+        <property name="idCustomer" type="int" default="null" />
+        <property name="incrementId" type="string" default="null" />
+        <property name="firstName" type="string" default="null" />
+        <property name="lastName" type="string" default="null" />
+        <property name="middleName" type="string" default="null" />
+        <property name="company" type="string" default="null" />
+        <property name="gender" type="string" default="null" />
+        <property name="dateOfBirth" type="string" default="null" />
+        <property name="salutation" type="string" default="null" />
+        <property name="password" type="string" default="null" />
+        <property name="newPassword" type="string" default="null" />
+        <property name="billingAddress" type="string" default="Customer\Address" />
+        <property name="shippingAddress" type="string" default="Customer\Address" />
+        <property name="addresses" type="string" default="Customer\AddressCollection" />
+        <property name="defaultBillingAddress" type="string" default="null" />
+        <property name="defaultShippingAddress" type="string" default="null" />
+        <property name="createdAt" type="string" default="null" />
+        <property name="updatedAt" type="string" default="null" />
+        <property name="restorePasswordKey" type="string" default="null" />
+        <property name="restorePasswordDate" type="string" default="null" />
+        <property name="registrationKey" type="string" default="null" />
+        <property name="registered" type="string" default="null" />
+        <property name="message" type="string" default="null" />
+    </transfer>
+
+</transfers>
+
