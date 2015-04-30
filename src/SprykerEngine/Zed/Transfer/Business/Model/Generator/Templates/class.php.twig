@@ -1,28 +1,31 @@
-{% import 'macros.php.twig' as mcr %}
+{% import 'macros.php.twig' as macro %}
 <?php
 
 namespace {{ namespace }};
 
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
-{% for ue in useExternal %}
-use {{ ue }};
+{% for use in useExternal %}
+use {{ use }};
 {% endfor %}
 
 /**
- * Class {{ className }}
- *
- * @author SprykerGenerator
+ * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
+ * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
+{% if interfacesToImplement %}
 class {{ className }} extends AbstractTransfer implements {{ interfacesToImplement }}
+{% else %}
+class {{ className }} extends AbstractTransfer
+{% endif %}
 {
 {# write properties #}
-{% for prop in properties %}
-{{- mcr.write_property(prop) -}}
+{% for property in properties %}
+{{- macro.write_property(property) -}}
 {% endfor %}
 
 {# write setters and getters #}
-{% for sag in settersAndGetters %}
-{{ mcr.method_set(sag) }}
-{{ mcr.method_get(sag) }}
+{% for accessor in settersAndGetters %}
+    {{ macro.method_set(accessor) }}
+    {{ macro.method_get(accessor) }}
 {%- endfor -%}
 }

@@ -2,25 +2,23 @@
 
 namespace SprykerEngine\Zed\Transfer\Business;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\TransferBusiness;
+use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Transfer\Business\Model\TransferGenerator;
 
+/**
+ * @method TransferBusiness getFactory()
+ */
 class TransferDependencyContainer extends AbstractDependencyContainer
 {
-    /**
-     * @return TouchRecordInterface
-     */
-//    public function getTransferRecordModel()
-//    {
-//        return $this->getFactory()->createModelRecordRecord(
-//            $this->getQueryContainer()
-//        );
-//    }
 
     /**
-     * @return TouchQueryContainerInterface
+     * @return TransferGenerator
      */
-//    protected function getQueryContainer()
-//    {
-        //return $this->getLocator()->touch()->queryContainer();
-//    }
+    public function createTransferGenerator(MessengerInterface $messenger)
+    {
+        return $this->getFactory()->createModelTransferGenerator($messenger);
+    }
+
 }
