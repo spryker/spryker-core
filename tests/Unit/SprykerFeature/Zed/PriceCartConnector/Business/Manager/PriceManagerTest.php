@@ -2,8 +2,6 @@
 
 namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business;
 
-use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\CartItemFixture;
