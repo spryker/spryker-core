@@ -118,7 +118,7 @@ class DefaultOrderSplitBundleItemBuilder extends OrderItemBuilder implements Pro
         $itemCollection = $this->createRecalculationItemTransferCollection($transferItem, $bundleProducts);
         $order->setItems($itemCollection);
 
-        $emptyTotals = Locator::getInstance()->sales()->transferPriceTotals();
+        $emptyTotals = new \Generated\Shared\Transfer\SalesPriceTotalsTransfer();
         $order->setTotals($emptyTotals);
 
         return $order;
@@ -164,7 +164,7 @@ class DefaultOrderSplitBundleItemBuilder extends OrderItemBuilder implements Pro
      */
     protected function createRecalculationItemTransfer(OrderItem $bundleTransferItem, ReadOnlyProductComposite $productComposite)
     {
-        $item = Locator::getInstance()->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $grossPrice = $this->facadeCatalog->getProductPriceBySku($productComposite->getSku());
 
         $item->setSku($productComposite->getSku());

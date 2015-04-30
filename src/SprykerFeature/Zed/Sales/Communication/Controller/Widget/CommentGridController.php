@@ -44,7 +44,7 @@ class CommentGridController extends AbstractGridController
      */
     protected function loadTransfer()
     {
-        return Locator::getInstance()->sales()->transferComment();
+        return new \Generated\Shared\Transfer\SalesCommentTransfer();
     }
 
     /**
