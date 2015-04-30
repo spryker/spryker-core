@@ -43,7 +43,9 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
      */
     public function log($level, $message, array $context = [])
     {
-        $this->messenger->log($level, $message, $context);
+        if ($this->messenger) {
+            $this->messenger->log($level, $message, $context);
+        }
     }
 
 }
