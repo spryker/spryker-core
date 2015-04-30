@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model;
+namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
-use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
+use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
+use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
+use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
 use SimpleXMLElement;
 use LogicException;
 
