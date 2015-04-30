@@ -577,7 +577,7 @@ class ProductFrontendExporterPluginTest extends Test
      */
     protected function createCategoryTransfer($name)
     {
-        $categoryTransfer = $this->locator->category()->transferCategory();
+        $categoryTransfer = new \Generated\Shared\Transfer\CategoryCategoryTransfer();
         $categoryTransfer->setName($name);
 
         return $categoryTransfer;
@@ -592,7 +592,7 @@ class ProductFrontendExporterPluginTest extends Test
      */
     protected function createCategoryNodeTransfer($idCategory, $idParentCategory, $isRoot = false)
     {
-        $categoryNodeTransfer = $this->locator->category()->transferCategoryNode();
+        $categoryNodeTransfer = new \Generated\Shared\Transfer\CategoryCategoryNodeTransfer();
         $categoryNodeTransfer->setIsRoot($isRoot);
         $categoryNodeTransfer->setFkCategory($idCategory);
         $categoryNodeTransfer->setFkParentCategoryNode($idParentCategory);
