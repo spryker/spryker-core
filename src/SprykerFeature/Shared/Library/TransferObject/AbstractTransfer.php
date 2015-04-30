@@ -26,36 +26,9 @@ abstract class AbstractTransfer implements TransferInterface
     private $modifiedProperties = [];
 
     /**
-     * @var LocatorLocatorInterface
+     * @var array
      */
-    private $locator;
-
-    /**
-     * @param LocatorLocatorInterface $locator
-     */
-    public function __construct(LocatorLocatorInterface $locator)
-    {
-        $this->locator = $locator;
-        $this->init();
-    }
-
-    /**
-     * @TODO refactor this awful code
-     * The code should not know about naming conventions
-     */
-    protected function init()
-    {
-        foreach (get_object_vars($this) as $var => $initValue) {
-            if (is_string($initValue) && !empty($initValue)) {
-                if (strpos($initValue, '\\') !== false) {
-                    $transferNameParts = explode('\\', $initValue);
-                    $bundle = array_shift($transferNameParts);
-                    $locatorMethodName = 'transfer' . implode($transferNameParts);
-                    $this->$var = $this->locator->$bundle()->$locatorMethodName();
-                }
-            }
-        }
-    }
+    private $properties = [];
 
     /**
      * @param bool $includeNullValues
@@ -326,10 +299,34 @@ abstract class AbstractTransfer implements TransferInterface
     }
 
     /**
-     * @return LocatorLocatorInterface
+     * @param $key
+     * @return null
      */
-    protected function getLocator()
+    public function __get($key)
     {
-        return $this->locator;
+        if (array_key_exists($key, $this->properties)) {
+            return $this->properties[$key];
+        }
+
+        return null;
     }
+
+    /**
+     * @param $key
+     * @param $value
+     */
+    public function __set($key, $value)
+    {
+        $this->properties[$key] = $value;
+    }
+
+    /**
+     * @param $method
+     * @param $args
+     */
+    public function __call($method, $args)
+    {
+    }
+
+
 }
