@@ -6,6 +6,11 @@ use SprykerFeature\Shared\Cart\Transfer\CartInterface as CartTransferInterface;
 interface CartInterface
 {
     /**
+     * @return CartTransferInterface
+     */
+    public function getCart();
+
+    /**
      * @param string $sku
      * @param int $quantity
      *

@@ -21,22 +21,22 @@ class Cart extends AbstractTransfer implements CartInterface
     /**
      * @var TotalsInterface
      */
-    private $totals = 'Calculation\\Totals';
+    protected $totals = 'Calculation\\Totals';
 
     /**
      * @var ExpenseItemCollectionInterface
      */
-    private $expenses = 'Calculation\\ExpenseCollection';
+    protected $expenses = 'Calculation\\ExpenseCollection';
 
     /**
      * @var DiscountableItemCollectionInterface|DiscountItemInterface[]
      */
-    private $discounts = 'Calculation\\DiscountCollection';
+    protected $discounts = 'Calculation\\DiscountCollection';
 
     /**
      * @var array|string
      */
-    private $couponCodes = [];
+    protected $couponCodes = [];
 
     /**
      * @return ItemCollectionInterface

@@ -42,6 +42,14 @@ class Cart implements CartInterface
     }
 
     /**
+     * @return CartTransferInterface
+     */
+    public function getCart()
+    {
+        return $this->getStorageProvider()->getCart();
+    }
+
+    /**
      * @param string $sku
      * @param int $quantity
      *
@@ -51,7 +59,7 @@ class Cart implements CartInterface
     {
         $addedItems = $this->createChangedItems($sku, $quantity);
         $cartChange = $this->prepareCartChange($addedItems);
-        $this->getZedClient()->call('/cart/add-item', $cartChange);
+        $this->getZedClient()->call('/cart/sdk/add-item', $cartChange);
 
         return $this->handleCartResponse();
     }
@@ -69,7 +77,7 @@ class Cart implements CartInterface
             $deleteItem = $cart->getItems()->offsetGet($sku);
             $deletedItems = $this->createChangedItems($sku, $deleteItem->getQuantity());
             $cartChange = $this->prepareCartChange($deletedItems);
-            $this->getZedClient()->call('/cart/remove-item', $cartChange);
+            $this->getZedClient()->call('/cart/sdk/remove-item', $cartChange);
 
             return $this->handleCartResponse();
         }
@@ -90,7 +98,7 @@ class Cart implements CartInterface
         if ($cart->getItems()->offsetExists($sku)) {
             $decreasedItems = $this->createChangedItems($sku, $quantity);
             $cartChange = $this->prepareCartChange($decreasedItems);
-            $this->getZedClient()->call('/cart/decrease-item-quantity', $cartChange);
+            $this->getZedClient()->call('/cart/sdk/decrease-item-quantity', $cartChange);
 
             return $this->handleCartResponse();
         }
@@ -108,7 +116,7 @@ class Cart implements CartInterface
     {
         $increasedItems = $this->createChangedItems($sku, $quantity);
         $cartChange = $this->prepareCartChange($increasedItems);
-        $this->getZedClient()->call('/cart/increase-item-quantity', $cartChange);
+        $this->getZedClient()->call('/cart/sdk/increase-item-quantity', $cartChange);
 
         return $this->handleCartResponse();
     }
@@ -119,7 +127,7 @@ class Cart implements CartInterface
     public function recalculate()
     {
         $cart = $this->storageProvider->getCart();
-        $this->getZedClient()->call('/cart/recalculate', $cart);
+        $this->getZedClient()->call('/cart/sdk/recalculate', $cart);
 
         return $this->handleCartResponse();
     }

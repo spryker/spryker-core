@@ -8,14 +8,14 @@ use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 class CartChange extends AbstractTransfer implements CartChangeInterface
 {
     /**
-     * @var Cart
+     * @var CartInterface
      */
-    protected $cart;
+    protected $cart = 'Cart\\Cart';
 
     /**
      * @var ItemCollectionInterface
      */
-    protected $changedItems;
+    protected $changedItems = 'Cart\\ItemCollection';
 
     /**
      * @return CartInterface

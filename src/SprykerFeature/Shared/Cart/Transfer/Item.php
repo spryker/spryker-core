@@ -6,50 +6,51 @@ use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionI
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 
-class Item extends AbstractTransfer implements ItemInterface
+class Item extends AbstractTransfer implements ItemInterface, DiscountableItemInterface
 {
     /**
      * @var int
      */
-    private $quantity = 1;
+    protected $quantity = 1;
 
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var ExpenseItemCollectionInterface|ExpenseItemInterface[]
      */
-    private $expenses = 'Calculation\\ExpenseCollection';
+    protected $expenses = 'Calculation\\ExpenseCollection';
 
     /**
      * @var OptionItemInterface[]
      */
-    private $options = [];
+    protected $options = [];
 
     /**
      * @var int
      */
-    private $grossPrice = 0;
+    protected $grossPrice = 0;
 
     /**
      * @var int
      */
-    private $priceToPay = 0;
+    protected $priceToPay = 0;
 
     /**
      * @var int
      */
-    private $taxPercentage = 0;
+    protected $taxPercentage = 0;
 
     /**
      * @var DiscountItemInterface[]|DiscountableItemCollectionInterface
      */
-    private $discounts = 'Calculation\\DiscountCollection';
+    protected $discounts = 'Calculation\\DiscountCollection';
 
     /**
      * @return string
@@ -88,6 +89,7 @@ class Item extends AbstractTransfer implements ItemInterface
     public function setQuantity($quantity = 1)
     {
         $this->quantity = $quantity;
+        $this->addModifiedProperty('quantity');
 
         return $this;
     }
@@ -135,6 +137,20 @@ class Item extends AbstractTransfer implements ItemInterface
     }
 
     /**
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function setOptions(array $options = [])
+    {
+        $this->options = $options;
+        $this->addModifiedProperty('options');
+
+        return $this;
+    }
+
+
+    /**
      * @return int
      */
     public function getGrossPrice()
@@ -177,6 +193,20 @@ class Item extends AbstractTransfer implements ItemInterface
     }
 
     /**
+     * @param int $taxPercentage
+     *
+     * @return $this
+     */
+    public function setTaxPercentage($taxPercentage)
+    {
+        $this->taxPercentage = (int) $taxPercentage;
+        $this->addModifiedProperty('taxPercentage');
+
+        return $this;
+    }
+
+
+    /**
      * @return int
      */
     public function getPriceToPay()
@@ -217,4 +247,6 @@ class Item extends AbstractTransfer implements ItemInterface
 
         return $this;
     }
+
+
 }

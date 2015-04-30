@@ -3,7 +3,7 @@
 namespace SprykerFeature\Yves\Cart\Provider;
 
 use Generated\Yves\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Sdk\Cart\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Shared\Cart\Transfer\CartInterface;
 use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
@@ -21,15 +21,15 @@ class SessionStorageProvider implements StorageProviderInterface
     private $session;
 
     /**
-     * @var LocatorInterface
+     * @var LocatorLocatorInterface
      */
     private $locator;
 
     /**
-     * @param LocatorInterface $locator
+     * @param LocatorLocatorInterface $locator
      * @param SessionInterface $session
      */
-    public function __construct(LocatorInterface $locator, SessionInterface $session)
+    public function __construct(LocatorLocatorInterface $locator, SessionInterface $session)
     {
         $this->session = $session;
         $this->locator = $locator;
@@ -90,7 +90,7 @@ class SessionStorageProvider implements StorageProviderInterface
     }
 
     /**
-     * @return LocatorInterface|AutoCompletion
+     * @return LocatorLocatorInterface|AutoCompletion
      */
     protected function getLocator()
     {
