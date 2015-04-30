@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model\Util;
+namespace SprykerFeature\Zed\Oms\Business\Util;
 
 use LogicException;
 

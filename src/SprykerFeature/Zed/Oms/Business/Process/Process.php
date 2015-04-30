@@ -1,11 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model;
+namespace SprykerFeature\Zed\Oms\Business\Process;
 
-use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Util\DrawerInterface;
+use SprykerFeature\Zed\Oms\Business\Util\DrawerInterface;
 use Exception;
 
 class Process implements ProcessInterface

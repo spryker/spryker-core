@@ -1,10 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model;
-
-use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
+namespace SprykerFeature\Zed\Oms\Business\Process;
 
 interface ProcessInterface
 {

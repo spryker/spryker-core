@@ -1,13 +1,14 @@
 <?php
-namespace SprykerFeature\Zed\Oms\Business\Model\Util;
+
+namespace SprykerFeature\Zed\Oms\Business\Util;
 
 use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Zed\Auth\Business\Model\Auth;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
+use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
+use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLog;

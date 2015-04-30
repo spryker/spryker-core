@@ -1,12 +1,11 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model\Util;
+namespace SprykerFeature\Zed\Oms\Business\Util;
 
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
-use SprykerFeature\Zed\Oms\Business\OmsSettings;
+use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
+use SprykerFeature\Zed\Oms\Business\ProcessInterface;
+use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\OmsConfig;
 
 class Drawer implements DrawerInterface

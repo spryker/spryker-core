@@ -1,13 +1,12 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model\OrderStateMachine;
+namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use DateInterval;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
-use SprykerFeature\Zed\Oms\Business\Model\OrderStateMachineInterface;
-use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
+use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
+use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
+use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsEventTimeout;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsEventTimeoutQuery;

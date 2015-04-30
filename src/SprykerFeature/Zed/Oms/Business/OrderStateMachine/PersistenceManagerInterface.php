@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model;
+namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model\Process;
+namespace SprykerFeature\Zed\Oms\Business\Process;
 
 interface TransitionInterface
 {

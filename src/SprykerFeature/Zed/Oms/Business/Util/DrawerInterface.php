@@ -1,9 +1,9 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model\Util;
+namespace SprykerFeature\Zed\Oms\Business\Util;
 
-use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
+use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
+use SprykerFeature\Zed\Oms\Business\ProcessInterface;
 
 interface DrawerInterface
 {

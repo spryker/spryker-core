@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model;
+namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use Propel\Runtime\Exception\PropelException;
 use Exception;

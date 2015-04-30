@@ -1,9 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model\OrderStateMachine;
+namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
-use SprykerFeature\Zed\Oms\Business\Model\OrderStateMachineInterface;
-use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
+use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use DateTime;
 use Exception;

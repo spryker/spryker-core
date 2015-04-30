@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model\Process;
+namespace SprykerFeature\Zed\Oms\Business\Process;
 
-use SprykerFeature\Zed\Oms\Business\Model\ProcessInterface;
+use SprykerFeature\Zed\Oms\Business\ProcessInterface;
 
 interface StateInterface
 {

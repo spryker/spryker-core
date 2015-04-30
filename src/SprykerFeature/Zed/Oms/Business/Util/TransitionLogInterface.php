@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model\Util;
+namespace SprykerFeature\Zed\Oms\Business\Util;
 
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\EventInterface;
+use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
+use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;

@@ -1,17 +1,17 @@
 <?php
 
-namespace SprykerFeature\Zed\Oms\Business\Model;
+namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
-use SprykerFeature\Zed\Oms\Business\Model\OrderStateMachine\TimeoutInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Process\TransitionInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Util\ReadOnlyArrayObject;
-use SprykerFeature\Zed\Oms\Business\Model\Util\TransitionLogInterface;
-use SprykerFeature\Zed\Oms\Business\Model\Util\CollectionToArrayTransformerInterface;
+use SprykerFeature\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
+use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
+use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
+use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use SprykerFeature\Zed\Oms\Business\Util\TransitionLogInterface;
+use SprykerFeature\Zed\Oms\Business\Util\CollectionToArrayTransformerInterface;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStateQuery;
