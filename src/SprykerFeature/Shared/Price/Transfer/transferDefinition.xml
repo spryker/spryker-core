@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="PriceProduct">
+        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
+        <property name="idPriceProduct" type="int" default="null" />
+        <property name="price" type="string" default="null" />
+        <property name="isActive" type="string" default="null" />
+        <property name="priceTypeName" type="string" default="null" />
+        <property name="skuProduct" type="string" default="null" />
+    </transfer>
+
+</transfers>
+
