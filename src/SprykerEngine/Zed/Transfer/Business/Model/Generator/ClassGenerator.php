@@ -237,7 +237,6 @@ class ClassGenerator
      */
     public function isSpecialProperty($type)
     {
-        //return !preg_match('/(^int|^bool|array|float|double|object|string|null)/', $type);
         return preg_match('/\[\]/', $type);
     }
 
@@ -306,9 +305,8 @@ class ClassGenerator
         if ( ! isset($dataArray['name']) ) {
             throw new Exception('name not found in ' . var_export($dataArray, true));
         }
-        $name = $dataArray['name'];
 
-        return $name;
+        return $dataArray['name'];
     }
 
     /**
@@ -328,8 +326,7 @@ class ClassGenerator
                 'is_special'    => $this->isSpecialProperty($props['type']),
             ];
         }
-//print_r($settersAndGetters);
-//die;
+
         return $settersAndGetters;
     }
 

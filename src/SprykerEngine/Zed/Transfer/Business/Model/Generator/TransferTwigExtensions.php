@@ -2,6 +2,8 @@
 
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
+use Zend\Filter\Word\UnderscoreToCamelCase;
+
 class TransferTwigExtensions extends \Twig_Extension
 {
     public function getName()
@@ -18,8 +20,14 @@ class TransferTwigExtensions extends \Twig_Extension
                 ]);
             }),
             new \Twig_SimpleFilter('singular', function($text){
-                // just cat the ending "s" from the word
+                // just cut the ending "s" from the word
                 return preg_replace('/(s$){1}/', '', $text);
+            }),
+            new \Twig_SimpleFilter('camelCase', function($string){
+                $filter = new UnderscoreToCamelCase();
+                $string = $filter->filter($string);
+
+                return ucwords($string);
             }),
         ];
     }

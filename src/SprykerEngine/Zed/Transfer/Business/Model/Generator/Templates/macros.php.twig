@@ -13,7 +13,7 @@
     /**
      * @var {{ writeIfNot(sag.parameterDataType~' ', '(^string)', sag.parameterDataType) }}${{ sag.passedParameter }}
      */
-    public function add{{ sag.propertyName|singular }}({{ writeIfNot(sag.parameterDataType~' ', '(^string)', sag.parameterDataType)|changeArrayType }}${{ sag.passedParameter }})
+    public function add{{ sag.propertyName|singular|camelCase }}({{ writeIfNot(sag.parameterDataType~' ', '(^string)', sag.parameterDataType)|changeArrayType }}${{ sag.passedParameter }})
     {
         $this->{{ sag.passedParameter }}[] = ${{ sag.passedParameter }};
         $this->addModifiedProperty('{{ sag.passedParameter }}');
@@ -29,14 +29,14 @@
     /**
      * @var {{ writeIfNot(type~' ', '^string', type) }}${{ sag.passedParameter }}
      */
-    public function set{{ sag.propertyName }}({{ writeIfNot(type~' ', '(string|integer|null)', type) }}${{ sag.passedParameter }})
+    public function set{{ sag.propertyName|camelCase }}({{ writeIfNot(type~' ', '(string|integer|null)', type) }}${{ sag.passedParameter }})
 {% endmacro %}
 
 {% macro method_get(sag) %}
     /**
      * @return {{ writeIfNot(sag.parameterDataType~' ', '^string', sag.parameterDataType) }}${{ sag.passedParameter }}
      */
-    public function get{{ sag.propertyName }}()
+    public function get{{ sag.propertyName|camelCase }}()
     {
         return $this->{{ sag.passedParameter }};
     }
