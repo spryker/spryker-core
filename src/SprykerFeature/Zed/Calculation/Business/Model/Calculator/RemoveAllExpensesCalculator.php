@@ -14,9 +14,9 @@ class RemoveAllExpensesCalculator extends AbstractCalculator implements
     public function recalculate(CalculableContainerInterface $calculableContainer)
     {
         foreach ($calculableContainer->getItems() as $item) {
-            $item->setExpenses($this->locator->calculation()->transferExpenseCollection());
+            $item->setExpenses(new \Generated\Shared\Transfer\CalculationExpenseTransfer());
         }
 
-        $calculableContainer->setExpenses($this->locator->calculation()->transferExpenseCollection());
+        $calculableContainer->setExpenses(new \Generated\Shared\Transfer\CalculationExpenseTransfer());
     }
 }
