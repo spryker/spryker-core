@@ -1,0 +1,32 @@
+{
+  "products": [
+    {
+      "id": "123",
+      "name": "Baby panda",
+      "price": "9.99",
+      "quantity": "1",
+      "image": "/images/products/baby-panda.jpg"
+    },
+    {
+      "id": "123",
+      "name": "Cow",
+      "price": "9.99",
+      "quantity": "2",
+      "image": "/images/products/cow.jpg"
+    },
+    {
+      "id": "123",
+      "name": "Crocodile",
+      "price": "9.99",
+      "quantity": "1",
+      "image": "/images/products/crocodile.jpg"
+    },
+    {
+      "id": "123",
+      "name": "Ostrich",
+      "price": "9.99",
+      "quantity": "1",
+      "image": "/images/products/ostrich.jpg"
+    },
+  ]
+}

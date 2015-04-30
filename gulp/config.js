@@ -4,7 +4,8 @@ var PUBLIC_DIR = 'public/';
 var globs = {
   images: '**/*.{png,jpg,jpeg,gif}',
   styles: '**/*.{sass,scss}',
-  fonts: '**/*.{svg,woff,otf,ttf,eot}'
+  fonts: '**/*.{svg,woff,otf,ttf,eot}',
+  mocks: '**/*.json'
 };
 
 var config = {
@@ -22,6 +23,7 @@ var config = {
       images         : [ASSETS_DIR + 'images/**/*', '!' + ASSETS_DIR + 'images/sprite/**/*'],
       sprite         : ASSETS_DIR + 'images/sprite/' + globs.images,
       fonts          : ASSETS_DIR + 'fonts/' + globs.fonts,
+      mocks          : ASSETS_DIR + 'mocks/' + globs.mocks,
       rev            : ASSETS_DIR + 'rev/',
       root           : ASSETS_DIR
     },
@@ -35,6 +37,7 @@ var config = {
         scss         : ASSETS_DIR + 'css/variables/'
       },
       fonts          : PUBLIC_DIR + 'fonts/',
+      mocks          : PUBLIC_DIR + 'mocks/',
       root           : PUBLIC_DIR
     }
   }

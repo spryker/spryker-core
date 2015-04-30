@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "name": "Baby panda",
+      "price": "9.99",
+      "quantity": "1",
+      "imageUrl": "/images/products/baby-panda.jpg"
+    },
+    {
+      "name": "Cow",
+      "price": "9.99",
+      "quantity": "2",
+      "imageUrl": "/images/products/cow.jpg"
+    },
+    {
+      "name": "Crocodile",
+      "price": "9.99",
+      "quantity": "1",
+      "imageUrl": "/images/products/crocodile.jpg"
+    }
+  ],
+  "shipping": "2,50",
+  "total": "32,47"
+}
