@@ -317,11 +317,11 @@ class OrderItem extends AbstractTransfer implements DiscountableItemInterface
     }
 
     /**
-     * @param OrderItemOptionCollection $options
+     * @param array $options
      *
      * @return $this
      */
-    public function setOptions(OrderItemOptionCollection $options)
+    public function setOptions(array $options = [])
     {
         $this->options = $options;
         $this->addModifiedProperty('options');
