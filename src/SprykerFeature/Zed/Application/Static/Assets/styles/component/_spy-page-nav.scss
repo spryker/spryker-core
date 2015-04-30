@@ -3,6 +3,7 @@ nav.spy-page-nav {
 	position:relative;		//Safari
 	z-index:-1;				//Safari
 	background: $_rgbSpyEbonyClay;
+	padding-top:50px;
 	@include font(40px, 13px, $_rgbWhite, $_ffCopy);
 
 	&+* {
