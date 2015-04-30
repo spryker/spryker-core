@@ -93,6 +93,7 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             ['public function getUserId()'],
             ['public function addCartItem(CartItem $cartItems)'],
             ['public function getCartItems()'],
+            ['public function removeCartItem()'],
             ['public function setCartItems(array $cartItems)'],
             ['$this->properties[] = $properties;'],
             ['setCustomer(Customer $customer)'],
