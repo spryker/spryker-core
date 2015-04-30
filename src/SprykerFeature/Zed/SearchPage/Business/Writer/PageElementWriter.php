@@ -11,6 +11,7 @@ use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement;
 class PageElementWriter implements PageElementWriterInterface
 {
     const RESOURCE_TYPE_SEARCH_PAGE_CONFIG = 'search_page_config';
+    const SEARCH_PAGE_CONFIG_ITEM_ID = 1;
 
     /**
      * @var PageElementReaderInterface
@@ -47,9 +48,11 @@ class PageElementWriter implements PageElementWriterInterface
         $pageElementEntity->fromArray($pageElement->toArray());
         $pageElementEntity->save();
 
+        $idPageElement = $pageElementEntity->getPrimaryKey();
+
         $this->touchSearchPageConfig();
 
-        return $pageElementEntity->getPrimaryKey();
+        return $idPageElement;
     }
 
     /**
@@ -60,15 +63,15 @@ class PageElementWriter implements PageElementWriterInterface
      */
     public function updatePageElement(PageElementInterface $pageElement)
     {
-        $idElement = $pageElement->getIdSearchPageElement();
-        $pageElementEntity = $this->elementReader->getPageElementById($idElement);
+        $idPageElement = $pageElement->getIdSearchPageElement();
+        $pageElementEntity = $this->elementReader->getPageElementById($idPageElement);
 
         $pageElementEntity->fromArray($pageElement->toArray());
         $pageElementEntity->save();
 
         $this->touchSearchPageConfig();
 
-        return $idElement;
+        return $idPageElement;
     }
 
     /**
@@ -79,14 +82,14 @@ class PageElementWriter implements PageElementWriterInterface
      */
     public function deletePageElement(PageElementInterface $pageElement)
     {
-        $idElement = $pageElement->getIdSearchPageElement();
-        $pageElementEntity = $this->elementReader->getPageElementById($idElement);
+        $idPageElement = $pageElement->getIdSearchPageElement();
+        $pageElementEntity = $this->elementReader->getPageElementById($idPageElement);
 
         $pageElementEntity->delete();
 
         $this->touchSearchPageConfig();
 
-        return $idElement;
+        return $idPageElement;
     }
 
     /**
@@ -109,6 +112,6 @@ class PageElementWriter implements PageElementWriterInterface
 
     protected function touchSearchPageConfig()
     {
-        $this->touchFacade->touchActive(self::RESOURCE_TYPE_SEARCH_PAGE_CONFIG, 1);
+        $this->touchFacade->touchActive(self::RESOURCE_TYPE_SEARCH_PAGE_CONFIG, self::SEARCH_PAGE_CONFIG_ITEM_ID);
     }
 }

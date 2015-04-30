@@ -5,13 +5,14 @@ namespace SprykerFeature\Zed\SearchPage\Communication\Plugin;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerFeature\Zed\SearchPage\Communication\SearchPageDependencyContainer;
 
 /**
  * @method SearchPageDependencyContainer getDependencyContainer()
  */
-class SearchPageConfigQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
+class SearchPageConfigProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
 
     /**
@@ -23,23 +24,18 @@ class SearchPageConfigQueryExpanderPlugin extends AbstractPlugin implements Quer
     }
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param array $resultSet
+     * @param array $processedResultSet
      * @param LocaleDto $locale
      *
-     * @return ModelCriteria
+     * @return array
      */
-    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
     {
-        $queryContainer = $this->getDependencyContainer()->getSearchPageQueryContainer();
-
-        return $queryContainer->expandSearchPageConfigQuery($expandableQuery);
+        return $this->getDependencyContainer()
+            ->getSearchPageFacade()
+            ->processSearchPageConfig($resultSet, $locale)
+        ;
     }
 
-    /**
-     * @return int
-     */
-    public function getChunkSize()
-    {
-        return 100;
-    }
 }

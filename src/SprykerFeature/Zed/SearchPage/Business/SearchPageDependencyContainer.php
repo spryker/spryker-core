@@ -7,6 +7,8 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\SearchPage\Business\Installer\DocumentAttributeInstaller;
 use SprykerFeature\Zed\SearchPage\Business\Installer\TemplateInstaller;
+use SprykerFeature\Zed\SearchPage\Business\KeyBuilder\SearchPageConfigKeyBuilder;
+use SprykerFeature\Zed\SearchPage\Business\Processor\SearchPageConfigProcessor;
 use SprykerFeature\Zed\SearchPage\Business\Reader\DocumentAttributeReader;
 use SprykerFeature\Zed\SearchPage\Business\Reader\PageElementReader;
 use SprykerFeature\Zed\SearchPage\Business\Reader\TemplateReader;
@@ -38,7 +40,7 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
      *
      * @return DocumentAttributeInstaller
      */
-    public function getDocumentAttributeInstaller(MessengerInterface $messenger)
+    public function createDocumentAttributeInstaller(MessengerInterface $messenger)
     {
         $attributeInstaller = $this->getFactory()->createInstallerDocumentAttributeInstaller(
             $this->createDocumentAttributeWriter(),
@@ -54,7 +56,7 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
      *
      * @return TemplateInstaller
      */
-    public function getTemplateInstaller(MessengerInterface $messenger)
+    public function createTemplateInstaller(MessengerInterface $messenger)
     {
         $templateInstaller = $this->getFactory()->createInstallerTemplateInstaller(
             $this->createTemplateWriter(),
@@ -63,6 +65,16 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
         );
 
         return $templateInstaller->setMessenger($messenger);
+    }
+
+    /**
+     * @return SearchPageConfigProcessor
+     */
+    public function createSearchPageConfigProcessor()
+    {
+        return $this->getFactory()->createProcessorSearchPageConfigProcessor(
+            $this->getSearchPageConfigKeyBuilder()
+        );
     }
 
     /**
@@ -129,5 +141,13 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
     private function createTouchFacade()
     {
         return $this->getLocator()->touch()->facade();
+    }
+
+    /**
+     * @return SearchPageConfigKeyBuilder
+     */
+    private function getSearchPageConfigKeyBuilder()
+    {
+        return $this->getFactory()->createKeyBuilderSearchPageConfigKeyBuilder();
     }
 }

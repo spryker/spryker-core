@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\SearchPage\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\Base\SpySearchDocumentAttributeQuery;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchDocumentAttributeTableMap;
@@ -10,6 +11,9 @@ use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchPageElementTem
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementQuery;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplateQuery;
 
+/**
+ * @method SearchPageDependencyContainer getDependencyContainer()
+ */
 class SearchPageQueryContainer extends AbstractQueryContainer
 {
 
@@ -128,9 +132,14 @@ class SearchPageQueryContainer extends AbstractQueryContainer
 
     /**
      * @param ModelCriteria $expandableQuery
+     *
+     * @return ModelCriteria
      */
     public function expandSearchPageConfigQuery(ModelCriteria $expandableQuery)
     {
-
+        return $this->getDependencyContainer()
+            ->createSearchPageConfigQueryExpander()
+            ->expandQuery($expandableQuery)
+        ;
     }
 }

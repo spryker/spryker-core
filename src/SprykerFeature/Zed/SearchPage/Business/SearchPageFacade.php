@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\SearchPage\Business;
 
+use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\SearchPage\Dependency\PageElementInterface;
@@ -71,7 +72,7 @@ class SearchPageFacade extends AbstractFacade
     public function installDocumentAttributes(MessengerInterface $messenger)
     {
         $this->getDependencyContainer()
-            ->getDocumentAttributeInstaller($messenger)
+            ->createDocumentAttributeInstaller($messenger)
             ->install()
         ;
     }
@@ -82,8 +83,22 @@ class SearchPageFacade extends AbstractFacade
     public function installTemplates(MessengerInterface $messenger)
     {
         $this->getDependencyContainer()
-            ->getTemplateInstaller($messenger)
+            ->createTemplateInstaller($messenger)
             ->install()
+        ;
+    }
+
+    /**
+     * @param array $configRaw
+     * @param LocaleDto $localeDto
+     *
+     * @return array
+     */
+    public function processSearchPageConfig(array $configRaw, LocaleDto $localeDto)
+    {
+        return $this->getDependencyContainer()
+            ->createSearchPageConfigProcessor()
+            ->processSearchPageConfig($configRaw, $localeDto)
         ;
     }
 }
