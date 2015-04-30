@@ -1,0 +1,24 @@
+{{!-- <table class="cart__content-list">
+  <tr>
+    <th class="cart__item-name">Deine Bestellung</th>
+    <th class="cart__item-quantity"></th>
+    <th class="cart__item-price">Preis</th>
+  </tr>
+</table> --}}
+<div class="cart__labels">
+  <div class="cart__label--name">Deine Bestellung</div>
+  <div class="cart__label--price">Preis</div>
+</div>
+<div class="cart__items js-cart-items">
+    {{> cartItem name='Batman' quantity='1' price='€ 12,99'}}
+    {{> cartItem name='Brillenpinguin' quantity='1' price='€ 8,99'}}
+    {{> cartItem name='Drachenritter Berserker' quantity='1' price='€ 28,99'}}
+</div>
+<div class="cart__shipping"><!--
+  --><div class="cart__shipping-label" colspan="2">Versand</div><!--
+  --><div class="cart__shipping-price js-cart-shipping">€ 2,50</div><!--
+--></div>
+<div class="cart__total"><!--
+  --><div class="cart__total-label" colspan="2">Gesamt</div><!--
+  --><div class="cart__total-price js-cart-total">€ 53,47</div><!--
+--></div>
