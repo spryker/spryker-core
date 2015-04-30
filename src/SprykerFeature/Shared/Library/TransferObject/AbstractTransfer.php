@@ -36,7 +36,7 @@ abstract class AbstractTransfer implements TransferInterface
     public function __construct(LocatorLocatorInterface $locator)
     {
         $this->locator = $locator;
-        $this->init();
+//        $this->init();
     }
 
     /**
