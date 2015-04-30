@@ -225,7 +225,7 @@ class Auth implements AuthInterface
      */
     public function getSystemUserByHash($hash)
     {
-        $user = $this->locator->user()->transferUser();
+        $user = new \Generated\Shared\Transfer\UserUserTransfer();
 
         $credentials = $this->bundleSettings->getUsersCredentials();
         $token = $this->staticToken;
