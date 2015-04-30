@@ -37,6 +37,7 @@ class PullConsole extends BaseCommand
     protected function computeCommand()
     {
         $command = 'branch=$(git rev-parse --abbrev-ref HEAD) | git pull origin $branch';
+        $command = 'git pull origin master';
         if ($this->input->getOption(self::OPTION_REBASE)) {
             $command .= ' --rebase';
         }
