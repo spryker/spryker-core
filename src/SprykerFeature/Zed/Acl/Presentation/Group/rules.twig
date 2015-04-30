@@ -26,7 +26,7 @@
         <tbody>
         <tr ng-repeat="row in rows">
             <td>
-                <div spy-action-switch="/acl/group/ruleset" state="row['id_acl_role']"></div>
+                <div spy-action-switch="/acl/group/ruleset" state="row['has_role']"></div>
             </td>
             <td>{[{ row['role_name'] }]}</td>
             <td>{[{ row['type'] }]}</td>
@@ -41,4 +41,4 @@
     </table>
 
     <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
-</section>
+</section>  
