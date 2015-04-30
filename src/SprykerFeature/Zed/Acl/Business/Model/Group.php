@@ -45,7 +45,7 @@ class Group implements GroupInterface
      */
     public function addGroup($name)
     {
-        $data = $this->locator->acl()->transferGroup();
+        $data = new \Generated\Shared\Transfer\AclGroupTransfer();
         $data->setName($name);
 
         $this->assertGroupHasName($data);
@@ -87,7 +87,7 @@ class Group implements GroupInterface
         $entity->setName($group->getName());
         $entity->save();
 
-        $transfer = $this->locator->acl()->transferGroup();
+        $transfer = new \Generated\Shared\Transfer\AclGroupTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -169,7 +169,7 @@ class Group implements GroupInterface
     {
         $entity = $this->queryContainer->queryUserGroupByIdUser($idUser)->findOne();
 
-        $transfer = $this->locator->acl()->transferGroup();
+        $transfer = new \Generated\Shared\Transfer\AclGroupTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -257,7 +257,7 @@ class Group implements GroupInterface
     {
         $entity = $this->queryContainer->queryGroupByName($name)->findOne();
 
-        $transfer = $this->locator->acl()->transferGroup();
+        $transfer = new \Generated\Shared\Transfer\AclGroupTransfer();
 
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
@@ -274,7 +274,7 @@ class Group implements GroupInterface
     {
         $entity = $this->getGroupEntityById($id);
 
-        $transfer = $this->locator->acl()->transferGroup();
+        $transfer = new \Generated\Shared\Transfer\AclGroupTransfer();
 
         $transfer = Copy::entityToTransfer($transfer, $entity);
 

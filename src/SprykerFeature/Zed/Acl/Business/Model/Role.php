@@ -45,7 +45,7 @@ class Role implements RoleInterface
      */
     public function addRole($name, $idGroup)
     {
-        $data = $this->locator->acl()->transferRole();
+        $data = new \Generated\Shared\Transfer\AclRoleTransfer();
         $data->setName($name);
 
         $role = $this->save($data);
@@ -78,7 +78,7 @@ d     */
         $entity->setName($data->getName());
         $entity->save();
 
-        $transfer = $this->locator->acl()->transferRole();
+        $transfer = new \Generated\Shared\Transfer\AclRoleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -150,7 +150,7 @@ d     */
             throw new EmptyEntityException();
         }
 
-        $transfer = $this->locator->acl()->transferRole();
+        $transfer = new \Generated\Shared\Transfer\AclRoleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -182,7 +182,7 @@ d     */
     {
         $entity = $this->queryContainer->queryRoleByName($name)->findOne();
 
-        $transfer = $this->locator->acl()->transferRole();
+        $transfer = new \Generated\Shared\Transfer\AclRoleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;

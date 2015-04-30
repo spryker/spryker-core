@@ -49,7 +49,7 @@ class RulesetController extends AbstractController
 
         if ($form->isValid()) {
             $data = $form->getRequestData();
-            $group = $this->getLocator()->acl()->transferGroup();
+            $group = new \Generated\Shared\Transfer\AclGroupTransfer();
             $group->setName($data['name']);
 
             if (!empty($idGroup)) {

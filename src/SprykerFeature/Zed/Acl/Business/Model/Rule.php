@@ -68,7 +68,7 @@ class Rule implements RuleInterface
      */
     public function addRule($bundle, $controller, $action, $idRole, $type = 'allow')
     {
-        $data = $this->locator->acl()->transferRule();
+        $data = new \Generated\Shared\Transfer\AclRuleTransfer();
 
         $data->setBundle($bundle);
         $data->setController($controller);
@@ -105,7 +105,7 @@ class Rule implements RuleInterface
         $entity->setType($data->getType());
         $entity->save();
 
-        $transfer = $this->locator->acl()->transferRule();
+        $transfer = new \Generated\Shared\Transfer\AclRuleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -130,7 +130,7 @@ class Rule implements RuleInterface
      */
     public function getRoleRules($idRole)
     {
-        $role = $this->locator->acl()->transferRole();
+        $role = new \Generated\Shared\Transfer\AclRoleTransfer();
         $role->setIdAclRole($idRole);
 
         $roles = $this->locator->acl()->transferRoleCollection();
@@ -193,7 +193,7 @@ class Rule implements RuleInterface
             throw new RuleNotFoundException();
         }
 
-        $transfer = $this->locator->acl()->transferRule();
+        $transfer = new \Generated\Shared\Transfer\AclRuleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -228,7 +228,7 @@ class Rule implements RuleInterface
         $ignore = $this->settings->getRules();
 
         foreach ($ignore as $arrayRule) {
-            $rule = $this->locator->acl()->transferRule();
+            $rule = new \Generated\Shared\Transfer\AclRuleTransfer();
             $rule->setBundle($arrayRule['bundle']);
             $rule->setController($arrayRule['controller']);
             $rule->setAction($arrayRule['action']);

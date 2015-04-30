@@ -80,7 +80,7 @@ class FormControllerProposal extends AbstractController
 
         $data = $form->getRequestData();
 
-        $user = $this->getLocator()->user()->transferUser();
+        $user = new \Generated\Shared\Transfer\UserUserTransfer();
         $user->setFirstName($data['first_name'])
             ->setLastName($data['last_name'])
             ->setUsername($data['username'])
