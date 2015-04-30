@@ -59,7 +59,7 @@ class Installer implements InstallerInterface
      */
     protected function addGroups(array $groupsArray)
     {
-        $groupCollection = $this->locator->acl()->transferGroupCollection();
+        $groupCollection = new \Generated\Shared\Transfer\AclGroupTransfer();
 
         foreach ($groupsArray as $group) {
             if ($this->queryContainer->queryGroupByName($group['name'])->count() > 0) {
@@ -84,7 +84,7 @@ class Installer implements InstallerInterface
      */
     protected function addRoles(array $roleArray, array $groupArray)
     {
-        $roleCollection = $this->locator->acl()->transferRoleCollection();
+        $roleCollection = new \Generated\Shared\Transfer\AclRoleTransfer();
 
         foreach ($roleArray as $role) {
             if ($this->queryContainer->queryRoleByName($role['name'])->count() > 0) {
@@ -120,7 +120,7 @@ class Installer implements InstallerInterface
      */
     protected function addRules(array $rulesArray, array $rolesArray)
     {
-        $ruleCollection = $this->locator->acl()->transferRuleCollection();
+        $ruleCollection = new \Generated\Shared\Transfer\AclRuleTransfer();
 
         foreach ($rulesArray as $rule) {
             $role = array_filter($rolesArray, function ($item) use ($rule) {

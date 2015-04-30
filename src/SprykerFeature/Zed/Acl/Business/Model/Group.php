@@ -237,7 +237,7 @@ class Group implements GroupInterface
      */
     public function getAllGroups()
     {
-        $collection = $this->locator->acl()->transferGroupCollection();
+        $collection = new \Generated\Shared\Transfer\AclGroupTransfer();
 
         $results = $this->queryContainer
             ->queryGroup()
@@ -329,7 +329,7 @@ class Group implements GroupInterface
             ->queryGroupRoles($idGroup)
             ->find();
 
-        $collection = $this->locator->acl()->transferRoleCollection();
+        $collection = new \Generated\Shared\Transfer\AclRoleTransfer();
 
         $collection = Copy::entityCollectionToTransferCollection($collection, $results, true);
 

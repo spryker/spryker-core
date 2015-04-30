@@ -130,7 +130,7 @@ d     */
     {
         $results = $this->queryContainer->queryGroupRoles($idGroup)->find();
 
-        $collection = $this->locator->acl()->transferRoleCollection();
+        $collection = new \Generated\Shared\Transfer\AclRoleTransfer();
         $collection = Copy::entityCollectionToTransferCollection($collection, $results, false);
 
         return $collection;

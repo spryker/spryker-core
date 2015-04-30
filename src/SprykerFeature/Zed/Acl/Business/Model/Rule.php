@@ -133,7 +133,7 @@ class Rule implements RuleInterface
         $role = new \Generated\Shared\Transfer\AclRoleTransfer();
         $role->setIdAclRole($idRole);
 
-        $roles = $this->locator->acl()->transferRoleCollection();
+        $roles = new \Generated\Shared\Transfer\AclRoleTransfer();
         $roles->add($role);
 
         $rules = $this->findByRoles($roles);
@@ -157,7 +157,7 @@ class Rule implements RuleInterface
     ) {
         $results = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();
 
-        $collection = $this->locator->acl()->transferRuleCollection();
+        $collection = new \Generated\Shared\Transfer\AclRuleTransfer();
         $collection = Copy::entityCollectionToTransferCollection($collection, $results, false);
 
         return $collection;
@@ -173,7 +173,7 @@ class Rule implements RuleInterface
         $relationshipCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find();
         $results = $this->queryContainer->queryGroupRules($relationshipCollection)->find();
 
-        $collection = $this->locator->acl()->transferRuleCollection();
+        $collection = new \Generated\Shared\Transfer\AclRuleTransfer();
         $collection = Copy::entityCollectionToTransferCollection($collection, $results, false);
 
         return $collection;
