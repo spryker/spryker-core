@@ -110,7 +110,7 @@ class DocumentAttributeInstaller extends AbstractInstaller
                 );
             }
 
-            $documentAttributeTransfer = $this->locator->searchPage()->transferDocumentAttribute();
+            $documentAttributeTransfer = new \Generated\Shared\Transfer\SearchPageDocumentAttributeTransfer();
             $documentAttributeTransfer->setAttributeName($attributeName);
             $documentAttributeTransfer->setAttributeType($attributeType);
 

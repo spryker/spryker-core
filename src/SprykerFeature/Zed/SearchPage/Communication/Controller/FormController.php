@@ -26,7 +26,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $pageElementTransfer = $this->getLocator()->searchPage()->transferPageElement();
+            $pageElementTransfer = new \Generated\Shared\Transfer\SearchPagePageElementTransfer();
 
             $pageElementTransfer->fromArray($form->getRequestData());
 
@@ -50,7 +50,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $pageElementTransfer = $this->getLocator()->searchPage()->transferPageElement();
+            $pageElementTransfer = new \Generated\Shared\Transfer\SearchPagePageElementTransfer();
             $pageElementTransfer->fromArray($form->getRequestData());
 
             $this->getDependencyContainer()->getSearchPageFacade()->updatePageElement($pageElementTransfer);
