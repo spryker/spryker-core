@@ -4,6 +4,7 @@
   background-color: $pale-color;
 
   padding-top: $step*6;
+  padding-bottom: $step;
 
   .login-form {
     display: block;
@@ -35,8 +36,39 @@
 }
 
 .js-checkout-collapsed {
-  height: $step*2;
   padding: $step*.5 $step;
+
+  :not(.form-block__heading) {
+    display: none;
+  }
+
+  .form-block__heading {
+    margin: 0;
+    font-size: $base-font-size;
+  }
+
+  &.js-checkout-completed {
+    input[type="radio"].padded:checked, input[type="radio"].padded:checked + label {
+      display: block;
+      margin-top: $step;
+    }
+
+    input[type="text"], textarea {
+      display: block;
+      border-color: transparent;
+      margin-bottom: 0;
+      pointer-events: none;
+    }
+
+    // hide the alternate delivery address textarea if the checkbox isn't checked
+    input[type="checkbox"]:not(:checked) + label + textarea {
+      display: none;
+    }
+
+    button.form-block__edit {
+      display: block;
+    }
+  }
 }
 
 .checkout__cart {
@@ -50,7 +82,9 @@
   @include media-query('huge') {
     width: 420px - $step;
   }
+}
 
+.checkout {
   .cart__item {
     @include clearfix;
     margin-bottom: $step*.5;
@@ -85,10 +119,6 @@
     display: inline;
   }
 
-  .cart__item-quantity::after {
-    content: 'x';
-  }
-
   .cart__shipping {
     margin-top: $step;
     padding-top: $step;
@@ -121,6 +151,8 @@
 .checkout__form-block {
   @include clearfix();
 
+  position: relative;
+
   @include media-query('large') {
     margin-right: 300px;
   }
@@ -137,6 +169,23 @@
   textarea {
     height: $step*4.5;
   }
+
+  .form-block__edit {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: none;
+    padding: $step;
+    width: auto;
+    border: none;
+    text-transform: none;
+    font-weight: bold;
+
+    &:hover {
+      background-color: $light-color;
+      color: $muted-color;
+    }
+  }
 }
 
 .form-block__heading {
@@ -145,11 +194,6 @@
   text-transform: uppercase;
   line-height: $step;
   color: $muted-color;
-
-  .js-checkout-collapsed  & {
-    margin: 0 0 $step;
-    font-size: $base-font-size;
-  }
 }
 
 .checkout__form-block--login {
@@ -185,7 +229,7 @@
     transform: translate(-50%, -50%);
     padding: $step $step #{$step - 4};
 
-    &:hover {
+    &:hover:not(:disabled) {
       transform: translate(-50%, -50%) translateY(-3px);
     }
   }
@@ -197,5 +241,61 @@
 
 .js-delivery-address {
   display: none;
+}
+
+.checkout__form-block--confirm {
+
+  &:not(.js-checkout-collapsed) {
+    padding-bottom: 0;
+  }
+
+  .cart__total {
+    margin-bottom: $step;
+    padding-bottom: $step;
+    border-bottom: 1px solid $muted-color;
+  }
+
+  .confirm__voucher-code, .confirm__voucher-submit {
+    float: none;
+    clear: none;
+  }
+
+  .confirm__voucher-code {
+    position: relative;
+    top: -$step*4;
+    width: calc(50% - #{$step});
+    padding: $step*.25 $step*.5;
+  }
+
+  .confirm__voucher-submit {
+    position: relative;
+    top: -$step*4;
+    left: -$step*1.5;
+    width: $step;
+    height: $step;
+    font-size: 0;
+    font-family: 'icomoon';
+
+    &::before {
+      content: '\e600';
+      position: relative;
+      top: -10px;
+      left: -$step*.5;
+      font-size: $step;
+    }
+  }
+
+}
+
+.confirm__agb-submit {
+  @include clearfix;
+  position: relative;
+  top: -$step*2;
+  margin-left: 50%;
+  margin-bottom: -$step;
+
+  .confirm__submit {
+    width: 100%;
+  }
 }
 

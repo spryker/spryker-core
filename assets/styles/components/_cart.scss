@@ -5,3 +5,10 @@
     content: '€ ';
   }
 }
+
+.cart__item-quantity {
+  &::after {
+    // multiplication sign, &nbsp
+    content: '\00d7\00A0';
+  }
+}

@@ -30,10 +30,9 @@ button, input[type="submit"] {
     border-color: $light-color;
   }
 
-  &:hover {
-    background-color: $muted-color;
+  &:hover:not(:disabled) {
+    background-color: $text-color;
     color: $light-color;
-    border-color: $muted-color;
   }
 }
 
@@ -64,23 +63,26 @@ input[type="checkbox"].padded, input[type="radio"].padded {
   width: $step;
 
   & + label {
+    position: relative;
     float: left;
     margin-bottom: $step;
     margin-top: -3px;
+    margin-left: $step*.5;
+    max-width: calc(100% - #{$step*1.5});
   }
 
   & + label::before {
+    $box-shadow-width: 4px;
     pointer-events: none;
     content: '';
-    display: inline-block;
-    position: relative;
-    left: -$step + 4px;
+    position: absolute;
+    left: -$step*1.5 + $box-shadow-width;
     padding-right: $step*.5;
     vertical-align: sub;
     width: $step - 8px;
     height: $step - 8px;
     border-radius: 3px;
-    box-shadow: 0 0 0 3px $light-color, 0 0 0 4px $paler-color;
+    box-shadow: 0 0 0 #{$box-shadow-width - 1px} $light-color, 0 0 0 $box-shadow-width $paler-color;
     background-color: $light-color;
   }
 
@@ -136,7 +138,7 @@ a.cta, input.cta, button.cta {
   -webkit-font-smoothing: antialiased;
   @include bounce-transition();
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: saturate($brand-color, 5%);
     transform: translateY(-3px);
     box-shadow: 0 5px 0 darken($brand-color, 30%);
@@ -145,6 +147,11 @@ a.cta, input.cta, button.cta {
   &:active {
     transform: translateY(0);
     box-shadow: 0 2px 0 darken($brand-color, 30%);
+  }
+
+  &:disabled {
+    background-color: $paler-color;
+    box-shadow: 0 2px 0 darken($paler-color, 30%);
   }
 
   @include media-query(small) {

@@ -4,6 +4,7 @@ var $ = require('jquery'),
     _ = require('underscore'),
     cartData = require('../data/cart'),
     overlay = require('./overlay'),
+    spinner = require('./spinner'),
     templateSrc = require('../templates/cart-item'),
     template,
     $cart,
@@ -29,9 +30,11 @@ var renderCart = function() {
   _.each(cartData.cart.items, function(item) {
     html += template(item);
   });
+  $el.children().remove();
   $el.html(html);
   $shipping.html('€ '+cartData.cart.shipping);
   $total.html('€ '+cartData.cart.total);
+  spinner.init();
 }
 
 module.exports = {
