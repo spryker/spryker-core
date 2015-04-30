@@ -25,6 +25,11 @@ class ClassDefinition implements ClassDefinitionInterface
     protected $properties = [];
 
     /**
+     * @var array
+     */
+    protected $uses = [];
+
+    /**
      * @param string $className
      */
     public function __construct($className)
@@ -59,6 +64,38 @@ class ClassDefinition implements ClassDefinitionInterface
         if (!in_array($interface, $this->interfaces)) {
             $this->interfaces[] = $interface;
         }
+    }
+
+    /**
+     * @param array|string $uses
+     */
+    public function setUses($uses)
+    {
+        if (is_array($uses)) {
+            foreach ($uses as $useStatement) {
+                $this->addUses($useStatement);
+            }
+        } else {
+            $this->addUses($uses);
+        }
+    }
+
+    /**
+     * @param string $useStatement
+     */
+    protected function addUses($useStatement)
+    {
+        if (!in_array($useStatement, $this->uses)) {
+            $this->uses[] = $useStatement;
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getUses()
+    {
+        return $this->uses;
     }
 
     /**

@@ -21,6 +21,10 @@ class ClassCollectionManager
             $classDefinition->setInterface($data['interface']);
         }
 
+        if (isset($data['use'])) {
+            $classDefinition->setUses($data['use']);
+        }
+
         if (isset($data['property'][0])) {
             foreach ($data['property'] as $prop) {
                 $classDefinition->setProperty($prop);
