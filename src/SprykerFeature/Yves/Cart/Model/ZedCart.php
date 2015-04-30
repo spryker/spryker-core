@@ -117,7 +117,7 @@ class ZedCart implements CartInterface
      */
     public function addItem(CartItem $cartItem)
     {
-        $cartItemCollection  = $this->locator->cart()->transferCartItemCollection();
+        $cartItemCollection  = new \Generated\Shared\Transfer\CartCartItemTransfer();
         $cartItemCollection->add($cartItem);
 
         return $this->addItems($cartItemCollection);
@@ -132,7 +132,7 @@ class ZedCart implements CartInterface
         CartItem $cartItem,
         $reason = DeleteReasonConstant::DELETE_REASON_ACTIVELY_REMOVED_BY_USER
     ) {
-        $cartItemCollection  = $this->locator->cart()->transferCartItemCollection();
+        $cartItemCollection  = new \Generated\Shared\Transfer\CartCartItemTransfer();
         $cartItemCollection->add($cartItem);
 
         return $this->removeItems($cartItemCollection, $reason);
@@ -144,7 +144,7 @@ class ZedCart implements CartInterface
      */
     public function changeQuantityOfItem(CartItem $cartItem)
     {
-        $cartItemCollection  = $this->locator->cart()->transferCartItemCollection();
+        $cartItemCollection  = new \Generated\Shared\Transfer\CartCartItemTransfer();
         $cartItemCollection->add($cartItem);
 
         return $this->changeQuantityOfItems($cartItemCollection);
@@ -219,7 +219,7 @@ class ZedCart implements CartInterface
     public function createCartChange($cartItemCollection = null)
     {
         if ($cartItemCollection === null || is_array($cartItemCollection)) {
-            $cartItemCollection = $this->locator->cart()->transferCartItemCollection();
+            $cartItemCollection = new \Generated\Shared\Transfer\CartCartItemTransfer();
             $cartItemCollection->fromArray($cartItemCollection);
         } elseif (!$cartItemCollection instanceof CartItemCollection) {
             throw new \InvalidArgumentException('addItems() expects array or CartItemCollection');
