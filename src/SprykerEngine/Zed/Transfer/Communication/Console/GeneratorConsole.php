@@ -2,6 +2,7 @@
 
 namespace SprykerEngine\Zed\Transfer\Communication\Console;
 
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -49,24 +50,8 @@ class GeneratorConsole extends Console
 
     private function createTransferObjects()
     {
-        $manager = new ClassCollectionManager();
-
-        $xmlDefinitions = $this->getXmlDefinitions();
-
-        foreach ($xmlDefinitions as $configObject) {
-            if (isset($configObject['transfer'][0])) {
-                foreach ($configObject['transfer'] as $transferArray) {
-                    $manager->setClassDefinition($transferArray);
-                }
-            } else {
-                $manager->setClassDefinition($configObject['transfer']);
-            }
-        }
-
-        $definitions = $manager->getCollections();
-        $generator = new ClassGenerator();
-        $generator->setNamespace('Generated\Shared\Transfer');
-        $generator->setTargetFolder($this->targetDirectory);
+        $definitions = $this->getTransferDefinitions();
+        $generator = $this->getClassGenerator();
 
         foreach ($definitions as $classDefinition) {
             $phpCode = $generator->generateClass($classDefinition);
@@ -77,6 +62,28 @@ class GeneratorConsole extends Console
             file_put_contents($generator->getTargetFolder() . $classDefinition->getClassName() . '.php', $phpCode);
             $this->info(sprintf('<info>%s.php</info> was generated', $classDefinition->getClassName()));
         }
+    }
+
+    /**
+     * @return array|ClassDefinition[]
+     */
+    private function getTransferDefinitions()
+    {
+        $manager = new ClassCollectionManager();
+
+        $xmlDefinitions = $this->getXmlDefinitions();
+
+        foreach ($xmlDefinitions as $config) {
+            if (isset($config['transfer'][0])) {
+                foreach ($config['transfer'] as $transferList) {
+                    $manager->setClassDefinition($transferList);
+                }
+            } else {
+                $manager->setClassDefinition($config['transfer']);
+            }
+        }
+
+        return $manager->getCollections();
     }
 
     /**
@@ -131,6 +138,17 @@ class GeneratorConsole extends Console
         $finder->in($directories)->name(self::TRANSFER_DEFINITION_FILE_NAME);
 
         return $finder;
+    }
+
+    /**
+     * @return ClassGenerator
+     */
+    private function getClassGenerator()
+    {
+        $generator = new ClassGenerator();
+        $generator->setNamespace('Generated\Shared\Transfer');
+        $generator->setTargetFolder($this->targetDirectory);
+        return $generator;
     }
 
 }

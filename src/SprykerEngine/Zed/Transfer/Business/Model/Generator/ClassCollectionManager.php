@@ -2,16 +2,11 @@
 
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassDefinition;
-
-/**
- * Class ClassCollectionManager
- * @package SprykerEngine\Zed\Transfer\Business\Model\Generator
- */
 class ClassCollectionManager
 {
+
     /**
-     * @var array definitionCollections
+     * @var array
      */
     protected $definitionCollections = [];
 
@@ -20,30 +15,40 @@ class ClassCollectionManager
      */
     public function setClassDefinition(array $data)
     {
-        if ( ! isset($this->definitionCollections[$data['name']]) ) {
-            $this->definitionCollections[$data['name']] = new ClassDefinition($data['name']);
+        $classDefinition = $this->getClassDefinition($data);
+
+        if (isset($data['interface'])) {
+            $classDefinition->setInterface($data['interface']);
         }
 
-        $cd = $this->definitionCollections[$data['name']];
-
-        if ( isset($data['interface']) ) {
-            $cd->setInterface($data['interface']);
-        }
-
-        if ( isset($data['property'][0]) ) {
+        if (isset($data['property'][0])) {
             foreach ($data['property'] as $prop) {
-                $cd->setProperty($prop);
+                $classDefinition->setProperty($prop);
             }
         } else {
-            $cd->setProperty($data['property']);
+            $classDefinition->setProperty($data['property']);
         }
     }
 
     /**
-     * @return array definitionCollections
+     * @return array|ClassDefinition[]
      */
     public function getCollections()
     {
         return $this->definitionCollections;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return mixed
+     */
+    private function getClassDefinition(array $data)
+    {
+        if (!isset($this->definitionCollections[$data['name']])) {
+            $this->definitionCollections[$data['name']] = new ClassDefinition($data['name']);
+        }
+
+        return $this->definitionCollections[$data['name']];
     }
 }
