@@ -42,7 +42,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $locator = Locator::getInstance();
 
         $this->markTestSkipped();
-        $transfer = $locator->system()->transferTestMain();
+        $transfer = new \Generated\Shared\Transfer\SystemTestMainTransfer();
         $transfer->setBar('string');
 
         $response = $this->createFullResponse($transfer);
@@ -60,7 +60,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->markTestSkipped();
         $locator = Locator::getInstance();
 
-        $transfer = $locator->system()->transferTestMain();
+        $transfer = new \Generated\Shared\Transfer\SystemTestMainTransfer();
         $transfer->setBar('string');
 
         $response = $this->createFullResponse($transfer);

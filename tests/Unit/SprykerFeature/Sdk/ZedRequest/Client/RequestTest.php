@@ -67,9 +67,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     {
         $this->markTestSkipped('TODO fix me after refactoring');
         $locator = Locator::getInstance();
-        $transfer = $locator->system()->transferTestMain();
-        $metaTransfer1 = $locator->system()->transferTestChild();
-        $metaTransfer2 = $locator->system()->transferTestChild();
+        $transfer = new \Generated\Shared\Transfer\SystemTestMainTransfer();
+        $metaTransfer1 = new \Generated\Shared\Transfer\SystemTestChildTransfer();
+        $metaTransfer2 = new \Generated\Shared\Transfer\SystemTestChildTransfer();
 
         $metaTransfer1->setBat('1');
         $metaTransfer2->setBat('2');
@@ -85,9 +85,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     {
         $this->markTestSkipped();
         $locator = Locator::getInstance();
-        $transfer = $locator->system()->transferTestMain();
-        $metaTransfer1 = $locator->system()->transferTestChild();
-        $metaTransfer2 = $locator->system()->transferTestChild();
+        $transfer = new \Generated\Shared\Transfer\SystemTestMainTransfer();
+        $metaTransfer1 = new \Generated\Shared\Transfer\SystemTestChildTransfer();
+        $metaTransfer2 = new \Generated\Shared\Transfer\SystemTestChildTransfer();
         $metaTransfer1->setBat('1');
         $metaTransfer2->setBat('2');
         $request = $this->createFullRequest($locator, $transfer, $metaTransfer1, $metaTransfer2);
