@@ -25,6 +25,7 @@ class Cart2Test extends Test
 
     public function setUp()
     {
+        $this->markTestSkipped();
         parent::setUp();
         $this->locator = Locator::getInstance();
 

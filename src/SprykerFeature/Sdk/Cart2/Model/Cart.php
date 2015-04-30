@@ -164,7 +164,7 @@ class Cart implements CartInterface
         $changedItem->setId($sku);
         $changedItem->setQuantity($quantity);
         /** @var ItemCollectionInterface|AbstractTransfer $changedItems */
-        $changedItems = $this->locator->cart2()->transferItemCollection();
+        $changedItems = new \Generated\Shared\Transfer\Cart2ItemTransfer();
         $changedItems->add($changedItem);
 
         return $changedItems;
