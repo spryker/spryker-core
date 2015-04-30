@@ -121,7 +121,7 @@ class WriterTest extends Test
 
     protected function setTransferPriceProduct($sku, $priceType)
     {
-        $transferPriceProduct = $this->locator->price()->transferProduct();
+        $transferPriceProduct = new \Generated\Shared\Transfer\PriceProductTransfer();
         $transferPriceProduct
             ->setPrice(100)
             ->setSkuProduct($sku)

@@ -24,7 +24,7 @@ class PriceFormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $transferPriceProduct = $this->getLocator()->price()->transferProduct();
+            $transferPriceProduct = new \Generated\Shared\Transfer\PriceProductTransfer();
             $transferPriceProduct->fromArray($form->getRequestData());
 
             if (null == $transferPriceProduct->getIdPriceProduct()) {
