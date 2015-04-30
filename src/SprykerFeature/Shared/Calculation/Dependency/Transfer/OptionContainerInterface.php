@@ -8,4 +8,11 @@ interface OptionContainerInterface
      * @return OptionItemInterface[]
      */
     public function getOptions();
+
+    /**
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function setOptions(array $options = []);
 }

@@ -10,7 +10,21 @@ interface TaxableItemInterface
     public function getTaxPercentage();
 
     /**
+     * @param int $taxPercentage
+     *
+     * @return $this
+     */
+    public function setTaxPercentage($taxPercentage);
+
+    /**
      * @return int
      */
     public function getPriceToPay();
+
+    /**
+     * @param int $price
+     *
+     * @return $this
+     */
+    public function setPriceToPay($price);
 }
