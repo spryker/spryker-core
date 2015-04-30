@@ -232,6 +232,18 @@
 
   }
 
+  &.js-cart-has-items::after {
+    content: attr(data-item-count);
+    position: absolute;
+    display: block;
+    top: 3px;
+    right: 3px;
+    height: 20px;
+    padding: 0px 7px 22px;
+    background-color: #e2694a;
+    border-radius: 13px;
+    color: white;
+  }
 
 
 }
