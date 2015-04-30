@@ -9,6 +9,7 @@ var $ = require('jquery'),
     filter = require('./ui/catalog/filters'),
     pagination = require('./ui/catalog/pagination'),
     homepage = require('./ui/homepage'),
+    checkout = require('./ui/checkout'),
     mainNav = require('./ui/main-nav'),
     slick = require('slick-carousel');
 
@@ -24,6 +25,7 @@ $(function() {
   cart.init();
   overlay.init();
   loginForm.init();
+  checkout.init();
 
   // TODO only call this on catalog page
   filter.init();
@@ -32,6 +34,9 @@ $(function() {
   // TODO only call this on homepage
   homepage.init();
 
+
+
   // TODO remove, probably
+  // it's only for in-browser debugging
   window.$ = $;
 });
