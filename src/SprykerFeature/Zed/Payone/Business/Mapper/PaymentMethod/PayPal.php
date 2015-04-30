@@ -64,6 +64,7 @@ class PayPal extends AbstractMapper
     }
 
     /**
+     * @param AuthorizationDataInterface $authorizationData
      * @return EWalletContainer
      */
     protected function createPaymentMethodContainer(AuthorizationDataInterface $authorizationData)

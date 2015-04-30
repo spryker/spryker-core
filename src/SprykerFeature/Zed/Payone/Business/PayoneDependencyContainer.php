@@ -35,6 +35,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
             ->createPaymentManager(
                 $this->getLocator(),
                 $this->createExecutionAdapter(),
+                $this->createQueryContainer(),
                 $this->createPaymentMethodRegistry()->findPaymentMethodMapperByName($paymentMethodName),
                 $this->createStandardParameter(),
                 $this->createSequenceNumberProvider(),
@@ -104,11 +105,11 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return ModeDetectorInterface
+     * @return Mode\ModeDetectorInterface
      */
     protected function createModeDetector()
     {
-        return $this->getFactory()->createModeDetector();
+        return $this->getFactory()->createModeModeDetector();
     }
 
     /**

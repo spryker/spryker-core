@@ -13,14 +13,14 @@ use SprykerFeature\Shared\Payone\Transfer\StandardParameterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\PreAuthorizationResponseContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethodMapperInterface;
+use SprykerFeature\Zed\Payone\Business\Mode\ModeDetectorInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
-use SprykerFeature\Zed\Payone\Persistence\Propel\Base\SpyPaymentPayoneQuery;
+use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
 
@@ -36,6 +36,10 @@ class PaymentManager
      * @var AdapterInterface
      */
     protected $executionAdapter;
+    /**
+     * @var PayoneQueryContainerInterface
+     */
+    protected $queryContainer;
     /**
      * @var PaymentMethodMapperInterface
      */
@@ -57,6 +61,7 @@ class PaymentManager
     /**
      * @param LocatorLocatorInterface $locator
      * @param AdapterInterface $executionAdapter
+     * @param PayoneQueryContainerInterface $queryContainer
      * @param PaymentMethodMapperInterface $paymentMethodMapper
      * @param StandardParameterInterface $standardParameter
      * @param SequenceNumberProviderInterface $sequenceNumberProvider
@@ -64,6 +69,7 @@ class PaymentManager
      */
     public function __construct(LocatorLocatorInterface $locator,
                                 AdapterInterface $executionAdapter,
+                                PayoneQueryContainerInterface $queryContainer,
                                 PaymentMethodMapperInterface $paymentMethodMapper,
                                 StandardParameterInterface $standardParameter,
                                 SequenceNumberProviderInterface $sequenceNumberProvider,
@@ -72,6 +78,7 @@ class PaymentManager
         $this->locator = $locator;
         $this->paymentMethodMapper = $paymentMethodMapper;
         $this->executionAdapter = $executionAdapter;
+        $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;
         $this->sequenceNumberProvider = $sequenceNumberProvider;
         $this->modeDetector = $modeDetector;
@@ -126,7 +133,6 @@ class PaymentManager
         $this->updatePaymentAfterAuthorization($paymentEntity, $responseContainer);
         $this->updateApiLogAfterAuthorization($apiLogEntity, $responseContainer);
 
-        echo '<pre>' . print_r($responseContainer, false) . '</pre>';die;
         return $responseContainer;
     }
 
@@ -150,7 +156,6 @@ class PaymentManager
 
         $this->updateApiLogAfterCapture($apiLogEntity, $responseContainer);
 
-        echo '<pre>' . print_r($responseContainer, false) . '</pre>';die;
         return $responseContainer;
     }
 
@@ -174,13 +179,28 @@ class PaymentManager
 
         $this->updateApiLogAfterDebit($apiLogEntity, $responseContainer);
 
-        echo '<pre>' . print_r($responseContainer, false) . '</pre>';die;
         return $responseContainer;
     }
 
+    /**
+     * @param RefundDataInterface $refundData
+     * @return RefundResponseContainer
+     */
     public function refund(RefundDataInterface $refundData)
     {
-        throw new \LogicException('TO BE IMPLEMENTED!');
+        $requestContainer = $this->paymentMethodMapper->mapDebit($refundData);
+        $this->setStandardParameter($requestContainer);
+
+        $paymentEntity = $this->findPaymentByTransactionId($refundData->getPayment()->getTransactionId());
+        $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
+
+        $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+        \SprykerFeature_Shared_Library_Log::log($rawResponse, 'payone-test.log');
+        $responseContainer = new RefundResponseContainer($rawResponse);
+
+        $this->updateApiLogAfterRefund($apiLogEntity, $responseContainer);
+
+        return $responseContainer;
     }
 
     /**
@@ -209,13 +229,12 @@ class PaymentManager
     }
 
     /**
-     * // @todo MUST come from QueryContainer!!!
+     * @param string $transactionId
      * @return SpyPaymentPayone
      */
     protected function findPaymentByTransactionId($transactionId)
     {
-        $query = SpyPaymentPayoneQuery::create();
-        return $query->filterByTransactionId($transactionId)->findOne();
+        return $this->queryContainer->getPaymentByTransactionIdQuery($transactionId)->findOne();
     }
 
     /**
@@ -274,6 +293,21 @@ class PaymentManager
      * @throws \Propel\Runtime\Exception\PropelException
      */
     protected function updateApiLogAfterDebit(SpyPaymentPayoneApiLog $apiLogEntity, DebitResponseContainer $responseContainer)
+    {
+        $apiLogEntity->setStatus($responseContainer->getStatus());
+        $apiLogEntity->setTransactionId($responseContainer->getTxid());
+        $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
+        $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
+        $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
+        $apiLogEntity->save();
+    }
+
+    /**
+     * @param SpyPaymentPayoneApiLog $apiLogEntity
+     * @param RefundResponseContainer $responseContainer
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    protected function updateApiLogAfterRefund(SpyPaymentPayoneApiLog $apiLogEntity, RefundResponseContainer $responseContainer)
     {
         $apiLogEntity->setStatus($responseContainer->getStatus());
         $apiLogEntity->setTransactionId($responseContainer->getTxid());
