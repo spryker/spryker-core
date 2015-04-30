@@ -145,7 +145,7 @@ class Cart implements CartInterface
     {
         $cart = $this->storageProvider->getCart();
         /** @var CartChangeInterface $cartChange */
-        $cartChange = $this->locator->cart2()->transferCartChange();
+        $cartChange = new \Generated\Shared\Transfer\Cart2CartChangeTransfer();
         $cartChange->setCart($cart);
 
         return $cartChange;
@@ -160,7 +160,7 @@ class Cart implements CartInterface
     protected function createChangedItems($sku, $quantity = 1)
     {
         /** @var ItemInterface|AbstractTransfer $changedItem */
-        $changedItem = $this->locator->cart2()->transferItem();
+        $changedItem = new \Generated\Shared\Transfer\Cart2ItemTransfer();
         $changedItem->setId($sku);
         $changedItem->setQuantity($quantity);
         /** @var ItemCollectionInterface|AbstractTransfer $changedItems */

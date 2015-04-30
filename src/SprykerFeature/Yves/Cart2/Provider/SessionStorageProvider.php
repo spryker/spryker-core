@@ -40,7 +40,7 @@ class SessionStorageProvider implements StorageProviderInterface
      */
     public function getCart()
     {
-        $cartTransfer = $this->getLocator()->cart2()->transferCart();
+        $cartTransfer = new \Generated\Shared\Transfer\Cart2CartTransfer();
 
         if ($this->session->has(self::CART_SESSION_IDENTIFIER)) {
             return $this->session->get(self::CART_SESSION_IDENTIFIER, $cartTransfer);
