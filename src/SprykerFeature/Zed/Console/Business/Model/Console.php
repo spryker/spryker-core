@@ -97,4 +97,12 @@ class Console extends SymfonyCommand
     {
         return $this->dependencyContainer;
     }
+
+    /**
+     * @return AutoCompletion
+     */
+    protected function getLocator()
+    {
+        return $this->locator;
+    }
 }
