@@ -94,7 +94,7 @@ function Menu(name, node) {
 	 * @name node
 	 * @memberOf Menu
 	 * @readonly
-	 * @type String
+	 * @type HTMLElement
 	 */
 	Object.defineProperty(this, 'node', {
 		value : node,
