@@ -9,16 +9,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use Symfony\Component\Finder\SplFileInfo;
 use Zend\Config\Factory;
 
 class GeneratorConsole extends Console
 {
 
     const COMMAND_NAME = 'transfer:generate';
+    const TRANSFER_DEFINITION_FILE_NAME = 'transferDefinition.xml';
 
-    protected $manager;
-
-    protected $xmlTree;
+    /**
+     * @var string
+     */
+    private $targetDirectory;
 
     protected function configure()
     {
@@ -27,36 +30,67 @@ class GeneratorConsole extends Console
             ->setName(self::COMMAND_NAME)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
         ;
-    }
 
-    protected function getXmlDefinitions()
-    {
-        $directory = APPLICATION_VENDOR_DIR . 'spryker/';
-
-        $bundlesList = scandir($directory);
-
-        $definitions = [];
-
-        foreach ($bundlesList as $bundle) {
-            if ( '.' !== $bundle && '..' !== $bundle ) {
-                $xmlDefinitionFile = $directory . $bundle . '/transferDefinitions.xml';
-                if ( is_file($xmlDefinitionFile) ) {
-                    $definitions[] = Factory::fromFile($xmlDefinitionFile, true)->toArray();
-                }
-            }
-        }
-
-        return $definitions;
+        $this->targetDirectory = APPLICATION_SOURCE_DIR . 'Generated/Shared/Transfer/';
     }
 
     /**
-     * where transfer objects will be generated
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @throws \Exception
      *
-     * @return string
+     * @return void
      */
-    private function getGeneratedTargetFolder()
+    public function execute(InputInterface $input, OutputInterface $output)
     {
-        return APPLICATION_SOURCE_DIR . 'Generated/Shared/Transfer/';
+        $this->removeGeneratedTransferObjects($this->targetDirectory);
+        $this->createTransferObjects();
+    }
+
+    private function createTransferObjects()
+    {
+        $manager = new ClassCollectionManager();
+
+        $xmlDefinitions = $this->getXmlDefinitions();
+
+        foreach ($xmlDefinitions as $configObject) {
+            if (isset($configObject['transfer'][0])) {
+                foreach ($configObject['transfer'] as $transferArray) {
+                    $manager->setClassDefinition($transferArray);
+                }
+            } else {
+                $manager->setClassDefinition($configObject['transfer']);
+            }
+        }
+
+        $definitions = $manager->getCollections();
+        $generator = new ClassGenerator();
+        $generator->setNamespace('Generated\Shared\Transfer');
+        $generator->setTargetFolder($this->targetDirectory);
+
+        foreach ($definitions as $classDefinition) {
+            $phpCode = $generator->generateClass($classDefinition);
+            if (!is_dir($generator->getTargetFolder())) {
+                mkdir($generator->getTargetFolder(), 0755, true);
+            }
+
+            file_put_contents($generator->getTargetFolder() . $classDefinition->getClassName() . '.php', $phpCode);
+            $this->info(sprintf('<info>%s.php</info> was generated', $classDefinition->getClassName()));
+        }
+    }
+
+    /**
+     * @return array
+     */
+    private function getXmlDefinitions()
+    {
+        $xmlTransferDefinitions = $this->getXmlTransferDefinitionFiles();
+        $xmlTransferDefinitionList = [];
+        foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
+            $xmlTransferDefinitionList[] = Factory::fromFile($xmlTransferDefinition->getPathname(), true)->toArray();
+        }
+
+        return $xmlTransferDefinitionList;
     }
 
     /**
@@ -64,52 +98,39 @@ class GeneratorConsole extends Console
      */
     private function removeGeneratedTransferObjects()
     {
-        $finder = new Finder();
-        $finder->files()->in($this->getGeneratedTargetFolder());
-
-        foreach ($finder as $file) {
+        foreach ($this->getGeneratedFile() as $file) {
             unlink($file->getRealPath());
         }
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    /**
+     * @return Finder|SplFileInfo[]
+     */
+    private function getGeneratedFile()
     {
+        $finder = new Finder();
+        $finder->files()->in($this->targetDirectory);
 
-        $this->manager = new ClassCollectionManager();
-
-        $xmlDefinitions = $this->getXmlDefinitions();
-
-        if ( empty($xmlDefinitions) ) {
-            throw new \Exception('No XML configuration transfer files found');
-        }
-
-        foreach ($xmlDefinitions as $configObject) {
-            if ( isset($configObject['transfer'][0]) ) {
-                foreach ($configObject['transfer'] as $trasnferArray) {
-                    $this->manager->setClassDefinition($trasnferArray);
-                }
-            } else {
-                $this->manager->setClassDefinition($configObject['transfer']);
-            }
-        }
-
-        $definitions = $this->manager->getCollections();
-        $generator = new ClassGenerator();
-        $generator->setNamespace('Generated\Shared\Transfer');
-        $generator->setTargetFolder($this->getGeneratedTargetFolder());
-
-        $this->removeGeneratedTransferObjects($this->getGeneratedTargetFolder());
-
-        foreach ($definitions as $classDefinition) {
-            $phpCode = $generator->generateClass($classDefinition);
-//echo $phpCode;
-//die;
-            if ( ! is_dir($generator->getTargetFolder()) ) {
-                mkdir($generator->getTargetFolder(), 0755, true);
-            }
-
-            file_put_contents($generator->getTargetFolder() . $classDefinition->getClassName() . '.php', $phpCode);
-            $output->writeln(sprintf('<info>%s.php</info> was generated', $classDefinition->getClassName()));
-        }
+        return $finder;
     }
+
+    /**
+     * @return Finder|SplFileInfo[]
+     */
+    private function getXmlTransferDefinitionFiles()
+    {
+        $finder = new Finder();
+        $directories = [
+            APPLICATION_VENDOR_DIR . '/*/*/src/*/Shared/*/Transfer/',
+        ];
+
+        if (glob(APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/')) {
+            $directories[] = APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
+        }
+
+        $finder->in($directories)->name(self::TRANSFER_DEFINITION_FILE_NAME);
+
+        return $finder;
+    }
+
 }
