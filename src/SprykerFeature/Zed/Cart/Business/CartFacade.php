@@ -2,106 +2,72 @@
 
 namespace SprykerFeature\Zed\Cart\Business;
 
-use SprykerFeature\Shared\Cart\Transfer\CartChange;
-use SprykerFeature\Shared\Cart\Transfer\StepStorage;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Shared\Cart\Transfer\CartChangeInterface;
+use SprykerFeature\Shared\Cart\Transfer\CartInterface;
 
 /**
- * Class CartFacade
- * @package SprykerFeature\Zed\Cart\Business
+ * @method CartDependencyContainer getDependencyContainer()
  */
 class CartFacade extends AbstractFacade
 {
-
     /**
-     * @param CartChange $cart
-     * @return \SprykerEngine\Zed\Kernel\Business\ModelResult
+     * @param CartChangeInterface $cartChange
+     *
+     * @return CartInterface
      */
-    public function addItems(CartChange $cart)
+    public function addToCart(CartChangeInterface $cartChange)
     {
-        return $this->getDependencyContainer()->createCartModel()->addItems($cart);
+        $addOperator = $this->getDependencyContainer()->createAddOperator();
+
+        return $addOperator->executeOperation($cartChange);
     }
 
     /**
-     * @param CartChange $cart
-     * @return \SprykerEngine\Zed\Kernel\Business\ModelResult
+     * @param CartChangeInterface $cartChange
+     *
+     * @return CartInterface
      */
-    public function removeItems(CartChange $cart)
+    public function increaseQuantity(CartChangeInterface $cartChange)
     {
-        return $this->getDependencyContainer()->createCartModel()->removeItems($cart);
+        $increaseOperator = $this->getDependencyContainer()->createIncreaseOperator();
+
+        return $increaseOperator->executeOperation($cartChange);
     }
 
     /**
-     * @param CartChange $cart
-     * @return \SprykerEngine\Zed\Kernel\Business\ModelResult
+     * @param CartChangeInterface $cartChange
+     *
+     * @return CartInterface
      */
-    public function changeQuantity(CartChange $cart)
+    public function removeFromCart(CartChangeInterface $cartChange)
     {
-        return $this->getDependencyContainer()->createCartModel()->changeQuantity($cart);
+        $removeOperator = $this->getDependencyContainer()->createRemoveOperator();
+
+        return $removeOperator->executeOperation($cartChange);
     }
 
     /**
-     * @param CartChange $cart
-     * @return \SprykerFeature\Shared\Sales\Transfer\Order
+     * @param CartChangeInterface $cartChange
+     *
+     * @return CartInterface
      */
-    public function mergeGuestCartWithCustomerCart(CartChange $cart)
+    public function decreaseQuantity(CartChangeInterface $cartChange)
     {
-        return $cart->getOrder();
-        //return $this->factory->createModelCartStorage()->mergeGuestCartWithCustomerCart($cart);
+        $decreaseOperator = $this->getDependencyContainer()->createDecreaseOperator();
+
+        return $decreaseOperator->executeOperation($cartChange);
     }
 
     /**
-     * @param CartChange $cart
-     * @return \SprykerFeature\Shared\Sales\Transfer\Order
+     * @param CartInterface $cart
+     *
+     * @return CartInterface
      */
-    public function loadGuestCartByHash(CartChange $cart)
+    public function recalculateCart(CartInterface  $cart)
     {
-        return $cart->getOrder();
-       // return $this->factory->createModelCartStorage()->loadGuestCartByHash($cart);
-    }
+        $calculator = $this->getDependencyContainer()->createCartCalculator();
 
-    /**
-     * @param  CartChange                           $cart
-     * @return \SprykerFeature\Shared\Sales\Transfer\Order
-     */
-    public function clearCartStorage(CartChange $cart)
-    {
-        return $cart->getOrder();
-        //return $this->factory->createModelCartStorage()->clearCartStorage($cart);
-    }
-
-    /**
-     * @param StepStorage $transfer
-     */
-    public function storeUserCartStep(StepStorage $transfer)
-    {
-        //$this->factory->createModelCartStep()->storeCartStep($transfer);
-    }
-
-    /**
-     * @param CartChange $cartChange
-     * @return \SprykerEngine\Zed\Kernel\Business\ModelResult
-     */
-    public function addCouponCode(CartChange $cartChange)
-    {
-        return $this->getDependencyContainer()->createCouponCodeModel()->addCouponCode($cartChange);
-    }
-
-    /**
-     * @param CartChange $cartChange
-     * @return \SprykerEngine\Zed\Kernel\Business\ModelResult
-     */
-    public function removeCouponCode(CartChange $cartChange)
-    {
-        return $this->getDependencyContainer()->createCouponCodeModel()->removeCouponCode($cartChange);
-    }
-
-    /**
-     * @param CartChange $cartChange
-     * @return \SprykerEngine\Zed\Kernel\Business\ModelResult
-     */
-    public function clearCouponCodes(CartChange $cartChange)
-    {
-        return $this->getDependencyContainer()->createCouponCodeModel()->clearCouponCodes($cartChange);
+        return $calculator->recalculate($cart);
     }
 }

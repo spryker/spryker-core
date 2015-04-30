@@ -1,9 +1,0 @@
-default:
-  context:
-    class: 'Behat\SprykerFeature\Zed\Cart\Context'
-  paths:
-    features: 'Feature'
-    bootstrap: 'vendor/spryker/cart-package/tests/Behat/SprykerFeature/Cart'
-
-imports:
-  - 'config/Zed/behat.local.yml'

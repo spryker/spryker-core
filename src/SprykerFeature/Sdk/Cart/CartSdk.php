@@ -2,39 +2,21 @@
 
 namespace SprykerFeature\Sdk\Cart;
 
-use SprykerFeature\Shared\Cart\Transfer\CartItem;
-use SprykerFeature\Shared\Sales\Transfer\OrderItemCollection;
 use SprykerEngine\Sdk\Kernel\AbstractSdk;
+use SprykerFeature\Sdk\Cart\StorageProvider\StorageProviderInterface;
 
 /**
- * Class CartSdk
- * @package SprykerFeature\Sdk\Cart
+ * @method CartDependencyContainer getDependencyContainer()
  */
 class CartSdk extends AbstractSdk
 {
     /**
-     * @param $sku
-     * @param int $quantity
-     * @param null $uniqueIdentifier
-     * @param array $productOptions
-     * @return CartItem
+     * @param StorageProviderInterface $storageProvider
+     *
+     * @return Model\CartInterface
      */
-    public function createCartItem($sku, $quantity = 1, $uniqueIdentifier = null, array $productOptions = [])
+    public function createCart(StorageProviderInterface $storageProvider)
     {
-        return $this->getDependencyContainer()->createCartItemCreator()->createCartItem(
-            $sku,
-            $quantity,
-            $uniqueIdentifier,
-            $productOptions
-        );
-    }
-
-    /**
-     * @param OrderItemCollection $cartItems
-     * @return array
-     */
-    public function getProductDataForCartItems(OrderItemCollection $cartItems)
-    {
-        return $this->getDependencyContainer()->createCatalogHelper()->getProductDataForCartItems($cartItems);
+        return $this->getDependencyContainer()->createCart($storageProvider);
     }
 }

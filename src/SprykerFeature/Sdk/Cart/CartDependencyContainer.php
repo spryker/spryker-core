@@ -4,31 +4,25 @@ namespace SprykerFeature\Sdk\Cart;
 
 use Generated\Sdk\Ide\FactoryAutoCompletion\Cart;
 use SprykerEngine\Sdk\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Sdk\Cart\Helper\CartItemCreator;
-use SprykerFeature\Sdk\Cart\Helper\CatalogHelper;
+use SprykerFeature\Sdk\Cart\Model\CartInterface;
+use SprykerFeature\Sdk\Cart\StorageProvider\StorageProviderInterface;
 
+/**
+ * @method Cart getFactory()
+ */
 class CartDependencyContainer extends AbstractDependencyContainer
 {
     /**
-     * @var Cart
+     * @param StorageProviderInterface $storageProvider
+     *
+     * @return CartInterface
      */
-    protected $factory;
-
-    /**
-     * @return CartItemCreator
-     */
-    public function createCartItemCreator()
+    public function createCart(StorageProviderInterface $storageProvider)
     {
-        return $this->getFactory()->createHelperCartItemCreator($this->getLocator());
-    }
-
-    /**
-     * @return CatalogHelper
-     */
-    public function createCatalogHelper()
-    {
-        $catalogModel = $this->getLocator()->catalog()->sdk()->createCatalogModel();
-
-        return $this->getFactory()->createHelperCatalogHelper($catalogModel);
+        $zedClient = $this->getLocator()->zedRequest()->zedClient()->getInstance();
+        return $this->getFactory()->createModelCart(
+            $zedClient,
+            $storageProvider
+        );
     }
 }
