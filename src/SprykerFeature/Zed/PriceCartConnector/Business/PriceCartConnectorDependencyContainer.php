@@ -16,11 +16,11 @@ class PriceCartConnectorDependencyContainer extends AbstractDependencyContainer
     /**
      * @return PriceManagerInterface
      */
-    public function getPriceManager()
+    public function createPriceManager()
     {
         $settings = $this->getSettings();
 
-        return $this->getFactory()->createManagerPriceManager($this->getPriceFacade(), $settings);
+        return $this->getFactory()->createManagerPriceManager($this->getPriceFacade(), $settings->getGrossPriceType());
     }
 
     /**
