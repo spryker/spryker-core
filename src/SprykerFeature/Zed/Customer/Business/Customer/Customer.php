@@ -289,7 +289,7 @@ class Customer
         foreach ($entities->getData() as $customer) {
             $addresses[] = $this->entityToTransfer($customer);
         }
-        $addressTransferCollection = $this->locator->customer()->transferAddressCollection();
+        $addressTransferCollection = new \Generated\Shared\Transfer\CustomerAddressTransfer();
         $addressTransferCollection->fromArray($addresses);
 
         return $addressTransferCollection;
