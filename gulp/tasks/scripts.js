@@ -13,7 +13,7 @@ var mergeStreams = require('merge-stream');
 
 gulp.task('scripts', function() {
 
-  var browserified = browserify('./'+config.paths.source.scripts_entry)
+  var browserified = browserify('./'+config.paths.source.scripts_entry, { debug: true })
       .bundle()
       .pipe(source('main.js'))
       .pipe(gulp.dest(config.paths.dest.scripts))
@@ -23,7 +23,7 @@ gulp.task('scripts', function() {
       .pipe(maps.init())
       .pipe(concat('vendor.js'))
       .pipe(uglify())
-      .pipe(maps.write('./'))
+      .pipe(maps.write())
       .pipe(gulp.dest(config.paths.dest.scripts));
 
   return mergeStreams(browserified, vendor);

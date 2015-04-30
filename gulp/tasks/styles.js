@@ -13,16 +13,16 @@ gulp.task('styles', function(done) {
   return gulp
     .src(config.paths.source.styles)
     .pipe(maps.init())
-    .pipe(sass({
-      errLogToConsole: true,
-      'outputStyle' : 'nested',
-      'precision' : 3
-    }))
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
-      cascade: false
-    }))
-    .pipe(maps.write())
+      .pipe(sass({
+        errLogToConsole: true,
+        style : 'expanded',
+        sourceComments : 'normal'
+      }))
+      .pipe(autoprefixer({
+        browsers: ['last 2 versions'],
+        cascade: false
+      }))
+    .pipe(maps.write('./'))
     .pipe(gulp.dest(config.paths.dest.styles))
     .pipe(browserSync.reload({stream:true}));
 });
