@@ -68,15 +68,8 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getType($type)
     {
-        if ( $this->isTypeSpecial($type) ) {
-            if ( $type === '[]' ) {
-                return self::TYPE_ARRAY;
-            }
-
-            // this should be class type
-            return strtr($type, [
-                '[]' => '',
-            ]);
+        if ( $this->isTypeSpecial($type) && $type === '[]' ) {
+            return self::TYPE_ARRAY;
         }
 
         return $type;

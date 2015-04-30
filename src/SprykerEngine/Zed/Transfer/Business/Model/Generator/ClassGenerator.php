@@ -237,7 +237,6 @@ class ClassGenerator
      */
     public function isSpecialProperty($type)
     {
-//        var_dump($type);
         //return !preg_match('/(^int|^bool|array|float|double|object|string|null)/', $type);
         return preg_match('/\[\]/', $type);
     }
@@ -249,14 +248,16 @@ class ClassGenerator
     protected function getDefaultValue(array $properties)
     {
         if ( preg_match('/(array|\[\])/', $properties['type']) ) {
-            return 'array()';
+            return '[]';
         }
 
         if ( ! empty($properties['default']) ) {
             return $properties['default'];
         }
 
-        return null;
+        return 'null';
+
+        // @todo support for default boolean values ?
     }
 
     /**
@@ -293,7 +294,7 @@ class ClassGenerator
             return $this->appendInterfaceName($resourceType);
         }
 
-        return '-null-';
+        return null;
     }
 
     /**
@@ -327,7 +328,8 @@ class ClassGenerator
                 'is_special'    => $this->isSpecialProperty($props['type']),
             ];
         }
-
+//print_r($settersAndGetters);
+//die;
         return $settersAndGetters;
     }
 
