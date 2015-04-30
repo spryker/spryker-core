@@ -124,12 +124,12 @@ class ClassGenerator
     protected function buildTwigData()
     {
         $this->translations = [
-            'namespace'             => $this->getNamespace(),
-            'className'             => $this->classDefinition->getClassName(),
+            'namespace' => $this->getNamespace(),
+            'className' => $this->classDefinition->getClassName(),
             'interfacesToImplement' => $this->getInterfacesToImplement(),
-            'properties'            => $this->generatePropertiesDeclarations(),
-            'settersAndGetters'     => $this->generateSettersAndGetters(),
-            'useExternal'           => $this->getExternalResourcesToUse(),
+            'properties' => $this->generatePropertiesDeclarations(),
+            'settersAndGetters' => $this->generateSettersAndGetters(),
+            'useExternal' => $this->getExternalResourcesToUse(),
         ];
     }
 
@@ -159,14 +159,14 @@ class ClassGenerator
      */
     protected function addExternalResource($resourceNamespace)
     {
-        if ( is_array($resourceNamespace) ) {
+        if (is_array($resourceNamespace)) {
             foreach ($resourceNamespace as $item) {
                 $this->addExternalResource($item);
             }
         } else {
             $resourceNamespace = $this->appendInterfaceName($resourceNamespace);
             $resourceNamespace = strtr($resourceNamespace, ['\\\\' => '\\']);
-            if ( ! in_array($resourceNamespace, $this->externalResourcesToUse)
+            if (!in_array($resourceNamespace, $this->externalResourcesToUse)
                 && strpos($resourceNamespace, '\\') !== false
             ) {
                 $this->externalResourcesToUse[] = $resourceNamespace;
@@ -246,11 +246,11 @@ class ClassGenerator
      */
     protected function getDefaultValue(array $properties)
     {
-        if ( preg_match('/(array|\[\])/', $properties['type']) ) {
+        if (preg_match('/(array|\[\])/', $properties['type'])) {
             return '[]';
         }
 
-        if ( ! empty($properties['default']) ) {
+        if (!empty($properties['default'])) {
             return $properties['default'];
         }
 
@@ -273,20 +273,20 @@ class ClassGenerator
      * @param bool $isForDocumentation
      * @return mixed|string
      */
-    public function getParameterDataType($type, $isForDocumentation=false)
+    public function getParameterDataType($type, $isForDocumentation = false)
     {
-        if ( 'array' === $type ) {
+        if ('array' === $type) {
             return ClassDefinition::TYPE_ARRAY;
         }
-        if ( 'bool' === $type || 'boolean' === $type ) {
+        if ('bool' === $type || 'boolean' === $type) {
             return ClassDefinition::TYPE_BOOLEAN;
         }
 
-        if ( preg_match('/^int/', $type) ) {
+        if (preg_match('/^int/', $type)) {
             return ClassDefinition::TYPE_INTEGER;
         }
 
-        if ( ! preg_match('/(string|integer|int)/', $type) && ! $isForDocumentation ) {
+        if (!preg_match('/(string|integer|int)/', $type) && !$isForDocumentation) {
             $this->addExternalResource($type);
             $resourceType = $this->getNamespaceBaseName($type);
 
@@ -302,7 +302,7 @@ class ClassGenerator
      */
     public function getPassedParameter(array $dataArray)
     {
-        if ( ! isset($dataArray['name']) ) {
+        if (!isset($dataArray['name'])) {
             throw new Exception('name not found in ' . var_export($dataArray, true));
         }
 
@@ -323,7 +323,7 @@ class ClassGenerator
                 'propertyName' => $this->getPropertyName($props),
                 'passedParameter' => $this->getPassedParameter($props),
                 'parameterDataType' => $this->getParameterDataType($props['type']),
-                'is_special'    => $this->isSpecialProperty($props['type']),
+                'is_special' => $this->isSpecialProperty($props['type']),
             ];
         }
 
@@ -336,8 +336,8 @@ class ClassGenerator
      */
     protected function appendInterfaceName($resourceNamespace)
     {
-        if ( ! preg_match('/Interface$/', $resourceNamespace) ) {
-            if ( interface_exists($resourceNamespace . 'Interface') ) {
+        if (!preg_match('/Interface$/', $resourceNamespace)) {
+            if (interface_exists($resourceNamespace . 'Interface')) {
                 return $resourceNamespace . 'Interface';
             }
         }

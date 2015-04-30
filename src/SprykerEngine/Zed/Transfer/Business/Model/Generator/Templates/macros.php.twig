@@ -29,7 +29,7 @@
     /**
      * @var {{ writeIfNot(type~' ', '^string', type) }}${{ sag.passedParameter }}
      */
-    public function set{{ sag.propertyName|camelCase }}({{ writeIfNot(type~' ', '(string|integer|null)', type) }}${{ sag.passedParameter }})
+    public function set{{ sag.propertyName|camelCase }}({{ writeIfNot(type~' ', '(string|int|null)', type) }}${{ sag.passedParameter }})
 {% endmacro %}
 
 {% macro method_get(sag) %}

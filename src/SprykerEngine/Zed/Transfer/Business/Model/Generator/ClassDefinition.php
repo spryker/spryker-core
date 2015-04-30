@@ -5,8 +5,8 @@ namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 class ClassDefinition implements ClassDefinitionInterface
 {
     const TYPE_ARRAY    = 'array';
-    const TYPE_BOOLEAN  = 'boolean';
-    const TYPE_INTEGER  = 'integer';
+    const TYPE_BOOLEAN  = 'bool';
+    const TYPE_INTEGER  = 'int';
 
     protected $className;
     protected $interfaces = [];

@@ -21,12 +21,12 @@ class ClassDefinitionTest extends PHPUnit_Framework_TestCase
 
         $definition->setProperty([
             'name' => 'id',
-            'type' => 'integer',
+            'type' => 'int',
             'default' => '0',
         ]);
         $definition->setProperty([
             'name' => 'published',
-            'type' => 'boolean',
+            'type' => 'bool',
             'default' => true,
         ]);
 
