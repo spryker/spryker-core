@@ -2,11 +2,10 @@
 
 namespace SprykerFeature\Zed\Cart\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\Cart2Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\CartBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
-use Pyz\Zed\Calculation\Business\CalculationFacade;
+use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Cart\Business\Operator\OperatorInterface;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 
@@ -98,12 +97,22 @@ class CartDependencyContainer extends AbstractDependencyContainer
      */
     private function configureCartOperator(OperatorInterface $operator)
     {
-        $settings = $this->getFactory()->createCartSettings($this->getLocator());
+        $settings = $this->getSettings();
 
         foreach ($settings->getCartItemPlugins() as $itemExpanderPlugin) {
             $operator->addItemExpanderPlugin($itemExpanderPlugin);
         }
 
         return $operator;
+    }
+
+    /**
+     * @return CartSettings
+     */
+    protected function getSettings()
+    {
+        $settings = $this->getFactory()->createCartSettings($this->getLocator());
+
+        return $settings;
     }
 }

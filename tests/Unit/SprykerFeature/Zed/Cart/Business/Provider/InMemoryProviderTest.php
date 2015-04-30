@@ -4,13 +4,13 @@ namespace Unit\SprykerFeature\Zed\Cart2\Business\Provider;
 
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Cart2\Transfer\Cart;
-use SprykerFeature\Shared\Cart2\Transfer\CartInterface;
-use SprykerFeature\Shared\Cart2\Transfer\Item;
-use SprykerFeature\Shared\Cart2\Transfer\ItemCollection;
-use SprykerFeature\Shared\Cart2\Transfer\ItemInterface;
-use SprykerFeature\Zed\Cart2\Business\StorageProvider\InMemoryProvider;
-use SprykerFeature\Zed\Cart2\Business\StorageProvider\StorageProviderInterface;
+use SprykerFeature\Shared\Cart\Transfer\Cart;
+use SprykerFeature\Shared\Cart\Transfer\CartInterface;
+use SprykerFeature\Shared\Cart\Transfer\Item;
+use SprykerFeature\Shared\Cart\Transfer\ItemCollection;
+use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
+use SprykerFeature\Zed\Cart\Business\StorageProvider\InMemoryProvider;
+use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 
 class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,6 +28,8 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     //@todo test with more then 1 item
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
      */
     public function testAddExistingItem()
@@ -52,6 +54,8 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
      */
     public function testAddNewItem()
@@ -81,6 +85,8 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
      */
     public function testRemoveExistingItem()
@@ -95,6 +101,8 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
      */
     public function testRemoveNotExistingItem()
@@ -114,6 +122,8 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
      */
     public function testReduceWithMoreThenExists()
@@ -128,8 +138,11 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
-     * @expectedException \SprykerFeature\Zed\Cart2\Business\Exception\InvalidArgumentException
+     *
+     * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not increase cart item 123 with -3 as value
      */
     public function testIncreaseWithNegativeValue()
@@ -144,8 +157,11 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
-     * @expectedException \SprykerFeature\Zed\Cart2\Business\Exception\InvalidArgumentException
+     *
+     * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not increase cart item 123 with 0 as value
      */
     public function testIncreaseWithZeroValue()
@@ -160,8 +176,11 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
-     * @expectedException \SprykerFeature\Zed\Cart2\Business\Exception\InvalidArgumentException
+     *
+     * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not decrease cart item 123 with -3 as value
      */
     public function testDecreaseWithNegativeValue()
@@ -176,8 +195,11 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
-     * @expectedException \SprykerFeature\Zed\Cart2\Business\Exception\InvalidArgumentException
+     *
+     * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not decrease cart item 123 with 0 as value
      */
     public function testDecreaseWithZeroValue()

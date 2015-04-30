@@ -1,20 +1,22 @@
 <?php
 
-namespace Functional\SprykerFeature\Zed\Cart2;
+namespace Functional\SprykerFeature\Zed\Cart;
 
 use Codeception\TestCase\Test;
+use Functional\SprykerFeature\Zed\Cart\Fixture\CartFacadeFixture;
+use Generated\Zed\Ide\FactoryAutoCompletion\CartBusiness;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Cart2\Transfer\Cart;
-use SprykerFeature\Shared\Cart2\Transfer\CartChange;
-use SprykerFeature\Shared\Cart2\Transfer\Item;
-use SprykerFeature\Shared\Cart2\Transfer\ItemCollection;
-use SprykerFeature\Zed\Cart2\Business\Cart2Facade;
+use SprykerFeature\Shared\Cart\Transfer\Cart;
+use SprykerFeature\Shared\Cart\Transfer\CartChange;
+use SprykerFeature\Shared\Cart\Transfer\Item;
+use SprykerFeature\Shared\Cart\Transfer\ItemCollection;
+use SprykerFeature\Zed\Cart\Business\CartFacade;
 
-class Cart2Test extends Test
+class CartTest extends Test
 {
     /**
-     * @var Cart2Facade
+     * @var CartFacade
      */
     private $cartFacade;
 
@@ -27,14 +29,16 @@ class Cart2Test extends Test
     {
         parent::setUp();
         $this->locator = Locator::getInstance();
+        /** @var CartBusiness $factory */
+        $factory = new Factory('Cart');
 
-        $this->cartFacade = new Cart2Facade(
-            new Factory('Cart2'),
-            $this->locator
-        );
+        //use fixture here which wraps the original facade to override DI and Settings to not tests plugins
+        $this->cartFacade = new CartFacadeFixture($factory, $this->locator);
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
      */
     public function testAddToCart()
@@ -74,6 +78,8 @@ class Cart2Test extends Test
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
      */
     public function testIncreaseCartQuantity()
@@ -107,6 +113,8 @@ class Cart2Test extends Test
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
      */
     public function testRemoveFromCart()
@@ -136,6 +144,8 @@ class Cart2Test extends Test
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
      */
     public function testDecreaseCartItem()
