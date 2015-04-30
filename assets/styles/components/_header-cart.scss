@@ -14,8 +14,14 @@
 
   @include bounce-transition(all, .4s);
 
-  @include media-query('large') {
+  @include media-query('medium') {
     width: $step*2.5;
+  }
+
+  // I have no explanation for why this is necessary, and no time to figure it out right now
+  // something about setting the header to static blows the height: 100%
+  .overlay-visible &:not(.cart--expanded) {
+    display: none;
   }
 
   .cart__toggle, .cart__close {

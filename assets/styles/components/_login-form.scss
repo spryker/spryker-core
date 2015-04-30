@@ -11,6 +11,7 @@
   .overlay--login & {
     display: block;
     position: absolute;
+    width: calc(100% - #{$step*2});
 
     @include media-query('medium') {
       width: 350px;
