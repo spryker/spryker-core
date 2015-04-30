@@ -10,6 +10,7 @@ require('Ui').ng
 		'$httpProvider',
 
 		function($httpProvider) {
+			$httpProvider.interceptors.push('progressInterceptor');
 			$httpProvider.interceptors.push('redirectInterceptor');
 			$httpProvider.interceptors.push('errorInterceptor');
 		}
@@ -17,6 +18,7 @@ require('Ui').ng
 
 
 
+require('./config/progressInterceptor');
 require('./config/interpolateProvider');
 require('./config/redirectInterceptor');
 require('./config/errorInterceptor');
