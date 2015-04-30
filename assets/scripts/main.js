@@ -9,6 +9,7 @@ var $ = require('jquery'),
     filter = require('./ui/catalog/filters'),
     pagination = require('./ui/catalog/pagination'),
     homepage = require('./ui/homepage'),
+    catalog = require('./ui/catalog'),
     checkout = require('./ui/checkout'),
     mainNav = require('./ui/main-nav'),
     slick = require('slick-carousel');
@@ -23,6 +24,7 @@ $(function() {
   spinner.init();
   search.init();
   cart.init();
+  catalog.init();
   overlay.init();
   loginForm.init();
   checkout.init();
