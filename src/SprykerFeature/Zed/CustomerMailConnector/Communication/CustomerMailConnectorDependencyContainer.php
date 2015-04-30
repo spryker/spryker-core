@@ -21,6 +21,6 @@ class CustomerMailConnectorDependencyContainer extends AbstractDependencyContain
      */
     public function createMailTransfer()
     {
-        return $this->getLocator()->mail()->transferMail();
+        return new \Generated\Shared\Transfer\MailMailTransfer();
     }
 }
