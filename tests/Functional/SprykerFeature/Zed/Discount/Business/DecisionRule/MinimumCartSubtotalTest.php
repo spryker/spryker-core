@@ -27,10 +27,10 @@ class MinimumCartSubtotalTest extends Test
     {
         $locator = $this->getLocator();
         /* @var Order $order */
-        $order = $locator->sales()->transferOrder();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
 
         /* @var TotalsInterface $totals */
-        $totals = $locator->calculation()->transferTotals();
+        $totals = new \Generated\Shared\Transfer\CalculationTotalsTransfer();
         $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_1000);
         $order->setTotals($totals);
 
@@ -46,10 +46,10 @@ class MinimumCartSubtotalTest extends Test
     {
         $locator = $this->getLocator();
         /* @var Order $order */
-        $order = $locator->sales()->transferOrder();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
 
         /* @var TotalsInterface $totals */
-        $totals = $locator->calculation()->transferTotals();
+        $totals = new \Generated\Shared\Transfer\CalculationTotalsTransfer();
         $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_400);
         $order->setTotals($totals);
 
@@ -65,10 +65,10 @@ class MinimumCartSubtotalTest extends Test
     {
         $locator = $this->getLocator();
         /* @var Order $order */
-        $order = $locator->sales()->transferOrder();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
 
         /* @var TotalsInterface $totals */
-        $totals = $locator->calculation()->transferTotals();
+        $totals = new \Generated\Shared\Transfer\CalculationTotalsTransfer();
         $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_500);
         $order->setTotals($totals);
 

@@ -92,7 +92,7 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
         $items = [];
 
         foreach ($grossPrices as $grossPrice) {
-            $item = Locator::getInstance()->sales()->transferOrderItem();
+            $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
             $item->setGrossPrice($grossPrice);
             $items[] = $item;
         }

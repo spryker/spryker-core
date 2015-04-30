@@ -280,8 +280,8 @@ class VoucherEngineTest extends Test
     protected function getOrderWithTwoItems()
     {
         $locator = Locator::getInstance();
-        $order = $locator->sales()->transferOrder();
-        $item = $locator->sales()->transferOrderItem();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $itemCollection = $locator->sales()->transferOrderItemCollection();
 
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_500);

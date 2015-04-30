@@ -66,7 +66,7 @@ class Distributor implements
     protected function addDiscountToDiscountableObject(DiscountableItemInterface $discountableObject, $discountAmount)
     {
         $discounts = $discountableObject->getDiscounts();
-        $discount = $this->getLocator()->calculation()->transferDiscount();
+        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
         $discount->setAmount($discountAmount);
         $discounts->add($discount);
         $discountableObject->setDiscounts($discounts);
