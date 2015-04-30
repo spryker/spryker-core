@@ -9,8 +9,7 @@
         return $this;
     }
 {% if sag.is_special == 1 %}{# create addMethod(ClassType $methodParameter) #}
-
-    /**
+/**
      * @var {{ writeIfNot(sag.parameterDataType~' ', '(^string)', sag.parameterDataType) }}${{ sag.passedParameter }}
      */
     public function add{{ sag.propertyName|singular|camelCase }}({{ writeIfNot(sag.parameterDataType~' ', '(^string)', sag.parameterDataType)|changeArrayType }}${{ sag.passedParameter }})
@@ -25,15 +24,16 @@
 {%- endmacro %}
 
 {% macro method_set_header(sag, type) %}
-
-    /**
+/**
      * @var {{ writeIfNot(type~' ', '^string', type) }}${{ sag.passedParameter }}
+     *
+     * @return $this
      */
     public function set{{ sag.propertyName|camelCase }}({{ writeIfNot(type~' ', '(string|int|null)', type) }}${{ sag.passedParameter }})
 {% endmacro %}
 
 {% macro method_get(sag) %}
-    /**
+/**
      * @return {{ writeIfNot(sag.parameterDataType~' ', '^string', sag.parameterDataType) }}${{ sag.passedParameter }}
      */
     public function get{{ sag.propertyName|camelCase }}()
@@ -45,7 +45,7 @@
 {% macro write_property(prop) %}
 
     /**
-     * @var {{ writeIfNot(prop.parameterDataType~' ', '^string', prop.parameterDataType) }}${{ prop.propertyName }}
+     * @var {{ prop.parameterDataType }}${{ prop.propertyName }}
      */
     protected ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue }}{% endif %};
 {% endmacro %}
