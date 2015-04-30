@@ -27,7 +27,7 @@ class FormController extends AbstractController
 
         if ($form->isValid()) {
             $locale = $this->getLocale();
-            $category = $this->getLocator()->category()->transferCategory();
+            $category = new \Generated\Shared\Transfer\CategoryCategoryTransfer();
             $category->fromArray($form->getRequestData());
 
             if (is_null($category->getIdCategory())) {
@@ -53,7 +53,7 @@ class FormController extends AbstractController
 
         if ($form->isValid()) {
             $locale = $this->getLocale();
-            $categoryNode = $this->getLocator()->category()->transferCategoryNode();
+            $categoryNode = new \Generated\Shared\Transfer\CategoryCategoryNodeTransfer();
             $categoryNode->fromArray($form->getRequestData());
 
             if (is_null($categoryNode->getIdCategoryNode())) {
