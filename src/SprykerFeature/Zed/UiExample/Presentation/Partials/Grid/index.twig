@@ -148,7 +148,7 @@
         <tbody>
             <tr ng-repeat="row in rows">
                 <td>{[{ row['column_for_string'] }]}</td>
-                <td><spy-format-boolean content="row['column_for_boolean']"></spy-format-boolean></td>
+                <td><div spy-action-switch="/null" state="row['column_for_boolean']"></div></td>
                 <td>{[{ row['column_for_timestamp'] }]}</td>
             </tr>
             <tr ng-if="!rows.length">
