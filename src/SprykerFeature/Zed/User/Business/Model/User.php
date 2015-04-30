@@ -154,7 +154,7 @@ class User implements UserInterface
             throw new UserNotFoundException();
         }
 
-        $userCollection = $this->locator->user()->transferUserCollection();
+        $userCollection = new \Generated\Shared\Transfer\UserUserTransfer();
 
         return Copy::entityCollectionToTransferCollection($userCollection, $users, false);
     }
@@ -296,7 +296,7 @@ class User implements UserInterface
     public function getSystemUsers()
     {
         $systemUser = $this->settings->getSystemUsers();
-        $collection = $this->locator->user()->transferUserCollection();
+        $collection = new \Generated\Shared\Transfer\UserUserTransfer();
 
         foreach ($systemUser as $username) {
             $transferUser = new \Generated\Shared\Transfer\UserUserTransfer();
