@@ -282,7 +282,7 @@ class VoucherEngineTest extends Test
         $locator = Locator::getInstance();
         $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
         $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
-        $itemCollection = $locator->sales()->transferOrderItemCollection();
+        $itemCollection = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
 
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_500);
         $itemCollection->add($item);

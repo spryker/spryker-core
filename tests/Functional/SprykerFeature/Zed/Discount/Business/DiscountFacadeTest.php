@@ -316,7 +316,7 @@ class DiscountFacadeTest extends Test
 
     public function testGetDiscountableItems() {
         $order = $this->getOrderWithFixtureData();
-        $itemCollection = $this->getLocator()->sales()->transferOrderItemCollection();
+        $itemCollection = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
 
         $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
@@ -331,7 +331,7 @@ class DiscountFacadeTest extends Test
     {
         $order = $this->getOrderWithFixtureData();
 
-        $itemCollection = $this->getLocator()->sales()->transferOrderItemCollection();
+        $itemCollection = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
@@ -354,7 +354,7 @@ class DiscountFacadeTest extends Test
         $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
         $order->addExpense($expense);
 
-        $itemCollection = $this->getLocator()->sales()->transferOrderItemCollection();
+        $itemCollection = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
