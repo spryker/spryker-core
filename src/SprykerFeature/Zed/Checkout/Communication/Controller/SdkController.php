@@ -73,7 +73,7 @@ class SdkController extends AbstractSdkController
         $payment->setMethod(PayoneApiConstants::PAYMENT_METHOD_PAYPAL);
         $transferOrder->setPayment($payment);
 
-        $items = Locator::getInstance()->sales()->transferOrderItemCollection();
+        $items = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
 
         $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->setSku('211709');
