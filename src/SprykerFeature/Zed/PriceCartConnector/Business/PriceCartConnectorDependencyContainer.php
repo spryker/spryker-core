@@ -6,10 +6,12 @@ use Generated\Zed\Ide\FactoryAutoCompletion\PriceCartConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface;
+use SprykerFeature\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 /**
  * @method PriceCartConnectorDependencyContainer getDependencyContainer()
  * @method PriceCartConnectorBusiness getFactory()
+ * @method PriceCartConnectorConfig getConfig()
  */
 class PriceCartConnectorDependencyContainer extends AbstractDependencyContainer
 {
@@ -18,17 +20,9 @@ class PriceCartConnectorDependencyContainer extends AbstractDependencyContainer
      */
     public function createPriceManager()
     {
-        $settings = $this->getSettings();
+        $bundleConfig = $this->getConfig();
 
-        return $this->getFactory()->createManagerPriceManager($this->getPriceFacade(), $settings->getGrossPriceType());
-    }
-
-    /**
-     * @return PriceCartConnectorSettings
-     */
-    protected function getSettings()
-    {
-        return $this->getFactory()->createPriceCartConnectorSettings();
+        return $this->getFactory()->createManagerPriceManager($this->getPriceFacade(), $bundleConfig->getGrossPriceType());
     }
 
     /**
