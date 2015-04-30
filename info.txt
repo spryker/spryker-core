@@ -1,0 +1,66 @@
+<?
+
+<property name="firstname" type="string" />
+
+/**
+ * @return string
+ */
+public function getFirstname(){
+    return $this->firstname;
+}
+
+/**
+ * @var string
+ */
+public function setFirstname($firstname){
+    $this->addModifiedProperty('firstname');
+    $this->firstname = $firstname;
+}
+
+
+===============================================
+
+<property name="item" type="OrderItem" />
+
+/**
+ * @return OrderItem
+ */
+public function getItem(){
+    return $this->orderItem;
+}
+
+/**
+ * @var OrderItem
+ */
+public function setItem($orderItem){
+    $this->addModifiedProperty('orderItem');
+    $this->$orderItem = $orderItem;
+}
+
+===============================================
+
+<property name="items" type="OrderItem[]" />
+
+/**
+ * @return OrderItem[]
+ */
+public function getItems(){
+    return $this->orderItems;
+}
+
+/**
+ * @var OrderItem[]
+ */
+public function setItems(ArrayObject $orderItems){
+    $this->addModifiedProperty('orderItems');
+    $this->$orderItems = $orderItems;
+}
+
+
+/**
+ * @var OrderItem
+ */
+public function addItem(OrderItem $orderItem){
+    $this->addModifiedProperty('orderItems');
+    $this->$orderItems[] = $orderItem;
+}

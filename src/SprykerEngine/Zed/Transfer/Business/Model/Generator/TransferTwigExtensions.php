@@ -18,11 +18,11 @@ class TransferTwigExtensions extends \Twig_Extension
                     $valueToCheck = $valueToWrite;
                 }
 
-                if ( ! empty($valueToCheck) && ! preg_match('/'.$notToBe.'/', $valueToCheck) ) {
+                if ( ! preg_match('/'.$notToBe.'/', $valueToCheck) ) {
                     return $valueToWrite;
                 }
 
-                return $valueToCheck;
+                return null;
             }),
             new \Twig_SimpleFunction('writeIf', function($valueToWrite, $toBe, $valueToCheck=null){
 

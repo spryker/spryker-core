@@ -6,9 +6,9 @@ use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\Finder;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassGenerator;
-use Zend\Config\Config;
 use Zend\Config\Factory;
 
 class GeneratorConsole extends Console
@@ -35,7 +35,7 @@ class GeneratorConsole extends Console
 
         $bundlesList = scandir($directory);
 
-        $definitions = array();
+        $definitions = [];
 
         foreach ($bundlesList as $bundle) {
             if ( '.' !== $bundle && '..' !== $bundle ) {
@@ -49,10 +49,27 @@ class GeneratorConsole extends Console
         return $definitions;
     }
 
-    private function removeGeneratedTransferObjects($targetFolder)
+    /**
+     * where transfer objects will be generated
+     *
+     * @return string
+     */
+    private function getGeneratedTargetFolder()
     {
-        // @todo
-        // will remove only php files
+        return APPLICATION_SOURCE_DIR . 'Generated/Shared/Transfer/';
+    }
+
+    /**
+     * remove generated TransferObjects
+     */
+    private function removeGeneratedTransferObjects()
+    {
+        $finder = new Finder();
+        $finder->files()->in($this->getGeneratedTargetFolder());
+
+        foreach ($finder as $file) {
+            unlink($file->getRealPath());
+        }
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -79,12 +96,14 @@ class GeneratorConsole extends Console
         $definitions = $this->manager->getCollections();
         $generator = new ClassGenerator();
         $generator->setNamespace('Generated\Shared\Transfer');
-        $generator->setTargetFolder(APPLICATION_SOURCE_DIR . 'Generated/Shared/Transfer/');
+        $generator->setTargetFolder($this->getGeneratedTargetFolder());
 
-        $this->removeGeneratedTransferObjects($generator->getTargetFolder());
+        $this->removeGeneratedTransferObjects($this->getGeneratedTargetFolder());
 
         foreach ($definitions as $classDefinition) {
             $phpCode = $generator->generateClass($classDefinition);
+//echo $phpCode;
+//die;
             if ( ! is_dir($generator->getTargetFolder()) ) {
                 mkdir($generator->getTargetFolder(), 0755, true);
             }

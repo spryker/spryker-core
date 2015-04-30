@@ -164,6 +164,7 @@ class ClassGenerator
                 $this->addExternalResource($item);
             }
         } else {
+            $resourceNamespace = $this->appendInterfaceName($resourceNamespace);
             $resourceNamespace = strtr($resourceNamespace, ['\\\\' => '\\']);
             if ( ! in_array($resourceNamespace, $this->externalResourcesToUse)
                 && strpos($resourceNamespace, '\\') !== false
@@ -236,7 +237,9 @@ class ClassGenerator
      */
     public function isSpecialProperty($type)
     {
-        return !preg_match('/(^int|^bool|array|float|double|object|string|null)/', $type);
+//        var_dump($type);
+        //return !preg_match('/(^int|^bool|array|float|double|object|string|null)/', $type);
+        return preg_match('/\[\]/', $type);
     }
 
     /**
@@ -279,13 +282,18 @@ class ClassGenerator
             return ClassDefinition::TYPE_BOOLEAN;
         }
 
-        if ( ! preg_match('/(string|integer|int)/', $type) && ! $isForDocumentation ) {
-            $this->addExternalResource($type);
-
-            return $this->getNamespaceBaseName($type);
+        if ( preg_match('/^int/', $type) ) {
+            return ClassDefinition::TYPE_INTEGER;
         }
 
-        return null;
+        if ( ! preg_match('/(string|integer|int)/', $type) && ! $isForDocumentation ) {
+            $this->addExternalResource($type);
+            $resourceType = $this->getNamespaceBaseName($type);
+
+            return $this->appendInterfaceName($resourceType);
+        }
+
+        return '-null-';
     }
 
     /**
@@ -321,5 +329,20 @@ class ClassGenerator
         }
 
         return $settersAndGetters;
+    }
+
+    /**
+     * @param string $resourceNamespace
+     * @return string
+     */
+    protected function appendInterfaceName($resourceNamespace)
+    {
+        if ( ! preg_match('/Interface$/', $resourceNamespace) ) {
+            if ( interface_exists($resourceNamespace . 'Interface') ) {
+                return $resourceNamespace . 'Interface';
+            }
+        }
+
+        return $resourceNamespace;
     }
 }

@@ -6,11 +6,15 @@ class ClassDefinition implements ClassDefinitionInterface
 {
     const TYPE_ARRAY    = 'array';
     const TYPE_BOOLEAN  = 'boolean';
+    const TYPE_INTEGER  = 'integer';
 
     protected $className;
     protected $interfaces = [];
     protected $properties = [];
 
+    /**
+     * @param string $className
+     */
     public function __construct($className)
     {
         $this->setClassName($className);
@@ -52,6 +56,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $this->properties[$properties['name']] = [
             'name' => $properties['name'],
+            'type_special' => $this->isTypeSpecial($properties['type']),
             'type' => $this->getType($properties['type']),
             'default' => (isset($properties['default'])) ? $properties['default'] : '',
         ];
@@ -63,20 +68,35 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getType($type)
     {
-        if ( preg_match('/\[\]/', $type) ) {
+        if ( $this->isTypeSpecial($type) ) {
             if ( $type === '[]' ) {
                 return self::TYPE_ARRAY;
             }
 
             // this should be class type
-            return strtr($type, array(
+            return strtr($type, [
                 '[]' => '',
-            ));
+            ]);
         }
 
         return $type;
     }
 
+    /**
+     * @param string $type
+     * @return int
+     */
+    protected function isTypeSpecial($type)
+    {
+        return (bool) preg_match('/\[\]/', $type);
+    }
+
+    /**
+     * Transfer objects should have Transfer word in they're name
+     * append it if not
+     *
+     * @param string $name
+     */
     public function setClassName($name)
     {
         if ( strpos($name, 'Transfer') === false ) {
