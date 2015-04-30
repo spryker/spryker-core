@@ -20,12 +20,13 @@ class {{ className }} extends AbstractTransfer
 {
 {# write properties #}
 {% for property in properties %}
-{{- macro.write_property(property) -}}
+
+{{ macro.write_property(property) }}
 {% endfor %}
 
 {# write setters and getters #}
 {% for accessor in settersAndGetters %}
-    {{ macro.method_set(accessor) }}
-    {{ macro.method_get(accessor) }}
+{{ macro.method_set(accessor) }}
+{{ macro.method_get(accessor) }}
 {%- endfor -%}
 }

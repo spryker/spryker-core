@@ -14,16 +14,16 @@ class TransferTwigExtensions extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('changeArrayType', function($text){
+            new \Twig_SimpleFilter('changeArrayType', function ($text) {
                 return strtr($text, [
                     '[]' => '',
                 ]);
             }),
-            new \Twig_SimpleFilter('singular', function($text){
+            new \Twig_SimpleFilter('singular', function ($text) {
                 // just cut the ending "s" from the word
                 return preg_replace('/(s$){1}/', '', $text);
             }),
-            new \Twig_SimpleFilter('camelCase', function($string){
+            new \Twig_SimpleFilter('camelCase', function ($string) {
                 $filter = new UnderscoreToCamelCase();
                 $string = $filter->filter($string);
 
@@ -35,25 +35,25 @@ class TransferTwigExtensions extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('writeIfNot', function($valueToWrite, $notToBe, $valueToCheck=null){
+            new \Twig_SimpleFunction('writeIfNot', function ($valueToWrite, $notToBe, $valueToCheck = null) {
 
-                if ( empty($valueToCheck) && ! is_null($valueToCheck) ) {
+                if (empty($valueToCheck) && !is_null($valueToCheck)) {
                     $valueToCheck = $valueToWrite;
                 }
 
-                if ( ! is_null($valueToCheck) && ! preg_match('/'.$notToBe.'/', $valueToCheck) ) {
+                if (!is_null($valueToCheck) && !preg_match('/' . $notToBe . '/', $valueToCheck)) {
                     return $valueToWrite;
                 }
 
                 return null;
             }),
-            new \Twig_SimpleFunction('writeIf', function($valueToWrite, $toBe, $valueToCheck=null){
+            new \Twig_SimpleFunction('writeIf', function ($valueToWrite, $toBe, $valueToCheck = null) {
 
-                if ( empty($valueToCheck) ) {
+                if (empty($valueToCheck)) {
                     $valueToCheck = $valueToWrite;
                 }
 
-                if ( $valueToCheck === $toBe ) {
+                if ($valueToCheck === $toBe) {
                     return $valueToWrite;
                 }
 

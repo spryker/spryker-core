@@ -4,12 +4,24 @@ namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
 class ClassDefinition implements ClassDefinitionInterface
 {
-    const TYPE_ARRAY    = 'array';
-    const TYPE_BOOLEAN  = 'bool';
-    const TYPE_INTEGER  = 'int';
+    const TYPE_ARRAY = 'array';
+    const TYPE_BOOLEAN = 'bool';
+    const TYPE_INTEGER = 'int';
+    const TYPE_STRING = 'string';
 
+    /**
+     * @var string
+     */
     protected $className;
+
+    /**
+     * @var array
+     */
     protected $interfaces = [];
+
+    /**
+     * @var array
+     */
     protected $properties = [];
 
     /**
@@ -26,7 +38,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     public function setInterface($implementsInterface)
     {
-        if ( is_array($implementsInterface) ) {
+        if (is_array($implementsInterface)) {
             foreach ($implementsInterface as $newInterface) {
                 $this->setInterface($newInterface);
             }
@@ -44,7 +56,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function addInterface($interface)
     {
-        if ( ! in_array($interface, $this->interfaces) ) {
+        if (!in_array($interface, $this->interfaces)) {
             $this->interfaces[] = $interface;
         }
     }
@@ -68,7 +80,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getType($type)
     {
-        if ( $this->isTypeSpecial($type) && $type === '[]' ) {
+        if ($this->isTypeSpecial($type) && $type === '[]') {
             return self::TYPE_ARRAY;
         }
 
@@ -81,7 +93,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function isTypeSpecial($type)
     {
-        return (bool) preg_match('/\[\]/', $type);
+        return (bool)preg_match('/\[\]/', $type);
     }
 
     /**
@@ -92,7 +104,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     public function setClassName($name)
     {
-        if ( strpos($name, 'Transfer') === false ) {
+        if (strpos($name, 'Transfer') === false) {
             $name .= 'Transfer';
         }
         $this->className = $name;

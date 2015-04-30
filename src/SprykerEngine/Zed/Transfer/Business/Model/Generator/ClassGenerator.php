@@ -6,6 +6,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 
 class ClassGenerator
 {
+
     const TWIG_TEMPLATES_LOCATION = '/Templates/';
 
     /**
@@ -14,7 +15,6 @@ class ClassGenerator
     protected $classDefinition;
 
     /**
-     * don't add ending basckslash
      * @var string|null
      */
     protected $namespace = null;
@@ -293,20 +293,20 @@ class ClassGenerator
             return $this->appendInterfaceName($resourceType);
         }
 
-        return null;
+        return ClassDefinition::TYPE_STRING;
     }
 
     /**
-     * @param array $dataArray
+     * @param array $data
      * @return mixed
      */
-    public function getPassedParameter(array $dataArray)
+    public function getPassedParameter(array $data)
     {
-        if (!isset($dataArray['name'])) {
-            throw new Exception('name not found in ' . var_export($dataArray, true));
+        if (!isset($data['name'])) {
+            throw new Exception('name not found in ' . var_export($data, true));
         }
 
-        return $dataArray['name'];
+        return $data['name'];
     }
 
     /**
