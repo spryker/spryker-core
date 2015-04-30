@@ -10,6 +10,8 @@ use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement;
 
 class PageElementWriter implements PageElementWriterInterface
 {
+    const RESOURCE_TYPE_SEARCH_PAGE_CONFIG = 'search_page_config';
+
     /**
      * @var PageElementReaderInterface
      */
@@ -45,7 +47,7 @@ class PageElementWriter implements PageElementWriterInterface
         $pageElementEntity->fromArray($pageElement->toArray());
         $pageElementEntity->save();
 
-        $this->touchFacade->touchActive('search-page-config', 1);
+        $this->touchSearchPageConfig();
 
         return $pageElementEntity->getPrimaryKey();
     }
@@ -64,6 +66,8 @@ class PageElementWriter implements PageElementWriterInterface
         $pageElementEntity->fromArray($pageElement->toArray());
         $pageElementEntity->save();
 
+        $this->touchSearchPageConfig();
+
         return $idElement;
     }
 
@@ -79,6 +83,8 @@ class PageElementWriter implements PageElementWriterInterface
         $pageElementEntity = $this->elementReader->getPageElementById($idElement);
 
         $pageElementEntity->delete();
+
+        $this->touchSearchPageConfig();
 
         return $idElement;
     }
@@ -96,6 +102,13 @@ class PageElementWriter implements PageElementWriterInterface
         $pageElementEntity->setIsElementActive($isElementActive);
         $pageElementEntity->save();
 
+        $this->touchSearchPageConfig();
+
         return true;
+    }
+
+    protected function touchSearchPageConfig()
+    {
+        $this->touchFacade->touchActive(self::RESOURCE_TYPE_SEARCH_PAGE_CONFIG, 1);
     }
 }

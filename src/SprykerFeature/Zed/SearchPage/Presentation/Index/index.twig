@@ -9,12 +9,10 @@
             spy-app="spyLayout,spyFormat,spyGrid,spyForm,spyFormAction"
             ng-controller="ComController"
             >
-        {#<div spy-form-update="openLayer(); read($argument)" scope="key_edit" channel="glossary"></div>#}
-        {#<div spy-form-update="closeLayer()" scope="key_edit" channel="glossary"></div>#}
-        {#<div spy-form-abort="closeLayer()" scope="key_edit" channel="glossary"></div>#}
+
         <div spy-form-update="read()" scope="page-element-grid" channel="page-element"></div>
 
-        <div class="spy-layout n4 f2">
+        <div class="spy-layout n3 f2">
 
             <div>
                 {% include '@SearchPage/Form/create-page-element-form.twig' %}

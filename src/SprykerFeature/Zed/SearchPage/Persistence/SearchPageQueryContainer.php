@@ -125,4 +125,12 @@ class SearchPageQueryContainer extends AbstractQueryContainer
             ->withColumn(SpySearchDocumentAttributeTableMap::COL_ATTRIBUTE_TYPE, 'attribute_type')
         ;
     }
+
+    /**
+     * @param ModelCriteria $expandableQuery
+     */
+    public function expandSearchPageConfigQuery(ModelCriteria $expandableQuery)
+    {
+
+    }
 }

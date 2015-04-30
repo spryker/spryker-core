@@ -25,6 +25,14 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
+     * @return SearchPageQueryContainer
+     */
+    public function getSearchPageQueryContainer()
+    {
+        return $this->getLocator()->searchPage()->queryContainer();
+    }
+
+    /**
      * @param Request $request
      *
      * @return PageElementForm
@@ -33,7 +41,7 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormPageElementForm(
             $request,
-            $this->getQueryContainer()
+            $this->getSearchPageQueryContainer()
         );
     }
 
@@ -45,16 +53,8 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
     public function createPageElementGrid(Request $request)
     {
         return $this->getFactory()->createGridPageElementGrid(
-            $this->getQueryContainer()->queryPageElementGrid(),
+            $this->getSearchPageQueryContainer()->queryPageElementGrid(),
             $request
         );
-    }
-
-    /**
-     * @return SearchPageQueryContainer
-     */
-    private function getQueryContainer()
-    {
-        return $this->getLocator()->searchPage()->queryContainer();
     }
 }
