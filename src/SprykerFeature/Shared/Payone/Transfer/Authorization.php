@@ -3,7 +3,7 @@
 namespace SprykerFeature\Shared\Payone\Transfer;
 
 
-class Authorization extends Transaction implements AuthorizationDataInterface
+class Authorization implements AuthorizationDataInterface
 {
 
     /**
@@ -20,6 +20,11 @@ class Authorization extends Transaction implements AuthorizationDataInterface
      * @var string
      */
     protected $referenceId;
+
+    /**
+     * @var OrderInterface
+     */
+    protected $order;
 
 
     /**
@@ -68,6 +73,22 @@ class Authorization extends Transaction implements AuthorizationDataInterface
     public function setReferenceId($referenceId)
     {
         $this->referenceId = $referenceId;
+    }
+
+    /**
+     * @return OrderInterface   // FIXME needs refactoring of Sales package
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param OrderInterface $order // FIXME needs refactoring of Sales package
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
     }
 
 }

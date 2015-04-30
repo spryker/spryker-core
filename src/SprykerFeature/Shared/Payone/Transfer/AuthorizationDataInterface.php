@@ -3,7 +3,7 @@
 namespace SprykerFeature\Shared\Payone\Transfer;
 
 
-interface AuthorizationDataInterface extends TransactionInterface
+interface AuthorizationDataInterface
 {
 
     /**
@@ -35,5 +35,15 @@ interface AuthorizationDataInterface extends TransactionInterface
      * @param $amount
      */
     public function setAmount($amount);
+
+    /**
+     * @return OrderInterface   // FIXME needs refactoring of Sales package
+     */
+    public function getOrder();
+
+    /**
+     * @param OrderInterface $order // FIXME needs refactoring of Sales package
+     */
+    public function setOrder($order);
 
 }

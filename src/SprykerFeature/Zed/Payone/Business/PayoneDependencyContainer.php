@@ -44,6 +44,18 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
+     * @return TransactionStatusManager
+     */
+    public function createTransactionStatusManager()
+    {
+        return $this->getFactory()
+            ->createTransactionStatusManager(
+                $this->getLocator(),
+                $this->createQueryContainer()
+            );
+    }
+
+    /**
      * @return PayoneFacade
      */
     public function createPayoneFacade()

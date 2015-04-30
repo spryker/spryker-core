@@ -3,7 +3,7 @@
 namespace SprykerFeature\Shared\Payone\Transfer;
 
 
-class Refund extends Transaction implements RefundDataInterface
+class Refund implements RefundDataInterface
 {
 
     /**

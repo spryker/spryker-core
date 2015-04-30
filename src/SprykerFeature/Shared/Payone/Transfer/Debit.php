@@ -3,7 +3,7 @@
 namespace SprykerFeature\Shared\Payone\Transfer;
 
 
-class Debit extends Transaction implements DebitDataInterface
+class Debit implements DebitDataInterface
 {
 
     /**
