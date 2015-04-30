@@ -65,7 +65,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
      */
     protected function getOrderWithFixtureData()
     {
-        $order = $this->getLocator()->sales()->transferOrder();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
         $order->fillWithFixtureData();
 
         return $order;
@@ -76,7 +76,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
      */
     protected function getItemWithFixtureData()
     {
-        $item = $this->getLocator()->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->fillWithFixtureData();
 
         return $item;
@@ -87,7 +87,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
      */
     protected function getTotals()
     {
-        return $this->getLocator()->calculation()->transferTotals();
+        return new \Generated\Shared\Transfer\CalculationTotalsTransfer();
     }
 
     /**

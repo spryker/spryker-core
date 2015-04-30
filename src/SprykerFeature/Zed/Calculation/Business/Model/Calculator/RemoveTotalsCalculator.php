@@ -13,6 +13,6 @@ class RemoveTotalsCalculator extends AbstractCalculator implements
      */
     public function recalculate(CalculableContainerInterface $calculableContainer)
     {
-        $calculableContainer->setTotals($this->locator->calculation()->transferTotals());
+        $calculableContainer->setTotals(new \Generated\Shared\Transfer\CalculationTotalsTransfer());
     }
 }

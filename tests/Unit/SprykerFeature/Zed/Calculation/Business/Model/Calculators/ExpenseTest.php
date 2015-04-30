@@ -103,7 +103,7 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPriceDiscount()
     {
-        return $this->getLocator()->calculation()->transferDiscount();
+        return new \Generated\Shared\Transfer\CalculationDiscountTransfer();
     }
 
     /**
@@ -111,7 +111,7 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
      */
     protected function getOrderWithFixtureData()
     {
-        $order = $this->getLocator()->sales()->transferOrder();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
         $order->fillWithFixtureData();
 
         return $order;
@@ -122,7 +122,7 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
      */
     protected function getItemWithFixtureData()
     {
-        $item = $this->getLocator()->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->fillWithFixtureData();
 
         return $item;
@@ -133,7 +133,7 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
      */
     protected function getExpenseWithFixtureData()
     {
-        $expense = $this->getLocator()->calculation()->transferExpense();
+        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
         $expense->fillWithFixtureData();
 
         return $expense;

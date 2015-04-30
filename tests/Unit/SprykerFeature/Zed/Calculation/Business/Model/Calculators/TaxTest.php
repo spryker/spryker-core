@@ -127,7 +127,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     protected function getOrderWithFixtureData()
     {
         /* @var Order $order */
-        $order = $this->getLocator()->sales()->transferOrder();
+        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
         $order->fillWithFixtureData();
 
         return $order;
@@ -138,7 +138,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
      */
     protected function getItemWithFixtureData()
     {
-        $item = $this->getLocator()->sales()->transferOrderItem();
+        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
         $item->fillWithFixtureData();
 
         return $item;
@@ -149,7 +149,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
      */
     protected function getExpenseWithFixtureData()
     {
-        $expense = $this->getLocator()->calculation()->transferExpense();
+        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
         $expense->fillWithFixtureData();
 
         return $expense;
@@ -160,7 +160,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPriceTotals()
     {
-        return $this->getLocator()->calculation()->transferTotals();
+        return new \Generated\Shared\Transfer\CalculationTotalsTransfer();
     }
 
     /**

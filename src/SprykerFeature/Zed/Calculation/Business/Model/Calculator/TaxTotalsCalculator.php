@@ -115,7 +115,7 @@ class TaxTotalsCalculator extends AbstractCalculator implements TotalsCalculator
      */
     protected function createTaxTransfer(array $groupedPrices)
     {
-        $tax = $this->locator->calculation()->transferTax();
+        $tax = new \Generated\Shared\Transfer\CalculationTaxTransfer();
         $totalTax = 0;
         foreach ($groupedPrices as $group) {
             $taxItem = $this->createTaxItem($group['amount'], $group['percentage']);
@@ -138,7 +138,7 @@ class TaxTotalsCalculator extends AbstractCalculator implements TotalsCalculator
     {
         $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($amount, $percentage);
 
-        $taxItem = $this->locator->calculation()->transferTaxItem();
+        $taxItem = new \Generated\Shared\Transfer\CalculationTaxItemTransfer();
         $taxItem->setPercentage($percentage);
         $taxItem->setAmount($taxAmount);
 

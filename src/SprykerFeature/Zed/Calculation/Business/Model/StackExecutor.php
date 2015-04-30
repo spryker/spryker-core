@@ -60,7 +60,7 @@ class StackExecutor
         CalculableContainerInterface $calculableContainer,
         CalculableItemCollectionInterface $calculableItems = null
     ) {
-        $totalsTransfer = $this->getLocator()->calculation()->transferTotals();
+        $totalsTransfer = new \Generated\Shared\Transfer\CalculationTotalsTransfer();
         $calculableItems = $calculableItems ? $calculableItems : $calculableContainer->getItems();
         foreach ($calculatorStack as $calculator) {
             if ($calculator instanceof TotalsCalculatorPluginInterface) {

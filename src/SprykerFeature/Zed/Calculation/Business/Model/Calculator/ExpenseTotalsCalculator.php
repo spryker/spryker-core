@@ -92,7 +92,7 @@ class ExpenseTotalsCalculator extends AbstractCalculator implements
     protected function transformExpenseToExpenseTotalItemInArray($expense, &$arrayOfExpenseTotalItems)
     {
         if (!isset($arrayOfExpenseTotalItems[$expense->getType()])) {
-            $item = $this->locator->calculation()->transferExpenseTotalItem();
+            $item = new \Generated\Shared\Transfer\CalculationExpenseTotalItemTransfer();
             $item->setName($expense->getName());
             $item->setType($expense->getType());
         } else {
@@ -114,7 +114,7 @@ class ExpenseTotalsCalculator extends AbstractCalculator implements
         CalculableContainerInterface $calculableContainer,
         CalculableItemCollectionInterface $calculableItems
     ) {
-        $expenseTotalTransfer = $this->locator->calculation()->transferExpenseTotals();
+        $expenseTotalTransfer = new \Generated\Shared\Transfer\CalculationExpenseTotalsTransfer();
         $expenseTotalTransfer->setTotalOrderAmount($this->calculateExpenseTotal($calculableContainer));
         $expenseTotalTransfer->setTotalItemAmount($this->calculateItemExpenseTotal($calculableItems));
 
