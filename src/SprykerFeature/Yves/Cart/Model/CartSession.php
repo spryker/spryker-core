@@ -104,7 +104,7 @@ class CartSession implements CartSessionInterface
     {
         if (!self::$cartOrder) {
             // TODO this must be removed
-            $salesOrderTransfer = $this->locator->sales()->transferOrder();
+            $salesOrderTransfer = new \Generated\Shared\Transfer\SalesOrderTransfer();
             self::$cartOrder = $this->session->get(self::SESSION_CART_ORDER_KEY, $salesOrderTransfer);
         }
     }

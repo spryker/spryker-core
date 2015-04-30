@@ -29,7 +29,7 @@ class CartItemCreator
      */
     public function createCartItem($sku, $quantity = 1, $uniqueIdentifier = null, array $productOptions = [])
     {
-        $newCartItem = $this->locator->cart()->transferCartItem();
+        $newCartItem = new \Generated\Shared\Transfer\CartCartItemTransfer();
         $newCartItem->setSku($sku);
         $newCartItem->setUniqueIdentifier($uniqueIdentifier);
         $newCartItem->setOptions($productOptions);

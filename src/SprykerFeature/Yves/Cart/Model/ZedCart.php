@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Yves\Cart\Model;
 
+use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Sales\Transfer\Order;
 use SprykerFeature\Shared\Sales\Transfer\OrderItem;
@@ -16,10 +17,6 @@ use SprykerFeature\Shared\ZedRequest\Client\AbstractZedClient;
 use SprykerFeature\Yves\Cart\CartStorage\CartStorageInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 
-/**
- * Class ZedCart
- * @package SprykerFeature\Yves\Cart\Model
- */
 class ZedCart implements CartInterface
 {
     /**
@@ -43,7 +40,7 @@ class ZedCart implements CartInterface
     protected $itemGrouper;
 
     /**
-     * @var LocatorLocatorInterface
+     * @var LocatorLocatorInterface|AutoCompletion
      */
     protected $locator;
 
@@ -55,7 +52,7 @@ class ZedCart implements CartInterface
     /**
      * @param CartSession $cartSession
      * @param AbstractItemGrouper $itemGrouper
-     * @param LocatorLocatorInterface $locator
+     * @param LocatorLocatorInterface|AutoCompletion $locator
      * @param CartStorageInterface $cartStorage
      * @param CartCountInterface $cartCount
      */
@@ -120,7 +117,7 @@ class ZedCart implements CartInterface
      */
     public function addItem(CartItem $cartItem)
     {
-        $cartItemCollection  = $this->locator->cart()->transferCartItemCollection();
+        $cartItemCollection  = new \Generated\Shared\Transfer\CartCartItemTransfer();
         $cartItemCollection->add($cartItem);
 
         return $this->addItems($cartItemCollection);
@@ -135,7 +132,7 @@ class ZedCart implements CartInterface
         CartItem $cartItem,
         $reason = DeleteReasonConstant::DELETE_REASON_ACTIVELY_REMOVED_BY_USER
     ) {
-        $cartItemCollection  = $this->locator->cart()->transferCartItemCollection();
+        $cartItemCollection  = new \Generated\Shared\Transfer\CartCartItemTransfer();
         $cartItemCollection->add($cartItem);
 
         return $this->removeItems($cartItemCollection, $reason);
@@ -147,7 +144,7 @@ class ZedCart implements CartInterface
      */
     public function changeQuantityOfItem(CartItem $cartItem)
     {
-        $cartItemCollection  = $this->locator->cart()->transferCartItemCollection();
+        $cartItemCollection  = new \Generated\Shared\Transfer\CartCartItemTransfer();
         $cartItemCollection->add($cartItem);
 
         return $this->changeQuantityOfItems($cartItemCollection);
@@ -206,7 +203,7 @@ class ZedCart implements CartInterface
     public function clear($reason = DeleteReasonConstant::DELETE_REASON_ORDER_PLACEMENT)
     {
         $transferCartChange = $this->createCartChange();
-        $transferCartChange->setOrder($this->locator->sales()->transferOrder());
+        $transferCartChange->setOrder(new \Generated\Shared\Transfer\SalesOrderTransfer());
         $transferCartChange->setDeleteReason($reason);
         $order = $order = $this->zedClient->call('cart/sdk/clear-cart-storage', $transferCartChange);
         $this->setOrder($order);
@@ -222,13 +219,14 @@ class ZedCart implements CartInterface
     public function createCartChange($cartItemCollection = null)
     {
         if ($cartItemCollection === null || is_array($cartItemCollection)) {
-            $cartItemCollection = $this->locator->cart()->transferCartItemCollection($cartItemCollection);
+            $cartItemCollection = new \Generated\Shared\Transfer\CartCartItemTransfer();
+            $cartItemCollection->fromArray($cartItemCollection);
         } elseif (!$cartItemCollection instanceof CartItemCollection) {
             throw new \InvalidArgumentException('addItems() expects array or CartItemCollection');
         }
 
-        $transferCartChange = $this->locator->cart()->transferCartChange()
-            ->setOrder($this->getOrder());
+        $transferCartChange = new \Generated\Shared\Transfer\CartCartChangeTransfer();
+        $transferCartChange->setOrder($this->getOrder());
 
         if ($this->cartStorage) {
             $transferCartChange->setCartHash($this->cartStorage->getCartHash());
