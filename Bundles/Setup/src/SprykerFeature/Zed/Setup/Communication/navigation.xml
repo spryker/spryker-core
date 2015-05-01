@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <system>
+        <pages>
+            <setup-index>
+                <id>setup-index</id>
+                <label>Setup</label>
+                <title>Setup</title>
+                <bundle>setup</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>0</visible>
+                <pages>
+                    <settings>
+                        <label>Settings</label>
+                        <title>Settings</title>
+                        <bundle>setup</bundle>
+                        <controller>settings</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </settings>
+                </pages>
+            </setup-index>
+            <cronjob-index>
+                <label>Cronjobs</label>
+                <title>Cronjobs</title>
+                <bundle>setup</bundle>
+                <controller>index</controller>
+                <action>show-cronjobs</action>
+            </cronjob-index>
+        </pages>
+    </system>
+</config>
