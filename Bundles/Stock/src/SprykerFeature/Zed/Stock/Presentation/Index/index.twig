@@ -1,0 +1,43 @@
+{% extends '@Application/layout.twig' %}
+
+
+{% block body_class %}spy-page{% endblock %}
+
+
+{% block title_content %}Stock{% endblock %}
+
+
+{% block content %}
+    <div
+        spy-app="spyFormat, spyGrid, spyLayout, spyForm"
+        ng-strict-di
+        ng-controller="ComController"
+    >
+
+        <div spy-form-update="read()" scope="stock-grid" channel="stock"></div>
+
+        <spy-listen on="stock-product-update-click" scope="stock-product-form" do="openLayer(); read($argument);" channel="stock-product"></spy-listen>
+
+        <div spy-form-update="read()" scope="stock-product-grid" channel="stock-product"></div>
+        <div spy-form-update="closeLayer()" scope="stock-product-form" channel="stock-product"></div>
+        <div spy-form-abort="closeLayer()" scope="stock-product-form" channel="stock-product"></div>
+
+        <section class="spy-layout n4 f2">
+            <div>
+
+                {% include '@Stock/Form/stock-form.twig' %}
+
+                {% include '@Stock/Grid/stock-grid.twig' %}
+
+            </div>
+
+            <div>
+
+                {% include '@Stock/Grid/stock-product-grid.twig' %}
+
+                {% include '@Stock/Form/stock-product-form.twig' %}
+
+            </div>
+        </section>
+    </div>
+{% endblock %}

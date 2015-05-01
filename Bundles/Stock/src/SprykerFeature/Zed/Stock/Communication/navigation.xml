@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <label>Product</label>
+        <title>Product</title>
+        <pages>
+            <stock>
+                <label>Stock</label>
+                <title>Stock</title>
+                <bundle>stock</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <order>1</order>
+                <shortcut>s</shortcut>
+            </stock>
+        </pages>
+    </product>
+</config>
