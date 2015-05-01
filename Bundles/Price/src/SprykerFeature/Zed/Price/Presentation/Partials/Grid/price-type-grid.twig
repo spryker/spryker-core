@@ -1,0 +1,25 @@
+<section
+    class="spy-grid"
+    ng-controller="GridController"
+    src="/price/price-grid/pricetype"
+    name="price_type_grid"
+>
+    <h3>Available Price Types</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th spy-grid-head="columns['name']" label="Name"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="row in rows" ng-click="context.entity = { id_price_type : row['id_price_type'] }">
+                <td>{[{ row['name'] }]}</td>
+            </tr>
+            <tr ng-if="!rows.length">
+                <td colspan="1">No results found</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
