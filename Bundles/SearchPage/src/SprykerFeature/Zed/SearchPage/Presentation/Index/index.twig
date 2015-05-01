@@ -1,0 +1,28 @@
+{% extends '@Application/layout.twig' %}
+
+
+{% block body_class %}spy-page{% endblock %}
+
+
+{% block content %}
+    <section
+            spy-app="spyLayout,spyFormat,spyGrid,spyForm,spyFormAction"
+            ng-controller="ComController"
+            >
+
+        <div spy-form-update="read()" scope="page-element-grid" channel="page-element"></div>
+
+        <div class="spy-layout n3 f2">
+
+            <div>
+                {% include '@SearchPage/Form/create-page-element-form.twig' %}
+            </div>
+
+            <div>
+                {% include '@SearchPage/Grid/page-element-grid.twig' %}
+            </div>
+
+        </div>
+
+    </section>
+{% endblock %}

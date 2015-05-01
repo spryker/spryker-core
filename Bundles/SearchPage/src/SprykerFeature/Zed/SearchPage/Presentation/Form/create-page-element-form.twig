@@ -1,0 +1,18 @@
+<spy-form
+        class="spy-layout sparse"
+        src="/search-page/form/create-page-element"
+        name="page-attribute-create-form"
+        channel="page-element"
+        >
+    <h3>Add Page Attribute</h3>
+
+    <div class="spy-layout">
+        <div spy-input-text="field.element_key" options="{ label : 'Element Key' }"></div>
+        <div spy-input-switch="field.is_element_active" options="{ label : 'Is active' }"></div>
+        <div spy-input-select="field.fk_search_document_attribute" options="{ label : 'Document Attribute' }"></div>
+        <div spy-input-select="field.fk_search_page_element_template" options="{ label : 'Template' }"></div>
+    </div>
+
+    <button class="button default" ng-disabled="query" ng-click="update()">Create</button>
+
+</spy-form>
