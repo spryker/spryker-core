@@ -2,19 +2,16 @@
 
 namespace SprykerFeature\Zed\ProductSearchAvailabilityConnector\Communication\Plugin;
 
+use Propel\Runtime\ActiveQuery\Join;
 use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
 use SprykerFeature\Zed\Stock\Persistence\Propel\Map\SpyStockProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
-/**
- * Class ProductAvailabilityQueryExpanderPlugin
- *
- * @package SprykerFeature\Zed\StockFrontendExporterConnector\Communication\Plugin
- */
 class ProductAvailabilityQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
@@ -33,6 +30,23 @@ class ProductAvailabilityQueryExpanderPlugin extends AbstractPlugin implements Q
      */
     public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
     {
+        $expandableQuery
+            ->addJoinObject(
+                new Join(
+                    SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                    SpyProductTableMap::COL_FK_ABSTRACT_PRODUCT,
+                    Criteria::LEFT_JOIN
+                ),
+                'concreteProductJoin'
+            );
+
+        $expandableQuery->addJoinCondition(
+            'concreteProductJoin',
+            SpyProductTableMap::COL_IS_ACTIVE,
+            true,
+            Criteria::EQUAL
+        );
+
         $expandableQuery->addJoin(
             SpyProductTableMap::COL_ID_PRODUCT,
             SpyStockProductTableMap::COL_FK_PRODUCT,
