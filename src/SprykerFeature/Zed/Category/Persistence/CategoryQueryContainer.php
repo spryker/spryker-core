@@ -462,7 +462,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
             ->addJoinObject(
                 (new Join(
                     $leftAlias . '.id_category_node',
-                    SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE_ID,
+                    SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
                     Criteria::LEFT_JOIN
                 ))->setRightTableAlias('category_urls')
             );
@@ -525,7 +525,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
         $expandableQuery->addJoinObject(
             (new Join(
                 $relationTableAlias . '.id_category_node',
-                SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE_ID,
+                SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
                 Criteria::LEFT_JOIN
             ))->setRightTableAlias($relationTableAlias . 'Urls')
         );
