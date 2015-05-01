@@ -1,0 +1,20 @@
+<spy-layer>
+    <spy-form
+        class="spy-layout sparse"
+        src="/glossary/form/translation"
+        name="key_edit"
+        channel="glossary"
+    >
+        <h3>Edit translation</h3>
+
+        <div spy-input-select="field.fk_glossary_key" options="{ label : 'Key', reload : true }"></div>
+        <div spy-input-select="field.fk_locale" options="{ label : 'Locale', reload : true }"></div>
+        <div spy-input-select="field.is_active" options="{ label : 'Active' }"></div>
+        <div spy-input-area="field.value" options="{ label : 'Localization', optional : 'optional' }"></div>
+
+        <div class="spy-layout buttons">
+            <button class="button accept" ng-disabled="query" ng-click="update()">Update</button>
+            <button class="button cancel" ng-disabled="query" ng-click="abort()">Cancel</button>
+        </div>
+    </spy-form>
+</spy-layer>

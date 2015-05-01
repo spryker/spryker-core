@@ -1,0 +1,34 @@
+<div
+    class="spy-grid interactive"
+    ng-controller="GridController"
+    src="/glossary/grid/translation"
+    name="grid"
+    channel="glossary"
+>
+    <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th spy-grid-head="columns['glossary_key']" label="Glossary Key"></th>
+                <th spy-grid-head="columns['locale']" label="Locale"></th>
+                <th spy-grid-head="columns['translation']" label="Localized"></th>
+                <th spy-grid-head="columns['translation_is_active']" label="Active"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="row in rows" ng-click="$emitAllChannels('glossary_edit', row)">
+                <td>{[{ row['glossary_key'] }]}</td>
+                <td>{[{ row['locale'] }]}</td>
+                <td>{[{ row['translation'] }]}</td>
+                <td><spy-format-boolean content="row['translation_is_active']"></spy-format-boolean></td>
+            </tr>
+            <tr ng-if="!rows.length">
+                <td colspan="4">No results found</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
+</div>
