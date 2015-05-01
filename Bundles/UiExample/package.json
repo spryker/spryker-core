@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "name": "spryker_uiexample",
+  "version": "1.0.0",
+  "description": "This package provides the frondend resources for the uiexample bundle.",
+
+  "author": {
+    "name": "Project A Ventures",
+    "email": "info@spryker.com",
+    "url": "http://www.project-a.com/"
+  },
+
+  "scripts" : {
+    "spy-install" : "npm install"
+  },
+
+  "dependencies" : {
+    "highlight.js" : "~8.5"
+  },
+
+  "devDependencies": {}
+}
