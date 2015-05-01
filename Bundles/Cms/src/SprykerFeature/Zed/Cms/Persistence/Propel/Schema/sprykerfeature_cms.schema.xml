@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          defaultIdMethod="native"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          namespace="SprykerFeature\Zed\Cms\Persistence\Propel"
+          package="vendor.spryker.cms.src.SprykerFeature.Zed.Cms.Persistence.Propel">
+
+    <table name="spy_cms_template" phpName="SpyCmsTemplate">
+        <column name="id_cms_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="template_name" type="VARCHAR" size="255" required="true" />
+        <column name="template_path" type="VARCHAR" size="255" required="true" />
+        <unique>
+            <unique-column name="template_path"/>
+        </unique>
+        <index>
+            <index-column name="template_path"/>
+        </index>
+    </table>
+
+    <table name="spy_cms_page" phpName="SpyCmsPage">
+        <column name="id_cms_page" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_template" type="INTEGER" required="true"/>
+        <column name="validFrom" type="TIMESTAMP" required="false" />
+        <column name="validTo" type="TIMESTAMP" required="false" />
+        <column name="is_active" type="BOOLEAN" required="true" default="true" />
+        <foreign-key foreignTable="spy_cms_template" phpName="CmsTemplate" onDelete="CASCADE">
+            <reference foreign="id_cms_template" local="fk_template"/>
+        </foreign-key>
+    </table>
+
+    <table name="spy_cms_glossary_key_mapping" phpName="SpyCmsGlossaryKeyMapping">
+        <column name="id_cms_glossary_key_mapping" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_page" type="INTEGER" required="true" />
+        <column name="fk_glossary_key" type="INTEGER" required="true"/>
+        <column name="placeholder" type="VARCHAR" required="true"/>
+        <foreign-key foreignTable="spy_cms_page" phpName="CmsPage" onDelete="CASCADE">
+            <reference foreign="id_cms_page" local="fk_page"/>
+        </foreign-key>
+        <foreign-key foreignTable="spy_glossary_key" phpName="GlossaryKey" onDelete="CASCADE">
+            <reference foreign="id_glossary_key" local="fk_glossary_key"/>
+        </foreign-key>
+        <unique>
+            <unique-column name="fk_page"/>
+            <unique-column name="placeholder"/>
+        </unique>
+        <index>
+            <index-column name="fk_page"/>
+            <index-column name="placeholder"/>
+        </index>
+    </table>
+
+    <!--<table name="spy_url" phpName="SpyUrl">
+        <column name="fk_resource_cmspage_id" type="INTEGER"/>
+
+        <foreign-key foreignTable="spy_cms_page" phpName="CmsPage" onDelete="CASCADE">
+            <reference foreign="id_cms_page" local="fk_cmspage_id"/>
+        </foreign-key>
+    </table> -->
+
+</database>

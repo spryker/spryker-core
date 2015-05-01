@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="CmsCmsTemplate">
+        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
+        <property name="idCmsTemplate" type="int" default="null" />
+        <property name="templateName" type="string" default="null" />
+        <property name="templatePath" type="string" default="null" />
+    </transfer>
+    <transfer name="CmsPage">
+        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
+        <property name="idCmsPage" type="int" default="null" />
+        <property name="fkTemplate" type="int" default="null" />
+        <property name="validFrom" type="string" default="null" />
+        <property name="validTo" type="string" default="null" />
+        <property name="isActive" type="string" default="null" />
+    </transfer>
+    <transfer name="CmsPageKeyMapping">
+        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
+        <property name="idCmsGlossaryKeyMapping" type="int" default="null" />
+        <property name="fkPage" type="int" default="null" />
+        <property name="fkGlossaryKey" type="int" default="null" />
+        <property name="placeholder" type="string" default="null" />
+    </transfer>
+
+</transfers>
+
