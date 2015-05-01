@@ -1,0 +1,20 @@
+{
+  "name": "spryker/console",
+  "autoload": {
+    "psr-0": {
+      "SprykerFeature": "src/",
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/",
+      "YvesUnit": "tests/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+  },
+  "bin": [
+    "bin/console"
+  ]
+}
