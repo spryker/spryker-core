@@ -1,0 +1,11 @@
+%layout-container-default {
+	margin-bottom:$_yGutter;
+
+	&>*:first-child {
+		margin-top:0;
+	}
+
+	&>*:last-child {
+		margin-bottom:0;
+	}
+}

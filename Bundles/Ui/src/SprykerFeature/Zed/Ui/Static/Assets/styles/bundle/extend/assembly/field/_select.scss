@@ -1,0 +1,46 @@
+%field-input-select-assembly {
+	div.select {
+		@extend %field-select;
+
+		&.invalid {
+			@extend %field-select-invalid;
+		}
+
+		&:hover,
+		&:focus {
+			@extend %field-select-hover;
+		}
+
+		span {
+			@extend %field-select-input;
+		}
+
+		ul {
+			@extend %field-select-list;
+		}
+
+		li {
+			@extend %field-select-item;
+
+			&.select {
+				@extend %field-select-item-hover;
+			}
+		}
+
+		&.open {
+			@extend %field-select-open;
+
+			span {
+				@extend %field-select-open-input;
+			}
+
+			ul {
+				@extend %field-select-list-hover;
+			}
+		}
+	}
+
+	span.select {
+		@extend %field-select-disabled;
+	}
+}

@@ -1,0 +1,6 @@
+%field-textselect-input {
+	@extend %reset-marginborderpadding;
+	@extend %reset-input;
+
+	@include wh(block, border-box, 100%);
+}

@@ -1,0 +1,18 @@
+%field-input-integer-assembly {
+	input {
+		@extend %field-text;
+
+		&:hover,
+		&:focus {
+			@extend %field-text-hover;
+		}
+
+		&:disabled {
+			@extend %field-text-disabled;
+		}
+
+		&.invalid {
+			@extend %field-text-invalid;
+		}
+	}
+}

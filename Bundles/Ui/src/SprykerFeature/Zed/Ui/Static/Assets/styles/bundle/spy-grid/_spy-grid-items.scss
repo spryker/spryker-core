@@ -1,0 +1,12 @@
+[spy-grid-items] {
+	@extend %control-default;
+
+	label {
+		cursor:pointer;
+	}
+
+	input {
+		@extend %reset-input;
+		@extend %control-input-pull;
+	}
+}
