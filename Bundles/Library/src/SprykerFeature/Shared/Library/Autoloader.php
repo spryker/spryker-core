@@ -9,6 +9,11 @@ class Autoloader
      */
     private static $allowedNamespaces = [
         'SprykerFeature',
+        'SprykerEngine',
+        'Functional',
+        'Acceptance',
+        'Unit',
+        'YvesUnit',
         'Generated'
     ];
 
@@ -68,16 +73,41 @@ class Autoloader
      */
     private function getResourceRelativePath($resourceName)
     {
-        $resourcePath = '';
+        //manual namespacing
+        $resourcePath = '%dir%\\' . str_replace('_', '\\', $resourceName);
 
-        if (($lastNamespacePosition = strrpos($resourceName, '\\')) !== false) {
-            // Namespaced resource name
-            $resourceNamespace = substr($resourceName, 0, $lastNamespacePosition);
-            $resourceName = substr($resourceName, $lastNamespacePosition + 1);
-            $resourcePath = str_replace('\\', DIRECTORY_SEPARATOR, $resourceNamespace) . DIRECTORY_SEPARATOR;
-        }
+        $testDirs = ['Functional', 'Unit', 'Acceptance'];
+        $testDirSearch = array_map(function($value) {
+            return '%dir%\\' . $value;
+        }, $testDirs);
 
-        return $resourcePath . str_replace('_', DIRECTORY_SEPARATOR, $resourceName) . '.php';
+        $testDirReplace = array_map(function($value) {
+            return 'tests\\' . $value;
+        }, $testDirs);
+
+        $resourcePath = str_replace($testDirSearch, $testDirReplace, $resourcePath);
+        $resourcePath = str_replace('%dir%', 'src\\%remove%', $resourcePath);
+
+        $resourceParts = explode('\\', $resourcePath);
+        $bundle = $resourceParts[4];
+
+        $resourcePath = str_replace(DIRECTORY_SEPARATOR . '%remove%', '', implode(DIRECTORY_SEPARATOR, $resourceParts));
+
+        //'SprykerFeature\Shared\Library\Filter';
+        //'Bundles/Library/src/SprykerFeature/Shared/Library/Filter'
+
+        //'Functional\SprykerFeature\Shared\Library\Filter
+        //'Bundles/Library/tests/Functional/SprykerFeature/Shared/Library/Filter'
+
+        //\%dir%\Functional \SprykerFeature\Shared\Library\Filter
+        //\tests\Functional \SprykerFeature\Shared\Library\Filter
+
+        //\%dir%\SprykerFeature\Shared\Library\Filter
+        //\src\%remove%\SprykerFeature\Shared\Library\Filter
+
+        $relativeResourcePath = implode(DIRECTORY_SEPARATOR, ['Bundles', $bundle, $resourcePath]);
+
+        return $relativeResourcePath . '.php';
     }
 
     /**
@@ -88,11 +118,9 @@ class Autoloader
      */
     private function getResourceAbsolutePath($relativePath)
     {
-        $absolutePath = $this->rootDirectory . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . $relativePath;
-        if (file_exists($absolutePath)) {
-            return $absolutePath;
-        }
-        return null;
+        $absolutePath = $this->rootDirectory . DIRECTORY_SEPARATOR . $relativePath;
+
+        return $absolutePath;
     }
 
     /**
@@ -110,20 +138,15 @@ class Autoloader
         if ($this->isLoadingAllowed($resourceName)) {
             $this->checkApplication($resourceName);
 
-            // Classes in Core Namespace like "SprykerFeature" are loaded through composer
-            foreach (self::$allowedNamespaces as $ns) {
-                if (strpos($resourceName, $ns) === 0 && $ns !== 'Generated') {
-                    return false;
-                }
-            }
-
             $relativePath = $this->getResourceRelativePath($resourceName);
             $absolutePath = $this->getResourceAbsolutePath($relativePath);
-            if ($absolutePath) {
+
+            if (file_exists($absolutePath)) {
                 require_once $absolutePath;
                 return true;
             }
         }
+
         return false;
     }
 

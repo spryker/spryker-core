@@ -138,6 +138,9 @@
   "config": {
     "use-include-path": true
   },
+  "autoload": {
+    "files": ["Autoload/autoload.php"]
+  },
   "bin": [
     "Bundles/Console/bin/console"
   ]

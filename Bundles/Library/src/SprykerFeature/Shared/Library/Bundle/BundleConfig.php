@@ -96,8 +96,8 @@ class BundleConfig
         if (count(glob(APPLICATION_SOURCE_DIR . '*/Zed/*/Persistence/Propel/Schema/'))) {
             $dirs[] = APPLICATION_SOURCE_DIR . '*/Zed/*/Persistence/Propel/Schema/';
         }
-        if (count(glob(APPLICATION_VENDOR_DIR . '*/*/src/*/Zed/*/Persistence/Propel/Schema/'))) {
-            $dirs[] = APPLICATION_VENDOR_DIR . '*/*/src/*/Zed/*/Persistence/Propel/Schema/';
+        if (count(glob(APPLICATION_VENDOR_DIR . 'spryker/spryker/Bundles/*/src/*/Zed/*/Persistence/Propel/Schema/'))) {
+            $dirs[] = APPLICATION_VENDOR_DIR . 'spryker/spryker/Bundles/*/src/*/Zed/*/Persistence/Propel/Schema/';
         }
 
         $files = $finder->files()->in($dirs)->name('*_' . $filteredBundleName . '.schema.xml');
