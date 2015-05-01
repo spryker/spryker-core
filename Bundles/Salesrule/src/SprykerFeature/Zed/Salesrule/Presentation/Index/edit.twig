@@ -1,0 +1,47 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+<script type="text/javascript" src="{{ staticPath('Salesrule/scripts/conditions.js') }}"></script>
+
+<div class="row">
+    <div class="col-md-4">
+        {% set widget = widget('/salesrule/salesrule-form', {'id-sales-rule': idSalesRule}) %}
+        {{ panel('Discount Configuration'|trans, widget) }}
+    </div>
+
+    {% if idSalesRule %}
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ 'Condition Configuration'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{ 'Add Condition'|trans }}<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        {% if availableConditions %}
+                            {% for condition in availableConditions %}
+                                <li>
+                                    <a data-ajax-update="#sales-rule-condition-form" href="{{ condition.ajaxUrl }}&add-condition=1">{{ condition.linkName }}</a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-11" id="sales-rule-condition-form"></div>
+                    <div class="col-md-1" id="help"></div>
+                </div>
+                {% if showConditionGrid %}
+                    {% set widget = widget('/salesrule/condition-grid', {'id-sales-rule': idSalesRule}) %}
+                    {{ panel('Conditions for this Discount'|trans, widget, {'noWrap': true}) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

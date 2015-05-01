@@ -1,0 +1,53 @@
+<br/>
+<div class="row">
+    <div class="col-md-6">
+        {{ panel('Create just one code', codeForm) }}
+    </div>
+    <div class="col-md-6">
+        {{ panel('Create multiple codes at once', codeBulkForm) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {% set navigation = '<button type="button" id="download-codes" class="btn btn-success icon-plus navbar-btn"> Download all codes</button>' %}
+        {{ navBar('', navigation) }}
+        {{ panel('Available codes', grid, {'noWrap': true}) }}
+    </div>
+</div>
+<hr/>
+
+<script>
+    $('#download-codes').click(function(e){
+        e.preventDefault();
+        window.location.href = '/salesrule/code-ajax/download?sales-rule-codepool={{ idCodePool }}';
+    });
+
+    $('form[data-code-form]').submit(function(ev) {
+        ev.preventDefault();
+        var $target = $(ev.target);
+        $.ajax({
+            url: ev.target.action,
+            method: ev.target.method,
+            data: $target.serialize()
+        }).success(function(data) {
+            $('#manage-codes').html(data);
+        }).fail(function(status) {
+            console.log(status);
+        });
+    });
+
+    $('form[data-code-bulk-form]').submit(function(ev) {
+        ev.preventDefault();
+        var $target = $(ev.target);
+        $.ajax({
+            url: ev.target.action,
+            method: ev.target.method,
+            data: $target.serialize()
+        }).success(function(data) {
+            $('#manage-codes').html(data);
+        }).fail(function(status) {
+            console.log(status);
+        });
+    });
+</script>

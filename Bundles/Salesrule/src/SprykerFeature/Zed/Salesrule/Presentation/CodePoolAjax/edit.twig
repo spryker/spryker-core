@@ -1,0 +1,58 @@
+{% block content %}
+
+{% if addContext %}
+    {% set jumpToAddCodes = '' %}
+{% else %}
+    {% set jumpToAddCodes = '/add-codes/1' %}
+{% endif %}
+
+<h1>{{ idCodePool }}</h1>
+<script>
+    $('form[data-ajax-code-pool-form]').submit(function(ev) {
+        ev.preventDefault();
+        var $target = $(ev.target);
+        {% if idSalesRule == false %}
+            var idSalesRule = document.location.pathname.split('id-sales-rule=')[1].split('=')[0];
+        {% else %}
+            var idSalesRule = {{ idSalesRule }};
+        {% endif %}
+
+        $.ajax({
+            url: ev.target.action,
+            method: ev.target.method,
+            data: $target.serialize()
+        }).success(function(data) {
+            var jdata = null;
+            try {
+                jdata = $.parseJSON(data);
+            } catch(e) {
+                // todo
+            }
+
+            if(jdata) {
+                var grid = $("#condition-grid").data("kendoGrid");
+                grid.dataSource.read();
+                grid.refresh();
+
+                var idCodePool = jdata.idcodepool;
+                var url = '/salesrule/condition-ajax/index?condition-form-name=ConditionVoucherCodeInPool&id-sales-rule=' + idSalesRule + '&add-condition={{ addContext ~ jumpToAddCodes }}&id-code-pool=' + idCodePool;
+                $.ajax({
+                    url: url,
+                    method: 'GET'
+                }).success(function(data){
+                        $('#sales-rule-condition-form').html(data);
+                }).fail(function(status) {
+                    console.log(status);
+                });
+
+            } else {
+                // todo
+            }
+
+        }).fail(function(status) {
+            console.log(status);
+        });
+    });
+</script>
+{{ form|raw }}
+{% endblock %}

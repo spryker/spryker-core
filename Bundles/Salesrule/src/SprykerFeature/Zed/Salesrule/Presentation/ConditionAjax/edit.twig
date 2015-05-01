@@ -1,0 +1,24 @@
+{% block content %}
+
+<script>
+    $("#number" ).on('change focus', function() {
+        if ($("#number").val() == null) {
+            return;
+        }
+        $.ajax({
+            url: '/salesrule/code-pool-ajax/info?id-sales-rule={{ idSalesRule }}&id-code-pool=' + $("#number").val(),
+            method: 'GET'
+        }).success(function(data) {
+             $('#help').html(data);
+        }).fail(function(status) {
+             console.log(status);
+        });
+    });
+
+    $('#number').focus();
+</script>
+    {% if form is defined %}
+        {{ form|raw }}
+    {% endif %}
+
+{% endblock %}
