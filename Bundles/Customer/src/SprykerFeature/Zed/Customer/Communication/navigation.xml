@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <customer>
+        <bundle>customer</bundle>
+        <controller>profile</controller>
+        <action>index</action>
+    </customer>
+</config>
