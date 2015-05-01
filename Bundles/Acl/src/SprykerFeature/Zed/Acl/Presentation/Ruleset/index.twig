@@ -1,0 +1,17 @@
+{% extends '@Application/layout.twig' %}
+
+
+{% block body_class %}spy-page{% endblock %}
+
+
+{% block content %}
+
+<section spy-app="spyFormat, spyGrid, spyForm, spyLayout">
+
+    {% include '@Acl/Group/rules.twig' %}
+    {% include '@Acl/Rulset/form.twig' %}
+    {% include '@Acl/Group/users.twig' %}
+
+</section>
+
+{% endblock %}
