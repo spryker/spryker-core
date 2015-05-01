@@ -29,7 +29,7 @@ class CmsExporterQueryContainer extends AbstractQueryContainer implements CmsExp
 
         $expandableQuery->addJoin(
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
-            SpyUrlTableMap::COL_FK_RESOURCE_PAGE_ID,
+            SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
             Criteria::LEFT_JOIN
         );
 
