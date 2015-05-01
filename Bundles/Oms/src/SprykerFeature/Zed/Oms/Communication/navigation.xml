@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <development>
+        <pages>
+            <statemachine-index>
+                <label>OMS</label>
+                <title>Order Management System</title>
+                <bundle>oms</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </statemachine-index>
+        </pages>
+    </development>
+</config>

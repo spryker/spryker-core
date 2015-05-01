@@ -1,0 +1,10 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+{% for process in processes %}
+    <h1>Processes</h1>
+    <a href="/oms/index/draw?process={{ process.name }}" target="_blank">{{ process.name }}</a>
+    <a style="font-size:10px;" href="/oms/index/draw-preview-version?process={{ process.name }}" target="_blank">[preview-version]</a>
+    <br >
+{% endfor %}
+{% endblock %}
