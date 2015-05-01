@@ -1,0 +1,23 @@
+<header class="spy-page-header">
+    {% block body_header_home %}
+        <nav class="menu">
+            <button type="button"></button>
+        </nav>
+    {% endblock %}
+
+    {% block body_header_breadcrumb %}
+        <nav class="breadcrumb">
+            <ul>
+                {%- for location in breadcrumbs -%}
+                    <li><a href="{{ location.uri }}">{{ location.label }}</a></li>
+                {%- endfor -%}
+            </ul>
+        </nav>
+    {% endblock %}
+
+    {% block body_header_widgets %}
+        <section class="widgets">
+            {{ include('@Application/Partials/header-widgets.twig') }}
+        </section>
+    {% endblock %}
+</header>

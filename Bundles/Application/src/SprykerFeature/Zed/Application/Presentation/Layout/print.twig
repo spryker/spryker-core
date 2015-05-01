@@ -1,0 +1,41 @@
+{% block html %}
+    <html class="print" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+{% endblock %}
+
+{% block head %}
+    <head>
+        {% block metaAttributes %}
+            <meta charset="utf-8">
+        {% endblock %}
+
+        <title>
+            {% block title %}
+                {% if title is defined %}
+                    {{ title }}
+                {% else %}
+                    Zed Application
+                {% endif %}
+            {% endblock %}
+        </title>
+
+        {% block styles %}
+        {% endblock %}
+
+        {% block scripts %}
+            {{ parent() }}
+            <link href="/bundles/Application/styles/print.css" media="all" rel="stylesheet" type="text/css" />
+        {% endblock %}
+    </head>
+{% endblock %}
+
+<body>
+    {% block body %}
+        <main id="main">
+            <h1>{{ block(title) }}</h1>
+
+            {% block content %}
+            {% endblock %}
+
+        </main>
+    {% endblock %}
+</body>

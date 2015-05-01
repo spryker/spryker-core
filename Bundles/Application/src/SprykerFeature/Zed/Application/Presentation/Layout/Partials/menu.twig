@@ -1,0 +1,54 @@
+{%- macro leaf(node) -%}
+    {%- if node is defined %}
+        {%- if menu_highlight is defined -%}
+            {%- if menu_highlight == node.uri -%}
+                <li class="item active">
+            {%- else -%}
+                <li class="item">
+            {%- endif -%}
+        {%- else-%}
+        <li class="item{{ node.is_active is defined and node.is_active ? " active" : "" }}">
+        {%- endif -%}
+            <a
+                href="{{ node.uri }}"
+                {% if node.shortcut is defined %}data-hotkey="{{ node.shortcut }}"{% endif %}
+            >{{ node.label }}</a>
+        </li>
+    {% endif -%}
+{%- endmacro -%}
+
+{%- macro branch(node) -%}
+    {%- import _self as menu -%}
+
+    {%- if node is defined %}
+        <li class="group{{ node.is_active is defined and node.is_active ? " active" : "" }}">
+            <span>{{ node.label }}</span>
+
+            <ul>
+                {{ menu.tree(node.children) }}
+            </ul>
+        </li>
+    {% endif -%}
+{%- endmacro -%}
+
+{%- macro tree(root) -%}
+    {%- import _self as menu -%}
+
+    {%- for child in root -%}
+        {%- if child.children is defined and child.children is not empty -%}
+            {{ menu.branch(child) }}
+        {%- else -%}
+            {{ menu.leaf(child) }}
+        {%- endif -%}
+    {%- endfor -%}
+{%- endmacro -%}
+
+
+{%- import _self as menu -%}
+
+
+<nav class="spy-page-nav">
+    <ul tabindex="0">
+        {{ menu.tree(navigation.menu) }}
+    </ul>
+</nav>
