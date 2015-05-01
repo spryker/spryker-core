@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="Alfa">
+        <interface>Spryker\Demo\FirstInterface</interface>
+        <interface>Spryker\Demo\SecondInterface</interface>
+        <property name="cartItems" type="CartItem[]" />
+        <property name="properties" type="[]" />
+        <property name="published" type="boolean" default="true" />
+        <property name="user_id" type="integer" />
+    </transfer>
+
+    <transfer name="Alfa">
+        <interface>Spryker\Demo\ThirdInterface</interface>
+        <property name="customer" type="Customer" />
+    </transfer>
+
+</transfers>

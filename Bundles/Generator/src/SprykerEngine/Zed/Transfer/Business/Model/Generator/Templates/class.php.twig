@@ -1,0 +1,32 @@
+{% import 'macros.php.twig' as macro %}
+<?php
+
+namespace {{ namespace }};
+
+use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+{% for use in useExternal %}
+use {{ use }};
+{% endfor %}
+
+/**
+ * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
+ * !!! DO NOT CHANGE ANYTHING IN THIS FILE
+ */
+{% if interfacesToImplement %}
+class {{ className }} extends AbstractTransfer{{ "\n" }}{# implements {{ interfacesToImplement }}#}
+{% else %}
+class {{ className }} extends AbstractTransfer
+{% endif %}
+{
+{# write properties #}
+{% for property in properties %}
+
+{{ macro.write_property(property) }}
+{% endfor %}
+
+{# write setters and getters #}
+{% for accessor in settersAndGetters %}
+{{ macro.method_set(accessor) }}
+{{ macro.method_get(accessor) }}
+{%- endfor -%}
+}

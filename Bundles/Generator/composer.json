@@ -1,0 +1,19 @@
+{
+  "name": "spryker/generator",
+  "autoload": {
+    "psr-0": {
+      "SprykerFeature": "src/",
+      "SprykerEngine": "src/",
+      "Acceptance": "tests/",
+      "Function": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/",
+      "YvesUnit": "tests/"
+    }
+  },
+  "require": {
+    "twig/twig": "~1.0"
+  },
+  "require-dev": {
+  }
+}

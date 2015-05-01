@@ -1,0 +1,64 @@
+{% macro method_set(sag) -%}
+
+{% import _self as mcr %}
+{%- if sag.is_special == 1 -%}{{ mcr.method_set_header(sag, 'array') }}{% else %}{{ mcr.method_set_header(sag, sag.parameterDataType) }}{%- endif %}
+    {
+        $this->{{ sag.passedParameter }}{{ writeIf('[]', 'array', sag.parameterDataType) }} = ${{ sag.passedParameter }};
+        $this->addModifiedProperty('{{ sag.passedParameter }}');
+
+        return $this;
+    }
+{% if sag.is_special == 1 %}{# create addMethod(ClassType $methodParameter) #}
+    /**
+     * @var {{ writeIfNot(sag.parameterDataType~' ', '(^string)', sag.parameterDataType) }}${{ sag.passedParameter }}
+     */
+    public function add{{ sag.propertyName|singular|camelCase }}({{ writeIfNot(sag.parameterDataType~' ', '(^string)', sag.parameterDataType)|changeArrayType }}${{ sag.passedParameter }})
+    {
+        $this->{{ sag.passedParameter }}[] = ${{ sag.passedParameter }};
+        $this->addModifiedProperty('{{ sag.passedParameter }}');
+
+        return $this;
+    }
+
+    /**
+     * @var {{ writeIfNot(sag.parameterDataType~' ', '(^string)', sag.parameterDataType) }}${{ sag.passedParameter }}
+     */
+    public function remove{{ sag.propertyName|singular|camelCase }}()
+    {
+        $this->{{ sag.passedParameter }} = null;
+        $this->addModifiedProperty('{{ sag.passedParameter }}');
+
+        return $this;
+    }
+{% endif %}
+
+{%- endmacro %}
+
+
+{% macro method_set_header(sag, type) %}
+    /**
+     * @var {{ type }} ${{ sag.passedParameter }}
+     *
+     * @return $this
+     */
+    public function set{{ sag.propertyName|camelCase }}({{ writeIfNot(type~' ', '(string|int|null)', type) }}${{ sag.passedParameter }})
+{% endmacro %}
+
+
+{% macro method_get(sag) %}
+    /**
+     * @return {{ sag.parameterDataType }}
+     */
+    public function get{{ sag.propertyName|camelCase }}()
+    {
+        return $this->{{ sag.passedParameter }};
+    }
+{% endmacro %}
+
+
+{% macro write_property(prop) %}
+    /**
+     * @var {{ prop.parameterDataType }} ${{ prop.propertyName }}
+     */
+    private ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue|quotedIfNotIntegers }}{% endif %};
+{% endmacro %}

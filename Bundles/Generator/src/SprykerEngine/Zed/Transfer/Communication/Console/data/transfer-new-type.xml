@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="Alfa">
+        <implementInterface>Cart\CartChangeTransferInterface</implementInterface>
+        <property name="cartItems" type="CartItem[]" />
+    </transfer>
+
+
+    <transfer name="Alfa">
+        <property name="AlfaItem" type="AlfaItem" />
+        <property name="changedCartItems" type="CartItem[]" />
+        <property name="couponCode" type="string" default="AAA" />
+        <property name="order" type="Sales\Order"/>
+        <property name="userId" type="int"/>
+        <property name="cartHash" type="string"/>
+        <property name="isMerged" type="bool"/>
+    </transfer>
+    <transfer name="Alfa" implementsInterface="Demo\DemoTransferInterface">
+        <property name="customer" type="Demo\Customer" />
+    </transfer>
+    <transfer name="Alfa" implementsInterface="Demo\DemoTransferInterface">
+        <property name="hgghtg" type="Demo\Customer" />
+    </transfer>
+
+</transfers>
