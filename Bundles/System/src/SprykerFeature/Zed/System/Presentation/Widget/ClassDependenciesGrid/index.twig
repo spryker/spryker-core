@@ -1,0 +1,8 @@
+<input type="button" class="btn btn-primary" onclick="collapseAll()" value="{{ 'Collapse all groups'|trans }}"/>
+<script>
+    function collapseAll() {
+        $("#class-dependencies-grid").find(".k-icon.k-i-collapse").trigger("click");
+    }
+</script>
+
+{{ grid(grid) }}

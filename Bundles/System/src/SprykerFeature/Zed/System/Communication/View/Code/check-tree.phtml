@@ -1,0 +1,38 @@
+<?php
+$matches = array();
+$echo = '<table border="1">';
+$cAll = 0;
+foreach ($this->errors as $i => $paths) {
+    $echo .= '<tr>';
+    $echo .= '<td>' . $i . '</td>';
+    $echo .= '<td><table>';
+    $c = 0;
+    foreach ($paths as $j => $path) {
+        $cAll++;
+        $expl = explode('/', $path);
+
+        $problem = isset($expl[$i]) ? $expl[$i] : 'null';
+
+        if (!isset($matches[$problem])) {
+            $matches[$problem] = 0;
+        }
+        $matches[$problem]++;;
+        $expl[$i] = '<font color="red">' . $problem . '</font>';
+
+        $echoTmp = implode('/', $expl);
+        $c++;
+        if ($c < 20) {
+            $echo .= '<tr><td>' . $echoTmp . '</td><td>' . $this->paths[$i][$j] . '</td></tr>';
+        }
+
+    }
+    $echo .= '</table></td>';
+    $echo .= '</tr>';
+
+}
+$echo .= '</table>';
+$echo .= $cAll;
+
+echo $echo;
+
+?>
