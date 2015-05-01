@@ -1,0 +1,13 @@
+.lumberjack__error {
+  margin: 1em;
+  padding: 1em;
+
+  border: 1px solid $ci-red-dark;
+  border-left-width: 1em;
+
+  overflow: auto;
+
+  white-space: normal;
+  white-space: pre-wrap;
+  white-space: pre-line;
+}

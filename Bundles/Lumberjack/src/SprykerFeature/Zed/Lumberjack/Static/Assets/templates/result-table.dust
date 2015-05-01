@@ -1,0 +1,3 @@
+<table class="lumberjack__table"{?key} data-key="{key}"{/key}>
+  {json|LJtable|s}
+</table>
