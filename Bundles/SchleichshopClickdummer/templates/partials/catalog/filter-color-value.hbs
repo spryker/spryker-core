@@ -1,0 +1,9 @@
+<input type="radio"
+       id="filter-{{filter-name}}-{{value}}"
+       name="filter-{{filter-name}}"
+       data-color="{{hex}}"
+       value="{{value}}"
+       {{#if checked}} checked=true{{/if}}>
+<label for="filter-{{filter-name}}-{{value}}" class="js-color-name">{{hex}}
+  <span class="filter__quantity">{{quantity}}</span>
+</label>

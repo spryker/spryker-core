@@ -1,0 +1,11 @@
+<input type="radio"
+        id="filter-{{filter-name}}-{{value}}"
+        name="filter-{{filter-name}}"
+        value="{{value}}"
+        {{#if default}}
+          checked=true
+          class="js-filter-default-value"
+        {{/if}}>
+<label for="filter-{{filter-name}}-{{value}}">{{display-value}}
+  <span class="filter__quantity">{{quantity}}</span>
+</label>
