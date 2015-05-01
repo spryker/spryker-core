@@ -1,0 +1,15 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+<table class="table table-striped table-bordered table-xs status-history-table hidden">
+    <tbody>
+    {% for index, historyItem in statusHistory %}
+        <tr>
+            <td>{{ historyItem.status.name }}</td>
+            <td>{{ historyItem.createdAt }}</td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

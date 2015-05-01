@@ -1,0 +1,30 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+<h1>ActiveMQ Browser - State Machine Trigger Channel</h1>
+<br/><br/>
+<table style="width: 100%;font-size:11px;">
+    <thead>
+    <th>Idx</th>
+    <th>Restored Data</th>
+    <th>Raw Data</th>
+    </thead>
+    {% if queueDecorators is empty %}
+        <tr>
+            <td colspan="3">AcitveMQ state machine trigger channel is empty!</td>
+        </tr>
+    {% else %}
+        {% for decorator in queueDecorators %}
+            <tr>
+                <td>{{ idx }}</td>
+                <td>
+                    <div style="height:316px;overflow:auto;">
+                        <pre>{{ decorator.restoredData }}</pre>
+                </td>
+                <td>{{ decorator.rawData }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+
+</table>
+{% endblock %}

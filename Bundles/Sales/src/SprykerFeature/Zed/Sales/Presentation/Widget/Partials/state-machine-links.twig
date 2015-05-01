@@ -1,0 +1,12 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+<h4>{{ 'Views'|trans }}</h4>
+<ul class="list-unstyled inline">
+  <li>
+    <a href="/sales/order-details/activity-log?id_sales_order={{ order.primaryKey }}" target="_blank">
+      <i class="icon-list-ul"></i>
+      {{ 'View State Machine Activity Log'|trans }}
+    </a>
+</ul>
+{% endblock %}

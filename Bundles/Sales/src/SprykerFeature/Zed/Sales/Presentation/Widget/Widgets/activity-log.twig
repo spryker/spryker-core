@@ -1,0 +1,77 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+<style>
+    #activity-log-table {
+        font-size: 9px;
+    }
+
+    #activity-log-table td {
+        font-size: 9px;
+    }
+</style>
+<div style="float: right"><a href="/sales/order-details/index?id={{ order.idSalesOrder }}">go to order</a></div>
+<h4>OrderItem-State-Machine Activity Log</h4>
+{% if activityLog|length > 0 %}
+<table id="activity-log-table" class="table table-striped table-bordered table-condensed">
+    <thead>
+    <th>Time</th>
+    <th>ID OrderItem</th>
+    <th>SKU OrderItem</th>
+    <th>Event</th>
+    <th>Locked?</th>
+    <th>Error?</th>
+    <th>Source-State</th>
+    <th>Target-State</th>
+    <th>Executed Commands</th>
+    <th>Condition which was true</th>
+    <!--<th>Parameters</th>-->
+    <th>Triggered in</th>
+    <th>User</th>
+    <th>Host</th>
+
+    </thead>
+
+    {% for log in activityLog %}
+    {% set = ids groupedLogItems[groupBy[log.idOmsTransitionLog]]|sort %}
+    <tr>
+        <td>{{ log.createdAt }}</td>
+
+        <td>{{ ids|join(',') }}</td>
+        <td>{{ log.orderItem.sku }}</td>
+        <td>{{ log.event }}</td>
+        <td>{% if log.locked %}yes{% else %}no{% endif %}</td>
+        <td>{% if log.error %}yes{% else %}no{% endif %}
+            {% if log.error %}
+            {{ log.errorMessage }}
+            {% endif %}
+        </td>
+        <td>
+        <td>{{ log.sourceState }}</td>
+        <td>{{ log.targetState }}</td>
+        <td>
+            {% if log.commands|length > 0 %}
+                <ul>
+                    <li>{{ log.commands|join('</li><li>') }}</li>
+                </ul>
+            {% endif %}
+        </td>
+        <td>
+            {% if log.conditions|length > 0 %}
+                <ul>
+                    <li>{{ log.conditions|join('</li><li>') }}</li>
+                </ul>
+            {% endif %}
+        </td>
+        <td>{{ log.module ~ '|' ~ log.controller ~ '|' ~ log.action }}</td>
+        <td>{% if log.aclUser is defined %}{{ log.aclUser.username }}{% else %}no{% endif %}</td>
+        <td>{{ log.hostname }}</td>
+    </tr>
+
+
+    {% endfor %}
+</table>
+
+
+{% endif %}
+{% endblock %}

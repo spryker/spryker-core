@@ -1,0 +1,67 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+<style>
+    .address-history {
+        float: left;
+        width: 30%;
+        height: 500px;
+        margin-left: 50px;
+        overflow: auto;
+    }
+
+    .address-history-container {
+        display: block;
+        margin-top: 4px;
+        border-bottom: 1px dotted #adadad;
+    }
+
+    .mpp-address {
+        color: #4591ca;
+        padding: 8px 0 8px 28px;
+        font-size: 9px;
+        vertical-align: middle;
+        background-image: url(/images/layout/mpp.png);
+        background-repeat: no-repeat;
+    }
+
+    .address {
+        margin-bottom: 8px;
+    }
+
+    dl.zend_form dd {
+        width: 80%;
+    }
+
+    dl.zend_form dt {
+        width: 20%;
+    }
+</style>
+
+
+<br/><br/>
+
+<h1>Edit Order Shipping Address</h1>
+
+<br/><br/><br/>
+
+
+<fieldset class="address-history">
+    <label style="font-size:14px;font-weight:bold;margin-bottom:8px;">Address History</label>
+    {% if addressHistoryCollection %}
+        {% for address in addressHistoryCollection %}
+            <div class="address-history-container">
+                <div class="address">
+                    {{ address.firstName }}&nbsp;{{ address.lastName }}<br/>
+                    {{ address.address1 }}&nbsp;{{ address.address2 }}&nbsp;{{ address.address3 }}<br/>
+                    {{ address.zipCode }}&nbsp;{{ address.city }}<br/>
+                    Company: {{ address.company }}<br/>
+                    Phone: {{ address.phone }}<br/>
+                    Cellphone: {{ address.cellPhone }}<br/>
+                    Email: {{ address.email }}<br/>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</fieldset>
+{% endblock %}

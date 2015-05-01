@@ -1,0 +1,208 @@
+<ul class="list-group">
+    <li class="list-group-item">
+        <?= $this->partial('Partials/state-machine-order-trigger.phtml', array('order' => $this->order, 'orderEvents' => $this->orderEvents)); ?>
+
+    <li class="list-group-item">
+        <?php $criteria = new Criteria(); ?>
+        <?php $criteria->addDescendingOrderByColumn(\SprykerFeature\Zed\Oms\Persistence\Propel\Map\PacOmsOrderItemStatusHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATUS_HISTORY) ?>
+        <?php $itemCount = $this->items->count() ?>
+
+        <form action="/sales/order-details/fire-event-group/" method="GET" id="order_items_form">
+            <input type="hidden" name="order_id" value="<?= $this->order->getPrimaryKey() ?>"/>
+            <table id="order-items-table" class="table table-striped table-bordered table-s table-no-margin">
+                <thead>
+                    <tr>
+                        <th><?= __('Image') ?>
+                        <th><?= __('Variety') ?>
+                        <th><?= __('Product / Pricing') ?>
+                        <th><?= __('Process') ?>
+                        <th>
+                            <?php if (count($this->items) > 1): ?>
+                                <div class="clearfix">
+                                    <span class="pull-left">
+                                        <?= __('Status') ?>
+                                    </span>
+                                    <a href="#" class="pull-right" data-trigger-on-click="<?= htmlentities(json_encode([ 'target' => '#order-items-table .status-history-table', 'class' => 'hidden' ])); ?>">
+                                        <i class="icon-time"></i>
+                                        <?= __('Histories') ?>
+                                    </a>
+                                </div>
+                            <?php else: ?>
+                                <?= __('Status') ?>
+                            <?php endif; ?>
+                        <th><?= __('Last Status Change') ?>
+                        <th><?= __('Item Trigger') ?>
+                        <?php if($itemCount > 1) : ?>
+                            <th><?= __('Group') ?>
+                        <?php endif; ?>
+                <tbody>
+
+                <?php $lastBundleId = null; ?>
+
+                <?php /* @var $item SprykerFeature\Zed\Sales\Persistence\Propel\PacSalesOrderItem */ ?>
+                <?php foreach ($this->items as $index => $item) : ?>
+                    <?php if($item->isBundle()) : ?>
+                        <?php $bundle = $item->getSalesOrderItemBundle(); ?>
+                        <?php if($bundle) : ?>
+                            <?php $currentBundleId = $bundle->getPrimaryKey(); ?>
+                            <?php if($currentBundleId != null && $currentBundleId != $lastBundleId) : ?>
+                                <tr>
+                                    <td colspan="8">
+                                        <b>
+                                            <?= __('Bundle') ?> - <?= __('Type') ?>: <?= __($bundle->getBundleType()) ?>, <?= __('Sku') ?>: <?= $bundle->getSku() ?>
+                                        </b>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        <?php $lastBundleId = $currentBundleId; ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                    <?php $productModel = $this->products[$item->getSku()]['productModel'] ?>
+                    <tr id="order-items-table__item-<?= $index ?>">
+                        <td><?= $this->partial('Partials/product-image.phtml', array('product' => $productModel)) ?>
+                        <td><?= $item->getVariety() ?></td>
+                        <td class="table-container"><?= $this->partial('Partials/product-pricing.phtml', array('item' => $item, 'product' => $productModel, 'itemIndex' => $index)) ?>
+                        <td><?= $item->getProcess()->getName(); ?>
+                        <td>
+                            <p class="clearfix">
+                                <span class="current-status pull-left"><?= $item->getStatus()->getName(); ?></span>
+                                <a href="#" class="pull-right" data-trigger-on-click="<?= htmlentities(json_encode([ 'target' => '#order-items-table__item-' . $index . ' .status-history-table', 'class' => 'hidden' ])); ?>"><i class="icon-time"></i> <?= __('History') ?></a>
+                            </p>
+                            <?= $this->partial('Partials/status-history.phtml', array('statusHistory' => $item->getStatusHistories($criteria))) ?>
+                            <a href="/oms/index/draw-item/id/<?= $item->getPrimaryKey() ?>" target="_blank"><i class="icon-cogs"></i> <?= __('View State Machine') ?></a>
+                        <td><?= $item->getLastStatusChange(); ?>
+                        <td>
+                            <?php foreach ($this->itemEvents[$item->getPrimaryKey()] as $event) : ?>
+                                <a href="/sales/order-details/fire-event/id_sales_order_item/<?= $item->getPrimaryKey() ?>
+                                /event/<?= $event ?>" class="btn btn-default btn-xs action-statemachine">
+                                    <i class="icon-cogs"></i>
+                                    <?= $event; ?>
+                                </a>
+                            <?php endforeach; ?>
+
+                        <?php if($itemCount > 1) : ?>
+                            <td class="event-group" style="width:50px;">
+                                <?php $showGroupSelector = (!empty($this->itemEvents[$item->getPrimaryKey()])) ?>
+                                <?php if ($showGroupSelector) : ?>
+                                    <input id="<?= $item->getPrimaryKey() ?>" class="group-selector-item" data-selector-group="event" type="checkbox" name="item_ids[<?= $item->getPrimaryKey() ?>]"/>
+                                <?php endif; ?>
+                        <?php endif; ?>
+
+                <?php endforeach ?>
+                <?php if($itemCount > 1) : ?>
+                    <tr>
+                        <td colspan="8" class="event-group text-right">
+                            <?= __('Trigger event for selected group of items') ?>:
+                            <?php foreach ($this->orderEvents as $event) : ?>
+                                <input id="<?= $event ?>" name="event" type="submit" class="group-submit btn btn-default btn-xs action-statemachine" value="<?= $event ?>" style="display: none;"/>
+                            <?php endforeach; ?>
+
+
+                <?php endif; ?>
+            </table>
+        </form>
+</ul>
+
+<?php // TODO: SCRIPTS! ?>
+
+<script>
+
+    // $('#show-status-histories').on('click', function (e) {
+    //     e.preventDefault();
+    //     $.each($('.status-history'), function() {
+    //         $(this).toggle();
+    //     });
+    // });
+
+    // $('.item-history-toggle').on('click', function (e) {
+    //     e.preventDefault();
+    //     $(e.target).parent().find('div.status-history').toggle();
+    // });
+
+
+/*
+    $('.item-history-control').on('click', function (e) {
+        e.preventDefault();
+        $(e.target).parent().find('.status-history').toggle();
+    });
+*/
+    var eventsByItemStorage = new Array();
+    <?php
+    foreach($this->itemEvents as $itemId => $eventArray) {
+        echo 'eventsByItemStorage['.$itemId.'] = new Array();';
+        foreach($eventArray as $idx => $event) {
+            echo 'eventsByItemStorage['.$itemId.']['.$idx.        '] = "'.$event.        '";';
+        }
+    }
+    ?>
+
+    function arrayIntersect(arr1, arr2) {
+        var r = [], o = {}, l = arr2.length, i, v;
+        for (i = 0; i < l; i++) {
+            o[arr2[i]] = true;
+        }
+        l = arr1.length;
+        for (i = 0; i < l; i++) {
+            v = arr1[i];
+            if (v in o) {
+                r.push(v);
+            }
+        }
+        return r;
+    }
+
+    function getEventIntersection(itemIds) {
+        var intersectedEvents = new Array();
+        $.each(itemIds, function (index, itemId) {
+            var possibleItemEvents = eventsByItemStorage[itemId];
+            if (!index) {
+                intersectedEvents = possibleItemEvents;
+            } else {
+                intersectedEvents = arrayIntersect(intersectedEvents, possibleItemEvents);
+            }
+        });
+        return intersectedEvents;
+    }
+
+    function toggleEventButtons() {
+
+        var ids = getSelectedGroupSelectorIds();
+        var intersectedEvents = getEventIntersection(ids);
+
+        $(".group-submit").each(function (index, element) {
+            var submitEventName = $(element).attr("value");
+            if ($.inArray(submitEventName, intersectedEvents) == -1) {
+                $(element).hide();
+            } else {
+                $(element).show();
+            }
+        });
+    }
+
+    function getSelectedGroupSelectorIds() {
+        var ids = new Array();
+        $('.group-selector-item[data-selector-group="event"]:checked').each(function (index, element) {
+            ids[index] = $(element).attr('id');
+        });
+        return ids;
+    }
+
+    $('.group-selector').change(function () {
+        var selectorGroup = $(this).data('selectorGroup');
+        var items = $('.group-selector-item[data-selector-group="' + selectorGroup + '"]');
+        items.prop("checked", ($(this).prop("checked")));
+        items.change();
+    });
+
+    $('.group-selector-item').change(function () {
+        var selectorGroup = $(this).data('selectorGroup');
+        var items = $('.group-selector-item[data-selector-group="' + selectorGroup + '"]:not(:checked)');
+        $('.group-selector[data-selector-group="' + selectorGroup + '"]').prop('checked', items.size() == 0);
+    });
+
+    $('.group-selector-item[data-selector-group="event"]').change(function () {
+        toggleEventButtons();
+    });
+
+</script>

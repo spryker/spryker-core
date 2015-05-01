@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sales>
+        <pages>
+            <order-matrix>
+                <label>Order Matrix</label>
+                <title>Order Matrix</title>
+                <bundle>sales</bundle>
+                <controller>operations</controller>
+                <action>matrix</action>
+                <visible>1</visible>
+                <pages>
+                    <order-item>
+                        <label>Order Items</label>
+                        <title>Order Items</title>
+                        <bundle>sales</bundle>
+                        <controller>order</controller>
+                        <action>items</action>
+                        <visible>0</visible>
+                    </order-item>
+                </pages>
+            </order-matrix>
+        </pages>
+    </sales>
+</config>

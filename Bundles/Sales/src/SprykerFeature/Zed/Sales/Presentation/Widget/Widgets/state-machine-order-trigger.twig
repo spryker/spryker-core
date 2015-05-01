@@ -1,0 +1,5 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+{{ include('/Sales/Partials/state-machine-order-trigger.twig', {'order': order, 'orderEvents': orderEvents}) }}
+{% endblock %}

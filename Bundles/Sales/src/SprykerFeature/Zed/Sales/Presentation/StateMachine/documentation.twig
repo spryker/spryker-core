@@ -1,0 +1,9 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+<a href="/sales/state-machine?process={{ process }}">Process Detail</a>
+{{ form|raw }}
+<pre>
+{{ callback }}
+</pre>
+{% endblock %}

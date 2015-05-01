@@ -1,0 +1,28 @@
+<?php
+
+$address = $this->address;
+
+$name    = implode( ' ', array_filter( [
+        $address->getSalutation() ? __($address->getSalutation()) : '',
+        $address->getFirstName(),
+        $address->getLastName()
+    ] ) );
+
+$addressArray = [];
+
+$addressArray[] = $name;
+$addressArray[] = $address->getCompany();
+$addressArray[] = $address->getAddress1();
+$addressArray[] = $address->getAddress2();
+$addressArray[] = $address->getAddress3();
+$addressArray[] = $address->getPoBox();
+$addressArray[] = implode( ' ', array_filter( [ $address->getZipCode(), $address->getCity() ] ) );
+$addressArray[] = $address->getPhone();
+$addressArray[] = $address->getCellPhone();
+$addressArray[] = $address->getEmail();
+
+?>
+
+<div id="<?= $this->type ?>_address_box">
+    <address class="address-compact"><?= implode( '<br>', array_filter( $addressArray ) ); ?></address>
+</div>
