@@ -1,0 +1,85 @@
+<?php
+
+namespace Functional\SprykerFeature\Zed\Country;
+
+use Codeception\TestCase\Test;
+use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Kernel\Business\Factory;
+use Propel\Runtime\Propel;
+use Psr\Log\LoggerInterface;
+use SprykerFeature\Zed\Country\Business\CountryFacade;
+use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
+use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
+use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
+
+/**
+ * @group Country
+ */
+class CountryFacadeTest extends Test
+{
+    /**
+     * @var Locator|AutoCompletion
+     */
+    protected $locator;
+
+    /**
+     * @var CountryFacade
+     */
+    protected $countryFacade;
+
+    /**
+     * @var CountryQueryContainerInterface
+     */
+    protected $countryQueryContainer;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->locator = Locator::getInstance();
+        $this->countryFacade = new CountryFacade(new Factory('Country'), $this->locator);
+        $this->countryQueryContainer = new CountryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Country'), $this->locator);
+    }
+
+
+    protected function eraseCountries()
+    {
+        Propel::getConnection()->query('SET foreign_key_checks = 0;');
+        SpyCountryQuery::create()->deleteAll();
+        Propel::getConnection()->query('SET foreign_key_checks = 1;');
+    }
+
+    /**
+     *
+     * @return MessengerInterface
+     */
+    protected function getMockLogger()
+    {
+        return $this->getMock('SprykerEngine\\Shared\\Kernel\\Messenger\\MessengerInterface');
+    }
+
+    public function testInitdbInstallation()
+    {
+        $this->eraseCountries();
+        $countryQuery = $this->countryQueryContainer->queryCountries();
+
+        $countryCountBefore = $countryQuery->count();
+
+        $this->countryFacade->install($this->getMockLogger());
+
+        $countryCountAfter = $countryQuery->count();
+
+        $this->assertTrue($countryCountAfter > $countryCountBefore);
+    }
+
+    public function testGetIdByIso2CodeReturnsRightValue()
+    {
+        $country = $this->locator->country()->entitySpyCountry();
+        $country->setIso2Code('qx');
+
+        $country->save();
+
+        $this->assertEquals($country->getIdCountry(), $this->countryFacade->getIdCountryByIso2Code('qx'));
+    }
+}
