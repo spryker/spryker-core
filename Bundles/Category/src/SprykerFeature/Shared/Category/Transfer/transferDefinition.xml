@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="CategoryCategory">
+        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
+        <property name="idCategory" type="int" default="null" />
+        <property name="isActive" type="string" default="null" />
+        <property name="name" type="string" default="null" />
+        <property name="url" type="string" default="null" />
+    </transfer>
+    <transfer name="CategoryCategoryNode">
+        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
+        <property name="isRoot" type="string" default="null" />
+        <property name="idCategoryNode" type="int" default="null" />
+        <property name="fkCategory" type="int" default="null" />
+        <property name="fkParentCategoryNode" type="int" default="null" />
+    </transfer>
+
+</transfers>
+

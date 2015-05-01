@@ -1,0 +1,44 @@
+<div
+        class="spy-layout sparse"
+        ng-controller="GridController"
+        ng-strict-di
+        src="/category/grid/category"
+        name="category-grid"
+        ng-class="{ query : queryActive }"
+        channel="category"
+        >
+
+    <h3>Categories</h3>
+
+    <button class="button default" ng-click="$emitAllChannels('category-create-click', '')">Add Category</button>
+
+    <br/>
+    <br/>
+
+    <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+
+    <table class="spy-grid spy-interactive">
+
+        <thead>
+        <tr>
+            <th spy-grid-head="columns['id_category']" label="Category Id"></th>
+            <th spy-grid-head="columns['name']" label="Name"></th>
+            <th spy-grid-head="columns['category_is_active']" label="Active"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="row in rows" ng-click="$emitAllChannels('category-update-click', row)">
+            <td>{[{ row['id_category'] }]}</td>
+            <td>{[{ row['name'] }]}</td>
+            <td><spy-format-boolean content="row['category_is_active']"></spy-format-boolean></td>
+        </tr>
+        <tr ng-if="!rows.length">
+            <td colspan="4">No results found</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+
+</div>
