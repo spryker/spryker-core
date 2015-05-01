@@ -1,5 +1,5 @@
 {
-  "name": "spryker/spydernet",
+  "name": "spryker/spryker",
   "replace": {
     "spryker/acl": "self.version",
     "spryker/application": "self.version",
@@ -133,15 +133,12 @@
     "fzaninotto/faker": "1.4.*",
     "codeception/remote-debug": "*"
   },
-  "autoload": {
-    "psr-0": {
-      "": "src",
-      "PhpUnit": "tests"
-    }
-  },
   "minimum-stability": "stable",
   "prefer-stable": true,
   "config": {
     "use-include-path": true
-  }
+  },
+  "bin": [
+    "Bundles/Console/bin/console"
+  ]
 }
