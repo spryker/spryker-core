@@ -6,7 +6,7 @@
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\User\Persistence\Propel"
           namespaceAutoPackage="false"
-          package="vendor.spryker.user.src.SprykerFeature.Zed.User.Persistence.Propel">
+          package="vendor.spryker.spryker.Bundles.User.src.SprykerFeature.Zed.User.Persistence.Propel">
 
     <table name="spy_user_user" idMethod="native" phpName="SpyUserUser">
         <column name="id_user_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>

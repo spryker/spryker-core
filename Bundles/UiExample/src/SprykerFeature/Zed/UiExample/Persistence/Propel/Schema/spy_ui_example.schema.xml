@@ -5,7 +5,7 @@
           defaultPhpNamingMethod="underscore"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\UiExample\Persistence\Propel"
-          package="vendor.spryker.ui-example.src.SprykerFeature.Zed.UiExample.Persistence.Propel">>
+          package="vendor.spryker.spryker.Bundles.UiExample.src.SprykerFeature.Zed.UiExample.Persistence.Propel">>
 
     <table name="spy_ui_example" phpName="SpyUiExample">
         <column name="id_ui_example" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>

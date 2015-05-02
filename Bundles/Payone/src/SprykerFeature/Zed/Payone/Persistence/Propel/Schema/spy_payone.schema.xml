@@ -6,7 +6,7 @@
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           identifierQuoting="true"
           namespace="SprykerFeature\Zed\Payone\Persistence\Propel"
-          package="vendor.spryker.payone.src.SprykerFeature.Zed.Payone.Persistence.Propel">
+          package="vendor.spryker.spryker.Bundles.Payone.src.SprykerFeature.Zed.Payone.Persistence.Propel">
 
 
     <table name="spy_payment_payone" phpName="SpyPaymentPayone" identifierQuoting="true">

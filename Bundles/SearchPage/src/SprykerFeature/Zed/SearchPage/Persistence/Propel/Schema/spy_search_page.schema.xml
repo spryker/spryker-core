@@ -4,7 +4,7 @@
           defaultIdMethod="native"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\SearchPage\Persistence\Propel"
-          package="vendor.spryker.search-page.src.SprykerFeature.Zed.SearchPage.Persistence.Propel">
+          package="vendor.spryker.spryker.Bundles.SearchPage.src.SprykerFeature.Zed.SearchPage.Persistence.Propel">
 
     <table name="spy_search_page_element" phpName="SpySearchPageElement">
 

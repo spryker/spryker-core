@@ -6,7 +6,7 @@
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           identifierQuoting="true"
           namespace="SprykerFeature\Zed\Glossary\Persistence\Propel"
-          package="vendor.spryker.glossary.src.SprykerFeature.Zed.Glossary.Persistence.Propel">
+          package="vendor.spryker.spryker.Bundles.Glossary.src.SprykerFeature.Zed.Glossary.Persistence.Propel">
 
     <table name="spy_glossary_key" phpName="SpyGlossaryKey" identifierQuoting="true">
         <column name="id_glossary_key" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>

@@ -5,7 +5,7 @@
           defaultPhpNamingMethod="underscore"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerEngine\Zed\Locale\Persistence\Propel"
-          package="vendor.spryker.locale.src.SprykerEngine.Zed.Locale.Persistence.Propel">
+          package="vendor.spryker.spryker.Bundles.Locale.src.SprykerEngine.Zed.Locale.Persistence.Propel">
 
     <table name="spy_locale" idMethod="native" phpName="SpyLocale">
         <column name="id_locale" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>

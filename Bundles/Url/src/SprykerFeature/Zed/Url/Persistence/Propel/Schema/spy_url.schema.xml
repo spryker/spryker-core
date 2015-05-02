@@ -4,7 +4,7 @@
           defaultIdMethod="native"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\Url\Persistence\Propel"
-          package="vendor.spryker.url.src.SprykerFeature.Zed.Url.Persistence.Propel">
+          package="vendor.spryker.spryker.Bundles.Url.src.SprykerFeature.Zed.Url.Persistence.Propel">
 
     <table name="spy_url" phpName="SpyUrl">
         <column name="id_url" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />

@@ -4,7 +4,7 @@
           defaultIdMethod="native"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerEngine\Zed\Touch\Persistence\Propel"
-          package="vendor.spryker.touch.src.SprykerEngine.Zed.Touch.Persistence.Propel">
+          package="vendor.spryker.spryker.Bundles.Touch.src.SprykerEngine.Zed.Touch.Persistence.Propel">
 
     <table name="spy_touch" phpName="SpyTouch">
         <column name="id_touch" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>

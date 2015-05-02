@@ -2,7 +2,7 @@
 <database name="zed"
           namespace="SprykerFeature\Zed\Discount\Persistence\Propel"
           namespaceAutoPackage="false"
-          package="vendor.spryker.discount.src.SprykerFeature.Zed.Discount.Persistence.Propel"
+          package="vendor.spryker.spryker.Bundles.Discount.src.SprykerFeature.Zed.Discount.Persistence.Propel"
           defaultIdMethod="native"
           defaultPhpNamingMethod="underscore"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

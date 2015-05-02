@@ -5,7 +5,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\Stock\Persistence\Propel"
-          package="vendor.spryker.stock.src.SprykerFeature.Zed.Stock.Persistence.Propel">
+          package="vendor.spryker.spryker.Bundles.Stock.src.SprykerFeature.Zed.Stock.Persistence.Propel">
 
     <table name="spy_stock" phpName="SpyStock">
         <column name="id_stock" type="INTEGER" primaryKey="true" autoIncrement="true" />
