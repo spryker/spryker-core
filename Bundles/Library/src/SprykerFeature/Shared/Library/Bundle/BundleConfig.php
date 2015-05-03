@@ -173,7 +173,7 @@ class BundleConfig
     protected function getBasePath($namespace, $bundleName)
     {
         if ($namespace === self::VENDOR) {
-            $path = APPLICATION_VENDOR_DIR . '/*/*/src/*/Zed/' . $bundleName;
+            $path = APPLICATION_VENDOR_DIR . sprintf('/spryker/spryker/Bundles/%s/src/*/Zed/%s', $bundleName, $bundleName);
             $globPath = glob($path);
             if (count($globPath)) {
                 $path = $globPath[0];
