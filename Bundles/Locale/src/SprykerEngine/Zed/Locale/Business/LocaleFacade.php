@@ -6,9 +6,9 @@
 
 namespace SprykerEngine\Zed\Locale\Business;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Locale\Business\Exception\LocaleExistsException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 

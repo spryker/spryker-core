@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Constraint;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\Validator\Constraint;
 

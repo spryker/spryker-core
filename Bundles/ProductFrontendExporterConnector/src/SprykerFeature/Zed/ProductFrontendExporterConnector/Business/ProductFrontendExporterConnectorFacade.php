@@ -3,9 +3,9 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 
 /**
  * @method ProductFrontendExporterConnectorDependencyContainer getDependencyContainer()

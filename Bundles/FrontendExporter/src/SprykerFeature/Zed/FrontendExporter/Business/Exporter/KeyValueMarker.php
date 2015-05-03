@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Reader\ReaderInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\WriterInterface;

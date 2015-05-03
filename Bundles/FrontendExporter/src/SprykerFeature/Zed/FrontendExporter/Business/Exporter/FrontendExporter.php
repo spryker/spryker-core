@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\BatchResultException;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResult;
 use SprykerFeature\Zed\FrontendExporter\Persistence\FrontendExporterQueryContainer;

@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\ProductSearch\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 
 interface ProductSearchQueryExpanderInterface
 {

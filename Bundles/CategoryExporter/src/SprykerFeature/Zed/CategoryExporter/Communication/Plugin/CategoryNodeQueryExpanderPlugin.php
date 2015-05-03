@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Communication\Plugin;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerFeature\Shared\Category\CategoryResourceSettings;
 
 /**
  * @method CategoryExporterDependencyContainer getDependencyContainer()

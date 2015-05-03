@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Dependency\Facade;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 
 interface ProductCategoryToCategoryInterface
 {

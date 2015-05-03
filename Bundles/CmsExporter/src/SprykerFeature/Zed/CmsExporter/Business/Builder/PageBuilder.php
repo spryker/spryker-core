@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\CmsExporter\Business\Builder;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class PageBuilder implements PageBuilderInterface

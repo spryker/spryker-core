@@ -2,11 +2,8 @@
 
 namespace SprykerFeature\Zed\Category\Business\Model;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Shared\Category\Transfer\Category as CategoryTransfer;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttribute;
-use Propel\Runtime\Exception\PropelException;
 
 interface CategoryWriterInterface
 {

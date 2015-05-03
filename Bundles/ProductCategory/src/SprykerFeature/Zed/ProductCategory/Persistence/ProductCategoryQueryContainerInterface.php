@@ -1,9 +1,9 @@
 <?php
 namespace SprykerFeature\Zed\ProductCategory\Persistence;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 interface ProductCategoryQueryContainerInterface
 {

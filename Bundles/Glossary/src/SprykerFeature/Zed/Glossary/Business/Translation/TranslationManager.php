@@ -7,10 +7,10 @@
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Shared\Glossary\Transfer\Translation;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
@@ -20,8 +20,8 @@ use SprykerFeature\Zed\Glossary\Business\Key\KeyManagerInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation;
 
 class TranslationManager implements TranslationManagerInterface
 {

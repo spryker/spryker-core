@@ -3,12 +3,12 @@
 namespace SprykerFeature\Zed\Url\Business;
 
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Shared\Url\Transfer\Redirect;
 use SprykerFeature\Shared\Url\Transfer\Url;
-use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
+use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyRedirect;
 

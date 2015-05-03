@@ -2,8 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Renderer;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;

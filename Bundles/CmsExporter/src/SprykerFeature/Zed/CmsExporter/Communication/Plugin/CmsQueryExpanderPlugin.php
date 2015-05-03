@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\CmsExporter\Communication\Plugin;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\CmsExporter\Communication\CmsExporterDependencyContainer;
+use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 
 /**
  * @method CmsExporterDependencyContainer getDependencyContainer()

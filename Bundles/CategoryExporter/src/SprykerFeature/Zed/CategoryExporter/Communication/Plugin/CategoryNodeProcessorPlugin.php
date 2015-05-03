@@ -2,13 +2,12 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Communication\Plugin;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
-use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
+use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
+use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
+use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 
 /**
  * @method CategoryExporterDependencyContainer getDependencyContainer()

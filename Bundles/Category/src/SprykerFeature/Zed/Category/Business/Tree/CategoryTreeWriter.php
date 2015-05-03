@@ -2,13 +2,13 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\Propel;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Shared\Category\Transfer\CategoryNode;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use SprykerFeature\Zed\Category\Business\Model\CategoryWriterInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
-use Propel\Runtime\Propel;
 
 class CategoryTreeWriter
 {

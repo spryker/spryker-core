@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Manager;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Shared\Category\Transfer\CategoryNode;
 
 interface NodeUrlManagerInterface

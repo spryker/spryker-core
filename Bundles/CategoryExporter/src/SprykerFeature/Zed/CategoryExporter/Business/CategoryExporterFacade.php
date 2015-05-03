@@ -2,9 +2,8 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 
 /**
  * Class CategoryExporterFacade

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 
 interface CategoryTreeReaderInterface

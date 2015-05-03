@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Business;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method ProductSearchDependencyContainer getDependencyContainer()

@@ -3,8 +3,10 @@
 namespace SprykerFeature\Zed\Product\Business\Product;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerFeature\Shared\Url\Transfer\Url;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductAttributesExistException;
@@ -13,9 +15,6 @@ use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use SprykerFeature\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Propel\Runtime\Exception\PropelException;
-use Propel\Runtime\Propel;
-use SprykerFeature\Shared\Url\Transfer\Url;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 class ProductManager implements ProductManagerInterface

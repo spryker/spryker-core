@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Communication\Plugin;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Communication\ProductFrontendExporterPriceConnectorDependencyContainer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
+use SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Communication\ProductFrontendExporterPriceConnectorDependencyContainer;
 
 /**
  * @method ProductFrontendExporterPriceConnectorDependencyContainer getDependencyContainer()

@@ -3,11 +3,11 @@
 namespace SprykerFeature\Zed\CategoryExporter\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryExporterPersistence;
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\CategoryNodeQueryExpander;
 use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\NavigationQueryExpander;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
 
 /**
  * @method CategoryExporterPersistence getFactory()

@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Communication\Plugin;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\ProductSearch\Business\ProductSearchFacade;
 use SprykerFeature\Zed\ProductSearch\Communication\ProductSearchDependencyContainer;
 

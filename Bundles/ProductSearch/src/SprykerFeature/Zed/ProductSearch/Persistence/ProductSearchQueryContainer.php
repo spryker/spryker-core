@@ -2,7 +2,8 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Persistence;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedProductAttributesTableMap;
@@ -10,7 +11,6 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 use SprykerFeature\Zed\ProductSearch\Persistence\Propel\Map\SpyProductSearchAttributesOperationTableMap;
 use SprykerFeature\Zed\ProductSearch\Persistence\Propel\SpyProductSearchAttributesOperationQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 /**
  * @method ProductSearchDependencyContainer getDependencyContainer()

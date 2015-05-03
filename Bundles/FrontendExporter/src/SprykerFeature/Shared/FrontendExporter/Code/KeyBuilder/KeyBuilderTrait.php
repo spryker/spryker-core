@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\Store;
 
 trait KeyBuilderTrait

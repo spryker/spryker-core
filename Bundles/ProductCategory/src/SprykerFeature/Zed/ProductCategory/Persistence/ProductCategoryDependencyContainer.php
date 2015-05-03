@@ -3,10 +3,9 @@
 namespace SprykerFeature\Zed\ProductCategory\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryPersistence;
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
+use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\QueryExpander\ProductCategoryPathQueryExpander;
 
 /**

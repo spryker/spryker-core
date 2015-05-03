@@ -7,9 +7,9 @@
 namespace SprykerEngine\Zed\Locale\Business\Manager;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\LocaleExistsException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;

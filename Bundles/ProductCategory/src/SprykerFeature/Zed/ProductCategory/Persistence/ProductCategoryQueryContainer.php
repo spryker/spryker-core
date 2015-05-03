@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Persistence;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 /**
  * @method ProductCategoryDependencyContainer getDependencyContainer()

@@ -2,11 +2,9 @@
 
 namespace SprykerFeature\Zed\SearchPage\Communication\Plugin;
 
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerFeature\Zed\SearchPage\Communication\SearchPageDependencyContainer;
 
 /**

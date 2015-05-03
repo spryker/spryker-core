@@ -2,15 +2,15 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Persistence\QueryExpander;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\Map\SpyProductCategoryTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Exception\PropelException;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 
 class ProductCategoryPathQueryExpander
 {

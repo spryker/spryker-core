@@ -3,13 +3,13 @@
 namespace SprykerFeature\Zed\Category\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerFeature\Shared\Category\Transfer\Category as CategoryTransfer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttribute;
-use SprykerFeature\Shared\Category\Transfer\Category as CategoryTransfer;
-use Propel\Runtime\Exception\PropelException;
 
 class CategoryWriter implements CategoryWriterInterface
 {

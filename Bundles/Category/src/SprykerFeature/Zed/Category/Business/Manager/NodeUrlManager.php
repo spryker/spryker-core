@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Manager;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Shared\Category\Transfer\CategoryNode;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;

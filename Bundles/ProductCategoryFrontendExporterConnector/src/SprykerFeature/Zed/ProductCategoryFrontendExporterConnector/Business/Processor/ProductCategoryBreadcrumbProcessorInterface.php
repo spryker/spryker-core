@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business\Processor;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 
 interface ProductCategoryBreadcrumbProcessorInterface
 {

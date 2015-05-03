@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Dependency\Plugin;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 
 interface DataProcessorPluginInterface
 {

@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Business;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResult;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResult;
 
 /**
  * @method FrontendExporterDependencyContainer getDependencyContainer()

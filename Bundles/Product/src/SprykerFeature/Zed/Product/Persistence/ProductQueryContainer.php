@@ -2,8 +2,13 @@
 
 namespace SprykerFeature\Zed\Product\Persistence;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\Join;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedProductAttributesTableMap;
@@ -14,11 +19,6 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributesQ
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributesMetadataQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributeTypeQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\Join;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface

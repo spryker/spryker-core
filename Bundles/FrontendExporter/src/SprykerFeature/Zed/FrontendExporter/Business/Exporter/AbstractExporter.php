@@ -3,13 +3,13 @@
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
 use Criteria;
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\ProcessException;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\WriteException;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\FailedResultInterface;
+use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\ExportFailedDeciderPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Persistence\FrontendExporterQueryContainer;

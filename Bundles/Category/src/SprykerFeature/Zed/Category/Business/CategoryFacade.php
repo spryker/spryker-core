@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Category\Business;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\Category\Transfer\Category;
 use SprykerFeature\Shared\Category\Transfer\CategoryNode;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method CategoryDependencyContainer getDependencyContainer()

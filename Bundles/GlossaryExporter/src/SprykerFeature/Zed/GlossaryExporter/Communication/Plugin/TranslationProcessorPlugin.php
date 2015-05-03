@@ -2,13 +2,13 @@
 
 namespace SprykerFeature\Zed\GlossaryExporter\Communication\Plugin;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerFeature\Zed\GlossaryExporter\Communication\GlossaryExporterDependencyContainer;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
+use SprykerFeature\Zed\GlossaryExporter\Communication\GlossaryExporterDependencyContainer;
 
 /**
  * @method GlossaryExporterDependencyContainer getDependencyContainer()

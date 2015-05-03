@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Persistence;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method ProductFrontendExporterConnectorDependencyContainer getDependencyContainer()

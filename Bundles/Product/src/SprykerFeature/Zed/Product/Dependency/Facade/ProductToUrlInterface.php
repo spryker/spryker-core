@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Product\Dependency\Facade;
 
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Shared\Url\Transfer\Url;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 

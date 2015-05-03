@@ -2,14 +2,14 @@
 
 namespace SprykerFeature\Zed\Product\Business\Product;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerFeature\Shared\Url\Transfer\Url;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Shared\Url\Transfer\Url;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface ProductManagerInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerEngine\Shared\Dto;
+namespace SprykerEngine\Shared\Locale\Dto;
 
 class LocaleDto
 {

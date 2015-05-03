@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\CmsExporter\Business\Builder;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 
 interface PageBuilderInterface
 {

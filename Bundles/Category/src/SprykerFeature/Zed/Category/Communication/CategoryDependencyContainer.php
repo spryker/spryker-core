@@ -3,14 +3,14 @@
 namespace SprykerFeature\Zed\Category\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
-use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryForm;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
 use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 
 class CategoryDependencyContainer extends AbstractDependencyContainer

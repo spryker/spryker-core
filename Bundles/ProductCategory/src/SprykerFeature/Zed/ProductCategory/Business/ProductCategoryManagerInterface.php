@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
-use Propel\Runtime\Exception\PropelException;
 
 interface ProductCategoryManagerInterface
 {

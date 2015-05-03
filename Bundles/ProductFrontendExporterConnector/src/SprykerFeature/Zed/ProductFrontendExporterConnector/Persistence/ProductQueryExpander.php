@@ -2,13 +2,13 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Persistence;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
+use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
+use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
 
 class ProductQueryExpander implements ProductQueryExpanderInterface
 {

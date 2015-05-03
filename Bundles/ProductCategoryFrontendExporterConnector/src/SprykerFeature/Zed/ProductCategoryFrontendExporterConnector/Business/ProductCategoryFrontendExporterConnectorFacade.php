@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**

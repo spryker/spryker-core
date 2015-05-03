@@ -3,10 +3,9 @@
 namespace SprykerFeature\Zed\Category\Communication\Form;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;

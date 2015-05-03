@@ -2,8 +2,11 @@
 
 namespace SprykerFeature\Zed\Product\Business;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Shared\Url\Transfer\Url;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\AttributeExistsException;
@@ -12,11 +15,7 @@ use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductAttributesExist
 use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingAttributeTypeException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use SprykerFeature\Zed\Product\Business\Internal\Install;
 use SprykerFeature\Zed\Product\Business\Model\ProductBatchResult;
-use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerFeature\Shared\Url\Transfer\Url;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 /**

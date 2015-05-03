@@ -2,14 +2,14 @@
 
 namespace SprykerFeature\Zed\Product\Persistence;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedAbstractProductAttributesQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributesQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributesMetadataQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributeTypeQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface ProductQueryContainerInterface
 {

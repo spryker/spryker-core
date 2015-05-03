@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategorySearch\Business\Processor;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 
 class ProductCategorySearchProcessor implements ProductCategorySearchProcessorInterface
 {

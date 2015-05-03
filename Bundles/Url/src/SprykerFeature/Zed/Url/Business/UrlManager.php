@@ -3,10 +3,11 @@
 namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Dto\LocaleDto;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
+use SprykerFeature\Shared\Url\Transfer\Url;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 use SprykerFeature\Zed\Url\Dependency\UrlToLocaleInterface;
@@ -15,7 +16,6 @@ use SprykerFeature\Zed\Url\Persistence\Exception\MissingResourceException;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrl;
 use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
-use SprykerFeature\Shared\Url\Transfer\Url;
 
 class UrlManager implements UrlManagerInterface
 {

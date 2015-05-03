@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\SearchPage\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\Base\SpySearchDocumentAttributeQuery;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchDocumentAttributeTableMap;

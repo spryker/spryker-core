@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business\Processor;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Dependency\Facade\ProductCategoryFrontendExporterToCategoryExporterInterface;
 
 class ProductCategoryBreadcrumbProcessor implements ProductCategoryBreadcrumbProcessorInterface

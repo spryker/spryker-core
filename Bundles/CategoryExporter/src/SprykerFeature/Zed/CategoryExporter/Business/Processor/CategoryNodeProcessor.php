@@ -2,10 +2,9 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business\Processor;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\CategoryExporter\Business\Formatter\CategoryNodeFormatterInterface;
-use SprykerFeature\Shared\Category\CategoryResourceSettings;
 
 class CategoryNodeProcessor implements CategoryNodeProcessorInterface
 {

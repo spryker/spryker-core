@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Url\Dependency;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface UrlToLocaleInterface

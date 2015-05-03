@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Dto\LocaleDto;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Shared\Glossary\Transfer\Translation;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;

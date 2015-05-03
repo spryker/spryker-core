@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\Collection\ObjectCollection;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {

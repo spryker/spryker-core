@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Persistence;
 
-use SprykerEngine\Shared\Dto\LocaleDto;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 use SprykerFeature\Zed\ProductSearch\Persistence\Propel\SpyProductSearchAttributesOperationQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface ProductSearchQueryContainerInterface
 {
