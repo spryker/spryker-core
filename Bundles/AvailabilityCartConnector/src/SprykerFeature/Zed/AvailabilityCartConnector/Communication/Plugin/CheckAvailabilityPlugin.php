@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\AvailabilityCartConnector\Communication\Plugin;
 
 use SprykerFeature\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnectorDependencyContainer as DependencyContainer;
-use SprykerFeature\Zed\Cart\Dependency\Plugin\CheckAvailabilityPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckAvailabilityPluginInterface;
 
 /**
  * @method DependencyContainer getDependencyContainer()
