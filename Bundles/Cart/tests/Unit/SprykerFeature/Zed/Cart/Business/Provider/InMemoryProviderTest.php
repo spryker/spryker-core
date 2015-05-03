@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Cart2\Business\Provider;
+namespace Unit\SprykerFeature\Zed\Cart\Business\Provider;
 
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
