@@ -79,7 +79,7 @@ class Auth implements AuthInterface
 
         $token = $this->generateToken($user);
 
-        $this->registerAuthorizedUser($token, $user);
+        $users = $this->registerAuthorizedUser($token, $user);
 
         return true;
     }

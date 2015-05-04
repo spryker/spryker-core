@@ -20,7 +20,7 @@ class TransferArrayObject extends \ArrayObject implements TransferCollectionInte
      */
     public function add(AbstractTransfer $transfer)
     {
-        $this->storage->append($transfer);
+        $this->append($transfer);
     }
 
     /**

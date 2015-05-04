@@ -264,7 +264,7 @@ class User implements UserInterface
     public function hasCurrentUser()
     {
         try {
-            $this->getCurrentUser();
+            $test = $this->getCurrentUser();
             return true;
         } catch (UserNotFoundException $e) {
             return false;

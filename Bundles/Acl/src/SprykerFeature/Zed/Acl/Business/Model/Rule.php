@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
+use SprykerEngine\Zed\Transfer\Business\Model\TransferArrayObject;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Library\Copy;
 use Generated\Shared\Transfer\AclRoleTransfer;
@@ -172,8 +173,12 @@ class Rule implements RuleInterface
         $relationshipCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find();
         $results = $this->queryContainer->queryGroupRules($relationshipCollection)->find();
 
-        $collection = new AclRuleTransfer();
-        $collection = Copy::entityCollectionToTransferCollection($collection, $results, false);
+        $transfer = new AclRuleTransfer();
+        $collection = new TransferArrayObject();
+
+        foreach ($results as $result) {
+            $collection->add(Copy::entityToTransfer($transfer, $result));
+        }
 
         return $collection;
     }
