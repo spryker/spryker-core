@@ -84,7 +84,7 @@ class Autoloader
         //manual namespacing
         $resourcePath = '%dir%\\' . str_replace('_', '\\', $resourceName);
 
-        $testDirs = ['Functional', 'Unit', 'Acceptance'];
+        $testDirs = ['Functional', 'YvesUnit', 'Unit', 'Acceptance'];
         $testDirSearch = array_map(function($value) {
             return '%dir%\\' . $value;
         }, $testDirs);
