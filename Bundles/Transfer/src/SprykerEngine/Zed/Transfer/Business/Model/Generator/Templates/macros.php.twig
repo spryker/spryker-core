@@ -65,7 +65,7 @@
     /**
      * @var {{ prop.parameterDataType }} ${{ prop.propertyName }}
      */
-    private ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue|quotedIfNotIntegers }}{% endif %};
+    protected ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue|quotedIfNotIntegers }}{% endif %};
 {% endmacro %}
 
 
