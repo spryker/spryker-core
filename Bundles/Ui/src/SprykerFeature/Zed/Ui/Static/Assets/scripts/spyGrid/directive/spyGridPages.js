@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 /**
  * Grid pagination control
  * @ngdoc directive
@@ -19,6 +21,16 @@ require('Ui').ng
 				'label' : '=labels'
 			},
 
-			templateUrl : 'spyGrid/GridPages'
+			templateUrl : 'spyGrid/GridPages',
+
+			controller : ['$scope', function($scope) {
+				$scope.showItem = true;
+				$scope.showPage = true;
+
+				$scope.$watchCollection('model', function(now, was, scope) {
+					$scope.showItem = now.pages.max > 1 && now.rows.length > 15;
+					$scope.showPage = now.pages.max > 1;
+				});
+			}]
 		};
 	}]);

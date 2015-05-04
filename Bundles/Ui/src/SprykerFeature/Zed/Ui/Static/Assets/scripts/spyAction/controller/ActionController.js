@@ -5,6 +5,11 @@ var _event = require('../event/ActionEvent');
 
 
 
+/**
+ * Generic Serveraction Controller
+ * @ngdoc function
+ * @name ActionController
+ */
 _ng
 	.module('spyAction')
 	.controller('ActionController', [

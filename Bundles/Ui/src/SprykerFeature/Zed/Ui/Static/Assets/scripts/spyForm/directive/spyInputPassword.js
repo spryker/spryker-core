@@ -1,5 +1,15 @@
 'use strict';
 
+
+
+/**
+ * Password input field directive
+ * @ngdoc directive
+ * @name spyInputPassword
+ * @restrict A
+ * @param {expression} spy-input-password The field model
+ * @param {expression} options            The field options
+ */
 require('Ui').ng
 	.module('spyForm')
 	.directive('spyInputPassword', [function() {
