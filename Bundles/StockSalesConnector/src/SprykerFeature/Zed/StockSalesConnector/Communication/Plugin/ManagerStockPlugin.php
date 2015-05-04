@@ -36,10 +36,11 @@ class UpdateStockPlugin extends AbstractPlugin implements ManagerStockPluginInte
     }
 
     /**
-     * @param StockProduct $transferStockProduct
-     * @return SpyStockProduct
+     * @param StockStockProductTransfer $transferStockProduct
+     *
+     * @return int
      */
-    public function updateStockProduct(StockProduct $transferStockProduct)
+    public function updateStockProduct(StockStockProductTransfer $transferStockProduct)
     {
         return $this->getDependencyContainer()->getStockFacade()->updateStockProduct($transferStockProduct);
     }

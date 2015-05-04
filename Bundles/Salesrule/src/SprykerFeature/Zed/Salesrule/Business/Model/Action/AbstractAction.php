@@ -42,11 +42,11 @@ abstract class AbstractAction
     protected $usedCodes;
 
     /**
-     * @param Order $order
+     * @param SalesOrderTransfer $order
      * @param SpySalesrule $salesrule
      * @param array $usedCodes
      */
-    public function __construct(Order $order, SpySalesrule $salesrule, array $usedCodes = null)
+    public function __construct(SalesOrderTransfer $order, SpySalesrule $salesrule, array $usedCodes = null)
     {
         $this->order = $order;
         $this->items = $order->getItems();

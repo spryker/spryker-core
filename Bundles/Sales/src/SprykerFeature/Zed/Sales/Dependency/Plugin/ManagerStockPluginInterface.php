@@ -22,9 +22,9 @@ interface ManagerStockPluginInterface
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1);
 
     /**
-     * @param StockProduct $stockProduct
+     * @param StockStockProductTransfer $stockProduct
      *
      * @return SpyStockProduct
      */
-    public function updateStockProduct(StockProduct $stockProduct);
+    public function updateStockProduct(StockStockProductTransfer $stockProduct);
 }

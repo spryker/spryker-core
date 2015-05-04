@@ -54,7 +54,7 @@ class User implements UserInterface
      * @param string $username
      * @param string $password
      *
-     * @return TransferUser
+     * @return UserUserTransfer
      * @throws UsernameExistsException
      */
     public function addUser($firstName, $lastName, $username, $password)
@@ -96,12 +96,12 @@ class User implements UserInterface
     }
 
     /**
-     * @param TransferUser $data
+     * @param UserUserTransfer $data
      *
-     * @return TransferUser
+     * @return UserUserTransfer
      * @throws UserNotFoundException
      */
-    public function save(TransferUser $data)
+    public function save(UserUserTransfer $data)
     {
         if ($data->getIdUserUser() !== null && $this->getUserById($data->getIdUserUser()) === null) {
             throw new UserNotFoundException();
@@ -131,7 +131,7 @@ class User implements UserInterface
     /**
      * @param $idUser
      *
-     * @return TransferUser
+     * @return UserUserTransfer
      */
     public function removeUser($idUser)
     {
@@ -142,7 +142,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return UserCollection
+     * @return UserUserTransfer
      * @throws UserNotFoundException
      */
     public function getUsers()

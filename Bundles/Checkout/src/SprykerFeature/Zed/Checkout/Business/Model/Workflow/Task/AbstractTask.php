@@ -9,9 +9,10 @@ use SprykerFeature\Zed\Library\Workflow\Task;
 abstract class AbstractTask extends Task
 {
     /**
-     * @param Order   $transferOrder
+     * @param SalesOrderTransfer $transferOrder
      * @param Context $context
-     * @param array   $logContext
+     * @param array $logContext
+     * @return mixed
      */
-    abstract public function __invoke(Order $transferOrder, Context $context, array $logContext);
+    abstract public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext);
 }

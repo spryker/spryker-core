@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Cart\Dependency;
 
-use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\CartItemInterfaceTransfer;
+use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
+use SprykerFeature\Shared\Cart2\Transfer\ItemInterface;
 
 interface ItemExpanderPluginInterface
 {

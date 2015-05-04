@@ -37,41 +37,41 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
     }
 
     /**
-     * @param StockType $stockTypeTransfer
+     * @param StockStockTypeTransfer $stockTypeTransfer
      *
      * @return int
      */
-    public function createStockType(StockType $stockTypeTransfer)
+    public function createStockType(StockStockTypeTransfer $stockTypeTransfer)
     {
         return $this->getDependencyContainer()->getWriterModel()->createStockType($stockTypeTransfer);
     }
 
     /**
-     * @param StockType $stockTypeTransfer
+     * @param StockStockTypeTransfer $stockTypeTransfer
      *
      * @return int
      */
-    public function updateStockType(StockType $stockTypeTransfer)
+    public function updateStockType(StockStockTypeTransfer $stockTypeTransfer)
     {
         return $this->getDependencyContainer()->getWriterModel()->updateStockType($stockTypeTransfer);
     }
 
     /**
-     * @param StockProduct $transferStockProduct
+     * @param StockStockProductTransfer $transferStockProduct
      *
      * @return int
      */
-    public function createStockProduct(StockProduct $transferStockProduct)
+    public function createStockProduct(StockStockProductTransfer $transferStockProduct)
     {
         return $this->getDependencyContainer()->getWriterModel()->createStockProduct($transferStockProduct);
     }
 
     /**
-     * @param StockProduct $stockProductTransfer
+     * @param StockStockProductTransfer $stockProductTransfer
      *
      * @return int
      */
-    public function updateStockProduct(StockProduct $stockProductTransfer)
+    public function updateStockProduct(StockStockProductTransfer $stockProductTransfer)
     {
         return $this->getDependencyContainer()->getWriterModel()->updateStockProduct($stockProductTransfer);
     }
