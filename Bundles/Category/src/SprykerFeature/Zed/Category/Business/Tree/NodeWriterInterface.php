@@ -8,16 +8,16 @@ interface NodeWriterInterface
 {
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      *
      * @return int $nodeId
      */
-    public function create(CategoryNode $categoryNode);
+    public function create(CategoryCategoryNodeTransfer $categoryNode);
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      */
-    public function update(CategoryNode $categoryNode);
+    public function update(CategoryCategoryNodeTransfer $categoryNode);
 
     /**
      * @param int $nodeId
