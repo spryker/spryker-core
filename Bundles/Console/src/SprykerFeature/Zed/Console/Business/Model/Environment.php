@@ -24,6 +24,6 @@ class Environment
         defined('SYSTEM_UNDER_TEST')
             || define('SYSTEM_UNDER_TEST', false);
 
-        SprykerEnvironment::initialize(APPLICATION);
+        SprykerEnvironment::initialize(APPLICATION, true);
     }
 }

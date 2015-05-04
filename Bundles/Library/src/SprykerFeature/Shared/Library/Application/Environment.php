@@ -46,10 +46,12 @@ class Environment
     }
 
     /**
-     * @param string $application
+     * @param $application
+     * @param bool $disableApplicationCheck
+     *
      * @throws \Exception
      */
-    public static function initialize($application)
+    public static function initialize($application, $disableApplicationCheck = false)
     {
         self::defineEnvironment();
         self::defineStore();
@@ -92,7 +94,7 @@ class Environment
 
         self::initializeErrorHandler();
         Autoloader::unregister();
-        Autoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application);
+        Autoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
 
         $coreNamespaces = Config::get(SystemConfig::CORE_NAMESPACES);
 

@@ -28,28 +28,35 @@ class Autoloader
     private $application;
 
     /**
-     * @param string $rootDirectory
-     * @param string $vendorDirectory
-     * @param string $application
+     * @var bool
      */
-    private function __construct($rootDirectory, $vendorDirectory, $application = null)
+    private $disableApplicationCheck;
+
+    /**
+     * @param $rootDirectory
+     * @param $vendorDirectory
+     * @param null $application
+     * @param bool $disableApplicationCheck
+     */
+    private function __construct($rootDirectory, $vendorDirectory, $application = null, $disableApplicationCheck = false)
     {
         $this->application = $application;
         $this->rootDirectory = $rootDirectory;
+        $this->disableApplicationCheck = $disableApplicationCheck;
 
         require_once $vendorDirectory . '/autoload.php';
     }
 
     /**
-     * @param string $rootDirectory
-     * @param string $vendorDirectory
-     * @param string $application
-     * @static
+     * @param $rootDirectory
+     * @param $vendorDirectory
+     * @param null $application
+     * @param bool $disableApplicationCheck
      */
-    public static function register($rootDirectory, $vendorDirectory, $application = null)
+    public static function register($rootDirectory, $vendorDirectory, $application = null, $disableApplicationCheck = false)
     {
         if (!self::$instance) {
-            self::$instance = new self($rootDirectory, $vendorDirectory, $application);
+            self::$instance = new self($rootDirectory, $vendorDirectory, $application, $disableApplicationCheck);
             spl_autoload_register([self::$instance, 'autoload'], true, true);
         }
     }
@@ -136,7 +143,9 @@ class Autoloader
         // php bug from 5.3.0 to 5.3.2
         $resourceName = ltrim($resourceName, '\\');
         if ($this->isLoadingAllowed($resourceName)) {
-            $this->checkApplication($resourceName);
+            if (!$this->disableApplicationCheck) {
+                $this->checkApplication($resourceName);
+            }
 
             $relativePath = $this->getResourceRelativePath($resourceName);
             $absolutePath = $this->getResourceAbsolutePath($relativePath);
