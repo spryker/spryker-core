@@ -6,6 +6,7 @@ use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\CategoryCategoryTransfer;
 use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
+use SprykerFeature\Shared\Category\Transfer\CategoryNode;
 
 /**
  * @method CategoryDependencyContainer getDependencyContainer()
@@ -42,12 +43,12 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param Category $category
+     * @param CategoryCategoryTransfer $category
      * @param LocaleDto $locale
      *
      * @return int
      */
-    public function createCategory(Category $category, LocaleDto $locale)
+    public function createCategory(CategoryCategoryTransfer $category, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->createCategoryWriter()
@@ -56,10 +57,10 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param Category $category
+     * @param CategoryCategoryTransfer $category
      * @param LocaleDto $locale
      */
-    public function updateCategory(Category $category, LocaleDto $locale)
+    public function updateCategory(CategoryCategoryTransfer $category, LocaleDto $locale)
     {
         $this->getDependencyContainer()
             ->createCategoryWriter()
@@ -82,12 +83,12 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      * @param LocaleDto $locale
      *
      * @return int $nodeId
      */
-    public function createCategoryNode(CategoryNode $categoryNode, LocaleDto $locale)
+    public function createCategoryNode(CategoryCategoryNodeTransfer $categoryNode, LocaleDto $locale)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeWriter()
@@ -96,10 +97,10 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      * @throws \ErrorException
      */
-    public function moveCategoryNode(CategoryNode $categoryNode)
+    public function moveCategoryNode(CategoryCategoryNodeTransfer $categoryNode)
     {
         $this->getDependencyContainer()
             ->createCategoryTreeWriter()

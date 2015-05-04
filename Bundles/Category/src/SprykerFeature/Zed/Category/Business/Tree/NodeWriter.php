@@ -37,11 +37,11 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      * @return int
      * @throws PropelException
      */
-    public function create(CategoryNode $categoryNode)
+    public function create(CategoryCategoryNodeTransfer $categoryNode)
     {
         $nodeEntity = $this->locator->category()->entitySpyCategoryNode();
         $nodeEntity->fromArray($categoryNode->toArray());
@@ -75,10 +75,10 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      * @throws PropelException
      */
-    public function update(CategoryNode $categoryNode)
+    public function update(CategoryCategoryNodeTransfer $categoryNode)
     {
         $nodeEntity = $this->queryContainer
             ->queryNodeById($categoryNode->getIdCategoryNode())

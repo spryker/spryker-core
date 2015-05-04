@@ -7,14 +7,13 @@
 
         return $this;
     }
-{%- if parameter.is_special == 1 %}{# create addMethod(ClassType $methodParameter) #}
+{%- if parameter.is_special == 1 %}
 
     /**
      * @var {{ writeIfNot(parameter.parameterDataType~' ', '(^string)', parameter.parameterDataType)|changeArrayType }}${{ parameter.passedParameter|singular }}
      */
     public function add{{ parameter.propertyName|singular|camelCase }}({{ writeIfNot(parameter.parameterDataType~' ', '(^string)', parameter.parameterDataType)|changeArrayType }}${{ parameter.passedParameter|singular }})
     {
-        $this->{{ parameter.passedParameter }}->offsetSet(${{ parameter.passedParameter }}->getId(), ${{ parameter.passedParameter|singular }});
         $this->{{ parameter.passedParameter }}->append(${{ parameter.passedParameter|singular }});
         $this->addModifiedProperty('{{ parameter.passedParameter }}');
 
@@ -31,7 +30,7 @@
      */
     public function remove{{ parameter.propertyName|singular|camelCase }}({{ writeIfNot(parameter.parameterDataType~' ', '(^string)', parameter.parameterDataType)|changeArrayType }}${{ parameter.passedParameter }})
     {
-        $this->{{ parameter.passedParameter }} = new \ArrayObject();
+        $this->{{ parameter.passedParameter }} = new TransferArrayObject();
         $this->addModifiedProperty('{{ parameter.passedParameter }}');
 
         return $this;
@@ -42,11 +41,11 @@
 {% macro method_set_header(parameter, type) %}
 
     /**
-     * @var {{ writeIfNot(type~' ', '(boolean|bool|array|string|int)', type) }}${{ parameter.passedParameter }}
+     * @var {{ writeIf('TransferArrayObject ', 'array', type) }}{{ writeIfNot(type~' ', '(boolean|bool|array|string|int)', type) }}${{ parameter.passedParameter }}
      *
      * @return $this
      */
-    public function set{{ parameter.propertyName|camelCase }}({{ writeIf('\\ArrayObject ', 'array', type) }}{{ writeIfNot(type~' ', '(boolean|bool|array|string|int|null)', type) }}${{ parameter.passedParameter }})
+    public function set{{ parameter.propertyName|camelCase }}({{ writeIf('TransferArrayObject ', 'array', type) }}{{ writeIfNot(type~' ', '(boolean|bool|array|string|int|null)', type) }}${{ parameter.passedParameter }})
 {% endmacro %}
 
 
@@ -77,7 +76,7 @@
     public function __construct()
     {
     {% for property in parameters -%}
-        {{ "\t" }}$this->{{ property }} = new \ArrayObject();{{ "\n" }}
+        {{ "\t" }}$this->{{ property }} = new TransferArrayObject();{{ "\n" }}
     {%- endfor %}
     }
 {% endmacro %}

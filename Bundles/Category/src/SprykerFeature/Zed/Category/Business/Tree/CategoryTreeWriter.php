@@ -69,14 +69,17 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      * @param LocaleDto $locale
      * @param bool $createUrlPath
      *
      * @return int
      */
-    public function createCategoryNode(CategoryNode $categoryNode, LocaleDto $locale, $createUrlPath = true)
-    {
+    public function createCategoryNode(
+        CategoryCategoryNodeTransfer $categoryNode,
+        LocaleDto $locale,
+        $createUrlPath = true
+    ) {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
 
@@ -119,9 +122,9 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      */
-    public function moveNode(CategoryNode $categoryNode)
+    public function moveNode(CategoryCategoryNodeTransfer $categoryNode)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
