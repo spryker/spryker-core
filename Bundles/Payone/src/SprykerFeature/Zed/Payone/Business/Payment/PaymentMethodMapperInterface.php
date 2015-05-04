@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business\Mapper;
+namespace SprykerFeature\Zed\Payone\Business\Payment;
 
 
 use SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface;

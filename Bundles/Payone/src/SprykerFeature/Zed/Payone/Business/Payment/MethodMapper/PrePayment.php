@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethod;
+namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
 use SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;

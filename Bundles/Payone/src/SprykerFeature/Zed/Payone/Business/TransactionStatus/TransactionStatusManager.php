@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business;
+namespace SprykerFeature\Zed\Payone\Business\TransactionStatus;
 
 
 use Generated\Zed\Ide\AutoCompletion;
