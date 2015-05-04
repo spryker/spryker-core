@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethod;
+namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
 use SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\DebitDataInterface;
@@ -10,7 +10,7 @@ use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
-use SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethodMapperInterface;
+use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 
 

@@ -1,15 +1,16 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business;
+namespace SprykerFeature\Zed\Payone\Business\Payment;
 
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Payone\Transfer\AuthorizationDataInterface;
-use SprykerFeature\Shared\Payone\Transfer\CaptureDataInterface;
-use SprykerFeature\Shared\Payone\Transfer\DebitDataInterface;
-use SprykerFeature\Shared\Payone\Transfer\RefundDataInterface;
-use SprykerFeature\Shared\Payone\Transfer\StandardParameterInterface;
+use SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\DebitDataInterface;
+use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
+use SprykerFeature\Shared\Payone\Dependency\RefundDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\StandardParameterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
@@ -17,13 +18,12 @@ use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationRespo
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\Mode\ModeDetectorInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
-
+use \Propel\Runtime\Exception\PropelException;
 
 class PaymentManager
 {
@@ -41,10 +41,6 @@ class PaymentManager
      */
     protected $queryContainer;
     /**
-     * @var PaymentMethodMapperInterface
-     */
-    protected $paymentMethodMapper;
-    /**
      * @var StandardParameterInterface
      */
     protected $standardParameter;
@@ -56,6 +52,10 @@ class PaymentManager
      * @var ModeDetectorInterface
      */
     protected $modeDetector;
+    /**
+     * @var PaymentMethodMapperInterface[]
+     */
+    protected $registeredMethodMappers;
 
 
     /**
@@ -67,25 +67,43 @@ class PaymentManager
      * @param SequenceNumberProviderInterface $sequenceNumberProvider
      * @param ModeDetectorInterface $modeDetector
      */
-    public function __construct(LocatorLocatorInterface $locator,
-                                AdapterInterface $executionAdapter,
-                                PayoneQueryContainerInterface $queryContainer,
-                                PaymentMethodMapperInterface $paymentMethodMapper,
-                                StandardParameterInterface $standardParameter,
-                                SequenceNumberProviderInterface $sequenceNumberProvider,
-                                ModeDetectorInterface $modeDetector)
+    public function __construct(
+        LocatorLocatorInterface $locator,
+        AdapterInterface $executionAdapter,
+        PayoneQueryContainerInterface $queryContainer,
+        StandardParameterInterface $standardParameter,
+        SequenceNumberProviderInterface $sequenceNumberProvider,
+        ModeDetectorInterface $modeDetector)
     {
         $this->locator = $locator;
-        $this->paymentMethodMapper = $paymentMethodMapper;
         $this->executionAdapter = $executionAdapter;
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;
         $this->sequenceNumberProvider = $sequenceNumberProvider;
         $this->modeDetector = $modeDetector;
+    }
 
-        // @todo Is it ok to do setter injection, and do it here?
-        $this->paymentMethodMapper->setStandardParameter($this->standardParameter);
-        $this->paymentMethodMapper->setSequenceNumberProvider($this->sequenceNumberProvider);
+    /**
+     * @param PaymentMethodMapperInterface $paymentMethodMapper
+     */
+    public function registerPaymentMethodMapper(PaymentMethodMapperInterface $paymentMethodMapper)
+    {
+        $paymentMethodMapper->setStandardParameter($this->standardParameter);
+        $paymentMethodMapper->setSequenceNumberProvider($this->sequenceNumberProvider);
+        $this->registeredMethodMappers[$paymentMethodMapper->getName()] = $paymentMethodMapper;
+    }
+
+    /**
+     * @param string $name
+     * @return null|PaymentMethodMapperInterface
+     */
+    public function findPaymentMethodMapperByName($name)
+    {
+        if (array_key_exists($name, $this->registeredMethodMappers)) {
+            return $this->registeredMethodMappers[$name];
+        }
+
+        return null;
     }
 
     /**
@@ -94,7 +112,8 @@ class PaymentManager
      */
     public function authorize(AuthorizationDataInterface $authorizationData)
     {
-        $requestContainer = $this->paymentMethodMapper->mapAuthorization($authorizationData);
+        $paymentMethodMapper = $this->findPaymentMethodMapperByName($authorizationData->getPayment()->getPaymentMethod());
+        $requestContainer = $paymentMethodMapper->mapAuthorization($authorizationData);
         $responseContainer = $this->performAuthorization($authorizationData, $requestContainer);
 
         return $responseContainer;
@@ -106,7 +125,8 @@ class PaymentManager
      */
     public function preAuthorize(AuthorizationDataInterface $authorizationData)
     {
-        $requestContainer = $this->paymentMethodMapper->mapPreAuthorization($authorizationData);
+        $paymentMethodMapper = $this->findPaymentMethodMapperByName($authorizationData->getPayment()->getPaymentMethod());
+        $requestContainer = $paymentMethodMapper->mapPreAuthorization($authorizationData);
         $responseContainer = $this->performAuthorization($authorizationData, $requestContainer);
 
         return $responseContainer;
@@ -116,7 +136,6 @@ class PaymentManager
      * @param AuthorizationDataInterface $authorizationData
      * @param AuthorizationContainer $requestContainer
      * @return AuthorizationResponseContainer
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     protected function performAuthorization(AuthorizationDataInterface $authorizationData, AuthorizationContainer $requestContainer)
     {
@@ -139,12 +158,11 @@ class PaymentManager
     /**
      * @param CaptureDataInterface $captureData
      * @return CaptureResponseContainer
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function capture(CaptureDataInterface $captureData)
     {
-        // @todo just works. refactor!
-        $requestContainer = $this->paymentMethodMapper->mapCapture($captureData);
+        $paymentMethodMapper = $this->findPaymentMethodMapperByName($captureData->getPayment()->getPaymentMethod());
+        $requestContainer = $paymentMethodMapper->mapCapture($captureData);
         $this->setStandardParameter($requestContainer);
 
         $paymentEntity = $this->findPaymentByTransactionId($captureData->getPayment()->getTransactionId());
@@ -162,12 +180,12 @@ class PaymentManager
     /**
      * @param DebitDataInterface $debitData
      * @return DebitResponseContainer
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function debit(DebitDataInterface $debitData)
     {
         // @todo just works. refactor!
-        $requestContainer = $this->paymentMethodMapper->mapDebit($debitData);
+        $paymentMethodMapper = $this->findPaymentMethodMapperByName($debitData->getPayment()->getPaymentMethod());
+        $requestContainer = $paymentMethodMapper->mapDebit($debitData);
         $this->setStandardParameter($requestContainer);
 
         $paymentEntity = $this->findPaymentByTransactionId($debitData->getPayment()->getTransactionId());
@@ -188,7 +206,8 @@ class PaymentManager
      */
     public function refund(RefundDataInterface $refundData)
     {
-        $requestContainer = $this->paymentMethodMapper->mapDebit($refundData);
+        $paymentMethodMapper = $this->findPaymentMethodMapperByName($refundData->getPayment()->getPaymentMethod());
+        $requestContainer = $paymentMethodMapper->mapDebit($refundData);
         $this->setStandardParameter($requestContainer);
 
         $paymentEntity = $this->findPaymentByTransactionId($refundData->getPayment()->getTransactionId());
@@ -204,9 +223,9 @@ class PaymentManager
     }
 
     /**
-     * @param $paymentMethodName
+     * @param string $paymentMethodName
      * @return SpyPaymentPayone
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws PropelException
      */
     protected function initializePayment($paymentMethodName)
     {
@@ -220,7 +239,7 @@ class PaymentManager
     /**
      * @param SpyPaymentPayone $paymentEntity
      * @param AuthorizationResponseContainer $responseContainer
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws PropelException
      */
     protected function updatePaymentAfterAuthorization(SpyPaymentPayone $paymentEntity, AuthorizationResponseContainer $responseContainer)
     {
@@ -238,9 +257,10 @@ class PaymentManager
     }
 
     /**
+     * @param SpyPaymentPayone $paymentEntity
      * @param AbstractRequestContainer $container
      * @return SpyPaymentPayoneApiLog
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws PropelException
      */
     protected function initializeApiLog(SpyPaymentPayone $paymentEntity, AbstractRequestContainer $container)
     {
@@ -258,7 +278,7 @@ class PaymentManager
     /**
      * @param SpyPaymentPayoneApiLog $apiLogEntity
      * @param AuthorizationResponseContainer $responseContainer
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws PropelException
      */
     protected function updateApiLogAfterAuthorization(SpyPaymentPayoneApiLog $apiLogEntity, AuthorizationResponseContainer $responseContainer)
     {
@@ -275,7 +295,7 @@ class PaymentManager
     /**
      * @param SpyPaymentPayoneApiLog $apiLogEntity
      * @param CaptureResponseContainer $responseContainer
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws PropelException
      */
     protected function updateApiLogAfterCapture(SpyPaymentPayoneApiLog $apiLogEntity, CaptureResponseContainer $responseContainer)
     {
@@ -290,7 +310,7 @@ class PaymentManager
     /**
      * @param SpyPaymentPayoneApiLog $apiLogEntity
      * @param DebitResponseContainer $responseContainer
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws PropelException
      */
     protected function updateApiLogAfterDebit(SpyPaymentPayoneApiLog $apiLogEntity, DebitResponseContainer $responseContainer)
     {

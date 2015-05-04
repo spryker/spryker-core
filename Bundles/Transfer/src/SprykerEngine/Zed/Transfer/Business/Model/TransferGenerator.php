@@ -115,7 +115,7 @@ class TransferGenerator
     {
         $finder = new Finder();
         $directories = [
-            APPLICATION_VENDOR_DIR . '/*/*/src/*/Shared/*/Transfer/',
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Shared/*/Transfer/',
         ];
 
         if (glob(APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/')) {

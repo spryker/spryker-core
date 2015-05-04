@@ -339,6 +339,7 @@ abstract class AbstractTransfer implements TransferInterface
     /**
      * @param Object $object
      *
+     * @deprecated
      * @return $this
      */
     public function add($object)

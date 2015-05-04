@@ -8,7 +8,8 @@ use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayoneBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
-use SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethodMapperInterface;
+use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
+use SprykerFeature\Zed\Payone\Business\Payment\PaymentManager;
 use SprykerFeature\Zed\Payone\PayoneConfig;
 
 /**
@@ -31,16 +32,21 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
      */
     public function createPaymentManager($paymentMethodName)
     {
-        return $this->getFactory()
+        $paymentManager = $this->getFactory()
             ->createPaymentManager(
                 $this->getLocator(),
                 $this->createExecutionAdapter(),
                 $this->createQueryContainer(),
-                $this->createPaymentMethodRegistry()->findPaymentMethodMapperByName($paymentMethodName),
                 $this->createStandardParameter(),
                 $this->createSequenceNumberProvider(),
                 $this->createModeDetector()
             );
+
+        foreach ($this->getAvailablePaymentMethods() as $paymentMethod) {
+            $paymentManager->registerPaymentMethodMapper($paymentMethod);
+        }
+
+        return $paymentManager;
     }
 
     /**
@@ -89,20 +95,6 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     protected function getPaymentMethodMapperByName($name)
     {
         return $this->createPaymentMethodRegistry()->findPaymentMethodMapperByName($name);
-    }
-
-    /**
-     * @return PaymentMethodRegistryInterface
-     */
-    protected function createPaymentMethodRegistry()
-    {
-        $registry = $this->getFactory()->createPaymentMethodRegistry();
-
-        foreach ($this->getAvailablePaymentMethods() as $paymentMethod) {
-            $registry->registerPaymentMethodMapper($paymentMethod);
-        }
-
-        return $registry;
     }
 
     /**
