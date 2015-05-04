@@ -12,10 +12,10 @@
         <column name="url" type="VARCHAR" size="255" required="true"/>
 
         <!-- TODO this schema must not contain this. inject it as soon as the xml merging works -->
-        <column name="fk_resource_redirect_id" type="INTEGER"/>
-        <column name="fk_resource_product_id" type="INTEGER"/>
-        <column name="fk_resource_categorynode_id" type="INTEGER"/>
-        <column name="fk_resource_page_id" type="INTEGER"/>
+        <column name="fk_resource_redirect" type="INTEGER"/>
+        <column name="fk_resource_product" type="INTEGER"/>
+        <column name="fk_resource_categorynode" type="INTEGER"/>
+        <column name="fk_resource_page" type="INTEGER"/>
 
         <foreign-key foreignTable="spy_locale" phpName="SpyLocale" onDelete="CASCADE">
             <reference foreign="id_locale" local="fk_locale"/>
@@ -26,15 +26,15 @@
         </foreign-key>
 
         <foreign-key foreignTable="spy_cms_page" phpName="CmsPage" onDelete="CASCADE">
-            <reference foreign="id_cms_page" local="fk_resource_page_id"/>
+            <reference foreign="id_cms_page" local="fk_resource_page"/>
         </foreign-key>
 
         <foreign-key foreignTable="spy_product" phpName="SpyProduct" onDelete="CASCADE">
-            <reference foreign="id_product" local="fk_resource_product_id"/>
+            <reference foreign="id_product" local="fk_resource_product"/>
         </foreign-key>
 
         <foreign-key foreignTable="spy_category_node" phpName="SpyCategoryNode" onDelete="CASCADE">
-            <reference foreign="id_category_node" local="fk_resource_categorynode_id"/>
+            <reference foreign="id_category_node" local="fk_resource_categorynode"/>
         </foreign-key>
 
         <unique>
