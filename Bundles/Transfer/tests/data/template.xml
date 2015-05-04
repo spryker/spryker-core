@@ -6,7 +6,6 @@
     <transfer name="Alfa">
         <interface>Spryker\Demo\FirstInterface</interface>
         <interface>Spryker\Demo\SecondInterface</interface>
-        <property name="cartItems" type="CartItem[]" />
         <property name="properties" type="[]" />
         <property name="published" type="boolean" default="true" />
         <property name="user_id" type="integer" />
@@ -14,7 +13,8 @@
 
     <transfer name="Alfa">
         <interface>Spryker\Demo\ThirdInterface</interface>
-        <property name="customer" type="Customer" />
+        <property name="customers" type="Customer[]" />
+        <property name="cartItems" type="CartItem[]" />
     </transfer>
 
 </transfers>
