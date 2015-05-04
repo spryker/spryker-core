@@ -4,6 +4,7 @@ namespace SprykerFeature\Shared\Payone\Transfer;
 
 
 use SprykerFeature\Shared\Payone\Dependency\DebitDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\PaymentInterface;
 
 class Debit implements DebitDataInterface
 {
