@@ -31,6 +31,11 @@ abstract class AbstractTransfer implements TransferInterface
     private $properties = [];
 
     /**
+     * @var \SplObjectStorage
+     */
+    private $objectStorage;
+
+    /**
      * @param bool $includeNullValues
      * @param bool $recursive
      * @param bool $formatToUnderscore
@@ -39,11 +44,14 @@ abstract class AbstractTransfer implements TransferInterface
      */
     public function toArray($includeNullValues = true, $recursive = true, $formatToUnderscore = true)
     {
+        if ($this->getStorage()->count() > 0) {
+            return $this->storageToArray();
+        }
         $varsForArray = [];
 
         foreach (get_object_vars($this) as $name => $value) {
             // validator variables begin with an '_', so we do not want them to be copied
-            if ($name[0] === '_' || $name === 'modifiedProperties' || $name === 'locator' || $name === 'enrichAbleProperties') {
+            if ($name[0] === '_' || $name === 'modifiedProperties' || $name === 'properties' || $name === 'objectStorage' || $name === 'locator' || $name === 'enrichAbleProperties') {
                 continue;
             }
 
@@ -328,5 +336,45 @@ abstract class AbstractTransfer implements TransferInterface
     {
     }
 
+    /**
+     * @param Object $object
+     *
+     * @return $this
+     */
+    public function add($object)
+    {
+        $storage = $this->getStorage();
+        if (!$storage->contains($object)) {
+            $storage->attach($object);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \SplObjectStorage
+     */
+    private function getStorage()
+    {
+        if (is_null($this->objectStorage)) {
+            $this->objectStorage = new \SplObjectStorage();
+        }
+
+        return $this->objectStorage;
+    }
+
+    /**
+     * @return array
+     */
+    private function storageToArray()
+    {
+        $storage = $this->getStorage();
+        $data = [];
+        foreach ($storage as $object) {
+            $data[] = $object->toArray();
+        }
+
+        return $data;
+    }
 
 }
