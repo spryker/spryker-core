@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', function _onDOM(e) {
 	window.removeEventListener('DOMContentLoaded', _onDOM, false);
 
 	(function(node) {
-		if (node !== null && _progress !== null) node.appendChild(_progress.node);
+		if (node !== null && _progress !== null) node.appendChild(_progress.node);
 	})(document.querySelector('body.spy-page>header.spy-page-header'));
 
 	(function(node) {

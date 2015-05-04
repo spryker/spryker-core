@@ -14,6 +14,8 @@ var _transitionFn = {};
 
 
 function _onTransitionEnd(e) {
+	/* jshint validthis: true */
+
 	var id = this.id, node = _instance[id].node;
 
 	_complete[id] = false;
@@ -205,7 +207,7 @@ Progress.prototype.addDistance = function(count) {
  * @throws {TypeError} if <code>count</code> is not a <code>Uint</code>
  */
 Progress.prototype.addProgress = function(count) {
-	if (typeof count !== 'number' || count < 0 || count << 0 !== count) throw new TypeError();
+	if (typeof count !== 'number' || count < 0 || count << 0 !== count) throw new TypeError();
 
 	var id = this.id;
 
