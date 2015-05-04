@@ -2,16 +2,16 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\AbstractCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface;
-use Generated\Shared\Transfer\Discount\DependencyDiscountableItemCollectionInterfaceTransfer;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use SprykerFeature\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
 
 class GrandTotalWithDiscountsTotalsCalculator extends AbstractCalculator implements TotalsCalculatorPluginInterface
 {

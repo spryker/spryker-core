@@ -17,7 +17,7 @@ class Percent extends AbstractAction
         $itemOptionDiscount = 0;
 
         foreach ($this->items as $item) {
-            /* @var OrderItem $item */
+            /* @var SalesOrderItemTransfer $item */
             $itemDiscount = $this->getCalculatedDiscountAmount($item);
 
             if ($itemDiscount > 0) {

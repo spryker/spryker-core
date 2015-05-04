@@ -1,21 +1,14 @@
 <?php
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
-
-use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableItemInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyDiscountableInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyOptionContainerInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
-use Generated\Shared\Transfer\Discount\DependencyDiscountableExpenseInterfaceTransfer;
-use Generated\Shared\Transfer\SalesPrice\DiscountTotalItemTransfer;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\AbstractCalculator;
-use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
-use Generated\Shared\Transfer\Discount\DependencyDiscountableItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\Discount\DependencyDiscountableItemInterfaceTransfer;
-use Generated\Shared\Transfer\Discount\DependencyDiscountItemInterfaceTransfer;
 
 class DiscountTotalsCalculator extends AbstractCalculator implements DiscountTotalsCalculatorInterface
 {

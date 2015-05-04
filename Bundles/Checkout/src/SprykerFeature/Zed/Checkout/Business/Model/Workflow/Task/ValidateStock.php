@@ -28,7 +28,7 @@ class ValidateStock extends AbstractTask
      * @param Context $context
      * @param array $logContext
      */
-    public function __invoke(Order $transferOrder, Context $context, array $logContext)
+    public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext)
     {
         $groupedItems = $this->itemGrouper->groupItemsBySku($transferOrder->getItems());
         /* @var \SprykerFeature\Shared\Sales\Transfer\OrderItem $item */

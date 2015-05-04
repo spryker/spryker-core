@@ -13,7 +13,7 @@ class ValidateOrderIsNew extends AbstractTask
      * @param Context $context
      * @param array   $logContext
      */
-    public function __invoke(Order $transferOrder, Context $context, array $logContext)
+    public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext)
     {
         $id = $transferOrder->getIdSalesOrder();
         if (!empty($id)) {

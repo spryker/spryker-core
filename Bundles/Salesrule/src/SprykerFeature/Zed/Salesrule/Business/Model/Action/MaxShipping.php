@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Salesrule\Business\Model\Action;
 
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
 
 class MaxShipping extends AbstractAction
@@ -16,10 +17,10 @@ class MaxShipping extends AbstractAction
     }
 
     /**
-     * @param \SprykerFeature\Shared\Calculation\Transfer\ExpenseCollection $expenses
+     * @param CalculationExpenseTransfer $expenses
      * @return bool
      */
-    protected function reduceShippingCosts(ExpenseCollection $expenses)
+    protected function reduceShippingCosts(CalculationExpenseTransfer $expenses)
     {
         foreach ($expenses as $expense) {
             /* @var $expense \SprykerFeature\Shared\Calculation\Transfer\Expense */

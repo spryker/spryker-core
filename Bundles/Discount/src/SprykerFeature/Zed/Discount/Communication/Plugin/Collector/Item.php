@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\Collector;
 
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 

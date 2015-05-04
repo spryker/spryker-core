@@ -23,12 +23,12 @@ abstract class AbstractPrepareAddress extends AbstractTask
 
 
     /**
-     * @param Address $salesAddress
-     * @param Customer $transferCustomer
+     * @param SalesAddressTransfer $salesAddress
+     * @param CustomerCustomerTransfer $transferCustomer
      *
-     * @return Address
+     * @return \Generated\Shared\Transfer\CustomerCustomerAddressTransfer
      */
-    protected function loadCustomerAddress(Address $salesAddress, Customer $transferCustomer)
+    protected function loadCustomerAddress(SalesAddressTransfer $salesAddress, CustomerCustomerTransfer $transferCustomer)
     {
         $transferCustomerAddress = new \Generated\Shared\Transfer\CustomerCustomerAddressTransfer();
         $transferCustomerAddress->fromArray($salesAddress->toArray(), true);

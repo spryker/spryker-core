@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Setup\Communication\Console;
 
+use SprykerEngine\Zed\Transfer\Communication\Console\GeneratorConsole;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerFeature\Zed\Setup\Communication\Console\Npm\RunnerConsole;
 use SprykerFeature\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
@@ -36,6 +37,7 @@ class InstallConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->runDependingCommand(PropelConsole::COMMAND_NAME);
+        $this->runDependingCommand(GeneratorConsole::COMMAND_NAME);
         $this->runDependingCommand(InitializeDatabaseConsole::COMMAND_NAME);
         $this->runDependingCommand(GenerateIdeAutoCompletionConsole::COMMAND_NAME);
         $this->runDependingCommand(RunnerConsole::COMMAND_NAME, ['--' . RunnerConsole::OPTION_TASK_BUILD_ALL]);

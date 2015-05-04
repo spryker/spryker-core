@@ -15,7 +15,7 @@ class PrepareShippingAddress extends AbstractPrepareAddress
      * @param Context $context
      * @param array   $logContext
      */
-    public function __invoke(Order $transferOrder, Context $context, array $logContext)
+    public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext)
     {
         // Check if both addresses contain the same values
         if ($transferOrder->getBillingAddress() == $transferOrder->getShippingAddress()) {
