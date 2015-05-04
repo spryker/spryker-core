@@ -4,9 +4,9 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="CartCartChange">
-        <property name="changedCartItems" type="string" default="Cart\CartItemCollection" />
+        <property name="changedCartItems" type="CartCartItemTransfer[]" />
         <property name="couponCode" type="string" default="null" />
-        <property name="order" type="string" default="Sales\Order" />
+        <property name="order" type="SalesOrderTransfer[]" />
         <property name="userId" type="string" default="null" />
         <property name="cartHash" type="string" default="null" />
         <property name="deleteReason" type="string" default="null" />

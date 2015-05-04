@@ -69,10 +69,10 @@
         <property name="lastName" type="string" default="null" />
         <property name="firstName" type="string" default="null" />
         <property name="incrementId" type="string" default="null" />
-        <property name="billingAddress" type="string" default="SalesAddressTransfer[]" />
-        <property name="shippingAddress" type="string" default="Sales\AddressTransfer[]" />
-        <property name="customer" type="string" default="Customer\CustomerTransfer[]" />
-        <property name="items" type="string" default="Sales\OrderItemTransfer[]" />
+        <property name="billingAddress" type="SalesAddressTransfer[]" />
+        <property name="shippingAddress" type="SalesAddressTransfer[]" />
+        <property name="customer" type="CustomerCustomerTransfer[]" />
+        <property name="items" type="SalesOrderItemTransfer[]" />
         <property name="payment" type="string" default="null" />
         <property name="couponCodes" type="array" default="[]" />
         <property name="salesruleLog" type="string" default="null" />
