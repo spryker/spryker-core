@@ -2,13 +2,13 @@
 
 namespace SprykerFeature\Shared\Cart2\Transfer;
 
-
+use Generated\Shared\Transfer\Cart2CartTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 
 class CartChange extends AbstractTransfer implements CartChangeInterface
 {
     /**
-     * @var Cart
+     * @var Cart2CartTransfer
      */
     protected $cart;
 
