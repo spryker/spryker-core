@@ -41,7 +41,7 @@
      *
      * @return $this
      */
-    public function set{{ sag.propertyName|camelCase }}({{ writeIfNot(type~' ', '(string|int|null)', type) }}${{ sag.passedParameter }})
+    public function set{{ sag.propertyName|camelCase }}({{ writeIfNot(type~' ', '(bool|string|int|null)', type) }}${{ sag.passedParameter }})
 {% endmacro %}
 
 
