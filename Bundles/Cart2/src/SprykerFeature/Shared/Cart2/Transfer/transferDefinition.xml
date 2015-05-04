@@ -13,7 +13,7 @@
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" short="DiscountItemInterface" />
         <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
         <interface name="CartInterface" short="CartInterface" />
-        <property name="items" type="string" default="Cart2\ItemCollection" />
+        <property name="items" type="Cart2ItemTransfer[]" />
         <property name="totals" type="string" default="Calculation\Totals" />
         <property name="expenses" type="string" default="Calculation\ExpenseCollection" />
         <property name="discounts" type="string" default="Calculation\DiscountCollection" />

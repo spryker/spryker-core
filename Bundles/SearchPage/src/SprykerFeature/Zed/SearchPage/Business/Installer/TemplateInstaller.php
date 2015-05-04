@@ -87,7 +87,7 @@ class TemplateInstaller extends AbstractInstaller
                     )
                 );
             }
-            
+
             $templateTransfer = new \Generated\Shared\Transfer\TemplateTransfer();
             $templateTransfer->setTemplateName($template);
 
