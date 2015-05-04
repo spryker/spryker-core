@@ -6,10 +6,6 @@ use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInt
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 
-/**
- * Interface ExpenseTotalsCalculatorInterface
- * @package SprykerFeature\Zed\Calculation\Business\Model\Calculator
- */
 interface ExpenseTotalsCalculatorInterface
 {
     /**

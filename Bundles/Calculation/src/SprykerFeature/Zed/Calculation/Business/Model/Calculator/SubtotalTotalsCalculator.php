@@ -4,6 +4,9 @@ namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 

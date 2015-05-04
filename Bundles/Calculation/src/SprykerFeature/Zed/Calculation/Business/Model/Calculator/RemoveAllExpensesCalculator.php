@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
@@ -14,9 +15,9 @@ class RemoveAllExpensesCalculator extends AbstractCalculator implements
     public function recalculate(CalculableContainerInterface $calculableContainer)
     {
         foreach ($calculableContainer->getItems() as $item) {
-            $item->setExpenses(new \Generated\Shared\Transfer\CalculationExpenseTransfer());
+            $item->setExpenses(new CalculationExpenseTransfer());
         }
 
-        $calculableContainer->setExpenses(new \Generated\Shared\Transfer\CalculationExpenseTransfer());
+        $calculableContainer->setExpenses(new CalculationExpenseTransfer());
     }
 }
