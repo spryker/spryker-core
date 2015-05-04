@@ -2,11 +2,12 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Mapper;
 
-use SprykerFeature\Shared\Payone\Transfer\AuthorizationDataInterface;
-use SprykerFeature\Shared\Payone\Transfer\CaptureDataInterface;
-use SprykerFeature\Shared\Payone\Transfer\DebitDataInterface;
-use SprykerFeature\Shared\Payone\Transfer\RefundDataInterface;
-use SprykerFeature\Shared\Payone\Transfer\StandardParameterInterface;
+
+use SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\DebitDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\RefundDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\StandardParameterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;

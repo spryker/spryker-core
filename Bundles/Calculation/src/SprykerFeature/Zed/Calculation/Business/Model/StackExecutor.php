@@ -2,13 +2,14 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model;
 
+use Generated\Shared\Transfer\CalculationTotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableItemCollectionInterfaceTransfer;
 
 class StackExecutor
 {
@@ -60,7 +61,7 @@ class StackExecutor
         CalculableContainerInterface $calculableContainer,
         CalculableItemCollectionInterface $calculableItems = null
     ) {
-        $totalsTransfer = new \Generated\Shared\Transfer\CalculationTotalsTransfer();
+        $totalsTransfer = new CalculationTotalsTransfer();
         $calculableItems = $calculableItems ? $calculableItems : $calculableContainer->getItems();
         foreach ($calculatorStack as $calculator) {
             if ($calculator instanceof TotalsCalculatorPluginInterface) {

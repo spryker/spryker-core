@@ -142,38 +142,38 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderItemOption
+     * @return SalesOrderItemOptionTransfer
      */
     protected function getItemOption()
     {
-        return new \Generated\Shared\Transfer\SalesOrderItemOptionTransfer();
+        return new SalesOrderItemOptionTransfer();
     }
 
     /**
-     * @return Discount
+     * @return CalculationDiscountTransfer
      */
     protected function getPriceDiscount()
     {
-        return new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        return new CalculationDiscountTransfer();
     }
 
     /**
-     * @return Order
+     * @return SalesOrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
+        $order = new SalesOrderTransfer();
         $order->fillWithFixtureData();
 
         return $order;
     }
 
     /**
-     * @return OrderItem
+     * @return SalesOrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->fillWithFixtureData();
 
         return $item;
