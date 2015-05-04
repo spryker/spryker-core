@@ -33,7 +33,7 @@ class UserFacade extends AbstractFacade
     /**
      * @param string $username
      *
-     * @return User
+     * @return UserUserTransfer
      */
     public function getUserByUsername($username)
     {
@@ -45,7 +45,7 @@ class UserFacade extends AbstractFacade
     /**
      * @param int $idUser
      *
-     * @return User
+     * @return UserUserTransfer
      */
     public function getUserById($idUser)
     {
@@ -60,7 +60,7 @@ class UserFacade extends AbstractFacade
      * @param string $username
      * @param string $password
      *
-     * @return User
+     * @return UserUserTransfer
      */
     public function addUser($firstName, $lastName, $username, $password)
     {
@@ -70,12 +70,12 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param User $user
+     * @param UserUserTransfer $user
      *
-     * @return User
+     * @return UserUserTransfer
      * @throws Exception\UserNotFoundException
      */
-    public function updateUser(User $user)
+    public function updateUser(UserUserTransfer $user)
     {
         return $this->getDependencyContainer()
             ->getUserModel()
@@ -83,11 +83,11 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param User $user
+     * @param UserUserTransfer $user
      *
      * @return mixed
      */
-    public function setCurrentUser(User $user)
+    public function setCurrentUser(UserUserTransfer $user)
     {
         return $this->getDependencyContainer()
             ->getUserModel()
@@ -95,7 +95,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @return User
+     * @return UserUserTransfer
      */
     public function getCurrentUser()
     {
@@ -128,11 +128,11 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param User $user
+     * @param UserUserTransfer $user
      *
      * @return bool
      */
-    public function isSystemUser(User $user)
+    public function isSystemUser(UserUserTransfer $user)
     {
         return $this->getDependencyContainer()
             ->getUserModel()
@@ -140,7 +140,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @return UserCollection
+     * @return UserUserTransfer
      */
     public function getSystemUsers()
     {
@@ -150,7 +150,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @return UserCollection
+     * @return UserUserTransfer
      */
     public function getUsers()
     {
@@ -160,7 +160,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @return void
+     * @param $idUser
      */
     public function removeUser($idUser)
     {
