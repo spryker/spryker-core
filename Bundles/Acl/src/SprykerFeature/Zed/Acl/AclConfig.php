@@ -16,6 +16,9 @@ class AclConfig extends AbstractBundleConfig
     const ACL_CREDENTIALS_KEY = 'credentials';
     const ACL_DEFAULT_KEY = 'default';
     const ACL_DEFAULT_RULES_KEY = 'rules';
+    const ROOT_GROUP = 'root_group';
+    const ROOT_ROLE = 'root_role';
+    const ALLOW = 'allow';
 
     /**
      * @var AutoCompletion
@@ -79,8 +82,8 @@ class AclConfig extends AbstractBundleConfig
                 'bundle' => self::VALIDATOR_WILDCARD,
                 'controller' => self::VALIDATOR_WILDCARD,
                 'action' => self::VALIDATOR_WILDCARD,
-                'type' => 'allow',
-                'role' => 'root role'
+                'type' => self::ALLOW,
+                'role' => self::ROOT_ROLE
                 //this is related to the installer_data only and will not interact with existing data if any
             ]
         ];
@@ -93,8 +96,8 @@ class AclConfig extends AbstractBundleConfig
     {
         return [
             [
-                'name' => 'root role',
-                'group' => 'root group'
+                'name' => self::ROOT_ROLE,
+                'group' => self::ROOT_GROUP
                 //this is related to the installer_data only and will not interact with existing data if any
             ]
         ];
@@ -107,7 +110,7 @@ class AclConfig extends AbstractBundleConfig
     {
         return [
             [
-                'name' => 'root group',
+                'name' => self::ROOT_GROUP,
             ]
         ];
     }
@@ -116,7 +119,7 @@ class AclConfig extends AbstractBundleConfig
     {
         return [
             'admin@spryker.com' => [
-                'group' => 'root group'
+                'group' => self::ROOT_GROUP
             ]
             //this is related to existent username and will be searched into the database
         ];

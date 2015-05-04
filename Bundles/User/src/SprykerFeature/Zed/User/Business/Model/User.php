@@ -147,15 +147,21 @@ class User implements UserInterface
      */
     public function getUsers()
     {
-        $users = $this->queryContainer->queryUsers()->find();
+        $results = $this->queryContainer->queryUsers()->find();
 
-        if (false === ($users instanceof ObjectCollection)) {
+        if (false === ($results instanceof ObjectCollection)) {
             throw new UserNotFoundException();
         }
 
-        $userCollection = new \Generated\Shared\Transfer\UserUserTransfer();
+        $collection = new TransferArrayObject();
 
-        return Copy::entityCollectionToTransferCollection($userCollection, $users, false);
+
+        foreach ($results as $result) {
+            $transfer = new UserUserTransfer();
+            $collection->add(Copy::entityToTransfer($transfer, $result));
+        }
+
+        return $collection;
     }
 
     /**

@@ -157,8 +157,12 @@ class Rule implements RuleInterface
     ) {
         $results = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();
 
-        $collection = new AclRuleTransfer();
-        $collection = Copy::entityCollectionToTransferCollection($collection, $results, false);
+        $collection = new TransferArrayObject();
+
+        foreach ($results as $result) {
+            $transfer = new AclRuleTransfer();
+            $collection->add(Copy::entityToTransfer($transfer, $result));
+        }
 
         return $collection;
     }
@@ -173,10 +177,10 @@ class Rule implements RuleInterface
         $relationshipCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find();
         $results = $this->queryContainer->queryGroupRules($relationshipCollection)->find();
 
-        $transfer = new AclRuleTransfer();
         $collection = new TransferArrayObject();
 
         foreach ($results as $result) {
+            $transfer = new AclRuleTransfer();
             $collection->add(Copy::entityToTransfer($transfer, $result));
         }
 

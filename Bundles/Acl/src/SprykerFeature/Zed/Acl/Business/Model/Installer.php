@@ -6,6 +6,7 @@ use Generated\Shared\Transfer\AclRoleTransfer;
 use Generated\Shared\Transfer\AclRuleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Zed\Transfer\Business\Model\TransferArrayObject;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 
@@ -47,9 +48,9 @@ class Installer implements InstallerInterface
     public function install()
     {
         $groups = $this->addGroups($this->settings->getInstallerGroups());
-        $roles = $this->addRoles($this->settings->getInstallerRoles(), $groups->toArray());
-        $this->addRules($this->settings->getInstallerRules(), $roles->toArray());
-        $this->addUserRelationships($this->settings->getInstallerUsers(), $groups->toArray());
+        $roles = $this->addRoles($this->settings->getInstallerRoles(), $groups->getArrayCopy());
+        $this->addRules($this->settings->getInstallerRules(), $roles->getArrayCopy());
+        $this->addUserRelationships($this->settings->getInstallerUsers(), $groups->getArrayCopy());
     }
 
     /**
@@ -59,7 +60,7 @@ class Installer implements InstallerInterface
      */
     protected function addGroups(array $groupsArray)
     {
-        $groupCollection = new AclGroupTransfer();
+        $groupCollection = new TransferArrayObject();
 
         foreach ($groupsArray as $group) {
             if ($this->queryContainer->queryGroupByName($group['name'])->count() > 0) {
@@ -84,7 +85,7 @@ class Installer implements InstallerInterface
      */
     protected function addRoles(array $roleArray, array $groupArray)
     {
-        $roleCollection = new AclRoleTransfer();
+        $roleCollection = new TransferArrayObject();
 
         foreach ($roleArray as $role) {
             if ($this->queryContainer->queryRoleByName($role['name'])->count() > 0) {
@@ -92,7 +93,7 @@ class Installer implements InstallerInterface
             }
 
             $group = array_filter($groupArray, function ($item) use ($role) {
-                return $item['name'] === $role['group'];
+                return $item->getName() === $role['group'];
             });
 
             //@TODO this is because our transfer collection returns negative indexes and i can't pick 0
@@ -104,7 +105,7 @@ class Installer implements InstallerInterface
 
             $roleTransfer = $this->locator->acl()
                 ->facade()
-                ->addRole($role['name'], $group['id_acl_group']);
+                ->addRole($role['name'], $group->getIdAclGroup());
 
             $roleCollection->add($roleTransfer);
         }
@@ -120,11 +121,11 @@ class Installer implements InstallerInterface
      */
     protected function addRules(array $rulesArray, array $rolesArray)
     {
-        $ruleCollection = new AclRuleTransfer();
+        $ruleCollection = new TransferArrayObject();
 
         foreach ($rulesArray as $rule) {
             $role = array_filter($rolesArray, function ($item) use ($rule) {
-                return $item['name'] === $rule['role'];
+                return $item->getName() === $rule['role'];
             });
 
             if (count($role) === 0) {
@@ -136,7 +137,7 @@ class Installer implements InstallerInterface
 
             $ruleTransfer = $this->locator->acl()
                 ->facade()
-                ->addRule($rule['bundle'], $rule['controller'], $rule['action'], $role['id_acl_role'], $rule['type']);
+                ->addRule($rule['bundle'], $rule['controller'], $rule['action'], $role->getIdAclRole(), $rule['type']);
 
             $ruleCollection->add($ruleTransfer);
         }
@@ -154,14 +155,14 @@ class Installer implements InstallerInterface
     {
         foreach ($arrayUsers as $username => $data) {
             $group = array_filter($groupsArray, function ($item) use ($data) {
-                return $item['name'] === $data['group'];
+                return $item->getName() === $data['group'];
             });
 
             //@TODO this is because our transfer collection returns negative indexes and i can't pick 0
             $group = array_shift($group);
 
             $user = $this->locator->user()->facade()->getUserByUsername($username);
-            $query = $this->queryContainer->queryUserHasGroupById($group['id_acl_group'], $user->getIdUserUser());
+            $query = $this->queryContainer->queryUserHasGroupById($group->getIdAclGroup(), $user->getIdUserUser());
 
             if (count($group) === 0 || $query->count() > 0) {
                 continue;
@@ -169,7 +170,7 @@ class Installer implements InstallerInterface
 
             $this->locator->acl()
                 ->facade()
-                ->addUserToGroup($user->getIdUserUser(), $group['id_acl_group']);
+                ->addUserToGroup($user->getIdUserUser(), $group->getIdAclGroup());
         }
 
         return true;
