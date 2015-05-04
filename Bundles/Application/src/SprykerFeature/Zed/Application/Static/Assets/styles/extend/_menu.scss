@@ -17,16 +17,16 @@
 
 %menu-label-level2 {
 	display:block;
-	@include font(24px, 13px, $_rgbWhite, null, $_ffCutReg);
+	@include font(24px, 13px, $_rgbSpyCasper, null, $_ffCutReg);
 	text-transform:none;
 }
 
 %menu-label-level2-hover {
-	font-weight:$_ffCutBold;
+	color:$_rgbWhite;
 }
 
 %menu-label-level2-active {
-	font-weight:$_ffCutBold;
+	color:$_rgbWhite;
 }
 
 
