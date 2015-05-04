@@ -24,7 +24,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param string $name
      *
-     * @return Group
+     * @return AclGroupTransfer
      */
     public function addGroup($name)
     {
@@ -34,11 +34,11 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param Group $data
+     * @param AclGroupTransfer $data
      *
-     * @return Group
+     * @return AclGroupTransfer
      */
-    public function updateGroup(Group $data)
+    public function updateGroup(AclGroupTransfer $data)
     {
         return $this->getDependencyContainer()
             ->createGroupModel()
@@ -48,7 +48,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return Group
+     * @return AclGroupTransfer
      */
     public function getGroup($id)
     {
@@ -58,7 +58,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @return GroupCollection
+     * @return AclGroupTransfer
      */
     public function getAllGroups()
     {
@@ -70,7 +70,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return Role
+     * @return AclRoleTransfer
      */
     public function getRole($id)
     {
@@ -82,7 +82,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return Rule
+     * @return AclRuleTransfer
      */
     public function getRule($id)
     {
@@ -95,7 +95,7 @@ class AclFacade extends AbstractFacade
      * @param string $name
      * @param int $idGroup
      *
-     * @return Role
+     * @return AclRoleTransfer
      */
     public function addRole($name, $idGroup)
     {
@@ -158,7 +158,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param $idUser
      *
-     * @return Group
+     * @return AclGroupTransfer
      */
     public function getUserGroup($idUser)
     {
@@ -185,7 +185,7 @@ class AclFacade extends AbstractFacade
      * @param string $idRole
      * @param string $type
      *
-     * @return Rule
+     * @return AclRuleTransfer
      */
     public function addRule($bundle, $controller, $action, $idRole, $type = 'allow')
     {
@@ -197,7 +197,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idGroup
      *
-     * @return RoleCollection
+     * @return AclRoleTransfer
      */
     public function getGroupRoles($idGroup)
     {
@@ -209,7 +209,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idGroup
      *
-     * @return RuleCollection
+     * @return AclRuleTransfer
      */
     public function getGroupRules($idGroup)
     {
@@ -221,7 +221,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idRole
      *
-     * @return RuleCollection
+     * @return AclRuleTransfer
      */
     public function getRoleRules($idRole)
     {
@@ -233,7 +233,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idUser
      *
-     * @return RoleCollection
+     * @return AclRoleTransfer
      */
     public function getUserRoles($idUser)
     {
@@ -279,14 +279,14 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param User $user
+     * @param UserUserTransfer $user
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
      * @return bool
      */
-    public function checkAccess(User $user, $bundle, $controller, $action)
+    public function checkAccess(UserUserTransfer $user, $bundle, $controller, $action)
     {
         return $this->getDependencyContainer()
             ->createRuleModel()

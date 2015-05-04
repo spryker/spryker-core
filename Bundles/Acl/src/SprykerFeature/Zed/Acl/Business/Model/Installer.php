@@ -1,6 +1,9 @@
 <?php
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
+use Generated\Shared\Transfer\AclGroupTransfer;
+use Generated\Shared\Transfer\AclRoleTransfer;
+use Generated\Shared\Transfer\AclRuleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Acl\AclConfig;
@@ -52,11 +55,11 @@ class Installer implements InstallerInterface
     /**
      * @param array $groupsArray
      *
-     * @return GroupCollection
+     * @return AclGroupTransfer
      */
     protected function addGroups(array $groupsArray)
     {
-        $groupCollection = new \Generated\Shared\Transfer\AclGroupTransfer();
+        $groupCollection = new AclGroupTransfer();
 
         foreach ($groupsArray as $group) {
             if ($this->queryContainer->queryGroupByName($group['name'])->count() > 0) {
@@ -77,11 +80,11 @@ class Installer implements InstallerInterface
      * @param array $roleArray
      * @param array $groupArray
      *
-     * @return RoleCollection
+     * @return AclRoleTransfer
      */
     protected function addRoles(array $roleArray, array $groupArray)
     {
-        $roleCollection = new \Generated\Shared\Transfer\AclRoleTransfer();
+        $roleCollection = new AclRoleTransfer();
 
         foreach ($roleArray as $role) {
             if ($this->queryContainer->queryRoleByName($role['name'])->count() > 0) {
@@ -113,11 +116,11 @@ class Installer implements InstallerInterface
      * @param array $rulesArray
      * @param array $rolesArray
      *
-     * @return RuleCollection
+     * @return AclRuleTransfer
      */
     protected function addRules(array $rulesArray, array $rolesArray)
     {
-        $ruleCollection = new \Generated\Shared\Transfer\AclRuleTransfer();
+        $ruleCollection = new AclRuleTransfer();
 
         foreach ($rulesArray as $rule) {
             $role = array_filter($rolesArray, function ($item) use ($rule) {

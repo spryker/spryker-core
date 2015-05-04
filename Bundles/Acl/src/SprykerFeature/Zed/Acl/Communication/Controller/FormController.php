@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Acl\Communication\Controller;
 
+use Generated\Shared\Transfer\UserUserTransfer;
 use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,7 +37,7 @@ class FormController extends AbstractController
 
             $userGroup = false;
 
-            $user = new \Generated\Shared\Transfer\UserUserTransfer();
+            $user = new UserUserTransfer();
             $user->setFirstName($data['first_name'])
                 ->setLastName($data['last_name'])
                 ->setUsername($data['username'])

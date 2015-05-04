@@ -17,18 +17,18 @@ interface RuleInterface
      * @param int $idRole
      * @param string $type
      *
-     * @return transferRule
+     * @return AclRuleTransfer
      * @throws RuleNotFoundException
      */
     public function addRule($bundle, $controller, $action, $idRole, $type = 'allow');
 
     /**
-     * @param transferRule $data
+     * @param AclRuleTransfer $data
      *
-     * @return transferRule
+     * @return AclRuleTransfer
      * @throws RuleNotFoundException
      */
-    public function save(transferRule $data);
+    public function save(AclRuleTransfer $data);
 
     /**
      * @param int $idRule
@@ -40,20 +40,20 @@ interface RuleInterface
     /**
      * @param int $idRole
      *
-     * @return RuleCollection
+     * @return AclRuleTransfer
      */
     public function getRoleRules($idRole);
 
     /**
-     * @param RoleCollection $roles
+     * @param AclRuleTransfer $roles
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
-     * @return RuleCollection
+     * @return AclRuleTransfer
      */
     public function findByRoles(
-        RoleCollection $roles,
+        AclRuleTransfer $roles,
         $bundle = AclConfig::VALIDATOR_WILDCARD,
         $controller = AclConfig::VALIDATOR_WILDCARD,
         $action = AclConfig::VALIDATOR_WILDCARD
@@ -61,14 +61,14 @@ interface RuleInterface
     /**
      * @param int $idGroup
      *
-     * @return RuleCollection
+     * @return AclRuleTransfer
      */
     public function findByGroupId($idGroup);
 
     /**
      * @param int $id
      *
-     * @return transferRule
+     * @return AclRuleTransfer
      * @throws RuleNotFoundException
      */
     public function getRuleById($id);
@@ -91,19 +91,19 @@ interface RuleInterface
     public function isIgnorable($bundle, $controller, $action);
 
     /**
-     * @param User $user
+     * @param UserUserTransfer $user
      *
      * @throws UserNotFoundException
      */
     public function registerSystemUserRules(User $user);
 
     /**
-     * @param User $user
+     * @param UserUserTransfer $user
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
      * @return bool
      */
-    public function isAllowed(User $user, $bundle, $controller, $action);
+    public function isAllowed(UserUserTransfer $user, $bundle, $controller, $action);
 }
