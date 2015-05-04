@@ -5,9 +5,11 @@ var _ng = require('Ui').ng;
 
 
 /**
+ * Form directive
  * @ngdoc directive
  * @name spyForm
  * @restrict E
+ * @param src The url of the datasource
  */
 _ng
 	.module('spyForm')

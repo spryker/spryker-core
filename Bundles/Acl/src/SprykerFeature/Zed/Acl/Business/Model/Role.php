@@ -39,12 +39,12 @@ class Role implements RoleInterface
      * @param string $name
      * @param int $idGroup
      *
-     * @return TransferRole
+     * @return AclRoleTransfer
      * @throws RoleNameExistsException
      */
     public function addRole($name, $idGroup)
     {
-        $data = new \Generated\Shared\Transfer\AclRoleTransfer();
+        $data = new AclRoleTransfer();
         $data->setName($name);
 
         $role = $this->save($data);
@@ -56,13 +56,13 @@ class Role implements RoleInterface
     }
 
     /**
-     * @param TransferRole $data
+     * @param AclRoleTransfer $data
      *
-     * @return TransferRole
+     * @return AclRoleTransfer
      * @throws RoleNameExistsException
      * @throws RoleNotFoundException
 d     */
-    public function save(TransferRole $data)
+    public function save(AclRoleTransfer $data)
     {
         $entity = $this->locator->acl()->entitySpyAclRole();
 
@@ -77,7 +77,7 @@ d     */
         $entity->setName($data->getName());
         $entity->save();
 
-        $transfer = new \Generated\Shared\Transfer\AclRoleTransfer();
+        $transfer = new AclRoleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -110,7 +110,7 @@ d     */
     /**
      * @param int $idUser
      *
-     * @return RoleCollection
+     * @return AclRoleTransfer
      */
     public function getUserRoles($idUser)
     {
@@ -122,14 +122,14 @@ d     */
     /**
      * @param int $idGroup
      *
-     * @return RoleCollection
+     * @return AclRoleTransfer
      * @throws GroupNotFoundException
      */
     public function getGroupRoles($idGroup)
     {
         $results = $this->queryContainer->queryGroupRoles($idGroup)->find();
 
-        $collection = new \Generated\Shared\Transfer\AclRoleTransfer();
+        $collection = new AclRoleTransfer();
         $collection = Copy::entityCollectionToTransferCollection($collection, $results, false);
 
         return $collection;
@@ -138,7 +138,7 @@ d     */
     /**
      * @param int $id
      *
-     * @return AbstractTransfer
+     * @return AclRoleTransfer
      * @throws EmptyEntityException
      */
     public function getRoleById($id)
@@ -149,7 +149,7 @@ d     */
             throw new EmptyEntityException();
         }
 
-        $transfer = new \Generated\Shared\Transfer\AclRoleTransfer();
+        $transfer = new AclRoleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -175,13 +175,13 @@ d     */
     /**
      * @param string $name
      *
-     * @return TransferRole
+     * @return AclRoleTransfer
      */
     public function getByName($name)
     {
         $entity = $this->queryContainer->queryRoleByName($name)->findOne();
 
-        $transfer = new \Generated\Shared\Transfer\AclRoleTransfer();
+        $transfer = new AclRoleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;

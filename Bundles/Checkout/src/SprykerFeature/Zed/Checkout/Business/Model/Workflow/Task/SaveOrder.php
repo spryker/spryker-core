@@ -30,7 +30,7 @@ class SaveOrder extends AbstractTask
      * @param Context $context
      * @param array   $logContext
      */
-    public function __invoke(Order $transferOrder, Context $context, array $logContext)
+    public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext)
     {
         $result = $this->locator->sales()->facade()->saveOrder($transferOrder, $context->getTransferRequest());
         if (!$result->isSuccess()) {

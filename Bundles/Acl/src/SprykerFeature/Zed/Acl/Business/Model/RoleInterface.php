@@ -18,13 +18,13 @@ interface RoleInterface
     public function addRole($name, $idGroup);
 
     /**
-     * @param transferRole $data
+     * @param AclRoleTransfer $data
      *
-     * @return transferRole
+     * @return AclRoleTransfer
      * @throws RoleNameExistsException
      * @throws RoleNotFoundException
     d     */
-    public function save(transferRole $data);
+    public function save(AclRoleTransfer $data);
 
     /**
      * @param int $idRole
@@ -43,14 +43,14 @@ interface RoleInterface
     /**
      * @param int $idUser
      *
-     * @return RoleCollection
+     * @return AclRoleTransfer
      */
     public function getUserRoles($idUser);
 
     /**
      * @param int $idGroup
      *
-     * @return RoleCollection
+     * @return AclRoleTransfer
      * @throws GroupNotFoundException
      */
     public function getGroupRoles($idGroup);
@@ -58,7 +58,7 @@ interface RoleInterface
     /**
      * @param int $id
      *
-     * @return transferRole
+     * @return AclRoleTransfer
      */
     public function getRoleById($id);
 
@@ -73,7 +73,7 @@ interface RoleInterface
     /**
      * @param string $name
      *
-     * @return transferRole
+     * @return AclRoleTransfer
      */
     public function getByName($name);
 }

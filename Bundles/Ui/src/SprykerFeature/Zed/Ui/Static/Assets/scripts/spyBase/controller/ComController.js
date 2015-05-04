@@ -4,6 +4,8 @@ var _ng = require('Ui').ng;
 
 var _scope = {};
 
+
+
 /**
  * Basic Communication Controller
  * @ngdoc function

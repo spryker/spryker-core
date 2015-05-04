@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 /**
  * @ngdoc directive
  * @name spyListen

@@ -4,10 +4,6 @@ namespace SprykerFeature\Zed\Discount\Dependency\Plugin;
 
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
-/**
- * Interface DiscountDecisionRulePluginInterface
- * @package SprykerFeature\Zed\Discount\Dependency\Plugin
- */
 interface DiscountCalculatorPluginInterface
 {
     /**

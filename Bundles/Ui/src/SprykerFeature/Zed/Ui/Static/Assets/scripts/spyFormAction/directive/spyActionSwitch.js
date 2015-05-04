@@ -1,5 +1,15 @@
 'use strict';
 
+
+
+/**
+ * @ngdoc directive
+ * @name spyActionSwitch
+ * @restrict A
+ * @param src     The url of the datasource
+ * @param state   The switch state
+ * @param options The switch options
+ */
 require('Ui').ng
 	.module('spyFormAction')
 	.directive('spyActionSwitch', [function() {

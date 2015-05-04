@@ -7,11 +7,11 @@ use Generated\Shared\Transfer\StockStockProductTransfer;
 interface StockToSalesFacadeInterface
 {
     /**
-     * @param StockProduct $transferStockProduct
+     * @param StockStockProductTransfer $transferStockProduct
      *
      * @return int
      */
-    public function updateStockProduct(StockProduct $transferStockProduct);
+    public function updateStockProduct(StockStockProductTransfer $transferStockProduct);
 
     /**
      * @param string $sku

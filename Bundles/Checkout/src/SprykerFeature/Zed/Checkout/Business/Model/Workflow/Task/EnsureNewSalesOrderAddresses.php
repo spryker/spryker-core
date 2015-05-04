@@ -16,7 +16,7 @@ class EnsureNewSalesOrderAddresses extends AbstractTask
      * @param Context $context
      * @param array   $logContext
      */
-    public function __invoke(Order $transferOrder, Context $context, array $logContext)
+    public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext)
     {
         // unset id, because we always want to store a new address for each order
         $transferOrder->getShippingAddress()->setIdSalesOrderAddress(null);

@@ -86,7 +86,7 @@ class TemplateInstaller extends AbstractInstaller
                     )
                 );
             }
-            $templateTransfer = new \Generated\Shared\Transfer\SearchPageTemplateTransfer();
+            $templateTransfer = new \Generated\Shared\Transfer\TemplateTransfer();
             $templateTransfer->setTemplateName($template);
 
             $this->templateWriter->createTemplate($templateTransfer);

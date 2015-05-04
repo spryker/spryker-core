@@ -2,14 +2,10 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableItemInterfaceTransfer;
 
-/**
- * Class ItemPriceToPayCalculator
- * @package SprykerFeature\Zed\Calculation\Business\Model\Calculator
- */
 class ItemPriceToPayCalculator extends AbstractCalculator implements
     CalculatorPluginInterface
 {

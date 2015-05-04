@@ -2,18 +2,16 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
+use Generated\Shared\Transfer\CalculationExpenseTotalItemTransfer;
 use Generated\Shared\Transfer\CalculationExpenseTotalsTransfer;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use SprykerFeature\Shared\Calculation\Transfer\ExpenseTotals;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableItemInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyExpenseItemInterfaceTransfer;
 
-/**
- * Class ExpenseTotalsCalculator
- * @package SprykerFeature\Zed\Calculation\Business\Model\Calculator
- */
 class ExpenseTotalsCalculator extends AbstractCalculator implements
     TotalsCalculatorPluginInterface,
     ExpenseTotalsCalculatorInterface
@@ -92,7 +90,7 @@ class ExpenseTotalsCalculator extends AbstractCalculator implements
     protected function transformExpenseToExpenseTotalItemInArray($expense, &$arrayOfExpenseTotalItems)
     {
         if (!isset($arrayOfExpenseTotalItems[$expense->getType()])) {
-            $item = new \Generated\Shared\Transfer\CalculationExpenseTotalItemTransfer();
+            $item = new CalculationExpenseTotalItemTransfer();
             $item->setName($expense->getName());
             $item->setType($expense->getType());
         } else {
@@ -108,13 +106,13 @@ class ExpenseTotalsCalculator extends AbstractCalculator implements
      * @param CalculableContainerInterface $calculableContainer
      * @param CalculableItemCollectionInterface $calculableItems
      *
-     * @return ExpenseTotals
+     * @return CalculationExpenseTotalsTransfer
      */
     protected function createExpenseTotalTransfer(
         CalculableContainerInterface $calculableContainer,
         CalculableItemCollectionInterface $calculableItems
     ) {
-        $expenseTotalTransfer = new \Generated\Shared\Transfer\CalculationExpenseTotalsTransfer();
+        $expenseTotalTransfer = new CalculationExpenseTotalsTransfer();
         $expenseTotalTransfer->setTotalOrderAmount($this->calculateExpenseTotal($calculableContainer));
         $expenseTotalTransfer->setTotalItemAmount($this->calculateItemExpenseTotal($calculableItems));
 

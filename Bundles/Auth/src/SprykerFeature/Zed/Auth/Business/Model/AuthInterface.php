@@ -17,11 +17,11 @@ interface AuthInterface
     public function authenticate($username, $password);
 
     /**
-     * @param User $user
+     * @param UserUserTransfer $user
      *
      * @return string
      */
-    public function generateToken(User $user);
+    public function generateToken(UserUserTransfer $user);
 
     /**
      * @return bool
@@ -48,7 +48,7 @@ interface AuthInterface
     /**
      * @param string $hash
      *
-     * @return User
+     * @return UserUserTransfer
      * @throws UserNotFoundException
      */
     public function getSystemUserByHash($hash);

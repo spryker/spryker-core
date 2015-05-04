@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 /**
  * Alternative to ng-app with support for multiple angular instances in a single page
  * @ngdoc directive

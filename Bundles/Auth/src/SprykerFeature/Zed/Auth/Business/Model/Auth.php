@@ -85,11 +85,11 @@ class Auth implements AuthInterface
     }
 
     /**
-     * @param User $user
+     * @param UserUserTransfer $user
      *
      * @return string
      */
-    public function generateToken(User $user)
+    public function generateToken(UserUserTransfer $user)
     {
         return md5(sprintf('%s%s', $user->getPassword(), $user->getIdUserUser()));
     }
@@ -106,11 +106,11 @@ class Auth implements AuthInterface
 
     /**
      * @param string $token
-     * @param User $user
+     * @param UserUserTransfer $user
      *
      * @return string
      */
-    protected function registerAuthorizedUser($token, User $user)
+    protected function registerAuthorizedUser($token, UserUserTransfer $user)
     {
         $key = $this->getSessionKey($token);
         $this->session->set($key, serialize($user));
@@ -220,12 +220,12 @@ class Auth implements AuthInterface
     /**
      * @param string $hash
      *
-     * @return User
+     * @return UserUserTransfer
      * @throws UserNotFoundException
      */
     public function getSystemUserByHash($hash)
     {
-        $user = new \Generated\Shared\Transfer\UserUserTransfer();
+        $user = new UserUserTransfer();
 
         $credentials = $this->bundleSettings->getUsersCredentials();
         $token = $this->staticToken;
@@ -246,7 +246,7 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      *
-     * @return User
+     * @return UserUserTransfer
      */
     public function getCurrentUser($token)
     {
@@ -258,7 +258,7 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      *
-     * @return User
+     * @return UserUserTransfer
      * @throws UserNotLoggedException
      */
     public function unserializeUserFromSession($token)

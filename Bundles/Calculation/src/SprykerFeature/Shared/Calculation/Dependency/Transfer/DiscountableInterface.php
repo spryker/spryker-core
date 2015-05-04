@@ -1,8 +1,9 @@
 <?php
+
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
-use Generated\Shared\Transfer\Discount\DependencyDiscountableItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\Discount\DependencyDiscountItemInterfaceTransfer;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface;
 
 interface DiscountableInterface
 {

@@ -4,6 +4,7 @@ var _ng    = require('Ui').ng;
 var _event = require('../event/TemplateEvent');
 
 
+
 /**
  * Basic Template Controller
  * @ngdoc function

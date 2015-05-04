@@ -6,6 +6,7 @@ var _event = require('../event/TemplateEvent');
 
 
 /**
+ * The template error directive
  * @ngdoc directive
  * @name spyTemplateError
  * @restrict A

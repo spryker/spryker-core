@@ -4,6 +4,8 @@ namespace Functional\SprykerFeature\Zed\Cart;
 
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\Cart\Fixture\CartFacadeFixture;
+use Generated\Shared\Transfer\Cart2CartTransfer;
+use Generated\Shared\Transfer\CartCartItemTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CartBusiness;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -40,21 +42,21 @@ class CartTest extends Test
      */
     public function testAddToCart()
     {
-        $cart = new Cart($this->locator);
-        $cartItem = new Item($this->locator);
+        $cart = new Cart2CartTransfer();
+        $cartItem = new CartCartItemTransfer();
         $cartItem->setId('123');
         $cartItem->setQuantity(3);
-        $cartItems = new ItemCollection($this->locator);
+        $cartItems = new CartCartItemTransfer();
         $cartItems->add($cartItem);
         $cart->setItems($cartItems);
 
-        $newItems = new ItemCollection($this->locator);
-        $newItem = new Item($this->locator);
+        $newItems = new CartCartItemTransfer($this->locator);
+        $newItem = new CartCartItemTransfer($this->locator);
         $newItem->setId('222');
         $newItem->setQuantity(1);
         $newItems->add($newItem);
 
-        $cartChange = new CartChange($this->locator);
+        $cartChange = new CartCartChangeTransfer();
         $cartChange->setCart($cart);
         $cartChange->setChangedItems($newItems);
 
@@ -62,7 +64,7 @@ class CartTest extends Test
 
         $this->assertCount(2, $changedCart->getItems());
 
-        /** @var Item $item */
+        /** @var CartCartItemTransfer $item */
         foreach ($cart->getItems() as $item) {
             if ($item->getId() === $cartItem->getId()) {
                 $this->assertEquals($cartItem->getQuantity(), $item->getQuantity());
@@ -81,21 +83,21 @@ class CartTest extends Test
      */
     public function testIncreaseCartQuantity()
     {
-        $cart = new Cart($this->locator);
-        $cartItem = new Item($this->locator);
+        $cart = new Cart2CartTransfer();
+        $cartItem = new CartCartItemTransfer();
         $cartItem->setId('123');
         $cartItem->setQuantity(3);
-        $cartItems = new ItemCollection($this->locator);
+        $cartItems = new CartCartItemTransfer();
         $cartItems->add($cartItem);
         $cart->setItems($cartItems);
 
-        $newItems = new ItemCollection($this->locator);
-        $newItem = new Item($this->locator);
+        $newItems = new CartCartItemTransfer();
+        $newItem = new CartCartItemTransfer();
         $newItem->setId('123');
         $newItem->setQuantity(1);
         $newItems->add($newItem);
 
-        $cartChange = new CartChange($this->locator);
+        $cartChange = new CartCartChangeTransfer();
         $cartChange->setCart($cart);
         $cartChange->setChangedItems($newItems);
 
@@ -116,21 +118,21 @@ class CartTest extends Test
      */
     public function testRemoveFromCart()
     {
-        $cart = new Cart($this->locator);
-        $cartItem = new Item($this->locator);
+        $cart = new Cart2CartTransfer();
+        $cartItem = new CartCartItemTransfer();
         $cartItem->setId('222');
         $cartItem->setQuantity(1);
-        $cartItems = new ItemCollection($this->locator);
+        $cartItems = new CartCartItemTransfer();
         $cartItems->add($cartItem);
         $cart->setItems($cartItems);
 
-        $newItems = new ItemCollection($this->locator);
-        $newItem = new Item($this->locator);
+        $newItems = new CartCartItemTransfer();
+        $newItem = new CartCartItemTransfer($this->locator);
         $newItem->setId('222');
         $newItem->setQuantity(1);
         $newItems->add($newItem);
 
-        $cartChange = new CartChange($this->locator);
+        $cartChange = new CartCartChangeTransfer();
         $cartChange->setCart($cart);
         $cartChange->setChangedItems($newItems);
 
@@ -147,21 +149,21 @@ class CartTest extends Test
      */
     public function testDecreaseCartItem()
     {
-        $cart = new Cart($this->locator);
-        $cartItem = new Item($this->locator);
+        $cart = new Cart2CartTransfer($this->locator);
+        $cartItem = new CartCartItemTransfer($this->locator);
         $cartItem->setId('123');
         $cartItem->setQuantity(3);
-        $cartItems = new ItemCollection($this->locator);
+        $cartItems = new CartCartItemTransfer($this->locator);
         $cartItems->add($cartItem);
         $cart->setItems($cartItems);
 
-        $newItems = new ItemCollection($this->locator);
-        $newItem = new Item($this->locator);
+        $newItems = new CartCartItemTransfer($this->locator);
+        $newItem = new CartCartItemTransfer($this->locator);
         $newItem->setId('123');
         $newItem->setQuantity(1);
         $newItems->add($newItem);
 
-        $cartChange = new CartChange($this->locator);
+        $cartChange = new CartCartChangeTransfer($this->locator);
         $cartChange->setCart($cart);
         $cartChange->setChangedItems($newItems);
 

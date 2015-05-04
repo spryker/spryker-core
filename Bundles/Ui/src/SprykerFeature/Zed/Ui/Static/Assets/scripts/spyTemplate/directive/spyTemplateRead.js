@@ -6,6 +6,7 @@ var _event = require('../event/TemplateEvent');
 
 
 /**
+ * The template read directive
  * @ngdoc directive
  * @name spyTemplateRead
  * @restrict A

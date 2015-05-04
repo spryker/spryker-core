@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 /**
  * Boolean formater directive
  * @ngdoc directive

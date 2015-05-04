@@ -7,13 +7,10 @@ use Generated\Shared\Transfer\SalesOrderItemTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerEngine\Zed\Kernel\Locator;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
 
 /**
- * Class DistributorTest
  * @group DiscountDistributorTest
  * @group Discount
- * @package Unit\SprykerFeature\Zed\Discount\Business
  */
 class DistributorTest extends Test
 {

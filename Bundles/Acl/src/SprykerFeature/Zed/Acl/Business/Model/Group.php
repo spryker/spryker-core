@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
+use Generated\Shared\Transfer\AclRoleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\AclGroupTransfer;
 
@@ -40,7 +41,7 @@ class Group implements GroupInterface
     /**
      * @param string $name
      *
-     * @return TransferGroup
+     * @return AclGroupTransfer
      */
     public function addGroup($name)
     {
@@ -53,11 +54,11 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param TransferGroup $group
+     * @param AclGroupTransfer $group
      *
-     * @return TransferGroup
+     * @return AclGroupTransfer
      */
-    public function updateGroup(TransferGroup $group)
+    public function updateGroup(AclGroupTransfer $group)
     {
         $original = $this->getGroupById($group->getIdAclGroup());
 
@@ -69,11 +70,11 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param TransferGroup $group
+     * @param AclGroupTransfer $group
      *
-     * @return TransferGroup
+     * @return AclGroupTransfer
      */
-    public function save(TransferGroup $group)
+    public function save(AclGroupTransfer $group)
     {
         $this->assertGroupExists($group);
 
@@ -86,7 +87,7 @@ class Group implements GroupInterface
         $entity->setName($group->getName());
         $entity->save();
 
-        $transfer = new \Generated\Shared\Transfer\AclGroupTransfer();
+        $transfer = new AclGroupTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -95,7 +96,7 @@ class Group implements GroupInterface
     /**
      * @param int $id
      *
-     * @return TransferGroup
+     * @return AclGroupTransfer
      * @throws GroupNotFoundException
      */
     public function getEntityGroupById($id)
@@ -162,13 +163,13 @@ class Group implements GroupInterface
     /**
      * @param int $idUser
      *
-     * @return TransferGroup
+     * @return AclGroupTransfer
      */
     public function getUserGroup($idUser)
     {
         $entity = $this->queryContainer->queryUserGroupByIdUser($idUser)->findOne();
 
-        $transfer = new \Generated\Shared\Transfer\AclGroupTransfer();
+        $transfer = new AclGroupTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -232,11 +233,11 @@ class Group implements GroupInterface
     }
 
     /**
-     * @return GroupCollection
+     * @return AclGroupTransfer
      */
     public function getAllGroups()
     {
-        $collection = new \Generated\Shared\Transfer\AclGroupTransfer();
+        $collection = new AclGroupTransfer();
 
         $results = $this->queryContainer
             ->queryGroup()
@@ -250,13 +251,13 @@ class Group implements GroupInterface
     /**
      * @param string $name
      *
-     * @return TransferGroup
+     * @return AclGroupTransfer
      */
     public function getByName($name)
     {
         $entity = $this->queryContainer->queryGroupByName($name)->findOne();
 
-        $transfer = new \Generated\Shared\Transfer\AclGroupTransfer();
+        $transfer = new AclGroupTransfer();
 
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
@@ -266,14 +267,14 @@ class Group implements GroupInterface
     /**
      * @param int $id
      *
-     * @return TransferGroup
+     * @return AclGroupTransfer
      * @throws GroupNotFoundException
      */
     public function getGroupById($id)
     {
         $entity = $this->getGroupEntityById($id);
 
-        $transfer = new \Generated\Shared\Transfer\AclGroupTransfer();
+        $transfer = new AclGroupTransfer();
 
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
@@ -319,7 +320,7 @@ class Group implements GroupInterface
     /**
      * @param int $idGroup
      *
-     * @return RoleCollection
+     * @return AclRoleTransfer
      * @throws GroupNotFoundException
      */
     public function getRoles($idGroup)
@@ -328,7 +329,7 @@ class Group implements GroupInterface
             ->queryGroupRoles($idGroup)
             ->find();
 
-        $collection = new \Generated\Shared\Transfer\AclRoleTransfer();
+        $collection = new AclRoleTransfer();
 
         $collection = Copy::entityCollectionToTransferCollection($collection, $results, true);
 
@@ -336,11 +337,11 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param TransferGroup $group
+     * @param AclGroupTransfer $group
      *
      * @throws GroupNameExistsException
      */
-    public function assertGroupHasName(transferGroup $group)
+    public function assertGroupHasName(AclGroupTransfer $group)
     {
         if ($this->hasGroupName($group->getName()) === true) {
             throw new GroupNameExistsException();
@@ -348,11 +349,11 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param TransferGroup $group
+     * @param AclGroupTransfer $group
      *
      * @throws GroupNotFoundException
      */
-    public function assertGroupExists(transferGroup $group)
+    public function assertGroupExists(AclGroupTransfer $group)
     {
         if ($group->getIdAclGroup() !== null && $this->hasGroup($group->getIdAclGroup()) === false) {
             throw new GroupNotFoundException();

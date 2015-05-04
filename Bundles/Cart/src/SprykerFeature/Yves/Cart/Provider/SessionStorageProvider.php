@@ -5,9 +5,9 @@ namespace SprykerFeature\Yves\Cart\Provider;
 use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Sdk\Cart\StorageProvider\StorageProviderInterface;
-use Generated\Shared\Transfer\CartCartInterfaceTransfer;
-use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\CartItemInterfaceTransfer;
+use SprykerFeature\Shared\Cart\Transfer\CartInterface;
+use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
+use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionStorageProvider implements StorageProviderInterface

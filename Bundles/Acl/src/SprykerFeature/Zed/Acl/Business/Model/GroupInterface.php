@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\AclGroupTransfer;
+use Generated\Shared\Transfer\AclRoleTransfer;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNameExistsException;
@@ -12,18 +13,18 @@ interface GroupInterface
     /**
      * @param string $name
      *
-     * @return transferGroup
+     * @return AclGroupTransfer
      */
     public function addGroup($name);
 
     /**
-     * @param transferGroup $group
+     * @param AclGroupTransfer $group
      *
-     * @return transferGroup
+     * @return AclGroupTransfer
      * @throws GroupNameExistsException
      * @throws GroupNotFoundException
      */
-    public function save(transferGroup $group);
+    public function save(AclGroupTransfer $group);
 
     /**
      * @param int $idGroup
@@ -58,7 +59,7 @@ interface GroupInterface
     /**
      * @param int $idUser
      *
-     * @return transferGroup
+     * @return AclGroupTransfer
      */
     public function getUserGroup($idUser);
 
@@ -83,14 +84,14 @@ interface GroupInterface
     /**
      * @param string $name
      *
-     * @return transferGroup
+     * @return AclGroupTransfer
      */
     public function getByName($name);
 
     /**
      * @param int $id
      *
-     * @return transferGroup
+     * @return AclGroupTransfer
      * @throws GroupNotFoundException
      */
     public function getGroupById($id);
@@ -106,7 +107,7 @@ interface GroupInterface
     /**
      * @param int $idGroup
      *
-     * @return RoleCollection
+     * @return AclRoleTransfer
      * @throws GroupNotFoundException
      */
     public function getRoles($idGroup);

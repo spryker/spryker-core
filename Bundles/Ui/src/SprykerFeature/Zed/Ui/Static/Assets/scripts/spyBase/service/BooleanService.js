@@ -1,5 +1,13 @@
 'use strict';
 
+
+
+/**
+ * @ngdoc service
+ * @name BooleanService
+ * @param {*} val The value resolving to either <code>true</code> or <code>false</code>
+ * @returns {boolean}
+ */
 require('Ui').ng
 	.module('spyBase')
 	.factory('BooleanService', function() {

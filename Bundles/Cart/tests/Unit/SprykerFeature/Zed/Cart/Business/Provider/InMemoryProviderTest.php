@@ -2,6 +2,9 @@
 
 namespace Unit\SprykerFeature\Zed\Cart\Business\Provider;
 
+use Generated\Shared\Transfer\Cart2CartTransfer;
+use Generated\Shared\Transfer\CartCartItemTransfer;
+use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\InMemoryProvider;
@@ -32,14 +35,14 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
 
         $newItem = $this->createItem($itemId, $newQuantity = 3);
-        $newItems = new ItemCollection(Locator::getInstance());
+        $newItems = new CartCartItemTransfer();
         $newItems->add($newItem);
 
         $changedCart = $this->provider->addItems($cart, $newItems);
         $changedItems = $changedCart->getItems();
         $this->assertCount(1, $changedItems);
 
-        /** @var Item $changedItem */
+        /** @var CartCartItemTransfer $changedItem */
         $changedItem = $changedItems->getFirstItem();
         $this->assertEquals($itemId, $changedItem->getId());
         $this->assertEquals(
@@ -58,7 +61,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
 
         $newItem = $this->createItem($newId = '321', $newQuantity = 3);
-        $newItems = new ItemCollection(Locator::getInstance());
+        $newItems = new CartCartItemTransfer(Locator::getInstance());
         $newItems->add($newItem);
 
         $changedCart = $this->provider->addItems($cart, $newItems);
@@ -88,7 +91,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     {
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
         $newItem = $this->createItem($itemId, $reduceQuantity = 1);
-        $newItems = new ItemCollection(Locator::getInstance());
+        $newItems = new CartCartItemTransfer(Locator::getInstance());
         $newItems->add($newItem);
 
         $changedCart = $this->provider->removeItems($cart, $newItems);
@@ -104,7 +107,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     {
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
         $newItem = $this->createItem($deleteItemId = '321', $reduceQuantity = 1);
-        $newItems = new ItemCollection(Locator::getInstance());
+        $newItems = new CartCartItemTransfer(Locator::getInstance());
         $newItems->add($newItem);
 
         $changedCart = $this->provider->removeItems($cart, $newItems);
@@ -125,7 +128,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     {
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
         $newItem = $this->createItem($itemId, $reduceQuantity = 3);
-        $newItems = new ItemCollection(Locator::getInstance());
+        $newItems = new CartCartItemTransfer(Locator::getInstance());
         $newItems->add($newItem);
 
         $changedCart = $this->provider->removeItems($cart, $newItems);
@@ -145,7 +148,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
 
         $newItem = $this->createItem($newId = '123', $newQuantity = -3);
-        $newItems = new ItemCollection(Locator::getInstance());
+        $newItems = new CartCartItemTransfer(Locator::getInstance());
         $newItems->add($newItem);
 
         $this->provider->addItems($cart, $newItems);
@@ -164,7 +167,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
 
         $newItem = $this->createItem($newId = '123', $newQuantity = 0);
-        $newItems = new ItemCollection(Locator::getInstance());
+        $newItems = new CartCartItemTransfer(Locator::getInstance());
         $newItems->add($newItem);
 
         $this->provider->addItems($cart, $newItems);
@@ -183,7 +186,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
 
         $newItem = $this->createItem($newId = '123', $newQuantity = -3);
-        $newItems = new ItemCollection(Locator::getInstance());
+        $newItems = new CartCartItemTransfer(Locator::getInstance());
         $newItems->add($newItem);
 
         $this->provider->removeItems($cart, $newItems);
@@ -202,7 +205,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
 
         $newItem = $this->createItem($newId = '123', $newQuantity = 0);
-        $newItems = new ItemCollection(Locator::getInstance());
+        $newItems = new CartCartItemTransfer(Locator::getInstance());
         $newItems->add($newItem);
 
         $this->provider->removeItems($cart, $newItems);
@@ -219,9 +222,9 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     protected function createCartWithItem($itemId, $itemQuantity)
     {
         $locator = Locator::getInstance();
-        $cart = new Cart($locator);
+        $cart = new Cart2CartTransfer($locator);
         $existingItem = $this->createItem($itemId, $itemQuantity);
-        $existingItems = new ItemCollection($locator);
+        $existingItems = new CartCartItemTransfer($locator);
         $existingItems->add($existingItem);
         $cart->setItems($existingItems);
 
@@ -236,7 +239,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createItem($itemId, $itemQuantity)
     {
-        $existingItem = new Item(Locator::getInstance());
+        $existingItem = new CartCartItemTransfer(Locator::getInstance());
         $existingItem->setQuantity($itemQuantity);
         $existingItem->setId($itemId);
 

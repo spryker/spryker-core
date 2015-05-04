@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 /**
  * Typeable select input field directive
  * @ngdoc directive

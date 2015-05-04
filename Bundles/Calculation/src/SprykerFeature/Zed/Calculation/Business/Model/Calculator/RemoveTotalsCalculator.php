@@ -2,8 +2,9 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
 
 class RemoveTotalsCalculator extends AbstractCalculator implements
     CalculatorPluginInterface
@@ -13,6 +14,6 @@ class RemoveTotalsCalculator extends AbstractCalculator implements
      */
     public function recalculate(CalculableContainerInterface $calculableContainer)
     {
-        $calculableContainer->setTotals(new \Generated\Shared\Transfer\CalculationTotalsTransfer());
+        $calculableContainer->setTotals(new CalculationTotalsTransfer());
     }
 }
