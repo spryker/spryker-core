@@ -14,7 +14,7 @@ interface UserInterface
      * @param string $username
      * @param string $password
      *
-     * @return TransferUser
+     * @return UserUserTransfer
      * @throws UsernameExistsException
      */
     public function addUser($firstName, $lastName, $username, $password);
@@ -35,12 +35,12 @@ interface UserInterface
     public function validatePassword($password, $hash);
 
     /**
-     * @param TransferUser $data
+     * @param UserUserTransfer $data
      *
-     * @return TransferUser
+     * @return UserUserTransfer
      * @throws UserNotFoundException
      */
-    public function save(TransferUser $data);
+    public function save(UserUserTransfer $data);
 
     /**
      * @param string $username
@@ -59,7 +59,7 @@ interface UserInterface
     /**
      * @param string $username
      *
-     * @return TransferUser
+     * @return UserUserTransfer
      * @throws UserNotFoundException
      */
     public function getUserByUsername($username);
@@ -67,17 +67,17 @@ interface UserInterface
     /**
      * @param int $id
      *
-     * @return TransferUser
+     * @return UserUserTransfer
      * @throws UserNotFoundException
      */
     public function getUserById($id);
 
     /**
-     * @param TransferUser $user
+     * @param UserUserTransfer $user
      *
-     * @return TransferUser
+     * @return UserUserTransfer
      */
-    public function setCurrentUser(TransferUser $user);
+    public function setCurrentUser(UserUserTransfer $user);
 
     /**
      * @return bool
@@ -85,19 +85,19 @@ interface UserInterface
     public function hasCurrentUser();
 
     /**
-     * @param TransferUser $user
+     * @param UserUserTransfer $user
      *
      * @return bool
      */
-    public function isSystemUser(TransferUser $user);
+    public function isSystemUser(UserUserTransfer $user);
 
     /**
-     * @return UserCollection
+     * @return UserUserTransfer
      */
     public function getSystemUsers();
 
     /**
-     * @return TransferUser
+     * @return UserUserTransfer
      * @throws UserNotFoundException
      */
     public function getCurrentUser();
