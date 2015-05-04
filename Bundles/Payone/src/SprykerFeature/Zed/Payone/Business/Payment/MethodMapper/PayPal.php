@@ -1,16 +1,17 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business\Mapper\PaymentMethod;
+namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
 use SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\EWalletContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 
-class CreditCardPseudo extends AbstractMapper
+class PayPal extends AbstractMapper
 {
 
     /**
@@ -18,7 +19,7 @@ class CreditCardPseudo extends AbstractMapper
      */
     public function getName()
     {
-        return self::PAYMENT_METHOD_CREDITCARD_PSEUDO;
+        return self::PAYMENT_METHOD_PAYPAL;
     }
 
     /**
@@ -32,7 +33,7 @@ class CreditCardPseudo extends AbstractMapper
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
         $authorizationContainer->setReference($authorizationData->getReferenceId());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $authorizationContainer->setClearingType(self::CLEARING_TYPE_CREDITCARD);
+        $authorizationContainer->setClearingType(self::CLEARING_TYPE_EWALLET);
         $authorizationContainer->setAmount($authorizationData->getAmount());
 
         $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
@@ -52,7 +53,7 @@ class CreditCardPseudo extends AbstractMapper
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
         $authorizationContainer->setReference($authorizationData->getReferenceId());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $authorizationContainer->setClearingType(self::CLEARING_TYPE_CREDITCARD);
+        $authorizationContainer->setClearingType(self::CLEARING_TYPE_EWALLET);
         $authorizationContainer->setAmount($authorizationData->getAmount());
 
         $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
@@ -63,16 +64,14 @@ class CreditCardPseudo extends AbstractMapper
 
     /**
      * @param AuthorizationDataInterface $authorizationData
-     * @return CreditCardContainer
+     * @return EWalletContainer
      */
     protected function createPaymentMethodContainer(AuthorizationDataInterface $authorizationData)
     {
-        $paymentMethodContainer = new CreditCardContainer();
+        $paymentMethodContainer = new EWalletContainer();
 
-        // @todo get pseudo card pan... interface for incoming payment data (from form)!
-        //$paymentMethodContainer->setPseudoCardPan();
-        // @todo do we need to set redirect container in case 3DSecure?!
-        //$paymentMethodContainer->setRedirect($this->createRedirectContainer());
+        $paymentMethodContainer->setWalletType(self::EWALLET_TYPE_PAYPAL);
+        $paymentMethodContainer->setRedirect($this->createRedirectContainer());
 
         return $paymentMethodContainer;
     }

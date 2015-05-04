@@ -20,7 +20,7 @@ class TestController extends AbstractController implements PayoneApiConstants
 
         $this->getLocator()->payone()->facade()->authorize($authorization);
 
-        die('motherfucker');
+        die('|-o-|');
     }
 
     public function preAuthAction()
@@ -35,7 +35,7 @@ class TestController extends AbstractController implements PayoneApiConstants
 
         $this->getLocator()->payone()->facade()->preAuthorize($authorization);
 
-        die('motherfucker');
+        die('-o-');
     }
 
     public function captureAction()
@@ -54,7 +54,7 @@ class TestController extends AbstractController implements PayoneApiConstants
 
         $this->getLocator()->payone()->facade()->capture($capture);
 
-        die('motherfucker');
+        die('|-o-|');
     }
 
     public function debitAction()
@@ -70,7 +70,7 @@ class TestController extends AbstractController implements PayoneApiConstants
 
         $this->getLocator()->payone()->facade()->debit($debit);
 
-        die('motherfucker');
+        die('|-o-|');
     }
 
     public function paypalAction()
@@ -86,7 +86,7 @@ class TestController extends AbstractController implements PayoneApiConstants
 
         $this->getLocator()->payone()->facade()->authorize($authorization);
 
-        die('motherfucker');
+        die('|-o-|');
     }
 
     /**
@@ -117,7 +117,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $payoneFacade = $this->getLocator()->payone()->facade();
         $payoneFacade->myTest();
 
-        die('motherfucker');
+        die('|-o-|');
     }
 
 }
