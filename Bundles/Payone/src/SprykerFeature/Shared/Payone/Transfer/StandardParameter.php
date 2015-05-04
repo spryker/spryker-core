@@ -4,6 +4,7 @@ namespace SprykerFeature\Shared\Payone\Transfer;
 
 
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+use SprykerFeature\Shared\Payone\Dependency\StandardParameterInterface;
 
 class StandardParameter extends AbstractTransfer implements StandardParameterInterface
 {

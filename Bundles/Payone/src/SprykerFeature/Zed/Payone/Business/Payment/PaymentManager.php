@@ -112,7 +112,7 @@ class PaymentManager
      */
     public function authorize(AuthorizationDataInterface $authorizationData)
     {
-        $paymentMethodMapper = $this->findPaymentMethodMapperByName($authorizationData->getPayment()->getPaymentMethod());
+        $paymentMethodMapper = $this->findPaymentMethodMapperByName($authorizationData->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapAuthorization($authorizationData);
         $responseContainer = $this->performAuthorization($authorizationData, $requestContainer);
 
@@ -125,7 +125,7 @@ class PaymentManager
      */
     public function preAuthorize(AuthorizationDataInterface $authorizationData)
     {
-        $paymentMethodMapper = $this->findPaymentMethodMapperByName($authorizationData->getPayment()->getPaymentMethod());
+        $paymentMethodMapper = $this->findPaymentMethodMapperByName($authorizationData->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapPreAuthorization($authorizationData);
         $responseContainer = $this->performAuthorization($authorizationData, $requestContainer);
 
