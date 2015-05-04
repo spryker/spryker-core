@@ -11,4 +11,3 @@ class CollectionFixture extends ItemCollection
     {
     }
 }
- 

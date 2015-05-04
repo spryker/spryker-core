@@ -3,10 +3,10 @@
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use SprykerFeature\Shared\Sales\Transfer\Order;
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
+use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use SprykerEngine\Zed\Kernel\Locator;
 

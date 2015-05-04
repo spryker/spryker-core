@@ -3,8 +3,7 @@
 namespace SprykerFeature\Zed\Salesrule\Business\Model\Action;
 
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
-use SprykerFeature\Shared\Calculation\Transfer\Expense;
-use SprykerFeature\Shared\Calculation\Transfer\ExpenseCollection;
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
 
 class PercentShipping extends AbstractAction
 {

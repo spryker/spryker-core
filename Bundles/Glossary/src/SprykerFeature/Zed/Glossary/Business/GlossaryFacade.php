@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Glossary\Business;
 use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use SprykerFeature\Shared\Glossary\Transfer\Translation;
+use Generated\Shared\Transfer\GlossaryTranslationTransfer;
 use SprykerFeature\Zed\Glossary\Business\Exception;
 use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;

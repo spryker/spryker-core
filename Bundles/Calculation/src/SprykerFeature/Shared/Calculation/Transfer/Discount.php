@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Shared\Calculation\Transfer;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountItemInterfaceTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 
 class Discount extends AbstractTransfer implements DiscountItemInterface
@@ -21,7 +21,7 @@ class Discount extends AbstractTransfer implements DiscountItemInterface
     protected $scope = null;
 
     protected $usedCodes = array(
-        
+
     );
 
     /**

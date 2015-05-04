@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\DecisionRule;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule as DecisionRule;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 

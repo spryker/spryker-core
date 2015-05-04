@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Shared\Cart\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\Transfer\Calculation\DependencyCalculableItemCollectionInterfaceTransfer;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
 
 interface CartInterface extends DiscountableContainerInterface
 {

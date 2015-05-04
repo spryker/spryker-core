@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Discount\Dependency\Plugin;
 
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
 
 interface DiscountCollectorPluginInterface
 {

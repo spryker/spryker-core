@@ -4,11 +4,11 @@ namespace Functional\SprykerFeature\Zed\Discount\Business\DecisionRule;
 
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 
 /**
  * Class MinimumCartSubtotalTest

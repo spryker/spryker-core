@@ -1,14 +1,11 @@
-<?php 
+<?php
 
 namespace SprykerFeature\Shared\Sales\Transfer;
 
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountableInterface;
-use SprykerFeature\Shared\Calculation\Transfer\Discount;
-use SprykerFeature\Shared\Calculation\Transfer\DiscountCollection;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface;
+use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 
 class OrderItemOption extends AbstractTransfer implements OptionItemInterface, DiscountableInterface
 {

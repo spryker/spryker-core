@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Auth\Business\Model;
 
-use SprykerFeature\Shared\User\Transfer\User;
+use Generated\Shared\Transfer\UserUserTransfer;
 use SprykerFeature\Zed\Auth\Business\Exception\UserNotLoggedException;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 

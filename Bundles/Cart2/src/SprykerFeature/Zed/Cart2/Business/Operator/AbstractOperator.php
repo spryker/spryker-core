@@ -3,10 +3,10 @@
 namespace SprykerFeature\Zed\Cart2\Business\Operator;
 
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
-use SprykerFeature\Shared\Cart2\Transfer\CartChangeInterface;
-use SprykerFeature\Shared\Cart2\Transfer\CartInterface;
+use Generated\Shared\Transfer\Cart2CartChangeInterfaceTransfer;
+use Generated\Shared\Transfer\Cart2CartInterfaceTransfer;
 use Psr\Log\LoggerInterface;
-use SprykerFeature\Shared\Cart2\Transfer\ItemCollectionInterface;
+use Generated\Shared\Transfer\Cart2ItemCollectionInterfaceTransfer;
 use SprykerFeature\Zed\Cart2\Business\StorageProvider\StorageProviderInterface;
 
 abstract class AbstractOperator implements OperatorInterface

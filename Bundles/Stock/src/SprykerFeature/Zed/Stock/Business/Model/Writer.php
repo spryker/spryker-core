@@ -4,8 +4,8 @@ namespace SprykerFeature\Zed\Stock\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Stock\Transfer\StockProduct;
-use SprykerFeature\Shared\Stock\Transfer\StockType;
+use Generated\Shared\Transfer\StockStockProductTransfer;
+use Generated\Shared\Transfer\StockStockTypeTransfer;
 use SprykerFeature\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use SprykerFeature\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use SprykerFeature\Zed\Stock\Business\Exception\StockTypeNotFoundException;

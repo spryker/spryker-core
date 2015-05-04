@@ -1,7 +1,7 @@
 <?php
 namespace SprykerFeature\Zed\Salesrule\Business\Model\Condition;
 
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 
 /**
  * This class is used for unit tests only

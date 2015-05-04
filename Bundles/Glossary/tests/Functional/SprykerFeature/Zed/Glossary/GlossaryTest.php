@@ -12,7 +12,7 @@ use SprykerEngine\Zed\Kernel\Persistence\Factory;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
-use SprykerFeature\Shared\Glossary\Transfer\Translation;
+use Generated\Shared\Transfer\GlossaryTranslationTransfer;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;

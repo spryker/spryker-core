@@ -3,15 +3,14 @@
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
+use Generated\Shared\Transfer\AclGroupTransfer;
+
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
-use SprykerFeature\Shared\Acl\Transfer\GroupCollection;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclGroup;
 use SprykerFeature\Zed\Library\Copy;
-use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
 use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use SprykerFeature\Shared\Acl\Transfer\Group as TransferGroup;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNameExistsException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;

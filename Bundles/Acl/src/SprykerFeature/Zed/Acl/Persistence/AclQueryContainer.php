@@ -7,7 +7,6 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclUserHasGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclGroupsHasRolesTableMap;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclGroupTableMap;

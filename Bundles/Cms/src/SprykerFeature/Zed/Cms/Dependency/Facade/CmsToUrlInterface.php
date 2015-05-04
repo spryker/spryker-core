@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Cms\Dependency\Facade;
 
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Shared\Url\Transfer\Url;
+use Generated\Shared\Transfer\UrlUrlTransfer;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface CmsToUrlInterface

@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Category\Dependency\Facade;
 
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Locale\Dto\LocaleDto;
-use SprykerFeature\Shared\Url\Transfer\Url;
+use Generated\Shared\Transfer\UrlUrlTransfer;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface CategoryToUrlInterface

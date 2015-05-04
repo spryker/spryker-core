@@ -4,7 +4,7 @@
 namespace SprykerFeature\Zed\Mail\Business;
 
 
-use SprykerFeature\Shared\Mail\Transfer\MailTransfer;
+use Generated\Shared\Transfer\MailMailTransferTransfer;
 
 class MandrillMailSender implements MailSenderInterface
 {

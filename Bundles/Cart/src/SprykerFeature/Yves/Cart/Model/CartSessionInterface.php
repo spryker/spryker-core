@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Yves\Cart\Model;
 
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 
 interface CartSessionInterface
 {

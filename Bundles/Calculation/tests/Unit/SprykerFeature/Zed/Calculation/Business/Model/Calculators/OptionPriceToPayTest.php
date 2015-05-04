@@ -3,11 +3,11 @@
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Shared\Calculation\Transfer\Discount;
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use SprykerFeature\Shared\Sales\Transfer\Order;
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
-use SprykerFeature\Shared\Sales\Transfer\OrderItemOption;
+use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\SalesOrderItemOptionTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\OptionPriceToPayCalculator;
 use SprykerEngine\Zed\Kernel\Locator;
 

@@ -2,12 +2,9 @@
 
 namespace SprykerFeature\Zed\Sales\Business;
 
-use SprykerFeature\Shared\Sales\Transfer\CommentCollection;
-use SprykerFeature\Shared\Sales\Transfer\Order;
-use SprykerFeature\Shared\Sales\Transfer\OrderItemCollection;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Sales\Business\Internal\Install;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 

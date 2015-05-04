@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Stock\Business;
 
-use SprykerFeature\Shared\Stock\Transfer\StockProduct;
-use SprykerFeature\Shared\Stock\Transfer\StockType;
+use Generated\Shared\Transfer\StockStockProductTransfer;
+use Generated\Shared\Transfer\StockStockTypeTransfer;
 use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStock;

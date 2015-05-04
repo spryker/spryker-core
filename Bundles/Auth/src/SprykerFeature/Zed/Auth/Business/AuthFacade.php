@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Auth\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\User\Transfer\User;
+use Generated\Shared\Transfer\UserUserTransfer;
 
 /**
  * @method AuthDependencyContainer getDependencyContainer()

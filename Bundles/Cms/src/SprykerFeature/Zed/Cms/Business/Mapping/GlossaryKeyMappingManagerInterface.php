@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Cms\Business\Mapping;
 
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Shared\Cms\Transfer\Page;
-use SprykerFeature\Shared\Cms\Transfer\PageKeyMapping;
+use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\CmsPageKeyMappingTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;

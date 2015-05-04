@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Category\Business\Model;
 
 use SprykerEngine\Shared\Locale\Dto\LocaleDto;
-use SprykerFeature\Shared\Category\Transfer\Category as CategoryTransfer;
+use Generated\Shared\Transfer\CategoryCategory as CategoryTransferTransfer;
 
 interface CategoryWriterInterface
 {

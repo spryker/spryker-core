@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Yves\Cart\Tracking;
 
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
 use Generated\Yves\Factory;
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Yves\Library\Tracking\DataProvider\AbstractDataProvider;

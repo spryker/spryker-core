@@ -2,7 +2,7 @@
 namespace SprykerFeature\Zed\Price\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\Price\Transfer\Product;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 

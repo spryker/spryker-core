@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 namespace SprykerFeature\Shared\Calculation\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalItemCollectionInterface;
+use Generated\Shared\Transfer\Calculation\DependencyDiscountTotalItemCollectionInterfaceTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection;
 
 class DiscountTotalItemCollection extends AbstractTransferCollection implements DiscountTotalItemCollectionInterface

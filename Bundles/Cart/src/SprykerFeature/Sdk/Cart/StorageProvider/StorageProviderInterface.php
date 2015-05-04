@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Sdk\Cart\StorageProvider;
 
-use SprykerFeature\Shared\Cart\Transfer\CartInterface;
+use Generated\Shared\Transfer\CartCartInterfaceTransfer;
 
 interface StorageProviderInterface
 {

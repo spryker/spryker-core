@@ -7,11 +7,10 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Library\Copy;
-use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
-use SprykerFeature\Shared\Acl\Transfer\RuleCollection;
-use SprykerFeature\Shared\User\Transfer\User;
+use Generated\Shared\Transfer\AclRoleTransfer;
+use Generated\Shared\Transfer\UserUserTransfer;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use SprykerFeature\Shared\Acl\Transfer\Rule as TransferRule;
+use Generated\Shared\Transfer\AclRuleTransfer;
 
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;

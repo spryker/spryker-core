@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
-use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
+use Generated\Shared\Transfer\CartItemInterfaceTransfer;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
-use SprykerFeature\Shared\Cart\Transfer\CartChangeInterface;
-use SprykerFeature\Shared\Cart\Transfer\CartInterface;
+use Generated\Shared\Transfer\CartCartChangeInterfaceTransfer;
+use Generated\Shared\Transfer\CartCartInterfaceTransfer;
 use Psr\Log\LoggerInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
+use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Calculator;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountItemInterfaceTransfer;
 
 class Fixed
 {

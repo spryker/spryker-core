@@ -6,11 +6,10 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 use SprykerFeature\Zed\Library\Copy;
-use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
 use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use SprykerFeature\Shared\Acl\Transfer\Role as TransferRole;
+use Generated\Shared\Transfer\AclRoleTransfer;
 use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
 use SprykerFeature\Zed\Acl\Business\Exception\RoleNameExistsException;
 

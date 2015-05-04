@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\StockSalesConnector\Communication\Plugin;
 
-use SprykerFeature\Shared\Stock\Transfer\StockProduct;
+use Generated\Shared\Transfer\StockStockProductTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Sales\Dependency\Plugin\ManagerStockPluginInterface;
 use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;

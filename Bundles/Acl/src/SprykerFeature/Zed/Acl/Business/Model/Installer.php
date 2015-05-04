@@ -3,9 +3,6 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Acl\Transfer\GroupCollection;
-use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
-use SprykerFeature\Shared\Acl\Transfer\RuleCollection;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 

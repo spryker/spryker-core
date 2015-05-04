@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Shared\Discount\Dependency\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
+use Generated\Shared\Transfer\Calculation\DependencyCalculableItemInterfaceTransfer;
 
 interface DiscountableItemInterface extends CalculableItemInterface
 {

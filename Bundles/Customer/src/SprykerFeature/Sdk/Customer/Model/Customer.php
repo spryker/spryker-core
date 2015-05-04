@@ -4,8 +4,8 @@ namespace SprykerFeature\Sdk\Customer\Model;
 
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Customer\Transfer\Customer as CustomerTransfer;
-use SprykerFeature\Shared\Customer\Transfer\Address as AddressTransfer;
+use Generated\Shared\Transfer\CustomerCustomer as CustomerTransferTransfer;
+use Generated\Shared\Transfer\CustomerAddress as AddressTransferTransfer;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use SprykerFeature\Sdk\ZedRequest\Client\Response;
 use Generated\Zed\Ide\AutoCompletion;

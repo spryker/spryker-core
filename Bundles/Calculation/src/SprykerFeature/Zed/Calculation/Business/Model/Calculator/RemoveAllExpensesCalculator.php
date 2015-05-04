@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
 
 class RemoveAllExpensesCalculator extends AbstractCalculator implements
     CalculatorPluginInterface

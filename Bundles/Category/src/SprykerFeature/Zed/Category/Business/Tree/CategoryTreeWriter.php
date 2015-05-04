@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\Category\Business\Tree;
 use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
-use SprykerFeature\Shared\Category\Transfer\CategoryNode;
+use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use SprykerFeature\Zed\Category\Business\Model\CategoryWriterInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;

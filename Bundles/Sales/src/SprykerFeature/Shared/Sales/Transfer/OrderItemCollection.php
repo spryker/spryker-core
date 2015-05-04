@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Shared\Sales\Transfer;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableItemCollectionInterfaceTransfer;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableItemInterfaceTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection;
 
 class OrderItemCollection extends AbstractTransferCollection implements DiscountableItemCollectionInterface

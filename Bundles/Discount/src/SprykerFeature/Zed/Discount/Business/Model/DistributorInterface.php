@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableItemInterfaceTransfer;
 
 interface DistributorInterface
 {

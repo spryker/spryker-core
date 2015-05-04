@@ -4,7 +4,7 @@
 namespace Unit\SprykerFeature\Zed\Mail\Business;
 
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Mail\Transfer\MailTransfer;
+use Generated\Shared\Transfer\MailMailTransferTransfer;
 use SprykerFeature\Zed\Mail\Business\MandrillMailSender;
 
 class MailSenderTest extends \PHPUnit_Framework_TestCase

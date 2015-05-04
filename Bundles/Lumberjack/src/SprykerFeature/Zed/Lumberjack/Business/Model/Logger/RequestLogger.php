@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Lumberjack\Business\Model\Logger;
 
-use SprykerFeature\Shared\Lumberjack\Transfer\MetaRequest;
+use Generated\Shared\Transfer\LumberjackMetaRequestTransfer;
 use Guzzle\Http\QueryString;
 use SprykerFeature\Shared\Lumberjack\Code\Log\Helper;
 use SprykerFeature\Shared\Lumberjack\Code\Log\Types;

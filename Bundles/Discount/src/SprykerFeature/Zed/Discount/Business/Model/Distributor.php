@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableItemInterfaceTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 
 class Distributor implements

@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
 use SprykerFeature\Zed\Auth\Business\Exception\UserNotLoggedException;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use SprykerFeature\Zed\User\Business\UserFacade;
-use SprykerFeature\Shared\User\Transfer\User;
+use Generated\Shared\Transfer\UserUserTransfer;
 
 class Auth implements AuthInterface
 {

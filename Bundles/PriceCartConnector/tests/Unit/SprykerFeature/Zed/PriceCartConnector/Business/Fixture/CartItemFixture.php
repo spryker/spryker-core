@@ -3,7 +3,7 @@
 namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
+use Generated\Shared\Transfer\CartItemInterfaceTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 
 class CartItemFixture extends AbstractTransfer implements ItemInterface
@@ -51,4 +51,3 @@ class CartItemFixture extends AbstractTransfer implements ItemInterface
         // TODO: Implement setQuantity() method.
     }
 }
- 

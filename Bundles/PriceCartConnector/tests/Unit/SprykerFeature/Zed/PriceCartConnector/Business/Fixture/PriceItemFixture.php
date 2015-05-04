@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\PriceItemInterface;
+use Generated\Shared\Transfer\Calculation\DependencyPriceItemInterfaceTransfer;
 
 class PriceItemFixture extends CartItemFixture implements PriceItemInterface
 {
@@ -46,4 +46,3 @@ class PriceItemFixture extends CartItemFixture implements PriceItemInterface
     }
 
 }
- 

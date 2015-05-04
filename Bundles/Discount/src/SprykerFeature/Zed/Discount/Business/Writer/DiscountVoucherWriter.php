@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
-use SprykerFeature\Shared\Discount\Transfer\DiscountVoucher;
+use Generated\Shared\Transfer\DiscountDiscountVoucherTransfer;
 
 /**
  * Class DiscountVoucherManager

@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Shared\Calculation\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalItemCollectionInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalItemInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalsInterface;
+use Generated\Shared\Transfer\Calculation\DependencyDiscountTotalItemCollectionInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyDiscountTotalItemInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyDiscountTotalsInterfaceTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 
 class DiscountTotals extends AbstractTransfer implements DiscountTotalsInterface

@@ -3,7 +3,7 @@ namespace SprykerFeature\Zed\Checkout\Business\Model\Workflow\Definition;
 
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Zed\Checkout\Business\Model\Workflow\Context;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 use SprykerFeature\Zed\Library\Workflow\ContextInterface;

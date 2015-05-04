@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Glossary\Business\Translation;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use SprykerFeature\Shared\Glossary\Transfer\Translation;
+use Generated\Shared\Transfer\GlossaryTranslationTransfer;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;

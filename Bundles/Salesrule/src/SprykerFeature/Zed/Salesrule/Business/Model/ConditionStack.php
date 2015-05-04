@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Salesrule\Business\Model;
 
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Zed\Salesrule\Business\Model\Condition\AbstractCondition;
 
 class ConditionStack extends \ArrayObject

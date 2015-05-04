@@ -2,16 +2,16 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
-use SprykerFeature\Shared\Calculation\Transfer\TaxItem;
+use Generated\Shared\Transfer\Calculation\DependencyTaxInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
+use Generated\Shared\Transfer\CalculationTaxItemTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxableItemInterface;
+use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyCalculableItemCollectionInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyCalculableItemInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyExpenseContainerInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyTaxableItemInterfaceTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 
 class TaxTotalsCalculator extends AbstractCalculator implements TotalsCalculatorPluginInterface

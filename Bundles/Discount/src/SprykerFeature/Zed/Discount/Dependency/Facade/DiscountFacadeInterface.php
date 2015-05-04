@@ -3,19 +3,19 @@
 namespace SprykerFeature\Zed\Discount\Dependency\Facade;
 
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
-use SprykerFeature\Shared\Discount\Transfer\Discount;
-use SprykerFeature\Shared\Discount\Transfer\DiscountVoucher;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\Transfer\DiscountDiscountTransfer;
+use Generated\Shared\Transfer\DiscountDiscountVoucherTransfer;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule as DecisionRule;
-use SprykerFeature\Shared\Discount\Transfer\DiscountVoucherPool;
+use Generated\Shared\Transfer\DiscountDiscountVoucherPoolTransfer;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use SprykerFeature\Shared\Discount\Transfer\DiscountVoucherPoolCategory;
+use Generated\Shared\Transfer\DiscountDiscountVoucherPoolCategoryTransfer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategory;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
-use SprykerFeature\Shared\Discount\Transfer\DiscountDecisionRule;
+use Generated\Shared\Transfer\DiscountDiscountDecisionRuleTransfer;
 
 interface DiscountFacadeInterface
 {

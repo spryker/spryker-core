@@ -2,16 +2,10 @@
 
 namespace SprykerFeature\Shared\Sales\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface;
-use SprykerFeature\Shared\Calculation\Transfer\Discount;
-use SprykerFeature\Shared\Calculation\Transfer\DiscountCollection;
-use SprykerFeature\Shared\Calculation\Transfer\ExpenseCollection;
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
-use SprykerFeature\Shared\Calculation\Transfer\Expense;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use SprykerFeature\Zed\Salesrule\Business\Model\DiscountableItemInterface;
 
 class OrderItem extends AbstractTransfer implements DiscountableItemInterface
 {

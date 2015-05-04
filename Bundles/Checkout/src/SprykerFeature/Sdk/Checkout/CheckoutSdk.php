@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Sdk\Checkout;
 
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerEngine\Sdk\Kernel\AbstractSdk;
 
 /**

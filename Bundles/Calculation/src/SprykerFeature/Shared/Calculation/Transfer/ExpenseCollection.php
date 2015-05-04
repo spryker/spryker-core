@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Shared\Calculation\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface;
+use Generated\Shared\Transfer\Calculation\DependencyExpenseItemInterfaceTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface;
+use Generated\Shared\Transfer\Calculation\DependencyExpenseItemCollectionInterfaceTransfer;
 
 class ExpenseCollection extends AbstractTransferCollection implements ExpenseItemCollectionInterface
 {

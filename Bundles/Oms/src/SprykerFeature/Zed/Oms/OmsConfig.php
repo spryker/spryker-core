@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Oms;
 
-use SprykerFeature\Shared\Sales\Transfer\Order as OrderTransfer;
+use Generated\Shared\Transfer\SalesOrder as OrderTransferTransfer;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;

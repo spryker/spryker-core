@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 namespace SprykerFeature\Shared\Calculation\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxItemInterface;
+use Generated\Shared\Transfer\Calculation\DependencyTaxItemInterfaceTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 
 class TaxItem extends AbstractTransfer implements TaxItemInterface

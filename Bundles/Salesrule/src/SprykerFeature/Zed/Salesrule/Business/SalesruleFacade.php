@@ -2,10 +2,9 @@
 
 namespace SprykerFeature\Zed\Salesrule\Business;
 
-use SprykerFeature\Shared\Calculation\Transfer\DiscountCollection;
-use SprykerFeature\Shared\Sales\Transfer\Order;
-use SprykerFeature\Shared\Salesrule\Transfer\CodePool;
-use SprykerFeature\Shared\Salesrule\Transfer\Item;
+use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\SalesruleCodePoolTransfer;
+use Generated\Shared\Transfer\SalesruleItemTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Salesrule\Business\Model\ConditionStack;
 use SprykerFeature\Zed\Salesrule\Business\Model\DiscountableItemInterface;

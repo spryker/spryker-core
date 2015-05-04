@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use SprykerFeature\Shared\Library\TransferLoader;
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Shared\Catalog\Code\ProductAttributeConstantInterface;
 
 class DefaultOrderSplitBundleItemBuilder extends OrderItemBuilder implements ProductAttributeConstantInterface

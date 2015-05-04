@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Salesrule\Business\Model\Condition;
 
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Zed\Library\Form\Element\DateTimePicker;
 use SprykerFeature\Zed\Library\Validator\DateTimeFormat;
 use SprykerFeature\Zed\Salesrule\Business\Model\Logger;

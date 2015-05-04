@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Collector;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
 
 class Item implements CollectorInterface
 {

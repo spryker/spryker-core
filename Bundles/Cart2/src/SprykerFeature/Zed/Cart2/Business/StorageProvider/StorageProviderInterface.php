@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Cart2\Business\StorageProvider;
 
-use SprykerFeature\Shared\Cart2\Transfer\CartInterface;
-use SprykerFeature\Shared\Cart2\Transfer\ItemCollectionInterface;
+use Generated\Shared\Transfer\Cart2CartInterfaceTransfer;
+use Generated\Shared\Transfer\Cart2ItemCollectionInterfaceTransfer;
 
 interface StorageProviderInterface
 {

@@ -3,8 +3,7 @@
 namespace SprykerFeature\Zed\User\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\User\Transfer\User;
-use SprykerFeature\Shared\User\Transfer\UserCollection;
+use Generated\Shared\Transfer\UserUserTransfer;
 
 /**
  * @method UserDependencyContainer getDependencyContainer()

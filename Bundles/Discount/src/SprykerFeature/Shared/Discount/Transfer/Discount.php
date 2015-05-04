@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 namespace SprykerFeature\Shared\Discount\Transfer;
 
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountItemInterfaceTransfer;
 
 class Discount extends AbstractTransfer implements
     DiscountItemInterface

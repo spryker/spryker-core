@@ -1,8 +1,8 @@
 <?php
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
-use SprykerFeature\Shared\Cart\Transfer\CartChangeInterface;
-use SprykerFeature\Shared\Cart\Transfer\CartInterface;
+use Generated\Shared\Transfer\CartCartChangeInterfaceTransfer;
+use Generated\Shared\Transfer\CartCartInterfaceTransfer;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 interface OperatorInterface

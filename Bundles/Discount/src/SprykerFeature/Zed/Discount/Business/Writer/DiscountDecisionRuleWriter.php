@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
-use SprykerFeature\Shared\Discount\Transfer\DiscountDecisionRule;
+use Generated\Shared\Transfer\DiscountDiscountDecisionRuleTransfer;
 
 /**
  * Class DiscountDecisionRuleManager

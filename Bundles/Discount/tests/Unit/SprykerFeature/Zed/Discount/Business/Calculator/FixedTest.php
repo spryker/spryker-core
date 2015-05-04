@@ -5,7 +5,7 @@ namespace Unit\SprykerFeature\Zed\Discount\Business\Calculator;
 use Codeception\TestCase\Test;
 use SprykerFeature\Zed\Discount\Business\Calculator\Fixed;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
 
 /**
  * Class FixedTest

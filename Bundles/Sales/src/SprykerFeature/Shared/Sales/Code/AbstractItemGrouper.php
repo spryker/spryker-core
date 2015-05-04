@@ -3,7 +3,6 @@
 namespace SprykerFeature\Shared\Sales\Code;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Sales\Transfer\OrderItemCollection;
 use SprykerEngine\Zed\Kernel\Locator;
 
 /**

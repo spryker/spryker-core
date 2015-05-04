@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Salesrule\Communication\Controller\Widget;
 
 use SprykerFeature\Shared\Library\TransferLoader;
-use SprykerFeature\Shared\Salesrule\Transfer\Condition;
+use Generated\Shared\Transfer\SalesruleConditionTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection;
 use SprykerFeature\Zed\Library\Controller\Action\AbstractGridController;
 use Symfony\Component\HttpFoundation\Request;

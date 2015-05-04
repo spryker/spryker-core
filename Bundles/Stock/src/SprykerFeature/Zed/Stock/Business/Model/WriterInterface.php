@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Stock\Business\Model;
 
-use SprykerFeature\Shared\Stock\Transfer\StockProduct;
-use SprykerFeature\Shared\Stock\Transfer\StockType;
+use Generated\Shared\Transfer\StockStockProductTransfer;
+use Generated\Shared\Transfer\StockStockTypeTransfer;
 
 interface WriterInterface
 {

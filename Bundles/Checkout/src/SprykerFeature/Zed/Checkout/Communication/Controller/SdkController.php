@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Checkout\Communication\Controller;
 
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
 

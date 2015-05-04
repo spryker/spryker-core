@@ -5,9 +5,9 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 use SprykerFeature\Shared\Library\TransferLoader;
 use SprykerFeature\Shared\Sales\Code\Messages;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
-use SprykerFeature\Shared\Sales\Transfer\Order as OrderTransfer;
+use Generated\Shared\Transfer\SalesOrder as OrderTransferTransfer;
 use SprykerFeature\Zed\Library\Copy;
-use SprykerFeature\Shared\Sales\Transfer\RegularRedirectPaymentCancellation as RegularRedirectPaymentCancellationTransfer;
+use Generated\Shared\Transfer\SalesRegularRedirectPaymentCancellation as RegularRedirectPaymentCancellationTransferTransfer;
 
 class SdkController extends AbstractSdkController
 {

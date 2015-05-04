@@ -2,15 +2,14 @@
 
 namespace SprykerFeature\Zed\Customer\Business\Customer;
 
-use SprykerFeature\Shared\Customer\Transfer\Customer as CustomerTransfer;
-use SprykerFeature\Shared\Customer\Transfer\Address as AddressTransfer;
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddress;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Shared\Customer\Transfer\AddressCollection as AddressTransferCollection;
+use Generated\Shared\Transfer\CustomerAddressTransfer;
 use DateTime;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;

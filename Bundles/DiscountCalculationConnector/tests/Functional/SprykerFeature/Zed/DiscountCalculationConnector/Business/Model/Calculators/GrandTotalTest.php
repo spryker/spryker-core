@@ -3,12 +3,12 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Codeception\TestCase\Test;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Sales\Transfer\Order;
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
-use SprykerFeature\Shared\Calculation\Transfer\Discount;
-use SprykerFeature\Shared\Calculation\Transfer\Expense;
+use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;

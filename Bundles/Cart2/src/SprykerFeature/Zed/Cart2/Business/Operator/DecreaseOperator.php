@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Cart2\Business\Operator;
 
 use SprykerFeature\Shared\Cart2\Messages\Messages;
-use SprykerFeature\Shared\Cart2\Transfer\CartInterface;
-use SprykerFeature\Shared\Cart2\Transfer\ItemCollectionInterface;
+use Generated\Shared\Transfer\Cart2CartInterfaceTransfer;
+use Generated\Shared\Transfer\Cart2ItemCollectionInterfaceTransfer;
 
 class DecreaseOperator extends AbstractOperator
 {

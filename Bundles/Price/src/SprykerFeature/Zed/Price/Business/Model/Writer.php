@@ -6,7 +6,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
 use SprykerFeature\Zed\Price\Dependency\Facade\PriceToTouchInterface;
-use SprykerFeature\Shared\Price\Transfer\Product;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
 use Propel\Runtime\Exception\PropelException;

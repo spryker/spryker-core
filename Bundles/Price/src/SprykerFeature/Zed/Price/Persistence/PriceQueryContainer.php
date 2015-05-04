@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Price\Persistence;
 
-use SprykerFeature\Shared\Price\Transfer\Product;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Price\Persistence\Propel\Map\SpyPriceTypeTableMap;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProductQuery;

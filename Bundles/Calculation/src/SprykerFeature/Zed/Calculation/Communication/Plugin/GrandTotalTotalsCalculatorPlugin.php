@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\Calculation\Communication\Plugin;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use SprykerFeature\Zed\Calculation\Communication\CalculationDependencyContainer;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
+use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyCalculableItemCollectionInterfaceTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

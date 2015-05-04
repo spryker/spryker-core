@@ -8,10 +8,10 @@ use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 use SprykerEngine\Yves\Kernel\Locator;
 use SprykerFeature\Sdk\Cart2\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Sdk\ZedRequest\Client\ZedClient;
-use SprykerFeature\Shared\Cart2\Transfer\CartChangeInterface;
-use SprykerFeature\Shared\Cart2\Transfer\CartInterface as CartTransferInterface;
-use SprykerFeature\Shared\Cart2\Transfer\ItemCollectionInterface;
-use SprykerFeature\Shared\Cart2\Transfer\ItemInterface;
+use Generated\Shared\Transfer\Cart2CartChangeInterfaceTransfer;
+use Generated\Shared\Transfer\Cart2CartInterface as CartTransferInterfaceTransfer;
+use Generated\Shared\Transfer\Cart2ItemCollectionInterfaceTransfer;
+use Generated\Shared\Transfer\Cart2ItemInterfaceTransfer;
 
 class Cart implements CartInterface
 {

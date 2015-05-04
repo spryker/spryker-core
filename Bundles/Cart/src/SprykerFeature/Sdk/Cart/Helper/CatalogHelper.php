@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Sdk\Cart\Helper;
 
-use SprykerFeature\Shared\Sales\Transfer\OrderItemCollection;
 use SprykerFeature\Sdk\Catalog\Model\Catalog;
 use SprykerFeature\Sdk\Catalog\Model\CatalogInterface;
 

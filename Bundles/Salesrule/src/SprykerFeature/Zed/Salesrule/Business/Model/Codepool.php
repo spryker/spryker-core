@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Salesrule\Business\Model;
 
-use SprykerFeature\Shared\Salesrule\Transfer\CodePool as CodePoolTransfer;
+use Generated\Shared\Transfer\SalesruleCodePool as CodePoolTransferTransfer;
 use SprykerFeature\Zed\Library\Copy;
 
 class Codepool

@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\Mail\Business;
 
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\Mail\Transfer\MailTransfer;
+use Generated\Shared\Transfer\MailMailTransferTransfer;
 
 /**
  * @method MailDependencyContainer getDependencyContainer()

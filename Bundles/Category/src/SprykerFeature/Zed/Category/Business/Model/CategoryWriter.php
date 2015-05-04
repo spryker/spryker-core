@@ -6,7 +6,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Locale\Dto\LocaleDto;
-use SprykerFeature\Shared\Category\Transfer\Category as CategoryTransfer;
+use Generated\Shared\Transfer\CategoryCategory as CategoryTransferTransfer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttribute;

@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Shared\Category\Transfer\CategoryNode;
+use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;

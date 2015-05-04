@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Shared\Sales\Code;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface;
+use Generated\Shared\Transfer\Calculation\DependencyExpenseItemCollectionInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyExpenseItemInterfaceTransfer;
 
 //@deprecated is not used
 interface ExpensableTransferInterface

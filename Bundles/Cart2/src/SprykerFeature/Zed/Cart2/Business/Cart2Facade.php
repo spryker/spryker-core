@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Cart2\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\Cart2\Transfer\CartChangeInterface;
-use SprykerFeature\Shared\Cart2\Transfer\CartInterface;
+use Generated\Shared\Transfer\Cart2CartChangeInterfaceTransfer;
+use Generated\Shared\Transfer\Cart2CartInterfaceTransfer;
 
 /**
  * @method Cart2DependencyContainer getDependencyContainer()

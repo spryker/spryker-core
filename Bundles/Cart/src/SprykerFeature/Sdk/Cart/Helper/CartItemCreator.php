@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Sdk\Cart\Helper;
 
-use SprykerFeature\Shared\Cart\Transfer\CartItem;
+use Generated\Shared\Transfer\CartCartItemTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
 class CartItemCreator

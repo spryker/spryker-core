@@ -7,7 +7,7 @@ use Generated\Shared\Transfer\SalesOrderItemTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
 
 /**
  * Class DistributorTest

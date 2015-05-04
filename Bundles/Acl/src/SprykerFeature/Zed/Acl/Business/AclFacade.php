@@ -3,13 +3,10 @@
 namespace SprykerFeature\Zed\Acl\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\Acl\Transfer\Group;
-use SprykerFeature\Shared\Acl\Transfer\GroupCollection;
-use SprykerFeature\Shared\Acl\Transfer\Role;
-use SprykerFeature\Shared\Acl\Transfer\Rule;
-use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
-use SprykerFeature\Shared\Acl\Transfer\RuleCollection;
-use SprykerFeature\Shared\User\Transfer\User;
+use Generated\Shared\Transfer\AclGroupTransfer;
+use Generated\Shared\Transfer\AclRoleTransfer;
+use Generated\Shared\Transfer\AclRuleTransfer;
+use Generated\Shared\Transfer\UserUserTransfer;
 
 /**
  * @method AclDependencyContainer getDependencyContainer()

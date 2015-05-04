@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Cms\Business\Template;
 
-use SprykerFeature\Shared\Cms\Transfer\CmsTemplate;
+use Generated\Shared\Transfer\CmsCmsTemplateTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\TemplateExistsException;
 
@@ -33,7 +33,7 @@ interface TemplateManagerInterface
 
     /**
      * @param CmsTemplate $cmsTemplate
-     * 
+     *
      * @return CmsTemplate
      */
     public function saveTemplate(CmsTemplate $cmsTemplate);

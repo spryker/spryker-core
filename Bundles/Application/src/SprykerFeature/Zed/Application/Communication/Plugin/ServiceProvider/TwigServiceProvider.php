@@ -42,19 +42,20 @@ class TwigServiceProvider extends SilexTwigServiceProvider
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/Layout/',
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/',
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/Widget/',
+
                     APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s' . $storeName . '/Presentation/Layout/',
                     APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s' . $storeName . '/Presentation/',
                     APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s' . $storeName . '/Presentation/Widget/',
-
                     APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s/Presentation/Layout/',
                     APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s/Presentation/',
                     APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s/Presentation/Widget/',
-                    APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s' . $storeName . '/Presentation/Layout/',
-                    APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s' . $storeName . '/Presentation/',
-                    APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s' . $storeName . '/Presentation/Widget/',
-                    APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s/Presentation/Layout/',
-                    APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s/Presentation/',
-                    APPLICATION_VENDOR_DIR . '/spryker/*/src/SprykerFeature/Zed/%s/Presentation/Widget/'
+
+                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/SprykerFeature/Zed/%s' . $storeName . '/Presentation/Layout/',
+                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/SprykerFeature/Zed/%s' . $storeName . '/Presentation/',
+                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/SprykerFeature/Zed/%s' . $storeName . '/Presentation/Widget/',
+                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/SprykerFeature/Zed/%s/Presentation/Layout/',
+                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/SprykerFeature/Zed/%s/Presentation/',
+                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/SprykerFeature/Zed/%s/Presentation/Widget/'
                 ]
             );
         });

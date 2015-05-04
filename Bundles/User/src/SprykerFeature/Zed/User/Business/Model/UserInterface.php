@@ -2,8 +2,7 @@
 
 namespace SprykerFeature\Zed\User\Business\Model;
 
-use SprykerFeature\Shared\User\Transfer\User as TransferUser;
-use SprykerFeature\Shared\User\Transfer\UserCollection;
+use Generated\Shared\Transfer\UserUserTransfer;
 use SprykerFeature\Zed\User\Business\Exception\UsernameExistsException;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 

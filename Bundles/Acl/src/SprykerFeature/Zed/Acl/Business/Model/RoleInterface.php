@@ -2,8 +2,7 @@
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
-use SprykerFeature\Shared\Acl\Transfer\Role as transferRole;
-use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
+use Generated\Shared\Transfer\AclRoleTransfer;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
 use SprykerFeature\Zed\Acl\Business\Exception\RoleNameExistsException;
 use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
@@ -11,11 +10,10 @@ use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
 interface RoleInterface
 {
     /**
-     * @param string $name
-     * @param int $idGroup
+     * @param $name
+     * @param $idGroup
      *
-     * @return transferRole
-     * @throws RoleNameExistsException
+     * @return mixed
      */
     public function addRole($name, $idGroup);
 

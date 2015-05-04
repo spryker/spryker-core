@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
-use SprykerFeature\Shared\Payone\Transfer\StandardParameterInterface;
+use Generated\Shared\Transfer\PayoneStandardParameterInterfaceTransfer;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerEngine\Zed\Kernel\Business\Factory;

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Checkout\Business\Model\Workflow\Task;
 
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Zed\Checkout\Business\Model\Workflow\Context;
 use SprykerFeature\Zed\Library\Workflow\Task;
 

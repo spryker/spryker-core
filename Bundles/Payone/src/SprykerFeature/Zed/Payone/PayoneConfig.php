@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Payone;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\System\SystemConfig;
 use \SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Payone\Transfer\StandardParameterInterface;
+use Generated\Shared\Transfer\PayoneStandardParameterInterfaceTransfer;
 
 
 class PayoneConfig extends AbstractBundleConfig

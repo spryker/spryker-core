@@ -2,22 +2,23 @@
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
-use SprykerFeature\Shared\Acl\Transfer\Rule;
-use SprykerFeature\Shared\Acl\Transfer\RuleCollection;
+use Generated\Shared\Transfer\AclRuleTransfer;
 
 interface RuleValidatorInterface
 {
     /**
-     * @param RuleCollection $rules
+     * @param AclRuleTransfer $rules
      *
-     * @return RuleValidator $this
+     * @return mixed
      */
-    public function setRules(RuleCollection $rules);
+    public function setRules(AclRuleTransfer $rules);
 
     /**
-     * @param Rule $rule
+     * @param AclRuleTransfer $rule
+     *
+     * @return mixed
      */
-    public function addRule(Rule $rule);
+    public function addRule(AclRuleTransfer $rule);
 
     /**
      * @return array
@@ -30,14 +31,14 @@ interface RuleValidatorInterface
     public function getDeniedRules();
 
     /**
-     * @param Rule $rule
+     * @param AclRuleTransfer $rule
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
      * @return bool
      */
-    public function assert(Rule $rule, $bundle, $controller, $action);
+    public function assert(AclRuleTransfer $rule, $bundle, $controller, $action);
 
     /**
      * @param string $bundle

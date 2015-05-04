@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Cms\Business\Page;
 
-use SprykerFeature\Shared\Cms\Transfer\Page;
-use SprykerFeature\Shared\Url\Transfer\Url;
+use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\UrlUrlTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\PageExistsException;

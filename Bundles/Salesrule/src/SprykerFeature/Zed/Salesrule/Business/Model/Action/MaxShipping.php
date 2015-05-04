@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Salesrule\Business\Model\Action;
 
-use SprykerFeature\Shared\Calculation\Transfer\ExpenseCollection;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
 
 class MaxShipping extends AbstractAction

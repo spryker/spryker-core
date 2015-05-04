@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
-use SprykerFeature\Shared\Payone\Transfer\AuthorizationDataInterface;
-use SprykerFeature\Shared\Payone\Transfer\CaptureDataInterface;
-use SprykerFeature\Shared\Payone\Transfer\DebitDataInterface;
-use SprykerFeature\Shared\Payone\Transfer\RefundDataInterface;
+use Generated\Shared\Transfer\PayoneAuthorizationDataInterfaceTransfer;
+use Generated\Shared\Transfer\PayoneCaptureDataInterfaceTransfer;
+use Generated\Shared\Transfer\PayoneDebitDataInterfaceTransfer;
+use Generated\Shared\Transfer\PayoneRefundDataInterfaceTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 

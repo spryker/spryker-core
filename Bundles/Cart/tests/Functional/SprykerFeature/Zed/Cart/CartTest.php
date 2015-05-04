@@ -7,10 +7,7 @@ use Functional\SprykerFeature\Zed\Cart\Fixture\CartFacadeFixture;
 use Generated\Zed\Ide\FactoryAutoCompletion\CartBusiness;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Cart\Transfer\Cart;
-use SprykerFeature\Shared\Cart\Transfer\CartChange;
-use SprykerFeature\Shared\Cart\Transfer\Item;
-use SprykerFeature\Shared\Cart\Transfer\ItemCollection;
+use Generated\Shared\Transfer\CartCartChangeTransfer;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
 
 class CartTest extends Test

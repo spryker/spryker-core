@@ -3,7 +3,7 @@
 namespace SprykerFeature\Sdk\Checkout\Model;
 
 use SprykerFeature\Shared\Library\Communication\Response;
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 
 interface CheckoutManagerInterface
 {

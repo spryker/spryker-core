@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Calculation\Communication\Plugin;
 
 use SprykerFeature\Zed\Calculation\Communication\CalculationDependencyContainer;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

@@ -8,9 +8,9 @@ use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 use SprykerEngine\Yves\Kernel\Locator;
 use SprykerFeature\Sdk\Cart\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Sdk\ZedRequest\Client\ZedClient;
-use SprykerFeature\Shared\Cart\Transfer\CartChangeInterface;
-use SprykerFeature\Shared\Cart\Transfer\CartInterface as CartTransferInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
+use Generated\Shared\Transfer\CartCartChangeInterfaceTransfer;
+use Generated\Shared\Transfer\CartCartInterface as CartTransferInterfaceTransfer;
+use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
 use SprykerFeature\Shared\ZedRequest\Client\AbstractZedClient;
 
 class Cart implements CartInterface

@@ -2,18 +2,10 @@
 
 namespace SprykerFeature\Shared\Sales\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
-use SprykerFeature\Shared\Calculation\Transfer\Discount;
-use SprykerFeature\Shared\Calculation\Transfer\DiscountCollection;
-use SprykerFeature\Shared\Customer\Transfer\Customer;
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableOptionsInterface;
 
 class Order extends AbstractTransfer implements DiscountableContainerInterface
 {

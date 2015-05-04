@@ -1,8 +1,8 @@
 <?php
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Shared\Catalog\Code\ProductAttributeConstantInterface;
 
 class DefaultOrderNonSplitBundleItemBuilder extends OrderItemBuilder implements ProductAttributeConstantInterface

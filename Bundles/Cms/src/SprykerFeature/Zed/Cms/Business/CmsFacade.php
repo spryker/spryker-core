@@ -4,10 +4,10 @@ namespace SprykerFeature\Zed\Cms\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Shared\Cms\Transfer\CmsTemplate;
-use SprykerFeature\Shared\Cms\Transfer\Page;
-use SprykerFeature\Shared\Cms\Transfer\PageKeyMapping;
-use SprykerFeature\Shared\Url\Transfer\Url;
+use Generated\Shared\Transfer\CmsCmsTemplateTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\CmsPageKeyMappingTransfer;
+use Generated\Shared\Transfer\UrlUrlTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\StockSalesConnector\Dependency\Facade;
 
-use SprykerFeature\Shared\Stock\Transfer\StockProduct;
+use Generated\Shared\Transfer\StockStockProductTransfer;
 
 interface StockToSalesFacadeInterface
 {

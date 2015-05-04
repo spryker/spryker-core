@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Customer\Business\Customer;
 
-use SprykerFeature\Shared\Customer\Transfer\Address as AddressTransfer;
-use SprykerFeature\Shared\Customer\Transfer\Customer as CustomerTransfer;
+use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
@@ -15,7 +15,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Shared\Customer\Transfer\AddressCollection as AddressTransferCollection;
 
 class Address
 {

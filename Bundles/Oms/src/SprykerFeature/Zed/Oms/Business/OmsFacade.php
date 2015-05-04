@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Oms\Business;
 
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Dummy;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Oms\Business\Process\Process;

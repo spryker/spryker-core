@@ -2,7 +2,7 @@
 namespace SprykerFeature\Zed\Salesrule\Business\Calculator;
 
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Zed\Salesrule\Business\Model\Action\AbstractAction;
 use SprykerFeature\Zed\Salesrule\Business\Model\Condition\VoucherCodeInPool;
 use SprykerFeature\Zed\Salesrule\Business\Model\Logger;

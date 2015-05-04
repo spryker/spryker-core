@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Product\Business\Product;
 
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Locale\Dto\LocaleDto;
-use SprykerFeature\Shared\Url\Transfer\Url;
+use Generated\Shared\Transfer\UrlUrlTransfer;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductAttributesExistException;

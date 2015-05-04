@@ -6,8 +6,8 @@ use Codeception\TestCase\Test;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
-use SprykerFeature\Shared\Customer\Transfer\Customer as CustomerTransfer;
-use SprykerFeature\Shared\Customer\Transfer\Address as AddressTransfer;
+use Generated\Shared\Transfer\CustomerCustomer as CustomerTransferTransfer;
+use Generated\Shared\Transfer\CustomerAddress as AddressTransferTransfer;
 use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredException;
 
 /**

@@ -4,12 +4,10 @@ namespace SprykerFeature\Yves\Cart\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Sales\Transfer\Order;
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
-use SprykerFeature\Shared\Sales\Transfer\OrderItemCollection;
-use SprykerFeature\Shared\Cart\Transfer\CartChange;
-use SprykerFeature\Shared\Cart\Transfer\CartItem;
-use SprykerFeature\Shared\Cart\Transfer\CartItemCollection;
+use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\CartCartChangeTransfer;
+use Generated\Shared\Transfer\CartCartItemTransfer;
 use SprykerFeature\Shared\Cart\Code\DeleteReasonConstant;
 use SprykerFeature\Shared\Library\Communication\Response;
 use SprykerFeature\Shared\Sales\Code\AbstractItemGrouper;

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
-use SprykerFeature\Shared\Category\Transfer\CategoryNode;
+use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
 
 interface NodeWriterInterface
 {

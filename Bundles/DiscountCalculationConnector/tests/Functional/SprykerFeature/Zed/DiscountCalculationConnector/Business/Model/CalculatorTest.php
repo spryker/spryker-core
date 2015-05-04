@@ -4,15 +4,12 @@ namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Mo
 
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Shared\Customer\Transfer\OrderItemCollection;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
-use SprykerFeature\Shared\Sales\Transfer\Order;
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
-use SprykerFeature\Shared\Calculation\Transfer\DiscountCollection;
-use SprykerFeature\Shared\Calculation\Transfer\Expense;
-use SprykerFeature\Shared\Calculation\Transfer\ExpenseCollection;
+use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\StackExecutor;
 use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
 use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;

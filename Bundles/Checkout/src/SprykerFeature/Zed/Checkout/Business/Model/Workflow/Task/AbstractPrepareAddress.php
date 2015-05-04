@@ -3,8 +3,8 @@ namespace SprykerFeature\Zed\Checkout\Business\Model\Workflow\Task;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Sales\Transfer\Address;
-use SprykerFeature\Shared\Customer\Transfer\Customer;
+use Generated\Shared\Transfer\SalesAddressTransfer;
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
 
 abstract class AbstractPrepareAddress extends AbstractTask
 {

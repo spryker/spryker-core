@@ -13,7 +13,7 @@ use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\Voucher;
 use SprykerFeature\Zed\Discount\DiscountConfig;

@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Shared\Cart2\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface;
+use Generated\Shared\Transfer\Calculation\DependencyExpenseItemCollectionInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyExpenseItemInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyOptionItemInterfaceTransfer;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableItemCollectionInterfaceTransfer;
+use Generated\Shared\Transfer\Discount\DependencyDiscountItemInterfaceTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 
 class Item extends AbstractTransfer implements ItemInterface

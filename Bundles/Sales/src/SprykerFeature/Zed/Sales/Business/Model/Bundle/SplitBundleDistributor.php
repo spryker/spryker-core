@@ -1,13 +1,11 @@
 <?php
 namespace SprykerFeature\Zed\Sales\Business\Model\Bundle;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountableInterface;
-use SprykerFeature\Shared\Sales\Transfer\Order;
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
-use SprykerFeature\Shared\Sales\Transfer\OrderItemCollection;
-use SprykerFeature\Shared\Sales\Transfer\OrderItemOption;
-use SprykerFeature\Shared\Calculation\Transfer\Discount;
-use SprykerFeature\Shared\Calculation\Transfer\Expense;
+use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\SalesOrderItemOptionTransfer;
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
 
 class SplitBundleDistributor
 {

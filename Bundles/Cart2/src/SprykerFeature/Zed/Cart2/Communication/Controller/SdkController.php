@@ -5,8 +5,8 @@ namespace SprykerFeature\Zed\Cart2\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Cart2\Transfer\CartChangeInterface;
-use SprykerFeature\Shared\Cart2\Transfer\CartInterface;
+use Generated\Shared\Transfer\Cart2CartChangeInterfaceTransfer;
+use Generated\Shared\Transfer\Cart2CartInterfaceTransfer;
 use SprykerFeature\Zed\Cart2\Business\Cart2Facade;
 
 class SdkController extends AbstractSdkController

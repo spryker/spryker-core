@@ -5,10 +5,9 @@ namespace Functional\SprykerFeature\Zed\Cart2;
 use Codeception\TestCase\Test;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Cart2\Transfer\Cart;
-use SprykerFeature\Shared\Cart2\Transfer\CartChange;
-use SprykerFeature\Shared\Cart2\Transfer\Item;
-use SprykerFeature\Shared\Cart2\Transfer\ItemCollection;
+use Generated\Shared\Transfer\Cart2CartTransfer;
+use Generated\Shared\Transfer\Cart2CartChangeTransfer;
+use Generated\Shared\Transfer\Cart2ItemTransfer;
 use SprykerFeature\Zed\Cart2\Business\Cart2Facade;
 
 class Cart2Test extends Test

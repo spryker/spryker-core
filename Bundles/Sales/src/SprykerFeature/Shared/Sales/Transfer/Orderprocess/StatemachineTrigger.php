@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace SprykerFeature\Shared\Sales\Transfer\Orderprocess;
+namespace Generated\Shared\Transfer\SalesOrderprocessTransfer;
 
 /**
  *
@@ -13,7 +13,7 @@ class StatemachineTrigger extends \SprykerFeature\Shared\Library\TransferObject\
     protected $orderId = null;
 
     protected $references = array(
-        
+
     );
 
     protected $context = null;

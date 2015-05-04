@@ -2,16 +2,11 @@
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
+use Generated\Shared\Transfer\AclGroupTransfer;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
-use SprykerFeature\Shared\Acl\Transfer\Group as transferGroup;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
-use SprykerFeature\Shared\Acl\Transfer\RoleCollection;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNameExistsException;
 
-/**
- * Class Group
- * @package SprykerFeature\Zed\Acl\Business\Model
- */
 interface GroupInterface
 {
     /**

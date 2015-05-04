@@ -2,10 +2,9 @@
 
 namespace SprykerFeature\Zed\Salesrule\Business\Model;
 
-use SprykerFeature\Shared\Calculation\Transfer\Discount;
-use SprykerFeature\Shared\Calculation\Transfer\DiscountCollection;
-use SprykerFeature\Shared\Sales\Transfer\Order;
-use SprykerFeature\Shared\Salesrule\Transfer\Item;
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\SalesruleItemTransfer;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Salesrule\Business\Model\Action\AbstractAction;
 

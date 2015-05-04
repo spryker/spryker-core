@@ -1,7 +1,7 @@
 <?php
 namespace SprykerFeature\Sdk\Cart2\Model;
 
-use SprykerFeature\Shared\Cart2\Transfer\CartInterface as CartTransferInterface;
+use Generated\Shared\Transfer\Cart2CartInterface as CartTransferInterfaceTransfer;
 
 interface CartInterface
 {

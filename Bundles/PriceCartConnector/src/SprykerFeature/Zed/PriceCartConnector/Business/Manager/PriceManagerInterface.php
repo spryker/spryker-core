@@ -1,8 +1,8 @@
 <?php
 namespace SprykerFeature\Zed\PriceCartConnector\Business\Manager;
 
-use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
+use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
+use Generated\Shared\Transfer\CartItemInterfaceTransfer;
 
 interface PriceManagerInterface
 {

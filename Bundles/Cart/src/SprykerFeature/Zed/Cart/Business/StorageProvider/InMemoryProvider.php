@@ -3,9 +3,9 @@
 namespace SprykerFeature\Zed\Cart\Business\StorageProvider;
 
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
-use SprykerFeature\Shared\Cart\Transfer\CartInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
+use Generated\Shared\Transfer\CartCartInterfaceTransfer;
+use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
+use Generated\Shared\Transfer\CartItemInterfaceTransfer;
 use SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException;
 
 class InMemoryProvider implements StorageProviderInterface

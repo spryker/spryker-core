@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 namespace SprykerFeature\Shared\Calculation\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseTotalItemInterface;
+use Generated\Shared\Transfer\Calculation\DependencyExpenseTotalItemInterfaceTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 
 class ExpenseTotalItem extends AbstractTransfer implements ExpenseTotalItemInterface

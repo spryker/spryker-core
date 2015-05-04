@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 
 interface DecisionRuleInterface

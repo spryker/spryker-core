@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
-use SprykerFeature\Shared\Discount\Transfer\Discount as DiscountTransfer;
+use Generated\Shared\Transfer\DiscountDiscount as DiscountTransferTransfer;
 
 /**
  * Class DiscountManager

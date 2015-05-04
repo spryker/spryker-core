@@ -4,8 +4,8 @@ namespace SprykerFeature\Zed\Category\Business;
 
 use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\Category\Transfer\Category;
-use SprykerFeature\Shared\Category\Transfer\CategoryNode;
+use Generated\Shared\Transfer\CategoryCategoryTransfer;
+use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
 
 /**
  * @method CategoryDependencyContainer getDependencyContainer()

@@ -82,7 +82,7 @@ class UserTest extends Test
 
         $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $user);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $user)Transfer;
         $this->assertNotNull($user->getIdUserUser());
         $this->assertEquals($data['firstName'], $user->getFirstName());
         $this->assertEquals($data['lastName'], $user->getLastName());
@@ -99,7 +99,7 @@ class UserTest extends Test
 
         $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $user);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $user)Transfer;
         $this->assertNotNull($user->getIdUserUser());
         $this->assertEquals($data['firstName'], $user->getFirstName());
         $this->assertEquals($data['lastName'], $user->getLastName());
@@ -133,7 +133,7 @@ class UserTest extends Test
         $userTest = clone $user;
         $finalUser = $this->userFacade->updateUser($userTest);
 
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $finalUser);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $finalUser)Transfer;
         $this->assertEquals($user->getFirstName(), $finalUser->getFirstName());
         $this->assertEquals($user->getLastName(), $finalUser->getLastName());
         $this->assertEquals($user->getUsername(), $finalUser->getUsername());
@@ -160,7 +160,7 @@ class UserTest extends Test
         $userTest = clone $user;
         $finalUser = $this->userFacade->updateUser($userTest);
 
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $finalUser);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $finalUser)Transfer;
         $this->assertEquals($user->getFirstName(), $finalUser->getFirstName());
         $this->assertEquals($user->getLastName(), $finalUser->getLastName());
         $this->assertEquals($user->getUsername(), $finalUser->getUsername());
@@ -179,7 +179,7 @@ class UserTest extends Test
 
         $user = $this->userFacade->getUserByUsername($data['username']);
 
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $user);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $user)Transfer;
         $this->assertEquals($user->getIdUserUser(), $mock->getIdUserUser());
         $this->assertEquals($user->getFirstName(), $mock->getFirstName());
         $this->assertEquals($user->getLastName(), $mock->getLastName());
@@ -197,7 +197,7 @@ class UserTest extends Test
 
         $user = $this->userFacade->getUserById($mock->getIdUserUser());
 
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $user);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $user)Transfer;
         $this->assertEquals($user->getIdUserUser(), $mock->getIdUserUser());
         $this->assertEquals($user->getFirstName(), $mock->getFirstName());
         $this->assertEquals($user->getLastName(), $mock->getLastName());

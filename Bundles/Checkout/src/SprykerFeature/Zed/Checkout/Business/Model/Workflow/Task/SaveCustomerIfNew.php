@@ -1,8 +1,8 @@
 <?php
 namespace SprykerFeature\Zed\Checkout\Business\Model\Workflow\Task;
 
-use SprykerFeature\Shared\Customer\Transfer\Customer;
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Zed\Checkout\Business\Model\Workflow\Context;
 use SprykerFeature\Shared\Library\TransferLoader;
 use SprykerEngine\Zed\Kernel\Locator;

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
-use SprykerFeature\Shared\Discount\Transfer\DiscountVoucherPool;
+use Generated\Shared\Transfer\DiscountDiscountVoucherPoolTransfer;
 use SprykerFeature\Zed\Discount\Business\Writer\AbstractWriter;
 
 /**

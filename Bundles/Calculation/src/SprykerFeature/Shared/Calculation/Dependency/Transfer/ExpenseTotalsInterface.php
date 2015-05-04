@@ -2,8 +2,6 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
-use SprykerFeature\Shared\Calculation\Transfer\ExpenseTotalItemCollection;
-
 interface ExpenseTotalsInterface
 {
     /**

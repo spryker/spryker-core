@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Shared\Cart\Transfer;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
+use Generated\Shared\Transfer\Discount\DependencyDiscountableItemCollectionInterfaceTransfer;
 
 interface ItemCollectionInterface extends DiscountableItemCollectionInterface
 {

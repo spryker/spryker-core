@@ -2,12 +2,10 @@
 
 namespace SprykerFeature\Zed\Salesrule\Business\Model\Action;
 
-use SprykerFeature\Shared\Calculation\Transfer\Discount;
-use SprykerFeature\Shared\Calculation\Transfer\DiscountCollection;
-use SprykerFeature\Shared\Calculation\Transfer\Expense;
-use SprykerFeature\Shared\Sales\Transfer\Order;
-use SprykerFeature\Shared\Sales\Transfer\OrderItem;
-use SprykerFeature\Shared\Sales\Transfer\OrderItemCollection;
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Salesrule\Persistence\Propel\Map\SpySalesruleTableMap;
 use SprykerFeature\Zed\Salesrule\Persistence\Propel\SpySalesrule;

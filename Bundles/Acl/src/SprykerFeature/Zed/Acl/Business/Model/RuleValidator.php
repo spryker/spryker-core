@@ -2,10 +2,8 @@
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
-use SprykerFeature\Shared\Acl\Transfer\Rule;
-use SprykerFeature\Shared\Acl\Transfer\RuleCollection;
+use Generated\Shared\Transfer\AclRuleTransfer;
 use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Zed\Acl\Business\AclSettings;
 
 class RuleValidator implements RuleValidatorInterface
 {
@@ -56,20 +54,20 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param RuleCollection $rules
+     * @param AclRuleTransfer $rules
      *
-     * @return RuleValidator $this
+     * @return $this
      */
-    public function setRules(RuleCollection $rules)
+    public function setRules(AclRuleTransfer $rules)
     {
         foreach ($rules as $rule) {
-            if ($rule->getType() === "allow") {
+            if ($rule->getType() === 'allow') {
                 $this->addAllowedRule($rule);
             }
         }
 
         foreach ($rules as $rule) {
-            if ($rule->getType() === "deny") {
+            if ($rule->getType() === 'deny') {
                 $this->addDeniedRule($rule);
             }
         }
@@ -78,9 +76,9 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param Rule $rule
+     * @param AclRuleTransfer $rule
      */
-    public function addRule(Rule $rule)
+    public function addRule(AclRuleTransfer $rule)
     {
         switch ($rule->getType()) {
             case 'allow':
@@ -94,21 +92,21 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param Rule $rule
+     * @param AclRuleTransfer $rule
      *
      * @return int
      */
-    protected function addAllowedRule(Rule $rule)
+    protected function addAllowedRule(AclRuleTransfer $rule)
     {
         return array_push($this->allowedRules, $rule);
     }
 
     /**
-     * @param Rule $rule
+     * @param AclRuleTransfer $rule
      *
      * @return int
      */
-    protected function addDeniedRule(Rule $rule)
+    protected function addDeniedRule(AclRuleTransfer $rule)
     {
         return array_push($this->deniedRules, $rule);
     }
@@ -130,14 +128,13 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param Rule $rule
+     * @param AclRuleTransfer $rule
      * @param string $bundle
      * @param string $controller
      * @param string $action
-     *
      * @return bool
      */
-    public function assert(Rule $rule, $bundle, $controller, $action)
+    public function assert(AclRuleTransfer $rule, $bundle, $controller, $action)
     {
         if (($rule->getBundle() === $bundle || $rule->getBundle() === AclConfig::VALIDATOR_WILDCARD) &&
             ($rule->getController() === $controller || $rule->getController() === AclConfig::VALIDATOR_WILDCARD) &&

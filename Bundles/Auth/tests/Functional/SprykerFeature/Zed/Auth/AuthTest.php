@@ -78,7 +78,7 @@ class AuthTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $userDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $userDto)Transfer;
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $token = $this->authFacade->getUserToken($userDto);
@@ -86,7 +86,7 @@ class AuthTest extends Test
 
         $this->assertEquals($fakeToken, $token);
 
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $userDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $userDto)Transfer;
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $login = $this->authFacade->login($userDto->getUsername(), $userData['password']);
@@ -116,7 +116,7 @@ class AuthTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $userDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $userDto)Transfer;
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $login = $this->authFacade->login($userDto->getUsername(), $userData['password']);
@@ -131,7 +131,7 @@ class AuthTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $userDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $userDto)Transfer;
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $login = $this->authFacade->login($userDto->getUsername(), rand(10000, 99999));
@@ -188,14 +188,14 @@ class AuthTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $userDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $userDto)Transfer;
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $login = $this->authFacade->login($userDto->getUsername(), $userData['password']);
         $this->assertTrue($login);
 
         $currentUserDto = $this->userFacade->getCurrentUser();
-        $this->assertInstanceOf('\SprykerFeature\Shared\User\Transfer\User', $currentUserDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUser', $currentUserDto)Transfer;
         $this->assertEquals($userDto->getIdUserUser(), $currentUserDto->getIdUserUser());
         $this->assertEquals($userDto->getUsername(), $currentUserDto->getUsername());
         $this->assertEquals($userDto->getPassword(), $currentUserDto->getPassword());

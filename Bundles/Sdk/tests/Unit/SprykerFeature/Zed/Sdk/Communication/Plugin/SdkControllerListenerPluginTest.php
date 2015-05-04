@@ -7,7 +7,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Foo\Sdk\NotTransferTransferObject;
 use SprykerFeature\Shared\Library\Communication\Response;
 use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
-use SprykerFeature\Shared\Skd\Transfer\GoodTransfer;
+use Generated\Shared\Transfer\SkdGoodTransferTransfer;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 use SprykerFeature\Zed\Sdk\Communication\Plugin\SdkControllerListenerPlugin;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -240,4 +240,3 @@ class SdkControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         return $controllerCallable;
     }
 }
- 

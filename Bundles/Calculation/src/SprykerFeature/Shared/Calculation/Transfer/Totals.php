@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 namespace SprykerFeature\Shared\Calculation\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalsInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseTotalsInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Transfer\Calculation\DependencyDiscountTotalsInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyExpenseTotalsInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyTaxInterfaceTransfer;
+use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 
 class Totals extends AbstractTransfer implements TotalsInterface

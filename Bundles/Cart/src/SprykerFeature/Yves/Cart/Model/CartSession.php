@@ -3,7 +3,7 @@
 namespace SprykerFeature\Yves\Cart\Model;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Sales\Transfer\Order;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Yves\Library\Session\TransferSession;
 
 class CartSession implements CartSessionInterface
