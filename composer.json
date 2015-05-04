@@ -73,7 +73,7 @@
     "spryker/yves": "self.version",
     "spryker/zed-request": "self.version"
   },
-  
+
   "require": {
     "psr/log": "~1.0",
     "phing/phing": "~2.6.0",
@@ -139,7 +139,10 @@
     "use-include-path": true
   },
   "autoload": {
-    "files": ["Autoload/autoload.php"]
+    "files": ["Autoload/autoload.php"],
+    "psr-0": {
+      "SprykerFeature\\Shared\\Library": "Bundles/Library/src/"
+    }
   },
   "bin": [
     "Bundles/Console/bin/console"

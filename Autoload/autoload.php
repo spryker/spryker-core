@@ -3,7 +3,7 @@
 use SprykerFeature\Shared\Library\Autoloader;
 
 if (is_dir($vendor = __DIR__ . '/../Bundles')) {
-    require($vendor . '/Library/src/SprykerFeature/Shared/Library/Autoloader.php');
+    require_once($vendor . '/Library/src/SprykerFeature/Shared/Library/Autoloader.php');
 } else {
     echo(
         'You must set up the project dependencies, run the following commands:' . PHP_EOL .

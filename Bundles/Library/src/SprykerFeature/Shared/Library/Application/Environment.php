@@ -93,6 +93,9 @@ class Environment
         }
 
         self::initializeErrorHandler();
+
+        require_once(APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Library/src/SprykerFeature/Shared/Library/Autoloader.php');
+
         Autoloader::unregister();
         Autoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
 
