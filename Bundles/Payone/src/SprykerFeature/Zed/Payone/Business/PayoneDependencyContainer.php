@@ -10,6 +10,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\PayoneBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentManager;
+use SprykerFeature\Zed\Payone\Business\TransactionStatus\TransactionStatusManager;
 use SprykerFeature\Zed\Payone\PayoneConfig;
 
 /**
@@ -20,20 +21,18 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @todo Is it allowed to cache here?
      * @var StandardParameterInterface
      */
     private $standardParameter;
 
 
     /**
-     * @param string $paymentMethodName
      * @return PaymentManager
      */
-    public function createPaymentManager($paymentMethodName)
+    public function createPaymentManager()
     {
         $paymentManager = $this->getFactory()
-            ->createPaymentManager(
+            ->createPaymentPaymentManager(
                 $this->getLocator(),
                 $this->createExecutionAdapter(),
                 $this->createQueryContainer(),
@@ -55,7 +54,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     public function createTransactionStatusManager()
     {
         return $this->getFactory()
-            ->createTransactionStatusManager(
+            ->createTransactionStatusTransactionStatusManager(
                 $this->getLocator(),
                 $this->createQueryContainer()
             );
@@ -89,15 +88,6 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @param string $name
-     * @return PaymentMethodMapperInterface
-     */
-    protected function getPaymentMethodMapperByName($name)
-    {
-        return $this->createPaymentMethodRegistry()->findPaymentMethodMapperByName($name);
-    }
-
-    /**
      * @return SequenceNumber\SequenceNumberProviderInterface
      */
     protected function createSequenceNumberProvider()
@@ -123,14 +113,13 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     protected function getAvailablePaymentMethods()
     {
         return [
-            PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createMapperPaymentMethodPrePayment(),
-            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createMapperPaymentMethodCreditCardPseudo(),
-            PayoneApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createMapperPaymentMethodPayPal()
+            PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createPaymentMethodMapperPrePayment(),
+            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createPaymentMethodMapperCreditCardPseudo(),
+            PayoneApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createPaymentMethodMapperPayPal()
         ];
     }
 
     /**
-     * @todo is it allowed to cache like this???
      * @return StandardParameterInterface
      */
     protected function createStandardParameter()

@@ -3,6 +3,7 @@
 namespace SprykerFeature\Shared\Payone\Transfer;
 
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+use SprykerFeature\Shared\Payone\Dependency\PaymentInterface;
 
 
 class Payment extends AbstractTransfer implements PaymentInterface

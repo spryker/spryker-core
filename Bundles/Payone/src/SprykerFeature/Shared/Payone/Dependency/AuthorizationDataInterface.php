@@ -7,6 +7,16 @@ interface AuthorizationDataInterface
 {
 
     /**
+     * @param string $paymentMethod
+     */
+    public function setPaymentMethod($paymentMethod);
+
+    /**
+     * @return string
+     */
+    public function getPaymentMethod();
+
+    /**
      * @return string
      */
     public function getReferenceId();
@@ -17,14 +27,14 @@ interface AuthorizationDataInterface
     public function setReferenceId($referenceId);
 
     /**
-     * @return PaymentInterface   // FIXME needs refactoring of Sales package
+     * @return PaymentUserDataInterface
      */
-    public function getPayment();
+    public function getPaymentUserData();
 
     /**
-     * @return PaymentInterface   // FIXME needs refactoring of Sales package
+     * @param PaymentUserDataInterface $paymentFormData
      */
-    public function setPayment($payment);
+    public function setPaymentUserData(PaymentUserDataInterface $paymentFormData);
 
     /**
      * @return int

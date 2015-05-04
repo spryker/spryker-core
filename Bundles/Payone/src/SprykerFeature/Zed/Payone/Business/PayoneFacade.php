@@ -21,7 +21,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function authorize(AuthorizationDataInterface $authorizationData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager($authorizationData->getPaymentMethod());
+        $paymentManager = $this->getDependencyContainer()->createPaymentManager();
 
         return $paymentManager->authorize($authorizationData);
     }
@@ -32,7 +32,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function preAuthorize(AuthorizationDataInterface $authorizationData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager($authorizationData->getPaymentMethod());
+        $paymentManager = $this->getDependencyContainer()->createPaymentManager();
 
         return $paymentManager->preAuthorize($authorizationData);
     }
@@ -43,7 +43,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function capture(CaptureDataInterface $captureData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager($captureData->getPayment()->getPaymentMethod());
+        $paymentManager = $this->getDependencyContainer()->createPaymentManager();
 
         return $paymentManager->capture($captureData);
     }
@@ -54,7 +54,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function debit(DebitDataInterface $debitData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager($debitData->getPayment()->getPaymentMethod());
+        $paymentManager = $this->getDependencyContainer()->createPaymentManager();
 
         return $paymentManager->debit($debitData);
     }
@@ -65,7 +65,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function refund(RefundDataInterface $refundData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager($refundData->getPayment()->getPaymentMethod());
+        $paymentManager = $this->getDependencyContainer()->createPaymentManager();
 
         return $paymentManager->refund($refundData);
     }

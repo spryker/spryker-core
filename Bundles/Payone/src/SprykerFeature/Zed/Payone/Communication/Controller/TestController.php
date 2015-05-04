@@ -99,7 +99,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $order->setLastName('wurst');
         $order->setEmail('horst@wurst.de');
         $order->setIsTest(true);
-        $order->setIncrementId('DY999991004');
+        $order->setIncrementId('DY999991005');
         $order->setIdSalesOrder(1);
         $order->setSalutation('Mr');
 

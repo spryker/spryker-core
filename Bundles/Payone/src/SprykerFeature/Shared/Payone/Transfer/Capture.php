@@ -3,6 +3,9 @@
 namespace SprykerFeature\Shared\Payone\Transfer;
 
 
+use SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\PaymentInterface;
+
 class Capture implements CaptureDataInterface
 {
 
