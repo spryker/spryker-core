@@ -20,7 +20,7 @@ class PercentShipping extends AbstractAction
      * @param \SprykerFeature\Shared\Calculation\Transfer\ExpenseCollection $expenses
      * @return bool
      */
-    protected function reduceShippingCosts(ExpenseCollection $expenses)
+    protected function reduceShippingCosts(CalculationExpenseTransfer $expenses)
     {
         foreach ($expenses as $expense) {
             /* @var Expense $expense */

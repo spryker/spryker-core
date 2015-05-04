@@ -9,14 +9,14 @@ class ConditionStack extends \ArrayObject
 {
 
     /**
-     * @var Order
+     * @var SalesOrderTransfer
      */
     protected $order;
 
     /**
-     * @param Order $order
+     * @param SalesOrderTransfer $order
      */
-    public function __construct(Order $order)
+    public function __construct(SalesOrderTransfer $order)
     {
         $this->order = $order;
     }

@@ -17,7 +17,7 @@ abstract class AbstractDefinition extends Definition
     protected $context;
 
     /**
-     * @var Order
+     * @var SalesOrderTransfer
      */
     private $transferOrder;
 
@@ -27,11 +27,11 @@ abstract class AbstractDefinition extends Definition
     private $transferRequest;
 
     /**
-     * @param Order $transferOrder
+     * @param SalesOrderTransfer $transferOrder
      * @param RequestInterface $transferRequest
      * @param FactoryInterface $factory
      */
-    public function __construct(Order $transferOrder, RequestInterface $transferRequest, FactoryInterface $factory)
+    public function __construct(SalesOrderTransfer $transferOrder, RequestInterface $transferRequest, FactoryInterface $factory)
     {
         $this->factory = $factory;
         $this->transferOrder = clone $transferOrder;

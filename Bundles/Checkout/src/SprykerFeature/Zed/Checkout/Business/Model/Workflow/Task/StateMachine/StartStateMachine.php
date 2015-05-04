@@ -18,7 +18,7 @@ class StartStateMachine extends AbstractTask
      * @param Context $context
      * @param array   $logContext
      */
-    public function __invoke(Order $transferOrder, Context $context, array $logContext)
+    public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext)
     {
         $data = array();
         Locator::getInstance()->oms()->facade()

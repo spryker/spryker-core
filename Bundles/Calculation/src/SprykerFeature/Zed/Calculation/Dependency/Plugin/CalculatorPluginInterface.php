@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Dependency\Plugin;
 
-use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 
 interface CalculatorPluginInterface
 {

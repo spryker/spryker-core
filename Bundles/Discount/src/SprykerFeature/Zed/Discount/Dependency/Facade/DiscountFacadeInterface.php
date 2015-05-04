@@ -2,10 +2,15 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Facade;
 
+use SprykerFeature\Shared\Calculation\Transfer\Discount;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use SprykerFeature\Shared\Discount\Transfer\DiscountDecisionRule;
+use SprykerFeature\Shared\Discount\Transfer\DiscountVoucher;
+use SprykerFeature\Shared\Discount\Transfer\DiscountVoucherPool;
+use SprykerFeature\Shared\Discount\Transfer\DiscountVoucherPoolCategory;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use Generated\Shared\Transfer\DiscountDiscountTransfer;
 use Generated\Shared\Transfer\DiscountDiscountVoucherTransfer;
-use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule as DecisionRule;
 use Generated\Shared\Transfer\DiscountDiscountVoucherPoolTransfer;

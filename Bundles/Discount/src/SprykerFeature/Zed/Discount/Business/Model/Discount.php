@@ -2,8 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
-use SprykerFeature\Zed\Discount\Business\DiscountSettings;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
@@ -44,7 +43,7 @@ class Discount
     protected $calculatorPlugins;
 
     /**
-     * @var DiscountSettings
+     * @var DiscountConfig
      */
     protected $discountSettings;
 

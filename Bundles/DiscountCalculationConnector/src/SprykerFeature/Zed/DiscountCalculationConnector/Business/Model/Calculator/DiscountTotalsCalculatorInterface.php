@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
-use Generated\Shared\Transfer\Discount\DependencyDiscountableItemCollectionInterfaceTransfer;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 interface DiscountTotalsCalculatorInterface extends TotalsCalculatorPluginInterface

@@ -2,18 +2,12 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use Generated\Shared\Transfer\CalculationExpenseTotalsTransfer;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableContainerInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyCalculableItemInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyExpenseItemInterfaceTransfer;
 
-/**
- * Class ExpenseTotalsCalculator
- * @package SprykerFeature\Zed\Calculation\Business\Model\Calculator
- */
 class ExpenseTotalsCalculator extends AbstractCalculator implements
     TotalsCalculatorPluginInterface,
     ExpenseTotalsCalculatorInterface
