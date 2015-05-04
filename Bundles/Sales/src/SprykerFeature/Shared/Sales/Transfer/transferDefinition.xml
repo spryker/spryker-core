@@ -69,19 +69,19 @@
         <property name="lastName" type="string" default="null" />
         <property name="firstName" type="string" default="null" />
         <property name="incrementId" type="string" default="null" />
-        <property name="billingAddress" type="string" default="Sales\Address" />
-        <property name="shippingAddress" type="string" default="Sales\Address" />
-        <property name="customer" type="string" default="Customer\Customer" />
-        <property name="items" type="string" default="Sales\OrderItemCollection" />
+        <property name="billingAddress" type="string" default="SalesAddressTransfer[]" />
+        <property name="shippingAddress" type="string" default="Sales\AddressTransfer[]" />
+        <property name="customer" type="string" default="Customer\CustomerTransfer[]" />
+        <property name="items" type="string" default="Sales\OrderItemTransfer[]" />
         <property name="payment" type="string" default="null" />
         <property name="couponCodes" type="array" default="[]" />
         <property name="salesruleLog" type="string" default="null" />
         <property name="createdAt" type="string" default="null" />
         <property name="isTest" type="string" default="null" />
-        <property name="totals" type="string" default="Calculation\Totals" />
-        <property name="expenses" type="string" default="Calculation\ExpenseCollection" />
-        <property name="discounts" type="string" default="Calculation\DiscountCollection" />
-        <property name="invoice" type="string" default="Sales\Invoice" />
+        <property name="totals" type="CalculationTotalsTransfer[]" />
+        <property name="expenses" type="CalculationExpenseTransfer[]" />
+        <property name="discounts" type="CalculationDiscountTransfer[]" />
+        <property name="invoice" type="SalesInvoiceTransfer[]" />
     </transfer>
     <transfer name="SalesOrderItem">
         <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface" short="ExpenseItemCollectionInterface" />
@@ -105,13 +105,13 @@
         <property name="priceToPay" type="string" default="null" />
         <property name="taxPercentage" type="string" default="null" />
         <property name="quantity" type="int" default="1" />
-        <property name="discounts" type="string" default="Calculation\DiscountCollection" />
-        <property name="options" type="string" default="Sales\OrderItemOptionCollection" />
-        <property name="expenses" type="string" default="Calculation\ExpenseCollection" />
+        <property name="discounts" type="CalculationDiscountTransfer[]" />
+        <property name="options" type="SalesOrderItemOptionTransfer[]" />
+        <property name="expenses" type="CalculationExpenseTransfer[]" />
         <property name="unitGrossPrice" type="string" default="null" />
         <property name="unitPriceToPay" type="string" default="null" />
         <property name="variety" type="string" default="null" />
-        <property name="status" type="string" default="Sales\OrderItemStatus" />
+        <property name="status" type="SalesOrderItemStatusTransfer[]" />
     </transfer>
     <transfer name="SalesOrderItemOption">
         <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountableInterface" short="DiscountableInterface" />
@@ -130,7 +130,7 @@
         <property name="priceToPay" type="int" default="0" />
         <property name="taxPercentage" type="string" default="null" />
         <property name="type" type="string" default="null" />
-        <property name="discounts" type="string" default="Calculation\DiscountCollection" />
+        <property name="discounts" type="CalculationDiscountCollectionTransfer[]" />
     </transfer>
     <transfer name="SalesOrderItemStatus">
         <property name="idOmsOrderItemStatus" type="int" default="null" />

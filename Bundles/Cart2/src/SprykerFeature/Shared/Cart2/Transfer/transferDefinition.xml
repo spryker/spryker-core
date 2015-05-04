@@ -14,9 +14,9 @@
         <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
         <interface name="CartInterface" short="CartInterface" />
         <property name="items" type="Cart2ItemTransfer[]" />
-        <property name="totals" type="string" default="Calculation\Totals" />
-        <property name="expenses" type="string" default="Calculation\ExpenseCollection" />
-        <property name="discounts" type="string" default="Calculation\DiscountCollection" />
+        <property name="totals" type="CalculationTotalsTransfer[]" />
+        <property name="expenses" type="CalculationExpenseTransfer[]" />
+        <property name="discounts" type="CalculationDiscountTransfer[]" />
         <property name="couponCodes" type="array" default="[]" />
     </transfer>
     <transfer name="Cart2CartChange">
@@ -35,12 +35,12 @@
         <interface name="ItemInterface" short="ItemInterface" />
         <property name="quantity" type="int" default="1" />
         <property name="id" type="int" default="null" />
-        <property name="expenses" type="string" default="Calculation\ExpenseCollection" />
+        <property name="expenses" type="CalculationExpenseTransfer[]" />
         <property name="options" type="array" default="[]" />
         <property name="grossPrice" type="int" default="0" />
         <property name="priceToPay" type="int" default="0" />
         <property name="taxPercentage" type="int" default="0" />
-        <property name="discounts" type="string" default="Calculation\DiscountCollection" />
+        <property name="discounts" type="CalculationDiscountTransfer[]" />
     </transfer>
 
 </transfers>

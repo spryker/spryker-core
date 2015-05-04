@@ -43,9 +43,9 @@
         <property name="salutation" type="string" default="null" />
         <property name="password" type="string" default="null" />
         <property name="newPassword" type="string" default="null" />
-        <property name="billingAddress" type="string" default="Customer\Address" />
-        <property name="shippingAddress" type="string" default="Customer\Address" />
-        <property name="addresses" type="string" default="Customer\AddressCollection" />
+        <property name="billingAddress" type="CustomerAddressTransfer[]" />
+        <property name="shippingAddress" type="CustomerAddressTransfer[]" />
+        <property name="addresses" type="CustomerAddressTransfer[]" />
         <property name="defaultBillingAddress" type="string" default="null" />
         <property name="defaultShippingAddress" type="string" default="null" />
         <property name="createdAt" type="string" default="null" />
