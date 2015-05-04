@@ -56,7 +56,7 @@ class AuthFacade extends AbstractFacade
     }
 
     /**
-     * @param User $user
+     * @param UserUserTransfer $user
      *
      * @return string
      */
@@ -84,7 +84,7 @@ class AuthFacade extends AbstractFacade
     /**
      * @param string $hash
      *
-     * @return User
+     * @return UserUserTransfer
      */
     public function getSystemUser($hash)
     {

@@ -114,7 +114,7 @@
 	@else {
 		$want : 'svg', 'woff', 'otf'     , 'ttf'     , 'eot';
 		$type : 'svg', 'woff', 'opentype', 'truetype', 'embedded-opentype';
-		$url  : null;
+		$url  : ();
 
 		@each $item in $want {
 			@if map-has-key($files, $item) {
@@ -127,7 +127,7 @@
 
 			@if $weight != null { font-weight : $weight };
 			@if $style  != null { font-style  : $style  };
-			src         : $url
+			src : $url;
 		}
 	}
 }

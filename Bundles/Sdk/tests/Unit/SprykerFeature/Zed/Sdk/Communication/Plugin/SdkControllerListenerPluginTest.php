@@ -7,7 +7,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Foo\Sdk\NotTransferTransferObject;
 use SprykerFeature\Shared\Library\Communication\Response;
 use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
-use Generated\Shared\Transfer\SkdGoodTransferTransfer;
+use SprykerFeature\Shared\Skd\Transfer\GoodTransfer;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 use SprykerFeature\Zed\Sdk\Communication\Plugin\SdkControllerListenerPlugin;
 use Symfony\Component\HttpFoundation\JsonResponse;

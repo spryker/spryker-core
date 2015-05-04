@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Acl\Communication\Controller;
 
+use Generated\Shared\Transfer\AclGroupTransfer;
 use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -49,7 +50,7 @@ class RulesetController extends AbstractController
 
         if ($form->isValid()) {
             $data = $form->getRequestData();
-            $group = new \Generated\Shared\Transfer\AclGroupTransfer();
+            $group = new AclGroupTransfer();
             $group->setName($data['name']);
 
             if (!empty($idGroup)) {
