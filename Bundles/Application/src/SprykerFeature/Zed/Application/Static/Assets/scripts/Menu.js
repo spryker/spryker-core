@@ -38,12 +38,16 @@ function _onNodeKeyPress(e) {
 
 
 function _isLocalOpen() {
+	/* jshint validthis: true */
+
 	var state = localStorage.getItem('menu.' + this.name + '.open');
 
 	return state !== null ? state === "open" : true;
 }
 
 function _setLocalOpen(b) {
+	/* jshint validthis: true */
+
 	localStorage.setItem('menu.' + this.name + '.open', b ? "open" : "closed");
 }
 

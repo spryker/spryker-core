@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Shared\SearchPage\Dependency;
+namespace SprykerFeature\Shared\SearchPage\Dependency\Transfer;
 
 interface PageElementInterface
 {

@@ -130,6 +130,7 @@ class ClassGenerator
             'properties' => $this->generatePropertiesDeclarations(),
             'settersAndGetters' => $this->generateSettersAndGetters(),
             'useExternal' => $this->getExternalResourcesToUse(),
+            'needsConstructor' => $this->classDefinition->getNeedsConstructor(),
         ];
     }
 
@@ -255,13 +256,7 @@ class ClassGenerator
             return '[]';
         }
 
-        if (!empty($properties['default'])) {
-            return $properties['default'];
-        }
-
         return 'null';
-
-        // @todo support for default boolean values ?
     }
 
     /**

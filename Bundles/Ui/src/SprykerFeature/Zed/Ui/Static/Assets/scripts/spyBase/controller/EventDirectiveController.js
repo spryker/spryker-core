@@ -1,5 +1,12 @@
 'use strict';
 
+
+
+/**
+ * Generic Event Directive Controller
+ * @ngdoc function
+ * @name EventDirectiveController
+ */
 require('Ui').ng
 	.module('spyBase')
 	.controller('EventDirectiveController', [

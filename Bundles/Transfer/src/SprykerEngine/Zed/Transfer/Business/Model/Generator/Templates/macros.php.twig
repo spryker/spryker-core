@@ -1,57 +1,63 @@
-{% macro method_set(sag) -%}
-
+{% macro method_set(parameter) -%}
 {% import _self as mcr %}
-{%- if sag.is_special == 1 -%}{{ mcr.method_set_header(sag, 'array') }}{% else %}{{ mcr.method_set_header(sag, sag.parameterDataType) }}{%- endif %}
+{%- if parameter.is_special == 1 -%}{{ mcr.method_set_header(parameter, 'array') }}{% else %}{{ mcr.method_set_header(parameter, parameter.parameterDataType) }}{%- endif %}
     {
-        $this->{{ sag.passedParameter }}{{ writeIf('[]', 'array', sag.parameterDataType) }} = ${{ sag.passedParameter }};
-        $this->addModifiedProperty('{{ sag.passedParameter }}');
+        $this->{{ parameter.passedParameter }}{{ writeIf('[]', 'array', parameter.parameterDataType) }} = ${{ parameter.passedParameter }};
+        $this->addModifiedProperty('{{ parameter.passedParameter }}');
 
         return $this;
     }
-{% if sag.is_special == 1 %}{# create addMethod(ClassType $methodParameter) #}
+{%- if parameter.is_special == 1 %}{# create addMethod(ClassType $methodParameter) #}
+
     /**
-     * @var {{ writeIfNot(sag.parameterDataType~' ', '(^string)', sag.parameterDataType) }}${{ sag.passedParameter }}
+     * @var {{ writeIfNot(parameter.parameterDataType~' ', '(^string)', parameter.parameterDataType)|changeArrayType }}${{ parameter.passedParameter|singular }}
      */
-    public function add{{ sag.propertyName|singular|camelCase }}({{ writeIfNot(sag.parameterDataType~' ', '(^string)', sag.parameterDataType)|changeArrayType }}${{ sag.passedParameter }})
+    public function add{{ parameter.propertyName|singular|camelCase }}({{ writeIfNot(parameter.parameterDataType~' ', '(^string)', parameter.parameterDataType)|changeArrayType }}${{ parameter.passedParameter|singular }})
     {
-        $this->{{ sag.passedParameter }}[] = ${{ sag.passedParameter }};
-        $this->addModifiedProperty('{{ sag.passedParameter }}');
+        $this->{{ parameter.passedParameter }}->offsetSet(${{ parameter.passedParameter }}->getId(), ${{ parameter.passedParameter|singular }});
+        $this->{{ parameter.passedParameter }}->append(${{ parameter.passedParameter|singular }});
+        $this->addModifiedProperty('{{ parameter.passedParameter }}');
 
         return $this;
     }
+{%- endif -%}
+{%- endmacro -%}
+
+
+{% macro remove(property) %}
 
     /**
-     * @var {{ writeIfNot(sag.parameterDataType~' ', '(^string)', sag.parameterDataType) }}${{ sag.passedParameter }}
+     * @var {{ writeIfNot(parameter.parameterDataType~' ', '(^string)', parameter.parameterDataType)|changeArrayType }}${{ parameter.passedParameter }}
      */
-    public function remove{{ sag.propertyName|singular|camelCase }}()
+    public function remove{{ parameter.propertyName|singular|camelCase }}({{ writeIfNot(parameter.parameterDataType~' ', '(^string)', parameter.parameterDataType)|changeArrayType }}${{ parameter.passedParameter }})
     {
-        $this->{{ sag.passedParameter }} = null;
-        $this->addModifiedProperty('{{ sag.passedParameter }}');
+        $this->{{ parameter.passedParameter }} = new \ArrayObject();
+        $this->addModifiedProperty('{{ parameter.passedParameter }}');
 
         return $this;
     }
-{% endif %}
-
-{%- endmacro %}
-
-
-{% macro method_set_header(sag, type) %}
-    /**
-     * @var {{ type }} ${{ sag.passedParameter }}
-     *
-     * @return $this
-     */
-    public function set{{ sag.propertyName|camelCase }}({{ writeIfNot(type~' ', '(string|int|null)', type) }}${{ sag.passedParameter }})
 {% endmacro %}
 
 
-{% macro method_get(sag) %}
+{% macro method_set_header(parameter, type) %}
+
     /**
-     * @return {{ sag.parameterDataType }}
+     * @var {{ writeIfNot(type~' ', '(boolean|bool|array|string|int)', type) }}${{ parameter.passedParameter }}
+     *
+     * @return $this
      */
-    public function get{{ sag.propertyName|camelCase }}()
+    public function set{{ parameter.propertyName|camelCase }}({{ writeIf('\\ArrayObject ', 'array', type) }}{{ writeIfNot(type~' ', '(boolean|bool|array|string|int|null)', type) }}${{ parameter.passedParameter }})
+{% endmacro %}
+
+
+{% macro method_get(parameter) %}
+
+    /**
+     * @return {{ parameter.parameterDataType }}
+     */
+    public function get{{ parameter.propertyName|camelCase }}()
     {
-        return $this->{{ sag.passedParameter }};
+        return $this->{{ parameter.passedParameter }};
     }
 {% endmacro %}
 
@@ -61,4 +67,17 @@
      * @var {{ prop.parameterDataType }} ${{ prop.propertyName }}
      */
     private ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue|quotedIfNotIntegers }}{% endif %};
+{% endmacro %}
+
+
+{% macro build_constructor(parameters) %}
+    /**
+     *
+     */
+    public function __construct()
+    {
+    {% for property in parameters -%}
+        {{ "\t" }}$this->{{ property }} = new \ArrayObject();{{ "\n" }}
+    {%- endfor %}
+    }
 {% endmacro %}

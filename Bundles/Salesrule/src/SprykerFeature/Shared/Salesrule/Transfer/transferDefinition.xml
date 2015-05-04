@@ -45,7 +45,7 @@
         <property name="updatedAt" type="string" default="null" />
     </transfer>
     <transfer name="SalesruleSalesrule">
-        <property name="item" type="string" default="Salesrule\Item" />
+        <property name="item" type="SalesruleItemTransfer[]" />
     </transfer>
 
 </transfers>

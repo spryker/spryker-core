@@ -1,5 +1,14 @@
 'use strict';
 
+
+
+/**
+ * Field directive
+ * @ngdoc directive
+ * @name spyField
+ * @restrict A
+ * @param {expression} spyField The field model
+ */
 require('Ui').ng
 	.module('spyForm')
 	.directive('spyField', [function() {

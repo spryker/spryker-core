@@ -25,7 +25,6 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
 use \Propel\Runtime\Exception\PropelException;
 
-
 class PaymentManager
 {
 

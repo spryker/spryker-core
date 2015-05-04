@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 /**
  * Generic template action controller
  * @ngdoc function

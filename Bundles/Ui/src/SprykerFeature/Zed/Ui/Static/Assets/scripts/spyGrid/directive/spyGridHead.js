@@ -7,6 +7,8 @@ var _event = require('../event/GridComponentEvent');
 
 var _id = 0;
 
+
+
 /**
  * Grid column head with sorting & filtering
  * @ngdoc directive

@@ -5,6 +5,15 @@ var _event = require('../event/GridEvent');
 
 
 
+/**
+ * The grid read event directive
+ * @ngdoc directive
+ * @name spyGridRead
+ * @restrict A
+ * @param {expression}  spyGridRead The grid read expression
+ * @param {string}     [scope]      The name of the named referenced scope if not local
+ * @param {string}     [channel]    The event channel
+ */
 _ng
 	.module('spyGrid')
 	.directive('spyGridRead', [function() {

@@ -31,7 +31,7 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
         $definitions = Factory::fromFile($file, true)->toArray();
 
         foreach ($definitions as $item) {
-            if ( is_array($item) ) {
+            if (is_array($item)) {
                 foreach ($item as $itemComponent) {
                     $this->manager->setClassDefinition($itemComponent);
                 }
@@ -53,13 +53,15 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
         }
     }
 
-
-    public function test_class_name()
+    /**
+     * @skip
+     */
+    public function testClassName()
     {
         $this->assertSame('AlfaTransfer', $this->generatedClasses[0]['definition']->getClassName());
     }
 
-    public function test_get_interfaces()
+    public function testGetInterfaces()
     {
         $this->assertEquals(3, count($this->generatedClasses[0]['definition']->getInterfaces()));
     }
@@ -68,7 +70,7 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
      * @dataProvider codeSampleValidationProvider
      * @param $codeSample
      */
-    public function test_generated_class_content($codeSample)
+    public function testGeneratedClassContent($codeSample)
     {
         $this->assertContains($codeSample, $this->generatedClasses[0]['code']);
     }
@@ -82,30 +84,36 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
     {
         return [
             ['namespace Generated\Shared\Transfer;'],
-            ['$properties = [];'],
-            ['$published = true;'],
+
+            ['private $properties = [];'],
+            ['private $published = null;'],
+            ['private $user_id = null;'],
+            ['private $customers = [];'],
+            ['private $cartItems = [];'],
+
             ['@var array $properties'],
-            ['@return array'],
             ['@var Customer $customer'],
-            ['@return Customer'],
-            ['$this->user_id = $user_id;'],
+
             ['public function setUserId($user_id)'],
             ['public function getUserId()'],
-            ['public function addCartItem(CartItem $cartItems)'],
+            ['public function addCartItem(CartItem $cartItem)'],
             ['public function getCartItems()'],
-            ['public function removeCartItem()'],
-            ['public function setCartItems(array $cartItems)'],
-            ['$this->properties[] = $properties;'],
-            ['setCustomer(Customer $customer)'],
-            ['public function setPublished(bool $published)'],
+            ['public function setCartItems(\ArrayObject $cartItems)'],
+            ['public function setCustomers(\ArrayObject $customers)'],
+            ['public function addCustomer(Customer $customer)'],
+            ['public function setPublished($published)'],
+
             ['use Spryker\Demo\FirstInterface'],
             ['use Spryker\Demo\SecondInterface'],
             ['use Spryker\Demo\ThirdInterface'],
+
+            ['$this->user_id = $user_id;'],
+            ['$this->customers->append($customer);'],
+            ['$this->properties[] = $properties;'],
             ['$this->addModifiedProperty(\'published\');'],
-            ['$this->addModifiedProperty(\'customer\');'],
+            ['$this->addModifiedProperty(\'customers\');'],
             ['$this->addModifiedProperty(\'properties\');'],
             ['$this->addModifiedProperty(\'cartItems\');'],
-//            ['class AlfaTransfer extends AbstractTransfer implements FirstInterface, SecondInterface, ThirdInterface'],
         ];
     }
 
@@ -138,6 +146,7 @@ class FullProcessTest extends PHPUnit_Framework_TestCase
             ['setCartItems( $cartItems)'],
             ['setCartItems(CartItems $cartItems)'],
             ['addCartItems(CartItems $cartItems)'],
+            ['addCartItems(CartItem $cartItems)'],
         ];
     }
 }

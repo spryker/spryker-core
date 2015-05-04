@@ -30,6 +30,11 @@ class ClassDefinition implements ClassDefinitionInterface
     protected $uses = [];
 
     /**
+     * @var array
+     */
+    protected $needsConstructor = [];
+
+    /**
      * @param string $className
      */
     public function __construct($className)
@@ -105,7 +110,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $this->properties[$properties['name']] = [
             'name' => $properties['name'],
-            'type_special' => $this->isTypeSpecial($properties['type']),
+            'type_special' => $this->checkTypeSpecial($properties),
             'type' => $this->getType($properties['type']),
             'default' => (isset($properties['default'])) ? $properties['default'] : '',
         ];
@@ -126,11 +131,26 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param string $type
-     * @return int
+     * @return bool
      */
     protected function isTypeSpecial($type)
     {
         return (bool)preg_match('/\[\]/', $type);
+    }
+
+    /**
+     * @param string $property
+     * @return int
+     */
+    protected function checkTypeSpecial(array $property)
+    {
+        if ($this->isTypeSpecial($property['type'])) {
+            $this->setPropertiesThatNeedsConstructor($property['name']);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -145,6 +165,30 @@ class ClassDefinition implements ClassDefinitionInterface
             $name .= 'Transfer';
         }
         $this->className = $name;
+    }
+
+    /**
+     * @param array|string $needsConstructor
+     */
+    public function setPropertiesThatNeedsConstructor($needsConstructor)
+    {
+        if (is_array($needsConstructor) && !empty($needsConstructor)) {
+            foreach ($needsConstructor as $item) {
+                $this->setPropertiesThatNeedsConstructor($item);
+            }
+        } else {
+            if (!in_array($needsConstructor, $this->needsConstructor)) {
+                $this->needsConstructor[] = $needsConstructor;
+            }
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getNeedsConstructor()
+    {
+        return $this->needsConstructor;
     }
 
     /**

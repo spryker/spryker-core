@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\SearchPage\Business\Installer;
 
+use Generated\Shared\Transfer\SearchPageTemplateTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\SearchPage\Business\Exception\TemplateAlreadyExistsException;
@@ -86,7 +87,8 @@ class TemplateInstaller extends AbstractInstaller
                     )
                 );
             }
-            $templateTransfer = new \Generated\Shared\Transfer\SearchPageTemplateTransfer();
+
+            $templateTransfer = new \Generated\Shared\Transfer\TemplateTransfer();
             $templateTransfer->setTemplateName($template);
 
             $this->templateWriter->createTemplate($templateTransfer);

@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 require('Ui').ng
 	.module('spyBase')
 	.factory('redirectInterceptor', [function() {
