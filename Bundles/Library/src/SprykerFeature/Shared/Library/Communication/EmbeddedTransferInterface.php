@@ -1,7 +1,7 @@
 <?php
 namespace SprykerFeature\Shared\Library\Communication;
 
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface EmbeddedTransferInterface
 {

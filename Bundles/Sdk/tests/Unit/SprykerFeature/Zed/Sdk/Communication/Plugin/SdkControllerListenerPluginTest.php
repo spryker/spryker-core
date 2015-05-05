@@ -6,7 +6,7 @@ use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Foo\Sdk\NotTransferTransferObject;
 use SprykerFeature\Shared\Library\Communication\Response;
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\Skd\Transfer\GoodTransfer;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 use SprykerFeature\Zed\Sdk\Communication\Plugin\SdkControllerListenerPlugin;

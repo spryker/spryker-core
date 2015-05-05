@@ -1,7 +1,7 @@
 <?php
 namespace SprykerFeature\Yves\Library\Session;
 
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class TransferSession

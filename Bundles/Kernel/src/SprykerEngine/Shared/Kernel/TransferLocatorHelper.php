@@ -3,7 +3,7 @@
 namespace SprykerEngine\Shared\Kernel;
 
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\System\SystemConfig;
 
 /**

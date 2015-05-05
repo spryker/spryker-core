@@ -1,9 +1,10 @@
 <?php
 
-namespace SprykerFeature\Shared\Library\TransferObject;
+namespace SprykerEngine\Shared\Transfer;
 
 interface TransferInterface
 {
+
     /**
      * @return boolean
      */

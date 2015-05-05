@@ -1,13 +1,16 @@
 <?php
 
-namespace SprykerFeature\Shared\Library\TransferObject;
+namespace SprykerEngine\Shared\Transfer;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
 use SprykerFeature\Shared\Library\Filter\FilterChain;
 use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 
-abstract class AbstractTransfer implements TransferInterface
+/**
+ * @TODO remove deprecated TransferArrayObject
+ */
+abstract class AbstractTransfer extends TransferArrayObject implements TransferInterface
 {
 
     /**
@@ -334,22 +337,6 @@ abstract class AbstractTransfer implements TransferInterface
      */
     public function __call($method, $args)
     {
-    }
-
-    /**
-     * @param Object $object
-     *
-     * @deprecated
-     * @return $this
-     */
-    public function add($object)
-    {
-        $storage = $this->getStorage();
-        if (!$storage->contains($object)) {
-            $storage->attach($object);
-        }
-
-        return $this;
     }
 
     /**

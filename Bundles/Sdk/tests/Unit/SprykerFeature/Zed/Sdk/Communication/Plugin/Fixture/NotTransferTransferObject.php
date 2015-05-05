@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Shared\Foo\Sdk;
 
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 class NotTransferTransferObject extends AbstractTransfer
 {
@@ -24,4 +24,3 @@ class NotTransferTransferObject extends AbstractTransfer
         $this->foo = $foo;
     }
 }
- 
