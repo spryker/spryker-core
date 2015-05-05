@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Setup;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\System\SystemConfig;
 
 class SetupConfig extends AbstractBundleConfig
 {
@@ -21,4 +22,27 @@ class SetupConfig extends AbstractBundleConfig
         ]);
     }
 
+    /**
+     * @return string
+     */
+    public function getJenkinsUrl()
+    {
+        return $this->get(SystemConfig::JENKINS_BASE_URL);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJenkinsDirectory()
+    {
+        return $this->get(SystemConfig::JENKINS_DIRECTORY);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJenkinsJobsDirectory()
+    {
+        return $this->getJenkinsDirectory() . '/jobs';
+    }
 }

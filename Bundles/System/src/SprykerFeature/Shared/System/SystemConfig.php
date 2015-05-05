@@ -31,6 +31,9 @@ interface SystemConfig extends ConfigInterface
     const ELASTICA_PARAMETER__INDEX_NAME = 'index_name';
     const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'document_type';
 
+    const JENKINS_BASE_URL = 'jenkins_url';
+    const JENKINS_DIRECTORY = 'jenkins_dir';
+
     /**
      * Sessions
      */

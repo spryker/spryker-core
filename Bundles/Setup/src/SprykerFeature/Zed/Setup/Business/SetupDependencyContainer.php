@@ -7,6 +7,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 
 
 /**
+ * @method SetupConfig getConfig()
  * @method SetupBusiness getFactory()
  */
 class SetupDependencyContainer extends AbstractDependencyContainer
@@ -17,6 +18,7 @@ class SetupDependencyContainer extends AbstractDependencyContainer
      */
     public function getModelCronjobs()
     {
-        return $this->getFactory()->createModelCronjobs();
+        $config = $this->getConfig();
+        return $this->getFactory()->createModelCronjobs($config);
     }
 }
