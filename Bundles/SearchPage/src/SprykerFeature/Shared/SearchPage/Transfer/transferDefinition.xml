@@ -4,17 +4,14 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Template">
-
         <use name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\TemplateInterface" short="TemplateInterface" />
         <interface name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\TemplateInterface" short="TemplateInterface" />
 
         <property name="idPageElementTemplate" type="int" />
         <property name="templateName" type="string" />
-
     </transfer>
 
     <transfer name="PageElement">
-
         <use name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\PageElementInterface" short="PageElementInterface" />
         <interface name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\PageElementInterface" short="PageElementInterface" />
 
@@ -27,7 +24,6 @@
     </transfer>
 
     <transfer name="DocumentAttribute">
-
         <use name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\DocumentAttributeInterface" short="DocumentAttributeInterface" />
         <interface name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\DocumentAttributeInterface" short="DocumentAttributeInterface" />
 

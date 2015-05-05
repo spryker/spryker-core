@@ -12,6 +12,7 @@
         <property name="createdAt" type="string" default="null" />
         <property name="updatedAt" type="string" default="null" />
     </transfer>
+
     <transfer name="SalesruleCodePool">
         <property name="idSalesruleCodepool" type="int" default="null" />
         <property name="name" type="string" default="null" />
@@ -23,6 +24,7 @@
         <property name="isVoucher" type="string" default="null" />
         <property name="isActive" type="string" default="null" />
     </transfer>
+
     <transfer name="SalesruleCondition">
         <property name="idSalesruleCondition" type="int" default="null" />
         <property name="fkSalesrule" type="int" default="null" />
@@ -32,6 +34,7 @@
         <property name="createdAt" type="string" default="null" />
         <property name="updatedAt" type="string" default="null" />
     </transfer>
+
     <transfer name="SalesruleItem">
         <property name="idSalesrule" type="int" default="null" />
         <property name="name" type="string" default="null" />
@@ -44,8 +47,10 @@
         <property name="createdAt" type="string" default="null" />
         <property name="updatedAt" type="string" default="null" />
     </transfer>
+
     <transfer name="SalesruleSalesrule">
-        <property name="item" type="SalesruleItemTransfer[]" />
+        <use name="Generated\Shared\Transfer\SalesruleItemTransfer" short="SalesruleItemTransfer" />
+        <property name="item" type="SalesruleItemTransfer[]" collection="true" />
     </transfer>
 
 </transfers>
