@@ -4,31 +4,34 @@ namespace SprykerFeature\Zed\Setup\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
+/**
+ * @method SetupDependencyContainer getDependencyContainer()
+ */
 class SetupFacade extends AbstractFacade
 {
 
     /**
-     * @return \SprykerFeature_Zed_Setup_Business_Settings
-     */
-    public function createSettings()
-    {
-        return $this->factory->createSettings();
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllCronjobs()
-    {
-        return $this->factory->createModelCronjobs()->getCronjobs();
-    }
-
-    /**
-     * @param string $what
      * @return string
      */
-    public function getPhpInfo($what = null)
+    public function generateCronjobs()
     {
-        return $this->factory->createModelSystem()->getPhpInfo($what);
+        return $this->getDependencyContainer()->getModelCronjobs()->generateCronjobs();
     }
+
+    /**
+     * @return string
+     */
+    public function enableJenkins()
+    {
+        return $this->getDependencyContainer()->getModelCronjobs()->enableJenkins();
+    }
+
+    /**
+     * @return string
+     */
+    public function disableJenkins()
+    {
+        return $this->getDependencyContainer()->getModelCronjobs()->disableJenkins();
+    }
+
 }

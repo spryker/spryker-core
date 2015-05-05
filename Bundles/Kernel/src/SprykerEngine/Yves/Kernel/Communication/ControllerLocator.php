@@ -8,7 +8,7 @@ use SprykerEngine\Shared\Kernel\Communication\ControllerLocatorInterface;
 use SprykerEngine\Shared\Kernel\IdentityMapClassResolver;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Yves\Kernel\ClassNamePattern;
-use SprykerEngine\Yves\Kernel\Factory;
+
 
 class ControllerLocator implements ControllerLocatorInterface
 {
