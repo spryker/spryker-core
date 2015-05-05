@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Zed\Transfer\Business\Model\TransferArrayObject;
 use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
@@ -129,8 +130,13 @@ d     */
     {
         $results = $this->queryContainer->queryGroupRoles($idGroup)->find();
 
-        $collection = new AclRoleTransfer();
-        $collection = Copy::entityCollectionToTransferCollection($collection, $results, false);
+        $collection = new TransferArrayObject();
+
+
+        foreach ($results as $result) {
+            $transfer = new AclRoleTransfer();
+            $collection->add(Copy::entityToTransfer($transfer, $result));
+        }
 
         return $collection;
     }

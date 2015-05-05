@@ -21,7 +21,6 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @todo Is it allowed to cache here?
      * @var StandardParameterInterface
      */
     private $standardParameter;
@@ -121,7 +120,6 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @todo is it allowed to cache like this???
      * @return StandardParameterInterface
      */
     protected function createStandardParameter()

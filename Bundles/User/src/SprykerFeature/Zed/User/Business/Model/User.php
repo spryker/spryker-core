@@ -147,15 +147,21 @@ class User implements UserInterface
      */
     public function getUsers()
     {
-        $users = $this->queryContainer->queryUsers()->find();
+        $results = $this->queryContainer->queryUsers()->find();
 
-        if (false === ($users instanceof ObjectCollection)) {
+        if (false === ($results instanceof ObjectCollection)) {
             throw new UserNotFoundException();
         }
 
-        $userCollection = new \Generated\Shared\Transfer\UserUserTransfer();
+        $collection = new TransferArrayObject();
 
-        return Copy::entityCollectionToTransferCollection($userCollection, $users, false);
+
+        foreach ($results as $result) {
+            $transfer = new UserUserTransfer();
+            $collection->add(Copy::entityToTransfer($transfer, $result));
+        }
+
+        return $collection;
     }
 
     /**
@@ -197,7 +203,7 @@ class User implements UserInterface
     /**
      * @param string $username
      *
-     * @return TransferUser
+     * @return UserUserTransfer
      * @throws UserNotFoundException
      */
     public function getUserByUsername($username)
@@ -264,7 +270,7 @@ class User implements UserInterface
     public function hasCurrentUser()
     {
         try {
-            $this->getCurrentUser();
+            $test = $this->getCurrentUser();
             return true;
         } catch (UserNotFoundException $e) {
             return false;
@@ -339,7 +345,7 @@ class User implements UserInterface
      */
     protected function entityToTransfer(SpyUserUser $entity)
     {
-        $transfer = new \Generated\Shared\Transfer\UserUserTransfer();
+        $transfer = new UserUserTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;

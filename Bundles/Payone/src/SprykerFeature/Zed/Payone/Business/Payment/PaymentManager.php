@@ -139,7 +139,6 @@ class PaymentManager
      */
     protected function performAuthorization(AuthorizationDataInterface $authorizationData, AuthorizationContainer $requestContainer)
     {
-        // @todo just works. refactor! does too much! create PersistenceManagerInterface for db storage?
         $this->setStandardParameter($requestContainer);
 
         $paymentEntity = $this->initializePayment($authorizationData->getPaymentMethod());
@@ -183,7 +182,6 @@ class PaymentManager
      */
     public function debit(DebitDataInterface $debitData)
     {
-        // @todo just works. refactor!
         $paymentMethodMapper = $this->findPaymentMethodMapperByName($debitData->getPayment()->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapDebit($debitData);
         $this->setStandardParameter($requestContainer);

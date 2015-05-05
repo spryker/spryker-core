@@ -35,7 +35,7 @@ class Authorization implements AuthorizationDataInterface
     protected $order;
 
     /**
-     * @param string $method
+     * @param string $paymentMethod
      */
     public function setPaymentMethod($paymentMethod)
     {

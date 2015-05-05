@@ -22,7 +22,7 @@
         </foreign-key>
 
         <foreign-key foreignTable="spy_redirect" phpName="SpyRedirect" onDelete="CASCADE">
-            <reference foreign="id_redirect" local="fk_resource_redirect_id"/>
+            <reference foreign="id_redirect" local="fk_resource_redirect"/>
         </foreign-key>
 
         <foreign-key foreignTable="spy_cms_page" phpName="CmsPage" onDelete="CASCADE">

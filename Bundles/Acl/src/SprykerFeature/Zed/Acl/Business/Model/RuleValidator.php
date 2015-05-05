@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\AclRuleTransfer;
+use SprykerEngine\Zed\Transfer\Business\Model\TransferArrayObject;
 use SprykerFeature\Zed\Acl\AclConfig;
 
 class RuleValidator implements RuleValidatorInterface
@@ -54,11 +55,11 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param AclRuleTransfer $rules
+     * @param TransferArrayObject $rules
      *
      * @return $this
      */
-    public function setRules(AclRuleTransfer $rules)
+    public function setRules(TransferArrayObject $rules)
     {
         foreach ($rules as $rule) {
             if ($rule->getType() === 'allow') {

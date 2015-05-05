@@ -7,38 +7,43 @@ use Generated\Shared\Transfer\AclRuleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
+use SprykerFeature\Zed\Acl\Business\AclFacade;
+use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
+use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
+use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
+use SprykerFeature\Zed\User\Business\UserFacade;
 
 class Installer implements InstallerInterface
 {
-    /**
-     * @var AclQueryContainer
-     */
-    protected $queryContainer;
 
     /**
-     * @var AutoCompletion
+     * @var AclFacade
      */
-    protected $locator;
+    private $facadeAcl;
+
+    /**
+     * @var UserFacade
+     */
+    private $facadeUser;
 
     /**
      * @var AclConfig
      */
-    protected $settings;
+    protected $config;
 
     /**
-     * @param AclQueryContainer $queryContainer
-     * @param LocatorLocatorInterface $locator
+     * @param AclFacade $facadeAcl
+     * @param UserFacade $facadeUser
      * @param AclConfig $settings
      */
     public function __construct(
-        AclQueryContainer $queryContainer,
-        LocatorLocatorInterface $locator,
+        AclFacade $facadeAcl,
+        UserFacade $facadeUser,
         AclConfig $settings
     ) {
-        $this->queryContainer = $queryContainer;
-        $this->locator = $locator;
-        $this->settings = $settings;
+        $this->facadeAcl = $facadeAcl;
+        $this->facadeUser = $facadeUser;
+        $this->config = $settings;
     }
 
     /**
@@ -46,132 +51,91 @@ class Installer implements InstallerInterface
      */
     public function install()
     {
-        $groups = $this->addGroups($this->settings->getInstallerGroups());
-        $roles = $this->addRoles($this->settings->getInstallerRoles(), $groups->toArray());
-        $this->addRules($this->settings->getInstallerRules(), $roles->toArray());
-        $this->addUserRelationships($this->settings->getInstallerUsers(), $groups->toArray());
+        $this->addGroups();
+        $this->addRoles();
+        $this->addRules();
+        $this->addUserGroupRelations();
+    }
+
+    private function addGroups()
+    {
+        foreach ($this->config->getInstallerGroups() as $group) {
+            $this->addGroup($group['name']);
+        }
     }
 
     /**
-     * @param array $groupsArray
-     *
-     * @return AclGroupTransfer
+     * @param string $name
      */
-    protected function addGroups(array $groupsArray)
+    private function addGroup($name)
     {
-        $groupCollection = new AclGroupTransfer();
-
-        foreach ($groupsArray as $group) {
-            if ($this->queryContainer->queryGroupByName($group['name'])->count() > 0) {
-                continue;
-            }
-
-            $groupTransfer = $this->locator->acl()
-                ->facade()
-                ->addGroup($group['name']);
-
-            $groupCollection->add($groupTransfer);
+        if (!$this->facadeAcl->hasGroupByName($name)) {
+            $this->facadeAcl->addGroup($name);
         }
+    }
 
-        return $groupCollection;
+    private function addRoles()
+    {
+        foreach ($this->config->getInstallerRoles() as $role) {
+            if (!$this->facadeAcl->existsRoleByName($role['name'])) {
+                $this->addRole($role);
+            }
+        }
     }
 
     /**
-     * @param array $roleArray
-     * @param array $groupArray
-     *
-     * @return AclRoleTransfer
+     * @param array $role
+     * @throws GroupNotFoundException
      */
-    protected function addRoles(array $roleArray, array $groupArray)
+    private function addRole(array $role)
     {
-        $roleCollection = new AclRoleTransfer();
-
-        foreach ($roleArray as $role) {
-            if ($this->queryContainer->queryRoleByName($role['name'])->count() > 0) {
-                continue;
-            }
-
-            $group = array_filter($groupArray, function ($item) use ($role) {
-                return $item['name'] === $role['group'];
-            });
-
-            //@TODO this is because our transfer collection returns negative indexes and i can't pick 0
-            $group = array_shift($group);
-
-            if (count($group) === 0) {
-                continue;
-            }
-
-            $roleTransfer = $this->locator->acl()
-                ->facade()
-                ->addRole($role['name'], $group['id_acl_group']);
-
-            $roleCollection->add($roleTransfer);
+        $group = $this->facadeAcl->getGroupByName($role['group']);
+        if (!$group) {
+            throw new GroupNotFoundException();
         }
 
-        return $roleCollection;
+        $this->facadeAcl->addRole($role['name'], $group->getIdAclGroup());
     }
 
     /**
-     * @param array $rulesArray
-     * @param array $rolesArray
-     *
-     * @return AclRuleTransfer
+     * @throws RoleNotFoundException
      */
-    protected function addRules(array $rulesArray, array $rolesArray)
+    private function addRules()
     {
-        $ruleCollection = new AclRuleTransfer();
-
-        foreach ($rulesArray as $rule) {
-            $role = array_filter($rolesArray, function ($item) use ($rule) {
-                return $item['name'] === $rule['role'];
-            });
-
-            if (count($role) === 0) {
-                continue;
+        foreach ($this->config->getInstallerRules() as $rule) {
+            $role = $this->facadeAcl->getRoleByName($rule['role']);
+            if (!$role) {
+                throw new RoleNotFoundException();
             }
 
-            //@TODO this is because our transfer collection returns negative indexes and i can't pick 0
-            $role = array_shift($role);
-
-            $ruleTransfer = $this->locator->acl()
-                ->facade()
-                ->addRule($rule['bundle'], $rule['controller'], $rule['action'], $role['id_acl_role'], $rule['type']);
-
-            $ruleCollection->add($ruleTransfer);
+            if (!$this->facadeAcl->existsRoleRule($role->getIdAclRole(), $rule['bundle'], $rule['controller'], $rule['action'], $rule['type'])) {
+                $this->facadeAcl->addRule(
+                    $rule['bundle'], $rule['controller'], $rule['action'], $role->getIdAclRole(), $rule['type']
+                );
+            }
         }
-
-        return $ruleCollection;
     }
 
     /**
-     * @param array $arrayUsers
-     * @param array $groupsArray
-     *
-     * @return bool
+     * @throws GroupNotFoundException
+     * @throws UserNotFoundException
      */
-    protected function addUserRelationships(array $arrayUsers, array $groupsArray)
+    private function addUserGroupRelations()
     {
-        foreach ($arrayUsers as $username => $data) {
-            $group = array_filter($groupsArray, function ($item) use ($data) {
-                return $item['name'] === $data['group'];
-            });
-
-            //@TODO this is because our transfer collection returns negative indexes and i can't pick 0
-            $group = array_shift($group);
-
-            $user = $this->locator->user()->facade()->getUserByUsername($username);
-            $query = $this->queryContainer->queryUserHasGroupById($group['id_acl_group'], $user->getIdUserUser());
-
-            if (count($group) === 0 || $query->count() > 0) {
-                continue;
+        foreach ($this->config->getInstallerUsers() as $username => $config) {
+            $group = $this->facadeAcl->getGroupByName($config['group']);
+            if (!$group) {
+                throw new GroupNotFoundException();
             }
 
-            $this->locator->acl()
-                ->facade()
-                ->addUserToGroup($user->getIdUserUser(), $group['id_acl_group']);
-        }
+            $user = $this->facadeUser->getUserByUsername($username);
+            if (!$user) {
+                throw new UserNotFoundException();
+            }
 
-        return true;
+            if (!$this->facadeAcl->userHasGroupId($group->getIdAclGroup(), $user->getIdUserUser())) {
+                $this->facadeAcl->addUserToGroup($user->getIdUserUser(), $group->getIdAclGroup());
+            }
+        }
     }
 }

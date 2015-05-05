@@ -50,6 +50,7 @@ class Copy
                 }
             }
         }
+
         return $transfer;
     }
 
