@@ -1,5 +1,6 @@
 <?php
-namespace SprykerFeature\Shared\Library\TransferObject;
+
+namespace SprykerEngine\Shared\Transfer;
 
 interface TransferCollectionInterface extends
     TransferInterface,

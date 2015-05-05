@@ -208,7 +208,7 @@ class GlossaryTest extends Test
         $locale = $this->localeFacade->createLocale('ab_xy');
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $locale->getIdLocale());
 
-        $transferTranslation = new Translation($this->locator);
+        $transferTranslation = new GlossaryTranslationTransfer();
         $transferTranslation->setFkGlossaryKey($keyId);
         $transferTranslation->setFkLocale($locale->getIdLocale());
         $transferTranslation->setValue('some Value');
@@ -249,7 +249,7 @@ class GlossaryTest extends Test
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeId);
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
 
-        $transferTranslation = new Translation($this->locator);
+        $transferTranslation = new GlossaryTranslationTransfer($this->locator);
         $transferTranslation->setFkGlossaryKey($keyId);
         $transferTranslation->setFkLocale($localeId);
         $transferTranslation->setValue('some Value');

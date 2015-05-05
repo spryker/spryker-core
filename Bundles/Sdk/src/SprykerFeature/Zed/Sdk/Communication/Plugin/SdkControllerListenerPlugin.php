@@ -7,7 +7,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Sdk\Communication\SdkControllerListenerInterface;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Response;
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;

@@ -4,14 +4,10 @@ namespace SprykerFeature\Sdk\Cart2\Model;
 
 use Generated\Sdk\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Yves\Kernel\Locator;
 use SprykerFeature\Sdk\Cart2\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Sdk\ZedRequest\Client\ZedClient;
-use Generated\Shared\Transfer\Cart2CartChangeInterfaceTransfer;
-use Generated\Shared\Transfer\Cart2CartInterface as CartTransferInterfaceTransfer;
-use Generated\Shared\Transfer\Cart2ItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\Cart2ItemInterfaceTransfer;
 
 class Cart implements CartInterface
 {

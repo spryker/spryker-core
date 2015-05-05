@@ -2,8 +2,9 @@
 
 namespace SprykerFeature\Zed\Sales\Communication\Controller\Widget;
 
-use SprykerFeature\Shared\Library\TransferLoader;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection;
+use Generated\Shared\Transfer\SalesCommentTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransferCollection;
 use SprykerFeature\Zed\Library\Controller\Action\AbstractGridController;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Communication\Grid\Comment as CommentGrid;
@@ -26,35 +27,35 @@ class CommentGridController extends AbstractGridController
      * @param AbstractTransferCollection $collection
      * @return mixed|void
      */
-    public function handleCreateOrUpdate($grid, \SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection $collection = null)
+    public function handleCreateOrUpdate($grid, AbstractTransferCollection $collection = null)
     {
         $this->facadeSales->saveComment($collection);
     }
 
     /**
-     * @return \SprykerFeature\Shared\Sales\Transfer\CommentCollection
+     * @return SalesCommentTransfer
      */
     protected function loadTransferCollection()
     {
-        return new \Generated\Shared\Transfer\SalesCommentTransfer();
+        return new SalesCommentTransfer();
     }
 
     /**
-     * @return \SprykerFeature\Shared\Sales\Transfer\Comment
+     * @return SalesCommentTransfer
      */
     protected function loadTransfer()
     {
-        return new \Generated\Shared\Transfer\SalesCommentTransfer();
+        return new SalesCommentTransfer();
     }
 
     /**
      * @param array $parameters
      * @param Request $request
-     * @return \SprykerFeature\Shared\Sales\Transfer\Comment|\SprykerFeature\Shared\Library\TransferObject\AbstractTransfer
+     *
+     * @return AbstractTransfer
      */
     protected function createTransfer(array $parameters, Request $request)
     {
-        /* @var $transfer \SprykerFeature\Shared\Sales\Transfer\Comment */
         $transfer = parent::createTransfer($parameters, $request);
         $fkSalesOrder = $request->query->get('id_sales_order', null);
         $transfer->setFkSalesOrder($fkSalesOrder);

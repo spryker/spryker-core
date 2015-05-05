@@ -8,8 +8,8 @@ use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
 interface NodeUrlManagerInterface
 {
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      * @param LocaleDto $locale
      */
-    public function createUrl(CategoryNode $categoryNode, LocaleDto $locale);
+    public function createUrl(CategoryCategoryNodeTransfer $categoryNode, LocaleDto $locale);
 }

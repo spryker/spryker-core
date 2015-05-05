@@ -6,7 +6,7 @@ use SprykerEngine\Shared\Kernel\TransferLocator;
 use SprykerEngine\Shared\Kernel\TransferLocatorHelper;
 use SprykerFeature\Shared\Library\TransferLoader;
 use SprykerFeature\Shared\Library\CodeGenerator\TransferLoaderGenerator;
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 
 class Response extends AbstractObject implements
     EmbeddedTransferInterface

@@ -8,9 +8,9 @@ interface ClosureTableWriterInterface
 {
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      */
-    public function create(CategoryNode $categoryNode);
+    public function create(CategoryCategoryNodeTransfer $categoryNode);
 
     /**
      * @param int $nodeId

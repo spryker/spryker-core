@@ -1,17 +1,12 @@
 <?php
 
+namespace SprykerEngine\Shared\Transfer;
 
-namespace SprykerEngine\Zed\Transfer\Business\Model;
-
-
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
-use SprykerFeature\Shared\Library\TransferObject\TransferCollectionInterface;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\TransferCollectionInterface;
 
 /**
- * Class TransferArrayObject
- *
  * @deprecated
- * @package SprykerEngine\Zed\Transfer\Business\Model
  */
 class TransferArrayObject extends \ArrayObject implements TransferCollectionInterface
 {

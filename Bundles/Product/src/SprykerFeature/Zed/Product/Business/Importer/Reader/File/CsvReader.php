@@ -44,7 +44,12 @@ class CsvReader implements IteratorReaderInterface
      */
     public function getIteratorFromFile(\SplFileInfo $file, $hasHeadingRow = true)
     {
-        $reader = Reader::createFromPath($file->getRealPath());
+        $path = $file->getRealPath();
+        if (!file_exists($path)) {
+            throw new \FileNotFoundException('File not found: ' . $path);
+        }
+
+        $reader = Reader::createFromPath($path);
 
         $reader->setDelimiter($this->delimiter);
         $reader->setEnclosure($this->enclosure);
@@ -55,4 +60,3 @@ class CsvReader implements IteratorReaderInterface
         return $iterator;
     }
 }
- 

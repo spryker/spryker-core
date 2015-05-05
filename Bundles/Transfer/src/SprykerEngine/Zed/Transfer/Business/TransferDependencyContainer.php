@@ -14,6 +14,8 @@ class TransferDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
+     * @param MessengerInterface $messenger
+     *
      * @return TransferGenerator
      */
     public function createTransferGenerator(MessengerInterface $messenger)

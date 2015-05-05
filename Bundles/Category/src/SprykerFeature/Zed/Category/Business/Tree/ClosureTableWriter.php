@@ -36,9 +36,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      */
-    public function create(CategoryNode $categoryNode)
+    public function create(CategoryCategoryNodeTransfer $categoryNode)
     {
         $nodeId = $categoryNode->getIdCategoryNode();
         $parentId = $categoryNode->getFkParentCategoryNode();
@@ -62,10 +62,10 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      * @throws PropelException
      */
-    protected function createRootNode(CategoryNode $categoryNode)
+    protected function createRootNode(CategoryCategoryNodeTransfer $categoryNode)
     {
         $nodeId = $categoryNode->getIdCategoryNode();
 

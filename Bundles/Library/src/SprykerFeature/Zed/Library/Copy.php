@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Library;
 
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransferCollection;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
 

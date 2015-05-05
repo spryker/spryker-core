@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerFeature\Zed\Sdk\Communication\Plugin\Fixture;
 
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 /**
  * This has to be here cause of a namespace check which is part of
@@ -28,4 +28,3 @@ class FooTransfer extends AbstractTransfer
         $this->foo = $foo;
     }
 }
- 

@@ -8,8 +8,7 @@ use Generated\Shared\Transfer\AclGroupTransfer;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
-use SprykerEngine\Zed\Transfer\Business\Model\TransferArrayObject;
-use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclGroup;
+use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroup;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
@@ -237,7 +236,7 @@ class Group implements GroupInterface
      */
     public function getAllGroups()
     {
-        $collection = new TransferArrayObject();
+        $collection = new AclGroupTransfer();
 
         $results = $this->queryContainer
             ->queryGroup()
@@ -332,8 +331,7 @@ class Group implements GroupInterface
             ->queryGroupRoles($idGroup)
             ->find();
 
-        $collection = new TransferArrayObject();
-
+        $collection = new AclGroupTransfer();
 
         foreach ($results as $result) {
             $transfer = new AclRoleTransfer();

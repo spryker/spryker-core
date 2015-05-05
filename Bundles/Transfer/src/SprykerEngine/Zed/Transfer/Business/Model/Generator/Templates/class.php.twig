@@ -3,8 +3,9 @@
 
 namespace {{ namespace }};
 
-use SprykerEngine\Zed\Transfer\Business\Model\TransferArrayObject;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\TransferArrayObject;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
+
 {% for use in useExternal %}
 use {{ use }};
 {% endfor %}

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Shared\Library\TransferObject;
+namespace SprykerEngine\Shared\Transfer;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
@@ -26,18 +26,6 @@ abstract class AbstractTransferCollection implements
      */
     protected $dirtyObjects = 0;
 
-    /**
-     * @var LocatorLocatorInterface
-     */
-    private $locator;
-
-    /**
-     * @param LocatorLocatorInterface $locator
-     */
-    public function __construct(LocatorLocatorInterface $locator)
-    {
-        $this->locator = $locator;
-    }
 
     /**
      * @todo think of type checks

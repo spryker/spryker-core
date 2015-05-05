@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerFeature\Zed\Sdk\Communication\Plugin\Fixture;
 
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 
 class Request extends \SprykerFeature\Shared\Library\Communication\Request
 {
@@ -22,4 +22,3 @@ class Request extends \SprykerFeature\Shared\Library\Communication\Request
         $this->transfer = $transfer;
     }
 }
- 
