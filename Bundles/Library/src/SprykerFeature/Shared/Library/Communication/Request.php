@@ -3,7 +3,7 @@
 namespace SprykerFeature\Shared\Library\Communication;
 
 use SprykerEngine\Shared\Kernel\TransferLocatorHelper;
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 
 class Request extends AbstractObject implements

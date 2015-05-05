@@ -31,7 +31,7 @@ class TransferGenerator
 
     public function execute()
     {
-//        $this->removeGeneratedTransferObjects();
+        $this->removeGeneratedTransferObjects();
         $this->createTransferObjects();
     }
 

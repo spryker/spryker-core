@@ -11,7 +11,7 @@ use SprykerFeature\Shared\Library\Communication\ObjectInterface;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Shared\Library\Communication\Request;
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
 use \SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
 use \SprykerFeature\Shared\Lumberjack\Code\Log\Types;

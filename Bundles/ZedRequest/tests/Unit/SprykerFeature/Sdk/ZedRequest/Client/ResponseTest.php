@@ -4,7 +4,7 @@ namespace Unit\SprykerFeature\Sdk\ZedRequest\Client;
 
 use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Sdk\ZedRequest\Client\Response;
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 
 /**

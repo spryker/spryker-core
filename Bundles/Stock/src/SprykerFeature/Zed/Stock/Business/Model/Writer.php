@@ -61,12 +61,12 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param StockType $stockTypeTransfer
+     * @param StockStockTypeTransfer $stockTypeTransfer
      *
      * @return int
      * @throws PropelException
      */
-    public function createStockType(StockType $stockTypeTransfer)
+    public function createStockType(StockStockTypeTransfer $stockTypeTransfer)
     {
         Propel::getConnection()->beginTransaction();
         $stockEntity = $this->locator->stock()->entitySpyStock();
@@ -81,13 +81,13 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param StockType $stockTypeTransfer
+     * @param StockStockTypeTransfer $stockTypeTransfer
      *
      * @return int
      * @throws PropelException
      * @throws StockTypeNotFoundException
      */
-    public function updateStockType(StockType $stockTypeTransfer)
+    public function updateStockType(StockStockTypeTransfer $stockTypeTransfer)
     {
         Propel::getConnection()->beginTransaction();
         $stockTypeEntity = $this->queryContainer
@@ -106,12 +106,12 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param StockProduct $transferStockProduct
+     * @param StockStockProductTransfer $transferStockProduct
      *
      * @return int
      * @throws StockProductAlreadyExistsException
      */
-    public function createStockProduct(StockProduct $transferStockProduct)
+    public function createStockProduct(StockStockProductTransfer $transferStockProduct)
     {
         Propel::getConnection()->beginTransaction();
 
@@ -126,13 +126,13 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param StockProduct $transferStockProduct
+     * @param StockStockProductTransfer $transferStockProduct
      *
      * @return int
      * @throws PropelException
      * @throws StockProductNotFoundException
      */
-    public function updateStockProduct(StockProduct $transferStockProduct)
+    public function updateStockProduct(StockStockProductTransfer $transferStockProduct)
     {
         Propel::getConnection()->beginTransaction();
 
@@ -216,14 +216,14 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param StockProduct $transferStockProduct
+     * @param StockStockProductTransfer $transferStockProduct
      * @param int $idStockType
      * @param int $idProduct
      *
      * @return int
      * @throws PropelException
      */
-    protected function saveStockProduct(StockProduct $transferStockProduct, $idStockType, $idProduct)
+    protected function saveStockProduct(StockStockProductTransfer $transferStockProduct, $idStockType, $idProduct)
     {
         $stockProduct = $this->locator->stock()->entitySpyStockProduct();
         $stockProduct->setFkProduct($idProduct)

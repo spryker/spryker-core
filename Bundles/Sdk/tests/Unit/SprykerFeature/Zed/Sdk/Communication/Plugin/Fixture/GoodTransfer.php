@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Shared\Skd\Transfer;
 
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 class GoodTransfer extends AbstractTransfer
 {
@@ -26,4 +26,3 @@ class GoodTransfer extends AbstractTransfer
 
 
 }
- 

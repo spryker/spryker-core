@@ -3,7 +3,7 @@
 namespace Unit\SprykerEngine\Shared\Kernel\Fixtures\Transfer;
 
 use Unit\SprykerEngine\Shared\Kernel\Fixtures\Transfer\Foo\Bar;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 class Foo extends AbstractTransfer
 {

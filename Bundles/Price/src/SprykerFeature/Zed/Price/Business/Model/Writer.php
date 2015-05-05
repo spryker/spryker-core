@@ -80,12 +80,12 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param Product $transferPriceProduct
+     * @param PriceProductTransfer $transferPriceProduct
      *
      * @return SpyPriceProduct
      * @throws \Exception
      */
-    public function createPriceForProduct(Product $transferPriceProduct)
+    public function createPriceForProduct(PriceProductTransfer $transferPriceProduct)
     {
         $transferPriceProduct = $this->setPriceType($transferPriceProduct);
         if (!$this->isPriceTypeExistingForAbstractProduct($transferPriceProduct)
@@ -99,11 +99,11 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param Product $transferPriceProduct
+     * @param PriceProductTransfer $transferPriceProduct
      *
      * @throws \Exception
      */
-    public function setPriceForProduct(Product $transferPriceProduct)
+    public function setPriceForProduct(PriceProductTransfer $transferPriceProduct)
     {
         $transferPriceProduct = $this->setPriceType($transferPriceProduct);
 
@@ -117,12 +117,12 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param Product $transferPriceProduct
+     * @param PriceProductTransfer $transferPriceProduct
      * @param SpyPriceProduct $productEntity
      *
      * @return SpyPriceProduct
      */
-    protected function savePriceProductEntity(Product $transferPriceProduct, SpyPriceProduct $productEntity)
+    protected function savePriceProductEntity(PriceProductTransfer $transferPriceProduct, SpyPriceProduct $productEntity)
     {
         $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
         $productEntity
@@ -151,13 +151,13 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param Product $transferPriceProduct
+     * @param PriceProductTransfer $transferPriceProduct
      *
-     * @return Product
+     * @return PriceProductTransfer
      * @throws \Exception
      * @throws PropelException
      */
-    protected function setPriceType(Product $transferPriceProduct)
+    protected function setPriceType(PriceProductTransfer $transferPriceProduct)
     {
         if (null == $transferPriceProduct->getPriceTypeName()) {
             $transferPriceProduct->setPriceTypeName($this->priceSettings->getPriceTypeDefaultName());
@@ -183,11 +183,11 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param Product $transferPriceProduct
+     * @param PriceProductTransfer $transferPriceProduct
      *
      * @return bool
      */
-    protected function isPriceTypeExistingForAbstractProduct(Product $transferPriceProduct)
+    protected function isPriceTypeExistingForAbstractProduct(PriceProductTransfer $transferPriceProduct)
     {
         $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
         $priceEntities = $this->queryContainer
@@ -213,11 +213,11 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param Product $transferPriceProduct
+     * @param PriceProductTransfer $transferPriceProduct
      *
      * @return bool
      */
-    protected function isPriceTypeExistingForConcreteProduct(Product $transferPriceProduct)
+    protected function isPriceTypeExistingForConcreteProduct(PriceProductTransfer $transferPriceProduct)
     {
         $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
         $priceEntities = $this->queryContainer

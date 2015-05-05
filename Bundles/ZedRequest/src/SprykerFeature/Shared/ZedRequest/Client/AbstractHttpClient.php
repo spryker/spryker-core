@@ -17,7 +17,7 @@ use SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
 use SprykerFeature\Shared\Lumberjack\Code\Log\Types;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Shared\Yves\YvesConfig;
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
 
 abstract class AbstractHttpClient implements HttpClientInterface

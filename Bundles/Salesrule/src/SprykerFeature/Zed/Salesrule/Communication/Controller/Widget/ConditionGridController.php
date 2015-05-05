@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Salesrule\Communication\Controller\Widget;
 
 use SprykerFeature\Shared\Library\TransferLoader;
 use Generated\Shared\Transfer\SalesruleConditionTransfer;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection;
+use SprykerEngine\Shared\Transfer\AbstractTransferCollection;
 use SprykerFeature\Zed\Library\Controller\Action\AbstractGridController;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Salesrule\Communication\Grid\Condition\DataSource;
@@ -28,7 +28,7 @@ class ConditionGridController extends AbstractGridController
      * @param AbstractTransferCollection $collection
      * @return mixed
      */
-    public function handleDestroy($grid, \SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection $collection = null)
+    public function handleDestroy($grid, AbstractTransferCollection $collection = null)
     {
         $gridRequest = $grid->getRequest();
         $parameters = $gridRequest->getParameters();

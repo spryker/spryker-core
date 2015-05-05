@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
-use SprykerFeature\Shared\Library\TransferObject\TransferCollectionInterface;
+use SprykerEngine\Shared\Transfer\TransferCollectionInterface;
 
 interface DiscountTotalItemCollectionInterface extends TransferCollectionInterface
 {

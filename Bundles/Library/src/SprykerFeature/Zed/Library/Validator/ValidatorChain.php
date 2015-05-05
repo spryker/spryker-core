@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Library\Validator;
 
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 /**
  * Class ValidatorChain

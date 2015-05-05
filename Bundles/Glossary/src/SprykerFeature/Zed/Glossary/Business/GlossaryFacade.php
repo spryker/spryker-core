@@ -97,7 +97,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $value
      * @param bool $isActive
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -114,7 +114,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $value
      * @param bool $isActive
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -132,7 +132,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $value
      * @param bool $isActive
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -161,7 +161,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $keyName
      * @param LocaleDto $locale
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingTranslationException
      */
     public function getTranslation($keyName, LocaleDto $locale)
@@ -177,7 +177,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $value
      * @param bool $isActive
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingTranslationException
      */
     public function updateTranslation($keyName, $locale, $value, $isActive = true)
@@ -193,7 +193,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $value
      * @param bool $isActive
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingTranslationException
      */
     public function updateAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true)
@@ -204,14 +204,14 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param Translation $transferTranslation
+     * @param GlossaryTranslationTransfer $transferTranslation
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function saveTranslation(Translation $transferTranslation)
+    public function saveTranslation(GlossaryTranslationTransfer $transferTranslation)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
@@ -219,14 +219,14 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param Translation $transferTranslation
+     * @param GlossaryTranslationTransfer $transferTranslation
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function saveAndTouchTranslation(Translation $transferTranslation)
+    public function saveAndTouchTranslation(GlossaryTranslationTransfer $transferTranslation)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 

@@ -22,7 +22,7 @@ interface TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -34,7 +34,7 @@ interface TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -47,7 +47,7 @@ interface TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -60,7 +60,7 @@ interface TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingTranslationException
      * @throws \Exception
      * @throws PropelException
@@ -73,7 +73,7 @@ interface TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws MissingTranslationException
@@ -81,26 +81,26 @@ interface TranslationManagerInterface
     public function updateAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true);
 
     /**
-     * @param Translation $transferTranslation
+     * @param GlossaryTranslationTransfer $transferTranslation
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      * @throws MissingTranslationException
      */
-    public function saveTranslation(Translation $transferTranslation);
+    public function saveTranslation(GlossaryTranslationTransfer $transferTranslation);
 
     /**
-     * @param Translation $transferTranslation
+     * @param GlossaryTranslationTransfer $transferTranslation
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      * @throws MissingTranslationException
      */
-    public function saveAndTouchTranslation(Translation $transferTranslation);
+    public function saveAndTouchTranslation(GlossaryTranslationTransfer $transferTranslation);
 
     /**
      * @param string $keyName
@@ -138,7 +138,7 @@ interface TranslationManagerInterface
      * @param string $keyName
      * @param LocaleDto $locale
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingTranslationException
      */
     public function getTranslationByKeyName($keyName, LocaleDto $locale);

@@ -7,7 +7,7 @@ var _event = require('../event/ActionEvent');
 
 /**
  * @ngdoc directive
- * @name spyActionTrigger
+ * @name spyActionError
  * @restrict A
  * @param {expression}  spyActionError The action error expression
  * @param {string}     [scope]         The name of the named referenced scope if not local
