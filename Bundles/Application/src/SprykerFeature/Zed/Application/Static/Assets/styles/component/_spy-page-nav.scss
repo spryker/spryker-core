@@ -67,8 +67,8 @@ nav.spy-page-nav {
 		}
 
 		&.active {
-			span,
-			a {
+			&>span,
+			&>a {
 				@extend %menu-label-level1-active;
 			}
 		}
@@ -87,8 +87,8 @@ nav.spy-page-nav {
 			}
 
 			&.active {
-				span,
-				a {
+				&>span,
+				&>a {
 					@extend %menu-label-level2-active;
 				}
 			}
