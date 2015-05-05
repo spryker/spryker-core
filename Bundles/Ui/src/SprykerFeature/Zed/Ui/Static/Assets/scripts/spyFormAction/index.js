@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @ngdoc module
+ * @name spyFormAction
+ */
 require('Ui').ng
 	.module('spyFormAction', ['spyAction', 'spyForm'])
 	.run(['$templateCache', function(t) {

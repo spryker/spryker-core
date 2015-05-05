@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc module
- * @name spyForm
+ * @name spyFormComponent
  */
 require('Ui').ng
 	.module('spyFormComponent', ['spyForm'/*, 'textAngular'*/])
