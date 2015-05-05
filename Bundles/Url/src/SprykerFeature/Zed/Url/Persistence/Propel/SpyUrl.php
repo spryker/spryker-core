@@ -92,7 +92,7 @@ class SpyUrl extends BaseSpyUrl
      */
     protected function getSetterName($resourceType)
     {
-        $setterName = 'setFkResource' . ucfirst(strtolower($resourceType)) . 'Id';
+        $setterName = 'setFkResource' . ucfirst(strtolower($resourceType));
         if (!method_exists($this, $setterName)) {
             throw new UnknownResourceTypeException(
                 sprintf(
