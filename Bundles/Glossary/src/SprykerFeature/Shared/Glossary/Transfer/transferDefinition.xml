@@ -4,7 +4,6 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="GlossaryTranslation">
-        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
         <property name="idGlossaryTranslation" type="int" default="null" />
         <property name="fkGlossaryKey" type="int" default="null" />
         <property name="fkLocale" type="int" default="null" />
