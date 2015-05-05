@@ -1,82 +1,103 @@
-{% macro method_set(parameter) -%}
-{% import _self as mcr %}
-{%- if parameter.is_special == 1 -%}{{ mcr.method_set_header(parameter, 'array') }}{% else %}{{ mcr.method_set_header(parameter, parameter.parameterDataType) }}{%- endif %}
+{% macro addProperty(property) %}
+    /**
+     * @var {{ property.var }} ${{ property.name }}
+     */
+    protected ${{ property.name }}{% if property.defaultValue is defined and property.defaultValue != '' %} = {{ property.defaultValue|quotedIfNotIntegers }}{% endif %};
+{% endmacro %}
+
+
+{% macro addConstructor(properties) %}
+{% if properties %}
+    public function __construct()
     {
-        $this->{{ parameter.passedParameter }}{{ writeIf('[]', 'array', parameter.parameterDataType) }} = ${{ parameter.passedParameter }};
+        {% for name, collectionType in properties -%}
+            $this->{{ name }} = new {{ collectionType }}();
+        {% endfor %}
+    }
+{% endif %}
+{% endmacro %}
+
+
+{% macro addSetter(parameter) -%}
+{% import _self as mcr %}
+{%- if parameter.isCollection -%}{{ mcr.setHeader(parameter, 'array') }}{% else %}{{ mcr.setHeader(parameter, parameter.type) }}{%- endif %}
+    {
+        $this->{{ parameter.passedParameter }}{{ writeIf('[]', 'array', parameter.type) }} = ${{ parameter.passedParameter }};
         $this->addModifiedProperty('{{ parameter.passedParameter }}');
 
         return $this;
     }
-{%- if parameter.is_special == 1 %}
+{%- if parameter.isCollection %}
 
     /**
-     * @var {{ writeIfNot(parameter.parameterDataType~' ', '(^string)', parameter.parameterDataType)|changeArrayType }}${{ parameter.passedParameter|singular }}
+     * @var {{ parameter.var }} ${{ parameter.passedParameter|singular }}
+     *
+     * @return $this
      */
-    public function add{{ parameter.propertyName|singular|camelCase }}({{ writeIfNot(parameter.parameterDataType~' ', '(^string)', parameter.parameterDataType)|changeArrayType }}${{ parameter.passedParameter|singular }})
+    public function add{{ parameter.name|singular|camelCase }}({{ writeIfNot(parameter.type~' ', '(^string)', parameter.type)|changeArrayType }}${{ parameter.passedParameter|singular }})
     {
         $this->{{ parameter.passedParameter }}->append(${{ parameter.passedParameter|singular }});
         $this->addModifiedProperty('{{ parameter.passedParameter }}');
 
         return $this;
     }
-{%- endif -%}
-{%- endmacro -%}
-
-
-{% macro remove(property) %}
 
     /**
-     * @var {{ writeIfNot(parameter.parameterDataType~' ', '(^string)', parameter.parameterDataType)|changeArrayType }}${{ parameter.passedParameter }}
+     * @var {{ parameter.var }} ${{ parameter.passedParameter|singular }}
+     *
+     * @return $this
      */
-    public function remove{{ parameter.propertyName|singular|camelCase }}({{ writeIfNot(parameter.parameterDataType~' ', '(^string)', parameter.parameterDataType)|changeArrayType }}${{ parameter.passedParameter }})
+    public function remove{{ parameter.name|singular|camelCase }}({{ writeIfNot(parameter.type~' ', '(^string)', parameter.type)|changeArrayType }}${% if parameter.isCollection %}{{ parameter.passedParameter|singular }}{% else %}{{ parameter.passedParameter|singular }}{% endif %})
     {
-        $this->{{ parameter.passedParameter }} = new TransferArrayObject();
+        if ($this->{{ parameter.passedParameter }}->has(${{ parameter.passedParameter|singular }})) {
+            $this->{{ parameter.passedParameter }}->remove(${{ parameter.passedParameter|singular }});
+        }
         $this->addModifiedProperty('{{ parameter.passedParameter }}');
 
         return $this;
     }
-{% endmacro %}
 
-
-{% macro method_set_header(parameter, type) %}
+{%- endif -%}
+{%- if parameter.type == 'array' %}
 
     /**
-     * @var {{ writeIf('TransferArrayObject ', 'array', type) }}{{ writeIfNot(type~' ', '(boolean|bool|array|string|int)', type) }}${{ parameter.passedParameter }}
+     * @var mixed ${{ parameter.passedParameter|singular }}
      *
      * @return $this
      */
-    public function set{{ parameter.propertyName|camelCase }}({{ writeIf('TransferArrayObject ', 'array', type) }}{{ writeIfNot(type~' ', '(boolean|bool|array|string|int|null)', type) }}${{ parameter.passedParameter }})
-{% endmacro %}
+    public function add{{ parameter.name|singular|camelCase }}(${{ parameter.passedParameter|singular }})
+    {
+        $this->{{ parameter.passedParameter }}[] = ${{ parameter.passedParameter|singular }};
+        $this->addModifiedProperty('{{ parameter.passedParameter }}');
 
+        return $this;
+    }
 
-{% macro method_get(parameter) %}
+{%- endif -%}
+{%- endmacro -%}
+
+{% macro setHeader(parameter, type) %}
+{% if parameter.isCollection %}
+    {% set varAttribute = parameter.passedParameter|singular -%}
+{% else %}
+    {% set varAttribute = parameter.passedParameter -%}
+{% endif %}
 
     /**
-     * @return {{ parameter.parameterDataType }}
+     * @var {% if parameter.var %}{{ parameter.var }} {% endif %}${{ varAttribute }}
+     *
+     * @return $this
      */
-    public function get{{ parameter.propertyName|camelCase }}()
+    public function set{{ parameter.name|camelCase }}({% if parameter.type %}{{ parameter.type }} {% endif %}${{ parameter.passedParameter }})
+{% endmacro %}
+
+{% macro addGetter(parameter) %}
+
+    /**
+    * @return {{ parameter.var }}
+    */
+    public function get{{ parameter.name|camelCase }}()
     {
         return $this->{{ parameter.passedParameter }};
-    }
-{% endmacro %}
-
-
-{% macro write_property(prop) %}
-    /**
-     * @var {{ prop.parameterDataType }} ${{ prop.propertyName }}
-     */
-    protected ${{ prop.propertyName }}{% if prop.defaultValue is defined and prop.defaultValue != '' %} = {{ prop.defaultValue|quotedIfNotIntegers }}{% endif %};
-{% endmacro %}
-
-
-{% macro build_constructor(parameters) %}
-    /**
-     *
-     */
-    public function __construct()
-    {
-    {% for property in parameters -%}
-        {{ "\t" }}$this->{{ property }} = new TransferArrayObject();{{ "\n" }}
-    {%- endfor %}
     }
 {% endmacro %}

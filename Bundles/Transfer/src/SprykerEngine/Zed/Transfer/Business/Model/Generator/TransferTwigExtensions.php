@@ -20,6 +20,9 @@ class TransferTwigExtensions extends \Twig_Extension
                 ]);
             }),
             new \Twig_SimpleFilter('singular', function ($text) {
+                if (preg_match('/Address/', $text)) {
+                    return $text;
+                }
                 // just cut the ending "s" from the word
                 return preg_replace('/(s$){1}/', '', $text);
             }),

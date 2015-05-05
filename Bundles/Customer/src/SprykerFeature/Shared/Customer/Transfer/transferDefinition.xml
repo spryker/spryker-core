@@ -28,9 +28,9 @@
         <property name="iso2Country" type="string" default="null" />
     </transfer>
     <transfer name="CustomerCustomer">
-        <use name="Generated\Shared\Transfer\CustomerAddressTransfer" short="CustomerAddressTransfer" />
+        <use name="Generated\Shared\Transfer\CustomerAddressTransfer" />
 
-        <use name="DateTime" short="DateTime" />
+        <use name="DateTime" />
 
         <property name="email" type="string" default="null" />
         <property name="idCustomer" type="int" default="null" />
@@ -44,9 +44,9 @@
         <property name="salutation" type="string" default="null" />
         <property name="password" type="string" default="null" />
         <property name="newPassword" type="string" default="null" />
-        <property name="billingAddress" type="CustomerAddressTransfer[]" collection="true" />
-        <property name="shippingAddress" type="CustomerAddressTransfer[]" collection="true" />
-        <property name="addresses" type="CustomerAddressTransfer[]" collection="true" />
+        <property name="billingAddress" type="CustomerAddressTransfer" collection="CustomerAddressTransfer" />
+        <property name="shippingAddress" type="CustomerAddressTransfer" collection="CustomerAddressTransfer" />
+        <property name="addresses" type="CustomerAddressTransfer" collection="CustomerAddressTransfer" />
         <property name="defaultBillingAddress" type="string" default="null" />
         <property name="defaultShippingAddress" type="string" default="null" />
         <property name="createdAt" type="string" default="null" />

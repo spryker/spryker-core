@@ -104,16 +104,19 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $properties
+     * @param array $property
      */
-    public function setProperty(array $properties)
+    public function setProperty(array $property)
     {
-        $this->properties[$properties['name']] = [
-            'name' => $properties['name'],
-            'type_special' => $this->checkTypeSpecial($properties),
-            'type' => $this->getType($properties['type']),
-            'default' => (isset($properties['default'])) ? $properties['default'] : '',
+        $propertyInfo = [
+            'name' => $property['name'],
+            'type_special' => $this->checkTypeSpecial($property),
+            'type' => $this->getType($property['type']),
+            'default' => (isset($property['default'])) ? $property['default'] : '',
+            'collection' => (isset($property['collection'])) ? $property['collection'] : '',
         ];
+
+        $this->properties[$property['name']] = $propertyInfo;
     }
 
     /**
@@ -135,17 +138,18 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function isTypeSpecial($type)
     {
-        return (bool)preg_match('/\[\]/', $type);
+        return (bool) preg_match('/\[\]/', $type);
     }
 
     /**
-     * @param string $property
-     * @return int
+     * @param array $property
+     *
+     * @return bool
      */
     protected function checkTypeSpecial(array $property)
     {
-        if ($this->isTypeSpecial($property['type'])) {
-            $this->setPropertiesThatNeedsConstructor($property['name']);
+        if ($this->isTypeSpecial($property['type']) || isset($property['collection'])) {
+            $this->setPropertiesThatNeedsConstructor($property);
 
             return true;
         }
@@ -168,19 +172,11 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array|string $needsConstructor
+     * @param array $property
      */
-    public function setPropertiesThatNeedsConstructor($needsConstructor)
+    private function setPropertiesThatNeedsConstructor(array $property)
     {
-        if (is_array($needsConstructor) && !empty($needsConstructor)) {
-            foreach ($needsConstructor as $item) {
-                $this->setPropertiesThatNeedsConstructor($item);
-            }
-        } else {
-            if (!in_array($needsConstructor, $this->needsConstructor)) {
-                $this->needsConstructor[] = $needsConstructor;
-            }
-        }
+        $this->needsConstructor[$property['name']] = (is_string($property['collection'])) ? $property['collection'] : 'Collection';
     }
 
     /**

@@ -226,11 +226,13 @@ class ClassGenerator
         $declarations = [];
         $properties = $this->classDefinition->getProperties();
 
-        foreach ($properties as $props) {
+        foreach ($properties as $property) {
             $declarations[] = [
-                'parameterDataType' => $this->getParameterDataType($props['type']),
-                'propertyName' => $this->getPassedParameter($props),
-                'defaultValue' => $this->getDefaultValue($props),
+                'type' => $this->getParameterType($property['type']),
+                'var' => $this->getParameterVarType($property['type']),
+                'name' => $this->getPassedParameter($property),
+                'isCollection' => $this->isCollection($property),
+                'defaultValue' => $this->getDefaultValue($property),
             ];
         }
 
@@ -238,12 +240,13 @@ class ClassGenerator
     }
 
     /**
-     * @param string $type
+     * @param array $property
+     *
      * @return bool
      */
-    public function isSpecialProperty($type)
+    public function isCollection(array $property)
     {
-        return preg_match('/\[\]/', $type);
+        return isset($property['collection']) && !empty($property['collection']);
     }
 
     /**
@@ -260,20 +263,40 @@ class ClassGenerator
     }
 
     /**
-     * @param $dataArray
+     * @param array $passedParameter
      * @return string
      */
-    public function getPropertyName($dataArray)
+    public function getPropertyName(array $passedParameter)
     {
-        return ucfirst($this->getPassedParameter($dataArray));
+        return ucfirst($this->getPassedParameter($passedParameter));
     }
 
     /**
-     * @param string $type
-     * @param bool $isForDocumentation
-     * @return mixed|string
+     * @param $type
+     *
+     * @return bool|string
      */
-    public function getParameterDataType($type, $isForDocumentation = false)
+    public function getParameterType($type)
+    {
+        if ('array' === $type) {
+            return ClassDefinition::TYPE_ARRAY;
+        }
+        if ('bool' === $type || 'boolean' === $type || 'int' === $type || 'integer' === $type || 'string' === $type) {
+            return false;
+        }
+
+        $this->addExternalResource($type);
+        $resourceType = $this->getNamespaceBaseName($type);
+
+        return $this->appendInterfaceName($resourceType);
+    }
+
+    /**
+     * @param $type
+     *
+     * @return string
+     */
+    public function getParameterVarType($type)
     {
         if ('array' === $type) {
             return ClassDefinition::TYPE_ARRAY;
@@ -282,11 +305,15 @@ class ClassGenerator
             return ClassDefinition::TYPE_BOOLEAN;
         }
 
-        if (preg_match('/^int/', $type)) {
+        if ('int' === $type) {
             return ClassDefinition::TYPE_INTEGER;
         }
 
-        if (!preg_match('/(string|integer|int)/', $type) && !$isForDocumentation) {
+        if ('string' === $type) {
+            return ClassDefinition::TYPE_STRING;
+        }
+
+        if (!preg_match('/(string|integer|int)/', $type)) {
             $this->addExternalResource($type);
             $resourceType = $this->getNamespaceBaseName($type);
 
@@ -318,12 +345,13 @@ class ClassGenerator
 
         $settersAndGetters = [];
 
-        foreach ($properties as $props) {
+        foreach ($properties as $property) {
             $settersAndGetters[] = [
-                'propertyName' => $this->getPropertyName($props),
-                'passedParameter' => $this->getPassedParameter($props),
-                'parameterDataType' => $this->getParameterDataType($props['type']),
-                'is_special' => $this->isSpecialProperty($props['type']),
+                'name' => $this->getPropertyName($property),
+                'passedParameter' => $this->getPassedParameter($property),
+                'type' => $this->getParameterType($property['type']),
+                'var' => $this->getParameterVarType($property['type']),
+                'isCollection' => $this->isCollection($property),
             ];
         }
 

@@ -45,7 +45,7 @@ class ClassCollectionManager
     /**
      * @param array $data
      *
-     * @return mixed
+     * @return ClassDefinition
      */
     private function getClassDefinition(array $data)
     {

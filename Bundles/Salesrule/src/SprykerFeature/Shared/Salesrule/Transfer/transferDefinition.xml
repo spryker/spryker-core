@@ -49,8 +49,8 @@
     </transfer>
 
     <transfer name="SalesruleSalesrule">
-        <use name="Generated\Shared\Transfer\SalesruleItemTransfer" short="SalesruleItemTransfer" />
-        <property name="item" type="SalesruleItemTransfer[]" collection="true" />
+        <use name="Generated\Shared\Transfer\SalesruleItemTransfer" />
+        <property name="item" type="SalesruleItemTransfer" collection="SalesruleItemTransfer" />
     </transfer>
 
 </transfers>

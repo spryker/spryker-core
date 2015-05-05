@@ -4,10 +4,10 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="DiscountDiscount">
-        <use name="SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface" short="CalculatorPluginInterface" />
-        <use name="SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface" short="DiscountCollectorPluginInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" short="DiscountItemInterface" />
-        <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" short="DiscountItemInterface" />
+        <use name="SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface" />
+        <use name="SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface" />
+        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
+        <interface name="DiscountItemInterface" />
         <property name="idDiscount" type="int" default="null" />
         <property name="fkDiscountVoucherPool" type="int" default="null" />
         <property name="displayName" type="string" default="null" />
@@ -22,7 +22,7 @@
     </transfer>
 
     <transfer name="DiscountDiscountDecisionRule">
-        <use name="SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface" short="DiscountDecisionRulePluginInterface" />
+        <use name="SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface" />
         <property name="idDiscountDecisionRule" type="int" default="null" />
         <property name="fkDiscount" type="int" default="null" />
         <property name="name" type="string" default="null" />

@@ -15,23 +15,20 @@ use {{ use }};
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
 {% if interfacesToImplement %}
-class {{ className }} extends AbstractTransfer
+class {{ className }} extends AbstractTransfer implements {{ interfacesToImplement }}
 {% else %}
 class {{ className }} extends AbstractTransfer
 {% endif %}
 {
 {# write properties #}
 {% for property in properties %}
-{{ macro.write_property(property) }}
+{{ macro.addProperty(property) }}
 {% endfor -%}
-
-{# build constructor #}
-{{- macro.build_constructor(needsConstructor) -}}
-
+{{- macro.addConstructor(needsConstructor) -}}
 {# write setters and getters #}
-{% for accessor in settersAndGetters %}
-{{ macro.method_set(accessor) }}
-{{ macro.method_get(accessor) }}
+{% for property in settersAndGetters %}
+{{ macro.addSetter(property) }}
+{{ macro.addGetter(property) }}
 {%- endfor %}
 
 }

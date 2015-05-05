@@ -35,6 +35,7 @@ class TransferGenerator
             mkdir($this->targetDirectory, 0777, true);
         }
         $this->removeGeneratedTransferObjects();
+//        $this->removeGeneratedTransferObjects();
         $this->createTransferObjects();
     }
 

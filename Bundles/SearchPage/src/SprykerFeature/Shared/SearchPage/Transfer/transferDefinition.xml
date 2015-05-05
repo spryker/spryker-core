@@ -4,16 +4,16 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Template">
-        <use name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\TemplateInterface" short="TemplateInterface" />
-        <interface name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\TemplateInterface" short="TemplateInterface" />
+        <use name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\TemplateInterface" />
+        <interface name="TemplateInterface" />
 
         <property name="idPageElementTemplate" type="int" />
         <property name="templateName" type="string" />
     </transfer>
 
     <transfer name="PageElement">
-        <use name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\PageElementInterface" short="PageElementInterface" />
-        <interface name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\PageElementInterface" short="PageElementInterface" />
+        <use name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\PageElementInterface" />
+        <interface name="PageElementInterface" />
 
         <property name="idSearchPageElement" type="int" />
         <property name="elementKey" type="string" />
@@ -24,8 +24,8 @@
     </transfer>
 
     <transfer name="DocumentAttribute">
-        <use name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\DocumentAttributeInterface" short="DocumentAttributeInterface" />
-        <interface name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\DocumentAttributeInterface" short="DocumentAttributeInterface" />
+        <use name="SprykerFeature\Shared\SearchPage\Dependency\Transfer\DocumentAttributeInterface" />
+        <interface name="DocumentAttributeInterface" />
 
         <property name="idSearchDocumentAttribute" type="int" />
         <property name="attributeName" type="string" />

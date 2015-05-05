@@ -4,50 +4,50 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Cart2Cart">
-        <use name="Generated\Shared\Transfer\Cart2ItemTransfer" short="Cart2ItemTransfer" />
-        <use name="Generated\Shared\Transfer\CalculationTotalsTransfer" short="CalculationTotalsTransfer" />
-        <use name="Generated\Shared\Transfer\CalculationExpenseTransfer" short="CalculationExpenseTransfer" />
-        <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" short="CalculationDiscountTransfer" />
+        <use name="Generated\Shared\Transfer\Cart2ItemTransfer" />
+        <use name="Generated\Shared\Transfer\CalculationTotalsTransfer" />
+        <use name="Generated\Shared\Transfer\CalculationExpenseTransfer" />
+        <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
 
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface" short="CalculableItemCollectionInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface" short="CalculableItemInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface" short="ExpenseItemCollectionInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" short="ExpenseItemInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface" short="TotalsInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" short="DiscountableItemCollectionInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" short="DiscountItemInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface" />
+        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" />
+        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
 
-        <interface name="CartInterface" short="CartInterface" />
-        <property name="items" type="Cart2ItemTransfer[]" collection="true" />
-        <property name="totals" type="CalculationTotalsTransfer[]" collection="true" />
-        <property name="expenses" type="CalculationExpenseTransfer[]" collection="true" />
-        <property name="discounts" type="CalculationDiscountTransfer[]" collection="true" />
+        <interface name="CartInterface" />
+        <property name="items" type="Cart2ItemTransfer[]" collection="Cart2ItemTransfer" />
+        <property name="totals" type="CalculationTotalsTransfer[]" collection="CalculationTotalsTransfer" />
+        <property name="expenses" type="CalculationExpenseTransfer[]" collection="CalculationExpenseTransfer" />
+        <property name="discounts" type="CalculationDiscountTransfer[]" collection="CalculationDiscountTransfer" />
         <property name="couponCodes" type="array" default="[]" />
     </transfer>
     <transfer name="Cart2CartChange">
-        <interface name="CartChangeInterface" short="CartChangeInterface" />
+        <interface name="CartChangeInterface" />
         <property name="cart" type="string" default="null" />
         <property name="changedItems" type="string" default="null" />
     </transfer>
     <transfer name="Cart2Item">
-        <use name="Generated\Shared\Transfer\CalculationExpenseTransfer" short="CalculationExpenseTransfer" />
-        <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" short="CalculationDiscountTransfer" />
+        <use name="Generated\Shared\Transfer\CalculationExpenseTransfer" />
+        <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
 
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface" short="ExpenseItemCollectionInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" short="ExpenseItemInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface" short="OptionItemInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" short="DiscountableItemCollectionInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" short="DiscountItemInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface" />
+        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" />
+        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
 
-        <interface name="ItemInterface" short="ItemInterface" />
+        <interface name="ItemInterface" />
         <property name="quantity" type="int" default="1" />
         <property name="id" type="int" default="null" />
-        <property name="expenses" type="CalculationExpenseTransfer[]" collection="true" />
+        <property name="expenses" type="CalculationExpenseTransfer" collection="CalculationExpenseTransfer" />
         <property name="options" type="array" default="[]" />
         <property name="grossPrice" type="int" default="0" />
         <property name="priceToPay" type="int" default="0" />
         <property name="taxPercentage" type="int" default="0" />
-        <property name="discounts" type="CalculationDiscountTransfer[]" collection="true" />
+        <property name="discounts" type="CalculationDiscountTransfer" collection="CalculationDiscountTransfer" />
     </transfer>
 
 </transfers>

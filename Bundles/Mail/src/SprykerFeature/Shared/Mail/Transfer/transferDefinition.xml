@@ -77,7 +77,7 @@
         <property name="mergeLanguage" type="string" default="mailchimp" />
         <property name="globalMergeVars" type="array" default="[]" />
         <property name="recipientMergeVars" type="array" default="[]" />
-        <property name="tags" type="array" default="[]" collection="true" />
+        <property name="tags" type="array" default="[]" />
         <property name="subAccount" type="string" default="null" />
         <property name="googleAnalyticsDomains" type="array" default="[]" />
         <property name="googleAnalyticsCampaign" type="string" default="null" />
