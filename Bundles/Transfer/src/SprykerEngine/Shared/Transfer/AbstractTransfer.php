@@ -7,10 +7,8 @@ use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
 use SprykerFeature\Shared\Library\Filter\FilterChain;
 use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 
-/**
- * @TODO remove deprecated TransferArrayObject
- */
-abstract class AbstractTransfer extends TransferArrayObject implements TransferInterface
+
+abstract class AbstractTransfer implements TransferInterface
 {
 
     /**
