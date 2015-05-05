@@ -26,6 +26,7 @@ require('./config/errorInterceptor');
 require('./service/BooleanService');
 require('./service/JSONModelDenormalizeService');
 require('./service/ArrayModelTransformService');
+require('./service/ErrorStoreService');
 
 require('./controller/ComController');
 require('./controller/TemplateActionController');

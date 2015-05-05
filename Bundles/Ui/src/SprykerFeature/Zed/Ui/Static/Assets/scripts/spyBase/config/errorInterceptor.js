@@ -4,28 +4,36 @@
 
 require('Ui').ng
 	.module('spyBase')
-	.factory('errorInterceptor', ['$q', function($q) {
-		return {
-			response : function(response) {
-				return response;
-			},
+	.factory('errorInterceptor', [
+		'$q',
+		'ErrorStoreService',
 
-			responseError : function(response) {
-				if (response.status >= 500) {
-					var body = document.querySelector('body');
+		function($q, errorStore) {
+			return {
+				response : function(response) {
+					return response;
+				},
 
-					var f = document.createElement('iframe');
-					f.className = 'spy-response-error';
-					body.appendChild(f);
+				responseError : function(response) {
+					if (response.status >= 500 && errorStore.has()) {
 
-					setTimeout(function (f, r) {
-						f.contentWindow.document.documentElement.innerHTML = r.data;
-					}, 200, f, response);
+						var error = errorStore.pop();
 
-					return $q.reject(response);
+						var body = document.querySelector('body');
+
+						var f = document.createElement('iframe');
+						f.className = 'spy-response-error';
+						body.appendChild(f);
+
+						setTimeout(function (f, r) {
+							f.contentWindow.document.documentElement.innerHTML = r;
+						}, 200, f, error);
+
+						return $q.reject(response);
+					}
+
+					return response;
 				}
-
-				return response;
-			}
-		};
-	}]);
+			};
+		}
+	]);
