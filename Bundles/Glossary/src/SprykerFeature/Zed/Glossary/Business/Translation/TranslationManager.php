@@ -355,14 +355,14 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function createTranslationFromTransfer(GlossaryTranslationTransfer $transferTranslation)
     {
-        $newEntity = $this->createTranslationByIds(
+        $newTransferTranslation = $this->createTranslationByIds(
             $transferTranslation->getFkGlossaryKey(),
             $transferTranslation->getFkLocale(),
             $transferTranslation->getValue(),
             $transferTranslation->getIsActive()
         );
 
-        return $newEntity;
+        return $newTransferTranslation;
     }
 
     /**
