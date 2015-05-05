@@ -31,6 +31,9 @@ class TransferGenerator
 
     public function execute()
     {
+        if (is_dir($this->targetDirectory) === false) {
+            mkdir($this->targetDirectory, 0777, true);
+        }
         $this->removeGeneratedTransferObjects();
         $this->createTransferObjects();
     }
