@@ -170,7 +170,8 @@ class Installer implements InstallerInterface
 
             $this->locator->acl()
                 ->facade()
-                ->addUserToGroup($user->getIdUserUser(), $group->getIdAclGroup());
+                ->addUserToGroup($user->getIdUserUser(), $group->getIdAclGroup())
+            ;
         }
 
         return true;

@@ -203,7 +203,7 @@ class User implements UserInterface
     /**
      * @param string $username
      *
-     * @return TransferUser
+     * @return UserUserTransfer
      * @throws UserNotFoundException
      */
     public function getUserByUsername($username)
@@ -345,7 +345,7 @@ class User implements UserInterface
      */
     protected function entityToTransfer(SpyUserUser $entity)
     {
-        $transfer = new \Generated\Shared\Transfer\UserUserTransfer();
+        $transfer = new UserUserTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;

@@ -38,7 +38,7 @@ class TransferLocator implements LocatorInterface
         $classResolver = new ClassResolver();
         $camelHumpClassResolver = new CamelHumpClassResolver($classResolver);
         $resolver = IdentityMapClassResolver::getInstance($camelHumpClassResolver);
-        $resolvedTransfer = $camelHumpClassResolver->resolve($classToLocate, $bundle, [$locator]);
+        $resolvedTransfer = $camelHumpClassResolver->resolve($classToLocate, $bundle);
 
         return $resolvedTransfer;
     }
