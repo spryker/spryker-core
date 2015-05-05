@@ -6,14 +6,14 @@
     <transfer name="Alfa">
         <interface>Cart\CartChangeTransferInterface</interface>
         <interface>Cart\CartChangeTransferInterface2</interface>
-        <property name="cartItems" type="CartItem[]" />
-        <property name="properties" type="[]" />
+        <property name="cartItems" type="CartItem[]" collection="true" />
+        <property name="properties" type="[]" collection="true" />
     </transfer>
     <transfer name="Delta">
         <interface>Cart\CartChangeTransferInterface3</interface>
         <interface>Cart\CartChangeTransferInterface4</interface>
-        <property name="cartItems" type="CartItem[]" />
-        <property name="properties" type="[]" />
+        <property name="cartItems" type="CartItem[]" collection="true" />
+        <property name="properties" type="[]" collection="true" />
     </transfer>
 
 </transfers>

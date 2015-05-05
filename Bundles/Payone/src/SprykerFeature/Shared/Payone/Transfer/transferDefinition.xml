@@ -5,11 +5,11 @@
 
     <transfer name="PayoneAuthorization">
         <use name="SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface" short="AuthorizationDataInterface" />
-        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
-        <interface name="AuthorizationDataInterface" short="AuthorizationDataInterface" />
+
+        <interface name="SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface" short="AuthorizationDataInterface" />
         <property name="amount" type="int" default="null" />
         <property name="referenceId" type="string" default="" />
-        <property name="order" type="SalesOrderTransfer" /><!-- requires sales package refactoring -->
+        <!-- <property name="order" type="SalesOrderTransfer" />--> <!-- requires sales package refactoring -->
         <!-- <property name="paymentFormData" type="string" default="" /> -->
     </transfer>
 

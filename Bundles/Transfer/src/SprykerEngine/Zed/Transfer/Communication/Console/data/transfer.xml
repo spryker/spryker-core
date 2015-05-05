@@ -6,8 +6,8 @@
     <transfer name="Alfa">
         <interface>Cart\CartChangeTransferInterface</interface>
         <interface>Cart\CartChangeTransferInterface2</interface>
-        <property name="cartItems" type="CartItem[]" />
-        <property name="properties" type="[]" />
+        <property name="cartItems" type="CartItem[]" collection="true" />
+        <property name="properties" type="[]" collection="true" />
     </transfer>
 
 

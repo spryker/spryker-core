@@ -10,8 +10,8 @@
         <property name="isNeverOutOfStock" type="string" default="null" />
         <property name="idStockProduct" type="int" default="null" />
     </transfer>
+
     <transfer name="StockStockType">
-        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
         <property name="idStock" type="int" default="null" />
         <property name="name" type="string" default="null" />
     </transfer>

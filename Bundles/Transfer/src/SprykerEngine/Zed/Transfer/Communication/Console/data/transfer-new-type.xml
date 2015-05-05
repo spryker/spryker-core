@@ -5,13 +5,13 @@
 
     <transfer name="Alfa">
         <implementInterface>Cart\CartChangeTransferInterface</implementInterface>
-        <property name="cartItems" type="CartItem[]" />
+        <property name="cartItems" type="CartItem[]" collection="true" />
     </transfer>
 
 
     <transfer name="Alfa">
         <property name="AlfaItem" type="AlfaItem" />
-        <property name="changedCartItems" type="CartItem[]" />
+        <property name="changedCartItems" type="CartItem[]" collection="true" />
         <property name="couponCode" type="string" default="AAA" />
         <property name="order" type="Sales\Order"/>
         <property name="userId" type="int"/>

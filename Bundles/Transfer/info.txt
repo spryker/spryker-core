@@ -39,7 +39,7 @@ public function setItem($orderItem){
 
 ===============================================
 
-<property name="items" type="OrderItem[]" />
+<property name="items" type="OrderItem[]" collection="true" />
 
 /**
  * @return OrderItem[]

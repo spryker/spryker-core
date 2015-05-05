@@ -6,14 +6,17 @@
     <transfer name="MailAddress">
         <property name="countryName" type="string" default="null" />
     </transfer>
+
     <transfer name="MailAttachment">
         <property name="fileName" type="string" default="null" />
         <property name="attachmentUrl" type="string" default="null" />
         <property name="referenceId" type="string" default="null" />
     </transfer>
+
     <transfer name="MailCustomer">
         <property name="customerId" type="string" default="null" />
     </transfer>
+
     <transfer name="MailItem">
         <property name="idSalesOrderItem" type="int" default="null" />
         <property name="name" type="string" default="null" />
@@ -22,6 +25,7 @@
         <property name="totalPrice" type="string" default="null" />
         <property name="quantity" type="string" default="null" />
     </transfer>
+
     <transfer name="MailMail">
         <property name="referenceId" type="string" default="null" />
         <property name="type" type="string" default="null" />
@@ -44,8 +48,8 @@
         <property name="staticAssetsUrl" type="string" default="null" />
         <property name="attachments" type="array" default="[]" />
     </transfer>
+
     <transfer name="MailMailTransfer">
-        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
         <property name="templateName" type="string" default="null" />
         <property name="templateContent" type="array" default="[]" />
         <property name="async" type="bool" default="false" />
@@ -73,7 +77,7 @@
         <property name="mergeLanguage" type="string" default="mailchimp" />
         <property name="globalMergeVars" type="array" default="[]" />
         <property name="recipientMergeVars" type="array" default="[]" />
-        <property name="tags" type="array" default="[]" />
+        <property name="tags" type="array" default="[]" collection="true" />
         <property name="subAccount" type="string" default="null" />
         <property name="googleAnalyticsDomains" type="array" default="[]" />
         <property name="googleAnalyticsCampaign" type="string" default="null" />
@@ -82,6 +86,7 @@
         <property name="attachments" type="array" default="[]" />
         <property name="images" type="array" default="[]" />
     </transfer>
+
     <transfer name="MailTemplate">
         <property name="idMailTemplate" type="int" default="null" />
         <property name="name" type="string" default="null" />

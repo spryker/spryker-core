@@ -389,7 +389,7 @@ class AclTest extends Test
         }
 
         $rulesCollectionDto = $this->facade->getRoleRules($roleDto->getIdAclRole());
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleCollectionTransfer', $rulesCollectionDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $rulesCollectionDto);
         $this->assertEquals(count($ruleData), count($rulesCollectionDto));
 
         $index = 0;

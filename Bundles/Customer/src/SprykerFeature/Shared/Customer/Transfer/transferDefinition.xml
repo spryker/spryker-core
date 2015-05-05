@@ -4,7 +4,6 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="CustomerAddress">
-        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
         <property name="idCustomerAddress" type="int" default="null" />
         <property name="customerId" type="string" default="null" />
         <property name="fkCustomer" type="int" default="null" />
@@ -29,8 +28,10 @@
         <property name="iso2Country" type="string" default="null" />
     </transfer>
     <transfer name="CustomerCustomer">
+        <use name="Generated\Shared\Transfer\CustomerAddressTransfer" short="CustomerAddressTransfer" />
+
         <use name="DateTime" short="DateTime" />
-        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
+
         <property name="email" type="string" default="null" />
         <property name="idCustomer" type="int" default="null" />
         <property name="incrementId" type="string" default="null" />
@@ -43,9 +44,9 @@
         <property name="salutation" type="string" default="null" />
         <property name="password" type="string" default="null" />
         <property name="newPassword" type="string" default="null" />
-        <property name="billingAddress" type="CustomerAddressTransfer[]" />
-        <property name="shippingAddress" type="CustomerAddressTransfer[]" />
-        <property name="addresses" type="CustomerAddressTransfer[]" />
+        <property name="billingAddress" type="CustomerAddressTransfer[]" collection="true" />
+        <property name="shippingAddress" type="CustomerAddressTransfer[]" collection="true" />
+        <property name="addresses" type="CustomerAddressTransfer[]" collection="true" />
         <property name="defaultBillingAddress" type="string" default="null" />
         <property name="defaultShippingAddress" type="string" default="null" />
         <property name="createdAt" type="string" default="null" />

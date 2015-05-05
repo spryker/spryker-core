@@ -8,6 +8,7 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\DebitDataInterface;
+use SprykerFeature\Zed\Payone\Business\Key\KeyHashInterface;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Shared\Payone\Dependency\RefundDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\StandardParameterInterface;
@@ -45,6 +46,10 @@ class PaymentManager
      */
     protected $standardParameter;
     /**
+     * @var KeyHashInterface
+     */
+    protected $keyHashProvider;
+    /**
      * @var SequenceNumberProviderInterface
      */
     protected $sequenceNumberProvider;
@@ -62,8 +67,8 @@ class PaymentManager
      * @param LocatorLocatorInterface $locator
      * @param AdapterInterface $executionAdapter
      * @param PayoneQueryContainerInterface $queryContainer
-     * @param PaymentMethodMapperInterface $paymentMethodMapper
      * @param StandardParameterInterface $standardParameter
+     * @param KeyHashInterface $keyHashProvider
      * @param SequenceNumberProviderInterface $sequenceNumberProvider
      * @param ModeDetectorInterface $modeDetector
      */
@@ -72,6 +77,7 @@ class PaymentManager
         AdapterInterface $executionAdapter,
         PayoneQueryContainerInterface $queryContainer,
         StandardParameterInterface $standardParameter,
+        KeyHashInterface $keyHashProvider,
         SequenceNumberProviderInterface $sequenceNumberProvider,
         ModeDetectorInterface $modeDetector)
     {
@@ -79,6 +85,7 @@ class PaymentManager
         $this->executionAdapter = $executionAdapter;
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;
+        $this->keyHashProvider = $keyHashProvider;
         $this->sequenceNumberProvider = $sequenceNumberProvider;
         $this->modeDetector = $modeDetector;
     }
@@ -341,7 +348,7 @@ class PaymentManager
     protected function setStandardParameter(AbstractRequestContainer $container)
     {
         $container->setEncoding($this->standardParameter->getEncoding());
-        $container->setKey($this->hashKey($this->standardParameter->getKey()));
+        $container->setKey($this->keyHashProvider->hashKey($this->standardParameter->getKey()));
         $container->setMid($this->standardParameter->getMid());
         $container->setPortalid($this->standardParameter->getPortalId());
         $container->setMode($this->modeDetector->getMode());
@@ -353,15 +360,6 @@ class PaymentManager
         $container->setSolutionName();
         $container->setSolutionVersion();
         */
-    }
-
-    /**
-     * @param string $key
-     * @return string
-     */
-    protected function hashKey($key)
-    {
-        return hash('md5', $key);
     }
 
 }

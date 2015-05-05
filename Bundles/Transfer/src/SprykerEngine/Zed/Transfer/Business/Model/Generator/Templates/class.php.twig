@@ -15,7 +15,7 @@ use {{ use }};
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
 {% if interfacesToImplement %}
-class {{ className }} extends AbstractTransfer{{ "\n" }}{# implements {{ interfacesToImplement }}#}
+class {{ className }} extends AbstractTransfer
 {% else %}
 class {{ className }} extends AbstractTransfer
 {% endif %}
