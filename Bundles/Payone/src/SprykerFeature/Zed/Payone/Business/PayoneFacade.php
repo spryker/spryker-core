@@ -7,6 +7,11 @@ use SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\DebitDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\RefundDataInterface;
+use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
+use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 
 
 /**
@@ -17,7 +22,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param AuthorizationDataInterface $authorizationData
-     * @return Api\Response\Container\AuthorizationResponseContainer
+     * @return AuthorizationResponseContainer
      */
     public function authorize(AuthorizationDataInterface $authorizationData)
     {
@@ -28,7 +33,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param AuthorizationDataInterface $authorizationData
-     * @return Api\Response\Container\AuthorizationResponseContainer
+     * @return AuthorizationResponseContainer
      */
     public function preAuthorize(AuthorizationDataInterface $authorizationData)
     {
@@ -39,7 +44,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param CaptureDataInterface $captureData
-     * @return Api\Response\Container\CaptureResponseContainer
+     * @return CaptureResponseContainer
      */
     public function capture(CaptureDataInterface $captureData)
     {
@@ -50,7 +55,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param DebitDataInterface $debitData
-     * @return Api\Response\Container\DebitResponseContainer
+     * @return DebitResponseContainer
      */
     public function debit(DebitDataInterface $debitData)
     {
@@ -61,7 +66,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param RefundDataInterface $refundData
-     * @return Api\Response\Container\RefundResponseContainer
+     * @return RefundResponseContainer
      */
     public function refund(RefundDataInterface $refundData)
     {
@@ -71,9 +76,8 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @todo: what do we pass here as facade method param?
      * @param array $requestParams
-     * @return mixed
+     * @return TransactionStatusResponse
      */
     public function processTransactionStatusUpdate(array $requestParams)
     {

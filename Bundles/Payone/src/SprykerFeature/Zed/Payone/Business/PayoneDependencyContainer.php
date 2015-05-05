@@ -8,6 +8,7 @@ use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayoneBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentManager;
 use SprykerFeature\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
@@ -114,6 +115,15 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     protected function createModeDetector()
     {
         return $this->getFactory()->createModeModeDetector();
+    }
+
+    /**
+     * @param array $requestParams
+     * @return TransactionStatusRequest
+     */
+    protected function createTransactionStatusUpdateRequest(array $requestParams)
+    {
+        return new TransactionStatusRequest($requestParams);
     }
 
     /**
