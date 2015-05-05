@@ -46,9 +46,8 @@ class Group implements GroupInterface
      */
     public function addGroup($name)
     {
-        $data = new \Generated\Shared\Transfer\AclGroupTransfer();
+        $data = new AclGroupTransfer();
         $data->setName($name);
-
         $this->assertGroupHasName($data);
 
         return $this->save($data);

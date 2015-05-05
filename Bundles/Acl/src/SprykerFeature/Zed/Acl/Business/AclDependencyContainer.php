@@ -84,8 +84,8 @@ class AclDependencyContainer extends AbstractDependencyContainer
     public function createInstallerModel()
     {
         return $this->getFactory()->createModelInstaller(
-            $this->locateQueryContainer(),
-            $this->getLocator(),
+            $this->getLocator()->acl()->facade(),
+            $this->getLocator()->user()->facade(),
             $this->getConfig()
         );
     }
