@@ -10,7 +10,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\PayoneBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentManager;
-use SprykerFeature\Zed\Payone\Business\TransactionStatus\TransactionStatusManager;
+use SprykerFeature\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
 use SprykerFeature\Zed\Payone\PayoneConfig;
 
 /**
@@ -37,6 +37,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
                 $this->createExecutionAdapter(),
                 $this->createQueryContainer(),
                 $this->createStandardParameter(),
+                $this->createKeyHashProvider(),
                 $this->createSequenceNumberProvider(),
                 $this->createModeDetector()
             );
@@ -49,14 +50,15 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return TransactionStatusManager
+     * @return TransactionStatusUpdateManager
      */
     public function createTransactionStatusManager()
     {
         return $this->getFactory()
-            ->createTransactionStatusTransactionStatusManager(
-                $this->getLocator(),
-                $this->createQueryContainer()
+            ->createTransactionStatusTransactionStatusUpdateManager(
+                $this->createQueryContainer(),
+                $this->createStandardParameter(),
+                $this->createKeyHashProvider()
             );
     }
 
@@ -96,6 +98,14 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
             ->createSequenceNumberSequenceNumberProvider(
                 $this->createQueryContainer()
             );
+    }
+
+    /**
+     * @return Key\KeyHashProvider
+     */
+    protected function createKeyHashProvider()
+    {
+        return $this->getFactory()->createKeyKeyHashProvider();
     }
 
     /**
