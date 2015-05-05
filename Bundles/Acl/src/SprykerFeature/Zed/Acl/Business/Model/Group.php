@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNameExistsException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
+use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasUserException;
 
 class Group implements GroupInterface
 {
@@ -202,12 +203,12 @@ class Group implements GroupInterface
      * @param int $idUser
      *
      * @return int
-     * @throws GroupAlreadyHasRoleException
+     * @throws GroupAlreadyHasUserException
      */
     public function addUser($idGroup, $idUser)
     {
         if ($this->hasUser($idGroup, $idUser)) {
-            throw new GroupAlreadyHasRoleException();
+            throw new GroupAlreadyHasUserException();
         }
 
         $entity = $this->locator

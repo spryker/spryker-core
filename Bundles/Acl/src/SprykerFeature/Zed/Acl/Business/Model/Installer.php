@@ -133,7 +133,7 @@ class Installer implements InstallerInterface
                 throw new UserNotFoundException();
             }
 
-            if ($this->facadeAcl->userHasGroupId($group->getIdAclGroup(), $user->getIdUserUser()) === 0) {
+            if (!$this->facadeAcl->userHasGroupId($group->getIdAclGroup(), $user->getIdUserUser())) {
                 $this->facadeAcl->addUserToGroup($user->getIdUserUser(), $group->getIdAclGroup());
             }
         }
