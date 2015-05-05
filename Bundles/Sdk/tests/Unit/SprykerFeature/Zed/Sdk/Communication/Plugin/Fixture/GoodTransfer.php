@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Shared\Skd\Transfer;
+namespace SprykerFeature\Shared\Sdk\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
