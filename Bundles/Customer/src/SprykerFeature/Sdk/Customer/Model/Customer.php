@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Sdk\Customer\Model;
 
+use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use Generated\Shared\Transfer\CustomerCustomer as CustomerTransferTransfer;
-use Generated\Shared\Transfer\CustomerAddress as AddressTransferTransfer;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use SprykerFeature\Sdk\ZedRequest\Client\Response;
 use Generated\Zed\Ide\AutoCompletion;
@@ -33,11 +33,11 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function register(CustomerTransfer $customerTransfer)
+    public function register(CustomerCustomerTransfer $customerTransfer)
     {
         $encoder = new MessageDigestPasswordEncoder();
         $customerTransfer->setPassword($encoder->encodePassword($customerTransfer->getPassword(), ""));
@@ -46,31 +46,31 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function confirmRegistration(CustomerTransfer $customerTransfer)
+    public function confirmRegistration(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/confirm-registration", $customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function forgotPassword(CustomerTransfer $customerTransfer)
+    public function forgotPassword(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/forgot-password", $customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function restorePassword(CustomerTransfer $customerTransfer)
+    public function restorePassword(CustomerCustomerTransfer $customerTransfer)
     {
         $encoder = new MessageDigestPasswordEncoder();
         $customerTransfer->setPassword($encoder->encodePassword($customerTransfer->getPassword(), ""));
@@ -78,61 +78,61 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
      * @return Response
      */
-    public function delete(CustomerTransfer $customerTransfer)
+    public function delete(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/delete", $customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function get(CustomerTransfer $customerTransfer)
+    public function get(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/customer", $customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function update(CustomerTransfer $customerTransfer)
+    public function update(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/update", $customerTransfer);
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
      * @return Response
      */
-    public function updateAddress(AddressTransfer $addressTransfer)
+    public function updateAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/update-address", $addressTransfer);
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      */
-    public function getAddress(AddressTransfer $addressTransfer)
+    public function getAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/address", $addressTransfer);
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      */
-    public function createAddress(AddressTransfer $addressTransfer)
+    public function createAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/new-address", $addressTransfer);
     }

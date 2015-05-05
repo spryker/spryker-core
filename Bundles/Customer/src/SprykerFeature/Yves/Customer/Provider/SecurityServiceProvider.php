@@ -9,6 +9,7 @@ use SprykerFeature\Shared\Customer\CustomerConfig;
 use Silex\Application;
 use Silex\Provider\SecurityServiceProvider as SilexSecurityServiceProvider;
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerFeature\Yves\Customer\Handler\AjaxAuthenticationHandler;
 
 class SecurityServiceProvider extends SilexSecurityServiceProvider
 {
@@ -38,6 +39,18 @@ class SecurityServiceProvider extends SilexSecurityServiceProvider
     public function register(Application $app)
     {
         parent::register($app);
+
+        $app['security.authentication.success_handler._proto'] = $app->protect(function ($name, $options) use ($app) {
+            return $app->share(function () use ($name, $options, $app) {
+                return new AjaxAuthenticationHandler();
+            });
+        });
+
+        $app['security.authentication.failure_handler._proto'] = $app->protect(function ($name, $options) use ($app) {
+            return $app->share(function () use ($name, $options, $app) {
+                return  new AjaxAuthenticationHandler();
+            });
+        });
 
         $app["security.firewalls"] = [
             "secured" => [
