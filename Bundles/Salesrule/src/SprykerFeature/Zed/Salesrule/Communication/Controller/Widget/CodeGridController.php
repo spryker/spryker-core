@@ -2,8 +2,9 @@
 
 namespace SprykerFeature\Zed\Salesrule\Communication\Controller\Widget;
 
+use Generated\Shared\Transfer\SalesruleCodeTransfer;
 use SprykerFeature\Shared\Library\TransferLoader;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection;
+use SprykerEngine\Shared\Transfer\AbstractTransferCollection;
 use SprykerFeature\Zed\Library\Controller\Action\AbstractGridController;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Salesrule\Communication\Grid\Code\DataSource;
@@ -24,11 +25,9 @@ class CodeGridController extends AbstractGridController
 
     /**
      * @param $grid
-     * @param \SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection
-     * $collection
-     * @return mixed
+     * @param AbstractTransferCollection $collection
      */
-    public function handleDestroy($grid, \SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection $collection = null)
+    public function handleDestroy($grid, AbstractTransferCollection $collection = null)
     {
         $gridRequest = $grid->getRequest();
         $parameters = $gridRequest->getParameters();
@@ -39,19 +38,19 @@ class CodeGridController extends AbstractGridController
     }
 
     /**
-     * @return \SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection
+     * @return SalesRuleCodeTransfer
      */
     protected function loadTransferCollection()
     {
-        return new \Generated\Shared\Transfer\SalesRuleCodeTransfer();
+        return new SalesruleCodeTransfer();
     }
 
     /**
-     * @return \SprykerFeature\Shared\Salesrule\Transfer\Code
+     * @return SalesruleCodeTransfer
      */
     protected function loadTransfer()
     {
-        return new \Generated\Shared\Transfer\SalesRuleCodeTransfer();
+        return new SalesRuleCodeTransfer();
     }
 
 

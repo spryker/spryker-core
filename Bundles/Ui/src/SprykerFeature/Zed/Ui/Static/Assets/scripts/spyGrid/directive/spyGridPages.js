@@ -24,13 +24,37 @@ require('Ui').ng
 			templateUrl : 'spyGrid/GridPages',
 
 			controller : ['$scope', function($scope) {
-				$scope.showItem = true;
-				$scope.showPage = true;
+				$scope.showItem   = true;
+				$scope.showPage   = true;
+				$scope.beforeGrid = false;
 
 				$scope.$watchCollection('model', function(now, was, scope) {
-					$scope.showItem = now.pages.max > 1 && now.rows.length > 15;
-					$scope.showPage = now.pages.max > 1;
+					if (scope.beforeGrid) scope.showItem = now.page.max > 1;
+					else scope.showItem = now.page.max > 1 || now.items.num > 15;
+
+					scope.showPage = now.page.max > 1;
 				});
-			}]
+			}],
+
+			link : function(scope, selector, attributes) {
+				var element = selector[0];
+				var nodes   = element.parentNode.querySelectorAll('[spy-grid-pages], table');
+
+				scope.beforeGrid = false;
+
+				Array.prototype
+					.slice.call(nodes, 0)
+					.some(function(item, index, source) {
+						if (item === element) {
+							scope.beforeGrid = true;
+
+							return true;
+						}
+
+						var name = item.nodeName.toLowerCase();
+
+						if (name === 'table') return true;
+					});
+			}
 		};
 	}]);

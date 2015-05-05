@@ -8,25 +8,25 @@ use Generated\Shared\Transfer\StockStockTypeTransfer;
 interface WriterInterface
 {
     /**
-     * @param StockType $stockTypeTransfer
+     * @param StockStockTypeTransfer $stockTypeTransfer
      *
      * @return int
      */
-    public function createStockType(StockType $stockTypeTransfer);
+    public function createStockType(StockStockTypeTransfer $stockTypeTransfer);
 
     /**
-     * @param StockType $stockTypeTransfer
+     * @param StockStockTypeTransfer $stockTypeTransfer
      *
      * @return int
      */
-    public function updateStockType(StockType $stockTypeTransfer);
+    public function updateStockType(StockStockTypeTransfer $stockTypeTransfer);
 
     /**
-     * @param StockProduct $transferStockProduct
+     * @param StockStockProductTransfer $transferStockProduct
      *
      * @return int
      */
-    public function updateStockProduct(StockProduct $transferStockProduct);
+    public function updateStockProduct(StockStockProductTransfer $transferStockProduct);
 
     /**
      * @param string $sku
@@ -43,9 +43,9 @@ interface WriterInterface
     public function incrementStock($sku, $stockType, $incrementBy = 1);
 
     /**
-     * @param StockProduct $transferStockProduct
+     * @param StockStockProductTransfer $transferStockProduct
      *
      * @return int
      */
-    public function createStockProduct(StockProduct $transferStockProduct);
+    public function createStockProduct(StockStockProductTransfer $transferStockProduct);
 }

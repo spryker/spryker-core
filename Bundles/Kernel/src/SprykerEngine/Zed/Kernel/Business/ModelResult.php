@@ -2,7 +2,7 @@
 
 namespace SprykerEngine\Zed\Kernel\Business;
 
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 
 class ModelResult

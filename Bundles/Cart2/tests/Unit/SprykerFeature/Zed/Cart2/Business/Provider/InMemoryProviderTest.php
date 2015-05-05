@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerFeature\Zed\Cart2\Business\Provider;
 
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\Cart2CartTransfer;
 use Generated\Shared\Transfer\Cart2ItemTransfer;

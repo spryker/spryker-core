@@ -4,8 +4,6 @@ namespace Unit\SprykerFeature\Zed\Cart\Business\Provider;
 
 use Generated\Shared\Transfer\Cart2CartTransfer;
 use Generated\Shared\Transfer\CartCartItemTransfer;
-use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\InMemoryProvider;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
@@ -235,7 +233,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
      * @param string $itemId
      * @param int $itemQuantity
      *
-     * @return ItemInterface|AbstractTransfer
+     * @return ItemInterface
      */
     protected function createItem($itemId, $itemQuantity)
     {

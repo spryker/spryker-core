@@ -4,7 +4,7 @@ namespace SprykerFeature\Shared\ZedRequest\Client;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\TransferLocatorHelper;
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 
 abstract class AbstractResponse extends AbstractObject implements
     EmbeddedTransferInterface, ResponseInterface

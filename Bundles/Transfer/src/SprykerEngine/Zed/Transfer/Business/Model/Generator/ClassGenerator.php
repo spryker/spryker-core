@@ -167,7 +167,7 @@ class ClassGenerator
                 $this->addExternalResource($item);
             }
         } else {
-            if ($resourceNamespace === 'SprykerFeature\Shared\Library\TransferObject\AbstractTransfer') {
+            if ($resourceNamespace === 'SprykerEngine\Shared\Transfer\AbstractTransfer') {
                 return;
             }
             $resourceNamespace = $this->appendInterfaceName($resourceNamespace);

@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Library\Controller\Action;
 
 use SprykerFeature\Shared\Library\Error\ErrorLogger;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransferCollection;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransferCollection;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

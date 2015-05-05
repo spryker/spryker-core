@@ -240,7 +240,7 @@ class AclTest extends Test
         $this->assertTrue($removed);
 
         try {
-            $this->facade->getRole($roleDto->getIdAclRole());
+            $this->facade->getRoleById($roleDto->getIdAclRole());
         } catch (EmptyEntityException $e) {
             $this->assertInstanceOf('\SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException', $e);
         }

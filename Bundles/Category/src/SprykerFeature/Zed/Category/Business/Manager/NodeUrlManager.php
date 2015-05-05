@@ -42,10 +42,10 @@ class NodeUrlManager implements NodeUrlManagerInterface
     }
 
     /**
-     * @param CategoryNode $categoryNode
+     * @param CategoryCategoryNodeTransfer $categoryNode
      * @param LocaleDto $locale
      */
-    public function createUrl(CategoryNode $categoryNode, LocaleDto $locale)
+    public function createUrl(CategoryCategoryNodeTransfer $categoryNode, LocaleDto $locale)
     {
         $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
         $categoryUrl = $this->urlPathGenerator->generate($path);

@@ -2,11 +2,8 @@
 
 namespace SprykerFeature\Zed\Cart\Business\StorageProvider;
 
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
-use Generated\Shared\Transfer\CartCartInterfaceTransfer;
-use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\CartItemInterfaceTransfer;
 use SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException;
+use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 class InMemoryProvider implements StorageProviderInterface
 {
@@ -20,7 +17,7 @@ class InMemoryProvider implements StorageProviderInterface
     {
         $existingItems = $cart->getItems();
 
-        /** @var AbstractTransfer|ItemInterface $item */
+        /** @var ItemExpanderPluginInterface $item */
         foreach ($addedItems as $item) {
             if ($item->getQuantity() < 1) {
                 throw new InvalidArgumentException(

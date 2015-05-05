@@ -3,7 +3,7 @@
 namespace SprykerFeature\Shared\Discount\Dependency\Transfer;
 
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
-use SprykerFeature\Shared\Library\TransferObject\TransferCollectionInterface;
+use SprykerEngine\Shared\Transfer\TransferCollectionInterface;
 
 interface DiscountableItemCollectionInterface extends TransferCollectionInterface, CalculableItemCollectionInterface
 {

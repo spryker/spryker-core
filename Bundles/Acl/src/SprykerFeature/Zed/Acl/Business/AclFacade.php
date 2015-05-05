@@ -58,6 +58,18 @@ class AclFacade extends AbstractFacade
     }
 
     /**
+     * @param $name
+     *
+     * @return AclGroupTransfer
+     */
+    public function getGroupByName($name)
+    {
+        return $this->getDependencyContainer()
+            ->createGroupModel()
+            ->getByName($name);
+    }
+
+    /**
      * @return AclGroupTransfer
      */
     public function getAllGroups()
@@ -68,11 +80,24 @@ class AclFacade extends AbstractFacade
     }
 
     /**
+     * @param $name
+     *
+     * @return bool
+     */
+    public function existsRoleByName($name)
+    {
+        return $this->getDependencyContainer()
+            ->createRoleModel()
+            ->hasRoleName($name)
+        ;
+    }
+
+    /**
      * @param int $id
      *
      * @return AclRoleTransfer
      */
-    public function getRole($id)
+    public function getRoleById($id)
     {
         return $this->getDependencyContainer()
             ->createRoleModel()
@@ -80,15 +105,15 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param int $id
+     * @param $name
      *
-     * @return AclRuleTransfer
+     * @return AclRoleTransfer
      */
-    public function getRule($id)
+    public function getRoleByName($name)
     {
         return $this->getDependencyContainer()
-            ->createRuleModel()
-            ->getRuleById($id);
+            ->createRoleModel()
+            ->getByName($name);
     }
 
     /**
@@ -102,6 +127,18 @@ class AclFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createRoleModel()
             ->addRole($name, $idGroup);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return AclRuleTransfer
+     */
+    public function getRule($id)
+    {
+        return $this->getDependencyContainer()
+            ->createRuleModel()
+            ->getRuleById($id);
     }
 
     /**
@@ -228,6 +265,21 @@ class AclFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createRuleModel()
             ->getRoleRules($idRole);
+    }
+
+    /**
+     * @param int $idAclRole
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
+     *
+     * @return bool
+     */
+    public function existsRoleRule($idAclRole, $bundle, $controller, $action, $type)
+    {
+        return $this->getDependencyContainer()
+            ->createRuleModel()
+            ->existsRoleRule($idAclRole, $bundle, $controller, $action, $type);
     }
 
     /**

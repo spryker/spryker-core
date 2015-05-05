@@ -3,7 +3,7 @@
 namespace Unit\SprykerFeature\Sdk\ZedRequest\Client;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Sdk\ZedRequest\Client\Request;
 

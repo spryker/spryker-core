@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Sdk\Customer;
 
+use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
 use SprykerEngine\Sdk\Kernel\AbstractSdk;
-use Generated\Shared\Transfer\CustomerCustomer as CustomerTransferTransfer;
-use Generated\Shared\Transfer\CustomerAddress as AddressTransferTransfer;
 
 /**
  * @method CustomerDependencyContainer getDependencyContainer()
@@ -12,101 +12,101 @@ use Generated\Shared\Transfer\CustomerAddress as AddressTransferTransfer;
 class CustomerSdk extends AbstractSdk
 {
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function registerCustomer(CustomerTransfer $customerTransfer)
+    public function registerCustomer(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->register($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function confirmRegistration(CustomerTransfer $customerTransfer)
+    public function confirmRegistration(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->confirmRegistration($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function forgotPassword(CustomerTransfer $customerTransfer)
+    public function forgotPassword(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->forgotPassword($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function restorePassword(CustomerTransfer $customerTransfer)
+    public function restorePassword(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->restorePassword($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function deleteCustomer(CustomerTransfer $customerTransfer)
+    public function deleteCustomer(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->delete($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function getCustomer(CustomerTransfer $customerTransfer)
+    public function getCustomer(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->get($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function updateCustomer(CustomerTransfer $customerTransfer)
+    public function updateCustomer(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->update($customerTransfer);
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      */
-    public function getAddress(AddressTransfer $addressTransfer)
+    public function getAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->getAddress($addressTransfer);
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      */
-    public function updateAddress(AddressTransfer $addressTransfer)
+    public function updateAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->updateAddress($addressTransfer);
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      */
-    public function createAddress(AddressTransfer $addressTransfer)
+    public function createAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->createAddress($addressTransfer);
     }

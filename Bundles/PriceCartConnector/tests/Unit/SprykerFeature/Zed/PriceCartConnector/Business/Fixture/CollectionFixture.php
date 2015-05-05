@@ -2,10 +2,10 @@
 
 namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture;
 
+use Generated\Shared\Transfer\CartCartItemTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemCollection;
 
-class CollectionFixture extends ItemCollection
+class CollectionFixture extends CartCartItemTransfer
 {
     public function __construct(LocatorLocatorInterface $locator = null)
     {

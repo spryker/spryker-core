@@ -41,6 +41,10 @@ header.spy-page-header {
 			font-weight:$_ffCutBold;
 			cursor:default;
 
+			a {
+				@extend %reset-link;
+			}
+
 			&:after {
 				content:'>';
 				@include h(baseline);

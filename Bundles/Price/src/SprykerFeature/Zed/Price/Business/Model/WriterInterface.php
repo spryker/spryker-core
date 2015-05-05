@@ -17,12 +17,12 @@ interface WriterInterface
     public function createPriceType($name);
 
     /**
-     * @param Product $transferPriceProduct
+     * @param PriceProductTransfer $transferPriceProduct
      */
-    public function setPriceForProduct(Product $transferPriceProduct);
+    public function setPriceForProduct(PriceProductTransfer $transferPriceProduct);
 
     /**
-     * @param Product $transferPriceProduct
+     * @param PriceProductTransfer $transferPriceProduct
      */
-    public function createPriceForProduct(Product $transferPriceProduct);
+    public function createPriceForProduct(PriceProductTransfer $transferPriceProduct);
 }

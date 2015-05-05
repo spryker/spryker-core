@@ -203,7 +203,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             ->addJoinObject(
                 (new Join(
                     SpyProductTableMap::COL_ID_PRODUCT,
-                    SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ID,
+                    SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT,
                     Criteria::LEFT_JOIN
                 ))->setRightTableAlias('product_urls')
             );

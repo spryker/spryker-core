@@ -5,7 +5,6 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
-use SprykerEngine\Zed\Transfer\Business\Model\TransferArrayObject;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Library\Copy;
 use Generated\Shared\Transfer\AclRoleTransfer;
@@ -142,6 +141,24 @@ class Rule implements RuleInterface
     }
 
     /**
+     * @param $idAclRole
+     * @param $bundle
+     * @param $controller
+     * @param $action
+     * @param $type
+     *
+     * @return bool
+     */
+    public function existsRoleRule($idAclRole, $bundle, $controller, $action, $type)
+    {
+        $query = $this->queryContainer
+            ->queryRuleByPathAndRole($idAclRole, $bundle, $controller, $action, $type)
+        ;
+
+        return ($query->count() > 0);
+    }
+
+    /**
      * @param AclRoleTransfer $roles
      * @param string $bundle
      * @param string $controller
@@ -157,7 +174,7 @@ class Rule implements RuleInterface
     ) {
         $results = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();
 
-        $collection = new TransferArrayObject();
+        $collection = new AclRuleTransfer();
 
         foreach ($results as $result) {
             $transfer = new AclRuleTransfer();
@@ -177,7 +194,7 @@ class Rule implements RuleInterface
         $relationshipCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find();
         $results = $this->queryContainer->queryGroupRules($relationshipCollection)->find();
 
-        $collection = new TransferArrayObject();
+        $collection = new AclRuleTransfer();
 
         foreach ($results as $result) {
             $transfer = new AclRuleTransfer();

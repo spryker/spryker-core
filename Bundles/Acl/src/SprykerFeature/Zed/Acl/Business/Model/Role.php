@@ -4,8 +4,6 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Transfer\Business\Model\TransferArrayObject;
-use SprykerFeature\Shared\Library\TransferObject\AbstractTransfer;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
@@ -130,8 +128,7 @@ d     */
     {
         $results = $this->queryContainer->queryGroupRoles($idGroup)->find();
 
-        $collection = new TransferArrayObject();
-
+        $collection = new AclRoleTransfer();
 
         foreach ($results as $result) {
             $transfer = new AclRoleTransfer();

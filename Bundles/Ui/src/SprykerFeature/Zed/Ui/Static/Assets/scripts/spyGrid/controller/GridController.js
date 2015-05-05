@@ -99,7 +99,8 @@ _ng
 				items : {
 					min : 1,
 					now : 30,
-					max : 100
+					max : 100,
+					num : 0
 				},
 				page : {
 					min : 1,
@@ -183,6 +184,7 @@ _ng
 
 						$scope.rows = model.rows;
 
+						$scope.pages.items.num = model.rows.length;
 						$scope.pages.page.now = model.page;
 						$scope.pages.page.max = model.pages;
 

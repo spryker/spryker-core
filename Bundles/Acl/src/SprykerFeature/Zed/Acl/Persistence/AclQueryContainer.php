@@ -1,7 +1,9 @@
 <?php
 namespace SprykerFeature\Zed\Acl\Persistence;
 
+use Generated\Shared\Transfer\AclRoleTransfer;
 use Propel\Runtime\ActiveQuery\Join;
+use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -217,15 +219,15 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param RoleCollection $roles
+     * @param AclRoleTransfer $roles
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
-     * @return SpyAclRuleQuery
+     * @return Propel\Base\SpyAclRuleQuery
      */
     public function queryRuleByPathAndRoles(
-        RoleCollection $roles,
+        AclRoleTransfer $roles,
         $bundle = AclConfig::VALIDATOR_WILDCARD,
         $controller = AclConfig::VALIDATOR_WILDCARD,
         $action = AclConfig::VALIDATOR_WILDCARD
@@ -250,6 +252,30 @@ class AclQueryContainer extends AbstractQueryContainer
         }
 
         $query->filterByFkAclRole($inRoles, Criteria::IN);
+
+        return $query;
+    }
+
+    /**
+     * @param $idAclRole
+     * @param $bundle
+     * @param $controller
+     * @param $action
+     * @param $type
+     *
+     * @throws PropelException
+     *
+     * @return SpyAclRuleQuery
+     */
+    public function queryRuleByPathAndRole($idAclRole, $bundle, $controller, $action, $type)
+    {
+        $query = $this->getDependencyContainer()->createRuleQuery();
+        $query->filterByFkAclRole($idAclRole, Criteria::EQUAL)
+            ->filterByBundle($bundle, Criteria::EQUAL)
+            ->filterByController($controller, Criteria::EQUAL)
+            ->filterByAction($action, Criteria::EQUAL)
+            ->filterByType($type, Criteria::EQUAL)
+        ;
 
         return $query;
     }

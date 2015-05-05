@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface PriceItemInterface extends TransferInterface
 {

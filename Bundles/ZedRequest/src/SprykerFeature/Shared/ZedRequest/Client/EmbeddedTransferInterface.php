@@ -1,7 +1,7 @@
 <?php
 namespace SprykerFeature\Shared\ZedRequest\Client;
 
-use SprykerFeature\Shared\Library\TransferObject\TransferInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface EmbeddedTransferInterface
 {
