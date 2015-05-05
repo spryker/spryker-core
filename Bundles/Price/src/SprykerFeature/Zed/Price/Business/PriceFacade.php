@@ -40,10 +40,10 @@ class PriceFacade extends AbstractFacade
     }
 
     /**
-     * @param Product $transferPriceProduct
+     * @param PriceProductTransfer $transferPriceProduct
      * @return mixed
      */
-    public function setPriceForProduct(Product $transferPriceProduct)
+    public function setPriceForProduct(PriceProductTransfer $transferPriceProduct)
     {
         return $this->getDependencyContainer()->getWriterModel()->setPriceForProduct($transferPriceProduct);
     }
@@ -67,9 +67,9 @@ class PriceFacade extends AbstractFacade
     }
 
     /**
-     * @param Product $transferPriceProduct
+     * @param PriceProductTransfer $transferPriceProduct
      */
-    public function createPriceForProduct(Product $transferPriceProduct)
+    public function createPriceForProduct(PriceProductTransfer $transferPriceProduct)
     {
         $this->getDependencyContainer()->getWriterModel()->createPriceForProduct($transferPriceProduct);
     }
