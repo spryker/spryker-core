@@ -48,6 +48,6 @@ class ProductProcessorPlugin extends AbstractPlugin implements DataProcessorPlug
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 }

@@ -102,7 +102,7 @@ interface ProductManagerInterface
     public function createProductUrl($sku, $url, LocaleDto $locale);
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idAbstractProduct
      * @param string $url
      * @param LocaleDto $locale
      *
@@ -111,7 +111,7 @@ interface ProductManagerInterface
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createProductUrlByIdProduct($idConcreteProduct, $url, LocaleDto $locale);
+    public function createProductUrlByIdProduct($idAbstractProduct, $url, LocaleDto $locale);
 
     /**
      * @param string $sku
@@ -126,7 +126,7 @@ interface ProductManagerInterface
     public function createAndTouchProductUrl($sku, $url, LocaleDto $locale);
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idAbstractProduct
      * @param string $url
      * @param LocaleDto $locale
      *
@@ -135,5 +135,5 @@ interface ProductManagerInterface
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createAndTouchProductUrlByIdProduct($idConcreteProduct, $url, LocaleDto $locale);
+    public function createAndTouchProductUrlByIdProduct($idAbstractProduct, $url, LocaleDto $locale);
 }

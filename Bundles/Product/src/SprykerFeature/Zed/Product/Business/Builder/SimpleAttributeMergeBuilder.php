@@ -2,14 +2,9 @@
 
 namespace SprykerFeature\Zed\Product\Business\Builder;
 
-
-/**
- * Class SimpleAttributeMergeBuilder
- *
- * @package SprykerFeature\Zed\Product\Business\Builder
- */
 class SimpleAttributeMergeBuilder
 {
+
     /**
      * @param array $productsData
      *
@@ -19,12 +14,23 @@ class SimpleAttributeMergeBuilder
     {
         foreach ($productsData as &$productData) {
             $abstractAttributes = json_decode($productData['abstract_attributes'], true);
-            $concreteAttributes = json_decode($productData['attributes'], true);
-            $attributes = array_merge($abstractAttributes, $concreteAttributes);
+            $productData['abstract_attributes'] = $this->normalizeAttributes($abstractAttributes);
+            $concreteAttributes = explode('$%', $productData['concrete_attributes']);
+            $concreteSkus = explode(',', $productData['concrete_skus']);
+            $productData['concrete_products'] = [];
 
-            unset($productData['abstract_attributes']);
+            $lastSku = '';
+            for ($i = 0, $l = count($concreteSkus); $i < $l; $i++) {
+                if ($lastSku === $concreteSkus[$i]) {
+                    continue;
+                }
 
-            $productData['attributes'] = $this->normalizeAttributes($attributes);
+                $lastSku = $concreteSkus[$i];
+                $productData['concrete_products'][] = [
+                    'sku' => $concreteSkus[$i],
+                    'attributes' => json_decode($concreteAttributes[$i], true)
+                ];
+            }
         }
 
         return $productsData;

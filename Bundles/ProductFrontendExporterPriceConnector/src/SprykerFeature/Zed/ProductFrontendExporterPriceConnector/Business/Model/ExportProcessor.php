@@ -28,7 +28,7 @@ class ExportProcessor implements ExportProcessorInterface
     {
         foreach ($resultSet as $index => $productRawData) {
             if (isset($processedResultSet[$index])) {
-                if ($productRawData['prices'] != null) {
+                if ($productRawData['concrete_prices'] != null) {
                     $processedResultSet = $this->preparePriceForResult($processedResultSet, $productRawData, $index);
                 } else {
                     unset($processedResultSet[$index]);

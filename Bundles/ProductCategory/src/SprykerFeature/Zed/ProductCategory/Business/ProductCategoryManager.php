@@ -62,19 +62,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     public function hasProductCategoryMapping($sku, $categoryName, LocaleDto $locale)
     {
-        if (!$this->productFacade->hasConcreteProduct($sku)) {
-            return false;
-        }
-
-        if (!$this->categoryFacade->hasCategoryNode($categoryName, $locale)) {
-            return false;
-        }
-
-        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
-        $idCategoryNode = $this->categoryFacade->getCategoryNodeIdentifier($categoryName, $locale);
-
         $mappingQuery = $this->productCategoryQueryContainer
-            ->queryProductCategoryMappingByIds($idProduct, $idCategoryNode)
+            ->queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, $locale)
         ;
 
         return $mappingQuery->count() > 0;
@@ -95,12 +84,12 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         $this->checkMappingDoesNotExist($sku, $categoryName, $locale);
 
-        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
+        $idAbstractProduct = $this->productFacade->getAbstractProductIdBySku($sku);
         $idCategoryNode = $this->categoryFacade->getCategoryNodeIdentifier($categoryName, $locale);
 
         $mappingEntity = $this->locator->productCategory()->entitySpyProductCategory();
         $mappingEntity
-            ->setFkProduct($idProduct)
+            ->setFkAbstractProduct($idAbstractProduct)
             ->setFkCategoryNode($idCategoryNode)
         ;
 

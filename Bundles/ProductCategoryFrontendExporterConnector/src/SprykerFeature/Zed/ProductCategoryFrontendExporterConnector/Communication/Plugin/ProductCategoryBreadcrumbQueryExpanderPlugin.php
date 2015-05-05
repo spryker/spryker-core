@@ -18,7 +18,7 @@ class ProductCategoryBreadcrumbQueryExpanderPlugin extends AbstractPlugin implem
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**

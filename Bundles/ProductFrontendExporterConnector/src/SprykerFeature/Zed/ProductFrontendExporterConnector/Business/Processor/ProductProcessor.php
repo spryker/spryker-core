@@ -43,7 +43,7 @@ class ProductProcessor implements ProductProcessorInterface
         $exportChunk = [];
 
         foreach ($products as $index => $productData) {
-            $productKey = $this->productKeyGenerator->generateKey($productData['id_product'], $locale->getLocaleName());
+            $productKey = $this->productKeyGenerator->generateKey($productData['id_abstract_product'], $locale->getLocaleName());
             $productData['url'] = $productData['product_url'];
             $exportChunk[$productKey] = $this->filterProductData($productData);
         }
@@ -59,7 +59,13 @@ class ProductProcessor implements ProductProcessorInterface
     protected function filterProductData(array $productData)
     {
         //TODO get this from the settings, instead of hardcoding it
-        $allowedFields = ['sku' => true, 'attributes' => true, 'name' => true, 'url' => true];
+        $allowedFields = [
+            'sku' => true,
+            'abstract_attributes' => true,
+            'name' => true,
+            'url' => true,
+            'concrete_products' => true,
+        ];
 
         return array_intersect_key($productData, $allowedFields);
     }

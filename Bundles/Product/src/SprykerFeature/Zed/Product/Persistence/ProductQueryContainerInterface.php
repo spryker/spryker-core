@@ -68,7 +68,15 @@ interface ProductQueryContainerInterface
     /**
      * @param ModelCriteria $expandableQuery
      *
-     * @return ModelCriteria
+     * @return $this
      */
-    public function joinLocalizedProductQueryWithAttributes(ModelCriteria $expandableQuery);
+    public function joinConcreteProducts(ModelCriteria $expandableQuery);
+
+    /**
+     * @param ModelCriteria $expandableQuery
+     * @param LocaleDto $locale
+     *
+     * @return $this
+     */
+    public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleDto $locale);
 }

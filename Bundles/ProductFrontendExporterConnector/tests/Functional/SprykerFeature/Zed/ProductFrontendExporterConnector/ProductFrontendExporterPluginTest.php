@@ -83,9 +83,9 @@ class ProductFrontendExporterPluginTest extends Test
     public function testSoleProductExporter()
     {
         $this->createAttributeType();
-        $idProduct = $this->createProduct('TestSku', 'TestProductName', $this->locale);
-        $this->urlFacade->createUrl('/some-url', $this->locale, 'product', $idProduct);
-        $this->touchFacade->touchActive('test', $idProduct);
+        $idAbstractProduct = $this->createProduct('TestSku', 'TestProductName', $this->locale);
+        $this->urlFacade->createUrl('/some-url', $this->locale, 'abstract_product', $idAbstractProduct);
+        $this->touchFacade->touchActive('test', $idAbstractProduct);
 
         $this->doExporterTest(
             [   //expanders
@@ -95,12 +95,11 @@ class ProductFrontendExporterPluginTest extends Test
                 $this->locator->productFrontendExporterConnector()->pluginProductProcessorPlugin()
             ],
             [
-                'de.abcde.resource.product.' . $idProduct =>
+                'de.abcde.resource.abstract_product.' . $idAbstractProduct =>
                     [
-                        'sku' => 'TestSku',
-                        'attributes' =>
+                        'sku' => 'AbstractTestSku',
+                        'abstract_attributes' =>
                             [
-                                'image_url' => '/images/product/robot_buttons_black.png',
                                 'thumbnail_url' => '/images/product/default.png',
                                 'price' => 1395,
                                 'width' => 12,
@@ -108,16 +107,24 @@ class ProductFrontendExporterPluginTest extends Test
                                 'depth' => 850,
                                 'main_color' => 'gray',
                                 'other_colors' => 'red',
-                                'weight' => 1.2,
-                                'material' => 'aluminium',
-                                'gender' => 'b',
-                                'age' => 8,
                                 'description' => 'A description!',
                                 'name' => 'Ted Technical Robot',
-                                'available' => true,
                             ],
                         'name' => 'TestProductName',
-                        'url' => '/some-url'
+                        'url' => '/some-url',
+                        'concrete_products' => [
+                            [
+                                'sku' => 'TestSku',
+                                'attributes' => [
+                                    'image_url' => '/images/product/robot_buttons_black.png',
+                                    'weight' => 1.2,
+                                    'material' => 'aluminium',
+                                    'gender' => 'b',
+                                    'age' => 8,
+                                    'available' => true,
+                                ]
+                            ]
+                        ]
                     ]
             ]
         );
@@ -143,9 +150,9 @@ class ProductFrontendExporterPluginTest extends Test
     protected function createProduct($sku, $name, LocaleDto $locale)
     {
         $idAbstractProduct = $this->createAbstractProductWithAttributes('Abstract' . $sku, 'Abstract' . $name, $locale);
-        $idConcreteProduct = $this->createConcreteProductWithAttributes($idAbstractProduct, $sku, $name, $locale);
+        $this->createConcreteProductWithAttributes($idAbstractProduct, $sku, $name, $locale);
 
-        return $idConcreteProduct;
+        return $idAbstractProduct;
     }
 
     /**

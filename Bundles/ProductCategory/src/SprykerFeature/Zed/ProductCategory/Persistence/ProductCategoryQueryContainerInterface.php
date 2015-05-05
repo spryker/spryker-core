@@ -1,4 +1,5 @@
 <?php
+
 namespace SprykerFeature\Zed\ProductCategory\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -18,10 +19,19 @@ interface ProductCategoryQueryContainerInterface
     public function expandProductCategoryPathQuery(ModelCriteria $query, LocaleDto $locale, $excludeDirectParent = true, $excludeRoot = true);
 
     /**
-     * @param int $idProduct
+     * @param int $idAbstractProduct
      * @param int $idCategoryNode
      *
      * @return SpyProductCategoryQuery
      */
-    public function queryProductCategoryMappingByIds($idProduct, $idCategoryNode);
+    public function queryProductCategoryMappingByIds($idAbstractProduct, $idCategoryNode);
+
+    /**
+     * @param string $sku
+     * @param string $categoryName
+     * @param LocaleDto $locale
+     *
+     * @return SpyProductCategoryQuery
+     */
+    public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleDto $locale);
 }

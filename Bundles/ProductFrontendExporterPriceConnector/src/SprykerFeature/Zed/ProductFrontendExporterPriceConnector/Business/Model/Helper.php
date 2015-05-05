@@ -28,7 +28,7 @@ class Helper implements HelperInterface
     {
         $organizedPrices = [];
         $priceTypes = explode(',', $entity['price_types']);
-        $prices = explode(',', $entity['prices']);
+        $prices = explode(',', $entity['concrete_prices']);
 //        $isActive = explode(',', $entity['is_active']);
 
         foreach ($prices as $index => $price) {
@@ -46,7 +46,7 @@ class Helper implements HelperInterface
     public function getDefaultPrice(array $entity)
     {
         $priceTypes = explode(',', $entity['price_types']);
-        $prices = explode(',', $entity['prices']);
+        $prices = explode(',', $entity['concrete_prices']);
 
         foreach ($priceTypes as $index => $priceType) {
             if ($priceType == $this->getDefaultPriceType()) {

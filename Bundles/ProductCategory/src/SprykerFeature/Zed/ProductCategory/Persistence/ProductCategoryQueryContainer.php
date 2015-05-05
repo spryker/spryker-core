@@ -32,17 +32,54 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @param int $idProduct
+     * @return SpyProductCategoryQuery
+     */
+    protected function queryProductCategoryMappings()
+    {
+        $query = $this->getDependencyContainer()->createProductCategoryQuery();
+
+        return $query;
+    }
+
+    /**
+     * @param int $idAbstractProduct
      * @param int $idCategoryNode
      *
      * @return SpyProductCategoryQuery
      */
-    public function queryProductCategoryMappingByIds($idProduct, $idCategoryNode)
+    public function queryProductCategoryMappingByIds($idAbstractProduct, $idCategoryNode)
     {
-        $query = SpyProductCategoryQuery::create();
+        $query = $this->queryProductCategoryMappings();
         $query
-            ->filterByFkProduct($idProduct)
+            ->filterByFkAbstractProduct($idAbstractProduct)
             ->filterByFkCategoryNode($idCategoryNode)
+        ;
+
+        return $query;
+    }
+
+    /**
+     * @param string $sku
+     * @param string $categoryName
+     * @param LocaleDto $locale
+     *
+     * @return SpyProductCategoryQuery
+     */
+    public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleDto $locale)
+    {
+        $query = $this->queryProductCategoryMappings();
+        $query
+            ->useSpyAbstractProductQuery()
+            ->filterBySku($sku)
+            ->endUse()
+            ->useSpyCategoryNodeQuery()
+            ->useCategoryQuery()
+            ->useAttributeQuery()
+            ->filterByFkLocale($locale->getIdLocale())
+            ->filterByName($categoryName)
+            ->endUse()
+            ->endUse()
+            ->endUse()
         ;
 
         return $query;

@@ -345,7 +345,7 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idAbstractProduct
      * @param string $url
      * @param LocaleDto $locale
      *
@@ -354,9 +354,9 @@ class ProductManager implements ProductManagerInterface
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createProductUrlByIdProduct($idConcreteProduct, $url, LocaleDto $locale)
+    public function createProductUrlByIdProduct($idAbstractProduct, $url, LocaleDto $locale)
     {
-        return $this->urlFacade->createUrl($url, $locale, 'product', $idConcreteProduct);
+        return $this->urlFacade->createUrl($url, $locale, 'abstract_product', $idAbstractProduct);
     }
 
     /**
@@ -378,7 +378,7 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idAbstractProduct
      * @param string $url
      * @param LocaleDto $locale
      *
@@ -387,9 +387,9 @@ class ProductManager implements ProductManagerInterface
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createAndTouchProductUrlByIdProduct($idConcreteProduct, $url, LocaleDto $locale)
+    public function createAndTouchProductUrlByIdProduct($idAbstractProduct, $url, LocaleDto $locale)
     {
-        $url = $this->createProductUrlByIdProduct($idConcreteProduct, $url, $locale);
+        $url = $this->createProductUrlByIdProduct($idAbstractProduct, $url, $locale);
         $this->urlFacade->touchUrlActive($url->getIdUrl());
 
         return $url;

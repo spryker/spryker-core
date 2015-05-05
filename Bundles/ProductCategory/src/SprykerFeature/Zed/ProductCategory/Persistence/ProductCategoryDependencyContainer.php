@@ -6,6 +6,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryPersistence;
 use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 use SprykerFeature\Zed\ProductCategory\Persistence\QueryExpander\ProductCategoryPathQueryExpander;
 
 /**
@@ -32,5 +33,13 @@ class ProductCategoryDependencyContainer extends AbstractDependencyContainer
     protected function getCategoryQueryContainer()
     {
         return $this->getLocator()->category()->queryContainer();
+    }
+
+    /**
+     * @return SpyProductCategoryQuery
+     */
+    public function createProductCategoryQuery()
+    {
+        return SpyProductCategoryQuery::create();
     }
 }

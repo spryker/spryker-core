@@ -19,5 +19,5 @@ interface ProductCategoryToProductInterface
      * @return int
      * @throws MissingProductException
      */
-    public function getConcreteProductIdBySku($sku);
+    public function getAbstractProductIdBySku($sku);
 }

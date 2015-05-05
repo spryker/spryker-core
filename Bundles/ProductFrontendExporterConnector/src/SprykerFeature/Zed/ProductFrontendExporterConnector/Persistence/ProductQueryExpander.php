@@ -3,12 +3,11 @@
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Shared\Locale\Dto\LocaleDto;
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
+use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ProductQueryExpander implements ProductQueryExpanderInterface
 {
@@ -34,29 +33,18 @@ class ProductQueryExpander implements ProductQueryExpanderInterface
     public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
     {
         $expandableQuery->clearSelectColumns();
-        $expandableQuery
-            ->addJoin(
-                SpyTouchTableMap::COL_ITEM_ID,
-                SpyProductTableMap::COL_ID_PRODUCT,
-                Criteria::LEFT_JOIN
-            );
 
-        $expandableQuery->addAnd(
-            SpyProductTableMap::COL_IS_ACTIVE,
-            true,
-            Criteria::EQUAL
-        );
-        $expandableQuery->addAnd(
-            SpyLocaleTableMap::COL_LOCALE_NAME,
-            $locale->getLocaleName(),
-            Criteria::EQUAL
-        );
-        $expandableQuery->addAnd(
-            SpyLocaleTableMap::COL_IS_ACTIVE,
-            true,
-            Criteria::EQUAL
+        $expandableQuery->addJoin(
+            SpyTouchTableMap::COL_ITEM_ID,
+            SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+            Criteria::INNER_JOIN
         );
 
-        return $this->productQueryContainer->joinLocalizedProductQueryWithAttributes($expandableQuery);
+        $this->productQueryContainer
+            ->joinConcreteProducts($expandableQuery)
+            ->joinProductQueryWithLocalizedAttributes($expandableQuery, $locale)
+        ;
+
+        return $expandableQuery;
     }
 }
