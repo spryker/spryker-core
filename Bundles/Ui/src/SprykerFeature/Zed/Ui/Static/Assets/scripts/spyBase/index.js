@@ -10,9 +10,9 @@ require('Ui').ng
 		'$httpProvider',
 
 		function($httpProvider) {
+			$httpProvider.interceptors.push('errorInterceptor');
 			$httpProvider.interceptors.push('progressInterceptor');
 			$httpProvider.interceptors.push('redirectInterceptor');
-			$httpProvider.interceptors.push('errorInterceptor');
 		}
 	]);
 
