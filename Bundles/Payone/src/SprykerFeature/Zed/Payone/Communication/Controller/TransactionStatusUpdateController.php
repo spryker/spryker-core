@@ -6,7 +6,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use Symfony\Component\HttpFoundation\Request;
 
-class TransactionStatusController extends AbstractController implements PayoneApiConstants
+class TransactionStatusUpdateController extends AbstractController implements PayoneApiConstants
 {
 
     public function statusUpdateAction(Request $request)
