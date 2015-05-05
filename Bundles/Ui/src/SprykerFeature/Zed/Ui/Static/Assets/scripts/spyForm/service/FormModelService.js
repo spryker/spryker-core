@@ -13,10 +13,11 @@ require('Ui').ng
 	.module('spyForm')
 	.factory('FormModelService', [
 		'$resource',
+		'ErrorStoreService',
 		'JSONModelDenormalizeService',
 		'ArrayModelTransformService',
 
-		function($resource, denormalizeResponse, transform) {
+		function($resource, errorStore, denormalizeResponse, transform) {
 
 			function _transformRequest(model, headers) {
 				var _res = {};
@@ -55,6 +56,7 @@ require('Ui').ng
 						method : 'post',
 						isArray : false,
 						transformResponse : [
+							errorStore.intercept,
 							denormalizeResponse,
 							_transformResponse
 						]
@@ -64,6 +66,7 @@ require('Ui').ng
 						isArray : false,
 						transformRequest  : _transformRequest,
 						transformResponse : [
+							errorStore.intercept,
 							denormalizeResponse,
 							_transformResponse
 						]
@@ -73,6 +76,7 @@ require('Ui').ng
 						isArray : false,
 						transformRequest  : _transformRequest,
 						transformResponse : [
+							errorStore.intercept,
 							denormalizeResponse,
 							_transformResponse
 						]
