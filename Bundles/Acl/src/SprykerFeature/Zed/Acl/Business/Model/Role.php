@@ -132,7 +132,8 @@ d     */
 
         foreach ($results as $result) {
             $transfer = new AclRoleTransfer();
-            $collection->add(Copy::entityToTransfer($transfer, $result));
+            Copy::entityToTransfer($transfer, $result);
+            $collection->add($transfer);
         }
 
         return $collection;
