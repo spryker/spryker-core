@@ -31,7 +31,7 @@ class TransactionContainer extends AbstractContainer
     /**
      * @var ItemContainer[]
      */
-    protected $items = array();
+    protected $items = [];
 
 
     /**

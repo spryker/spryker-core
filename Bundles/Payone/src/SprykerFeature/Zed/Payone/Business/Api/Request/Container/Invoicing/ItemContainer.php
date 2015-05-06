@@ -10,38 +10,38 @@ class ItemContainer extends AbstractContainer
     /**
      * @var string
      */
-    protected $id = null;
+    protected $id;
     /**
      * @var int
      */
-    protected $pr = null;
+    protected $pr;
     /**
      * @var int
      */
-    protected $no = null;
+    protected $no;
     /**
      * @var string
      */
-    protected $de = null;
+    protected $de;
     /**
      * Artikeltyp (Enum)
      * @var string
      */
-    protected $it = null;
+    protected $it;
     /**
      * @var int
      */
-    protected $va = null;
+    protected $va;
     /**
      * DeliveryDate (YYYYMMDD)
      * @var string
      */
-    protected $sd = null;
+    protected $sd;
     /**
      * Lieferzeitraums-Ende (YYYYMMDD)
      * @var string
      */
-    protected $ed = null;
+    protected $ed;
 
 
     /**
@@ -50,15 +50,16 @@ class ItemContainer extends AbstractContainer
      */
     public function toArrayByKey($key)
     {
-        $data = array();
-        $data['id[' . $key . ']'] = $this->getId();
-        $data['pr[' . $key . ']'] = $this->getPr();
-        $data['no[' . $key . ']'] = $this->getNo();
-        $data['de[' . $key . ']'] = $this->getDe();
-        $data['it[' . $key . ']'] = $this->getIt();
-        $data['va[' . $key . ']'] = $this->getVa();
-        $data['sd[' . $key . ']'] = $this->getSd();
-        $data['ed[' . $key . ']'] = $this->getEd();
+        $data = [];
+        if (isset($this->id)) $data['id[' . $key . ']'] = $this->getId();
+        if (isset($this->pr)) $data['pr[' . $key . ']'] = $this->getPr();
+        if (isset($this->no)) $data['no[' . $key . ']'] = $this->getNo();
+        if (isset($this->de)) $data['de[' . $key . ']'] = $this->getDe();
+        if (isset($this->it)) $data['it[' . $key . ']'] = $this->getIt();
+        if (isset($this->va)) $data['va[' . $key . ']'] = $this->getVa();
+        if (isset($this->sd)) $data['sd[' . $key . ']'] = $this->getSd();
+        if (isset($this->ed)) $data['ed[' . $key . ']'] = $this->getEd();
+        
         return $data;
     }
 
