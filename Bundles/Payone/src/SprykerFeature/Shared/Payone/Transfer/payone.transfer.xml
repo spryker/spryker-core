@@ -12,6 +12,7 @@
         <property name="referenceId" type="string" default="" />
         <property name="paymentMethod" type="string" default="" />
         <property name="paymentUserData" type="PaymentUserDataInterface" />
+        <property name="order" type="string" default="" />
         <!-- <property name="order" type="SalesOrderTransfer" />--> <!-- requires sales package refactoring -->
         <!-- <property name="paymentFormData" type="string" default="" /> -->
     </transfer>
