@@ -262,7 +262,6 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         );
 
         $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT, 'id_abstract_product');
-        $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_SKU, 'abstract_sku');
 
         $expandableQuery->withColumn(
             SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES,

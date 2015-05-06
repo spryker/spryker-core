@@ -45,6 +45,8 @@ class ProductQueryExpander implements ProductQueryExpanderInterface
             ->joinProductQueryWithLocalizedAttributes($expandableQuery, $locale)
         ;
 
+        $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_SKU, 'sku');
+
         return $expandableQuery;
     }
 }
