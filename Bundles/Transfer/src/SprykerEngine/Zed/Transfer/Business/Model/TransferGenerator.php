@@ -13,8 +13,6 @@ use Zend\Config\Factory;
 class TransferGenerator
 {
 
-    const TRANSFER_DEFINITION_FILE_NAME = 'transferDefinition.xml';
-
     /**
      * @var string
      */
@@ -122,7 +120,7 @@ class TransferGenerator
             $directories[] = APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
         }
 
-        $finder->in($directories)->name(self::TRANSFER_DEFINITION_FILE_NAME);
+        $finder->in($directories)->name('*.transfer.xml');
 
         return $finder;
     }

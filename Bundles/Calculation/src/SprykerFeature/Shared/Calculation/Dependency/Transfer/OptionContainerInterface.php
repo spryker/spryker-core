@@ -2,6 +2,9 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
+/**
+ * @TODO check if return types are correct here. Set array and expect a OptionItemInterface when use get cant work
+ */
 interface OptionContainerInterface
 {
     /**
@@ -14,5 +17,5 @@ interface OptionContainerInterface
      *
      * @return $this
      */
-    public function setOptions(array $options = []);
+    public function setOptions(array $options);
 }

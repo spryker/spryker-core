@@ -17,11 +17,11 @@
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" />
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
 
-        <interface name="CartInterface" />
-        <property name="items" type="Cart2ItemTransfer[]" collection="Cart2ItemTransfer" />
-        <property name="totals" type="CalculationTotalsTransfer[]" collection="CalculationTotalsTransfer" />
-        <property name="expenses" type="CalculationExpenseTransfer[]" collection="CalculationExpenseTransfer" />
-        <property name="discounts" type="CalculationDiscountTransfer[]" collection="CalculationDiscountTransfer" />
+        <!--<interface name="CartInterface" />-->
+        <property name="items" type="Cart2ItemTransfer" collection="Cart2ItemTransfer" />
+        <property name="totals" type="CalculationTotalsTransfer" collection="CalculationTotalsTransfer" />
+        <property name="expenses" type="CalculationExpenseTransfer" collection="CalculationExpenseTransfer" />
+        <property name="discounts" type="CalculationDiscountTransfer" collection="CalculationDiscountTransfer" />
         <property name="couponCodes" type="array" default="[]" />
     </transfer>
     <transfer name="Cart2CartChange">
@@ -29,6 +29,7 @@
         <property name="cart" type="string" default="null" />
         <property name="changedItems" type="string" default="null" />
     </transfer>
+
     <transfer name="Cart2Item">
         <use name="Generated\Shared\Transfer\CalculationExpenseTransfer" />
         <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
@@ -38,6 +39,7 @@
         <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface" />
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" />
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
+        <use name="SprykerFeature\Shared\Cart\Transfer\ItemInterface" />
 
         <interface name="ItemInterface" />
         <property name="quantity" type="int" default="1" />

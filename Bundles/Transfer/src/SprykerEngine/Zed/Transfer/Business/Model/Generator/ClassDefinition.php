@@ -392,6 +392,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'var' => $this->getType($property, $prefix),
         ];
         $method = $this->addTypeHint($property, $method, $prefix);
+        $method = $this->addDefault($property, $method, $prefix);
         $method = $this->addParentIfNeeded($property, $method, $prefix);
 
         $this->methods[$methodName] = $method;
@@ -433,6 +434,22 @@ class ClassDefinition implements ClassDefinitionInterface
 
         if (!array_key_exists('parent', $method) && array_key_exists('collection', $property)) {
             $method['parent'] = $property['name'];
+        }
+
+        return $method;
+    }
+
+    /**
+     * @param array $property
+     * @param array $method
+     * @param string $prefix
+     *
+     * @return array
+     */
+    private function addDefault(array $property, array $method,  $prefix)
+    {
+        if (array_key_exists('default', $property)) {
+            $method['default'] = $property['default'];
         }
 
         return $method;

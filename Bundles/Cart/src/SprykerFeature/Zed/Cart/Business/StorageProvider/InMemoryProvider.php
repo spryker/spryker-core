@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\Cart\Business\StorageProvider;
 
+use SprykerFeature\Shared\Cart\Transfer\CartInterface;
+use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
 use SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 

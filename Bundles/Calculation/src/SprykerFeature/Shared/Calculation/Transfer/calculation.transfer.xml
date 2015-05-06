@@ -42,7 +42,10 @@
         <interface name="DiscountTotalsInterface" />
 
         <property name="totalAmount" type="int" default="0" />
-        <property name="discountItems" type="DiscountTotalItemCollectionInterface" collection="SalesDiscountTotalItemTransfer" />
+        <property name="discountItems" type="DiscountTotalItemCollectionInterface" collection="SalesDiscountTotalItemTransfer">
+            <add name="discountItem" type="DiscountTotalItemInterface" />
+            <remove name="discountItem" type="DiscountTotalItemInterface" />
+        </property>
     </transfer>
 
     <transfer name="CalculationExpense">
@@ -60,7 +63,7 @@
         <property name="priceToPay" type="string" default="null" />
         <property name="taxPercentage" type="string" default="null" />
         <property name="name" type="string" default="null" />
-        <property name="discounts" type="CalculationDiscountTransfer" collection="CalculationDiscountTransfer" />
+        <property name="discounts" type="DiscountableItemCollectionInterface" collection="CalculationDiscountTransfer" />
     </transfer>
 
     <transfer name="CalculationExpenseTotalItem">
@@ -81,7 +84,10 @@
 
         <interface name="TaxInterface" />
         <property name="totalAmount" type="int" default="0" />
-        <property name="taxRates" type="CalculationTaxItemTransfer" collection="CalculationTaxItemTransfer" />
+        <property name="taxRates" type="TaxItemCollectionInterface" collection="CalculationTaxItemTransfer">
+            <add name="taxRate" type="TaxItemInterface" />
+            <remove name="taxRate" type="TaxItemInterface" />
+        </property>
     </transfer>
 
     <transfer name="CalculationTaxItem">
@@ -106,9 +112,9 @@
 
         <property name="subtotal" type="int" default="0" />
         <property name="subtotalWithoutItemExpenses" type="int" default="0" />
-        <property name="expenses" type="CalculationExpenseTotalsTransfer" collection="CalculationExpenseTotalsTransfer" />
-        <property name="discount" type="CalculationDiscountTotalsTransfer" collection="CalculationDiscountTotalsTransfer" />
-        <property name="tax" type="CalculationTaxTransfer" collection="CalculationTaxTransfer" />
+        <property name="expenses" type="ExpenseTotalsInterface" collection="CalculationExpenseTotalsTransfer" />
+        <property name="discount" type="DiscountTotalsInterface" collection="CalculationDiscountTotalsTransfer" />
+        <property name="tax" type="TaxInterface" collection="CalculationTaxTransfer" />
         <property name="grandTotalWithDiscounts" type="int" default="0" />
         <property name="grandTotal" type="int" default="0" />
     </transfer>

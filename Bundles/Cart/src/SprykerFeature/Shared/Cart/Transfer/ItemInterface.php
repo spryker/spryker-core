@@ -26,5 +26,5 @@ interface ItemInterface
      *
      * @return $this
      */
-    public function setQuantity($quantity = 1);
+    public function setQuantity($quantity);
 }
