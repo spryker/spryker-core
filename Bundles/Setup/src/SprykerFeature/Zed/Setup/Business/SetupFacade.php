@@ -11,11 +11,12 @@ class SetupFacade extends AbstractFacade
 {
 
     /**
-     * @return string
+     * @param array $roles
+     * @return mixed
      */
-    public function generateCronjobs()
+    public function generateCronjobs(array $roles)
     {
-        return $this->getDependencyContainer()->getModelCronjobs()->generateCronjobs();
+        return $this->getDependencyContainer()->getModelCronjobs()->generateCronjobs($roles);
     }
 
     /**

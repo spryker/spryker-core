@@ -3,9 +3,8 @@
 namespace SprykerEngine\Yves\Application\Communication\Controller;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Yves\Kernel\Factory;
-
 use SprykerEngine\Yves\Application\Business\Application;
+use SprykerEngine\Yves\Kernel\Communication\Factory;
 use SprykerFeature\Yves\Library\Session\FlashMessageHelper;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
