@@ -10,14 +10,11 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use Pyz\Zed\Locale\Business\LocaleFacade;
 use Pyz\Zed\Product\Business\ProductFacade;
-use Pyz\Zed\ProductCategory\Business\ProductCategoryFacade;
 use Pyz\Zed\Touch\Business\TouchFacade;
 use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
-use Generated\Shared\Transfer\CategoryCategoryTransfer;
-use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
@@ -67,10 +64,7 @@ class ProductFrontendExporterPluginTest extends Test
      */
     protected $urlFacade;
 
-    /**
-     * @var ProductCategoryFacade
-     */
-    protected $productCategoryFacade;
+
 
     /**
      * @var LocaleDto
@@ -130,9 +124,6 @@ class ProductFrontendExporterPluginTest extends Test
         );
     }
 
-    /**
-     *
-     */
     protected function createAttributeType()
     {
         if (!$this->productFacade->hasAttributeType('test')) {
@@ -348,80 +339,6 @@ class ProductFrontendExporterPluginTest extends Test
         );
     }
 
-    public function testProductsWithCategoryNodes()
-    {
-        $this->eraseUrlsAndCategories();
-
-        $this->createAttributeType();
-        $idProduct = $this->createProduct('TestSku', 'TestProductName', $this->locale);
-        $this->urlFacade->createUrl('/some-url', $this->locale, 'product', $idProduct);
-        $this->touchFacade->touchActive('test', $idProduct);
-
-        $idRootCategory = $this->categoryFacade->createCategory(
-            $this->createCategoryTransfer('ARootCategory'),
-            $this->locale
-        );
-
-        $idRootCategoryNode = $this->categoryFacade->createCategoryNode(
-            $this->createCategoryNodeTransfer($idRootCategory, null, true),
-            $this->locale
-        );
-
-        $idCategory = $this->categoryFacade->createCategory(
-            $this->createCategoryTransfer('ACategory'),
-            $this->locale
-        );
-
-        $idCategoryNode = $this->categoryFacade->createCategoryNode(
-            $this->createCategoryNodeTransfer($idCategory, $idRootCategoryNode),
-            $this->locale
-        );
-
-        $this->productCategoryFacade->createProductCategoryMapping('TestSku', 'ACategory', $this->locale);
-
-        $this->doExporterTest(
-            [
-                $this->locator->productFrontendExporterConnector()->pluginProductQueryExpanderPlugin(),
-                $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbQueryExpanderPlugin()
-            ],
-            [
-                $this->locator->productFrontendExporterConnector()->pluginProductProcessorPlugin(),
-                $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbProcessorPlugin()
-            ],
-            ['de.abcde.resource.product.' . $idProduct =>
-                [
-                    'sku' => 'TestSku',
-                    'attributes' => [
-                        'image_url' => '/images/product/robot_buttons_black.png',
-                        'thumbnail_url' => '/images/product/default.png',
-                        'price' => 1395,
-                        'width' => 12,
-                        'height' => 27,
-                        'depth' => 850,
-                        'main_color' => 'gray',
-                        'other_colors' => 'red',
-                        'weight' => 1.2,
-                        'material' => 'aluminium',
-                        'gender' => 'b',
-                        'age' => 8,
-                        'description' => 'A description!',
-                        'name' => 'Ted Technical Robot',
-                        'available' => true,
-                    ],
-                    'name' => 'TestProductName',
-                    'url' => '/some-url',
-                    'category' => [
-                        $idCategoryNode => [
-                            'node_id' => (string)$idCategoryNode,
-                            'name' => 'ACategory',
-                            'url' => '/acategory'
-                        ]
-                    ]
-                ]
-            ]
-        );
-    }
-
     public function testNavigationExporter()
     {
         $this->eraseUrlsAndCategories();
@@ -562,7 +479,6 @@ class ProductFrontendExporterPluginTest extends Test
         $this->categoryFacade = $this->locator->category()->facade();
         $this->touchFacade = $this->locator->touch()->facade();
         $this->urlFacade = $this->locator->url()->facade();
-        $this->productCategoryFacade = $this->locator->productCategory()->facade();
         $this->locale = $this->localeFacade->createLocale('ABCDE');
     }
 
@@ -577,33 +493,5 @@ class ProductFrontendExporterPluginTest extends Test
         Propel::getConnection()->query('SET foreign_key_checks = 1;');
     }
 
-    /**
-     * @param $name
-     *
-     * @return Category
-     */
-    protected function createCategoryTransfer($name)
-    {
-        $categoryTransfer = new \Generated\Shared\Transfer\CategoryCategoryTransfer();
-        $categoryTransfer->setName($name);
 
-        return $categoryTransfer;
-    }
-
-    /**
-     * @param int $idCategory
-     * @param bool $isRoot
-     * @param int $idParentCategory
-     *
-     * @return CategoryNode
-     */
-    protected function createCategoryNodeTransfer($idCategory, $idParentCategory, $isRoot = false)
-    {
-        $categoryNodeTransfer = new \Generated\Shared\Transfer\CategoryCategoryNodeTransfer();
-        $categoryNodeTransfer->setIsRoot($isRoot);
-        $categoryNodeTransfer->setFkCategory($idCategory);
-        $categoryNodeTransfer->setFkParentCategoryNode($idParentCategory);
-
-        return $categoryNodeTransfer;
-    }
 }
