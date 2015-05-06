@@ -1,9 +1,9 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Communication\Command;
+namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Oms\Business\Model\Util\ReadOnlyArrayObject;
+use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
 
@@ -21,7 +21,6 @@ class AuthorizeGrandTotalPlugin extends AbstractPlugin implements CommandByOrder
      */
     public function run(array $orderItems, \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-
         //FIXME Pseudo Code
 
         $transferAuthorization = $this->getLocator()->payone()->transferAuthorization();
