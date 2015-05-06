@@ -1,12 +1,12 @@
 {% import 'macros.php.twig' as macro %}
 <?php
 
-namespace {{ namespace }};
+namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\TransferArrayObject;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
-{% for use in useExternal %}
+{% for use in uses %}
 use {{ use }};
 {% endfor %}
 
@@ -14,21 +14,34 @@ use {{ use }};
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
-{% if interfacesToImplement %}
-class {{ className }} extends AbstractTransfer implements {{ interfacesToImplement }}
+{% if interfaces %}
+class {{ className }} extends AbstractTransfer implements {{ interfaces|join(', ') }}
 {% else %}
 class {{ className }} extends AbstractTransfer
 {% endif %}
 {
-{# write properties #}
+
 {% for property in properties %}
 {{ macro.addProperty(property) }}
 {% endfor -%}
-{{- macro.addConstructor(needsConstructor) -}}
-{# write setters and getters #}
-{% for property in settersAndGetters %}
-{{ macro.addSetter(property) }}
-{{ macro.addGetter(property) }}
-{%- endfor %}
+
+{{ macro.addConstructor(constructorDefinition) }}
+{% for methodName, definition  in methods %}
+{% if methodName starts with 'set' %}
+{{ macro.addSet(definition) }}
+{% endif %}
+{% if methodName starts with 'get' %}
+{{ macro.addGet(definition) }}
+{% endif %}
+{% if methodName starts with 'add' %}
+{{ macro.addAdd(definition) }}
+{% endif %}
+{% if methodName starts with 'has' %}
+{{ macro.addHas(definition) }}
+{% endif %}
+{% if methodName starts with 'remove' %}
+{{ macro.addRemove(definition) }}
+{% endif %}
+{% endfor %}
 
 }

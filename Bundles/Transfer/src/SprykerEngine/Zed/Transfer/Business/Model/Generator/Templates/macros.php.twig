@@ -1,103 +1,80 @@
 {% macro addProperty(property) %}
     /**
-     * @var {{ property.var }} ${{ property.name }}
+     * @var {{ property.type }} ${{ property.name }}
      */
-    protected ${{ property.name }}{% if property.defaultValue is defined and property.defaultValue != '' %} = {{ property.defaultValue|quotedIfNotIntegers }}{% endif %};
+    protected ${{ property.name }}{% if property.default is defined and property.default != '' %} = {{ property.default|quotedIfNotIntegers }}{% endif %};
 {% endmacro %}
-
 
 {% macro addConstructor(properties) %}
 {% if properties %}
     public function __construct()
     {
-        {% for name, collectionType in properties -%}
-            $this->{{ name }} = new {{ collectionType }}();
-        {% endfor %}
+{% for property, collectionType in properties %}
+        $this->{{ property }} = new {{ collectionType }}();
+{% endfor %}
     }
 {% endif %}
 {% endmacro %}
 
-
-{% macro addSetter(parameter) -%}
-{% import _self as mcr %}
-{%- if parameter.isCollection -%}{{ mcr.setHeader(parameter, 'array') }}{% else %}{{ mcr.setHeader(parameter, parameter.type) }}{%- endif %}
-    {
-        $this->{{ parameter.passedParameter }}{{ writeIf('[]', 'array', parameter.type) }} = ${{ parameter.passedParameter }};
-        $this->addModifiedProperty('{{ parameter.passedParameter }}');
-
-        return $this;
-    }
-{%- if parameter.isCollection %}
-
+{%- macro addSet(method) %}
     /**
-     * @var {{ parameter.var }} ${{ parameter.passedParameter|singular }}
+     * @var {{ method.var }} ${{ method.property }}
      *
      * @return $this
      */
-    public function add{{ parameter.name|singular|camelCase }}({{ writeIfNot(parameter.type~' ', '(^string)', parameter.type)|changeArrayType }}${{ parameter.passedParameter|singular }})
+    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
-        $this->{{ parameter.passedParameter }}->append(${{ parameter.passedParameter|singular }});
-        $this->addModifiedProperty('{{ parameter.passedParameter }}');
+        $this->{{ method.property }} = ${{ method.property }};
+        $this->addModifiedProperty('{{ method.property }}');
 
         return $this;
     }
-
+{% endmacro -%}
+{%- macro addGet(method) %}
     /**
-     * @var {{ parameter.var }} ${{ parameter.passedParameter|singular }}
-     *
-     * @return $this
+     * @return {{ method.return }}
      */
-    public function remove{{ parameter.name|singular|camelCase }}({{ writeIfNot(parameter.type~' ', '(^string)', parameter.type)|changeArrayType }}${% if parameter.isCollection %}{{ parameter.passedParameter|singular }}{% else %}{{ parameter.passedParameter|singular }}{% endif %})
+    public function {{ method.name }}()
     {
-        if ($this->{{ parameter.passedParameter }}->has(${{ parameter.passedParameter|singular }})) {
-            $this->{{ parameter.passedParameter }}->remove(${{ parameter.passedParameter|singular }});
-        }
-        $this->addModifiedProperty('{{ parameter.passedParameter }}');
-
-        return $this;
+        return $this->{{ method.property }};
     }
-
-{%- endif -%}
-{%- if parameter.type == 'array' %}
-
+{% endmacro -%}
+{%- macro addAdd(method) %}
     /**
-     * @var mixed ${{ parameter.passedParameter|singular }}
-     *
-     * @return $this
-     */
-    public function add{{ parameter.name|singular|camelCase }}(${{ parameter.passedParameter|singular }})
-    {
-        $this->{{ parameter.passedParameter }}[] = ${{ parameter.passedParameter|singular }};
-        $this->addModifiedProperty('{{ parameter.passedParameter }}');
-
-        return $this;
-    }
-
-{%- endif -%}
-{%- endmacro -%}
-
-{% macro setHeader(parameter, type) %}
-{% if parameter.isCollection %}
-    {% set varAttribute = parameter.passedParameter|singular -%}
-{% else %}
-    {% set varAttribute = parameter.passedParameter -%}
-{% endif %}
-
-    /**
-     * @var {% if parameter.var %}{{ parameter.var }} {% endif %}${{ varAttribute }}
-     *
-     * @return $this
-     */
-    public function set{{ parameter.name|camelCase }}({% if parameter.type %}{{ parameter.type }} {% endif %}${{ parameter.passedParameter }})
-{% endmacro %}
-
-{% macro addGetter(parameter) %}
-
-    /**
-    * @return {{ parameter.var }}
+    * @var {{ method.var }} ${{ method.property }}
+    *
+    * @return $this
     */
-    public function get{{ parameter.name|camelCase }}()
+    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
-        return $this->{{ parameter.passedParameter }};
+        $this->{{ method.parent }}->add(${{ method.property }});
+        $this->addModifiedProperty('{{ method.parent }}');
+
+        return $this;
     }
-{% endmacro %}
+{% endmacro -%}
+{%- macro addHas(method) %}
+    /**
+     * @var {{ method.var }} ${{ method.property }}
+     *
+     * @return bool
+     */
+    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
+    {
+        return $this->{{ method.parent }}->has(${{ method.property }});
+    }
+{% endmacro -%}
+{%- macro addRemove(method) %}
+    /**
+     * @var {{ method.var }} ${{ method.property }}
+     *
+     * @return $this
+     */
+    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
+    {
+        $this->{{ method.parent }}->remove(${{ method.property }});
+        $this->addModifiedProperty('{{ method.parent }}');
+
+        return $this;
+    }
+{% endmacro -%}

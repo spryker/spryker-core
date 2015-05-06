@@ -7,12 +7,14 @@
         <property name="idAclGroup" type="int" default="null" />
         <property name="name" type="string" default="null" />
     </transfer>
+
     <transfer name="AclRole">
         <property name="idAclRole" type="int" default="null" />
         <property name="name" type="string" default="null" />
         <property name="idGroup" type="int" default="null" />
         <property name="rules" type="string" default="null" />
     </transfer>
+
     <transfer name="AclRule">
         <property name="idAclRule" type="int" default="null" />
         <property name="bundle" type="string" default="null" />

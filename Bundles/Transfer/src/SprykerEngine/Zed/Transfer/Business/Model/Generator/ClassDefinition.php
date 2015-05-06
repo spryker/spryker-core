@@ -2,8 +2,11 @@
 
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
+use Zend\Filter\Word\UnderscoreToCamelCase;
+
 class ClassDefinition implements ClassDefinitionInterface
 {
+
     const TYPE_ARRAY = 'array';
     const TYPE_BOOLEAN = 'bool';
     const TYPE_INTEGER = 'int';
@@ -12,59 +15,99 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @var string
      */
-    protected $className;
+    private $name;
 
     /**
      * @var array
      */
-    protected $interfaces = [];
+    private $uses = [];
 
     /**
      * @var array
      */
-    protected $properties = [];
+    private $interfaces = [];
 
     /**
      * @var array
      */
-    protected $uses = [];
+    private $properties = [];
 
     /**
      * @var array
      */
-    protected $needsConstructor = [];
+    private $constructorDefinition = [];
 
     /**
-     * @param string $className
+     * @var array
      */
-    public function __construct($className)
+    private $methods = [];
+
+    /**
+     * @param array $transferDefinition
+     */
+    public function __construct(array $transferDefinition)
     {
-        $this->setClassName($className);
+        $this->setName($transferDefinition['name']);
+
+        if (isset($transferDefinition['interface'])) {
+            $this->addInterfaces($transferDefinition['interface']);
+        }
+
+        if (isset($transferDefinition['use'])) {
+            $this->addUses($transferDefinition['use']);
+        }
+
+        if (isset($transferDefinition['property'])) {
+            $this->addProperties($transferDefinition['property']);
+            $this->addMethods($transferDefinition['property']);
+        }
     }
 
     /**
-     * @param array|string $implementsInterface
+     * @param string $name
+     *
      * @return $this
      */
-    public function setInterface($implementsInterface)
+    private function setName($name)
     {
-        if (is_array($implementsInterface)) {
-            foreach ($implementsInterface as $newInterface) {
-                $this->setInterface($newInterface);
+        if (strpos($name, 'Transfer') === false) {
+            $name .= 'Transfer';
+        }
+        $this->name = ucfirst($name);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param array $interfaces
+     *
+     * @return $this
+     */
+    private function addInterfaces(array $interfaces)
+    {
+        foreach ($interfaces as $interface) {
+            if (is_array($interface)) {
+                $this->addInterface($interface['name']);
+            } else {
+                $this->addInterface($interface);
             }
-        } else {
-            $this->addInterface($implementsInterface);
         }
 
         return $this;
     }
 
     /**
-     * Add interface to list if it doesn't exists already
-     *
      * @param string $interface
      */
-    protected function addInterface($interface)
+    private function addInterface($interface)
     {
         if (!in_array($interface, $this->interfaces)) {
             $this->interfaces[] = $interface;
@@ -72,26 +115,34 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array|string $uses
+     * @return array
      */
-    public function setUses($uses)
+    public function getInterfaces()
     {
-        if (is_array($uses)) {
-            foreach ($uses as $useStatement) {
-                $this->addUses($useStatement);
+        return $this->interfaces;
+    }
+
+    /**
+     * @param array $uses
+     */
+    private function addUses(array $uses)
+    {
+        foreach ($uses as $use) {
+            if (is_array($use)) {
+                $this->addUse($use['name']);
+            } else {
+                $this->addUse($use);
             }
-        } else {
-            $this->addUses($uses);
         }
     }
 
     /**
-     * @param string $useStatement
+     * @param array $use
      */
-    protected function addUses($useStatement)
+    private function addUse($use)
     {
-        if (!in_array($useStatement, $this->uses)) {
-            $this->uses[] = $useStatement;
+        if (!in_array($use, $this->uses)) {
+            $this->uses[] = $use;
         }
     }
 
@@ -104,103 +155,54 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * @param array $properties
+     */
+    private function addProperties(array $properties)
+    {
+        if (isset($properties[0])) {
+            foreach ($properties as $property) {
+                $this->addProperty($property);
+            }
+        } else {
+            $this->addProperty($properties);
+        }
+    }
+
+    /**
      * @param array $property
      */
-    public function setProperty(array $property)
+    private function addProperty(array $property)
     {
         $propertyInfo = [
             'name' => $property['name'],
-            'type_special' => $this->checkTypeSpecial($property),
-            'type' => $this->getType($property['type']),
-            'default' => (isset($property['default'])) ? $property['default'] : '',
-            'collection' => (isset($property['collection'])) ? $property['collection'] : '',
+            'type' => $this->getType($property),
+            'default' => (isset($property['default'])) ? $property['default'] : ''
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
-    }
-
-    /**
-     * @param string $type
-     * @return string
-     */
-    protected function getType($type)
-    {
-        if ($this->isTypeSpecial($type) && $type === '[]') {
-            return self::TYPE_ARRAY;
-        }
-
-        return $type;
-    }
-
-    /**
-     * @param string $type
-     * @return bool
-     */
-    protected function isTypeSpecial($type)
-    {
-        return (bool) preg_match('/\[\]/', $type);
+        $this->addPropertyConstructorIfCollection($property);
     }
 
     /**
      * @param array $property
+     * @param string|null $methodPrefix
      *
-     * @return bool
-     */
-    protected function checkTypeSpecial(array $property)
-    {
-        if ($this->isTypeSpecial($property['type']) || isset($property['collection'])) {
-            $this->setPropertiesThatNeedsConstructor($property);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Transfer objects should have Transfer word in they're name
-     * append it if not
-     *
-     * @param string $name
-     */
-    public function setClassName($name)
-    {
-        if (strpos($name, 'Transfer') === false) {
-            $name .= 'Transfer';
-        }
-        $this->className = $name;
-    }
-
-    /**
-     * @param array $property
-     */
-    private function setPropertiesThatNeedsConstructor(array $property)
-    {
-        $this->needsConstructor[$property['name']] = (is_string($property['collection'])) ? $property['collection'] : 'Collection';
-    }
-
-    /**
-     * @return array
-     */
-    public function getNeedsConstructor()
-    {
-        return $this->needsConstructor;
-    }
-
-    /**
      * @return string
      */
-    public function getClassName()
+    private function getType(array $property, $methodPrefix = null)
     {
-        return $this->className;
-    }
+        if (!is_null($methodPrefix) && array_key_exists($methodPrefix, $property) && array_key_exists('type', $property[$methodPrefix])) {
+            return $property[$methodPrefix]['type'];
+        }
+        if ($property['type'] === '[]' || $property['type'] === 'array') {
+            return 'array';
+        }
 
-    /**
-     * @return array
-     */
-    public function getInterfaces()
-    {
-        return $this->interfaces;
+        if (isset($property['collection'])) {
+            return $property['type'];
+        }
+
+        return $property['type'];
     }
 
     /**
@@ -209,5 +211,230 @@ class ClassDefinition implements ClassDefinitionInterface
     public function getProperties()
     {
         return $this->properties;
+    }
+
+    /**
+     * @param array $properties
+     */
+    private function addMethods(array $properties)
+    {
+        if (isset($properties[0])) {
+            foreach ($properties as $property) {
+                $this->addPropertyMethods($property);
+            }
+        } else {
+            $this->addPropertyMethods($properties);
+        }
+    }
+
+    /**
+     * @param array $property
+     */
+    private function addPropertyMethods(array $property)
+    {
+        if ($this->isCollection($property)) {
+            $this->buildCollectionMethods($property);
+        } else {
+            $this->buildGetterAndSetter($property);
+        }
+    }
+
+    /**
+     * @param array $property
+     */
+    private function addPropertyConstructorIfCollection(array $property)
+    {
+        if ($this->isCollection($property)) {
+            $this->constructorDefinition[$property['name']] = (is_string($property['collection'])) ? $property['collection'] : 'Collection';
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getConstructorDefinition()
+    {
+        return $this->constructorDefinition;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMethods()
+    {
+        return $this->methods;
+    }
+
+    /**
+     * @param array $property
+     */
+    private function buildCollectionMethods(array $property)
+    {
+        $this->buildGetterAndSetter($property);
+        $this->buildMethod($property, 'add');
+        $this->buildMethod($property, 'remove');
+        $this->buildMethod($property, 'has');
+    }
+
+    /**
+     * @param array $property
+     */
+    private function buildGetterAndSetter(array $property)
+    {
+        $this->buildMethod($property, 'set');
+        $this->buildGetMethod($property);
+    }
+
+    /**
+     * @param array $property
+     * @param $methodPrefix
+     *
+     * @return string
+     */
+    private function getPropertyName(array $property, $methodPrefix)
+    {
+        if (array_key_exists($methodPrefix, $property) && array_key_exists('name' , $property[$methodPrefix])) {
+            $propertyName = $property[$methodPrefix]['name'];
+        } else {
+            $propertyName = $property['name'];
+        }
+
+        $filter = new UnderscoreToCamelCase();
+
+        return lcfirst($filter->filter($propertyName));
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    private function getReturnType(array $property)
+    {
+        if ($property['type'] === 'array' || $property['type'] === '[]') {
+            return 'array';
+        }
+
+        if (isset($property['collection'])) {
+            return $property['type'];
+        }
+
+        return $property['type'];
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    private function isCollection(array $property)
+    {
+        return isset($property['collection']) && !empty($property['collection']);
+    }
+
+    /**
+     * @param array $property
+     * @param $methodPrefix
+     *
+     * @return bool|string
+     */
+    private function getTypeHint(array $property, $methodPrefix)
+    {
+        if (array_key_exists($methodPrefix, $property) && array_key_exists('type' , $property[$methodPrefix])) {
+            if ($property[$methodPrefix]['type'] === 'string') {
+                return false;
+            }
+
+            return $property[$methodPrefix]['type'];
+        }
+
+        if ($property['type'] === 'array' || $property['type'] === '[]') {
+            return 'array';
+        }
+
+        if (isset($property['collection'])) {
+            if ('string' === $property['type']) {
+                return false;
+            }
+
+            return $property['type'];
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $property
+     */
+    private function buildGetMethod(array $property)
+    {
+        $propertyName = $this->getPropertyName($property, 'get');
+        $methodName = 'get' . ucfirst($propertyName);
+        $method = [
+            'name' => $methodName,
+            'property' => $propertyName,
+            'return' => $this->getReturnType($property)
+        ];
+        $this->methods[$methodName] = $method;
+    }
+
+    /**
+     * @param $property
+     * @param $prefix
+     */
+    private function buildMethod($property, $prefix)
+    {
+        $propertyName = $this->getPropertyName($property, $prefix);
+        $methodName = $prefix . ucfirst($propertyName);
+        $method = [
+            'name' => $methodName,
+            'property' => $propertyName,
+            'var' => $this->getType($property, $prefix),
+        ];
+        $method = $this->addTypeHint($property, $method, $prefix);
+        $method = $this->addParentIfNeeded($property, $method, $prefix);
+
+        $this->methods[$methodName] = $method;
+    }
+
+    /**
+     * @param array $property
+     * @param array $method
+     * @param string $prefix
+     *
+     * @return array
+     */
+    private function addTypeHint(array $property, array $method, $prefix)
+    {
+        $typeHint = $this->getTypeHint($property, $prefix);
+        if ($typeHint) {
+            $method['typeHint'] = $typeHint;
+        }
+
+        return $method;
+    }
+
+    /**
+     * @param array $property
+     * @param array $method
+     * @param string $prefix
+     *
+     * @return array
+     */
+    private function addParentIfNeeded(array $property, array $method,  $prefix)
+    {
+        if (array_key_exists($prefix, $property)) {
+            if (array_key_exists('parent', $property[$prefix])) {
+                $method['parent'] = $property[$prefix]['parent'];
+            } else {
+                $method['parent'] = $property['name'];
+            }
+        }
+
+        if (!array_key_exists('parent', $method) && array_key_exists('collection', $property)) {
+            $method['parent'] = $property['name'];
+        }
+
+        return $method;
     }
 }

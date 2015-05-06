@@ -4,10 +4,33 @@ namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
 interface ClassDefinitionInterface
 {
-    public function setInterface($implementsInterface);
-    public function setProperty(array $property);
-    public function setClassName($name);
-    public function getClassName();
+    /**
+     * @return string
+     */
+    public function getName();
+
+    /**
+     * @return array
+     */
+    public function getUses();
+
+    /**
+     * @return array
+     */
     public function getInterfaces();
+
+    /**
+     * @return array
+     */
     public function getProperties();
+
+    /**
+     * @return array
+     */
+    public function getMethods();
+
+    /**
+     * @return array
+     */
+    public function getConstructorDefinition();
 }
