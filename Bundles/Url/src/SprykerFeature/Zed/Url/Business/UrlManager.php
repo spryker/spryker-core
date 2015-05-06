@@ -282,6 +282,7 @@ class UrlManager implements UrlManagerInterface
      */
     protected function syncUrlEntityWithTransfer(UrlTransfer $urlTransfer, SpyUrl $urlEntity)
     {
+
         $urlEntity
             ->setFkLocale($urlTransfer->getFkLocale())
             ->setResource($urlTransfer->getResourceType(), $urlTransfer->getResourceId())

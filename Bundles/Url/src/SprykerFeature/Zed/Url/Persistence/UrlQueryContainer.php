@@ -1,13 +1,12 @@
 <?php
 
-
 namespace SprykerFeature\Zed\Url\Persistence;
-
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyRedirectQuery;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrl;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface
 {
@@ -22,6 +21,14 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         $query
             ->filterByUrl($url);
 
+
+        return $query;
+    }
+
+    public function queryTranslationById($id)
+    {
+        $query = SpyUrlQuery::create();
+        $query->filterByIdUrl($id);
 
         return $query;
     }
@@ -73,5 +80,17 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         ;
 
         return $query;
+    }
+
+    /**
+     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function joinLocales()
+    {
+        return $this
+            ->queryUrls()
+            ->leftJoinSpyLocale(null, Criteria::LEFT_JOIN)
+            ->withColumn('locale_name')
+        ;
     }
 }
