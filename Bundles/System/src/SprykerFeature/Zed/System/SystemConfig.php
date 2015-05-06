@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @deprecated
+ * @todo get rid of me
+ */
+
 namespace SprykerFeature\Zed\System;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
