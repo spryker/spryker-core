@@ -5,49 +5,59 @@
 
     <transfer name="PayoneAuthorization">
         <!-- DUMMY -->
-        <use name="SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface" />
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface" />
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentUserDataInterface" />
         <interface name="AuthorizationDataInterface" />
         <property name="amount" type="int" default="null" />
         <property name="referenceId" type="string" default="" />
+        <property name="paymentMethod" type="string" default="" />
+        <property name="paymentUserData" type="PaymentUserDataInterface" />
         <!-- <property name="order" type="SalesOrderTransfer" />--> <!-- requires sales package refactoring -->
         <!-- <property name="paymentFormData" type="string" default="" /> -->
     </transfer>
 
     <transfer name="PayoneCapture">
         <!-- DUMMY -->
-        <use name="SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface" short="CaptureDataInterface" />
-        <interface name="SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface" short="CaptureDataInterface" />
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface"/>
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface"/>
+        <interface name="CaptureDataInterface" />
         <property name="amount" type="int" default="null" />
+        <property name="payment" type="PaymentInterface" />
     </transfer>
 
     <transfer name="PayoneDebit">
         <!-- DUMMY -->
-        <use name="SprykerFeature\Shared\Payone\Dependency\DebitDataInterface" short="DebitDataInterface" />
-        <interface name="SprykerFeature\Shared\Payone\Dependency\DebitDataInterface" short="DebitDataInterface" />
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\DebitDataInterface"/>
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface"/>
+        <interface name="DebitDataInterface" />
         <property name="amount" type="int" default="null" />
+        <property name="payment" type="PaymentInterface" />
     </transfer>
 
     <transfer name="PayoneRefund">
         <!-- DUMMY -->
-        <use name="SprykerFeature\Shared\Payone\Dependency\RefundDataInterface" short="RefundDataInterface" />
-        <interface name="SprykerFeature\Shared\Payone\Dependency\RefundDataInterface" short="RefundDataInterface" />
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\RefundDataInterface"/>
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface"/>
+        <interface name="RefundDataInterface" />
         <property name="amount" type="int" default="null" />
+        <property name="payment" type="PaymentInterface" />
     </transfer>
 
     <transfer name="PayonePayment">
         <!-- DUMMY -->
-        <use name="SprykerFeature\Shared\Payone\Dependency\PaymentInterface" short="PaymentInterface" />
-        <interface name="SprykerFeature\Shared\Payone\Dependency\PaymentInterface" short="PaymentInterface" />
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface"/>
+        <interface name="PaymentInterface" />
         <property name="paymentMethod" type="string" default="null" />
         <property name="transactionId" type="string" default="null" />
     </transfer>
 
     <transfer name="PayoneApiCallResponseCheck">
         <!-- DUMMY -->
-        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\ApiCallResponseCheckInterface" short="ApiCallResponseCheckInterface" />
-        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface" short="PaymentInterface" />
-        <interface name="SprykerFeature\Shared\Payone\Dependency\Transfer\ApiCallResponseCheckInterface" short="ApiCallResponseCheckInterface" />
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\ApiCallResponseCheckInterface" />
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface" />
+        <interface name="ApiCallResponseCheckInterface" />
         <property name="requestType" type="string" default="null" />
+        <property name="payment" type="PaymentInterface" />
     </transfer>
 
 </transfers>
