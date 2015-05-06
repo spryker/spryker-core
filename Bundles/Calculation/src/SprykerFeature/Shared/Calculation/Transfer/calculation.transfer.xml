@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="CalculationExpenseTotals">
+        <use name="Generated\Shared\Transfer\CalculationExpenseTotalItemTransfer" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseTotalItemCollectionInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseTotalItemInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseTotalsInterface" />
+
+        <interface name="ExpenseTotalsInterface" />
+
+        <property name="totalOrderAmount" type="int" default="0" />
+        <property name="totalItemAmount" type="int" default="0" />
+        <property name="totalAmount" type="int" default="0" />
+        <property name="expenseItems" type="ExpenseTotalItemCollectionInterface" collection="CalculationExpenseTotalItemTransfer">
+            <add name="expenseItem" type="ExpenseTotalItemInterface" />
+            <remove name="expenseItem" type="ExpenseTotalItemInterface" />
+            <has name="expenseItem" type="ExpenseTotalItemInterface" />
+        </property>
+    </transfer>
+
+    <transfer name="CalculationDiscount">
+        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
+        <interface name="DiscountItemInterface" />
+        <property name="salesruleId" type="string" default="null" />
+        <property name="displayName" type="string" default="null" />
+        <property name="amount" type="int" default="0" />
+        <property name="type" type="string" default="null" />
+        <property name="action" type="string" default="null" />
+        <property name="scope" type="string" default="null" />
+        <property name="usedCodes" type="array" default="[]" />
+    </transfer>
+
+    <transfer name="CalculationDiscountTotals">
+        <use name="Generated\Shared\Transfer\SalesDiscountTotalItemTransfer" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalItemCollectionInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalItemInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalsInterface" />
+
+        <interface name="DiscountTotalsInterface" />
+
+        <property name="totalAmount" type="int" default="0" />
+        <property name="discountItems" type="DiscountTotalItemCollectionInterface" collection="SalesDiscountTotalItemTransfer">
+            <add name="discountItem" type="DiscountTotalItemInterface" />
+            <remove name="discountItem" type="DiscountTotalItemInterface" />
+        </property>
+    </transfer>
+
+    <transfer name="CalculationExpense">
+        <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
+        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableExpenseInterface" />
+        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" />
+        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" />
+
+        <interface name="ExpenseItemInterface" />
+        <interface name="DiscountableExpenseInterface" />
+
+        <property name="type" type="string" default="null" />
+        <property name="grossPrice" type="string" default="null" />
+        <property name="priceToPay" type="string" default="null" />
+        <property name="taxPercentage" type="string" default="null" />
+        <property name="name" type="string" default="null" />
+        <property name="discounts" type="DiscountableItemCollectionInterface" collection="CalculationDiscountTransfer" />
+    </transfer>
+
+    <transfer name="CalculationExpenseTotalItem">
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseTotalItemInterface" />
+        <interface name="ExpenseTotalItemInterface" />
+
+        <property name="name" type="string" default="null" />
+        <property name="type" type="string" default="null" />
+        <property name="grossPrice" type="int" default="0" />
+        <property name="priceToPay" type="int" default="0" />
+    </transfer>
+
+    <transfer name="CalculationTax">
+        <use name="Generated\Shared\Transfer\CalculationTaxItemTransfer" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxItemCollectionInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxItemInterface" />
+
+        <interface name="TaxInterface" />
+        <property name="totalAmount" type="int" default="0" />
+        <property name="taxRates" type="TaxItemCollectionInterface" collection="CalculationTaxItemTransfer">
+            <add name="taxRate" type="TaxItemInterface" />
+            <remove name="taxRate" type="TaxItemInterface" />
+        </property>
+    </transfer>
+
+    <transfer name="CalculationTaxItem">
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxItemInterface" />
+
+        <interface name="TaxItemInterface" />
+
+        <property name="percentage" type="string" default="null" />
+        <property name="amount" type="int" default="0" />
+    </transfer>
+
+    <transfer name="CalculationTotals">
+        <use name="Generated\Shared\Transfer\CalculationExpenseTotalsTransfer" />
+        <use name="Generated\Shared\Transfer\CalculationDiscountTotalsTransfer" />
+        <use name="Generated\Shared\Transfer\CalculationTaxTransfer" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalsInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseTotalsInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface" />
+
+        <interface name="TotalsInterface" />
+
+        <property name="subtotal" type="int" default="0" />
+        <property name="subtotalWithoutItemExpenses" type="int" default="0" />
+        <property name="expenses" type="ExpenseTotalsInterface" collection="CalculationExpenseTotalsTransfer" />
+        <property name="discount" type="DiscountTotalsInterface" collection="CalculationDiscountTotalsTransfer" />
+        <property name="tax" type="TaxInterface" collection="CalculationTaxTransfer" />
+        <property name="grandTotalWithDiscounts" type="int" default="0" />
+        <property name="grandTotal" type="int" default="0" />
+    </transfer>
+
+</transfers>
+

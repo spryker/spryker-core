@@ -1,14 +1,12 @@
 {
-  "name": "spryker/generator",
+  "name": "spryker/transfer",
   "autoload": {
     "psr-0": {
-      "SprykerFeature": "src/",
       "SprykerEngine": "src/",
       "Acceptance": "tests/",
       "Function": "tests/",
       "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Unit": "tests/"
     }
   },
   "require": {

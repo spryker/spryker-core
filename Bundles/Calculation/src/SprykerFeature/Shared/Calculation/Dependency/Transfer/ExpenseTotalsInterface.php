@@ -41,14 +41,14 @@ interface ExpenseTotalsInterface
     public function getTotalAmount();
 
     /**
-     * @param ExpenseTotalItemCollection $expenseItems
+     * @param ExpenseTotalItemCollectionInterface $expenseItems
      *
      * @return $this
      */
-    public function setExpenseItems(ExpenseTotalItemCollection $expenseItems);
+    public function setExpenseItems(ExpenseTotalItemCollectionInterface $expenseItems);
 
     /**
-     * @return ExpenseTotalItemInterface[]|ExpenseTotalItemCollection
+     * @return ExpenseTotalItemInterface[]|ExpenseTotalItemCollectionInterface
      */
     public function getExpenseItems();
 

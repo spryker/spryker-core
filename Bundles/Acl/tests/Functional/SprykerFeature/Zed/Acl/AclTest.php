@@ -4,13 +4,12 @@ namespace Functional\SprykerFeature\Zed\User;
 
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
-use Generated\Shared\Transfer\UserUserTransfer;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
 use SprykerFeature\Zed\User\Business\UserFacade;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 
 /**
  * @group AclTest
@@ -316,13 +315,13 @@ class AclTest extends Test
 
         foreach ($ruleData as $current) {
             $ruleDto = $this->facade
-                            ->addRule(
-                                $current['bundle'],
-                                $current['controller'],
-                                $current['action'],
-                                $roleDto->getIdAclRole(),
-                                $current['type']
-                            );
+                ->addRule(
+                    $current['bundle'],
+                    $current['controller'],
+                    $current['action'],
+                    $roleDto->getIdAclRole(),
+                    $current['type']
+                );
 
             $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $ruleDto);
             $this->assertNotNull($ruleDto->getIdAclRule());
@@ -371,13 +370,13 @@ class AclTest extends Test
 
         foreach ($ruleData as $current) {
             $transferRule = $this->facade
-                            ->addRule(
-                                $current['bundle'],
-                                $current['controller'],
-                                $current['action'],
-                                $roleDto->getIdAclRole(),
-                                $current['type']
-                            );
+                ->addRule(
+                    $current['bundle'],
+                    $current['controller'],
+                    $current['action'],
+                    $roleDto->getIdAclRole(),
+                    $current['type']
+                );
 
             $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $transferRule);
             $this->assertNotNull($transferRule->getIdAclRule());
@@ -442,13 +441,13 @@ class AclTest extends Test
 
         foreach ($ruleData as $current) {
             $ruleDto = $this->facade
-                            ->addRule(
-                                $current['bundle'],
-                                $current['controller'],
-                                $current['action'],
-                                $roleDto->getIdAclRole(),
-                                $current['type']
-                            );
+                ->addRule(
+                    $current['bundle'],
+                    $current['controller'],
+                    $current['action'],
+                    $roleDto->getIdAclRole(),
+                    $current['type']
+                );
 
             $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $ruleDto);
             $this->assertNotNull($ruleDto->getIdAclRule());
@@ -513,13 +512,13 @@ class AclTest extends Test
 
         foreach ($ruleData as $current) {
             $ruleDto = $this->facade
-                            ->addRule(
-                                $current['bundle'],
-                                $current['controller'],
-                                $current['action'],
-                                $roleDto->getIdAclRole(),
-                                $current['type']
-                            );
+                ->addRule(
+                    $current['bundle'],
+                    $current['controller'],
+                    $current['action'],
+                    $roleDto->getIdAclRole(),
+                    $current['type']
+                );
 
             $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $ruleDto);
             $this->assertNotNull($ruleDto->getIdAclRule());

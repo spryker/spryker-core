@@ -8,7 +8,7 @@ use SprykerFeature\Shared\Library\Filter\FilterChain;
 use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 
 
-abstract class AbstractTransfer implements TransferInterface
+abstract class AbstractTransfer implements TransferInterface, \IteratorAggregate
 {
 
     /**
@@ -35,6 +35,14 @@ abstract class AbstractTransfer implements TransferInterface
      * @var \SplObjectStorage
      */
     private $objectStorage;
+
+    /**
+     * @return \SplObjectStorage
+     */
+    public function getIterator()
+    {
+        return $this->getStorage();
+    }
 
     /**
      * @param bool $includeNullValues
@@ -361,6 +369,19 @@ abstract class AbstractTransfer implements TransferInterface
         }
 
         return $data;
+    }
+
+    /**
+     * @param $object
+     *
+     * @return $this
+     */
+    public function add($object)
+    {
+        $storage = $this->getStorage();
+        $storage->attach($object);
+
+        return $this;
     }
 
 }

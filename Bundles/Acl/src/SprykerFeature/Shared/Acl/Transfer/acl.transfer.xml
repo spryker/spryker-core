@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="AclGroup">
+        <property name="idAclGroup" type="int" default="null" />
+        <property name="name" type="string" default="null" />
+    </transfer>
+
+    <transfer name="AclRole">
+        <property name="idAclRole" type="int" default="null" />
+        <property name="name" type="string" default="null" />
+        <property name="idGroup" type="int" default="null" />
+        <property name="rules" type="string" default="null" />
+    </transfer>
+
+    <transfer name="AclRule">
+        <property name="idAclRule" type="int" default="null" />
+        <property name="bundle" type="string" default="null" />
+        <property name="controller" type="string" default="null" />
+        <property name="action" type="string" default="null" />
+        <property name="type" type="string" default="null" />
+        <property name="fkAclRole" type="int" default="null" />
+    </transfer>
+
+</transfers>
+

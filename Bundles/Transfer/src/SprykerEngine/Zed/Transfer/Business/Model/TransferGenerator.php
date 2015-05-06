@@ -13,8 +13,6 @@ use Zend\Config\Factory;
 class TransferGenerator
 {
 
-    const TRANSFER_DEFINITION_FILE_NAME = 'transferDefinition.xml';
-
     /**
      * @var string
      */
@@ -45,12 +43,9 @@ class TransferGenerator
         foreach ($definitions as $classDefinition) {
             $generator = $this->getClassGenerator();
             $phpCode = $generator->generateClass($classDefinition);
-            if (!is_dir($generator->getTargetFolder())) {
-                mkdir($generator->getTargetFolder(), 0755, true);
-            }
 
-            file_put_contents($generator->getTargetFolder() . $classDefinition->getClassName() . '.php', $phpCode);
-            $this->messenger->info(sprintf('<info>%s.php</info> was generated', $classDefinition->getClassName()));
+            file_put_contents($this->targetDirectory . $classDefinition->getName() . '.php', $phpCode);
+            $this->messenger->info(sprintf('<info>%s.php</info> was generated', $classDefinition->getName()));
         }
     }
 
@@ -125,19 +120,17 @@ class TransferGenerator
             $directories[] = APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
         }
 
-        $finder->in($directories)->name(self::TRANSFER_DEFINITION_FILE_NAME);
+        $finder->in($directories)->name('*.transfer.xml');
 
         return $finder;
     }
 
     /**
-     * @return \SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassGenerator
+     * @return ClassGenerator
      */
     private function getClassGenerator()
     {
-        $generator = new ClassGenerator();
-        $generator->setNamespace('Generated\Shared\Transfer');
-        $generator->setTargetFolder($this->targetDirectory);
+        $generator = new ClassGenerator($this->targetDirectory);
 
         return $generator;
     }
