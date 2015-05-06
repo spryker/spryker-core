@@ -1,12 +1,11 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
+namespace Unit\SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
 
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 
 /**
- * Class RequestContainerTest
  * @group RequestContainer
  */
 class RequestContainerTest extends \PHPUnit_Framework_TestCase
