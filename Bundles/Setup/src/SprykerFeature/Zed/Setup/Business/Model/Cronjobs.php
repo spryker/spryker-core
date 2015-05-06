@@ -3,6 +3,8 @@
 namespace SprykerFeature\Zed\Setup\Business\Model;
 
 
+use SprykerFeature\Zed\Setup\SetupConfig;
+
 class Cronjobs
 {
     const ROLE_ADMIN = 'admin';
@@ -23,19 +25,33 @@ class Cronjobs
     ];
 
     /**
-     * @return bool
-     * @throws \ErrorException
+     * @var SetupConfig
      */
-    public function generateCronjobs()
+    protected $config;
+
+    function __construct($config) {
+        $this->config = $config;
+    }
+
+    /**
+     * @param $roles
+     * @return string
+     */
+    public function generateCronjobs($roles)
     {
-        $this->checkRoles(); // maybe provide the roles as parameter from command
+        if (empty($roles)) {
+           $roles = array(self::DEFAULT_ROLE);
+        }
 
-        $jobsByName = $this->getCronjobs();
+        $this->checkRoles($roles);
 
-        $this->updateOrDelete($jobsByName);
-        $this->createJobDefinitions($jobsByName);
+        $jobsByName = $this->getCronjobs($roles);
 
-        return 'Some generated foo.. result-text';
+        $console_output = '';
+        $console_output .= $this->updateOrDelete($jobsByName);
+        $console_output .= $this->createJobDefinitions($jobsByName);
+
+        return $console_output;
     }
 
     /**
@@ -58,19 +74,16 @@ class Cronjobs
         return "Jenkins enabled (response: $code)\n";
     }
 
-
-    protected function checkRoles()
+    /**
+     * @param $roles
+     * @throws \ErrorException
+     */
+    protected function checkRoles($roles)
     {
-        $roles = $this->getRoles();
-
-        if (false === $roles) {
-            $roles = array(self::DEFAULT_ROLE);
-        }
-
         foreach ($roles as $role) {
             if (!in_array($role, $this->allowedRoles)) {
                 throw new \ErrorException(
-                    $role . ' is not in the list of allowed roles! Cannot continue configuration of jenkins!'
+                    $role . ' is not in the list of allowed job roles! Cannot continue configuration of jenkins!'
                 );
             }
         }
@@ -78,9 +91,10 @@ class Cronjobs
 
 
     /**
+     * @param $roles
      * @return array
      */
-    protected function getCronjobs()
+    protected function getCronjobs($roles)
     {
         $jobs = array();
 
@@ -109,13 +123,17 @@ class Cronjobs
             }
         }
 
-        return $this->indexJobsByName($jobs);
+        return $this->indexJobsByName($jobs, $roles);
     }
 
-    protected function indexJobsByName(array $jobs)
+    /**
+     * @param array $jobs
+     * @param array $roles
+     * @return array
+     */
+    protected function indexJobsByName(array $jobs, array $roles)
     {
         $job_by_name = array();
-        $roles = $this->getRoles();
 
         foreach ($jobs as $v) {
             if (array_key_exists('role', $v) && in_array($v['role'], $this->allowedRoles)) {
@@ -142,19 +160,33 @@ class Cronjobs
         return $job_by_name;
     }
 
-    protected function updateOrDelete(array$jobsByName)
+    /**
+     * @return array
+     */
+    protected function getExistingJobs() {
+        return glob($this->getJobsDir() . "/*/config.xml");
+    }
+
+    /**
+     * Loop over existing jobs: either update or delete job
+     *
+     * @param array $jobsByName
+     * @return string
+     */
+    protected function updateOrDelete(array $jobsByName)
     {
-        // Loop thru existing jobs - either update them or delete them.
-        $existing_jobs = glob($this->getJobsDir() . "*/config.xml");
+        $console_output = '';
+        $existing_jobs = $this->getExistingJobs();
+
         if (!empty($existing_jobs)) {
             foreach ($existing_jobs as $v) {
                 $name=basename(dirname($v));
 
-                if (false === array_search($name, array_keys($jobsByName))) {
+                if (false === in_array($name, array_keys($jobsByName))) {
                     // Job does not exist anymore - we have to delete it.
                     $url = 'job/' . $name . '/doDelete';
                     $code = $this->callJenkins($url);
-                    echo "Delete job: $url returned code $code\n";
+                    $console_output .= "DELETE  jenkins job: $url (http_response: $code)" . PHP_EOL;
                 } else {
                     // Job exists - let's update config.xml and remove it from array of jobs
                     $xml = $this->prepareJobXml($jobsByName[$name]);
@@ -163,59 +195,43 @@ class Cronjobs
                     unset($jobsByName[$name]);
 
                     if ($code != '200') {
-                        echo "Update: $url returned code $code\n";
+                        $console_output .= "UPDATE jenkins job: $url (http_response: $code)" . PHP_EOL;
                     }
                 }
             }
         }
+
+        return $console_output;
     }
 
+    /**
+     * Create Jenkins jobs for provided list of jobs
+     *
+     * @todo Skip existing jobs
+     * @param array $jobsByName
+     * @return string
+     */
     protected function createJobDefinitions(array $jobsByName)
     {
-        // Create new job definitions
+        $console_output = '';
+        $existing_jobs = $this->getExistingJobs();
+
         foreach ($jobsByName as $k => $v) {
+            // skip if job is in existingjobs
             $xml = $this->prepareJobXml($v);
             $url = 'createItem?name=' . $v['name'];
             $code = $this->callJenkins($url, $xml);
-            echo "Jenkins API $url returned response: $code\n";
+            if ($code == '400') $code = '400: already exists';
+            $console_output .= "CREATE  jenkins job: $url (http_response: $code)" . PHP_EOL;
         }
+        return $console_output;
     }
-
-
-
-    /**
-     * TODO: update and use the console input
-     * move this to command, and pass through the "real" option
-     *
-     * @return bool|array
-     */
-    protected function getRoles()
-    {
-        return [self::ROLE_ADMIN]; // TODO: fixme!
-
-        if (php_sapi_name() != 'cli') {
-            return false;
-        }
-
-        $shortopts = 'r::';
-        $longopts = array(
-            'role::'
-        );
-
-        $options = getopt($shortopts, $longopts);
-        if (array_key_exists('role', $options)) {
-            return explode(',', $options['role']);
-        } else {
-            return false;
-        }
-    }
-
-
 
 
     /**
      * @param string $url
      * @param string $body
+     * @throws \ErrorException
      * @return mixed
      */
     private function callJenkins($url, $body = '')
@@ -229,16 +245,28 @@ class Cronjobs
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+
+
 //        \SprykerFeature_Shared_Library_Log::logRaw('CURL call: ' . $postUrl . "body:\n[" . $body . "]\n\n", self::LOGFILE);
-        $head = curl_exec($ch);
+        $curl_response = curl_exec($ch);
 //        \SprykerFeature_Shared_Library_Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if (false === $curl_response) {
+            throw new \ErrorException("cURL error: " . curl_error($ch) . " while calling Jenkins URL " . $postUrl);
+        } else {
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $return_value = $httpCode;
+        }
+
         curl_close($ch);
-        return $httpCode;
+        return $return_value;
     }
 
 
     /**
+     * Render Job description (as XML) for Jenkins API call
+     *
+     * @todo Move XML snippet to twig template
      * @param $job
      * @return string
      */
@@ -283,7 +311,10 @@ class Cronjobs
     }
 
 
-    /**
+   /**
+    * Render partial for job description with publisher settings
+    * it returns not empty XML entity if job has email notifications set.
+    *
     * @param $job
     * @return string
     */
@@ -304,6 +335,16 @@ class Cronjobs
         }
     }
 
+    /**
+     * Gets a string with job schedule (how often run job). The schedule string is compatible
+     * with cronjob schedule defininion (eg. 0 * * * * meaning: run once each hour at 00 minute).
+     * If environment is development, return empty string - we execute cronjobs on development environment
+     * only manually.
+     *
+     * @param array $job
+     * @return string
+     */
+
     protected function getSchedule(array $job)
     {
         $schedule = ('' === $job['schedule']) ? "":" <hudson.triggers.TimerTrigger><spec>".$job['schedule']."</spec></hudson.triggers.TimerTrigger>";
@@ -321,6 +362,8 @@ class Cronjobs
     }
 
     /**
+     * Get number of days to keep job output history. Each run is a directory, so we definitely need to keep it clean.
+     *
      * @param array $job
      * @return int
      */
@@ -340,48 +383,52 @@ class Cronjobs
      */
     protected function getCommand($command, $store)
     {
-        if (\SprykerFeature_Shared_Library_Environment::getInstance()->isNotDevelopment()) {
+        $environment = \SprykerFeature_Shared_Library_Environment::getInstance();
+        $environment_name = $environment->getEnvironment();
+        if ($environment->isNotDevelopment()) {
             return "<command>[ -f ../../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../../current/deploy/vars
 [ -f ../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../current/deploy/vars
 [ -f ../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../current/deploy/vars
-export APPLICATION_ENV=\$environment
+export APPLICATION_ENV=$environment_name
 export APPLICATION_STORE=$store
-cd \$destination_release_dir/config/Zed/cronjobs
-. ./cron.conf
+cd \$destination_release_dir
+. ./config/Zed/cronjobs/cron.conf
 $command</command>";
         } else {
             return "<command>
-export APPLICATION_ENV=\$environment
+export APPLICATION_ENV=$environment_name
 export APPLICATION_STORE=$store
-cd /data/shop/development/current/config/Zed/cronjobs
-. ./cron.conf
+cd /data/shop/development/current
+. ./config/Zed/cronjobs/cron.conf
 $command</command>";
         }
     }
 
 
-
-
-    // TODO: MOVE THE FOLLOWING TOSOME CONFIG!!
-
+    /**
+     * @return string
+     */
     protected function getJobConfigPath()
     {
-        return APPLICATION_ROOT_DIR . '/config/Zed/cronjobs/jobs.php';
+        return $this->config->getPathForJobsPHP();
     }
 
     /**
-     * TODO: move to config!!
-     * @param $url
+     * @param $location
      * @return string
      */
-    protected function getJenkinsUrl($url)
+    protected function getJenkinsUrl($location)
     {
-        return 'hardcoded_jenkins_url/' . $url;
+        return $this->config->getJenkinsUrl() . $location;
+
     }
 
+    /**
+     * @return string
+     */
     protected function getJobsDir()
     {
-        return APPLICATION_ROOT_DIR . '/jenkins/jobs/';
+        return $this->config->getJenkinsJobsDirectory();
     }
 
 }

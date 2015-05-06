@@ -19,12 +19,19 @@ class JenkinsGenerateConsole extends Console
 {
 
     const COMMAND_NAME = 'setup:jenkins:generate';
-    const DESCRIPTION = 'Generate jenkins';
+    const DESCRIPTION = 'Generate jenkins jobs configuration';
 
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
+        $this->addOption(
+            'role',
+            'r',
+            InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+            'Job roles to include on this host',
+            []
+        );
 
         parent::configure();
     }
@@ -36,7 +43,9 @@ class JenkinsGenerateConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $result = $this->locator->setup()->facade()->generateCronjobs();
+        $result = $this->locator->setup()->facade()->generateCronjobs(
+            $input->getOption('role')
+        );
 
         $output->writeln($result);
     }
