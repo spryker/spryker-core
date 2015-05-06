@@ -341,7 +341,7 @@ class ClassDefinition implements ClassDefinitionInterface
     private function getTypeHint(array $property, $methodPrefix)
     {
         if (array_key_exists($methodPrefix, $property) && array_key_exists('type' , $property[$methodPrefix])) {
-            if ($property[$methodPrefix]['type'] === 'string') {
+            if (preg_match('/(string|int|bool|boolean)/', $property[$methodPrefix]['type'])) {
                 return false;
             }
 
@@ -352,15 +352,11 @@ class ClassDefinition implements ClassDefinitionInterface
             return 'array';
         }
 
-        if (isset($property['collection'])) {
-            if ('string' === $property['type']) {
-                return false;
-            }
-
-            return $property['type'];
+        if (preg_match('/(string|int|bool|boolean)/', $property['type'])) {
+            return false;
         }
 
-        return false;
+        return $property['type'];
     }
 
     /**

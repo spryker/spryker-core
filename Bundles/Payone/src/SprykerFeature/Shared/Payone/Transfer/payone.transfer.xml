@@ -15,9 +15,11 @@
 
     <transfer name="PayoneCapture">
         <!-- DUMMY -->
-        <use name="SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface" short="CaptureDataInterface" />
-        <interface name="SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface" short="CaptureDataInterface" />
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface"/>
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface"/>
+        <interface name="CaptureDataInterface" />
         <property name="amount" type="int" default="null" />
+        <property name="payment" type="PaymentInterface" />
     </transfer>
 
     <transfer name="PayoneDebit">
