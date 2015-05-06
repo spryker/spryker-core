@@ -14,6 +14,9 @@ class TransactionController extends AbstractController implements PayoneApiConst
      */
     public function statusUpdateAction(Request $request)
     {
+        /********************************************************************************************************
+         * @todo: Payone allways sends status updates in ISO-8859-1 !!!! Do we have to transform???
+         ********************************************************************************************************/
         $response = $this->getLocator()->payone()->facade()
             ->processTransactionStatusUpdate($request->request->all());
 
@@ -21,6 +24,9 @@ class TransactionController extends AbstractController implements PayoneApiConst
             echo $response;
         };
 
+        /*****************************************
+         * @todo: is streamed response correct here?
+         *****************************************/
         return $this->streamedResponse($callback);
     }
 
