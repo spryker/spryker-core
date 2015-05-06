@@ -33,6 +33,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
  * @group Zed
  * @group ProductCategoryFrontendExporterConnector
  * @group ProductCategoryFrontendExporterPluginTest
+ * @group FrontendExporterPlugin
  */
 class ProductCategoryFrontendExporterPluginTest extends Test
 {

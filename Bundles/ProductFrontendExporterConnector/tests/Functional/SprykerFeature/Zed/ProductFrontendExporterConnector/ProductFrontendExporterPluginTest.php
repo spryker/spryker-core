@@ -23,7 +23,8 @@ use SprykerFeature\Zed\Url\Business\UrlFacade;
  * @group SprykerFeature
  * @group Zed
  * @group ProductFrontendExporterConnector
- * @group ProductFrontendExporterPlugin
+ * @group ProductFrontendExporterPluginTest
+ * @group FrontendExporterPlugin
  */
 class ProductFrontendExporterPluginTest extends Test
 {
