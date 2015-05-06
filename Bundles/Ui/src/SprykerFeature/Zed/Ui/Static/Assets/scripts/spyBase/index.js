@@ -10,9 +10,9 @@ require('Ui').ng
 		'$httpProvider',
 
 		function($httpProvider) {
+			$httpProvider.interceptors.push('errorInterceptor');
 			$httpProvider.interceptors.push('progressInterceptor');
 			$httpProvider.interceptors.push('redirectInterceptor');
-			$httpProvider.interceptors.push('errorInterceptor');
 		}
 	]);
 
@@ -26,6 +26,7 @@ require('./config/errorInterceptor');
 require('./service/BooleanService');
 require('./service/JSONModelDenormalizeService');
 require('./service/ArrayModelTransformService');
+require('./service/ErrorStoreService');
 
 require('./controller/ComController');
 require('./controller/TemplateActionController');

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Setup\Business;
+namespace SprykerFeature\Zed\Setup;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 

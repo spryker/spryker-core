@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Process;
 
-use SprykerFeature\Zed\Oms\Business\ProcessInterface;
 use Exception;
 
 class State implements StateInterface

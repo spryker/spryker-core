@@ -8,6 +8,9 @@ use SprykerFeature\Shared\Setup\SetupConfig;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
+/**
+ * @deprecated
+ */
 class JenkinsController extends AbstractController{
 
     const LOGFILE = 'jenkins.log';
