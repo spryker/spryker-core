@@ -4,8 +4,8 @@ namespace SprykerFeature\Zed\Payone\Business\TransactionStatus;
 
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Shared\Payone\Dependency\StandardParameterInterface;
-use SprykerFeature\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\StandardParameterInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\TransactionStatusUpdateInterface;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use SprykerFeature\Zed\Payone\Business\Key\KeyHashInterface;

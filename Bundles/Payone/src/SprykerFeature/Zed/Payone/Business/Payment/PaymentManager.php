@@ -5,13 +5,13 @@ namespace SprykerFeature\Zed\Payone\Business\Payment;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\DebitDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\DebitDataInterface;
 use SprykerFeature\Zed\Payone\Business\Key\KeyHashInterface;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
-use SprykerFeature\Shared\Payone\Dependency\RefundDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\StandardParameterInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\RefundDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\StandardParameterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;

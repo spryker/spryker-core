@@ -1,7 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin;
+namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Command;
 
+use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
@@ -21,9 +22,8 @@ class AuthorizeGrandTotalPlugin extends AbstractPlugin implements CommandByOrder
      */
     public function run(array $orderItems, \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        //FIXME Pseudo Code
-
-        $transferAuthorization = $this->getLocator()->payone()->transferAuthorization();
+        //FIXME Pseudo Code Example
+        $transferAuthorization = new PayoneAuthorizationTransfer();
         $transferAuthorization->setAmount($orderEntity->getGrandTotal());
         $transferAuthorization->setReferenceId($orderEntity->getIncrementId());
         $transferAuthorization->setPaymentFormData($data['???_SOME_KEY_TO_GET_FORM_DATA_???']);

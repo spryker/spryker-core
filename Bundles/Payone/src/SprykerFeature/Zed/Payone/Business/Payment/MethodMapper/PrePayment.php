@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
-use SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;

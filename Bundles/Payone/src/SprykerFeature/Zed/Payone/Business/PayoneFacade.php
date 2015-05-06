@@ -3,10 +3,10 @@
 namespace SprykerFeature\Zed\Payone\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\Payone\Dependency\AuthorizationDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\CaptureDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\DebitDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\RefundDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\DebitDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\RefundDataInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;

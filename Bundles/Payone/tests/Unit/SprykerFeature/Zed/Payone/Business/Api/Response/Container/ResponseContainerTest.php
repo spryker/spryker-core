@@ -142,8 +142,9 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
         $params = array_merge($this->getStandardResponseParams(), $this->getDebitResponseParams());
 
         $container = new DebitResponseContainer($params);
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
 
+        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
+        $this->assertStandardParams($container);
         $this->assertEquals('settleaccount', $container->getSettleaccount());
         $this->assertEquals('txid', $container->getTxid());
     }
@@ -164,8 +165,9 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
         $params = array_merge($this->getStandardResponseParams(), $this->getRefundResponseParams());
 
         $container = new RefundResponseContainer($params);
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
 
+        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
+        $this->assertStandardParams($container);
         $this->assertEquals('protectresultavs', $container->getProtectResultAvs());
         $this->assertEquals('txid', $container->getTxid());
     }

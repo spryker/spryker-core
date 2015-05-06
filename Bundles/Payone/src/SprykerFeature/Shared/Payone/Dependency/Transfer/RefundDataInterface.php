@@ -1,9 +1,9 @@
 <?php
 
-namespace SprykerFeature\Shared\Payone\Dependency;
+namespace SprykerFeature\Shared\Payone\Dependency\Transfer;
 
 
-interface CaptureDataInterface
+interface RefundDataInterface
 {
 
     /**
