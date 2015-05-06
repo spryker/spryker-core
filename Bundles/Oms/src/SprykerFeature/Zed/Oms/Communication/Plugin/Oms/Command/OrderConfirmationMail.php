@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use SprykerFeature\Zed\Oms\Business\Model\Util\ReadOnlyArrayObject;
+use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature_Shared_Library_Log;
