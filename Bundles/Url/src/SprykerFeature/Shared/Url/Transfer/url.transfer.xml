@@ -4,13 +4,11 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="UrlRedirect">
-        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
         <property name="idRedirect" type="int" default="null" />
         <property name="toUrl" type="string" default="null" />
         <property name="status" type="int" default="301" />
     </transfer>
     <transfer name="UrlUrl">
-        <use name="SprykerFeature\Shared\Library\TransferObject\AbstractTransfer" short="AbstractTransfer" />
         <property name="idUrl" type="int" default="null" />
         <property name="url" type="string" default="null" />
         <property name="fkLocale" type="int" default="null" />
