@@ -46,6 +46,7 @@ class ProductQueryExpander implements ProductQueryExpanderInterface
         ;
 
         $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_SKU, 'abstract_sku');
+        $expandableQuery->groupBy('abstract_sku');
 
         return $expandableQuery;
     }

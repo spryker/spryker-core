@@ -339,9 +339,9 @@ class ProductManager implements ProductManagerInterface
      */
     public function createProductUrl($sku, $url, LocaleDto $locale)
     {
-        $idConcreteProduct = $this->getConcreteProductIdBySku($sku);
+        $idAbstractProduct = $this->getAbstractProductIdBySku($sku);
 
-        return $this->createProductUrlByIdProduct($idConcreteProduct, $url, $locale);
+        return $this->createProductUrlByIdProduct($idAbstractProduct, $url, $locale);
     }
 
     /**

@@ -60,7 +60,7 @@ class ProductProcessor implements ProductProcessorInterface
     {
         //TODO get this from the settings, instead of hardcoding it
         $allowedFields = [
-            'sku' => true,
+            'abstract_sku' => true,
             'abstract_attributes' => true,
             'name' => true,
             'url' => true,
