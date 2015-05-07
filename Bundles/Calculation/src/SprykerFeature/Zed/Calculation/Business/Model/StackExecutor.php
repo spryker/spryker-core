@@ -3,29 +3,13 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model;
 
 use Generated\Shared\Transfer\CalculationTotalsTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class StackExecutor
 {
-
-    /**
-     * @var LocatorLocatorInterface|AutoCompletion
-     */
-    protected $locator;
-
-    /**
-     * @param LocatorLocatorInterface $locator
-     */
-    public function __construct(LocatorLocatorInterface $locator)
-    {
-        $this->locator = $locator;
-    }
 
     /**
      * @param array $calculatorStack
@@ -53,13 +37,13 @@ class StackExecutor
     /**
      * @param array $calculatorStack
      * @param CalculableContainerInterface $calculableContainer
-     * @param CalculableItemCollectionInterface $calculableItems
+     * @param \ArrayObject $calculableItems
      * @return TotalsInterface
      */
     public function recalculateTotals(
         array $calculatorStack,
         CalculableContainerInterface $calculableContainer,
-        CalculableItemCollectionInterface $calculableItems = null
+        \ArrayObject $calculableItems = null
     ) {
         $totalsTransfer = new CalculationTotalsTransfer();
         $calculableItems = $calculableItems ? $calculableItems : $calculableContainer->getItems();
@@ -70,13 +54,5 @@ class StackExecutor
         }
 
         return $totalsTransfer;
-    }
-
-    /**
-     * @return AutoCompletion|LocatorLocatorInterface
-     */
-    protected function getLocator()
-    {
-        return $this->locator;
     }
 }

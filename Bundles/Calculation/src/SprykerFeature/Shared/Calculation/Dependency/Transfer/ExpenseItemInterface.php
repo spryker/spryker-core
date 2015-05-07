@@ -13,4 +13,9 @@ interface ExpenseItemInterface extends TaxableItemInterface, PriceItemInterface
      * @return string
      */
     public function getName();
+
+    /**
+     * @return \ArrayObject
+     */
+    public function getDiscounts();
 }

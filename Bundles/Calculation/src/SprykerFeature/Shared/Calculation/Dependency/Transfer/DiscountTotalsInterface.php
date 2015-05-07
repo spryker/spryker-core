@@ -19,14 +19,14 @@ interface DiscountTotalsInterface extends TransferInterface
     public function getTotalAmount();
 
     /**
-     * @param DiscountTotalItemCollectionInterface $discountItems
+     * @param \ArrayObject $discountItems
      *
      * @return $this
      */
-    public function setDiscountItems(DiscountTotalItemCollectionInterface $discountItems);
+    public function setDiscountItems(\ArrayObject $discountItems);
 
     /**
-     * @return DiscountTotalItemInterface[]|DiscountTotalItemCollectionInterface
+     * @return DiscountTotalItemInterface[]|\ArrayObject
      */
     public function getDiscountItems();
 

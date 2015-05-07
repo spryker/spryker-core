@@ -2,14 +2,11 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
-class GrandTotalTotalsCalculator extends AbstractCalculator implements
-    TotalsCalculatorPluginInterface
+class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
 {
     /**
      * @var SubtotalTotalsCalculatorInterface
@@ -22,17 +19,13 @@ class GrandTotalTotalsCalculator extends AbstractCalculator implements
     protected $expenseTotalsCalculator;
 
     /**
-     * @param LocatorLocatorInterface $locator
      * @param SubtotalTotalsCalculatorInterface $subtotalTotalsCalculatorInterface
      * @param ExpenseTotalsCalculatorInterface $expenseTotalsCalculator
      */
     public function __construct(
-        LocatorLocatorInterface $locator,
         SubtotalTotalsCalculatorInterface $subtotalTotalsCalculatorInterface,
         ExpenseTotalsCalculatorInterface $expenseTotalsCalculator
     ) {
-        parent::__construct($locator);
-
         $this->subtotalTotalsCalculator = $subtotalTotalsCalculatorInterface;
         $this->expenseTotalsCalculator = $expenseTotalsCalculator;
     }
@@ -40,12 +33,12 @@ class GrandTotalTotalsCalculator extends AbstractCalculator implements
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableContainerInterface $calculableContainer
-     * @param CalculableItemCollectionInterface $calculableItems
+     * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
         CalculableContainerInterface $calculableContainer,
-        CalculableItemCollectionInterface $calculableItems
+        \ArrayObject $calculableItems
     ) {
         $grandTotalWithoutDiscounts = $this->calculateGrandTotal(
             $totalsTransfer,
@@ -58,13 +51,14 @@ class GrandTotalTotalsCalculator extends AbstractCalculator implements
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableContainerInterface $calculableContainer
-     * @param CalculableItemCollectionInterface $calculableItems
+     * @param \ArrayObject $calculableItems
+     *
      * @return int
      */
     protected function calculateGrandTotal(
         TotalsInterface $totalsTransfer,
         CalculableContainerInterface $calculableContainer,
-        CalculableItemCollectionInterface $calculableItems
+        \ArrayObject $calculableItems
     ) {
         $grandTotalWithoutDiscounts = $this->getSubtotal($totalsTransfer, $calculableItems);
         $grandTotalWithoutDiscounts += $this->getOrderExpenseTotal($totalsTransfer, $calculableContainer);
@@ -74,12 +68,13 @@ class GrandTotalTotalsCalculator extends AbstractCalculator implements
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param CalculableItemCollectionInterface $calculableItems
+     * @param \ArrayObject $calculableItems
+     *
      * @return int
      */
     protected function getSubtotal(
         TotalsInterface $totalsTransfer,
-        CalculableItemCollectionInterface $calculableItems
+        \ArrayObject $calculableItems
     ) {
         if ($totalsTransfer->getSubtotal() !== 0) {
             return $totalsTransfer->getSubtotal();
@@ -91,6 +86,7 @@ class GrandTotalTotalsCalculator extends AbstractCalculator implements
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableContainerInterface $calculableContainer
+     *
      * @return int
      */
     protected function getOrderExpenseTotal(

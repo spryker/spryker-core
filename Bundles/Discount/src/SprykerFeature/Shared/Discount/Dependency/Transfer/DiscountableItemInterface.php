@@ -13,24 +13,24 @@ interface DiscountableItemInterface extends CalculableItemInterface
     public function getGrossPrice();
 
     /**
-     * @return DiscountItemInterface[]|DiscountableItemCollectionInterface
+     * @return DiscountItemInterface[]|\ArrayObject
      */
     public function getDiscounts();
 
     /**
-     * @param DiscountableItemCollectionInterface $collection
+     * @param \ArrayObject $collection
      *
      * @return $this
      */
-    public function setDiscounts(DiscountableItemCollectionInterface $collection);
+    public function setDiscounts(\ArrayObject $collection);
 
     /**
-     * @return DiscountableOptionsInterface[]
+     * @return DiscountableOptionsInterface[]|\ArrayObject
      */
     public function getOptions();
 
     /**
-     * @return DiscountableExpenseInterface[]
+     * @return DiscountableExpenseInterface[]|\ArrayObject
      */
     public function getExpenses();
 }

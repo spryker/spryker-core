@@ -10,9 +10,9 @@ interface OptionContainerInterface
     public function getOptions();
 
     /**
-     * @param array $options
+     * @param \ArrayObject $options
      *
      * @return $this
      */
-    public function setOptions(array $options);
+    public function setOptions(\ArrayObject $options);
 }

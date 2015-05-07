@@ -8,24 +8,24 @@ interface DiscountableContainerInterface extends CalculableContainerInterface
 {
 
     /**
-     * @return DiscountableItemInterface[]
+     * @return \ArrayObject|DiscountableItemInterface[]
      */
     public function getItems();
 
     /**
-     * @return DiscountItemInterface[]
+     * @return \ArrayObject|DiscountItemInterface[]
      */
     public function getDiscounts();
 
     /**
-     * @param DiscountableItemCollectionInterface $collection
+     * @param \ArrayObject $collection
      *
      * @return $this
      */
-    public function setDiscounts(DiscountableItemCollectionInterface $collection);
+    public function setDiscounts(\ArrayObject $collection);
 
     /**
-     * @return DiscountableExpenseInterface[]
+     * @return \ArrayObject|DiscountableExpenseInterface[]
      */
     public function getExpenses();
 

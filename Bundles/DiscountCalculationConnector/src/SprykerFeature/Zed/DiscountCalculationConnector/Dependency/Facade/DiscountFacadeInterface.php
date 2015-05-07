@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 
 interface DiscountFacadeInterface
 {

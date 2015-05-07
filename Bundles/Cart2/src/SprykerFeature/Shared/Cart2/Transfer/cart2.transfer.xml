@@ -9,12 +9,9 @@
         <use name="Generated\Shared\Transfer\CalculationExpenseTransfer" />
         <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
 
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface" />
         <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface" />
         <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" />
         <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" />
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
 
         <!--<interface name="CartInterface" />-->
@@ -34,10 +31,8 @@
         <use name="Generated\Shared\Transfer\CalculationExpenseTransfer" />
         <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
 
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface" />
         <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" />
         <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" />
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
         <use name="SprykerFeature\Shared\Cart\Transfer\ItemInterface" />
 

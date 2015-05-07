@@ -187,7 +187,6 @@ class GrandTotalWithDiscountTest extends Test
     protected function getCalculator()
     {
         return new GrandTotalWithDiscountsTotalsCalculator(
-            $this->locator,
             $this->locator->calculation()->facade(),
             new DiscountTotalsCalculator($this->locator)
         );

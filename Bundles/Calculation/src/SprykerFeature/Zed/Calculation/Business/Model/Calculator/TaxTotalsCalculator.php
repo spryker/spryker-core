@@ -5,18 +5,15 @@ namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\CalculationTaxItemTransfer;
 use Generated\Shared\Transfer\CalculationTaxTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
-use SprykerFeature\Shared\Calculation\Transfer\TaxItem;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
-use SprykerEngine\Zed\Kernel\Locator;
 
-class TaxTotalsCalculator extends AbstractCalculator implements TotalsCalculatorPluginInterface
+class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 {
     /**
      * @var PriceCalculationHelperInterface
@@ -24,24 +21,22 @@ class TaxTotalsCalculator extends AbstractCalculator implements TotalsCalculator
     protected $priceCalculationHelper;
 
     /**
-     * @param Locator $locator
      * @param PriceCalculationHelperInterface $priceCalculationHelper
      */
-    public function __construct(Locator $locator, PriceCalculationHelperInterface $priceCalculationHelper)
+    public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
     {
-        parent::__construct($locator);
         $this->priceCalculationHelper = $priceCalculationHelper;
     }
 
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableContainerInterface $calculableContainer
-     * @param CalculableItemCollectionInterface $calculableItems
+     * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
         CalculableContainerInterface $calculableContainer,
-        CalculableItemCollectionInterface $calculableItems
+        \ArrayObject $calculableItems
     ) {
         $groupedPrices = $this->sumPriceToPayGroupedByTaxRate($calculableContainer, $calculableItems);
         $taxTransfer = $this->createTaxTransfer($groupedPrices);
@@ -51,13 +46,13 @@ class TaxTotalsCalculator extends AbstractCalculator implements TotalsCalculator
 
     /**
      * @param CalculableContainerInterface $calculableContainer
-     * @param CalculableItemCollectionInterface $calculableItems
+     * @param \ArrayObject $calculableItems
      *
      * @return array
      */
     protected function sumPriceToPayGroupedByTaxRate(
         CalculableContainerInterface $calculableContainer,
-        CalculableItemCollectionInterface $calculableItems
+        \ArrayObject $calculableItems
     ) {
         $groupedPrices = [];
         foreach ($calculableItems as $item) {
@@ -134,7 +129,7 @@ class TaxTotalsCalculator extends AbstractCalculator implements TotalsCalculator
      * @param int $amount
      * @param float $percentage
      *
-     * @return TaxItem
+     * @return CalculationTaxItemTransfer
      */
     protected function createTaxItem($amount, $percentage)
     {
