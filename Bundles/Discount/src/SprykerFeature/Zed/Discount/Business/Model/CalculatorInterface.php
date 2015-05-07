@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Zed\Discount\Business\DiscountSettingsInterface;
 
 interface CalculatorInterface

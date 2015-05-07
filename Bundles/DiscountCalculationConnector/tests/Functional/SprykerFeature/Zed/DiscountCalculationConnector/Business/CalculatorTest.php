@@ -3,6 +3,10 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
@@ -124,19 +128,19 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnExampleOrderWithTwoItemsAndExpenseOnItems()
     {
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $order = new SalesOrderTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        $discount = new CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        $discount = new CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
+        $expense = new CalculationExpenseTransfer();
         $expense->setName('Shipping Costs')
             ->setType(ExpenseConstants::EXPENSE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS/2)

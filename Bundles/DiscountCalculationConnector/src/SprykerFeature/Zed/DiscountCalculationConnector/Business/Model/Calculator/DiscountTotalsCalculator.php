@@ -2,13 +2,19 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
+use Generated\Shared\Transfer\SalesDiscountTotalItemTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableExpenseInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\AbstractCalculator;
+use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 class DiscountTotalsCalculator extends AbstractCalculator implements DiscountTotalsCalculatorInterface
 {
@@ -54,13 +60,13 @@ class DiscountTotalsCalculator extends AbstractCalculator implements DiscountTot
     /**
      * @param DiscountableContainerInterface $discountableContainer
      * @param DiscountableItemCollectionInterface $discountableContainers
-     * @return DiscountTotals
+     * @return CalculationDiscountTotalsTransfer
      */
     protected function createDiscountTransfer(
         DiscountableContainerInterface $discountableContainer,
         DiscountableItemCollectionInterface $discountableContainers
     ) {
-        $discountTransfer = new \Generated\Shared\Transfer\CalculationDiscountTotalsTransfer();
+        $discountTransfer = new CalculationDiscountTotalsTransfer();
         $discountTransfer->setTotalAmount($this->calculateDiscount($discountableContainer, $discountableContainers));
 
         foreach ($this->sumDiscountItems($discountableContainer, $discountableContainers) as $discountTotalItem) {
@@ -132,11 +138,11 @@ class DiscountTotalsCalculator extends AbstractCalculator implements DiscountTot
     }
 
     /**
-     * @return DiscountTotalItem
+     * @return SalesDiscountTotalItemTransfer
      */
     protected function getDiscountTotalItem()
     {
-        return new \Generated\Shared\Transfer\SalesPriceDiscountTotalItemTransfer();
+        return new SalesDiscountTotalItemTransfer();
     }
 
     /**

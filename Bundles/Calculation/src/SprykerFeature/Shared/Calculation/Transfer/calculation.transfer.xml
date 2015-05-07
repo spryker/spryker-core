@@ -23,7 +23,11 @@
 
     <transfer name="CalculationDiscount">
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
+        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" />
+
         <interface name="DiscountItemInterface" />
+        <interface name="DiscountableItemCollectionInterface" />
+
         <property name="salesruleId" type="string" default="null" />
         <property name="displayName" type="string" default="null" />
         <property name="amount" type="int" default="0" />
@@ -53,10 +57,12 @@
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableExpenseInterface" />
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
         <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" />
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemCollectionInterface" />
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" />
 
         <interface name="ExpenseItemInterface" />
         <interface name="DiscountableExpenseInterface" />
+        <interface name="ExpenseItemCollectionInterface" />
 
         <property name="type" type="string" default="null" />
         <property name="grossPrice" type="string" default="null" />

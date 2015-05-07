@@ -3,8 +3,8 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CalculationTotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use Generated\Shared\Transfer\CalculationDiscountTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
@@ -194,49 +194,49 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return TotalsInterface
+     * @return CalculationTotalsTransfer
      */
     protected function getTotals()
     {
-        return new \Generated\Shared\Transfer\CalculationTotalsTransfer();
+        return new CalculationTotalsTransfer();
     }
 
     /**
-     * @return Discount
+     * @return CalculationDiscountTransfer
      */
     protected function getDiscount()
     {
-        return new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        return new CalculationDiscountTransfer();
     }
 
     /**
-     * @return Order
+     * @return SalesOrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
+        $order = new SalesOrderTransfer();
         $order->fillWithFixtureData();
 
         return $order;
     }
 
     /**
-     * @return OrderItem
+     * @return SalesOrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->fillWithFixtureData();
 
         return $item;
     }
 
     /**
-     * @return Expense
+     * @return CalculationExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {
-        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
+        $expense = new CalculationExpenseTransfer();
         $expense->fillWithFixtureData();
 
         return $expense;

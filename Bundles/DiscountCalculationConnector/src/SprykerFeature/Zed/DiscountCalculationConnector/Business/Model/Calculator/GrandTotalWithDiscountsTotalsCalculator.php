@@ -50,8 +50,7 @@ class GrandTotalWithDiscountsTotalsCalculator extends AbstractCalculator impleme
         CalculableContainerInterface $container,
         CalculableItemCollectionInterface $items
     ) {
-        if ($container instanceof DiscountableContainerInterface &&
-        $items instanceof DiscountableItemCollectionInterface) {
+        if ($container instanceof DiscountableContainerInterface && $items instanceof DiscountableItemCollectionInterface) {
             $grandTotal = $this->calculateGrandTotal($totalsTransfer, $container, $items);
             $grandTotal -= $this->getDiscount($totalsTransfer, $container, $items);
             $totalsTransfer->setGrandTotalWithDiscounts($grandTotal);

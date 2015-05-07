@@ -5,6 +5,7 @@
 
 
     <transfer name="SalesOrder">
+        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface" />
         <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface" />
         <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface" />
         <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
@@ -34,7 +35,11 @@
         <property name="billingAddress" type="SalesAddressTransfer" collection="SalesAddressTransfer" />
         <property name="shippingAddress" type="SalesAddressTransfer" collection="SalesAddressTransfer" />
         <property name="customer" type="CustomerCustomerTransfer" collection="CustomerCustomerTransfer" />
-        <property name="items" type="CalculableItemCollectionInterface" collection="SalesOrderItemTransfer" />
+        <property name="items" type="CalculableItemCollectionInterface" collection="SalesOrderItemTransfer">
+            <add name="item" type="CalculableItemInterface" />
+            <has name="item" type="CalculableItemInterface" />
+            <remove name="item" type="CalculableItemInterface" />
+        </property>
         <property name="payment" type="string" default="null" />
         <property name="couponCodes" type="array" default="[]" collection="TransferArrayObject">
             <add name="couponCode" type="string" />
@@ -103,11 +108,11 @@
         <use name="Generated\Shared\Transfer\SalesOrderItemOptionTransfer" />
         <use name="Generated\Shared\Transfer\SalesOrderItemStatusTransfer" />
 
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface" />
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface" />
         <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface" />
 
         <interface name="DiscountableItemInterface" />
+        <interface name="DiscountableItemCollectionInterface" />
 
         <property name="idSalesOrderItem" type="int" default="null" />
         <property name="fkSalesOrder" type="int" default="null" />
