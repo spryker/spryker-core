@@ -7,6 +7,7 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Library\Copy;
 use Propel\Runtime\Collection\ObjectCollection;
 use Generated\Shared\Transfer\UserUserTransfer;
+use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserUserTableMap;
 use SprykerFeature\Zed\User\UserConfig;
 use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUser;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
@@ -96,30 +97,34 @@ class User implements UserInterface
     }
 
     /**
-     * @param UserUserTransfer $data
+     * @param UserUserTransfer $user
      *
      * @return UserUserTransfer
      * @throws UserNotFoundException
      */
-    public function save(UserUserTransfer $data)
+    public function save(UserUserTransfer $user)
     {
-        if ($data->getIdUserUser() !== null && $this->getUserById($data->getIdUserUser()) === null) {
+        if ($user->getIdUserUser() !== null && $this->getUserById($user->getIdUserUser()) === null) {
             throw new UserNotFoundException();
         }
 
-        if ($data->getIdUserUser() !== null) {
-            $entity = $this->getEntityUserById($data->getIdUserUser());
+        if ($user->getIdUserUser() !== null) {
+            $entity = $this->getEntityUserById($user->getIdUserUser());
         } else {
             $entity = $this->locator->user()->entitySpyUserUser();
         }
 
-        $entity->setFirstName($data->getFirstName());
-        $entity->setLastName($data->getLastName());
-        $entity->setUsername($data->getUsername());
+        $entity->setFirstName($user->getFirstName());
+        $entity->setLastName($user->getLastName());
+        $entity->setUsername($user->getUsername());
 
-        $password = $data->getPassword();
-        if (!empty($password) && true === $this->isRawPassword($data->getPassword())) {
-            $entity->setPassword($this->encryptPassword($data->getPassword()));
+        if (!is_null($user->getStatus())) {
+            $entity->setStatus($user->getStatus());
+        }
+
+        $password = $user->getPassword();
+        if (!empty($password) && true === $this->isRawPassword($user->getPassword())) {
+            $entity->setPassword($this->encryptPassword($user->getPassword()));
         }
 
         $entity->save();
@@ -225,7 +230,11 @@ class User implements UserInterface
      */
     public function getUserById($id)
     {
-        $entity = $this->queryContainer->queryUserById($id)->findOne();
+        $entity = $this->queryContainer
+            ->queryUserById($id)
+            ->filterByStatus(SpyUserUserTableMap::COL_STATUS_ACTIVE)
+            ->findOne()
+        ;
 
         if ($entity === null) {
             throw new UserNotFoundException();
