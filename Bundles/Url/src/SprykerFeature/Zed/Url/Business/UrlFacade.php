@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Url\Business;
 
-use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlUrlTransfer;
+use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
@@ -18,7 +18,7 @@ class UrlFacade extends AbstractFacade
 {
     /**
      * @param string $url
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
      *
@@ -26,7 +26,7 @@ class UrlFacade extends AbstractFacade
      * @throws PropelException
      * @throws UrlExistsException
      */
-    public function createUrl($url, LocaleDto $locale, $resourceType, $idResource)
+    public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
     {
         $urlManager = $this->getDependencyContainer()->getUrlManager();
         $pageUrl = $urlManager->createUrl($url, $locale, $resourceType, $idResource);
@@ -142,14 +142,14 @@ class UrlFacade extends AbstractFacade
 
     /**
      * @param string $url
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param int $idRedirect
      *
      * @return UrlUrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
      */
-    public function createRedirectUrl($url, LocaleDto $locale, $idRedirect)
+    public function createRedirectUrl($url, LocaleTransfer $locale, $idRedirect)
     {
         $redirectManager = $this->getDependencyContainer()->getRedirectManager();
 

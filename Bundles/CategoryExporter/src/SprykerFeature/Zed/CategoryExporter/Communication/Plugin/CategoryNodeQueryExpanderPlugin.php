@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Communication\Plugin;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
@@ -24,11 +24,11 @@ class CategoryNodeQueryExpanderPlugin extends AbstractPlugin implements QueryExp
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
         $queryContainer = $this->getDependencyContainer()->getCategoryExporterQueryContainer();
 

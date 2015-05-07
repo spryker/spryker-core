@@ -3,13 +3,13 @@
 namespace Functional\SprykerFeature\Zed\ProductFrontendExporterConnector;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
 use Pyz\Zed\Locale\Business\LocaleFacade;
 use Pyz\Zed\Product\Business\ProductFacade;
 use Pyz\Zed\Touch\Business\TouchFacade;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
@@ -61,7 +61,7 @@ class ProductFrontendExporterPluginTest extends Test
 
 
     /**
-     * @var LocaleDto
+     * @var LocaleTransfer
      */
     protected $locale;
 
@@ -128,11 +128,11 @@ class ProductFrontendExporterPluginTest extends Test
     /**
      * @param string $sku
      * @param string $name
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return int
      */
-    protected function createProduct($sku, $name, LocaleDto $locale)
+    protected function createProduct($sku, $name, LocaleTransfer $locale)
     {
         $idAbstractProduct = $this->createAbstractProductWithAttributes('Abstract' . $sku, 'Abstract' . $name, $locale);
         $this->createConcreteProductWithAttributes($idAbstractProduct, $sku, $name, $locale);
@@ -143,7 +143,7 @@ class ProductFrontendExporterPluginTest extends Test
     /**
      * @param string $sku
      * @param string $name
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return int
      */
@@ -177,11 +177,11 @@ class ProductFrontendExporterPluginTest extends Test
      * @param int $idAbstractProduct
      * @param string $sku
      * @param string $name
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return int
      */
-    protected function createConcreteProductWithAttributes($idAbstractProduct, $sku, $name, LocaleDto $locale)
+    protected function createConcreteProductWithAttributes($idAbstractProduct, $sku, $name, LocaleTransfer $locale)
     {
         $idConcreteProduct = $this->productFacade->createConcreteProduct($sku, $idAbstractProduct, true);
 

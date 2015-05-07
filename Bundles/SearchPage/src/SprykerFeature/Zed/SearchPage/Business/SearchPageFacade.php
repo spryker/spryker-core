@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\SearchPage\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\SearchPage\Dependency\PageElementInterface;
 
@@ -90,11 +90,11 @@ class SearchPageFacade extends AbstractFacade
 
     /**
      * @param array $configRaw
-     * @param LocaleDto $localeDto
+     * @param LocaleTransfer $localeDto
      *
      * @return array
      */
-    public function processSearchPageConfig(array $configRaw, LocaleDto $localeDto)
+    public function processSearchPageConfig(array $configRaw, LocaleTransfer $localeDto)
     {
         return $this->getDependencyContainer()
             ->createSearchPageConfigProcessor()

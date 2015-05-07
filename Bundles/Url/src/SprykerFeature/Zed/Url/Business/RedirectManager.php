@@ -2,14 +2,14 @@
 
 namespace SprykerFeature\Zed\Url\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlRedirectTransfer;
+use Generated\Shared\Transfer\UrlUrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use Generated\Shared\Transfer\UrlRedirectTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
 use SprykerFeature\Zed\Url\Business\Exception\MissingRedirectException;
 use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
@@ -191,7 +191,7 @@ class RedirectManager implements RedirectManagerInterface
 
     /**
      * @param string $url
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param int $idRedirect
      *
      * @return UrlUrlTransfer
@@ -199,7 +199,7 @@ class RedirectManager implements RedirectManagerInterface
      * @throws MissingLocaleException
      * @throws MissingRedirectException
      */
-    public function createRedirectUrl($url, LocaleDto $locale, $idRedirect)
+    public function createRedirectUrl($url, LocaleTransfer $locale, $idRedirect)
     {
         $this->checkRedirectExists($idRedirect);
         $urlEntity = $this->urlManager->createUrl($url, $locale, 'redirect', $idRedirect);

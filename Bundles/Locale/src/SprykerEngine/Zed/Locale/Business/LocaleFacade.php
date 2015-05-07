@@ -6,8 +6,8 @@
 
 namespace SprykerEngine\Zed\Locale\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Locale\Business\Exception\LocaleExistsException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
@@ -32,7 +32,7 @@ class LocaleFacade extends AbstractFacade
     /**
      * @param string $localeName
      *
-     * @return LocaleDto
+     * @return LocaleTransfer
      * @throws MissingLocaleException
      */
     public function getLocale($localeName)
@@ -61,7 +61,7 @@ class LocaleFacade extends AbstractFacade
     }
 
     /**
-     * @return LocaleDto
+     * @return LocaleTransfer
      */
     public function getCurrentLocale()
     {
@@ -73,7 +73,7 @@ class LocaleFacade extends AbstractFacade
     /**
      * @param string $localeName
      *
-     * @return LocaleDto
+     * @return LocaleTransfer
      * @throws LocaleExistsException
      */
     public function createLocale($localeName)

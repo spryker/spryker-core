@@ -2,16 +2,16 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 
 interface ProductSearchQueryExpanderInterface
 {
     /**
      * @param ModelCriteria $expandableQuery
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return ModelCriteria
      */
-    public function expandProductQuery(ModelCriteria $expandableQuery, LocaleDto $locale);
+    public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale);
 }

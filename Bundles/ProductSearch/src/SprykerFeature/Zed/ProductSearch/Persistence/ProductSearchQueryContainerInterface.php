@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 use SprykerFeature\Zed\ProductSearch\Persistence\Propel\SpyProductSearchAttributesOperationQuery;
 
@@ -16,11 +16,11 @@ interface ProductSearchQueryContainerInterface
 
     /**
      * @param array $productIds
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return SpyProductQuery
      */
-    public function getExportableProductsByLocale(array $productIds, LocaleDto $locale);
+    public function getExportableProductsByLocale(array $productIds, LocaleTransfer $locale);
 
     /**
      * @param int $idAttribute
@@ -32,9 +32,9 @@ interface ProductSearchQueryContainerInterface
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return ModelCriteria
      */
-    public function expandProductQuery(ModelCriteria $expandableQuery, LocaleDto $locale);
+    public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale);
 }

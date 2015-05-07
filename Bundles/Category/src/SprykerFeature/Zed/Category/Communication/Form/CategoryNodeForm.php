@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Form;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
@@ -27,7 +27,7 @@ class CategoryNodeForm extends AbstractForm
     protected $factory;
 
     /**
-     * @var LocaleDto
+     * @var LocaleTransfer
      */
     protected $locale;
 
@@ -39,13 +39,13 @@ class CategoryNodeForm extends AbstractForm
     /**
      * @param Request $request
      * @param FactoryInterface $factory
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param CategoryQueryContainer $queryContainer
      */
     public function __construct(
         Request $request,
         FactoryInterface $factory,
-        LocaleDto $locale,
+        LocaleTransfer $locale,
         CategoryQueryContainer $queryContainer = null
     ) {
         parent::__construct($request, $queryContainer);

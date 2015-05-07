@@ -2,15 +2,15 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business\Processor;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryNodeProcessorInterface
 {
     /**
      * @param array $categoryNodes
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return mixed
      */
-    public function process(array $categoryNodes, LocaleDto $locale);
+    public function process(array $categoryNodes, LocaleTransfer $locale);
 }

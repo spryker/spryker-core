@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryExporterPersistence;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\CategoryNodeQueryExpander;
@@ -15,11 +15,11 @@ use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\NavigationQuer
 class CategoryExporterDependencyContainer extends AbstractDependencyContainer
 {
     /**
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return CategoryNodeQueryExpander
      */
-    public function createCategoryNodeQueryExpander(LocaleDto $locale)
+    public function createCategoryNodeQueryExpander(LocaleTransfer $locale)
     {
         return $this->getFactory()->createQueryExpanderCategoryNodeQueryExpander(
             $this->getCategoryQueryContainer(),
@@ -28,11 +28,11 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return NavigationQueryExpander
      */
-    public function createNavigationQueryExpander(LocaleDto $locale)
+    public function createNavigationQueryExpander(LocaleTransfer $locale)
     {
         return $this->getFactory()->createQueryExpanderNavigationQueryExpander(
             $this->getCategoryQueryContainer(),

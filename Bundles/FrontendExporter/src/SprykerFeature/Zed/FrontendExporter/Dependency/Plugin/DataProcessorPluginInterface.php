@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Dependency\Plugin;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 interface DataProcessorPluginInterface
 {
@@ -14,9 +14,9 @@ interface DataProcessorPluginInterface
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale);
+    public function processData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale);
 }

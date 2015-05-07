@@ -2,15 +2,15 @@
 
 namespace SprykerFeature\Zed\SearchPage\Business\Processor;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 interface SearchPageConfigProcessorInterface
 {
     /**
      * @param array $configRaw
-     * @param LocaleDto $localeDto
+     * @param LocaleTransfer $localeDto
      *
      * @return array
      */
-    public function processSearchPageConfig(array $configRaw, LocaleDto $localeDto);
+    public function processSearchPageConfig(array $configRaw, LocaleTransfer $localeDto);
 }

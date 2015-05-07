@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategorySearch\Communication\Plugin;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\ProductCategorySearch\Communication\ProductCategorySearchDependencyContainer;
@@ -27,11 +27,11 @@ class ProductCategorySearchProcessorPlugin extends AbstractPlugin implements Dat
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
         $facade = $this->getDependencyContainer()->getProductCategorySearchFacade();
 

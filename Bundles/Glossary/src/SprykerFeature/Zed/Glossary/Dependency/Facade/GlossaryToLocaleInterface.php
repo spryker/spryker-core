@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Glossary\Dependency\Facade;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface GlossaryToLocaleInterface
@@ -14,13 +14,13 @@ interface GlossaryToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @return LocaleDto
+     * @return LocaleTransfer
      * @throws MissingLocaleException
      */
     public function getLocale($localeName);
 
     /**
-     * @return LocaleDto
+     * @return LocaleTransfer
      */
     public function getCurrentLocale();
 

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 
 interface CategoryTreeReaderInterface
@@ -10,22 +10,22 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $onlyOneLevel
      * @param bool $excludeStartNode
      *
      * @return SpyCategoryNode[]
      */
-    public function getChildren($idNode, LocaleDto $locale, $onlyOneLevel = true, $excludeStartNode = true);
+    public function getChildren($idNode, LocaleTransfer $locale, $onlyOneLevel = true, $excludeStartNode = true);
 
     /**
      * @param int $idNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $excludeRootNode
      *
      * @return array
      */
-    public function getParents($idNode, LocaleDto $locale, $excludeRootNode = true);
+    public function getParents($idNode, LocaleTransfer $locale, $excludeRootNode = true);
 
     /**
      * @param int $idNode
@@ -35,23 +35,23 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
      * @return array
      */
-    public function getPath($idNode, LocaleDto $locale, $excludeRootNode = true, $onlyParents = false);
+    public function getPath($idNode, LocaleTransfer $locale, $excludeRootNode = true, $onlyParents = false);
 
     /**
      * @param int $idNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
      * @return array
      */
-    public function getGroupedPaths($idNode, LocaleDto $locale, $excludeRootNode = true, $onlyParents = false);
+    public function getGroupedPaths($idNode, LocaleTransfer $locale, $excludeRootNode = true, $onlyParents = false);
 
     /**
      * @param int $idNode

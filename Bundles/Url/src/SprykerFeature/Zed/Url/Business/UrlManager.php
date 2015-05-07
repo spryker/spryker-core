@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Url\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlUrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use Generated\Shared\Transfer\UrlUrlTransfer;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 use SprykerFeature\Zed\Url\Dependency\UrlToLocaleInterface;
@@ -60,7 +60,7 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param string $url
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
      *
@@ -69,7 +69,7 @@ class UrlManager implements UrlManagerInterface
      * @throws UrlExistsException
      * @throws MissingLocaleException
      */
-    public function createUrl($url, LocaleDto $locale, $resourceType, $idResource)
+    public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
     {
         $this->checkUrlDoesNotExist($url);
 

@@ -6,13 +6,13 @@
 
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
+use Generated\Shared\Transfer\GlossaryTranslationTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use Generated\Shared\Transfer\GlossaryTranslationTransfer;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
@@ -76,7 +76,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -85,7 +85,7 @@ class TranslationManager implements TranslationManagerInterface
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function createTranslation($keyName, LocaleDto $locale, $value, $isActive)
+    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive)
     {
         $idKey = $this->keyManager->getKey($keyName)->getPrimaryKey();
         $idLocale = $locale->getIdLocale();
@@ -134,11 +134,11 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleDto $locale)
+    public function hasTranslation($keyName, LocaleTransfer $locale)
     {
         $translationCount = $this->glossaryQueryContainer
             ->queryTranslationByNames($keyName, $locale->getLocaleName())
@@ -202,7 +202,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -210,7 +210,7 @@ class TranslationManager implements TranslationManagerInterface
      * @throws MissingTranslationException
      * @throws PropelException
      */
-    public function updateTranslation($keyName, LocaleDto $locale, $value, $isActive)
+    public function updateTranslation($keyName, LocaleTransfer $locale, $value, $isActive)
     {
         $translation = $this->getUpdatedTranslationEntity($keyName, $locale, $value, $isActive);
 
@@ -219,7 +219,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -238,12 +238,12 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return GlossaryTranslationTransfer
      * @throws MissingTranslationException
      */
-    public function getTranslationByKeyName($keyName, LocaleDto $locale)
+    public function getTranslationByKeyName($keyName, LocaleTransfer $locale)
     {
         $translation = $this->getTranslationEntityByNames($keyName, $locale->getLocaleName());
 
@@ -263,11 +263,11 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    public function deleteTranslation($keyName, LocaleDto $locale)
+    public function deleteTranslation($keyName, LocaleTransfer $locale)
     {
         if (!$this->hasTranslation($keyName, $locale)) {
             return true;
@@ -457,7 +457,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -466,7 +466,7 @@ class TranslationManager implements TranslationManagerInterface
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function createAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true)
+    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
         Propel::getConnection()->beginTransaction();
 
@@ -481,7 +481,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -490,7 +490,7 @@ class TranslationManager implements TranslationManagerInterface
      * @throws MissingLocaleException
      * @throws MissingTranslationException
      */
-    public function updateAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true)
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
         $translation = $this->getUpdatedTranslationEntity($keyName, $locale, $value, $isActive);
 

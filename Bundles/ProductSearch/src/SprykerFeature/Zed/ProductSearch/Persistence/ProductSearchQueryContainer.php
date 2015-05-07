@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedProductAttributesTableMap;
@@ -36,11 +36,11 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param array $productIds
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return SpyProductQuery
      */
-    public function getExportableProductsByLocale(array $productIds, LocaleDto $locale)
+    public function getExportableProductsByLocale(array $productIds, LocaleTransfer $locale)
     {
         $query = SpyProductQuery::create();
         $query
@@ -84,11 +84,11 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return ModelCriteria
      */
-    public function expandProductQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
+    public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
         $productSearchQueryExpander = $this->getDependencyContainer()->createProductSearchQueryExpander();
 

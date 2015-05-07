@@ -2,21 +2,20 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Persistence\QueryExpander;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\Map\SpyProductCategoryTableMap;
 
 class ProductCategoryPathQueryExpander
 {
     /**
-     * @var LocaleDto
+     * @var LocaleTransfer
      */
     protected $locale;
 
@@ -27,11 +26,11 @@ class ProductCategoryPathQueryExpander
 
     /**
      * @param CategoryQueryContainer $categoryQueryContainer
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      */
     public function __construct(
         CategoryQueryContainer $categoryQueryContainer,
-        LocaleDto $locale
+        LocaleTransfer $locale
     ) {
         $this->locale = $locale;
         $this->categoryQueryContainer = $categoryQueryContainer;

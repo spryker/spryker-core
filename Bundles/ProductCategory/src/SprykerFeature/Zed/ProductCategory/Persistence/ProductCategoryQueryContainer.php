@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
@@ -14,7 +14,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
 {
     /**
      * @param ModelCriteria $query
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      *
@@ -22,7 +22,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      */
     public function expandProductCategoryPathQuery(
         ModelCriteria $query,
-        LocaleDto $locale,
+        LocaleTransfer $locale,
         $excludeDirectParent = true,
         $excludeRoot = true
     ) {
@@ -61,11 +61,11 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return SpyProductCategoryQuery
      */
-    public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleDto $locale)
+    public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale)
     {
         $query = $this->queryProductCategoryMappings();
         $query

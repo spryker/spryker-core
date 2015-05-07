@@ -2,14 +2,14 @@
 
 namespace SprykerFeature\Zed\Category\Business\Manager;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 interface NodeUrlManagerInterface
 {
     /**
      * @param CategoryCategoryNodeTransfer $categoryNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      */
-    public function createUrl(CategoryCategoryNodeTransfer $categoryNode, LocaleDto $locale);
+    public function createUrl(CategoryCategoryNodeTransfer $categoryNode, LocaleTransfer $locale);
 }

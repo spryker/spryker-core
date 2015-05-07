@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\Product\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
@@ -25,11 +25,11 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 {
     /**
      * @param string $skus
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * 
      * @return SpyProductQuery
      */
-    public function getProductWithAttributeQuery($skus, LocaleDto $locale)
+    public function getProductWithAttributeQuery($skus, LocaleTransfer $locale)
     {
         $query = SpyProductQuery::create();
         $query->filterBySku($skus);
@@ -205,11 +205,11 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return $this
      */
-    public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleDto $locale)
+    public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
         $expandableQuery
             ->addJoin(

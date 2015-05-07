@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\Product\Business\Product;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlUrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
-use Generated\Shared\Transfer\UrlUrlTransfer;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductAttributesExistException;
@@ -130,14 +130,14 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idAbstractProduct
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $name
      * @param string $attributes
      *
      * @return int
      * @throws AbstractProductAttributesExistException
      */
-    public function createAbstractProductAttributes($idAbstractProduct, LocaleDto $locale, $name, $attributes)
+    public function createAbstractProductAttributes($idAbstractProduct, LocaleTransfer $locale, $name, $attributes)
     {
         $this->checkAbstractProductAttributesDoNotExist($idAbstractProduct, $locale);
 
@@ -156,7 +156,7 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idAbstractProduct
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @throws AbstractProductAttributesExistException
      */
@@ -175,11 +175,11 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idAbstractProduct
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    protected function hasAbstractProductAttributes($idAbstractProduct, LocaleDto $locale)
+    protected function hasAbstractProductAttributes($idAbstractProduct, LocaleTransfer $locale)
     {
         $query = $this->productQueryContainer->queryAbstractProductAttributeCollection($idAbstractProduct, $locale->getIdLocale());
 
@@ -263,14 +263,14 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idConcreteProduct
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $name
      * @param string $attributes
      *
      * @return int
      * @throws ConcreteProductAttributesExistException
      */
-    public function createConcreteProductAttributes($idConcreteProduct, LocaleDto $locale, $name, $attributes)
+    public function createConcreteProductAttributes($idConcreteProduct, LocaleTransfer $locale, $name, $attributes)
     {
         $this->checkConcreteProductAttributesDoNotExist($idConcreteProduct, $locale);
 
@@ -289,11 +289,11 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idConcreteProduct
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @throws ConcreteProductAttributesExistException
      */
-    protected function checkConcreteProductAttributesDoNotExist($idConcreteProduct, LocaleDto $locale)
+    protected function checkConcreteProductAttributesDoNotExist($idConcreteProduct, LocaleTransfer $locale)
     {
         if ($this->hasConcreteProductAttributes($idConcreteProduct, $locale)) {
             throw new ConcreteProductAttributesExistException(
@@ -308,11 +308,11 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idConcreteProduct
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    protected function hasConcreteProductAttributes($idConcreteProduct, LocaleDto $locale)
+    protected function hasConcreteProductAttributes($idConcreteProduct, LocaleTransfer $locale)
     {
         $query = $this->productQueryContainer->queryConcreteProductAttributeCollection($idConcreteProduct, $locale->getIdLocale());
 
@@ -330,14 +330,14 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      * @param string $url
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createProductUrl($sku, $url, LocaleDto $locale)
+    public function createProductUrl($sku, $url, LocaleTransfer $locale)
     {
         $idAbstractProduct = $this->getAbstractProductIdBySku($sku);
 
@@ -347,14 +347,14 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param int $idAbstractProduct
      * @param string $url
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createProductUrlByIdProduct($idAbstractProduct, $url, LocaleDto $locale)
+    public function createProductUrlByIdProduct($idAbstractProduct, $url, LocaleTransfer $locale)
     {
         return $this->urlFacade->createUrl($url, $locale, 'abstract_product', $idAbstractProduct);
     }
@@ -362,14 +362,14 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      * @param string $url
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createAndTouchProductUrl($sku, $url, LocaleDto $locale)
+    public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale)
     {
         $url = $this->createProductUrl($sku, $url, $locale);
         $this->urlFacade->touchUrlActive($url->getIdUrl());
@@ -380,14 +380,14 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param int $idAbstractProduct
      * @param string $url
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
      */
-    public function createAndTouchProductUrlByIdProduct($idAbstractProduct, $url, LocaleDto $locale)
+    public function createAndTouchProductUrlByIdProduct($idAbstractProduct, $url, LocaleTransfer $locale)
     {
         $url = $this->createProductUrlByIdProduct($idAbstractProduct, $url, $locale);
         $this->urlFacade->touchUrlActive($url->getIdUrl());

@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
@@ -26,13 +26,13 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $onlyOneLevel
      * @param bool $excludeStartNode
      *
      * @return SpyCategoryNode[]|ObjectCollection
      */
-    public function getChildren($idNode, LocaleDto $locale, $onlyOneLevel = true, $excludeStartNode = true)
+    public function getChildren($idNode, LocaleTransfer $locale, $onlyOneLevel = true, $excludeStartNode = true)
     {
         return $this->queryContainer
             ->queryChildren($idNode, $locale->getIdLocale(), $onlyOneLevel, $excludeStartNode)
@@ -42,25 +42,25 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $excludeRootNode
      *
      * @return array
      */
-    public function getParents($idNode, LocaleDto $locale, $excludeRootNode = true)
+    public function getParents($idNode, LocaleTransfer $locale, $excludeRootNode = true)
     {
         return $this->getGroupedPaths($idNode, $locale, $excludeRootNode, true);
     }
 
     /**
      * @param int $idNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
      * @return array
      */
-    public function getPath($idNode, LocaleDto $locale, $excludeRootNode = true, $onlyParents = false)
+    public function getPath($idNode, LocaleTransfer $locale, $excludeRootNode = true, $onlyParents = false)
     {
         return $this->queryContainer
             ->queryPath($idNode, $locale->getIdLocale(), $excludeRootNode, $onlyParents)
@@ -70,13 +70,13 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
      * @return array
      */
-    public function getGroupedPaths($idNode, LocaleDto $locale, $excludeRootNode = true, $onlyParents = false)
+    public function getGroupedPaths($idNode, LocaleTransfer $locale, $excludeRootNode = true, $onlyParents = false)
     {
         $paths = $this->getPath($idNode, $locale, $excludeRootNode, $onlyParents);
         $groupedPaths = [];
@@ -97,13 +97,13 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      * @TODO Move getGroupedPathIds and getGroupedPaths to another class, duplicated Code!
      * @return array
      */
-    public function getGroupedPathIds($idNode, LocaleDto $locale, $excludeRootNode = true, $onlyParents = false)
+    public function getGroupedPathIds($idNode, LocaleTransfer $locale, $excludeRootNode = true, $onlyParents = false)
     {
         $paths = $this->getPath($idNode, $locale, $excludeRootNode, $onlyParents);
 
@@ -152,11 +152,11 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param string $categoryName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    public function hasCategoryNode($categoryName, LocaleDto $locale)
+    public function hasCategoryNode($categoryName, LocaleTransfer $locale)
     {
         $categoryQuery = $this->queryContainer->queryNodeByCategoryName($categoryName, $locale->getIdLocale());
 
@@ -165,12 +165,12 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param string $categoryName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return int
      * @throws MissingCategoryNodeException
      */
-    public function getCategoryNodeIdentifier($categoryName, LocaleDto $locale)
+    public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $locale)
     {
         $categoryQuery = $this->queryContainer->queryNodeByCategoryName($categoryName, $locale->getIdLocale());
         $categoryNode = $categoryQuery->findOne();

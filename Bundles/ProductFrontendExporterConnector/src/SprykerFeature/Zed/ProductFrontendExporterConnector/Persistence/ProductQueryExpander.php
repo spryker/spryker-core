@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ProductQueryExpander implements ProductQueryExpanderInterface
 {
@@ -26,11 +26,11 @@ class ProductQueryExpander implements ProductQueryExpanderInterface
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
         $expandableQuery->clearSelectColumns();
 

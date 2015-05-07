@@ -3,25 +3,25 @@
 namespace SprykerFeature\Zed\Category\Business\Model;
 
 use Generated\Shared\Transfer\CategoryCategoryTransfer;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryWriterInterface
 {
     /**
      * @param CategoryCategoryTransfer $category
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return int
      */
-    public function create(CategoryCategoryTransfer $category, LocaleDto $locale);
+    public function create(CategoryCategoryTransfer $category, LocaleTransfer $locale);
 
     /**
      * @param CategoryCategoryTransfer $category
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return int
      */
-    public function update(CategoryCategoryTransfer $category, LocaleDto $locale);
+    public function update(CategoryCategoryTransfer $category, LocaleTransfer $locale);
 
     /**
      * @param int $idCategory

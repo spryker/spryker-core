@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\UrlExporter\Communication\Plugin;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\UrlExporter\Communication\UrlExporterDependencyContainer;
@@ -23,11 +23,11 @@ class RedirectProcessorPlugin extends AbstractPlugin implements DataProcessorPlu
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
         $processedResultSet = $this->getDependencyContainer()->getUrlExporterFacade()->buildRedirects($resultSet, $locale);
 

@@ -2,15 +2,15 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductProcessorInterface
 {
     /**
      * @param array $products
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function buildProducts(array $products, LocaleDto $locale);
+    public function buildProducts(array $products, LocaleTransfer $locale);
 }

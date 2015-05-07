@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\Url\Business;
 
-use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlUrlTransfer;
+use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
 use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
@@ -48,12 +48,12 @@ interface RedirectManagerInterface
 
     /**
      * @param string $url
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param int $idRedirect
      *
      * @return UrlUrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
      */
-    public function createRedirectUrl($url, LocaleDto $locale, $idRedirect);
+    public function createRedirectUrl($url, LocaleTransfer $locale, $idRedirect);
 }

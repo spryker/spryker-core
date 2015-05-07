@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Dependency\Facade\ProductFrontendExporterToProductInterface;
 
@@ -32,11 +32,11 @@ class ProductProcessor implements ProductProcessorInterface
 
     /**
      * @param array $products
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function buildProducts(array $products, LocaleDto $locale)
+    public function buildProducts(array $products, LocaleTransfer $locale)
     {
         $products = $this->productBuilder->buildProducts($products);
 

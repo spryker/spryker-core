@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
@@ -56,11 +56,11 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    public function hasProductCategoryMapping($sku, $categoryName, LocaleDto $locale)
+    public function hasProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale)
     {
         $mappingQuery = $this->productCategoryQueryContainer
             ->queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, $locale)
@@ -72,7 +72,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @return int
      *
      * @throws ProductCategoryMappingExistsException
@@ -80,7 +80,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @throws MissingCategoryNodeException
      * @throws PropelException
      */
-    public function createProductCategoryMapping($sku, $categoryName, LocaleDto $locale)
+    public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale)
     {
         $this->checkMappingDoesNotExist($sku, $categoryName, $locale);
 
@@ -101,11 +101,11 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @throws ProductCategoryMappingExistsException
      */
-    protected function checkMappingDoesNotExist($sku, $categoryName, LocaleDto $locale)
+    protected function checkMappingDoesNotExist($sku, $categoryName, LocaleTransfer $locale)
     {
         if ($this->hasProductCategoryMapping($sku, $categoryName, $locale)) {
             throw new ProductCategoryMappingExistsException(

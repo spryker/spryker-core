@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Form;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ class CategoryForm extends AbstractForm
     protected $factory;
 
     /**
-     * @var LocaleDto
+     * @var LocaleTransfer
      */
     protected $locale;
 
@@ -38,7 +38,7 @@ class CategoryForm extends AbstractForm
     public function __construct(
         Request $request,
         FactoryInterface $factory,
-        LocaleDto $locale,
+        LocaleTransfer $locale,
         QueryContainerInterface $queryContainer = null
     ) {
         parent::__construct($request, $queryContainer);
@@ -101,7 +101,7 @@ class CategoryForm extends AbstractForm
     }
 
     /**
-     * @return LocaleDto
+     * @return LocaleTransfer
      */
     protected function getLocale()
     {

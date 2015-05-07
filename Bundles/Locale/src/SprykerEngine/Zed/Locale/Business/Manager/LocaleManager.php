@@ -6,10 +6,10 @@
 
 namespace SprykerEngine\Zed\Locale\Business\Manager;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\LocaleExistsException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;
@@ -36,7 +36,7 @@ class LocaleManager
     /**
      * @param string $localeName
      *
-     * @return LocaleDto
+     * @return LocaleTransfer
      * @throws MissingLocaleException
      */
     public function getLocale($localeName)
@@ -58,7 +58,7 @@ class LocaleManager
     /**
      * @param string $localeName
      *
-     * @return LocaleDto
+     * @return LocaleTransfer
      * @throws LocaleExistsException
      * @throws \Exception
      * @throws PropelException
@@ -119,11 +119,11 @@ class LocaleManager
     /**
      * @param SpyLocale $locale
      *
-     * @return LocaleDto
+     * @return LocaleTransfer
      */
     protected function convertEntityToDto($locale)
     {
-        $dto = new LocaleDto();
+        $dto = new LocaleTransfer();
 
         $dto
             ->setIdLocale($locale->getPrimaryKey())

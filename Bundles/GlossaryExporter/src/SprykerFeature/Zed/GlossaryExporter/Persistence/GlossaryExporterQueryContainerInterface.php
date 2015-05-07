@@ -2,16 +2,16 @@
 
 namespace SprykerFeature\Zed\GlossaryExporter\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 
 interface GlossaryExporterQueryContainerInterface
 {
     /**
      * @param ModelCriteria $expandableQuery
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale);
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale);
 }

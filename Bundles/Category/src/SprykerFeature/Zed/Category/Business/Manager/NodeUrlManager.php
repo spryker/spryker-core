@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\Category\Business\Manager;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
-use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
@@ -43,9 +43,9 @@ class NodeUrlManager implements NodeUrlManagerInterface
 
     /**
      * @param CategoryCategoryNodeTransfer $categoryNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      */
-    public function createUrl(CategoryCategoryNodeTransfer $categoryNode, LocaleDto $locale)
+    public function createUrl(CategoryCategoryNodeTransfer $categoryNode, LocaleTransfer $locale)
     {
         $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
         $categoryUrl = $this->urlPathGenerator->generate($path);

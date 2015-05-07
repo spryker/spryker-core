@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Reader\ReaderInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\WriterInterface;
@@ -39,11 +39,11 @@ class KeyValueMarker implements MarkerInterface
 
     /**
      * @param string $exportType
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return \DateTime
      */
-    public function getLastExportMarkByTypeAndLocale($exportType, LocaleDto $locale)
+    public function getLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale)
     {
         $lastTimeStamp = $this->reader->read($this->keyBuilder->generateKey($exportType, $locale->getLocaleName()));
 
@@ -58,9 +58,9 @@ class KeyValueMarker implements MarkerInterface
 
     /**
      * @param string $exportType
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      */
-    public function setLastExportMarkByTypeAndLocale($exportType, LocaleDto $locale)
+    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale)
     {
         $timestampKey = $this->keyBuilder->generateKey($exportType, $locale->getLocaleName());
         $this->writer->write([ $timestampKey => (new \DateTime())->format('Y-m-d H:i:s')]);

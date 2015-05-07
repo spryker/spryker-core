@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
@@ -13,16 +13,16 @@ interface ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    public function hasProductCategoryMapping($sku, $categoryName, LocaleDto $locale);
+    public function hasProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
 
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return int
      * @throws ProductCategoryMappingExistsException
@@ -30,5 +30,5 @@ interface ProductCategoryManagerInterface
      * @throws MissingCategoryNodeException
      * @throws PropelException
      */
-    public function createProductCategoryMapping($sku, $categoryName, LocaleDto $locale);
+    public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
 }

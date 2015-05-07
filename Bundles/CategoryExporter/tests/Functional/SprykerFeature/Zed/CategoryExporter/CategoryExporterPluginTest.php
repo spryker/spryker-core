@@ -5,11 +5,11 @@ namespace Functional\SprykerFeature\Zed\CategoryExporter;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
 use Generated\Shared\Transfer\CategoryCategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Touch\Business\TouchFacade;
@@ -46,7 +46,7 @@ class CategoryExporterPluginTest extends Test
     protected $localeFacade;
 
     /**
-     * @var LocaleDto
+     * @var LocaleTransfer
      */
     protected $locale;
 
