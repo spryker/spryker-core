@@ -3,24 +3,22 @@
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DiscountDiscountVoucherPoolTransfer;
+use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Discount\Business\Writer\AbstractWriter;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 
-/**
- * Class DiscountVoucherPoolManager
- * @package SprykerFeature\Zed\Discount\Business\Model
- */
 class DiscountVoucherPoolWriter extends AbstractWriter
 {
     /**
-     * @var \Generated\Zed\Ide\AutoCompletion
+     * @var AutoCompletion
      */
     protected $locator;
 
     /**
-     * @param DiscountVoucherPool $discountVoucherPoolTransfer
+     * @param DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer
      * @return mixed
      */
-    public function create(DiscountVoucherPool $discountVoucherPoolTransfer)
+    public function create(DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer)
     {
         $discountVoucherPoolEntity = $this->locator->discount()->entitySpyDiscountVoucherPool();
         $discountVoucherPoolEntity->fromArray($discountVoucherPoolTransfer->toArray());
@@ -30,11 +28,11 @@ class DiscountVoucherPoolWriter extends AbstractWriter
     }
 
     /**
-     * @param DiscountVoucherPool $discountVoucherPoolTransfer
-     * @return array|mixed|\SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool
+     * @param DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer
+     * @return array|mixed|SpyDiscountVoucherPool
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function update(DiscountVoucherPool $discountVoucherPoolTransfer)
+    public function update(DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer)
     {
         $queryContainer = $this->getQueryContainer();
         $discountVoucherPoolEntity = $queryContainer->queryDiscountVoucherPool()

@@ -2,12 +2,13 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Collector;
 
-use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 
 interface CollectorInterface
 {
     /**
      * @param DiscountableContainerInterface $container
+     *
      * @return DiscountableContainerInterface[]
      */
     public function collect(DiscountableContainerInterface $container);

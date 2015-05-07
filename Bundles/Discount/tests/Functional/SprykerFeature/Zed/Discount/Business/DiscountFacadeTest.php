@@ -15,8 +15,10 @@ use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 
 /**
- * @group DiscountFacadeTest
+ * @group SprykerFeature
+ * @group Zed
  * @group Discount
+ * @group Business
  */
 class DiscountFacadeTest extends Test
 {
@@ -204,9 +206,10 @@ class DiscountFacadeTest extends Test
         );
 
         $this->discountFacade->distributeAmount($items, self::DISCOUNT_AMOUNT_4000);
-        $this->assertEquals($items[0]->getGrossPrice(), $items[0]->getDiscounts()[-1]->getAmount());
-        $this->assertEquals($items[1]->getGrossPrice(), $items[1]->getDiscounts()[-1]->getAmount());
-        $this->assertEquals($items[2]->getGrossPrice(), $items[2]->getDiscounts()[-1]->getAmount());
+
+        $this->assertEquals($items[0]->getGrossPrice(), $items[0]->getDiscounts()->getFirstItem()->getAmount());
+        $this->assertEquals($items[1]->getGrossPrice(), $items[1]->getDiscounts()->getFirstItem()->getAmount());
+        $this->assertEquals($items[2]->getGrossPrice(), $items[2]->getDiscounts()->getFirstItem()->getAmount());
     }
 
     public function testShouldCreateOneVoucherCode()
@@ -433,14 +436,15 @@ class DiscountFacadeTest extends Test
 
     /**
      * @param array $grossPrices
-     * @return OrderItem[]
+     *
+     * @return SalesOrderItemTransfer[]
      */
     protected function getItems(array $grossPrices)
     {
         $items = [];
 
         foreach ($grossPrices as $grossPrice) {
-            $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+            $item = new SalesOrderItemTransfer();
             $item->setGrossPrice($grossPrice);
             $items[] = $item;
         }

@@ -3,24 +3,24 @@
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DiscountDiscountVoucherPoolCategoryTransfer;
+use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Discount\Persistence\Propel\Base\SpyDiscountVoucherPoolCategory;
 
-/**
- * Class DiscountVoucherPoolCategoryManager
- * @package SprykerFeature\Zed\Discount\Business\Model
- */
 class DiscountVoucherPoolCategoryWriter extends AbstractWriter
 {
     /**
-     * @var \Generated\Zed\Ide\AutoCompletion
+     * @var AutoCompletion
      */
     protected $locator;
 
     /**
-     * @param DiscountVoucherPoolCategory $discountVoucherPoolCategoryTransfer
-     * @return array|mixed|\SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategory
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @param DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     *
+     * @return SpyDiscountVoucherPoolCategory
+     * @throws PropelException
      */
-    public function create(DiscountVoucherPoolCategory $discountVoucherPoolCategoryTransfer)
+    public function create(DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
         $discountVoucherPoolCategoryEntity = $this->locator->discount()->entitySpyDiscountVoucherPoolCategory();
         $discountVoucherPoolCategoryEntity->fromArray($discountVoucherPoolCategoryTransfer->toArray());
@@ -30,11 +30,11 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
     }
 
     /**
-     * @param DiscountVoucherPoolCategory $discountVoucherPoolCategoryTransfer
-     * @return array|mixed|\SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategory
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @param DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     * @return array|mixed|SpyDiscountVoucherPoolCategory
+     * @throws PropelException
      */
-    public function update(DiscountVoucherPoolCategory $discountVoucherPoolCategoryTransfer)
+    public function update(DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
         $queryContainer = $this->getQueryContainer();
         $discountVoucherPoolCategoryEntity = $queryContainer

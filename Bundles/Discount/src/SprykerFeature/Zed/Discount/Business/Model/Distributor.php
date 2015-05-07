@@ -2,9 +2,10 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Generated\Shared\Transfer\Discount\DependencyDiscountableItemInterfaceTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
 
 class Distributor implements
     DistributorInterface
@@ -66,7 +67,7 @@ class Distributor implements
     protected function addDiscountToDiscountableObject(DiscountableItemInterface $discountableObject, $discountAmount)
     {
         $discounts = $discountableObject->getDiscounts();
-        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        $discount = new CalculationDiscountTransfer();
         $discount->setAmount($discountAmount);
         $discounts->add($discount);
         $discountableObject->setDiscounts($discounts);
