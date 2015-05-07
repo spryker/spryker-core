@@ -78,7 +78,7 @@ class UrlManager implements UrlManagerInterface
             $fkLocale = $this->localeFacade->getLocale($locale->getLocaleName())->getIdLocale();
         }
 
-        $urlEntity = $this->locator->url()->entitySpyUrl();
+        $urlEntity = new SpyUrl();
         $urlEntity
             ->setUrl($url)
             ->setFkLocale($fkLocale)
@@ -298,7 +298,7 @@ class UrlManager implements UrlManagerInterface
         $this->checkUrlDoesNotExist($url);
 
         $fkLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
-        $urlEntity = $this->locator->url()->entitySpyUrl();
+        $urlEntity = new SpyUrl();
         $urlEntity
             ->setFkLocale($fkLocale)
             ->setUrl($url)
