@@ -35,13 +35,13 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      * @throws CustomerNotFoundException
      * @throws PropelException
      */
-    public function newAddress(AddressTransfer $addressTransfer)
+    public function newAddress(CustomerAddressTransfer $addressTransfer)
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
@@ -67,12 +67,12 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      * @throws AddressNotFoundException
      */
-    public function getAddress(AddressTransfer $addressTransfer)
+    public function getAddress(CustomerAddressTransfer $addressTransfer)
     {
         $entity = $this->queryContainer
             ->queryAddress(
@@ -88,14 +88,14 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      * @throws AddressNotFoundException
      * @throws CustomerNotFoundException
      * @throws PropelException
      */
-    public function updateAddress(AddressTransfer $addressTransfer)
+    public function updateAddress(CustomerAddressTransfer $addressTransfer)
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
@@ -123,14 +123,14 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
      * @return bool
      * @throws AddressNotFoundException
      * @throws CustomerNotFoundException
      * @throws PropelException
      */
-    public function setDefaultShippingAddress(AddressTransfer $addressTransfer)
+    public function setDefaultShippingAddress(CustomerAddressTransfer $addressTransfer)
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
@@ -152,14 +152,14 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
      * @return bool
      * @throws AddressNotFoundException
      * @throws CustomerNotFoundException
      * @throws PropelException
      */
-    public function setDefaultBillingAddress(AddressTransfer $addressTransfer)
+    public function setDefaultBillingAddress(CustomerAddressTransfer $addressTransfer)
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
@@ -181,21 +181,21 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
      * @return string
      */
-    public function getFormattedAddressString(AddressTransfer $addressTransfer)
+    public function getFormattedAddressString(CustomerAddressTransfer $addressTransfer)
     {
         return implode("\n", $this->getFormattedAddressArray($addressTransfer));
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
      * @return array
      */
-    public function getFormattedAddressArray(AddressTransfer $addressTransfer)
+    public function getFormattedAddressArray(CustomerAddressTransfer $addressTransfer)
     {
         $address = [];
 
@@ -231,7 +231,7 @@ class Address
     /**
      * @param SpyCustomerAddress $entity
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      */
     protected function entityToTransfer(SpyCustomerAddress $entity)
     {
@@ -239,7 +239,7 @@ class Address
         unset($data["deleted_at"]);
         unset($data["created_at"]);
         unset($data["updated_at"]);
-        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
+        $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->fromArray($data);
 
         return $addressTransfer;
@@ -248,7 +248,7 @@ class Address
     /**
      * @param ObjectCollection $entities
      *
-     * @return AddressTransferCollection
+     * @return CustomerAddressTransfer
      * @throws AddressNotFoundException
      */
     protected function entityCollectionToTransferCollection(ObjectCollection $entities)
@@ -257,19 +257,19 @@ class Address
         foreach ($entities->getData() as $entity) {
             $addresses[] = $this->entityToTransfer($entity);
         }
-        $addressTransferCollection = new \Generated\Shared\Transfer\CustomerAddressTransfer();
+        $addressTransferCollection = new CustomerAddressTransfer();
         $addressTransferCollection->fromArray($addresses);
 
         return $addressTransferCollection;
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
      * @return SpyCustomer
      * @throws CustomerNotFoundException
      */
-    protected function getCustomerFromAddressTransfer(AddressTransfer $addressTransfer)
+    protected function getCustomerFromAddressTransfer(CustomerAddressTransfer $addressTransfer)
     {
         if ($addressTransfer->getEmail()) {
             $customer = $this->queryContainer
@@ -289,12 +289,12 @@ class Address
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
      * @return SpyCustomer
      * @throws CustomerNotFoundException
      */
-    protected function getCustomerFromCustomerTransfer(CustomerTransfer $customerTransfer)
+    protected function getCustomerFromCustomerTransfer(CustomerCustomerTransfer $customerTransfer)
     {
         if ($customerTransfer->getEmail()) {
             $customer = $this->queryContainer
@@ -319,34 +319,26 @@ class Address
      */
     protected function getCustomerCountryId()
     {
-        $isoCode = explode(
-            "_",
-            $this->locator
-                ->locale()
-                ->facade()
-                ->getCurrentLocale()
-                ->getLocaleName()
-        )[1];
-
-        $id_country = $this->locator
+        $idCountry = $this->locator
             ->country()
             ->facade()
-            ->getIdCountryByIso2Code($isoCode);
+            ->getIdCountryByIso2Code($this->getIsoCode())
+        ;
 
-        if ($id_country == null) {
+        if ($idCountry == null) {
             throw new CountryNotFoundException;
         }
 
-        return $id_country;
+        return $idCountry;
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      * @throws AddressNotFoundException
      */
-    public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
+    public function getDefaultShippingAddress(CustomerCustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
         $id_address = $customer->getDefaultShippingAddress();
@@ -359,12 +351,12 @@ class Address
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      * @throws AddressNotFoundException
      */
-    public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
+    public function getDefaultBillingAddress(CustomerCustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
         $id_address = $customer->getDefaultBillingAddress();
@@ -374,5 +366,19 @@ class Address
         }
 
         return $this->entityToTransfer($address);
+    }
+
+    /**
+     * @return string
+     */
+    private function getIsoCode()
+    {
+        $localeName = $this->locator
+            ->locale()
+            ->facade()
+            ->getCurrentLocale()
+            ->getLocaleName();
+
+        return explode('_', $localeName)[1];
     }
 }

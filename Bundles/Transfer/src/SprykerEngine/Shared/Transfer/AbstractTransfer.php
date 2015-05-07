@@ -384,4 +384,13 @@ abstract class AbstractTransfer implements TransferInterface, \IteratorAggregate
         return $this;
     }
 
+    /**
+     * @return object
+     */
+    public function getFirstItem()
+    {
+        $this->getStorage()->rewind();
+
+        return $this->getStorage()->current();
+    }
 }

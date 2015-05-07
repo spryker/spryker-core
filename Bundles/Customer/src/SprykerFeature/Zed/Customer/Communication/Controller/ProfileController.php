@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,7 +34,7 @@ class ProfileController extends AbstractController
         $form = $this->getDependencyContainer()->createCustomerForm($request);
         $form->init();
 
-        $customerTransfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
+        $customerTransfer = new CustomerCustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
         $customerTransfer = $this->getLocator()->customer()->facade()->getCustomer($customerTransfer);
 

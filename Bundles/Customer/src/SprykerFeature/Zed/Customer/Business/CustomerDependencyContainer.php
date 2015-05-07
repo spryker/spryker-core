@@ -2,14 +2,16 @@
 
 namespace SprykerFeature\Zed\Customer\Business;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\CustomerBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
-use SprykerFeature\Shared\Customer\CustomerConfig;
+use SprykerFeature\Zed\Customer\CustomerConfig;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
 use SprykerFeature\Zed\Customer\Business\Customer\Customer;
 use SprykerFeature\Zed\Customer\Business\Customer\Address;
 
 /**
  * @method CustomerConfig getConfig()
+ * @method CustomerBusiness getFactory()
  */
 class CustomerDependencyContainer extends AbstractDependencyContainer
 {

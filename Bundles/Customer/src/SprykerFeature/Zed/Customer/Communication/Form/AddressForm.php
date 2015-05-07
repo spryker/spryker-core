@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
+use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Symfony\Component\Validator\Constraints;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 
@@ -115,9 +116,9 @@ class AddressForm extends AbstractForm
             return [];
         }
 
-        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
+        $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($addressId);
-        $addressTransfer = $this->locator->customer()->facade()->getAddress($addressTransfer);
+        $addressTransfer = $this->getLocator()->customer()->facade()->getAddress($addressTransfer);
         if ($addressTransfer) {
             return $addressTransfer->toArray();
         }
