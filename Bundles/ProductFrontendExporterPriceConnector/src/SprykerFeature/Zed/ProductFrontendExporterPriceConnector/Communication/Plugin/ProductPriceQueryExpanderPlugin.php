@@ -18,7 +18,7 @@ class ProductPriceQueryExpanderPlugin extends AbstractPlugin implements QueryExp
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**

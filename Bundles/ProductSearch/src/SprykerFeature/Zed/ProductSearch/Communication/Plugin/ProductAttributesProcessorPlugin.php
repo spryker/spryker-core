@@ -36,7 +36,7 @@ class ProductAttributesProcessorPlugin extends AbstractPlugin implements DataPro
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**

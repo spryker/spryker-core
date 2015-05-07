@@ -19,7 +19,7 @@ class ProductAvailabilityQueryExpanderPlugin extends AbstractPlugin implements Q
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**

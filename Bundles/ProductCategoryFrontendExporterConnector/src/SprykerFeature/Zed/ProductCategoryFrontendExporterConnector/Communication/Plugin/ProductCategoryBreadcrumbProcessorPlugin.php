@@ -18,7 +18,7 @@ class ProductCategoryBreadcrumbProcessorPlugin extends AbstractPlugin implements
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**

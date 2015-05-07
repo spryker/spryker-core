@@ -36,7 +36,7 @@ class ProductSearchProcessorPlugin extends AbstractPlugin implements DataProcess
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**

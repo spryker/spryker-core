@@ -17,7 +17,7 @@ class ProductPriceProcessorPlugin extends AbstractPlugin implements DataProcesso
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**

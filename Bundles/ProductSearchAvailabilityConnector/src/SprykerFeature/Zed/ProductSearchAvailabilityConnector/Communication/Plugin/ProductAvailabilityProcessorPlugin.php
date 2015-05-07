@@ -13,7 +13,7 @@ class ProductAvailabilityProcessorPlugin extends AbstractPlugin implements DataP
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**

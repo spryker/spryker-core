@@ -320,11 +320,11 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idAbstractProduct
      */
-    public function touchProductActive($idConcreteProduct)
+    public function touchProductActive($idAbstractProduct)
     {
-        $this->touchFacade->touchActive('product', $idConcreteProduct);
+        $this->touchFacade->touchActive('abstract_product', $idAbstractProduct);
     }
 
     /**

@@ -29,6 +29,6 @@ class ProductExportIsFailedDeciderPlugin extends AbstractPlugin implements Expor
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 }

@@ -209,13 +209,13 @@ class ProductFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idAbstractProduct
      */
-    public function touchProductActive($idConcreteProduct)
+    public function touchProductActive($idAbstractProduct)
     {
         $productManager = $this->getDependencyContainer()->createProductManager();
 
-        $productManager->touchProductActive($idConcreteProduct);
+        $productManager->touchProductActive($idAbstractProduct);
     }
 
     /**

@@ -21,7 +21,7 @@ class ProductCategorySearchProcessorPlugin extends AbstractPlugin implements Dat
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**

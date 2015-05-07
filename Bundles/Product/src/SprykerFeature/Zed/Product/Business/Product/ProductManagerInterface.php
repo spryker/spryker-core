@@ -85,9 +85,9 @@ interface ProductManagerInterface
     public function createConcreteProductAttributes($idConcreteProduct, LocaleDto $locale, $name, $attributes);
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idAbstractProduct
      */
-    public function touchProductActive($idConcreteProduct);
+    public function touchProductActive($idAbstractProduct);
 
     /**
      * @param string $sku
