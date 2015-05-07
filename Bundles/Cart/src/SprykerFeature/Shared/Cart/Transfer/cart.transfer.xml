@@ -14,6 +14,14 @@
         <property name="isMerged" type="string" default="null" />
     </transfer>
     <transfer name="CartCartItem">
+
+        <use name="SprykerFeature\Shared\Cart2\Transfer\ItemInterface" />
+        <use name="SprykerFeature\Shared\Cart2\Transfer\ItemCollectionInterface" />
+
+        <interface name="ItemInterface" />
+        <interface name="ItemCollectionInterface" />
+
+        <property name="id" type="int" default="null" />
         <property name="sku" type="string" default="null" />
         <property name="uniqueIdentifier" type="string" default="null" />
         <property name="options" type="array" default="[]" />
