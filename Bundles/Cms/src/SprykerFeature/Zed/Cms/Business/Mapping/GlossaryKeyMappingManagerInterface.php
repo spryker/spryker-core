@@ -23,27 +23,27 @@ interface GlossaryKeyMappingManagerInterface
     public function translatePlaceholder($idPage, $placeholder, array $data = []);
 
     /**
-     * @param PageKeyMapping $pageKeyMapping
+     * @param CmsPageKeyMappingTransfer $pageKeyMapping
      *
-     * @return PageKeyMapping
+     * @return CmsPageKeyMappingTransfer
      * @throws MappingAmbiguousException
      * @throws MissingGlossaryKeyMappingException
      * @throws \Exception
      * @throws PropelException
      */
-    public function savePageKeyMapping(PageKeyMapping $pageKeyMapping);
+    public function savePageKeyMapping(CmsPageKeyMappingTransfer $pageKeyMapping);
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      * @param string $placeholder
      * @param string $value
      *
-     * @return PageKeyMapping
+     * @return CmsPageKeyMappingTransfer
      */
-    public function addPlaceholderText(Page $page, $placeholder, $value);
+    public function addPlaceholderText(CmsPageTransfer $page, $placeholder, $value);
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      * @param string $placeholder
      *
      * @return bool
@@ -51,13 +51,13 @@ interface GlossaryKeyMappingManagerInterface
      * @throws \Exception
      * @throws PropelException
      */
-    public function deletePageKeyMapping(Page $page, $placeholder);
+    public function deletePageKeyMapping(CmsPageTransfer $page, $placeholder);
 
     /**
      * @param int $idPage
      * @param string $placeholder
      *
-     * @return PageKeyMapping
+     * @return CmsPageKeyMappingTransfer
      * @throws MissingGlossaryKeyMappingException
      */
     public function getPagePlaceholderMapping($idPage, $placeholder);

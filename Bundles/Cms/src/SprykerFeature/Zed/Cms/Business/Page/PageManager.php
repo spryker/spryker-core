@@ -77,14 +77,14 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      *
-     * @return Page
+     * @return CmsPageTransfer
      * @throws MissingTemplateException
      * @throws MissingPageException
      * @throws PageExistsException
      */
-    public function savePage(Page $page)
+    public function savePage(CmsPageTransfer $page)
     {
         $this->checkTemplateExists($page->getFkTemplate());
 
@@ -96,14 +96,14 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      *
-     * @return Page
+     * @return CmsPageTransfer
      * @throws MissingTemplateException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function createPage(Page $page)
+    protected function createPage(CmsPageTransfer $page)
     {
         $this->checkTemplateExists($page->getFkTemplate());
 
@@ -118,14 +118,14 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      *
-     * @return Page
+     * @return CmsPageTransfer
      * @throws MissingPageException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function updatePage(Page $page)
+    protected function updatePage(CmsPageTransfer $page)
     {
         $pageEntity = $this->getPageById($page->getIdCmsPage());
         $pageEntity->fromArray($page->toArray());
@@ -197,21 +197,21 @@ class PageManager implements PageManagerInterface
     /**
      * @param SpyCmsPage $page
      *
-     * @return Page
+     * @return CmsPageTransfer
      */
     public function convertPageEntityToTransfer(SpyCmsPage $page)
     {
-        $pageTransfer = new \Generated\Shared\Transfer\CmsPageTransfer();
+        $pageTransfer = new CmsPageTransfer();
         $pageTransfer->fromArray($page->toArray());
 
         return $pageTransfer;
     }
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      * @var SpyCmsGlossaryKeyMapping[] $pageMappings
      */
-    public function touchPageActive(Page $page)
+    public function touchPageActive(CmsPageTransfer $page)
     {
         $pageMappings = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($page->getIdCmsPage())->find();
         foreach ($pageMappings as $pageMapping) {
@@ -222,13 +222,13 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      * @param string $url
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      */
-    public function createPageUrl(Page $page, $url)
+    public function createPageUrl(CmsPageTransfer $page, $url)
     {
         $this->checkPageExists($page->getIdCmsPage());
 

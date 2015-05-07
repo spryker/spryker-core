@@ -24,7 +24,7 @@ class CmsFacade extends AbstractFacade
      * @param string $name
      * @param string $path
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      * @throws TemplateExistsException
      */
     public function createTemplate($name, $path)
@@ -37,7 +37,7 @@ class CmsFacade extends AbstractFacade
     /**
      * @param string $path
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      * @throws MissingTemplateException
      */
     public function getTemplate($path)
@@ -60,12 +60,12 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      *
-     * @return Page
+     * @return CmsPageTransfer
      * @throws MissingPageException
      */
-    public function savePage(Page $page)
+    public function savePage(CmsPageTransfer $page)
     {
         $pageManager = $this->getDependencyContainer()->getPageManager();
 
@@ -73,11 +73,11 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageKeyMapping $pageKeyMapping
+     * @param CmsPageKeyMappingTransfer $pageKeyMapping
      *
-     * @return PageKeyMapping
+     * @return CmsPageKeyMappingTransfer
      */
-    public function savePageKeyMapping(PageKeyMapping $pageKeyMapping)
+    public function savePageKeyMapping(CmsPageKeyMappingTransfer $pageKeyMapping)
     {
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
@@ -101,7 +101,7 @@ class CmsFacade extends AbstractFacade
      * @param int $idPage
      * @param string $placeholder
      *
-     * @return PageKeyMapping
+     * @return CmsPageKeyMappingTransfer
      * @throws MissingGlossaryKeyMappingException
      */
     public function getPagePlaceholderMapping($idPage, $placeholder)
@@ -112,11 +112,11 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param CmsTemplate $cmsTemplate
+     * @param CmsCmsTemplateTransfer $cmsTemplate
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      */
-    public function saveTemplate(CmsTemplate $cmsTemplate)
+    public function saveTemplate(CmsCmsTemplateTransfer $cmsTemplate)
     {
         $templateManager = $this->getDependencyContainer()->getTemplateManager();
 
@@ -140,13 +140,13 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      * @param string $placeholder
      * @param string $value
      *
-     * @return PageKeyMapping
+     * @return CmsPageKeyMappingTransfer
      */
-    public function addPlaceholderText(Page $page, $placeholder, $value)
+    public function addPlaceholderText(CmsPageTransfer $page, $placeholder, $value)
     {
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
@@ -154,7 +154,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      * @param string $placeholder
      *
      * @return bool
@@ -162,7 +162,7 @@ class CmsFacade extends AbstractFacade
      * @throws \Exception
      * @throws PropelException
      */
-    public function deletePageKeyMapping(Page $page, $placeholder)
+    public function deletePageKeyMapping(CmsPageTransfer $page, $placeholder)
     {
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
@@ -170,13 +170,13 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      * @param string $url
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      */
-    public function createPageUrl(Page $page, $url)
+    public function createPageUrl(CmsPageTransfer $page, $url)
     {
         $pageManager = $this->getDependencyContainer()->getPageManager();
 
@@ -184,9 +184,9 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      */
-    public function touchPageActive(Page $page)
+    public function touchPageActive(CmsPageTransfer $page)
     {
         $pageManager = $this->getDependencyContainer()->getPageManager();
         $pageManager->touchPageActive($page);

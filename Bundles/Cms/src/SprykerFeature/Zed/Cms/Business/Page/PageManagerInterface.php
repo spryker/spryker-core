@@ -14,15 +14,15 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 interface PageManagerInterface
 {
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      *
-     * @return Page
+     * @return CmsPageTransfer
      * @throws MissingTemplateException
      * @throws MissingPageException
      * @throws MissingUrlException
      * @throws PageExistsException
      */
-    public function savePage(Page $page);
+    public function savePage(CmsPageTransfer $page);
 
     /**
      * @param int $idPage
@@ -35,21 +35,21 @@ interface PageManagerInterface
     /**
      * @param SpyCmsPage $page
      *
-     * @return Page
+     * @return CmsPageTransfer
      */
     public function convertPageEntityToTransfer(SpyCmsPage $page);
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      */
-    public function touchPageActive(Page $page);
+    public function touchPageActive(CmsPageTransfer $page);
 
     /**
-     * @param Page $page
+     * @param CmsPageTransfer $page
      * @param string $url
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      */
-    public function createPageUrl(Page $page, $url);
+    public function createPageUrl(CmsPageTransfer $page, $url);
 }
