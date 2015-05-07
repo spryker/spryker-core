@@ -127,12 +127,18 @@ class UrlManager implements UrlManagerInterface
      */
     public function convertUrlEntityToTransfer(SpyUrl $urlEntity)
     {
+        $bumps = explode('_', $urlEntity->getResourceType());
+        $bumps = array_map('ucfirst', $bumps);
+
+        $setterName = 'setFk' . implode('', $bumps);
+
         $transferUrl = new UrlUrlTransfer();
         $transferUrl
             ->setFkLocale($urlEntity->getFkLocale())
-            // TODO this is logical code which is forbidden in Transfer Objects
-//            ->setResource($urlEntity->getResourceType(), $urlEntity->getResourceId())
             ->setUrl($urlEntity->getUrl())
+            ->setResourceType($urlEntity->getResourceType())
+            ->setResourceId($urlEntity->getResourceId())
+            ->$setterName($urlEntity->getResourceId())
             ->setIdUrl($urlEntity->getIdUrl())
         ;
 
