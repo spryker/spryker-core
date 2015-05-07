@@ -8,7 +8,7 @@ use SprykerFeature\Shared\Library\Filter\FilterChain;
 use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 
 
-abstract class AbstractTransfer implements TransferInterface, \IteratorAggregate
+abstract class AbstractTransfer implements TransferInterface, \IteratorAggregate, \Countable
 {
 
     /**
@@ -42,6 +42,15 @@ abstract class AbstractTransfer implements TransferInterface, \IteratorAggregate
     public function getIterator()
     {
         return $this->getStorage();
+
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return $this->getStorage()->count();
     }
 
     /**
