@@ -17,7 +17,10 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 /**
- * @group Salesrule
+ * @group SprykerFeature
+ * @group Zed
+ * @group DiscountCalculationConnector
+ * @group Business
  * @group Calculator
  */
 class CalculatorTest extends Test
@@ -68,7 +71,7 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnEmptyOrder()
     {
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
+        $order = new SalesOrderTransfer();
         $calculator = $this->getCalculatorModel();
         $calculatorStack = $this->createCalculatorStack();
         $calculator->recalculate($calculatorStack, $order);
@@ -77,26 +80,26 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnExampleOrderWithOneItemAndExpenseOnOrder()
     {
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
-        $items = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
-        $item =  new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $order = new SalesOrderTransfer();
+        $items = new SalesOrderItemTransfer();
+        $item =  new SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $discounts = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
-        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        $discounts = new CalculationDiscountTransfer();
+        $discount = new CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $discounts->add($discount);
-        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        $discount = new CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $discounts->add($discount);
 
-        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
+        $expense = new CalculationExpenseTransfer();
         $expense->setName('Shipping Costs')
             ->setType(ExpenseConstants::EXPENSE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS)
             ->setGrossPrice(self::ORDER_SHIPPING_COSTS);
 
-        $expensesCollection = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
+        $expensesCollection = new CalculationExpenseTransfer();
         $expensesCollection->add($expense);
         $order->setExpenses($expensesCollection);
 

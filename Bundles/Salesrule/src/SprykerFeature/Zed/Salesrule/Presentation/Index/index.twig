@@ -1,6 +1,0 @@
-{% extends '@Application/layout.twig' %}
-{% block content %}
-<script type="text/javascript" src="{{ staticPath('Salesrule/scripts/conditions.js') }}"></script>
-{{ navBar('Discounts', '<ul class="nav navbar-nav"><li><a href="salesrule/index/edit" class="icon-plus"> ' ~ 'Add Discount'|trans ~ '</a></li></ul>') }}
-{{ panel('Discounts'|trans, widget('/salesrule/salesrule-grid'), {'noWrap': true}) }}
-{% endblock %}

@@ -153,7 +153,7 @@ class GrandTotalWithDiscountTest extends Test
         );
     }
 
-    public function testGrandTotalShouldReturnTheItemGrossPriceMinusTheItemSalesurleDiscountForAnOrderWithTwoItemsAndASalesruleDiscountAndACouponDiscount()
+    public function testGrandTotalShouldReturnTheItemGrossPriceMinusTheItemSalesurleDiscountForAnOrderWithTwoItemsAndADiscountAndACouponDiscount()
     {
         $order = $this->getOrderWithFixtureData();
 

@@ -46,7 +46,6 @@
             <has name="couponCode" type="string" />
             <remove name="couponCode" type="string" />
         </property>
-        <property name="salesruleLog" type="string" default="null" />
         <property name="createdAt" type="string" default="null" />
         <property name="isTest" type="string" default="null" />
         <property name="totals" type="TotalsInterface" collection="CalculationTotalsTransfer" />

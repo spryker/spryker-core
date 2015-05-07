@@ -28,7 +28,6 @@
         <interface name="DiscountItemInterface" />
         <interface name="DiscountableItemCollectionInterface" />
 
-        <property name="salesruleId" type="string" default="null" />
         <property name="displayName" type="string" default="null" />
         <property name="amount" type="int" default="0" />
         <property name="type" type="string" default="null" />
