@@ -28,30 +28,30 @@ interface RedirectManagerInterface
     /**
      * @param SpyRedirect $redirectEntity
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      */
     public function convertRedirectEntityToTransfer(SpyRedirect $redirectEntity);
 
     /**
-     * @param Redirect $redirect
+     * @param UrlRedirectTransfer $redirect
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      * @throws MissingUrlException
      * @throws RedirectExistsException
      */
-    public function saveRedirect(Redirect $redirect);
+    public function saveRedirect(UrlRedirectTransfer $redirect);
 
     /**
-     * @param Redirect $redirect
+     * @param UrlRedirectTransfer $redirect
      */
-    public function touchRedirectActive(Redirect $redirect);
+    public function touchRedirectActive(UrlRedirectTransfer $redirect);
 
     /**
      * @param string $url
      * @param LocaleDto $locale
      * @param int $idRedirect
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
      */

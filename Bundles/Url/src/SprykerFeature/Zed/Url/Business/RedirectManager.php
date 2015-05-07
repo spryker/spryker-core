@@ -89,23 +89,23 @@ class RedirectManager implements RedirectManagerInterface
     /**
      * @param SpyRedirect $redirectEntity
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      */
     public function convertRedirectEntityToTransfer(SpyRedirect $redirectEntity)
     {
-        $transferRedirect = new \Generated\Shared\Transfer\UrlRedirectTransfer();
+        $transferRedirect = new UrlRedirectTransfer();
         $transferRedirect->fromArray($redirectEntity->toArray());
 
         return $transferRedirect;
     }
 
     /**
-     * @param Redirect $redirect
+     * @param UrlRedirectTransfer $redirect
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      * @throws RedirectExistsException
      */
-    public function saveRedirect(Redirect $redirect)
+    public function saveRedirect(UrlRedirectTransfer $redirect)
     {
         if (is_null($redirect->getIdRedirect())) {
             return $this->createRedirectFromTransfer($redirect);
@@ -115,14 +115,14 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
-     * @param Redirect $redirectTransfer
+     * @param UrlRedirectTransfer $redirectTransfer
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      * @throws RedirectExistsException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function createRedirectFromTransfer(Redirect $redirectTransfer)
+    protected function createRedirectFromTransfer(UrlRedirectTransfer $redirectTransfer)
     {
         $redirectEntity = $this->locator->url()->entitySpyRedirect();
 
@@ -139,14 +139,14 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
-     * @param Redirect $redirectTransfer
+     * @param UrlRedirectTransfer $redirectTransfer
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      * @throws MissingRedirectException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function updateRedirectFromTransfer(Redirect $redirectTransfer)
+    protected function updateRedirectFromTransfer(UrlRedirectTransfer $redirectTransfer)
     {
         $redirectEntity = $this->getRedirectById($redirectTransfer->getIdRedirect());
         $redirectEntity->fromArray($redirectTransfer->toArray());
@@ -182,9 +182,9 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
-     * @param Redirect $redirect
+     * @param UrlRedirectTransfer $redirect
      */
-    public function touchRedirectActive(Redirect $redirect)
+    public function touchRedirectActive(UrlRedirectTransfer $redirect)
     {
         $this->touchFacade->touchActive(self::ITEM_TYPE_REDIRECT, $redirect->getIdRedirect());
     }
@@ -194,7 +194,7 @@ class RedirectManager implements RedirectManagerInterface
      * @param LocaleDto $locale
      * @param int $idRedirect
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
      * @throws MissingRedirectException

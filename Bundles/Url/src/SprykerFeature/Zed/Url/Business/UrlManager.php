@@ -122,12 +122,12 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param SpyUrl $urlEntity
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws MissingResourceException
      */
     public function convertUrlEntityToTransfer(SpyUrl $urlEntity)
     {
-        $transferUrl = new \Generated\Shared\Transfer\UrlUrlTransfer();
+        $transferUrl = new UrlUrlTransfer();
         $transferUrl
             ->setFkLocale($urlEntity->getFkLocale())
             // TODO this is logical code which is forbidden in Transfer Objects
@@ -204,15 +204,15 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param Url $url
+     * @param UrlUrlTransfer $url
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      * @throws MissingUrlException
      * @throws \Exception
      * @throws PropelException
      */
-    public function saveUrl(Url $url)
+    public function saveUrl(UrlUrlTransfer $url)
     {
         if (is_null($url->getIdUrl())) {
             return $this->createUrlFromTransfer($url);
@@ -222,14 +222,14 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param Url $url
+     * @param UrlUrlTransfer $url
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function createUrlFromTransfer(Url $url)
+    protected function createUrlFromTransfer(UrlUrlTransfer $url)
     {
         $this->checkUrlDoesNotExist($url->getUrl());
 
@@ -244,15 +244,15 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param Url $url
+     * @param UrlUrlTransfer $url
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws MissingUrlException
      * @throws UrlExistsException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function updateUrlFromTransfer(Url $url)
+    protected function updateUrlFromTransfer(UrlUrlTransfer $url)
     {
         $urlEntity = $this->getUrlById($url->getIdUrl());
 
@@ -271,10 +271,10 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param Url $urlTransfer
+     * @param UrlUrlTransfer $urlTransfer
      * @param SpyUrl $urlEntity
      */
-    protected function syncUrlEntityWithTransfer(Url $urlTransfer, SpyUrl $urlEntity)
+    protected function syncUrlEntityWithTransfer(UrlUrlTransfer $urlTransfer, SpyUrl $urlEntity)
     {
         $urlEntity
             ->setFkLocale($urlTransfer->getFkLocale())

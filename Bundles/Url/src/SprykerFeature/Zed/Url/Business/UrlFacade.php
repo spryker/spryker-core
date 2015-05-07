@@ -22,7 +22,7 @@ class UrlFacade extends AbstractFacade
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      */
@@ -39,7 +39,7 @@ class UrlFacade extends AbstractFacade
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      */
@@ -52,11 +52,11 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param Url $url
+     * @param UrlUrlTransfer $url
      *
-     * @return Url
+     * @return UrlUrlTransfer
      */
-    public function saveUrl(Url $url)
+    public function saveUrl(UrlUrlTransfer $url)
     {
         $urlManager = $this->getDependencyContainer()->getUrlManager();
 
@@ -90,7 +90,7 @@ class UrlFacade extends AbstractFacade
     /**
      * @param string $urlString
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws MissingUrlException
      */
     public function getUrlByPath($urlString)
@@ -104,7 +104,7 @@ class UrlFacade extends AbstractFacade
     /**
      * @param int $idUrl
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws MissingUrlException
      */
     public function getUrlById($idUrl)
@@ -127,7 +127,7 @@ class UrlFacade extends AbstractFacade
      * @param string $toUrl
      * @param int $status
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      * @throws MissingUrlException
      * @throws \Exception
      * @throws PropelException
@@ -145,7 +145,7 @@ class UrlFacade extends AbstractFacade
      * @param LocaleDto $locale
      * @param int $idRedirect
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
      */
@@ -157,11 +157,11 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param Redirect $redirect
+     * @param UrlRedirectTransfer $redirect
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      */
-    public function saveRedirect(Redirect $redirect)
+    public function saveRedirect(UrlRedirectTransfer $redirect)
     {
         $redirectManager = $this->getDependencyContainer()->getRedirectManager();
 
@@ -169,9 +169,9 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param Redirect $redirect
+     * @param UrlRedirectTransfer $redirect
      */
-    public function touchRedirectActive(Redirect $redirect)
+    public function touchRedirectActive(UrlRedirectTransfer $redirect)
     {
         $redirectManager = $this->getDependencyContainer()->getRedirectManager();
 

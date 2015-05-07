@@ -27,15 +27,15 @@ interface UrlManagerInterface
     public function createUrl($url, LocaleDto $locale, $resourceType, $idResource);
 
     /**
-     * @param Url $url
+     * @param UrlUrlTransfer $url
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      * @throws MissingUrlException
      * @throws \Exception
      * @throws PropelException
      */
-    public function saveUrl(Url $url);
+    public function saveUrl(UrlUrlTransfer $url);
 
     /**
      * @param string $url
@@ -75,7 +75,7 @@ interface UrlManagerInterface
     /**
      * @param SpyUrl $urlEntity
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws MissingResourceException
      */
     public function convertUrlEntityToTransfer(SpyUrl $urlEntity);
