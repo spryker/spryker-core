@@ -20,6 +20,7 @@ use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSe
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
 use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredException;
+use Generated\Shared\Transfer\CustomerAddressCollectionTransfer;
 
 class Customer
 {
@@ -294,13 +295,10 @@ class Customer
      */
     protected function entityCollectionToTransferCollection(ObjectCollection $entities)
     {
-        $addressCollection = new CustomerAddressTransfer();
+        $addressCollection = new CustomerAddressCollectionTransfer();
         foreach ($entities->getData() as $customer) {
             $addressCollection->add($this->entityToTransfer($customer));
-//            $addresses[] = $this->entityToTransfer($customer);
         }
-//        $addressTransferCollection = new CustomerAddressTransfer();
-//        $addressTransferCollection->fromArray($addresses);
 
         return $addressCollection;
     }

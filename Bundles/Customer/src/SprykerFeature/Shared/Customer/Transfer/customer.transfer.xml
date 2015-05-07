@@ -27,6 +27,17 @@
         <property name="fkCountry" type="int" default="null" />
         <property name="iso2Country" type="string" default="null" />
     </transfer>
+
+    <transfer name="CustomerAddressCollection">
+        <use name="Generated\Shared\Transfer\CustomerAddressTransfer" />
+
+        <property name="customerAddressItems" type="CustomerAddress" collection="TransferArrayObject">
+            <add name="customerAddress" />
+            <has name="customerAddress" />
+            <remove name="customerAddress" />
+        </property>
+    </transfer>
+
     <transfer name="CustomerCustomer">
         <use name="Generated\Shared\Transfer\CustomerAddressTransfer" />
 
