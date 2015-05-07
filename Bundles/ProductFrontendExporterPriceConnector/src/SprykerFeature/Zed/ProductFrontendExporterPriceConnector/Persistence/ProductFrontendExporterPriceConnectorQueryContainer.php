@@ -24,8 +24,8 @@ class ProductFrontendExporterPriceConnectorQueryContainer extends AbstractQueryC
     }
 
     /**
-     * @param $priceType
-     * @return $this|SpyPriceTypeQuery
+     * @param string $priceType
+     * @return SpyPriceTypeQuery
      */
     public function getFkDefaultPriceType($priceType)
     {

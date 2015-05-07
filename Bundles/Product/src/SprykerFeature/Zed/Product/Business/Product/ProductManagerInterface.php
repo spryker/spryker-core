@@ -94,7 +94,7 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleDto $locale
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -106,7 +106,7 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleDto $locale
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -118,7 +118,7 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleDto $locale
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -130,7 +130,7 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleDto $locale
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException

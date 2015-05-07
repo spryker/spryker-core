@@ -332,7 +332,7 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleDto $locale
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -349,7 +349,7 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleDto $locale
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -364,7 +364,7 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleDto $locale
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -382,7 +382,7 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleDto $locale
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException

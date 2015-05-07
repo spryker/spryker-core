@@ -223,7 +223,7 @@ class ProductFacade extends AbstractFacade
      * @param string $url
      * @param LocaleDto $locale
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
