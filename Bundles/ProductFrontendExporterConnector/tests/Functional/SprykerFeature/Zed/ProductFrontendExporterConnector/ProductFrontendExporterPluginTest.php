@@ -85,7 +85,6 @@ class ProductFrontendExporterPluginTest extends Test
             [
                 'de.abcde.resource.abstract_product.' . $idAbstractProduct =>
                     [
-                        'sku' => 'AbstractTestSku',
                         'abstract_attributes' =>
                             [
                                 'thumbnail_url' => '/images/product/default.png',
@@ -99,6 +98,7 @@ class ProductFrontendExporterPluginTest extends Test
                                 'name' => 'Ted Technical Robot',
                             ],
                         'name' => 'TestProductName',
+                        'abstract_sku' => 'AbstractTestSku',
                         'url' => '/some-url',
                         'concrete_products' => [
                             [
