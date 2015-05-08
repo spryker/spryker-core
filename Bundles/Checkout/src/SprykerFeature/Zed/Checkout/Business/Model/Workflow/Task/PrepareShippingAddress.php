@@ -22,7 +22,7 @@ class PrepareShippingAddress extends AbstractPrepareAddress
             return;
         }
 
-        if (!$transferOrder->getCustomer()->isEmpty()) {
+        if ($transferOrder->getCustomer()) {
             $transferCustomerAddress = $this->loadCustomerAddress($transferOrder->getShippingAddress(), $transferOrder->getCustomer());
 
             if ($transferOrder->getCustomer()->getBillingAddress()->getIsDefaultShipping()) {

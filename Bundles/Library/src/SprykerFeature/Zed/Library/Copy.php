@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\Library;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
-use SprykerEngine\Shared\Transfer\AbstractTransferCollection;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
 
@@ -139,12 +138,12 @@ class Copy
     }
 
     /**
-     * @param AbstractTransferCollection $transferCollection
+     * @param $transferCollection
      * @param Collection $entityCollection
      * @param $enrich
-     * @return AbstractTransferCollection
+     * @return mixed
      */
-    public static function entityCollectionToTransferCollection(AbstractTransferCollection $transferCollection, Collection $entityCollection, $enrich)
+    public static function entityCollectionToTransferCollection($transferCollection, Collection $entityCollection, $enrich)
     {
         foreach ($entityCollection as $entity) {
             $transfer = $transferCollection->getEmptyTransferItem();
@@ -155,12 +154,12 @@ class Copy
     }
 
     /**
-     * @param AbstractTransferCollection $transferCollection
+     * @param $transferCollection
      * @param Collection $entityCollection
      * @param $enrich
      * @return Collection
      */
-    private static function transferCollectionToEntityCollection(AbstractTransferCollection $transferCollection, Collection $entityCollection, $enrich)
+    private static function transferCollectionToEntityCollection($transferCollection, Collection $entityCollection, $enrich)
     {
         foreach ($transferCollection as $transfer) {
             $entityName = $entityCollection->getModel();

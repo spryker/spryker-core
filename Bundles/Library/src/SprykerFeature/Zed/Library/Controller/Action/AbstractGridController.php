@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\Library\Controller\Action;
 
 use SprykerFeature\Shared\Library\Error\ErrorLogger;
-use SprykerEngine\Shared\Transfer\AbstractTransferCollection;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -115,7 +114,7 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param Request $request
-     * @return AbstractTransferCollection
+     * @return
      */
     protected function createTransferCollection(Request $request)
     {
@@ -154,10 +153,10 @@ abstract class AbstractGridController extends AbstractWidgetController
     }
 
     /**
-     * @param AbstractTransferCollection $collection
+     * @param $collection
      * @return array
      */
-    protected function extractResultIds(AbstractTransferCollection $collection)
+    protected function extractResultIds($collection)
     {
         $result = [];
         $getterMethod = $this->grid->getGridIdFieldGetter();
@@ -274,7 +273,7 @@ abstract class AbstractGridController extends AbstractWidgetController
     }
 
     /**
-     * @return AbstractTransferCollection
+     * @return mixed
      */
     protected function loadTransferCollection()
     {
@@ -289,10 +288,10 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param $grid
-     * @param AbstractTransferCollection $collection
+     * @param $collection
      * @throws \ErrorException
      */
-    public function handleCreateOrUpdate($grid, AbstractTransferCollection $collection = null)
+    public function handleCreateOrUpdate($grid, $collection = null)
     {
         throw new \ErrorException('Modifying not allowed for this grid!');
     }

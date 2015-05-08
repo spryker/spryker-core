@@ -112,7 +112,6 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
     protected function getOrderWithFixtureData()
     {
         $order = new SalesOrderTransfer();
-        $order->fillWithFixtureData();
 
         return $order;
     }
@@ -123,7 +122,6 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
     protected function getItemWithFixtureData()
     {
         $item = new SalesOrderItemTransfer();
-        $item->fillWithFixtureData();
 
         return $item;
     }
@@ -134,7 +132,6 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
     protected function getExpenseWithFixtureData()
     {
         $expense = new CalculationExpenseTransfer();
-        $expense->fillWithFixtureData();
 
         return $expense;
     }

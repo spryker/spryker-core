@@ -4,7 +4,6 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller\Widget;
 
 use Generated\Shared\Transfer\SalesCommentTransfer;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
-use SprykerEngine\Shared\Transfer\AbstractTransferCollection;
 use SprykerFeature\Zed\Library\Controller\Action\AbstractGridController;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Communication\Grid\Comment as CommentGrid;
@@ -24,10 +23,10 @@ class CommentGridController extends AbstractGridController
 
     /**
      * @param $grid
-     * @param AbstractTransferCollection $collection
+     * @param $collection
      * @return mixed|void
      */
-    public function handleCreateOrUpdate($grid, AbstractTransferCollection $collection = null)
+    public function handleCreateOrUpdate($grid, $collection = null)
     {
         $this->facadeSales->saveComment($collection);
     }

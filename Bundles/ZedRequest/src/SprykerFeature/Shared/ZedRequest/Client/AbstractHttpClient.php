@@ -203,7 +203,6 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $request->setPassword($this->password);
         }
         if (!empty($transferObject)) {
-            $transferObject->validate();
             $request->setTransfer($transferObject);
         }
         return $request;

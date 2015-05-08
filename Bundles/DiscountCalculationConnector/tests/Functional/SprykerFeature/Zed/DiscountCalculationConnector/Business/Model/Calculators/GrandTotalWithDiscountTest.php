@@ -214,7 +214,6 @@ class GrandTotalWithDiscountTest extends Test
     protected function getOrderWithFixtureData()
     {
         $order = new SalesOrderTransfer();
-        $order->fillWithFixtureData();
 
         return $order;
     }
@@ -225,7 +224,6 @@ class GrandTotalWithDiscountTest extends Test
     protected function getItemWithFixtureData()
     {
         $item = new SalesOrderItemTransfer();
-        $item->fillWithFixtureData();
 
         return $item;
     }
@@ -236,7 +234,6 @@ class GrandTotalWithDiscountTest extends Test
     protected function getExpenseWithFixtureData()
     {
         $expense = new CalculationExpenseTransfer();
-        $expense->fillWithFixtureData();
 
         return $expense;
     }

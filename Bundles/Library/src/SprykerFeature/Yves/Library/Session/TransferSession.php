@@ -39,7 +39,6 @@ class TransferSession
         $transferArray = $this->session->get($name);
         if (!empty($transferArray)) {
             $transferObject->fromArray($transferArray, true);
-            $transferObject->validate();
         }
 
         return $transferObject;

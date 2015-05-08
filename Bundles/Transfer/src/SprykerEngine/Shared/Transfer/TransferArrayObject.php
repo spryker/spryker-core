@@ -3,12 +3,11 @@
 namespace SprykerEngine\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
-use SprykerEngine\Shared\Transfer\TransferCollectionInterface;
 
 /**
  * @deprecated
  */
-class TransferArrayObject extends \ArrayObject implements TransferCollectionInterface
+class TransferArrayObject extends \ArrayObject
 {
     /**
      * @param AbstractTransfer $transfer
@@ -20,6 +19,7 @@ class TransferArrayObject extends \ArrayObject implements TransferCollectionInte
 
     /**
      * @param AbstractTransfer $transfer
+     *
      * @return bool
      */
     public function has(AbstractTransfer $transfer)
@@ -79,20 +79,20 @@ class TransferArrayObject extends \ArrayObject implements TransferCollectionInte
     /**
      * @param bool $includeNullValues
      * @param bool $recursive
-     * @param bool $formatToUnderscore
+     *
      * @return array
      */
-    public function toArray($includeNullValues = true, $recursive = true, $formatToUnderscore = true)
+    public function toArray($includeNullValues = true, $recursive = true)
     {
         // TODO: Implement toArray() method.
     }
 
     /**
      * @param bool $recursive
-     * @param bool $formatToUnderscore
+     *
      * @return array
      */
-    public function modifiedToArray($recursive = true, $formatToUnderscore = true)
+    public function modifiedToArray($recursive = true)
     {
         // TODO: Implement modifiedToArray() method.
     }

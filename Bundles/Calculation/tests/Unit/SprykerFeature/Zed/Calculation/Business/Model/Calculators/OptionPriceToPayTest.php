@@ -163,7 +163,6 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     protected function getOrderWithFixtureData()
     {
         $order = new SalesOrderTransfer();
-        $order->fillWithFixtureData();
 
         return $order;
     }
@@ -174,7 +173,6 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     protected function getItemWithFixtureData()
     {
         $item = new SalesOrderItemTransfer();
-        $item->fillWithFixtureData();
 
         return $item;
     }

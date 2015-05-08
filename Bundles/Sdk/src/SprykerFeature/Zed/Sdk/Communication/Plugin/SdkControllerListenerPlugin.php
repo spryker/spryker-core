@@ -83,7 +83,6 @@ class SdkControllerListenerPlugin extends AbstractPlugin implements SdkControlle
         $response = new Response(Locator::getInstance());
 
         if ($result instanceof TransferInterface) {
-            $result->validate();
             $response->setTransfer($result);
         }
 

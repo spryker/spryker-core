@@ -19,7 +19,7 @@ class SaveCustomerIfNew extends AbstractTask
      */
     public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext)
     {
-        if ($transferOrder->getCustomer()->getIdCustomer() || $transferOrder->getCustomer()->isEmpty()) {
+        if ($transferOrder->getCustomer()->getIdCustomer() || !$transferOrder->getCustomer()) {
             return;
         }
 

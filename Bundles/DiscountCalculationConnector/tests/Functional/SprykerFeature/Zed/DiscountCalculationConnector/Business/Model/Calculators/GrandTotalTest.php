@@ -74,7 +74,6 @@ class GrandTotalTest extends Test
         $order = $this->getOrderWithFixtureData();
 
         $item = $this->getItemWithFixtureData();
-        $item->fillWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
         $order->addItem($item);
 
@@ -137,7 +136,6 @@ class GrandTotalTest extends Test
     protected function getOrderWithFixtureData()
     {
         $order = new SalesOrderTransfer();
-        $order->fillWithFixtureData();
 
         return $order;
     }
@@ -148,7 +146,6 @@ class GrandTotalTest extends Test
     protected function getItemWithFixtureData()
     {
         $item = new SalesOrderItemTransfer();
-        $item->fillWithFixtureData();
 
         return $item;
     }
@@ -159,7 +156,6 @@ class GrandTotalTest extends Test
     protected function getExpenseWithFixtureData()
     {
         $expense = new CalculationExpenseTransfer();
-        $expense->fillWithFixtureData();
 
         return $expense;
     }

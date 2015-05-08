@@ -6,27 +6,23 @@ interface TransferInterface
 {
 
     /**
-     * @return boolean
-     */
-    public function isEmpty();
-
-    /**
      * @param bool $includeNullValues
      * @param bool $recursive
-     * @param bool $formatToUnderscore
+     *
      * @return array
      */
-    public function toArray($includeNullValues = true, $recursive = true, $formatToUnderscore = true);
+    public function toArray($includeNullValues = true, $recursive = true);
 
     /**
      * @param bool $recursive
-     * @param bool $formatToUnderscore
+     *
      * @return array
      */
-    public function modifiedToArray($recursive = true, $formatToUnderscore = true);
+    public function modifiedToArray($recursive = true);
 
     /**
      * @param array $values
+     *
      * @param bool $fuzzyMatch
      */
     public function fromArray(array $values, $fuzzyMatch = false);

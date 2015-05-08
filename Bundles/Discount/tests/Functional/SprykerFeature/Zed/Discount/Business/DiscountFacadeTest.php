@@ -423,12 +423,11 @@ class DiscountFacadeTest extends Test
     }
 
     /**
-     * @return Order
+     * @return SalesOrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
-        $order->fillWithFixtureData();
+        $order = new SalesOrderTransfer();
 
         return $order;
     }

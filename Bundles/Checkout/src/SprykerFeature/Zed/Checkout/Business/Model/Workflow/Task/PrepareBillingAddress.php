@@ -17,10 +17,10 @@ class PrepareBillingAddress extends AbstractPrepareAddress
      */
     public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext)
     {
-        if (!$transferOrder->getCustomer()->isEmpty()) {
+        if ($transferOrder->getCustomer()) {
             $transferCustomerAddress = $this->loadCustomerAddress($transferOrder->getBillingAddress(), $transferOrder->getCustomer());
 
-            if ($transferOrder->getCustomer()->getAddresses()->isEmpty()) {
+            if (!$transferOrder->getCustomer()->getAddresses()) {
                 $transferCustomerAddress->setIsDefaultBilling(true);
                 $transferCustomerAddress->setIsDefaultShipping(true);
                 $transferOrder->getCustomer()->setShippingAddress($transferCustomerAddress);
