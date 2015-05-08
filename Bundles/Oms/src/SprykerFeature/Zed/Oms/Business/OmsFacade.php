@@ -117,7 +117,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
             ->createOrderStateMachineOrderStateMachine($logContext);
 
         return $this->getDependencyContainer()
-            ->createOrderStateMachineOrderStateMachineTimeout($logContext)
+            ->createOrderStateMachineTimeout($logContext)
             ->checkTimeouts($orderStateMachine);
     }
 
