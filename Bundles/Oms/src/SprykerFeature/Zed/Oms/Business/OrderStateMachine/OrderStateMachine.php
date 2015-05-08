@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
+use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
@@ -572,7 +573,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected function makeDataReadOnly($data)
     {
         if (is_array($data)) {
-            $data = $this->factory->createModelUtilReadOnlyArrayObject($data);
+            $data = $this->factory->createUtilReadOnlyArrayObject($data);
 
             return $data;
         }
