@@ -5,198 +5,149 @@
 
 
     <transfer name="SalesOrder">
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface" />
-        <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
-        <use name="Generated\Shared\Transfer\CalculationTotalsTransfer" />
-        <use name="Generated\Shared\Transfer\CalculationExpenseTransfer" />
-        <use name="Generated\Shared\Transfer\CustomerCustomerTransfer" />
-        <use name="Generated\Shared\Transfer\SalesOrderItemTransfer" />
-        <use name="Generated\Shared\Transfer\SalesAddressTransfer" />
-        <use name="Generated\Shared\Transfer\SalesInvoiceTransfer" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableOptionsInterface" />
-
-        <interface name="DiscountableContainerInterface" />
-        <property name="idSalesOrder" type="int" default="null" />
-        <property name="fkSalesOrderAddressBilling" type="int" default="null" />
-        <property name="fkSalesOrderAddressShipping" type="int" default="null" />
-        <property name="fkCustomer" type="int" default="null" />
-        <property name="email" type="string" default="null" />
-        <property name="salutation" type="string" default="null" />
-        <property name="lastName" type="string" default="null" />
-        <property name="firstName" type="string" default="null" />
-        <property name="incrementId" type="string" default="null" />
-        <property name="billingAddress" type="SalesAddressTransfer" collection="SalesAddressTransfer" />
-        <property name="shippingAddress" type="SalesAddressTransfer" collection="SalesAddressTransfer" />
-        <property name="customer" type="CustomerCustomerTransfer" collection="CustomerCustomerTransfer" />
-        <property name="items" type="\ArrayObject" collection="SalesOrderItemTransfer">
-            <add name="item" type="CalculableItemInterface" />
-            <has name="item" type="CalculableItemInterface" />
-            <remove name="item" type="CalculableItemInterface" />
-        </property>
-        <property name="payment" type="string" default="null" />
-        <property name="couponCodes" type="array" default="[]" collection="TransferArrayObject">
-            <add name="couponCode" type="string" />
-            <has name="couponCode" type="string" />
-            <remove name="couponCode" type="string" />
-        </property>
-        <property name="createdAt" type="string" default="null" />
-        <property name="isTest" type="string" default="null" />
-        <property name="totals" type="TotalsInterface" collection="CalculationTotalsTransfer" />
-        <property name="expenses" type="\ArrayObject" collection="CalculationExpenseTransfer">
-            <add name="expense" type="ExpenseItemInterface" />
-            <remove name="expense" type="ExpenseItemInterface" />
-        </property>
-        <property name="discounts" type="\ArrayObject" collection="CalculationDiscountTransfer">
-            <add name="discount" type="DiscountItemInterface" />
-            <remove name="discount" type="DiscountItemInterface" />
-        </property>
-        <property name="invoice" type="SalesInvoiceTransfer" collection="SalesInvoiceTransfer" />
+        <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface" />
+        <property name="idSalesOrder" type="int" />
+        <property name="fkSalesOrderAddressBilling" type="int" />
+        <property name="fkSalesOrderAddressShipping" type="int" />
+        <property name="fkCustomer" type="int" />
+        <property name="email" type="string" />
+        <property name="salutation" type="string" />
+        <property name="lastName" type="string" />
+        <property name="firstName" type="string" />
+        <property name="incrementId" type="string" />
+        <property name="billingAddress" type="SalesAddressTransfer[]" />
+        <property name="shippingAddress" type="SalesAddressTransfer[]" />
+        <property name="customer" type="CustomerCustomerTransfer[]" />
+        <property name="items" type="SalesOrderItemTransfer[]"  singular="item" />
+        <property name="payment" type="string" />
+        <property name="couponCodes" type="array" singular="couponCode" />
+        <property name="createdAt" type="string" />
+        <property name="isTest" type="string" />
+        <property name="totals" type="CalculationTotalsTransfer[]" />
+        <property name="expenses" type="CalculationExpenseTransfer[]" singular="ExpenseItemInterface" />
+        <property name="invoice" type="SalesInvoiceTransfer[]" />
     </transfer>
+
     <transfer name="SalesAddress">
-        <property name="idSalesOrderAddress" type="int" default="null" />
-        <property name="idCustomerAddress" type="int" default="null" />
-        <property name="iso2Country" type="string" default="null" />
-        <property name="region" type="string" default="null" />
-        <property name="fkMiscCountry" type="int" default="null" />
-        <property name="salutation" type="string" default="null" />
-        <property name="firstName" type="string" default="null" />
-        <property name="middleName" type="string" default="null" />
-        <property name="lastName" type="string" default="null" />
-        <property name="email" type="string" default="null" />
-        <property name="address1" type="string" default="null" />
-        <property name="address2" type="string" default="null" />
-        <property name="address3" type="string" default="null" />
-        <property name="company" type="string" default="null" />
-        <property name="city" type="string" default="null" />
-        <property name="zipCode" type="string" default="null" />
-        <property name="poBox" type="string" default="null" />
-        <property name="phone" type="string" default="null" />
-        <property name="cellPhone" type="string" default="null" />
-        <property name="description" type="string" default="null" />
+        <property name="idSalesOrderAddress" type="int" />
+        <property name="idCustomerAddress" type="int" />
+        <property name="iso2Country" type="string" />
+        <property name="region" type="string" />
+        <property name="fkMiscCountry" type="int" />
+        <property name="salutation" type="string" />
+        <property name="firstName" type="string" />
+        <property name="middleName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="email" type="string" />
+        <property name="address1" type="string" />
+        <property name="address2" type="string" />
+        <property name="address3" type="string" />
+        <property name="company" type="string" />
+        <property name="city" type="string" />
+        <property name="zipCode" type="string" />
+        <property name="poBox" type="string" />
+        <property name="phone" type="string" />
+        <property name="cellPhone" type="string" />
+        <property name="description" type="string" />
     </transfer>
     <transfer name="SalesComment">
-        <property name="idSalesOrderComment" type="int" default="null" />
-        <property name="message" type="string" default="null" />
-        <property name="username" type="string" default="null" />
-        <property name="fkSalesOrder" type="int" default="null" />
-        <property name="createdAt" type="string" default="null" />
-        <property name="updatedAt" type="string" default="null" />
+        <property name="idSalesOrderComment" type="int" />
+        <property name="message" type="string" />
+        <property name="username" type="string" />
+        <property name="fkSalesOrder" type="int" />
+        <property name="createdAt" type="string" />
+        <property name="updatedAt" type="string" />
     </transfer>
     <transfer name="SalesDocument">
-        <property name="header" type="string" default="null" />
-        <property name="fileName" type="string" default="null" />
-        <property name="filePath" type="string" default="null" />
+        <property name="header" type="string" />
+        <property name="fileName" type="string" />
+        <property name="filePath" type="string" />
     </transfer>
     <transfer name="SalesInvoice">
-        <property name="invoiceNumber" type="string" default="null" />
-        <property name="fkSalesOrder" type="int" default="null" />
-        <property name="type" type="string" default="null" />
-        <property name="createdAt" type="string" default="null" />
-        <property name="hash" type="string" default="null" />
-        <property name="customerId" type="string" default="null" />
+        <property name="invoiceNumber" type="string" />
+        <property name="fkSalesOrder" type="int" />
+        <property name="type" type="string" />
+        <property name="createdAt" type="string" />
+        <property name="hash" type="string" />
+        <property name="customerId" type="string" />
     </transfer>
     <transfer name="SalesOrderItem">
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" />
-        <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
-        <use name="Generated\Shared\Transfer\CalculationExpenseTransfer" />
-        <use name="Generated\Shared\Transfer\SalesOrderItemOptionTransfer" />
-        <use name="Generated\Shared\Transfer\SalesOrderItemStatusTransfer" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface" />
+        <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface" />
 
-        <interface name="DiscountableItemInterface" />
-
-        <property name="idSalesOrderItem" type="int" default="null" />
-        <property name="fkSalesOrder" type="int" default="null" />
-        <property name="fkOmsOrderItemStatus" type="int" default="null" />
-        <property name="name" type="string" default="null" />
-        <property name="sku" type="string" default="null" />
-        <property name="uniqueIdentifier" type="string" default="null" />
-        <property name="grossPrice" type="string" default="null" />
-        <property name="priceToPay" type="string" default="null" />
-        <property name="taxPercentage" type="string" default="null" />
-        <property name="quantity" type="int" default="1" />
-        <property name="discounts" type="\ArrayObject" collection="CalculationDiscountTransfer">
-            <add name="discount" type="DiscountItemInterface" />
-            <remove name="discount" type="DiscountItemInterface" />
-        </property>
-        <property name="options" type="\ArrayObject" collection="SalesOrderItemOptionTransfer" />
-        <property name="expenses" type="\ArrayObject" collection="CalculationExpenseTransfer">
-            <add name="expense" type="ExpenseItemInterface" />
-            <remove name="expense" type="ExpenseItemInterface" />
-        </property>
-        <property name="unitGrossPrice" type="string" default="null" />
-        <property name="unitPriceToPay" type="string" default="null" />
-        <property name="variety" type="string" default="null" />
-        <property name="status" type="SalesOrderItemStatusTransfer" collection="SalesOrderItemStatusTransfer" />
+        <property name="idSalesOrderItem" type="int" />
+        <property name="fkSalesOrder" type="int" />
+        <property name="fkOmsOrderItemStatus" type="int" />
+        <property name="name" type="string" />
+        <property name="sku" type="string" />
+        <property name="uniqueIdentifier" type="string" />
+        <property name="grossPrice" type="string" />
+        <property name="priceToPay" type="string" />
+        <property name="taxPercentage" type="string" />
+        <property name="quantity" type="int" />
+        <property name="discounts" type="CalculationDiscountTransfer[]" singular="discount" />
+        <property name="options" type="SalesOrderItemOptionTransfer[]" />
+        <property name="expenses" type="CalculationExpenseTransfer[]" singular="expense" />
+        <property name="unitGrossPrice" type="string" />
+        <property name="unitPriceToPay" type="string" />
+        <property name="variety" type="string" />
+        <property name="status" type="SalesOrderItemStatusTransfer[]" />
     </transfer>
+
     <transfer name="SalesOrderItemOption">
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountableInterface" />
-        <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
-
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface" />
-        <interface name="OptionItemInterface" />
-        <interface name="DiscountableInterface" />
-        <property name="identifier" type="int" default="null" />
-        <property name="name" type="string" default="null" />
-        <property name="description" type="string" default="null" />
-        <property name="grossPrice" type="int" default="0" />
-        <property name="priceToPay" type="int" default="0" />
-        <property name="taxPercentage" type="string" default="null" />
-        <property name="type" type="string" default="null" />
-        <property name="discounts" type="\ArrayObject" collection="CalculationDiscountTransfer">
-            <add name="discount" type="DiscountItemInterface" />
-            <remove name="discount" type="DiscountItemInterface" />
-        </property>
+        <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface" />
+        <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountableInterface" />
+        <property name="identifier" type="int" />
+        <property name="name" type="string" />
+        <property name="description" type="string" />
+        <property name="grossPrice" type="int" />
+        <property name="priceToPay" type="int" />
+        <property name="taxPercentage" type="string" />
+        <property name="type" type="string" />
+        <property name="discounts" type="CalculationDiscountTransfer[]" singular="discount" />
     </transfer>
+
     <transfer name="SalesOrderItemStatus">
-        <property name="idOmsOrderItemStatus" type="int" default="null" />
-        <property name="name" type="string" default="null" />
-        <property name="description" type="string" default="null" />
+        <property name="idOmsOrderItemStatus" type="int" />
+        <property name="name" type="string" />
+        <property name="description" type="string" />
     </transfer>
-    <transfer name="SalesStatemachineTrigger">
-        <property name="eventName" type="string" default="null" />
-        <property name="orderId" type="string" default="null" />
-        <property name="references" type="array" default="[]" />
-        <property name="context" type="string" default="null" />
-        <property name="observer" type="string" default="null" />
-    </transfer>
-    <transfer name="SalesPayment">
-        <property name="method" type="string" default="null" />
-        <property name="redirectUrl" type="string" default="null" />
-        <property name="ccType" type="string" default="null" />
-        <property name="ccNumber" type="string" default="null" />
-        <property name="ccCardholder" type="string" default="null" />
-        <property name="ccExpirationMonth" type="string" default="null" />
-        <property name="ccExpirationYear" type="string" default="null" />
-        <property name="ccVerification" type="string" default="null" />
-        <property name="debitHolder" type="string" default="null" />
-        <property name="debitAccountNumber" type="string" default="null" />
-        <property name="debitBankCodeNumber" type="string" default="null" />
-        <property name="debitInstitute" type="string" default="null" />
-        <property name="pseudoCcNumber" type="string" default="null" />
-        <property name="paymentData" type="string" default="null" />
-        <property name="paymentDataClassName" type="string" default="null" />
-    </transfer>
-    <transfer name="SalesDiscountTotalItem">
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalItemInterface" />
 
-        <interface name="DiscountTotalItemInterface" />
-        <property name="name" type="string" default="null" />
-        <property name="discountType" type="string" default="null" />
-        <property name="amount" type="int" default="0" />
-        <property name="codes" type="array" default="[]" collection="TransferArrayObject">
-            <add name="code" type="string" />
-            <remove name="code" type="string" />
-        </property>
+    <transfer name="SalesStatemachineTrigger">
+        <property name="eventName" type="string" />
+        <property name="orderId" type="string" />
+        <property name="references" type="array" />
+        <property name="context" type="string" />
+        <property name="observer" type="string" />
     </transfer>
+
+    <transfer name="SalesPayment">
+        <property name="method" type="string" />
+        <property name="redirectUrl" type="string" />
+        <property name="ccType" type="string" />
+        <property name="ccNumber" type="string" />
+        <property name="ccCardholder" type="string" />
+        <property name="ccExpirationMonth" type="string" />
+        <property name="ccExpirationYear" type="string" />
+        <property name="ccVerification" type="string" />
+        <property name="debitHolder" type="string" />
+        <property name="debitAccountNumber" type="string" />
+        <property name="debitBankCodeNumber" type="string" />
+        <property name="debitInstitute" type="string" />
+        <property name="pseudoCcNumber" type="string" />
+        <property name="paymentData" type="string" />
+        <property name="paymentDataClassName" type="string" />
+    </transfer>
+
+    <transfer name="SalesDiscountTotalItem">
+        <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalItemInterface" />
+        <property name="name" type="string" />
+        <property name="discountType" type="string" />
+        <property name="amount" type="int" />
+        <property name="codes" type="array" singular="code" />
+    </transfer>
+
     <transfer name="SalesRegularRedirectPaymentCancellation">
-        <property name="orderId" type="string" default="null" />
+        <property name="orderId" type="string" />
     </transfer>
 
 </transfers>

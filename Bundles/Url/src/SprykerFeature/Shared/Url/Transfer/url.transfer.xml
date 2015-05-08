@@ -4,22 +4,23 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="UrlRedirect">
-        <property name="idRedirect" type="int" default="null" />
-        <property name="toUrl" type="string" default="null" />
-        <property name="status" type="int" default="301" />
+        <property name="idRedirect" type="int" />
+        <property name="toUrl" type="string" />
+        <property name="status" type="int" />
     </transfer>
+
     <transfer name="UrlUrl">
-        <property name="idUrl" type="int" default="null" />
-        <property name="url" type="string" default="null" />
-        <property name="fkLocale" type="int" default="null" />
-        <property name="itemType" type="string" default="null" />
-        <property name="itemId" type="string" default="null" />
-        <property name="fkAbstractProduct" type="int" default="null" />
-        <property name="fkCategorynode" type="int" default="null" />
-        <property name="fkPage" type="int" default="null" />
-        <property name="fkRedirect" type="int" default="null" />
-        <property name="resourceType" type="string" default="null" />
-        <property name="resourceId" type="string" default="null" />
+        <property name="idUrl" type="int" />
+        <property name="url" type="string" />
+        <property name="fkLocale" type="int" />
+        <property name="itemType" type="string" />
+        <property name="itemId" type="string" />
+        <property name="fkAbstractProduct" type="int" />
+        <property name="fkCategoryNode" type="int" />
+        <property name="fkPage" type="int" />
+        <property name="fkRedirect" type="int" />
+        <property name="resourceType" type="string" />
+        <property name="resourceId" type="string" />
     </transfer>
 
 </transfers>

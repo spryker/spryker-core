@@ -4,69 +4,59 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="CustomerAddress">
-        <property name="idCustomerAddress" type="int" default="null" />
-        <property name="customerId" type="string" default="null" />
-        <property name="fkCustomer" type="int" default="null" />
-        <property name="email" type="string" default="null" />
-        <property name="salutation" type="string" default="null" />
-        <property name="name" type="string" default="null" />
-        <property name="address1" type="string" default="null" />
-        <property name="address2" type="string" default="null" />
-        <property name="address3" type="string" default="null" />
-        <property name="company" type="string" default="null" />
-        <property name="city" type="string" default="null" />
-        <property name="zipCode" type="string" default="null" />
-        <property name="poBox" type="string" default="null" />
-        <property name="phone" type="string" default="null" />
-        <property name="cellPhone" type="string" default="null" />
-        <property name="comment" type="string" default="null" />
-        <property name="state" type="string" default="null" />
-        <property name="isDeleted" type="string" default="null" />
-        <property name="isDefaultBilling" type="string" default="null" />
-        <property name="isDefaultShipping" type="string" default="null" />
-        <property name="fkCountry" type="int" default="null" />
-        <property name="iso2Country" type="string" default="null" />
+        <property name="idCustomerAddress" type="int" />
+        <property name="customerId" type="string" />
+        <property name="fkCustomer" type="int" />
+        <property name="email" type="string" />
+        <property name="salutation" type="string" />
+        <property name="name" type="string" />
+        <property name="address1" type="string" />
+        <property name="address2" type="string" />
+        <property name="address3" type="string" />
+        <property name="company" type="string" />
+        <property name="city" type="string" />
+        <property name="zipCode" type="string" />
+        <property name="poBox" type="string" />
+        <property name="phone" type="string" />
+        <property name="cellPhone" type="string" />
+        <property name="comment" type="string" />
+        <property name="state" type="string" />
+        <property name="isDeleted" type="string" />
+        <property name="isDefaultBilling" type="string" />
+        <property name="isDefaultShipping" type="string" />
+        <property name="fkCountry" type="int" />
+        <property name="iso2Country" type="string" />
     </transfer>
 
     <transfer name="CustomerAddressCollection">
-        <use name="Generated\Shared\Transfer\CustomerAddressTransfer" />
-
-        <property name="customerAddressItems" type="CustomerAddress" collection="TransferArrayObject">
-            <add name="customerAddress" />
-            <has name="customerAddress" />
-            <remove name="customerAddress" />
-        </property>
+        <property name="customerAddressItems" type="CustomerAddress[]" singular="customerAddress" />
     </transfer>
 
     <transfer name="CustomerCustomer">
-        <use name="Generated\Shared\Transfer\CustomerAddressTransfer" />
-
-        <use name="DateTime" />
-
-        <property name="email" type="string" default="null" />
-        <property name="idCustomer" type="int" default="null" />
-        <property name="incrementId" type="string" default="null" />
-        <property name="firstName" type="string" default="null" />
-        <property name="lastName" type="string" default="null" />
-        <property name="middleName" type="string" default="null" />
-        <property name="company" type="string" default="null" />
-        <property name="gender" type="string" default="null" />
-        <property name="dateOfBirth" type="string" default="null" />
-        <property name="salutation" type="string" default="null" />
-        <property name="password" type="string" default="null" />
-        <property name="newPassword" type="string" default="null" />
-        <property name="billingAddress" type="CustomerAddressTransfer" collection="CustomerAddressTransfer" />
-        <property name="shippingAddress" type="CustomerAddressTransfer" collection="CustomerAddressTransfer" />
-        <property name="addresses" type="CustomerAddressTransfer" collection="CustomerAddressTransfer" />
-        <property name="defaultBillingAddress" type="string" default="null" />
-        <property name="defaultShippingAddress" type="string" default="null" />
-        <property name="createdAt" type="string" default="null" />
-        <property name="updatedAt" type="string" default="null" />
-        <property name="restorePasswordKey" type="string" default="null" />
-        <property name="restorePasswordDate" type="string" default="null" />
-        <property name="registrationKey" type="string" default="null" />
-        <property name="registered" type="string" default="null" />
-        <property name="message" type="string" default="null" />
+        <property name="email" type="string" />
+        <property name="idCustomer" type="int" />
+        <property name="incrementId" type="string" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="middleName" type="string" />
+        <property name="company" type="string" />
+        <property name="gender" type="string" />
+        <property name="dateOfBirth" type="string" />
+        <property name="salutation" type="string" />
+        <property name="password" type="string" />
+        <property name="newPassword" type="string" />
+        <property name="billingAddress" type="CustomerAddressTransfer[]" />
+        <property name="shippingAddress" type="CustomerAddressTransfer[]" />
+        <property name="addresses" type="CustomerAddressTransfer[]" />
+        <property name="defaultBillingAddress" type="string" />
+        <property name="defaultShippingAddress" type="string" />
+        <property name="createdAt" type="string" />
+        <property name="updatedAt" type="string" />
+        <property name="restorePasswordKey" type="string" />
+        <property name="restorePasswordDate" type="string" />
+        <property name="registrationKey" type="string" />
+        <property name="registered" type="string" />
+        <property name="message" type="string" />
     </transfer>
 
 </transfers>

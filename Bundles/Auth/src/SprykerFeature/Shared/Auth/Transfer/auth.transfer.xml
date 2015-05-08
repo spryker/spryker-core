@@ -4,10 +4,10 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="AuthResetPassword">
-        <property name="idResetPassword" type="int" default="null" />
-        <property name="fkUserId" type="int" default="null" />
-        <property name="code" type="string" default="null" />
-        <property name="status" type="string" default="null" />
+        <property name="idResetPassword" type="int" />
+        <property name="fkUserId" type="int" />
+        <property name="code" type="string" />
+        <property name="status" type="string" />
     </transfer>
 
 </transfers>

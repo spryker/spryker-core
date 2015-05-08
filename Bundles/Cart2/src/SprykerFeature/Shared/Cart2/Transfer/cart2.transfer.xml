@@ -4,47 +4,29 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Cart2Cart">
-        <use name="Generated\Shared\Transfer\Cart2ItemTransfer" />
-        <use name="Generated\Shared\Transfer\CalculationTotalsTransfer" />
-        <use name="Generated\Shared\Transfer\CalculationExpenseTransfer" />
-        <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
-
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
-
-        <!--<interface name="CartInterface" />-->
-        <property name="items" type="Cart2ItemTransfer" collection="Cart2ItemTransfer" />
-        <property name="totals" type="CalculationTotalsTransfer" collection="CalculationTotalsTransfer" />
-        <property name="expenses" type="CalculationExpenseTransfer" collection="CalculationExpenseTransfer" />
-        <property name="discounts" type="CalculationDiscountTransfer" collection="CalculationDiscountTransfer" />
-        <property name="couponCodes" type="array" default="[]" />
+        <property name="items" type="Cart2ItemTransfer[]" />
+        <property name="totals" type="CalculationTotalsTransfer[]" />
+        <property name="expenses" type="CalculationExpenseTransfer[]" />
+        <property name="discounts" type="CalculationDiscountTransfer[]" />
+        <property name="couponCodes" type="array" singular="couponCode" />
     </transfer>
+
     <transfer name="Cart2CartChange">
-        <interface name="CartChangeInterface" />
-        <property name="cart" type="string" default="null" />
-        <property name="changedItems" type="string" default="null" />
+        <interface name="SprykerFeature\Shared\Cart2\Transfer\CartChangeInterface" />
+        <property name="cart" type="string" />
+        <property name="changedItems" type="string" />
     </transfer>
 
     <transfer name="Cart2Item">
-        <use name="Generated\Shared\Transfer\CalculationExpenseTransfer" />
-        <use name="Generated\Shared\Transfer\CalculationDiscountTransfer" />
-
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" />
-        <use name="SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
-        <use name="SprykerFeature\Shared\Cart\Transfer\ItemInterface" />
-
-        <interface name="ItemInterface" />
-        <property name="quantity" type="int" default="1" />
-        <property name="id" type="int" default="null" />
-        <property name="expenses" type="CalculationExpenseTransfer" collection="CalculationExpenseTransfer" />
-        <property name="options" type="array" default="[]" />
-        <property name="grossPrice" type="int" default="0" />
-        <property name="priceToPay" type="int" default="0" />
-        <property name="taxPercentage" type="int" default="0" />
-        <property name="discounts" type="CalculationDiscountTransfer" collection="CalculationDiscountTransfer" />
+        <interface name="SprykerFeature\Shared\Cart\Transfer\ItemInterface" />
+        <property name="quantity" type="int" />
+        <property name="id" type="int" />
+        <property name="expenses" type="CalculationExpenseTransfer[]" />
+        <property name="options" type="array" />
+        <property name="grossPrice" type="int" />
+        <property name="priceToPay" type="int" />
+        <property name="taxPercentage" type="int" />
+        <property name="discounts" type="CalculationDiscountTransfer[]" />
     </transfer>
 
 </transfers>

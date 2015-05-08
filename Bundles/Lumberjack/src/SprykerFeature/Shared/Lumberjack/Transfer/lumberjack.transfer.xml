@@ -4,7 +4,7 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="LumberjackMetaRequest">
-        <property name="requestId" type="string" default="null" />
+        <property name="requestId" type="string" />
     </transfer>
 
 </transfers>

@@ -4,100 +4,92 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="MailAddress">
-        <property name="countryName" type="string" default="null" />
+        <property name="countryName" type="string" />
     </transfer>
 
     <transfer name="MailAttachment">
-        <property name="fileName" type="string" default="null" />
-        <property name="displayName" type="string" default="null" />
-        <property name="attachmentUrl" type="string" default="null" />
-        <property name="referenceId" type="string" default="null" />
+        <property name="fileName" type="string" />
+        <property name="displayName" type="string" />
+        <property name="attachmentUrl" type="string" />
+        <property name="referenceId" type="string" />
     </transfer>
 
     <transfer name="MailCustomer">
-        <property name="customerId" type="string" default="null" />
+        <property name="customerId" type="string" />
     </transfer>
 
     <transfer name="MailItem">
-        <property name="idSalesOrderItem" type="int" default="null" />
-        <property name="name" type="string" default="null" />
-        <property name="sku" type="string" default="null" />
-        <property name="grossPrice" type="string" default="null" />
-        <property name="totalPrice" type="string" default="null" />
-        <property name="quantity" type="string" default="null" />
+        <property name="idSalesOrderItem" type="int" />
+        <property name="name" type="string" />
+        <property name="sku" type="string" />
+        <property name="grossPrice" type="string" />
+        <property name="totalPrice" type="string" />
+        <property name="quantity" type="string" />
     </transfer>
 
     <transfer name="MailRecipient">
-        <property name="email" type="string" default="null" />
-        <property name="name" type="string" default="null" />
-        <property name="type" type="string" default="to" />
-        <property name="mergeVars" type="array" default="[]"/>
-        <property name="metadata" type="array" default="[]"/>
+        <property name="email" type="string" />
+        <property name="name" type="string" />
+        <property name="type" type="string" />
+        <property name="mergeVars" type="array"/>
+        <property name="metadata" type="array"/>
     </transfer>
 
     <transfer name="MailHeader">
-        <property name="key" type="string" default="null"/>
-        <property name="value" type="string" default="null"/>
+        <property name="key" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
-    <transfer name="MailMail">
-        <property name="templateName" type="string" default="null" />
-        <property name="templateContent" type="array" default="[]" />
-        <property name="async" type="bool" default="false" />
-        <property name="ipPool" type="string" default="null" />
-        <property name="sendAt" type="\DateTime" default="null" />
-        <property name="subject" type="string" default="null" />
-        <property name="fromEmail" type="string" default="null" />
-        <property name="fromName" type="string" default="null" />
-        <property name="recipients" type="MailRecipientTransfer" collection="TransferArrayObject">
-            <add name="recipient" />
-        </property>
-        <property name="headers" type="MailHeaderTransfer" collection="TransferArrayObject">
-            <add name="header" />
-        </property>
-        <property name="important" type="bool" default="false" />
-        <property name="trackOpens" type="bool" default="false" />
-        <property name="trackClicks" type="bool" default="false" />
-        <property name="autoText" type="bool" default="false" />
-        <property name="autoHtml" type="bool" default="false" />
-        <property name="inlineCss" type="bool" default="false" />
-        <property name="urlStripQueryString" type="bool" default="false" />
-        <property name="preserveRecipients" type="bool" default="false" />
-        <property name="viewContentLink" type="bool" default="false" />
-        <property name="bccAddress" type="string" default="null" />
-        <property name="trackingDomain" type="string" default="null" />
-        <property name="signingDomain" type="string" default="null" />
-        <property name="returnPathDomain" type="string" default="null" />
-        <property name="merge" type="bool" default="false" />
-        <property name="mergeLanguage" type="string" default="mailchimp" />
-        <property name="globalMergeVars" type="array" default="[]" />
-        <property name="tags" type="array" default="[]" />
-        <property name="subAccount" type="string" default="null" />
-        <property name="googleAnalyticsDomains" type="array" default="[]" />
-        <property name="googleAnalyticsCampaign" type="string" default="null" />
-        <property name="metadata" type="array" default="[]" />
-        <property name="attachments" type="MailAttachmentTransfer" collection="TransferArrayObject">
-            <add name="attachment" />
-        </property>
-        <property name="images" type="MailAttachmentTransfer" collection="TransferArrayObject">
-            <add name="image" />
-        </property>
+    <transfer name="Mail">
+        <property name="templateName" type="string" />
+        <property name="templateContent" type="array" />
+        <property name="async" type="bool" />
+        <property name="ipPool" type="string" />
+        <property name="sendAt" type="\DateTime" />
+        <property name="subject" type="string" />
+        <property name="fromEmail" type="string" />
+        <property name="fromName" type="string" />
+        <property name="recipients" type="MailRecipient[]" singular="recipient" />
+        <property name="headers" type="MailHeader[]" singular="header" />
+        <property name="important" type="bool" />
+        <property name="trackOpens" type="bool" />
+        <property name="trackClicks" type="bool" />
+        <property name="autoText" type="bool" />
+        <property name="autoHtml" type="bool" />
+        <property name="inlineCss" type="bool" />
+        <property name="urlStripQueryString" type="bool" />
+        <property name="preserveRecipients" type="bool" />
+        <property name="viewContentLink" type="bool" />
+        <property name="bccAddress" type="string" />
+        <property name="trackingDomain" type="string" />
+        <property name="signingDomain" type="string" />
+        <property name="returnPathDomain" type="string" />
+        <property name="merge" type="bool" />
+        <property name="mergeLanguage" type="string" />
+        <property name="globalMergeVars" type="array" />
+        <property name="tags" type="array" />
+        <property name="subAccount" type="string" />
+        <property name="googleAnalyticsDomains" type="array" />
+        <property name="googleAnalyticsCampaign" type="string" />
+        <property name="metadata" type="array" />
+        <property name="attachments" type="MailAttachment[]" singular="attachment" />
+        <property name="images" type="MailAttachment[]" singular="images" />
     </transfer>
 
     <transfer name="MailTemplate">
-        <property name="idMailTemplate" type="int" default="null" />
-        <property name="name" type="string" default="null" />
-        <property name="subject" type="string" default="null" />
-        <property name="sender" type="string" default="null" />
-        <property name="senderName" type="string" default="null" />
-        <property name="text" type="string" default="null" />
-        <property name="html" type="string" default="null" />
-        <property name="wrapper" type="int" default="0" />
-        <property name="deleted" type="string" default="null" />
-        <property name="version" type="string" default="null" />
-        <property name="dateInterval" type="string" default="null" />
-        <property name="versionCreatedAt" type="string" default="null" />
-        <property name="versionCreatedBy" type="string" default="null" />
+        <property name="idMailTemplate" type="int" />
+        <property name="name" type="string" />
+        <property name="subject" type="string" />
+        <property name="sender" type="string" />
+        <property name="senderName" type="string" />
+        <property name="text" type="string" />
+        <property name="html" type="string" />
+        <property name="wrapper" type="int" />
+        <property name="deleted" type="string" />
+        <property name="version" type="string" />
+        <property name="dateInterval" type="string" />
+        <property name="versionCreatedAt" type="string" />
+        <property name="versionCreatedBy" type="string" />
     </transfer>
 
 </transfers>

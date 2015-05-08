@@ -4,33 +4,29 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="CartCartChange">
-        <use name="Generated\Shared\Transfer\CartCartItemTransfer" />
-        <property name="changedCartItems" type="CartCartItemTransfer" collection="CartCartItemTransfer" />
-        <property name="couponCode" type="string" default="null" />
-        <property name="order" type="SalesOrderTransfer" collection="SalesOrderTransfer" />
-        <property name="userId" type="string" default="null" />
-        <property name="cartHash" type="string" default="null" />
-        <property name="deleteReason" type="string" default="null" />
-        <property name="isMerged" type="string" default="null" />
+        <property name="changedCartItems" type="CartCartItemTransfer[]" />
+        <property name="couponCode" type="string" />
+        <property name="order" type="SalesOrderTransfer[]" />
+        <property name="userId" type="string" />
+        <property name="cartHash" type="string" />
+        <property name="deleteReason" type="string" />
+        <property name="isMerged" type="string" />
     </transfer>
+
     <transfer name="CartCartItem">
+        <interface name="SprykerFeature\Shared\Cart2\Transfer\ItemInterface" />
 
-        <use name="SprykerFeature\Shared\Cart2\Transfer\ItemInterface" />
-        <use name="SprykerFeature\Shared\Cart2\Transfer\ItemCollectionInterface" />
-
-        <interface name="ItemInterface" />
-        <interface name="ItemCollectionInterface" />
-
-        <property name="id" type="int" default="null" />
-        <property name="sku" type="string" default="null" />
-        <property name="uniqueIdentifier" type="string" default="null" />
-        <property name="options" type="array" default="[]" />
-        <property name="quantity" type="string" default="null" />
+        <property name="id" type="int" />
+        <property name="sku" type="string" />
+        <property name="uniqueIdentifier" type="string" />
+        <property name="options" type="array" />
+        <property name="quantity" type="string" />
     </transfer>
+
     <transfer name="CartStepStorage">
-        <property name="userId" type="string" default="null" />
-        <property name="stepName" type="string" default="null" />
-        <property name="isSuccess" type="string" default="null" />
+        <property name="userId" type="string" />
+        <property name="stepName" type="string" />
+        <property name="isSuccess" type="string" />
     </transfer>
 
 </transfers>

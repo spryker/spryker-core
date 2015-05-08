@@ -4,51 +4,47 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="DiscountDiscount">
-        <use name="SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface" />
-        <use name="SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface" />
-        <use name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
-        <interface name="DiscountItemInterface" />
-        <property name="idDiscount" type="int" default="null" />
-        <property name="fkDiscountVoucherPool" type="int" default="null" />
-        <property name="displayName" type="string" default="null" />
-        <property name="description" type="string" default="null" />
-        <property name="amount" type="string" default="null" />
-        <property name="calculatorPlugin" type="string" default="null" />
-        <property name="collectorPlugin" type="string" default="null" />
-        <property name="isPrivileged" type="string" default="null" />
-        <property name="isActive" type="string" default="null" />
-        <property name="validFrom" type="string" default="null" />
-        <property name="validTo" type="string" default="null" />
+        <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
+        <property name="idDiscount" type="int" />
+        <property name="fkDiscountVoucherPool" type="int" />
+        <property name="displayName" type="string" />
+        <property name="description" type="string" />
+        <property name="amount" type="string" />
+        <property name="calculatorPlugin" type="string" />
+        <property name="collectorPlugin" type="string" />
+        <property name="isPrivileged" type="string" />
+        <property name="isActive" type="string" />
+        <property name="validFrom" type="string" />
+        <property name="validTo" type="string" />
     </transfer>
 
     <transfer name="DiscountDiscountDecisionRule">
-        <use name="SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface" />
-        <property name="idDiscountDecisionRule" type="int" default="null" />
-        <property name="fkDiscount" type="int" default="null" />
-        <property name="name" type="string" default="null" />
-        <property name="decisionRulePlugin" type="string" default="null" />
-        <property name="value" type="string" default="null" />
+        <property name="idDiscountDecisionRule" type="int" />
+        <property name="fkDiscount" type="int" />
+        <property name="name" type="string" />
+        <property name="decisionRulePlugin" type="string" />
+        <property name="value" type="string" />
     </transfer>
 
     <transfer name="DiscountDiscountVoucher">
-        <property name="idDiscountVoucher" type="int" default="null" />
-        <property name="fkDiscountVoucherPool" type="int" default="null" />
-        <property name="code" type="string" default="null" />
-        <property name="isActive" type="string" default="null" />
+        <property name="idDiscountVoucher" type="int" />
+        <property name="fkDiscountVoucherPool" type="int" />
+        <property name="code" type="string" />
+        <property name="isActive" type="string" />
     </transfer>
 
     <transfer name="DiscountDiscountVoucherPool">
-        <property name="idDiscountVoucherPool" type="int" default="null" />
-        <property name="fkDiscountVoucherPoolCategory" type="int" default="null" />
-        <property name="name" type="string" default="null" />
-        <property name="template" type="string" default="null" />
-        <property name="isActive" type="string" default="null" />
-        <property name="isInfinitelyUsable" type="string" default="null" />
+        <property name="idDiscountVoucherPool" type="int" />
+        <property name="fkDiscountVoucherPoolCategory" type="int" />
+        <property name="name" type="string" />
+        <property name="template" type="string" />
+        <property name="isActive" type="string" />
+        <property name="isInfinitelyUsable" type="string" />
     </transfer>
 
     <transfer name="DiscountDiscountVoucherPoolCategory">
-        <property name="idDiscountVoucherPoolCategory" type="int" default="null" />
-        <property name="name" type="string" default="null" />
+        <property name="idDiscountVoucherPoolCategory" type="int" />
+        <property name="name" type="string" />
     </transfer>
 
 </transfers>

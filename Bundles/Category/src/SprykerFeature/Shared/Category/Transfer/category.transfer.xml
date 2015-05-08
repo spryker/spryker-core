@@ -4,19 +4,18 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="CategoryCategory">
-
-        <property name="idCategory" type="int" default="null" />
-        <property name="isActive" type="string" default="null" />
-        <property name="name" type="string" default="null" />
-        <property name="url" type="string" default="null" />
-        <property name="imageName" type="string" default="null" />
+        <property name="idCategory" type="int" />
+        <property name="isActive" type="string" />
+        <property name="name" type="string" />
+        <property name="url" type="string" />
+        <property name="imageName" type="string" />
     </transfer>
-    <transfer name="CategoryCategoryNode">
 
-        <property name="isRoot" type="string" default="null" />
-        <property name="idCategoryNode" type="int" default="null" />
-        <property name="fkCategory" type="int" default="null" />
-        <property name="fkParentCategoryNode" type="int" default="null" />
+    <transfer name="CategoryCategoryNode">
+        <property name="isRoot" type="string" />
+        <property name="idCategoryNode" type="int" />
+        <property name="fkCategory" type="int" />
+        <property name="fkParentCategoryNode" type="int" />
     </transfer>
 
 </transfers>

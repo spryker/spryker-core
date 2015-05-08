@@ -4,24 +4,24 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="AclGroup">
-        <property name="idAclGroup" type="int" default="null" />
-        <property name="name" type="string" default="null" />
+        <property name="idAclGroup" type="int" />
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="AclRole">
-        <property name="idAclRole" type="int" default="null" />
-        <property name="name" type="string" default="null" />
-        <property name="idGroup" type="int" default="null" />
-        <property name="rules" type="string" default="null" />
+        <property name="idAclRole" type="int" />
+        <property name="name" type="string" />
+        <property name="idGroup" type="int" />
+        <property name="rules" type="string" />
     </transfer>
 
     <transfer name="AclRule">
-        <property name="idAclRule" type="int" default="null" />
-        <property name="bundle" type="string" default="null" />
-        <property name="controller" type="string" default="null" />
-        <property name="action" type="string" default="null" />
-        <property name="type" type="string" default="null" />
-        <property name="fkAclRole" type="int" default="null" />
+        <property name="idAclRule" type="int" />
+        <property name="bundle" type="string" />
+        <property name="controller" type="string" />
+        <property name="action" type="string" />
+        <property name="type" type="string" />
+        <property name="fkAclRole" type="int" />
     </transfer>
 
 </transfers>
