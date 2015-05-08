@@ -46,23 +46,23 @@ class CalculatorTest extends Test
      */
     protected function getCalculatorModel()
     {
-        $calculator = $this->getMock('\SprykerFeature\Zed\Calculation\Business\Model\StackExecutor', [], [$this->locator]);
+        $calculator = $this->getMock('\SprykerFeature\Zed\Calculation\Business\Model\StackExecutor', []);
+
         return $calculator;
     }
 
     protected function createCalculatorStack()
     {
         $stack = [
-            new Calculator\ExpenseTotalsCalculator($this->locator),
-            new Calculator\SubtotalTotalsCalculator($this->locator),
+            new Calculator\ExpenseTotalsCalculator(),
+            new Calculator\SubtotalTotalsCalculator(),
             new GrandTotalTotalsCalculator(
-                $this->locator,
-                new Calculator\SubtotalTotalsCalculator($this->locator),
-                new Calculator\ExpenseTotalsCalculator($this->locator)
+                new Calculator\SubtotalTotalsCalculator(),
+                new Calculator\ExpenseTotalsCalculator()
             ),
-            new Calculator\ExpensePriceToPayCalculator($this->locator),
-            new Calculator\ItemPriceToPayCalculator($this->locator),
-            new DiscountTotalsCalculator($this->locator),
+            new Calculator\ExpensePriceToPayCalculator(),
+            new Calculator\ItemPriceToPayCalculator(),
+            new DiscountTotalsCalculator(),
             $this->locator->discountCalculationConnector()->pluginGrandTotalWithDiscountsTotalsCalculatorPlugin()
         ];
 
@@ -81,17 +81,17 @@ class CalculatorTest extends Test
     public function testCanRecalculateAnExampleOrderWithOneItemAndExpenseOnOrder()
     {
         $order = new SalesOrderTransfer();
-        $items = new SalesOrderItemTransfer();
+        $items = new \ArrayObject();
         $item =  new SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $discounts = new CalculationDiscountTransfer();
+        $discounts = new \ArrayObject();
         $discount = new CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
-        $discounts->add($discount);
+        $discounts->append($discount);
         $discount = new CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
-        $discounts->add($discount);
+        $discounts->append($discount);
 
         $expense = new CalculationExpenseTransfer();
         $expense->setName('Shipping Costs')
@@ -99,15 +99,15 @@ class CalculatorTest extends Test
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS)
             ->setGrossPrice(self::ORDER_SHIPPING_COSTS);
 
-        $expensesCollection = new CalculationExpenseTransfer();
-        $expensesCollection->add($expense);
+        $expensesCollection = new \ArrayObject();
+        $expensesCollection->append($expense);
         $order->setExpenses($expensesCollection);
 
         $item->setDiscounts($discounts);
-        $items->add($item);
+        $items->append($item);
         $order->setItems($items);
 
-        $calculator = new StackExecutor($this->locator);
+        $calculator = new StackExecutor();
 
         $calculatorStack = $this->createCalculatorStack();
         $calculator->recalculate($calculatorStack, $order);
@@ -132,6 +132,7 @@ class CalculatorTest extends Test
     public function testCanRecalculateAnExampleOrderWithTwoItemsAndExpenseOnItems()
     {
         $order = new SalesOrderTransfer();
+        $items = new \ArrayObject();
         $item = new SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
@@ -150,11 +151,14 @@ class CalculatorTest extends Test
             ->setGrossPrice(self::ORDER_SHIPPING_COSTS/2);
 
         $item->addExpense($expense);
+        $items->append($item);
+        $items->append(clone $item);
+        $order->setItems($items);
 
-        $order->addItem($item);
-        $order->addItem(clone $item);
+        //$order->addItem($item);
+        //$order->addItem(clone $item);
 
-        $calculator = new StackExecutor($this->locator);
+        $calculator = new StackExecutor();
         $calculatorStack = $this->createCalculatorStack();
         $order = $calculator->recalculate($calculatorStack, $order);
         $calculator->recalculateTotals($calculatorStack, $order, null);
