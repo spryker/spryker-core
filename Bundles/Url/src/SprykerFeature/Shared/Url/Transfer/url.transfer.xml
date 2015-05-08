@@ -15,7 +15,7 @@
         <property name="itemType" type="string" default="null" />
         <property name="itemId" type="string" default="null" />
         <property name="fkAbstractProduct" type="int" default="null" />
-        <property name="fkCategory" type="int" default="null" />
+        <property name="fkCategorynode" type="int" default="null" />
         <property name="fkPage" type="int" default="null" />
         <property name="fkRedirect" type="int" default="null" />
         <property name="resourceType" type="string" default="null" />
