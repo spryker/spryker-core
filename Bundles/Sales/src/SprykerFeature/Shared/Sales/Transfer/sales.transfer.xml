@@ -23,8 +23,9 @@
         <property name="couponCodes" type="array" singular="couponCode" />
         <property name="createdAt" type="string" />
         <property name="isTest" type="string" />
+        <property name="discounts" type="CalculationDiscountTransfer[]" />
         <property name="totals" type="CalculationTotalsTransfer[]" />
-        <property name="expenses" type="CalculationExpenseTransfer[]" singular="ExpenseItemInterface" />
+        <property name="expenses" type="CalculationExpenseTransfer[]" singular="expense" />
         <property name="invoice" type="SalesInvoiceTransfer[]" />
     </transfer>
 

@@ -153,8 +153,9 @@ class ClassDefinition implements ClassDefinitionInterface
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
-        if ($this->isCollection($property)) {
-            $this->uses[] = 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $property['type']);
+        if ($this->isCollection($property) && !$this->isArray($property)) {
+            $use = 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $property['type']);
+            $this->uses[$use] = $use;
         }
         $this->addPropertyConstructorIfCollection($property);
     }
@@ -166,7 +167,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getPropertyVar(array $property)
     {
-        if ($property['type'] === '[]' || $property['type'] === 'array') {
+        if ($this->isArray($property)) {
             return 'array';
         }
 
@@ -184,7 +185,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getSetVar(array $property)
     {
-        if ($property['type'] === '[]' || $property['type'] === 'array') {
+        if ($this->isArray($property)) {
             return 'array';
         }
 
@@ -202,7 +203,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getAddVar(array $property)
     {
-        if ($property['type'] === '[]' || $property['type'] === 'array') {
+        if ($this->isArray($property)) {
             return 'array';
         }
 
@@ -310,7 +311,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getReturnType(array $property)
     {
-        if ($property['type'] === 'array' || $property['type'] === '[]') {
+        if ($this->isArray($property)) {
             return 'array';
         }
 
@@ -324,7 +325,17 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function isCollection(array $property)
     {
-        return preg_match('/(.*?)\[\]/', $property['type']);
+        return preg_match('/((.*?)\[\]|\[\]|array)/', $property['type']);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    private function isArray(array $property)
+    {
+        return ($property['type'] === 'array' || $property['type'] === '[]');
     }
 
     /**
@@ -334,7 +345,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getTypeHint(array $property)
     {
-        if ($property['type'] === 'array' || $property['type'] === '[]') {
+        if ($this->isArray($property)) {
             return 'array';
         }
 

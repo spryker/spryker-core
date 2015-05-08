@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
+
 interface ExpenseContainerInterface
 {
     /**
@@ -17,16 +19,19 @@ interface ExpenseContainerInterface
     public function setExpenses(\ArrayObject $expenses);
 
     /**
-     * @param ExpenseItemInterface $expenseItem
+     * @param CalculationExpenseTransfer $expenseItem
      *
-     * @return $this
+     * @return mixed
      */
-    public function addExpense(ExpenseItemInterface $expenseItem);
+    public function addExpense(CalculationExpenseTransfer $expenseItem);
 
     /**
      * @param ExpenseItemInterface $expenseItem
      *
      * @return $this
      */
-    public function removeExpense(ExpenseItemInterface $expenseItem);
+
+    // TODO check with Fabian Wesner if remove should be implemented
+    // @see SalesOrderTransfer
+//    public function removeExpense(ExpenseItemInterface $expenseItem);
 }

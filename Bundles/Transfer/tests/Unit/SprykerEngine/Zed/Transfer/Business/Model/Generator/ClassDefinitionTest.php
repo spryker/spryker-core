@@ -200,6 +200,22 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('\\ArrayObject', $constructorDefinition['property1']);
     }
 
+    public function testIfMoreThanOnePropertyTypeHasSameCollectionTypeUseShouldContainOnlyOneOfThisEntries()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [
+                $this->getProperty('property1', 'Collection[]'),
+                $this->getProperty('property2', 'Collection[]')
+            ]
+        ];
+
+        $classDefinition = new ClassDefinition($transferDefinition);
+
+        $uses = $classDefinition->getUses();
+        $this->assertCount(1, $uses);
+    }
+
     public function testIfPropertyTypeIsCollectionTheReturTypeShouldBeAnArrayObject()
     {
         $transferDefinition = [

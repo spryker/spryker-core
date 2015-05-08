@@ -11,7 +11,7 @@ interface CalculableContainerInterface extends ExpenseContainerInterface
     public function getItems();
 
     /**
-     * @return TotalsInterface
+     * @return \ArrayObject|TotalsInterface[]
      */
     public function getTotals();
 
@@ -23,9 +23,9 @@ interface CalculableContainerInterface extends ExpenseContainerInterface
     public function setItems(\ArrayObject $items);
 
     /**
-     * @param TotalsInterface $totals
+     * @param \ArrayObject $totals
      *
-     * @return $this
+     * @return mixed
      */
-    public function setTotals(TotalsInterface $totals);
+    public function setTotals(\ArrayObject $totals);
 }
