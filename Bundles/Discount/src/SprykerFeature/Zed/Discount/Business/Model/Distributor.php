@@ -69,7 +69,7 @@ class Distributor implements
         $discounts = $discountableObject->getDiscounts();
         $discount = new CalculationDiscountTransfer();
         $discount->setAmount($discountAmount);
-        $discounts->add($discount);
+        $discounts->append($discount);
         $discountableObject->setDiscounts($discounts);
     }
 

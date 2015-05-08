@@ -207,9 +207,9 @@ class DiscountFacadeTest extends Test
 
         $this->discountFacade->distributeAmount($items, self::DISCOUNT_AMOUNT_4000);
 
-        $this->assertEquals($items[0]->getGrossPrice(), $items[0]->getDiscounts()->getFirstItem()->getAmount());
-        $this->assertEquals($items[1]->getGrossPrice(), $items[1]->getDiscounts()->getFirstItem()->getAmount());
-        $this->assertEquals($items[2]->getGrossPrice(), $items[2]->getDiscounts()->getFirstItem()->getAmount());
+        $this->assertEquals($items[0]->getGrossPrice(), current($items[0]->getDiscounts())->getAmount());
+        $this->assertEquals($items[1]->getGrossPrice(), current($items[1]->getDiscounts())->getAmount());
+        $this->assertEquals($items[2]->getGrossPrice(), current($items[2]->getDiscounts())->getAmount());
     }
 
     public function testShouldCreateOneVoucherCode()
