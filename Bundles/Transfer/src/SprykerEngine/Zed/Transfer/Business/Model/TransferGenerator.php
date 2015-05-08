@@ -14,17 +14,32 @@ class TransferGenerator
 {
 
     /**
+     * @var ClassGenerator
+     */
+    private $classGenerator;
+
+    /**
+     * @var array
+     */
+    private $sourceDirectories;
+
+    /**
      * @var string
      */
     private $targetDirectory;
 
     /**
      * @param MessengerInterface $messenger
+     * @param ClassGenerator $classGenerator
+     * @param array $sourceDirectories
+     * @param string $targetDirectory
      */
-    public function __construct(MessengerInterface $messenger)
+    public function __construct(MessengerInterface $messenger, ClassGenerator $classGenerator, array $sourceDirectories, $targetDirectory)
     {
         $this->messenger = $messenger;
-        $this->targetDirectory = APPLICATION_SOURCE_DIR . 'Generated/Shared/Transfer/';
+        $this->classGenerator = $classGenerator;
+        $this->sourceDirectories = $sourceDirectories;
+        $this->targetDirectory = $targetDirectory;
     }
 
     public function execute()
@@ -41,8 +56,7 @@ class TransferGenerator
         $definitions = $this->getTransferDefinitions();
 
         foreach ($definitions as $classDefinition) {
-            $generator = $this->getClassGenerator();
-            $phpCode = $generator->generateClass($classDefinition);
+            $phpCode = $this->classGenerator->generateClass($classDefinition);
 
             file_put_contents($this->targetDirectory . $classDefinition->getName() . '.php', $phpCode);
             $this->messenger->info(sprintf('<info>%s.php</info> was generated', $classDefinition->getName()));
@@ -50,7 +64,7 @@ class TransferGenerator
     }
 
     /**
-     * @return array|ClassDefinition[]
+     * @return ClassDefinition[]
      */
     private function getTransferDefinitions()
     {
@@ -90,7 +104,7 @@ class TransferGenerator
      */
     private function removeGeneratedTransferObjects()
     {
-        foreach ($this->getGeneratedFile() as $file) {
+        foreach ($this->getGeneratedFiles() as $file) {
             unlink($file->getRealPath());
         }
     }
@@ -98,7 +112,7 @@ class TransferGenerator
     /**
      * @return Finder|SplFileInfo[]
      */
-    private function getGeneratedFile()
+    private function getGeneratedFiles()
     {
         $finder = new Finder();
         $finder->files()->in($this->targetDirectory);
@@ -112,26 +126,9 @@ class TransferGenerator
     private function getXmlTransferDefinitionFiles()
     {
         $finder = new Finder();
-        $directories = [
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Shared/*/Transfer/',
-        ];
 
-        if (glob(APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/')) {
-            $directories[] = APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
-        }
-
-        $finder->in($directories)->name('*.transfer.xml');
+        $finder->in($this->sourceDirectories)->name('*.transfer.xml');
 
         return $finder;
-    }
-
-    /**
-     * @return ClassGenerator
-     */
-    private function getClassGenerator()
-    {
-        $generator = new ClassGenerator($this->targetDirectory);
-
-        return $generator;
     }
 }

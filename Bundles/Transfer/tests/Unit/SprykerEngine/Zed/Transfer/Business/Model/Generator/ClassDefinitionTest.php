@@ -25,12 +25,12 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('NameTransfer', $classDefinition->getName());
     }
 
-    public function testIfOneUseIsSetGetUsesShouldReturnArrayWithOneName()
+    public function testIfOneInterfaceIsSetGetUsesShouldReturnArrayWithOneName()
     {
         $transferDefinition = [
             'name' => 'name',
-            'use' => [
-                'name' => 'Use\For\Class'
+            'interface' => [
+                'name' => 'Used\Interface'
             ]
         ];
 
@@ -38,16 +38,16 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $uses = $classDefinition->getUses();
         $this->assertTrue(is_array($uses));
-        $this->assertContains('Use\For\Class', $uses);
+        $this->assertContains('Used\Interface', $uses);
     }
 
-    public function testIfMoreThanOneUseIsSetGetUsesShouldReturnArrayWithAllNames()
+    public function testIfMoreThanOneInterfaceIsSetGetUsesShouldReturnArrayWithAllNames()
     {
         $transferDefinition = [
             'name' => 'name',
-            'use' => [
-                ['name' => 'Use\For\Class1'],
-                ['name' => 'Use\For\Class2'],
+            'interface' => [
+                ['name' => 'Used\Interface1'],
+                ['name' => 'Used\Interface2'],
             ]
         ];
 
@@ -55,8 +55,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $uses = $classDefinition->getUses();
         $this->assertTrue(is_array($uses));
-        $this->assertContains('Use\For\Class1', $uses);
-        $this->assertContains('Use\For\Class2', $uses);
+        $this->assertContains('Used\Interface1', $uses);
+        $this->assertContains('Used\Interface2', $uses);
     }
 
     public function testIfOneInterfaceIsSetGetInterfacesShouldReturnArrayWithOneName()
@@ -64,7 +64,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = [
             'name' => 'name',
             'interface' => [
-                'name' => 'Interface'
+                'name' => 'Used\Interface'
             ]
         ];
 
@@ -80,8 +80,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = [
             'name' => 'name',
             'interface' => [
-                ['name' => 'Interface1'],
-                ['name' => 'Interface2'],
+                ['name' => 'Used\Interface1'],
+                ['name' => 'Used\Interface2'],
             ]
         ];
 
@@ -95,7 +95,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
     public function testIfOnePropertyIsSetGetPropertiesShouldReturnArrayWithOneProperty()
     {
-        $property = $this->getProperty('property1', 'type', 'default');
+        $property = $this->getProperty('property1', 'type');
         $transferDefinition = [
             'name' => 'name',
             'property' => $property
@@ -106,38 +106,27 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $properties = $classDefinition->getProperties();
         $this->assertTrue(is_array($properties));
 
-        $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'type', 'default');
-        $this->assertEquals($expectedProperty, $givenProperty);
+        $given = $properties['property1'];
+        $expected = $this->getProperty('property1', 'type');
+        $this->assertEquals($expected, $given);
     }
 
     /**
      * @param $name
      * @param $type
-     * @param $default
-     * @param null $collection
-     * @param null $options
+     * @param null $singular
      *
      * @return array
      */
-    private function getProperty($name, $type, $default, $collection = null, $options = null)
+    private function getProperty($name, $type, $singular = null, $return = null)
     {
         $property = [
             'name' => $name,
-            'type' => $type,
-            'default' => $default
+            'type' => (is_null($return)) ? $type : $return
         ];
 
-        if (!is_null($collection)) {
-            $property['collection'] = $collection;
-        }
-
-        if (!is_null($options)) {
-            foreach ($options as $option) {
-                foreach ($option as $key => $value) {
-                    $property[$key] = $value;
-                }
-            }
+        if (!is_null($singular)) {
+            $property['singular'] = $singular;
         }
 
         return $property;
@@ -148,8 +137,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = [
             'name' => 'name',
             'property' => [
-                $this->getProperty('property1', 'type', 'default'),
-                $this->getProperty('property2', 'type', 'default')
+                $this->getProperty('property1', 'type'),
+                $this->getProperty('property2', 'type')
             ]
         ];
 
@@ -159,11 +148,11 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($properties));
 
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'type', 'default');
+        $expectedProperty = $this->getProperty('property1', 'type');
         $this->assertEquals($expectedProperty, $givenProperty);
 
         $givenProperty = $properties['property2'];
-        $expectedProperty = $this->getProperty('property2', 'type', 'default');
+        $expectedProperty = $this->getProperty('property2', 'type');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -171,14 +160,14 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'array', 'default')
+            'property' => $this->getProperty('property1', 'array')
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'array', 'default');
+        $expectedProperty = $this->getProperty('property1', 'array');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -186,29 +175,43 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', '[]', 'default')
+            'property' => $this->getProperty('property1', '[]')
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'array', 'default');
+        $expectedProperty = $this->getProperty('property1', 'array');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
-    public function testIfPropertyTypeIsCollectionTheReturnedTypeShouldBeTheType()
+    public function testIfPropertyTypeIsCollectionConstructorDefinitionMustContainArrayWithThisEntry()
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'Type', 'default', 'collection')
+            'property' => $this->getProperty('property1', 'Collection[]')
+        ];
+
+        $classDefinition = new ClassDefinition($transferDefinition);
+
+        $constructorDefinition = $classDefinition->getConstructorDefinition();
+        $this->assertArrayHasKey('property1', $constructorDefinition);
+        $this->assertSame('\\ArrayObject', $constructorDefinition['property1']);
+    }
+
+    public function testIfPropertyTypeIsCollectionTheReturTypeShouldBeAnArrayObject()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => $this->getProperty('property1', 'Type[]')
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'Type', 'default');
+        $expectedProperty = $this->getProperty('property1', 'Type[]', null, '\ArrayObject');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -216,7 +219,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'string', 'default')
+            'property' => $this->getProperty('property1', 'string')
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -233,7 +236,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'string', 'default')
+            'property' => $this->getProperty('property1', 'string')
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -247,51 +250,42 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'type', 'default', 'collection')
+            'property' => $this->getProperty('property1', 'Type[]')
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string', null, 'type');
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'Type', null, 'Type');
     }
 
-    public function testCollectionPropertyShouldHaveGetSetAddHasAndRemove()
+    public function testCollectionPropertyShouldHaveGetSetAndAdd()
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'string', 'default', 'collection')
+            'property' => $this->getProperty('property1', 'Type[]')
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
-        $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string', '$this');
+        $given = $methods['setProperty1'];
+        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject', null, '\\ArrayObject');
+        $this->assertEquals($expected, $given);
 
-        $givenGetter = $methods['getProperty1'];
-        $expectedGetter = $this->getMethod('getProperty1', 'property1', 'string', 'string');
+        $given = $methods['getProperty1'];
+        $expected = $this->getMethod('getProperty1', 'property1', null, 'Type[]');
+        $this->assertEquals($expected, $given);
 
-        $givenAdd = $methods['addProperty1'];
-        $expectedAdd = $this->getMethod('addProperty1', 'property1', 'string', 'string');
-
-        $givenRemove = $methods['removeProperty1'];
-        $expectedRemove = $this->getMethod('removeProperty1', 'property1', 'string', 'string');
-
-        $givenHas = $methods['hasProperty1'];
-        $expectedHas = $this->getMethod('hasProperty1', 'property1', 'string', 'string');
+        $given = $methods['addProperty1'];
+        $expected = $this->getCollectionMethod('addProperty1', 'property1', 'property1', 'Type', null, 'Type');
+        $this->assertEquals($expected, $given);
     }
 
-    public function testCollectionPropertyWithMethodDefinitionShouldHaveAddHasAndRemoveWithDefinedNames()
+    public function testCollectionPropertyWithSingularDefinitionShouldHaveAddWithDefinedName()
     {
-        $property = $this->getProperty(
-            'properties', 'string', 'default', 'collection', [
-                ['add' => ['type' => 'otherType', 'name' => 'property']],
-                ['has' => ['type' => 'otherType', 'name' => 'property']],
-                ['remove' => ['type' => 'otherType', 'name' => 'property']]
-            ]
-        );
+        $property = $this->getProperty('properties', 'Type[]', 'property');
 
         $transferDefinition = [
             'name' => 'name',
@@ -302,23 +296,15 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperties'];
-        $expected = $this->getCollectionMethod('setProperties', 'properties', 'properties', 'string');
+        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject', null, '\\ArrayObject');
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];
-        $expected = $this->getMethod('getProperties', 'properties', null, 'string');
+        $expected = $this->getMethod('getProperties', 'properties', null, 'Type[]');
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty'];
-        $expected = $this->getCollectionMethod('addProperty', 'property', 'properties', 'otherType', null, 'otherType');
-        $this->assertEquals($expected, $given);
-
-        $given = $methods['removeProperty'];
-        $expected = $this->getCollectionMethod('removeProperty', 'property', 'properties', 'otherType', null, 'otherType');
-        $this->assertEquals($expected, $given);
-
-        $given = $methods['hasProperty'];
-        $expected = $this->getCollectionMethod('hasProperty', 'property', 'properties', 'otherType', null, 'otherType');
+        $expected = $this->getCollectionMethod('addProperty', 'property', 'properties', 'Type', null, 'Type');
         $this->assertEquals($expected, $given);
     }
 

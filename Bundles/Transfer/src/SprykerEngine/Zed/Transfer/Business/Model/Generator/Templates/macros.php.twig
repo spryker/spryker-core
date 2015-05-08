@@ -47,7 +47,7 @@
     */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
-        $this->{{ method.parent }}->add(${{ method.property }});
+        $this->{{ method.parent }}[] = ${{ method.property }};
         $this->addModifiedProperty('{{ method.parent }}');
 
         return $this;

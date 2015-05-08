@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="Transfer">
+        <property name="name" type="string" />
+        <property name="item" type="OrderItem" />
+        <property name="items" type="OrderItem[]" singular="item" />
+    </transfer>
+
+</transfers>
+

@@ -26,9 +26,4 @@ interface TransferInterface
      * @param bool $fuzzyMatch
      */
     public function fromArray(array $values, $fuzzyMatch = false);
-
-    /**
-     * @throws \RuntimeException
-     */
-    public function validate();
 }

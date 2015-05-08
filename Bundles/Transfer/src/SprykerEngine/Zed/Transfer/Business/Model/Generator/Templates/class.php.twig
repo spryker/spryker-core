@@ -3,7 +3,6 @@
 
 namespace Generated\Shared\Transfer;
 
-use SprykerEngine\Shared\Transfer\TransferArrayObject;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 {% for use in uses %}
@@ -26,22 +25,22 @@ class {{ className }} extends AbstractTransfer
 {% endfor -%}
 
 {{ macro.addConstructor(constructorDefinition) }}
-{% for methodName, definition  in methods %}
+{% for methodName, method  in methods %}
 {% if methodName starts with 'set' %}
-{{ macro.addSet(definition) }}
+{{ macro.addSet(method) }}
 {% endif %}
 {% if methodName starts with 'get' %}
-{{ macro.addGet(definition) }}
+{{ macro.addGet(method) }}
 {% endif %}
 {% if methodName starts with 'add' %}
-{{ macro.addAdd(definition) }}
+{{ macro.addAdd(method) }}
 {% endif %}
-{% if methodName starts with 'has' %}
-{{ macro.addHas(definition) }}
-{% endif %}
-{% if methodName starts with 'remove' %}
-{{ macro.addRemove(definition) }}
-{% endif %}
+{#{% if methodName starts with 'has' %}#}
+{#{{ macro.addHas(method) }}#}
+{#{% endif %}#}
+{#{% if methodName starts with 'remove' %}#}
+{#{{ macro.addRemove(method) }}#}
+{#{% endif %}#}
 {% endfor %}
 
 }
