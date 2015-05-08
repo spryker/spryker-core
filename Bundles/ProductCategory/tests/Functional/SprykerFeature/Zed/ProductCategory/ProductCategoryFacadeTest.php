@@ -91,11 +91,11 @@ class ProductCategoryFacadeTest extends Test
         $categoryNodeTransfer->setFkCategory($idCategory);
         $categoryNodeTransfer->setIsRoot(true);
         $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $locale);
-        $this->productCategoryFacade->createProductCategoryMapping($concreteSku, $categoryName, $locale);
+        $this->productCategoryFacade->createProductCategoryMapping($abstractSku, $categoryName, $locale);
 
         $this->assertTrue(
             $this->productCategoryFacade->hasProductCategoryMapping(
-                $concreteSku,
+                $abstractSku,
                 $categoryName,
                 $locale
             )
