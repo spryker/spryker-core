@@ -3,12 +3,20 @@
 namespace SprykerEngine\Zed\Translation;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerEngine\Zed\Translation\Business\Exception\TranslationFormatNotFoundException;
 use Symfony\Component\Translation\Loader\CsvFileLoader;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 
 class TranslationConfig extends AbstractBundleConfig
 {
+    /**
+     * @param string $format
+     *
+     * @return LoaderInterface
+     *
+     * @throws TranslationFormatNotFoundException
+     */
     public static function getLoader($format)
     {
         switch($format) {
@@ -17,8 +25,12 @@ class TranslationConfig extends AbstractBundleConfig
             case 'csv':
                 return new CsvFileLoader();
             default:
-                // todo: create Exception
-                throw new \Exception('Unknown Format');
+                throw new TranslationFormatNotFoundException(
+                    sprintf(
+                        'There is no loader for the format "%s".',
+                        $format
+                    )
+                );
         }
     }
 
