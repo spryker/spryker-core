@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Util;
 
+use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\ProcessInterface;
 use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\OmsConfig;
 

@@ -209,7 +209,7 @@ class TransitionLog implements TransitionLogInterface
         $logItem->setOrder($orderItem->getOrder());
         $logItem->setOrderItem($orderItem);
 
-        $logItem->setAclUser($this->getAclUser());
+//        $logItem->setAclUser($this->getAclUser());
 
         $logItem->setError($this->error);
         $logItem->setErrorMessage($this->errorMessage);
@@ -235,10 +235,10 @@ class TransitionLog implements TransitionLogInterface
      */
     protected function getAclUser()
     {
-        $auth = Auth::getInstance();
-        if ($auth->hasIdentity()) {
-            return $auth->getIdentity();
-        }
+//        $auth = Auth::getInstance();
+//        if ($auth->hasIdentity()) {
+//            return $auth->getIdentity();
+//        }
 
         return null;
     }

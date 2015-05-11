@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Oms;
 
-use Generated\Shared\Transfer\SalesOrder as OrderTransferTransfer;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
@@ -30,11 +30,11 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param SalesOrderTransfer $orderTransfer
      *
      * @return mixed
      */
-    public function selectProcess(OrderTransfer $orderTransfer)
+    public function selectProcess(SalesOrderTransfer $orderTransfer)
     {
         return null;
     }
