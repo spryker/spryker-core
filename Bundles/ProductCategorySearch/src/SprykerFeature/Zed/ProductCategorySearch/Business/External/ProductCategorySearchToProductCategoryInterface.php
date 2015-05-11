@@ -9,8 +9,9 @@ namespace SprykerFeature\Zed\ProductCategorySearch\Business\External;
 interface ProductCategorySearchToProductCategoryInterface
 {
     /**
-     * @param $data
+     * @param array $data
+     *
      * @return mixed
      */
-    public function collectProductNodes($data);
+    public function collectProductNodes(array $data);
 }

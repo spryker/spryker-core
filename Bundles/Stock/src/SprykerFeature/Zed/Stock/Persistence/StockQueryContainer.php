@@ -25,7 +25,7 @@ class StockQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param $idProduct
+     * @param int $idProduct
      *
      * @return SpyStockProductQuery
      */

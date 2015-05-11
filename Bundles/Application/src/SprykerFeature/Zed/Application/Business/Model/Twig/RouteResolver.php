@@ -6,7 +6,7 @@ class RouteResolver
 {
 
     /**
-     * @param $controllerServiceName
+     * @param string $controllerServiceName
      * @return string
      */
     public function buildRouteFromControllerServiceName($controllerServiceName)

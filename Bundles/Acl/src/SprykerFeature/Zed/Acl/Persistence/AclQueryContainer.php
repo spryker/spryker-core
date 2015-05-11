@@ -258,11 +258,11 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param $idAclRole
-     * @param $bundle
-     * @param $controller
-     * @param $action
-     * @param $type
+     * @param int $idAclRole
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
+     * @param int $type
      *
      * @throws PropelException
      *

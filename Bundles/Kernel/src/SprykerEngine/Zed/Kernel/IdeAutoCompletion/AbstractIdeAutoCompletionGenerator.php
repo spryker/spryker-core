@@ -100,7 +100,8 @@ abstract class AbstractIdeAutoCompletionGenerator
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
+     *
      * @return array
      */
     protected function getMethodTagsByBundle($bundle)
@@ -115,7 +116,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     }
 
     /**
-     * @param $namespace
+     * @param string $namespace
      *
      * @return string
      */

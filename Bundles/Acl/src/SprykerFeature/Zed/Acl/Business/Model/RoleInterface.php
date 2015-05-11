@@ -10,10 +10,11 @@ use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
 interface RoleInterface
 {
     /**
-     * @param $name
-     * @param $idGroup
+     * @param string $name
+     * @param int $idGroup
      *
-     * @return mixed
+     * @return AclRoleTransfer
+     * @throws RoleNameExistsException
      */
     public function addRole($name, $idGroup);
 

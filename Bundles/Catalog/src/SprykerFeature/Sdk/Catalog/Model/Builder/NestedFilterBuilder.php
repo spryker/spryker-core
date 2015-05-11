@@ -24,9 +24,10 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
     }
 
     /**
-     * @param $fieldName
-     * @param $nestedFieldName
-     * @param $nestedFieldValue
+     * @param string $fieldName
+     * @param string $nestedFieldName
+     * @param string $nestedFieldValue
+     *
      * @return Nested
      */
     public function createNestedTermFilter($fieldName, $nestedFieldName, $nestedFieldValue)
@@ -39,9 +40,10 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
     }
 
     /**
-     * @param $fieldName
-     * @param $nestedFieldName
+     * @param string $fieldName
+     * @param string $nestedFieldName
      * @param array $nestedFieldValues
+     *
      * @return Nested
      */
     public function createNestedTermsFilter($fieldName, $nestedFieldName, array $nestedFieldValues)
@@ -56,10 +58,11 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
     /**
      * @param string $fieldName
      * @param string $nestedFieldName
-     * @param float  $minValue
-     * @param float  $maxValue
+     * @param float $minValue
+     * @param float $maxValue
      * @param string $greaterParam
      * @param string $lessParam
+     *
      * @return Nested
      */
     public function createNestedRangeFilter(
@@ -79,8 +82,9 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
     }
 
     /**
-     * @param $fieldName
+     * @param string $fieldName
      * @param array $filters
+     *
      * @return Nested
      */
     protected function bindMultipleNestedFilter($fieldName, array $filters)

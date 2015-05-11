@@ -28,8 +28,8 @@ class BundleControllerAction implements BundleControllerActionInterface
     }
 
     /**
-     * @param $value
-     * @return array|string
+     * @param string $value
+     * @return string
      */
     private function filter($value)
     {

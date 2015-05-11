@@ -115,7 +115,7 @@ class Store
     }
 
     /**
-     * @param $currentStoreName
+     * @param string $currentStoreName
      *
      * @return array
      * @throws \Exception
@@ -132,7 +132,7 @@ class Store
     }
 
     /**
-     * @param $currentStoreName
+     * @param string $currentStoreName
      *
      * @throws \Exception
      */
@@ -175,11 +175,13 @@ class Store
     }
 
     /**
-     * @param $locale string The locale, e.g. 'DE_de'
+     * @param string $locale string The locale, e.g. 'de_DE'
+     *
      * @return string The language, e.g. 'de'
      */
     protected function getLanguageFromLocale($locale)
     {
+        //TODO use strstr here
         return substr($locale, 0, strpos($locale, '_'));
     }
 
@@ -239,7 +241,8 @@ class Store
     }
 
     /**
-     * @param $storeName
+     * @param string $storeName
+     *
      * @return $this
      */
     public function setStoreName($storeName)
@@ -250,7 +253,7 @@ class Store
     }
 
     /**
-     * @param $currentLocale
+     * @param string $currentLocale
      */
     public function setCurrentLocale($currentLocale)
     {
@@ -282,7 +285,7 @@ class Store
     }
 
     /**
-     * @param $currentCountry
+     * @param string $currentCountry
      */
     public function setCurrentCountry($currentCountry)
     {

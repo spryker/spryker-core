@@ -14,7 +14,8 @@ class TransferLocatorHelper
 {
     /**
      * @param LocatorLocatorInterface $locator
-     * @param $className
+     * @param string $className
+     *
      * @return TransferInterface
      * @throws \Exception
      */

@@ -116,8 +116,8 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param $fromXmlElement SimpleXMLElement
-     * @param $intoXmlNode SimpleXMLElement
+     * @param SimpleXMLElement $fromXmlElement
+     * @param SimpleXMLElement $intoXmlNode
      */
     protected function recursiveMerge($fromXmlElement, $intoXmlNode)
     {
@@ -151,7 +151,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param $processName
+     * @param string $processName
      *
      * @return SimpleXMLElement
      */
@@ -351,7 +351,7 @@ class Builder implements BuilderInterface
 
     /**
      * @param SimpleXMLElement $xmlElement
-     * @param $attributeName
+     * @param string $attributeName
      *
      * @return string
      */
@@ -365,7 +365,7 @@ class Builder implements BuilderInterface
 
     /**
      * @param SimpleXMLElement $xmlElement
-     * @param $attributeName
+     * @param string $attributeName
      *
      * @return bool
      */

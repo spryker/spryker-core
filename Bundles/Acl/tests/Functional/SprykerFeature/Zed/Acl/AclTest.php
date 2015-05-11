@@ -3,6 +3,7 @@
 namespace Functional\SprykerFeature\Zed\User;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\UserUserTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -102,11 +103,11 @@ class AclTest extends Test
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
-     * @return User
+     * @return UserUserTransfer
      */
-    private function mockAddUser($data)
+    private function mockAddUser(array $data)
     {
         return $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
     }

@@ -5,7 +5,8 @@ namespace SprykerFeature\Zed\Application\Business\Model\Navigation\Validator;
 interface UrlUniqueValidatorInterface
 {
     /**
-     * @param $url
+     * @param string $url
+     *
      * @throws \Exception
      */
     public function validate($url);

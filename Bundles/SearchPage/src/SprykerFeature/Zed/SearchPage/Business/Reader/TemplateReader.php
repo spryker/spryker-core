@@ -22,7 +22,7 @@ class TemplateReader implements TemplateReaderInterface
     }
 
     /**
-     * @param $idTemplate
+     * @param int $idTemplate
      *
      * @return SpySearchPageElementTemplate
      */
@@ -36,7 +36,7 @@ class TemplateReader implements TemplateReaderInterface
     }
 
     /**
-     * @param $templateName
+     * @param string $templateName
      *
      * @return bool
      */

@@ -3,6 +3,7 @@
 namespace SprykerFeature\Sdk\Catalog\Model\Builder;
 
 use Elastica\Aggregation\AbstractAggregation;
+use Elastica\Aggregation\AbstractSimpleAggregation;
 use Elastica\Aggregation\Max;
 use Elastica\Aggregation\Min;
 use Elastica\Aggregation\Nested;
@@ -19,8 +20,8 @@ class FacetAggregationBuilder implements FacetAggregationBuilderInterface
     const FACET_NAME = 'facet-name';
 
     /**
-     * @param $fieldName
-     * @return \Elastica\Aggregation\AbstractAggregation
+     * @param string $fieldName
+     * @return AbstractAggregation
      */
     public function createStringFacetAggregation($fieldName)
     {
@@ -33,7 +34,8 @@ class FacetAggregationBuilder implements FacetAggregationBuilderInterface
     }
 
     /**
-     * @param $fieldName
+     * @param string $fieldName
+     *
      * @return AbstractAggregation
      */
     public function createNumberFacetAggregation($fieldName)
@@ -56,8 +58,9 @@ class FacetAggregationBuilder implements FacetAggregationBuilderInterface
     }
 
     /**
-     * @param $fieldName
+     * @param string $fieldName
      * @param AbstractAggregation $aggregation
+     *
      * @return AbstractAggregation
      */
     protected function createNestedFacetAggregation($fieldName, AbstractAggregation $aggregation)
@@ -67,8 +70,9 @@ class FacetAggregationBuilder implements FacetAggregationBuilderInterface
     }
 
     /**
-     * @param $fieldName
-     * @return \Elastica\Aggregation\AbstractSimpleAggregation
+     * @param string $fieldName
+     *
+     * @return AbstractSimpleAggregation
      */
     protected function createFacetNameAggregation($fieldName)
     {
@@ -77,8 +81,9 @@ class FacetAggregationBuilder implements FacetAggregationBuilderInterface
     }
 
     /**
-     * @param $nestedFieldName
-     * @param $fieldName
+     * @param string $nestedFieldName
+     * @param string $fieldName
+     *
      * @return string
      */
     protected function addNestedFieldPrefix($nestedFieldName, $fieldName)

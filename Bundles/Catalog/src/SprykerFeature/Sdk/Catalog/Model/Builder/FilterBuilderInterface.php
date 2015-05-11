@@ -16,30 +16,33 @@ use Elastica\Filter\Terms;
 interface FilterBuilderInterface
 {
     /**
-     * @param $fieldName
-     * @param $minValue
-     * @param $maxValue
+     * @param string $fieldName
+     * @param float $minValue
+     * @param float $maxValue
      * @param string $greaterParam
      * @param string $lessParam
+     *
      * @return Range
      */
     public function createRangeFilter($fieldName, $minValue, $maxValue, $greaterParam = 'gte', $lessParam = 'lte');
 
     /**
-     * @param $fieldName
+     * @param string $fieldName
+     *
      * @return Nested
      */
     public function createNestedFilter($fieldName);
 
     /**
-     * @param $field
-     * @param $value
+     * @param string $field
+     * @param string $value
+     *
      * @return Term
      */
     public function createTermFilter($field, $value);
 
     /**
-     * @param $field
+     * @param string $field
      * @param array $values
      * @return Terms
      */

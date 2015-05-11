@@ -7,7 +7,7 @@ abstract class StaticToken
     protected $rawToken = null;
 
     /**
-     * @param $token
+     * @param string $token
      */
     public function setRawToken($token)
     {
@@ -31,7 +31,7 @@ abstract class StaticToken
     }
 
     /**
-     * @param $hash
+     * @param string $hash
      *
      * @return bool
      */

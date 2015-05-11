@@ -21,8 +21,8 @@ class CodeExists extends Constraint
 
     /**
      * @param DiscountQueryContainerInterface $queryContainer
-     * @param $voucherName
-     * @param null $options
+     * @param string $voucherName
+     * @param mixed $options
      */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,

@@ -1,4 +1,5 @@
 <?php
+
 namespace SprykerFeature\Sdk\Catalog\Model;
 
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
@@ -70,6 +71,7 @@ class Catalog implements CatalogInterface
     /**
      * @param array $ids
      * @param null  $indexByKey
+     * 
      * @return array
      */
     public function getProductDataByIds(array $ids, $indexByKey = null)
@@ -127,7 +129,8 @@ class Catalog implements CatalogInterface
     }
 
     /**
-     * @param $product
+     * @param array $product
+     *
      * @return array
      */
     protected function mergeAttributes(array $product)

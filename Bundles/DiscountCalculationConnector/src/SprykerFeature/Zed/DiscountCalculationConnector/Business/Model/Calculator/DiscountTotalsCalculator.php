@@ -3,16 +3,14 @@
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\DiscountItemsInterface;
-use Generated\Shared\DiscountCalculationConnector\ExpenseInterface;
 use Generated\Shared\Calculation\OrderInterface;
-use Generated\Shared\Sales\OrderItemsInterface;
-use Generated\Shared\Transfer\DiscountTotalsTransfer;
-use Generated\Shared\Transfer\DiscountTotalItemTransfer;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\DiscountCalculationConnector\DiscountInterface;
+use Generated\Shared\DiscountCalculationConnector\ExpenseInterface;
 use Generated\Shared\DiscountCalculationConnector\OrderItemOptionInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
-use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
+use Generated\Shared\Transfer\DiscountTotalsTransfer;
+use Generated\Shared\Transfer\DiscountTotalItemTransfer;
+use Generated\Shared\Sales\OrderItemsInterface;
 
 class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 {
@@ -82,7 +80,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param OrderInterface $discountableContainer
-     * @param \ArrayObject|DiscountableItemInterface[] $discountableItems
+     * @param \ArrayObject $discountableItems
      *
      * @return array
      */
@@ -125,11 +123,11 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param DiscountInterface $discount
-     * @param $arrayOfExpenseTotalItems
+     * @param array $arrayOfExpenseTotalItems
      */
     protected function transformDiscountToDiscountTotalItemInArray(
         DiscountInterface $discount,
-        &$arrayOfExpenseTotalItems
+        array &$arrayOfExpenseTotalItems
     ) {
         if (!isset($arrayOfExpenseTotalItems[$discount->getDisplayName()])) {
             $item = $this->getDiscountTotalItem();

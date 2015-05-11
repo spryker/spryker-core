@@ -47,7 +47,7 @@ class DocumentAttributeReader implements DocumentAttributeReaderInterface
     }
 
     /**
-     * @param $idDocumentAttribute
+     * @param int $idDocumentAttribute
      *
      * @return SpySearchDocumentAttribute
      */

@@ -60,7 +60,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return GroupTransfer
      */
@@ -82,7 +82,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return bool
      */
@@ -107,7 +107,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return RoleTransfer
      */
@@ -195,7 +195,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param $idUser
+     * @param int $idUser
      *
      * @return GroupTransfer
      */

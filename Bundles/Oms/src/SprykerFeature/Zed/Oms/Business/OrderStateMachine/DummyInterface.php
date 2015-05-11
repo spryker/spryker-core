@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 interface DummyInterface
 {
     /**
-     * @param $processName
+     * @param string $processName
      *
      * @return mixed
      */

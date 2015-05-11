@@ -59,7 +59,8 @@ abstract class AbstractSdkController extends AbstractController
     }
 
     /**
-     * @param $success
+     * @param bool $success
+     *
      * @return $this
      */
     protected function setSuccess($success)
@@ -70,8 +71,9 @@ abstract class AbstractSdkController extends AbstractController
     }
 
     /**
-     * @param $message
+     * @param string $message
      * @param array $data
+     *
      * @return $this
      */
     protected function addMessage($message, $data = [])
@@ -86,8 +88,9 @@ abstract class AbstractSdkController extends AbstractController
     }
 
     /**
-     * @param $message
+     * @param string $message
      * @param array $data
+     *
      * @return $this
      */
     protected function addErrorMessage($message, $data = [])

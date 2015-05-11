@@ -101,9 +101,10 @@ class IdentityMapClassResolver implements ClassResolverInterface
     }
 
     /**
-     * @param $pattern
-     * @param $bundle
-     * @return mixed
+     * @param string $pattern
+     * @param string $bundle
+     *
+     * @return string
      */
     private function getPatternWithResolvedBundle($pattern, $bundle)
     {
@@ -111,7 +112,7 @@ class IdentityMapClassResolver implements ClassResolverInterface
     }
 
     /**
-     * @param $className
+     * @param string $className
      * @param array $arguments
      *
      * @return object

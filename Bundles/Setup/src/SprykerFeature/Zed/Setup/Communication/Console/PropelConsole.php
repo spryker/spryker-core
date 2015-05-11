@@ -46,7 +46,7 @@ class PropelConsole extends Console
     }
 
     /**
-     * @param $command
+     * @param string $command
      * @param array $arguments
      */
     protected function runDependingCommand($command, array $arguments = [])

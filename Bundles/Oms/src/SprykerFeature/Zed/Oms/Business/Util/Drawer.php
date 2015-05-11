@@ -242,7 +242,7 @@ class Drawer implements DrawerInterface
 
     /**
      * @param TransitionInterface $transition
-     * @param $label
+     * @param string $label
      *
      * @return array
      */
@@ -264,7 +264,7 @@ class Drawer implements DrawerInterface
 
     /**
      * @param TransitionInterface $transition
-     * @param $label
+     * @param string $label
      *
      * @return array
      */
@@ -311,7 +311,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param $label
+     * @param string $label
      *
      * @return string
      */
@@ -328,13 +328,13 @@ class Drawer implements DrawerInterface
 
     /**
      * @param TransitionInterface $transition
-     * @param $attributes
-     * @param $label
+     * @param array $attributes
+     * @param string $label
      * @param string $type
      *
      * @return array
      */
-    protected function addEdgeAttributes(TransitionInterface $transition, $attributes, $label, $type = self::EDGE_FULL)
+    protected function addEdgeAttributes(TransitionInterface $transition, array $attributes, $label, $type = self::EDGE_FULL)
     {
         $attributes = array_merge($this->attributesTransition, $attributes);
         $attributes['label'] = '  ' . $label;
@@ -364,7 +364,7 @@ class Drawer implements DrawerInterface
 
     /**
      * @param TransitionInterface $transition
-     * @param $fromName
+     * @param string $fromName
      *
      * @return mixed
      */
@@ -377,8 +377,7 @@ class Drawer implements DrawerInterface
 
     /**
      * @param TransitionInterface $transition
-     * @param $toName
-     *
+     * @param string $toName
      * @return mixed
      */
     protected function addEdgeToState(TransitionInterface $transition, $toName)
@@ -389,7 +388,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param $format
+     * @param string $format
      * @param $fontsize
      */
     protected function init($format, $fontsize)

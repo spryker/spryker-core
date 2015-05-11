@@ -24,7 +24,7 @@ class PluginMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param array $methodTags
      *
      * @return array
@@ -40,7 +40,7 @@ class PluginMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return bool
      */
@@ -54,7 +54,7 @@ class PluginMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return string
      */

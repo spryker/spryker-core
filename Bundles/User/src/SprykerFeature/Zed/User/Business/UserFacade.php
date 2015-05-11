@@ -160,7 +160,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param $idUser
+     * @param int $idUser
      */
     public function removeUser($idUser)
     {

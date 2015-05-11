@@ -10,14 +10,16 @@ abstract class AbstractAggregationExtractor implements AggregationExtractorInter
 {
     /**
      * @param array $aggregation
-     * @param $fieldName
-     * @return mixed
+     * @param string $fieldName
+     *
+     * @return array
      */
     abstract protected function extractData(array $aggregation, $fieldName);
 
     /**
      * @param array $aggregations
      * @param array $fields
+     *
      * @return array
      */
     public function extractDataFromAggregations(array $aggregations, array $fields)

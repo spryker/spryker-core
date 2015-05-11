@@ -58,7 +58,8 @@ class JenkinsController extends AbstractController{
     }
 
     /**
-     * @param $job
+     * @param array $job
+     *
      * @return string
      */
     private function prepareJobXml($job)
@@ -286,7 +287,8 @@ $command</command>";
     }
 
     /**
-     * @param $job
+     * @param array $job
+     *
      * @return string
      */
     protected function getPublisherString($job)

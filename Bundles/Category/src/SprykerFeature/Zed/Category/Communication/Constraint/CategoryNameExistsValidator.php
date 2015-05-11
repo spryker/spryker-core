@@ -34,7 +34,7 @@ class CategoryNameExistsValidator extends ConstraintValidator
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @param Constraint|CategoryNameExists $constraint
      */
     protected function addViolation($value, Constraint $constraint)

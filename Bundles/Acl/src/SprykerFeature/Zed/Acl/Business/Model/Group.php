@@ -224,8 +224,8 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param $idGroup
-     * @param $idUser
+     * @param int $idGroup
+     * @param int $idUser
      */
     public function removeUser($idGroup, $idUser)
     {

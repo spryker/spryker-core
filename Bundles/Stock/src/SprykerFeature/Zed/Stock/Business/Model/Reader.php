@@ -144,8 +144,8 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param $idStockType
-     * @param $idProduct
+     * @param int $idStockType
+     * @param int $idProduct
      *
      * @throws StockProductAlreadyExistsException
      */

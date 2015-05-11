@@ -47,9 +47,10 @@ abstract class AbstractController
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @param int $status
      * @param array $headers
+     *
      * @return RedirectResponse
      */
     protected function redirectResponse($url, $status = 302, $headers = array())
@@ -92,7 +93,8 @@ abstract class AbstractController
     }
 
     /**
-     * @param $message
+     * @param string $message
+     *
      * @return $this
      * @throws \ErrorException
      */
@@ -105,7 +107,8 @@ abstract class AbstractController
     }
 
     /**
-     * @param $message
+     * @param string $message
+     *
      * @throws \Exception
      */
     protected function addMessageWarning($message)
@@ -114,7 +117,8 @@ abstract class AbstractController
     }
 
     /**
-     * @param $message
+     * @param string $message
+     *
      * @return $this
      * @throws \ErrorException
      */

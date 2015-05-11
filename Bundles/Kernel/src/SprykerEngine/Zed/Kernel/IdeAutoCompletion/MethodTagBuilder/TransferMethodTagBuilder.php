@@ -24,7 +24,7 @@ class TransferMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param array $methodTags
      *
      * @return array

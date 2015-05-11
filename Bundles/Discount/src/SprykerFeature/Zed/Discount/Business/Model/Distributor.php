@@ -62,7 +62,7 @@ class Distributor implements
 
     /**
      * @param \ArrayObject $discounts
-     * @param $discountAmount
+     * @param int $discountAmount
      */
     protected function addDiscountToDiscounts(\ArrayObject $discounts, $discountAmount)
     {

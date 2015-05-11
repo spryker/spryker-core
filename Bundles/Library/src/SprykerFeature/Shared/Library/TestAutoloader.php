@@ -51,8 +51,8 @@ class TestAutoloader
     }
 
     /**
-     * @param $rootDirectory
-     * @param $vendorDirectory
+     * @param string $rootDirectory
+     * @param string $vendorDirectory
      * @param null $application
      * @param bool $disableApplicationCheck
      */

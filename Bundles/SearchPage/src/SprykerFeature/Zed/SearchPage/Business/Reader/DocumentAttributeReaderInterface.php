@@ -16,7 +16,7 @@ interface DocumentAttributeReaderInterface
     public function hasDocumentAttributeByNameAndType($name, $type);
 
     /**
-     * @param $idDocumentAttribute
+     * @param int $idDocumentAttribute
      *
      * @return SpySearchDocumentAttribute
      */

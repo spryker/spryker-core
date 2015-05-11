@@ -34,7 +34,8 @@ abstract class AbstractZedClient
 
     /**
      * @param string $name
-     * @param $metaTransfer
+     * @param mixed $metaTransfer
+     *
      * @return $this
      */
     public function addMetaTransfer($name, $metaTransfer)
@@ -57,10 +58,11 @@ abstract class AbstractZedClient
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @param TransferInterface $object
-     * @param $timeoutInSeconds (optional) default: null
-     * @param $isBackgroundRequest (optional) default: false
+     * @param int|null $timeoutInSeconds (optional) default: null
+     * @param bool $isBackgroundRequest (optional) default: false
+     *
      * @return TransferInterface
      */
     public function call($url, TransferInterface $object, $timeoutInSeconds = null, $isBackgroundRequest = false)

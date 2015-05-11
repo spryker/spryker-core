@@ -155,7 +155,7 @@ class KeyManager implements KeyManagerInterface
     }
 
     /**
-     * @param $keyName
+     * @param string $keyName
      *
      * @throws KeyExistsException
      */

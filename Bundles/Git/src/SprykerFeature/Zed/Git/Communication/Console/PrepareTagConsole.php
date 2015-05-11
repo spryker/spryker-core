@@ -43,7 +43,7 @@ class PrepareTagConsole extends Console
     }
 
     /**
-     * @param $command
+     * @param string $command
      */
     protected function runCommand($command)
     {
@@ -72,7 +72,8 @@ class PrepareTagConsole extends Console
     }
 
     /**
-     * @param $ticketText
+     * @param string $ticketText
+     *
      * @return string
      */
     protected function getTagName($ticketText)
@@ -84,7 +85,8 @@ class PrepareTagConsole extends Console
     }
 
     /**
-     * @param $tagName
+     * @param string $tagName
+     *
      * @return string
      */
     protected function askMessage($tagName)

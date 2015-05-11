@@ -26,7 +26,7 @@ class ConsoleMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param array $methodTags
      *
      * @return array
@@ -42,7 +42,7 @@ class ConsoleMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return string
      */

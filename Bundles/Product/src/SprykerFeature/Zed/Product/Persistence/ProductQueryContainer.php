@@ -70,7 +70,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * @param $idAbstractProduct
+     * @param int $idAbstractProduct
      * 
      * @return SpyAbstractProductQuery
      */

@@ -34,7 +34,7 @@ abstract class AbstractBundleConfig
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @throws \Exception
      * @return string

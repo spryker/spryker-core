@@ -222,7 +222,7 @@ abstract class AbstractSearch
     }
 
     /**
-     * @param $query
+     * @param Query $query
      */
     protected function addFacetAggregationToQuery(Query $query)
     {

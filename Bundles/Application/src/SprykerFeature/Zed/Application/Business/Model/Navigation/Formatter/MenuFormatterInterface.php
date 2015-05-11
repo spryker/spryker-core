@@ -7,6 +7,7 @@ interface MenuFormatterInterface
     /**
      * @param array $pages
      * @param string $pathInfo
+     *
      * @return array
      */
     public function formatMenu(array $pages, $pathInfo);

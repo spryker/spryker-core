@@ -11,13 +11,15 @@ use Elastica\Aggregation\AbstractAggregation;
 interface FacetAggregationBuilderInterface
 {
     /**
-     * @param $fieldName
+     * @param string $fieldName
+     *
      * @return AbstractAggregation
      */
     public function createNumberFacetAggregation($fieldName);
 
     /**
-     * @param $fieldName
+     * @param string $fieldName
+     *
      * @return AbstractAggregation
      */
     public function createStringFacetAggregation($fieldName);

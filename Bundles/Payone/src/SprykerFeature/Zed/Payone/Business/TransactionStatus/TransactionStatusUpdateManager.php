@@ -123,7 +123,8 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param $errorMessage
+     * @param string $errorMessage
+     *
      * @return TransactionStatusResponse
      */
     protected function createErrorResponse($errorMessage)

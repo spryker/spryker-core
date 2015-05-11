@@ -17,7 +17,7 @@ class OmsQueryContainer extends AbstractQueryContainer
 {
     /**
      * @param array $states
-     * @param $processName
+     * @param string $processName
      *
      * @return ModelCriteria
      */

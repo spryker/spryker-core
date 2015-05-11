@@ -38,7 +38,7 @@ class BundleProxy
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      *
      * @return $this
      */
@@ -82,8 +82,8 @@ class BundleProxy
     }
 
     /**
-     * @param $method
-     * @param $arguments
+     * @param string $method
+     * @param array $arguments
      *
      * @return object
      */

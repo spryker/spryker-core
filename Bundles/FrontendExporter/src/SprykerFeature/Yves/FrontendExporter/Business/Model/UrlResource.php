@@ -19,8 +19,8 @@ class UrlResource
     private $referenceKey;
 
     /**
-     * @param $referenceKey
-     * @param $type
+     * @param string $referenceKey
+     * @param string $type
      */
     public function __construct($referenceKey = null, $type = null)
     {
@@ -46,7 +46,8 @@ class UrlResource
 
     /**
      * @param array $data
-     * @return $this UrlResource
+     *
+     * @return $this
      */
     public function fromArray(array $data)
     {

@@ -104,7 +104,8 @@ class SprykerFeature_Shared_Library_Environment
     }
 
     /**
-     * @param $environment
+     * @param string $environment
+     *
      * @return string
      */
     public static function setEnvironment($environment)

@@ -23,7 +23,7 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param array $methodTags
      *
      * @return array
@@ -39,7 +39,7 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return bool
      */
@@ -53,7 +53,7 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return string
      */
@@ -72,7 +72,8 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $className
+     * @param string $className
+     *
      * @return array
      * @throws \ErrorException
      */

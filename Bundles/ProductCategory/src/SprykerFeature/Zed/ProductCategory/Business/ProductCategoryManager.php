@@ -73,8 +73,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param string $sku
      * @param string $categoryName
      * @param LocaleTransfer $locale
-     * @return int
      *
+     * @return int
      * @throws ProductCategoryMappingExistsException
      * @throws MissingProductException
      * @throws MissingCategoryNodeException

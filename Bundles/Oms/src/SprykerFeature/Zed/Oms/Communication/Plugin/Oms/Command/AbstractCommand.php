@@ -9,7 +9,7 @@ abstract class AbstractCommand extends AbstractPlugin
 {
 
     /**
-     * @param $message
+     * @param string $message
      * @param SpySalesOrder $orderEntity
      * @param bool $isSuccess
      */

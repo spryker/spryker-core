@@ -29,7 +29,7 @@ class EntityMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param array $methodTags
      *
      * @return array
@@ -46,7 +46,7 @@ class EntityMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return string
      */
@@ -59,7 +59,7 @@ class EntityMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return bool
      */

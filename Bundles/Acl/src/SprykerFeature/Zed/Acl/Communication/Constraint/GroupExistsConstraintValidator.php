@@ -25,7 +25,7 @@ class GroupExistsConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @param Constraint $constraint
      */
     protected function addViolation($value, Constraint $constraint)

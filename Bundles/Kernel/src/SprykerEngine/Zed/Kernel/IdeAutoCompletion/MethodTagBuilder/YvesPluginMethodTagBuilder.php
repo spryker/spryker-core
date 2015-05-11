@@ -27,7 +27,7 @@ class YvesPluginMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param array $methodTags
      *
      * @return array
@@ -43,7 +43,7 @@ class YvesPluginMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     }
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return string
      */

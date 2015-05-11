@@ -76,7 +76,8 @@ class AbstractRequest
     }
 
     /**
-     * @param $name
+     * @param string $name
+     *
      * @return null|mixed
      */
     public function get($name)

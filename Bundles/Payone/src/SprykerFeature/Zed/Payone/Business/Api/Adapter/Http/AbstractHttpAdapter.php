@@ -28,7 +28,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     protected $rawResponse;
 
     /**
-     * @param $paymentGatewayUrl
+     * @param string $paymentGatewayUrl
      */
     public function __construct($paymentGatewayUrl)
     {

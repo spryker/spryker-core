@@ -137,7 +137,7 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param $stateId
+     * @param string $stateId
      * @param ProcessInterface $process
      *
      * @return StateInterface
@@ -152,7 +152,7 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param $orderItems
+     * @param ObjectCollection $orderItems
      *
      * @return array
      */
@@ -181,8 +181,8 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param $interval
-     * @param $timeout
+     * @param \DateInterval $interval
+     * @param mixed $timeout
      *
      * @return int
      * @throws ErrorException

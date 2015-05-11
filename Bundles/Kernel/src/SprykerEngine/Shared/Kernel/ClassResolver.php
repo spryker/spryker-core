@@ -55,7 +55,7 @@ class ClassResolver implements ClassResolverInterface
 
     /**
      * @param array $namespaces
-     * @param $class
+     * @param string $class
      *
      * @return array
      * @throws ClassNameAmbiguousException
@@ -158,7 +158,7 @@ class ClassResolver implements ClassResolverInterface
 
     /**
      * @param array $namespaces
-     * @param $class
+     * @param string $class
      * @param array $arguments
      * @return bool|object
      *
@@ -190,9 +190,9 @@ class ClassResolver implements ClassResolverInterface
     }
 
     /**
-     * @param $resolvedClass
-     * @param $namespace
-     * @param $alreadyResolvedIn
+     * @param object $resolvedClass
+     * @param string $namespace
+     * @param string $alreadyResolvedIn
      *
      * @return bool
      */
@@ -202,7 +202,7 @@ class ClassResolver implements ClassResolverInterface
     }
 
     /**
-     * @param $resolvedClass
+     * @param object $resolvedClass
      *
      * @return bool
      */
@@ -212,7 +212,7 @@ class ClassResolver implements ClassResolverInterface
     }
 
     /**
-     * @param $className
+     * @param string $className
      * @param array $arguments
      *
      * @return object

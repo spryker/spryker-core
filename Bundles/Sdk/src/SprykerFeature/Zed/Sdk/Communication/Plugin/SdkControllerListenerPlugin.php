@@ -76,6 +76,7 @@ class SdkControllerListenerPlugin extends AbstractPlugin implements SdkControlle
     /**
      * @param AbstractSdkController $controller
      * @param $result
+     *
      * @return Response
      */
     private function getResponse(AbstractSdkController $controller, $result)

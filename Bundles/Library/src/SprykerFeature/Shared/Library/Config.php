@@ -19,7 +19,8 @@ class Config
     const CONFIG_FILE_SUFFIX = '.php';
 
     /**
-     * @param $key
+     * @param string $key
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -37,7 +38,8 @@ class Config
     }
 
     /**
-     * @param $key
+     * @param string $key
+     *
      * @return bool
      */
     public static function hasValue($key)

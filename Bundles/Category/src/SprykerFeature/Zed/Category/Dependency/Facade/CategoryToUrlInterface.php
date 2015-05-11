@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Category\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
@@ -14,7 +15,7 @@ interface CategoryToUrlInterface
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @return Url
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      */

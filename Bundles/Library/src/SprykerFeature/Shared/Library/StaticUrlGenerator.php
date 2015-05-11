@@ -58,9 +58,9 @@ class StaticUrlGenerator
     }
 
     /**
-     * @param $type
-     * @param $path
-     * @param $ssl
+     * @param string $type
+     * @param string $path
+     * @param bool $ssl
      * @return string
      * @static
      */

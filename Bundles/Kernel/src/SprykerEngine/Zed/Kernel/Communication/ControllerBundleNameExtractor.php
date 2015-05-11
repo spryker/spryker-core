@@ -8,7 +8,7 @@ class ControllerBundleNameExtractor
     const BUNDLE_NAME_POSITION = 2;
 
     /**
-     * @param $controller
+     * @param string|object $controller
      * @return string
      */
     public function getBundleName($controller)

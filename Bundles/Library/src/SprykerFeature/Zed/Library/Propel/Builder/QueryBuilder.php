@@ -8,8 +8,8 @@ class QueryBuilder extends \Propel\Generator\Builder\Om\QueryBuilder
     /**
      * Change default propel behaviour
      *
-     * @param $objName
-     * @param $clsName
+     * @param string $objName
+     * @param string $clsName
      * @return string
      */
     public function buildObjectInstanceCreationCode($objName, $clsName)

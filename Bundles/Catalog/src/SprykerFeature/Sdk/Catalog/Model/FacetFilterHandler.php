@@ -26,7 +26,7 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
 
     /**
      * @param NestedFilterBuilderInterface $nestedFilterBuilder
-     * @param FacetConfig                  $facetConfig
+     * @param FacetConfig $facetConfig
      */
     public function __construct(
         NestedFilterBuilderInterface $nestedFilterBuilder,
@@ -38,7 +38,7 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
 
 
     /**
-     * @param Query   $query
+     * @param Query $query
      * @param Request $request
      */
     public function addFacetFiltersToQuery(Query $query, Request $request)
@@ -65,9 +65,9 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
     }
 
     /**
-     * @param $facetConfig
-     * @param $filterValue
-     * @param $filterFacetName
+     * @param array $facetConfig
+     * @param string $filterValue
+     * @param string $filterFacetName
      * @return Filter\Range|null
      */
     protected function createFilterObject($facetConfig, $filterValue, $filterFacetName)
@@ -87,11 +87,11 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
     }
 
     /**
-     * @param $facetConfig
-     * @param $filterValue
+     * @param array $facetConfig
+     * @param string $filterValue
      * @return array
      */
-    protected function getMinMaxValue($facetConfig, $filterValue)
+    protected function getMinMaxValue(array $facetConfig, $filterValue)
     {
         $values = explode($facetConfig[FacetConfig::KEY_RANGE_DIVIDER], $filterValue);
         $minValue = $values[0];

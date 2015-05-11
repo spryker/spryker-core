@@ -24,9 +24,9 @@ class TransferLocator implements LocatorInterface
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param LocatorLocatorInterface $locator
-     * @param null $className
+     * @param string $className
      *
      * @return object
      * @throws ClassResolver\ClassNameAmbiguousException

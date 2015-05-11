@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
+use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
@@ -15,7 +16,7 @@ interface FinderInterface
     public function getReservedOrderItemsForSku($sku);
 
     /**
-     * @param $sku
+     * @param string $sku
      *
      * @return SpySalesOrderItem
      */

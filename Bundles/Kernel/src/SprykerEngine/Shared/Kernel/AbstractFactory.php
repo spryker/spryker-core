@@ -34,7 +34,7 @@ abstract class AbstractFactory implements FactoryInterface
     protected $isMagicCall = false;
 
     /**
-     * @param $bundle
+     * @param string $bundle
      */
     public function __construct($bundle)
     {
@@ -49,7 +49,7 @@ abstract class AbstractFactory implements FactoryInterface
     ];
 
     /**
-     * @param $method
+     * @param string $method
      * @param array $arguments
      *
      * @return bool|object

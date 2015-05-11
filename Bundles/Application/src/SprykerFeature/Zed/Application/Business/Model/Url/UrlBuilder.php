@@ -6,7 +6,7 @@ class UrlBuilder implements UrlBuilderInterface
 {
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param string $controller
      * @param string $action
      * @param array $queryParameter
@@ -29,11 +29,12 @@ class UrlBuilder implements UrlBuilderInterface
     }
 
     /**
-     * @param $hasQueryParameter
-     * @param $mca
+     * @param bool $hasQueryParameter
+     * @param array $mca
+     *
      * @return array
      */
-    protected static function fillNullValues($hasQueryParameter, $mca)
+    protected static function fillNullValues($hasQueryParameter, array $mca)
     {
         $mapCallback = function ($value) use ($hasQueryParameter) {
             return ($value) ?: (($hasQueryParameter) ? 'index' : null);
@@ -43,10 +44,10 @@ class UrlBuilder implements UrlBuilderInterface
     }
 
     /**
-     * @param $mca
+     * @param array $mca
      * @return array
      */
-    protected static function removeNullValues($mca)
+    protected static function removeNullValues(array $mca)
     {
         $filterCallback = function ($value) {
             return !is_null($value);

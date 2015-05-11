@@ -28,6 +28,7 @@ class Helper
     /**
      * @param PaginatedIterator $loadBalancers
      * @param OutputInterface $output
+     *
      * @param $application
      */
     public function dumpLoadBalancerTable(PaginatedIterator $loadBalancers, OutputInterface $output, $application)

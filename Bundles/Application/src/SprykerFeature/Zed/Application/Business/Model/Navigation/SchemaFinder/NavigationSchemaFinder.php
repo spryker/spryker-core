@@ -20,7 +20,7 @@ class NavigationSchemaFinder implements NavigationSchemaFinderInterface
 
     /**
      * @param array $pathPattern
-     * @param $fileNamePattern
+     * @param string $fileNamePattern
      */
     public function __construct(array $pathPattern, $fileNamePattern)
     {
