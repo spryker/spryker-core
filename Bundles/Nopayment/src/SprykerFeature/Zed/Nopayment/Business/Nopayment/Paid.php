@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\Nopayment\Business\Nopayment;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Nopayment\Persistence\NopaymentQueryContainer;
+use SprykerFeature\Zed\Nopayment\Persistence\Propel\SpyNopaymentPaid;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
@@ -30,7 +31,7 @@ class Paid
      */
     protected function setOrderItemAsPaid(SpySalesOrderItem $orderItem)
     {
-        $paidItem = $this->locator->nopayment()->entitySpyNopaymentPaid();
+        $paidItem = new SpyNopaymentPaid();
         $paidItem->setOrderItem($orderItem);
         $paidItem->save();
     }
