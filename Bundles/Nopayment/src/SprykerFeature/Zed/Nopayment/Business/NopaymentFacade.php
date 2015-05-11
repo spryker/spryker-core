@@ -18,16 +18,16 @@ class NopaymentFacade extends AbstractFacade
      */
     public function setAsPaid(array $orderItems)
     {
-        return $this->getDependencyContainer()->createNopayment()->setAsPaid($orderItems);
+        return $this->getDependencyContainer()->createNopaymentPaid()->setAsPaid($orderItems);
     }
 
     /**
-     * @param SpySalesOrderItem $orderEntity
+     * @param SpySalesOrderItem $orderItem
      *
      * @return array
      */
-    public function isPaid(SpySalesOrderItem $orderEntity)
+    public function isPaid(SpySalesOrderItem $orderItem)
     {
-        return $this->getDependencyContainer()->createNopayment()->isPaid($orderItems);
+        return $this->getDependencyContainer()->createNopaymentPaid()->isPaid($orderItem);
     }
 }

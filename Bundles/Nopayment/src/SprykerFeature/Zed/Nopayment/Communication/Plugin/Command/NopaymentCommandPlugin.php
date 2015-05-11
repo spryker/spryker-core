@@ -17,13 +17,13 @@ class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInt
 
     /**
      * @param SpySalesOrderItem[] $orderItems
-     * @param SpySalesOrder $orderEntity
+     * @param SpySalesOrder $order
      * @param ReadOnlyArrayObject $data
      *
      * @return array
      */
-    public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
+    public function run(array $orderItems, SpySalesOrder $order, ReadOnlyArrayObject $data)
     {
-        return $this->getDependencyContainer()->createFacade()->setAsPaid($orderEntity, $orderItems);
+        return $this->getDependencyContainer()->createFacade()->setAsPaid($orderItems);
     }
 }
