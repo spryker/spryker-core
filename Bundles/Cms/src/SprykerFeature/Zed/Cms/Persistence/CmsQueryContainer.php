@@ -2,10 +2,12 @@
 
 namespace SprykerFeature\Zed\Cms\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
@@ -56,6 +58,18 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         $query = SpyCmsPageQuery::create();
 
         return $query;
+    }
+
+    /**
+     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplates()
+    {
+        return $this->queryPages()
+            ->leftJoinCmsTemplate(null, Criteria::LEFT_JOIN)
+            ->withColumn('template_name')
+            ->withColumn('template_path')
+        ;
     }
 
     /**
