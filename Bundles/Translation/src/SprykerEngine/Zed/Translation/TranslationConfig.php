@@ -22,6 +22,9 @@ class TranslationConfig extends AbstractBundleConfig
         }
     }
 
+    /**
+     * @return string[]
+     */
     public static function getPathPatterns()
     {
         return [

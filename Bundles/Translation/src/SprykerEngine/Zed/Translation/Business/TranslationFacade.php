@@ -10,8 +10,8 @@ class TranslationFacade extends AbstractFacade
     /**
      * @param string $id
      * @param array $parameters
-     * @param null $domain
-     * @param null $locale
+     * @param string $domain
+     * @param string $locale
      *
      * @return string
      */
@@ -26,8 +26,8 @@ class TranslationFacade extends AbstractFacade
      * @param string $id
      * @param int $number
      * @param array $parameters
-     * @param null $domain
-     * @param null $locale
+     * @param string $domain
+     * @param string $locale
      *
      * @return string
      */
