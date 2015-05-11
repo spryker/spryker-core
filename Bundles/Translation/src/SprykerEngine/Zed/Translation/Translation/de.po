@@ -1,0 +1,2 @@
+msgid "email"
+msgstr "Email"
