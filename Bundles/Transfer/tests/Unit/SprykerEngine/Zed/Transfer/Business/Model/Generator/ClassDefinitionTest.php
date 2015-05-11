@@ -30,7 +30,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = [
             'name' => 'name',
             'interface' => [
-                'name' => 'Used\Interface'
+                ['name' => 'Used\Interface']
             ]
         ];
 
@@ -64,7 +64,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = [
             'name' => 'name',
             'interface' => [
-                'name' => 'Used\Interface'
+                ['name' => 'Used\Interface']
             ]
         ];
 
@@ -98,7 +98,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $property = $this->getProperty('property1', 'type');
         $transferDefinition = [
             'name' => 'name',
-            'property' => $property
+            'property' => [$property]
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -160,7 +160,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'array')
+            'property' => [$this->getProperty('property1', 'array')]
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -175,7 +175,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', '[]')
+            'property' => [$this->getProperty('property1', '[]')]
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -190,7 +190,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'Collection[]')
+            'property' => [$this->getProperty('property1', 'Collection[]')]
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -220,7 +220,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'Type[]')
+            'property' => [$this->getProperty('property1', 'Type[]')]
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -235,7 +235,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'string')
+            'property' => [$this->getProperty('property1', 'string')]
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -252,7 +252,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'string')
+            'property' => [$this->getProperty('property1', 'string')]
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -266,7 +266,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'Type[]')
+            'property' => [$this->getProperty('property1', 'Type[]')]
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -280,7 +280,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => $this->getProperty('property1', 'Type[]')
+            'property' => [$this->getProperty('property1', 'Type[]')]
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -305,7 +305,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $transferDefinition = [
             'name' => 'name',
-            'property' => $property
+            'property' => [$property]
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);

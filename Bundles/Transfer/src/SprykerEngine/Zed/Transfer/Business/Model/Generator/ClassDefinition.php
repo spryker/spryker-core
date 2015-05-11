@@ -7,11 +7,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class ClassDefinition implements ClassDefinitionInterface
 {
 
-    const TYPE_ARRAY = 'array';
-    const TYPE_BOOLEAN = 'bool';
-    const TYPE_INTEGER = 'int';
-    const TYPE_STRING = 'string';
-
     /**
      * @var string
      */
@@ -35,12 +30,12 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @var array
      */
-    private $constructorDefinition = [];
+    private $methods = [];
 
     /**
      * @var array
      */
-    private $methods = [];
+    private $constructorDefinition = [];
 
     /**
      * @param array $transferDefinition
@@ -90,24 +85,20 @@ class ClassDefinition implements ClassDefinitionInterface
     private function addInterfaces(array $interfaces)
     {
         foreach ($interfaces as $interface) {
-            if (is_array($interface)) {
-                $this->addInterface($interface['name']);
-            } else {
-                $this->addInterface($interface);
-            }
+            $this->addInterface($interface);
         }
 
         return $this;
     }
 
     /**
-     * @param string $interface
+     * @param array $interface
      */
-    private function addInterface($interface)
+    private function addInterface(array $interface)
     {
-        if (!in_array($interface, $this->interfaces)) {
-            $interfaceParts = explode('\\', $interface);
-            $this->uses[] = $interface;
+        if (!in_array($interface['name'], $this->interfaces)) {
+            $interfaceParts = explode('\\', $interface['name']);
+            $this->uses[] = $interface['name'];
             $this->interfaces[] = array_pop($interfaceParts);
         }
     }
@@ -133,12 +124,8 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function addProperties(array $properties)
     {
-        if (isset($properties[0])) {
-            foreach ($properties as $property) {
-                $this->addProperty($property);
-            }
-        } else {
-            $this->addProperty($properties);
+        foreach ($properties as $property) {
+            $this->addProperty($property);
         }
     }
 
@@ -227,12 +214,8 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function addMethods(array $properties)
     {
-        if (isset($properties[0])) {
-            foreach ($properties as $property) {
-                $this->addPropertyMethods($property);
-            }
-        } else {
-            $this->addPropertyMethods($properties);
+        foreach ($properties as $property) {
+            $this->addPropertyMethods($property);
         }
     }
 

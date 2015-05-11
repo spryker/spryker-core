@@ -46,4 +46,29 @@ class TransferGeneratorTest extends Test
             file_get_contents($targetDirectory . '/Transfer.php')
         );
     }
+
+    public function testExecuteShouldGenerateExpectedMergedTransfer()
+    {
+        $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
+
+        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
+        $classGenerator = new ClassGenerator($targetDirectory);
+
+        $sourceDirectories = [
+            __DIR__ . '/Fixtures'
+        ];
+        $transferDefinitionBuilder = new TransferDefinitionBuilder(
+            new TransferDefinitionMerger(),
+            $sourceDirectories
+        );
+
+        $transferGenerator = new TransferGenerator($messenger, $classGenerator, $transferDefinitionBuilder);
+        $transferGenerator->execute();
+
+        $this->assertTrue(file_exists($targetDirectory . '/Transfer.php'));
+        $this->assertSame(
+            file_get_contents(__DIR__ . '/Fixtures/expected.merged.transfer'),
+            file_get_contents($targetDirectory . '/NameOfTransfer.php')
+        );
+    }
 }
