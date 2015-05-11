@@ -84,7 +84,7 @@ class FacetAggregationBuilder implements FacetAggregationBuilderInterface
      */
     protected function addNestedFieldPrefix($nestedFieldName, $fieldName)
     {
-        return implode([$nestedFieldName, $fieldName], '.');
+        return $nestedFieldName . '.' . $fieldName;
     }
 
 }
