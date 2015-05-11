@@ -20,10 +20,22 @@ class TransferDefinitionBuilder
     private $transferDefinitions = [];
 
     /**
+     * @var array
+     */
+    private $mergedTransferDefinitions = [];
+
+    /**
+     * @var TransferDefinitionMerger
+     */
+    private $transferDefinitionMerger;
+
+    /**
+     * @param TransferDefinitionMerger $merger
      * @param array $sourceDirectories
      */
-    public function __construct(array $sourceDirectories)
+    public function __construct(TransferDefinitionMerger $merger, array $sourceDirectories)
     {
+        $this->transferDefinitionMerger = $merger;
         $this->sourceDirectories = $sourceDirectories;
     }
 
@@ -32,25 +44,31 @@ class TransferDefinitionBuilder
      */
     public function getTransferDefinitions()
     {
-        $xmlDefinitions = $this->getXmlDefinitions();
+        $this->loadTransferDefinitions();
+        $this->mergeTransferDefinitions();
+
+        return $this->getClassDefinitions();
+    }
+
+    private function loadTransferDefinitions()
+    {
+        $xmlDefinitions = $this->readXmlDefinitions();
 
         foreach ($xmlDefinitions as $config) {
             if (isset($config['transfer'][0])) {
                 foreach ($config['transfer'] as $transfer) {
-                    $this->addTransferDefinition($transfer);
+                    $this->transferDefinitions[] = $transfer;
                 }
             } else {
-                $this->addTransferDefinition($config['transfer']);
+                $this->transferDefinitions[] = $config['transfer'];
             }
         }
-
-        return $this->transferDefinitions;
     }
 
     /**
      * @return array
      */
-    private function getXmlDefinitions()
+    private function readXmlDefinitions()
     {
         $xmlTransferDefinitions = $this->getXmlTransferDefinitionFiles();
         $xmlTransferDefinitionList = [];
@@ -73,11 +91,21 @@ class TransferDefinitionBuilder
         return $finder;
     }
 
-    /**
-     * @param array $transfer
-     */
-    private function addTransferDefinition(array $transfer)
+    private function mergeTransferDefinitions()
     {
-        $this->transferDefinitions[$transfer['name']] = new ClassDefinition($transfer);
+        $this->mergedTransferDefinitions = $this->transferDefinitionMerger->merge($this->transferDefinitions);
+    }
+
+    /**
+     * @return ClassDefinition[]
+     */
+    private function getClassDefinitions()
+    {
+        $transferClassDefinitions = [];
+        foreach ($this->mergedTransferDefinitions as $transferDefinition) {
+            $transferClassDefinitions[$transferDefinition['name']] = new ClassDefinition($transferDefinition);
+        }
+
+        return $transferClassDefinitions;
     }
 }

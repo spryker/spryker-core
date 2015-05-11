@@ -3,6 +3,7 @@
 namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 
 /**
  * @group SprykerEngine
@@ -20,7 +21,10 @@ class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
             __DIR__ . '/Fixtures/Project/'
         ];
 
-        $transferDefinitionBuilder = new TransferDefinitionBuilder($directories);
+        $transferDefinitionBuilder = new TransferDefinitionBuilder(
+            new TransferDefinitionMerger(),
+            $directories
+        );
         $result = $transferDefinitionBuilder->getTransferDefinitions();
 
         $this->assertTrue(is_array($result));
@@ -28,4 +32,6 @@ class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = $result['NameOfTransfer'];
         $this->assertInstanceOf('SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassDefinition', $transferDefinition);
     }
+
+
 }

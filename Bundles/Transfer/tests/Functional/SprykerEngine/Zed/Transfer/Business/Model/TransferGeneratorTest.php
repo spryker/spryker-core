@@ -5,6 +5,7 @@ namespace Functional\SprykerEngine\Zed\Transfer\Business\Model;
 use Codeception\TestCase\Test;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use SprykerEngine\Zed\Transfer\Business\Model\TransferGenerator;
 use SprykerFeature\Zed\Console\Business\Model\ConsoleMessenger;
 use Symfony\Component\Console\Logger\ConsoleLogger;
@@ -31,7 +32,10 @@ class TransferGeneratorTest extends Test
         $sourceDirectories = [
             __DIR__ . '/Fixtures'
         ];
-        $transferDefinitionBuilder = new TransferDefinitionBuilder($sourceDirectories);
+        $transferDefinitionBuilder = new TransferDefinitionBuilder(
+            new TransferDefinitionMerger(),
+            $sourceDirectories
+        );
 
         $transferGenerator = new TransferGenerator($messenger, $classGenerator, $transferDefinitionBuilder);
         $transferGenerator->execute();

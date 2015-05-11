@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <transfers>
     <transfer name="NameOfTransfer">
-        <interface type="\BundleNamespace\Shared\Bundle1\Transfer\AInterface" />
+        <interface name="\BundleNamespace\Shared\Bundle1\Transfer\AInterface" />
         <property name="name" type="string" />
     </transfer>
 </transfers>
