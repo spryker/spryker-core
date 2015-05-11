@@ -5,3 +5,8 @@
 [2015-05-11 06:12:36] Codeception.ALERT: Failed asserting that true is false. [] []
 [2015-05-11 06:12:36] Codeception.INFO: # FAILED # [] []
 [2015-05-11 06:12:36] Codeception.INFO: PASSED [] []
+[2015-05-11 07:38:23] Codeception.ALERT: Undefined index: transfer [] []
+[2015-05-11 07:38:23] Codeception.INFO: # ERROR # [] []
+[2015-05-11 07:38:23] Codeception.INFO: PASSED [] []
+[2015-05-11 07:40:40] Codeception.INFO: PASSED [] []
+[2015-05-11 07:44:47] Codeception.INFO: PASSED [] []

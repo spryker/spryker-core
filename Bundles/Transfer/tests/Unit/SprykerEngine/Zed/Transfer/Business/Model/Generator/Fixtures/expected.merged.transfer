@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<transfers>
+    <transfer name="NameOfTransfer">
+        <interface type="BundleNamespace\Shared\Bundle1\Transfer\AnotherInterface" />
+        <interface type="BundleNamespace\Shared\Bundle2\Transfer\AInterface" />
+        <property name="name" type="string" />
+        <property name="bla" type="int" />
+    </transfer>
+</transfers

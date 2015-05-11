@@ -6,6 +6,8 @@ use Generated\Zed\Ide\FactoryAutoCompletion\TransferBusiness;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
+use SprykerEngine\Zed\Transfer\Business\Model\TransferCleaner;
 use SprykerEngine\Zed\Transfer\Business\Model\TransferGenerator;
 use SprykerEngine\Zed\Transfer\TransferConfig;
 
@@ -26,7 +28,7 @@ class TransferDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createModelTransferGenerator(
             $messenger,
             $this->createClassGenerator(),
-            $this->getConfig()->getSourceDirectories()
+            $this->createTransferDefinitionBuilder()
         );
     }
 
@@ -40,6 +42,19 @@ class TransferDependencyContainer extends AbstractDependencyContainer
         );
     }
 
+    /**
+     * @return TransferDefinitionBuilder
+     */
+    private function createTransferDefinitionBuilder()
+    {
+        return $this->getFactory()->createModelGeneratorTransferDefinitionBuilder(
+            $this->getConfig()->getSourceDirectories()
+        );
+    }
+
+    /**
+     * @return TransferCleaner
+     */
     public function createTransferCleaner()
     {
         return $this->getFactory()->createModelTransferCleaner(

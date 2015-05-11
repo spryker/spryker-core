@@ -3,12 +3,8 @@
 namespace SprykerEngine\Zed\Transfer\Business\Model;
 
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassDefinition;
-use Symfony\Component\Finder\Finder;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassCollectionManager;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassGenerator;
-use Symfony\Component\Finder\SplFileInfo;
-use Zend\Config\Factory;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 
 class TransferGenerator
 {
@@ -19,30 +15,25 @@ class TransferGenerator
     private $classGenerator;
 
     /**
-     * @var array
+     * @var TransferDefinitionBuilder
      */
-    private $sourceDirectories;
+    private $transferDefinitionBuilder;
 
     /**
      * @param MessengerInterface $messenger
      * @param ClassGenerator $classGenerator
-     * @param array $sourceDirectories
+     * @param TransferDefinitionBuilder $transferDefinitionBuilder
      */
-    public function __construct(MessengerInterface $messenger, ClassGenerator $classGenerator, array $sourceDirectories)
+    public function __construct(MessengerInterface $messenger, ClassGenerator $classGenerator, TransferDefinitionBuilder $transferDefinitionBuilder)
     {
         $this->messenger = $messenger;
         $this->classGenerator = $classGenerator;
-        $this->sourceDirectories = $sourceDirectories;
+        $this->transferDefinitionBuilder = $transferDefinitionBuilder;
     }
 
     public function execute()
     {
-        $this->createTransferObjects();
-    }
-
-    private function createTransferObjects()
-    {
-        $definitions = $this->getTransferDefinitions();
+        $definitions = $this->transferDefinitionBuilder->getTransferDefinitions();
 
         foreach ($definitions as $classDefinition) {
             $fileName = $this->classGenerator->generateClass($classDefinition);
@@ -51,51 +42,4 @@ class TransferGenerator
         }
     }
 
-    /**
-     * @return ClassDefinition[]
-     */
-    private function getTransferDefinitions()
-    {
-        $manager = new ClassCollectionManager();
-
-        $xmlDefinitions = $this->getXmlDefinitions();
-
-        foreach ($xmlDefinitions as $config) {
-            if (isset($config['transfer'][0])) {
-                foreach ($config['transfer'] as $transferList) {
-                    $manager->setClassDefinition($transferList);
-                }
-            } else {
-                $manager->setClassDefinition($config['transfer']);
-            }
-        }
-
-        return $manager->getCollections();
-    }
-
-    /**
-     * @return array
-     */
-    private function getXmlDefinitions()
-    {
-        $xmlTransferDefinitions = $this->getXmlTransferDefinitionFiles();
-        $xmlTransferDefinitionList = [];
-        foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
-            $xmlTransferDefinitionList[] = Factory::fromFile($xmlTransferDefinition->getPathname(), true)->toArray();
-        }
-
-        return $xmlTransferDefinitionList;
-    }
-
-    /**
-     * @return Finder|SplFileInfo[]
-     */
-    private function getXmlTransferDefinitionFiles()
-    {
-        $finder = new Finder();
-
-        $finder->in($this->sourceDirectories)->name('*.transfer.xml');
-
-        return $finder;
-    }
 }
