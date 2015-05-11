@@ -18,4 +18,9 @@ class TransferFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->createTransferGenerator($messenger)->execute();
     }
+
+    public function deleteGeneratedTransferObjects()
+    {
+        $this->getDependencyContainer()->createTransferCleaner()->cleanDirectory();
+    }
 }

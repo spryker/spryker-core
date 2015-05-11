@@ -2,6 +2,7 @@
 
 namespace SprykerEngine\Zed\Transfer\Communication\Console;
 
+use SprykerEngine\Zed\Transfer\Business\TransferFacade;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -30,9 +31,18 @@ class GeneratorConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getLocator()->transfer()->facade()->generateTransferObjects(
-            $this->getMessenger()
-        );
+        $facade = $this->getFacade();
+
+        $facade->deleteGeneratedTransferObjects();
+        $facade->generateTransferObjects($this->getMessenger());
+    }
+
+    /**
+     * @return TransferFacade
+     */
+    private function getFacade()
+    {
+        return $this->getLocator()->transfer()->facade();
     }
 
 }

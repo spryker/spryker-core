@@ -24,30 +24,19 @@ class TransferGenerator
     private $sourceDirectories;
 
     /**
-     * @var string
-     */
-    private $targetDirectory;
-
-    /**
      * @param MessengerInterface $messenger
      * @param ClassGenerator $classGenerator
      * @param array $sourceDirectories
-     * @param string $targetDirectory
      */
-    public function __construct(MessengerInterface $messenger, ClassGenerator $classGenerator, array $sourceDirectories, $targetDirectory)
+    public function __construct(MessengerInterface $messenger, ClassGenerator $classGenerator, array $sourceDirectories)
     {
         $this->messenger = $messenger;
         $this->classGenerator = $classGenerator;
         $this->sourceDirectories = $sourceDirectories;
-        $this->targetDirectory = $targetDirectory;
     }
 
     public function execute()
     {
-        if (is_dir($this->targetDirectory) === false) {
-            mkdir($this->targetDirectory, 0777, true);
-        }
-        $this->removeGeneratedTransferObjects();
         $this->createTransferObjects();
     }
 
@@ -56,10 +45,9 @@ class TransferGenerator
         $definitions = $this->getTransferDefinitions();
 
         foreach ($definitions as $classDefinition) {
-            $phpCode = $this->classGenerator->generateClass($classDefinition);
+            $fileName = $this->classGenerator->generateClass($classDefinition);
 
-            file_put_contents($this->targetDirectory . $classDefinition->getName() . '.php', $phpCode);
-            $this->messenger->info(sprintf('<info>%s.php</info> was generated', $classDefinition->getName()));
+            $this->messenger->info(sprintf('<info>%s.php</info> was generated', $fileName));
         }
     }
 
@@ -97,27 +85,6 @@ class TransferGenerator
         }
 
         return $xmlTransferDefinitionList;
-    }
-
-    /**
-     * remove generated TransferObjects
-     */
-    private function removeGeneratedTransferObjects()
-    {
-        foreach ($this->getGeneratedFiles() as $file) {
-            unlink($file->getRealPath());
-        }
-    }
-
-    /**
-     * @return Finder|SplFileInfo[]
-     */
-    private function getGeneratedFiles()
-    {
-        $finder = new Finder();
-        $finder->files()->in($this->targetDirectory);
-
-        return $finder;
     }
 
     /**

@@ -26,8 +26,7 @@ class TransferDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createModelTransferGenerator(
             $messenger,
             $this->createClassGenerator(),
-            $this->getConfig()->getSourceDirectories(),
-            $this->getConfig()->getTargetDirectory()
+            $this->getConfig()->getSourceDirectories()
         );
     }
 
@@ -37,6 +36,13 @@ class TransferDependencyContainer extends AbstractDependencyContainer
     private function createClassGenerator()
     {
         return $this->getFactory()->createModelGeneratorClassGenerator(
+            $this->getConfig()->getTargetDirectory()
+        );
+    }
+
+    public function createTransferCleaner()
+    {
+        return $this->getFactory()->createModelTransferCleaner(
             $this->getConfig()->getTargetDirectory()
         );
     }

@@ -41,8 +41,12 @@ class ClassGenerator
     public function generateClass(ClassDefinition $definition)
     {
         $twigData = $this->getTwigData($definition);
+        $fileName = $definition->getName() . '.php';
+        $fileContent = $this->twig->render('class.php.twig', $twigData);
 
-        return $this->twig->render('class.php.twig', $twigData);
+        file_put_contents($this->targetDirectory . $fileName, $fileContent);
+
+        return $fileName;
     }
 
     /**
