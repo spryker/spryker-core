@@ -8,10 +8,6 @@ use Elastica\Query;
 use SprykerFeature\Sdk\Catalog\Model\Builder\NestedFilterBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class FacetFilter
- * @package SprykerFeature\Sdk\Catalog\Model
- */
 class FacetFilterHandler implements FacetFilterHandlerInterface
 {
     /**

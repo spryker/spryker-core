@@ -2,10 +2,6 @@
 
 namespace SprykerFeature\Sdk\Catalog\Model\Extractor;
 
-/**
- * Class RangeExtractor
- * @package SprykerFeature\Sdk\Catalog\Model\Extractor
- */
 class RangeExtractor extends AbstractAggregationExtractor
 {
     /**

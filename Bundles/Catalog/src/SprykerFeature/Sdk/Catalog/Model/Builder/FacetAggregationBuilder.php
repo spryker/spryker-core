@@ -10,10 +10,6 @@ use Elastica\Aggregation\Nested;
 use Elastica\Aggregation\Terms;
 use Elastica\Query;
 
-/**
- * Class FacetAggregation
- * @package SprykerFeature\Sdk\Catalog\Model
- */
 class FacetAggregationBuilder implements FacetAggregationBuilderInterface
 {
     const FACET_VALUE = 'facet-value';

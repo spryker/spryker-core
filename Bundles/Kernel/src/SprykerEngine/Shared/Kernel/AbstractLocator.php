@@ -6,10 +6,6 @@ use SprykerEngine\Shared\Kernel\ClassResolver;
 use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
 use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 
-/**
- * Class AbstractLocator
- * @package SprykerEngine\Shared\Kernel
- */
 abstract class AbstractLocator implements LocatorInterface
 {
 

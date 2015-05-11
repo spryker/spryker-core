@@ -2,10 +2,6 @@
 
 namespace SprykerFeature\Sdk\Catalog\Model\Extractor;
 
-/**
- * Class AbstractAggregationExtractor
- * @package SprykerFeature\Sdk\Catalog\Model\Extractor
- */
 abstract class AbstractAggregationExtractor implements AggregationExtractorInterface
 {
     /**

@@ -5,8 +5,6 @@ namespace SprykerFeature\Yves\FrontendExporter\Mapper;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class UrlMapper
- * @package SprykerFeature\Sdk\Catalog\Model
  * @TODO This class needs a refactoring!!!
  */
 interface UrlMapperInterface

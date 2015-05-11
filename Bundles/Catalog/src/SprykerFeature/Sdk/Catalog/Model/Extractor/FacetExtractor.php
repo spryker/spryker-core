@@ -2,9 +2,6 @@
 
 namespace SprykerFeature\Sdk\Catalog\Model\Extractor;
 
-/**
- * Class FacetExtractor
- */
 class FacetExtractor extends AbstractAggregationExtractor
 {
     /**

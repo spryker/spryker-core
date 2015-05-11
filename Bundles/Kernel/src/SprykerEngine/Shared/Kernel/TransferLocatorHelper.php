@@ -6,10 +6,6 @@ use SprykerFeature\Shared\Library\Config;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\System\SystemConfig;
 
-/**
- * Class TransferLocatorHelper
- * @package SprykerEngine\Shared\Kernel
- */
 class TransferLocatorHelper
 {
     /**

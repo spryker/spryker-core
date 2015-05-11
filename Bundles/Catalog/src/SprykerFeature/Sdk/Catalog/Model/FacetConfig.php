@@ -2,9 +2,6 @@
 
 namespace SprykerFeature\Sdk\Catalog\Model;
 
-/**
- * @package SprykerFeature\Sdk\Catalog\Model
- */
 class FacetConfig
 {
     const KEY_FACET_FIELD_NAME = 'facet_field_name';

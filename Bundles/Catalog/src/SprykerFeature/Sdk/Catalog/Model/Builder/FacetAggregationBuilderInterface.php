@@ -4,10 +4,6 @@ namespace SprykerFeature\Sdk\Catalog\Model\Builder;
 
 use Elastica\Aggregation\AbstractAggregation;
 
-/**
- * Class FacetAggregation
- * @package SprykerFeature\Sdk\Catalog\Model
- */
 interface FacetAggregationBuilderInterface
 {
     /**

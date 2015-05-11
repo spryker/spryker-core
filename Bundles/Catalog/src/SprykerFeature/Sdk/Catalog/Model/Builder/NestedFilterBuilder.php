@@ -4,10 +4,6 @@ namespace SprykerFeature\Sdk\Catalog\Model\Builder;
 
 use Elastica\Filter\Nested;
 
-/**
- * Class FilterBuilder
- * @package SprykerFeature\Sdk\Catalog\Model\Builder
- */
 class NestedFilterBuilder implements NestedFilterBuilderInterface
 {
     /**

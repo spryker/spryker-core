@@ -2,10 +2,6 @@
 
 namespace SprykerFeature\Yves\FrontendExporter\Business\Model;
 
-/**
- * Class UrlResource
- * @package SprykerFeature\Yves\FrontendExporter\Business\Model
- */
 class UrlResource
 {
     /**

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: trosenstock
- * Date: 20.01.15
- * Time: 16:26
- */
+
 namespace SprykerFeature\Sdk\Catalog\Model\Builder;
 
 use Elastica\Filter\BoolAnd;

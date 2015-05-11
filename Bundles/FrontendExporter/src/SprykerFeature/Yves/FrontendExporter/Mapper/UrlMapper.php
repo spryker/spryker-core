@@ -6,8 +6,6 @@ use SprykerFeature\Sdk\Catalog\Model\FacetConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class UrlMapper
- * @package SprykerFeature\Sdk\Catalog\Model
  * @TODO This class needs a refactoring!!!
  */
 class UrlMapper implements UrlMapperInterface
