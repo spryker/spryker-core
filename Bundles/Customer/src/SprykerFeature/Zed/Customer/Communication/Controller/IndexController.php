@@ -12,9 +12,11 @@ use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
  */
 class IndexController extends AbstractController
 {
+
+    const DATE_FORMAT = 'Y-m-d G:i:s';
+
     public function indexAction()
     {
-
     }
 
     /**
@@ -25,7 +27,29 @@ class IndexController extends AbstractController
     public function gridAction(Request $request)
     {
         $grid = $this->getDependencyContainer()->createCustomerGrid($request);
+        $data = $grid->renderData();
 
-        return $this->jsonResponse($grid->renderData());
+        foreach ($data['content']['rows'] as &$value) {
+            $value['date_of_birth'] = $this->getFormatedRowDate($value['date_of_birth']);
+            $value['registered'] = $this->getFormatedRowDate($value['registered']);
+            $value['created_at'] = $this->getFormatedRowDate($value['created_at']);
+        }
+
+        return $this->jsonResponse($data);
     }
+
+    /**
+     * @param $date
+     *
+     * @return null|string
+     */
+    protected function getFormatedRowDate($date)
+    {
+        if ($date instanceof \DateTime) {
+            return $date->format(self::DATE_FORMAT);
+        }
+
+        return null;
+    }
+
 }
