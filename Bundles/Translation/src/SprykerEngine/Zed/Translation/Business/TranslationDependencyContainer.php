@@ -21,44 +21,23 @@ class TranslationDependencyContainer extends AbstractDependencyContainer
     {
         $translator = $this->getFactory()->createTranslator($locale);
 
-        foreach ($this->getConfig()->getLoaders() as $format => $loader) {
-            $translator->addLoader($format, $loader);
-        }
+        $translationFileFinder = $this->getFactory()->createTranslationFileFinder();
 
-        $translationFileFinder = $this->getFactory()->createTranslationFileFinder(
-            $this
-        );
+        foreach ($translationFileFinder->getTranslationFilePaths() as $path) {
+            $pathParts = explode(DIRECTORY_SEPARATOR, $path);
 
-        foreach ($translationFileFinder->getTranslationFiles() as $file) {
-            $translator->addResource(
-                $file->getFormat(),
-                $file->getPath(),
-                $file->getLocale()
-            );
+            list($locale, $format) = explode('.', array_pop($pathParts));
+
+            if (!$translator->hasLoader($format)) {
+                $translator->addLoader(
+                    $format,
+                    $this->getConfig()->getLoader($format)
+                );
+            }
+
+            $translator->addResource($format, $path, $locale);
         }
 
         return $translator;
-    }
-
-    /**
-     * @param string $path
-     *
-     * @return TranslationFileInterface
-     */
-    public function getTranslationFile($path)
-    {
-        $translationFile = $this->getFactory()->createModelTranslationFile();
-
-        $translationFile->setPath($path);
-
-        $pathParts = explode(DIRECTORY_SEPARATOR, $path);
-
-        list($locale, $type) = explode('.', array_pop($pathParts));
-
-        $translationFile
-            ->setLocale($locale)
-            ->setFormat($type);
-
-        return $translationFile;
     }
 }

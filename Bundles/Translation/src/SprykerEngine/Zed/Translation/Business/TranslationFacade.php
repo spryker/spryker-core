@@ -12,9 +12,10 @@ class TranslationFacade extends AbstractFacade
      * @param array $parameters
      * @param null $domain
      * @param null $locale
+     *
      * @return string
      */
-    public function trans($id, array $parameters = array(), $domain = null, $locale = null)
+    public function translate($id, array $parameters = array(), $domain = null, $locale = null)
     {
         return $this->getDependencyContainer()
             ->getTranslator($locale)
@@ -27,17 +28,19 @@ class TranslationFacade extends AbstractFacade
      * @param array $parameters
      * @param null $domain
      * @param null $locale
+     *
      * @return string
      */
-    public function transChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
+    public function translateChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
     {
         return $this->getDependencyContainer()
             ->getTranslator($locale)
-            ->transchoice($id, $number, $parameters, $domain, $locale);
+            ->transChoice($id, $number, $parameters, $domain, $locale);
     }
 
     /**
      * @param string $locale
+     *
      * @return TranslatorInterface
      */
     public function getTranslator($locale)

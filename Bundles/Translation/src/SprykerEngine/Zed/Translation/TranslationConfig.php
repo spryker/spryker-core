@@ -9,19 +9,24 @@ use Symfony\Component\Translation\Loader\LoaderInterface;
 
 class TranslationConfig extends AbstractBundleConfig
 {
-    public static function getFormats()
+    public static function getLoader($format)
     {
-        return array_keys(self::getLoaders());
+        switch($format) {
+            case 'po':
+                return new PoFileLoader();
+            case 'csv':
+                return new CsvFileLoader();
+            default:
+                // todo: create Exception
+                throw new \Exception('Unknown Format');
+        }
     }
 
-    /**
-     * @return LoaderInterface[]
-     */
-    public static function getLoaders()
+    public static function getPathPatterns()
     {
         return [
-            'po'  => new PoFileLoader(),
-            'csv' => new CsvFileLoader(),
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Zed/*/Translation/*.*',
+            APPLICATION_SOURCE_DIR . '/*/Zed/*/Translation/*.*',
         ];
     }
 }
