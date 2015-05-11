@@ -3,7 +3,7 @@
 namespace SprykerEngine\Zed\Translation\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerEngine\Zed\Translation\Business\TranslatorInterface;
 
 class TranslationFacade extends AbstractFacade
 {
@@ -38,7 +38,7 @@ class TranslationFacade extends AbstractFacade
 
     /**
      * @param string $locale
-     * @return TransferInterface
+     * @return TranslatorInterface
      */
     public function getTranslator($locale)
     {

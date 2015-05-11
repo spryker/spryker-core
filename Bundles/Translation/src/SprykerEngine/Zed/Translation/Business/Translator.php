@@ -52,6 +52,11 @@ class Translator extends \Symfony\Component\Translation\Translator
         return $translation;
     }
 
+    /**
+     * @param $id
+     *
+     * @return bool
+     */
     public function has($id)
     {
         return $this->catalogues[$this->locale]->has($id);

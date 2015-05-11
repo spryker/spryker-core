@@ -9,6 +9,11 @@ use Symfony\Component\Translation\Loader\LoaderInterface;
 
 class TranslationConfig extends AbstractBundleConfig
 {
+    public static function getFormats()
+    {
+        return array_keys(self::getLoaders());
+    }
+
     /**
      * @return LoaderInterface[]
      */
