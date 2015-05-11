@@ -4,6 +4,7 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Transfer">
+        <interface name="Path\To\Interface" />
         <property name="name" type="string" />
         <property name="item" type="OrderItem" />
         <property name="items" type="OrderItem[]" singular="item" />
