@@ -74,6 +74,7 @@ class Console extends SymfonyCommand
      */
     protected function runDependingCommand($command, array $arguments = [])
     {
+        //TODO find is unknown
         $command = $this->getApplication()->find($command);
         $arguments['command'] = $command;
         $input = new ArrayInput($arguments);

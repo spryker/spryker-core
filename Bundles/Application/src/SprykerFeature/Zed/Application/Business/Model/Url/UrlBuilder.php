@@ -40,6 +40,7 @@ class UrlBuilder implements UrlBuilderInterface
             return ($value) ?: (($hasQueryParameter) ? 'index' : null);
         };
 
+        //TODO abbreviation
         return array_map($mapCallback, $mca);
     }
 

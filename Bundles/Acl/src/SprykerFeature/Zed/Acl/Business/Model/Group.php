@@ -231,6 +231,7 @@ class Group implements GroupInterface
     {
         $entity = $this->queryContainer->queryUserHasGroupById($idGroup, $idUser)->findOne();
 
+        //TODO guard against NPE
         $entity->delete();
     }
 
