@@ -253,6 +253,7 @@ class GlossaryTest extends Test
         $transferTranslation->setFkGlossaryKey($keyId);
         $transferTranslation->setFkLocale($localeId);
         $transferTranslation->setValue('some Value');
+        $transferTranslation->setIsActive(true);
 
         $this->assertEquals(0, $specificTranslationQuery->count());
         $touchCountBeforeCreation = $touchQuery->count();
