@@ -5,11 +5,11 @@ namespace SprykerFeature\Zed\Availability\Business;
 use SprykerFeature\Zed\AvailabilityCheckoutConnector\Dependency\Facade\AvailabilityToCheckoutConnectorFacadeInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
+/**
+ * @method AvailabilityDependencyContainer getDependencyContainer()
+ */
 class AvailabilityFacade extends AbstractFacade implements AvailabilityToCheckoutConnectorFacadeInterface
 {
-
-    /** @var AvailabilityDependencyContainer */
-    protected $dependencyContainer;
 
     /**
      * @param string $sku
