@@ -18,9 +18,9 @@ class TranslationServiceProvider implements TranslationServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $currentLanguage = Store::getInstance()->getCurrentLanguage();
+        $currentLocale = Locator::getInstance()->locale()->facade()->getCurrentLocaleName();
 
-        $app['translator'] = Locator::getInstance()->translation()->facade()->getTranslator($currentLanguage);
+        $app['translator'] = Locator::getInstance()->translation()->facade()->getTranslator($currentLocale);
     }
 
     /**
