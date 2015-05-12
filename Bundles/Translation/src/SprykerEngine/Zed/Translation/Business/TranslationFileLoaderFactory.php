@@ -1,0 +1,39 @@
+<?php
+
+namespace SprykerEngine\Zed\Translation\Business;
+
+use SprykerEngine\Zed\Translation\Business\Exception\TranslationFormatNotFoundException;
+use Symfony\Component\Translation\Loader\CsvFileLoader;
+use Symfony\Component\Translation\Loader\LoaderInterface;
+use Symfony\Component\Translation\Loader\PoFileLoader;
+
+/**
+ * Class TranslationFileLoaderFactory
+ * @package SprykerEngine\Zed\Translation\Business
+ */
+class TranslationFileLoaderFactory
+{
+    /**
+     * @param string $format
+     *
+     * @return LoaderInterface
+     *
+     * @throws TranslationFormatNotFoundException
+     */
+    public static function getLoader($format)
+    {
+        switch($format) {
+            case 'po':
+                return new PoFileLoader();
+            case 'csv':
+                return new CsvFileLoader();
+            default:
+                throw new TranslationFormatNotFoundException(
+                    sprintf(
+                        'There is no loader for the format "%s".',
+                        $format
+                    )
+                );
+        }
+    }
+}

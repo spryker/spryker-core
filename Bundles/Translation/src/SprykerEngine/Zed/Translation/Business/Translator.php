@@ -2,8 +2,46 @@
 
 namespace SprykerEngine\Zed\Translation\Business;
 
+use Symfony\Component\Translation\MessageSelector;
+
 class Translator extends \Symfony\Component\Translation\Translator
 {
+    /**
+     * Constructor.
+     *
+     * @param string $locale   The locale
+     * @param MessageSelector|null $selector The message selector for pluralization
+     * @param TranslationFileFinder $fileFinder
+     * @param TranslationFileLoaderFactory $fileLoaderFactory
+     *
+     * @throws \InvalidArgumentException If a locale contains invalid characters
+     *
+     * @api
+     */
+    public function __construct(
+        $locale,
+        MessageSelector $selector = null,
+        TranslationFileFinder $fileFinder,
+        TranslationFileLoaderFactory $fileLoaderFactory
+    ) {
+        parent::__construct($locale, $selector);
+
+        foreach ($fileFinder->getTranslationFilePaths() as $path) {
+            $pathParts = explode(DIRECTORY_SEPARATOR, $path);
+
+            list($locale, $format) = explode('.', array_pop($pathParts));
+
+            if (!$this->hasLoader($format)) {
+                $this->addLoader(
+                    $format,
+                    $fileLoaderFactory->getLoader($format)
+                );
+            }
+
+            $this->addResource($format, $path, $locale);
+        }
+    }
+
     /**
      * @param string $id
      * @param array $parameters

@@ -19,24 +19,18 @@ class TranslationDependencyContainer extends AbstractDependencyContainer
      */
     public function getTranslator($locale)
     {
-        $translator = $this->getFactory()->createTranslator($locale);
+        $translationFileFinder = $this->getFactory()->createTranslationFileFinder(
+            $this->getConfig()->getPathPatterns()
+        );
 
-        $translationFileFinder = $this->getFactory()->createTranslationFileFinder();
+        $translationFileLoaderFactory = $this->getFactory()->createTranslationFileLoaderFactory();
 
-        foreach ($translationFileFinder->getTranslationFilePaths() as $path) {
-            $pathParts = explode(DIRECTORY_SEPARATOR, $path);
-
-            list($locale, $format) = explode('.', array_pop($pathParts));
-
-            if (!$translator->hasLoader($format)) {
-                $translator->addLoader(
-                    $format,
-                    $this->getConfig()->getLoader($format)
-                );
-            }
-
-            $translator->addResource($format, $path, $locale);
-        }
+        $translator = $this->getFactory()->createTranslator(
+            $locale,
+            null,
+            $translationFileFinder,
+            $translationFileLoaderFactory
+        );
 
         return $translator;
     }

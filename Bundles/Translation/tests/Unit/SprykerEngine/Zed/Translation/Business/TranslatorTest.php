@@ -2,8 +2,11 @@
 
 namespace Unit\SprykerEngine\Zed\Translation\Business;
 
+use SprykerEngine\Zed\Translation\Business\TranslationFileFinder;
+use SprykerEngine\Zed\Translation\Business\TranslationFileLoaderFactory;
 use SprykerEngine\Zed\Translation\Business\Translator;
 use SprykerEngine\Zed\Translation\Business\TranslatorInterface;
+use SprykerEngine\Zed\Translation\TranslationConfig;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class TranslatorTest extends \PHPUnit_Framework_TestCase
@@ -15,7 +18,12 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->translator = new Translator('de');
+        $this->translator = new Translator(
+            'de',
+            null,
+            new TranslationFileFinder([]),
+            new TranslationFileLoaderFactory()
+        );
         $this->translator->addLoader('po', new PoFileLoader());
 
         $this->translator->addResource(

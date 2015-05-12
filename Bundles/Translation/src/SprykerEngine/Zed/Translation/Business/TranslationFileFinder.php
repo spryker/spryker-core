@@ -9,15 +9,26 @@ use SprykerEngine\Zed\Translation\TranslationConfig;
 class TranslationFileFinder
 {
     /**
+     * @var
+     */
+    protected $pathPatterns;
+
+    /**
+     * @param array $pathPatterns
+     */
+    public function __construct(array $pathPatterns)
+    {
+        $this->pathPatterns = $pathPatterns;
+    }
+
+    /**
      * @return string[]
      */
     public function getTranslationFilePaths()
     {
         $translationFilePaths = [];
 
-        $pathPatterns = TranslationConfig::getPathPatterns();
-
-        foreach ($pathPatterns as $pathPattern) {
+        foreach ($this->pathPatterns as $pathPattern) {
             $paths = glob($pathPattern);
 
             $translationFilePaths = array_merge($translationFilePaths, $paths);
