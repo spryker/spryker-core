@@ -2,6 +2,10 @@
 
 namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business;
 
+use Generated\Shared\Transfer\Cart2ItemsTransfer;
+use Generated\Shared\Transfer\Cart2ItemTransfer;
+use Generated\Shared\Transfer\CartCartItemTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\CartItemFixture;
@@ -23,14 +27,14 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $priceFacadeStub->addPriceStub('123', 1000);
         $priceFacadeStub->addValidityStub('123', true);
 
-        $itemCollectionStub = new CollectionFixture(null);
-        $itemFixture = new PriceItemFixture(null);
-        $itemFixture->setId('123');
-        $itemCollectionStub->addCartItem($itemFixture);
+        $itemCollection = new Cart2ItemsTransfer();
+        $item = new Cart2ItemTransfer();
+        $item->setId(123);
+        $itemCollection->addCartItem($item);
 
         $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');
 
-        $modifiedItems = $priceManager->addGrossPriceToItems($itemCollectionStub);
+        $modifiedItems = $priceManager->addGrossPriceToItems($itemCollection);
 
         foreach ($modifiedItems as $modifiedItem) {
             $this->assertEquals(1000, $modifiedItem->getGrossPrice());
@@ -46,43 +50,19 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
      * @expectedException \SprykerFeature\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      * @expectedExceptionMessage Cart item 123 can not be priced
      */
-    public function testIsNotPriceableWithInvalidPrice()
+    public function testIsNotPriceAbleWithInvalidPrice()
     {
         $priceFacadeStub = $this->createPriceFacadeStub();
         $priceFacadeStub->addPriceStub('123', 1000);
         $priceFacadeStub->addValidityStub('123', false);
 
-        $itemCollectionStub = new CollectionFixture(null);
-        $itemFixture = new PriceItemFixture(null);
-        $itemFixture->setId('123');
-        $itemCollectionStub->addCartItem($itemFixture);
+        $itemCollection = new Cart2ItemsTransfer();
+        $item = new Cart2ItemTransfer();
+        $item->setId(123);
+        $itemCollection->addCartItem($item);
 
         $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');
-        $priceManager->addGrossPriceToItems($itemCollectionStub);
-    }
-
-    /**
-     * @group PriceCartConnector
-     * @group Business
-     * @group Zed
-     * @group Manager
-     *
-     * @expectedException \SprykerFeature\Zed\PriceCartConnector\Business\Exception\PriceMissingException
-     * @expectedExceptionMessage Cart item 123 can not be priced
-     */
-    public function testIsNotPriceableWithMissingPriceInterface()
-    {
-        $priceFacadeStub = $this->createPriceFacadeStub();
-        $priceFacadeStub->addPriceStub('123', 1000);
-        $priceFacadeStub->addValidityStub('123', true);
-
-        $itemCollectionStub = new CollectionFixture(null);
-        $itemFixture = new CartItemFixture(null);
-        $itemFixture->setId('123');
-        $itemCollectionStub->addCartItem($itemFixture);
-
-        $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');
-        $priceManager->addGrossPriceToItems($itemCollectionStub);
+        $priceManager->addGrossPriceToItems($itemCollection);
     }
 
     /**

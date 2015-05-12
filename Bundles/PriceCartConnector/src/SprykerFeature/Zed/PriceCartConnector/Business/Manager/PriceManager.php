@@ -39,7 +39,7 @@ class PriceManager implements PriceManagerInterface
     public function addGrossPriceToItems(ItemCollectionInterface $items)
     {
         /** @var PriceItemInterface|ItemInterface $cartItem */
-        foreach ($items as $cartItem) {
+        foreach ($items->getCartItems() as $cartItem) {
             if (!$cartItem instanceof PriceItemInterface ||
                 !$this->priceFacade->hasValidPrice($cartItem->getId(), $this->grossPriceType)) {
                 throw new PriceMissingException(sprintf('Cart item %s can not be priced', $cartItem->getId()));

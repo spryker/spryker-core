@@ -18,7 +18,8 @@
     </transfer>
 
     <transfer name="Cart2Item">
-        <interface name="SprykerFeature\Shared\Cart\Transfer\ItemInterface" />
+        <interface name="SprykerFeature\Shared\Cart2\Transfer\ItemInterface" />
+        <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\PriceItemInterface" />
         <property name="quantity" type="int" />
         <property name="id" type="int" />
         <property name="expenses" type="CalculationExpense[]" />
@@ -30,6 +31,7 @@
     </transfer>
 
     <transfer name="Cart2Items">
+        <interface name="SprykerFeature\Shared\Cart2\Transfer\ItemCollectionInterface" />
         <property name="cartItems" type="Cart2Item[]" singular="cartItem" />
     </transfer>
 
