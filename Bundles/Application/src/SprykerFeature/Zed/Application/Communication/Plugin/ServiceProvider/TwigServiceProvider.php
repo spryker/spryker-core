@@ -69,9 +69,11 @@ class TwigServiceProvider extends SilexTwigServiceProvider
             );
         });
 
-        $app['twig.options'] = array(
-            'cache' => \SprykerFeature_Shared_Library_Data::getLocalStoreSpecificPath('cache/twig')
-        );
+        if (false === \SprykerFeature_Shared_Library_Environment::isDevelopment()) {
+            $app['twig.options'] = array(
+                'cache' => \SprykerFeature_Shared_Library_Data::getLocalStoreSpecificPath('cache/twig')
+            );
+        }
 
         $app['twig.global.variables'] = $app->share(function () {
              return [];
