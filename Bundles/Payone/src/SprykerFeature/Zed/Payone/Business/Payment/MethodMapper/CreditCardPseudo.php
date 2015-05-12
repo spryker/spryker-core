@@ -68,11 +68,8 @@ class CreditCardPseudo extends AbstractMapper
     protected function createPaymentMethodContainer(AuthorizationDataInterface $authorizationData)
     {
         $paymentMethodContainer = new CreditCardContainer();
-
-        // @todo get pseudo card pan... interface for incoming payment data (from form)!
-        //$paymentMethodContainer->setPseudoCardPan();
-        // @todo do we need to set redirect container in case 3DSecure?!
-        //$paymentMethodContainer->setRedirect($this->createRedirectContainer());
+        $paymentMethodContainer->setPseudoCardPan($authorizationData->getPaymentUserData()->getCreditCardPseudoCardPan());
+        $paymentMethodContainer->setRedirect($this->createRedirectContainer());
 
         return $paymentMethodContainer;
     }

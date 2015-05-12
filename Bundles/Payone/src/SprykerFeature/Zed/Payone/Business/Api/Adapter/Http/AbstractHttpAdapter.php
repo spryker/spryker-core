@@ -94,9 +94,9 @@ abstract class AbstractHttpAdapter implements AdapterInterface
      * @param array $responseRaw
      * @return array
      */
-    protected function parseResponse(array $responseRaw = array())
+    protected function parseResponse(array $responseRaw = [])
     {
-        $result = array();
+        $result = [];
 
         if (count($responseRaw) == 0) {
             return $result;

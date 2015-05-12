@@ -26,4 +26,14 @@ interface PaymentInterface
      */
     public function setPaymentMethod($paymentMethod);
 
+    /**
+     * @return string
+     */
+    public function getAuthorizationType();
+
+    /**
+     * @param string $paymentMethod
+     */
+    public function setAuthorizationType($paymentMethod);
+
 }

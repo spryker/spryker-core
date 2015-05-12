@@ -12,6 +12,7 @@
     <table name="spy_payment_payone" phpName="SpyPaymentPayone" identifierQuoting="true">
         <column name="id_payment_payone" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="payment_method" required="true" type="VARCHAR"/>
+        <column name="authorization_type" required="true" type="VARCHAR"/>
         <column name="transaction_id" required="false" type="INTEGER" comment="payone txid"/>
 
         <behavior name="timestampable" />
@@ -48,11 +49,11 @@
         <column name="id_payment_payone_transaction_status_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_payment_payone"  required="true" type="INTEGER" />
 
-        <column name="transaction_id" required="false" type="INTEGER" comment="payone txid"/>
+        <column name="transaction_id" required="false" type="INTEGER" comment="payone txid" />
         <column name="reference_id" required="false" type="INTEGER" comment="payone txid"/>
         <column name="mode" required="false" type="VARCHAR"/>
 
-        <column name="status" required="false" type="VARCHAR" comment="payone txaction"/>
+        <column name="status" required="true" type="VARCHAR" comment="payone txaction"/>
         <column name="transaction_time" required="false" type="TIMESTAMP" comment="payone txtime"/>
         <column name="sequence_number" required="false" type="INTEGER" comment="payone sequencenumber"/>
 

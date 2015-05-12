@@ -5,10 +5,12 @@ namespace SprykerFeature\Zed\Payone\Business\Payment;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerFeature\Shared\Payone\Dependency\HashInterface;
+use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\DebitDataInterface;
-use SprykerFeature\Zed\Payone\Business\Key\KeyHashInterface;
+use SprykerFeature\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\RefundDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\StandardParameterInterface;
@@ -19,7 +21,6 @@ use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationRespo
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Mode\ModeDetectorInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
@@ -46,9 +47,9 @@ class PaymentManager
      */
     protected $standardParameter;
     /**
-     * @var KeyHashInterface
+     * @var HashInterface
      */
-    protected $keyHashProvider;
+    protected $hashProvider;
     /**
      * @var SequenceNumberProviderInterface
      */
@@ -68,7 +69,7 @@ class PaymentManager
      * @param AdapterInterface $executionAdapter
      * @param PayoneQueryContainerInterface $queryContainer
      * @param StandardParameterInterface $standardParameter
-     * @param KeyHashInterface $keyHashProvider
+     * @param HashInterface $hashProvider
      * @param SequenceNumberProviderInterface $sequenceNumberProvider
      * @param ModeDetectorInterface $modeDetector
      */
@@ -77,7 +78,7 @@ class PaymentManager
         AdapterInterface $executionAdapter,
         PayoneQueryContainerInterface $queryContainer,
         StandardParameterInterface $standardParameter,
-        KeyHashInterface $keyHashProvider,
+        HashInterface $hashProvider,
         SequenceNumberProviderInterface $sequenceNumberProvider,
         ModeDetectorInterface $modeDetector)
     {
@@ -85,7 +86,7 @@ class PaymentManager
         $this->executionAdapter = $executionAdapter;
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;
-        $this->keyHashProvider = $keyHashProvider;
+        $this->hashProvider = $hashProvider;
         $this->sequenceNumberProvider = $sequenceNumberProvider;
         $this->modeDetector = $modeDetector;
     }
@@ -104,7 +105,7 @@ class PaymentManager
      * @param string $name
      * @return null|PaymentMethodMapperInterface
      */
-    public function findPaymentMethodMapperByName($name)
+    protected function findPaymentMethodMapperByName($name)
     {
         if (array_key_exists($name, $this->registeredMethodMappers)) {
             return $this->registeredMethodMappers[$name];
@@ -114,12 +115,27 @@ class PaymentManager
     }
 
     /**
+     * @param $paymentMethodName
+     * @return null|PaymentMethodMapperInterface
+     */
+    protected function getRegisteredPaymentMethodMapper($paymentMethodName)
+    {
+        $paymentMethodMapper = $this->findPaymentMethodMapperByName($paymentMethodName);
+        if (null === $paymentMethodMapper) {
+            throw new InvalidPaymentMethodException(
+                sprintf('No registered payment method mapper found for given method name %s', $paymentMethodName)
+            );
+        }
+        return $paymentMethodMapper;
+    }
+
+    /**
      * @param AuthorizationDataInterface $authorizationData
      * @return AuthorizationResponseContainer
      */
     public function authorize(AuthorizationDataInterface $authorizationData)
     {
-        $paymentMethodMapper = $this->findPaymentMethodMapperByName($authorizationData->getPaymentMethod());
+        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($authorizationData->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapAuthorization($authorizationData);
         $responseContainer = $this->performAuthorization($authorizationData, $requestContainer);
 
@@ -132,7 +148,7 @@ class PaymentManager
      */
     public function preAuthorize(AuthorizationDataInterface $authorizationData)
     {
-        $paymentMethodMapper = $this->findPaymentMethodMapperByName($authorizationData->getPaymentMethod());
+        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($authorizationData->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapPreAuthorization($authorizationData);
         $responseContainer = $this->performAuthorization($authorizationData, $requestContainer);
 
@@ -148,10 +164,14 @@ class PaymentManager
     {
         $this->setStandardParameter($requestContainer);
 
-        $paymentEntity = $this->initializePayment($authorizationData->getPaymentMethod());
+        $paymentEntity = $this->initializePayment(
+            $authorizationData->getPaymentMethod(),
+            $requestContainer->getRequest()
+        );
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+        // @todo remove test log
         \SprykerFeature_Shared_Library_Log::log($rawResponse, 'payone-test.log');
         $responseContainer = new AuthorizationResponseContainer($rawResponse);
 
@@ -167,7 +187,7 @@ class PaymentManager
      */
     public function capture(CaptureDataInterface $captureData)
     {
-        $paymentMethodMapper = $this->findPaymentMethodMapperByName($captureData->getPayment()->getPaymentMethod());
+        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($captureData->getPayment()->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapCapture($captureData);
         $this->setStandardParameter($requestContainer);
 
@@ -175,6 +195,7 @@ class PaymentManager
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+        // @todo remove test log
         \SprykerFeature_Shared_Library_Log::log($rawResponse, 'payone-test.log');
         $responseContainer = new CaptureResponseContainer($rawResponse);
 
@@ -189,7 +210,7 @@ class PaymentManager
      */
     public function debit(DebitDataInterface $debitData)
     {
-        $paymentMethodMapper = $this->findPaymentMethodMapperByName($debitData->getPayment()->getPaymentMethod());
+        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($debitData->getPayment()->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapDebit($debitData);
         $this->setStandardParameter($requestContainer);
 
@@ -197,6 +218,7 @@ class PaymentManager
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+        // @todo remove test log
         \SprykerFeature_Shared_Library_Log::log($rawResponse, 'payone-test.log');
         $responseContainer = new DebitResponseContainer($rawResponse);
 
@@ -211,7 +233,7 @@ class PaymentManager
      */
     public function refund(RefundDataInterface $refundData)
     {
-        $paymentMethodMapper = $this->findPaymentMethodMapperByName($refundData->getPayment()->getPaymentMethod());
+        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($refundData->getPayment()->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapDebit($refundData);
         $this->setStandardParameter($requestContainer);
 
@@ -219,6 +241,7 @@ class PaymentManager
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+        // @todo remove test log
         \SprykerFeature_Shared_Library_Log::log($rawResponse, 'payone-test.log');
         $responseContainer = new RefundResponseContainer($rawResponse);
 
@@ -232,10 +255,11 @@ class PaymentManager
      * @return SpyPaymentPayone
      * @throws PropelException
      */
-    protected function initializePayment($paymentMethodName)
+    protected function initializePayment($paymentMethodName, $authorizationType)
     {
-        $entity = $this->locator->payone()->entitySpyPaymentPayone();
+        $entity = $entity = new SpyPaymentPayone();
         $entity->setPaymentMethod($paymentMethodName);
+        $entity->setAuthorizationType($authorizationType);
         $entity->save();
 
         return $entity;
@@ -269,7 +293,7 @@ class PaymentManager
      */
     protected function initializeApiLog(SpyPaymentPayone $paymentEntity, AbstractRequestContainer $container)
     {
-        $entity = $this->locator->payone()->entitySpyPaymentPayoneApiLog();
+        $entity = new SpyPaymentPayoneApiLog();
         $entity->setSpyPaymentPayone($paymentEntity);
         $entity->setRequest($container->getRequest());
         $entity->setMode($container->getMode());
@@ -348,18 +372,10 @@ class PaymentManager
     protected function setStandardParameter(AbstractRequestContainer $container)
     {
         $container->setEncoding($this->standardParameter->getEncoding());
-        $container->setKey($this->keyHashProvider->hashKey($this->standardParameter->getKey()));
+        $container->setKey($this->hashProvider->hash($this->standardParameter->getKey()));
         $container->setMid($this->standardParameter->getMid());
         $container->setPortalid($this->standardParameter->getPortalId());
         $container->setMode($this->modeDetector->getMode());
-
-        // @todo does spryker want to send integrator/solution and version data???
-        /*
-        $container->setIntegratorName();
-        $container->setIntegratorVersion();
-        $container->setSolutionName();
-        $container->setSolutionVersion();
-        */
     }
 
 }

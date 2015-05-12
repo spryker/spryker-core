@@ -2,6 +2,12 @@
 
 namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
+use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
+use Generated\Shared\Transfer\PayoneCaptureTransfer;
+use Generated\Shared\Transfer\PayoneDebitTransfer;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
@@ -12,13 +18,13 @@ class TestController extends AbstractController implements PayoneApiConstants
     {
         $order = $this->getOrder();
 
-        $authorization = $this->getLocator()->payone()->transferAuthorization();
+        $authorization = new PayoneAuthorizationTransfer();
         $authorization->setPaymentMethod('payment.payone.prepayment');
         $authorization->setAmount($order->getTotals()->getGrandTotal());
         $authorization->setReferenceId($order->getIncrementId());
         $authorization->setOrder($order);
 
-        $this->getLocator()->payone()->facade()->authorize($authorization);
+        $this->getLocator()->payone()->facade()->preAuthorize($authorization);
 
         die('|-o-|');
     }
@@ -27,7 +33,7 @@ class TestController extends AbstractController implements PayoneApiConstants
     {
         $order = $this->getOrder();
 
-        $authorization = $this->getLocator()->payone()->transferAuthorization();
+        $authorization = new PayoneAuthorizationTransfer();
         $authorization->setPaymentMethod('payment.payone.prepayment');
         $authorization->setAmount($order->getTotals()->getGrandTotal());
         $authorization->setReferenceId($order->getIncrementId());
@@ -35,22 +41,20 @@ class TestController extends AbstractController implements PayoneApiConstants
 
         $this->getLocator()->payone()->facade()->preAuthorize($authorization);
 
-        die('-o-');
+        die('|-o-|');
     }
 
     public function captureAction()
     {
         $order = $this->getOrder();
 
-        $payment = $this->getLocator()->payone()->transferPayment();
-        $payment->setTransactionId('161237526');
-        $payment->setPaymentMethod('payment.payone.prepayment');
+        $payment = new PayonePaymentTransfer();
+        $payment->setTransactionId('161913038');
+        $payment->setPaymentMethod(self::PAYMENT_METHOD_PREPAYMENT);
 
-        $capture = $this->getLocator()->payone()->transferCapture();
-        $capture->setPaymentMethod('payment.payone.prepayment');
+        $capture = new PayoneCaptureTransfer();
         $capture->setPayment($payment);
         $capture->setAmount($order->getTotals()->getGrandTotal());
-        $capture->setOrder($order);
 
         $this->getLocator()->payone()->facade()->capture($capture);
 
@@ -59,12 +63,11 @@ class TestController extends AbstractController implements PayoneApiConstants
 
     public function debitAction()
     {
-        $payment = $this->getLocator()->payone()->transferPayment();
+        $payment = new PayonePaymentTransfer();
         $payment->setTransactionId('161237526');
         $payment->setPaymentMethod('payment.payone.prepayment');
 
-        $debit = $this->getLocator()->payone()->transferDebit();
-        $debit->setPaymentMethod('payment.payone.prepayment');
+        $debit = new PayoneDebitTransfer();
         $debit->setPayment($payment);
         $debit->setAmount(1000);
 
@@ -73,37 +76,52 @@ class TestController extends AbstractController implements PayoneApiConstants
         die('|-o-|');
     }
 
+    public function checkAuthAction()
+    {
+        $payment = new PayonePaymentTransfer();
+        $payment->setTransactionId('162180281');
+        $payment->setPaymentMethod('payment.payone.paypal');
+        $payment->setAuthorizationType('preauthorization');
+
+
+        $result = $this->getLocator()->payone()->facade()->getAuthorizationResponse($payment);
+
+        echo '<pre>' . print_r($result,false) . '</pre>';die;
+
+        die('|-o-|');
+    }
+
     public function paypalAction()
     {
         $order = $this->getOrder();
 
-        $authorization = $this->getLocator()->payone()->transferAuthorization();
+        $authorization = new PayoneAuthorizationTransfer();
         $authorization->setPaymentMethod(self::PAYMENT_METHOD_PAYPAL);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
         $authorization->setReferenceId($order->getIncrementId());
 
         $authorization->setOrder($order);
 
-        $this->getLocator()->payone()->facade()->authorize($authorization);
+        $this->getLocator()->payone()->facade()->preAuthorize($authorization);
 
         die('|-o-|');
     }
 
     /**
-     * @return \SprykerFeature\Shared\Sales\Transfer\Order
+     * @return SalesOrderTransfer
      */
     protected function getOrder()
     {
-        $order = $this->getLocator()->sales()->transferOrder();
+        $order = new SalesOrderTransfer();
         $order->setFirstName('horst');
         $order->setLastName('wurst');
         $order->setEmail('horst@wurst.de');
         $order->setIsTest(true);
-        $order->setIncrementId('DY999991005');
+        $order->setIncrementId('DY999991011');
         $order->setIdSalesOrder(1);
         $order->setSalutation('Mr');
 
-        $totals = $this->getLocator()->calculation()->transferTotals();
+        $totals = new CalculationTotalsTransfer();
         $totals->setGrandTotal(10000);
         //$totals->setTax(300);
         $totals->setSubtotal(10000);
@@ -112,12 +130,63 @@ class TestController extends AbstractController implements PayoneApiConstants
         return $order;
     }
 
-    public function myTestAction()
+    public function transactionUpdateAction()
     {
-        $payoneFacade = $this->getLocator()->payone()->facade();
-        $payoneFacade->myTest();
+        $order = $this->getOrder();
+
+        $params = [
+            'aid' => '25811',
+            'mode' => 'test',
+            'customerid' => '999',
+            'key' => hash('md5', 'dFWR8GlNG8aonscn'),
+            'portalid' => '2018246',
+            'sequencenumber' => '0',
+            'txaction' => 'appointed',
+            'receivable' => '0',
+            'balance' => '0',
+            'currency' => 'EUR',
+            'txid' => '161913038',
+            'userid' => '67518130',
+            'txtime' => '1354187955',
+            'clearingtype' => 'wlt',
+            'reference' => $order->getIncrementId()
+        ];
+
+
+         $r = $this->getLocator()->payone()->facade()->processTransactionStatusUpdate($params);
+
+        echo '<pre>' . print_r($r,false) . '</pre>';die;
 
         die('|-o-|');
+    }
+
+    public function myTestAction()
+    {
+        $a = ['aa' => 'sjdlfkjsrf',
+              'bb' => 45456,
+        'cc' => 'sjdflsdjflskdjf'];
+
+        $x = $this->rawResponseFromArray($a);
+        \SprykerFeature_Shared_Library_Log::log($x, 'payone-test.log');
+        echo '<pre>' . print_r($x,false) . '</pre>';die;
+
+        die('|-o-|');
+    }
+
+    protected function rawResponseFromArray(array $request)
+    {
+        $rawResponse = '';
+        $arrayCount = count($request);
+        $count = 1;
+        foreach ($request as $key => $value) {
+            $rawResponse .= $key . '=' . $value;
+            if ($count < $arrayCount) {
+                $rawResponse .= 'x' . "\n";
+            }
+            $count++;
+        }
+
+        return $rawResponse;
     }
 
 

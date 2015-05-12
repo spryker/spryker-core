@@ -70,9 +70,9 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApi
         $captureContainer->setTxid($captureData->getPayment()->getTransactionId());
         $captureContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $captureContainer->setAmount($captureData->getAmount());
-        //$captureContainer->setSequenceNumber($this->getSequenceNumberProvider()->getNextSequenceNumber());
-        // @todo fix how sequence number provider works
-        $captureContainer->setSequenceNumber(1);
+        $captureContainer->setSequenceNumber(
+            $this->getSequenceNumberProvider()->getNextSequenceNumber($captureData->getPayment()->getTransactionId())
+        );
 
         return $captureContainer;
     }
@@ -88,9 +88,9 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApi
         $debitContainer->setTxid($debitData->getPayment()->getTransactionId());
         $debitContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $debitContainer->setAmount($debitData->getAmount());
-        //$captureContainer->setSequenceNumber($this->getSequenceNumberProvider()->getNextSequenceNumber());
-        // @todo fix how sequence number provider works
-        $debitContainer->setSequenceNumber(2);
+        $debitContainer->setSequenceNumber(
+            $this->getSequenceNumberProvider()->getNextSequenceNumber($debitData->getPayment()->getTransactionId())
+        );
 
         return $debitContainer;
     }
@@ -106,9 +106,9 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApi
         $refundContainer->setTxid($refundData->getPayment()->getTransactionId());
         $refundContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $refundContainer->setAmount($refundData->getAmount());
-        //$captureContainer->setSequenceNumber($this->getSequenceNumberProvider()->getNextSequenceNumber());
-        // @todo fix how sequence number provider works
-        $refundContainer->setSequenceNumber(2);
+        $refundContainer->setSequenceNumber(
+            $this->getSequenceNumberProvider()->getNextSequenceNumber($refundData->getPayment()->getTransactionId())
+        );
 
         return $refundContainer;
     }

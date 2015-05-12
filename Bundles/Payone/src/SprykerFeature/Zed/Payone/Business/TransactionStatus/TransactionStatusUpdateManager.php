@@ -4,11 +4,11 @@ namespace SprykerFeature\Zed\Payone\Business\TransactionStatus;
 
 
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\StandardParameterInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\TransactionStatusUpdateInterface;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
-use SprykerFeature\Zed\Payone\Business\Key\KeyHashInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
@@ -26,24 +26,24 @@ class TransactionStatusUpdateManager
      */
     protected $standardParameter;
     /**
-     * @var KeyHashInterface
+     * @var HashInterface
      */
-    protected $keyHashProvider;
+    protected $hashProvider;
 
 
     /**
      * @param PayoneQueryContainerInterface $queryContainer
      * @param StandardParameterInterface $standardParameter
-     * @param KeyHashInterface $keyHashProvider
+     * @param HashInterface $hashProvider
      */
     public function __construct(
         PayoneQueryContainerInterface $queryContainer,
         StandardParameterInterface $standardParameter,
-        KeyHashInterface $keyHashProvider)
+        HashInterface $hashProvider)
     {
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;
-        $this->keyHashProvider = $keyHashProvider;
+        $this->hashProvider = $hashProvider;
     }
 
     /**
@@ -106,7 +106,7 @@ class TransactionStatusUpdateManager
      */
     protected function validate(TransactionStatusUpdateInterface $request)
     {
-        $systemHashedKey = $this->keyHashProvider->hashKey($this->standardParameter->getKey());
+        $systemHashedKey = $this->hashProvider->hash($this->standardParameter->getKey());
         if ($request->getKey() != $systemHashedKey) {
             return $this->createErrorResponse(false, 'Payone transaction status update: Given and internal key do not match!');
         }

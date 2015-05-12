@@ -12,7 +12,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class AuthorizeGrandTotalPlugin extends AbstractPlugin implements CommandByOrderInterface
+class PreAuthorizeGrandTotalPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
     /**
@@ -30,7 +30,7 @@ class AuthorizeGrandTotalPlugin extends AbstractPlugin implements CommandByOrder
         $paymentUserDataTransfer = $data['???_SOME_KEY_TO_GET_FORM_DATA_???'];
         $transferAuthorization->setPaymentUserData($paymentUserDataTransfer);
 
-        $this->getDependencyContainer()->createPayoneFacade()->authorize($transferAuthorization);
+        $this->getDependencyContainer()->createPayoneFacade()->preAuthorize($transferAuthorization);
     }
 
 }

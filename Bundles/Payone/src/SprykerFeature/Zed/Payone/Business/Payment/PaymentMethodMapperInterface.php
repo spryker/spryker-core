@@ -29,9 +29,9 @@ interface PaymentMethodMapperInterface
     public function setSequenceNumberProvider(SequenceNumberProviderInterface $sequenceNumberProvider);
 
     /**
-     * @param StandardParameterInterface $standardParamter
+     * @param StandardParameterInterface $standardParameter
      */
-    public function setStandardParameter(StandardParameterInterface $standardParamter);
+    public function setStandardParameter(StandardParameterInterface $standardParameter);
 
     /**
      * @param AuthorizationDataInterface $authorizationData

@@ -2,16 +2,20 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
+use Generated\Shared\Transfer\PayoneApiCallResponseCheckTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\ApiCallResponseCheckInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\DebitDataInterface;
+use SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\RefundDataInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
+use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
 
 
 /**
@@ -26,9 +30,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function authorize(AuthorizationDataInterface $authorizationData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager();
-
-        return $paymentManager->authorize($authorizationData);
+        return $this->getDependencyContainer()->createPaymentManager()->authorize($authorizationData);
     }
 
     /**
@@ -37,9 +39,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function preAuthorize(AuthorizationDataInterface $authorizationData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager();
-
-        return $paymentManager->preAuthorize($authorizationData);
+        return $this->getDependencyContainer()->createPaymentManager()->preAuthorize($authorizationData);
     }
 
     /**
@@ -48,9 +48,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function capture(CaptureDataInterface $captureData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager();
-
-        return $paymentManager->capture($captureData);
+        return $this->getDependencyContainer()->createPaymentManager()->capture($captureData);
     }
 
     /**
@@ -59,9 +57,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function debit(DebitDataInterface $debitData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager();
-
-        return $paymentManager->debit($debitData);
+        return $this->getDependencyContainer()->createPaymentManager()->debit($debitData);
     }
 
     /**
@@ -70,9 +66,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function refund(RefundDataInterface $refundData)
     {
-        $paymentManager = $this->getDependencyContainer()->createPaymentManager();
-
-        return $paymentManager->refund($refundData);
+        return $this->getDependencyContainer()->createPaymentManager()->refund($refundData);
     }
 
     /**
@@ -82,8 +76,36 @@ class PayoneFacade extends AbstractFacade
     public function processTransactionStatusUpdate(array $requestParams)
     {
         $transactionManager = $this->getDependencyContainer()->createTransactionStatusManager();
+        $transactionTransfer = $this->getDependencyContainer()->createTransactionStatusUpdateRequest($requestParams);
 
-        return $transactionManager->processTransactionStatusUpdate($requestParams);
+        return $transactionManager->processTransactionStatusUpdate($transactionTransfer);
+    }
+
+    /**
+     * @param PaymentInterface $payment
+     * @return bool
+     */
+    public function isAuthorizationSuccessful(PaymentInterface $payment)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationSuccessful($payment);
+    }
+
+    /**
+     * @param PaymentInterface $payment
+     * @return PayoneAuthorizationCheckResponseTransfer
+     */
+    public function getAuthorizationResponse(PaymentInterface $payment)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->getAuthorizationResponse($payment);
+    }
+
+    /**
+     * @param ApiCallResponseCheckInterface $apiCallCheck
+     * @return bool
+     */
+    public function isApiCallSuccessful(ApiCallResponseCheckInterface $apiCallCheck)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isApiCallSuccessful($apiCallCheck);
     }
 
 }

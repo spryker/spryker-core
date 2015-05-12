@@ -12,6 +12,10 @@ class Curl extends AbstractHttpAdapter
      */
     protected function performRequest(array $params)
     {
+        // @todo remove log!
+        \SprykerFeature_Shared_Library_Log::log($params, 'payone-test.log');
+        // @todo remove log!
+
         $response = [];
         $urlArray = $this->generateUrlArray($params);
 
@@ -30,6 +34,10 @@ class Curl extends AbstractHttpAdapter
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->getTimeout());
 
         $result = curl_exec($curl);
+
+        // @todo remove log!
+        \SprykerFeature_Shared_Library_Log::log($result, 'payone-test.log');
+        // @todo remove log!
 
         $this->setRawResponse($result);
 

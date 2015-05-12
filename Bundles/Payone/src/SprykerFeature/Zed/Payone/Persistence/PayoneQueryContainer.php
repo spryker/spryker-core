@@ -4,9 +4,9 @@ namespace SprykerFeature\Zed\Payone\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Payone\Persistence\Propel\Base\SpyPaymentPayoneQuery;
-use SprykerFeature\Zed\Payone\Persistence\Propel\PaymentPayoneTransactionQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogQuery;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLogQuery;
 
 
 class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQueryContainerInterface
@@ -21,7 +21,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     {
         $query = SpyPaymentPayoneTransactionStatusLogQuery::create();
         $query->filterByTransactionId($transactionId)
-              ->orderBySequencenumber(Criteria::DESC);
+              ->orderBySequenceNumber(Criteria::DESC);
 
         return $query;
     }
@@ -34,6 +34,20 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     {
         $query = SpyPaymentPayoneQuery::create();
         $query->filterByTransactionId($transactionId);
+
+        return $query;
+    }
+
+    /**
+     * @param int $fkPayment
+     * @param string $requestName
+     * @return SpyPaymentPayoneApiLogQuery
+     */
+    public function getApiLogByPaymentAndRequestTypeQuery($fkPayment, $requestName)
+    {
+        $query = SpyPaymentPayoneApiLogQuery::create();
+        $query->filterByFkPaymentPayone($fkPayment)
+              ->filterByRequest($requestName);
 
         return $query;
     }

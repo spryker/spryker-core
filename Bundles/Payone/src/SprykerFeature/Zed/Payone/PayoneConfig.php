@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone;
 
+use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use SprykerFeature\Shared\Payone\PayoneConfigConstants;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\System\SystemConfig;
@@ -46,7 +47,7 @@ class PayoneConfig extends AbstractBundleConfig
     public function getRequestStandardParameter()
     {
         $credentials = $this->get(PayoneConfigConstants::PAYONE_CREDENTIALS);
-        $standardParameter = $this->getLocator()->payone()->transferStandardParameter();
+        $standardParameter = new PayoneStandardParameterTransfer();
 
         $standardParameter->setEncoding($credentials[PayoneConfigConstants::PAYONE_CREDENTIALS_ENCODING]);
         $standardParameter->setMid($credentials[PayoneConfigConstants::PAYONE_CREDENTIALS_MID]);

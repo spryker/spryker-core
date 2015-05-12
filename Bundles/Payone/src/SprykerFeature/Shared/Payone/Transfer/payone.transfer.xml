@@ -4,7 +4,6 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="PayoneAuthorization">
-        <!-- DUMMY -->
         <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface" />
         <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentUserDataInterface" />
         <interface name="AuthorizationDataInterface" />
@@ -12,13 +11,10 @@
         <property name="referenceId" type="string" default="" />
         <property name="paymentMethod" type="string" default="" />
         <property name="paymentUserData" type="PaymentUserDataInterface" />
-        <property name="order" type="string" default="" />
-        <!-- <property name="order" type="SalesOrderTransfer" />--> <!-- requires sales package refactoring -->
-        <!-- <property name="paymentFormData" type="string" default="" /> -->
+        <property name="order" type="string" default="" /> <!-- @todo: Order Interface here -->
     </transfer>
 
     <transfer name="PayoneCapture">
-        <!-- DUMMY -->
         <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface"/>
         <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface"/>
         <interface name="CaptureDataInterface" />
@@ -27,7 +23,6 @@
     </transfer>
 
     <transfer name="PayoneDebit">
-        <!-- DUMMY -->
         <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\DebitDataInterface"/>
         <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface"/>
         <interface name="DebitDataInterface" />
@@ -36,7 +31,6 @@
     </transfer>
 
     <transfer name="PayoneRefund">
-        <!-- DUMMY -->
         <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\RefundDataInterface"/>
         <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface"/>
         <interface name="RefundDataInterface" />
@@ -45,20 +39,48 @@
     </transfer>
 
     <transfer name="PayonePayment">
-        <!-- DUMMY -->
         <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface"/>
         <interface name="PaymentInterface" />
         <property name="paymentMethod" type="string" default="null" />
+        <property name="authorizationType" type="string" default="null" />
         <property name="transactionId" type="string" default="null" />
     </transfer>
 
+    <transfer name="PayoneStandardParameter">
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\StandardParameterInterface" />
+        <interface name="StandardParameterInterface" />
+        <property name="encoding" type="string" default="null" />
+        <property name="mid" type="string" default="null" />
+        <property name="aid" type="string" default="null" />
+        <property name="portalId" type="string" default="null" />
+        <property name="key" type="string" default="null" />
+        <property name="paymentGatewayUrl" type="string" default="null" />
+        <property name="currency" type="string" default="null" />
+        <property name="language" type="string" default="null" />
+        <property name="redirectSuccessUrl" type="string" default="null" />
+        <property name="redirectBackUrl" type="string" default="null" />
+        <property name="redirectErrorUrl" type="string" default="null" />
+    </transfer>
+
     <transfer name="PayoneApiCallResponseCheck">
-        <!-- DUMMY -->
         <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\ApiCallResponseCheckInterface" />
         <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface" />
         <interface name="ApiCallResponseCheckInterface" />
         <property name="requestType" type="string" default="null" />
         <property name="payment" type="PaymentInterface" />
+    </transfer>
+
+    <transfer name="PayoneAuthorizationCheckResponse">
+        <use name="SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationCheckResponseInterface" />
+        <interface name="AuthorizationCheckResponseInterface" />
+        <property name="isSuccess" type="boolean" default="false" />
+        <property name="request" type="string" default="null" />
+        <property name="status" type="string" default="null" />
+        <property name="redirectUrl" type="string" default="null" />
+        <property name="isRedirect" type="string" default="false" />
+        <property name="internalErrorMessage" type="string" default="null" />
+        <property name="customerErrorMessage" type="string" default="null" />
+        <property name="errorCode" type="string" default="null" />
     </transfer>
 
 </transfers>

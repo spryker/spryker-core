@@ -13,6 +13,11 @@ use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentManager;
 use SprykerFeature\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
 use SprykerFeature\Zed\Payone\PayoneConfig;
+use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
+use SprykerFeature\Shared\Payone\Dependency\HashInterface;
+use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainer;
+use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
+use SprykerFeature\Zed\Payone\Business\ApiLog\ApiLogFinder;
 
 /**
  * @method Factory|PayoneBusiness getFactory()
@@ -26,6 +31,15 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
      */
     private $standardParameter;
 
+
+
+    /**
+     * @return PayoneFacade
+     */
+    public function createPayoneFacade()
+    {
+        return $this->getLocator()->payone()->facade();
+    }
 
     /**
      * @return PaymentManager
@@ -64,15 +78,17 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return PayoneFacade
+     * @return ApiLogFinder
      */
-    public function createPayoneFacade()
+    public function createApiLogFinder()
     {
-        return $this->getLocator()->payone()->facade();
+        return $this->getFactory()->createApiLogApiLogFinder(
+            $this->createQueryContainer()
+        );
     }
 
     /**
-     * @return \SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainer
+     * @return PayoneQueryContainer
      */
     protected function createQueryContainer()
     {
@@ -91,7 +107,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return SequenceNumber\SequenceNumberProviderInterface
+     * @return SequenceNumberProviderInterface
      */
     protected function createSequenceNumberProvider()
     {
@@ -102,15 +118,15 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return Key\KeyHashProvider
+     * @return HashInterface
      */
     protected function createKeyHashProvider()
     {
-        return $this->getFactory()->createKeyKeyHashProvider();
+        return $this->getFactory()->createKeyHashProvider();
     }
 
     /**
-     * @return Mode\ModeDetectorInterface
+     * @return ModeDetectorInterface
      */
     protected function createModeDetector()
     {
@@ -121,13 +137,13 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
      * @param array $requestParams
      * @return TransactionStatusRequest
      */
-    protected function createTransactionStatusUpdateRequest(array $requestParams)
+    public function createTransactionStatusUpdateRequest(array $requestParams)
     {
         return new TransactionStatusRequest($requestParams);
     }
 
     /**
-     * @todo move implementation in PayoneConfig
+     * @todo move implementation to PayoneConfig
      * @return array
      */
     protected function getAvailablePaymentMethods()

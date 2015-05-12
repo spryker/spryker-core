@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business\Mode;
+namespace SprykerFeature\Shared\Payone\Dependency;
 
 
 interface ModeDetectorInterface
