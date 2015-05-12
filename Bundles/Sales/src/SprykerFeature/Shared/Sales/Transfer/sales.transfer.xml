@@ -24,7 +24,7 @@
         <property name="createdAt" type="string" />
         <property name="isTest" type="string" />
         <property name="discounts" type="CalculationDiscount[]" />
-        <property name="totals" type="CalculationTotals[]" />
+        <property name="totals" type="CalculationTotals" />
         <property name="expenses" type="CalculationExpense[]" singular="expense" />
         <property name="invoice" type="SalesInvoice[]" />
     </transfer>
@@ -86,7 +86,7 @@
         <property name="taxPercentage" type="string" />
         <property name="quantity" type="int" />
         <property name="discounts" type="CalculationDiscount[]" singular="discount" />
-        <property name="options" type="SalesOrderItemOption[]" />
+        <property name="options" type="SalesOrderItemOption[]" singular="option" />
         <property name="expenses" type="CalculationExpense[]" singular="expense" />
         <property name="unitGrossPrice" type="string" />
         <property name="unitPriceToPay" type="string" />
@@ -96,7 +96,7 @@
 
 
     <transfer name="OrderItems">
-        <property name="orderItems" type="SalesOrderItems[]" singular="orderItem" />
+        <property name="orderItems" type="SalesOrderItem[]" singular="orderItem" />
     </transfer>
 
     <transfer name="SalesOrderItemOption">

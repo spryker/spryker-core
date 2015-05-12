@@ -41,8 +41,10 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $calculator = $this->getCalculator();
         $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
 
-        $this->assertEquals(10, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-1][self::KEY_PERCENTAGE]);
-        $this->assertEquals(91, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-1][self::KEY_AMOUNT]);
+        $taxRates = $totalsTransfer->getTax()->getTaxRates();
+
+        $this->assertEquals(10, $taxRates[0]->getPercentage());
+        $this->assertEquals(91, $taxRates[0]->getAmount());
     }
 
     public function testShouldHaveProperlyCalculatedTaxAmountsForAnOrderWithTwoItems()
@@ -65,10 +67,12 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $calculator = $this->getCalculator();
         $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
 
-        $this->assertEquals(10, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-1][self::KEY_PERCENTAGE]);
-        $this->assertEquals(91, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-1][self::KEY_AMOUNT]);
-        $this->assertEquals(20, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-2][self::KEY_PERCENTAGE]);
-        $this->assertEquals(167, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-2][self::KEY_AMOUNT]);
+        $taxRates = $totalsTransfer->getTax()->getTaxRates();
+
+        $this->assertEquals(10, $taxRates[0]->getPercentage());
+        $this->assertEquals(91, $taxRates[0]->getAmount());
+        $this->assertEquals(20, $taxRates[1]->getPercentage());
+        $this->assertEquals(167, $taxRates[1]->getAmount());
     }
 
     public function testShouldHaveProperlyCalculatedTaxAmountsForAnOrderWithTwoItemsWithItemExpensesAndOrderExpenses()
@@ -103,12 +107,14 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $calculator = $this->getCalculator();
         $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
 
-        $this->assertEquals(10, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-1][self::KEY_PERCENTAGE]);
-        $this->assertEquals(182, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-1][self::KEY_AMOUNT]);
-        $this->assertEquals(20, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-2][self::KEY_PERCENTAGE]);
-        $this->assertEquals(167, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-2][self::KEY_AMOUNT]);
-        $this->assertEquals(30, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-3][self::KEY_PERCENTAGE]);
-        $this->assertEquals(231, $totalsTransfer->getTax()->toArray()[self::KEY_TAX_RATES][-3][self::KEY_AMOUNT]);
+        $taxRates = $totalsTransfer->getTax()->getTaxRates();
+
+        $this->assertEquals(10,  $taxRates[0]->getPercentage());
+        $this->assertEquals(182, $taxRates[0]->getAmount());
+        $this->assertEquals(20,  $taxRates[1]->getPercentage());
+        $this->assertEquals(167, $taxRates[1]->getAmount());
+        $this->assertEquals(30,  $taxRates[2]->getPercentage());
+        $this->assertEquals(231, $taxRates[2]->getAmount());
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business\DecisionRule;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CalculationTotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
@@ -26,11 +27,8 @@ class MinimumCartSubtotalTest extends Test
     public function testShouldReturnTrueForAnOrderWithAHighEnoughSubtotal()
     {
         $locator = $this->getLocator();
-        /* @var Order $order */
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
-
-        /* @var TotalsInterface $totals */
-        $totals = new \Generated\Shared\Transfer\CalculationTotalsTransfer();
+        $order = new SalesOrderTransfer();
+        $totals = new CalculationTotalsTransfer();
         $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_1000);
         $order->setTotals($totals);
 

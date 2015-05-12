@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface;
 
 interface DiscountableInterface
@@ -19,16 +20,9 @@ interface DiscountableInterface
     public function getDiscounts();
 
     /**
-     * @param DiscountItemInterface $discount
+     * @param CalculationDiscountTransfer $discount
      *
      * @return $this
      */
-    public function addDiscount(DiscountItemInterface $discount);
-
-    /**
-     * @param DiscountItemInterface $discount
-     *
-     * @return $this
-     */
-    public function removeDiscount(DiscountItemInterface $discount);
+    public function addDiscount(CalculationDiscountTransfer $discount);
 }

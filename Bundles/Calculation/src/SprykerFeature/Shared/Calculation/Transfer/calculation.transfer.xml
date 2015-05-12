@@ -66,8 +66,8 @@
         <property name="subtotal" type="int" />
         <property name="subtotalWithoutItemExpenses" type="int" />
         <property name="expenses" type="CalculationExpenseTotals[]" />
-        <property name="discount" type="CalculationDiscountTotals[]" />
-        <property name="tax" type="CalculationTax[]" />
+        <property name="discount" type="CalculationDiscountTotals" />
+        <property name="tax" type="CalculationTax" />
         <property name="grandTotalWithDiscounts" type="int" />
         <property name="grandTotal" type="int" />
     </transfer>

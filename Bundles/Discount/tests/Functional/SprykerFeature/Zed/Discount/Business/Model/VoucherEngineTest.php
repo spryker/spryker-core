@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Discount\Business\Model\Distributor;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\DiscountConfig;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 
 /**
  * @group VoucherEngineTest
@@ -265,7 +266,7 @@ class VoucherEngineTest extends Test
         $collectorPlugin,
         $isPrivileged = true
     ) {
-        $discount = new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount();
+        $discount = new SpyDiscount();
         $discount->setDisplayName($displayName);
         $discount->setAmount($amount);
         $discount->setIsActive($isActive);
@@ -284,8 +285,8 @@ class VoucherEngineTest extends Test
     {
         $locator = Locator::getInstance();
         $order = new SalesOrderTransfer();
-        $item = new OrderItemsTransfer();
-        $itemCollection = new SalesOrderItemTransfer();
+        $item = new SalesOrderItemTransfer();
+        $itemCollection = new OrderItemsTransfer();
 
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_500);
         $itemCollection->addOrderItem($item);

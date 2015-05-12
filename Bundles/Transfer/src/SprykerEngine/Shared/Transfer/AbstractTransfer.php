@@ -6,14 +6,20 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
 use SprykerFeature\Shared\Library\Filter\FilterChain;
 use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
+use Zend\Filter\Word\CamelCaseToUnderscore;
 
-abstract class AbstractTransfer implements TransferInterface
+abstract class AbstractTransfer extends \ArrayObject implements TransferInterface
 {
 
     /**
      * @var array
      */
     private $modifiedProperties = [];
+
+    public function __construct()
+    {
+        parent::__construct([], \ArrayObject::STD_PROP_LIST);
+    }
 
     /**
      * @param bool $includeNullValues
@@ -25,12 +31,14 @@ abstract class AbstractTransfer implements TransferInterface
     {
         $varsForArray = [];
 
-        foreach (get_object_vars($this) as $name => $value) {
+        $classVars = get_object_vars($this);
+        $filter = new CamelCaseToUnderscore();
+        foreach ($classVars as $name => $value) {
             if ($name === 'modifiedProperties') {
                 continue;
             }
 
-            $key = $name;
+            $key = strtolower($filter->filter($name));
 
             if (is_null($value)) {
                 if ($includeNullValues) {

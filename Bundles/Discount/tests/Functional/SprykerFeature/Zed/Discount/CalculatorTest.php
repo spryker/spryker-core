@@ -3,6 +3,7 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
 use Generated\Shared\Transfer\SalesOrderTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerEngine\Shared\Config;
@@ -13,6 +14,7 @@ use SprykerFeature\Zed\Discount\Business\Model\Distributor;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\DiscountConfig;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
 
 /**
  * @group DiscountCalculatorTest
@@ -273,7 +275,7 @@ class CalculatorTest extends Test
     protected function retrieveDiscounts()
     {
         $result = [];
-        foreach ((new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery())->find() as $discount) {
+        foreach ((new SpyDiscountQuery())->find() as $discount) {
             $result[] = $discount;
         }
 

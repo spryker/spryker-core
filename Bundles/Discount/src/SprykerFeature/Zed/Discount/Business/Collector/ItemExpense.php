@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Collector;
 
+use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 
 class ItemExpense implements CollectorInterface
@@ -15,11 +16,13 @@ class ItemExpense implements CollectorInterface
         $discountableExpenses = [];
         $items = $container->getItems();
 
-        foreach ($items as $item) {
-            $expenses = $item->getExpenses();
+        if ($items instanceof OrderItemsTransfer) {
+            foreach ($items->getOrderItems() as $item) {
+                $expenses = $item->getExpenses();
 
-            foreach ($expenses as $expense) {
-                $discountableExpenses[] = $expense;
+                foreach ($expenses as $expense) {
+                    $discountableExpenses[] = $expense;
+                }
             }
         }
 

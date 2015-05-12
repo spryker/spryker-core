@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
+use Generated\Shared\Transfer\CalculationTotalsTransfer;
+
 interface CalculableContainerInterface extends ExpenseContainerInterface
 {
 
@@ -23,9 +25,9 @@ interface CalculableContainerInterface extends ExpenseContainerInterface
     public function setItems(\ArrayObject $items);
 
     /**
-     * @param \ArrayObject $totals
+     * @param CalculationTotalsTransfer $totals
      *
      * @return mixed
      */
-    public function setTotals(\ArrayObject $totals);
+    public function setTotals(CalculationTotalsTransfer $totals);
 }

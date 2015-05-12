@@ -3,7 +3,12 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
 use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\DiscountDiscountTransfer;
+use Generated\Shared\Transfer\DiscountDiscountVoucherPoolCategoryTransfer;
+use Generated\Shared\Transfer\DiscountDiscountVoucherPoolTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\SalesOrderTransfer;
@@ -15,6 +20,7 @@ use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\DiscountConfig;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 
 /**
  * @group SprykerFeature
@@ -145,7 +151,7 @@ class DiscountFacadeTest extends Test
             DiscountConfig::PLUGIN_COLLECTOR_ITEM
         );
 
-        $decisionRule = new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule();
+        $decisionRule = new SpyDiscountDecisionRule();
         $decisionRule
             ->setName(self::DECISION_RULE_MINIMUM_CART_SUBTOTAL_AMOUNT)
             ->setValue(self::MINIMUM_CART_AMOUNT_1000)
@@ -154,6 +160,7 @@ class DiscountFacadeTest extends Test
             ->save();
 
         $order = $this->getOrderWithFixtureData();
+        $order->setTotals(new CalculationTotalsTransfer());
 
         $result = $this->discountFacade->isMinimumCartSubtotalReached($order, $decisionRule);
         $this->assertFalse($result->isSuccess());
@@ -251,7 +258,7 @@ class DiscountFacadeTest extends Test
 
     public function testSaveDiscount()
     {
-        $discountTransfer = new \Generated\Shared\Transfer\DiscountDiscountTransfer();
+        $discountTransfer = new DiscountDiscountTransfer();
         $discountTransfer->setDisplayName(self::DISCOUNT_DISPLAY_NAME);
         $discountTransfer->setCollectorPlugin(self::DISCOUNT_COLLECTOR_PLUGIN);
         $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_100);
@@ -282,7 +289,7 @@ class DiscountFacadeTest extends Test
 
     public function testSaveDiscountVoucherPool()
     {
-        $discountVoucherPoolTransfer = new \Generated\Shared\Transfer\DiscountDiscountVoucherPoolTransfer();
+        $discountVoucherPoolTransfer = new DiscountDiscountVoucherPoolTransfer();
         $discountVoucherPoolTransfer->setName(self::DISCOUNT_VOUCHER_POOL_NAME);
         $result = $this->discountFacade->createDiscountVoucherPool($discountVoucherPoolTransfer);
 
@@ -291,7 +298,7 @@ class DiscountFacadeTest extends Test
 
     public function testSaveDiscountVoucherPoolCategory()
     {
-        $discountVoucherPoolCategoryTransfer = new \Generated\Shared\Transfer\DiscountDiscountVoucherPoolCategoryTransfer();
+        $discountVoucherPoolCategoryTransfer = new DiscountDiscountVoucherPoolCategoryTransfer();
         $discountVoucherPoolCategoryTransfer->setName(self::DISCOUNT_VOUCHER_POOL_CATEGORY);
         $result = $this->discountFacade->createDiscountVoucherPoolCategory($discountVoucherPoolCategoryTransfer);
 

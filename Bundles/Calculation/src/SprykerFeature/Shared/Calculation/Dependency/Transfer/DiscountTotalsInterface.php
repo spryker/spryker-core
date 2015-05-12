@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
+use Generated\Shared\Transfer\SalesDiscountTotalItemTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface DiscountTotalsInterface extends TransferInterface
@@ -31,16 +32,10 @@ interface DiscountTotalsInterface extends TransferInterface
     public function getDiscountItems();
 
     /**
-     * @param DiscountTotalItemInterface $discountItem
+     * @param SalesDiscountTotalItemTransfer $discountItem
      *
      * @return $this
      */
-    public function addDiscountItem(DiscountTotalItemInterface $discountItem);
+    public function addDiscountItem(SalesDiscountTotalItemTransfer $discountItem);
 
-    /**
-     * @param DiscountTotalItemInterface $discountItem
-     *
-     * @return $this
-     */
-    public function removeDiscountItem(DiscountTotalItemInterface $discountItem);
 }
