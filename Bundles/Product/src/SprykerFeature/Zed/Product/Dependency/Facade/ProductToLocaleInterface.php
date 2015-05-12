@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Product\Dependency\Facade;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductToLocaleInterface
 {
     /**
-     * @return LocaleDto
+     * @return LocaleTransfer
      */
     public function getCurrentLocale();
 }

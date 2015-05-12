@@ -10,11 +10,11 @@ interface ItemInterface
     public function getId();
 
     /**
-     * @param string $identifier
+     * @param string $id
      *
      * @return $this
      */
-    public function setId($identifier);
+    public function setId($id);
 
     /**
      * @return int

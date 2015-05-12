@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\GlossaryExporter\Communication\Plugin;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -42,11 +42,11 @@ class TranslationProcessorPlugin extends AbstractPlugin implements DataProcessor
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
         foreach ($resultSet as $index => $translation) {
             $key = $this->keyBuilder->generateKey($translation['translation_key'], $locale->getLocaleName());

@@ -157,14 +157,17 @@ class ProductFacadeTest extends Test
      */
     public function testCreateProductUrlCreatesAndReturnsCorrectUrl()
     {
+        $urlString = '/someUrl';
         $locale = $this->localeFacade->createLocale('ABCDE');
         $idAbstractProduct = $this->productFacade->createAbstractProduct('AnAbstractProduct');
-        $idConcreteProduct = $this->productFacade->createConcreteProduct('AConcreteProduct', $idAbstractProduct);
-        $url = $this->productFacade->createProductUrl('AConcreteProduct', '/someUrl', $locale);
+        $url = $this->productFacade->createProductUrl('AnAbstractProduct', $urlString, $locale);
 
-        $this->assertTrue($this->urlFacade->hasUrl('/someUrl'));
+        $this->assertTrue($this->urlFacade->hasUrl($urlString));
 
-        $this->assertEquals($idConcreteProduct, $url->getResourceId());
-        $this->assertEquals('product', $url->getResourceType());
+        $this->assertEquals($urlString, $url->getUrl());
+        $this->assertEquals($idAbstractProduct, $url->getFkAbstractProduct());
+        $this->assertEquals($idAbstractProduct, $url->getResourceId());
+        $this->assertEquals('abstract_product', $url->getResourceType());
+        $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
     }
 }

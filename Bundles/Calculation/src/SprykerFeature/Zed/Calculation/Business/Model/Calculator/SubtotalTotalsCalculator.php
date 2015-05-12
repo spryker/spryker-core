@@ -3,14 +3,13 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
-class SubtotalTotalsCalculator extends AbstractCalculator implements
+class SubtotalTotalsCalculator implements
     TotalsCalculatorPluginInterface,
     SubtotalTotalsCalculatorInterface
 {
@@ -18,22 +17,23 @@ class SubtotalTotalsCalculator extends AbstractCalculator implements
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableContainerInterface $calculableContainer
-     * @param CalculableItemCollectionInterface $calculableItems
+     * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
         CalculableContainerInterface $calculableContainer,
-        CalculableItemCollectionInterface $calculableItems
+        \ArrayObject $calculableItems
     ) {
         $subtotal = $this->calculateSubtotal($calculableItems);
         $totalsTransfer->setSubtotal($subtotal);
     }
 
     /**
-     * @param CalculableItemCollectionInterface|CalculableItemInterface[] $calculableItems
+     * @param \ArrayObject|CalculableItemInterface[] $calculableItems
+     *
      * @return int
      */
-    public function calculateSubtotal(CalculableItemCollectionInterface $calculableItems)
+    public function calculateSubtotal(\ArrayObject $calculableItems)
     {
         $subtotal = 0;
         foreach ($calculableItems as $item) {
@@ -47,6 +47,7 @@ class SubtotalTotalsCalculator extends AbstractCalculator implements
 
     /**
      * @param OptionContainerInterface $item
+     *
      * @return int
      */
     protected function sumOptions(OptionContainerInterface $item)
@@ -61,6 +62,7 @@ class SubtotalTotalsCalculator extends AbstractCalculator implements
 
     /**
      * @param ExpenseContainerInterface $item
+     *
      * @return int
      */
     protected function sumExpenses(ExpenseContainerInterface $item)

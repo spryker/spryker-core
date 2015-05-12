@@ -40,7 +40,7 @@ class TemplateManager implements TemplateManagerInterface
      * @param string $name
      * @param string $path
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      * @throws TemplateExistsException
      */
     public function createTemplate($name, $path)
@@ -101,7 +101,7 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param SpyCmsTemplate $template
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      */
     protected function convertTemplateEntityToTransfer(SpyCmsTemplate $template)
     {
@@ -112,10 +112,10 @@ class TemplateManager implements TemplateManagerInterface
     }
 
     /**
-     * @param CmsTemplate $cmsTemplate
-     * @return CmsTemplate
+     * @param CmsCmsTemplateTransfer $cmsTemplate
+     * @return CmsCmsTemplateTransfer
      */
-    public function saveTemplate(CmsTemplate $cmsTemplate)
+    public function saveTemplate(CmsCmsTemplateTransfer $cmsTemplate)
     {
         if (is_null($cmsTemplate->getIdCmsTemplate())) {
             return $this->createTemplateFromTransfer($cmsTemplate);
@@ -125,11 +125,11 @@ class TemplateManager implements TemplateManagerInterface
     }
 
     /**
-     * @param CmsTemplate $cmsTemplate
+     * @param CmsCmsTemplateTransfer $cmsTemplate
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      */
-    protected function createTemplateFromTransfer(CmsTemplate $cmsTemplate)
+    protected function createTemplateFromTransfer(CmsCmsTemplateTransfer $cmsTemplate)
     {
         $this->checkTemplatePathDoesNotExist($cmsTemplate->getTemplatePath());
         $templateEntity = $this->locator->cms()->entitySpyCmsTemplate();
@@ -143,15 +143,15 @@ class TemplateManager implements TemplateManagerInterface
     }
 
     /**
-     * @param CmsTemplate $cmsTemplate
+     * @param CmsCmsTemplateTransfer $cmsTemplate
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      * @throws MissingTemplateException
      * @throws TemplateExistsException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function updateTemplateFromTransfer(CmsTemplate $cmsTemplate)
+    protected function updateTemplateFromTransfer(CmsCmsTemplateTransfer $cmsTemplate)
     {
         $templateEntity = $this->getTemplateEntityById($cmsTemplate->getIdCmsTemplate());
         $templateEntity->fromArray($cmsTemplate->toArray());
@@ -172,7 +172,7 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param int $idTemplate
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      * @throws MissingTemplateException
      */
     public function getTemplateById($idTemplate)
@@ -185,7 +185,7 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param string $path
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      * @throws MissingTemplateException
      */
     public function getTemplateByPath($path)

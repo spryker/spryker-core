@@ -6,7 +6,7 @@ use Generated\Shared\Transfer\CalculationExpenseTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
-class RemoveAllExpensesCalculator extends AbstractCalculator implements
+class RemoveAllExpensesCalculator implements
     CalculatorPluginInterface
 {
     /**
@@ -15,7 +15,7 @@ class RemoveAllExpensesCalculator extends AbstractCalculator implements
     public function recalculate(CalculableContainerInterface $calculableContainer)
     {
         foreach ($calculableContainer->getItems() as $item) {
-            $item->setExpenses(new CalculationExpenseTransfer());
+            $item->setExpenses(new \ArrayObject());
         }
 
         $calculableContainer->setExpenses(new CalculationExpenseTransfer());

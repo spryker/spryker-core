@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\Category\Communication;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryForm;
@@ -30,7 +30,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return LocaleDto
+     * @return LocaleTransfer
      */
     public function getCurrentLocale()
     {

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductCategorySearch\Business\Processor;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 class ProductCategorySearchProcessor implements ProductCategorySearchProcessorInterface
 {
@@ -10,10 +10,10 @@ class ProductCategorySearchProcessor implements ProductCategorySearchProcessorIn
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @return array
      */
-    public function process(array &$resultSet, array $processedResultSet, LocaleDto $locale)
+    public function process(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
         foreach ($resultSet as $index => $productCategories) {
             if (isset($processedResultSet[$index])) {

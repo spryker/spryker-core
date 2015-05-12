@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Renderer;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;
@@ -41,9 +41,9 @@ class CategoryTreeRenderer
 
     /**
      * @param CategoryQueryContainer $queryContainer
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      */
-    public function __construct(CategoryQueryContainer $queryContainer, LocaleDto $locale)
+    public function __construct(CategoryQueryContainer $queryContainer, LocaleTransfer $locale)
     {
         $this->queryContainer = $queryContainer;
         $this->locale = $locale;

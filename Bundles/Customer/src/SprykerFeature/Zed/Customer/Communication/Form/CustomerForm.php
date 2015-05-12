@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
 use Symfony\Component\Validator\Constraints;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 
@@ -76,9 +77,9 @@ class CustomerForm extends AbstractForm
      */
     public function getDefaultData()
     {
-        $customerTransfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
+        $customerTransfer = new CustomerCustomerTransfer();
         $customerTransfer->setIdCustomer($this->stateContainer->getRequestValue('id'));
-        $customerTransfer = $this->locator->customer()->facade()->getCustomer($customerTransfer);
+        $customerTransfer = $this->getLocator()->customer()->facade()->getCustomer($customerTransfer);
 
         return $customerTransfer->toArray();
     }
@@ -89,9 +90,9 @@ class CustomerForm extends AbstractForm
     protected function getGenderOptions()
     {
         return [
-            ["value" => 0, "label" => "customer.profile.gender.unknown"],
-            ["value" => 1, "label" => "customer.profile.gender.male"],
-            ["value" => 2, "label" => "customer.profile.gender.female"],
+            ['value' => 0, 'label' => 'customer.profile.gender.unknown'],
+            ['value' => 1, 'label' => 'customer.profile.gender.male'],
+            ['value' => 2, 'label' => 'customer.profile.gender.female'],
         ];
     }
 }

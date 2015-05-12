@@ -2,20 +2,19 @@
 
 namespace SprykerFeature\Shared\Cart\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 
 interface CartInterface extends DiscountableContainerInterface
 {
     /**
-     * @return CalculableItemCollectionInterface|ItemCollectionInterface
+     * @return \ArrayObject|ItemCollectionInterface
      */
     public function getItems();
 
     /**
-     * @param CalculableItemCollectionInterface $items
+     * @param \ArrayObject $items
      *
      * @return $this
      */
-    public function setItems(CalculableItemCollectionInterface $items);
+    public function setItems(\ArrayObject $items);
 }

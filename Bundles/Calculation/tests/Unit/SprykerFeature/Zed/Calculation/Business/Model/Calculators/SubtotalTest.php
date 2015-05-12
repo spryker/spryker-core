@@ -23,6 +23,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     public function testSubtotalShouldBeZeroForAnEmptyOrder()
     {
         $order = $this->getOrderWithFixtureData();
+        $order->setItems(new \ArrayObject());
 
         $totalsTransfer = $this->getTotals();
         $calculator = new SubtotalTotalsCalculator(Locator::getInstance());

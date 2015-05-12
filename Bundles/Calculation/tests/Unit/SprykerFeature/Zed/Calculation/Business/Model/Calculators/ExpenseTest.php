@@ -58,7 +58,7 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
         $discount = $this->getPriceDiscount();
         $discount->setAmount($expense->getGrossPrice());
 
-        $expense->addDiscount($discount);
+        $expense->addDiscountItem($discount);
         $order->addItem($item);
 
         $calculator = new ExpensePriceToPayCalculatorPlugin(new Factory('Calculation'), $this->getLocator());
@@ -83,8 +83,8 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
         $discount = $this->getPriceDiscount();
         $discount->setAmount($expense->getGrossPrice()/4);
 
-        $expense->addDiscount($discount);
-        $expense->addDiscount(clone $discount);
+        $expense->addDiscountItem($discount);
+        $expense->addDiscountItem(clone $discount);
 
         $order->addItem($item);
 

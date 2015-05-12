@@ -12,39 +12,39 @@ class AddressGrid extends AbstractGrid
             $this->createDefaultRowRenderer(),
             $this->createPagination(),
             $this->createDefaultColumn()
-                ->setName("id_customer_address")
+                ->setName('id_customer_address')
                 ->filterable()
                 ->sortable(),
             $this->createDefaultColumn()
-                ->setName("first_name")
+                ->setName('first_name')
                 ->filterable()
                 ->sortable(),
             $this->createDefaultColumn()
-                ->setName("last_name")
+                ->setName('last_name')
                 ->filterable()
                 ->sortable(),
             $this->createDefaultColumn()
-                ->setName("address1")
+                ->setName('address1')
                 ->filterable()
                 ->sortable(),
             $this->createDefaultColumn()
-                ->setName("address2")
+                ->setName('address2')
                 ->filterable()
                 ->sortable(),
             $this->createDefaultColumn()
-                ->setName("address3")
+                ->setName('address3')
                 ->filterable()
                 ->sortable(),
             $this->createDefaultColumn()
-                ->setName("company")
+                ->setName('company')
                 ->filterable()
                 ->sortable(),
             $this->createDefaultColumn()
-                ->setName("city")
+                ->setName('city')
                 ->filterable()
                 ->sortable(),
             $this->createDefaultColumn()
-                ->setName("comment")
+                ->setName('comment')
                 ->filterable()
                 ->sortable(),
         ];

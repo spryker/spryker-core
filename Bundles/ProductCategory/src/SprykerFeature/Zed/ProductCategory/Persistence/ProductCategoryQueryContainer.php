@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
@@ -14,7 +14,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
 {
     /**
      * @param ModelCriteria $query
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      *
@@ -22,7 +22,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      */
     public function expandProductCategoryPathQuery(
         ModelCriteria $query,
-        LocaleDto $locale,
+        LocaleTransfer $locale,
         $excludeDirectParent = true,
         $excludeRoot = true
     ) {
@@ -32,17 +32,54 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @param int $idProduct
+     * @return SpyProductCategoryQuery
+     */
+    protected function queryProductCategoryMappings()
+    {
+        $query = $this->getDependencyContainer()->createProductCategoryQuery();
+
+        return $query;
+    }
+
+    /**
+     * @param int $idAbstractProduct
      * @param int $idCategoryNode
      *
      * @return SpyProductCategoryQuery
      */
-    public function queryProductCategoryMappingByIds($idProduct, $idCategoryNode)
+    public function queryProductCategoryMappingByIds($idAbstractProduct, $idCategoryNode)
     {
-        $query = SpyProductCategoryQuery::create();
+        $query = $this->queryProductCategoryMappings();
         $query
-            ->filterByFkProduct($idProduct)
+            ->filterByFkAbstractProduct($idAbstractProduct)
             ->filterByFkCategoryNode($idCategoryNode)
+        ;
+
+        return $query;
+    }
+
+    /**
+     * @param string $sku
+     * @param string $categoryName
+     * @param LocaleTransfer $locale
+     *
+     * @return SpyProductCategoryQuery
+     */
+    public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale)
+    {
+        $query = $this->queryProductCategoryMappings();
+        $query
+            ->useSpyAbstractProductQuery()
+            ->filterBySku($sku)
+            ->endUse()
+            ->useSpyCategoryNodeQuery()
+            ->useCategoryQuery()
+            ->useAttributeQuery()
+            ->filterByFkLocale($locale->getIdLocale())
+            ->filterByName($categoryName)
+            ->endUse()
+            ->endUse()
+            ->endUse()
         ;
 
         return $query;

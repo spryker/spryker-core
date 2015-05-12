@@ -2,11 +2,6 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Dependency\Facade;
 
-/**
- * Interface ProductFrontendExporterToProductInterface
- *
- * @package SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Builder
- */
 interface ProductFrontendExporterToProductInterface
 {
     /**

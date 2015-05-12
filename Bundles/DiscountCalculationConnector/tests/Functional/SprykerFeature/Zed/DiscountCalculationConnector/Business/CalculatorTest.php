@@ -3,6 +3,10 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\SalesOrderTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
@@ -13,7 +17,10 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 /**
- * @group Salesrule
+ * @group SprykerFeature
+ * @group Zed
+ * @group DiscountCalculationConnector
+ * @group Business
  * @group Calculator
  */
 class CalculatorTest extends Test
@@ -39,23 +46,23 @@ class CalculatorTest extends Test
      */
     protected function getCalculatorModel()
     {
-        $calculator = $this->getMock('\SprykerFeature\Zed\Calculation\Business\Model\StackExecutor', [], [$this->locator]);
+        $calculator = $this->getMock('\SprykerFeature\Zed\Calculation\Business\Model\StackExecutor', []);
+
         return $calculator;
     }
 
     protected function createCalculatorStack()
     {
         $stack = [
-            new Calculator\ExpenseTotalsCalculator($this->locator),
-            new Calculator\SubtotalTotalsCalculator($this->locator),
+            new Calculator\ExpenseTotalsCalculator(),
+            new Calculator\SubtotalTotalsCalculator(),
             new GrandTotalTotalsCalculator(
-                $this->locator,
-                new Calculator\SubtotalTotalsCalculator($this->locator),
-                new Calculator\ExpenseTotalsCalculator($this->locator)
+                new Calculator\SubtotalTotalsCalculator(),
+                new Calculator\ExpenseTotalsCalculator()
             ),
-            new Calculator\ExpensePriceToPayCalculator($this->locator),
-            new Calculator\ItemPriceToPayCalculator($this->locator),
-            new DiscountTotalsCalculator($this->locator),
+            new Calculator\ExpensePriceToPayCalculator(),
+            new Calculator\ItemPriceToPayCalculator(),
+            new DiscountTotalsCalculator(),
             $this->locator->discountCalculationConnector()->pluginGrandTotalWithDiscountsTotalsCalculatorPlugin()
         ];
 
@@ -64,7 +71,7 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnEmptyOrder()
     {
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
+        $order = new SalesOrderTransfer();
         $calculator = $this->getCalculatorModel();
         $calculatorStack = $this->createCalculatorStack();
         $calculator->recalculate($calculatorStack, $order);
@@ -73,34 +80,34 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnExampleOrderWithOneItemAndExpenseOnOrder()
     {
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
-        $items = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
-        $item =  new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $order = new SalesOrderTransfer();
+        $items = new \ArrayObject();
+        $item =  new SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $discounts = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
-        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        $discounts = new \ArrayObject();
+        $discount = new CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
-        $discounts->add($discount);
-        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        $discounts->append($discount);
+        $discount = new CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
-        $discounts->add($discount);
+        $discounts->append($discount);
 
-        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
+        $expense = new CalculationExpenseTransfer();
         $expense->setName('Shipping Costs')
             ->setType(ExpenseConstants::EXPENSE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS)
             ->setGrossPrice(self::ORDER_SHIPPING_COSTS);
 
-        $expensesCollection = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
-        $expensesCollection->add($expense);
+        $expensesCollection = new \ArrayObject();
+        $expensesCollection->append($expense);
         $order->setExpenses($expensesCollection);
 
         $item->setDiscounts($discounts);
-        $items->add($item);
+        $items->append($item);
         $order->setItems($items);
 
-        $calculator = new StackExecutor($this->locator);
+        $calculator = new StackExecutor();
 
         $calculatorStack = $this->createCalculatorStack();
         $calculator->recalculate($calculatorStack, $order);
@@ -124,30 +131,34 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnExampleOrderWithTwoItemsAndExpenseOnItems()
     {
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $order = new SalesOrderTransfer();
+        $items = new \ArrayObject();
+        $item = new SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        $discount = new CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $discount = new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        $discount = new CalculationDiscountTransfer();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
+        $expense = new CalculationExpenseTransfer();
         $expense->setName('Shipping Costs')
             ->setType(ExpenseConstants::EXPENSE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS/2)
             ->setGrossPrice(self::ORDER_SHIPPING_COSTS/2);
 
         $item->addExpense($expense);
+        $items->append($item);
+        $items->append(clone $item);
+        $order->setItems($items);
 
-        $order->addItem($item);
-        $order->addItem(clone $item);
+        //$order->addItem($item);
+        //$order->addItem(clone $item);
 
-        $calculator = new StackExecutor($this->locator);
+        $calculator = new StackExecutor();
         $calculatorStack = $this->createCalculatorStack();
         $order = $calculator->recalculate($calculatorStack, $order);
         $calculator->recalculateTotals($calculatorStack, $order, null);

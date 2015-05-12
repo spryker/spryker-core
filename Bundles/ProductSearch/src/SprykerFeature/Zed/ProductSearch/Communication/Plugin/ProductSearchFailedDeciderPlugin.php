@@ -23,6 +23,6 @@ class ProductSearchFailedDeciderPlugin extends AbstractPlugin implements ExportF
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 }

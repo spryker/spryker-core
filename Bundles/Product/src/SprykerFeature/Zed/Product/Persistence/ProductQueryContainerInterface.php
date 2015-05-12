@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Product\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedAbstractProductAttributesQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributesQuery;
@@ -15,11 +15,11 @@ interface ProductQueryContainerInterface
 {
     /**
      * @param string $skus
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return SpyProductQuery
      */
-    public function getProductWithAttributeQuery($skus, LocaleDto $locale);
+    public function getProductWithAttributeQuery($skus, LocaleTransfer $locale);
 
     /**
      * @param string $sku
@@ -68,7 +68,15 @@ interface ProductQueryContainerInterface
     /**
      * @param ModelCriteria $expandableQuery
      *
-     * @return ModelCriteria
+     * @return $this
      */
-    public function joinLocalizedProductQueryWithAttributes(ModelCriteria $expandableQuery);
+    public function joinConcreteProducts(ModelCriteria $expandableQuery);
+
+    /**
+     * @param ModelCriteria $expandableQuery
+     * @param LocaleTransfer $locale
+     *
+     * @return $this
+     */
+    public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleTransfer $locale);
 }

@@ -2,20 +2,19 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface;
 
 interface DiscountableInterface
 {
     /**
-     * @param DiscountableItemCollectionInterface $discounts
+     * @param \ArrayObject $discounts
      *
      * @return $this
      */
-    public function setDiscounts(DiscountableItemCollectionInterface $discounts);
+    public function setDiscounts(\ArrayObject $discounts);
 
     /**
-     * @return DiscountItemInterface[]|DiscountableItemCollectionInterface
+     * @return DiscountItemInterface[]|\ArrayObject
      */
     public function getDiscounts();
 

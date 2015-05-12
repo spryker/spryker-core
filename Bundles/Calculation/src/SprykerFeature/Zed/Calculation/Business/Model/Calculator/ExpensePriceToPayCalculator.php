@@ -6,8 +6,7 @@ use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInt
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
-class ExpensePriceToPayCalculator extends AbstractCalculator implements
-    CalculatorPluginInterface
+class ExpensePriceToPayCalculator implements CalculatorPluginInterface
 {
     /**
      * @param CalculableContainerInterface $calculableContainer

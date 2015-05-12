@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\ProductSearchAvailabilityConnector\Communication\Plugin;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
@@ -19,16 +19,16 @@ class ProductAvailabilityQueryExpanderPlugin extends AbstractPlugin implements Q
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
         $expandableQuery
             ->addJoinObject(

@@ -7,6 +7,20 @@ use SprykerFeature\Shared\UrlExporter\Code\KeyBuilder\ResourceKeyBuilder as Shar
 class ResourceKeyBuilder extends SharedKeyBuilder
 {
     /**
+     * @param array $data
+     * @param string $localeName
+     *
+     * @return string
+     */
+    public function generateKey($data, $localeName)
+    {
+        $identifier = $data['value'];
+        $this->setResourceType($data['resourceType']);
+
+        return parent::generateKey($identifier, $localeName);
+    }
+
+    /**
      * @var string
      */
     protected $resourceType;

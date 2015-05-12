@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
@@ -56,25 +56,14 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    public function hasProductCategoryMapping($sku, $categoryName, LocaleDto $locale)
+    public function hasProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale)
     {
-        if (!$this->productFacade->hasConcreteProduct($sku)) {
-            return false;
-        }
-
-        if (!$this->categoryFacade->hasCategoryNode($categoryName, $locale)) {
-            return false;
-        }
-
-        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
-        $idCategoryNode = $this->categoryFacade->getCategoryNodeIdentifier($categoryName, $locale);
-
         $mappingQuery = $this->productCategoryQueryContainer
-            ->queryProductCategoryMappingByIds($idProduct, $idCategoryNode)
+            ->queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, $locale)
         ;
 
         return $mappingQuery->count() > 0;
@@ -83,7 +72,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @return int
      *
      * @throws ProductCategoryMappingExistsException
@@ -91,16 +80,16 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @throws MissingCategoryNodeException
      * @throws PropelException
      */
-    public function createProductCategoryMapping($sku, $categoryName, LocaleDto $locale)
+    public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale)
     {
         $this->checkMappingDoesNotExist($sku, $categoryName, $locale);
 
-        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
+        $idAbstractProduct = $this->productFacade->getAbstractProductIdBySku($sku);
         $idCategoryNode = $this->categoryFacade->getCategoryNodeIdentifier($categoryName, $locale);
 
         $mappingEntity = $this->locator->productCategory()->entitySpyProductCategory();
         $mappingEntity
-            ->setFkProduct($idProduct)
+            ->setFkAbstractProduct($idAbstractProduct)
             ->setFkCategoryNode($idCategoryNode)
         ;
 
@@ -112,11 +101,11 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @throws ProductCategoryMappingExistsException
      */
-    protected function checkMappingDoesNotExist($sku, $categoryName, LocaleDto $locale)
+    protected function checkMappingDoesNotExist($sku, $categoryName, LocaleTransfer $locale)
     {
         if ($this->hasProductCategoryMapping($sku, $categoryName, $locale)) {
             throw new ProductCategoryMappingExistsException(

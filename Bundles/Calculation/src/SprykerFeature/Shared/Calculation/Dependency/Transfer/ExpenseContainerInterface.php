@@ -5,16 +5,16 @@ namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 interface ExpenseContainerInterface
 {
     /**
-     * @return ExpenseItemCollectionInterface|ExpenseItemInterface[]
+     * @return \ArrayObject|ExpenseItemInterface[]
      */
     public function getExpenses();
 
     /**
-     * @param ExpenseItemCollectionInterface $expenses
+     * @param \ArrayObject $expenses
      *
      * @return $this
      */
-    public function setExpenses(ExpenseItemCollectionInterface $expenses);
+    public function setExpenses(\ArrayObject $expenses);
 
     /**
      * @param ExpenseItemInterface $expenseItem

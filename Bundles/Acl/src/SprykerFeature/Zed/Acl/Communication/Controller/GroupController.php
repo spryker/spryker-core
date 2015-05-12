@@ -22,6 +22,16 @@ class GroupController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        return [];
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function viewAction(Request $request)
+    {
         $idGroup = $request->get('id');
         $query=sprintf("?id=%s", $idGroup);
 
@@ -62,6 +72,19 @@ class GroupController extends AbstractController
         }
 
         return $this->jsonResponse($form->renderData(), $statusCode);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function listAction(Request $request)
+    {
+        $grid = $this->getDependencyContainer()->createGroupsGrid($request);
+        $data = $grid->renderData();
+
+        return $this->jsonResponse($data);
     }
 
     /**

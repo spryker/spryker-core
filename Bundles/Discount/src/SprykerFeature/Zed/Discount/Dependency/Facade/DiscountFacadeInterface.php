@@ -2,12 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Facade;
 
-use SprykerFeature\Shared\Calculation\Transfer\Discount;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
-use SprykerFeature\Shared\Discount\Transfer\DiscountDecisionRule;
-use SprykerFeature\Shared\Discount\Transfer\DiscountVoucher;
-use SprykerFeature\Shared\Discount\Transfer\DiscountVoucherPool;
-use SprykerFeature\Shared\Discount\Transfer\DiscountVoucherPoolCategory;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use Generated\Shared\Transfer\DiscountDiscountTransfer;
 use Generated\Shared\Transfer\DiscountDiscountVoucherTransfer;
@@ -84,64 +79,64 @@ interface DiscountFacadeInterface
     public function getDecisionRulePluginNames();
 
     /**
-     * @param Discount $discountTransfer
+     * @param DiscountDiscountTransfer $discountTransfer
      * @return SpyDiscount
      */
-    public function createDiscount(Discount $discountTransfer);
+    public function createDiscount(DiscountDiscountTransfer $discountTransfer);
 
     /**
-     * @param Discount $discountTransfer
+     * @param DiscountDiscountTransfer $discountTransfer
      * @return SpyDiscount
      */
-    public function updateDiscount(Discount $discountTransfer);
+    public function updateDiscount(DiscountDiscountTransfer $discountTransfer);
 
     /**
-     * @param DiscountDecisionRule $discountDecisionRuleTransfer
+     * @param DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer
      * @return SpyDiscountDecisionRule
      */
-    public function createDiscountDecisionRule(DiscountDecisionRule $discountDecisionRuleTransfer);
+    public function createDiscountDecisionRule(DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer);
 
     /**
-     * @param DiscountDecisionRule $discountDecisionRuleTransfer
+     * @param DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer
      * @return SpyDiscountDecisionRule
      */
-    public function updateDiscountDecisionRule(DiscountDecisionRule $discountDecisionRuleTransfer);
+    public function updateDiscountDecisionRule(DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer);
 
     /**
-     * @param DiscountVoucher $discountVoucherTransfer
+     * @param DiscountDiscountVoucherTransfer $discountVoucherTransfer
      * @return SpyDiscountVoucher
      */
-    public function createDiscountVoucher(DiscountVoucher $discountVoucherTransfer);
+    public function createDiscountVoucher(DiscountDiscountVoucherTransfer $discountVoucherTransfer);
 
     /**
-     * @param DiscountVoucher $discountVoucherTransfer
+     * @param DiscountDiscountVoucherTransfer $discountVoucherTransfer
      * @return SpyDiscountVoucher
      */
-    public function updateDiscountVoucher(DiscountVoucher $discountVoucherTransfer);
+    public function updateDiscountVoucher(DiscountDiscountVoucherTransfer $discountVoucherTransfer);
 
     /**
-     * @param DiscountVoucherPool $discountVoucherPoolTransfer
+     * @param DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer
      * @return SpyDiscountVoucher
      */
-    public function createDiscountVoucherPool(DiscountVoucherPool $discountVoucherPoolTransfer);
+    public function createDiscountVoucherPool(DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer);
 
     /**
-     * @param DiscountVoucherPool $discountVoucherPoolTransfer
+     * @param DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer
      * @return SpyDiscountVoucher
      */
-    public function updateDiscountVoucherPool(DiscountVoucherPool $discountVoucherPoolTransfer);
+    public function updateDiscountVoucherPool(DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer);
 
     /**
-     * @param DiscountVoucherPoolCategory $discountVoucherPoolCategoryTransfer
+     * @param DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      * @return SpyDiscountVoucherPoolCategory
      */
-    public function createDiscountVoucherPoolCategory(DiscountVoucherPoolCategory $discountVoucherPoolCategoryTransfer);
+    public function createDiscountVoucherPoolCategory(DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer);
 
     /**
-     * @param DiscountVoucherPoolCategory $discountVoucherPoolCategoryTransfer
+     * @param DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      * @return SpyDiscountVoucherPoolCategory
      */
-    public function updateDiscountVoucherPoolCategory(DiscountVoucherPoolCategory $discountVoucherPoolCategoryTransfer);
+    public function updateDiscountVoucherPoolCategory(DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer);
 
     /**
      * @param string $pluginName

@@ -13,7 +13,7 @@
 
         <!-- TODO this schema must not contain this. inject it as soon as the xml merging works -->
         <column name="fk_resource_redirect" type="INTEGER"/>
-        <column name="fk_resource_product" type="INTEGER"/>
+        <column name="fk_resource_abstract_product" type="INTEGER"/>
         <column name="fk_resource_categorynode" type="INTEGER"/>
         <column name="fk_resource_page" type="INTEGER"/>
 
@@ -29,8 +29,8 @@
             <reference foreign="id_cms_page" local="fk_resource_page"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_product" phpName="SpyProduct" onDelete="CASCADE">
-            <reference foreign="id_product" local="fk_resource_product"/>
+        <foreign-key foreignTable="spy_abstract_product" phpName="SpyProduct" onDelete="CASCADE">
+            <reference foreign="id_abstract_product" local="fk_resource_abstract_product"/>
         </foreign-key>
 
         <foreign-key foreignTable="spy_category_node" phpName="SpyCategoryNode" onDelete="CASCADE">

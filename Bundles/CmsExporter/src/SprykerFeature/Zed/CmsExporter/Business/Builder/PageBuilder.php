@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\CmsExporter\Business\Builder;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class PageBuilder implements PageBuilderInterface
@@ -22,11 +22,11 @@ class PageBuilder implements PageBuilderInterface
 
     /**
      * @param array $pageResultSet
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function buildPages(array $pageResultSet, LocaleDto $locale)
+    public function buildPages(array $pageResultSet, LocaleTransfer $locale)
     {
         $returnedResultSet = [];
         foreach ($pageResultSet as $index => $page) {

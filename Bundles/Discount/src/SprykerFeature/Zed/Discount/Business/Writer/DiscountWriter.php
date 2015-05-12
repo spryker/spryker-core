@@ -2,12 +2,8 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
-use Generated\Shared\Transfer\DiscountDiscount as DiscountTransferTransfer;
+use Generated\Shared\Transfer\DiscountDiscountTransfer;
 
-/**
- * Class DiscountManager
- * @package SprykerFeature\Zed\Discount\Business\Model
- */
 class DiscountWriter extends AbstractWriter
 {
     /**
@@ -16,10 +12,10 @@ class DiscountWriter extends AbstractWriter
     protected $locator;
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param DiscountDiscountTransfer $discountTransfer
      * @return mixed
      */
-    public function create(DiscountTransfer $discountTransfer)
+    public function create(DiscountDiscountTransfer $discountTransfer)
     {
         $discountEntity = $this->locator->discount()->entitySpyDiscount();
         $discountEntity->fromArray($discountTransfer->toArray());
@@ -29,11 +25,11 @@ class DiscountWriter extends AbstractWriter
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param DiscountDiscountTransfer $discountTransfer
      * @return array|mixed|\SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function update(DiscountTransfer $discountTransfer)
+    public function update(DiscountDiscountTransfer $discountTransfer)
     {
         $queryContainer = $this->getQueryContainer();
         $discountEntity = $queryContainer->queryDiscount()->findPk($discountTransfer->getIdDiscount());

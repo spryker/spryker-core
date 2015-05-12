@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Util;
 
+use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\ProcessInterface;
 
 interface DrawerInterface
 {

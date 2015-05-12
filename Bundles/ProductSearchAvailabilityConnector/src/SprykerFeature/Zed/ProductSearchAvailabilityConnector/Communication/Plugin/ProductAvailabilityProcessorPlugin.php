@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductSearchAvailabilityConnector\Communication\Plugin;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 
@@ -13,17 +13,17 @@ class ProductAvailabilityProcessorPlugin extends AbstractPlugin implements DataP
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
 
         foreach ($resultSet as $index => $productRawData) {

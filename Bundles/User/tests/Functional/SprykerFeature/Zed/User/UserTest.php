@@ -1,7 +1,9 @@
 <?php
+
 namespace Functional\SprykerFeature\Zed\User;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\UserUserTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
@@ -9,10 +11,13 @@ use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 
 /**
- * @group UserTest
+ * @group SprykerFeature
+ * @group Zed
+ * @group User
  */
 class UserTest extends Test
 {
+
     /**
      * @var UserFacade $userFacade
      */
@@ -50,7 +55,8 @@ class UserTest extends Test
 
     /**
      * @param $data
-     * @return NULL|\SprykerFeature\Shared\User\Transfer\User
+     *
+     * @return UserUserTransfer
      */
     private function mockAddUser($data)
     {
@@ -59,11 +65,12 @@ class UserTest extends Test
 
     /**
      * @param $data
-     * @return \SprykerFeature\Shared\User\Transfer\User
+     *
+     * @return UserUserTransfer
      */
-    private function mockUserDto($data)
+    private function mockUserTransfer($data)
     {
-        $dto = new \Generated\Shared\Transfer\UserUserTransfer();
+        $dto = new UserUserTransfer();
 
         $dto->setFirstName($data['firstName']);
         $dto->setLastName($data['lastName']);
@@ -73,9 +80,6 @@ class UserTest extends Test
         return $dto;
     }
 
-    /**
-     * @group User
-     */
     public function testAddUser()
     {
         $data = $this->mockUserData();
@@ -90,34 +94,19 @@ class UserTest extends Test
         $this->assertNotEquals($data['password'], $user->getPassword());
     }
 
-    /**
-     * @group User
-     */
-    public function testRemoveUser()
+    public function testAfterCallToRemoveUserUserMustBeMArkedAsDeleted()
     {
-        $data = $this->mockUserData();
+        $this->setExpectedException('\SprykerFeature\Zed\User\Business\Exception\UserNotFoundException');
 
+        $data = $this->mockUserData();
         $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $user);
-        $this->assertNotNull($user->getIdUserUser());
-        $this->assertEquals($data['firstName'], $user->getFirstName());
-        $this->assertEquals($data['lastName'], $user->getLastName());
-        $this->assertEquals($data['username'], $user->getUsername());
-        $this->assertNotEquals($data['password'], $user->getPassword());
 
         $this->userFacade->removeUser($user->getIdUserUser());
-
-        try {
-            $this->userFacade->getUserById($user->getIdUserUser());
-        } catch (UserNotFoundException $e) {
-            $this->assertInstanceOf('\SprykerFeature\Zed\User\Business\Exception\UserNotFoundException', $e);
-        }
+        $this->userFacade->getUserById($user->getIdUserUser());
     }
 
-    /**
-     * @group User
-     */
     public function testUpdateUserWithSamePassword()
     {
         $data = $this->mockUserData();
@@ -142,9 +131,6 @@ class UserTest extends Test
         $this->assertTrue($this->userFacade->isValidPassword($data['password'], $finalUser->getPassword()));
     }
 
-    /**
-     * @group User
-     */
     public function testUpdateUserWithNewPassword()
     {
         $data = $this->mockUserData();
@@ -169,9 +155,6 @@ class UserTest extends Test
         $this->assertTrue($this->userFacade->isValidPassword($data2['password'], $finalUser->getPassword()));
     }
 
-    /**
-     * @group User
-     */
     public function testGetUserByUsername()
     {
         $data = $this->mockUserData();
@@ -187,9 +170,6 @@ class UserTest extends Test
         $this->assertEquals($user->getPassword(), $mock->getPassword());
     }
 
-    /**
-     * @group User
-     */
     public function testGetUserById()
     {
         $data = $this->mockUserData();
@@ -205,9 +185,6 @@ class UserTest extends Test
         $this->assertEquals($user->getPassword(), $mock->getPassword());
     }
 
-    /**
-     * @group User
-     */
     public function testIsValidPassword()
     {
         $data = $this->mockUserData();

@@ -12,7 +12,7 @@ interface TemplateManagerInterface
      * @param string $name
      * @param string $path
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      * @throws TemplateExistsException
      */
     public function createTemplate($name, $path);
@@ -32,16 +32,16 @@ interface TemplateManagerInterface
     public function hasTemplateId($id);
 
     /**
-     * @param CmsTemplate $cmsTemplate
+     * @param CmsCmsTemplateTransfer $cmsTemplate
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      */
-    public function saveTemplate(CmsTemplate $cmsTemplate);
+    public function saveTemplate(CmsCmsTemplateTransfer $cmsTemplate);
 
     /**
      * @param int $idTemplate
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      * @throws MissingTemplateException
      */
     public function getTemplateById($idTemplate);
@@ -49,7 +49,7 @@ interface TemplateManagerInterface
     /**
      * @param string $path
      *
-     * @return CmsTemplate
+     * @return CmsCmsTemplateTransfer
      * @throws MissingTemplateException
      */
     public function getTemplateByPath($path);

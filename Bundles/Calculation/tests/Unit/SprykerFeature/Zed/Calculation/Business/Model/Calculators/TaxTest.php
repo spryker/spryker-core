@@ -116,7 +116,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
      */
     private function getCalculator()
     {
-        return new TaxTotalsCalculator($this->getLocator(), new PriceCalculationHelper());
+        return new TaxTotalsCalculator(new PriceCalculationHelper());
     }
 
     /**

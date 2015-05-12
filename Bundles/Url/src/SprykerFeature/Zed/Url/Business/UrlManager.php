@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Url\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlUrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use Generated\Shared\Transfer\UrlUrlTransfer;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 use SprykerFeature\Zed\Url\Dependency\UrlToLocaleInterface;
@@ -60,7 +60,7 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param string $url
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
      *
@@ -69,7 +69,7 @@ class UrlManager implements UrlManagerInterface
      * @throws UrlExistsException
      * @throws MissingLocaleException
      */
-    public function createUrl($url, LocaleDto $locale, $resourceType, $idResource)
+    public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
     {
         $this->checkUrlDoesNotExist($url);
 
@@ -78,7 +78,7 @@ class UrlManager implements UrlManagerInterface
             $fkLocale = $this->localeFacade->getLocale($locale->getLocaleName())->getIdLocale();
         }
 
-        $urlEntity = $this->locator->url()->entitySpyUrl();
+        $urlEntity = new SpyUrl();
         $urlEntity
             ->setUrl($url)
             ->setFkLocale($fkLocale)
@@ -122,17 +122,23 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param SpyUrl $urlEntity
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws MissingResourceException
      */
     public function convertUrlEntityToTransfer(SpyUrl $urlEntity)
     {
-        $transferUrl = new \Generated\Shared\Transfer\UrlUrlTransfer();
+        $bumps = explode('_', $urlEntity->getResourceType());
+        $bumps = array_map('ucfirst', $bumps);
+
+        $setterName = 'setFk' . implode('', $bumps);
+
+        $transferUrl = new UrlUrlTransfer();
         $transferUrl
             ->setFkLocale($urlEntity->getFkLocale())
-            // TODO this is logical code which is forbidden in Transfer Objects
-//            ->setResource($urlEntity->getResourceType(), $urlEntity->getResourceId())
             ->setUrl($urlEntity->getUrl())
+            ->setResourceType($urlEntity->getResourceType())
+            ->setResourceId($urlEntity->getResourceId())
+            ->$setterName($urlEntity->getResourceId())
             ->setIdUrl($urlEntity->getIdUrl())
         ;
 
@@ -204,15 +210,15 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param Url $url
+     * @param UrlUrlTransfer $url
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      * @throws MissingUrlException
      * @throws \Exception
      * @throws PropelException
      */
-    public function saveUrl(Url $url)
+    public function saveUrl(UrlUrlTransfer $url)
     {
         if (is_null($url->getIdUrl())) {
             return $this->createUrlFromTransfer($url);
@@ -222,14 +228,14 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param Url $url
+     * @param UrlUrlTransfer $url
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function createUrlFromTransfer(Url $url)
+    protected function createUrlFromTransfer(UrlUrlTransfer $url)
     {
         $this->checkUrlDoesNotExist($url->getUrl());
 
@@ -244,15 +250,15 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param Url $url
+     * @param UrlUrlTransfer $url
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws MissingUrlException
      * @throws UrlExistsException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function updateUrlFromTransfer(Url $url)
+    protected function updateUrlFromTransfer(UrlUrlTransfer $url)
     {
         $urlEntity = $this->getUrlById($url->getIdUrl());
 
@@ -271,10 +277,10 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param Url $urlTransfer
+     * @param UrlUrlTransfer $urlTransfer
      * @param SpyUrl $urlEntity
      */
-    protected function syncUrlEntityWithTransfer(Url $urlTransfer, SpyUrl $urlEntity)
+    protected function syncUrlEntityWithTransfer(UrlUrlTransfer $urlTransfer, SpyUrl $urlEntity)
     {
         $urlEntity
             ->setFkLocale($urlTransfer->getFkLocale())
@@ -298,7 +304,7 @@ class UrlManager implements UrlManagerInterface
         $this->checkUrlDoesNotExist($url);
 
         $fkLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
-        $urlEntity = $this->locator->url()->entitySpyUrl();
+        $urlEntity = new SpyUrl();
         $urlEntity
             ->setFkLocale($fkLocale)
             ->setUrl($url)

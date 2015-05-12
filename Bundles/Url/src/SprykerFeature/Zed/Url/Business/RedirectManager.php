@@ -2,14 +2,14 @@
 
 namespace SprykerFeature\Zed\Url\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlRedirectTransfer;
+use Generated\Shared\Transfer\UrlUrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use Generated\Shared\Transfer\UrlRedirectTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
 use SprykerFeature\Zed\Url\Business\Exception\MissingRedirectException;
 use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
@@ -89,23 +89,23 @@ class RedirectManager implements RedirectManagerInterface
     /**
      * @param SpyRedirect $redirectEntity
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      */
     public function convertRedirectEntityToTransfer(SpyRedirect $redirectEntity)
     {
-        $transferRedirect = new \Generated\Shared\Transfer\UrlRedirectTransfer();
+        $transferRedirect = new UrlRedirectTransfer();
         $transferRedirect->fromArray($redirectEntity->toArray());
 
         return $transferRedirect;
     }
 
     /**
-     * @param Redirect $redirect
+     * @param UrlRedirectTransfer $redirect
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      * @throws RedirectExistsException
      */
-    public function saveRedirect(Redirect $redirect)
+    public function saveRedirect(UrlRedirectTransfer $redirect)
     {
         if (is_null($redirect->getIdRedirect())) {
             return $this->createRedirectFromTransfer($redirect);
@@ -115,14 +115,14 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
-     * @param Redirect $redirectTransfer
+     * @param UrlRedirectTransfer $redirectTransfer
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      * @throws RedirectExistsException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function createRedirectFromTransfer(Redirect $redirectTransfer)
+    protected function createRedirectFromTransfer(UrlRedirectTransfer $redirectTransfer)
     {
         $redirectEntity = $this->locator->url()->entitySpyRedirect();
 
@@ -139,14 +139,14 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
-     * @param Redirect $redirectTransfer
+     * @param UrlRedirectTransfer $redirectTransfer
      *
-     * @return Redirect
+     * @return UrlRedirectTransfer
      * @throws MissingRedirectException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function updateRedirectFromTransfer(Redirect $redirectTransfer)
+    protected function updateRedirectFromTransfer(UrlRedirectTransfer $redirectTransfer)
     {
         $redirectEntity = $this->getRedirectById($redirectTransfer->getIdRedirect());
         $redirectEntity->fromArray($redirectTransfer->toArray());
@@ -182,24 +182,24 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
-     * @param Redirect $redirect
+     * @param UrlRedirectTransfer $redirect
      */
-    public function touchRedirectActive(Redirect $redirect)
+    public function touchRedirectActive(UrlRedirectTransfer $redirect)
     {
         $this->touchFacade->touchActive(self::ITEM_TYPE_REDIRECT, $redirect->getIdRedirect());
     }
 
     /**
      * @param string $url
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param int $idRedirect
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
      * @throws MissingRedirectException
      */
-    public function createRedirectUrl($url, LocaleDto $locale, $idRedirect)
+    public function createRedirectUrl($url, LocaleTransfer $locale, $idRedirect)
     {
         $this->checkRedirectExists($idRedirect);
         $urlEntity = $this->urlManager->createUrl($url, $locale, 'redirect', $idRedirect);

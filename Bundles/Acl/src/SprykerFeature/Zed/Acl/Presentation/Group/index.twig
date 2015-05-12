@@ -1,17 +1,44 @@
 {% extends '@Application/layout.twig' %}
 
-
-{% block body_class %}spy-page{% endblock %}
-
-
 {% block content %}
+    <section spy-app="spyFormat, spyGrid, spyLayout">
+        <section
+                class="spy-grid"
+                ng-controller="GridController"
+                ng-strict-di
+                src="/acl/group/list/{{ query | default ('') }}"
+                name="grid"
+                on="{ form_success : 'update' }"
+                >
+            <h3>Rule Sets</h3>
 
-<section spy-app="spyFormat, spyGrid, spyForm, spyLayout, spyFormAction">
+            <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
 
-    {% include '@Acl/Group/form.twig' %}
-    {% include '@Acl/Group/rules.twig' %}
-    {% include '@Acl/Group/users.twig' %}
+            <table>
+                <thead>
+                <tr>
+                    <th spy-grid-head="columns['id_acl_group']" label="Group ID"></th>
+                    <th spy-grid-head="columns['name']" label="Name"></th>
+                    <th spy-grid-head="columns['created_at']" label="Created at"></th>
+                    <th spy-grid-head="columns['updated_at']" label="Updated at"></th>
+                    <th spy-grid-head="" label="Actions"></th>
+                </tr>
+                </thead>
 
-</section>
+                <tbody>
+                <tr ng-repeat="row in rows">
+                    <td>{[{ row['id_acl_group'] }]}</td>
+                    <td>{[{ row['name'] }]}</td>
+                    <td>{[{ row['created_at'] }]}</td>
+                    <td>{[{ row['updated_at'] }]}</td>
+                    <td>
+                        <a href="/acl/group/view/?id={[{ row['id_acl_group'] }]}" class="button default">edit</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
+            <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
+        </section>
+    </section>
 {% endblock %}

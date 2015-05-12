@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
-use Propel\Runtime\Propel;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
-use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\Propel;
+use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use SprykerFeature\Zed\Category\Business\Model\CategoryWriterInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
@@ -70,14 +70,14 @@ class CategoryTreeWriter
 
     /**
      * @param CategoryCategoryNodeTransfer $categoryNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $createUrlPath
      *
      * @return int
      */
     public function createCategoryNode(
         CategoryCategoryNodeTransfer $categoryNode,
-        LocaleDto $locale,
+        LocaleTransfer $locale,
         $createUrlPath = true
     ) {
         $connection = Propel::getConnection();
@@ -98,11 +98,11 @@ class CategoryTreeWriter
 
     /**
      * @param int $idNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    public function deleteCategoryByNodeId($idNode, LocaleDto $locale)
+    public function deleteCategoryByNodeId($idNode, LocaleTransfer $locale)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
@@ -138,12 +138,12 @@ class CategoryTreeWriter
 
     /**
      * @param int $idNode
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param bool $deleteChildren
      *
      * @return int
      */
-    public function deleteNode($idNode, LocaleDto $locale, $deleteChildren = false)
+    public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false)
     {
         if ($this->categoryTreeReader->hasChildren($idNode) && $deleteChildren) {
             $childNodes = $this->categoryTreeReader->getChildren($idNode, $locale);

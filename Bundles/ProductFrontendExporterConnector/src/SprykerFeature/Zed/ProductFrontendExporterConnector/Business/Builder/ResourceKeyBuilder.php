@@ -11,6 +11,6 @@ class ResourceKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 }

@@ -19,14 +19,14 @@ interface TaxInterface extends TransferInterface
     public function getTotalAmount();
 
     /**
-     * @param TaxItemCollectionInterface $taxRates
+     * @param \ArrayObject $taxRates
      *
      * @return $this
      */
-    public function setTaxRates(TaxItemCollectionInterface $taxRates);
+    public function setTaxRates(\ArrayObject $taxRates);
 
     /**
-     * @return TaxItemInterface[]|TaxItemCollectionInterface
+     * @return TaxItemInterface[]|\ArrayObject
      */
     public function getTaxRates();
 

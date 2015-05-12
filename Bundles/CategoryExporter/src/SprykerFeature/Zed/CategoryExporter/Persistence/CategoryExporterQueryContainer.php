@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -13,10 +13,10 @@ class CategoryExporterQueryContainer extends AbstractQueryContainer
 {
     /**
      * @param ModelCriteria $query
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @return ModelCriteria
      */
-    public function expandCategoryNodeQuery(ModelCriteria $query, LocaleDto $locale)
+    public function expandCategoryNodeQuery(ModelCriteria $query, LocaleTransfer $locale)
     {
         return $this->getDependencyContainer()->createCategoryNodeQueryExpander($locale)->expandQuery($query);
     }

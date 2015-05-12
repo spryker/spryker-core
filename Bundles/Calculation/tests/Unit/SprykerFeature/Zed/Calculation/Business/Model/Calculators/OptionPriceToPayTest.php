@@ -73,7 +73,7 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusSalesruleDiscountAmountForAnOrderWithOneItemAndBothDiscounts()
+    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithOneItemAndBothDiscounts()
     {
         $order = $this->getOrderWithFixtureData();
 
@@ -106,7 +106,7 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusSalesruleDoscountAmountForAnOrderWithTwoItemsAndBothDiscounts()
+    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithTwoItemsAndBothDiscounts()
     {
         $order = $this->getOrderWithFixtureData();
 

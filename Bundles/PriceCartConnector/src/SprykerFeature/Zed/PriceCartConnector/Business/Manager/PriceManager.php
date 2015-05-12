@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\PriceCartConnector\Business\Manager;
 
-use Generated\Shared\Transfer\Calculation\DependencyPriceItemInterfaceTransfer;
-use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\CartItemInterfaceTransfer;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\PriceItemInterface;
+use SprykerFeature\Shared\Cart2\Transfer\ItemCollectionInterface;
+use SprykerFeature\Shared\Cart2\Transfer\ItemInterface;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 

@@ -6,12 +6,12 @@ interface DiscountableOptionsInterface
 {
 
     /**
-     * @return DiscountItemInterface[]
+     * @return \ArrayObject|DiscountItemInterface[]
      */
     public function getDiscounts();
 
     /**
-     * @param DiscountableItemCollectionInterface $collection
+     * @param \ArrayObject $collection
      */
-    public function setDiscounts(DiscountableItemCollectionInterface $collection);
+    public function setDiscounts(\ArrayObject $collection);
 }

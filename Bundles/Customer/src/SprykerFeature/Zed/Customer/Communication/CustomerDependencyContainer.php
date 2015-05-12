@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
@@ -10,6 +11,9 @@ use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Customer\Communication\Grid\AddressGrid;
 use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
 
+/**
+ * @method CustomerCommunication getFactory()
+ */
 class CustomerDependencyContainer extends AbstractDependencyContainer
 {
     /**

@@ -16,7 +16,7 @@ class DiscountCalculationConnectorDependencyContainer extends AbstractDependency
      */
     public function getDiscountTotalsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorDiscountTotalsCalculator($this->getLocator());
+        return $this->getFactory()->createModelCalculatorDiscountTotalsCalculator();
     }
 
     /**
@@ -28,7 +28,6 @@ class DiscountCalculationConnectorDependencyContainer extends AbstractDependency
         $discountTotalsCalculator = $this->getDiscountTotalsCalculator();
 
         return $this->getFactory()->createModelCalculatorGrandTotalWithDiscountsTotalsCalculator(
-            $this->getLocator(),
             $calculationFacade,
             $discountTotalsCalculator
         );
@@ -39,7 +38,7 @@ class DiscountCalculationConnectorDependencyContainer extends AbstractDependency
      */
     public function getRemoveAllCalculatedDiscountsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorRemoveAllCalculatedDiscountsCalculator($this->getLocator());
+        return $this->getFactory()->createModelCalculatorRemoveAllCalculatedDiscountsCalculator();
     }
 
 

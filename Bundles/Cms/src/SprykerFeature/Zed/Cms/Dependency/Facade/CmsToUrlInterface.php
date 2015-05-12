@@ -13,7 +13,7 @@ interface CmsToUrlInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return Url
+     * @return UrlUrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      */

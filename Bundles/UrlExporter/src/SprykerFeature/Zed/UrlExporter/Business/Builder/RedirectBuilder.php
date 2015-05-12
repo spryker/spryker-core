@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\UrlExporter\Business\Builder;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class RedirectBuilder implements RedirectBuilderInterface
@@ -22,11 +22,11 @@ class RedirectBuilder implements RedirectBuilderInterface
 
     /**
      * @param array $redirectResultSet
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function buildRedirects(array $redirectResultSet, LocaleDto $locale)
+    public function buildRedirects(array $redirectResultSet, LocaleTransfer $locale)
     {
         $returnedResultSet = [];
         foreach ($redirectResultSet as $index => $redirect) {

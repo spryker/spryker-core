@@ -55,7 +55,6 @@
     "spryker/redirect": "self.version",
     "spryker/redirect-exporter": "self.version",
     "spryker/sales": "self.version",
-    "spryker/salesrule": "self.version",
     "spryker/sdk": "self.version",
     "spryker/search": "self.version",
     "spryker/search-page": "self.version",

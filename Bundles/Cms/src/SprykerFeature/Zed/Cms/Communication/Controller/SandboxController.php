@@ -1,8 +1,6 @@
 <?php
 
-
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
-
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 

@@ -4,6 +4,7 @@ namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Mo
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
+use Generated\Shared\Transfer\CalculationTotalsTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Generated\Shared\Transfer\SalesOrderTransfer;
 use Generated\Shared\Transfer\SalesOrderItemTransfer;
@@ -98,9 +99,8 @@ class GrandTotalTest extends Test
     private function getGrandTotalCalculator()
     {
         return new GrandTotalTotalsCalculator(
-            $this->locator,
-            new SubtotalTotalsCalculator($this->locator),
-            new ExpenseTotalsCalculator($this->locator)
+            new SubtotalTotalsCalculator(),
+            new ExpenseTotalsCalculator()
         );
     }
 
@@ -110,59 +110,55 @@ class GrandTotalTest extends Test
     protected function getGrandTotalWithDiscountCalculator()
     {
         return new GrandTotalWithDiscountsTotalsCalculator(
-            $this->locator,
             $this->locator->calculation()->facade(),
-            new DiscountTotalsCalculator($this->locator)
+            new DiscountTotalsCalculator()
         );
     }
 
     /**
-     * @return TotalsInterface
+     * @return CalculationTotalsTransfer
      */
     protected function getPriceTotals()
     {
-        return new \Generated\Shared\Transfer\CalculationTotalsTransfer();
+        return new CalculationTotalsTransfer();
     }
 
     /**
-     * @return Discount
+     * @return CalculationDiscountTransfer
      */
     protected function getPriceDiscount()
     {
-        return new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        return new CalculationDiscountTransfer();
     }
 
     /**
-     * @return Order
+     * @return SalesOrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        /* @var Order $order */
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
+        $order = new SalesOrderTransfer();
         $order->fillWithFixtureData();
 
         return $order;
     }
 
     /**
-     * @return OrderItem
+     * @return SalesOrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        /* @var OrderItem $item */
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->fillWithFixtureData();
 
         return $item;
     }
 
     /**
-     * @return Expense
+     * @return CalculationExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {
-        /* @var Expense $expense */
-        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
+        $expense = new CalculationExpenseTransfer();
         $expense->fillWithFixtureData();
 
         return $expense;

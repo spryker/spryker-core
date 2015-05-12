@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Discount\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountBusiness;
+use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Zed\Discount\Business\Calculator\Fixed;
 use SprykerFeature\Zed\Discount\Business\Calculator\Percentage;
 use SprykerFeature\Zed\Discount\Business\Collector\Item;
@@ -13,7 +14,6 @@ use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
-use Generated\Shared\Transfer\Discount\DependencyDiscountableContainerInterfaceTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\Voucher;
 use SprykerFeature\Zed\Discount\DiscountConfig;

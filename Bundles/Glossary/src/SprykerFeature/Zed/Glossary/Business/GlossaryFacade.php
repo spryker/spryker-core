@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Glossary\Business;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\GlossaryTranslationTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use Generated\Shared\Transfer\GlossaryTranslationTransfer;
 use SprykerFeature\Zed\Glossary\Business\Exception;
 use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
@@ -93,7 +93,7 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -102,7 +102,7 @@ class GlossaryFacade extends AbstractFacade
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function createTranslation($keyName, LocaleDto $locale, $value, $isActive = true)
+    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
@@ -128,7 +128,7 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -137,7 +137,7 @@ class GlossaryFacade extends AbstractFacade
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function createAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true)
+    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
@@ -146,11 +146,11 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleDto $locale)
+    public function hasTranslation($keyName, LocaleTransfer $locale)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
@@ -159,12 +159,12 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return GlossaryTranslationTransfer
      * @throws MissingTranslationException
      */
-    public function getTranslation($keyName, LocaleDto $locale)
+    public function getTranslation($keyName, LocaleTransfer $locale)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
@@ -173,7 +173,7 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -189,14 +189,14 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
      * @return GlossaryTranslationTransfer
      * @throws MissingTranslationException
      */
-    public function updateAndTouchTranslation($keyName, LocaleDto $locale, $value, $isActive = true)
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
@@ -235,11 +235,11 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    public function deleteTranslation($keyName, LocaleDto $locale)
+    public function deleteTranslation($keyName, LocaleTransfer $locale)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 

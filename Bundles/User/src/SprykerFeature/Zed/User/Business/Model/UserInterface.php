@@ -35,12 +35,12 @@ interface UserInterface
     public function validatePassword($password, $hash);
 
     /**
-     * @param UserUserTransfer $data
+     * @param UserUserTransfer $user
      *
      * @return UserUserTransfer
      * @throws UserNotFoundException
      */
-    public function save(UserUserTransfer $data);
+    public function save(UserUserTransfer $user);
 
     /**
      * @param string $username

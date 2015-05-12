@@ -3,34 +3,34 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
-class SubtotalWithoutItemExpensesTotalsCalculator extends AbstractCalculator implements
+class SubtotalWithoutItemExpensesTotalsCalculator implements
     TotalsCalculatorPluginInterface
 {
 
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableContainerInterface $calculableContainer
-     * @param CalculableItemCollectionInterface $calculableItems
+     * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
         CalculableContainerInterface $calculableContainer,
-        CalculableItemCollectionInterface $calculableItems
+        \ArrayObject $calculableItems
     ) {
         $expense = $this->calculateSubtotalWithoutItemExpense($calculableItems);
         $totalsTransfer->setSubtotalWithoutItemExpenses($expense);
     }
 
     /**
-     * @param CalculableItemCollectionInterface|CalculableItemInterface[] $calculableItems
+     * @param \ArrayObject|CalculableItemInterface[] $calculableItems
+     *
      * @return int
      */
-    protected function calculateSubtotalWithoutItemExpense(CalculableItemCollectionInterface $calculableItems)
+    protected function calculateSubtotalWithoutItemExpense(\ArrayObject $calculableItems)
     {
         $subtotal = 0;
         foreach ($calculableItems as $item) {
@@ -43,6 +43,7 @@ class SubtotalWithoutItemExpensesTotalsCalculator extends AbstractCalculator imp
 
     /**
      * @param CalculableItemInterface $item
+     *
      * @return int
      */
     protected function sumOptions(CalculableItemInterface $item)

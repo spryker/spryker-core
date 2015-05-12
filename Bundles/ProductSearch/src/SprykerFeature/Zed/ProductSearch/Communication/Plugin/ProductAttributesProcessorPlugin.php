@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Communication\Plugin;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -36,17 +36,17 @@ class ProductAttributesProcessorPlugin extends AbstractPlugin implements DataPro
      */
     public function getProcessableType()
     {
-        return 'product';
+        return 'abstract_product';
     }
 
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet, LocaleDto $locale)
+    public function processData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
         $processedResultSet = $this->transformer->enrichProductsWithSearchAttributes(
             $resultSet,

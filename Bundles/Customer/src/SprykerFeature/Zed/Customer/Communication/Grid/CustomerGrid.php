@@ -12,19 +12,19 @@ class CustomerGrid extends AbstractGrid
             $this->createDefaultRowRenderer(),
             $this->createPagination(),
             $this->createDefaultColumn()
-                ->setName("id_customer")
+                ->setName('id_customer')
                 ->filterable()
                 ->sortable(),
             $this->createDefaultColumn()
-                ->setName("email")
+                ->setName('email')
                 ->filterable()
                 ->sortable(),
             $this->createDefaultColumn()
-                ->setName("first_name")
+                ->setName('first_name')
                 ->filterable()
                 ->sortable(),
             $this->createDefaultColumn()
-                ->setName("last_name")
+                ->setName('last_name')
                 ->filterable()
                 ->sortable(),
         ];

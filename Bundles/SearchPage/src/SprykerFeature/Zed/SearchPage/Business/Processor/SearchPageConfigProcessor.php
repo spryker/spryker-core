@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\SearchPage\Business\Processor;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class SearchPageConfigProcessor implements SearchPageConfigProcessorInterface
@@ -23,11 +23,11 @@ class SearchPageConfigProcessor implements SearchPageConfigProcessorInterface
 
     /**
      * @param array $configRaw
-     * @param LocaleDto $localeDto
+     * @param LocaleTransfer $localeDto
      *
      * @return array
      */
-    public function processSearchPageConfig(array $configRaw, LocaleDto $localeDto)
+    public function processSearchPageConfig(array $configRaw, LocaleTransfer $localeDto)
     {
         $localeName = $localeDto->getLocaleName();
         $storageKey = $this->searchPageConfigKeyBuilder->generateKey('', $localeName);

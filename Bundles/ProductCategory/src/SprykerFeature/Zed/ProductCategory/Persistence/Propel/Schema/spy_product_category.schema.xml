@@ -9,19 +9,19 @@
 
     <table name="spy_product_category" idMethod="native" phpName="SpyProductCategory">
         <column name="id_product_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_product" required="true" type="INTEGER"/>
+        <column name="fk_abstract_product" required="true" type="INTEGER"/>
         <column name="fk_category_node" required="true" type="INTEGER"/>
 
         <foreign-key foreignTable="spy_category_node">
             <reference foreign="id_category_node" local="fk_category_node"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_product">
-            <reference foreign="id_product" local="fk_product"/>
+        <foreign-key foreignTable="spy_abstract_product">
+            <reference foreign="id_abstract_product" local="fk_abstract_product"/>
         </foreign-key>
 
         <unique>
-            <unique-column name="fk_product"/>
+            <unique-column name="fk_abstract_product"/>
             <unique-column name="fk_category_node"/>
         </unique>
     </table>

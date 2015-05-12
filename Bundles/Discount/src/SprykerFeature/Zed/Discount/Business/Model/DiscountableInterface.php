@@ -12,14 +12,14 @@ interface DiscountableInterface
     public function getGrossPrice();
 
     /**
-     * @return DiscountableItemCollectionInterface
+     * @return \ArrayObject
      */
     public function getDiscounts();
 
     /**
-     * @param DiscountableItemCollectionInterface $discountCollection
+     * @param \ArrayObject $discountCollection
      *
      * @return $this
      */
-    public function setDiscounts(DiscountableItemCollectionInterface $discountCollection);
+    public function setDiscounts(\ArrayObject $discountCollection);
 }

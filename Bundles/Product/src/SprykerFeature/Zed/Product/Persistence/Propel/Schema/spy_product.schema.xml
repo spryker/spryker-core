@@ -127,10 +127,10 @@
     </table>
 
     <!--<table name="spy_url" phpName="SpyUrl">
-        <column name="fk_resource_product_id" type="INTEGER"/>
+        <column name="fk_resource_abstract_product" type="INTEGER"/>
 
-        <foreign-key foreignTable="spy_product" phpName="Product" onDelete="CASCADE">
-            <reference foreign="product_id" local="fk_resource_product_id"/>
+        <foreign-key foreignTable="spy_abstract_product" phpName="Product" onDelete="CASCADE">
+            <reference foreign="id_abstract_product" local="fk_resource_abstract_product"/>
         </foreign-key>
     </table>-->
 </database>

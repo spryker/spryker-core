@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\AbstractCalculator;
 
-class RemoveAllCalculatedDiscountsCalculator extends AbstractCalculator
+class RemoveAllCalculatedDiscountsCalculator
 {
 
     /**
@@ -14,20 +14,20 @@ class RemoveAllCalculatedDiscountsCalculator extends AbstractCalculator
     public function recalculate(DiscountableContainerInterface $calculableContainer)
     {
         foreach ($calculableContainer->getItems() as $item) {
-            $item->setDiscounts(new \Generated\Shared\Transfer\CalculationDiscountTransfer());
+            $item->setDiscounts(new \ArrayObject());
 
             foreach ($item->getOptions() as $option) {
-                $option->setDiscounts(new \Generated\Shared\Transfer\CalculationDiscountTransfer());
+                $option->setDiscounts(new \ArrayObject());
             }
             foreach ($item->getExpenses() as $expense) {
-                $expense->setDiscounts(new \Generated\Shared\Transfer\CalculationDiscountTransfer());
+                $expense->setDiscounts(new \ArrayObject);
             }
         }
 
         foreach ($calculableContainer->getExpenses() as $expense) {
-            $expense->setDiscounts(new \Generated\Shared\Transfer\CalculationDiscountTransfer());
+            $expense->setDiscounts(new \ArrayObject());
         }
 
-        $calculableContainer->setDiscounts(new \Generated\Shared\Transfer\CalculationDiscountTransfer());
+        $calculableContainer->setDiscounts(new \ArrayObject());
     }
 }

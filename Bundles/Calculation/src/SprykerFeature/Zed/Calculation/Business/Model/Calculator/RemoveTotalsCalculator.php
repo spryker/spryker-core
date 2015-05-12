@@ -6,9 +6,10 @@ use Generated\Shared\Transfer\CalculationTotalsTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
-class RemoveTotalsCalculator extends AbstractCalculator implements
+class RemoveTotalsCalculator implements
     CalculatorPluginInterface
 {
+
     /**
      * @param CalculableContainerInterface $calculableContainer
      */

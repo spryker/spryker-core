@@ -25,7 +25,7 @@ interface CmsToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return Translation
+     * @return GlossaryTranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException

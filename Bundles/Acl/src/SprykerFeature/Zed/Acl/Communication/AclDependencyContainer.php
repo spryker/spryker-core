@@ -95,6 +95,23 @@ class AclDependencyContainer extends AbstractDependencyContainer
     /**
      * @param Request $request
      *
+     * @return RulesGrid
+     */
+    public function createGroupsGrid(Request $request)
+    {
+        $aclQueryContainer = $this->createAclQueryContainer();
+        $query = $aclQueryContainer->queryGroup();
+
+        return $this->getFactory()->createGridGroupGrid(
+            $query,
+            $request,
+            $this->getLocator()
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
      * @return UserForm
      */
     public function createUserWithGroupForm(Request $request)

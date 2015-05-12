@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
 use Generated\Shared\Transfer\CustomerCustomer as CustomerTransferTransfer;
 use Generated\Shared\Transfer\CustomerAddress as AddressTransferTransfer;
@@ -9,113 +11,119 @@ use Generated\Shared\Transfer\CustomerAddress as AddressTransferTransfer;
 class SdkController extends AbstractSdkController
 {
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function registerAction(CustomerTransfer $customerTransfer)
+    public function registerAction(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getLocator()->customer()->facade()->registerCustomer($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function confirmRegistrationAction(CustomerTransfer $customerTransfer)
+    public function confirmRegistrationAction(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getLocator()->customer()->facade()->confirmRegistration($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function forgotPasswordAction(CustomerTransfer $customerTransfer)
+    public function forgotPasswordAction(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getLocator()->customer()->facade()->forgotPassword($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function restorePasswordAction(CustomerTransfer $customerTransfer)
+    public function restorePasswordAction(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getLocator()->customer()->facade()->restorePassword($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      */
-    public function deleteAction(CustomerTransfer $customerTransfer)
+    public function deleteAction(CustomerCustomerTransfer $customerTransfer)
     {
         $success = $this->getLocator()->customer()->facade()->deleteCustomer($customerTransfer);
         $this->setSuccess($success);
+
         return;
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function customerAction(CustomerTransfer $customerTransfer)
+    public function customerAction(CustomerCustomerTransfer $customerTransfer)
     {
         return $this->getLocator()->customer()->facade()->getCustomer($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function updateAction(CustomerTransfer $customerTransfer)
+    public function updateAction(CustomerCustomerTransfer $customerTransfer)
     {
         $success = $this->getLocator()->customer()->facade()->updateCustomer($customerTransfer);
         $this->setSuccess($success);
+
         return $customerTransfer;
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      */
-    public function addressAction(AddressTransfer $addressTransfer)
+    public function addressAction(CustomerAddressTransfer $addressTransfer)
     {
         $addressTransfer = $this->getLocator()->customer()->facade()->getAddress($addressTransfer);
         if (!$addressTransfer) {
             $this->setSuccess(false);
+
             return null;
         }
+
         return $addressTransfer;
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      */
-    public function updateAddressAction(AddressTransfer $addressTransfer)
+    public function updateAddressAction(CustomerAddressTransfer $addressTransfer)
     {
         $success = $this->getLocator()->customer()->facade()->updateAddress($addressTransfer);
         $this->setSuccess($success);
+
         return $addressTransfer;
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param CustomerAddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      */
-    public function newAddressAction(AddressTransfer $addressTransfer)
+    public function newAddressAction(CustomerAddressTransfer $addressTransfer)
     {
         $success = $this->getLocator()->customer()->facade()->newAddress($addressTransfer);
         $this->setSuccess($success);
+
         return $addressTransfer;
     }
 }

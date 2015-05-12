@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -18,10 +18,10 @@ class CategoryExporterFacade extends AbstractFacade
 {
     /**
      * @param array $resultSet
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @return array
      */
-    public function processCategoryNodes(array $resultSet, LocaleDto $locale)
+    public function processCategoryNodes(array $resultSet, LocaleTransfer $locale)
     {
         return $this->getDependencyContainer()->createCategoryNodeProcessor()
             ->process($resultSet, $locale);
@@ -29,10 +29,10 @@ class CategoryExporterFacade extends AbstractFacade
 
     /**
      * @param array $resultSet
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * @return array
      */
-    public function processNavigation(array $resultSet, LocaleDto $locale)
+    public function processNavigation(array $resultSet, LocaleTransfer $locale)
     {
         return $this->getDependencyContainer()->createNavigationProcessor()
             ->process($resultSet, $locale);

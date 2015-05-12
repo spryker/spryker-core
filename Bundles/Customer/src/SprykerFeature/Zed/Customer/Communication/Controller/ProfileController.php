@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
+use Generated\Shared\Transfer\CustomerAddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,7 +35,7 @@ class ProfileController extends AbstractController
         $form = $this->getDependencyContainer()->createCustomerForm($request);
         $form->init();
 
-        $customerTransfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
+        $customerTransfer = new CustomerCustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
         $customerTransfer = $this->getLocator()->customer()->facade()->getCustomer($customerTransfer);
 
@@ -78,7 +80,7 @@ class ProfileController extends AbstractController
      */
     public function sendPasswordRestoreTokenAction(Request $request)
     {
-        $customerTransfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
+        $customerTransfer = new CustomerCustomerTransfer();
         $customerTransfer->setIdCustomer($request->query->get('id'));
         $this->getLocator()->customer()->facade()->forgotPassword($customerTransfer);
 
@@ -96,7 +98,7 @@ class ProfileController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $customerTransfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
+            $customerTransfer = new CustomerCustomerTransfer();
             $customerTransfer->fromArray($form->getRequestData());
             $this->getLocator()->customer()->facade()->updateCustomer($customerTransfer);
         }
@@ -127,7 +129,7 @@ class ProfileController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
+            $addressTransfer = new CustomerAddressTransfer();
             $addressTransfer->fromArray($form->getRequestData());
             if ($addressTransfer->getIdCustomerAddress()) {
                 $this->getLocator()->customer()->facade()->updateAddress($addressTransfer);
@@ -148,7 +150,7 @@ class ProfileController extends AbstractController
      */
     public function setDefaultShippingAddressAction(Request $request)
     {
-        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
+        $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
         $this->getLocator()->customer()->facade()->setDefaultShippingAddress($addressTransfer);
@@ -163,7 +165,7 @@ class ProfileController extends AbstractController
      */
     public function setDefaultBillingAddressAction(Request $request)
     {
-        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
+        $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
         $this->getLocator()->customer()->facade()->setDefaultBillingAddress($addressTransfer);

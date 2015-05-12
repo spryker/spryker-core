@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\CmsExporter\Communication\Plugin;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\CmsExporter\Communication\CmsExporterDependencyContainer;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
@@ -23,11 +23,11 @@ class CmsQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPlug
 
     /**
      * @param ModelCriteria $expandableQuery
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      *
      * @return ModelCriteria
      */
-    public function expandQuery(ModelCriteria $expandableQuery, LocaleDto $locale)
+    public function expandQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
         $queryContainer = $this->getDependencyContainer()->getCmsExporterQueryContainer();
 

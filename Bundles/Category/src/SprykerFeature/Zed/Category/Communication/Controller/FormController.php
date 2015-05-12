@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Controller;
 
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
+use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
@@ -75,7 +75,7 @@ class FormController extends AbstractController
     }
 
     /**
-     * @return LocaleDto
+     * @return LocaleTransfer
      */
     protected function getLocale()
     {

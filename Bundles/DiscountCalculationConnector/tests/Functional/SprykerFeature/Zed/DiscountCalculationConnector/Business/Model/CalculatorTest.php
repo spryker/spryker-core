@@ -196,7 +196,6 @@ class CalculatorTest extends Test
      */
     protected function getExpenseCollection()
     {
-        /* @var ExpenseCollection $expenseCollection */
         return new \Generated\Shared\Transfer\CalculationExpenseTransfer();
     }
 

@@ -9,8 +9,11 @@ use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerEngine\Zed\Kernel\Locator;
 
 /**
- * @group DiscountDistributorTest
+ * @group SprykerFeature
+ * @group Zed
  * @group Discount
+ * @group Business
+ * @group Distributor
  */
 class DistributorTest extends Test
 {
@@ -58,9 +61,10 @@ class DistributorTest extends Test
         );
 
         $this->discountFacade->distributeAmount($items, self::DISCOUNT_AMOUNT_4000);
-        $this->assertEquals($items[0]->getGrossPrice(), $items[0]->getDiscounts()[-1]->getAmount());
-        $this->assertEquals($items[1]->getGrossPrice(), $items[1]->getDiscounts()[-1]->getAmount());
-        $this->assertEquals($items[2]->getGrossPrice(), $items[2]->getDiscounts()[-1]->getAmount());
+
+        $this->assertEquals($items[0]->getGrossPrice(), current($items[0]->getDiscounts())->getAmount());
+        $this->assertEquals($items[1]->getGrossPrice(), current($items[1]->getDiscounts())->getAmount());
+        $this->assertEquals($items[2]->getGrossPrice(), current($items[2]->getDiscounts())->getAmount());
     }
 
     public function testDistributeShouldDistributeAmountEquallyToEqualExpensiveObjects()
@@ -74,9 +78,9 @@ class DistributorTest extends Test
         );
 
         $this->discountFacade->distributeAmount($items, self::DISCOUNT_AMOUNT_300);
-        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, $items[0]->getDiscounts()[-1]->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, $items[1]->getDiscounts()[-1]->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, $items[2]->getDiscounts()[-1]->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[0]->getDiscounts())->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[1]->getDiscounts())->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[2]->getDiscounts())->getAmount());
     }
 
     public function testDistributeShouldDistributeAmountWithRoundingErrorCorrection()
@@ -90,9 +94,9 @@ class DistributorTest extends Test
         );
 
         $this->discountFacade->distributeAmount($items, self::DISCOUNT_AMOUNT_400);
-        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, $items[0]->getDiscounts()[-1]->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_13334, $items[1]->getDiscounts()[-1]->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, $items[2]->getDiscounts()[-1]->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[0]->getDiscounts())->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_13334, current($items[1]->getDiscounts())->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[2]->getDiscounts())->getAmount());
     }
 
     public function testDistributeShouldDistributeDiscountAmountInRelationToObjectGrossPrice()
@@ -106,9 +110,9 @@ class DistributorTest extends Test
         );
 
         $this->discountFacade->distributeAmount($items, self::DISCOUNT_AMOUNT_700);
-        $this->assertEquals(self::DISCOUNT_AMOUNT_100, $items[0]->getDiscounts()[-1]->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_200, $items[1]->getDiscounts()[-1]->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_400, $items[2]->getDiscounts()[-1]->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_100, current($items[0]->getDiscounts())->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_200, current($items[1]->getDiscounts())->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_400, current($items[2]->getDiscounts())->getAmount());
     }
 
     public function testDistributionForNegativeDiscountAmountShouldNotDistributeAnyDiscounts()

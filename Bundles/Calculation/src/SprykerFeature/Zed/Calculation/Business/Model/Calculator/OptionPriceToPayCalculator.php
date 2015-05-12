@@ -6,7 +6,7 @@ use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInt
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
-class OptionPriceToPayCalculator extends AbstractCalculator implements
+class OptionPriceToPayCalculator implements
     CalculatorPluginInterface
 {
 
@@ -28,6 +28,7 @@ class OptionPriceToPayCalculator extends AbstractCalculator implements
 
     /**
      * @param OptionItemInterface $option
+     *
      * @return int
      */
     protected function sumDiscounts(OptionItemInterface $option)

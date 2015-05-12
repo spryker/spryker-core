@@ -3,10 +3,8 @@
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Communication\Plugin;
 
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemCollectionInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use SprykerFeature\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
@@ -21,15 +19,14 @@ class GrandTotalWithDiscountsTotalsCalculatorPlugin extends AbstractPlugin imple
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableContainerInterface $calculableContainer
-     * @param CalculableItemCollectionInterface $calculableItems
+     * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
         CalculableContainerInterface $calculableContainer,
-        CalculableItemCollectionInterface $calculableItems
+        \ArrayObject $calculableItems
     ) {
-        if ($calculableContainer instanceof DiscountableContainerInterface &&
-            $calculableItems instanceof DiscountableItemCollectionInterface) {
+        if ($calculableContainer instanceof DiscountableContainerInterface) {
             $this->getDependencyContainer()
                 ->getDiscountCalculationFacade()
                 ->recalculateGrandTotalWithDiscountsTotals($totalsTransfer, $calculableContainer, $calculableItems);

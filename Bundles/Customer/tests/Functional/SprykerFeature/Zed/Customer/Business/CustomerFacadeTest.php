@@ -3,15 +3,19 @@
 namespace Functional\SprykerFeature\Zed\Customer\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerCustomerTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
-use Generated\Shared\Transfer\CustomerCustomer as CustomerTransferTransfer;
-use Generated\Shared\Transfer\CustomerAddress as AddressTransferTransfer;
 use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredException;
 
 /**
+ * @group SprykerFeature
+ * @group Zed
  * @group Customer
+ * @group Business
+ * @group Facade
  */
 class CustomerFacadeTest extends Test
 {
@@ -36,11 +40,11 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
     protected function createTestCustomerTransfer()
     {
-        $customerTransfer = new \Generated\Shared\Transfer\CustomerCustomerTransfer();
+        $customerTransfer = new CustomerCustomerTransfer();
         $customerTransfer->setEmail(self::TESTER_EMAIL);
         $customerTransfer->setPassword(self::TESTER_PASSWORD);
 
@@ -48,13 +52,13 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      */
-    protected function createTestAddressTransfer(CustomerTransfer $customerTransfer)
+    protected function createTestAddressTransfer(CustomerCustomerTransfer $customerTransfer)
     {
-        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
+        $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
         $addressTransfer->setEmail(self::TESTER_EMAIL);
         $addressTransfer->setName(self::TESTER_NAME);
@@ -66,7 +70,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
     protected function createTestCustomer()
     {
@@ -78,11 +82,11 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return AddressTransfer
+     * @return CustomerAddressTransfer
      */
-    protected function createTestAddress(CustomerTransfer $customerTransfer)
+    protected function createTestAddress(CustomerCustomerTransfer $customerTransfer)
     {
         $addressTransfer = $this->createTestAddressTransfer($customerTransfer);
         $addressTransfer = $this->locator->customer()->facade()->newAddress($addressTransfer);
@@ -91,11 +95,11 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerCustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerCustomerTransfer
      */
-    public function getTestCustomerTransfer(CustomerTransfer $customerTransfer)
+    public function getTestCustomerTransfer(CustomerCustomerTransfer $customerTransfer)
     {
         $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
 
@@ -179,7 +183,7 @@ class CustomerFacadeTest extends Test
     public function testNewAddress()
     {
         $customerTransfer = $this->createTestCustomer();
-        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
+        $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setEmail($customerTransfer->getEmail());
         $addressTransfer->setName(self::TESTER_NAME);
         $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
@@ -189,14 +193,19 @@ class CustomerFacadeTest extends Test
     public function testUpdateAddress()
     {
         $customerTransfer = $this->createTestCustomer();
-        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
+        $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setEmail($customerTransfer->getEmail());
         $addressTransfer->setName(self::TESTER_NAME);
         $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
+
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
+
+        /* @var $addressTransfer CustomerAddressTransfer */
         $addressTransfer = $customerTransfer->getAddresses()->getFirstItem();
+
         $addressTransfer->setCity(self::TESTER_CITY);
+        $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
         $addressTransfer = $this->customerFacade->updateAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
         $this->assertEquals(self::TESTER_CITY, $addressTransfer->getCity());
@@ -205,12 +214,14 @@ class CustomerFacadeTest extends Test
     public function testSetDefaultShippingAddress()
     {
         $customerTransfer = $this->createTestCustomer();
-        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
+        $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setEmail($customerTransfer->getEmail());
         $addressTransfer->setName(self::TESTER_NAME);
+        $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
         $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
+        /* @var $addressTransfer CustomerAddressTransfer */
         $addressTransfer = $customerTransfer->getAddresses()->getFirstItem();
         $isSuccess = $this->customerFacade->setDefaultShippingAddress($addressTransfer);
         $this->assertTrue($isSuccess);
@@ -219,12 +230,14 @@ class CustomerFacadeTest extends Test
     public function testSetDefaultBillingAddress()
     {
         $customerTransfer = $this->createTestCustomer();
-        $addressTransfer = new \Generated\Shared\Transfer\CustomerAddressTransfer();
+        $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setEmail($customerTransfer->getEmail());
         $addressTransfer->setName(self::TESTER_NAME);
+        $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
         $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
+        /* @var $addressTransfer CustomerAddressTransfer */
         $addressTransfer = $customerTransfer->getAddresses()->getFirstItem();
         $isSuccess = $this->customerFacade->setDefaultBillingAddress($addressTransfer);
         $this->assertTrue($isSuccess);

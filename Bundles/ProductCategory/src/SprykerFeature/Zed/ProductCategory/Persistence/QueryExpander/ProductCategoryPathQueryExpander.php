@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Persistence\QueryExpander;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
@@ -15,7 +15,7 @@ use SprykerFeature\Zed\ProductCategory\Persistence\Propel\Map\SpyProductCategory
 class ProductCategoryPathQueryExpander
 {
     /**
-     * @var LocaleDto
+     * @var LocaleTransfer
      */
     protected $locale;
 
@@ -26,11 +26,11 @@ class ProductCategoryPathQueryExpander
 
     /**
      * @param CategoryQueryContainer $categoryQueryContainer
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      */
     public function __construct(
         CategoryQueryContainer $categoryQueryContainer,
-        LocaleDto $locale
+        LocaleTransfer $locale
     ) {
         $this->locale = $locale;
         $this->categoryQueryContainer = $categoryQueryContainer;
@@ -49,7 +49,7 @@ class ProductCategoryPathQueryExpander
         $expandableQuery
             ->addJoin(
                 SpyTouchTableMap::COL_ITEM_ID,
-                SpyProductCategoryTableMap::COL_FK_PRODUCT,
+                SpyProductCategoryTableMap::COL_FK_ABSTRACT_PRODUCT,
                 Criteria::LEFT_JOIN
             );
         $expandableQuery
@@ -82,10 +82,6 @@ class ProductCategoryPathQueryExpander
         $expandableQuery = $this->categoryQueryContainer->joinRelatedCategoryQueryWithUrls($expandableQuery, 'categoryParents', 'parent');
 
         $expandableQuery->withColumn(
-            SpyProductCategoryTableMap::COL_FK_PRODUCT,
-            'product_id'
-        );
-        $expandableQuery->withColumn(
             'GROUP_CONCAT(DISTINCT spy_category_node.id_category_node)',
             'node_id'
         );
@@ -95,7 +91,7 @@ class ProductCategoryPathQueryExpander
         );
         $expandableQuery->orderBy('depth', Criteria::DESC);
         $expandableQuery->orderBy('descendant_id', Criteria::DESC);
-        $expandableQuery->groupBy('product_id');
+        $expandableQuery->groupBy('id_abstract_product');
 
         return $expandableQuery;
     }

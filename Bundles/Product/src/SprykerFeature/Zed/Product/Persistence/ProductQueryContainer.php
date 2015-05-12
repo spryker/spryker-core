@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\Product\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Locale\Dto\LocaleDto;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
@@ -25,11 +25,11 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 {
     /**
      * @param string $skus
-     * @param LocaleDto $locale
+     * @param LocaleTransfer $locale
      * 
      * @return SpyProductQuery
      */
-    public function getProductWithAttributeQuery($skus, LocaleDto $locale)
+    public function getProductWithAttributeQuery($skus, LocaleTransfer $locale)
     {
         $query = SpyProductQuery::create();
         $query->filterBySku($skus);
@@ -174,17 +174,43 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     /**
      * @param ModelCriteria $expandableQuery
      *
-     * @return ModelCriteria
+     * @return $this
      */
-    public function joinLocalizedProductQueryWithAttributes(ModelCriteria $expandableQuery)
+    public function joinConcreteProducts(ModelCriteria $expandableQuery)
     {
         $expandableQuery
-            ->addJoin(
-                SpyProductTableMap::COL_FK_ABSTRACT_PRODUCT,
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
-                Criteria::INNER_JOIN
+            ->addJoinObject(
+                new Join(
+                    SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                    SpyProductTableMap::COL_FK_ABSTRACT_PRODUCT,
+                    Criteria::LEFT_JOIN
+                ),
+                'concreteProductJoin'
             );
 
+        $expandableQuery->addJoinCondition(
+            'concreteProductJoin',
+            SpyProductTableMap::COL_IS_ACTIVE,
+            true,
+            Criteria::EQUAL
+        );
+
+        $expandableQuery->withColumn(
+            'GROUP_CONCAT(spy_product.sku)',
+            'concrete_skus'
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param ModelCriteria $expandableQuery
+     * @param LocaleTransfer $locale
+     *
+     * @return $this
+     */
+    public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleTransfer $locale)
+    {
         $expandableQuery
             ->addJoin(
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
@@ -199,11 +225,22 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
                 Criteria::INNER_JOIN
             );
 
+        $expandableQuery->addAnd(
+            SpyLocaleTableMap::COL_ID_LOCALE,
+            $locale->getIdLocale(),
+            Criteria::EQUAL
+        );
+        $expandableQuery->addAnd(
+            SpyLocaleTableMap::COL_IS_ACTIVE,
+            true,
+            Criteria::EQUAL
+        );
+
         $expandableQuery
             ->addJoinObject(
                 (new Join(
-                    SpyProductTableMap::COL_ID_PRODUCT,
-                    SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT,
+                    SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                    SpyUrlTableMap::COL_FK_RESOURCE_ABSTRACT_PRODUCT,
                     Criteria::LEFT_JOIN
                 ))->setRightTableAlias('product_urls')
             );
@@ -224,29 +261,29 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             SpyLocaleTableMap::COL_ID_LOCALE
         );
 
-        $expandableQuery->withColumn(SpyProductTableMap::COL_ID_PRODUCT, 'id_product');
-        $expandableQuery->withColumn(SpyProductTableMap::COL_SKU, 'sku');
+        $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT, 'id_abstract_product');
+
         $expandableQuery->withColumn(
-            SpyLocalizedProductAttributesTableMap::COL_ATTRIBUTES,
-            'attributes'
+            SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES,
+            'abstract_attributes'
+        );
+        $expandableQuery->withColumn(
+            "GROUP_CONCAT(spy_product_localized_attributes.attributes SEPARATOR '$%')",
+            'concrete_attributes'
         );
         $expandableQuery->withColumn(
             'product_urls.url',
             'product_url'
         );
         $expandableQuery->withColumn(
-            SpyLocalizedProductAttributesTableMap::COL_NAME,
-            'name'
-        );
-        $expandableQuery->withColumn(
-            SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES,
-            'abstract_attributes'
-        );
-        $expandableQuery->withColumn(
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
             'abstract_name'
         );
+        $expandableQuery->withColumn(
+            SpyLocalizedProductAttributesTableMap::COL_NAME,
+            'name'
+        );
 
-        return $expandableQuery;
+        return $this;
     }
 }

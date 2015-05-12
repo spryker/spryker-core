@@ -26,8 +26,7 @@ class SpyUrl extends BaseSpyUrl
     {
         $resourceData = $this->findResourceData();
 
-        $fkName = str_replace('fk_resource_', '', $resourceData['name']);
-        $resourceType = str_replace('_id', '', $fkName);
+        $resourceType = str_replace('fk_resource_', '', $resourceData['name']);
 
         return $resourceType;
     }
@@ -92,7 +91,10 @@ class SpyUrl extends BaseSpyUrl
      */
     protected function getSetterName($resourceType)
     {
-        $setterName = 'setFkResource' . ucfirst(strtolower($resourceType));
+        $bumps = explode('_', $resourceType);
+        $bumps = array_map('ucfirst', $bumps);
+
+        $setterName = 'setFkResource' . implode('', $bumps);
         if (!method_exists($this, $setterName)) {
             throw new UnknownResourceTypeException(
                 sprintf(

@@ -11,7 +11,8 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
  */
 class Installer extends AbstractPlugin implements InstallerInterface
 {
-            public function install()
+
+    public function install()
     {
         $this->getDependencyContainer()->createInstaller()->install();
     }
