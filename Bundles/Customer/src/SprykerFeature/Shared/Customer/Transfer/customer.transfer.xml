@@ -47,7 +47,7 @@
         <property name="newPassword" type="string" />
         <property name="billingAddress" type="CustomerAddress[]" />
         <property name="shippingAddress" type="CustomerAddress[]" />
-        <property name="addresses" type="CustomerAddress[]" />
+        <property name="addresses" type="CustomerAddresses" singular="address" />
         <property name="defaultBillingAddress" type="string" />
         <property name="defaultShippingAddress" type="string" />
         <property name="createdAt" type="string" />

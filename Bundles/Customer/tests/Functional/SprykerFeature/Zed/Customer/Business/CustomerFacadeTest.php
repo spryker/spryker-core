@@ -201,8 +201,8 @@ class CustomerFacadeTest extends Test
 
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
 
-        /* @var $addressTransfer CustomerAddressTransfer */
-        $addressTransfer = $customerTransfer->getAddresses()->getFirstItem();
+        $addresses = $customerTransfer->getAddresses()->getCustomerAddressItems();
+        $addressTransfer = $addresses[0];
 
         $addressTransfer->setCity(self::TESTER_CITY);
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
@@ -221,8 +221,10 @@ class CustomerFacadeTest extends Test
         $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
-        /* @var $addressTransfer CustomerAddressTransfer */
-        $addressTransfer = $customerTransfer->getAddresses()->getFirstItem();
+
+        $addresses = $customerTransfer->getAddresses()->getCustomerAddressItems();
+        $addressTransfer = $addresses[0];
+
         $isSuccess = $this->customerFacade->setDefaultShippingAddress($addressTransfer);
         $this->assertTrue($isSuccess);
     }
@@ -237,8 +239,10 @@ class CustomerFacadeTest extends Test
         $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
-        /* @var $addressTransfer CustomerAddressTransfer */
-        $addressTransfer = $customerTransfer->getAddresses()->getFirstItem();
+
+        $addresses = $customerTransfer->getAddresses()->getCustomerAddressItems();
+        $addressTransfer = $addresses[0];
+
         $isSuccess = $this->customerFacade->setDefaultBillingAddress($addressTransfer);
         $this->assertTrue($isSuccess);
     }
