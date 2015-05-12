@@ -3,8 +3,10 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
+use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
+use Generated\Shared\Transfer\CalculationExpenseTotalsTransfer;
 use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Generated\Shared\Transfer\SalesOrderTransfer;
 use Generated\Shared\Transfer\SalesOrderItemTransfer;
@@ -119,7 +121,11 @@ class GrandTotalTest extends Test
      */
     protected function getPriceTotals()
     {
-        return new CalculationTotalsTransfer();
+        $totals = new CalculationTotalsTransfer();
+        $totals->setExpenses(new CalculationExpenseTotalsTransfer());
+        $totals->setDiscount(new CalculationDiscountTotalsTransfer());
+
+        return $totals;
     }
 
     /**
@@ -136,6 +142,11 @@ class GrandTotalTest extends Test
     protected function getOrderWithFixtureData()
     {
         $order = new SalesOrderTransfer();
+        $order->setItems(new OrderItemsTransfer());
+        $totalsTransfer = new CalculationTotalsTransfer();
+        $totalsTransfer->setExpenses(new CalculationExpenseTotalsTransfer());
+        $order->setTotals($totalsTransfer);
+        $order->setExpenses(new CalculationExpenseTransfer());
 
         return $order;
     }

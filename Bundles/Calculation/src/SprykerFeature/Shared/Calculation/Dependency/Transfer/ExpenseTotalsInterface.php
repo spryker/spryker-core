@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
+use Generated\Shared\Transfer\CalculationExpenseTotalItemTransfer;
+
 interface ExpenseTotalsInterface
 {
     /**
@@ -53,16 +55,10 @@ interface ExpenseTotalsInterface
     public function getExpenseItems();
 
     /**
-     * @param ExpenseTotalItemInterface|ExpenseTotalItemInterface $expenseItem
+     * @param CalculationExpenseTotalItemTransfer|ExpenseTotalItemInterface $expenseItem
      *
      * @return $this
      */
-    public function addExpenseItem(ExpenseTotalItemInterface $expenseItem);
+    public function addExpenseItem(CalculationExpenseTotalItemTransfer $expenseItem);
 
-    /**
-     * @param ExpenseTotalItemInterface $expenseItem
-     *
-     * @return $this
-     */
-    public function removeExpenseItem(ExpenseTotalItemInterface $expenseItem);
 }

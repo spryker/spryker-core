@@ -2,12 +2,13 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
+use Generated\Shared\Transfer\CalculationExpensesTransfer;
 use Generated\Shared\Transfer\CalculationExpenseTransfer;
 
 interface ExpenseContainerInterface
 {
     /**
-     * @return \ArrayObject|ExpenseItemInterface[]
+     * @return \ArrayObject|ExpenseItemInterface[]|CalculationExpensesTransfer
      */
     public function getExpenses();
 

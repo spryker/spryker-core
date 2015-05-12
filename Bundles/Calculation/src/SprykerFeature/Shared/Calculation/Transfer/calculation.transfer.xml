@@ -8,7 +8,7 @@
         <property name="totalOrderAmount" type="int" />
         <property name="totalItemAmount" type="int" />
         <property name="totalAmount" type="int" />
-        <property name="expenseItems" type="CalculationExpenseTotalItem" singular="expenseItem" />
+        <property name="expenseItems" type="CalculationExpenseTotalItem[]" singular="expenseItem" />
 
     </transfer>
 
@@ -32,11 +32,15 @@
         <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface" />
         <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableExpenseInterface" />
         <property name="type" type="string" />
-        <property name="grossPrice" type="string" />
-        <property name="priceToPay" type="string" />
+        <property name="grossPrice" type="int" />
+        <property name="priceToPay" type="int" />
         <property name="taxPercentage" type="string" />
         <property name="name" type="string" />
         <property name="discounts" type="CalculationDiscount[]" singular="discountItem" />
+    </transfer>
+
+    <transfer name="CalculationExpenses">
+        <property name="calculationExpenses" type="CalculationExpense[]" singular="calculationExpense" />
     </transfer>
 
     <transfer name="CalculationExpenseTotalItem">

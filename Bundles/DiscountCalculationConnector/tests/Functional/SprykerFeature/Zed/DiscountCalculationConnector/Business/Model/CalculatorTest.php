@@ -3,6 +3,11 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
+use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\CalculationExpensesTransfer;
+use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
@@ -78,10 +83,10 @@ class CalculatorTest extends Test
         $discounts = $this->getPriceDiscountCollection();
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
-        $discounts->add($discount);
+        $discounts->addUsedCode($discount);
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_DISCOUNT_AMOUNT);
-        $discounts->add($discount);
+        $discounts->addUsedCode($discount);
 
         $expense = $this->getExpenseWithFixtureData();
         $expense->setName(self::EXPENSE_NAME_SHIPPING_COSTS)
@@ -90,11 +95,11 @@ class CalculatorTest extends Test
             ->setGrossPrice(self::ORDER_SHIPPING_COSTS);
 
         $expensesCollection = $this->getExpenseCollection();
-        $expensesCollection->add($expense);
+        $expensesCollection->addCalculationExpense($expense);
         $order->setExpenses($expensesCollection);
 
         $item->setDiscounts($discounts);
-        $items->add($item);
+        $items->addOrderItem($item);
         $order->setItems($items);
 
         $calculator = $this->getCalculator();
@@ -176,71 +181,66 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return OrderItemCollection
+     * @return OrderItemsTransfer
      */
     protected function getItemCollection()
     {
-        return new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        return new OrderItemsTransfer();
     }
 
     /**
-     * @return DiscountCollection
+     * @return CalculationDiscountTransfer
      */
     protected function getPriceDiscountCollection()
     {
-        return new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        return new CalculationDiscountTransfer();
     }
 
     /**
-     * @return \SprykerFeature\Shared\Calculation\Transfer\ExpenseCollection
+     * @return CalculationExpensesTransfer
      */
     protected function getExpenseCollection()
     {
-        return new \Generated\Shared\Transfer\CalculationExpenseTransfer();
+        return new CalculationExpensesTransfer();
     }
 
     /**
-     * @return \SprykerFeature\Shared\Calculation\Transfer\Discount
+     * @return CalculationDiscountTransfer
      */
     protected function getPriceDiscount()
     {
-        return new \Generated\Shared\Transfer\CalculationDiscountTransfer();
+        return new CalculationDiscountTransfer();
     }
 
     /**
-     * @return Order
+     * @return SalesOrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        /* @var Order $order */
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
-        $order->fillWithFixtureData();
+        $order = new SalesOrderTransfer();
+        $totals = new CalculationTotalsTransfer();
+        $totals->setDiscount(new CalculationDiscountTotalsTransfer());
+        $order->setTotals($totals);
+
+        $order->setDiscounts(new CalculationDiscountTransfer());
 
         return $order;
     }
 
     /**
-     * @return OrderItem
+     * @return SalesOrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        /* @var OrderItem $item */
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
-        $item->fillWithFixtureData();
-
-        return $item;
+        return new SalesOrderItemTransfer();
     }
 
     /**
-     * @return \SprykerFeature\Shared\Calculation\Transfer\Expense
+     * @return CalculationExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {
-        /* @var Expense $expense */
-        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
-        $expense->fillWithFixtureData();
-
-        return $expense;
+        return new CalculationExpenseTransfer();
     }
 
     /**

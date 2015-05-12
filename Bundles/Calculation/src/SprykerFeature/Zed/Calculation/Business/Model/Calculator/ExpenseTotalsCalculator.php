@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\CalculationExpensesTransfer;
 use Generated\Shared\Transfer\CalculationExpenseTotalItemTransfer;
 use Generated\Shared\Transfer\CalculationExpenseTotalsTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
@@ -36,8 +37,12 @@ class ExpenseTotalsCalculator implements
     public function calculateExpenseTotal(CalculableContainerInterface $calculableContainer)
     {
         $orderExpensesTotal = 0;
-        foreach ($calculableContainer->getExpenses() as $expense) {
-            $orderExpensesTotal += $expense->getGrossPrice();
+        if ($calculableContainer->getExpenses() instanceof CalculationExpensesTransfer) {
+            foreach ($calculableContainer->getExpenses()->getCalculationExpenses() as $expense) {
+                if (!is_null($expense->getGrossPrice())) {
+                    $orderExpensesTotal += $expense->getGrossPrice();
+                }
+            }
         }
 
         return $orderExpensesTotal;
@@ -70,8 +75,11 @@ class ExpenseTotalsCalculator implements
         \ArrayObject $calculableItems
     ) {
         $orderExpenseItems = [];
-        foreach ($calculableContainer->getExpenses() as $expense) {
-            $this->transformExpenseToExpenseTotalItemInArray($expense, $orderExpenseItems);
+
+        if ($calculableContainer->getExpenses() instanceof CalculationExpensesTransfer) {
+            foreach ($calculableContainer->getExpenses()->getCalculationExpenses() as $expense) {
+                $this->transformExpenseToExpenseTotalItemInArray($expense, $orderExpenseItems);
+            }
         }
 
         foreach ($calculableItems as $item) {

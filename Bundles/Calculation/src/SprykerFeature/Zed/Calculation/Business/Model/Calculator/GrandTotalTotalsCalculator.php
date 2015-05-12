@@ -76,7 +76,7 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
         TotalsInterface $totalsTransfer,
         \ArrayObject $calculableItems
     ) {
-        if ($totalsTransfer->getSubtotal() !== 0) {
+        if (!is_null($totalsTransfer->getSubtotal())) {
             return $totalsTransfer->getSubtotal();
         } else {
             return $this->subtotalTotalsCalculator->calculateSubtotal($calculableItems);
@@ -93,7 +93,7 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
         TotalsInterface $totalsTransfer,
         CalculableContainerInterface $calculableContainer
     ) {
-        if ($totalsTransfer->getExpenses()->getTotalOrderAmount() !== 0) {
+        if (!is_null($totalsTransfer->getExpenses()->getTotalOrderAmount())) {
             return $totalsTransfer->getExpenses()->getTotalOrderAmount();
         } else {
             return $this->expenseTotalsCalculator->calculateExpenseTotal($calculableContainer);

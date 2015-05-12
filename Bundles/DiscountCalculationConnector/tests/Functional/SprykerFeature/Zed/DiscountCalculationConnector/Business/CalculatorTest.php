@@ -5,6 +5,8 @@ namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CalculationDiscountTransfer;
 use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\SalesOrderItemTransfer;
 use Generated\Shared\Transfer\SalesOrderTransfer;
 use Generated\Zed\Ide\AutoCompletion;
@@ -72,7 +74,10 @@ class CalculatorTest extends Test
     public function testCanRecalculateAnEmptyOrder()
     {
         $order = new SalesOrderTransfer();
-        $calculator = $this->getCalculatorModel();
+        $order->setTotals(new CalculationTotalsTransfer());
+        $order->setItems(new OrderItemsTransfer());
+
+        $calculator = new StackExecutor();//$this->getCalculatorModel();
         $calculatorStack = $this->createCalculatorStack();
         $calculator->recalculate($calculatorStack, $order);
         $this->assertEmpty($order->getTotals()->getGrandTotalWithDiscounts());
@@ -81,7 +86,9 @@ class CalculatorTest extends Test
     public function testCanRecalculateAnExampleOrderWithOneItemAndExpenseOnOrder()
     {
         $order = new SalesOrderTransfer();
-        $items = new \ArrayObject();
+        $order->setTotals(new CalculationTotalsTransfer());
+
+        $items = new OrderItemsTransfer();
         $item =  new SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
@@ -132,6 +139,8 @@ class CalculatorTest extends Test
     public function testCanRecalculateAnExampleOrderWithTwoItemsAndExpenseOnItems()
     {
         $order = new SalesOrderTransfer();
+        $order->setTotals(new CalculationTotalsTransfer());
+
         $items = new \ArrayObject();
         $item = new SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);

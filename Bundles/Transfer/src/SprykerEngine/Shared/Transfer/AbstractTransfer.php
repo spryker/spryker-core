@@ -7,6 +7,7 @@ use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
 use SprykerFeature\Shared\Library\Filter\FilterChain;
 use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 use Zend\Filter\Word\CamelCaseToUnderscore;
+use Zend\Filter\Word\UnderscoreToCamelCase;
 
 abstract class AbstractTransfer extends \ArrayObject implements TransferInterface
 {
@@ -123,10 +124,11 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      */
     public function fromArray(array $data, $fuzzyMatch = false)
     {
+        $filter = new UnderscoreToCamelCase();
         foreach ($data as $key => $value) {
-            $property = lcfirst($key);
-            $getter = 'get' . $key;
-            $setter = 'set' . $key;
+            $property = lcfirst($filter->filter($key));
+            $getter = 'get' . ucfirst($property);
+            $setter = 'set' . ucfirst($property);
 
             if (method_exists($this, $getter) && $this->$getter() instanceof TransferInterface && is_array($value)) {
                 $this->$getter()->fromArray($value, $fuzzyMatch);

@@ -3,6 +3,7 @@
 namespace Functional\SprykerFeature\Zed\Url;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlUrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\Factory;
@@ -181,8 +182,9 @@ class UrlFacadeTest extends Test
 
     public function testSaveRedirectInsertsAndReturnsSomethingOnCreate()
     {
-        $redirect = new \Generated\Shared\Transfer\UrlRedirectTransfer();
+        $redirect = new UrlRedirectTransfer();
         $redirect->setToUrl('/pageToUrl');
+        $redirect->setStatus(301);
 
         $redirectQuery = $this->urlQueryContainer->queryRedirects();
 
@@ -199,6 +201,7 @@ class UrlFacadeTest extends Test
     {
         $redirect = new \Generated\Shared\Transfer\UrlRedirectTransfer();
         $redirect->setToUrl('/pageToUrl2');
+        $redirect->setStatus(301);
 
         $redirect = $this->urlFacade->saveRedirect($redirect);
 

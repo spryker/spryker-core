@@ -2,7 +2,9 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model;
 
+use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
 use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
@@ -46,7 +48,12 @@ class StackExecutor
         \ArrayObject $calculableItems = null
     ) {
         $totalsTransfer = new CalculationTotalsTransfer();
+        $totalsTransfer->setDiscount(new CalculationDiscountTotalsTransfer());
+
         $calculableItems = $calculableItems ? $calculableItems : $calculableContainer->getItems();
+        if ($calculableItems instanceof OrderItemsTransfer) {
+            $calculableItems = $calculableItems->getOrderItems();
+        }
         foreach ($calculatorStack as $calculator) {
             if ($calculator instanceof TotalsCalculatorPluginInterface) {
                 $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
