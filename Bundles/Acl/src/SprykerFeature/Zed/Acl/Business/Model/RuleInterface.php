@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\AclRoleTransfer;
 use Generated\Shared\Transfer\AclRuleTransfer;
+use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\UserUserTransfer;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
@@ -46,7 +47,7 @@ interface RuleInterface
     public function getRoleRules($idRole);
 
     /**
-     * @param AclRoleTransfer $roles
+     * @param RolesTransfer $roles
      * @param string $bundle
      * @param string $controller
      * @param string $action
@@ -54,7 +55,7 @@ interface RuleInterface
      * @return AclRuleTransfer
      */
     public function findByRoles(
-        AclRoleTransfer $roles,
+        RolesTransfer $roles,
         $bundle = AclConfig::VALIDATOR_WILDCARD,
         $controller = AclConfig::VALIDATOR_WILDCARD,
         $action = AclConfig::VALIDATOR_WILDCARD

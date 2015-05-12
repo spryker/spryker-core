@@ -269,7 +269,7 @@ class AclTest extends Test
         $transferRoleCollection = $this->facade->getGroupRoles($transferGroup->getIdAclGroup());
 
         $isPresent = false;
-        foreach ($transferRoleCollection as $current) {
+        foreach ($transferRoleCollection->getRoles() as $current) {
             if ($transferRole->getIdAclRole() === $current->getIdAclRole()) {
                 $isPresent = true;
             }
@@ -299,10 +299,10 @@ class AclTest extends Test
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
 
-        $roles = $this->facade->getGroupRoles($groupDto->getIdAclGroup());
+        $roleCollection = $this->facade->getGroupRoles($groupDto->getIdAclGroup());
 
         $isPresent = false;
-        foreach ($roles as $current) {
+        foreach ($roleCollection->getRoles() as $current) {
             if ($roleDto->getIdAclRole() === $current->getIdAclRole()) {
                 $isPresent = true;
             }
@@ -357,7 +357,7 @@ class AclTest extends Test
         $roles = $this->facade->getGroupRoles($groupDto->getIdAclGroup());
 
         $isPresent = false;
-        foreach ($roles as $current) {
+        foreach ($roles->getRoles() as $current) {
             if ($roleDto->getIdAclRole() === $current->getIdAclRole()) {
                 $isPresent = true;
             }
@@ -388,13 +388,11 @@ class AclTest extends Test
         }
 
         $rulesCollectionDto = $this->facade->getRoleRules($roleDto->getIdAclRole());
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $rulesCollectionDto);
-        $this->assertEquals(count($ruleData), count($rulesCollectionDto));
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RulesTransfer', $rulesCollectionDto);
 
         $index = 0;
-        foreach ($rulesCollectionDto as $current) {
+        foreach ($rulesCollectionDto->getRules() as $current) {
             $currentData = $ruleData[$index];
-            $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $transferRule);
             $this->assertEquals($currentData['bundle'], $current->getBundle());
             $this->assertEquals($currentData['controller'], $current->getController());
             $this->assertEquals($currentData['action'], $current->getAction());
@@ -428,7 +426,7 @@ class AclTest extends Test
         $roles = $this->facade->getGroupRoles($groupDto->getIdAclGroup());
 
         $isPresent = false;
-        foreach ($roles as $current) {
+        foreach ($roles->getRoles() as $current) {
             if ($roleDto->getIdAclRole() === $current->getIdAclRole()) {
                 $isPresent = true;
             }
@@ -459,13 +457,11 @@ class AclTest extends Test
         }
 
         $rulesCollectionDto = $this->facade->getGroupRules($groupDto->getIdAclGroup());
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $rulesCollectionDto);
-        $this->assertEquals(count($ruleData), count($rulesCollectionDto));
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RulesTransfer', $rulesCollectionDto);
 
         $index = 0;
-        foreach ($rulesCollectionDto as $current) {
+        foreach ($rulesCollectionDto->getRules() as $current) {
             $currentData = $ruleData[$index];
-            $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $ruleDto);
             $this->assertEquals($currentData['bundle'], $current->getBundle());
             $this->assertEquals($currentData['controller'], $current->getController());
             $this->assertEquals($currentData['action'], $current->getAction());
@@ -499,7 +495,7 @@ class AclTest extends Test
         $roles = $this->facade->getGroupRoles($groupDto->getIdAclGroup());
 
         $isPresent = false;
-        foreach ($roles as $current) {
+        foreach ($roles->getRoles() as $current) {
             if ($roleDto->getIdAclRole() === $current->getIdAclRole()) {
                 $isPresent = true;
             }
@@ -583,7 +579,7 @@ class AclTest extends Test
         $roles = $this->facade->getGroupRoles($groupDto->getIdAclGroup());
 
         $isPresent = false;
-        foreach ($roles as $current) {
+        foreach ($roles->getRoles() as $current) {
             if ($roleDto->getIdAclRole() === $current->getIdAclRole()) {
                 $isPresent = true;
             }
@@ -630,7 +626,7 @@ class AclTest extends Test
         $roles = $this->facade->getGroupRoles($groupDto->getIdAclGroup());
 
         $isPresent = false;
-        foreach ($roles as $current) {
+        foreach ($roles->getRoles() as $current) {
             if ($roleDto->getIdAclRole() === $current->getIdAclRole()) {
                 $isPresent = true;
             }
@@ -698,7 +694,7 @@ class AclTest extends Test
         $roles = $this->facade->getGroupRoles($groupDto->getIdAclGroup());
 
         $isPresent = false;
-        foreach ($roles as $current) {
+        foreach ($roles->getRoles() as $current) {
             if ($roleDto->getIdAclRole() === $current->getIdAclRole()) {
                 $isPresent = true;
             }
@@ -764,7 +760,7 @@ class AclTest extends Test
         $roles = $this->facade->getGroupRoles($groupDto->getIdAclGroup());
 
         $isPresent = false;
-        foreach ($roles as $current) {
+        foreach ($roles->getRoles() as $current) {
             if ($roleDto->getIdAclRole() === $current->getIdAclRole()) {
                 $isPresent = true;
             }
@@ -808,7 +804,7 @@ class AclTest extends Test
     {
         $systemUsers = $this->userFacade->getSystemUsers();
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $systemUsers);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserCollectionTransfer', $systemUsers);
 
         foreach ($systemUsers as $user) {
             $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $user);
@@ -828,7 +824,7 @@ class AclTest extends Test
     {
         $systemUsers = $this->userFacade->getSystemUsers();
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $systemUsers);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserCollectionTransfer', $systemUsers);
 
         foreach ($systemUsers as $user) {
             $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $user);

@@ -8,7 +8,7 @@
         <property name="name" type="string" />
     </transfer>
 
-    <transfer name="Group">
+    <transfer name="Groups">
         <property name="groups" type="AclGroup[]" singular="group" />
     </transfer>
 

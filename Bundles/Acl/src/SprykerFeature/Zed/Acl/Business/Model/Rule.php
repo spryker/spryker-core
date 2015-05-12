@@ -161,7 +161,7 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param AclRoleTransfer $roles
+     * @param RolesTransfer $roles
      * @param string $bundle
      * @param string $controller
      * @param string $action
@@ -169,7 +169,7 @@ class Rule implements RuleInterface
      * @return AclRoleTransfer
      */
     public function findByRoles(
-        AclRoleTransfer $roles,
+        RolesTransfer $roles,
         $bundle = AclConfig::VALIDATOR_WILDCARD,
         $controller = AclConfig::VALIDATOR_WILDCARD,
         $action = AclConfig::VALIDATOR_WILDCARD

@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\Acl\Business;
 
+use Generated\Shared\Transfer\RolesTransfer;
+use Generated\Shared\Transfer\RulesTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\AclGroupTransfer;
 use Generated\Shared\Transfer\AclRoleTransfer;
@@ -234,7 +236,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idGroup
      *
-     * @return AclRoleTransfer
+     * @return RolesTransfer
      */
     public function getGroupRoles($idGroup)
     {
@@ -246,7 +248,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idGroup
      *
-     * @return AclRuleTransfer
+     * @return RulesTransfer
      */
     public function getGroupRules($idGroup)
     {
@@ -258,7 +260,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idRole
      *
-     * @return AclRuleTransfer
+     * @return RulesTransfer
      */
     public function getRoleRules($idRole)
     {

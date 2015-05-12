@@ -3,15 +3,16 @@
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\AclRuleTransfer;
+use Generated\Shared\Transfer\RulesTransfer;
 
 interface RuleValidatorInterface
 {
     /**
-     * @param AclRuleTransfer $rules
+     * @param RulesTransfer $rules
      *
      * @return mixed
      */
-    public function setRules(AclRuleTransfer $rules);
+    public function setRules(RulesTransfer $rules);
 
     /**
      * @param AclRuleTransfer $rule

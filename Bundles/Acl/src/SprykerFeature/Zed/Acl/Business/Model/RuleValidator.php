@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\AclRuleTransfer;
+use Generated\Shared\Transfer\RulesTransfer;
 use SprykerFeature\Zed\Acl\AclConfig;
 
 class RuleValidator implements RuleValidatorInterface
@@ -54,19 +55,19 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param AclRuleTransfer $rules
+     * @param RulesTransfer $rules
      *
      * @return $this
      */
-    public function setRules(AclRuleTransfer $rules)
+    public function setRules(RulesTransfer $rules)
     {
-        foreach ($rules as $rule) {
+        foreach ($rules->getRules() as $rule) {
             if ($rule->getType() === 'allow') {
                 $this->addAllowedRule($rule);
             }
         }
 
-        foreach ($rules as $rule) {
+        foreach ($rules->getRules() as $rule) {
             if ($rule->getType() === 'deny') {
                 $this->addDeniedRule($rule);
             }

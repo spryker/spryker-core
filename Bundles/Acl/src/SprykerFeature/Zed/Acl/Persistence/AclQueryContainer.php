@@ -2,6 +2,7 @@
 namespace SprykerFeature\Zed\Acl\Persistence;
 
 use Generated\Shared\Transfer\AclRoleTransfer;
+use Generated\Shared\Transfer\RolesTransfer;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
@@ -219,15 +220,15 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param AclRoleTransfer $roles
+     * @param RolesTransfer $roles
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
-     * @return Propel\Base\SpyAclRuleQuery
+     * @return SpyAclRuleQuery
      */
     public function queryRuleByPathAndRoles(
-        AclRoleTransfer $roles,
+        RolesTransfer $roles,
         $bundle = AclConfig::VALIDATOR_WILDCARD,
         $controller = AclConfig::VALIDATOR_WILDCARD,
         $action = AclConfig::VALIDATOR_WILDCARD
