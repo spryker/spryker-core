@@ -5,7 +5,7 @@ namespace Generated\Shared\Transfer;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 use Path\To\Interface;
-use Generated\Shared\Transfer\OrderItem;
+use Generated\Shared\Transfer\OrderItemTransfer;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -20,7 +20,7 @@ class Transfer extends AbstractTransfer implements Interface
     protected $name;
 
     /**
-     * @var OrderItem $item
+     * @var OrderItemTransfer $item
      */
     protected $item;
 
@@ -56,11 +56,11 @@ class Transfer extends AbstractTransfer implements Interface
     }
 
     /**
-     * @param OrderItem $item
+     * @param OrderItemTransfer $item
      *
      * @return $this
      */
-    public function setItem(OrderItem $item)
+    public function setItem(OrderItemTransfer $item)
     {
         $this->item = $item;
         $this->addModifiedProperty('item');
@@ -69,7 +69,7 @@ class Transfer extends AbstractTransfer implements Interface
     }
 
     /**
-     * @return OrderItem
+     * @return OrderItemTransfer
      */
     public function getItem()
     {
@@ -90,7 +90,7 @@ class Transfer extends AbstractTransfer implements Interface
     }
 
     /**
-     * @return OrderItem[]
+     * @return OrderItemTransfer[]
      */
     public function getItems()
     {
@@ -98,11 +98,11 @@ class Transfer extends AbstractTransfer implements Interface
     }
 
     /**
-    * @param OrderItem $item
-    *
-    * @return $this
-    */
-    public function addItem(OrderItem $item)
+     * @param OrderItemTransfer $item
+     *
+     * @return $this
+     */
+    public function addItem(OrderItemTransfer $item)
     {
         $this->items[] = $item;
         $this->addModifiedProperty('items');

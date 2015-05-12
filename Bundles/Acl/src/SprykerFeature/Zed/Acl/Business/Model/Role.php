@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
+use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Library\Copy;
@@ -121,19 +122,19 @@ d     */
     /**
      * @param int $idGroup
      *
-     * @return AclRoleTransfer
+     * @return RolesTransfer
      * @throws GroupNotFoundException
      */
     public function getGroupRoles($idGroup)
     {
         $results = $this->queryContainer->queryGroupRoles($idGroup)->find();
 
-        $collection = new AclRoleTransfer();
+        $collection = new RolesTransfer();
 
         foreach ($results as $result) {
             $transfer = new AclRoleTransfer();
             Copy::entityToTransfer($transfer, $result);
-            $collection->add($transfer);
+            $collection->addRole($transfer);
         }
 
         return $collection;

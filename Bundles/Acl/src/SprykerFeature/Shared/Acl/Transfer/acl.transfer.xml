@@ -8,11 +8,19 @@
         <property name="name" type="string" />
     </transfer>
 
+    <transfer name="Group">
+        <property name="groups" type="AclGroup[]" singular="group" />
+    </transfer>
+
     <transfer name="AclRole">
         <property name="idAclRole" type="int" />
         <property name="name" type="string" />
         <property name="idGroup" type="int" />
         <property name="rules" type="string" />
+    </transfer>
+
+    <transfer name="Roles">
+        <property name="roles" type="AclRole[]" singular="role" />
     </transfer>
 
     <transfer name="AclRule">
@@ -22,6 +30,10 @@
         <property name="action" type="string" />
         <property name="type" type="string" />
         <property name="fkAclRole" type="int" />
+    </transfer>
+
+    <transfer name="Rules">
+        <property name="rules" type="AclRule[]" singular="rule" />
     </transfer>
 
 </transfers>

@@ -26,7 +26,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $itemCollectionStub = new CollectionFixture(null);
         $itemFixture = new PriceItemFixture(null);
         $itemFixture->setId('123');
-        $itemCollectionStub->add($itemFixture);
+        $itemCollectionStub->addCartItem($itemFixture);
 
         $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');
 
@@ -55,7 +55,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $itemCollectionStub = new CollectionFixture(null);
         $itemFixture = new PriceItemFixture(null);
         $itemFixture->setId('123');
-        $itemCollectionStub->add($itemFixture);
+        $itemCollectionStub->addCartItem($itemFixture);
 
         $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');
         $priceManager->addGrossPriceToItems($itemCollectionStub);
@@ -79,7 +79,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $itemCollectionStub = new CollectionFixture(null);
         $itemFixture = new CartItemFixture(null);
         $itemFixture->setId('123');
-        $itemCollectionStub->add($itemFixture);
+        $itemCollectionStub->addCartItem($itemFixture);
 
         $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');
         $priceManager->addGrossPriceToItems($itemCollectionStub);
@@ -93,4 +93,3 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         return new PriceFacadeStub(null, null);
     }
 }
- 

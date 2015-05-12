@@ -28,7 +28,7 @@
         <property name="iso2Country" type="string" />
     </transfer>
 
-    <transfer name="CustomerAddressCollection">
+    <transfer name="CustomerAddresses">
         <property name="customerAddressItems" type="CustomerAddress[]" singular="customerAddress" />
     </transfer>
 
@@ -45,9 +45,9 @@
         <property name="salutation" type="string" />
         <property name="password" type="string" />
         <property name="newPassword" type="string" />
-        <property name="billingAddress" type="CustomerAddressTransfer[]" />
-        <property name="shippingAddress" type="CustomerAddressTransfer[]" />
-        <property name="addresses" type="CustomerAddressTransfer[]" />
+        <property name="billingAddress" type="CustomerAddress[]" />
+        <property name="shippingAddress" type="CustomerAddress[]" />
+        <property name="addresses" type="CustomerAddress[]" />
         <property name="defaultBillingAddress" type="string" />
         <property name="defaultShippingAddress" type="string" />
         <property name="createdAt" type="string" />

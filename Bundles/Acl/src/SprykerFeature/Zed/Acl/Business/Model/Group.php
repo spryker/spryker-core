@@ -3,8 +3,10 @@
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\AclRoleTransfer;
+use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\AclGroupTransfer;
+use Generated\Shared\Transfer\GroupsTransfer;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
@@ -237,7 +239,7 @@ class Group implements GroupInterface
      */
     public function getAllGroups()
     {
-        $collection = new AclGroupTransfer();
+        $collection = new GroupsTransfer();
 
         $results = $this->queryContainer
             ->queryGroup()
@@ -245,7 +247,7 @@ class Group implements GroupInterface
 
         foreach ($results as $result) {
             $transfer = new AclGroupTransfer();
-            $collection->add(Copy::entityToTransfer($transfer, $result));
+            $collection->addGroup(Copy::entityToTransfer($transfer, $result));
         }
 
         return $collection;
@@ -332,11 +334,12 @@ class Group implements GroupInterface
             ->queryGroupRoles($idGroup)
             ->find();
 
-        $collection = new AclGroupTransfer();
+        $collection = new RolesTransfer();
 
         foreach ($results as $result) {
             $transfer = new AclRoleTransfer();
-            $collection->add(Copy::entityToTransfer($transfer, $result));
+            Copy::entityToTransfer($transfer, $result);
+            $collection->addRole($transfer);
         }
 
         return $collection;

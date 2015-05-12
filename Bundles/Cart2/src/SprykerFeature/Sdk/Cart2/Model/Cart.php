@@ -3,6 +3,8 @@
 namespace SprykerFeature\Sdk\Cart2\Model;
 
 use Generated\Sdk\Ide\AutoCompletion;
+use Generated\Shared\Transfer\Cart2ItemTransfer;
+use Generated\Shared\Transfer\Cart2ItemsTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Yves\Kernel\Locator;
@@ -156,12 +158,12 @@ class Cart implements CartInterface
     protected function createChangedItems($sku, $quantity = 1)
     {
         /** @var ItemInterface|AbstractTransfer $changedItem */
-        $changedItem = new \Generated\Shared\Transfer\Cart2ItemTransfer();
+        $changedItem = new Cart2ItemTransfer();
         $changedItem->setId($sku);
         $changedItem->setQuantity($quantity);
         /** @var ItemCollectionInterface|AbstractTransfer $changedItems */
-        $changedItems = new \Generated\Shared\Transfer\Cart2ItemTransfer();
-        $changedItems->add($changedItem);
+        $changedItems = new Cart2ItemsTransfer();
+        $changedItems->addCartItem($changedItem);
 
         return $changedItems;
     }

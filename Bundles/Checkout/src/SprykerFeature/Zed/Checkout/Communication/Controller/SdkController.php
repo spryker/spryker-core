@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\Checkout\Communication\Controller;
 
+use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\SalesOrderTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
@@ -73,47 +75,47 @@ class SdkController extends AbstractSdkController
         $payment->setMethod(PayoneApiConstants::PAYMENT_METHOD_PAYPAL);
         $transferOrder->setPayment($payment);
 
-        $items = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $items = new SalesOrderItemsTransfer();
 
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->setSku('211709');
         $item->setPriceToPay(10500);
         $item->setName('Gewinde-Aussch.Lehrring D2299M1,2 LMW');
         $item->setGrossPrice(10500);
 
-        $items->add($item);
+        $items->addOrderItem($item);
 
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->setSku('210105');
         $item->setPriceToPay(722);
         $item->setName('Auflageplatte A-SPCN 12');
         $item->setGrossPrice(722);
 
-        $items->add($item);
+        $items->addOrderItem($item);
 
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->setSku('211815');
         $item->setPriceToPay(3940);
         $item->setName('Gewinde-Reparatur-Satz M14 x 1,25 V-Coil');
         $item->setGrossPrice(3940);
 
-        $items->add($item);
+        $items->addOrderItem($item);
 
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->setSku('210105');
         $item->setPriceToPay(722);
         $item->setName('Auflageplatte A-SPCN 12');
         $item->setGrossPrice(722);
 
-        $items->add($item);
+        $items->addOrderItem($item);
 
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->setSku('210403');
         $item->setPriceToPay(26200);
         $item->setName('Aderendhülsensortiment 1250-tlg. 4kt. Knipex');
         $item->setGrossPrice(26200);
 
-        $items->add($item);
+        $items->addOrderItem($item);
         $transferOrder->setItems($items);
 
         $this->saveOrderAction($transferOrder, $requestTransfer);

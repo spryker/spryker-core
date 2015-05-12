@@ -8,6 +8,7 @@ use Generated\Shared\Transfer\SalesOrderTransfer;
 use Generated\Shared\Transfer\SalesOrderItemTransfer;
 use Generated\Shared\Transfer\CartCartChangeTransfer;
 use Generated\Shared\Transfer\CartCartItemTransfer;
+use Generated\Shared\Transfer\CartCartItemsTransfer;
 use SprykerFeature\Shared\Cart\Code\DeleteReasonConstant;
 use SprykerFeature\Shared\Library\Communication\Response;
 use SprykerFeature\Shared\Sales\Code\AbstractItemGrouper;
@@ -115,8 +116,8 @@ class ZedCart implements CartInterface
      */
     public function addItem(CartItem $cartItem)
     {
-        $cartItemCollection  = new \Generated\Shared\Transfer\CartCartItemTransfer();
-        $cartItemCollection->add($cartItem);
+        $cartItemCollection  = new CartItemsTransfer();
+        $cartItemCollection->addCartItem($cartItem);
 
         return $this->addItems($cartItemCollection);
     }
@@ -130,8 +131,8 @@ class ZedCart implements CartInterface
         CartItem $cartItem,
         $reason = DeleteReasonConstant::DELETE_REASON_ACTIVELY_REMOVED_BY_USER
     ) {
-        $cartItemCollection  = new \Generated\Shared\Transfer\CartCartItemTransfer();
-        $cartItemCollection->add($cartItem);
+        $cartItemCollection  = new CartItemsTransfer();
+        $cartItemCollection->addCartItem($cartItem);
 
         return $this->removeItems($cartItemCollection, $reason);
     }
@@ -142,8 +143,8 @@ class ZedCart implements CartInterface
      */
     public function changeQuantityOfItem(CartItem $cartItem)
     {
-        $cartItemCollection  = new \Generated\Shared\Transfer\CartCartItemTransfer();
-        $cartItemCollection->add($cartItem);
+        $cartItemCollection  = new CartItemsTransfer();
+        $cartItemCollection->addCartItem($cartItem);
 
         return $this->changeQuantityOfItems($cartItemCollection);
     }

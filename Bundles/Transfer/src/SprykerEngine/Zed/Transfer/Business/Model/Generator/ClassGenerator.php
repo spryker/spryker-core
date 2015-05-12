@@ -44,6 +44,9 @@ class ClassGenerator
         $fileName = $definition->getName() . '.php';
         $fileContent = $this->twig->render('class.php.twig', $twigData);
 
+        if (!is_dir($this->targetDirectory)) {
+            mkdir($this->targetDirectory, 0755, true);
+        }
         file_put_contents($this->targetDirectory . $fileName, $fileContent);
 
         return $fileName;

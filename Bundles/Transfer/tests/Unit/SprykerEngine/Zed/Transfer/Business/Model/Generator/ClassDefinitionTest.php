@@ -95,7 +95,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
     public function testIfOnePropertyIsSetGetPropertiesShouldReturnArrayWithOneProperty()
     {
-        $property = $this->getProperty('property1', 'type');
+        $property = $this->getProperty('property1', 'string');
         $transferDefinition = [
             'name' => 'name',
             'property' => [$property]
@@ -107,7 +107,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($properties));
 
         $given = $properties['property1'];
-        $expected = $this->getProperty('property1', 'type');
+        $expected = $this->getProperty('property1', 'string');
         $this->assertEquals($expected, $given);
     }
 
@@ -137,8 +137,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = [
             'name' => 'name',
             'property' => [
-                $this->getProperty('property1', 'type'),
-                $this->getProperty('property2', 'type')
+                $this->getProperty('property1', 'string'),
+                $this->getProperty('property2', 'string')
             ]
         ];
 
@@ -148,11 +148,11 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($properties));
 
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'type');
+        $expectedProperty = $this->getProperty('property1', 'string');
         $this->assertEquals($expectedProperty, $givenProperty);
 
         $givenProperty = $properties['property2'];
-        $expectedProperty = $this->getProperty('property2', 'type');
+        $expectedProperty = $this->getProperty('property2', 'string');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -161,21 +161,6 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getProperty('property1', 'array')]
-        ];
-
-        $classDefinition = new ClassDefinition($transferDefinition);
-
-        $properties = $classDefinition->getProperties();
-        $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'array');
-        $this->assertEquals($expectedProperty, $givenProperty);
-    }
-
-    public function testIfPropertyTypeIsArrayWithBracketsShouldBeMarkedAsArray()
-    {
-        $transferDefinition = [
-            'name' => 'name',
-            'property' => [$this->getProperty('property1', '[]')]
         ];
 
         $classDefinition = new ClassDefinition($transferDefinition);
@@ -291,11 +276,11 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
-        $expected = $this->getMethod('getProperty1', 'property1', null, 'Type[]');
+        $expected = $this->getMethod('getProperty1', 'property1', null, 'TypeTransfer[]');
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty1'];
-        $expected = $this->getCollectionMethod('addProperty1', 'property1', 'property1', 'Type', null, 'Type');
+        $expected = $this->getCollectionMethod('addProperty1', 'property1', 'property1', 'TypeTransfer', null, 'TypeTransfer');
         $this->assertEquals($expected, $given);
     }
 
@@ -316,11 +301,11 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];
-        $expected = $this->getMethod('getProperties', 'properties', null, 'Type[]');
+        $expected = $this->getMethod('getProperties', 'properties', null, 'TypeTransfer[]');
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty'];
-        $expected = $this->getCollectionMethod('addProperty', 'property', 'properties', 'Type', null, 'Type');
+        $expected = $this->getCollectionMethod('addProperty', 'property', 'properties', 'TypeTransfer', null, 'TypeTransfer');
         $this->assertEquals($expected, $given);
     }
 

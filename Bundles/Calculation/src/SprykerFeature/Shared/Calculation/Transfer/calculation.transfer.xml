@@ -8,7 +8,7 @@
         <property name="totalOrderAmount" type="int" />
         <property name="totalItemAmount" type="int" />
         <property name="totalAmount" type="int" />
-        <property name="expenseItems" type="CalculationExpenseTotalItemTransfer" singular="expenseItem" />
+        <property name="expenseItems" type="CalculationExpenseTotalItem" singular="expenseItem" />
 
     </transfer>
 
@@ -25,7 +25,7 @@
     <transfer name="CalculationDiscountTotals">
         <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalsInterface" />
         <property name="totalAmount" type="int" />
-        <property name="discountItems" type="SalesDiscountTotalItemTransfer[]" singular="discountItem" />
+        <property name="discountItems" type="SalesDiscountTotalItem[]" singular="discountItem" />
     </transfer>
 
     <transfer name="CalculationExpense">
@@ -36,7 +36,7 @@
         <property name="priceToPay" type="string" />
         <property name="taxPercentage" type="string" />
         <property name="name" type="string" />
-        <property name="discounts" type="CalculationDiscountTransfer[]" singular="discountItem" />
+        <property name="discounts" type="CalculationDiscount[]" singular="discountItem" />
     </transfer>
 
     <transfer name="CalculationExpenseTotalItem">
@@ -50,7 +50,7 @@
     <transfer name="CalculationTax">
         <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxInterface" />
         <property name="totalAmount" type="int" />
-        <property name="taxRates" type="CalculationTaxItemTransfer[]" singular="taxRate" />
+        <property name="taxRates" type="CalculationTaxItem[]" singular="taxRate" />
     </transfer>
 
     <transfer name="CalculationTaxItem">
@@ -65,9 +65,9 @@
 
         <property name="subtotal" type="int" />
         <property name="subtotalWithoutItemExpenses" type="int" />
-        <property name="expenses" type="CalculationExpenseTotalsTransfer[]" />
-        <property name="discount" type="CalculationDiscountTotalsTransfer[]" />
-        <property name="tax" type="CalculationTaxTransfer[]" />
+        <property name="expenses" type="CalculationExpenseTotals[]" />
+        <property name="discount" type="CalculationDiscountTotals[]" />
+        <property name="tax" type="CalculationTax[]" />
         <property name="grandTotalWithDiscounts" type="int" />
         <property name="grandTotal" type="int" />
     </transfer>

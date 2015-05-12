@@ -10,6 +10,7 @@ use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerAddressesTransfer;
 use DateTime;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
@@ -20,7 +21,6 @@ use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSe
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
 use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredException;
-use Generated\Shared\Transfer\CustomerAddressCollectionTransfer;
 
 class Customer
 {
@@ -295,9 +295,9 @@ class Customer
      */
     protected function entityCollectionToTransferCollection(ObjectCollection $entities)
     {
-        $addressCollection = new CustomerAddressCollectionTransfer();
+        $addressCollection = new CustomerAddressesTransfer();
         foreach ($entities->getData() as $customer) {
-            $addressCollection->add($this->entityToTransfer($customer));
+            $addressCollection->addCustomerAddress($this->entityToTransfer($customer));
         }
 
         return $addressCollection;

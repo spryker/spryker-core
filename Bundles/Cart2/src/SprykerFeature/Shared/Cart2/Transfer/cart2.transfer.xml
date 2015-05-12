@@ -4,10 +4,10 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Cart2Cart">
-        <property name="items" type="Cart2ItemTransfer[]" />
-        <property name="totals" type="CalculationTotalsTransfer[]" />
-        <property name="expenses" type="CalculationExpenseTransfer[]" />
-        <property name="discounts" type="CalculationDiscountTransfer[]" />
+        <property name="items" type="Cart2Item[]" />
+        <property name="totals" type="CalculationTotals[]" />
+        <property name="expenses" type="CalculationExpense[]" />
+        <property name="discounts" type="CalculationDiscount[]" />
         <property name="couponCodes" type="array" singular="couponCode" />
     </transfer>
 
@@ -21,12 +21,16 @@
         <interface name="SprykerFeature\Shared\Cart\Transfer\ItemInterface" />
         <property name="quantity" type="int" />
         <property name="id" type="int" />
-        <property name="expenses" type="CalculationExpenseTransfer[]" />
+        <property name="expenses" type="CalculationExpense[]" />
         <property name="options" type="array" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
         <property name="taxPercentage" type="int" />
-        <property name="discounts" type="CalculationDiscountTransfer[]" />
+        <property name="discounts" type="CalculationDiscount[]" />
+    </transfer>
+
+    <transfer name="Cart2Items">
+        <property name="cartItems" type="Cart2Item[]" singular="cartItem" />
     </transfer>
 
 </transfers>

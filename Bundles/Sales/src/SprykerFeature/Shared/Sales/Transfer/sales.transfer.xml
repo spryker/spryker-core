@@ -15,18 +15,18 @@
         <property name="lastName" type="string" />
         <property name="firstName" type="string" />
         <property name="incrementId" type="string" />
-        <property name="billingAddress" type="SalesAddressTransfer[]" />
-        <property name="shippingAddress" type="SalesAddressTransfer[]" />
-        <property name="customer" type="CustomerCustomerTransfer[]" />
-        <property name="items" type="SalesOrderItemTransfer[]"  singular="item" />
+        <property name="billingAddress" type="SalesAddress[]" />
+        <property name="shippingAddress" type="SalesAddress[]" />
+        <property name="customer" type="CustomerCustomer[]" />
+        <property name="items" type="SalesOrderItem[]"  singular="item" />
         <property name="payment" type="string" />
         <property name="couponCodes" type="array" singular="couponCode" />
         <property name="createdAt" type="string" />
         <property name="isTest" type="string" />
-        <property name="discounts" type="CalculationDiscountTransfer[]" />
-        <property name="totals" type="CalculationTotalsTransfer[]" />
-        <property name="expenses" type="CalculationExpenseTransfer[]" singular="expense" />
-        <property name="invoice" type="SalesInvoiceTransfer[]" />
+        <property name="discounts" type="CalculationDiscount[]" />
+        <property name="totals" type="CalculationTotals[]" />
+        <property name="expenses" type="CalculationExpense[]" singular="expense" />
+        <property name="invoice" type="SalesInvoice[]" />
     </transfer>
 
     <transfer name="SalesAddress">
@@ -85,13 +85,18 @@
         <property name="priceToPay" type="string" />
         <property name="taxPercentage" type="string" />
         <property name="quantity" type="int" />
-        <property name="discounts" type="CalculationDiscountTransfer[]" singular="discount" />
-        <property name="options" type="SalesOrderItemOptionTransfer[]" />
-        <property name="expenses" type="CalculationExpenseTransfer[]" singular="expense" />
+        <property name="discounts" type="CalculationDiscount[]" singular="discount" />
+        <property name="options" type="SalesOrderItemOption[]" />
+        <property name="expenses" type="CalculationExpense[]" singular="expense" />
         <property name="unitGrossPrice" type="string" />
         <property name="unitPriceToPay" type="string" />
         <property name="variety" type="string" />
-        <property name="status" type="SalesOrderItemStatusTransfer[]" />
+        <property name="status" type="SalesOrderItemStatus[]" />
+    </transfer>
+
+
+    <transfer name="OrderItems">
+        <property name="orderItems" type="SalesOrderItems[]" singular="orderItem" />
     </transfer>
 
     <transfer name="SalesOrderItemOption">
@@ -104,7 +109,7 @@
         <property name="priceToPay" type="int" />
         <property name="taxPercentage" type="string" />
         <property name="type" type="string" />
-        <property name="discounts" type="CalculationDiscountTransfer[]" singular="discount" />
+        <property name="discounts" type="CalculationDiscount[]" singular="discount" />
     </transfer>
 
     <transfer name="SalesOrderItemStatus">

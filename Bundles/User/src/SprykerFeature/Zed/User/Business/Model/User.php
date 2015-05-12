@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\User\Business\Model;
 
+use Generated\Shared\Transfer\UserUserCollectionTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Library\Copy;
@@ -310,10 +311,10 @@ class User implements UserInterface
     public function getSystemUsers()
     {
         $systemUser = $this->settings->getSystemUsers();
-        $collection = new \Generated\Shared\Transfer\UserUserTransfer();
+        $collection = new UserUserCollectionTransfer();
 
         foreach ($systemUser as $username) {
-            $transferUser = new \Generated\Shared\Transfer\UserUserTransfer();
+            $transferUser = new UserUserTransfer();
 
             // TODO why setting the id? why is everything the username?
             $transferUser->setIdUserUser(0);
@@ -324,7 +325,7 @@ class User implements UserInterface
                 ->setPassword($username)
             ;
 
-            $collection->add($transferUser);
+            $collection->addUser($transferUser);
         }
 
         return $collection;

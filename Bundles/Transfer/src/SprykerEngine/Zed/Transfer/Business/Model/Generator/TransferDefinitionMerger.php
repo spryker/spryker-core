@@ -59,11 +59,17 @@ class TransferDefinitionMerger
     {
         $normalizedDefinitions = [];
         foreach ($transferDefinitions as $transferDefinition) {
-            $normalizedDefinitions[] = [
+
+            $normalizedDefinition = [
                 'name' => $transferDefinition['name'],
-                'interface' => $this->normalizeAttribute($transferDefinition['interface']),
                 'property' => $this->normalizeAttribute($transferDefinition['property']),
             ];
+
+            if (array_key_exists('interface', $transferDefinition)) {
+                $normalizedDefinition['interface'] = $this->normalizeAttribute($transferDefinition['interface']);
+            }
+
+            $normalizedDefinitions[] = $normalizedDefinition;
         }
 
         return $normalizedDefinitions;

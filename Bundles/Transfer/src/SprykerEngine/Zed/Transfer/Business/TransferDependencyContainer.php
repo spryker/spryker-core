@@ -48,6 +48,7 @@ class TransferDependencyContainer extends AbstractDependencyContainer
     private function createTransferDefinitionBuilder()
     {
         return $this->getFactory()->createModelGeneratorTransferDefinitionBuilder(
+            $this->getFactory()->createModelGeneratorTransferDefinitionMerger(),
             $this->getConfig()->getSourceDirectories()
         );
     }

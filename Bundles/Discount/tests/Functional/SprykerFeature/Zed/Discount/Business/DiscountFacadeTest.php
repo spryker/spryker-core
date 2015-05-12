@@ -3,10 +3,12 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\SalesOrderTransfer;
 use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerFeature\Zed\Discount\Business\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Percentage;
@@ -319,11 +321,11 @@ class DiscountFacadeTest extends Test
 
     public function testGetDiscountableItems() {
         $order = $this->getOrderWithFixtureData();
-        $itemCollection = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $itemCollection = new OrderItemsTransfer();
 
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-        $itemCollection->add($item);
+        $itemCollection->addOrderItem($item);
         $order->setItems($itemCollection);
 
         $result = $this->discountFacade->getDiscountableItems($order);
@@ -334,15 +336,15 @@ class DiscountFacadeTest extends Test
     {
         $order = $this->getOrderWithFixtureData();
 
-        $itemCollection = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $itemCollection = new OrderItemsTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
+        $expense = new CalculationExpenseTransfer();
         $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
 
         $item->addExpense($expense);
-        $itemCollection->add($item);
+        $itemCollection->addOrderItem($item);
         $order->setItems($itemCollection);
 
         $result = $this->discountFacade->getDiscountableItemExpenses($order);
@@ -353,19 +355,19 @@ class DiscountFacadeTest extends Test
     {
         $order = $this->getOrderWithFixtureData();
 
-        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
+        $expense = new CalculationExpenseTransfer();
         $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
         $order->addExpense($expense);
 
-        $itemCollection = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $itemCollection = new OrderItemsTransfer();
+        $item = new SalesOrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $expense = new \Generated\Shared\Transfer\CalculationExpenseTransfer();
+        $expense = new CalculationExpenseTransfer();
         $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
 
         $item->addExpense($expense);
-        $itemCollection->add($item);
+        $itemCollection->addOrderItem($item);
         $order->setItems($itemCollection);
 
         $result = $this->discountFacade->getDiscountableOrderExpenses($order);

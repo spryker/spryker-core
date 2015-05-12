@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
+use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
@@ -11,6 +12,7 @@ use Generated\Shared\Transfer\AclRoleTransfer;
 use Generated\Shared\Transfer\UserUserTransfer;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use Generated\Shared\Transfer\AclRuleTransfer;
+use Generated\Shared\Transfer\RulesTransfer;
 
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
@@ -132,8 +134,8 @@ class Rule implements RuleInterface
         $role = new AclRoleTransfer();
         $role->setIdAclRole($idRole);
 
-        $roles = new AclRoleTransfer();
-        $roles->add($role);
+        $roles = new RolesTransfer();
+        $roles->addRole($role);
 
         $rules = $this->findByRoles($roles);
 
@@ -174,11 +176,11 @@ class Rule implements RuleInterface
     ) {
         $results = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();
 
-        $collection = new AclRuleTransfer();
+        $collection = new RulesTransfer();
 
         foreach ($results as $result) {
             $transfer = new AclRuleTransfer();
-            $collection->add(Copy::entityToTransfer($transfer, $result));
+            $collection->addRule(Copy::entityToTransfer($transfer, $result));
         }
 
         return $collection;
@@ -194,11 +196,11 @@ class Rule implements RuleInterface
         $relationshipCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find();
         $results = $this->queryContainer->queryGroupRules($relationshipCollection)->find();
 
-        $collection = new AclRuleTransfer();
+        $collection = new RulesTransfer();
 
         foreach ($results as $result) {
             $transfer = new AclRuleTransfer();
-            $collection->add(Copy::entityToTransfer($transfer, $result));
+            $collection->addRule(Copy::entityToTransfer($transfer, $result));
         }
 
         return $collection;

@@ -49,8 +49,9 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if (isset($transferDefinition['property'])) {
-            $this->addProperties($transferDefinition['property']);
-            $this->addMethods($transferDefinition['property']);
+            $properties = $this->normalizePropertyTypes($transferDefinition['property']);
+            $this->addProperties($properties);
+            $this->addMethods($properties);
         }
     }
 
@@ -136,7 +137,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $propertyInfo = [
             'name' => $property['name'],
-            'type' => $this->getPropertyVar($property)
+            'type' => $this->getPropertyType($property)
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
@@ -148,11 +149,35 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * Properties which are Transfer MUST be suffixed with Transfer
+     *
+     * @param array $properties
+     *
+     * @return array
+     */
+    private function normalizePropertyTypes(array $properties)
+    {
+        $normalizedProperties = [];
+        foreach ($properties as $property) {
+            if (!preg_match('/^int|integer|string|array|bool|boolean/', $property['type'])) {
+                if (preg_match('/\[\]$/', $property['type'])) {
+                    $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
+                } else {
+                    $property['type'] = $property['type'] . 'Transfer';
+                }
+            }
+            $normalizedProperties[] = $property;
+        }
+
+        return $normalizedProperties;
+    }
+
+    /**
      * @param array $property
      *
      * @return string
      */
-    private function getPropertyVar(array $property)
+    private function getPropertyType(array $property)
     {
         if ($this->isArray($property)) {
             return 'array';

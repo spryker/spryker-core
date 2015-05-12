@@ -41,10 +41,10 @@
 {% endmacro -%}
 {%- macro addAdd(method) %}
     /**
-    * @param {{ method.var }} ${{ method.property }}
-    *
-    * @return $this
-    */
+     * @param {{ method.var }} ${{ method.property }}
+     *
+     * @return $this
+     */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
         $this->{{ method.parent }}[] = ${{ method.property }};

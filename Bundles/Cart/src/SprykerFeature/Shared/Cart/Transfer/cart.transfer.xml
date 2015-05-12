@@ -4,9 +4,9 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="CartCartChange">
-        <property name="changedCartItems" type="CartCartItemTransfer[]" />
+        <property name="changedCartItems" type="CartCartItem[]" />
         <property name="couponCode" type="string" />
-        <property name="order" type="SalesOrderTransfer[]" />
+        <property name="order" type="SalesOrder[]" />
         <property name="userId" type="string" />
         <property name="cartHash" type="string" />
         <property name="deleteReason" type="string" />
@@ -21,6 +21,10 @@
         <property name="uniqueIdentifier" type="string" />
         <property name="options" type="array" />
         <property name="quantity" type="string" />
+    </transfer>
+
+    <transfer name="CartCartItems">
+        <property name="cartItems" type="CartCartItem[]" singular="cartItem" />
     </transfer>
 
     <transfer name="CartStepStorage">
