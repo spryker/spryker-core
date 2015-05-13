@@ -48,7 +48,6 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     {
         $paymentManager = $this->getFactory()
             ->createPaymentPaymentManager(
-                $this->getLocator(),
                 $this->createExecutionAdapter(),
                 $this->createQueryContainer(),
                 $this->createStandardParameter(),

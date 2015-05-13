@@ -4,7 +4,6 @@ namespace SprykerFeature\Zed\Payone\Business\Payment;
 
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface;
@@ -30,10 +29,6 @@ use \Propel\Runtime\Exception\PropelException;
 class PaymentManager
 {
 
-    /**
-     * @var AutoCompletion
-     */
-    protected $locator;
     /**
      * @var AdapterInterface
      */
@@ -65,7 +60,6 @@ class PaymentManager
 
 
     /**
-     * @param LocatorLocatorInterface $locator
      * @param AdapterInterface $executionAdapter
      * @param PayoneQueryContainerInterface $queryContainer
      * @param StandardParameterInterface $standardParameter
@@ -74,7 +68,6 @@ class PaymentManager
      * @param ModeDetectorInterface $modeDetector
      */
     public function __construct(
-        LocatorLocatorInterface $locator,
         AdapterInterface $executionAdapter,
         PayoneQueryContainerInterface $queryContainer,
         StandardParameterInterface $standardParameter,
@@ -82,7 +75,6 @@ class PaymentManager
         SequenceNumberProviderInterface $sequenceNumberProvider,
         ModeDetectorInterface $modeDetector)
     {
-        $this->locator = $locator;
         $this->executionAdapter = $executionAdapter;
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;
@@ -171,8 +163,6 @@ class PaymentManager
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
-        // @todo remove test log
-        \SprykerFeature_Shared_Library_Log::log($rawResponse, 'payone-test.log');
         $responseContainer = new AuthorizationResponseContainer($rawResponse);
 
         $this->updatePaymentAfterAuthorization($paymentEntity, $responseContainer);
@@ -195,8 +185,6 @@ class PaymentManager
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
-        // @todo remove test log
-        \SprykerFeature_Shared_Library_Log::log($rawResponse, 'payone-test.log');
         $responseContainer = new CaptureResponseContainer($rawResponse);
 
         $this->updateApiLogAfterCapture($apiLogEntity, $responseContainer);
@@ -218,8 +206,6 @@ class PaymentManager
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
-        // @todo remove test log
-        \SprykerFeature_Shared_Library_Log::log($rawResponse, 'payone-test.log');
         $responseContainer = new DebitResponseContainer($rawResponse);
 
         $this->updateApiLogAfterDebit($apiLogEntity, $responseContainer);
@@ -241,8 +227,6 @@ class PaymentManager
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
-        // @todo remove test log
-        \SprykerFeature_Shared_Library_Log::log($rawResponse, 'payone-test.log');
         $responseContainer = new RefundResponseContainer($rawResponse);
 
         $this->updateApiLogAfterRefund($apiLogEntity, $responseContainer);
