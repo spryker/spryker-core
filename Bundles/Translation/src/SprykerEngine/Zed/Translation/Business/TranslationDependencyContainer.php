@@ -17,7 +17,7 @@ class TranslationDependencyContainer extends AbstractDependencyContainer
      *
      * @return TranslatorInterface
      */
-    public function getTranslator($locale)
+    public function createTranslator($locale)
     {
         $translationFileFinder = $this->getFactory()->createTranslationFileFinder(
             $this->getConfig()->getPathPatterns()

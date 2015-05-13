@@ -4,6 +4,7 @@ namespace SprykerEngine\Zed\Translation\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Translation\Business\TranslatorInterface;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 class TranslationFacade extends AbstractFacade
 {
@@ -11,15 +12,15 @@ class TranslationFacade extends AbstractFacade
      * @param string $id
      * @param array $parameters
      * @param string $domain
-     * @param string $locale
+     * @param LocaleTransfer $locale
      *
      * @return string
      */
-    public function translate($id, array $parameters = array(), $domain = null, $locale = null)
+    public function translate($id, array $parameters = array(), $domain = null, LocaleTransfer $locale = null)
     {
         return $this->getDependencyContainer()
-            ->getTranslator($locale)
-            ->trans($id, $parameters, $domain, $locale);
+            ->createTranslator($locale->getLocaleName())
+            ->trans($id, $parameters, $domain, $locale->getLocaleName());
     }
 
     /**
@@ -27,15 +28,15 @@ class TranslationFacade extends AbstractFacade
      * @param int $number
      * @param array $parameters
      * @param string $domain
-     * @param string $locale
+     * @param LocaleTransfer $locale
      *
      * @return string
      */
-    public function translateChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
+    public function translateChoice($id, $number, array $parameters = array(), $domain = null, LocaleTransfer $locale = null)
     {
         return $this->getDependencyContainer()
-            ->getTranslator($locale)
-            ->transChoice($id, $number, $parameters, $domain, $locale);
+            ->createTranslator($locale->getLocaleName())
+            ->transChoice($id, $number, $parameters, $domain, $locale->getLocaleName());
     }
 
     /**
@@ -45,6 +46,6 @@ class TranslationFacade extends AbstractFacade
      */
     public function getTranslator($locale)
     {
-        return $this->getDependencyContainer()->getTranslator($locale);
+        return $this->getDependencyContainer()->createTranslator($locale);
     }
 }

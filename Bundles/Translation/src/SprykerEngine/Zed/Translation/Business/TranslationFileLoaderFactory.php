@@ -7,10 +7,6 @@ use Symfony\Component\Translation\Loader\CsvFileLoader;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
-/**
- * Class TranslationFileLoaderFactory
- * @package SprykerEngine\Zed\Translation\Business
- */
 class TranslationFileLoaderFactory
 {
     /**

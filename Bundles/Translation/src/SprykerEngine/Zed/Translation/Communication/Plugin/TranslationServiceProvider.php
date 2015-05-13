@@ -3,7 +3,6 @@
 namespace SprykerEngine\Zed\Translation\Communication\Plugin;
 
 use Silex\Application;
-use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\Locator;
 
 class TranslationServiceProvider implements TranslationServiceProviderInterface
