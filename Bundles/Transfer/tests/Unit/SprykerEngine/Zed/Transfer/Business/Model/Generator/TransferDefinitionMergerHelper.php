@@ -13,7 +13,7 @@ class TransferDefinitionMergerHelper
         return [
             'name' => 'Transfer',
             'interface' => [
-                'name' => 'Path\To\Interface'
+                ['name' => 'Path\To\Interface']
             ],
             'property' => [
                 [

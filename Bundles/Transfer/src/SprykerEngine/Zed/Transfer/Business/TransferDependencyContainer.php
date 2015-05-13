@@ -5,8 +5,11 @@ namespace SprykerEngine\Zed\Transfer\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\TransferBusiness;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassGenerator;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInterface\TransferInterfaceDefinitionBuilder;
 use SprykerEngine\Zed\Transfer\Business\Model\TransferCleaner;
 use SprykerEngine\Zed\Transfer\Business\Model\TransferGenerator;
 use SprykerEngine\Zed\Transfer\TransferConfig;
@@ -33,6 +36,39 @@ class TransferDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
+     * @return ClassGenerator
+     */
+    private function createClassGenerator()
+    {
+        return $this->getFactory()->createModelGeneratorTransferClassGenerator(
+            $this->getConfig()->getClassTargetDirectory()
+        );
+    }
+
+    /**
+     * @return TransferDefinitionBuilder|DefinitionBuilderInterface
+     */
+    private function createTransferDefinitionBuilder()
+    {
+        return $this->getFactory()->createModelGeneratorTransferTransferDefinitionBuilder(
+            $this->createLoader(),
+            $this->getFactory()->createModelGeneratorTransferDefinitionMerger(),
+            $this->getFactory()->createModelGeneratorTransferClassDefinition()
+        );
+    }
+
+    /**
+     * @return TransferDefinitionLoader
+     */
+    private function createLoader()
+    {
+        return $this->getFactory()->createModelGeneratorTransferDefinitionLoader(
+            $this->getFactory()->createModelGeneratorDefinitionNormalizer(),
+            $this->getConfig()->getSourceDirectories()
+        );
+    }
+
+    /**
      * @param MessengerInterface $messenger
      *
      * @return TransferGenerator
@@ -42,17 +78,7 @@ class TransferDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createModelTransferGenerator(
             $messenger,
             $this->createInterfaceGenerator(),
-            $this->createTransferInterfaceDefinitionBuilder()
-        );
-    }
-
-    /**
-     * @return ClassGenerator
-     */
-    private function createClassGenerator()
-    {
-        return $this->getFactory()->createModelGeneratorClassGenerator(
-            $this->getConfig()->getTargetDirectory()
+            $this->createInterfaceDefinitionBuilder()
         );
     }
 
@@ -61,30 +87,19 @@ class TransferDependencyContainer extends AbstractDependencyContainer
      */
     private function createInterfaceGenerator()
     {
-        return $this->getFactory()->createModelGeneratorInterfaceGenerator(
-            $this->getConfig()->getTargetDirectory()
+        return $this->getFactory()->createModelGeneratorTransferInterfaceInterfaceGenerator(
+            $this->getConfig()->getGeneratedTargetDirectory()
         );
     }
 
     /**
-     * @return TransferDefinitionBuilder
+     * @return TransferInterfaceDefinitionBuilder|DefinitionBuilderInterface
      */
-    private function createTransferDefinitionBuilder()
+    private function createInterfaceDefinitionBuilder()
     {
-        return $this->getFactory()->createModelGeneratorTransferDefinitionBuilder(
-            $this->getFactory()->createModelGeneratorTransferDefinitionMerger(),
-            $this->getConfig()->getSourceDirectories()
-        );
-    }
-
-    /**
-     * @return TransferDefinitionBuilder
-     */
-    private function createTransferInterfaceDefinitionBuilder()
-    {
-        return $this->getFactory()->createModelGeneratorTransferDefinitionBuilder(
-            $this->getFactory()->createModelGeneratorTransferDefinitionNullMerger(),
-            $this->getConfig()->getSourceDirectories()
+        return $this->getFactory()->createModelGeneratorTransferInterfaceTransferInterfaceDefinitionBuilder(
+            $this->createLoader(),
+            $this->getFactory()->createModelGeneratorTransferInterfaceInterfaceDefinition()
         );
     }
 
@@ -94,7 +109,7 @@ class TransferDependencyContainer extends AbstractDependencyContainer
     public function createTransferCleaner()
     {
         return $this->getFactory()->createModelTransferCleaner(
-            $this->getConfig()->getTargetDirectory()
+            $this->getConfig()->getGeneratedTargetDirectory()
         );
     }
 

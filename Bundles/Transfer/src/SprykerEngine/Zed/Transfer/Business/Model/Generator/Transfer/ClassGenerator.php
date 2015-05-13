@@ -1,13 +1,15 @@
 <?php
 
-namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
+namespace SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer;
 
-use Symfony\Component\Config\Definition\Exception\Exception;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionInterface;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferTwigExtensions;
 
 class ClassGenerator implements GeneratorInterface
 {
 
-    const TWIG_TEMPLATES_LOCATION = '/Templates/';
+    const TWIG_TEMPLATES_LOCATION = '/../Templates/';
 
     /**
      * @var string
@@ -47,6 +49,7 @@ class ClassGenerator implements GeneratorInterface
         if (!is_dir($this->targetDirectory)) {
             mkdir($this->targetDirectory, 0755, true);
         }
+
         file_put_contents($this->targetDirectory . $fileName, $fileContent);
 
         return $fileName;

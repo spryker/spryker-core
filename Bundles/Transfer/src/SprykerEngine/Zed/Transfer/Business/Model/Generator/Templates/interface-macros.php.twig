@@ -18,5 +18,5 @@
      *
      * @return $this
      */
-    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
+    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }});
 {% endmacro -%}

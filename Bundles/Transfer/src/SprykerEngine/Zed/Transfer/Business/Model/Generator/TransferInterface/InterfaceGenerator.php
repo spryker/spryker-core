@@ -1,11 +1,15 @@
 <?php
 
-namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
+namespace SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInterface;
+
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionInterface;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferTwigExtensions;
 
 class InterfaceGenerator implements GeneratorInterface
 {
 
-    const TWIG_TEMPLATES_LOCATION = '/Templates/';
+    const TWIG_TEMPLATES_LOCATION = '/../Templates/';
 
     /**
      * @var string
@@ -29,7 +33,7 @@ class InterfaceGenerator implements GeneratorInterface
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param DefinitionInterface|InterfaceDefinitionInterface $definition
      *
      * @return string
      */
@@ -39,23 +43,29 @@ class InterfaceGenerator implements GeneratorInterface
         $fileName = $definition->getName() . '.php';
         $fileContent = $this->twig->render('interface.php.twig', $twigData);
 
-        if (!is_dir($this->targetDirectory)) {
-            mkdir($this->targetDirectory, 0755, true);
+        $targetDirectory = $this->targetDirectory . DIRECTORY_SEPARATOR . $definition->getBundle() . DIRECTORY_SEPARATOR;
+
+        if (!is_dir($targetDirectory)) {
+            mkdir($targetDirectory, 0755, true);
         }
-        file_put_contents($this->targetDirectory . $fileName, $fileContent);
+
+        file_put_contents($targetDirectory . $fileName, $fileContent);
 
         return $fileName;
     }
 
     /**
-     * @param InterfaceDefinitionInterface $classDefinition
+     * @param DefinitionInterface|InterfaceDefinitionInterface $classDefinition
      *
      * @return array
      */
     public function getTwigData(InterfaceDefinitionInterface $classDefinition)
     {
         return [
+            'namespace' => $classDefinition->getNamespace(),
+            'bundle' => $classDefinition->getBundle(),
             'name' => $classDefinition->getName(),
+            'uses' => $classDefinition->getUses(),
             'methods' => $classDefinition->getMethods()
         ];
     }

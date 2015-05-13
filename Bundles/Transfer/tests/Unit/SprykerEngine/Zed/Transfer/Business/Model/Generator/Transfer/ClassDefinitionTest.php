@@ -1,9 +1,9 @@
 <?php
 
-namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Generator;
+namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer;
 
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassDefinition;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
 
 /**
  * @group SprykerEngine
@@ -21,7 +21,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'name' => 'name'
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
         $this->assertSame('NameTransfer', $classDefinition->getName());
     }
 
@@ -34,7 +35,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $uses = $classDefinition->getUses();
         $this->assertTrue(is_array($uses));
@@ -51,7 +53,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $uses = $classDefinition->getUses();
         $this->assertTrue(is_array($uses));
@@ -68,7 +71,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $interfaces = $classDefinition->getInterfaces();
         $this->assertTrue(is_array($interfaces));
@@ -85,7 +89,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $interfaces = $classDefinition->getInterfaces();
         $this->assertTrue(is_array($interfaces));
@@ -101,7 +106,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => [$property]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
         $this->assertTrue(is_array($properties));
@@ -142,7 +148,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
         $this->assertTrue(is_array($properties));
@@ -163,7 +170,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => [$this->getProperty('property1', 'array')]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
@@ -178,7 +186,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => [$this->getProperty('property1', 'Collection[]')]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $constructorDefinition = $classDefinition->getConstructorDefinition();
         $this->assertArrayHasKey('property1', $constructorDefinition);
@@ -195,20 +204,22 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $uses = $classDefinition->getUses();
         $this->assertCount(1, $uses);
     }
 
-    public function testIfPropertyTypeIsCollectionTheReturTypeShouldBeAnArrayObject()
+    public function testIfPropertyTypeIsCollectionTheReturnTypeShouldBeAnArrayObject()
     {
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getProperty('property1', 'Type[]')]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
@@ -223,7 +234,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => [$this->getProperty('property1', 'string')]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
@@ -240,7 +252,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => [$this->getProperty('property1', 'string')]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
@@ -254,7 +267,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => [$this->getProperty('property1', 'Type[]')]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
@@ -268,7 +282,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => [$this->getProperty('property1', 'Type[]')]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperty1'];
@@ -293,7 +308,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => [$property]
         ];
 
-        $classDefinition = new ClassDefinition($transferDefinition);
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperties'];

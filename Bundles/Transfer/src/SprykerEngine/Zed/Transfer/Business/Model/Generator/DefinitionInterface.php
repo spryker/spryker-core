@@ -10,17 +10,9 @@ interface DefinitionInterface
     public function getName();
 
     /**
-     * @return array
+     * @param array $definition
+     *
+     * @return $this
      */
-    public function getUses();
-
-    /**
-     * @return array
-     */
-    public function getInterfaces();
-
-    /**
-     * @return array
-     */
-    public function getMethods();
+    public function setDefinition(array $definition);
 }

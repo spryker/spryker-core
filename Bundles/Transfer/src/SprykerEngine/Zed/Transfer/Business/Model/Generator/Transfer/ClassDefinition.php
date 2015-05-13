@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
+namespace SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer;
 
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -38,21 +38,25 @@ class ClassDefinition implements ClassDefinitionInterface
     private $constructorDefinition = [];
 
     /**
-     * @param array $transferDefinition
+     * @param array $definition
+     *
+     * @return $this
      */
-    public function __construct(array $transferDefinition)
+    public function setDefinition(array $definition)
     {
-        $this->setName($transferDefinition['name']);
+        $this->setName($definition['name']);
 
-        if (isset($transferDefinition['interface'])) {
-            $this->addInterfaces($transferDefinition['interface']);
+        if (isset($definition['interface'])) {
+            $this->addInterfaces($definition['interface']);
         }
 
-        if (isset($transferDefinition['property'])) {
-            $properties = $this->normalizePropertyTypes($transferDefinition['property']);
+        if (isset($definition['property'])) {
+            $properties = $this->normalizePropertyTypes($definition['property']);
             $this->addProperties($properties);
             $this->addMethods($properties);
         }
+
+        return $this;
     }
 
     /**
@@ -455,21 +459,6 @@ class ClassDefinition implements ClassDefinitionInterface
         $typeHint = $this->getTypeHint($property);
         if ($typeHint) {
             $method['typeHint'] = $typeHint;
-        }
-
-        return $method;
-    }
-
-    /**
-     * @param array $property
-     * @param array $method
-     *
-     * @return array
-     */
-    private function addDefault(array $property, array $method)
-    {
-        if (array_key_exists('default', $property)) {
-            $method['default'] = $property['default'];
         }
 
         return $method;

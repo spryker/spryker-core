@@ -10,9 +10,17 @@ class TransferConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getTargetDirectory()
+    public function getClassTargetDirectory()
     {
         return APPLICATION_SOURCE_DIR . 'Generated/Shared/Transfer/';
+    }
+
+    /**
+     * @return string
+     */
+    public function getGeneratedTargetDirectory()
+    {
+        return APPLICATION_SOURCE_DIR . 'Generated/Shared/';
     }
 
     /**

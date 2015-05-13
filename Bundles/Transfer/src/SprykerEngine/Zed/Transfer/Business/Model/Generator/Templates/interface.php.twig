@@ -11,18 +11,14 @@ use {{ use }};
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
-{% if interfaces %}
-interface {{ name }} extends {{ interfaces|join(', ') }}
-{% else %}
 interface {{ name }}
-{% endif %}
 {
 {% for methodName, method  in methods %}
 {% if methodName starts with 'set' %}
-{{ macro.addSetFor(method) }}
+{{ macro.addSet(method) }}
 {% endif %}
 {% if methodName starts with 'get' %}
-{{ macro.addGetFor(method) }}
+{{ macro.addGet(method) }}
 {% endif %}
 {% if methodName starts with 'add' %}
 {{ macro.addAdd(method) }}

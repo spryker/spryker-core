@@ -2,7 +2,7 @@
 
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
-class TransferDefinitionMerger implements TransferDefinitionMergerInterface
+class TransferDefinitionMerger
 {
 
     /**
@@ -16,7 +16,6 @@ class TransferDefinitionMerger implements TransferDefinitionMergerInterface
      */
     public function merge(array $transferDefinitions)
     {
-        $transferDefinitions = $this->normalizeDefinitions($transferDefinitions);
         foreach ($transferDefinitions as $transferDefinition) {
             if (array_key_exists($transferDefinition['name'], $this->mergedTransferDefinitions)) {
                 $this->mergedTransferDefinitions[$transferDefinition['name']] = $this->mergeDefinitions(
@@ -41,48 +40,9 @@ class TransferDefinitionMerger implements TransferDefinitionMergerInterface
     {
         return [
             'name' => $existingDefinition['name'],
-            'interface' => $this->mergeProperty($existingDefinition['interface'], $definitionToMerge['interface']),
+            'interface' => $this->mergeInterfaces($existingDefinition, $definitionToMerge),
             'property' => $this->mergeProperty($existingDefinition['property'], $definitionToMerge['property']),
         ];
-    }
-
-    /**
-     * @param array $transferDefinitions
-     *
-     * @return array
-     */
-    private function normalizeDefinitions(array $transferDefinitions)
-    {
-        $normalizedDefinitions = [];
-        foreach ($transferDefinitions as $transferDefinition) {
-
-            $normalizedDefinition = [
-                'name' => $transferDefinition['name'],
-                'property' => $this->normalizeAttribute($transferDefinition['property']),
-            ];
-
-            if (array_key_exists('interface', $transferDefinition)) {
-                $normalizedDefinition['interface'] = $this->normalizeAttribute($transferDefinition['interface']);
-            }
-
-            $normalizedDefinitions[] = $normalizedDefinition;
-        }
-
-        return $normalizedDefinitions;
-    }
-
-    /**
-     * @param array $attribute
-     *
-     * @return array
-     */
-    private function normalizeAttribute(array $attribute)
-    {
-        if (isset($attribute[0])) {
-            return $attribute;
-        }
-
-        return [$attribute];
     }
 
     /**
@@ -125,21 +85,25 @@ class TransferDefinitionMerger implements TransferDefinitionMergerInterface
     }
 
     /**
-     * @param array $interfaces1
-     * @param array $interfaces2
+     * @param array $definition1
+     * @param array $definition2
      *
      * @return array
      */
-    private function mergeInterfaces(array $interfaces1, array $interfaces2)
+    private function mergeInterfaces(array $definition1, array $definition2)
     {
         $mergedInterfaces = [];
 
-        foreach ($interfaces1 as $interface) {
-            $mergedInterfaces[$interface['name']] = $interface;
+        if (isset($definition1['interface'])) {
+            foreach ($definition1['interface'] as $interface) {
+                $mergedInterfaces[$interface['name']] = $interface;
+            }
         }
 
-        foreach ($interfaces2 as $interface) {
-            $mergedInterfaces[$interface['name']] = $interface;
+        if (isset($definition2['interface'])) {
+            foreach ($definition2['interface'] as $interface) {
+                $mergedInterfaces[$interface['name']] = $interface;
+            }
         }
 
         return $mergedInterfaces;
