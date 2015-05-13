@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature_Shared_Library_Log;
 
-class PaymentRedirected implements ConditionInterface
+class PaymentRedirected extends AbstractCondition
 {
 
     /**

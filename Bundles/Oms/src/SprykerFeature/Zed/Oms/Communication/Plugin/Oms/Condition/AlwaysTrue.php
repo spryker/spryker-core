@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition;
 
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
-class AlwaysTrue implements ConditionInterface
+class AlwaysTrue extends AbstractCondition
 {
 
     /**
