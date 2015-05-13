@@ -14,9 +14,10 @@ require('Ui').ng
 	.module('spyGrid')
 	.factory('GridModelService', [
 		'$resource',
+		'ErrorStoreService',
 		'JSONModelDenormalizeService',
 
-		function($resource, denormalizeResponse) {
+		function($resource, errorStore, denormalizeResponse) {
 
 			function _transformResponse(model, headers) {
 				if (model === null) {
@@ -35,6 +36,7 @@ require('Ui').ng
 						method  : 'get',
 						isArray : false,
 						transformResponse : [
+							errorStore.intercept,
 							denormalizeResponse,
 							_transformResponse
 						]

@@ -15,16 +15,20 @@ require('Ui').ng
 	.factory('ActionModelService', [
 		'$resource',
 		'$q',
+		'ErrorStoreService',
 		'JSONModelDenormalizeService',
 
-		function($resource, $q, denormalizeResponse) {
+		function($resource, $q, errorStore, denormalizeResponse) {
 
 			return function(url) {
 				return $resource(url, {}, {
 					update : {
 						method : 'post',
 						isArray : false,
-						transformResponse : denormalizeResponse,
+						transformResponse : [
+							errorStore.intercept,
+							denormalizeResponse
+						],
 						interceptor : {
 							response : function(response) {
 								if (response.status >= 400) return $q.reject(response);

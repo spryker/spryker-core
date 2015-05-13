@@ -13,10 +13,11 @@ require('Ui').ng
 	.module('spyTemplate')
 	.factory('TemplateModelService', [
 		'$resource',
+		'ErrorStoreService',
 		'JSONModelDenormalizeService',
 		'ArrayModelTransformService',
 
-		function($resource, denormalizeResponse, transform) {
+		function($resource, errorStore, denormalizeResponse, transform) {
 			return function(url) {
 
 				function _transformResponse(model, headers) {
@@ -35,6 +36,7 @@ require('Ui').ng
 						method : 'get',
 						isArray : true,
 						transformResponse : [
+							errorStore.intercept,
 							denormalizeResponse,
 							_transformResponse
 						]
