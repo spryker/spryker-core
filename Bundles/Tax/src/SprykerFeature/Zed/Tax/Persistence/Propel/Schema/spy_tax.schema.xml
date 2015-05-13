@@ -5,7 +5,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\Price\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Tax.src.SprykerFeature.Zed.Product.Persistence.Propel">
+          package="vendor.spryker.spryker.Bundles.Tax.src.SprykerFeature.Zed.Tax.Persistence.Propel">
 
     <table name="spy_tax_set" idMethod="native" allowPkInsert="true" phpName="SpyTaxSet">
         <column name="id_tax_set" type="INTEGER" primaryKey="true" autoIncrement="true" />
