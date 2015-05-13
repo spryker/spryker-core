@@ -26,7 +26,20 @@
         <property name="quantity" type="string" default="null" />
     </transfer>
 
-    <transfer name="MailMailTransfer">
+    <transfer name="MailRecipient">
+        <property name="email" type="string" default="null" />
+        <property name="name" type="string" default="null" />
+        <property name="type" type="string" default="to" />
+        <property name="mergeVars" type="array" default="[]"/>
+        <property name="metadata" type="array" default="[]"/>
+    </transfer>
+
+    <transfer name="MailHeader">
+        <property name="key" type="string" default="null"/>
+        <property name="value" type="string" default="null"/>
+    </transfer>
+
+    <transfer name="MailMail">
         <property name="templateName" type="string" default="null" />
         <property name="templateContent" type="array" default="[]" />
         <property name="async" type="bool" default="false" />
@@ -35,8 +48,12 @@
         <property name="subject" type="string" default="null" />
         <property name="fromEmail" type="string" default="null" />
         <property name="fromName" type="string" default="null" />
-        <property name="recipients" type="array" default="[]" />
-        <property name="headers" type="array" default="[]" />
+        <property name="recipients" type="MailRecipientTransfer" collection="TransferArrayObject">
+            <add name="recipient" />
+        </property>
+        <property name="headers" type="MailHeaderTransfer" collection="TransferArrayObject">
+            <add name="header" />
+        </property>
         <property name="important" type="bool" default="false" />
         <property name="trackOpens" type="bool" default="false" />
         <property name="trackClicks" type="bool" default="false" />
@@ -53,15 +70,17 @@
         <property name="merge" type="bool" default="false" />
         <property name="mergeLanguage" type="string" default="mailchimp" />
         <property name="globalMergeVars" type="array" default="[]" />
-        <property name="recipientMergeVars" type="array" default="[]" />
         <property name="tags" type="array" default="[]" />
         <property name="subAccount" type="string" default="null" />
         <property name="googleAnalyticsDomains" type="array" default="[]" />
         <property name="googleAnalyticsCampaign" type="string" default="null" />
         <property name="metadata" type="array" default="[]" />
-        <property name="recipientMetadata" type="array" default="[]" />
-        <property name="attachments" type="array" default="[]" />
-        <property name="images" type="array" default="[]" />
+        <property name="attachments" type="MailAttachmentTransfer" collection="TransferArrayObject">
+            <add name="attachment" />
+        </property>
+        <property name="images" type="MailAttachmentTransfer" collection="TransferArrayObject">
+            <add name="image" />
+        </property>
     </transfer>
 
     <transfer name="MailTemplate">
