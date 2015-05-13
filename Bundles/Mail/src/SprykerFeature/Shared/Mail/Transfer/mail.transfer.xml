@@ -9,6 +9,7 @@
 
     <transfer name="MailAttachment">
         <property name="fileName" type="string" default="null" />
+        <property name="displayName" type="string" default="null" />
         <property name="attachmentUrl" type="string" default="null" />
         <property name="referenceId" type="string" default="null" />
     </transfer>
