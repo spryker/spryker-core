@@ -2,22 +2,8 @@
 
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
-interface ClassDefinitionInterface
+interface ClassDefinitionInterface extends DefinitionInterface
 {
-    /**
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * @return array
-     */
-    public function getUses();
-
-    /**
-     * @return array
-     */
-    public function getInterfaces();
 
     /**
      * @return array
@@ -27,10 +13,6 @@ interface ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getMethods();
-
-    /**
-     * @return array
-     */
     public function getConstructorDefinition();
+
 }

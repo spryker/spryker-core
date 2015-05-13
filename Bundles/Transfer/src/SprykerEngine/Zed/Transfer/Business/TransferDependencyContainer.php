@@ -33,11 +33,35 @@ class TransferDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
+     * @param MessengerInterface $messenger
+     *
+     * @return TransferGenerator
+     */
+    public function createTransferInterfaceGenerator(MessengerInterface $messenger)
+    {
+        return $this->getFactory()->createModelTransferGenerator(
+            $messenger,
+            $this->createInterfaceGenerator(),
+            $this->createTransferInterfaceDefinitionBuilder()
+        );
+    }
+
+    /**
      * @return ClassGenerator
      */
     private function createClassGenerator()
     {
         return $this->getFactory()->createModelGeneratorClassGenerator(
+            $this->getConfig()->getTargetDirectory()
+        );
+    }
+
+    /**
+     * @return ClassGenerator
+     */
+    private function createInterfaceGenerator()
+    {
+        return $this->getFactory()->createModelGeneratorInterfaceGenerator(
             $this->getConfig()->getTargetDirectory()
         );
     }
@@ -49,6 +73,17 @@ class TransferDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelGeneratorTransferDefinitionBuilder(
             $this->getFactory()->createModelGeneratorTransferDefinitionMerger(),
+            $this->getConfig()->getSourceDirectories()
+        );
+    }
+
+    /**
+     * @return TransferDefinitionBuilder
+     */
+    private function createTransferInterfaceDefinitionBuilder()
+    {
+        return $this->getFactory()->createModelGeneratorTransferDefinitionBuilder(
+            $this->getFactory()->createModelGeneratorTransferDefinitionNullMerger(),
             $this->getConfig()->getSourceDirectories()
         );
     }

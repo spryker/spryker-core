@@ -58,7 +58,7 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
             Criteria::EQUAL
         );
 
-        $expandableQuery = $this->productQueryContainer->joinLocalizedProductQueryWithAttributes($expandableQuery, $locale);
+        $expandableQuery = $this->productQueryContainer->joinProductQueryWithLocalizedAttributes($expandableQuery, $locale);
 
         $expandableQuery->addJoinObject(
             new Join(

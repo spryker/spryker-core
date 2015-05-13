@@ -35,6 +35,7 @@ class GeneratorConsole extends Console
 
         $facade->deleteGeneratedTransferObjects();
         $facade->generateTransferObjects($this->getMessenger());
+        $facade->generateTransferInterfaces($this->getMessenger());
     }
 
     /**

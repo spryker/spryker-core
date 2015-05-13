@@ -2,9 +2,7 @@
 
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
-use Symfony\Component\Config\Definition\Exception\Exception;
-
-class ClassGenerator implements GeneratorInterface
+class InterfaceGenerator implements GeneratorInterface
 {
 
     const TWIG_TEMPLATES_LOCATION = '/Templates/';
@@ -19,9 +17,6 @@ class ClassGenerator implements GeneratorInterface
      */
     protected $twig;
 
-    /**
-     * @param $targetDirectory
-     */
     public function __construct($targetDirectory)
     {
         $this->targetDirectory = $targetDirectory;
@@ -42,7 +37,7 @@ class ClassGenerator implements GeneratorInterface
     {
         $twigData = $this->getTwigData($definition);
         $fileName = $definition->getName() . '.php';
-        $fileContent = $this->twig->render('class.php.twig', $twigData);
+        $fileContent = $this->twig->render('interface.php.twig', $twigData);
 
         if (!is_dir($this->targetDirectory)) {
             mkdir($this->targetDirectory, 0755, true);
@@ -53,18 +48,14 @@ class ClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param ClassDefinitionInterface $classDefinition
+     * @param InterfaceDefinitionInterface $classDefinition
      *
      * @return array
      */
-    public function getTwigData(ClassDefinitionInterface $classDefinition)
+    public function getTwigData(InterfaceDefinitionInterface $classDefinition)
     {
         return [
-            'className' => $classDefinition->getName(),
-            'uses' => $classDefinition->getUses(),
-            'interfaces' => $classDefinition->getInterfaces(),
-            'constructorDefinition' => $classDefinition->getConstructorDefinition(),
-            'properties' => $classDefinition->getProperties(),
+            'name' => $classDefinition->getName(),
             'methods' => $classDefinition->getMethods()
         ];
     }

@@ -2,11 +2,7 @@
 
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
-use Zend\Config\Factory;
-
-class TransferDefinitionMerger
+class TransferDefinitionMerger implements TransferDefinitionMergerInterface
 {
 
     /**

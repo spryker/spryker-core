@@ -1,0 +1,22 @@
+{%- macro addSet(method) %}
+    /**
+     * @param {{ method.var }} ${{ method.property }}
+     *
+     * @return $this
+     */
+    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }});
+{% endmacro -%}
+{%- macro addGet(method) %}
+    /**
+     * @return {{ method.return }}
+     */
+    public function {{ method.name }}();
+{% endmacro -%}
+{%- macro addAdd(method) %}
+    /**
+     * @param {{ method.var }} ${{ method.property }}
+     *
+     * @return $this
+     */
+    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
+{% endmacro -%}

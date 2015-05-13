@@ -25,15 +25,15 @@ class TransferDefinitionBuilder
     private $mergedTransferDefinitions = [];
 
     /**
-     * @var TransferDefinitionMerger
+     * @var TransferDefinitionMergerInterface
      */
     private $transferDefinitionMerger;
 
     /**
-     * @param TransferDefinitionMerger $merger
+     * @param TransferDefinitionMergerInterface $merger
      * @param array $sourceDirectories
      */
-    public function __construct(TransferDefinitionMerger $merger, array $sourceDirectories)
+    public function __construct(TransferDefinitionMergerInterface $merger, array $sourceDirectories)
     {
         $this->transferDefinitionMerger = $merger;
         $this->sourceDirectories = $sourceDirectories;
