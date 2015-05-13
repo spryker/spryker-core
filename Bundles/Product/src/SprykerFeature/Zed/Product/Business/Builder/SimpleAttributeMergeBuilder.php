@@ -17,6 +17,7 @@ class SimpleAttributeMergeBuilder
             $productData['abstract_attributes'] = $this->normalizeAttributes($abstractAttributes);
             $concreteAttributes = explode('$%', $productData['concrete_attributes']);
             $concreteSkus = explode(',', $productData['concrete_skus']);
+            $concreteNames = explode(',', $productData['concrete_names']);
             $productData['concrete_products'] = [];
 
             $lastSku = '';
@@ -27,6 +28,7 @@ class SimpleAttributeMergeBuilder
 
                 $lastSku = $concreteSkus[$i];
                 $productData['concrete_products'][] = [
+                    'name' => $concreteNames[$i],
                     'sku' => $concreteSkus[$i],
                     'attributes' => json_decode($concreteAttributes[$i], true)
                 ];
