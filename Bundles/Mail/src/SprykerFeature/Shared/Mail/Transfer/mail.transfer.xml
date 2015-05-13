@@ -44,7 +44,7 @@
         <property name="templateContent" type="array" default="[]" />
         <property name="async" type="bool" default="false" />
         <property name="ipPool" type="string" default="null" />
-        <property name="sendAt" type="string" default="null" />
+        <property name="sendAt" type="\DateTime" default="null" />
         <property name="subject" type="string" default="null" />
         <property name="fromEmail" type="string" default="null" />
         <property name="fromName" type="string" default="null" />
