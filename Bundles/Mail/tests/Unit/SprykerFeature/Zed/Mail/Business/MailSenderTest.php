@@ -10,12 +10,16 @@ use Generated\Shared\Transfer\MailRecipientTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Mail\Business\MandrillMailSender;
 
+/**
+ * @group Zed
+ * @group Business
+ * @group Mail
+ * @group MailSenderTest
+ * @see https://mandrillapp.com/api/docs/messages.php.html#method-send-template
+ */
 class MailSenderTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @group Mail
-     * @see https://mandrillapp.com/api/docs/messages.php.html#method-send-template
-     */
+
     public function testSendMail()
     {
         $locator = Locator::getInstance();
