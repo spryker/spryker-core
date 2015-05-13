@@ -62,8 +62,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     public function getMetaTransfer($name)
     {
         if (isset($this->values['metaTransfers'][$name])) {
-            $transfer = (new TransferLocatorHelper())->createTransferFromClassName(
-                $this->locator,
+            $transfer = $this->createTransferObject(
                 $this->values['metaTransfers'][$name]['className']
             );
             $transfer->fromArray($this->values['metaTransfers'][$name]['data']);
@@ -148,14 +147,14 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     public function getTransfer()
     {
         if (!empty($this->values['transferClassName']) && !empty($this->values['transfer'])) {
-            $transfer = (new TransferLocatorHelper())->createTransferFromClassName(
-                $this->locator,
+            $transfer = $this->createTransferObject(
                 $this->values['transferClassName']
             );
             $transfer->fromArray($this->values['transfer']);
 
             return $transfer;
         }
+
         return null;
     }
 
@@ -165,7 +164,6 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
      */
     public function setTransfer(TransferInterface $transferObject)
     {
-
         $this->values['transfer'] = $transferObject->toArray(false);
         $this->values['transferClassName'] = get_class($transferObject);
 
@@ -188,5 +186,17 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     {
         $this->values['username'] = $username;
         return $this;
+    }
+
+    /**
+     * @param $transferClassName
+     *
+     * @return TransferInterface
+     */
+    private function createTransferObject($transferClassName)
+    {
+        $transfer = new $transferClassName();
+
+        return $transfer;
     }
 }

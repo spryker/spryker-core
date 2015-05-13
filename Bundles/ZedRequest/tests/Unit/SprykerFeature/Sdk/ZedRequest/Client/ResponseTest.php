@@ -6,13 +6,20 @@ use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Sdk\ZedRequest\Client\Response;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Locator;
+use Unit\SprykerFeature\Sdk\ZedRequest\Client\Fixture\TestTransfer;
 
 /**
- * @group Communication
+ * @group SprykerFeature
+ * @group Sdk
+ * @group ZedRequest
  */
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @param TransferInterface $transfer
+     * @return Response
+     */
     protected function createFullResponse(TransferInterface $transfer)
     {
         $response = new Response(Locator::getInstance());
@@ -41,9 +48,8 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $locator = Locator::getInstance();
 
-        $this->markTestSkipped();
-        $transfer = new \Generated\Shared\Transfer\SystemTestMainTransfer();
-        $transfer->setBar('string');
+        $transfer = new TestTransfer();
+        $transfer->setFoo('foo');
 
         $response = $this->createFullResponse($transfer);
 
@@ -57,18 +63,17 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testToArrayAndFromArray()
     {
-        $this->markTestSkipped();
         $locator = Locator::getInstance();
 
-        $transfer = new \Generated\Shared\Transfer\SystemTestMainTransfer();
-        $transfer->setBar('string');
+        $transfer = new TestTransfer();
+        $transfer->setFoo('foo');
 
         $response = $this->createFullResponse($transfer);
 
         $array = $response->toArray();
         $this->assertTrue(is_array($array), 'toArray does not return array');
 
-        $newResponse = new Response(Locator::getInstance(), $array);
+        $newResponse = new Response($locator, $array);
 
         $this->assertEquals($response, $newResponse);
         $this->assertNotSame($response, $newResponse);

@@ -6,8 +6,7 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\TransferLocatorHelper;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
-abstract class AbstractResponse extends AbstractObject implements
-    EmbeddedTransferInterface, ResponseInterface
+abstract class AbstractResponse extends AbstractObject implements EmbeddedTransferInterface, ResponseInterface
 {
     /**
      * @var array
@@ -61,12 +60,12 @@ abstract class AbstractResponse extends AbstractObject implements
 
     /**
      * @param string $messageString
+     *
      * @return bool
      */
     public function hasErrorMessage($messageString)
     {
         $errorMessages = $this->getErrorMessages();
-        /* @var Message $errorMessage */
         foreach ($errorMessages as $errorMessage) {
             if ($errorMessage->getMessage() === $messageString) {
                 return true;
@@ -78,6 +77,7 @@ abstract class AbstractResponse extends AbstractObject implements
 
     /**
      * @param array $errorMessages
+     *
      * @return $this
      */
     public function addErrorMessages(array $errorMessages)
@@ -85,16 +85,19 @@ abstract class AbstractResponse extends AbstractObject implements
         foreach ($errorMessages as $errorMessage) {
             $this->addErrorMessage($errorMessage);
         }
+
         return $this;
     }
 
     /**
      * @param Message $errorMessage
+     *
      * @return $this
      */
     public function addErrorMessage(Message $errorMessage)
     {
         $this->values['errorMessages'][] = $errorMessage;
+
         return $this;
     }
 
@@ -108,6 +111,7 @@ abstract class AbstractResponse extends AbstractObject implements
 
     /**
      * @param string $messageString
+     *
      * @return bool
      */
     public function hasMessage($messageString)
@@ -124,16 +128,19 @@ abstract class AbstractResponse extends AbstractObject implements
 
     /**
      * @param Message $message
+     *
      * @return $this
      */
     public function addMessage(Message $message)
     {
         $this->values['messages'][] = $message;
+
         return $this;
     }
 
     /**
      * @param array $messages
+     *
      * @return $this
      */
     public function addMessages(array $messages)
@@ -141,6 +148,7 @@ abstract class AbstractResponse extends AbstractObject implements
         foreach ($messages as $message) {
             $this->addMessage($message);
         }
+
         return $this;
     }
 
@@ -154,11 +162,13 @@ abstract class AbstractResponse extends AbstractObject implements
 
     /**
      * @param bool $success
+     *
      * @return $this
      */
     public function setSuccess($success)
     {
         $this->values['success'] = $success;
+
         return $this;
     }
 
@@ -167,10 +177,8 @@ abstract class AbstractResponse extends AbstractObject implements
      */
     public function getTransfer()
     {
-
         if (!empty($this->values['transferClassName']) && !empty($this->values['transfer'])) {
-            $transfer = (new TransferLocatorHelper())->createTransferFromClassName(
-                $this->locator,
+            $transfer = $this->createTransferObject(
                 $this->values['transferClassName']
             );
             $transfer->fromArray($this->values['transfer']);
@@ -178,6 +186,18 @@ abstract class AbstractResponse extends AbstractObject implements
             return $transfer;
         }
         return null;
+    }
+
+    /**
+     * @param $transferClassName
+     *
+     * @return TransferInterface
+     */
+    private function createTransferObject($transferClassName)
+    {
+        $transfer = new $transferClassName();
+
+        return $transfer;
     }
 
     /**
