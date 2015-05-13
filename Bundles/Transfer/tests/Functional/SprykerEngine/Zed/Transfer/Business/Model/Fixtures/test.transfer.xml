@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="Transfer">
+    <transfer name="CatFace">
         <interface name="Path\To\Interface" />
         <property name="name" type="string" />
         <property name="item" type="OrderItem" />

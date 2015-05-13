@@ -59,7 +59,7 @@ class TransferDefinitionLoader
     {
         $finder = new Finder();
 
-        $finder->in($sourceDirectories)->name('*.transfer.xml');
+        $finder->in($sourceDirectories)->name('*.transfer.xml')->depth('< 1');
 
         return $finder;
     }

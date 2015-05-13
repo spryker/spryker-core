@@ -11,7 +11,7 @@ use BundleNamespace\Shared\Bundle2\Transfer\AnotherInterface;
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
-class NameOfTransfer extends AbstractTransfer implements AInterface, AnotherInterface
+class FooBarTransfer extends AbstractTransfer implements AInterface, AnotherInterface
 {
 
     /**

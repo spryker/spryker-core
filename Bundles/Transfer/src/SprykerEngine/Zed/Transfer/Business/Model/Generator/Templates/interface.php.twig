@@ -13,6 +13,7 @@ use {{ use }};
  */
 interface {{ name }}
 {
+
 {% for methodName, method  in methods %}
 {% if methodName starts with 'set' %}
 {{ macro.addSet(method) }}

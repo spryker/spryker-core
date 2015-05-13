@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderItemTransfer;
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
-class Transfer extends AbstractTransfer implements Interface
+class CatFaceTransfer extends AbstractTransfer implements Interface
 {
 
     /**

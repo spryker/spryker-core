@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <transfers>
-    <transfer name="NameOfTransfer">
+    <transfer name="FooBar">
         <interface name="BundleNamespace\Shared\Bundle1\Transfer\AInterface" />
         <property name="name" type="string" />
     </transfer>
