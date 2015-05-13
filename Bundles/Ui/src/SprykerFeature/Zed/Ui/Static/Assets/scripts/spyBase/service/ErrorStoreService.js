@@ -22,6 +22,8 @@ require('Ui').ng
 
 			intercept : function(model, headers) {
 				_errors.push(model);
+
+				return model;
 			}
 		}
 	}]);
