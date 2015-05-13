@@ -5,7 +5,8 @@ namespace SprykerFeature\Zed\Application\Business\Model\Messenger;
 use SprykerFeature\Zed\Application\Business\Model\Messenger\Exception\MessageTypeNotFoundException;
 use SprykerFeature\Zed\Application\Business\Model\Messenger\Message\Message;
 use SprykerFeature\Zed\Application\Business\Model\Messenger\Message\MessageInterface;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface as LegacyMessengerInterface;
+use SprykerFeature\Zed\Application\Business\Model\Messenger\MessengerInterface;
 
 /**
  * Class Messenger
@@ -16,7 +17,7 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
  * @method Messenger addNotice($key, $options = [])
  * @method Messenger addWarning($key, $options = [])
  */
-class Messenger implements MessengerInterface
+class Messenger implements MessengerInterface, LegacyMessengerInterface
 {
     protected $validMessageTypes = [
         Message::MESSAGE_ALERT,
@@ -34,6 +35,11 @@ class Messenger implements MessengerInterface
      * @var MessageInterface[]
      */
     protected $messages = [];
+
+    /**
+     * @var ObservingPresenterInterface[]
+     */
+    protected $observingPresenters = [];
 
     /**
      * @param string $type
@@ -54,6 +60,8 @@ class Messenger implements MessengerInterface
             $message,
             $options
         );
+
+        $this->notify();
 
         return $this;
     }
@@ -280,5 +288,27 @@ class Messenger implements MessengerInterface
     public function log($level, $message, array $context = [])
     {
         return $this->add($level, $message, $context);
+    }
+
+    /**
+     * @param ObservingPresenterInterface $presenter
+     *
+     * @return MessengerInterface
+     */
+    public function registerPresenter(ObservingPresenterInterface $presenter)
+    {
+        $this->observingPresenters[] = $presenter;
+
+        return $this;
+    }
+
+    /**
+     * notifies registered presenters about available updates
+     */
+    protected function notify()
+    {
+        foreach ($this->observingPresenters as $presenter) {
+            $presenter->update();
+        }
     }
 }
