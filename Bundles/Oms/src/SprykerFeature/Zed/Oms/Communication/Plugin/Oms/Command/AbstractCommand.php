@@ -2,9 +2,10 @@
 
 namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command;
 
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
-abstract class AbstractCommand
+abstract class AbstractCommand extends AbstractPlugin
 {
 
     /**
@@ -16,5 +17,4 @@ abstract class AbstractCommand
     {
         $this->facadeSales->addNote($message, $orderEntity, $isSuccess, get_class($this));
     }
-
 }
