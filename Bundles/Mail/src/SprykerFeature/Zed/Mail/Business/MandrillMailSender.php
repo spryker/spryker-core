@@ -1,10 +1,12 @@
 <?php
 
-
 namespace SprykerFeature\Zed\Mail\Business;
 
-
-use Generated\Shared\Transfer\MailMailTransferTransfer;
+use Generated\Shared\Transfer\MailAttachmentTransfer;
+use Generated\Shared\Transfer\MailHeaderTransfer;
+use Generated\Shared\Transfer\MailMailTransfer;
+use Generated\Shared\Transfer\MailRecipientTransfer;
+use SprykerEngine\Shared\Transfer\TransferArrayObject;
 
 class MandrillMailSender implements MailSenderInterface
 {
@@ -29,12 +31,12 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param MailMailTransfer $mailTransfer
      *
      * @return array
      * @throws \Mandrill_Error
      */
-    public function sendMail(MailTransfer $mailTransfer)
+    public function sendMail(MailMailTransfer $mailTransfer)
     {
         $templateName = $mailTransfer->getTemplateName();
         $templateContent = $this->convertToJsonStyle($mailTransfer->getTemplateContent());
@@ -66,18 +68,16 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param MailMailTransfer $mailTransfer
      *
      * @return array
      */
-    protected function extractMessage(MailTransfer $mailTransfer)
+    protected function extractMessage(MailMailTransfer $mailTransfer)
     {
         return [
             'subject' => $mailTransfer->getSubject(),
             'from_email' => $mailTransfer->getFromEmail(),
             'from_name' => $mailTransfer->getFromName(),
-            'to' => $mailTransfer->getRecipients(),
-            'headers' => $mailTransfer->getHeaders(),
             'important' => $mailTransfer->isImportant(),
             'track_opens' => $mailTransfer->isTrackOpens(),
             'track_clicks' => $mailTransfer->isTrackClicks(),
@@ -87,6 +87,8 @@ class MandrillMailSender implements MailSenderInterface
             'url_strip_qs' => $mailTransfer->isUrlStripQueryString(),
             'preserve_recipients' => $mailTransfer->isPreserveRecipients(),
             'view_content_link' => $mailTransfer->isViewContentLink(),
+            'to' => $this->extractRecipients($mailTransfer->getRecipients()),
+            'headers' => $this->extractHeaders($mailTransfer->getHeaders()),
             'bcc_address' => $mailTransfer->getBccAddress(),
             'tracking_domain' => $mailTransfer->getTrackingDomain(),
             'signing_domain' => $mailTransfer->getSigningDomain(),
@@ -94,30 +96,33 @@ class MandrillMailSender implements MailSenderInterface
             'merge' => $mailTransfer->isMerge(),
             'merge_language' => $mailTransfer->getMergeLanguage(),
             'global_merge_vars' => $this->convertToJsonStyle($mailTransfer->getGlobalMergeVars()),
-            'merge_vars' => $this->extractMergeVars($mailTransfer->getRecipientMergeVars()),
+            'merge_vars' => $this->extractMergeVars($mailTransfer->getRecipients()),
             'tags' => $mailTransfer->getTags(),
             'subaccount' => $mailTransfer->getSubAccount(),
             'google_analytics_domains' => $mailTransfer->getGoogleAnalyticsDomains(),
             'google_analytics_campaign' => $mailTransfer->getGoogleAnalyticsCampaign(),
             'metadata' => $mailTransfer->getMetadata(),
-            'recipient_metadata' => $this->extractRecipientMetadata($mailTransfer->getRecipientMetadata()),
+            'recipient_metadata' => $this->extractRecipientMetadata($mailTransfer->getRecipients()),
             'attachments' => $this->extractFiles($mailTransfer->getAttachments()),
             'images' => $this->extractFiles($mailTransfer->getImages())
         ];
     }
 
     /**
-     * @param array $mergeVars
+     * @param TransferArrayObject $recipients
+     *
      * @return array
      */
-    protected function extractMergeVars(array $mergeVars)
+    protected function extractRecipients(TransferArrayObject $recipients)
     {
         $result = [];
 
-        foreach ($mergeVars as $recipientVars) {
+        /** @var MailRecipientTransfer $recipient */
+        foreach ($recipients as $recipient) {
             $result[] = [
-                'rcpt' => $recipientVars['recipient'],
-                'vars' => $this->convertToJsonStyle($recipientVars['vars'])
+                'email' => $recipient->getEmail(),
+                'name' => $recipient->getName(),
+                'type' => $recipient->getType(),
             ];
         }
 
@@ -125,17 +130,63 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param array $recipientMetadata
+     * @param TransferArrayObject $headers
      *
      * @return array
      */
-    protected function extractRecipientMetadata(array $recipientMetadata)
+    protected function extractHeaders(TransferArrayObject $headers)
     {
         $result = [];
+
+        /** @var MailHeaderTransfer $header */
+        foreach ($headers as $header) {
+            $result[$header->getKey()] = $header->getValue();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param TransferArrayObject $recipients
+     *
+     * @return array
+     */
+    protected function extractMergeVars(TransferArrayObject $recipients)
+    {
+        $result = [];
+
+        /** @var MailRecipientTransfer $recipient */
+        foreach ($recipients as $recipient) {
+            if (empty($recipient->getMergeVars())) {
+                continue;
+            }
+
+            $result[] = [
+                'rcpt' => $recipient->getEmail(),
+                'vars' => $this->convertToJsonStyle($recipient->getMergeVars())
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param TransferArrayObject $recipientMetadata
+     *
+     * @return array
+     */
+    protected function extractRecipientMetadata(TransferArrayObject $recipientMetadata)
+    {
+        $result = [];
+        /** @var MailRecipientTransfer $individualData */
         foreach ($recipientMetadata as $individualData) {
+            if (empty($individualData->getMetadata())) {
+                continue;
+            }
+
             $result[] = [
-                'rcpt' => $individualData['recipient'],
-                'values' => $individualData['vars']
+                'rcpt' => $individualData->getEmail(),
+                'values' => $individualData->getMetadata()
             ];
         }
 
@@ -143,18 +194,19 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param array $fileInfo
+     * @param TransferArrayObject $fileInfo
      *
      * @return array
      */
-    protected function extractFiles(array $fileInfo)
+    protected function extractFiles(TransferArrayObject $fileInfo)
     {
         $result = [];
+        /** @var MailAttachmentTransfer $file */
         foreach ($fileInfo as $file) {
             $result[] = [
-                'type' => $this->inclusionHandler->guessType($file['path']),
-                'name' => $file['name'] ? $file['name'] : $this->inclusionHandler->getFilename($file['path']),
-                'content' => $this->inclusionHandler->encodeBase64($file['path'])
+                'type' => $this->inclusionHandler->guessType($file->getFileName()),
+                'name' => $file->getDisplayName() ? $file->getDisplayName() : $this->inclusionHandler->getFilename($file->getFileName()),
+                'content' => $this->inclusionHandler->encodeBase64($file->getFileName())
             ];
         }
 
