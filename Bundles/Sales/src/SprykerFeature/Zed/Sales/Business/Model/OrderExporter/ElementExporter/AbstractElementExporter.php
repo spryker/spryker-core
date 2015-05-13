@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Sales\Business\Model\OrderExporter\ElementExporter;
 
+use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use SprykerFeature\Zed\Sales\Business\Model\OrderExporter;
 use SprykerFeature\Zed\Sales\Business\Model\OrderExporter\OrderExporterStrategy;
 use SprykerFeature\Zed\Sales\Business\Model\OrderExporter\ElementExporter\FieldFormatter\FieldFormatterInterface;
@@ -128,7 +129,7 @@ abstract class AbstractElementExporter implements ElementExporterInterface
     }
 
     /**
-     * This method is ment to be used with a SprykerFeature_Zed_Library_Propel_BaseObject e.g. a SalesOrderItem,
+     * This method is ment to be used with a ActiveRecordInterface e.g. a SalesOrderItem,
      * but to have the opertunity to override this method and use anything else please don´t use a type hint
      *
      * @param $element
@@ -137,8 +138,8 @@ abstract class AbstractElementExporter implements ElementExporterInterface
      */
     protected function getExportFields($element)
     {
-        if (!($element instanceof \SprykerFeature_Zed_Library_Propel_BaseObject)) {
-            throw new \InvalidArgumentException('Passed element to "getExportFields" must be a instance of "SprykerFeature_Zed_Library_Propel_BaseObject" or must be overwriten in your exporter!');
+        if (!($element instanceof ActiveRecordInterface)) {
+            throw new \InvalidArgumentException('Passed element to "getExportFields" must be a instance of "ActiveRecordInterface" or must be overwriten in your exporter!');
         }
         $exportFields = [];
         $orderElementArray = $element->toArray();
@@ -151,6 +152,7 @@ abstract class AbstractElementExporter implements ElementExporterInterface
             }
             $exportFields[$key] = $value;
         }
+
         return $exportFields;
     }
 

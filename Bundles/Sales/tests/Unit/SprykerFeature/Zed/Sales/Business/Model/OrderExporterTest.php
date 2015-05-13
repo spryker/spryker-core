@@ -1,23 +1,26 @@
 <?php
 
 namespace Unit\SprykerFeature\Zed\Sales\Business\Model;
+
 use SprykerFeature\Zed\Sales\Business\Model\OrderExporter;
 use SprykerFeature\Zed\Sales\Business\Model\OrderExporter\ElementExporter\Decorator\CsvDecorator;
 use SprykerFeature\Zed\Sales\Business\Model\OrderExporter\OrderExporterStrategy\CsvStrategy;
 use SprykerFeature\Zed\Sales\Business\Model\OrderExporter\ElementExporter\OrderElement;
 use Propel\Runtime\Collection\Collection;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 /**
- * Class OrderExportTest
- * @package Unit\SprykerFeature\Zed\Sales\Business\Model
- * @group OrderExport
+ * @group SprykerFeature
+ * @group Zed
+ * @group Sales
+ * @group Business
  */
 class OrderExporterTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testSetOrderCollectionShouldReturnExporter()
     {
-        $order = new \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder();
+        $order = new SpySalesOrder();
         $orderCollection = new Collection();
         $orderCollection->append($order);
         $strategy = new CsvStrategy();
@@ -48,8 +51,8 @@ class OrderExporterTest extends \PHPUnit_Framework_TestCase
 
     public function testExportShouldReturnTrue()
     {
-        $this->markTestSkipped('EntityLoader not longer supported');
-        $order = new \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder();
+//        $this->markTestSkipped('EntityLoader not longer supported');
+        $order = new SpySalesOrder();
         $orderCollection = new Collection();
         $orderCollection->append($order);
         $csvDecorator = new CsvDecorator([CsvDecorator::SEPARATOR => ';']);

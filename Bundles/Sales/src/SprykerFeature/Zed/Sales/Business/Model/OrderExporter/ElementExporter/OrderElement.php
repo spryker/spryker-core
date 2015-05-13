@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Sales\Business\Model\OrderExporter\ElementExporter;
 
 use SprykerFeature\Zed\Sales\Business\Model\OrderExporter;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 /**
  * Class Order
@@ -22,10 +23,11 @@ class OrderElement extends AbstractElementExporter
     }
 
     /**
-     * @param \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order
-     * @return OrderExporter|\SprykerFeature_Zed_Library_Propel_BaseObject
+     * @param SpySalesOrder $order
+     *
+     * @return SpySalesOrder
      */
-    public function getOrderElement(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order)
+    public function getOrderElement(SpySalesOrder $order)
     {
         return $order;
     }
