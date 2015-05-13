@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\Application\Business\Model\Messenger;
 
+use SprykerFeature\Zed\Application\Business\Model\Messenger\Message\MessageInterface;
+
 /**
  * Interface MessengerInterface
  *
