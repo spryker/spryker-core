@@ -1,0 +1,17 @@
+{
+  "name": "spryker/translation",
+  "autoload": {
+    "psr-0": {
+      "SprykerEngine": "src/",
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "require": {
+    "symfony/translation": "~2.3,<2.7"
+  },
+  "require-dev": {
+  }
+}
