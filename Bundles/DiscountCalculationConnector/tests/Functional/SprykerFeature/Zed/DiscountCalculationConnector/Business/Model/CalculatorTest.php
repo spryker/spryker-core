@@ -81,9 +81,11 @@ class CalculatorTest extends Test
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
         $discounts = $this->getPriceDiscountCollection();
+
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $discounts->addUsedCode($discount);
+
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_DISCOUNT_AMOUNT);
         $discounts->addUsedCode($discount);
@@ -92,7 +94,8 @@ class CalculatorTest extends Test
         $expense->setName(self::EXPENSE_NAME_SHIPPING_COSTS)
             ->setType(ExpenseConstants::EXPENSE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS)
-            ->setGrossPrice(self::ORDER_SHIPPING_COSTS);
+            ->setGrossPrice(self::ORDER_SHIPPING_COSTS)
+        ;
 
         $expensesCollection = $this->getExpenseCollection();
         $expensesCollection->addCalculationExpense($expense);
@@ -112,13 +115,14 @@ class CalculatorTest extends Test
             - self::ITEM_COUPON_DISCOUNT_AMOUNT
             - self::ITEM_DISCOUNT_AMOUNT;
 
-        $this->assertEquals($expected, $order->getTotals()->getGrandTotalWithDiscounts());
+        $totals = $order->getTotals();
+        $this->assertEquals($expected, $totals->getGrandTotalWithDiscounts());
 
-        foreach ($order->getItems() as $item) {
-            $this->assertEquals(
-                self::ITEM_GROSS_PRICE - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT,
-                $item->getPriceToPay()
-            );
+        $items = $order->getItems();
+        $expectedItemPriceToPay = self::ITEM_GROSS_PRICE - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT;
+
+        foreach ($items as $item) {
+            $this->assertEquals($expectedItemPriceToPay, $item->getPriceToPay());
         }
     }
 
@@ -152,23 +156,20 @@ class CalculatorTest extends Test
         $order = $calculator->recalculate($calculatorStack, $order);
         $calculator->recalculateTotals($calculatorStack, $order);
 
-        $this->assertEquals(
-            2 * self::ITEM_GROSS_PRICE + self::ORDER_SHIPPING_COSTS,
-            $order->getTotals()->getSubtotal()
-        );
+        $totals = $order->getTotals();
+        $expectedSubTotal = 2 * self::ITEM_GROSS_PRICE + self::ORDER_SHIPPING_COSTS;
+        $this->assertEquals($expectedSubTotal, $totals->getSubtotal());
 
-        $this->assertEquals(
-            self::ORDER_SHIPPING_COSTS + 2
-            * (self::ITEM_GROSS_PRICE - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT),
-            $order->getTotals()->getGrandTotalWithDiscounts()
-        );
+        $expectedGrandTotalWithDiscounts = self::ORDER_SHIPPING_COSTS + 2
+            * (self::ITEM_GROSS_PRICE - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT);
+        $this->assertEquals($expectedGrandTotalWithDiscounts, $totals->getGrandTotalWithDiscounts());
 
-        foreach ($order->getItems() as $item) {
-            $this->assertEquals(
-                self::ORDER_SHIPPING_COSTS / 2 + self::ITEM_GROSS_PRICE
-                - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT,
-                $item->getPriceToPay()
-            );
+        $items = $order->getItems();
+        $expectedItemPriceToPay = self::ORDER_SHIPPING_COSTS / 2 + self::ITEM_GROSS_PRICE
+            - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT;
+
+        foreach ($items as $item) {
+            $this->assertEquals($expectedItemPriceToPay, $item->getPriceToPay());
         }
     }
 

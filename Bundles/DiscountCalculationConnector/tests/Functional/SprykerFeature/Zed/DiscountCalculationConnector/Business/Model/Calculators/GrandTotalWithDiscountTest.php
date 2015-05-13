@@ -97,7 +97,9 @@ class GrandTotalWithDiscountTest extends Test
         $expense->setName(self::EXPENSE_NAME_SHIPPING_COSTS)
             ->setType(ExpenseConstants::EXPENSE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS)
-            ->setGrossPrice(self::ORDER_SHIPPING_COSTS);
+            ->setGrossPrice(self::ORDER_SHIPPING_COSTS)
+        ;
+
         $order->addExpense($expense);
 
         $totalsTransfer = $this->getTotals();

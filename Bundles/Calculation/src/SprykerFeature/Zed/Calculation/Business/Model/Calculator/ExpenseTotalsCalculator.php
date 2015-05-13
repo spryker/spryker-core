@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\CalculationExpensesTransfer;
 use Generated\Shared\Transfer\CalculationExpenseTotalItemTransfer;
 use Generated\Shared\Transfer\CalculationExpenseTotalsTransfer;
+use Generated\Shared\Transfer\CalculationExpenseTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface;
@@ -38,10 +39,14 @@ class ExpenseTotalsCalculator implements
     {
         $orderExpensesTotal = 0;
         if ($calculableContainer->getExpenses() instanceof CalculationExpensesTransfer) {
-            foreach ($calculableContainer->getExpenses()->getCalculationExpenses() as $expense) {
-                if (!is_null($expense->getGrossPrice())) {
-                    $orderExpensesTotal += $expense->getGrossPrice();
-                }
+            $expenses = $calculableContainer->getExpenses()->getCalculationExpenses();
+        } else {
+            $expenses = $calculableContainer->getExpenses();
+        }
+
+        foreach ($expenses as $expense) {
+            if (!is_null($expense->getGrossPrice())) {
+                $orderExpensesTotal += $expense->getGrossPrice();
             }
         }
 
@@ -56,8 +61,16 @@ class ExpenseTotalsCalculator implements
     {
         $itemExpenseTotal = 0;
         foreach ($calculableItems as $item) {
-            foreach ($item->getExpenses() as $expense) {
-                $itemExpenseTotal += $expense->getGrossPrice();
+            if ($item->getExpenses() instanceof CalculationExpensesTransfer) {
+                $expenses = $item->getExpenses()->getCalculationExpenses();
+            } else {
+                $expenses = $item->getExpenses();
+            }
+
+            foreach ($expenses as $expense) {
+                if (!is_null($expense->getGrossPrice())) {
+                    $itemExpenseTotal += $expense->getGrossPrice();
+                }
             }
         }
 
