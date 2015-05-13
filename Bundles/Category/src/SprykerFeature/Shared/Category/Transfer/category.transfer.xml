@@ -9,6 +9,7 @@
         <property name="isActive" type="string" default="null" />
         <property name="name" type="string" default="null" />
         <property name="url" type="string" default="null" />
+        <property name="imageName" type="string" default="null" />
     </transfer>
     <transfer name="CategoryCategoryNode">
 

@@ -35,6 +35,7 @@ class CategoryNodeFormatter implements CategoryNodeFormatterInterface
             'node_id' => $categoryNode['node_id'],
             'name' => $categoryNode['category_name'],
             'url' => $categoryNode['category_url'],
+            'image' => $categoryNode['category_image_name'],
             'children' => $this->nodeExploder->explodeGroupedNodes(
                 $categoryNode,
                 'category_child_ids',

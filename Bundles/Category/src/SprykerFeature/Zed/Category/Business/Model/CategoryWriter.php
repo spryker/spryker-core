@@ -110,6 +110,7 @@ class CategoryWriter implements CategoryWriterInterface
 
         $categoryAttributeEntity->setFkCategory($category->getIdCategory());
         $categoryAttributeEntity->setName($category->getName());
+        $categoryAttributeEntity->setCategoryImageName($category->getImageName());
         $categoryAttributeEntity->setFkLocale($locale->getIdLocale());
 
         $categoryAttributeEntity->save();

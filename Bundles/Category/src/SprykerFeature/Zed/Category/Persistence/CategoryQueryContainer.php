@@ -560,6 +560,10 @@ class CategoryQueryContainer extends AbstractQueryContainer
             $tableAlias . '.meta_description',
             'category_meta_description'
         );
+        $expandableQuery->withColumn(
+            $tableAlias . '.category_image_name',
+            'category_image_name'
+        );
 
         return $expandableQuery;
     }
