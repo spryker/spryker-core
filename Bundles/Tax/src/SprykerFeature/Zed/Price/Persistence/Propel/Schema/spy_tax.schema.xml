@@ -5,15 +5,14 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\Price\Persistence\Propel"
-          identifierQuoting="true"
           package="vendor.spryker.spryker.Bundles.Tax.src.SprykerFeature.Zed.Product.Persistence.Propel">
 
-    <table name="spy_tax_set" idMethod="native" allowPkInsert="true" phpName="SpyTaxSet" identifierQuoting="true">
+    <table name="spy_tax_set" idMethod="native" allowPkInsert="true" phpName="SpyTaxSet">
         <column name="id_tax_set" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="name" type="VARCHAR" size="255" required="true" />
     </table>
 
-    <table name="spy_tax_rate" idMethod="native" allowPkInsert="true" phpName="SpyTaxRate" identifierQuoting="true">
+    <table name="spy_tax_rate" idMethod="native" allowPkInsert="true" phpName="SpyTaxRate">
         <column name="id_tax_rate" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="name" type="VARCHAR" size="255" required="true" />
         <column name="rate" type="FLOAT" size="4" scale="2" required="true" />
