@@ -125,6 +125,8 @@ require('Ui').ng
 				}
 
 				function _onKeyDown(e) {
+					var item, y, h;
+
 					switch (e.keyCode) {
 						case 27 :	//ESC
 							if (scope.open) {
@@ -144,6 +146,13 @@ require('Ui').ng
 							scope.selectable = Math.max(scope.selectable - 1, 0);
 
 							if (!scope.open) scope.selectItem(scope.accepted[scope.selectable]);
+							else {
+								item = _list.children[scope.selectable];
+
+								h = item.clientHeight, y = scope.selectable * h;
+
+								if (_list.scrollTop > y) _list.scrollTop = y;
+							}
 
 							break;
 
@@ -151,6 +160,13 @@ require('Ui').ng
 							scope.selectable = Math.min(scope.selectable + 1, scope.accepted.length - 1);
 
 							if (!scope.open) scope.selectItem(scope.accepted[scope.selectable]);
+							else {
+								item = _list.children[scope.selectable];
+
+								h = item.clientHeight, y = scope.selectable * h;
+
+								if (_list.scrollTop + _list.clientHeight < y + h) _list.scrollTop = y + h - _list.clientHeight;
+							}
 
 							break;
 
