@@ -22,8 +22,8 @@
 <h5>Scope methods</h5>
 
 <dl>
-    <dt>trigger()</dt>
-    <dd>Triggers the action referenced by the <code>spy-action</code> attribute on the server.</dd>
+    <dt>update()</dt>
+    <dd>Triggers the action referenced by the <code>spy-action</code> attribute on the server and sends the supplied model.</dd>
     <dd>
         Emits an event that is catchable using the <code>spy-action-trigger</code> listener.
         Inside the listener the returned data is accessible by referencing <code>$argument</code>.
@@ -31,7 +31,7 @@
 </dl>
 
 <h5>Request</h5>
-<p>Action requests are static <code>GET</code> requests to the source referenced in the <code>spy-action</code> attribute of its markup.</p>
+<p>Action requests are <code>POST</code> requests to the source referenced in the <code>spy-action</code> attribute of its markup.</p>
 
 <h5>Response</h5>
 
