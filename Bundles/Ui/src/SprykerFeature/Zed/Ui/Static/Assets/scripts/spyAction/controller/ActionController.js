@@ -42,7 +42,7 @@ _ng
 
 						return model;
 					}, function(why) {
-						$scope.query = true;
+						$scope.query = false;
 
 						console.warn('SPY - action returned with errors');	//jshint ignore:line
 
