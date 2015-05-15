@@ -94,10 +94,9 @@
 	@extend %reset-list;
 
 	height:0;
-//	max-height:200px;		//FIX overflow-y triggers focus on ff
-//	overflow-x:hidden;
-//	overflow-y:auto;
-	overflow:hidden;
+	max-height:$_hLine * 6;
+	overflow-x:hidden;
+	overflow-y:auto;
 	white-space:nowrap;
 	@include pre(transition, height $_tFast ease-in);
 }
