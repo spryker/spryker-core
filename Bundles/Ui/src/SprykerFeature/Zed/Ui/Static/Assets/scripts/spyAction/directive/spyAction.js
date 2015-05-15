@@ -25,7 +25,7 @@ require('Ui').ng
 
 
 				function _onAction(e) {
-					scope.trigger();
+					scope.update();
 
 					e.preventDefault();
 					e.stopPropagation();
