@@ -1,3 +1,7 @@
+'use strict';
+
+
+
 require('Ui').ng
 	.module('spyBase')
 	.factory('ErrorStoreService', [function() {
@@ -25,5 +29,5 @@ require('Ui').ng
 
 				return model;
 			}
-		}
+		};
 	}]);
