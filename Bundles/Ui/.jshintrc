@@ -14,7 +14,7 @@
   "maxcomplexity" : 0,
   "maxdepth"      : 0,
   "maxerr"        : 10,
-  "maxparams"     : 0,
+  "maxparams"     : false,
   "maxstatements" : 0,
 
   "bitwise"      : false,
