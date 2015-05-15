@@ -9,3 +9,10 @@
 	@import 'control/index.scss';
 	@import 'field/index.scss';
 }
+
+.spy-layout.sparse,
+.spy-layout.compact {
+	.spy-layout.sparse {
+		@extend %reset-tile-default;
+	}
+}
