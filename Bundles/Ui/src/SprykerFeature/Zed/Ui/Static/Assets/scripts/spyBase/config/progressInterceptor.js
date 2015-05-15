@@ -16,6 +16,12 @@ require('Ui').ng
 				$window.dispatchEvent(new Event('query-resolve'));
 
 				return response;
+			},
+
+			responseError : function(response) {
+				$window.dispatchEvent(new Event('query-resolve'));
+
+				return response;
 			}
 		};
 	}]);
