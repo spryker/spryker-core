@@ -101,6 +101,10 @@
 	@include pre(transition, height $_tFast ease-in);
 }
 
+%field-select-list-transition {
+	overflow-y:hidden;
+}
+
 %field-select-list-hover {
 	@include pre(transition-timing-function, ease-out);
 }
