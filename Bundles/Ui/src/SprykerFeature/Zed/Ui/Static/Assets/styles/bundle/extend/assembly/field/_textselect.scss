@@ -18,6 +18,10 @@
 			@extend %field-select-list;
 		}
 
+		&.ng-animate ul {
+			@extend %field-select-list-transition;
+		}
+
 		li {
 			@extend %field-select-item;
 

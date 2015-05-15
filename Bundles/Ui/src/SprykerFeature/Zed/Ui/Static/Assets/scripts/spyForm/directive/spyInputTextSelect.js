@@ -45,11 +45,17 @@ require('Ui').ng
 						return;
 					}
 
-					var select = scope.model.accepts.filter(function(item, index, source) {
-						return item.label.match(now) !== null;
-					});
+					var select = scope.model.accepts
+						.filter(function(item, index, source) {
+							return item.label.match(now) !== null;
+						});
 
-					if (select.length === 1) {
+					if (
+						select.length === 1 || 
+						select.some(function(item, index, source) {
+							return item.label === now;
+						})
+					) {
 						scope.model.value = select[0].value;
 						scope.value = select[0].label;
 
@@ -95,6 +101,8 @@ require('Ui').ng
 
 
 				function _onKeyDown(e) {
+					var item, y, h;
+
 					switch(e.keyCode) {
 						case 32 :	//SPACE
 							if (scope.selectable === -1) return;
@@ -106,10 +114,20 @@ require('Ui').ng
 						case 38 :	//UP
 							scope.selectable = Math.max(scope.selectable - 1, 0);
 
+							item = _list.children[scope.selectable];
+							h = item.clientHeight, y = h * scope.selectable;
+
+							if (y < _list.scrollTop) _list.scrollTop = y;
+
 							break;
 
 						case 40 :	//DOWN
 							scope.selectable = Math.min(scope.selectable + 1, scope.selection.length -1);
+
+							item = _list.children[scope.selectable];
+							h = item.clientHeight, y = h * scope.selectable;
+
+							if (y + h > _list.scrollTop + _list.clientHeight) _list.scrollTop = y + h - _list.clientHeight;
 
 							break;
 
