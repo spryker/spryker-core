@@ -3,7 +3,7 @@
 namespace Functional\SprykerFeature\Zed\User;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\UserUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
@@ -56,7 +56,7 @@ class UserTest extends Test
     /**
      * @param $data
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     private function mockAddUser($data)
     {
@@ -66,11 +66,11 @@ class UserTest extends Test
     /**
      * @param $data
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     private function mockUserTransfer($data)
     {
-        $dto = new UserUserTransfer();
+        $dto = new UserTransfer();
 
         $dto->setFirstName($data['firstName']);
         $dto->setLastName($data['lastName']);
@@ -86,7 +86,7 @@ class UserTest extends Test
 
         $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $user);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
         $this->assertNotNull($user->getIdUserUser());
         $this->assertEquals($data['firstName'], $user->getFirstName());
         $this->assertEquals($data['lastName'], $user->getLastName());
@@ -101,7 +101,7 @@ class UserTest extends Test
         $data = $this->mockUserData();
         $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $user);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
 
         $this->userFacade->removeUser($user->getIdUserUser());
         $this->userFacade->getUserById($user->getIdUserUser());
@@ -122,7 +122,7 @@ class UserTest extends Test
         $userTest = clone $user;
         $finalUser = $this->userFacade->updateUser($userTest);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $finalUser);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $finalUser);
         $this->assertEquals($user->getFirstName(), $finalUser->getFirstName());
         $this->assertEquals($user->getLastName(), $finalUser->getLastName());
         $this->assertEquals($user->getUsername(), $finalUser->getUsername());
@@ -146,7 +146,7 @@ class UserTest extends Test
         $userTest = clone $user;
         $finalUser = $this->userFacade->updateUser($userTest);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $finalUser);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $finalUser);
         $this->assertEquals($user->getFirstName(), $finalUser->getFirstName());
         $this->assertEquals($user->getLastName(), $finalUser->getLastName());
         $this->assertEquals($user->getUsername(), $finalUser->getUsername());
@@ -162,7 +162,7 @@ class UserTest extends Test
 
         $user = $this->userFacade->getUserByUsername($data['username']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $user);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
         $this->assertEquals($user->getIdUserUser(), $mock->getIdUserUser());
         $this->assertEquals($user->getFirstName(), $mock->getFirstName());
         $this->assertEquals($user->getLastName(), $mock->getLastName());
@@ -177,7 +177,7 @@ class UserTest extends Test
 
         $user = $this->userFacade->getUserById($mock->getIdUserUser());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $user);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
         $this->assertEquals($user->getIdUserUser(), $mock->getIdUserUser());
         $this->assertEquals($user->getFirstName(), $mock->getFirstName());
         $this->assertEquals($user->getLastName(), $mock->getLastName());

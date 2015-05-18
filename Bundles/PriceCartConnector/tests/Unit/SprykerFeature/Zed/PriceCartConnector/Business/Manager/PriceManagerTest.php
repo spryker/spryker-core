@@ -4,7 +4,7 @@ namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business;
 
 use Generated\Shared\Transfer\Cart2ItemsTransfer;
 use Generated\Shared\Transfer\Cart2ItemTransfer;
-use Generated\Shared\Transfer\CartCartItemTransfer;
+use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManager;

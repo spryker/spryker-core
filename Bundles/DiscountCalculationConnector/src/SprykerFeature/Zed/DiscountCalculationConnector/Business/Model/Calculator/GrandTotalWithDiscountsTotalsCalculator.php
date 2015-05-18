@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;

@@ -20,7 +20,7 @@ interface DiscountableInterface
     public function getDiscounts();
 
     /**
-     * @param CalculationDiscountTransfer $discount
+     * @param DiscountTransfer $discount
      *
      * @return $this
      */

@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use SprykerFeature\Shared\Library\TransferLoader;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Shared\Catalog\Code\ProductAttributeConstantInterface;
 
 class DefaultOrderSplitBundleItemBuilder extends OrderItemBuilder implements ProductAttributeConstantInterface
@@ -164,7 +164,7 @@ class DefaultOrderSplitBundleItemBuilder extends OrderItemBuilder implements Pro
      */
     protected function createRecalculationItemTransfer(OrderItem $bundleTransferItem, ReadOnlyProductComposite $productComposite)
     {
-        $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $item = new \Generated\Shared\Transfer\OrderItemTransfer();
         $grossPrice = $this->facadeCatalog->getProductPriceBySku($productComposite->getSku());
 
         $item->setSku($productComposite->getSku());

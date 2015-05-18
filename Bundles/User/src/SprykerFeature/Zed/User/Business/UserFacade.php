@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\User\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\Transfer\UserUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 
 /**
  * @method UserDependencyContainer getDependencyContainer()
@@ -33,7 +33,7 @@ class UserFacade extends AbstractFacade
     /**
      * @param string $username
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     public function getUserByUsername($username)
     {
@@ -45,7 +45,7 @@ class UserFacade extends AbstractFacade
     /**
      * @param int $idUser
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     public function getUserById($idUser)
     {
@@ -60,7 +60,7 @@ class UserFacade extends AbstractFacade
      * @param string $username
      * @param string $password
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     public function addUser($firstName, $lastName, $username, $password)
     {
@@ -70,12 +70,12 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws Exception\UserNotFoundException
      */
-    public function updateUser(UserUserTransfer $user)
+    public function updateUser(UserTransfer $user)
     {
         return $this->getDependencyContainer()
             ->getUserModel()
@@ -83,11 +83,11 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
      * @return mixed
      */
-    public function setCurrentUser(UserUserTransfer $user)
+    public function setCurrentUser(UserTransfer $user)
     {
         return $this->getDependencyContainer()
             ->getUserModel()
@@ -95,7 +95,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     public function getCurrentUser()
     {
@@ -128,11 +128,11 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
      * @return bool
      */
-    public function isSystemUser(UserUserTransfer $user)
+    public function isSystemUser(UserTransfer $user)
     {
         return $this->getDependencyContainer()
             ->getUserModel()
@@ -140,7 +140,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     public function getSystemUsers()
     {
@@ -150,7 +150,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     public function getUsers()
     {

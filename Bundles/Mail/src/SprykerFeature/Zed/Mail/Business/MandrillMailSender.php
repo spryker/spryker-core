@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Mail\Business;
 
 use Generated\Shared\Transfer\MailAttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
-use Generated\Shared\Transfer\MailMailTransfer;
+use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use SprykerEngine\Shared\Transfer\TransferArrayObject;
 

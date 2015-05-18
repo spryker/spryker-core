@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
-use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
-use Generated\Shared\Transfer\CalculationTaxTransfer;
+use Generated\Shared\Transfer\DiscountTotalsTransfer;
+use Generated\Shared\Transfer\TaxTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface TotalsInterface extends TransferInterface
@@ -45,11 +45,11 @@ interface TotalsInterface extends TransferInterface
     public function getExpenses();
 
     /**
-     * @param CalculationDiscountTotalsTransfer $discount
+     * @param DiscountTotalsTransfer $discount
      *
      * @return $this
      */
-    public function setDiscount(CalculationDiscountTotalsTransfer $discount);
+    public function setDiscount(DiscountTotalsTransfer $discount);
 
     /**
      * @return DiscountTotalsInterface
@@ -57,11 +57,11 @@ interface TotalsInterface extends TransferInterface
     public function getDiscount();
 
     /**
-     * @param CalculationTaxTransfer $tax
+     * @param TaxTransfer $tax
      *
      * @return $this
      */
-    public function setTax(CalculationTaxTransfer $tax);
+    public function setTax(TaxTransfer $tax);
 
     /**
      * @return TaxInterface

@@ -6,8 +6,8 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
-use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\CmsPageKeyMappingTransfer;
+use Generated\Shared\Transfer\PageTransfer;
+use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use SprykerFeature\Zed\Cms\Business\Template\TemplateManagerInterface;
@@ -78,7 +78,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @param int $idPage
      * @param string $placeholder
      *
-     * @return CmsPageKeyMappingTransfer
+     * @return PageKeyMappingTransfer
      * @throws MissingGlossaryKeyMappingException
      */
     public function getPagePlaceholderMapping($idPage, $placeholder)
@@ -99,11 +99,11 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param CmsPageKeyMappingTransfer $pageKeyMapping
+     * @param PageKeyMappingTransfer $pageKeyMapping
      *
-     * @return CmsPageKeyMappingTransfer
+     * @return PageKeyMappingTransfer
      */
-    public function savePageKeyMapping(CmsPageKeyMappingTransfer $pageKeyMapping)
+    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping)
     {
         if (is_null($pageKeyMapping->getIdCmsGlossaryKeyMapping())) {
             return $this->createPageKeyMapping($pageKeyMapping);
@@ -113,14 +113,14 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param CmsPageKeyMappingTransfer $pageKeyMapping
+     * @param PageKeyMappingTransfer $pageKeyMapping
      *
-     * @return CmsPageKeyMappingTransfer
+     * @return PageKeyMappingTransfer
      * @throws MappingAmbiguousException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function createPageKeyMapping(CmsPageKeyMappingTransfer $pageKeyMapping)
+    protected function createPageKeyMapping(PageKeyMappingTransfer $pageKeyMapping)
     {
         $this->checkPagePlaceholderNotAmbiguous($pageKeyMapping->getFkPage(), $pageKeyMapping->getPlaceholder());
 
@@ -134,15 +134,15 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param CmsPageKeyMappingTransfer $pageKeyMapping
+     * @param PageKeyMappingTransfer $pageKeyMapping
      *
-     * @return CmsPageKeyMappingTransfer
+     * @return PageKeyMappingTransfer
      * @throws MappingAmbiguousException
      * @throws MissingGlossaryKeyMappingException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function updatePageKeyMapping(CmsPageKeyMappingTransfer $pageKeyMapping)
+    protected function updatePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping)
     {
         $mappingEntity = $this->getGlossaryKeyMappingById($pageKeyMapping->getIdCmsGlossaryKeyMapping());
         $mappingEntity->fromArray($pageKeyMapping->toArray());
@@ -217,13 +217,13 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      * @param string $placeholder
      * @param string $value
      *
-     * @return CmsPageKeyMappingTransfer
+     * @return PageKeyMappingTransfer
      */
-    public function addPlaceholderText(CmsPageTransfer $page, $placeholder, $value)
+    public function addPlaceholderText(PageTransfer $page, $placeholder, $value)
     {
         $template = $this->templateManager->getTemplateById($page->getFkTemplate());
 
@@ -234,7 +234,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
         $idKey = $this->glossaryFacade->createKey($keyName);
         $this->glossaryFacade->createTranslationForCurrentLocale($keyName, $value);
 
-        $pageKeyMapping = new CmsPageKeyMappingTransfer();
+        $pageKeyMapping = new PageKeyMappingTransfer();
         $pageKeyMapping->setFkGlossaryKey($idKey);
         $pageKeyMapping->setPlaceholder($placeholder);
         $pageKeyMapping->setFkPage($page->getIdCmsPage());
@@ -270,7 +270,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      * @param string $placeholder
      *
      * @return bool
@@ -278,7 +278,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @throws \Exception
      * @throws PropelException
      */
-    public function deletePageKeyMapping(CmsPageTransfer $page, $placeholder)
+    public function deletePageKeyMapping(PageTransfer $page, $placeholder)
     {
         $mappingQuery = $this->cmsQueryContainer->queryGlossaryKeyMapping($page->getIdCmsPage(), $placeholder);
         $mappingQuery->delete();
@@ -289,11 +289,11 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     /**
      * @param SpyCmsGlossaryKeyMapping $mappingEntity
      *
-     * @return CmsPageKeyMappingTransfer
+     * @return PageKeyMappingTransfer
      */
     protected function convertMappingEntityToTransfer(SpyCmsGlossaryKeyMapping $mappingEntity)
     {
-        $mappingTransfer = new CmsPageKeyMappingTransfer();
+        $mappingTransfer = new PageKeyMappingTransfer();
         $mappingTransfer->fromArray($mappingEntity->toArray());
 
         return $mappingTransfer;

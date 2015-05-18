@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
-use Generated\Shared\Transfer\CustomerCustomerTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
 use Generated\Shared\Transfer\CustomerCustomer as CustomerTransferTransfer;
 use Generated\Shared\Transfer\CustomerAddress as AddressTransferTransfer;
@@ -11,49 +11,49 @@ use Generated\Shared\Transfer\CustomerAddress as AddressTransferTransfer;
 class SdkController extends AbstractSdkController
 {
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function registerAction(CustomerCustomerTransfer $customerTransfer)
+    public function registerAction(CustomerTransfer $customerTransfer)
     {
         return $this->getLocator()->customer()->facade()->registerCustomer($customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function confirmRegistrationAction(CustomerCustomerTransfer $customerTransfer)
+    public function confirmRegistrationAction(CustomerTransfer $customerTransfer)
     {
         return $this->getLocator()->customer()->facade()->confirmRegistration($customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function forgotPasswordAction(CustomerCustomerTransfer $customerTransfer)
+    public function forgotPasswordAction(CustomerTransfer $customerTransfer)
     {
         return $this->getLocator()->customer()->facade()->forgotPassword($customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function restorePasswordAction(CustomerCustomerTransfer $customerTransfer)
+    public function restorePasswordAction(CustomerTransfer $customerTransfer)
     {
         return $this->getLocator()->customer()->facade()->restorePassword($customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      */
-    public function deleteAction(CustomerCustomerTransfer $customerTransfer)
+    public function deleteAction(CustomerTransfer $customerTransfer)
     {
         $success = $this->getLocator()->customer()->facade()->deleteCustomer($customerTransfer);
         $this->setSuccess($success);
@@ -62,21 +62,21 @@ class SdkController extends AbstractSdkController
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function customerAction(CustomerCustomerTransfer $customerTransfer)
+    public function customerAction(CustomerTransfer $customerTransfer)
     {
         return $this->getLocator()->customer()->facade()->getCustomer($customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function updateAction(CustomerCustomerTransfer $customerTransfer)
+    public function updateAction(CustomerTransfer $customerTransfer)
     {
         $success = $this->getLocator()->customer()->facade()->updateCustomer($customerTransfer);
         $this->setSuccess($success);

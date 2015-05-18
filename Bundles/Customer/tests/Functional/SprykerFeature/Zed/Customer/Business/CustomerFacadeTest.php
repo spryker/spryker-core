@@ -4,7 +4,7 @@ namespace Functional\SprykerFeature\Zed\Customer\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
-use Generated\Shared\Transfer\CustomerCustomerTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
@@ -40,11 +40,11 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
     protected function createTestCustomerTransfer()
     {
-        $customerTransfer = new CustomerCustomerTransfer();
+        $customerTransfer = new CustomerTransfer();
         $customerTransfer->setEmail(self::TESTER_EMAIL);
         $customerTransfer->setPassword(self::TESTER_PASSWORD);
 
@@ -52,11 +52,11 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerAddressTransfer
      */
-    protected function createTestAddressTransfer(CustomerCustomerTransfer $customerTransfer)
+    protected function createTestAddressTransfer(CustomerTransfer $customerTransfer)
     {
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
@@ -70,7 +70,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
     protected function createTestCustomer()
     {
@@ -82,11 +82,11 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerAddressTransfer
      */
-    protected function createTestAddress(CustomerCustomerTransfer $customerTransfer)
+    protected function createTestAddress(CustomerTransfer $customerTransfer)
     {
         $addressTransfer = $this->createTestAddressTransfer($customerTransfer);
         $addressTransfer = $this->locator->customer()->facade()->newAddress($addressTransfer);
@@ -95,11 +95,11 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function getTestCustomerTransfer(CustomerCustomerTransfer $customerTransfer)
+    public function getTestCustomerTransfer(CustomerTransfer $customerTransfer)
     {
         $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
 

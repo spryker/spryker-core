@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
-use Generated\Shared\Transfer\PayoneApiCallResponseCheckTransfer;
+use Generated\Shared\Transfer\ApiCallResponseCheckTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\ApiCallResponseCheckInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface;
@@ -15,7 +15,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseConta
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
-use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
+use Generated\Shared\Transfer\AuthorizationCheckResponseTransfer;
 
 
 /**
@@ -92,7 +92,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param PaymentInterface $payment
-     * @return PayoneAuthorizationCheckResponseTransfer
+     * @return AuthorizationCheckResponseTransfer
      */
     public function getAuthorizationResponse(PaymentInterface $payment)
     {

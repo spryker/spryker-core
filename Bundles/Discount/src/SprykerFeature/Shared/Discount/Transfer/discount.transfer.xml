@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="DiscountDiscount">
+    <transfer name="Discount">
         <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
         <property name="idDiscount" type="int" />
         <property name="fkDiscountVoucherPool" type="int" />
@@ -18,7 +18,7 @@
         <property name="validTo" type="string" />
     </transfer>
 
-    <transfer name="DiscountDiscountDecisionRule">
+    <transfer name="DecisionRule">
         <property name="idDiscountDecisionRule" type="int" />
         <property name="fkDiscount" type="int" />
         <property name="name" type="string" />
@@ -26,14 +26,14 @@
         <property name="value" type="string" />
     </transfer>
 
-    <transfer name="DiscountDiscountVoucher">
+    <transfer name="Voucher">
         <property name="idDiscountVoucher" type="int" />
         <property name="fkDiscountVoucherPool" type="int" />
         <property name="code" type="string" />
         <property name="isActive" type="string" />
     </transfer>
 
-    <transfer name="DiscountDiscountVoucherPool">
+    <transfer name="VoucherPool">
         <property name="idDiscountVoucherPool" type="int" />
         <property name="fkDiscountVoucherPoolCategory" type="int" />
         <property name="name" type="string" />
@@ -42,7 +42,7 @@
         <property name="isInfinitelyUsable" type="string" />
     </transfer>
 
-    <transfer name="DiscountDiscountVoucherPoolCategory">
+    <transfer name="VoucherPoolCategory">
         <property name="idDiscountVoucherPoolCategory" type="int" />
         <property name="name" type="string" />
     </transfer>

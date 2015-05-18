@@ -3,15 +3,15 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
-use Generated\Shared\Transfer\CalculationExpenseTotalsTransfer;
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\DiscountTotalsTransfer;
+use Generated\Shared\Transfer\ExpenseTotalsTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\CalculationDiscountTransfer;
-use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
@@ -117,13 +117,13 @@ class GrandTotalTest extends Test
     }
 
     /**
-     * @return CalculationTotalsTransfer
+     * @return TotalsTransfer
      */
     protected function getPriceTotals()
     {
-        $totals = new CalculationTotalsTransfer();
-        $totals->setExpenses(new CalculationExpenseTotalsTransfer());
-        $totals->setDiscount(new CalculationDiscountTotalsTransfer());
+        $totals = new TotalsTransfer();
+        $totals->setExpenses(new ExpenseTotalsTransfer());
+        $totals->setDiscount(new DiscountTotalsTransfer());
 
         return $totals;
     }
@@ -137,36 +137,36 @@ class GrandTotalTest extends Test
     }
 
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new SalesOrderTransfer();
+        $order = new OrderTransfer();
         $order->setItems(new OrderItemsTransfer());
-        $totalsTransfer = new CalculationTotalsTransfer();
-        $totalsTransfer->setExpenses(new CalculationExpenseTotalsTransfer());
+        $totalsTransfer = new TotalsTransfer();
+        $totalsTransfer->setExpenses(new ExpenseTotalsTransfer());
         $order->setTotals($totalsTransfer);
-        $order->setExpenses(new CalculationExpenseTransfer());
+        $order->setExpenses(new ExpenseTransfer());
 
         return $order;
     }
 
     /**
-     * @return SalesOrderItemTransfer
+     * @return OrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
 
         return $item;
     }
 
     /**
-     * @return CalculationExpenseTransfer
+     * @return ExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {
-        $expense = new CalculationExpenseTransfer();
+        $expense = new ExpenseTransfer();
 
         return $expense;
     }

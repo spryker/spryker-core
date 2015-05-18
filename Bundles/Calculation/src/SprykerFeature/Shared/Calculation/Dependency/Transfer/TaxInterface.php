@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
-use Generated\Shared\Transfer\CalculationTaxItemTransfer;
+use Generated\Shared\Transfer\TaxItemTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface TaxInterface extends TransferInterface
@@ -32,9 +32,9 @@ interface TaxInterface extends TransferInterface
     public function getTaxRates();
 
     /**
-     * @param CalculationTaxItemTransfer $taxRate
+     * @param TaxItemTransfer $taxRate
      *
      * @return $this
      */
-    public function addTaxRate(CalculationTaxItemTransfer $taxRate);
+    public function addTaxRate(TaxItemTransfer $taxRate);
 }

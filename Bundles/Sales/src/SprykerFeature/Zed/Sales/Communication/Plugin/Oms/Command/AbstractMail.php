@@ -1,7 +1,7 @@
 <?php
 namespace SprykerFeature\Zed\Sales\Communication\Plugin\Oms\Command;
 
-use Generated\Shared\Transfer\MailMailTransfer;
+use Generated\Shared\Transfer\MailTransfer;
 use SprykerFeature\Zed\Mail\Business\Model\Adapter\DatabaseQueueMailAdapter;
 use SprykerFeature\Zed\Mail\Business\Model\Adapter\DirectMailAdapter;
 use SprykerFeature\Zed\Mail\Business\Model\Provider\MailProviderResponse;

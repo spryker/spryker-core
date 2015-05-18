@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Sdk\Checkout\Model;
 
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Shared\Library\Communication\Response;
 use SprykerFeature\Shared\ZedRequest\Client\AbstractZedClient;
 

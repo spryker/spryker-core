@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
-use Generated\Shared\Transfer\SalesDiscountTotalItemTransfer;
+use Generated\Shared\Transfer\DiscountTotalsTransfer;
+use Generated\Shared\Transfer\DiscountTotalItemTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableExpenseInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
@@ -59,13 +59,13 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
      * @param DiscountableContainerInterface $discountableContainer
      * @param \ArrayObject $discountableContainers
      *
-     * @return CalculationDiscountTotalsTransfer
+     * @return DiscountTotalsTransfer
      */
     protected function createDiscountTransfer(
         DiscountableContainerInterface $discountableContainer,
         \ArrayObject $discountableContainers
     ) {
-        $discountTransfer = new CalculationDiscountTotalsTransfer();
+        $discountTransfer = new DiscountTotalsTransfer();
         $discountTransfer->setTotalAmount($this->calculateDiscount($discountableContainer, $discountableContainers));
 
         foreach ($this->sumDiscountItems($discountableContainer, $discountableContainers) as $discountTotalItem) {
@@ -137,11 +137,11 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @return SalesDiscountTotalItemTransfer
+     * @return DiscountTotalItemTransfer
      */
     protected function getDiscountTotalItem()
     {
-        return new SalesDiscountTotalItemTransfer();
+        return new DiscountTotalItemTransfer();
     }
 
     /**

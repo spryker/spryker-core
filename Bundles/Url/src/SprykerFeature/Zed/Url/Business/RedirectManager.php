@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlRedirectTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\RedirectTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
@@ -89,23 +89,23 @@ class RedirectManager implements RedirectManagerInterface
     /**
      * @param SpyRedirect $redirectEntity
      *
-     * @return UrlRedirectTransfer
+     * @return RedirectTransfer
      */
     public function convertRedirectEntityToTransfer(SpyRedirect $redirectEntity)
     {
-        $transferRedirect = new UrlRedirectTransfer();
+        $transferRedirect = new RedirectTransfer();
         $transferRedirect->fromArray($redirectEntity->toArray());
 
         return $transferRedirect;
     }
 
     /**
-     * @param UrlRedirectTransfer $redirect
+     * @param RedirectTransfer $redirect
      *
-     * @return UrlRedirectTransfer
+     * @return RedirectTransfer
      * @throws RedirectExistsException
      */
-    public function saveRedirect(UrlRedirectTransfer $redirect)
+    public function saveRedirect(RedirectTransfer $redirect)
     {
         if (is_null($redirect->getIdRedirect())) {
             return $this->createRedirectFromTransfer($redirect);
@@ -115,14 +115,14 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
-     * @param UrlRedirectTransfer $redirectTransfer
+     * @param RedirectTransfer $redirectTransfer
      *
-     * @return UrlRedirectTransfer
+     * @return RedirectTransfer
      * @throws RedirectExistsException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function createRedirectFromTransfer(UrlRedirectTransfer $redirectTransfer)
+    protected function createRedirectFromTransfer(RedirectTransfer $redirectTransfer)
     {
         $redirectEntity = $this->locator->url()->entitySpyRedirect();
 
@@ -139,14 +139,14 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
-     * @param UrlRedirectTransfer $redirectTransfer
+     * @param RedirectTransfer $redirectTransfer
      *
-     * @return UrlRedirectTransfer
+     * @return RedirectTransfer
      * @throws MissingRedirectException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function updateRedirectFromTransfer(UrlRedirectTransfer $redirectTransfer)
+    protected function updateRedirectFromTransfer(RedirectTransfer $redirectTransfer)
     {
         $redirectEntity = $this->getRedirectById($redirectTransfer->getIdRedirect());
         $redirectEntity->fromArray($redirectTransfer->toArray());
@@ -182,9 +182,9 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
-     * @param UrlRedirectTransfer $redirect
+     * @param RedirectTransfer $redirect
      */
-    public function touchRedirectActive(UrlRedirectTransfer $redirect)
+    public function touchRedirectActive(RedirectTransfer $redirect)
     {
         $this->touchFacade->touchActive(self::ITEM_TYPE_REDIRECT, $redirect->getIdRedirect());
     }
@@ -194,7 +194,7 @@ class RedirectManager implements RedirectManagerInterface
      * @param LocaleTransfer $locale
      * @param int $idRedirect
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
      * @throws MissingRedirectException

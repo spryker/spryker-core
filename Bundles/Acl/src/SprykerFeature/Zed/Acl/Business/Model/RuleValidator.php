@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
-use Generated\Shared\Transfer\AclRuleTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RulesTransfer;
 use SprykerFeature\Zed\Acl\AclConfig;
 
@@ -77,9 +77,9 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param AclRuleTransfer $rule
+     * @param RuleTransfer $rule
      */
-    public function addRule(AclRuleTransfer $rule)
+    public function addRule(RuleTransfer $rule)
     {
         switch ($rule->getType()) {
             case 'allow':
@@ -93,21 +93,21 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param AclRuleTransfer $rule
+     * @param RuleTransfer $rule
      *
      * @return int
      */
-    protected function addAllowedRule(AclRuleTransfer $rule)
+    protected function addAllowedRule(RuleTransfer $rule)
     {
         return array_push($this->allowedRules, $rule);
     }
 
     /**
-     * @param AclRuleTransfer $rule
+     * @param RuleTransfer $rule
      *
      * @return int
      */
-    protected function addDeniedRule(AclRuleTransfer $rule)
+    protected function addDeniedRule(RuleTransfer $rule)
     {
         return array_push($this->deniedRules, $rule);
     }
@@ -129,13 +129,13 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param AclRuleTransfer $rule
+     * @param RuleTransfer $rule
      * @param string $bundle
      * @param string $controller
      * @param string $action
      * @return bool
      */
-    public function assert(AclRuleTransfer $rule, $bundle, $controller, $action)
+    public function assert(RuleTransfer $rule, $bundle, $controller, $action)
     {
         if (($rule->getBundle() === $bundle || $rule->getBundle() === AclConfig::VALIDATOR_WILDCARD) &&
             ($rule->getController() === $controller || $rule->getController() === AclConfig::VALIDATOR_WILDCARD) &&

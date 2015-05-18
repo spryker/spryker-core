@@ -2,11 +2,11 @@
 
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use SprykerEngine\Zed\Kernel\Locator;
 
@@ -62,31 +62,31 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new SalesOrderTransfer();
+        $order = new OrderTransfer();
 
         return $order;
     }
 
     /**
-     * @return SalesOrderItemTransfer
+     * @return OrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
 
         return $item;
     }
 
     /**
-     * @return CalculationTotalsTransfer
+     * @return TotalsTransfer
      */
     protected function getTotals()
     {
-        return new CalculationTotalsTransfer();
+        return new TotalsTransfer();
     }
 
     /**

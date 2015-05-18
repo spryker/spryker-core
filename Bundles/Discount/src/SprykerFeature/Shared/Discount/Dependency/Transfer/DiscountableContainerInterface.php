@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Shared\Discount\Dependency\Transfer;
 
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 
@@ -32,7 +32,7 @@ interface DiscountableContainerInterface extends CalculableContainerInterface
     public function getExpenses();
 
     /**
-     * @return CalculationTotalsTransfer
+     * @return TotalsTransfer
      */
     public function getTotals();
 

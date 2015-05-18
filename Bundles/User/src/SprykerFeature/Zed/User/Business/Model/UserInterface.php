@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\User\Business\Model;
 
-use Generated\Shared\Transfer\UserUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use SprykerFeature\Zed\User\Business\Exception\UsernameExistsException;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 
@@ -14,7 +14,7 @@ interface UserInterface
      * @param string $username
      * @param string $password
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UsernameExistsException
      */
     public function addUser($firstName, $lastName, $username, $password);
@@ -35,12 +35,12 @@ interface UserInterface
     public function validatePassword($password, $hash);
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotFoundException
      */
-    public function save(UserUserTransfer $user);
+    public function save(UserTransfer $user);
 
     /**
      * @param string $username
@@ -59,7 +59,7 @@ interface UserInterface
     /**
      * @param string $username
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotFoundException
      */
     public function getUserByUsername($username);
@@ -67,17 +67,17 @@ interface UserInterface
     /**
      * @param int $id
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotFoundException
      */
     public function getUserById($id);
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
-    public function setCurrentUser(UserUserTransfer $user);
+    public function setCurrentUser(UserTransfer $user);
 
     /**
      * @return bool
@@ -85,19 +85,19 @@ interface UserInterface
     public function hasCurrentUser();
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
      * @return bool
      */
-    public function isSystemUser(UserUserTransfer $user);
+    public function isSystemUser(UserTransfer $user);
 
     /**
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     public function getSystemUsers();
 
     /**
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotFoundException
      */
     public function getCurrentUser();

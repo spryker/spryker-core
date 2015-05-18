@@ -23,7 +23,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $discountDecisionRule = new \Generated\Shared\Transfer\DiscountDiscountDecisionRuleTransfer();
+            $discountDecisionRule = new \Generated\Shared\Transfer\DecisionRuleTransfer();
             $discountDecisionRule->fromArray($form->getRequestData());
 
             if (is_null($discountDecisionRule->getIdDiscountDecisionRule())) {
@@ -49,7 +49,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $discount = new \Generated\Shared\Transfer\DiscountDiscountTransfer();
+            $discount = new \Generated\Shared\Transfer\DiscountTransfer();
             $discount->fromArray($form->getRequestData());
 
             if (is_null($discount->getIdDiscount())) {
@@ -73,7 +73,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $voucher = new \Generated\Shared\Transfer\DiscountDiscountVoucherTransfer();
+            $voucher = new \Generated\Shared\Transfer\VoucherTransfer();
             $voucher->fromArray($form->getRequestData());
 
             if (is_null($voucher->getIdDiscountVoucher())) {
@@ -99,7 +99,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $voucherPoolCategory = new \Generated\Shared\Transfer\DiscountDiscountVoucherPoolCategoryTransfer();
+            $voucherPoolCategory = new \Generated\Shared\Transfer\VoucherPoolCategoryTransfer();
             $voucherPoolCategory->fromArray($form->getRequestData());
 
             if (is_null($voucherPoolCategory->getIdDiscountVoucherPoolCategory())) {
@@ -125,7 +125,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $voucherPool = new \Generated\Shared\Transfer\DiscountDiscountVoucherPoolTransfer();
+            $voucherPool = new \Generated\Shared\Transfer\VoucherPoolTransfer();
             $voucherPool->fromArray($form->getRequestData());
 
             if (is_null($voucherPool->getIdDiscountVoucherPool())) {

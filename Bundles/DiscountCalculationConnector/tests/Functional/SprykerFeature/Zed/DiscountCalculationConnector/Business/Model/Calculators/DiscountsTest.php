@@ -3,14 +3,14 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
-use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\CalculationDiscountTransfer;
 
 /**
@@ -42,7 +42,7 @@ class DiscountsTest extends Test
         $order->addItem($item);
 
         $calculator = new DiscountTotalsCalculator(Locator::getInstance());
-        $totals = new CalculationTotalsTransfer();
+        $totals = new TotalsTransfer();
         $calculator->recalculateTotals($totals, $order, $order->getItems());
 
         $this->assertEquals(0, $totals->getDiscount()->getTotalAmount());
@@ -117,35 +117,35 @@ class DiscountsTest extends Test
     }
 
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        return new SalesOrderTransfer();
+        return new OrderTransfer();
     }
 
     /**
-     * @return SalesOrderItemTransfer
+     * @return OrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        return new SalesOrderItemTransfer();
+        return new OrderItemTransfer();
     }
 
     /**
-     * @return CalculationExpenseTransfer
+     * @return ExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {
-        return new CalculationExpenseTransfer();
+        return new ExpenseTransfer();
     }
 
     /**
-     * @return CalculationTotalsTransfer
+     * @return TotalsTransfer
      */
     protected function getPriceTotals()
     {
-        return new CalculationTotalsTransfer();
+        return new TotalsTransfer();
     }
 
     /**

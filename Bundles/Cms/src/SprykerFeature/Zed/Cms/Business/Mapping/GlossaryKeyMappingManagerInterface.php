@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Cms\Business\Mapping;
 
 use Propel\Runtime\Exception\PropelException;
-use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\CmsPageKeyMappingTransfer;
+use Generated\Shared\Transfer\PageTransfer;
+use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
@@ -23,27 +23,27 @@ interface GlossaryKeyMappingManagerInterface
     public function translatePlaceholder($idPage, $placeholder, array $data = []);
 
     /**
-     * @param CmsPageKeyMappingTransfer $pageKeyMapping
+     * @param PageKeyMappingTransfer $pageKeyMapping
      *
-     * @return CmsPageKeyMappingTransfer
+     * @return PageKeyMappingTransfer
      * @throws MappingAmbiguousException
      * @throws MissingGlossaryKeyMappingException
      * @throws \Exception
      * @throws PropelException
      */
-    public function savePageKeyMapping(CmsPageKeyMappingTransfer $pageKeyMapping);
+    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping);
 
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      * @param string $placeholder
      * @param string $value
      *
-     * @return CmsPageKeyMappingTransfer
+     * @return PageKeyMappingTransfer
      */
-    public function addPlaceholderText(CmsPageTransfer $page, $placeholder, $value);
+    public function addPlaceholderText(PageTransfer $page, $placeholder, $value);
 
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      * @param string $placeholder
      *
      * @return bool
@@ -51,13 +51,13 @@ interface GlossaryKeyMappingManagerInterface
      * @throws \Exception
      * @throws PropelException
      */
-    public function deletePageKeyMapping(CmsPageTransfer $page, $placeholder);
+    public function deletePageKeyMapping(PageTransfer $page, $placeholder);
 
     /**
      * @param int $idPage
      * @param string $placeholder
      *
-     * @return CmsPageKeyMappingTransfer
+     * @return PageKeyMappingTransfer
      * @throws MissingGlossaryKeyMappingException
      */
     public function getPagePlaceholderMapping($idPage, $placeholder);

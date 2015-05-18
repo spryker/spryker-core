@@ -3,8 +3,8 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="CartCartChange">
-        <property name="changedCartItems" type="CartCartItem[]" />
+    <transfer name="Change">
+        <property name="changedCartItems" type="CartItem[]" />
         <property name="couponCode" type="string" />
         <property name="order" type="SalesOrder[]" />
         <property name="userId" type="string" />
@@ -13,7 +13,7 @@
         <property name="isMerged" type="string" />
     </transfer>
 
-    <transfer name="CartCartItem">
+    <transfer name="CartItem">
         <interface name="SprykerFeature\Shared\Cart2\Transfer\ItemInterface" />
 
         <property name="id" type="int" />
@@ -23,11 +23,11 @@
         <property name="quantity" type="string" />
     </transfer>
 
-    <transfer name="CartCartItems">
-        <property name="cartItems" type="CartCartItem[]" singular="cartItem" />
+    <transfer name="CartItems">
+        <property name="cartItems" type="CartItem[]" singular="cartItem" />
     </transfer>
 
-    <transfer name="CartStepStorage">
+    <transfer name="StepStorage">
         <property name="userId" type="string" />
         <property name="stepName" type="string" />
         <property name="isSuccess" type="string" />

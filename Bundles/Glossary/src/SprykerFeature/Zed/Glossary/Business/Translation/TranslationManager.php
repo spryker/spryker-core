@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
-use Generated\Shared\Transfer\GlossaryTranslationTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
@@ -80,7 +80,7 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -154,7 +154,7 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws \Exception
      * @throws PropelException
      */
@@ -190,11 +190,11 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param SpyGlossaryTranslation $translation
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      */
     protected function convertEntityToTranslationTransfer(SpyGlossaryTranslation $translation)
     {
-        $transferTranslation = new GlossaryTranslationTransfer();
+        $transferTranslation = new TranslationTransfer();
         $transferTranslation->fromArray($translation->toArray());
 
         return $transferTranslation;
@@ -206,7 +206,7 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingTranslationException
      * @throws PropelException
      */
@@ -240,7 +240,7 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $keyName
      * @param LocaleTransfer $locale
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingTranslationException
      */
     public function getTranslationByKeyName($keyName, LocaleTransfer $locale)
@@ -301,15 +301,15 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param GlossaryTranslationTransfer $transferTranslation
+     * @param TranslationTransfer $transferTranslation
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      * @throws MissingTranslationException
      */
-    public function saveTranslation(GlossaryTranslationTransfer $transferTranslation)
+    public function saveTranslation(TranslationTransfer $transferTranslation)
     {
         if (is_null($transferTranslation->getIdGlossaryTranslation())) {
             $translationTransfer = $this->createTranslationFromTransfer($transferTranslation);
@@ -325,15 +325,15 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param GlossaryTranslationTransfer $transferTranslation
+     * @param TranslationTransfer $transferTranslation
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      * @throws MissingTranslationException
      */
-    public function saveAndTouchTranslation(GlossaryTranslationTransfer $transferTranslation)
+    public function saveAndTouchTranslation(TranslationTransfer $transferTranslation)
     {
         if (is_null($transferTranslation->getIdGlossaryTranslation())) {
             $translationEntity = $this->createAndTouchTranslationFromTransfer($transferTranslation);
@@ -349,11 +349,11 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param GlossaryTranslationTransfer $transferTranslation
+     * @param TranslationTransfer $transferTranslation
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      */
-    protected function createTranslationFromTransfer(GlossaryTranslationTransfer $transferTranslation)
+    protected function createTranslationFromTransfer(TranslationTransfer $transferTranslation)
     {
         $newTransferTranslation = $this->createTranslationByIds(
             $transferTranslation->getFkGlossaryKey(),
@@ -366,11 +366,11 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param GlossaryTranslationTransfer $transferTranslation
+     * @param TranslationTransfer $transferTranslation
      *
      * @return SpyGlossaryTranslation
      */
-    protected function createAndTouchTranslationFromTransfer(GlossaryTranslationTransfer $transferTranslation)
+    protected function createAndTouchTranslationFromTransfer(TranslationTransfer $transferTranslation)
     {
         Propel::getConnection()->beginTransaction();
 
@@ -409,12 +409,12 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param GlossaryTranslationTransfer $transferTranslation
+     * @param TranslationTransfer $transferTranslation
      *
      * @return SpyGlossaryTranslation
      * @throws MissingTranslationException
      */
-    protected function getTranslationFromTransfer(GlossaryTranslationTransfer $transferTranslation)
+    protected function getTranslationFromTransfer(TranslationTransfer $transferTranslation)
     {
         $translation = $this->getTranslationEntityById($transferTranslation->getIdGlossaryTranslation());
         $translation->fromArray($transferTranslation->toArray());
@@ -485,7 +485,7 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws MissingTranslationException
@@ -500,7 +500,7 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param SpyGlossaryTranslation $translation
 
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      */
     protected function doUpdateTranslation(SpyGlossaryTranslation $translation)
     {
@@ -514,7 +514,7 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param SpyGlossaryTranslation $translation
 
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws \Exception
      * @throws PropelException
      */
@@ -546,7 +546,7 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param int $idTranslation
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingTranslationException
      */
     protected function getTranslationById($idTranslation)

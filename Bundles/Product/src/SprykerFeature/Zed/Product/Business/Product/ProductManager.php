@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
@@ -332,7 +332,7 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -349,7 +349,7 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -364,7 +364,7 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -382,7 +382,7 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException

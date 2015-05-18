@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="Cart2Cart">
+    <transfer name="Cart">
         <property name="items" type="Cart2Item[]" />
         <property name="totals" type="CalculationTotals[]" />
         <property name="expenses" type="CalculationExpense[]" />
@@ -11,7 +11,7 @@
         <property name="couponCodes" type="array" singular="couponCode" />
     </transfer>
 
-    <transfer name="Cart2CartChange">
+    <transfer name="CartChange">
         <interface name="SprykerFeature\Shared\Cart2\Transfer\CartChangeInterface" />
         <property name="cart" type="string" />
         <property name="changedItems" type="string" />

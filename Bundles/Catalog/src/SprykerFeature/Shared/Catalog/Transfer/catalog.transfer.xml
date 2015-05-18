@@ -3,23 +3,23 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="CatalogAttribute">
+    <transfer name="Attribute">
         <property name="idCatalogAttribute" type="int" />
         <property name="name" type="string" />
     </transfer>
 
-    <transfer name="CatalogAttributeSet">
+    <transfer name="AttributeSet">
         <property name="idCatalogAttributeSet" type="int" />
         <property name="name" type="string" />
     </transfer>
 
-    <transfer name="CatalogAttributeSetGroup">
+    <transfer name="AttributeSetGroup">
         <property name="idCatalogAttributeSetGroup" type="int" />
         <property name="fkCatalogGroup" type="int" />
         <property name="fkCatalogValueType" type="int" />
     </transfer>
 
-    <transfer name="CatalogValueType">
+    <transfer name="ValueType">
         <property name="idCatalogValueType" type="int" />
         <property name="variety" type="string" />
         <property name="fkCatalogAttribute" type="int" />

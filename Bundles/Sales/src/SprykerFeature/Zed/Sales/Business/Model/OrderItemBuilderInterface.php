@@ -1,8 +1,8 @@
 <?php
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface OrderItemBuilderInterface
 {

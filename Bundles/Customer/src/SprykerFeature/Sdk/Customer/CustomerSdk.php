@@ -3,7 +3,7 @@
 namespace SprykerFeature\Sdk\Customer;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
-use Generated\Shared\Transfer\CustomerCustomerTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerEngine\Sdk\Kernel\AbstractSdk;
 
 /**
@@ -12,71 +12,71 @@ use SprykerEngine\Sdk\Kernel\AbstractSdk;
 class CustomerSdk extends AbstractSdk
 {
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function registerCustomer(CustomerCustomerTransfer $customerTransfer)
+    public function registerCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->register($customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function confirmRegistration(CustomerCustomerTransfer $customerTransfer)
+    public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->confirmRegistration($customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function forgotPassword(CustomerCustomerTransfer $customerTransfer)
+    public function forgotPassword(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->forgotPassword($customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function restorePassword(CustomerCustomerTransfer $customerTransfer)
+    public function restorePassword(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->restorePassword($customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function deleteCustomer(CustomerCustomerTransfer $customerTransfer)
+    public function deleteCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->delete($customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function getCustomer(CustomerCustomerTransfer $customerTransfer)
+    public function getCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->get($customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function updateCustomer(CustomerCustomerTransfer $customerTransfer)
+    public function updateCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createModelCustomer()->update($customerTransfer);
     }

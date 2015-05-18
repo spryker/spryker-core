@@ -2,15 +2,15 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
-use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 
 interface ClosureTableWriterInterface
 {
 
     /**
-     * @param CategoryCategoryNodeTransfer $categoryNode
+     * @param NodeTransfer $categoryNode
      */
-    public function create(CategoryCategoryNodeTransfer $categoryNode);
+    public function create(NodeTransfer $categoryNode);
 
     /**
      * @param int $nodeId

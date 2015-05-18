@@ -3,8 +3,8 @@
 namespace Functional\SprykerFeature\Zed\ProductCategoryFrontendExporterConnector;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
-use Generated\Shared\Transfer\CategoryCategoryTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -273,11 +273,11 @@ class ProductCategoryFrontendExporterPluginTest extends Test
     /**
      * @param $name
      *
-     * @return CategoryCategoryTransfer
+     * @return CategoryTransfer
      */
     protected function createCategoryTransfer($name)
     {
-        $categoryTransfer = new CategoryCategoryTransfer();
+        $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setName($name);
 
         return $categoryTransfer;
@@ -288,11 +288,11 @@ class ProductCategoryFrontendExporterPluginTest extends Test
      * @param bool $isRoot
      * @param int $idParentCategory
      *
-     * @return CategoryCategoryNodeTransfer
+     * @return NodeTransfer
      */
     protected function createCategoryNodeTransfer($idCategory, $idParentCategory, $isRoot = false)
     {
-        $categoryNodeTransfer = new CategoryCategoryNodeTransfer();
+        $categoryNodeTransfer = new NodeTransfer();
         $categoryNodeTransfer->setIsRoot($isRoot);
         $categoryNodeTransfer->setFkCategory($idCategory);
         $categoryNodeTransfer->setFkParentCategoryNode($idParentCategory);

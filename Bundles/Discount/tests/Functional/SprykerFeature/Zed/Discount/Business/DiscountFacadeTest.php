@@ -3,16 +3,16 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
-use Generated\Shared\Transfer\CalculationExpenseTransfer;
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
-use Generated\Shared\Transfer\DiscountDiscountTransfer;
-use Generated\Shared\Transfer\DiscountDiscountVoucherPoolCategoryTransfer;
-use Generated\Shared\Transfer\DiscountDiscountVoucherPoolTransfer;
+use Generated\Shared\Transfer\DiscountTotalsTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
+use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerFeature\Zed\Discount\Business\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed;
@@ -160,7 +160,7 @@ class DiscountFacadeTest extends Test
             ->save();
 
         $order = $this->getOrderWithFixtureData();
-        $order->setTotals(new CalculationTotalsTransfer());
+        $order->setTotals(new TotalsTransfer());
 
         $result = $this->discountFacade->isMinimumCartSubtotalReached($order, $decisionRule);
         $this->assertFalse($result->isSuccess());
@@ -258,7 +258,7 @@ class DiscountFacadeTest extends Test
 
     public function testSaveDiscount()
     {
-        $discountTransfer = new DiscountDiscountTransfer();
+        $discountTransfer = new DiscountTransfer();
         $discountTransfer->setDisplayName(self::DISCOUNT_DISPLAY_NAME);
         $discountTransfer->setCollectorPlugin(self::DISCOUNT_COLLECTOR_PLUGIN);
         $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_100);
@@ -269,7 +269,7 @@ class DiscountFacadeTest extends Test
 
     public function testSaveDiscountDecisionRule()
     {
-        $discountDecisionRuleTransfer = new \Generated\Shared\Transfer\DiscountDiscountDecisionRuleTransfer();
+        $discountDecisionRuleTransfer = new \Generated\Shared\Transfer\DecisionRuleTransfer();
         $discountDecisionRuleTransfer->setName(self::DECISION_RULE_NAME);
         $discountDecisionRuleTransfer->setDecisionRulePlugin(self::DECISION_RULE_PLUGIN);
         $discountDecisionRuleTransfer->setValue(self::DECISION_RULE_VALUE_500);
@@ -280,7 +280,7 @@ class DiscountFacadeTest extends Test
 
     public function testSaveDiscountVoucher()
     {
-        $discountVoucherTransfer = new \Generated\Shared\Transfer\DiscountDiscountVoucherTransfer();
+        $discountVoucherTransfer = new \Generated\Shared\Transfer\VoucherTransfer();
         $discountVoucherTransfer->setCode(self::DISCOUNT_VOUCHER_CODE);
         $result = $this->discountFacade->createDiscountVoucher($discountVoucherTransfer);
 
@@ -289,7 +289,7 @@ class DiscountFacadeTest extends Test
 
     public function testSaveDiscountVoucherPool()
     {
-        $discountVoucherPoolTransfer = new DiscountDiscountVoucherPoolTransfer();
+        $discountVoucherPoolTransfer = new VoucherPoolTransfer();
         $discountVoucherPoolTransfer->setName(self::DISCOUNT_VOUCHER_POOL_NAME);
         $result = $this->discountFacade->createDiscountVoucherPool($discountVoucherPoolTransfer);
 
@@ -298,7 +298,7 @@ class DiscountFacadeTest extends Test
 
     public function testSaveDiscountVoucherPoolCategory()
     {
-        $discountVoucherPoolCategoryTransfer = new DiscountDiscountVoucherPoolCategoryTransfer();
+        $discountVoucherPoolCategoryTransfer = new VoucherPoolCategoryTransfer();
         $discountVoucherPoolCategoryTransfer->setName(self::DISCOUNT_VOUCHER_POOL_CATEGORY);
         $result = $this->discountFacade->createDiscountVoucherPoolCategory($discountVoucherPoolCategoryTransfer);
 
@@ -330,7 +330,7 @@ class DiscountFacadeTest extends Test
         $order = $this->getOrderWithFixtureData();
         $itemCollection = new OrderItemsTransfer();
 
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
         $itemCollection->addOrderItem($item);
         $order->setItems($itemCollection);
@@ -344,10 +344,10 @@ class DiscountFacadeTest extends Test
         $order = $this->getOrderWithFixtureData();
 
         $itemCollection = new OrderItemsTransfer();
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $expense = new CalculationExpenseTransfer();
+        $expense = new ExpenseTransfer();
         $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
 
         $item->addExpense($expense);
@@ -362,15 +362,15 @@ class DiscountFacadeTest extends Test
     {
         $order = $this->getOrderWithFixtureData();
 
-        $expense = new CalculationExpenseTransfer();
+        $expense = new ExpenseTransfer();
         $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
         $order->addExpense($expense);
 
         $itemCollection = new OrderItemsTransfer();
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $expense = new CalculationExpenseTransfer();
+        $expense = new ExpenseTransfer();
         $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
 
         $item->addExpense($expense);
@@ -432,11 +432,11 @@ class DiscountFacadeTest extends Test
     }
 
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new SalesOrderTransfer();
+        $order = new OrderTransfer();
 
         return $order;
     }
@@ -445,14 +445,14 @@ class DiscountFacadeTest extends Test
     /**
      * @param array $grossPrices
      *
-     * @return SalesOrderItemTransfer[]
+     * @return OrderItemTransfer[]
      */
     protected function getItems(array $grossPrices)
     {
         $items = [];
 
         foreach ($grossPrices as $grossPrice) {
-            $item = new SalesOrderItemTransfer();
+            $item = new OrderItemTransfer();
             $item->setGrossPrice($grossPrice);
             $items[] = $item;
         }

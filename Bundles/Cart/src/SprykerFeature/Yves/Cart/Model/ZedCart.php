@@ -4,11 +4,11 @@ namespace SprykerFeature\Yves\Cart\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
-use Generated\Shared\Transfer\CartCartChangeTransfer;
-use Generated\Shared\Transfer\CartCartItemTransfer;
-use Generated\Shared\Transfer\CartCartItemsTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Transfer\CartItemsTransfer;
 use SprykerFeature\Shared\Cart\Code\DeleteReasonConstant;
 use SprykerFeature\Shared\Library\Communication\Response;
 use SprykerFeature\Shared\Sales\Code\AbstractItemGrouper;
@@ -202,7 +202,7 @@ class ZedCart implements CartInterface
     public function clear($reason = DeleteReasonConstant::DELETE_REASON_ORDER_PLACEMENT)
     {
         $transferCartChange = $this->createCartChange();
-        $transferCartChange->setOrder(new \Generated\Shared\Transfer\SalesOrderTransfer());
+        $transferCartChange->setOrder(new \Generated\Shared\Transfer\OrderTransfer());
         $transferCartChange->setDeleteReason($reason);
         $order = $order = $this->zedClient->call('cart/sdk/clear-cart-storage', $transferCartChange);
         $this->setOrder($order);
@@ -218,13 +218,13 @@ class ZedCart implements CartInterface
     public function createCartChange($cartItemCollection = null)
     {
         if ($cartItemCollection === null || is_array($cartItemCollection)) {
-            $cartItemCollection = new \Generated\Shared\Transfer\CartCartItemTransfer();
+            $cartItemCollection = new \Generated\Shared\Transfer\CartItemTransfer();
             $cartItemCollection->fromArray($cartItemCollection);
         } elseif (!$cartItemCollection instanceof CartItemCollection) {
             throw new \InvalidArgumentException('addItems() expects array or CartItemCollection');
         }
 
-        $transferCartChange = new \Generated\Shared\Transfer\CartCartChangeTransfer();
+        $transferCartChange = new \Generated\Shared\Transfer\ChangeTransfer();
         $transferCartChange->setOrder($this->getOrder());
 
         if ($this->cartStorage) {

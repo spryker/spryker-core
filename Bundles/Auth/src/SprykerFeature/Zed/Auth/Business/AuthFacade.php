@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Auth\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\Transfer\UserUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 
 /**
  * @method AuthDependencyContainer getDependencyContainer()
@@ -56,7 +56,7 @@ class AuthFacade extends AbstractFacade
     }
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
      * @return string
      */
@@ -84,7 +84,7 @@ class AuthFacade extends AbstractFacade
     /**
      * @param string $hash
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     public function getSystemUser($hash)
     {

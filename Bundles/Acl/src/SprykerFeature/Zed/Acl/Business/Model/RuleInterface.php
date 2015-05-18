@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
-use Generated\Shared\Transfer\AclRoleTransfer;
-use Generated\Shared\Transfer\AclRuleTransfer;
+use Generated\Shared\Transfer\RoleTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
-use Generated\Shared\Transfer\UserUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
@@ -19,18 +19,18 @@ interface RuleInterface
      * @param int $idRole
      * @param string $type
      *
-     * @return AclRuleTransfer
+     * @return RuleTransfer
      * @throws RuleNotFoundException
      */
     public function addRule($bundle, $controller, $action, $idRole, $type = 'allow');
 
     /**
-     * @param AclRuleTransfer $data
+     * @param RuleTransfer $data
      *
-     * @return AclRuleTransfer
+     * @return RuleTransfer
      * @throws RuleNotFoundException
      */
-    public function save(AclRuleTransfer $data);
+    public function save(RuleTransfer $data);
 
     /**
      * @param int $idRule
@@ -42,7 +42,7 @@ interface RuleInterface
     /**
      * @param int $idRole
      *
-     * @return AclRuleTransfer
+     * @return RuleTransfer
      */
     public function getRoleRules($idRole);
 
@@ -52,7 +52,7 @@ interface RuleInterface
      * @param string $controller
      * @param string $action
      *
-     * @return AclRuleTransfer
+     * @return RuleTransfer
      */
     public function findByRoles(
         RolesTransfer $roles,
@@ -63,14 +63,14 @@ interface RuleInterface
     /**
      * @param int $idGroup
      *
-     * @return AclRuleTransfer
+     * @return RuleTransfer
      */
     public function findByGroupId($idGroup);
 
     /**
      * @param int $id
      *
-     * @return AclRuleTransfer
+     * @return RuleTransfer
      * @throws RuleNotFoundException
      */
     public function getRuleById($id);
@@ -93,19 +93,19 @@ interface RuleInterface
     public function isIgnorable($bundle, $controller, $action);
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
      * @throws UserNotFoundException
      */
-    public function registerSystemUserRules(UserUserTransfer $user);
+    public function registerSystemUserRules(UserTransfer $user);
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
      * @return bool
      */
-    public function isAllowed(UserUserTransfer $user, $bundle, $controller, $action);
+    public function isAllowed(UserTransfer $user, $bundle, $controller, $action);
 }

@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Category\Business\Model;
 
 use Generated\Shared\Transfer\CategoryCategory as CategoryTransferTransfer;
-use Generated\Shared\Transfer\CategoryCategoryTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
@@ -38,13 +38,13 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryCategoryTransfer $category
+     * @param CategoryTransfer $category
      * @param LocaleTransfer $locale
      *
      * @return SpyCategory
      * @throws \ErrorException
      */
-    public function create(CategoryCategoryTransfer $category, LocaleTransfer $locale)
+    public function create(CategoryTransfer $category, LocaleTransfer $locale)
     {
         $idCategory = $this->persistCategory();
         $category->setIdCategory($idCategory);
@@ -54,13 +54,13 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryCategoryTransfer $category
+     * @param CategoryTransfer $category
      * @param LocaleTransfer $locale
      * @return int
      *
      * @throws PropelException
      */
-    public function update(CategoryCategoryTransfer $category, LocaleTransfer $locale)
+    public function update(CategoryTransfer $category, LocaleTransfer $locale)
     {
         $attributeEntity = $this->getAttributeEntity($category->getIdCategory(), $locale);
         $attributeEntity->setName($category->getName());
@@ -99,12 +99,12 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryCategoryTransfer $category
+     * @param CategoryTransfer $category
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
      */
-    protected function persistCategoryAttribute(CategoryCategoryTransfer $category, LocaleTransfer $locale)
+    protected function persistCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale)
     {
         $categoryAttributeEntity = $this->locator->category()->entitySpyCategoryAttribute();
 

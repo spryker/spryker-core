@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Calculation\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\CalculationConfig;
 
 /**

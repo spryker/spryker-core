@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlRedirectTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\RedirectTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
@@ -28,30 +28,30 @@ interface RedirectManagerInterface
     /**
      * @param SpyRedirect $redirectEntity
      *
-     * @return UrlRedirectTransfer
+     * @return RedirectTransfer
      */
     public function convertRedirectEntityToTransfer(SpyRedirect $redirectEntity);
 
     /**
-     * @param UrlRedirectTransfer $redirect
+     * @param RedirectTransfer $redirect
      *
-     * @return UrlRedirectTransfer
+     * @return RedirectTransfer
      * @throws MissingUrlException
      * @throws RedirectExistsException
      */
-    public function saveRedirect(UrlRedirectTransfer $redirect);
+    public function saveRedirect(RedirectTransfer $redirect);
 
     /**
-     * @param UrlRedirectTransfer $redirect
+     * @param RedirectTransfer $redirect
      */
-    public function touchRedirectActive(UrlRedirectTransfer $redirect);
+    public function touchRedirectActive(RedirectTransfer $redirect);
 
     /**
      * @param string $url
      * @param LocaleTransfer $locale
      * @param int $idRedirect
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
      */

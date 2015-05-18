@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Glossary\Business;
 
-use Generated\Shared\Transfer\GlossaryTranslationTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
@@ -97,7 +97,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -114,7 +114,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -132,7 +132,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -161,7 +161,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $keyName
      * @param LocaleTransfer $locale
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingTranslationException
      */
     public function getTranslation($keyName, LocaleTransfer $locale)
@@ -177,7 +177,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingTranslationException
      */
     public function updateTranslation($keyName, $locale, $value, $isActive = true)
@@ -193,7 +193,7 @@ class GlossaryFacade extends AbstractFacade
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingTranslationException
      */
     public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
@@ -204,14 +204,14 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param GlossaryTranslationTransfer $transferTranslation
+     * @param TranslationTransfer $transferTranslation
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function saveTranslation(GlossaryTranslationTransfer $transferTranslation)
+    public function saveTranslation(TranslationTransfer $transferTranslation)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
@@ -219,14 +219,14 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param GlossaryTranslationTransfer $transferTranslation
+     * @param TranslationTransfer $transferTranslation
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      */
-    public function saveAndTouchTranslation(GlossaryTranslationTransfer $transferTranslation)
+    public function saveAndTouchTranslation(TranslationTransfer $transferTranslation)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 

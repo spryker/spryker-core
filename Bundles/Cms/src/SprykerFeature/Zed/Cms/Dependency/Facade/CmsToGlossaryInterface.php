@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Cms\Dependency\Facade;
 
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use Generated\Shared\Transfer\GlossaryTranslationTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
@@ -25,7 +25,7 @@ interface CmsToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException

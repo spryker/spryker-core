@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="StockStockProduct">
+    <transfer name="StockProduct">
         <property name="sku" type="string" />
         <property name="stockType" type="string" />
         <property name="quantity" type="string" />
@@ -11,7 +11,7 @@
         <property name="idStockProduct" type="int" />
     </transfer>
 
-    <transfer name="StockStockType">
+    <transfer name="Type">
         <property name="idStock" type="int" />
         <property name="name" type="string" />
     </transfer>

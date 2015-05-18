@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Cms\Business\Template;
 
-use Generated\Shared\Transfer\CmsCmsTemplateTransfer;
+use Generated\Shared\Transfer\CmsTemplateTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\TemplateExistsException;
 
@@ -12,7 +12,7 @@ interface TemplateManagerInterface
      * @param string $name
      * @param string $path
      *
-     * @return CmsCmsTemplateTransfer
+     * @return CmsTemplateTransfer
      * @throws TemplateExistsException
      */
     public function createTemplate($name, $path);
@@ -32,16 +32,16 @@ interface TemplateManagerInterface
     public function hasTemplateId($id);
 
     /**
-     * @param CmsCmsTemplateTransfer $cmsTemplate
+     * @param CmsTemplateTransfer $cmsTemplate
      *
-     * @return CmsCmsTemplateTransfer
+     * @return CmsTemplateTransfer
      */
-    public function saveTemplate(CmsCmsTemplateTransfer $cmsTemplate);
+    public function saveTemplate(CmsTemplateTransfer $cmsTemplate);
 
     /**
      * @param int $idTemplate
      *
-     * @return CmsCmsTemplateTransfer
+     * @return CmsTemplateTransfer
      * @throws MissingTemplateException
      */
     public function getTemplateById($idTemplate);
@@ -49,7 +49,7 @@ interface TemplateManagerInterface
     /**
      * @param string $path
      *
-     * @return CmsCmsTemplateTransfer
+     * @return CmsTemplateTransfer
      * @throws MissingTemplateException
      */
     public function getTemplateByPath($path);

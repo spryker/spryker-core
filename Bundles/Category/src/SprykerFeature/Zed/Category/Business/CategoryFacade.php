@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Category\Business;
 
-use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
-use Generated\Shared\Transfer\CategoryCategoryTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\Category\Transfer\CategoryNode;
@@ -43,12 +43,12 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param CategoryCategoryTransfer $category
+     * @param CategoryTransfer $category
      * @param LocaleTransfer $locale
      *
      * @return int
      */
-    public function createCategory(CategoryCategoryTransfer $category, LocaleTransfer $locale)
+    public function createCategory(CategoryTransfer $category, LocaleTransfer $locale)
     {
         return $this->getDependencyContainer()
             ->createCategoryWriter()
@@ -57,10 +57,10 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param CategoryCategoryTransfer $category
+     * @param CategoryTransfer $category
      * @param LocaleTransfer $locale
      */
-    public function updateCategory(CategoryCategoryTransfer $category, LocaleTransfer $locale)
+    public function updateCategory(CategoryTransfer $category, LocaleTransfer $locale)
     {
         $this->getDependencyContainer()
             ->createCategoryWriter()
@@ -83,12 +83,12 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param CategoryCategoryNodeTransfer $categoryNode
+     * @param NodeTransfer $categoryNode
      * @param LocaleTransfer $locale
      *
      * @return int $nodeId
      */
-    public function createCategoryNode(CategoryCategoryNodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function createCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeWriter()
@@ -97,10 +97,10 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param CategoryCategoryNodeTransfer $categoryNode
+     * @param NodeTransfer $categoryNode
      * @throws \ErrorException
      */
-    public function moveCategoryNode(CategoryCategoryNodeTransfer $categoryNode)
+    public function moveCategoryNode(NodeTransfer $categoryNode)
     {
         $this->getDependencyContainer()
             ->createCategoryTreeWriter()

@@ -5,9 +5,9 @@ namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\CalculationDiscountTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
-use Generated\Shared\Transfer\SalesOrderItemOptionTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\OrderItemOptionTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\OptionPriceToPayCalculator;
 use SprykerEngine\Zed\Kernel\Locator;
 
@@ -142,11 +142,11 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return SalesOrderItemOptionTransfer
+     * @return OrderItemOptionTransfer
      */
     protected function getItemOption()
     {
-        return new SalesOrderItemOptionTransfer();
+        return new OrderItemOptionTransfer();
     }
 
     /**
@@ -158,21 +158,21 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new SalesOrderTransfer();
+        $order = new OrderTransfer();
 
         return $order;
     }
 
     /**
-     * @return SalesOrderItemTransfer
+     * @return OrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
 
         return $item;
     }

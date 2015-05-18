@@ -3,18 +3,18 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
+use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\CalculationDiscountTransfer;
-use Generated\Shared\Transfer\CalculationExpensesTransfer;
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\ExpensesTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
-use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\StackExecutor;
 use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
 use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
@@ -199,11 +199,11 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return CalculationExpensesTransfer
+     * @return ExpensesTransfer
      */
     protected function getExpenseCollection()
     {
-        return new CalculationExpensesTransfer();
+        return new ExpensesTransfer();
     }
 
     /**
@@ -215,13 +215,13 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new SalesOrderTransfer();
-        $totals = new CalculationTotalsTransfer();
-        $totals->setDiscount(new CalculationDiscountTotalsTransfer());
+        $order = new OrderTransfer();
+        $totals = new TotalsTransfer();
+        $totals->setDiscount(new DiscountTotalsTransfer());
         $order->setTotals($totals);
 
         $order->setDiscounts(new CalculationDiscountTransfer());
@@ -230,19 +230,19 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return SalesOrderItemTransfer
+     * @return OrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        return new SalesOrderItemTransfer();
+        return new OrderItemTransfer();
     }
 
     /**
-     * @return CalculationExpenseTransfer
+     * @return ExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {
-        return new CalculationExpenseTransfer();
+        return new ExpenseTransfer();
     }
 
     /**

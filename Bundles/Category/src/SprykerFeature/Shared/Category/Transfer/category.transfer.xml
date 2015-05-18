@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="CategoryCategory">
+    <transfer name="Category">
         <property name="idCategory" type="int" />
         <property name="isActive" type="string" />
         <property name="name" type="string" />
@@ -11,7 +11,7 @@
         <property name="imageName" type="string" />
     </transfer>
 
-    <transfer name="CategoryCategoryNode">
+    <transfer name="Node">
         <property name="isRoot" type="string" />
         <property name="idCategoryNode" type="int" />
         <property name="fkCategory" type="int" />

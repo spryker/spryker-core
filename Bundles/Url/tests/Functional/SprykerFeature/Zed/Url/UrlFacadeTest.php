@@ -3,8 +3,8 @@
 namespace Functional\SprykerFeature\Zed\Url;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\UrlRedirectTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\RedirectTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -78,7 +78,7 @@ class UrlFacadeTest extends Test
         $urlQuery = $this->urlQueryContainer->queryUrls();
         $redirect = $this->urlFacade->createRedirect('/YetSomeOtherPageUrl2');
 
-        $url = new UrlUrlTransfer();
+        $url = new UrlTransfer();
         $url->setUrl('/YetSomeOtherPageUrl');
         $url->setFkLocale($this->localeFacade->createLocale('QWERT')->getIdLocale());
         $url->setResource('redirect', $redirect->getIdRedirect());
@@ -95,7 +95,7 @@ class UrlFacadeTest extends Test
     public function testSaveUrlUpdatesSomething()
     {
         $this->markTestSkipped('Logical code in transfer MUST be fixed');
-        $url = new UrlUrlTransfer();
+        $url = new UrlTransfer();
         $urlQuery = $this->urlQueryContainer->queryUrl('/SoManyPageUrls');
         $redirect1 = $this->urlFacade->createRedirect('/SoManyPageUrls2');
         $redirect2 = $this->urlFacade->createRedirect('/SoManyPageUrls3');
@@ -182,7 +182,7 @@ class UrlFacadeTest extends Test
 
     public function testSaveRedirectInsertsAndReturnsSomethingOnCreate()
     {
-        $redirect = new UrlRedirectTransfer();
+        $redirect = new RedirectTransfer();
         $redirect->setToUrl('/pageToUrl');
         $redirect->setStatus(301);
 
@@ -199,7 +199,7 @@ class UrlFacadeTest extends Test
 
     public function testSaveRedirectUpdatesSomething()
     {
-        $redirect = new \Generated\Shared\Transfer\UrlRedirectTransfer();
+        $redirect = new \Generated\Shared\Transfer\RedirectTransfer();
         $redirect->setToUrl('/pageToUrl2');
         $redirect->setStatus(301);
 

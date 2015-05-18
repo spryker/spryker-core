@@ -28,11 +28,11 @@
         <property name="iso2Country" type="string" />
     </transfer>
 
-    <transfer name="CustomerAddresses">
+    <transfer name="Addresses">
         <property name="customerAddressItems" type="CustomerAddress[]" singular="customerAddress" />
     </transfer>
 
-    <transfer name="CustomerCustomer">
+    <transfer name="Customer">
         <property name="email" type="string" />
         <property name="idCustomer" type="int" />
         <property name="incrementId" type="string" />
@@ -47,7 +47,7 @@
         <property name="newPassword" type="string" />
         <property name="billingAddress" type="CustomerAddress[]" />
         <property name="shippingAddress" type="CustomerAddress[]" />
-        <property name="addresses" type="CustomerAddresses" singular="address" />
+        <property name="addresses" type="Addresses" singular="address" />
         <property name="defaultBillingAddress" type="string" />
         <property name="defaultShippingAddress" type="string" />
         <property name="createdAt" type="string" />

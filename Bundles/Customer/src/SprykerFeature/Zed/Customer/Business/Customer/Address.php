@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Customer\Business\Customer;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
-use Generated\Shared\Transfer\CustomerCustomerTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
@@ -289,12 +289,12 @@ class Address
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return SpyCustomer
      * @throws CustomerNotFoundException
      */
-    protected function getCustomerFromCustomerTransfer(CustomerCustomerTransfer $customerTransfer)
+    protected function getCustomerFromCustomerTransfer(CustomerTransfer $customerTransfer)
     {
         if ($customerTransfer->getEmail()) {
             $customer = $this->queryContainer
@@ -333,12 +333,12 @@ class Address
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerAddressTransfer
      * @throws AddressNotFoundException
      */
-    public function getDefaultShippingAddress(CustomerCustomerTransfer $customerTransfer)
+    public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
         $id_address = $customer->getDefaultShippingAddress();
@@ -351,12 +351,12 @@ class Address
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerAddressTransfer
      * @throws AddressNotFoundException
      */
-    public function getDefaultBillingAddress(CustomerCustomerTransfer $customerTransfer)
+    public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
         $id_address = $customer->getDefaultBillingAddress();

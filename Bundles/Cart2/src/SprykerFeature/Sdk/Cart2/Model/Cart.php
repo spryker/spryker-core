@@ -143,7 +143,7 @@ class Cart implements CartInterface
     {
         $cart = $this->storageProvider->getCart();
         /** @var CartChangeInterface $cartChange */
-        $cartChange = new \Generated\Shared\Transfer\Cart2CartChangeTransfer();
+        $cartChange = new \Generated\Shared\Transfer\CartChangeTransfer();
         $cartChange->setCart($cart);
 
         return $cartChange;

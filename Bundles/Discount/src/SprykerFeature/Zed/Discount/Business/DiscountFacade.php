@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\Discount\Business;
 
-use Generated\Shared\Transfer\DiscountDiscountTransfer;
-use Generated\Shared\Transfer\DiscountDiscountDecisionRuleTransfer;
-use Generated\Shared\Transfer\DiscountDiscountVoucherTransfer;
-use Generated\Shared\Transfer\DiscountDiscountVoucherPoolTransfer;
-use Generated\Shared\Transfer\DiscountDiscountVoucherPoolCategoryTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DecisionRuleTransfer;
+use Generated\Shared\Transfer\VoucherTransfer;
+use Generated\Shared\Transfer\VoucherPoolTransfer;
+use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
@@ -114,92 +114,92 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param DiscountDiscountTransfer $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      * @return SpyDiscount
      */
-    public function createDiscount(DiscountDiscountTransfer $discountTransfer)
+    public function createDiscount(DiscountTransfer $discountTransfer)
     {
         return $this->getDependencyContainer()->getDiscountWriter()->create($discountTransfer);
     }
 
     /**
-     * @param DiscountDiscountTransfer $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      * @return SpyDiscount
      */
-    public function updateDiscount(DiscountDiscountTransfer $discountTransfer)
+    public function updateDiscount(DiscountTransfer $discountTransfer)
     {
         return $this->getDependencyContainer()->getDiscountWriter()->update($discountTransfer);
     }
 
     /**
-     * @param DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      * @return SpyDiscountDecisionRule
      */
-    public function createDiscountDecisionRule(DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer)
+    public function createDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
         return $this->getDependencyContainer()->getDiscountDecisionRuleWriter()->create($discountDecisionRuleTransfer);
     }
 
     /**
-     * @param DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      * @return SpyDiscountDecisionRule
      */
-    public function updateDiscountDecisionRule(DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer)
+    public function updateDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
         return $this->getDependencyContainer()->getDiscountDecisionRuleWriter()->update($discountDecisionRuleTransfer);
     }
 
     /**
-     * @param DiscountDiscountVoucherTransfer $discountVoucherTransfer
+     * @param VoucherTransfer $discountVoucherTransfer
      * @return SpyDiscountVoucher
      */
-    public function createDiscountVoucher(DiscountDiscountVoucherTransfer $discountVoucherTransfer)
+    public function createDiscountVoucher(VoucherTransfer $discountVoucherTransfer)
     {
         return $this->getDependencyContainer()->getDiscountVoucherWriter()->create($discountVoucherTransfer);
     }
 
     /**
-     * @param DiscountDiscountVoucherTransfer $discountVoucherTransfer
+     * @param VoucherTransfer $discountVoucherTransfer
      * @return SpyDiscountVoucher
      */
-    public function updateDiscountVoucher(DiscountDiscountVoucherTransfer $discountVoucherTransfer)
+    public function updateDiscountVoucher(VoucherTransfer $discountVoucherTransfer)
     {
         return $this->getDependencyContainer()->getDiscountVoucherWriter()->update($discountVoucherTransfer);
     }
 
     /**
-     * @param DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer
+     * @param VoucherPoolTransfer $discountVoucherPoolTransfer
      * @return SpyDiscountVoucher
      */
-    public function createDiscountVoucherPool(DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer)
+    public function createDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer)
     {
         return $this->getDependencyContainer()->getDiscountVoucherPoolWriter()->create($discountVoucherPoolTransfer);
     }
 
     /**
-     * @param DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer
+     * @param VoucherPoolTransfer $discountVoucherPoolTransfer
      * @return SpyDiscountVoucher
      */
-    public function updateDiscountVoucherPool(DiscountDiscountVoucherPoolTransfer $discountVoucherPoolTransfer)
+    public function updateDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer)
     {
         return $this->getDependencyContainer()->getDiscountVoucherPoolWriter()->update($discountVoucherPoolTransfer);
     }
 
     /**
-     * @param DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      * @return SpyDiscountVoucherPoolCategory
      */
-    public function createDiscountVoucherPoolCategory(DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
+    public function createDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
         return $this->getDependencyContainer()->getDiscountVoucherPoolCategoryWriter()
             ->create($discountVoucherPoolCategoryTransfer);
     }
 
     /**
-     * @param DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      * @return SpyDiscountVoucherPoolCategory
      */
-    public function updateDiscountVoucherPoolCategory(DiscountDiscountVoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
+    public function updateDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
         return $this->getDependencyContainer()->getDiscountVoucherPoolCategoryWriter()
             ->update($discountVoucherPoolCategoryTransfer);

@@ -1,7 +1,7 @@
 <?php
 namespace SprykerFeature\Zed\Acl\Persistence;
 
-use Generated\Shared\Transfer\AclRoleTransfer;
+use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\Exception\PropelException;

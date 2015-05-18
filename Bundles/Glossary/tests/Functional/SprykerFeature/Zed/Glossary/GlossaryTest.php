@@ -12,7 +12,7 @@ use SprykerEngine\Zed\Kernel\Persistence\Factory;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
-use Generated\Shared\Transfer\GlossaryTranslationTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
@@ -208,7 +208,7 @@ class GlossaryTest extends Test
         $locale = $this->localeFacade->createLocale('ab_xy');
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $locale->getIdLocale());
 
-        $transferTranslation = new GlossaryTranslationTransfer();
+        $transferTranslation = new TranslationTransfer();
         $transferTranslation->setFkGlossaryKey($keyId);
         $transferTranslation->setFkLocale($locale->getIdLocale());
         $transferTranslation->setValue('some Value');
@@ -249,7 +249,7 @@ class GlossaryTest extends Test
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeId);
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
 
-        $transferTranslation = new GlossaryTranslationTransfer($this->locator);
+        $transferTranslation = new TranslationTransfer($this->locator);
         $transferTranslation->setFkGlossaryKey($keyId);
         $transferTranslation->setFkLocale($localeId);
         $transferTranslation->setValue('some Value');

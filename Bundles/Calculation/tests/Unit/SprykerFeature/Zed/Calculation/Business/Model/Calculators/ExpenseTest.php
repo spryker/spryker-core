@@ -4,10 +4,10 @@ namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\CalculationDiscountTransfer;
-use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
@@ -107,31 +107,31 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new SalesOrderTransfer();
+        $order = new OrderTransfer();
 
         return $order;
     }
 
     /**
-     * @return SalesOrderItemTransfer
+     * @return OrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
 
         return $item;
     }
 
     /**
-     * @return CalculationExpenseTransfer
+     * @return ExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {
-        $expense = new CalculationExpenseTransfer();
+        $expense = new ExpenseTransfer();
 
         return $expense;
     }

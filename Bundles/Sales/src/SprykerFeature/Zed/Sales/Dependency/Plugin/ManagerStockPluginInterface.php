@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Sales\Dependency\Plugin;
 
-use Generated\Shared\Transfer\StockStockProductTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;
 
 interface ManagerStockPluginInterface
@@ -22,9 +22,9 @@ interface ManagerStockPluginInterface
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1);
 
     /**
-     * @param StockStockProductTransfer $stockProduct
+     * @param StockProductTransfer $stockProduct
      *
      * @return SpyStockProduct
      */
-    public function updateStockProduct(StockStockProductTransfer $stockProduct);
+    public function updateStockProduct(StockProductTransfer $stockProduct);
 }

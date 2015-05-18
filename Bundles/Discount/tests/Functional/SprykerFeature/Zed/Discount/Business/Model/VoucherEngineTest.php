@@ -3,8 +3,8 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerEngine\Shared\Config;
 use SprykerFeature\Zed\Discount\Business\Model\Calculator;
@@ -284,8 +284,8 @@ class VoucherEngineTest extends Test
     protected function getOrderWithTwoItems()
     {
         $locator = Locator::getInstance();
-        $order = new SalesOrderTransfer();
-        $item = new SalesOrderItemTransfer();
+        $order = new OrderTransfer();
+        $item = new OrderItemTransfer();
         $itemCollection = new OrderItemsTransfer();
 
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_500);

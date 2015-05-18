@@ -4,7 +4,7 @@ namespace Unit\SprykerFeature\Zed\Cart2\Business\Provider;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
-use Generated\Shared\Transfer\Cart2CartTransfer;
+use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\Cart2ItemTransfer;
 use SprykerFeature\Zed\Cart2\Business\StorageProvider\InMemoryProvider;
 use SprykerFeature\Zed\Cart2\Business\StorageProvider\StorageProviderInterface;

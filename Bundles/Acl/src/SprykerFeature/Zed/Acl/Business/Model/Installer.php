@@ -1,9 +1,9 @@
 <?php
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
-use Generated\Shared\Transfer\AclGroupTransfer;
-use Generated\Shared\Transfer\AclRoleTransfer;
-use Generated\Shared\Transfer\AclRuleTransfer;
+use Generated\Shared\Transfer\GroupTransfer;
+use Generated\Shared\Transfer\RoleTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Acl\AclConfig;

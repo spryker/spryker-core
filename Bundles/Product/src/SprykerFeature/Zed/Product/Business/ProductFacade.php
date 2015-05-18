@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Product\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
@@ -223,7 +223,7 @@ class ProductFacade extends AbstractFacade
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException

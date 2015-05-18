@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\ApiLog;
 
-use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
+use Generated\Shared\Transfer\AuthorizationCheckResponseTransfer;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\ApiCallResponseCheckInterface;
 use SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
@@ -73,11 +73,11 @@ class ApiLogFinder
     /**
      * @todo R E F A C T O R - Horrorcode
      * @param PaymentInterface $payment
-     * @return PayoneAuthorizationCheckResponseTransfer
+     * @return AuthorizationCheckResponseTransfer
      */
     public function getAuthorizationResponse(PaymentInterface $payment)
     {
-        $response = new PayoneAuthorizationCheckResponseTransfer();
+        $response = new AuthorizationCheckResponseTransfer();
 
         $paymentEntity = $this->findPayment($payment->getTransactionId());
         // no payment - no success - but: what if auth call was successfull but

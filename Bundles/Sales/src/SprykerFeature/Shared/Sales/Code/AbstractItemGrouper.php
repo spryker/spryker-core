@@ -75,7 +75,7 @@ abstract class AbstractItemGrouper
                 $index[$groupKey] = $newItem;
             }
         }
-        $transferItems = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+        $transferItems = new \Generated\Shared\Transfer\OrderItemTransfer();
         $transferItems->fromArray($index);
 
         return $transferItems;

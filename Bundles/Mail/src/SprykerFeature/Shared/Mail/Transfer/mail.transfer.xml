@@ -7,7 +7,7 @@
         <property name="countryName" type="string" />
     </transfer>
 
-    <transfer name="MailAttachment">
+    <transfer name="Attachment">
         <property name="fileName" type="string" />
         <property name="displayName" type="string" />
         <property name="attachmentUrl" type="string" />
@@ -18,7 +18,7 @@
         <property name="customerId" type="string" />
     </transfer>
 
-    <transfer name="MailItem">
+    <transfer name="Item">
         <property name="idSalesOrderItem" type="int" />
         <property name="name" type="string" />
         <property name="sku" type="string" />

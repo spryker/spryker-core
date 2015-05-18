@@ -3,13 +3,13 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="UrlRedirect">
+    <transfer name="Redirect">
         <property name="idRedirect" type="int" />
         <property name="toUrl" type="string" />
         <property name="status" type="int" />
     </transfer>
 
-    <transfer name="UrlUrl">
+    <transfer name="Url">
         <property name="idUrl" type="int" />
         <property name="url" type="string" />
         <property name="fkLocale" type="int" />

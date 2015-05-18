@@ -120,7 +120,7 @@ class AclTest extends Test
 
         $transfer = $this->facade->addGroup($data['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $transfer);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $transfer);
         $this->assertNotNull($transfer->getIdAclGroup());
         $this->assertEquals($data['name'], $transfer->getName());
     }
@@ -135,7 +135,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -143,7 +143,7 @@ class AclTest extends Test
         $dto2->setName($groupData2['name']);
         $this->facade->updateGroup($dto2);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $dto2);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $dto2);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertNotEquals($groupData2['name'], $groupDto->getName());
         $this->assertEquals($groupData2['name'], $dto2->getName());
@@ -163,7 +163,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->getGroup($id);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($id, $groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
@@ -178,7 +178,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -201,7 +201,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -209,7 +209,7 @@ class AclTest extends Test
 
         $roleDto = $this->facade->addRole($roleData['name'], $groupDto->getIdAclGroup());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRoleTransfer', $roleDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
     }
@@ -223,7 +223,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -231,7 +231,7 @@ class AclTest extends Test
 
         $roleDto = $this->facade->addRole($roleData['name'], $groupDto->getIdAclGroup());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRoleTransfer', $roleDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
 
@@ -254,7 +254,7 @@ class AclTest extends Test
 
         $transferGroup = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $transferGroup);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $transferGroup);
         $this->assertNotNull($transferGroup->getIdAclGroup());
         $this->assertEquals($groupData['name'], $transferGroup->getName());
 
@@ -262,7 +262,7 @@ class AclTest extends Test
 
         $transferRole = $this->facade->addRole($roleData['name'], $transferGroup->getIdAclGroup());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRoleTransfer', $transferRole);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $transferRole);
         $this->assertNotNull($transferRole->getIdAclRole());
         $this->assertEquals($roleData['name'], $transferRole->getName());
 
@@ -287,7 +287,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -295,7 +295,7 @@ class AclTest extends Test
 
         $roleDto = $this->facade->addRole($roleData['name'], $groupDto->getIdAclGroup());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRoleTransfer', $roleDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
 
@@ -323,7 +323,7 @@ class AclTest extends Test
                     $current['type']
                 );
 
-            $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $ruleDto);
+            $this->assertInstanceOf('\Generated\Shared\Transfer\RuleTransfer', $ruleDto);
             $this->assertNotNull($ruleDto->getIdAclRule());
             $this->assertEquals($current['bundle'], $ruleDto->getBundle());
             $this->assertEquals($current['controller'], $ruleDto->getController());
@@ -342,7 +342,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -350,7 +350,7 @@ class AclTest extends Test
 
         $roleDto = $this->facade->addRole($roleData['name'], $groupDto->getIdAclGroup());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRoleTransfer', $roleDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
 
@@ -378,7 +378,7 @@ class AclTest extends Test
                     $current['type']
                 );
 
-            $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $transferRule);
+            $this->assertInstanceOf('\Generated\Shared\Transfer\RuleTransfer', $transferRule);
             $this->assertNotNull($transferRule->getIdAclRule());
             $this->assertEquals($current['bundle'], $transferRule->getBundle());
             $this->assertEquals($current['controller'], $transferRule->getController());
@@ -411,7 +411,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -419,7 +419,7 @@ class AclTest extends Test
 
         $roleDto = $this->facade->addRole($roleData['name'], $groupDto->getIdAclGroup());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRoleTransfer', $roleDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
 
@@ -447,7 +447,7 @@ class AclTest extends Test
                     $current['type']
                 );
 
-            $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $ruleDto);
+            $this->assertInstanceOf('\Generated\Shared\Transfer\RuleTransfer', $ruleDto);
             $this->assertNotNull($ruleDto->getIdAclRule());
             $this->assertEquals($current['bundle'], $ruleDto->getBundle());
             $this->assertEquals($current['controller'], $ruleDto->getController());
@@ -480,7 +480,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -488,7 +488,7 @@ class AclTest extends Test
 
         $roleDto = $this->facade->addRole($roleData['name'], $groupDto->getIdAclGroup());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRoleTransfer', $roleDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
 
@@ -516,7 +516,7 @@ class AclTest extends Test
                     $current['type']
                 );
 
-            $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $ruleDto);
+            $this->assertInstanceOf('\Generated\Shared\Transfer\RuleTransfer', $ruleDto);
             $this->assertNotNull($ruleDto->getIdAclRule());
             $this->assertEquals($current['bundle'], $ruleDto->getBundle());
             $this->assertEquals($current['controller'], $ruleDto->getController());
@@ -544,7 +544,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -564,7 +564,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -572,7 +572,7 @@ class AclTest extends Test
 
         $roleDto = $this->facade->addRole($roleData['name'], $groupDto->getIdAclGroup());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRoleTransfer', $roleDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
 
@@ -597,7 +597,7 @@ class AclTest extends Test
         $this->assertEquals($added, 1);
 
         $userGroupDto = $this->facade->getUserGroup($userDto->getIdUserUser());
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $userGroupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $userGroupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
     }
@@ -611,7 +611,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -619,7 +619,7 @@ class AclTest extends Test
 
         $roleDto = $this->facade->addRole($roleData['name'], $groupDto->getIdAclGroup());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRoleTransfer', $roleDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
 
@@ -654,7 +654,7 @@ class AclTest extends Test
                 );
 
             $this->assertNotNull($ruleDto->getIdAclRule());
-            $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $ruleDto);
+            $this->assertInstanceOf('\Generated\Shared\Transfer\RuleTransfer', $ruleDto);
             $this->assertEquals($current['bundle'], $ruleDto->getBundle());
             $this->assertEquals($current['controller'], $ruleDto->getController());
             $this->assertEquals($current['action'], $ruleDto->getAction());
@@ -679,7 +679,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -687,7 +687,7 @@ class AclTest extends Test
 
         $roleDto = $this->facade->addRole($roleData['name'], $groupDto->getIdAclGroup());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRoleTransfer', $roleDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
 
@@ -722,7 +722,7 @@ class AclTest extends Test
                 );
 
             $this->assertNotNull($ruleDto->getIdAclRule());
-            $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $ruleDto);
+            $this->assertInstanceOf('\Generated\Shared\Transfer\RuleTransfer', $ruleDto);
             $this->assertEquals($current['bundle'], $ruleDto->getBundle());
             $this->assertEquals($current['controller'], $ruleDto->getController());
             $this->assertEquals($current['action'], $ruleDto->getAction());
@@ -745,7 +745,7 @@ class AclTest extends Test
 
         $groupDto = $this->facade->addGroup($groupData['name']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclGroupTransfer', $groupDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
 
@@ -753,7 +753,7 @@ class AclTest extends Test
 
         $roleDto = $this->facade->addRole($roleData['name'], $groupDto->getIdAclGroup());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\AclRoleTransfer', $roleDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
 
@@ -782,7 +782,7 @@ class AclTest extends Test
                 ->addRule('*', $current['controller'], $current['action'], $roleDto->getIdAclRole(), $current['type']);
 
             $this->assertNotNull($ruleDto->getIdAclRule());
-            $this->assertInstanceOf('\Generated\Shared\Transfer\AclRuleTransfer', $ruleDto);
+            $this->assertInstanceOf('\Generated\Shared\Transfer\RuleTransfer', $ruleDto);
             $this->assertEquals($current['controller'], $ruleDto->getController());
             $this->assertEquals($current['action'], $ruleDto->getAction());
             $this->assertEquals($current['type'], $ruleDto->getType());
@@ -804,10 +804,10 @@ class AclTest extends Test
     {
         $systemUsers = $this->userFacade->getSystemUsers();
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserCollectionTransfer', $systemUsers);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\CollectionTransfer', $systemUsers);
 
         foreach ($systemUsers as $user) {
-            $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $user);
+            $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
 
             $hasAccess = $this->facade->checkAccess($user, 'auth', 'login', 'index');
             $this->assertTrue($hasAccess);
@@ -824,10 +824,10 @@ class AclTest extends Test
     {
         $systemUsers = $this->userFacade->getSystemUsers();
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserCollectionTransfer', $systemUsers);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\CollectionTransfer', $systemUsers);
 
         foreach ($systemUsers as $user) {
-            $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $user);
+            $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
 
             $hasAccess = $this->facade->checkAccess($user, rand(100, 999), rand(100, 999), rand(100, 999));
             $this->assertEquals(false, $hasAccess);

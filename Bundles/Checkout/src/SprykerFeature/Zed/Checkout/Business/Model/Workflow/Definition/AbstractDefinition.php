@@ -3,7 +3,7 @@ namespace SprykerFeature\Zed\Checkout\Business\Model\Workflow\Definition;
 
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Checkout\Business\Model\Workflow\Context;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 use SprykerFeature\Zed\Library\Workflow\ContextInterface;
@@ -17,7 +17,7 @@ abstract class AbstractDefinition extends Definition
     protected $context;
 
     /**
-     * @var SalesOrderTransfer
+     * @var OrderTransfer
      */
     private $transferOrder;
 
@@ -27,11 +27,11 @@ abstract class AbstractDefinition extends Definition
     private $transferRequest;
 
     /**
-     * @param SalesOrderTransfer $transferOrder
+     * @param OrderTransfer $transferOrder
      * @param RequestInterface $transferRequest
      * @param FactoryInterface $factory
      */
-    public function __construct(SalesOrderTransfer $transferOrder, RequestInterface $transferRequest, FactoryInterface $factory)
+    public function __construct(OrderTransfer $transferOrder, RequestInterface $transferRequest, FactoryInterface $factory)
     {
         $this->factory = $factory;
         $this->transferOrder = clone $transferOrder;

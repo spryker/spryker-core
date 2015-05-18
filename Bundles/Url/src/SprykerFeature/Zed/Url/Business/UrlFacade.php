@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlRedirectTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\RedirectTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
@@ -22,7 +22,7 @@ class UrlFacade extends AbstractFacade
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      */
@@ -39,7 +39,7 @@ class UrlFacade extends AbstractFacade
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      */
@@ -52,11 +52,11 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param UrlUrlTransfer $url
+     * @param UrlTransfer $url
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      */
-    public function saveUrl(UrlUrlTransfer $url)
+    public function saveUrl(UrlTransfer $url)
     {
         $urlManager = $this->getDependencyContainer()->getUrlManager();
 
@@ -90,7 +90,7 @@ class UrlFacade extends AbstractFacade
     /**
      * @param string $urlString
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws MissingUrlException
      */
     public function getUrlByPath($urlString)
@@ -104,7 +104,7 @@ class UrlFacade extends AbstractFacade
     /**
      * @param int $idUrl
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws MissingUrlException
      */
     public function getUrlById($idUrl)
@@ -127,7 +127,7 @@ class UrlFacade extends AbstractFacade
      * @param string $toUrl
      * @param int $status
      *
-     * @return UrlRedirectTransfer
+     * @return RedirectTransfer
      * @throws MissingUrlException
      * @throws \Exception
      * @throws PropelException
@@ -145,7 +145,7 @@ class UrlFacade extends AbstractFacade
      * @param LocaleTransfer $locale
      * @param int $idRedirect
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
      */
@@ -157,11 +157,11 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param UrlRedirectTransfer $redirect
+     * @param RedirectTransfer $redirect
      *
-     * @return UrlRedirectTransfer
+     * @return RedirectTransfer
      */
-    public function saveRedirect(UrlRedirectTransfer $redirect)
+    public function saveRedirect(RedirectTransfer $redirect)
     {
         $redirectManager = $this->getDependencyContainer()->getRedirectManager();
 
@@ -169,9 +169,9 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param UrlRedirectTransfer $redirect
+     * @param RedirectTransfer $redirect
      */
-    public function touchRedirectActive(UrlRedirectTransfer $redirect)
+    public function touchRedirectActive(RedirectTransfer $redirect)
     {
         $redirectManager = $this->getDependencyContainer()->getRedirectManager();
 

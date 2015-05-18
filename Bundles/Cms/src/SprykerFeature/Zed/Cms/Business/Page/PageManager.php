@@ -5,8 +5,8 @@ namespace SprykerFeature\Zed\Cms\Business\Page;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Exception\PropelException;
-use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\PageTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\PageExistsException;
@@ -77,14 +77,14 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      *
-     * @return CmsPageTransfer
+     * @return PageTransfer
      * @throws MissingTemplateException
      * @throws MissingPageException
      * @throws PageExistsException
      */
-    public function savePage(CmsPageTransfer $page)
+    public function savePage(PageTransfer $page)
     {
         $this->checkTemplateExists($page->getFkTemplate());
 
@@ -96,14 +96,14 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      *
-     * @return CmsPageTransfer
+     * @return PageTransfer
      * @throws MissingTemplateException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function createPage(CmsPageTransfer $page)
+    protected function createPage(PageTransfer $page)
     {
         $this->checkTemplateExists($page->getFkTemplate());
 
@@ -118,14 +118,14 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      *
-     * @return CmsPageTransfer
+     * @return PageTransfer
      * @throws MissingPageException
      * @throws \Exception
      * @throws PropelException
      */
-    protected function updatePage(CmsPageTransfer $page)
+    protected function updatePage(PageTransfer $page)
     {
         $pageEntity = $this->getPageById($page->getIdCmsPage());
         $pageEntity->fromArray($page->toArray());
@@ -197,21 +197,21 @@ class PageManager implements PageManagerInterface
     /**
      * @param SpyCmsPage $page
      *
-     * @return CmsPageTransfer
+     * @return PageTransfer
      */
     public function convertPageEntityToTransfer(SpyCmsPage $page)
     {
-        $pageTransfer = new CmsPageTransfer();
+        $pageTransfer = new PageTransfer();
         $pageTransfer->fromArray($page->toArray());
 
         return $pageTransfer;
     }
 
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      * @var SpyCmsGlossaryKeyMapping[] $pageMappings
      */
-    public function touchPageActive(CmsPageTransfer $page)
+    public function touchPageActive(PageTransfer $page)
     {
         $pageMappings = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($page->getIdCmsPage())->find();
         foreach ($pageMappings as $pageMapping) {
@@ -222,13 +222,13 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      * @param string $url
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws UrlExistsException
      */
-    public function createPageUrl(CmsPageTransfer $page, $url)
+    public function createPageUrl(PageTransfer $page, $url)
     {
         $this->checkPageExists($page->getIdCmsPage());
 

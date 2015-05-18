@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Checkout\Business\Model\Workflow\Task;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Generated\Shared\Transfer\SalesAddressTransfer;
-use Generated\Shared\Transfer\CustomerCustomerTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 abstract class AbstractPrepareAddress extends AbstractTask
 {
@@ -24,11 +24,11 @@ abstract class AbstractPrepareAddress extends AbstractTask
 
     /**
      * @param SalesAddressTransfer $salesAddress
-     * @param CustomerCustomerTransfer $transferCustomer
+     * @param CustomerTransfer $transferCustomer
      *
      * @return \Generated\Shared\Transfer\CustomerCustomerAddressTransfer
      */
-    protected function loadCustomerAddress(SalesAddressTransfer $salesAddress, CustomerCustomerTransfer $transferCustomer)
+    protected function loadCustomerAddress(SalesAddressTransfer $salesAddress, CustomerTransfer $transferCustomer)
     {
         $transferCustomerAddress = new \Generated\Shared\Transfer\CustomerCustomerAddressTransfer();
         $transferCustomerAddress->fromArray($salesAddress->toArray(), true);

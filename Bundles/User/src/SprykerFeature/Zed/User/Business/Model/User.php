@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\User\Business\Model;
 
-use Generated\Shared\Transfer\UserUserCollectionTransfer;
+use Generated\Shared\Transfer\CollectionTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Library\Copy;
 use Propel\Runtime\Collection\ObjectCollection;
-use Generated\Shared\Transfer\UserUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserUserTableMap;
 use SprykerFeature\Zed\User\UserConfig;
 use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUser;
@@ -56,7 +56,7 @@ class User implements UserInterface
      * @param string $username
      * @param string $password
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UsernameExistsException
      */
     public function addUser($firstName, $lastName, $username, $password)
@@ -67,7 +67,7 @@ class User implements UserInterface
             throw new UsernameExistsException();
         }
 
-        $transferUser = new \Generated\Shared\Transfer\UserUserTransfer();
+        $transferUser = new \Generated\Shared\Transfer\UserTransfer();
         $transferUser->setFirstName($firstName);
         $transferUser->setLastName($lastName);
         $transferUser->setUsername($username);
@@ -98,12 +98,12 @@ class User implements UserInterface
     }
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotFoundException
      */
-    public function save(UserUserTransfer $user)
+    public function save(UserTransfer $user)
     {
         if ($user->getIdUserUser() !== null && $this->getUserById($user->getIdUserUser()) === null) {
             throw new UserNotFoundException();
@@ -137,7 +137,7 @@ class User implements UserInterface
     /**
      * @param $idUser
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     public function removeUser($idUser)
     {
@@ -148,7 +148,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotFoundException
      */
     public function getUsers()
@@ -163,7 +163,7 @@ class User implements UserInterface
 
 
         foreach ($results as $result) {
-            $transfer = new UserUserTransfer();
+            $transfer = new UserTransfer();
             $collection->add(Copy::entityToTransfer($transfer, $result));
         }
 
@@ -209,7 +209,7 @@ class User implements UserInterface
     /**
      * @param string $username
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotFoundException
      */
     public function getUserByUsername($username)
@@ -226,7 +226,7 @@ class User implements UserInterface
     /**
      * @param int $id
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotFoundException
      */
     public function getUserById($id)
@@ -247,7 +247,7 @@ class User implements UserInterface
     /**
      * @param int $id
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotFoundException
      */
     public function getEntityUserById($id)
@@ -262,11 +262,11 @@ class User implements UserInterface
     }
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
-    public function setCurrentUser(UserUserTransfer $user)
+    public function setCurrentUser(UserTransfer $user)
     {
         $session = $this->locator->application()->pluginSession();
         $key = sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
@@ -288,11 +288,11 @@ class User implements UserInterface
     }
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
      * @return bool
      */
-    public function isSystemUser(UserUserTransfer $user)
+    public function isSystemUser(UserTransfer $user)
     {
         $systemUser = $this->settings->getSystemUsers();
 
@@ -306,15 +306,15 @@ class User implements UserInterface
     }
 
     /**
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     public function getSystemUsers()
     {
         $systemUser = $this->settings->getSystemUsers();
-        $collection = new UserUserCollectionTransfer();
+        $collection = new CollectionTransfer();
 
         foreach ($systemUser as $username) {
-            $transferUser = new UserUserTransfer();
+            $transferUser = new UserTransfer();
 
             // TODO why setting the id? why is everything the username?
             $transferUser->setIdUserUser(0);
@@ -332,7 +332,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotFoundException
      */
     public function getCurrentUser()
@@ -351,11 +351,11 @@ class User implements UserInterface
     /**
      * @param SpyUserUser $entity
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     protected function entityToTransfer(SpyUserUser $entity)
     {
-        $transfer = new UserUserTransfer();
+        $transfer = new UserTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;

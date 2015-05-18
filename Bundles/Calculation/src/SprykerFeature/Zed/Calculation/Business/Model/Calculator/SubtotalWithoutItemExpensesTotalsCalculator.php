@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class SubtotalWithoutItemExpensesTotalsCalculator implements

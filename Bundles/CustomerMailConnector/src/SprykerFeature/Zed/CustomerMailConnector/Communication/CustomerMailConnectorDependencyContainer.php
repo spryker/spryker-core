@@ -21,6 +21,6 @@ class CustomerMailConnectorDependencyContainer extends AbstractDependencyContain
      */
     public function createMailTransfer()
     {
-        return new \Generated\Shared\Transfer\MailMailTransfer();
+        return new \Generated\Shared\Transfer\MailTransfer();
     }
 }

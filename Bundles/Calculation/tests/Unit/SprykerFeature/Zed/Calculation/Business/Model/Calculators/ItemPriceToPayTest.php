@@ -5,8 +5,8 @@ namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\CalculationDiscountTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ItemPriceToPayCalculator;
 use SprykerEngine\Zed\Kernel\Locator;
 
@@ -125,21 +125,21 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new SalesOrderTransfer();
+        $order = new OrderTransfer();
 
         return $order;
     }
 
     /**
-     * @return SalesOrderItemTransfer
+     * @return OrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
 
         return $item;
     }

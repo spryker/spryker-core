@@ -3,7 +3,7 @@ namespace SprykerFeature\Zed\Checkout\Business\Model\Workflow;
 
 use ArrayObject;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Library\Workflow\ContextInterface;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
 

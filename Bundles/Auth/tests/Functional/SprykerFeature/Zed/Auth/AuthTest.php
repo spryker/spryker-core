@@ -78,7 +78,7 @@ class AuthTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $userDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $userDto);
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $token = $this->authFacade->getUserToken($userDto);
@@ -86,7 +86,7 @@ class AuthTest extends Test
 
         $this->assertEquals($fakeToken, $token);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $userDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $userDto);
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $login = $this->authFacade->login($userDto->getUsername(), $userData['password']);
@@ -116,7 +116,7 @@ class AuthTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $userDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $userDto);
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $login = $this->authFacade->login($userDto->getUsername(), $userData['password']);
@@ -131,7 +131,7 @@ class AuthTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $userDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $userDto);
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $login = $this->authFacade->login($userDto->getUsername(), rand(10000, 99999));
@@ -188,14 +188,14 @@ class AuthTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $userDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $userDto);
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $login = $this->authFacade->login($userDto->getUsername(), $userData['password']);
         $this->assertTrue($login);
 
         $currentUserDto = $this->userFacade->getCurrentUser();
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserUserTransfer', $currentUserDto);
+        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $currentUserDto);
         $this->assertEquals($userDto->getIdUserUser(), $currentUserDto->getIdUserUser());
         $this->assertEquals($userDto->getUsername(), $currentUserDto->getUsername());
         $this->assertEquals($userDto->getPassword(), $currentUserDto->getPassword());

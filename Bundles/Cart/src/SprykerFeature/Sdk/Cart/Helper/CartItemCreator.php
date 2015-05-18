@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Sdk\Cart\Helper;
 
-use Generated\Shared\Transfer\CartCartItemTransfer;
+use Generated\Shared\Transfer\CartItemTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
 class CartItemCreator
@@ -29,7 +29,7 @@ class CartItemCreator
      */
     public function createCartItem($sku, $quantity = 1, $uniqueIdentifier = null, array $productOptions = [])
     {
-        $newCartItem = new \Generated\Shared\Transfer\CartCartItemTransfer();
+        $newCartItem = new \Generated\Shared\Transfer\CartItemTransfer();
         $newCartItem->setSku($sku);
         $newCartItem->setUniqueIdentifier($uniqueIdentifier);
         $newCartItem->setOptions($productOptions);

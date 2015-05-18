@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
 use SprykerFeature\Zed\Auth\Business\Exception\UserNotLoggedException;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use SprykerFeature\Zed\User\Business\UserFacade;
-use Generated\Shared\Transfer\UserUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 
 class Auth implements AuthInterface
 {
@@ -85,11 +85,11 @@ class Auth implements AuthInterface
     }
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
      * @return string
      */
-    public function generateToken(UserUserTransfer $user)
+    public function generateToken(UserTransfer $user)
     {
         return md5(sprintf('%s%s', $user->getPassword(), $user->getIdUserUser()));
     }
@@ -106,11 +106,11 @@ class Auth implements AuthInterface
 
     /**
      * @param string $token
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
      * @return string
      */
-    protected function registerAuthorizedUser($token, UserUserTransfer $user)
+    protected function registerAuthorizedUser($token, UserTransfer $user)
     {
         $key = $this->getSessionKey($token);
         $this->session->set($key, serialize($user));
@@ -220,12 +220,12 @@ class Auth implements AuthInterface
     /**
      * @param string $hash
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotFoundException
      */
     public function getSystemUserByHash($hash)
     {
-        $user = new UserUserTransfer();
+        $user = new UserTransfer();
 
         $credentials = $this->bundleSettings->getUsersCredentials();
         $token = $this->staticToken;
@@ -246,7 +246,7 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     public function getCurrentUser($token)
     {
@@ -258,7 +258,7 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      * @throws UserNotLoggedException
      */
     public function unserializeUserFromSession($token)

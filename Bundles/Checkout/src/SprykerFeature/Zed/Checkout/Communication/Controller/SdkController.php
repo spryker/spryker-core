@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\Checkout\Communication\Controller;
 
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
 
@@ -54,7 +54,7 @@ class SdkController extends AbstractSdkController
 
     public function saveOrderTestAction(\SprykerFeature\Shared\Sales\Transfer\Order $transferOrder = null, \SprykerFeature\Shared\Library\Communication\Request $requestTransfer = null)
     {
-        $transferOrder = new \Generated\Shared\Transfer\SalesOrderTransfer();
+        $transferOrder = new \Generated\Shared\Transfer\OrderTransfer();
         $transferOrder->setEmail('test+123@spryker.com');
 
         $address = new \Generated\Shared\Transfer\SalesAddressTransfer();
@@ -77,7 +77,7 @@ class SdkController extends AbstractSdkController
 
         $items = new SalesOrderItemsTransfer();
 
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
         $item->setSku('211709');
         $item->setPriceToPay(10500);
         $item->setName('Gewinde-Aussch.Lehrring D2299M1,2 LMW');
@@ -85,7 +85,7 @@ class SdkController extends AbstractSdkController
 
         $items->addOrderItem($item);
 
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
         $item->setSku('210105');
         $item->setPriceToPay(722);
         $item->setName('Auflageplatte A-SPCN 12');
@@ -93,7 +93,7 @@ class SdkController extends AbstractSdkController
 
         $items->addOrderItem($item);
 
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
         $item->setSku('211815');
         $item->setPriceToPay(3940);
         $item->setName('Gewinde-Reparatur-Satz M14 x 1,25 V-Coil');
@@ -101,7 +101,7 @@ class SdkController extends AbstractSdkController
 
         $items->addOrderItem($item);
 
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
         $item->setSku('210105');
         $item->setPriceToPay(722);
         $item->setName('Auflageplatte A-SPCN 12');
@@ -109,7 +109,7 @@ class SdkController extends AbstractSdkController
 
         $items->addOrderItem($item);
 
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
         $item->setSku('210403');
         $item->setPriceToPay(26200);
         $item->setName('Aderendhülsensortiment 1250-tlg. 4kt. Knipex');

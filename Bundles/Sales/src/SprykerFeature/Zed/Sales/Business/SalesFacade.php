@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Sales\Business;
 
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;

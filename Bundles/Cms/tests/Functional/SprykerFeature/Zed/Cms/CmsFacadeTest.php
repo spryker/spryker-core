@@ -90,7 +90,7 @@ class CmsFacadeTest extends Test
 
         $template = $this->cmsFacade->createTemplate('AUsedTemplateName', 'AUsedTemplatePath');
 
-        $page = new \Generated\Shared\Transfer\CmsPageTransfer();
+        $page = new \Generated\Shared\Transfer\PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
 
         $pageCountBeforeCreation = $pageQuery->count();
@@ -110,7 +110,7 @@ class CmsFacadeTest extends Test
         $template1 = $this->cmsFacade->createTemplate('AnotherUsedTemplateName', 'AnotherUsedTemplatePath');
         $template2 = $this->cmsFacade->createTemplate('YetAnotherUsedTemplateName', 'YetAnotherUsedTemplatePath');
 
-        $page = new \Generated\Shared\Transfer\CmsPageTransfer();
+        $page = new \Generated\Shared\Transfer\PageTransfer();
         $page->setFkTemplate($template1->getIdCmsTemplate());
 
         $page = $this->cmsFacade->savePage($page);
@@ -129,7 +129,7 @@ class CmsFacadeTest extends Test
      */
     public function testSaveTemplateInsertsAndReturnsSomethingOnCreate()
     {
-        $template = new \Generated\Shared\Transfer\CmsCmsTemplateTransfer();
+        $template = new \Generated\Shared\Transfer\CmsTemplateTransfer();
         $template->setTemplateName('WhatARandomName');
         $template->setTemplatePath('WhatARandomPath');
 
@@ -149,7 +149,7 @@ class CmsFacadeTest extends Test
      */
     public function testSaveTemplateUpdatesSomething()
     {
-        $template = new \Generated\Shared\Transfer\CmsCmsTemplateTransfer();
+        $template = new \Generated\Shared\Transfer\CmsTemplateTransfer();
         $template->setTemplateName('WhatARandomName');
         $template->setTemplatePath('WhatARandomPath2');
         $template = $this->cmsFacade->saveTemplate($template);
@@ -174,11 +174,11 @@ class CmsFacadeTest extends Test
         $glossaryKeyId = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey');
         $template = $this->cmsFacade->createTemplate('ANotExistingTemplateName', 'ANotYetExistingTemplatePath');
 
-        $page = new \Generated\Shared\Transfer\CmsPageTransfer();
+        $page = new \Generated\Shared\Transfer\PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
         $page = $this->cmsFacade->savePage($page);
 
-        $pageKeyMapping = new \Generated\Shared\Transfer\CmsPageKeyMappingTransfer();
+        $pageKeyMapping = new \Generated\Shared\Transfer\PageKeyMappingTransfer();
         $pageKeyMapping->setFkGlossaryKey($glossaryKeyId);
         $pageKeyMapping->setFkPage($page->getIdCmsPage());
         $pageKeyMapping->setPlaceholder('SomePlaceholderName');
@@ -201,11 +201,11 @@ class CmsFacadeTest extends Test
         $glossaryKeyId2 = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey3');
         $template = $this->cmsFacade->createTemplate('ANotExistingTemplateName2', 'ANotYetExistingTemplatePath2');
 
-        $page = new \Generated\Shared\Transfer\CmsPageTransfer();
+        $page = new \Generated\Shared\Transfer\PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
         $page = $this->cmsFacade->savePage($page);
 
-        $pageKeyMapping = new \Generated\Shared\Transfer\CmsPageKeyMappingTransfer();
+        $pageKeyMapping = new \Generated\Shared\Transfer\PageKeyMappingTransfer();
         $pageKeyMapping->setFkGlossaryKey($glossaryKeyId1);
         $pageKeyMapping->setFkPage($page->getIdCmsPage());
         $pageKeyMapping->setPlaceholder('SomePlaceholderName');
@@ -232,7 +232,7 @@ class CmsFacadeTest extends Test
 
         $template = $this->cmsFacade->createTemplate('APlaceholderTemplate', 'APlaceholderTemplatePath');
 
-        $page = new \Generated\Shared\Transfer\CmsPageTransfer();
+        $page = new \Generated\Shared\Transfer\PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
 
         $page = $this->cmsFacade->savePage($page);
@@ -258,7 +258,7 @@ class CmsFacadeTest extends Test
     {
         $template = $this->cmsFacade->createTemplate('APlaceholderTemplate2', 'APlaceholderTemplatePath2');
 
-        $page = new \Generated\Shared\Transfer\CmsPageTransfer();
+        $page = new \Generated\Shared\Transfer\PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
 
         $page = $this->cmsFacade->savePage($page);

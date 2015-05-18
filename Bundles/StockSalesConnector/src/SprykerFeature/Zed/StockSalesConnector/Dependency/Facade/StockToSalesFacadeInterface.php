@@ -2,16 +2,16 @@
 
 namespace SprykerFeature\Zed\StockSalesConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\StockStockProductTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 
 interface StockToSalesFacadeInterface
 {
     /**
-     * @param StockStockProductTransfer $transferStockProduct
+     * @param StockProductTransfer $transferStockProduct
      *
      * @return int
      */
-    public function updateStockProduct(StockStockProductTransfer $transferStockProduct);
+    public function updateStockProduct(StockProductTransfer $transferStockProduct);
 
     /**
      * @param string $sku

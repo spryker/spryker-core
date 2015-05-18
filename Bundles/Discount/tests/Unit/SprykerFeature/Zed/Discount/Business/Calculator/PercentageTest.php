@@ -5,7 +5,7 @@ namespace Unit\SprykerFeature\Zed\Discount\Business\Calculator;
 use Codeception\TestCase\Test;
 use SprykerFeature\Zed\Discount\Business\Calculator\Percentage;
 use SprykerEngine\Zed\Kernel\Locator;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
 
 /**
  * Class PercentageTest
@@ -92,7 +92,7 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
         $items = [];
 
         foreach ($grossPrices as $grossPrice) {
-            $item = new \Generated\Shared\Transfer\SalesOrderItemTransfer();
+            $item = new \Generated\Shared\Transfer\OrderItemTransfer();
             $item->setGrossPrice($grossPrice);
             $items[] = $item;
         }

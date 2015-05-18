@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use Generated\Shared\Transfer\MailMailTransferTransfer;
+use Generated\Shared\Transfer\MailTransferTransfer;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 
 class RegistrationTokenSender extends AbstractPlugin implements RegistrationTokenSenderPluginInterface

@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
-use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
-use Generated\Shared\Transfer\PayoneCaptureTransfer;
-use Generated\Shared\Transfer\PayoneDebitTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Shared\Transfer\AuthorizationTransfer;
+use Generated\Shared\Transfer\CaptureTransfer;
+use Generated\Shared\Transfer\DebitTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
@@ -18,7 +18,7 @@ class TestController extends AbstractController implements PayoneApiConstants
     {
         $order = $this->getOrder();
 
-        $authorization = new PayoneAuthorizationTransfer();
+        $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod('payment.payone.prepayment');
         $authorization->setAmount($order->getTotals()->getGrandTotal());
         $authorization->setReferenceId($order->getIncrementId());
@@ -33,7 +33,7 @@ class TestController extends AbstractController implements PayoneApiConstants
     {
         $order = $this->getOrder();
 
-        $authorization = new PayoneAuthorizationTransfer();
+        $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod('payment.payone.prepayment');
         $authorization->setAmount($order->getTotals()->getGrandTotal());
         $authorization->setReferenceId($order->getIncrementId());
@@ -52,7 +52,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $payment->setTransactionId('161913038');
         $payment->setPaymentMethod(self::PAYMENT_METHOD_PREPAYMENT);
 
-        $capture = new PayoneCaptureTransfer();
+        $capture = new CaptureTransfer();
         $capture->setPayment($payment);
         $capture->setAmount($order->getTotals()->getGrandTotal());
 
@@ -67,7 +67,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $payment->setTransactionId('161237526');
         $payment->setPaymentMethod('payment.payone.prepayment');
 
-        $debit = new PayoneDebitTransfer();
+        $debit = new DebitTransfer();
         $debit->setPayment($payment);
         $debit->setAmount(1000);
 
@@ -95,7 +95,7 @@ class TestController extends AbstractController implements PayoneApiConstants
     {
         $order = $this->getOrder();
 
-        $authorization = new PayoneAuthorizationTransfer();
+        $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(self::PAYMENT_METHOD_PAYPAL);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
         $authorization->setReferenceId($order->getIncrementId());
@@ -108,11 +108,11 @@ class TestController extends AbstractController implements PayoneApiConstants
     }
 
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     protected function getOrder()
     {
-        $order = new SalesOrderTransfer();
+        $order = new OrderTransfer();
         $order->setFirstName('horst');
         $order->setLastName('wurst');
         $order->setEmail('horst@wurst.de');
@@ -121,7 +121,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $order->setIdSalesOrder(1);
         $order->setSalutation('Mr');
 
-        $totals = new CalculationTotalsTransfer();
+        $totals = new TotalsTransfer();
         $totals->setGrandTotal(10000);
         //$totals->setTax(300);
         $totals->setSubtotal(10000);

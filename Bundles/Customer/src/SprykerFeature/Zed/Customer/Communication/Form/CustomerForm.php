@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
-use Generated\Shared\Transfer\CustomerCustomerTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Symfony\Component\Validator\Constraints;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 
@@ -77,7 +77,7 @@ class CustomerForm extends AbstractForm
      */
     public function getDefaultData()
     {
-        $customerTransfer = new CustomerCustomerTransfer();
+        $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($this->stateContainer->getRequestValue('id'));
         $customerTransfer = $this->getLocator()->customer()->facade()->getCustomer($customerTransfer);
 

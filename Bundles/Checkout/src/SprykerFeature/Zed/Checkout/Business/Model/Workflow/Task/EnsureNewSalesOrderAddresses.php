@@ -1,7 +1,7 @@
 <?php
 namespace SprykerFeature\Zed\Checkout\Business\Model\Workflow\Task;
 
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Checkout\Business\Model\Workflow\Context;
 
 /**
@@ -16,7 +16,7 @@ class EnsureNewSalesOrderAddresses extends AbstractTask
      * @param Context $context
      * @param array   $logContext
      */
-    public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext)
+    public function __invoke(OrderTransfer $transferOrder, Context $context, array $logContext)
     {
         // unset id, because we always want to store a new address for each order
         $transferOrder->getShippingAddress()->setIdSalesOrderAddress(null);

@@ -29,7 +29,7 @@ class SdkController extends AbstractSdkController
             return null;
         }
 
-        return Copy::entityToTransfer(new \Generated\Shared\Transfer\SalesOrderTransfer(), $order, true);
+        return Copy::entityToTransfer(new \Generated\Shared\Transfer\OrderTransfer(), $order, true);
     }
 
     /**

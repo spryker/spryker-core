@@ -3,13 +3,13 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business\DecisionRule;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
 use SprykerEngine\Zed\Kernel\Locator;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 /**
  * Class MinimumCartSubtotalTest
@@ -27,8 +27,8 @@ class MinimumCartSubtotalTest extends Test
     public function testShouldReturnTrueForAnOrderWithAHighEnoughSubtotal()
     {
         $locator = $this->getLocator();
-        $order = new SalesOrderTransfer();
-        $totals = new CalculationTotalsTransfer();
+        $order = new OrderTransfer();
+        $totals = new TotalsTransfer();
         $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_1000);
         $order->setTotals($totals);
 
@@ -44,10 +44,10 @@ class MinimumCartSubtotalTest extends Test
     {
         $locator = $this->getLocator();
         /* @var Order $order */
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
+        $order = new \Generated\Shared\Transfer\OrderTransfer();
 
         /* @var TotalsInterface $totals */
-        $totals = new \Generated\Shared\Transfer\CalculationTotalsTransfer();
+        $totals = new \Generated\Shared\Transfer\TotalsTransfer();
         $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_400);
         $order->setTotals($totals);
 
@@ -63,10 +63,10 @@ class MinimumCartSubtotalTest extends Test
     {
         $locator = $this->getLocator();
         /* @var Order $order */
-        $order = new \Generated\Shared\Transfer\SalesOrderTransfer();
+        $order = new \Generated\Shared\Transfer\OrderTransfer();
 
         /* @var TotalsInterface $totals */
-        $totals = new \Generated\Shared\Transfer\CalculationTotalsTransfer();
+        $totals = new \Generated\Shared\Transfer\TotalsTransfer();
         $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_500);
         $order->setTotals($totals);
 

@@ -4,11 +4,11 @@ namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CalculationDiscountTransfer;
-use Generated\Shared\Transfer\CalculationExpenseTransfer;
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
@@ -73,8 +73,8 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnEmptyOrder()
     {
-        $order = new SalesOrderTransfer();
-        $order->setTotals(new CalculationTotalsTransfer());
+        $order = new OrderTransfer();
+        $order->setTotals(new TotalsTransfer());
         $order->setItems(new OrderItemsTransfer());
 
         $calculator = new StackExecutor();//$this->getCalculatorModel();
@@ -85,11 +85,11 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnExampleOrderWithOneItemAndExpenseOnOrder()
     {
-        $order = new SalesOrderTransfer();
-        $order->setTotals(new CalculationTotalsTransfer());
+        $order = new OrderTransfer();
+        $order->setTotals(new TotalsTransfer());
 
         $items = new OrderItemsTransfer();
-        $item =  new SalesOrderItemTransfer();
+        $item =  new OrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
         $discounts = new \ArrayObject();
@@ -100,7 +100,7 @@ class CalculatorTest extends Test
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $discounts->append($discount);
 
-        $expense = new CalculationExpenseTransfer();
+        $expense = new ExpenseTransfer();
         $expense->setName('Shipping Costs')
             ->setType(ExpenseConstants::EXPENSE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS)
@@ -138,11 +138,11 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnExampleOrderWithTwoItemsAndExpenseOnItems()
     {
-        $order = new SalesOrderTransfer();
-        $order->setTotals(new CalculationTotalsTransfer());
+        $order = new OrderTransfer();
+        $order->setTotals(new TotalsTransfer());
 
         $items = new \ArrayObject();
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
         $discount = new CalculationDiscountTransfer();
@@ -153,7 +153,7 @@ class CalculatorTest extends Test
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $expense = new CalculationExpenseTransfer();
+        $expense = new ExpenseTransfer();
         $expense->setName('Shipping Costs')
             ->setType(ExpenseConstants::EXPENSE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS/2)

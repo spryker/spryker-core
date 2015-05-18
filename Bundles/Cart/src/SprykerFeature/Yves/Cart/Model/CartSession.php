@@ -3,7 +3,7 @@
 namespace SprykerFeature\Yves\Cart\Model;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Yves\Library\Session\TransferSession;
 
 class CartSession implements CartSessionInterface
@@ -104,7 +104,7 @@ class CartSession implements CartSessionInterface
     {
         if (!self::$cartOrder) {
             // TODO this must be removed
-            $salesOrderTransfer = new \Generated\Shared\Transfer\SalesOrderTransfer();
+            $salesOrderTransfer = new \Generated\Shared\Transfer\OrderTransfer();
             self::$cartOrder = $this->session->get(self::SESSION_CART_ORDER_KEY, $salesOrderTransfer);
         }
     }

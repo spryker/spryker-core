@@ -1,7 +1,7 @@
 <?php
 namespace SprykerFeature\Zed\Checkout\Business\Model\Workflow\Task;
 
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Checkout\Business\Model\Workflow\Context;
 
 /**
@@ -15,7 +15,7 @@ class PrepareBillingAddress extends AbstractPrepareAddress
      * @param Context $context
      * @param array   $logContext
      */
-    public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext)
+    public function __invoke(OrderTransfer $transferOrder, Context $context, array $logContext)
     {
         if ($transferOrder->getCustomer()) {
             $transferCustomerAddress = $this->loadCustomerAddress($transferOrder->getBillingAddress(), $transferOrder->getCustomer());

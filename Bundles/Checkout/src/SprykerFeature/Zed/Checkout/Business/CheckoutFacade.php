@@ -1,7 +1,7 @@
 <?php
 namespace SprykerFeature\Zed\Checkout\Business;
 
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
 

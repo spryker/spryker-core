@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Stock\Business;
 
-use Generated\Shared\Transfer\StockStockProductTransfer;
-use Generated\Shared\Transfer\StockStockTypeTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\TypeTransfer;
 use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStock;
@@ -37,41 +37,41 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
     }
 
     /**
-     * @param StockStockTypeTransfer $stockTypeTransfer
+     * @param TypeTransfer $stockTypeTransfer
      *
      * @return int
      */
-    public function createStockType(StockStockTypeTransfer $stockTypeTransfer)
+    public function createStockType(TypeTransfer $stockTypeTransfer)
     {
         return $this->getDependencyContainer()->getWriterModel()->createStockType($stockTypeTransfer);
     }
 
     /**
-     * @param StockStockTypeTransfer $stockTypeTransfer
+     * @param TypeTransfer $stockTypeTransfer
      *
      * @return int
      */
-    public function updateStockType(StockStockTypeTransfer $stockTypeTransfer)
+    public function updateStockType(TypeTransfer $stockTypeTransfer)
     {
         return $this->getDependencyContainer()->getWriterModel()->updateStockType($stockTypeTransfer);
     }
 
     /**
-     * @param StockStockProductTransfer $transferStockProduct
+     * @param StockProductTransfer $transferStockProduct
      *
      * @return int
      */
-    public function createStockProduct(StockStockProductTransfer $transferStockProduct)
+    public function createStockProduct(StockProductTransfer $transferStockProduct)
     {
         return $this->getDependencyContainer()->getWriterModel()->createStockProduct($transferStockProduct);
     }
 
     /**
-     * @param StockStockProductTransfer $stockProductTransfer
+     * @param StockProductTransfer $stockProductTransfer
      *
      * @return int
      */
-    public function updateStockProduct(StockStockProductTransfer $stockProductTransfer)
+    public function updateStockProduct(StockProductTransfer $stockProductTransfer)
     {
         return $this->getDependencyContainer()->getWriterModel()->updateStockProduct($stockProductTransfer);
     }

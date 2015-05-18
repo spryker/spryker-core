@@ -8,10 +8,10 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Library\Copy;
-use Generated\Shared\Transfer\AclRoleTransfer;
-use Generated\Shared\Transfer\UserUserTransfer;
+use Generated\Shared\Transfer\RoleTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use Generated\Shared\Transfer\AclRuleTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RulesTransfer;
 
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
@@ -64,12 +64,12 @@ class Rule implements RuleInterface
      * @param int $idRole
      * @param string $type
      *
-     * @return AclRuleTransfer
+     * @return RuleTransfer
      * @throws RuleNotFoundException
      */
     public function addRule($bundle, $controller, $action, $idRole, $type = 'allow')
     {
-        $data = new AclRuleTransfer();
+        $data = new RuleTransfer();
 
         $data->setBundle($bundle);
         $data->setController($controller);
@@ -81,12 +81,12 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param AclRuleTransfer $data
+     * @param RuleTransfer $data
      *
-     * @return AclRuleTransfer
+     * @return RuleTransfer
      * @throws RuleNotFoundException
      */
-    public function save(AclRuleTransfer $data)
+    public function save(RuleTransfer $data)
     {
         $entity = $this->locator->acl()->entitySpyAclRule();
 
@@ -106,7 +106,7 @@ class Rule implements RuleInterface
         $entity->setType($data->getType());
         $entity->save();
 
-        $transfer = new AclRuleTransfer();
+        $transfer = new RuleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -127,11 +127,11 @@ class Rule implements RuleInterface
     /**
      * @param int $idRole
      *
-     * @return AclRuleTransfer
+     * @return RuleTransfer
      */
     public function getRoleRules($idRole)
     {
-        $role = new AclRoleTransfer();
+        $role = new RoleTransfer();
         $role->setIdAclRole($idRole);
 
         $roles = new RolesTransfer();
@@ -166,7 +166,7 @@ class Rule implements RuleInterface
      * @param string $controller
      * @param string $action
      *
-     * @return AclRoleTransfer
+     * @return RoleTransfer
      */
     public function findByRoles(
         RolesTransfer $roles,
@@ -179,7 +179,7 @@ class Rule implements RuleInterface
         $collection = new RulesTransfer();
 
         foreach ($results as $result) {
-            $transfer = new AclRuleTransfer();
+            $transfer = new RuleTransfer();
             $collection->addRule(Copy::entityToTransfer($transfer, $result));
         }
 
@@ -189,7 +189,7 @@ class Rule implements RuleInterface
     /**
      * @param int $idGroup
      *
-     * @return AclRuleTransfer
+     * @return RuleTransfer
      */
     public function findByGroupId($idGroup)
     {
@@ -199,7 +199,7 @@ class Rule implements RuleInterface
         $collection = new RulesTransfer();
 
         foreach ($results as $result) {
-            $transfer = new AclRuleTransfer();
+            $transfer = new RuleTransfer();
             $collection->addRule(Copy::entityToTransfer($transfer, $result));
         }
 
@@ -209,7 +209,7 @@ class Rule implements RuleInterface
     /**
      * @param int $id
      *
-     * @return AclRuleTransfer
+     * @return RuleTransfer
      * @throws RuleNotFoundException
      */
     public function getRuleById($id)
@@ -220,7 +220,7 @@ class Rule implements RuleInterface
             throw new RuleNotFoundException();
         }
 
-        $transfer = new AclRuleTransfer();
+        $transfer = new RuleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -255,7 +255,7 @@ class Rule implements RuleInterface
         $ignore = $this->settings->getRules();
 
         foreach ($ignore as $arrayRule) {
-            $rule = new AclRuleTransfer();
+            $rule = new RuleTransfer();
             $rule->setBundle($arrayRule['bundle']);
             $rule->setController($arrayRule['controller']);
             $rule->setAction($arrayRule['action']);
@@ -268,11 +268,11 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      *
      * @throws UserNotFoundException
      */
-    public function registerSystemUserRules(UserUserTransfer $user)
+    public function registerSystemUserRules(UserTransfer $user)
     {
         $credentials = $this->settings->getCredentials();
 
@@ -290,14 +290,14 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param UserUserTransfer $user
+     * @param UserTransfer $user
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
      * @return bool
      */
-    public function isAllowed(UserUserTransfer $user, $bundle, $controller, $action)
+    public function isAllowed(UserTransfer $user, $bundle, $controller, $action)
     {
         if ($this->locator->user()->facade()->isSystemUser($user)) {
             $this->registerSystemUserRules($user);

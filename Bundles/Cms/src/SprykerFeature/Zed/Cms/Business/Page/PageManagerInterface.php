@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Cms\Business\Page;
 
-use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\PageTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\PageExistsException;
@@ -14,15 +14,15 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 interface PageManagerInterface
 {
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      *
-     * @return CmsPageTransfer
+     * @return PageTransfer
      * @throws MissingTemplateException
      * @throws MissingPageException
      * @throws MissingUrlException
      * @throws PageExistsException
      */
-    public function savePage(CmsPageTransfer $page);
+    public function savePage(PageTransfer $page);
 
     /**
      * @param int $idPage
@@ -35,21 +35,21 @@ interface PageManagerInterface
     /**
      * @param SpyCmsPage $page
      *
-     * @return CmsPageTransfer
+     * @return PageTransfer
      */
     public function convertPageEntityToTransfer(SpyCmsPage $page);
 
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      */
-    public function touchPageActive(CmsPageTransfer $page);
+    public function touchPageActive(PageTransfer $page);
 
     /**
-     * @param CmsPageTransfer $page
+     * @param PageTransfer $page
      * @param string $url
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws UrlExistsException
      */
-    public function createPageUrl(CmsPageTransfer $page, $url);
+    public function createPageUrl(PageTransfer $page, $url);
 }

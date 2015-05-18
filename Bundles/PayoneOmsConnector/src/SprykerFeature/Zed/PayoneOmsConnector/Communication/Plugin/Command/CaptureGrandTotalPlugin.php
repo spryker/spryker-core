@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Command;
 
-use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
-use Generated\Shared\Transfer\PayoneCaptureTransfer;
+use Generated\Shared\Transfer\AuthorizationTransfer;
+use Generated\Shared\Transfer\CaptureTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -25,7 +25,7 @@ class CaptureGrandTotalPlugin extends AbstractPlugin implements CommandByOrderIn
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
         //FIXME Pseudo Code Example
-        $captureTransfer = new PayoneCaptureTransfer();
+        $captureTransfer = new CaptureTransfer();
         $captureTransfer->setAmount($orderEntity->getGrandTotal());
 
         $payment = $orderEntity->getPayonePayment();

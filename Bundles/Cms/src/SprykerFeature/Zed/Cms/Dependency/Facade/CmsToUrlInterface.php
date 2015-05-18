@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Cms\Dependency\Facade;
 
 use Propel\Runtime\Exception\PropelException;
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface CmsToUrlInterface
@@ -13,7 +13,7 @@ interface CmsToUrlInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      */

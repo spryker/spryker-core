@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Yves\Cart\Tracking;
 
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
 use SprykerFeature\Yves\Cart\Model\ZedCart;

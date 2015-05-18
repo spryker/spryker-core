@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
-use Generated\Shared\Transfer\DiscountDiscountDecisionRuleTransfer;
+use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
@@ -15,10 +15,10 @@ class DiscountDecisionRuleWriter extends AbstractWriter
     protected $locator;
 
     /**
-     * @param DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      * @return mixed
      */
-    public function create(DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer)
+    public function create(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
         $discountDecisionRuleEntity =$this->locator->discount()->entitySpyDiscountDecisionRule();
         $discountDecisionRuleEntity->fromArray($discountDecisionRuleTransfer->toArray());
@@ -28,11 +28,11 @@ class DiscountDecisionRuleWriter extends AbstractWriter
     }
 
     /**
-     * @param DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      * @return array|mixed|SpyDiscountDecisionRule
      * @throws PropelException
      */
-    public function update(DiscountDiscountDecisionRuleTransfer $discountDecisionRuleTransfer)
+    public function update(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
 
         $queryContainer = $this->getQueryContainer();

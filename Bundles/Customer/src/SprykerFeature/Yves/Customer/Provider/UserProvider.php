@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Generated\Zed\Ide\AutoCompletion;
-use Generated\Shared\Transfer\CustomerCustomerTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 class UserProvider implements UserProviderInterface
 {
@@ -83,7 +83,7 @@ class UserProvider implements UserProviderInterface
      */
     protected function fetchUser($username)
     {
-        $customerTransfer = new CustomerCustomerTransfer();
+        $customerTransfer = new CustomerTransfer();
         $customerTransfer->setEmail($username);
         $customerTransfer = $this->locator->customer()->sdk()->getCustomer($customerTransfer);
         return [

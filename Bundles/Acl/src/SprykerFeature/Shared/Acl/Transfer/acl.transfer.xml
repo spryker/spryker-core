@@ -3,16 +3,16 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="AclGroup">
+    <transfer name="Group">
         <property name="idAclGroup" type="int" />
         <property name="name" type="string" />
     </transfer>
 
     <transfer name="Groups">
-        <property name="groups" type="AclGroup[]" singular="group" />
+        <property name="groups" type="Group[]" singular="group" />
     </transfer>
 
-    <transfer name="AclRole">
+    <transfer name="Role">
         <property name="idAclRole" type="int" />
         <property name="name" type="string" />
         <property name="idGroup" type="int" />
@@ -20,10 +20,10 @@
     </transfer>
 
     <transfer name="Roles">
-        <property name="roles" type="AclRole[]" singular="role" />
+        <property name="roles" type="Role[]" singular="role" />
     </transfer>
 
-    <transfer name="AclRule">
+    <transfer name="Rule">
         <property name="idAclRule" type="int" />
         <property name="bundle" type="string" />
         <property name="controller" type="string" />
@@ -33,7 +33,7 @@
     </transfer>
 
     <transfer name="Rules">
-        <property name="rules" type="AclRule[]" singular="rule" />
+        <property name="rules" type="Rule[]" singular="rule" />
     </transfer>
 
 </transfers>

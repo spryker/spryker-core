@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
-use Generated\Shared\Transfer\GlossaryTranslationTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
@@ -22,7 +22,7 @@ interface TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -34,7 +34,7 @@ interface TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -47,7 +47,7 @@ interface TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
@@ -60,7 +60,7 @@ interface TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingTranslationException
      * @throws \Exception
      * @throws PropelException
@@ -73,7 +73,7 @@ interface TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws MissingTranslationException
@@ -81,26 +81,26 @@ interface TranslationManagerInterface
     public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 
     /**
-     * @param GlossaryTranslationTransfer $transferTranslation
+     * @param TranslationTransfer $transferTranslation
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      * @throws MissingTranslationException
      */
-    public function saveTranslation(GlossaryTranslationTransfer $transferTranslation);
+    public function saveTranslation(TranslationTransfer $transferTranslation);
 
     /**
-     * @param GlossaryTranslationTransfer $transferTranslation
+     * @param TranslationTransfer $transferTranslation
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      * @throws MissingTranslationException
      */
-    public function saveAndTouchTranslation(GlossaryTranslationTransfer $transferTranslation);
+    public function saveAndTouchTranslation(TranslationTransfer $transferTranslation);
 
     /**
      * @param string $keyName
@@ -138,7 +138,7 @@ interface TranslationManagerInterface
      * @param string $keyName
      * @param LocaleTransfer $locale
      *
-     * @return GlossaryTranslationTransfer
+     * @return TranslationTransfer
      * @throws MissingTranslationException
      */
     public function getTranslationByKeyName($keyName, LocaleTransfer $locale);

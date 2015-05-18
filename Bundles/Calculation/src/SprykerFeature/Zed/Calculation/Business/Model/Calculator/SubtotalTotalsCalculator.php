@@ -6,7 +6,7 @@ use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInt
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class SubtotalTotalsCalculator implements

@@ -9,7 +9,7 @@ use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use Generated\Shared\Transfer\AclRoleTransfer;
+use Generated\Shared\Transfer\RoleTransfer;
 use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
 use SprykerFeature\Zed\Acl\Business\Exception\RoleNameExistsException;
 
@@ -39,12 +39,12 @@ class Role implements RoleInterface
      * @param string $name
      * @param int $idGroup
      *
-     * @return AclRoleTransfer
+     * @return RoleTransfer
      * @throws RoleNameExistsException
      */
     public function addRole($name, $idGroup)
     {
-        $data = new AclRoleTransfer();
+        $data = new RoleTransfer();
         $data->setName($name);
 
         $role = $this->save($data);
@@ -56,13 +56,13 @@ class Role implements RoleInterface
     }
 
     /**
-     * @param AclRoleTransfer $data
+     * @param RoleTransfer $data
      *
-     * @return AclRoleTransfer
+     * @return RoleTransfer
      * @throws RoleNameExistsException
      * @throws RoleNotFoundException
 d     */
-    public function save(AclRoleTransfer $data)
+    public function save(RoleTransfer $data)
     {
         $entity = $this->locator->acl()->entitySpyAclRole();
 
@@ -77,7 +77,7 @@ d     */
         $entity->setName($data->getName());
         $entity->save();
 
-        $transfer = new AclRoleTransfer();
+        $transfer = new RoleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -110,7 +110,7 @@ d     */
     /**
      * @param int $idUser
      *
-     * @return AclRoleTransfer
+     * @return RoleTransfer
      */
     public function getUserRoles($idUser)
     {
@@ -132,7 +132,7 @@ d     */
         $collection = new RolesTransfer();
 
         foreach ($results as $result) {
-            $transfer = new AclRoleTransfer();
+            $transfer = new RoleTransfer();
             Copy::entityToTransfer($transfer, $result);
             $collection->addRole($transfer);
         }
@@ -143,7 +143,7 @@ d     */
     /**
      * @param int $id
      *
-     * @return AclRoleTransfer
+     * @return RoleTransfer
      * @throws EmptyEntityException
      */
     public function getRoleById($id)
@@ -154,7 +154,7 @@ d     */
             throw new EmptyEntityException();
         }
 
-        $transfer = new AclRoleTransfer();
+        $transfer = new RoleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
@@ -180,13 +180,13 @@ d     */
     /**
      * @param string $name
      *
-     * @return AclRoleTransfer
+     * @return RoleTransfer
      */
     public function getByName($name)
     {
         $entity = $this->queryContainer->queryRoleByName($name)->findOne();
 
-        $transfer = new AclRoleTransfer();
+        $transfer = new RoleTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;

@@ -2,9 +2,9 @@
 namespace SprykerFeature\Yves\Cart\Model;
 
 use SprykerFeature\Shared\Cart\Code\DeleteReasonConstant;
-use Generated\Shared\Transfer\CartCartItemTransfer;
+use Generated\Shared\Transfer\CartItemTransfer;
 use SprykerFeature\Shared\Library\Communication\Response;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface CartInterface
 {

@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
@@ -94,7 +94,7 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -106,7 +106,7 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -118,7 +118,7 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
@@ -130,7 +130,7 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException

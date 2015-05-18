@@ -3,16 +3,16 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CalculationDiscountTotalsTransfer;
-use Generated\Shared\Transfer\CalculationExpenseTotalsTransfer;
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\DiscountTotalsTransfer;
+use Generated\Shared\Transfer\ExpenseTotalsTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\CalculationDiscountTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
-use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -197,13 +197,13 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return CalculationTotalsTransfer
+     * @return TotalsTransfer
      */
     protected function getTotals()
     {
-        $totals = new CalculationTotalsTransfer();
-        $totals->setDiscount(new CalculationDiscountTotalsTransfer());
-        $totals->setExpenses(new CalculationExpenseTotalsTransfer());
+        $totals = new TotalsTransfer();
+        $totals->setDiscount(new DiscountTotalsTransfer());
+        $totals->setExpenses(new ExpenseTotalsTransfer());
 
         return $totals;
     }
@@ -217,13 +217,13 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new SalesOrderTransfer();
-        $totals = new CalculationTotalsTransfer();
-        $totals->setDiscount(new CalculationDiscountTotalsTransfer());
+        $order = new OrderTransfer();
+        $totals = new TotalsTransfer();
+        $totals->setDiscount(new DiscountTotalsTransfer());
         $order->setTotals($totals);
         $order->setDiscounts(new CalculationDiscountTransfer());
 
@@ -231,21 +231,21 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return SalesOrderItemTransfer
+     * @return OrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
 
         return $item;
     }
 
     /**
-     * @return CalculationExpenseTransfer
+     * @return ExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {
-        $expense = new CalculationExpenseTransfer();
+        $expense = new ExpenseTransfer();
 
         return $expense;
     }

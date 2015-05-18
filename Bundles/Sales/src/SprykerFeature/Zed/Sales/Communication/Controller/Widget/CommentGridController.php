@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Sales\Communication\Controller\Widget;
 
-use Generated\Shared\Transfer\SalesCommentTransfer;
+use Generated\Shared\Transfer\CommentTransfer;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerFeature\Zed\Library\Controller\Action\AbstractGridController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,19 +32,19 @@ class CommentGridController extends AbstractGridController
     }
 
     /**
-     * @return SalesCommentTransfer
+     * @return CommentTransfer
      */
     protected function loadTransferCollection()
     {
-        return new SalesCommentTransfer();
+        return new CommentTransfer();
     }
 
     /**
-     * @return SalesCommentTransfer
+     * @return CommentTransfer
      */
     protected function loadTransfer()
     {
-        return new SalesCommentTransfer();
+        return new CommentTransfer();
     }
 
     /**

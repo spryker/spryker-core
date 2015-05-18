@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Calculation\TotalsInterface;
 
 interface SubtotalTotalsCalculatorInterface
 {

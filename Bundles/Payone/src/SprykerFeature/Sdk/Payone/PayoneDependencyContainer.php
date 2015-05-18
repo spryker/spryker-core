@@ -4,7 +4,7 @@ namespace SprykerFeature\Sdk\Payone;
 
 
 use Generated\Sdk\Ide\FactoryAutoCompletion\Payone;
-use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
+use Generated\Shared\Transfer\StandardParameterTransfer;
 use SprykerEngine\Sdk\Kernel\AbstractDependencyContainer;
 use SprykerFeature\Sdk\Payone\ClientApi\HashGeneratorInterface;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
@@ -56,11 +56,11 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return PayoneStandardParameterTransfer
+     * @return StandardParameterTransfer
      */
     protected function createStandardParameter()
     {
-        $standardParameter = new PayoneStandardParameterTransfer();
+        $standardParameter = new StandardParameterTransfer();
 
         /********************************
          * @todo get params from config (like in PayoneConfig zed bundle)

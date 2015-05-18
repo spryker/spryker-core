@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
 use Generated\Zed\Ide\AutoCompletion;
-use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
@@ -36,9 +36,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param CategoryCategoryNodeTransfer $categoryNode
+     * @param NodeTransfer $categoryNode
      */
-    public function create(CategoryCategoryNodeTransfer $categoryNode)
+    public function create(NodeTransfer $categoryNode)
     {
         $nodeId = $categoryNode->getIdCategoryNode();
         $parentId = $categoryNode->getFkParentCategoryNode();
@@ -62,10 +62,10 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param CategoryCategoryNodeTransfer $categoryNode
+     * @param NodeTransfer $categoryNode
      * @throws PropelException
      */
-    protected function createRootNode(CategoryCategoryNodeTransfer $categoryNode)
+    protected function createRootNode(NodeTransfer $categoryNode)
     {
         $nodeId = $categoryNode->getIdCategoryNode();
 

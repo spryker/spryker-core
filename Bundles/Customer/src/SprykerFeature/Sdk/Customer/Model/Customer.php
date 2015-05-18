@@ -3,7 +3,7 @@
 namespace SprykerFeature\Sdk\Customer\Model;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
-use Generated\Shared\Transfer\CustomerCustomerTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
@@ -33,11 +33,11 @@ class Customer
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function register(CustomerCustomerTransfer $customerTransfer)
+    public function register(CustomerTransfer $customerTransfer)
     {
         $encoder = new MessageDigestPasswordEncoder();
         $customerTransfer->setPassword($encoder->encodePassword($customerTransfer->getPassword(), ""));
@@ -46,31 +46,31 @@ class Customer
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function confirmRegistration(CustomerCustomerTransfer $customerTransfer)
+    public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/confirm-registration", $customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function forgotPassword(CustomerCustomerTransfer $customerTransfer)
+    public function forgotPassword(CustomerTransfer $customerTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/forgot-password", $customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function restorePassword(CustomerCustomerTransfer $customerTransfer)
+    public function restorePassword(CustomerTransfer $customerTransfer)
     {
         $encoder = new MessageDigestPasswordEncoder();
         $customerTransfer->setPassword($encoder->encodePassword($customerTransfer->getPassword(), ""));
@@ -78,31 +78,31 @@ class Customer
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return Response
      */
-    public function delete(CustomerCustomerTransfer $customerTransfer)
+    public function delete(CustomerTransfer $customerTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/delete", $customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function get(CustomerCustomerTransfer $customerTransfer)
+    public function get(CustomerTransfer $customerTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/customer", $customerTransfer);
     }
 
     /**
-     * @param CustomerCustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerCustomerTransfer
+     * @return CustomerTransfer
      */
-    public function update(CustomerCustomerTransfer $customerTransfer)
+    public function update(CustomerTransfer $customerTransfer)
     {
         return $this->locator->zedRequest()->zedClient()->createClient()->call("/customer/sdk/update", $customerTransfer);
     }

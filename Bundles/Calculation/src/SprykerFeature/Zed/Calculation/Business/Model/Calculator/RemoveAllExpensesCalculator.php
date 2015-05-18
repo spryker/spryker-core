@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
@@ -18,6 +18,6 @@ class RemoveAllExpensesCalculator implements
             $item->setExpenses(new \ArrayObject());
         }
 
-        $calculableContainer->setExpenses(new CalculationExpenseTransfer());
+        $calculableContainer->setExpenses(new ExpenseTransfer());
     }
 }

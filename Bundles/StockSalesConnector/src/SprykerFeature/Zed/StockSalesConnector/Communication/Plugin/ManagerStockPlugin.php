@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\StockSalesConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\StockStockProductTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Sales\Dependency\Plugin\ManagerStockPluginInterface;
 use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;
@@ -36,11 +36,11 @@ class UpdateStockPlugin extends AbstractPlugin implements ManagerStockPluginInte
     }
 
     /**
-     * @param StockStockProductTransfer $transferStockProduct
+     * @param StockProductTransfer $transferStockProduct
      *
      * @return int
      */
-    public function updateStockProduct(StockStockProductTransfer $transferStockProduct)
+    public function updateStockProduct(StockProductTransfer $transferStockProduct)
     {
         return $this->getDependencyContainer()->getStockFacade()->updateStockProduct($transferStockProduct);
     }

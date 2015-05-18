@@ -2,14 +2,14 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\CalculationTaxItemTransfer;
-use Generated\Shared\Transfer\CalculationTaxTransfer;
+use Generated\Shared\Transfer\TaxItemTransfer;
+use Generated\Shared\Transfer\TaxTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
@@ -112,7 +112,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
      */
     protected function createTaxTransfer(array $groupedPrices)
     {
-        $tax = new CalculationTaxTransfer();
+        $tax = new TaxTransfer();
         $totalTax = 0;
         foreach ($groupedPrices as $group) {
             $taxItem = $this->createTaxItem($group['amount'], $group['percentage']);
@@ -129,13 +129,13 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
      * @param int $amount
      * @param float $percentage
      *
-     * @return CalculationTaxItemTransfer
+     * @return TaxItemTransfer
      */
     protected function createTaxItem($amount, $percentage)
     {
         $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($amount, $percentage);
 
-        $taxItem = new CalculationTaxItemTransfer();
+        $taxItem = new TaxItemTransfer();
         $taxItem->setPercentage($percentage);
         $taxItem->setAmount($taxAmount);
 

@@ -26,7 +26,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $stockTypeTransfer = new \Generated\Shared\Transfer\StockStockTypeTransfer();
+            $stockTypeTransfer = new \Generated\Shared\Transfer\TypeTransfer();
             $stockTypeTransfer->fromArray($form->getRequestData());
 
             if (null === $stockTypeTransfer->getIdStock()) {
@@ -52,7 +52,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $stockProduct = new \Generated\Shared\Transfer\StockStockProductTransfer();
+            $stockProduct = new \Generated\Shared\Transfer\StockProductTransfer();
             $stockProduct->fromArray($form->getRequestData());
 
             if (null === $stockProduct->getIdStockProduct()) {

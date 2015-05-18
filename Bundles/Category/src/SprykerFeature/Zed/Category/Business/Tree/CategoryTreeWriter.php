@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
-use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
@@ -69,14 +69,14 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param CategoryCategoryNodeTransfer $categoryNode
+     * @param NodeTransfer $categoryNode
      * @param LocaleTransfer $locale
      * @param bool $createUrlPath
      *
      * @return int
      */
     public function createCategoryNode(
-        CategoryCategoryNodeTransfer $categoryNode,
+        NodeTransfer $categoryNode,
         LocaleTransfer $locale,
         $createUrlPath = true
     ) {
@@ -122,9 +122,9 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param CategoryCategoryNodeTransfer $categoryNode
+     * @param NodeTransfer $categoryNode
      */
-    public function moveNode(CategoryCategoryNodeTransfer $categoryNode)
+    public function moveNode(NodeTransfer $categoryNode)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();

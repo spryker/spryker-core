@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Checkout\Business\Model\Workflow\Task;
 
 use SprykerFeature\Shared\Sales\Code\AbstractItemGrouper;
-use Generated\Shared\Transfer\SalesOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Checkout\Business\Model\Workflow\Context;
 use SprykerEngine\Zed\Kernel\Locator;
 
@@ -28,7 +28,7 @@ class ValidateStock extends AbstractTask
      * @param Context $context
      * @param array $logContext
      */
-    public function __invoke(SalesOrderTransfer $transferOrder, Context $context, array $logContext)
+    public function __invoke(OrderTransfer $transferOrder, Context $context, array $logContext)
     {
         $groupedItems = $this->itemGrouper->groupItemsBySku($transferOrder->getItems());
         /* @var \SprykerFeature\Shared\Sales\Transfer\OrderItem $item */

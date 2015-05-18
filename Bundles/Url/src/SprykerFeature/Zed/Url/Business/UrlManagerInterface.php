@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
@@ -27,15 +27,15 @@ interface UrlManagerInterface
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource);
 
     /**
-     * @param UrlUrlTransfer $url
+     * @param UrlTransfer $url
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws UrlExistsException
      * @throws MissingUrlException
      * @throws \Exception
      * @throws PropelException
      */
-    public function saveUrl(UrlUrlTransfer $url);
+    public function saveUrl(UrlTransfer $url);
 
     /**
      * @param string $url
@@ -75,7 +75,7 @@ interface UrlManagerInterface
     /**
      * @param SpyUrl $urlEntity
      *
-     * @return UrlUrlTransfer
+     * @return UrlTransfer
      * @throws MissingResourceException
      */
     public function convertUrlEntityToTransfer(SpyUrl $urlEntity);

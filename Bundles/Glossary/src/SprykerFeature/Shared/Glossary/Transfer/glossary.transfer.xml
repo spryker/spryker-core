@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="GlossaryTranslation">
+    <transfer name="Translation">
         <property name="idGlossaryTranslation" type="int" />
         <property name="fkGlossaryKey" type="int" />
         <property name="fkLocale" type="int" />

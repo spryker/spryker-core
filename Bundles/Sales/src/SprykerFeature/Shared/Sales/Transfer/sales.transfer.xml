@@ -4,7 +4,7 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
 
-    <transfer name="SalesOrder">
+    <transfer name="Order">
         <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface" />
         <property name="idSalesOrder" type="int" />
         <property name="fkSalesOrderAddressBilling" type="int" />
@@ -17,16 +17,16 @@
         <property name="incrementId" type="string" />
         <property name="billingAddress" type="SalesAddress[]" />
         <property name="shippingAddress" type="SalesAddress[]" />
-        <property name="customer" type="CustomerCustomer[]" />
-        <property name="items" type="SalesOrderItem[]"  singular="item" />
+        <property name="customer" type="Customer[]" />
+        <property name="items" type="OrderItem[]"  singular="item" />
         <property name="payment" type="string" />
         <property name="couponCodes" type="array" singular="couponCode" />
         <property name="createdAt" type="string" />
         <property name="isTest" type="string" />
-        <property name="discounts" type="CalculationDiscount[]" />
-        <property name="totals" type="CalculationTotals" />
-        <property name="expenses" type="CalculationExpense[]" singular="expense" />
-        <property name="invoice" type="SalesInvoice[]" />
+        <property name="discounts" type="Discount[]" />
+        <property name="totals" type="Totals" />
+        <property name="expenses" type="Expense[]" singular="expense" />
+        <property name="invoice" type="Invoice[]" />
     </transfer>
 
     <transfer name="SalesAddress">
@@ -51,7 +51,7 @@
         <property name="cellPhone" type="string" />
         <property name="description" type="string" />
     </transfer>
-    <transfer name="SalesComment">
+    <transfer name="Comment">
         <property name="idSalesOrderComment" type="int" />
         <property name="message" type="string" />
         <property name="username" type="string" />
@@ -59,12 +59,12 @@
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
     </transfer>
-    <transfer name="SalesDocument">
+    <transfer name="Document">
         <property name="header" type="string" />
         <property name="fileName" type="string" />
         <property name="filePath" type="string" />
     </transfer>
-    <transfer name="SalesInvoice">
+    <transfer name="Invoice">
         <property name="invoiceNumber" type="string" />
         <property name="fkSalesOrder" type="int" />
         <property name="type" type="string" />
@@ -72,7 +72,7 @@
         <property name="hash" type="string" />
         <property name="customerId" type="string" />
     </transfer>
-    <transfer name="SalesOrderItem">
+    <transfer name="OrderItem">
         <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface" />
 
         <property name="idSalesOrderItem" type="int" />
@@ -86,20 +86,19 @@
         <property name="taxPercentage" type="string" />
         <property name="quantity" type="int" />
         <property name="discounts" type="CalculationDiscount[]" singular="discount" />
-        <property name="options" type="SalesOrderItemOption[]" singular="option" />
-        <property name="expenses" type="CalculationExpense[]" singular="expense" />
+        <property name="options" type="OrderItemOption[]" singular="option" />
+        <property name="expenses" type="Expense[]" singular="expense" />
         <property name="unitGrossPrice" type="string" />
         <property name="unitPriceToPay" type="string" />
         <property name="variety" type="string" />
-        <property name="status" type="SalesOrderItemStatus[]" />
+        <property name="status" type="OrderItemStatus[]" />
     </transfer>
-
 
     <transfer name="OrderItems">
-        <property name="orderItems" type="SalesOrderItem[]" singular="orderItem" />
+        <property name="orderItems" type="OrderItem[]" singular="orderItem" />
     </transfer>
 
-    <transfer name="SalesOrderItemOption">
+    <transfer name="OrderItemOption">
         <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface" />
         <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountableInterface" />
         <property name="identifier" type="int" />
@@ -112,13 +111,13 @@
         <property name="discounts" type="CalculationDiscount[]" singular="discount" />
     </transfer>
 
-    <transfer name="SalesOrderItemStatus">
+    <transfer name="OrderItemStatus">
         <property name="idOmsOrderItemStatus" type="int" />
         <property name="name" type="string" />
         <property name="description" type="string" />
     </transfer>
 
-    <transfer name="SalesStatemachineTrigger">
+    <transfer name="StatemachineTrigger">
         <property name="eventName" type="string" />
         <property name="orderId" type="string" />
         <property name="references" type="array" />
@@ -144,15 +143,14 @@
         <property name="paymentDataClassName" type="string" />
     </transfer>
 
-    <transfer name="SalesDiscountTotalItem">
-        <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountTotalItemInterface" />
+    <transfer name="DiscountTotalItem">
         <property name="name" type="string" />
         <property name="discountType" type="string" />
         <property name="amount" type="int" />
         <property name="codes" type="array" singular="code" />
     </transfer>
 
-    <transfer name="SalesRegularRedirectPaymentCancellation">
+    <transfer name="RegularRedirectPaymentCancellation">
         <property name="orderId" type="string" />
     </transfer>
 

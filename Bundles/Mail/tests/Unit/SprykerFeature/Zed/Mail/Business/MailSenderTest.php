@@ -5,7 +5,7 @@ namespace Unit\SprykerFeature\Zed\Mail\Business;
 
 use Generated\Shared\Transfer\MailAttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
-use Generated\Shared\Transfer\MailMailTransfer;
+use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Mail\Business\MandrillMailSender;
@@ -60,7 +60,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
 
         $mailSender = new MandrillMailSender($mandrillMock, $inclusionHandler);
 
-        $mailTransfer = new MailMailTransfer($locator);
+        $mailTransfer = new MailTransfer($locator);
         $mailTransfer
             ->setTemplateName('test_template')
             ->setTemplateContent(['templatekey' => 'templatevalue'])

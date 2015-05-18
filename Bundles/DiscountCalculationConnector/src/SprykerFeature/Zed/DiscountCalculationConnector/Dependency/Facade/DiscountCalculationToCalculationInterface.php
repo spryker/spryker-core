@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Dependency\Facade;
 
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TotalsInterface;
+use Generated\Shared\Calculation\TotalsInterface;
 
 interface DiscountCalculationToCalculationInterface
 {

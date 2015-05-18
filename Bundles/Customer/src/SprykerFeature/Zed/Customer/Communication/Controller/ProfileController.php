@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
-use Generated\Shared\Transfer\CustomerCustomerTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
@@ -35,7 +35,7 @@ class ProfileController extends AbstractController
         $form = $this->getDependencyContainer()->createCustomerForm($request);
         $form->init();
 
-        $customerTransfer = new CustomerCustomerTransfer();
+        $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
         $customerTransfer = $this->getLocator()->customer()->facade()->getCustomer($customerTransfer);
 
@@ -80,7 +80,7 @@ class ProfileController extends AbstractController
      */
     public function sendPasswordRestoreTokenAction(Request $request)
     {
-        $customerTransfer = new CustomerCustomerTransfer();
+        $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($request->query->get('id'));
         $this->getLocator()->customer()->facade()->forgotPassword($customerTransfer);
 
@@ -98,7 +98,7 @@ class ProfileController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $customerTransfer = new CustomerCustomerTransfer();
+            $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getRequestData());
             $this->getLocator()->customer()->facade()->updateCustomer($customerTransfer);
         }

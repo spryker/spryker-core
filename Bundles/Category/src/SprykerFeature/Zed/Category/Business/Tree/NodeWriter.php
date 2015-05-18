@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
 use Generated\Zed\Ide\AutoCompletion;
-use Generated\Shared\Transfer\CategoryCategoryNodeTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
@@ -37,11 +37,11 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
-     * @param CategoryCategoryNodeTransfer $categoryNode
+     * @param NodeTransfer $categoryNode
      * @return int
      * @throws PropelException
      */
-    public function create(CategoryCategoryNodeTransfer $categoryNode)
+    public function create(NodeTransfer $categoryNode)
     {
         $nodeEntity = $this->locator->category()->entitySpyCategoryNode();
         $nodeEntity->fromArray($categoryNode->toArray());
@@ -75,10 +75,10 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
-     * @param CategoryCategoryNodeTransfer $categoryNode
+     * @param NodeTransfer $categoryNode
      * @throws PropelException
      */
-    public function update(CategoryCategoryNodeTransfer $categoryNode)
+    public function update(NodeTransfer $categoryNode)
     {
         $nodeEntity = $this->queryContainer
             ->queryNodeById($categoryNode->getIdCategoryNode())

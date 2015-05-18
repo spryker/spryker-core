@@ -2,12 +2,12 @@
 
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\CalculationTotalsTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use Generated\Shared\Transfer\SalesOrderTransfer;
-use Generated\Shared\Transfer\SalesOrderItemTransfer;
-use Generated\Shared\Transfer\CalculationExpenseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelper;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -126,41 +126,41 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     protected function getOrderWithFixtureData()
     {
-        $order = new SalesOrderTransfer();
+        $order = new OrderTransfer();
 
         return $order;
     }
 
     /**
-     * @return SalesOrderItemTransfer
+     * @return OrderItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new SalesOrderItemTransfer();
+        $item = new OrderItemTransfer();
 
         return $item;
     }
 
     /**
-     * @return CalculationExpenseTransfer
+     * @return ExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {
-        $expense = new CalculationExpenseTransfer();
+        $expense = new ExpenseTransfer();
 
         return $expense;
     }
 
     /**
-     * @return CalculationTotalsTransfer
+     * @return TotalsTransfer
      */
     protected function getPriceTotals()
     {
-        return new CalculationTotalsTransfer();
+        return new TotalsTransfer();
     }
 
     /**
