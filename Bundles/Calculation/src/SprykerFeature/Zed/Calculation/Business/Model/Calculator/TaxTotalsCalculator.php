@@ -115,7 +115,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         $tax = new TaxSetTransfer();
         $totalTax = 0;
         foreach ($groupedPrices as $group) {
-            $taxItem = $this->createTaxItem($group['amount'], $group['percentage']);
+            $taxItem = $this->createTaxRateTransfer($group['amount'], $group['percentage']);
             $tax->addTaxRate($taxItem);
 
             $totalTax += $taxItem->getAmount();
@@ -131,7 +131,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
      *
      * @return TaxRateTransfer
      */
-    protected function createTaxItem($amount, $percentage)
+    protected function createTaxRateTransfer($amount, $percentage)
     {
         $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($amount, $percentage);
 
