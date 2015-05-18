@@ -58,6 +58,9 @@
         <column name="name" required="true" type="VARCHAR"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
         <column name="is_complete" required="false" defaultValue="true" type="BOOLEAN"/>
+        <foreign-key foreignTable="spy_product" onDelete="CASCADE" onUpdate="CASCADE">
+            <reference local="fk_product" foreign="id_product"/>
+        </foreign-key>
         <foreign-key foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
