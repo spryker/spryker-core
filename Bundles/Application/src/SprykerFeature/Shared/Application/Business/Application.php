@@ -60,7 +60,7 @@ class Application extends \Silex\Application
      */
     public function addRouter(RouterInterface $router, $priority = 0)
     {
-        /* @var \Pimple $this */
+        /** @var \Pimple $this */
         $this['routers'] = $this->share($this->extend('routers', function (ChainRouter $chainRouter) use ($router, $priority) {
             $chainRouter->add($router, $priority);
 
