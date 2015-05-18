@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="Tax">
+        <property name="totalAmount" type="int" />
+        <property name="taxRates" type="TaxItem[]" singular="taxRate" />
+    </transfer>
+
+    <transfer name="TaxItem">
+        <property name="percentage" type="string" />
+        <property name="amount" type="int" />
+    </transfer>
+
+</transfers>
+

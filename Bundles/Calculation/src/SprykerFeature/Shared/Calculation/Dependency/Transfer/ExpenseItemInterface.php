@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
+use SprykerFeature\Shared\Tax\Dependency\Transfer\TaxableItemInterface;
+
 interface ExpenseItemInterface extends TaxableItemInterface, PriceItemInterface
 {
     /**
