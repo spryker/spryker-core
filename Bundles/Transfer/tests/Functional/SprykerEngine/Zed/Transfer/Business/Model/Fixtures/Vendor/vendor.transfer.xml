@@ -2,6 +2,6 @@
 <transfers>
     <transfer name="FooBar">
         <property name="name" type="string" />
-        <property name="bla" type="integer" />
+        <property name="bla" type="int" />
     </transfer>
 </transfers>

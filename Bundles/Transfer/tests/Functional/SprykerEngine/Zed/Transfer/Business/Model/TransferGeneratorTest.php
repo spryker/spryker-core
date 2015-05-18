@@ -28,6 +28,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 class TransferGeneratorTest extends Test
 {
 
+    public function tearDown()
+    {
+        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
+        $testFiles = [
+            'Project/FooBarInterface.php',
+            'Vendor/FooBarInterface.php',
+        ];
+
+        foreach ($testFiles as $testFile) {
+            if (file_exists($targetDirectory . $testFile)) {
+                unlink($targetDirectory . $testFile);
+            }
+        }
+    }
+
     public function testExecuteShouldGenerateExpectedTransfer()
     {
         $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
