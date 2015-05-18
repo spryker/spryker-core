@@ -35,7 +35,7 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
      */
     public function register(Application $app)
     {
-        /* @var $dispatcher EventDispatcher */
+        /* @var EventDispatcher $dispatcher */
         $dispatcher = $app['dispatcher'];
         $dispatcher->addListener(
             KernelEvents::CONTROLLER,
@@ -55,5 +55,4 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
             TransferServer::getInstance()->setRequest($request);
         });
     }
-
 }

@@ -148,7 +148,7 @@ abstract class AbstractGridController extends AbstractWidgetController
      */
     protected function createTransfer(array $parameters, Request $request)
     {
-        /* @var $transfer AbstractTransfer */
+        /** @var AbstractTransfer $transfer */
         $transfer = $this->loadTransfer();
         $transfer->fromArray($parameters, true);
 

@@ -20,7 +20,7 @@ class QueryBuilder extends \Propel\Generator\Builder\Om\QueryBuilder
         $bundle = $this->getBundleName();
 
         return "
-            /* @var \$locator \\Generated\\Zed\\Ide\\AutoCompletion */
+            /** @var \\Generated\\Zed\\Ide\\AutoCompletion \$locator */
             \$locator = \\SprykerEngine\\Zed\\Kernel\\Locator::getInstance();
             $objName = \$locator->"
         . lcfirst($bundle)

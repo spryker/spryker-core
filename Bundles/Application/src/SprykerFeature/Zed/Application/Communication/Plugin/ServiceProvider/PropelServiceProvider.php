@@ -35,7 +35,7 @@ class PropelServiceProvider implements ServiceProviderInterface
         $manager->setConfiguration($this->getConfig());
         $manager->setName('zed');
 
-        /* @var $serviceContainer StandardServiceContainer */
+        /** @var StandardServiceContainer $serviceContainer */
         $serviceContainer = Propel::getServiceContainer();
         $serviceContainer->setAdapterClass('zed', 'mysql');
         $serviceContainer->setConnectionManager('zed', $manager);

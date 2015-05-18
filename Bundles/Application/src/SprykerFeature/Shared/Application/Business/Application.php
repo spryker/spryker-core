@@ -34,7 +34,7 @@ class Application extends \Silex\Application
      */
     public function createForm($type = 'form', $data = null, array $options = array())
     {
-        /* @var FormInterface $form */
+        /** @var FormInterface $form */
         $form = $this['form.factory']->create($type, $data, $options);
         $request = ($this['request_stack'])? $this['request_stack']->getCurrentRequest():$this['request'];
         $form->handleRequest($request);
@@ -58,7 +58,7 @@ class Application extends \Silex\Application
      */
     public function addRouter(RouterInterface $router, $priority = 0)
     {
-        /* @var \Pimple $this */
+        /** @var \Pimple $this */
         $this['routers'] = $this->share($this->extend('routers', function (ChainRouter $chainRouter) use ($router, $priority) {
             $chainRouter->add($router, $priority);
 

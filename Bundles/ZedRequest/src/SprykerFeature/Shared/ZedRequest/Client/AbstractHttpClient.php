@@ -168,7 +168,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $pathInfo .= $char.'yvesRequestId='.Lumberjack::getInstance()->getRequestId();
 
         $client->setUserAgent('Yves 2.0');
-        /* @var EntityEnclosingRequest $request */
+        /** @var EntityEnclosingRequest $request */
         $request = $client->post($pathInfo);
         $request->addHeader('X-Yves-Host', 1);
         foreach ($this->getHeaders() as $header => $value) {

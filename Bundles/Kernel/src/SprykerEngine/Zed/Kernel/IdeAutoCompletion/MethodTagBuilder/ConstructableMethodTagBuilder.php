@@ -86,12 +86,12 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
             $class = new \ReflectionClass($className);
 
             $constructor = $class->getConstructor();
-            /* @var $constructor \ReflectionMethod */
+            /** @var \ReflectionMethod $constructor */
             if (isset($constructor)) {
                 $parameters = $constructor->getParameters();
                 if (!empty($parameters)) {
                     $constructorData = [];
-                    /* @var $param \ReflectionParameter */
+                    /** @var \ReflectionParameter $param */
                     foreach ($parameters as $param) {
                         $paramData = '';
                         if ($param->isArray()) {

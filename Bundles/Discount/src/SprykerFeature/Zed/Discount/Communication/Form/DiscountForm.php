@@ -189,7 +189,7 @@ class DiscountForm extends AbstractForm
 
         $data = [];
 
-        /* @var \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool $voucherPool */
+        /** @var \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool $voucherPool */
         foreach ($voucherPools as $voucherPool) {
             $data[] = [
                 'value' => $voucherPool->getPrimaryKey(),

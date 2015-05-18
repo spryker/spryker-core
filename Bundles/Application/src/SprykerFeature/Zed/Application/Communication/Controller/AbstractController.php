@@ -225,7 +225,7 @@ abstract class AbstractController
      */
     protected function createForm($type = 'form', $data = null, array $options = [])
     {
-        /* @var $formFactory \Symfony\Component\Form\FormFactory */
+        /** @var \Symfony\Component\Form\FormFactory $formFactory */
         $formFactory = $this->application['form.factory'];
 
         return $formFactory->create($type, $data, $options);

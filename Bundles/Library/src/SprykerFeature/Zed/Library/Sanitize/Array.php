@@ -32,7 +32,7 @@ class SprykerFeature_Zed_Library_Sanitize_Array implements Iterator, Countable, 
     protected function initFilters($filterSet)
     {
         if (is_string($filterSet) && class_exists($filterSet)) {
-            /* @var \SprykerFeature_Zed_Library_Sanitize_FilterSet_Interface $filterSetClass */
+            /** @var \SprykerFeature_Zed_Library_Sanitize_FilterSet_Interface $filterSetClass */
             $filterSetClass = new $filterSet();
             $this->filters = $filterSetClass->getFilters();
         } elseif ($filterSet instanceof \SprykerFeature_Zed_Library_Sanitize_FilterSet_Interface) {
@@ -51,10 +51,11 @@ class SprykerFeature_Zed_Library_Sanitize_Array implements Iterator, Countable, 
         }
 
         $result = $array;
-        /* @var \SprykerFeature_Zed_Library_Sanitize_Filter_Interface $filter */
+        /** @var \SprykerFeature_Zed_Library_Sanitize_Filter_Interface $filter */
         foreach ($this->filters as $filter) {
             $result = $filter->filter($result);
         }
+
         return $result;
     }
 

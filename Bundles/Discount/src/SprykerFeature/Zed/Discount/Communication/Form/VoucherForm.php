@@ -133,7 +133,7 @@ class VoucherForm extends AbstractForm
         $voucherPools = $this->queryContainer->queryVoucherPool()->find();
 
         $data = [];
-        /* @var SpyDiscountVoucherPool $voucherPool */
+        /** @var SpyDiscountVoucherPool $voucherPool */
         foreach ($voucherPools as $voucherPool) {
             $data[] = [
                 'value' => $voucherPool->getPrimaryKey(),

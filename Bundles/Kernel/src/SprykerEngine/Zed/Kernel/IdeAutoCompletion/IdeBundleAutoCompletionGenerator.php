@@ -24,6 +24,7 @@ class IdeBundleAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerato
 
     /**
      * @param null $output
+     *
      * @return mixed
      */
     public function create($output = null)

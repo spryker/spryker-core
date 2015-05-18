@@ -127,7 +127,7 @@ class DecisionRuleForm extends AbstractForm
         $discounts = $this->queryContainer->queryDiscount()->find();
 
         $data = [];
-        /* @var \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount $discount */
+        /** @var \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount $discount */
         foreach ($discounts as $discount) {
             $data[] = [
                 'value' => $discount->getPrimaryKey(),
