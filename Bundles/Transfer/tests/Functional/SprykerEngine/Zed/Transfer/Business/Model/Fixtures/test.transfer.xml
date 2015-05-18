@@ -4,7 +4,7 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="CatFace">
-        <interface name="Path\To\Interface" />
+        <interface name="Path\To\AnInterface" />
         <property name="name" type="string" />
         <property name="item" type="OrderItem" />
         <property name="items" type="OrderItem[]" singular="item" />
