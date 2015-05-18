@@ -26,29 +26,6 @@
         <property name="quantity" type="string" default="null" />
     </transfer>
 
-    <transfer name="MailMail">
-        <property name="referenceId" type="string" default="null" />
-        <property name="type" type="string" default="null" />
-        <property name="subType" type="string" default="null" />
-        <property name="priority" type="string" default="null" />
-        <property name="recipientAddress" type="string" default="null" />
-        <property name="recipientFullname" type="string" default="null" />
-        <property name="senderAddress" type="string" default="null" />
-        <property name="senderFullname" type="string" default="null" />
-        <property name="replyToAddress" type="string" default="null" />
-        <property name="subject" type="string" default="null" />
-        <property name="charset" type="string" default="null" />
-        <property name="data" type="string" default="null" />
-        <property name="isOrderMail" type="string" default="null" />
-        <property name="isTestOrder" type="string" default="null" />
-        <property name="isUnique" type="string" default="null" />
-        <property name="yvesUrl" type="string" default="null" />
-        <property name="dateInterval" type="string" default="null" />
-        <property name="staticMediaUrl" type="string" default="null" />
-        <property name="staticAssetsUrl" type="string" default="null" />
-        <property name="attachments" type="array" default="[]" />
-    </transfer>
-
     <transfer name="MailMailTransfer">
         <property name="templateName" type="string" default="null" />
         <property name="templateContent" type="array" default="[]" />
