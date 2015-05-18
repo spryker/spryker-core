@@ -1,9 +1,11 @@
 <?php
 
-namespace SprykerFeature\Zed\Application\Business\Model\Messenger;
+namespace SprykerFeature\Zed\Application\Business\Model\Messenger\Presenter;
 
 use SprykerEngine\Zed\Translation\Business\TranslationFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Symfony\Component\Console\Output\OutputInterface;
+use SprykerFeature\Zed\Application\Business\Model\Messenger\MessengerInterface;
 
 class ConsolePresenter extends AbstractPresenter implements
     ObservingPresenterInterface
@@ -19,19 +21,27 @@ class ConsolePresenter extends AbstractPresenter implements
     protected $locale;
 
     /**
+     * @var OutputInterface
+     */
+    protected $output;
+
+    /**
      * @param MessengerInterface $messenger
      * @param TranslationFacade $translator
      * @param LocaleTransfer $locale
+     * @param OutputInterface $output
      */
     public function __construct(
         MessengerInterface $messenger,
         TranslationFacade $translator,
-        LocaleTransfer $locale
+        LocaleTransfer $locale,
+        OutputInterface $output
     ) {
         parent::__construct($messenger);
 
         $this->translator = $translator;
         $this->locale = $locale;
+        $this->output = $output;
 
         $this->messenger->registerPresenter($this);
     }
@@ -48,8 +58,10 @@ class ConsolePresenter extends AbstractPresenter implements
                 $message->getMessage(),
                 $message->getOptions(),
                 null,
-                $this->locale->getLocaleName()
+                $this->locale
             );
+
+            $this->output->writeln($displayedMessage);
         }
     }
 }

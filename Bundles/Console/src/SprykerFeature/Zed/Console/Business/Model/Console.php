@@ -7,6 +7,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
+use SprykerFeature\Zed\Application\Business\Model\Messenger\Presenter\ConsolePresenter;
 use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 
@@ -14,6 +15,8 @@ use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+
+use SprykerFeature\Zed\Application\Business\Model\Messenger\Messenger;
 
 class Console extends SymfonyCommand
 {
@@ -86,7 +89,16 @@ class Console extends SymfonyCommand
      */
     protected function getMessenger()
     {
-        $messenger = new ConsoleMessenger($this->output);
+//        $messenger = new ConsoleMessenger($this->output);
+
+        $messenger = new Messenger();
+
+        $presenter = new ConsolePresenter(
+            $messenger,
+            $this->locator->translation()->facade(),
+            $this->locator->locale()->facade()->getCurrentLocale(),
+            $this->output
+        );
 
         return $messenger;
     }

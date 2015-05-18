@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Application\Business\Model\Messenger;
 
 use SprykerFeature\Zed\Application\Business\Model\Messenger\Message\MessageInterface;
+use SprykerFeature\Zed\Application\Business\Model\Messenger\Presenter\ObservingPresenterInterface;
 
 /**
  * Interface MessengerInterface

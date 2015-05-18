@@ -7,6 +7,7 @@ use SprykerFeature\Zed\Application\Business\Model\Messenger\Message\Message;
 use SprykerFeature\Zed\Application\Business\Model\Messenger\Message\MessageInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface as LegacyMessengerInterface;
 use SprykerFeature\Zed\Application\Business\Model\Messenger\MessengerInterface;
+use SprykerFeature\Zed\Application\Business\Model\Messenger\Presenter\ObservingPresenterInterface;
 
 /**
  * Class Messenger
