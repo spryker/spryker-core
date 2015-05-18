@@ -6,10 +6,6 @@ use Generated\Yves\Ide\FactoryAutoCompletion\ProductExporter;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerFeature\Yves\ProductExporter\Model\AbstractProduct;
 
-/**
- * Class FrontendProductBuilder
- * @package SprykerFeature\Yves\Product\Builder
- */
 class FrontendProductBuilder implements FrontendProductBuilderInterface
 {
     /**

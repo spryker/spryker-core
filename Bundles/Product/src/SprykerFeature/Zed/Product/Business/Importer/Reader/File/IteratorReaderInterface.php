@@ -2,9 +2,6 @@
 
 namespace SprykerFeature\Zed\Product\Business\Importer\Reader\File;
 
-/**
- * Interface IteratorReaderInterface
- */
 interface IteratorReaderInterface
 {
     /**
