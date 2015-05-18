@@ -4,14 +4,14 @@
 namespace SprykerFeature\Zed\Mail\Business;
 
 
-use Generated\Shared\Transfer\MailMailTransferTransfer;
+use Generated\Shared\Transfer\MailMailTransfer;
 
 interface MailSenderInterface
 {
     /**
-     * @param MailTransfer $mailTransfer
+     * @param MailMailTransfer $mailTransfer
      *
      * @return array
      */
-    public function sendMail(MailTransfer $mailTransfer);
+    public function sendMail(MailMailTransfer $mailTransfer);
 }

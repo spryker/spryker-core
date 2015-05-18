@@ -3,19 +3,25 @@
 
 namespace Unit\SprykerFeature\Zed\Mail\Business;
 
+use Generated\Shared\Transfer\MailAttachmentTransfer;
+use Generated\Shared\Transfer\MailHeaderTransfer;
 use Generated\Shared\Transfer\MailMailTransfer;
+use Generated\Shared\Transfer\MailRecipientTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Mail\Business\MandrillMailSender;
 
+/**
+ * @group Zed
+ * @group Business
+ * @group Mail
+ * @group MailSenderTest
+ * @see https://mandrillapp.com/api/docs/messages.php.html#method-send-template
+ */
 class MailSenderTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @group Mail
-     * @see https://mandrillapp.com/api/docs/messages.php.html#method-send-template
-     */
+
     public function testSendMail()
     {
-        $this->markTestSkipped();
         $locator = Locator::getInstance();
 
         $mandrillMock = $this->getMock('\\Mandrill', [], ['MOCK_API_KEY']);
@@ -61,9 +67,24 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
             ->setSubject('test subject')
             ->setFromEmail('testfrom@testmail.com')
             ->setFromName('Test From Name')
-            ->addRecipient('testrecipient1@testmail.com', 'Recipient 1')
-            ->addRecipient('testrecipient2@testmail.com', 'Recipient 2', 'cc')
-            ->addHeader('Reply-To', 'testfrom2@testmail.com')
+            ->addRecipient(
+                (new MailRecipientTransfer())
+                ->setEmail('testrecipient1@testmail.com')
+                ->setName('Recipient 1')
+                ->setMergeVars(['recipient1Var' => 'recipient1Content'])
+            )
+            ->addRecipient(
+                (new MailRecipientTransfer())
+                    ->setEmail('testrecipient2@testmail.com')
+                    ->setName('Recipient 2')
+                    ->setType('cc')
+                    ->setMetadata(['perRecipient1' => 'anotherValue'])
+            )
+            ->addHeader(
+                (new MailHeaderTransfer())
+                    ->setKey('Reply-To')
+                    ->setValue('testfrom2@testmail.com')
+            )
             ->setImportant(true)
             ->setTrackOpens(true)
             ->setTrackClicks(true)
@@ -80,15 +101,21 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
             ->setMerge(true)
             ->setMergeLanguage('handlebars')
             ->setGlobalMergeVars(['globalMergeVar1' => 'globalMergeVarContent'])
-            ->setMergeVarsForRecipient('testrecipient1@testmail.com', ['recipient1Var' => 'recipient1Content'])
             ->setTags(['tag1', 'tag2'])
             ->setSubAccount('subAccountId')
             ->setGoogleAnalyticsDomains(['dDomain'])
             ->setGoogleAnalyticsCampaign('campaign')
             ->setMetadata(['global1' => 'someValue'])
-            ->setRecipientMetadata('testrecipient2@testmail.com', ['perRecipient1' => 'anotherValue'])
-            ->addAttachment($textFilePath, 'ATestfile')
-            ->addImage($imageFilePath, 'logo')
+            ->addAttachment(
+                (new MailAttachmentTransfer())
+                    ->setFileName($textFilePath)
+                    ->setDisplayName('ATestfile')
+                )
+            ->addImage(
+                (new MailAttachmentTransfer())
+                    ->setFileName($imageFilePath)
+                    ->setDisplayName('logo')
+            )
             ->setAsync(true)
             ->setIpPool('Test Ip Pool')
             ->setSendAt(new \DateTime('2010-10-10 01:10:10'))
