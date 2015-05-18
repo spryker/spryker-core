@@ -2,18 +2,14 @@
 
 namespace SprykerFeature\Yves\ProductExporter\Model;
 
-use SprykerFeature\Shared\Product\Model\ProductInterface;
+use SprykerFeature\Shared\Product\Model\AbstractProductInterface;
 
-/**
- * Class Product
- * @package SprykerFeature\Yves\ProductExport\Model
- */
-class Product implements ProductInterface
+class AbstractProduct implements AbstractProductInterface
 {
     /**
      * @var array
      */
-    protected $attributes = [];
+    protected $abstractAttributes = [];
 
     /**
      * @var bool
@@ -23,7 +19,7 @@ class Product implements ProductInterface
     /**
      * @var string
      */
-    protected $sku = '';
+    protected $abstractSku = '';
 
     /**
      * @var string
@@ -31,19 +27,24 @@ class Product implements ProductInterface
     protected $name = '';
 
     /**
+     * @var array
+     */
+    protected $concreteProducts = [];
+
+    /**
      * @return array
      */
-    public function getAttributes()
+    public function getAbstractAttributes()
     {
-        return $this->attributes;
+        return $this->abstractAttributes;
     }
 
     /**
      * @param array $attributes
      */
-    public function setAttributes(array $attributes)
+    public function setAbstractAttributes(array $attributes)
     {
-        $this->attributes = $attributes;
+        $this->abstractAttributes = $attributes;
     }
 
     /**
@@ -52,7 +53,7 @@ class Product implements ProductInterface
      */
     public function addAttribute($name, $value)
     {
-        $this->attributes[$name] = $value;
+        $this->abstractAttributes[$name] = $value;
     }
 
     /**
@@ -74,17 +75,17 @@ class Product implements ProductInterface
     /**
      * @return string
      */
-    public function getSku()
+    public function getAbstractSku()
     {
-        return $this->sku;
+        return $this->abstractSku;
     }
 
     /**
      * @param string $sku
      */
-    public function setSku($sku)
+    public function setAbstractSku($sku)
     {
-        $this->sku = $sku;
+        $this->abstractSku = $sku;
     }
 
     /**
@@ -110,8 +111,8 @@ class Product implements ProductInterface
      */
     public function __get($name)
     {
-        if (array_key_exists($name, $this->attributes)) {
-            return $this->attributes[$name];
+        if (array_key_exists($name, $this->abstractAttributes)) {
+            return $this->abstractAttributes[$name];
         }
 
         return null;
@@ -126,5 +127,21 @@ class Product implements ProductInterface
     public function __call($name, $arguments)
     {
         return $this->__get($name);
+    }
+
+    /**
+     * @return array
+     */
+    public function getConcreteProducts()
+    {
+        return $this->concreteProducts;
+    }
+
+    /**
+     * @param array $products
+     */
+    public function setConcreteProducts(array $products)
+    {
+        $this->concreteProducts = $products;
     }
 }

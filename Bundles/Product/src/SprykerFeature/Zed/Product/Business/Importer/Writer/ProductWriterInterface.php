@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Product\Business\Importer\Writer;
 
-use SprykerFeature\Shared\Product\Model\ProductInterface;
+use SprykerFeature\Shared\Product\Model\AbstractProductInterface;
 
 /**
  * Class GeneraWriter
@@ -12,7 +12,7 @@ use SprykerFeature\Shared\Product\Model\ProductInterface;
 interface ProductWriterInterface
 {
     /**
-     * @param ProductInterface $product
+     * @param AbstractProductInterface $product
      */
-    public function writeProduct(ProductInterface $product);
+    public function writeProduct(AbstractProductInterface $product);
 }

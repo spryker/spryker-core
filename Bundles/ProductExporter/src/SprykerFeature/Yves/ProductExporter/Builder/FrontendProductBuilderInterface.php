@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Yves\ProductExporter\Builder;
 
-use SprykerFeature\Yves\ProductExporter\Model\Product;
+use SprykerFeature\Yves\ProductExporter\Model\AbstractProduct;
 
 /**
  * Interface FrontendProductBuilderInterface
@@ -13,7 +13,7 @@ interface FrontendProductBuilderInterface
     /**
      * @param array $productData
      *
-     * @return Product
+     * @return AbstractProduct
      */
     public function buildProduct(array $productData);
 }

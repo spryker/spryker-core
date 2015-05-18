@@ -2,22 +2,27 @@
 
 namespace SprykerFeature\Shared\Product\Model;
 
-/**
- * Class Product
- *
- * @package SprykerFeature\Zed\Product\Business\Model
- */
-interface ProductInterface
+interface AbstractProductInterface
 {
     /**
      * @return array
      */
-    public function getAttributes();
+    public function getAbstractAttributes();
 
     /**
      * @param array $attributes
      */
-    public function setAttributes(array $attributes);
+    public function setAbstractAttributes(array $attributes);
+
+    /**
+     * @return array
+     */
+    public function getConcreteProducts();
+
+    /**
+     * @param array $products
+     */
+    public function setConcreteProducts(array $products);
 
     /**
      * @return boolean
@@ -32,12 +37,12 @@ interface ProductInterface
     /**
      * @return string
      */
-    public function getSku();
+    public function getAbstractSku();
 
     /**
      * @param string $sku
      */
-    public function setSku($sku);
+    public function setAbstractSku($sku);
 
     /**
      * @return string

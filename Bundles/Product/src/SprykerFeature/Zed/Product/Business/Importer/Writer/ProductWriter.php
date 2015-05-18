@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Product\Business\Importer\Writer;
 
 use SprykerFeature\Zed\Product\Business\Importer\Model\AbstractProduct;
 use SprykerFeature\Zed\Product\Business\Importer\Model\ConcreteProduct;
-use SprykerFeature\Shared\Product\Model\ProductInterface;
+use SprykerFeature\Shared\Product\Model\AbstractProductInterface;
 
 /**
  * Class GeneraWriter
@@ -36,11 +36,11 @@ class ProductWriter implements ProductWriterInterface
     }
 
     /**
-     * @param ProductInterface $product
+     * @param AbstractProductInterface $product
      *
      * @return bool
      */
-    public function writeProduct(ProductInterface $product)
+    public function writeProduct(AbstractProductInterface $product)
     {
         if ($product instanceof ConcreteProduct) {
             return $this->productWriter->writeProduct($product);
