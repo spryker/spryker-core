@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\Price\Persistence\Propel;
+namespace SprykerFeature\Zed\Tax\Persistence\Propel;
 
-use SprykerFeature\Zed\Price\Persistence\Propel\Base\SpyTaxSetTax as BaseSpyTaxSetTax;
+use SprykerFeature\Zed\Tax\Persistence\Propel\Base\SpyTaxSetTax as BaseSpyTaxSetTax;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_tax_set_tax' table.
