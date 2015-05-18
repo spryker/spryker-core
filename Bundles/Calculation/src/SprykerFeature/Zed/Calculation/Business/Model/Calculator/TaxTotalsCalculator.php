@@ -2,13 +2,13 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\TaxItemTransfer;
-use Generated\Shared\Transfer\TaxTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
 use SprykerFeature\Shared\Tax\Dependency\Transfer\TaxableItemInterface;
-use SprykerFeature\Shared\Tax\Dependency\Transfer\TaxInterface;
+use SprykerFeature\Shared\Tax\Dependency\Transfer\TaxSetInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
@@ -39,7 +39,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         \ArrayObject $calculableItems
     ) {
         $groupedPrices = $this->sumPriceToPayGroupedByTaxRate($calculableContainer, $calculableItems);
-        $taxTransfer = $this->createTaxTransfer($groupedPrices);
+        $taxTransfer = $this->createTaxSetTransfer($groupedPrices);
 
         $totalsTransfer->setTax($taxTransfer);
     }
@@ -108,11 +108,11 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     /**
      * @param array $groupedPrices
      *
-     * @return TaxInterface
+     * @return TaxSetInterface
      */
-    protected function createTaxTransfer(array $groupedPrices)
+    protected function createTaxSetTransfer(array $groupedPrices)
     {
-        $tax = new TaxTransfer();
+        $tax = new TaxSetTransfer();
         $totalTax = 0;
         foreach ($groupedPrices as $group) {
             $taxItem = $this->createTaxItem($group['amount'], $group['percentage']);
@@ -129,13 +129,13 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
      * @param int $amount
      * @param float $percentage
      *
-     * @return TaxItemTransfer
+     * @return TaxRateTransfer
      */
     protected function createTaxItem($amount, $percentage)
     {
         $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($amount, $percentage);
 
-        $taxItem = new TaxItemTransfer();
+        $taxItem = new TaxRateTransfer();
         $taxItem->setPercentage($percentage);
         $taxItem->setAmount($taxAmount);
 

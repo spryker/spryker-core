@@ -4,7 +4,7 @@ namespace SprykerFeature\Shared\Tax\Dependency\Transfer;
 
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
-interface TaxItemInterface extends TransferInterface
+interface TaxRateInterface extends TransferInterface
 {
     /**
      * @param float $percentage

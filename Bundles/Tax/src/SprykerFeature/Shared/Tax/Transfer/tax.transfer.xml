@@ -3,12 +3,14 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="Tax">
+    <transfer name="TaxSet">
+        <property name="name" type="string" />
+        <property name="taxRates" type="TaxRate[]" singular="taxRate" />
         <property name="totalAmount" type="int" />
-        <property name="taxRates" type="TaxItem[]" singular="taxRate" />
     </transfer>
 
-    <transfer name="TaxItem">
+    <transfer name="TaxRate">
+        <property name="name" type="string" />
         <property name="percentage" type="string" />
         <property name="amount" type="int" />
     </transfer>

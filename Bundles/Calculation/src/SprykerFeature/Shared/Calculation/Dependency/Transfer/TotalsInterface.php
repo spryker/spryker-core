@@ -3,7 +3,7 @@
 namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
-use Generated\Shared\Transfer\TaxTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface TotalsInterface extends TransferInterface
@@ -57,14 +57,14 @@ interface TotalsInterface extends TransferInterface
     public function getDiscount();
 
     /**
-     * @param TaxTransfer $tax
+     * @param TaxSetTransfer $tax
      *
      * @return $this
      */
-    public function setTax(TaxTransfer $tax);
+    public function setTax(TaxSetTransfer $tax);
 
     /**
-     * @return TaxInterface
+     * @return TaxSetTransfer
      */
     public function getTax();
 
