@@ -18,12 +18,15 @@ class DefinitionNormalizer
             $normalizedDefinition = [
                 'bundle' => $transferDefinition['bundle'],
                 'name' => $transferDefinition['name'],
-                'property' => $this->normalizeAttribute($transferDefinition['property']),
+                'property' => $this->normalizeAttributes($transferDefinition['property'], $transferDefinition['bundle']),
             ];
 
-            if (array_key_exists('interface', $transferDefinition)) {
-                $normalizedDefinition['interface'] = $this->normalizeAttribute($transferDefinition['interface']);
-            }
+            $normalizedDefinition['interface'] = [
+                [
+                    'name' => 'Generated\\Shared\\' . $transferDefinition['bundle'] . '\\' . $transferDefinition['name'] . 'Interface',
+                    'bundle' => $transferDefinition['bundle']
+                ]
+            ];
 
             $normalizedDefinitions[] = $normalizedDefinition;
         }
@@ -32,16 +35,32 @@ class DefinitionNormalizer
     }
 
     /**
-     * @param array $attribute
+     * @param array $attributes
+     * @param string $bundle
      *
      * @return array
      */
-    private function normalizeAttribute(array $attribute)
+    private function normalizeAttributes(array $attributes, $bundle)
     {
-        if (isset($attribute[0])) {
-            return $attribute;
+        if (isset($attributes[0])) {
+            return $this->addBundleToAttributes($attributes, $bundle);
         }
 
-        return [$attribute];
+        return $this->addBundleToAttributes([$attributes], $bundle);
+    }
+
+    /**
+     * @param array $attributes
+     * @param string $bundle
+     *
+     * @return array
+     */
+    private function addBundleToAttributes(array $attributes, $bundle)
+    {
+        foreach ($attributes as &$attribute) {
+            $attribute['bundle'] = $bundle;
+        }
+
+        return $attributes;
     }
 }

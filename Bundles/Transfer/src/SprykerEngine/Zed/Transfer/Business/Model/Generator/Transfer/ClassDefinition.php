@@ -103,8 +103,10 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         if (!in_array($interface['name'], $this->interfaces)) {
             $interfaceParts = explode('\\', $interface['name']);
-            $this->uses[] = $interface['name'];
-            $this->interfaces[] = array_pop($interfaceParts);
+            $name = array_pop($interfaceParts);
+            $alias = $interface['bundle'] . $name;
+            $this->uses[] = $interface['name'] . ' as ' . $alias;
+            $this->interfaces[] = $alias;
         }
     }
 
@@ -145,10 +147,12 @@ class ClassDefinition implements ClassDefinitionInterface
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
+
         if ($this->isCollection($property) && !$this->isArray($property)) {
             $use = 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $property['type']);
             $this->uses[$use] = $use;
         }
+
         $this->addPropertyConstructorIfCollection($property);
     }
 

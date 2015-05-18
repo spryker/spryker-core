@@ -4,14 +4,14 @@ namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
-use BundleNamespace\Shared\Bundle1\Transfer\AInterface;
-use BundleNamespace\Shared\Bundle2\Transfer\AnotherInterface;
+use Generated\Shared\Project\FooBarInterface as ProjectFooBarInterface;
+use Generated\Shared\Vendor\FooBarInterface as VendorFooBarInterface;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
-class FooBarTransfer extends AbstractTransfer implements AInterface, AnotherInterface
+class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface, VendorFooBarInterface
 {
 
     /**

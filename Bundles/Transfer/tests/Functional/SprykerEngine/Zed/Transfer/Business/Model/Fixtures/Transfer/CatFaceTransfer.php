@@ -4,14 +4,14 @@ namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
-use Path\To\Interface;
+use Generated\Shared\Test\CatFaceInterface as TestCatFaceInterface;
 use Generated\Shared\Transfer\OrderItemTransfer;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
-class CatFaceTransfer extends AbstractTransfer implements Interface
+class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
 {
 
     /**

@@ -80,8 +80,15 @@ class TransferDefinitionMerger
     private function propertiesAreIdentically(array $property1, array $property2)
     {
         $diff = array_diff($property1, $property2);
+        if (count($diff) === 0) {
+            return true;
+        }
 
-        return count($diff) === 0;
+        if (count($diff) === 1 && isset($diff['bundle'])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

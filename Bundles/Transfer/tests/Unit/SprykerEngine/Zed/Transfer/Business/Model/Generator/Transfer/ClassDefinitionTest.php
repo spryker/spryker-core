@@ -26,12 +26,12 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('NameTransfer', $classDefinition->getName());
     }
 
-    public function testIfOneInterfaceIsSetGetUsesShouldReturnArrayWithOneName()
+    public function testGetUsesShouldReturnArrayWithDefinedInterface()
     {
         $transferDefinition = [
             'name' => 'name',
             'interface' => [
-                ['name' => 'Used\Interface']
+                ['name' => 'Used\Interface', 'bundle' => 'Test']
             ]
         ];
 
@@ -40,62 +40,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $uses = $classDefinition->getUses();
         $this->assertTrue(is_array($uses));
-        $this->assertContains('Used\Interface', $uses);
-    }
-
-    public function testIfMoreThanOneInterfaceIsSetGetUsesShouldReturnArrayWithAllNames()
-    {
-        $transferDefinition = [
-            'name' => 'name',
-            'interface' => [
-                ['name' => 'Used\Interface1'],
-                ['name' => 'Used\Interface2'],
-            ]
-        ];
-
-        $classDefinition = new ClassDefinition();
-        $classDefinition->setDefinition($transferDefinition);
-
-        $uses = $classDefinition->getUses();
-        $this->assertTrue(is_array($uses));
-        $this->assertContains('Used\Interface1', $uses);
-        $this->assertContains('Used\Interface2', $uses);
-    }
-
-    public function testIfOneInterfaceIsSetGetInterfacesShouldReturnArrayWithOneName()
-    {
-        $transferDefinition = [
-            'name' => 'name',
-            'interface' => [
-                ['name' => 'Used\Interface']
-            ]
-        ];
-
-        $classDefinition = new ClassDefinition();
-        $classDefinition->setDefinition($transferDefinition);
-
-        $interfaces = $classDefinition->getInterfaces();
-        $this->assertTrue(is_array($interfaces));
-        $this->assertContains('Interface', $interfaces);
-    }
-
-    public function testIfMoreThanInterfaceUseIsSetGetInterfacesShouldReturnArrayWithAllNames()
-    {
-        $transferDefinition = [
-            'name' => 'name',
-            'interface' => [
-                ['name' => 'Used\Interface1'],
-                ['name' => 'Used\Interface2'],
-            ]
-        ];
-
-        $classDefinition = new ClassDefinition();
-        $classDefinition->setDefinition($transferDefinition);
-
-        $interfaces = $classDefinition->getInterfaces();
-        $this->assertTrue(is_array($interfaces));
-        $this->assertContains('Interface1', $interfaces);
-        $this->assertContains('Interface2', $interfaces);
+        $this->assertContains('Used\Interface as TestInterface', $uses);
     }
 
     public function testIfOnePropertyIsSetGetPropertiesShouldReturnArrayWithOneProperty()
