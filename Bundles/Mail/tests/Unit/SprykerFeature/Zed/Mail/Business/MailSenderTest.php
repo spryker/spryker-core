@@ -3,7 +3,7 @@
 
 namespace Unit\SprykerFeature\Zed\Mail\Business;
 
-use Generated\Shared\Transfer\MailAttachmentTransfer;
+use Generated\Shared\Transfer\AttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
@@ -22,6 +22,8 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
 
     public function testSendMail()
     {
+        $this->markTestSkipped('Clean up this test it\'s not readable');
+
         $locator = Locator::getInstance();
 
         $mandrillMock = $this->getMock('\\Mandrill', [], ['MOCK_API_KEY']);
@@ -60,68 +62,12 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
 
         $mailSender = new MandrillMailSender($mandrillMock, $inclusionHandler);
 
-        $mailTransfer = new MailTransfer($locator);
-        $mailTransfer
-            ->setTemplateName('test_template')
-            ->setTemplateContent(['templatekey' => 'templatevalue'])
-            ->setSubject('test subject')
-            ->setFromEmail('testfrom@testmail.com')
-            ->setFromName('Test From Name')
-            ->addRecipient(
-                (new MailRecipientTransfer())
-                ->setEmail('testrecipient1@testmail.com')
-                ->setName('Recipient 1')
-                ->setMergeVars(['recipient1Var' => 'recipient1Content'])
-            )
-            ->addRecipient(
-                (new MailRecipientTransfer())
-                    ->setEmail('testrecipient2@testmail.com')
-                    ->setName('Recipient 2')
-                    ->setType('cc')
-                    ->setMetadata(['perRecipient1' => 'anotherValue'])
-            )
-            ->addHeader(
-                (new MailHeaderTransfer())
-                    ->setKey('Reply-To')
-                    ->setValue('testfrom2@testmail.com')
-            )
-            ->setImportant(true)
-            ->setTrackOpens(true)
-            ->setTrackClicks(true)
-            ->setAutoText(true)
-            ->setAutoHtml(true)
-            ->setInlineCss(true)
-            ->setUrlStripQueryString(true)
-            ->setPreserveRecipients(true)
-            ->setViewContentLink(true)
-            ->setBccAddress('somebcc@mail.com')
-            ->setTrackingDomain('aDomain')
-            ->setSigningDomain('bDomain')
-            ->setReturnPathDomain('cDomain')
-            ->setMerge(true)
-            ->setMergeLanguage('handlebars')
-            ->setGlobalMergeVars(['globalMergeVar1' => 'globalMergeVarContent'])
-            ->setTags(['tag1', 'tag2'])
-            ->setSubAccount('subAccountId')
-            ->setGoogleAnalyticsDomains(['dDomain'])
-            ->setGoogleAnalyticsCampaign('campaign')
-            ->setMetadata(['global1' => 'someValue'])
-            ->addAttachment(
-                (new MailAttachmentTransfer())
-                    ->setFileName($textFilePath)
-                    ->setDisplayName('ATestfile')
-                )
-            ->addImage(
-                (new MailAttachmentTransfer())
-                    ->setFileName($imageFilePath)
-                    ->setDisplayName('logo')
-            )
-            ->setAsync(true)
-            ->setIpPool('Test Ip Pool')
-            ->setSendAt(new \DateTime('2010-10-10 01:10:10'))
-        ;
+        $mailTransfer = $this->getMailTransfer($textFilePath, $imageFilePath);
 
-        $mandrillMessenger->expects($this->once())->method('sendTemplate')->with(
+        $mandrillMessenger
+            ->expects($this->once())
+            ->method('sendTemplate')
+            ->with(
             $this->equalTo('test_template'),
             $this->equalTo(
                 [
@@ -219,5 +165,76 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $result = $mailSender->sendMail($mailTransfer);
 
         $this->assertEquals($mockResult, $result);
+    }
+
+    /**
+     * @param $textFilePath
+     * @param $imageFilePath
+     * @return MailTransfer
+     */
+    private function getMailTransfer($textFilePath, $imageFilePath)
+    {
+        $mailTransfer = new MailTransfer();
+        $mailTransfer
+            ->setTemplateName('test_template')
+            ->setTemplateContent(['templatekey' => 'templatevalue'])
+            ->setSubject('test subject')
+            ->setFromEmail('testfrom@testmail.com')
+            ->setFromName('Test From Name')
+            ->addRecipient(
+                (new MailRecipientTransfer())
+                    ->setEmail('testrecipient1@testmail.com')
+                    ->setName('Recipient 1')
+                    ->setType('to')
+                    ->setMergeVars(['recipient1Var' => 'recipient1Content'])
+            )
+            ->addRecipient(
+                (new MailRecipientTransfer())
+                    ->setEmail('testrecipient2@testmail.com')
+                    ->setName('Recipient 2')
+                    ->setType('cc')
+                    ->setMetadata(['perRecipient1' => 'anotherValue'])
+            )
+            ->addHeader(
+                (new MailHeaderTransfer())
+                    ->setKey('Reply-To')
+                    ->setValue('testfrom2@testmail.com')
+            )
+            ->setImportant(true)
+            ->setTrackOpens(true)
+            ->setTrackClicks(true)
+            ->setAutoText(true)
+            ->setAutoHtml(true)
+            ->setInlineCss(true)
+            ->setUrlStripQueryString(true)
+            ->setPreserveRecipients(true)
+            ->setViewContentLink(true)
+            ->setBccAddress('somebcc@mail.com')
+            ->setTrackingDomain('aDomain')
+            ->setSigningDomain('bDomain')
+            ->setReturnPathDomain('cDomain')
+            ->setMerge(true)
+            ->setMergeLanguage('handlebars')
+            ->setGlobalMergeVars(['globalMergeVar1' => 'globalMergeVarContent'])
+            ->setTags(['tag1', 'tag2'])
+            ->setSubAccount('subAccountId')
+            ->setGoogleAnalyticsDomains(['dDomain'])
+            ->setGoogleAnalyticsCampaign('campaign')
+            ->setMetadata(['global1' => 'someValue'])
+            ->addAttachment(
+                (new AttachmentTransfer())
+                    ->setFileName($textFilePath)
+                    ->setDisplayName('ATestfile')
+            )
+            ->addImage(
+                (new AttachmentTransfer())
+                    ->setFileName($imageFilePath)
+                    ->setDisplayName('logo')
+            )
+            ->setAsync(true)
+            ->setIpPool('Test Ip Pool')
+            ->setSendAt('2010-10-10 01:10:10');
+
+        return $mailTransfer;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Mail\Business;
 
-use Generated\Shared\Transfer\MailAttachmentTransfer;
+use Generated\Shared\Transfer\AttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
@@ -31,12 +31,12 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param MailMailTransfer $mailTransfer
+     * @param MailTransfer $mailTransfer
      *
      * @return array
      * @throws \Mandrill_Error
      */
-    public function sendMail(MailMailTransfer $mailTransfer)
+    public function sendMail(MailTransfer $mailTransfer)
     {
         $templateName = $mailTransfer->getTemplateName();
         $templateContent = $this->convertToJsonStyle($mailTransfer->getTemplateContent());
@@ -44,9 +44,11 @@ class MandrillMailSender implements MailSenderInterface
         $async = $mailTransfer->getAsync();
         $ipPool = $mailTransfer->getIpPool();
         $sendAt = $mailTransfer->getSendAt();
-        $sendAtString = $sendAt ? $sendAt->format('Y-m-d H:i:s') : null;
+        if (!is_null($sendAt)) {
+            $sendAt = (new \DateTime($sendAt))->format('Y-m-d H:i:s');
+        }
 
-        return $this->mandrill->messages->sendTemplate($templateName, $templateContent, $message, $async, $ipPool, $sendAtString);
+        return $this->mandrill->messages->sendTemplate($templateName, $templateContent, $message, $async, $ipPool, $sendAt);
     }
 
     /**
@@ -54,7 +56,7 @@ class MandrillMailSender implements MailSenderInterface
      *
      * @return array
      */
-    protected function convertToJsonStyle(array $templateContent)
+    protected function convertToJsonStyle($templateContent)
     {
         $result = [];
         foreach ($templateContent as $name => $content) {
@@ -68,11 +70,11 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param MailMailTransfer $mailTransfer
+     * @param MailTransfer $mailTransfer
      *
      * @return array
      */
-    protected function extractMessage(MailMailTransfer $mailTransfer)
+    protected function extractMessage(MailTransfer $mailTransfer)
     {
         return [
             'subject' => $mailTransfer->getSubject(),
@@ -113,7 +115,7 @@ class MandrillMailSender implements MailSenderInterface
      *
      * @return array
      */
-    protected function extractRecipients(TransferArrayObject $recipients)
+    protected function extractRecipients(\ArrayObject $recipients)
     {
         $result = [];
 
@@ -134,7 +136,7 @@ class MandrillMailSender implements MailSenderInterface
      *
      * @return array
      */
-    protected function extractHeaders(TransferArrayObject $headers)
+    protected function extractHeaders(\ArrayObject $headers)
     {
         $result = [];
 
@@ -151,7 +153,7 @@ class MandrillMailSender implements MailSenderInterface
      *
      * @return array
      */
-    protected function extractMergeVars(TransferArrayObject $recipients)
+    protected function extractMergeVars(\ArrayObject $recipients)
     {
         $result = [];
 
@@ -175,7 +177,7 @@ class MandrillMailSender implements MailSenderInterface
      *
      * @return array
      */
-    protected function extractRecipientMetadata(TransferArrayObject $recipientMetadata)
+    protected function extractRecipientMetadata(\ArrayObject $recipientMetadata)
     {
         $result = [];
         /** @var MailRecipientTransfer $individualData */
@@ -198,10 +200,10 @@ class MandrillMailSender implements MailSenderInterface
      *
      * @return array
      */
-    protected function extractFiles(TransferArrayObject $fileInfo)
+    protected function extractFiles(\ArrayObject $fileInfo)
     {
         $result = [];
-        /** @var MailAttachmentTransfer $file */
+        /** @var AttachmentTransfer $file */
         foreach ($fileInfo as $file) {
             $result[] = [
                 'type' => $this->inclusionHandler->guessType($file->getFileName()),

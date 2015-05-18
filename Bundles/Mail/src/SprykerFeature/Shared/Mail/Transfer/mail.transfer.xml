@@ -45,7 +45,7 @@
         <property name="templateContent" type="array" />
         <property name="async" type="bool" />
         <property name="ipPool" type="string" />
-        <property name="sendAt" type="\DateTime" />
+        <property name="sendAt" type="string" />
         <property name="subject" type="string" />
         <property name="fromEmail" type="string" />
         <property name="fromName" type="string" />
@@ -72,8 +72,8 @@
         <property name="googleAnalyticsDomains" type="array" />
         <property name="googleAnalyticsCampaign" type="string" />
         <property name="metadata" type="array" />
-        <property name="attachments" type="MailAttachment[]" singular="attachment" />
-        <property name="images" type="MailAttachment[]" singular="images" />
+        <property name="attachments" type="Attachment[]" singular="attachment" />
+        <property name="images" type="Attachment[]" singular="image" />
     </transfer>
 
     <transfer name="MailTemplate">
