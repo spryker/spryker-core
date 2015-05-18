@@ -104,7 +104,7 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
 
         try {
             $finder = new Finder();
-            /* @var $file SplFileInfo */
+            /** @var SplFileInfo $file */
             foreach ($finder->files()->in($pathPattern)->depth($this->options[self::OPTION_KEY_DEPTH]) as $file) {
                 $className = $this->buildClassNameFromFile($file);
 
