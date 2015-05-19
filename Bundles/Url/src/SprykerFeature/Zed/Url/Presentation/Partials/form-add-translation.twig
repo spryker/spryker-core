@@ -1,0 +1,14 @@
+<spy-form
+        class="spy-layout sparse"
+        src="/glossary/form/translation"
+        name="key_add"
+        channel="glossary"
+        >
+    {#<h3>Add Translation</h3>#}
+
+    <div spy-input-select="field.fk_locale" options="{ label : 'Locale' }"></div>
+
+    {#<div class="spy-layout buttons">#}
+        {#<button class="button default" ng-disabled="query || !field.fk_glossary_key.value" ng-click="$emitAllChannels('glossary_edit', { fk_glossary_key : model.fields.fk_glossary_key.value })">Add</button>#}
+    {#</div>#}
+</spy-form>
