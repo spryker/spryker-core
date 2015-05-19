@@ -11,11 +11,4 @@ use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 class SalesDependencyContainer extends AbstractDependencyContainer
 {
 
-    /**
-     * @return Internal\Install
-     */
-    public function getInstaller()
-    {
-        return $this->getFactory()->createInternalInstall();
-    }
 }
