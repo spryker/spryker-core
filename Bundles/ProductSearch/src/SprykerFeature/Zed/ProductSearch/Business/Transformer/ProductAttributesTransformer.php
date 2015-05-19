@@ -54,7 +54,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
 
         foreach ($productsRaw as $index => $productData) {
             if (isset($searchableProducts[$index])) {
-                $productAttributes = json_decode($productData['attributes'], true);
+                $productAttributes = json_decode($productData['concrete_attributes'], true);
                 $abstractAttributes = json_decode($productData['abstract_attributes'], true);
 
                 $mergedAttributes = array_merge($abstractAttributes, $productAttributes);
