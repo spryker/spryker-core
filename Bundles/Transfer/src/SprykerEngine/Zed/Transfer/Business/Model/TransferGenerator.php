@@ -38,7 +38,10 @@ class TransferGenerator
         foreach ($definitions as $classDefinition) {
             $fileName = $this->generator->generate($classDefinition);
 
-            $this->messenger->info(sprintf('<info>%s</info> was generated', $fileName));
+            $this->messenger->addInfo(
+                'transfer.generated',
+                ['%name%' => $fileName,]
+            );
         }
     }
 

@@ -32,10 +32,11 @@ class GeneratorConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $facade = $this->getFacade();
+        $messenger = $this->getMessenger();
 
         $facade->deleteGeneratedTransferObjects();
-        $facade->generateTransferObjects($this->getMessenger());
-        $facade->generateTransferInterfaces($this->getMessenger());
+        $facade->generateTransferObjects($messenger);
+        $facade->generateTransferInterfaces($messenger);
     }
 
     /**
