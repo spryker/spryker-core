@@ -1,11 +1,11 @@
 <?php
 
-namespace SprykerFeature\Zed\CategoryExporter\Business\KeyBuilder;
+namespace SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder;
 
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
-use \SprykerFeature\Shared\UrlExporter\Code\KeyBuilder\ResourceKeyBuilder as SharedResourceKeyBuilder;
+use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuilder;
 
-class ResourceKeyBuilder extends SharedResourceKeyBuilder
+abstract class SharedCategoryResourceKeyBuilder extends SharedResourceKeyBuilder
 {
     /**
      * @return string

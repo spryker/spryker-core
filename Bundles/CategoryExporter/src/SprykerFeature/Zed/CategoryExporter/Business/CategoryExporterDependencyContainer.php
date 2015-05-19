@@ -56,7 +56,7 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
      */
     protected function getResourceKeyBuilder()
     {
-        return $this->getFactory()->createKeyBuilderResourceKeyBuilder();
+        return $this->getFactory()->createKeyBuilderCategoryResourceKeyBuilder();
     }
 
     /**

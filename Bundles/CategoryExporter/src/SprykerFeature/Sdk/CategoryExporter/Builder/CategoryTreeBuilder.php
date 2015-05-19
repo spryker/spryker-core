@@ -42,10 +42,7 @@ class CategoryTreeBuilder
         $subtree = [];
         foreach ($parents as $parent) {
             $storageKey = $this->keyBuilder->generateKey(
-                [
-                    'resourceType' => CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE,
-                    'value' => $parent['node_id']
-                ],
+                $parent['node_id'],
                 $locale
             );
             $parentCategory = $this->kvReader->get($storageKey);
