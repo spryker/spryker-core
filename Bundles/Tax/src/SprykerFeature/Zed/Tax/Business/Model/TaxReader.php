@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Tax\Business\Model;
 
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
-use Sprykerfeature\Zed\Tax\TaxConfig;
+use SprykerFeature\Zed\Tax\TaxConfig;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Propel\Runtime\Exception\PropelException;

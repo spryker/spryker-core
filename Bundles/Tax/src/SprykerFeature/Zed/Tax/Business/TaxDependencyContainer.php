@@ -7,7 +7,7 @@ use SprykerFeature\Zed\Tax\TaxConfig;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
 use SprykerFeature\Zed\Tax\Business\Model\TaxReaderInterface;
-use Sprykerfeature\Zed\Tax\Business\Model\TaxWriterInterface;
+use SprykerFeature\Zed\Tax\Business\Model\TaxWriterInterface;
 
 /**
  * @method TaxBusiness getFactory()
@@ -37,6 +37,7 @@ class TaxDependencyContainer extends AbstractDependencyContainer
     public function getWriterModel()
     {
         return $this->getFactory()->createModelTaxWriter(
+            $this->getLocator(),
             $this->getQueryContainer(),
             $this->getReaderModel(),
             $this->getConfig()

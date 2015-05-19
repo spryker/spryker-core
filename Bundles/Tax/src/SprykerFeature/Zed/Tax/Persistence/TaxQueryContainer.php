@@ -3,16 +3,42 @@
 namespace SprykerFeature\Zed\Tax\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Tax\Persistence\Propel\Map\SpyTaxRateTableMap;
-use SprykerFeature\Zed\Tax\Persistence\Propel\Map\SpyTaxSetTableMap;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRateQuery;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
-use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
 
 class TaxQueryContainer extends AbstractQueryContainer {
 
+    /**
+     * @param $id
+     * @return SpyTaxRateQuery
+     */
+    public function queryTaxRate($id)
+    {
+        return SpyTaxRateQuery::create()->filterByIdTaxRate($id);
+    }
+
+    /**
+     * @return SpyTaxRateQuery
+     */
+    public function queryAllTaxRates()
+    {
+        return SpyTaxRateQuery::create();
+    }
+
+    /**
+     * @param $id
+     * @return SpyTaxSetQuery
+     */
+    public function queryTaxSet($id)
+    {
+        return SpyTaxSetQuery::create()->filterByIdTaxSet($id);
+    }
+
+    /**
+     * @return SpyTaxSetQuery
+     */
+    public function queryAllTaxSets()
+    {
+        return SpyTaxSetQuery::create();
+    }
 }

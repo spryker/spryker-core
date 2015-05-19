@@ -11,7 +11,7 @@
 
     <transfer name="TaxRate">
         <property name="name" type="string" />
-        <property name="percentage" type="string" />
+        <property name="rate" type="string" />
         <property name="amount" type="int" />
     </transfer>
 
