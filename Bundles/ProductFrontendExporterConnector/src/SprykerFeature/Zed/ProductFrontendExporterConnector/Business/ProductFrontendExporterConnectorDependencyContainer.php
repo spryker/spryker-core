@@ -40,7 +40,7 @@ class ProductFrontendExporterConnectorDependencyContainer extends AbstractDepend
      */
     protected function getResourceKeyBuilder()
     {
-        return $this->getFactory()->createBuilderResourceKeyBuilder();
+        return $this->getFactory()->createBuilderAbstractProductResourceKeyBuilder();
     }
 
     /**
