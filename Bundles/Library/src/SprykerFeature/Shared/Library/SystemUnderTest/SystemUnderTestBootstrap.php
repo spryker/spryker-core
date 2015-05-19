@@ -57,7 +57,7 @@ class SystemUnderTestBootstrap
         defined('IS_CLI') or define('IS_CLI', false);
         defined('APPLICATION') or define('APPLICATION', strtoupper($application));
 
-        $path = realpath(__DIR__ . '/../../../../../../../../../../');
+        $path = realpath(__DIR__ . '/../../../../../../../../../..');
         defined('APPLICATION_ROOT_DIR') or define('APPLICATION_ROOT_DIR', $path);
 
         \Zend_Session::$_unitTestEnabled = true;
