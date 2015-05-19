@@ -11,8 +11,19 @@ class AbstractPresenter implements PresenterInterface
      */
     protected $messenger;
 
+    /**
+     * @param MessengerInterface $messenger
+     */
     public function __construct(MessengerInterface $messenger)
     {
         $this->messenger = $messenger;
+    }
+
+    /**
+     * @return MessengerInterface
+     */
+    public function getMessenger()
+    {
+        return $this->messenger;
     }
 }
