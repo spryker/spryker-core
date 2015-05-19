@@ -5,7 +5,7 @@ namespace SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderTrait;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
-class NavigationKeyBuilder implements KeyBuilderInterface
+abstract class NavigationKeyBuilder implements KeyBuilderInterface
 {
     use KeyBuilderTrait;
 
