@@ -49,7 +49,7 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
         $resolver->setDefaults([
             self::OPTION_KEY_APPLICATION => self::APPLICATION,
             self::OPTION_KEY_PROJECT_PATH_PATTERN => APPLICATION_SOURCE_DIR,
-            self::OPTION_KEY_VENDOR_PATH_PATTERN => APPLICATION_VENDOR_DIR . 'spryker/spryker/Bundles/*/src',
+            self::OPTION_KEY_VENDOR_PATH_PATTERN => APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src',
             self::OPTION_KEY_DEPTH => self::DEPTH,
             self::OPTION_KEY_CLASS_NAME_PART_LEVEL => self::CLASS_NAME_PART_LEVEL,
         ]);

@@ -173,7 +173,7 @@ abstract class BaseCommand extends Console
         return $this->packages;
     }
 
-    /**å
+    /**
      * @return Finder
      */
     protected function getPackageDirs()

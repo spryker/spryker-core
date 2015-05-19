@@ -65,7 +65,7 @@ class GenerateSdkIdeAutoCompletionConsole extends Console
     {
         $options = [
             IdeAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Sdk\Ide',
-            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Sdk/Ide/',
+            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Sdk/Ide',
             IdeAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Sdk',
             IdeAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
                 [
@@ -107,7 +107,7 @@ class GenerateSdkIdeAutoCompletionConsole extends Console
         $options = [
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Sdk\Ide\FactoryAutoCompletion',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR =>
-                APPLICATION_SOURCE_DIR . '/Generated/Sdk/Ide/',
+                APPLICATION_SOURCE_DIR . '/Generated/Sdk/Ide',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => false,
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Sdk',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
