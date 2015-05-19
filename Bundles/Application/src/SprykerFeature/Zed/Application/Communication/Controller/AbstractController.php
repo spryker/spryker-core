@@ -7,6 +7,9 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use Silex\Application;
+use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
+use SprykerEngine\Zed\Messenger\Communication\Presenter\ObservingPresenterInterface;
+use SprykerEngine\Zed\Messenger\Communication\Presenter\ZedUiPresenter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -31,7 +34,10 @@ abstract class AbstractController
      */
     private $dependencyContainer;
 
-    private $messenger;
+    /**
+     * @var ObservingPresenterInterface
+     */
+    private $presenter;
 
     /**
      * @param Application $application
@@ -42,15 +48,25 @@ abstract class AbstractController
     {
         $this->application = $application;
         $this->locator = $locator;
-        $this->messenger = $this->getLocator()->messenger()->facader();
+
+        $this->presenter = new ZedUiPresenter(
+            $this->locator->messenger()->facade(),
+            $this->locator->translation()->facade(),
+            $this->locator->locale()->facade()->getCurrentLocale(),
+            $this->getTwig()
+        );
 
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
         }
+    }
 
-        $this->addMessageSuccess('Object created!');
-
-        var_dump($this->messenger->getAll()); exit;
+    /**
+     * @return MessengerInterface
+     */
+    protected function getMessenger()
+    {
+        return $this->presenter->getMessenger();
     }
 
     /**
@@ -107,7 +123,7 @@ abstract class AbstractController
      */
     protected function addMessageSuccess($message)
     {
-        $this->messenger->addSuccess($message);
+        $this->getMessenger()->addSuccess($message);
         return $this;
     }
 
@@ -118,7 +134,8 @@ abstract class AbstractController
      */
     protected function addMessageWarning($message)
     {
-        throw new \Exception('Messenger removed');
+        $this->getMessenger()->addWarning($message);
+        return $this;
     }
 
     /**
@@ -129,10 +146,7 @@ abstract class AbstractController
      */
     protected function addMessageError($message)
     {
-        // TODO circle
-        $this->addMessageError(__($message));
-
-        return $this;
+        $this->getMessenger()->addError($message);
     }
 
     /**
