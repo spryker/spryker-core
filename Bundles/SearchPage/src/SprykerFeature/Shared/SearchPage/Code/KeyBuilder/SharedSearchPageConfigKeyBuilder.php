@@ -5,7 +5,7 @@ namespace SprykerFeature\Shared\SearchPage\Code\KeyBuilder;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderTrait;
 
-class SearchPageConfigKeyBuilder implements KeyBuilderInterface
+class SharedSearchPageConfigKeyBuilder implements KeyBuilderInterface
 {
 
     use KeyBuilderTrait;
