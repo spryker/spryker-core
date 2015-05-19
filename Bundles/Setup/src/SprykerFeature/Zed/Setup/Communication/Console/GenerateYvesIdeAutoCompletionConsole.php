@@ -66,7 +66,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
     {
         $options = [
             IdeAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Yves\Ide',
-            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide/',
+            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide',
             IdeAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
             IdeAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
                 [
@@ -107,7 +107,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         $options = [
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Yves\Ide\FactoryAutoCompletion',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR =>
-                APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide/',
+                APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => false,
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
