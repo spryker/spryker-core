@@ -30,6 +30,9 @@ class UserDependencyContainer extends AbstractDependencyContainer
         return $this->getLocator()->user()->facade();
     }
 
+    /**
+     * @return SpyUserUserQuery
+     */
     public function createUserQuery()
     {
         return $this->getFactory()->createPropelSpyUserUserQuery();
