@@ -29,10 +29,10 @@ class TransferConfig extends AbstractBundleConfig
     public function getSourceDirectories()
     {
         $directories = [
-            APPLICATION_VENDOR_DIR . 'spryker/spryker/Bundles/*/src/*/Shared/*/Transfer/',
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Shared/*/Transfer/',
         ];
 
-        if (glob(APPLICATION_SOURCE_DIR . '*/Shared/*/Transfer/')) {
+        if (glob(APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/')) {
             $directories[] = APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
         }
 
