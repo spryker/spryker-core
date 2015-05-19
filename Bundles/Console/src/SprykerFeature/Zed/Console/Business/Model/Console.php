@@ -7,6 +7,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
+use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Zed\Messenger\Business\Model\Presenter\ConsolePresenter;
 use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
@@ -20,7 +21,6 @@ use SprykerFeature\Zed\Application\Business\Model\Messenger\Messenger;
 
 class Console extends SymfonyCommand
 {
-
     use Helper;
 
     /**
@@ -44,11 +44,18 @@ class Console extends SymfonyCommand
     private $dependencyContainer;
 
     /**
+     * @var ConsolePresenter
+     */
+    protected $presenter;
+
+    /**
      * @param FactoryInterface $factory
      * @param LocatorLocatorInterface $locator
      */
-    public function __construct(FactoryInterface $factory, LocatorLocatorInterface $locator)
-    {
+    public function __construct(
+        FactoryInterface $factory,
+        LocatorLocatorInterface $locator
+    ) {
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
         }
@@ -85,20 +92,24 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return ConsoleMessenger
+     * @return MessengerInterface
      */
     protected function getMessenger()
     {
-        $messenger = $this->locator->messenger()->facade();
+        try {
+            if (null === $this->presenter) {
+                $this->presenter = new ConsolePresenter(
+                    $this->locator->messenger()->facade(),
+                    $this->locator->translation()->facade(),
+                    $this->locator->locale()->facade()->getCurrentLocale(),
+                    $this->output
+                );
+            }
 
-        $presenter = new ConsolePresenter(
-            $messenger,
-            $this->locator->translation()->facade(),
-            $this->locator->locale()->facade()->getCurrentLocale(),
-            $this->output
-        );
-
-        $messenger = new ConsoleMessenger($this->output);
+            $messenger = $this->presenter->getMessenger();
+        } catch (\Exception $e) {
+            $messenger = new ConsoleMessenger($this->output);
+        }
 
         return $messenger;
     }
