@@ -164,7 +164,11 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
                 }
                 $normalizedProperties[] = $property;
             } catch (\Exception $e) {
-                echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($properties) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+                throw new \InvalidArgumentException(sprintf(
+                    'Invalid transfer object definition in "%s" bundle - no type set for property "%s".',
+                    $property['bundle'],
+                    isset($property['name']) ? $property['name'] : ''
+                ));
             }
         }
 

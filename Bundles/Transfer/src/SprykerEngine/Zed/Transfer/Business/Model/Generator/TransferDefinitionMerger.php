@@ -39,6 +39,7 @@ class TransferDefinitionMerger
     private function mergeDefinitions(array $existingDefinition, array $definitionToMerge)
     {
         return [
+            'bundle' => $existingDefinition['bundle'],
             'name' => $existingDefinition['name'],
             'interface' => $this->mergeInterfaces($existingDefinition, $definitionToMerge),
             'property' => $this->mergeProperty($existingDefinition['property'], $definitionToMerge['property']),
