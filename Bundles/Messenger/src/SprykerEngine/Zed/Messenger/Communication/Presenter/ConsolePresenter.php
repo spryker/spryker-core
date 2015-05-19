@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerEngine\Zed\Messenger\Business\Model\Presenter;
+namespace SprykerEngine\Zed\Messenger\Communication\Presenter;
 
 use SprykerEngine\Zed\Translation\Business\TranslationFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
