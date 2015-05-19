@@ -31,6 +31,8 @@ abstract class AbstractController
      */
     private $dependencyContainer;
 
+    private $messenger;
+
     /**
      * @param Application $application
      * @param Factory $factory
@@ -40,10 +42,15 @@ abstract class AbstractController
     {
         $this->application = $application;
         $this->locator = $locator;
+        $this->messenger = $this->getLocator()->messenger()->facader();
 
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
         }
+
+        $this->addMessageSuccess('Object created!');
+
+        var_dump($this->messenger->getAll()); exit;
     }
 
     /**
@@ -100,9 +107,7 @@ abstract class AbstractController
      */
     protected function addMessageSuccess($message)
     {
-        // TODO circle
-        $this->addMessageSuccess(__($message));
-
+        $this->messenger->addSuccess($message);
         return $this;
     }
 

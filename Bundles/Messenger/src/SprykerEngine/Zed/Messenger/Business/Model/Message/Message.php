@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Application\Business\Model\Messenger\Message;
+namespace SprykerEngine\Zed\Messenger\Business\Model\Message;
 
 class Message implements MessageInterface
 {

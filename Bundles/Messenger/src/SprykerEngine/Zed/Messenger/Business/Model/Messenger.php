@@ -1,13 +1,12 @@
 <?php
 
-namespace SprykerFeature\Zed\Application\Business\Model\Messenger;
+namespace SprykerEngine\Zed\Messenger\Business\Model;
 
-use SprykerFeature\Zed\Application\Business\Model\Messenger\Exception\MessageTypeNotFoundException;
-use SprykerFeature\Zed\Application\Business\Model\Messenger\Message\Message;
-use SprykerFeature\Zed\Application\Business\Model\Messenger\Message\MessageInterface;
+use SprykerEngine\Zed\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
+use SprykerEngine\Zed\Messenger\Business\Model\Message\Message;
+use SprykerEngine\Zed\Messenger\Business\Model\Message\MessageInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface as LegacyMessengerInterface;
-use SprykerFeature\Zed\Application\Business\Model\Messenger\MessengerInterface;
-use SprykerFeature\Zed\Application\Business\Model\Messenger\Presenter\ObservingPresenterInterface;
+use SprykerEngine\Zed\Messenger\Business\Model\Presenter\ObservingPresenterInterface;
 
 /**
  * Class Messenger

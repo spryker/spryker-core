@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Application\Business\Model\Messenger\Presenter;
+namespace SprykerEngine\Zed\Messenger\Business\Model\Presenter;
 
 interface ObservingPresenterInterface extends PresenterInterface
 {

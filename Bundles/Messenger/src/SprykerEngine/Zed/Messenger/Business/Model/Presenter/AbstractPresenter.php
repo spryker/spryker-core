@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\Application\Business\Model\Messenger\Presenter;
+namespace SprykerEngine\Zed\Messenger\Business\Model\Presenter;
 
-use SprykerFeature\Zed\Application\Business\Model\Messenger\MessengerInterface;
+use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
 
 class AbstractPresenter implements PresenterInterface
 {

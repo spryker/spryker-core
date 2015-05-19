@@ -1,9 +1,9 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Application\Business\Model\Messenger;
+namespace Unit\SprykerEngine\Zed\Messenger\Business\Model;
 
-use SprykerFeature\Zed\Application\Business\Model\Messenger\Message\Message;
-use SprykerFeature\Zed\Application\Business\Model\Messenger\Messenger;
+use SprykerEngine\Zed\Messenger\Business\Model\Message\Message;
+use SprykerEngine\Zed\Messenger\Business\Model\Messenger;
 
 class MessengerTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +23,7 @@ class MessengerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \SprykerFeature\Zed\Application\Business\Model\Messenger\Exception\MessageTypeNotFoundException
+     * @expectedException \SprykerEngine\Zed\Messenger\Business\Model\Exception\MessageTypeNotFoundException
      */
     public function testAddInvalid()
     {

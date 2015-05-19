@@ -1,9 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Application\Business\Model\Messenger;
+namespace SprykerEngine\Zed\Messenger\Business\Model;
 
-use SprykerFeature\Zed\Application\Business\Model\Messenger\Message\MessageInterface;
-use SprykerFeature\Zed\Application\Business\Model\Messenger\Presenter\ObservingPresenterInterface;
+use SprykerEngine\Zed\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
+use SprykerEngine\Zed\Messenger\Business\Model\Message\MessageInterface;
+use SprykerEngine\Zed\Messenger\Business\Model\Presenter\ObservingPresenterInterface;
 
 /**
  * Interface MessengerInterface

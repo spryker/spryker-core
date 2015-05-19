@@ -1,11 +1,11 @@
 <?php
 
-namespace SprykerFeature\Zed\Application\Business\Model\Messenger\Presenter;
+namespace SprykerEngine\Zed\Messenger\Business\Model\Presenter;
 
 use SprykerEngine\Zed\Translation\Business\TranslationFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Symfony\Component\Console\Output\OutputInterface;
-use SprykerFeature\Zed\Application\Business\Model\Messenger\MessengerInterface;
+use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
 
 class ConsolePresenter extends AbstractPresenter implements
     ObservingPresenterInterface
