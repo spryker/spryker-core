@@ -8,7 +8,7 @@ use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
 use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
-use SprykerEngine\Zed\Messenger\Business\Model\Presenter\ConsolePresenter;
+use SprykerEngine\Zed\Messenger\Communication\Presenter\ConsolePresenter;
 use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 

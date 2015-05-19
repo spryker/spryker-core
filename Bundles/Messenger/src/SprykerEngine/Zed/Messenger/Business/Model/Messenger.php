@@ -6,7 +6,7 @@ use SprykerEngine\Zed\Messenger\Business\Model\Exception\MessageTypeNotFoundExce
 use SprykerEngine\Zed\Messenger\Business\Model\Message\Message;
 use SprykerEngine\Zed\Messenger\Business\Model\Message\MessageInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface as LegacyMessengerInterface;
-use SprykerEngine\Zed\Messenger\Business\Model\Presenter\ObservingPresenterInterface;
+use SprykerEngine\Zed\Messenger\Communication\Presenter\ObservingPresenterInterface;
 
 /**
  * Class Messenger

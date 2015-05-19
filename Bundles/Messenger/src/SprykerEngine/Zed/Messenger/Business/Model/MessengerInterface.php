@@ -4,7 +4,7 @@ namespace SprykerEngine\Zed\Messenger\Business\Model;
 
 use SprykerEngine\Zed\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
 use SprykerEngine\Zed\Messenger\Business\Model\Message\MessageInterface;
-use SprykerEngine\Zed\Messenger\Business\Model\Presenter\ObservingPresenterInterface;
+use SprykerEngine\Zed\Messenger\Communication\Presenter\ObservingPresenterInterface;
 
 /**
  * Interface MessengerInterface

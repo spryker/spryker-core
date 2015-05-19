@@ -8,8 +8,10 @@ use SprykerEngine\Zed\Messenger\Business\Model\Message\Message;
 use SprykerEngine\Zed\Messenger\Business\Model\Message\MessageInterface;
 use SprykerEngine\Zed\Messenger\Business\Model\Messenger;
 use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
-use SprykerEngine\Zed\Messenger\Business\Model\Presenter\ObservingPresenterInterface;
+use SprykerEngine\Zed\Messenger\Communication\Presenter\ObservingPresenterInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface as LegacyMessengerInterface;
+use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
+use SprykerEngine\Zed\Kernel\Locator;
 
 /**
  * @method MessengerInterface addSuccess($key, $options = [])
@@ -20,9 +22,18 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface as LegacyMessengerI
 class MessengerFacade extends AbstractFacade implements MessengerInterface,
     LegacyMessengerInterface
 {
+    protected $messenger;
+
+    public function __construct(FactoryInterface $factory, Locator $locator)
+    {
+        parent::__construct($factory, $locator);
+
+        $this->messenger = $this->getDependencyContainer()->getMessenger();
+    }
+
     public function getAll($type = null)
     {
-        return $this->getDependencyContainer()->getMessenger()->getAll($type);
+        return $this->messenger->getAll($type);
     }
 
     /**
@@ -35,7 +46,7 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      */
     public function add($type, $message, array $options = [])
     {
-        return $this->getDependencyContainer()->getMessenger()->add(
+        return $this->messenger->add(
             $type,
             $message,
             $options
@@ -49,7 +60,7 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      */
     public function get($type = null)
     {
-        return $this->getDependencyContainer()->getMessenger()->get($type);
+        return $this->messenger->get($type);
     }
 
     /**
@@ -59,7 +70,7 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      */
     public function registerPresenter(ObservingPresenterInterface $presenter)
     {
-        return $this->getDependencyContainer()->getMessenger()->registerPresenter(
+        return $this->messenger->registerPresenter(
             $presenter
         );
     }
