@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\ProductCategorySearch\Communication;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use SprykerFeature\Zed\ProductCategorySearch\Business\ProductCategorySearchFacade;
 
 /**
@@ -17,5 +18,13 @@ class ProductCategorySearchDependencyContainer extends AbstractDependencyContain
     public function getProductCategorySearchFacade()
     {
         return $this->getLocator()->productCategorySearch()->facade();
+    }
+
+    /**
+     * @return ProductCategoryQueryContainer
+     */
+    public function getProductCategoryQueryContainer()
+    {
+        return $this->getLocator()->productCategory()->queryContainer();
     }
 }
