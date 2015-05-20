@@ -46,7 +46,6 @@ class BatchIterator implements CountableIteratorInterface
     {
         $this->query = $query;
         $this->chunkSize = $chunkSize;
-        $this->query->setLimit($this->chunkSize);
     }
 
     /**
@@ -69,6 +68,7 @@ class BatchIterator implements CountableIteratorInterface
     public function next()
     {
         $this->query->setOffset($this->offset);
+        $this->query->setLimit($this->chunkSize);
         $this->currentDataSet = $this->query->find();
         $this->currentKey++;
         $this->isValid = (boolean) $this->currentDataSet;
@@ -122,6 +122,7 @@ class BatchIterator implements CountableIteratorInterface
      */
     public function count()
     {
+        $this->query->setLimit(-1);
         return $this->query->count();
     }
 }
