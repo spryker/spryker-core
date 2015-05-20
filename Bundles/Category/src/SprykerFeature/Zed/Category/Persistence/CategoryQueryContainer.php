@@ -516,6 +516,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
      * @param string $fieldIdentifier
      *
      * @return ModelCriteria
+     * @throws PropelException
      */
     public function joinRelatedCategoryQueryWithUrls(
         ModelCriteria $expandableQuery,

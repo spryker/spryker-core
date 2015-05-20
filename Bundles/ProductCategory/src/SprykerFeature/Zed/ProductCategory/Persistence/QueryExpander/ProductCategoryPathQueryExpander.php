@@ -64,11 +64,6 @@ class ProductCategoryPathQueryExpander
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                 Criteria::INNER_JOIN
             );
-        $expandableQuery->addAnd(
-            SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-            $this->locale->getIdLocale(),
-            Criteria::EQUAL
-        );
 
         $expandableQuery = $this->categoryQueryContainer->joinCategoryQueryWithUrls($expandableQuery);
         $expandableQuery = $this->categoryQueryContainer->selectCategoryAttributeColumns($expandableQuery);

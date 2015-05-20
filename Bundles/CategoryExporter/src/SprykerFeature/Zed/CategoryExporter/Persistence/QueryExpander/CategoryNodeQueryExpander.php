@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
@@ -13,9 +15,9 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 class CategoryNodeQueryExpander
 {
     /**
-     * @var int
+     * @var LocaleTransfer
      */
-    protected $localeId;
+    protected $locale;
 
     /**
      * @var CategoryQueryContainer
@@ -24,12 +26,12 @@ class CategoryNodeQueryExpander
 
     /**
      * @param CategoryQueryContainer $categoryQueryContainer
-     * @param int $localeId
+     * @param LocaleTransfer $locale
      */
-    public function __construct(CategoryQueryContainer $categoryQueryContainer, $localeId)
+    public function __construct(CategoryQueryContainer $categoryQueryContainer, LocaleTransfer $locale)
     {
         $this->categoryQueryContainer = $categoryQueryContainer;
-        $this->localeId = $localeId;
+        $this->locale = $locale;
     }
 
     /**
@@ -52,9 +54,17 @@ class CategoryNodeQueryExpander
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                 Criteria::INNER_JOIN
             );
+
+        $expandableQuery
+            ->addJoin(
+                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+                SpyLocaleTableMap::COL_ID_LOCALE,
+                Criteria::INNER_JOIN
+            );
+
         $expandableQuery->addAnd(
-            SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-            $this->localeId,
+            SpyLocaleTableMap::COL_ID_LOCALE,
+            $this->locale->getIdLocale(),
             Criteria::EQUAL
         );
 

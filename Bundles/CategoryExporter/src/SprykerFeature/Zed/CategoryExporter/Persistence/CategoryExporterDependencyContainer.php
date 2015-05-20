@@ -23,7 +23,7 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createQueryExpanderCategoryNodeQueryExpander(
             $this->getCategoryQueryContainer(),
-            $locale->getIdLocale()
+            $locale
         );
     }
 
@@ -36,7 +36,7 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createQueryExpanderNavigationQueryExpander(
             $this->getCategoryQueryContainer(),
-            $locale->getIdLocale()
+            $locale
         );
     }
 
