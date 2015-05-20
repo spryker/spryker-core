@@ -4,11 +4,6 @@ namespace SprykerFeature\Zed\CategoryExporter\Business\Formatter;
 
 use SprykerFeature\Zed\CategoryExporter\Business\Exploder\GroupedNodeExploderInterface;
 
-/**
- * Class CategoryNodeFormatter
- *
- * @package SprykerFeature\Zed\CategoryExporter\Business\Formatter
- */
 class CategoryNodeFormatter implements CategoryNodeFormatterInterface
 {
 
@@ -27,6 +22,7 @@ class CategoryNodeFormatter implements CategoryNodeFormatterInterface
 
     /**
      * @param array $categoryNode
+     *
      * @return array
      */
     public function formatCategoryNode(array $categoryNode)

@@ -9,10 +9,6 @@ use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInt
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
 
 /**
- * Class ProductCategorySearchQueryExpanderPlugin
- * @package SprykerFeature\Zed\ProductCategorySearch\Communication\Plugin
- */
-/**
  * @method ProductCategoryDependencyContainer getDependencyContainer()
  */
 class ProductCategoryPathQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
