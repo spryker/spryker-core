@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Business\Model;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class BatchResult implements BatchResultInterface
 {
     /**
@@ -150,9 +152,9 @@ class BatchResult implements BatchResultInterface
     }
 
     /**
-     * @param string $processedLocale
+     * @param LocaleTransfer $processedLocale
      */
-    public function setProcessedLocale($processedLocale)
+    public function setProcessedLocale(LocaleTransfer $processedLocale)
     {
         $this->processedLocale = $processedLocale;
     }
