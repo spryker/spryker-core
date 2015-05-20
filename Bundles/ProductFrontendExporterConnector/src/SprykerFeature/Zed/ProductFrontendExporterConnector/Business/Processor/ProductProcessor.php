@@ -61,7 +61,7 @@ class ProductProcessor implements ProductProcessorInterface
         $allowedFields = [
             'abstract_sku' => true,
             'abstract_attributes' => true,
-            'name' => true,
+            'abstract_name' => true,
             'url' => true,
             'concrete_products' => true,
         ];

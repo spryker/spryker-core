@@ -284,7 +284,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         );
         $expandableQuery->withColumn(
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
-            'name'
+            'abstract_name'
         );
         $expandableQuery->withColumn(
             'GROUP_CONCAT(spy_product_localized_attributes.name)',

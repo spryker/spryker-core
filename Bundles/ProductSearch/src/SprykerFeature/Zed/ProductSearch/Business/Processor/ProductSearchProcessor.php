@@ -57,24 +57,25 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
 
         return [
             'search-result-data' => [
-                'sku' => $productData['sku'],
-                'name' => $productData['name'],
+                'id_abstract_product' => $productData['id_abstract_product'],
+                'abstract_sku' => $productData['abstract_sku'],
+                'abstract_name' => $productData['abstract_name'],
                 'url' => $productUrls[0],
             ],
             'full-text-boosted' => [
-                $productData['name']
+                $productData['abstract_name']
             ],
             'full-text' => [
-                $productData['name']
+                $productData['abstract_name']
             ],
             'suggestion-terms' => [
-                $productData['name']
+                $productData['abstract_name']
             ],
             'completion-terms' => [
-                $productData['name']
+                $productData['abstract_name']
             ],
             'string-sort' => [
-                'name' => $productData['name']
+                'name' => $productData['abstract_name']
             ],
             'store' => $this->storeName,
             'locale' => $locale->getLocaleName()
