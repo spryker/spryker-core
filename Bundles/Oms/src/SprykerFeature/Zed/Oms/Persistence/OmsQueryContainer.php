@@ -16,12 +16,12 @@ use DateTime;
 class OmsQueryContainer extends AbstractQueryContainer
 {
     /**
-     * @param $states
+     * @param array $states
      * @param $processName
      *
      * @return ModelCriteria
      */
-    public function getOrderItemsByState($states, $processName)
+    public function getOrderItemsByState(array $states, $processName)
     {
         return SpySalesOrderItemQuery::create()
             ->joinProcess(null, $joinType = Criteria::INNER_JOIN)
