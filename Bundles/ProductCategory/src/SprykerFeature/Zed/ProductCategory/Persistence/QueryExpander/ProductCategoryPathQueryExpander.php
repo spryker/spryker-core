@@ -86,7 +86,7 @@ class ProductCategoryPathQueryExpander
         );
         $expandableQuery->orderBy('depth', Criteria::DESC);
         $expandableQuery->orderBy('descendant_id', Criteria::DESC);
-        $expandableQuery->groupBy('id_abstract_product');
+        $expandableQuery->groupBy('abstract_sku');
 
         return $expandableQuery;
     }
