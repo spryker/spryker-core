@@ -528,7 +528,14 @@ class CategoryQueryContainer extends AbstractQueryContainer
                 $relationTableAlias . '.id_category_node',
                 SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
                 Criteria::LEFT_JOIN
-            ))->setRightTableAlias($relationTableAlias . 'Urls')
+            ))->setRightTableAlias($relationTableAlias . 'Urls'),
+            $relationTableAlias . 'UrlJoin'
+        );
+
+        $expandableQuery->addJoinCondition(
+            $relationTableAlias . 'UrlJoin',
+            $relationTableAlias . 'Urls.fk_locale = ' .
+            SpyLocaleTableMap::COL_ID_LOCALE
         );
 
         $expandableQuery->withColumn(
