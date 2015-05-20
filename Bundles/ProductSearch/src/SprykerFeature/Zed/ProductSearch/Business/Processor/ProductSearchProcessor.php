@@ -53,11 +53,13 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
      */
     protected function buildBaseProduct(array $productData, LocaleTransfer $locale)
     {
+        $productUrls = explode(',', $productData['product_urls']);
+
         return [
             'search-result-data' => [
                 'sku' => $productData['sku'],
                 'name' => $productData['name'],
-                'url' => $productData['product_url'],
+                'url' => $productUrls[0],
             ],
             'full-text-boosted' => [
                 $productData['name']

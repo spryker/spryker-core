@@ -242,8 +242,15 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
                     SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
                     SpyUrlTableMap::COL_FK_RESOURCE_ABSTRACT_PRODUCT,
                     Criteria::LEFT_JOIN
-                ))->setRightTableAlias('product_urls')
+                ))->setRightTableAlias('product_urls'),
+                'productUrlsJoin'
             );
+
+        $expandableQuery->addJoinCondition(
+            'productUrlsJoin',
+            'product_urls.fk_locale = ' .
+            SpyLocaleTableMap::COL_ID_LOCALE
+        );
 
         $expandableQuery
             ->addJoinObject(
@@ -272,8 +279,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             'concrete_attributes'
         );
         $expandableQuery->withColumn(
-            'product_urls.url',
-            'product_url'
+            'GROUP_CONCAT(product_urls.url)',
+            'product_urls'
         );
         $expandableQuery->withColumn(
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
