@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
+use Generated\Shared\Transfer\TaxItemTransfer;
+use Generated\Shared\Transfer\TaxTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
-use SprykerFeature\Shared\Tax\Dependency\Transfer\TaxableItemInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxableItemInterface;
 use SprykerFeature\Shared\Tax\Dependency\Transfer\TaxSetInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
@@ -39,7 +39,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         \ArrayObject $calculableItems
     ) {
         $groupedPrices = $this->sumPriceToPayGroupedByTaxRate($calculableContainer, $calculableItems);
-        $taxTransfer = $this->createTaxSetTransfer($groupedPrices);
+        $taxTransfer = $this->createTaxTransfer($groupedPrices);
 
         $totalsTransfer->setTax($taxTransfer);
     }
@@ -110,12 +110,12 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
      *
      * @return TaxSetInterface
      */
-    protected function createTaxSetTransfer(array $groupedPrices)
+    protected function createTaxTransfer(array $groupedPrices)
     {
-        $tax = new TaxSetTransfer();
+        $tax = new TaxTransfer();
         $totalTax = 0;
         foreach ($groupedPrices as $group) {
-            $taxItem = $this->createTaxRateTransfer($group['amount'], $group['percentage']);
+            $taxItem = $this->createTaxItemTransfer($group['amount'], $group['percentage']);
             $tax->addTaxRate($taxItem);
 
             $totalTax += $taxItem->getAmount();
@@ -129,13 +129,13 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
      * @param int $amount
      * @param float $percentage
      *
-     * @return TaxRateTransfer
+     * @return TaxItemTransfer
      */
-    protected function createTaxRateTransfer($amount, $percentage)
+    protected function createTaxItemTransfer($amount, $percentage)
     {
         $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($amount, $percentage);
 
-        $taxItem = new TaxRateTransfer();
+        $taxItem = new TaxItemTransfer();
         $taxItem->setPercentage($percentage);
         $taxItem->setAmount($taxAmount);
 

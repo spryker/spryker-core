@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Shared\Tax\Dependency\Transfer;
+namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
 interface TaxableItemInterface
 {
