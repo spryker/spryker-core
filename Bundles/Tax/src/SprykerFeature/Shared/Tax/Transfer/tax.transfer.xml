@@ -4,12 +4,14 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="TaxSet">
+        <property name="idTaxSet" type="int" />
         <property name="name" type="string" />
         <property name="taxRates" type="TaxRate[]" singular="taxRate" />
         <property name="totalAmount" type="int" />
     </transfer>
 
     <transfer name="TaxRate">
+        <property name="idTaxRate" type="int" />
         <property name="name" type="string" />
         <property name="rate" type="string" />
         <property name="amount" type="int" />

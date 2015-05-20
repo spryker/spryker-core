@@ -13,7 +13,8 @@ use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Propel\Runtime\Exception\PropelException;
 
-class TaxWriter implements TaxWriterInterface {
+class TaxWriter implements TaxWriterInterface
+{
 
     /**
      * @var AutoCompletion
@@ -55,40 +56,71 @@ class TaxWriter implements TaxWriterInterface {
 
     /**
      * @param TaxRateTransfer $taxRate
+     *
      * @return SpyTaxRate
      * @throws PropelException
      */
     public function createTaxRate(TaxRateTransfer $taxRateTransfer)
     {
-        $taxEntity = $this->locator->tax()->entitySpyTaxRate();
-        $taxEntity->fromArray($taxRateTransfer->toArray());
-        $taxEntity->save();
+        $taxRateEntity = $this->locator->tax()->entitySpyTaxRate();
+        $taxRateEntity->fromArray($taxRateTransfer->toArray());
+        $taxRateEntity->save();
 
-        return $taxEntity;
+        return $taxRateEntity;
     }
 
     /**
      * @param TaxSetTransfer $taxSet
+     *
      * @return SpyTaxSet
      * @throws PropelException
      */
-    public function createTaxSet(TaxSetTransfer $taxSetTransfer) {
-        // ...
+    public function createTaxSet(TaxSetTransfer $taxSetTransfer)
+    {
+        $taxSetEntity = $this->locator->tax()->entitySpyTaxSet();
+        $taxSetEntity->setName($taxSetTransfer->getName());
+
+        foreach($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
+
+            if ($this->reader->taxRateExists($taxRateTransfer->getIdTaxRate())) {
+                $taxRateEntity = $this->reader->getTaxRate($taxRateTransfer->getIdTaxRate());
+            } else {
+                $taxRateEntity = $this->createTaxRate($taxRateTransfer);
+            }
+
+            $taxSetEntity->addSpyTaxRate($taxRateEntity);
+        }
+
+        $taxSetEntity->save();
+
+        return $taxSetEntity;
     }
 
     /**
      * @param int $id
+     *
      * @throws PropelException
      */
-    public function deleteTaxRate($id) {
-        // ...
+    public function deleteTaxRate($id)
+    {
+        $taxRateEntity = $this->reader->getTaxRate($id);
+
+        if ($taxRateEntity) {
+            $taxRateEntity->delete();
+        }
     }
 
     /**
      * @param int $id
+     *
      * @throws PropelException
      */
-    public function deleteTaxSet($id) {
-        // ...
+    public function deleteTaxSet($id)
+    {
+        $taxSetEntity = $this->reader->getTaxSet($id);
+
+        if ($taxSetEntity) {
+            $taxSetEntity->delete();
+        }
     }
 }

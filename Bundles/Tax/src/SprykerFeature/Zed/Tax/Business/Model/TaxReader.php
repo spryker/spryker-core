@@ -4,11 +4,15 @@ namespace SprykerFeature\Zed\Tax\Business\Model;
 
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
 use SprykerFeature\Zed\Tax\TaxConfig;
-use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
 use Propel\Runtime\Exception\PropelException;
 
-class TaxReader implements TaxReaderInterface {
+class TaxReader implements TaxReaderInterface
+{
+
+    const TAX_SET_UNKNOWN = 'tax set unknown: ';
+    const TAX_RATE_UNKNOWN = 'tax rate unknown: ';
 
     /**
      * @var TaxQueryContainer
@@ -34,19 +38,63 @@ class TaxReader implements TaxReaderInterface {
 
     /**
      * @param int $id
-     * @return TaxRateTransfer
+     *
+     * @return SpyTaxRate
      * @throws PropelException
+     * @throws \Exception
      */
-    public function getTaxRate($id) {
-        // ...
+    public function getTaxRate($id)
+    {
+        $taxRateEntity = $this->queryContainer->queryTaxRate($id)->findOne();
+
+        if (null == $taxRateEntity) {
+            throw new \Exception(self::TAX_RATE_UNKNOWN . $id);
+        }
+
+        return $taxRateEntity;
     }
 
     /**
      * @param int $id
-     * @return TaxSetTransfer
+     *
+     * @return bool
      * @throws PropelException
      */
-    public function getTaxSet($id) {
-        // ...
+    public function taxRateExists($id)
+    {
+        $result = $this->queryContainer->queryTaxRate($id)->find();
+
+        return $result->isEmpty() ? false : true;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return SpyTaxSet
+     * @throws PropelException
+     * @throws \Exception
+     */
+    public function getTaxSet($id)
+    {
+        $taxSetEntity = $this->queryContainer->queryTaxSet($id)->findOne();
+
+        if (null == $taxSetEntity) {
+            throw new \Exception(self::TAX_SET_UNKNOWN . $id);
+        }
+
+        return $taxSetEntity;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     * @throws PropelException
+     */
+    public function taxSetExists($id)
+    {
+        $result = $this->queryContainer->queryTaxSet($id)->find();
+
+        return $result->isEmpty() ? false : true;
     }
 }

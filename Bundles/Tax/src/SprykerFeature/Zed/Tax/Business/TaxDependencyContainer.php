@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Tax\Business\Model\TaxWriterInterface;
  */
 class TaxDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @var TaxQueryContainer
      */

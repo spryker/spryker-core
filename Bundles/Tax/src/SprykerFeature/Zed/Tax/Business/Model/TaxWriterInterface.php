@@ -8,10 +8,12 @@ use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
 use Propel\Runtime\Exception\PropelException;
 
-interface TaxWriterInterface {
+interface TaxWriterInterface
+{
 
     /**
      * @param TaxRateTransfer $taxRate
+     *
      * @return SpyTaxRate
      * @throws PropelException
      */
@@ -19,6 +21,7 @@ interface TaxWriterInterface {
 
     /**
      * @param TaxSetTransfer $taxSet
+     *
      * @return SpyTaxSet
      * @throws PropelException
      */
@@ -26,12 +29,14 @@ interface TaxWriterInterface {
 
     /**
      * @param int $id
+     *
      * @throws PropelException
      */
     public function deleteTaxRate($id);
 
     /**
      * @param int $id
+     *
      * @throws PropelException
      */
     public function deleteTaxSet($id);

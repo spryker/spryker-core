@@ -5,6 +5,8 @@ namespace SprykerFeature\Zed\Tax\Business;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
 use Propel\Runtime\Exception\PropelException;
 
 /**
@@ -12,11 +14,13 @@ use Propel\Runtime\Exception\PropelException;
  */
 class TaxFacade extends AbstractFacade
 {
+
     /**
      * @param int $id
      *
-     * @return TaxRateTransfer
+     * @return SpyTaxRate
      * @throws PropelException
+     * @throws \Exception
      */
     public function getTaxRate($id)
     {
@@ -26,8 +30,20 @@ class TaxFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return TaxSetTransfer
+     * @return bool
      * @throws PropelException
+     */
+    public function taxRateExists($id)
+    {
+        return $this->getDependencyContainer()->getReaderModel()->taxRateExists($id);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return SpyTaxSet
+     * @throws PropelException
+     * @throws \Exception
      */
     public function getTaxSet($id)
     {
@@ -35,8 +51,20 @@ class TaxFacade extends AbstractFacade
     }
 
     /**
+     * @param int $id
+     *
+     * @return bool
+     * @throws PropelException
+     */
+    public function taxSetExists($id)
+    {
+        return $this->getDependencyContainer()->getReaderModel()->taxSetExists($id);
+    }
+
+    /**
      * @param TaxRateTransfer $taxRate
      *
+     * @return SpyTaxRate
      * @throws PropelException
      */
     public function createTaxRate(TaxRateTransfer $taxRate)
@@ -47,6 +75,7 @@ class TaxFacade extends AbstractFacade
     /**
      * @param TaxSetTransfer $taxSet
      *
+     * @return SpyTaxSet
      * @throws PropelException
      */
     public function createTaxSet(TaxSetTransfer $taxSet)

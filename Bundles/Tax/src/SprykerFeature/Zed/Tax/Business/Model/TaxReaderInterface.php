@@ -2,22 +2,34 @@
 
 namespace SprykerFeature\Zed\Tax\Business\Model;
 
-use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
 use Propel\Runtime\Exception\PropelException;
 
-interface TaxReaderInterface {
+interface TaxReaderInterface
+{
 
     /**
      * @param int $id
-     * @return TaxRateTransfer
+     *
+     * @return SpyTaxRate
      * @throws PropelException
      */
     public function getTaxRate($id);
 
+
     /**
      * @param int $id
-     * @return TaxSetTransfer
+     *
+     * @return bool
+     * @throws PropelException
+     */
+    public function taxRateExists($id);
+
+    /**
+     * @param int $id
+     *
+     * @return SpyTaxSet
      * @throws PropelException
      */
     public function getTaxSet($id);

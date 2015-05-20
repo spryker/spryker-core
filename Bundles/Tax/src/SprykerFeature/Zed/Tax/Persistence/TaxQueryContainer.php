@@ -6,10 +6,12 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRateQuery;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
 
-class TaxQueryContainer extends AbstractQueryContainer {
+class TaxQueryContainer extends AbstractQueryContainer
+{
 
     /**
      * @param $id
+     *
      * @return SpyTaxRateQuery
      */
     public function queryTaxRate($id)
@@ -27,6 +29,7 @@ class TaxQueryContainer extends AbstractQueryContainer {
 
     /**
      * @param $id
+     *
      * @return SpyTaxSetQuery
      */
     public function queryTaxSet($id)
