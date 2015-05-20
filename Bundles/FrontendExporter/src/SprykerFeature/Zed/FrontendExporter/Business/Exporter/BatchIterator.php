@@ -47,7 +47,6 @@ class BatchIterator implements CountableIteratorInterface
         $this->query = $query;
         $this->chunkSize = $chunkSize;
         $this->query->setLimit($this->chunkSize);
-        $this->query->setFormatter(new PropelArraySetFormatter());
     }
 
     /**
