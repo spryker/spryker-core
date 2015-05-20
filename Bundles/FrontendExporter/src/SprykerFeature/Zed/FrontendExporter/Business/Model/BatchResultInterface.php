@@ -15,6 +15,11 @@ interface BatchResultInterface
     public function setProcessedCount($processedCount);
 
     /**
+     * @param int $amount
+     */
+    public function increaseProcessedCount($amount);
+
+    /**
      * @param int $fetchedCount
      */
     public function setFetchedCount($fetchedCount);

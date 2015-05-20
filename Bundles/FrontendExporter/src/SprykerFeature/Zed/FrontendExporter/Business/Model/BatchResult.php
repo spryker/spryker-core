@@ -156,4 +156,12 @@ class BatchResult implements BatchResultInterface
     {
         $this->processedLocale = $processedLocale;
     }
+
+    /**
+     * @param int $amount
+     */
+    public function increaseProcessedCount($amount)
+    {
+        $this->processedCount += $amount;
+    }
 }

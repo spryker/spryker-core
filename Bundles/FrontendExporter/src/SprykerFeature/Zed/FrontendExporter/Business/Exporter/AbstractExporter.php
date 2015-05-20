@@ -131,7 +131,7 @@ abstract class AbstractExporter implements ExporterInterface
 
             $exportableData = $this->processData($resultSet, $type, $locale);
             $this->writeExportableData($exportableData, $type);
-            $result->setProcessedCount(count($exportableData));
+            $result->increaseProcessedCount(count($exportableData));
 
             if ($this->isExportFailed($type, $result)) {
                 $result->setIsFailed(true);
