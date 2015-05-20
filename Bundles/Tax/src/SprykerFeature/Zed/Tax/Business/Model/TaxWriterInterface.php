@@ -4,8 +4,6 @@ namespace SprykerFeature\Zed\Tax\Business\Model;
 
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
 use Propel\Runtime\Exception\PropelException;
 
 interface TaxWriterInterface
@@ -14,7 +12,7 @@ interface TaxWriterInterface
     /**
      * @param TaxRateTransfer $taxRate
      *
-     * @return SpyTaxRate
+     * @return int
      * @throws PropelException
      */
     public function createTaxRate(TaxRateTransfer $taxRateTransfer);
@@ -22,7 +20,7 @@ interface TaxWriterInterface
     /**
      * @param TaxSetTransfer $taxSet
      *
-     * @return SpyTaxSet
+     * @return int
      * @throws PropelException
      */
     public function createTaxSet(TaxSetTransfer $taxSetTransfer);

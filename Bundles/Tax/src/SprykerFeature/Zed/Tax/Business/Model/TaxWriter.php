@@ -4,10 +4,7 @@ namespace SprykerFeature\Zed\Tax\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
-use SprykerFeature\Zed\Tax\Business\Model\TaxReaderInterface;
 use SprykerFeature\Zed\Tax\TaxConfig;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
@@ -27,11 +24,6 @@ class TaxWriter implements TaxWriterInterface
     protected $queryContainer;
 
     /**
-     * @var TaxReaderInterface
-     */
-    protected $reader;
-
-    /**
      * @var TaxConfig
      */
     protected $taxSettings;
@@ -39,40 +31,35 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param LocatorLocatorInterface $locator
      * @param TaxQueryContainer $queryContainer
-     * @param TaxReaderInterface $reader
      * @param TaxConfig $taxSettings
      */
     public function __construct(
         LocatorLocatorInterface $locator,
         TaxQueryContainer $queryContainer,
-        TaxReaderInterface $reader,
         TaxConfig $taxSettings
     ) {
         $this->locator = $locator;
         $this->queryContainer = $queryContainer;
-        $this->reader = $reader;
         $this->taxSettings = $taxSettings;
     }
 
     /**
      * @param TaxRateTransfer $taxRate
      *
-     * @return SpyTaxRate
+     * @return int
      * @throws PropelException
      */
     public function createTaxRate(TaxRateTransfer $taxRateTransfer)
     {
-        $taxRateEntity = $this->locator->tax()->entitySpyTaxRate();
-        $taxRateEntity->fromArray($taxRateTransfer->toArray());
-        $taxRateEntity->save();
+        $taxRateEntity = $this->createTaxRateEntity($taxRateTransfer);
 
-        return $taxRateEntity;
+        return $taxRateEntity->getIdTaxRate();
     }
 
     /**
      * @param TaxSetTransfer $taxSet
      *
-     * @return SpyTaxSet
+     * @return int
      * @throws PropelException
      */
     public function createTaxSet(TaxSetTransfer $taxSetTransfer)
@@ -82,10 +69,10 @@ class TaxWriter implements TaxWriterInterface
 
         foreach($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
 
-            if ($this->reader->taxRateExists($taxRateTransfer->getIdTaxRate())) {
-                $taxRateEntity = $this->reader->getTaxRate($taxRateTransfer->getIdTaxRate());
-            } else {
-                $taxRateEntity = $this->createTaxRate($taxRateTransfer);
+            $taxRateEntity = $this->queryContainer->queryTaxRate($taxRateTransfer->getIdTaxRate())->findOne();
+
+            if (!$taxRateEntity) {
+                $taxRateEntity = $this->createTaxRateEntity($taxRateTransfer);
             }
 
             $taxSetEntity->addSpyTaxRate($taxRateEntity);
@@ -93,7 +80,7 @@ class TaxWriter implements TaxWriterInterface
 
         $taxSetEntity->save();
 
-        return $taxSetEntity;
+        return $taxSetEntity->getIdTaxSet();
     }
 
     /**
@@ -103,7 +90,7 @@ class TaxWriter implements TaxWriterInterface
      */
     public function deleteTaxRate($id)
     {
-        $taxRateEntity = $this->reader->getTaxRate($id);
+        $taxRateEntity = $this->queryContainer->queryTaxRate($id)->findOne();
 
         if ($taxRateEntity) {
             $taxRateEntity->delete();
@@ -117,10 +104,19 @@ class TaxWriter implements TaxWriterInterface
      */
     public function deleteTaxSet($id)
     {
-        $taxSetEntity = $this->reader->getTaxSet($id);
+        $taxSetEntity = $this->queryContainer->queryTaxSet($id)->findOne();
 
         if ($taxSetEntity) {
             $taxSetEntity->delete();
         }
+    }
+
+    private function createTaxRateEntity(TaxRateTransfer $taxRateTransfer)
+    {
+        $taxRateEntity = $this->locator->tax()->entitySpyTaxRate();
+        $taxRateEntity->fromArray($taxRateTransfer->toArray());
+        $taxRateEntity->save();
+
+        return $taxRateEntity;
     }
 }

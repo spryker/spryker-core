@@ -48,9 +48,9 @@ class WriterTest extends Test
         $taxRateTransfer->setName(self::DUMMY_TAX_RATE1_NAME);
         $taxRateTransfer->setRate(self::DUMMY_TAX_RATE1_PERCENTAGE);
 
-        $taxRateEntity = $this->taxFacade->createTaxRate($taxRateTransfer);
+        $id = $this->taxFacade->createTaxRate($taxRateTransfer);
 
-        $taxRateQuery = SpyTaxRateQuery::create()->filterByName($taxRateEntity->getName())->findOne();
+        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($id)->findOne();
 
         $this->assertNotEmpty($taxRateQuery);
         $this->assertEquals(self::DUMMY_TAX_RATE1_PERCENTAGE, $taxRateQuery->getRate());
@@ -69,12 +69,13 @@ class WriterTest extends Test
 
         $taxSetTransfer->addTaxRate($taxRateTransfer);
 
-        $taxSetEntity = $this->taxFacade->createTaxSet($taxSetTransfer);
+        $id = $this->taxFacade->createTaxSet($taxSetTransfer);
 
-        $taxSetQuery = SpyTaxSetQuery::create()->filterByName($taxSetEntity->getName())->findOne();
+        $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($id)->findOne();
 
         $this->assertNotEmpty($taxSetQuery);
         $this->assertEquals(self::DUMMY_TAX_SET_NAME, $taxSetQuery->getName());
+        $this->assertNotEmpty($taxSetQuery->getSpyTaxRates());
     }
 
     public function testCreateTaxSetWithExistingTaxRate()
@@ -82,18 +83,18 @@ class WriterTest extends Test
         $taxRateTransfer = new TaxRateTransfer();
         $taxRateTransfer->setName(self::DUMMY_TAX_RATE1_NAME);
         $taxRateTransfer->setRate(self::DUMMY_TAX_RATE1_PERCENTAGE);
-        $taxRateEntity = $this->taxFacade->createTaxRate($taxRateTransfer);
-        $taxRateTransfer->setIdTaxRate($taxRateEntity->getIdTaxRate());
+        $id = $this->taxFacade->createTaxRate($taxRateTransfer);
+        $taxRateTransfer->setIdTaxRate($id);
 
         $taxSetTransfer = new TaxSetTransfer();
         $taxSetTransfer->setName(self::DUMMY_TAX_SET_NAME);
         $taxSetTransfer->addTaxRate($taxRateTransfer);
+        $id = $this->taxFacade->createTaxSet($taxSetTransfer);
 
-        $taxSetEntity = $this->taxFacade->createTaxSet($taxSetTransfer);
-
-        $taxSetQuery = SpyTaxSetQuery::create()->filterByName($taxSetEntity->getName())->findOne();
+        $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($id)->findOne();
 
         $this->assertNotEmpty($taxSetQuery);
+        $this->assertNotEmpty($taxSetQuery->getSpyTaxRates());
     }
 
     public function testDeleteTaxRate()
@@ -101,14 +102,14 @@ class WriterTest extends Test
         $taxRateTransfer = new TaxRateTransfer();
         $taxRateTransfer->setName(self::DUMMY_TAX_RATE1_NAME);
         $taxRateTransfer->setRate(self::DUMMY_TAX_RATE1_PERCENTAGE);
-        $taxRateEntity = $this->taxFacade->createTaxRate($taxRateTransfer);
+        $id = $this->taxFacade->createTaxRate($taxRateTransfer);
 
-        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($taxRateEntity->getIdTaxRate())->findOne();
+        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($id)->findOne();
         $this->assertNotEmpty($taxRateQuery);
 
-        $this->taxFacade->deleteTaxRate($taxRateEntity->getIdTaxRate());
+        $this->taxFacade->deleteTaxRate($id);
 
-        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($taxRateEntity->getIdTaxRate())->findOne();
+        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($id)->findOne();
         $this->assertEmpty($taxRateQuery);
     }
 
@@ -117,26 +118,26 @@ class WriterTest extends Test
         $taxRateTransfer = new TaxRateTransfer();
         $taxRateTransfer->setName(self::DUMMY_TAX_RATE1_NAME);
         $taxRateTransfer->setRate(self::DUMMY_TAX_RATE1_PERCENTAGE);
-        $taxRateEntity = $this->taxFacade->createTaxRate($taxRateTransfer);
-        $taxRateTransfer->setIdTaxRate($taxRateEntity->getIdTaxRate());
+        $rateId = $this->taxFacade->createTaxRate($taxRateTransfer);
+        $taxRateTransfer->setIdTaxRate($rateId);
 
-        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($taxRateEntity->getIdTaxRate())->findOne();
+        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($rateId)->findOne();
         $this->assertNotEmpty($taxRateQuery);
 
         $taxSetTransfer = new TaxSetTransfer();
         $taxSetTransfer->setName(self::DUMMY_TAX_SET_NAME);
         $taxSetTransfer->addTaxRate($taxRateTransfer);
-        $taxSetEntity = $this->taxFacade->createTaxSet($taxSetTransfer);
+        $setId = $this->taxFacade->createTaxSet($taxSetTransfer);
 
-        $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($taxSetEntity->getIdTaxSet())->findOne();
+        $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($setId)->findOne();
         $this->assertNotEmpty($taxSetQuery);
 
-        $this->taxFacade->deleteTaxSet($taxSetEntity->getIdTaxSet());
+        $this->taxFacade->deleteTaxSet($setId);
 
-        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($taxRateEntity->getIdTaxRate())->findOne();
+        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($rateId)->findOne();
         $this->assertNotEmpty($taxRateQuery);
 
-        $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($taxSetEntity->getIdTaxSet())->findOne();
+        $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($setId)->findOne();
         $this->assertEmpty($taxSetQuery);
     }
 }

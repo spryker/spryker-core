@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\Tax\Business\Model;
 
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
 use SprykerFeature\Zed\Tax\TaxConfig;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
@@ -39,7 +41,7 @@ class TaxReader implements TaxReaderInterface
     /**
      * @param int $id
      *
-     * @return SpyTaxRate
+     * @return TaxRateTransfer
      * @throws PropelException
      * @throws \Exception
      */
@@ -51,7 +53,7 @@ class TaxReader implements TaxReaderInterface
             throw new \Exception(self::TAX_RATE_UNKNOWN . $id);
         }
 
-        return $taxRateEntity;
+        return (new TaxRateTransfer)->fromArray($taxRateEntity->toArray());
     }
 
     /**
@@ -70,7 +72,7 @@ class TaxReader implements TaxReaderInterface
     /**
      * @param int $id
      *
-     * @return SpyTaxSet
+     * @return TaxSetTransfer
      * @throws PropelException
      * @throws \Exception
      */
@@ -82,7 +84,13 @@ class TaxReader implements TaxReaderInterface
             throw new \Exception(self::TAX_SET_UNKNOWN . $id);
         }
 
-        return $taxSetEntity;
+        $taxSetTransfer = (new TaxSetTransfer)->fromArray($taxSetEntity->toArray());
+        foreach($taxSetEntity->getSpyTaxRates() as $taxRateEntity) {
+            $taxRateTransfer = (new TaxRateTransfer)->fromArray($taxRateEntity->toArray());
+            $taxSetTransfer->addTaxRate($taxRateTransfer);
+        }
+
+        return $taxSetTransfer;
     }
 
     /**

@@ -40,7 +40,6 @@ class TaxDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createModelTaxWriter(
             $this->getLocator(),
             $this->getQueryContainer(),
-            $this->getReaderModel(),
             $this->getConfig()
         );
     }

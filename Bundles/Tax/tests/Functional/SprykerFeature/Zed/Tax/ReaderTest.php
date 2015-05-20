@@ -3,8 +3,8 @@
 namespace Functional\SprykerFeature\Zed\Tax;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Tax\Business\TaxFacade;
@@ -40,18 +40,13 @@ class ReaderTest extends Test
         $this->taxFacade = new TaxFacade(new Factory('Tax'), $this->locator);
     }
 
-    public function testGetTaxSet()
-    {
-        $persistedTaxSet = $this->loadFixtures();
-        $result = $this->taxFacade->getTaxSet($persistedTaxSet->getIdTaxSet());
-        $this->assertNotEmpty($result);
-    }
-
     public function testGetTaxRate()
     {
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->getTaxRate($persistedTaxSet->getSpyTaxRates()[0]->getIdTaxRate());
         $this->assertNotEmpty($result);
+        $this->assertEquals(self::DUMMY_TAX_RATE1_NAME, $result->getName());
+        $this->assertEquals(self::DUMMY_TAX_RATE1_PERCENTAGE, $result->getRate());
     }
 
     public function testTaxRateExists()
@@ -59,6 +54,14 @@ class ReaderTest extends Test
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->taxRateExists($persistedTaxSet->getSpyTaxRates()[0]->getIdTaxRate());
         $this->assertTrue($result);
+    }
+
+    public function testGetTaxSet()
+    {
+        $persistedTaxSet = $this->loadFixtures();
+        $result = $this->taxFacade->getTaxSet($persistedTaxSet->getIdTaxSet());
+        $this->assertNotEmpty($result);
+        $this->assertEquals(self::DUMMY_TAX_SET_NAME, $result->getName());
     }
 
     public function testTaxSetExists()
@@ -82,14 +85,16 @@ class ReaderTest extends Test
 
     private function loadFixtures()
     {
-        $taxRateTransfer = new TaxRateTransfer();
-        $taxRateTransfer->setName(self::DUMMY_TAX_RATE1_NAME);
-        $taxRateTransfer->setRate(self::DUMMY_TAX_RATE1_PERCENTAGE);
+        $taxRateEntity = new SpyTaxRate();
+        $taxRateEntity->setName(self::DUMMY_TAX_RATE1_NAME);
+        $taxRateEntity->setRate(self::DUMMY_TAX_RATE1_PERCENTAGE);
+        $taxRateEntity->save();
 
-        $taxSetTransfer = new TaxSetTransfer();
-        $taxSetTransfer->setName(self::DUMMY_TAX_SET_NAME);
-        $taxSetTransfer->addTaxRate($taxRateTransfer);
+        $taxSetEntity = new SpyTaxSet();
+        $taxSetEntity->setName(self::DUMMY_TAX_SET_NAME);
+        $taxSetEntity->addSpyTaxRate($taxRateEntity);
+        $taxSetEntity->save();
 
-        return $this->taxFacade->createTaxSet($taxSetTransfer);
+        return $taxSetEntity;
     }
 }

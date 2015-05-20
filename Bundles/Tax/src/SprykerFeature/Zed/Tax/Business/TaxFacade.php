@@ -5,8 +5,6 @@ namespace SprykerFeature\Zed\Tax\Business;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
 use Propel\Runtime\Exception\PropelException;
 
 /**
@@ -18,7 +16,7 @@ class TaxFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return SpyTaxRate
+     * @return TaxRateTransfer
      * @throws PropelException
      * @throws \Exception
      */
@@ -41,7 +39,7 @@ class TaxFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return SpyTaxSet
+     * @return TaxSetTransfer
      * @throws PropelException
      * @throws \Exception
      */
@@ -64,7 +62,7 @@ class TaxFacade extends AbstractFacade
     /**
      * @param TaxRateTransfer $taxRate
      *
-     * @return SpyTaxRate
+     * @return int
      * @throws PropelException
      */
     public function createTaxRate(TaxRateTransfer $taxRate)
@@ -75,7 +73,7 @@ class TaxFacade extends AbstractFacade
     /**
      * @param TaxSetTransfer $taxSet
      *
-     * @return SpyTaxSet
+     * @return int
      * @throws PropelException
      */
     public function createTaxSet(TaxSetTransfer $taxSet)
