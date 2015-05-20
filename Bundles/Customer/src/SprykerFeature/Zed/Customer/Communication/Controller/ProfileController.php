@@ -56,10 +56,17 @@ class ProfileController extends AbstractController
         }
 
         $addresses = [];
-        foreach ($customerTransfer->getAddresses() as $address) {
+        $addressesItems = $customerTransfer->getAddresses()->getCustomerAddressItems();
+        foreach ($addressesItems as $address) {
             $addresses[] = [
                 'id' => $address->getIdCustomerAddress(),
-                'rendered' => $this->getLocator()->customer()->facade()->renderAddress($address),
+                'name' => $address->getName(),
+                'address1' => $address->getAddress1(),
+                'address2' => $address->getAddress2(),
+                'address3' => $address->getAddress3(),
+                'company' => $address->getCompany(),
+                'zipCode' => $address->getZipCode(),
+                'city' => $address->getCity(),
                 'isDefaultBilling' => ($address->getIdCustomerAddress() == $idBillingAddress),
                 'isDefaultShipping' => ($address->getIdCustomerAddress() == $idShippingAddress),
             ];
