@@ -6,8 +6,8 @@
 
 {% block content %}
     <section
-            class="spy-layout compact"
-            spy-app="spyGrid, spyForm"
+            class="spy-grid"
+            spy-app="spyGrid,spyForm,spyFormAction"
             ng-controller="GridController"
             ng-strict-di
             src="/customer/index/grid"
@@ -23,22 +23,23 @@
         <table class="spy-grid spy-interactive">
             <thead>
             <tr>
+                <th spy-grid-head="columns['first_name']" label="Name"></th>
                 <th spy-grid-head="columns['email']" label="E-Mail"></th>
-                <th spy-grid-head="columns['first_name']" label="First name"></th>
-                <th spy-grid-head="columns['last_name']" label="Last name"></th>
+                <th spy-grid-head="columns['created_at']" label="Signed Up"></th>
             </tr>
             </thead>
 
             <tbody>
             <tr ng-repeat="row in rows">
-                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] }]}">{[{ row['email'] }]}</a></td>
-                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] }]}">{[{ row['first_name'] }]}</a></td>
-                <td><a class="cell" href="/customer/profile?id={[{ row['id_customer'] }]}">{[{ row['last_name'] }]}</a></td>
+                <td><a class="cell" href="/customer/profile?id={[{ row.id_customer }]}">{[{ row.first_name + ' ' + row.middle_name + ' ' + row.last_name }]}</a></td>
+                <td>{[{ row.email }]}</td>
+                <td>{[{ row.created_at }]}</td>
             </tr>
             <tr ng-if="!rows.length">
                 <td colspan="4">{{ "grid.no.results" | trans }}</td>
             </tr>
             </tbody>
+
         </table>
 
         <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
