@@ -130,6 +130,7 @@ abstract class AbstractController
     /**
      * @param string $message
      *
+     * @return $this
      * @throws \Exception
      */
     protected function addMessageWarning($message)
@@ -147,6 +148,7 @@ abstract class AbstractController
     protected function addMessageError($message)
     {
         $this->getMessenger()->addError($message);
+        return $this;
     }
 
     /**

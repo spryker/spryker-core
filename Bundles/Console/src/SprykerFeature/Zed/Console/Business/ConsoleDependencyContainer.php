@@ -21,9 +21,4 @@ class ConsoleDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getConfig()->getConsoleCommands();
     }
-
-    public function getMessenger()
-    {
-
-    }
 }
