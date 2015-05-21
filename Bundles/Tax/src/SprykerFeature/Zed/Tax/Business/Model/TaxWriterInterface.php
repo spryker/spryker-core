@@ -10,7 +10,7 @@ interface TaxWriterInterface
 {
 
     /**
-     * @param TaxRateTransfer $taxRate
+     * @param TaxRateTransfer $taxRateTransfer
      *
      * @return int
      * @throws PropelException
@@ -18,7 +18,7 @@ interface TaxWriterInterface
     public function createTaxRate(TaxRateTransfer $taxRateTransfer);
 
     /**
-     * @param TaxSetTransfer $taxSet
+     * @param TaxSetTransfer $taxSetTransfer
      *
      * @return int
      * @throws PropelException

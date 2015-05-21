@@ -44,7 +44,7 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxRateTransfer $taxRate
+     * @param TaxRateTransfer $taxRateTransfer
      *
      * @return int
      * @throws PropelException
@@ -57,7 +57,7 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxSetTransfer $taxSet
+     * @param TaxSetTransfer $taxSetTransfer
      *
      * @return int
      * @throws PropelException
