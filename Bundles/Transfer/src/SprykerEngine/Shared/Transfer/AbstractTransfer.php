@@ -2,11 +2,6 @@
 
 namespace SprykerEngine\Shared\Transfer;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Transfer\Business\TransferNoPropertiesException;
-use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
-use SprykerFeature\Shared\Library\Filter\FilterChain;
-use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -18,90 +13,46 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      */
     private $modifiedProperties = [];
 
-    public function __construct()
-    {
-        parent::__construct([], \ArrayObject::STD_PROP_LIST);
-    }
-
     /**
-     * get_object_vars($this) does not work when extending ArrayObject
-     *
-     * @return array
+     * @param string $property
      */
-    protected function getObjectVars()
+    protected function addModifiedProperty($property)
     {
-        $objectVars = [];
-
-        $classVars = array_keys(
-            get_class_vars( get_called_class() )
-        );
-
-        if (empty($classVars)) {
-            throw new TransferNoPropertiesException();
+        if (!in_array($property, $this->modifiedProperties)) {
+            $this->modifiedProperties[] = $property;
         }
-
-        foreach ($classVars as $property) {
-            $getMethod = 'get' . ucfirst($property);
-            if (method_exists($this, $getMethod)) {
-                $objectVars[$property] = $this->$getMethod();
-            } else {
-                throw new TransferNoPropertiesException(
-                    get_called_class() . '::' . $getMethod . ' was not declared'
-                );
-            }
-        }
-
-        return $objectVars;
     }
 
     /**
-     * @param bool $includeNullValues
      * @param bool $recursive
      *
      * @return array
      */
-    public function toArray($includeNullValues = true, $recursive = true)
+    public function toArray($recursive = true)
     {
-        $varsForArray = [];
-
-        $classVars = $this->getObjectVars();
+        $values = [];
+        $propertyNames = $this->getPropertyNames();
 
         $filter = new CamelCaseToUnderscore();
-        foreach ($classVars as $name => $value) {
-            if ($name === 'modifiedProperties') {
-                continue;
-            }
+        foreach ($propertyNames as $property) {
+            $getter = 'get' . ucfirst($property);
+            $value = $this->$getter();
 
-            $key = strtolower($filter->filter($name));
-
-            if (is_null($value)) {
-                if ($includeNullValues) {
-                    $varsForArray[$key] = $value;
-                }
-                continue;
-            }
-
-            if (is_scalar($value)) {
-                $varsForArray[$key] = $value;
-                continue;
-            }
+            $key = strtolower($filter->filter($property));
 
             if (is_object($value)) {
                 if ($recursive && $value instanceof TransferInterface) {
-                    $varsForArray[$key] = $value->toArray($includeNullValues, $recursive);
+                    $values[$key] = $value->toArray($recursive);
                 } else {
-                    $varsForArray[$key] = $value;
+                    $values[$key] = $value;
                 }
                 continue;
             }
 
-            if (is_array($value)) {
-                $varsForArray[$key] = $value;
-                continue;
-            }
+            $values[$key] = $value;
         }
 
-        return $varsForArray;
+        return $values;
     }
 
     /**
@@ -112,8 +63,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     public function modifiedToArray($recursive = true)
     {
         $returnData = [];
-        $modifiedProperties = $this->getModifiedProperties();
-        foreach ($modifiedProperties as $modifiedProperty) {
+        foreach ($this->modifiedProperties as $modifiedProperty) {
             $key = $modifiedProperty;
             $getterName = 'get' . ucfirst($modifiedProperty);
             $value = $this->$getterName();
@@ -132,30 +82,12 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     }
 
     /**
-     * @param string $property
-     */
-    protected function addModifiedProperty($property)
-    {
-        if (!in_array($property, $this->modifiedProperties)) {
-            $this->modifiedProperties[] = $property;
-        }
-    }
-
-    /**
-     * @return array
-     */
-    protected function getModifiedProperties()
-    {
-        return $this->modifiedProperties;
-    }
-
-    /**
      * @param array $data
-     * @param bool $fuzzyMatch
+     * @param bool $ignoreMissingProperty
      *
      * @return $this
      */
-    public function fromArray(array $data, $fuzzyMatch = false)
+    public function fromArray(array $data, $ignoreMissingProperty = false)
     {
         $filter = new UnderscoreToCamelCase();
         foreach ($data as $key => $value) {
@@ -164,13 +96,13 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
             $setter = 'set' . ucfirst($property);
 
             if (method_exists($this, $getter) && $this->$getter() instanceof TransferInterface && is_array($value)) {
-                $this->$getter()->fromArray($value, $fuzzyMatch);
+                $this->$getter()->fromArray($value, $ignoreMissingProperty);
             } elseif (is_array($value)) {
                 $this->$property = $value;
             } elseif (method_exists($this, $setter)) {
                 $this->$setter($value);
-            } elseif (!$fuzzyMatch) {
-                throw new \LogicException(
+            } elseif (!$ignoreMissingProperty) {
+                throw new \InvalidArgumentException(
                     sprintf(
                         "Missing method or property in transfer object.\n [Transfer] %s\n[Property] %s",
                         get_class($this),
@@ -183,21 +115,33 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
         return $this;
     }
 
+    // @TODO check if we need this two methods
+//    /**
+//     * @return array
+//     */
+//    public function __sleep()
+//    {
+//        return array_keys($this->toArray(false, false));
+//    }
+//
+//    public function __clone()
+//    {
+//        foreach (get_object_vars($this) as $key => $value) {
+//            if (is_object($value)) {
+//                $this->$key = clone $value;
+//            }
+//        }
+//    }
+
     /**
      * @return array
      */
-    public function __sleep()
+    private function getPropertyNames()
     {
-        return array_keys($this->toArray(false, false));
-    }
+        $classVars = get_class_vars(get_class($this));
+        unset($classVars['modifiedProperties']);
 
-    public function __clone()
-    {
-        foreach (get_object_vars($this) as $key => $value) {
-            if (is_object($value)) {
-                $this->$key = clone $value;
-            }
-        }
+        return array_keys($classVars);
     }
 
 }

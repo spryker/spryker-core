@@ -6,12 +6,11 @@ interface TransferInterface
 {
 
     /**
-     * @param bool $includeNullValues
      * @param bool $recursive
      *
      * @return array
      */
-    public function toArray($includeNullValues = true, $recursive = true);
+    public function toArray($recursive = true);
 
     /**
      * @param bool $recursive
