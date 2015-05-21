@@ -5,9 +5,9 @@ namespace Unit\SprykerFeature\Zed\Mail\Business;
 use Generated\Shared\Transfer\AttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use SprykerFeature\Shared\Library\PHPUnit\Constraints\ArrayContainsKeyEqualToConstraint;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Shared\Library\PHPUnit\Constraints\ArrayContainsKeyEqualToConstraint;
 use SprykerFeature\Zed\Mail\Business\MandrillMailSender;
 
 /**
@@ -21,6 +21,21 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $mandrillMock;
+
+    /**
+     * InclusionHandlerInterface
+     */
+    protected $inclusionHandler;
+
+    /**
+     * @var MandrillMailSender
+     */
+    protected $mailSender;
+
+    /**
      * @param string $key
      * @param mixed $value
      * 
@@ -29,6 +44,19 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
     protected function arrayContainsKeyEqualTo($key, $value)
     {
         return new ArrayContainsKeyEqualToConstraint($key, $value);
+    }
+    
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->mandrillMock = $this->getMock('\\Mandrill', [], ['MOCK_API_KEY']);
+        $mandrillMessengerMock = $this->getMock('\\Mandrill_Messages', [], [$this->mandrillMock]);
+        $this->mandrillMock->messages = $mandrillMessengerMock;
+
+        $this->inclusionHandler = $this->getMock('\\SprykerFeature\\Zed\\Mail\\Business\\InclusionHandlerInterface');
+
+        $this->mailSender = new MandrillMailSender($this->mandrillMock, $this->inclusionHandler);
     }
     
     public function testSendMail()
