@@ -3,7 +3,8 @@
 namespace SprykerFeature\Sdk\CategoryExporter;
 
 use SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder;
-use \SprykerFeature\Zed\CategoryExporter\Business\KeyBuilder\ResourceKeyBuilder;
+use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Zed\CategoryExporter\Business\KeyBuilder\SharedResourceKeyBuilder;
 use Generated\Sdk\Ide\FactoryAutoCompletion\CategoryExporter;
 use SprykerEngine\Sdk\Kernel\AbstractDependencyContainer;
 use SprykerFeature\Sdk\CategoryExporter\Builder\CategoryTreeBuilder;
@@ -47,10 +48,10 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return ResourceKeyBuilder
+     * @return KeyBuilderInterface
      */
     protected function createResourceKeyBuilder()
     {
-        return $this->getFactory()->createKeyBuilderResourceKeyBuilder();
+        return $this->getFactory()->createKeyBuilderCategoryResourceKeyBuilder();
     }
 }

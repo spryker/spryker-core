@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\UrlExporter\Business\Builder;
 
-use SprykerFeature\Shared\UrlExporter\Code\KeyBuilder\ResourceKeyBuilder as SharedKeyBuilder;
+use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuilder;
 
-class ResourceKeyBuilder extends SharedKeyBuilder
+class ResourceKeyBuilder extends SharedResourceKeyBuilder
 {
     /**
      * @param array $data

@@ -11,7 +11,7 @@ interface ProductCategoryToProductInterface
      *
      * @return bool
      */
-    public function hasConcreteProduct($sku);
+    public function hasAbstractProduct($sku);
 
     /**
      * @param string $sku

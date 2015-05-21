@@ -1,17 +1,17 @@
 <?php
 
-namespace SprykerFeature\Zed\ProductCategory\Communication\Plugin;
+namespace SprykerFeature\Zed\ProductCategorySearch\Communication\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
-use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
+use SprykerFeature\Zed\ProductCategorySearch\Communication\ProductCategorySearchDependencyContainer;
 
 /**
- * @method ProductCategoryDependencyContainer getDependencyContainer()
+ * @method ProductCategorySearchDependencyContainer getDependencyContainer()
  */
-class ProductCategoryPathQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
+class ProductCategorySearchQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
      * @return string
@@ -31,7 +31,7 @@ class ProductCategoryPathQueryExpanderPlugin extends AbstractPlugin implements Q
     {
         $queryContainer = $this->getDependencyContainer()->getProductCategoryQueryContainer();
 
-        return $queryContainer->expandProductCategoryPathQuery($expandableQuery, $locale);
+        return $queryContainer->expandProductCategoryPathQuery($expandableQuery, $locale, false);
     }
 
     /**

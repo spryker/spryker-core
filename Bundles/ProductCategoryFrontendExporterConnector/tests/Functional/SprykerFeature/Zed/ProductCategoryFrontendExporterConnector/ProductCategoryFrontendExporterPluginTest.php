@@ -145,11 +145,12 @@ class ProductCategoryFrontendExporterPluginTest extends Test
                         'description' => 'A description!',
                         'name' => 'Ted Technical Robot',
                     ],
-                    'name' => 'TestProductName',
+                    'abstract_name' => 'AbstractTestProductName',
                     'abstract_sku' => 'AbstractTestSku',
                     'url' => '/some-url',
                     'concrete_products' => [
                         [
+                            'name' => 'TestProductName',
                             'sku' => 'TestSku',
                             'attributes' => [
                                 'image_url' => '/images/product/robot_buttons_black.png',

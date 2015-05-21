@@ -141,7 +141,7 @@ class ProductSearchDependencyContainer extends AbstractDependencyContainer
      */
     public function createKeyBuilder()
     {
-        return $this->getFactory()->createBuilderProductKeyBuilder();
+        return $this->getFactory()->createBuilderProductResourceKeyBuilder();
     }
 
     /**

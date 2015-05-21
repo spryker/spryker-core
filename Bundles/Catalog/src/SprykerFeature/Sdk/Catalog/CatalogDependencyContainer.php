@@ -6,6 +6,7 @@ use Elastica\Index;
 use Generated\Sdk\Ide\FactoryAutoCompletion\Catalog;
 use SprykerFeature\Sdk\Catalog\Model\FacetConfig;
 use SprykerEngine\Sdk\Kernel\AbstractDependencyContainer;
+use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CatalogDependencyContainer extends AbstractDependencyContainer
@@ -124,10 +125,10 @@ class CatalogDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return KeyBuilder\ProductKeyBuilder
+     * @return KeyBuilderInterface
      */
     protected function getProductKeyBuilder()
     {
-        return $this->getFactory()->createKeyBuilderProductKeyBuilder();
+        return $this->getFactory()->createKeyBuilderProductResourceKeyBuilder();
     }
 }

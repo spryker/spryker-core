@@ -13,20 +13,26 @@ class SimpleAttributeMergeBuilder
     public function buildProducts(array $productsData)
     {
         foreach ($productsData as &$productData) {
+            $productUrls = explode(',', $productData['product_urls']);
+            $productData['url'] = $productUrls[0];
+
             $abstractAttributes = json_decode($productData['abstract_attributes'], true);
             $productData['abstract_attributes'] = $this->normalizeAttributes($abstractAttributes);
+
             $concreteAttributes = explode('$%', $productData['concrete_attributes']);
             $concreteSkus = explode(',', $productData['concrete_skus']);
+            $concreteNames = explode(',', $productData['concrete_names']);
             $productData['concrete_products'] = [];
 
-            $lastSku = '';
+            $processedConcreteSkus = [];
             for ($i = 0, $l = count($concreteSkus); $i < $l; $i++) {
-                if ($lastSku === $concreteSkus[$i]) {
+                if (isset($processedConcreteSkus[$concreteSkus[$i]])) {
                     continue;
                 }
 
-                $lastSku = $concreteSkus[$i];
+                $processedConcreteSkus[$concreteSkus[$i]] = true;
                 $productData['concrete_products'][] = [
+                    'name' => $concreteNames[$i],
                     'sku' => $concreteSkus[$i],
                     'attributes' => json_decode($concreteAttributes[$i], true)
                 ];

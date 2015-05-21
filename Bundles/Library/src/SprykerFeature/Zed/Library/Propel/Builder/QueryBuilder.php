@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprykerfeature\Zed\Library\Propel\Builder;
+namespace SprykerFeature\Zed\Library\Propel\Builder;
 
 class QueryBuilder extends \Propel\Generator\Builder\Om\QueryBuilder
 {

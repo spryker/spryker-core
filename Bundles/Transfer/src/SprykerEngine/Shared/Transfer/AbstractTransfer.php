@@ -3,6 +3,7 @@
 namespace SprykerEngine\Shared\Transfer;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Zed\Transfer\Business\TransferNoPropertiesException;
 use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
 use SprykerFeature\Shared\Library\Filter\FilterChain;
 use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
@@ -23,6 +24,37 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     }
 
     /**
+     * get_object_vars($this) does not work when extending ArrayObject
+     *
+     * @return array
+     */
+    protected function getObjectVars()
+    {
+        $objectVars = [];
+
+        $classVars = array_keys(
+            get_class_vars( get_called_class() )
+        );
+
+        if (empty($classVars)) {
+            throw new TransferNoPropertiesException();
+        }
+
+        foreach ($classVars as $property) {
+            $getMethod = 'get' . ucfirst($property);
+            if (method_exists($this, $getMethod)) {
+                $objectVars[$property] = $this->$getMethod();
+            } else {
+                throw new TransferNoPropertiesException(
+                    get_called_class() . '::' . $getMethod . ' was not declared'
+                );
+            }
+        }
+
+        return $objectVars;
+    }
+
+    /**
      * @param bool $includeNullValues
      * @param bool $recursive
      *
@@ -32,7 +64,8 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     {
         $varsForArray = [];
 
-        $classVars = get_object_vars($this);
+        $classVars = $this->getObjectVars();
+
         $filter = new CamelCaseToUnderscore();
         foreach ($classVars as $name => $value) {
             if ($name === 'modifiedProperties') {

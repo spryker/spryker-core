@@ -27,6 +27,7 @@ class CmsExporterDependencyContainer extends AbstractDependencyContainer
      */
     protected function createPageKeyBuilder()
     {
-        return $this->getFactory()->createBuilderResourceKeyBuilder();
+        return $this->getFactory()->createBuilderPageResourceKeyBuilder();
     }
 }
+

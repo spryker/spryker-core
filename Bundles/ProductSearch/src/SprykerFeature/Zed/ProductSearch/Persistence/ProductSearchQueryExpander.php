@@ -6,9 +6,11 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
+use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
 use SprykerFeature\Zed\ProductSearch\Persistence\Propel\Map\SpySearchableProductsTableMap;
 
@@ -39,27 +41,30 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
         $expandableQuery
             ->addJoin(
                 SpyTouchTableMap::COL_ITEM_ID,
-                SpyProductTableMap::COL_ID_PRODUCT,
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
                 Criteria::LEFT_JOIN
             );
-        $expandableQuery->addAnd(
-            SpyProductTableMap::COL_IS_ACTIVE,
-            true,
-            Criteria::EQUAL
-        );
-        $expandableQuery->addAnd(
-            SpyLocaleTableMap::COL_LOCALE_NAME,
-            $locale->getLocaleName(),
-            Criteria::EQUAL
-        );
-        $expandableQuery->addAnd(
-            SpyLocaleTableMap::COL_IS_ACTIVE,
-            true,
-            Criteria::EQUAL
-        );
 
-        $this->productQueryContainer->joinProductQueryWithLocalizedAttributes($expandableQuery, $locale);
+        $this->productQueryContainer
+            ->joinConcreteProducts($expandableQuery)
+            ->joinProductQueryWithLocalizedAttributes($expandableQuery, $locale)
+        ;
 
+        $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_SKU, 'abstract_sku');
+        $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT, 'id_abstract_product');
+        $this->joinSearchableProducts($expandableQuery);
+
+        return $expandableQuery;
+    }
+
+    /**
+     * @param ModelCriteria $expandableQuery
+     *
+     * @return ModelCriteria
+     * @throws PropelException
+     */
+    protected function joinSearchableProducts(ModelCriteria $expandableQuery)
+    {
         $expandableQuery->addJoinObject(
             new Join(
                 SpyProductTableMap::COL_ID_PRODUCT,

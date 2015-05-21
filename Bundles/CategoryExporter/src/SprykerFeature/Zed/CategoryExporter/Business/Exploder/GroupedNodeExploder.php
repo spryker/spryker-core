@@ -2,10 +2,6 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business\Exploder;
 
-/**
- * Class GroupedNodeExploder
- * @package SprykerFeature\Zed\CategoryExporter\Business\Exploder
- */
 class GroupedNodeExploder implements GroupedNodeExploderInterface
 {
     /**
@@ -13,6 +9,7 @@ class GroupedNodeExploder implements GroupedNodeExploderInterface
      * @param string $idsField
      * @param string $namesField
      * @param string $urlsField
+     *
      * @return array
      */
     public function explodeGroupedNodes(array $data, $idsField, $namesField, $urlsField)

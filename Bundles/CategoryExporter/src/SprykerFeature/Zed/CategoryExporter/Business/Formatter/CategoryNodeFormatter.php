@@ -4,11 +4,6 @@ namespace SprykerFeature\Zed\CategoryExporter\Business\Formatter;
 
 use SprykerFeature\Zed\CategoryExporter\Business\Exploder\GroupedNodeExploderInterface;
 
-/**
- * Class CategoryNodeFormatter
- *
- * @package SprykerFeature\Zed\CategoryExporter\Business\Formatter
- */
 class CategoryNodeFormatter implements CategoryNodeFormatterInterface
 {
 
@@ -27,14 +22,17 @@ class CategoryNodeFormatter implements CategoryNodeFormatterInterface
 
     /**
      * @param array $categoryNode
+     *
      * @return array
      */
     public function formatCategoryNode(array $categoryNode)
     {
+        $categoryUrls = explode(',', $categoryNode['category_urls']);
+
         return [
             'node_id' => $categoryNode['node_id'],
             'name' => $categoryNode['category_name'],
-            'url' => $categoryNode['category_url'],
+            'url' => $categoryUrls[0],
             'image' => $categoryNode['category_image_name'],
             'children' => $this->nodeExploder->explodeGroupedNodes(
                 $categoryNode,

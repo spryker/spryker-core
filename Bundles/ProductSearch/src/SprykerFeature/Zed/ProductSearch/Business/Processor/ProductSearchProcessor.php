@@ -38,7 +38,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
     public function buildProducts(array $productsRaw, array $processedProducts, LocaleTransfer $locale)
     {
         foreach ($productsRaw as $index => $productData) {
-            $productKey = $this->keyBuilder->generateKey($productData['sku'], $locale->getLocaleName());
+            $productKey = $this->keyBuilder->generateKey($productData['id_abstract_product'], $locale->getLocaleName());
             $processedProducts[$productKey] = $this->buildBaseProduct($productData, $locale);
         }
 
@@ -53,26 +53,29 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
      */
     protected function buildBaseProduct(array $productData, LocaleTransfer $locale)
     {
+        $productUrls = explode(',', $productData['product_urls']);
+
         return [
             'search-result-data' => [
-                'sku' => $productData['sku'],
-                'name' => $productData['name'],
-                'url' => $productData['product_url'],
+                'id_abstract_product' => $productData['id_abstract_product'],
+                'abstract_sku' => $productData['abstract_sku'],
+                'abstract_name' => $productData['abstract_name'],
+                'url' => $productUrls[0],
             ],
             'full-text-boosted' => [
-                $productData['name']
+                $productData['abstract_name']
             ],
             'full-text' => [
-                $productData['name']
+                $productData['abstract_name']
             ],
             'suggestion-terms' => [
-                $productData['name']
+                $productData['abstract_name']
             ],
             'completion-terms' => [
-                $productData['name']
+                $productData['abstract_name']
             ],
             'string-sort' => [
-                'name' => $productData['name']
+                'name' => $productData['abstract_name']
             ],
             'store' => $this->storeName,
             'locale' => $locale->getLocaleName()

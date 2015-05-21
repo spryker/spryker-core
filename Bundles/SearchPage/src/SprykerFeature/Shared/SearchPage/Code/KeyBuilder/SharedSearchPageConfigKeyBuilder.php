@@ -1,22 +1,23 @@
 <?php
 
-namespace SprykerFeature\Shared\ProductFrontendExporterConnector\Code\KeyBuilder;
+namespace SprykerFeature\Shared\SearchPage\Code\KeyBuilder;
 
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderTrait;
 
-class ProductKeyBuilder implements KeyBuilderInterface
+class SharedSearchPageConfigKeyBuilder implements KeyBuilderInterface
 {
+
     use KeyBuilderTrait;
 
     /**
-     * @param array $data
+     * @param mixed $data
      *
      * @return string
      */
     protected function buildKey($data)
     {
-        return 'sku.' . $data;
+        return 'search.page.config';
     }
 
     /**
@@ -24,6 +25,6 @@ class ProductKeyBuilder implements KeyBuilderInterface
      */
     public function getBundleName()
     {
-        return 'product';
+        return 'search-page';
     }
 }

@@ -4,9 +4,6 @@ namespace SprykerFeature\Zed\Product\Business\Importer\Reader\File;
 
 use League\Csv\Reader;
 
-/**
- * Class CsvReader
- */
 class CsvReader implements IteratorReaderInterface
 {
     /**
@@ -41,6 +38,7 @@ class CsvReader implements IteratorReaderInterface
      * @param bool $hasHeadingRow
      *
      * @return \Iterator
+     * @throws \FileNotFoundException
      */
     public function getIteratorFromFile(\SplFileInfo $file, $hasHeadingRow = true)
     {

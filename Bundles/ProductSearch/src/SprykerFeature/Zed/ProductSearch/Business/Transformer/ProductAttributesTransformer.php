@@ -54,11 +54,31 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
 
         foreach ($productsRaw as $index => $productData) {
             if (isset($searchableProducts[$index])) {
-                $productAttributes = json_decode($productData['attributes'], true);
+                $productUrls = explode(', ', $productData['product_urls']);
+                $productData['url'] = $productUrls[0];
+
                 $abstractAttributes = json_decode($productData['abstract_attributes'], true);
 
-                $mergedAttributes = array_merge($abstractAttributes, $productAttributes);
-                $attributes = $this->mapProductAttributes($mergedAttributes);
+                $concreteAttributes = explode('$%', $productData['concrete_attributes']);
+                $concreteSkus = explode(',', $productData['concrete_skus']);
+                $concreteNames = explode(',', $productData['concrete_names']);
+                $productData['concrete_products'] = [];
+
+                $lastSku = '';
+                for ($i = 0, $l = count($concreteSkus); $i < $l; $i++) {
+                    if ($lastSku === $concreteSkus[$i]) {
+                        continue;
+                    }
+
+                    $lastSku = $concreteSkus[$i];
+                    $productData['concrete_products'][] = [
+                        'sku' => $concreteSkus[$i],
+                        'attributes' => json_decode($concreteAttributes[$i], true),
+                        'name' => $concreteNames[$i]
+                    ];
+                }
+
+                $attributes = $this->mapProductAttributes($abstractAttributes);
                 $searchableProducts[$index] = array_merge_recursive($searchableProducts[$index], $attributes);
             }
         }

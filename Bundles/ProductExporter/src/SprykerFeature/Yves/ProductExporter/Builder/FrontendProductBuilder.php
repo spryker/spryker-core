@@ -4,12 +4,8 @@ namespace SprykerFeature\Yves\ProductExporter\Builder;
 
 use Generated\Yves\Ide\FactoryAutoCompletion\ProductExporter;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerFeature\Yves\ProductExporter\Model\Product;
+use SprykerFeature\Yves\ProductExporter\Model\AbstractProduct;
 
-/**
- * Class FrontendProductBuilder
- * @package SprykerFeature\Yves\Product\Builder
- */
 class FrontendProductBuilder implements FrontendProductBuilderInterface
 {
     /**
@@ -28,14 +24,17 @@ class FrontendProductBuilder implements FrontendProductBuilderInterface
     /**
      * @param array $productData
      *
-     * @return Product
+     * @return AbstractProduct
      */
     public function buildProduct(array $productData)
     {
-        $product = $this->factory->createModelProduct();
+        $product = $this->factory->createModelAbstractProduct();
 
         foreach ($productData as $name => $value) {
-            $setter = 'set' . ucfirst(strtolower($name));
+            $arrayParts = explode('_', strtolower($name));
+            $arrayParts = array_map('ucfirst', $arrayParts);
+
+            $setter = 'set' . implode('', $arrayParts);
 
             if (method_exists($product, $setter)) {
                 $product->{$setter}($value);

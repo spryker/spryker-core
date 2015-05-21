@@ -234,11 +234,11 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * @param array $resultSet
      * @param string $type
-     * @param string $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    protected function processData($resultSet, $type, $locale)
+    protected function processData($resultSet, $type, LocaleTransfer $locale)
     {
         $processedResultSet = [];
 
