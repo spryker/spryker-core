@@ -11,14 +11,24 @@
     <section class="spy-layout n4">
     {% for address in addresses %}
         <div class="spy-layout sparse">
+            {#
+            Removed for moment, it be enabled later
             <p>
                 <button class="button" ng-click="$emitAsChannel('address_form', 'address_form', {'id_customer_address': '{{ address.id }}'})">
                     {{ "customer.profile.address.edit" | trans }}
                 </button>
             </p>
+            #}
 
-            <pre>{{ address.rendered }}</pre>
+            <div><strong>{{ address.name }}</strong></div>
+            <div>{{ address.company }}</div>
+            <div>{{ address.address1 }}</div>
+            <div>{{ address.address2 }}</div>
+            <div>{{ address.address3 }}</div>
+            <div>{{ address.zipCode }} {{ address.city }}</div>
 
+            {#
+            Removed for moment, it be enabled later
             <div>
                 <p>
                     {% if address.isDefaultBilling %}
@@ -40,11 +50,15 @@
                     {% endif %}
                 </p>
             </div>
+            #}
         </div>
     {% endfor %}
+        {#
+        Removed for moment, it be enabled later
         <div class="spy-layout sparse">
             <button class="button default" ng-click="$emitAsChannel('address_form', 'address_form', {'fk_customer': {{ id_customer }}})">{{ "customer.profile.address.new" | trans }}</button>
         </div>
+        #}
     </section>
 
     {% include "@Customer/Partial/address.twig" %}
