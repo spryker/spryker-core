@@ -126,10 +126,10 @@ abstract class AbstractSearch
     {
         $searchQuery = $this->createSearchQuery($this->request);
         $resultSet = $this->searchIndex->search($searchQuery);
-        $skus = $this->extractProductSkusFromResultSet($resultSet);
+        $ids = $this->extractProductIdsFromResultSet($resultSet);
         $products = [];
-        if ($skus) {
-            $products = $this->catalogModel->getProductDataBySkus($skus);
+        if ($ids) {
+            $products = $this->catalogModel->getProductDataByIds($ids);
         }
         $activeParameters = iterator_to_array($this->request->query);
 
@@ -148,17 +148,18 @@ abstract class AbstractSearch
 
     /**
      * @param ResultSet $resultSet
+     *
      * @return array
      */
-    public function extractProductSkusFromResultSet(ResultSet $resultSet)
+    public function extractProductIdsFromResultSet(ResultSet $resultSet)
     {
-        $skus = [];
+        $ids = [];
         foreach ($resultSet->getResults() as $result) {
             $product = $result->getSource();
-            $skus[] = $product[FacetConfig::FIELD_SEARCH_RESULT_DATA]['sku'];
+            $ids[] = $product[FacetConfig::FIELD_SEARCH_RESULT_DATA]['id_abstract_product'];
         }
 
-        return $skus;
+        return $ids;
     }
 
     /**

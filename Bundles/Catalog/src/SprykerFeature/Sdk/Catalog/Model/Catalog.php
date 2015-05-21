@@ -1,7 +1,6 @@
 <?php
 namespace SprykerFeature\Sdk\Catalog\Model;
 
-use SprykerFeature\Shared\Catalog\Code\Storage\StorageKeyGenerator;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Shared\KvStorage\Client\ReadInterface;
 use SprykerFeature\Sdk\Catalog\Model\Exception\ProductNotFoundException;
@@ -52,12 +51,13 @@ class Catalog implements CatalogInterface
 
     /**
      * @param int $id
+     *
      * @return array
-     * @throws Exception\ProductNotFoundException
+     * @throws ProductNotFoundException
      */
     public function getProductDataById($id)
     {
-        $productKey = StorageKeyGenerator::getProductKey($id);
+        $productKey = $this->productKeyBuilder->generateKey($id, $this->locale);
         $productFromStorage = $this->storageReader->get($productKey);
 
         if (empty($productFromStorage)) {
@@ -68,55 +68,17 @@ class Catalog implements CatalogInterface
     }
 
     /**
-     * @param string $sku
-     * @return array
-     * @throws Exception\ProductNotFoundException
-     */
-    public function getProductDataBySku($sku)
-    {
-        $skuKey = StorageKeyGenerator::getProductSkuKey($sku);
-        $productId = $this->storageReader->get($skuKey);
-
-        return self::getProductDataById($productId);
-    }
-
-    /**
-     * @param array       $ids
-     * @param string|null $indexByKey
-     * @return array[]
-     * @throws Exception\ProductNotFoundException
-     */
-    public function getProductDataByIds(array $ids, $indexByKey = null)
-    {
-        $productKeys = [];
-        foreach ($ids as $id) {
-            $productKeys[] = StorageKeyGenerator::getProductKey($id);
-        }
-        $productsFromStorage = array_filter($this->storageReader->getMulti($productKeys));
-
-        if (empty($productsFromStorage)) {
-            throw new ProductNotFoundException('');
-        }
-
-        if ($indexByKey) {
-            $productsFromStorage = $this->mapKeysToValue($indexByKey, $productsFromStorage);
-        }
-
-        return $productsFromStorage;
-    }
-
-    /**
-     * @param array $skus
+     * @param array $ids
      * @param null  $indexByKey
      * @return array
      */
-    public function getProductDataBySkus(array $skus, $indexByKey = null)
+    public function getProductDataByIds(array $ids, $indexByKey = null)
     {
-        $skuKeys = [];
-        foreach ($skus as $sku) {
-            $skuKeys[] = $this->productKeyBuilder->generateKey($sku, $this->locale);
+        $idKeys = [];
+        foreach ($ids as $id) {
+            $idKeys[] = $this->productKeyBuilder->generateKey($id, $this->locale);
         }
-        $productsFromStorage = $this->storageReader->getMulti($skuKeys);
+        $productsFromStorage = $this->storageReader->getMulti($idKeys);
         foreach ($productsFromStorage as $key => $product) {
             $productsFromStorage[$key] = $this->mergeAttributes(json_decode($product, true));
         }
@@ -131,6 +93,7 @@ class Catalog implements CatalogInterface
     /**
      * @param string $key
      * @param array $productsFromStorage
+     *
      * @return array
      */
     protected function mapKeysToValue($key, array $productsFromStorage)
@@ -145,6 +108,7 @@ class Catalog implements CatalogInterface
 
     /**
      * @param array $product
+     *
      * @return array|\array[]
      */
     public function getSubProducts(array $product)
@@ -158,23 +122,6 @@ class Catalog implements CatalogInterface
                 return $this->getSubProductsBySkuIndex($product, self::INDEXKEY_PRODUCT_BUNDLE_SKUS);
                 break;
         }
-
-        return $subProducts;
-    }
-
-    /**
-     * @param array  $product
-     * @param string $skuIndexKey
-     * @return array|\array[]
-     */
-    protected function getSubProductsBySkuIndex(array $product, $skuIndexKey)
-    {
-        if (!isset($product[$skuIndexKey])) {
-            return [];
-        }
-        $subProductSkus = $product[$skuIndexKey];
-        $subProductSkus = explode(',', $subProductSkus);
-        $subProducts = $this->getProductDataBySkus($subProductSkus);
 
         return $subProducts;
     }
