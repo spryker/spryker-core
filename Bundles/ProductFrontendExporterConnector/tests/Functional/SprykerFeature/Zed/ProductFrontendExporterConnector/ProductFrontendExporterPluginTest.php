@@ -95,7 +95,7 @@ class ProductFrontendExporterPluginTest extends Test
                                 'description' => 'A description!',
                                 'name' => 'Ted Technical Robot',
                             ],
-                        'name' => 'AbstractTestProductName',
+                        'abstract_name' => 'AbstractTestProductName',
                         'abstract_sku' => 'AbstractTestSku',
                         'url' => '/some-url',
                         'concrete_products' => [
