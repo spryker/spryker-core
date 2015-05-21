@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\Tax\Business\Model;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 
 interface TaxReaderInterface
 {
@@ -14,7 +15,7 @@ interface TaxReaderInterface
      *
      * @return TaxRateTransfer
      * @throws PropelException
-     * @throws \Exception
+     * @throws ResourceNotFoundException
      */
     public function getTaxRate($id);
 
@@ -31,7 +32,7 @@ interface TaxReaderInterface
      *
      * @return TaxSetTransfer
      * @throws PropelException
-     * @throws \Exception
+     * @throws ResourceNotFoundException
      */
     public function getTaxSet($id);
 

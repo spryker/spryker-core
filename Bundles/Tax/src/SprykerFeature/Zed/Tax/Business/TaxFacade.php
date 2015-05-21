@@ -6,6 +6,8 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
+use SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 
 /**
  * @method TaxDependencyContainer getDependencyContainer()
@@ -18,7 +20,7 @@ class TaxFacade extends AbstractFacade
      *
      * @return TaxRateTransfer
      * @throws PropelException
-     * @throws \Exception
+     * @throws ResourceNotFoundException
      */
     public function getTaxRate($id)
     {
@@ -41,7 +43,7 @@ class TaxFacade extends AbstractFacade
      *
      * @return TaxSetTransfer
      * @throws PropelException
-     * @throws \Exception
+     * @throws ResourceNotFoundException
      */
     public function getTaxSet($id)
     {
@@ -71,14 +73,68 @@ class TaxFacade extends AbstractFacade
     }
 
     /**
+     * @param TaxRateTransfer $taxRate
+     *
+     * @return int
+     * @throws PropelException
+     * @throws ResourceNotFoundException
+     */
+    public function updateTaxRate(TaxRateTransfer $taxRateTransfer)
+    {
+        return $this->getDependencyContainer()->getWriterModel()->updateTaxRate($taxRateTransfer);
+    }
+
+    /**
      * @param TaxSetTransfer $taxSet
      *
      * @return int
      * @throws PropelException
+     * @throws ResourceNotFoundException
+     * @throws MissingTaxRateException
      */
     public function createTaxSet(TaxSetTransfer $taxSet)
     {
         return $this->getDependencyContainer()->getWriterModel()->createTaxSet($taxSet);
+    }
+
+    /**
+     * @param TaxSetTransfer $taxSetTransfer
+     *
+     * @return int
+     * @throws PropelException
+     * @throws ResourceNotFoundException
+     * @throws MissingTaxRateException
+     */
+    public function updateTaxSet(TaxSetTransfer $taxSetTransfer)
+    {
+        return $this->getDependencyContainer()->getWriterModel()->updateTaxSet($taxSetTransfer);
+    }
+
+    /**
+     * @param int $taxSetId
+     * @param TaxRateTransfer $taxRateTransfer
+     *
+     * @return int
+     * @throws PropelException
+     * @throws ResourceNotFoundException
+     */
+    public function addTaxRateToTaxSet($taxSetId, TaxRateTransfer $taxRateTransfer)
+    {
+        return $this->getDependencyContainer()->getWriterModel()->addTaxRateToTaxSet($taxSetId, $taxRateTransfer);
+    }
+
+    /**
+     * @param int $taxSetId
+     * @param int $taxRateId
+     *
+     * @return int
+     * @throws PropelException
+     * @throws ResourceNotFoundException
+     * @throws MissingTaxRateException
+     */
+    public function removeTaxRateFromTaxSet($taxSetId, $taxRateId)
+    {
+        return $this->getDependencyContainer()->getWriterModel()->removeTaxRateFromTaxSet($taxSetId, $taxRateId);
     }
 
     /**

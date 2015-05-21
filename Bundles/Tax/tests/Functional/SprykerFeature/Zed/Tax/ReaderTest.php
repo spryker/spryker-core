@@ -73,13 +73,13 @@ class ReaderTest extends Test
 
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxRate()
     {
-        $this->setExpectedException('\Exception');
+        $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
         $this->taxFacade->getTaxSet(9999999999);
     }
 
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxSet()
     {
-        $this->setExpectedException('\Exception');
+        $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
         $this->taxFacade->getTaxRate(9999999999);
     }
 

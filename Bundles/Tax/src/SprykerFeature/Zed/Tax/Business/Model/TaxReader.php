@@ -6,16 +6,12 @@ use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
 use SprykerFeature\Zed\Tax\TaxConfig;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
+
 
 class TaxReader implements TaxReaderInterface
 {
-
-    const TAX_SET_UNKNOWN = 'tax set unknown: ';
-    const TAX_RATE_UNKNOWN = 'tax rate unknown: ';
-
     /**
      * @var TaxQueryContainer
      */
@@ -43,14 +39,14 @@ class TaxReader implements TaxReaderInterface
      *
      * @return TaxRateTransfer
      * @throws PropelException
-     * @throws \Exception
+     * @throws ResourceNotFoundException
      */
     public function getTaxRate($id)
     {
         $taxRateEntity = $this->queryContainer->queryTaxRate($id)->findOne();
 
         if (null == $taxRateEntity) {
-            throw new \Exception(self::TAX_RATE_UNKNOWN . $id);
+            throw new ResourceNotFoundException();
         }
 
         return (new TaxRateTransfer)->fromArray($taxRateEntity->toArray());
@@ -74,14 +70,14 @@ class TaxReader implements TaxReaderInterface
      *
      * @return TaxSetTransfer
      * @throws PropelException
-     * @throws \Exception
+     * @throws ResourceNotFoundException
      */
     public function getTaxSet($id)
     {
         $taxSetEntity = $this->queryContainer->queryTaxSet($id)->findOne();
 
         if (null == $taxSetEntity) {
-            throw new \Exception(self::TAX_SET_UNKNOWN . $id);
+            throw new ResourceNotFoundException();
         }
 
         $taxSetTransfer = (new TaxSetTransfer)->fromArray($taxSetEntity->toArray());
