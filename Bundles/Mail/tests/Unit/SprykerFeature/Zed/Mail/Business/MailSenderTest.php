@@ -1,11 +1,11 @@
 <?php
 
-
 namespace Unit\SprykerFeature\Zed\Mail\Business;
 
 use Generated\Shared\Transfer\AttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use SprykerFeature\Shared\Library\PHPUnit\Constraints\ArrayContainsKeyEqualToConstraint;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Mail\Business\MandrillMailSender;
@@ -20,6 +20,17 @@ use SprykerFeature\Zed\Mail\Business\MandrillMailSender;
 class MailSenderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @param string $key
+     * @param mixed $value
+     * 
+     * @return ArrayContainsKeyEqualToConstraint
+     */
+    protected function arrayContainsKeyEqualTo($key, $value)
+    {
+        return new ArrayContainsKeyEqualToConstraint($key, $value);
+    }
+    
     public function testSendMail()
     {
         $this->markTestSkipped('Clean up this test it\'s not readable');
