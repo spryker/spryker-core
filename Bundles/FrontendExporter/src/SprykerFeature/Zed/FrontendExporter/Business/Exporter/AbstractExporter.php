@@ -13,6 +13,7 @@ use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInt
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\ExportFailedDeciderPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Persistence\FrontendExporterQueryContainer;
+use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 
 abstract class AbstractExporter implements ExporterInterface
 {
@@ -130,7 +131,7 @@ abstract class AbstractExporter implements ExporterInterface
 
             $exportableData = $this->processData($resultSet, $type, $locale);
             $this->writeExportableData($exportableData, $type);
-            $result->setProcessedCount(count($exportableData));
+            $result->increaseProcessedCount(count($exportableData));
 
             if ($this->isExportFailed($type, $result)) {
                 $result->setIsFailed(true);
@@ -202,6 +203,7 @@ abstract class AbstractExporter implements ExporterInterface
     {
         $chunkSize = 100;
         $query = $this->queryContainer->createBasicExportableQuery($type, $lastRunTimestamp);
+        $query->setFormatter(new PropelArraySetFormatter());
 
         /** @var QueryExpanderPluginInterface $queryExpander */
         foreach ($this->queryPipeline[$type] as $queryExpander) {
