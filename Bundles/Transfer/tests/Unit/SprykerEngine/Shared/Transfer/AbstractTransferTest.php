@@ -44,10 +44,11 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerEngine\Shared\Transfer\TransferInterface', $transfer->getTransferCollection());
     }
 
-    public function testFromArrayShouldReturnInstanceWithRecursiveFilledObjects()
+    public function testFromArrayShouldOnlyWorkForGivenTransferNotForInnerTransfers()
     {
-        $this->markTestSkipped('Recursive is not working anymore, because the given object is a instance of \ArrayObject and can\'t handled like a TransferInterface');
         $data = [
+            'string' => 'foo',
+            'integer' => 1,
             'transfer' => [
                 'string' => 'foo',
                 'integer' => 1
@@ -57,7 +58,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer = new AbstractTransfer();
         $transfer->fromArray($data);
 
-        $this->assertInstanceOf('SprykerEngine\Shared\Transfer\TransferInterface', $transfer->getTransfer());
+        $this->assertNull($transfer->getTransfer());
     }
 
     public function testFromArrayWithIgnoreMissingPropertyFalseShouldThrowExceptionIfPropertyIsInArrayButNotInObject()

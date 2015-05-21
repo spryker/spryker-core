@@ -95,43 +95,19 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
             $getter = 'get' . ucfirst($property);
             $setter = 'set' . ucfirst($property);
 
-            if (method_exists($this, $getter) && $this->$getter() instanceof TransferInterface && is_array($value)) {
-                $this->$getter()->fromArray($value, $ignoreMissingProperty);
-            } elseif (is_array($value)) {
-                $this->$property = $value;
-            } elseif (method_exists($this, $setter)) {
-                $this->$setter($value);
+            if (method_exists($this, $setter)) {
+                if ($this->canSetValue($setter, $value)) {
+                    $this->$setter($value);
+                }
             } elseif (!$ignoreMissingProperty) {
                 throw new \InvalidArgumentException(
-                    sprintf(
-                        "Missing method or property in transfer object.\n [Transfer] %s\n[Property] %s",
-                        get_class($this),
-                        $property
-                    )
+                    sprintf('Missing property "%s" in "%s"', $property, get_class($this))
                 );
             }
         }
 
         return $this;
     }
-
-    // @TODO check if we need this two methods
-//    /**
-//     * @return array
-//     */
-//    public function __sleep()
-//    {
-//        return array_keys($this->toArray(false, false));
-//    }
-//
-//    public function __clone()
-//    {
-//        foreach (get_object_vars($this) as $key => $value) {
-//            if (is_object($value)) {
-//                $this->$key = clone $value;
-//            }
-//        }
-//    }
 
     /**
      * @return array
@@ -142,6 +118,28 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
         unset($classVars['modifiedProperties']);
 
         return array_keys($classVars);
+    }
+
+    /**
+     * If fromArray() tries to set a transfer object to something else than its allowed, an exception is thrown.
+     *
+     * To prevent that en error is thrown when calling e.g.
+     * setTransfer(TransferInterface $transferInterface) with null or string etc
+     * This code is wrapped in a try catch block
+     *
+     * @param $setter
+     * @param $value
+     *
+     * @return bool
+     */
+    private function canSetValue($setter, $value)
+    {
+        try {
+            $this->$setter($value);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
 }
