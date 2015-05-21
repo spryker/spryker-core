@@ -32,6 +32,11 @@ class AbstractProduct implements AbstractProductInterface
     protected $concreteProducts = [];
 
     /**
+     * @var array
+     */
+    protected $category = [];
+
+    /**
      * @return array
      */
     public function getAbstractAttributes()
@@ -143,5 +148,21 @@ class AbstractProduct implements AbstractProductInterface
     public function setConcreteProducts(array $products)
     {
         $this->concreteProducts = $products;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param array $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
     }
 }
