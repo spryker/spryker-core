@@ -30,7 +30,7 @@ class TaxProcessorPlugin extends AbstractPlugin implements DataProcessorPluginIn
     public function processData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
         return $this->getDependencyContainer()
-            ->getPriceProcessor()
+            ->getTaxProcessor()
             ->processDataForExport($resultSet, $processedResultSet)
         ;
     }

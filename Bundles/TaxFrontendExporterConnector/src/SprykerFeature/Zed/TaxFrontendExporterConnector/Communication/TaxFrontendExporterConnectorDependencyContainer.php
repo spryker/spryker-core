@@ -20,7 +20,7 @@ class TaxFrontendExporterConnectorDependencyContainer extends AbstractDependency
     /**
      * @return TaxFrontendExporterConnectorFacade
      */
-    public function getPriceProcessor()
+    public function getTaxProcessor()
     {
         return $this->getFacade();
     }

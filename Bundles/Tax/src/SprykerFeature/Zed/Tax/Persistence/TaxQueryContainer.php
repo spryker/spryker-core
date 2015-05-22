@@ -60,19 +60,25 @@ class TaxQueryContainer extends AbstractQueryContainer
             ->addJoin(
                 SpyTaxSetTableMap::COL_ID_TAX_SET,
                 SpyTaxSetTaxTableMap::COL_FK_TAX_SET,
-                Criteria::LEFT_JOIN // @TODO Check workflow of Criteria::INNER_JOIN should be used instead
+                Criteria::INNER_JOIN
             )
             ->addJoin(
                 SpyTaxSetTaxTableMap::COL_FK_TAX_RATE,
                 SpyTaxRateTableMap::COL_ID_TAX_RATE,
-                Criteria::LEFT_JOIN // @TODO Check workflow of Criteria::INNER_JOIN should be used instead
+                Criteria::INNER_JOIN
             )
         ;
 
-        $expandableQuery->withColumn(
-            'GROUP_CONCAT(spy_product.sku)',
-            'concrete_skus'
-        );
+        $expandableQuery
+            ->withColumn(
+                'GROUP_CONCAT(DISTINCT ' . SpyTaxRateTableMap::COL_NAME . ')',
+                'tax_rate_names'
+            )
+            ->withColumn(
+                'GROUP_CONCAT(DISTINCT ' . SpyTaxRateTableMap::COL_RATE . ')',
+                'tax_rate_rates'
+            )
+        ;
 
         return $this;
     }

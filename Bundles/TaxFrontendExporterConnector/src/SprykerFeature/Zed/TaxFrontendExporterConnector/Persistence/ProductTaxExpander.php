@@ -34,7 +34,7 @@ class ProductTaxExpander implements ProductTaxExpanderInterface
             ->addJoin(
                 SpyAbstractProductTableMap::COL_FK_TAX_SET,
                 SpyTaxSetTableMap::COL_ID_TAX_SET,
-                Criteria::INNER_JOIN
+                Criteria::LEFT_JOIN // @TODO Check workflow of Criteria::INNER_JOIN should be used instead
             )
         ;
 
@@ -43,13 +43,7 @@ class ProductTaxExpander implements ProductTaxExpanderInterface
             'tax_set_name'
         );
 
-        return $expandableQuery;
-
-        $expandableQuery->withColumn(
-            'GROUP_CONCAT(spy_price_type.name)',
-            'price_types'
-        );
-
+        $this->taxQueryContainer->joinTaxRates($expandableQuery);
 
         return $expandableQuery;
     }

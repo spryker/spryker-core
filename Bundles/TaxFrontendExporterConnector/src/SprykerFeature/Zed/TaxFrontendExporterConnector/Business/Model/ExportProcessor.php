@@ -5,19 +5,6 @@ namespace SprykerFeature\Zed\TaxFrontendExporterConnector\Business\Model;
 class ExportProcessor implements ExportProcessorInterface
 {
     /**
-     * @var HelperInterface
-     */
-    protected $helper;
-
-    /**
-     * @param HelperInterface $helper
-     */
-    public function __construct(HelperInterface $helper)
-    {
-        $this->helper = $helper;
-    }
-
-    /**
      * @param array $resultSet
      * @param array $processedResultSet
      *
@@ -27,10 +14,11 @@ class ExportProcessor implements ExportProcessorInterface
     {
         foreach ($resultSet as $index => $productRawData) {
             if (isset($processedResultSet[$index])) {
-                if ($productRawData['concrete_prices'] != null) {
-                    $processedResultSet = $this->preparePriceForResult($processedResultSet, $productRawData, $index);
+                if (isset($productRawData['tax_set_name'], $productRawData['tax_rate_names'], $productRawData['tax_rate_rates'])) {
+                    $processedResultSet = $this->prepareTaxForResult($processedResultSet, $productRawData, $index);
                 } else {
-                    unset($processedResultSet[$index]);
+                    // @TODO Check if we do not want to index products which do not have a tax set
+                    //unset($processedResultSet[$index]);
                 }
             }
         }
@@ -40,21 +28,32 @@ class ExportProcessor implements ExportProcessorInterface
 
     /**
      * @param array $processedResultSet
-     * @param $productRawData
-     * @param $index
+     * @param array $productRawData
+     * @param string $index
      *
      * @return array
      */
-    protected function preparePriceForResult(array $processedResultSet, $productRawData, $index)
+    protected function prepareTaxForResult(array $processedResultSet, $productRawData, $index)
     {
-        if ($this->helper->hasDefaultPrice($productRawData)) {
-            $defaultPrice = $this->helper->getDefaultPrice($productRawData);
-            $processedResultSet[$index]['valid_price'] = $defaultPrice;
-            $processedResultSet[$index]['prices'] = $this->helper->organizeData($productRawData);
+        $taxRates = [];
+        $taxRateNames = explode(',', $productRawData['tax_rate_names']);
+        $taxRateRates = explode(',', $productRawData['tax_rate_rates']);
 
-            return $processedResultSet;
+        $effectiveRate = 0;
+
+        foreach ($taxRateNames as $key => $taxRateName) {
+            $effectiveRate += $taxRateRates[$key];
+            $taxRates[] = [
+                'rate' => (float) $taxRateRates[$key],
+                'name' => $taxRateName,
+            ];
         }
-        unset($processedResultSet[$index]);
+
+        $processedResultSet[$index]['tax'] = [
+            'name' => $productRawData['tax_set_name'],
+            'effectiv_rate' => $effectiveRate,
+            'rates' => $taxRates,
+        ];
 
         return $processedResultSet;
     }
