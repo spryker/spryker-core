@@ -8,11 +8,9 @@
         <property name="totalItemAmount" type="int" />
         <property name="totalAmount" type="int" />
         <property name="expenseItems" type="ExpenseTotalItem[]" singular="expenseItem" />
-
     </transfer>
 
     <transfer name="CalculationDiscount">
-        <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
         <property name="displayName" type="string" />
         <property name="amount" type="int" />
         <property name="type" type="string" />

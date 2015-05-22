@@ -100,7 +100,6 @@
 
     <transfer name="OrderItemOption">
         <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface" />
-        <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\DiscountableInterface" />
         <property name="identifier" type="int" />
         <property name="name" type="string" />
         <property name="description" type="string" />

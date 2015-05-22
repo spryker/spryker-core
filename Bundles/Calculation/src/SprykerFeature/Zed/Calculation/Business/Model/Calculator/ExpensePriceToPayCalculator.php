@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Calculation\ExpenseInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseItemInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class ExpensePriceToPayCalculator implements CalculatorPluginInterface
@@ -25,10 +25,10 @@ class ExpensePriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param ExpenseItemInterface $expense
+     * @param ExpenseInterface $expense
      * @return int
      */
-    protected function getExpenseDiscountAmount(ExpenseItemInterface $expense)
+    protected function getExpenseDiscountAmount(ExpenseInterface $expense)
     {
         $discountAmount = 0;
         foreach ($expense->getDiscounts() as $discount) {

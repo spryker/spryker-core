@@ -4,7 +4,6 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Discount">
-        <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountItemInterface" />
         <property name="idDiscount" type="int" />
         <property name="fkDiscountVoucherPool" type="int" />
         <property name="displayName" type="string" />
