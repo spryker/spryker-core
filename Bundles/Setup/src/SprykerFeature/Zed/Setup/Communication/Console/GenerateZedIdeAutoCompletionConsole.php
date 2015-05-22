@@ -13,7 +13,6 @@ use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\FacadeMethodTagB
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\PluginMethodTagBuilder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\QueryContainerMethodTagBuilder;
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\TransferMethodTagBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -77,7 +76,6 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $generator
             ->addMethodTagBuilder(new FacadeMethodTagBuilder())
             ->addMethodTagBuilder(new QueryContainerMethodTagBuilder())
-            ->addMethodTagBuilder(new TransferMethodTagBuilder())
             ->addMethodTagBuilder(new EntityMethodTagBuilder())
             ->addMethodTagBuilder(new ConsoleMethodTagBuilder())
             ->addMethodTagBuilder(new PluginMethodTagBuilder([PluginMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed']))

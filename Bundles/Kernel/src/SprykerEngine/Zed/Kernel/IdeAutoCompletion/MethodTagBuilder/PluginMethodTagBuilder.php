@@ -42,6 +42,25 @@ class PluginMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     /**
      * @param $className
      *
+     * @return bool
+     */
+    protected function ignoreClass($className)
+    {
+        if (!class_exists($className)) {
+            return true;
+        }
+        $class = new \ReflectionClass($className);
+
+        if (!$class->isInstantiable()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $className
+     *
      * @return string
      */
     protected function buildMethodNameFromClassName($className)

@@ -13,7 +13,6 @@ use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagB
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConstructableMethodTagBuilder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\SdkMethodTagBuilder;
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\TransferMethodTagBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -86,7 +85,6 @@ class GenerateSdkIdeAutoCompletionConsole extends Console
 
         $generator = new IdeBundleAutoCompletionGenerator($options);
         $generator
-            ->addMethodTagBuilder(new TransferMethodTagBuilder())
             ->addMethodTagBuilder(new SdkMethodTagBuilder())
             ->addMethodTagBuilder(new ClientMethodTagBuilder())
         ;
