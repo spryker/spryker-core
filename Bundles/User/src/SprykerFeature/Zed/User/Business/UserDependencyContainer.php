@@ -22,7 +22,7 @@ class UserDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelUser(
             $this->getQueryContainer(),
-            $this->getLocator(),
+            $this->getLocator()->application()->pluginSession(),
             $this->getConfig()
         );
     }
