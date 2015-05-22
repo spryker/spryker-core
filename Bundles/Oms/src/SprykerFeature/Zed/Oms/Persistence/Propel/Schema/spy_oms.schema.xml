@@ -99,7 +99,6 @@
         <unique>
             <unique-column name="fk_sales_order_item"/>
             <unique-column name="fk_oms_order_item_state"/>
-            <unique-column name="event"/>
         </unique>
 
         <index>
