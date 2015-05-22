@@ -4,7 +4,7 @@ namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Mo
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
-use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
@@ -191,11 +191,11 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return CalculationDiscountTransfer
+     * @return DiscountTransfer
      */
     protected function getPriceDiscountCollection()
     {
-        return new CalculationDiscountTransfer();
+        return new DiscountTransfer();
     }
 
     /**
@@ -207,11 +207,11 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return CalculationDiscountTransfer
+     * @return DiscountTransfer
      */
     protected function getPriceDiscount()
     {
-        return new CalculationDiscountTransfer();
+        return new DiscountTransfer();
     }
 
     /**
@@ -224,7 +224,7 @@ class CalculatorTest extends Test
         $totals->setDiscount(new DiscountTotalsTransfer());
         $order->setTotals($totals);
 
-        $order->setDiscounts(new CalculationDiscountTransfer());
+        $order->setDiscounts(new DiscountTransfer());
 
         return $order;
     }

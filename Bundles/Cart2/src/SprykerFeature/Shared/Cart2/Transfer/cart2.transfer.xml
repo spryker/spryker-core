@@ -7,7 +7,7 @@
         <property name="items" type="Cart2Item[]" />
         <property name="totals" type="CalculationTotals[]" />
         <property name="expenses" type="CalculationExpense[]" />
-        <property name="discounts" type="CalculationDiscount[]" />
+        <property name="discounts" type="Discount[]" />
         <property name="couponCodes" type="array" singular="couponCode" />
     </transfer>
 
@@ -27,7 +27,7 @@
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
         <property name="taxPercentage" type="int" />
-        <property name="discounts" type="CalculationDiscount[]" />
+        <property name="discounts" type="Discount[]" />
     </transfer>
 
     <transfer name="Cart2Items">

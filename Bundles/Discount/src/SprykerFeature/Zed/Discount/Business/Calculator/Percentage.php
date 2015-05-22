@@ -26,7 +26,7 @@ class Percentage
         }
 
         foreach ($discountableObjects as $discountableObject) {
-            $discountAmount += $this->calculateDiscountAmount($discountableObject, $number);
+            $discountAmount += $this->calculateDiscountAmount($discountableObject->getGrossPrice(), $number);
         }
 
         if ($discountAmount <= 0) {
@@ -37,13 +37,14 @@ class Percentage
     }
 
     /**
-     * @param DiscountableItemInterface $discountableObject
+     * @param int $grossPrice
      * @param int $number
+     *
      * @return float
      */
-    protected function calculateDiscountAmount(DiscountableItemInterface $discountableObject, $number)
+    protected function calculateDiscountAmount($grossPrice, $number)
     {
-        return round(($discountableObject->getGrossPrice() * $number / 100), 2);
+        return round(($grossPrice * $number / 100), 2);
     }
 
     /**

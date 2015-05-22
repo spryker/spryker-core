@@ -36,7 +36,7 @@ class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_array($result));
 
-        $transferDefinition = $result['NameOfTransfer'];
+        $transferDefinition = $result[0];
         $this->assertInstanceOf('SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition', $transferDefinition);
     }
 

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 
 class RemoveAllCalculatedDiscountsCalculator

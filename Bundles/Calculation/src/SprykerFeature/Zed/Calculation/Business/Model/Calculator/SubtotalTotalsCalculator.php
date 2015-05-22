@@ -2,11 +2,14 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Calculation\ExpenseInterface;
+use Generated\Shared\Calculation\ExpensesInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionContainerInterface;
 use Generated\Shared\Calculation\TotalsInterface;
+use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class SubtotalTotalsCalculator implements
@@ -38,22 +41,22 @@ class SubtotalTotalsCalculator implements
         $subtotal = 0;
         foreach ($calculableItems as $item) {
             $subtotal += $item->getGrossPrice();
-            $subtotal += $this->sumOptions($item);
-            $subtotal += $this->sumExpenses($item);
+            $subtotal += $this->sumOptions($item->getOptions());
+            $subtotal += $this->sumExpenses($item->getExpenses());
         }
 
         return $subtotal;
     }
 
     /**
-     * @param OptionContainerInterface $item
+     * @param \ArrayObject|OptionItemInterface[] $options
      *
      * @return int
      */
-    protected function sumOptions(OptionContainerInterface $item)
+    protected function sumOptions(\ArrayObject $options)
     {
         $optionsPrice = 0;
-        foreach ($item->getOptions() as $option) {
+        foreach ($options as $option) {
             $optionsPrice += $option->getGrossPrice();
         }
 
@@ -61,14 +64,14 @@ class SubtotalTotalsCalculator implements
     }
 
     /**
-     * @param ExpenseContainerInterface $item
+     * @param \ArrayObject|ExpenseInterface[] $expenses
      *
      * @return int
      */
-    protected function sumExpenses(ExpenseContainerInterface $item)
+    protected function sumExpenses(\ArrayObject $expenses)
     {
         $expensesPrice = 0;
-        foreach ($item->getExpenses() as $expense) {
+        foreach ($expenses as $expense) {
             $expensesPrice += $expense->getGrossPrice();
         }
 

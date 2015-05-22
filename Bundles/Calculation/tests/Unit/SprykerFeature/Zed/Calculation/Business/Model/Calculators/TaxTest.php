@@ -2,6 +2,7 @@
 
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\TaxItemTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
@@ -32,7 +33,10 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $order = $this->getOrderWithFixtureData();
 
         $item = $this->getItemWithFixtureData();
-        $item->setTaxPercentage(self::TAX_PERCENTAGE_10);
+        $tax = new TaxItemTransfer();
+        $tax->setPercentage(self::TAX_PERCENTAGE_10);
+        $tax->setAmount(self::ITEM_GROSS_PRICE_1000);
+        $item->setTax($tax);
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
         $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
         $order->addItem($item);
@@ -52,13 +56,19 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $order = $this->getOrderWithFixtureData();
 
         $item = $this->getItemWithFixtureData();
-        $item->setTaxPercentage(self::TAX_PERCENTAGE_10);
+        $tax = new TaxItemTransfer();
+        $tax->setPercentage(self::TAX_PERCENTAGE_10);
+        $tax->setAmount(self::ITEM_GROSS_PRICE_1000);
+        $item->setTax($tax);
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
         $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
         $order->addItem($item);
 
         $item = $this->getItemWithFixtureData();
-        $item->setTaxPercentage(self::TAX_PERCENTAGE_20);
+        $tax = new TaxItemTransfer();
+        $tax->setPercentage(self::TAX_PERCENTAGE_20);
+        $tax->setAmount(self::ITEM_GROSS_PRICE_1000);
+        $item->setTax($tax);
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
         $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
         $order->addItem($item);
@@ -80,27 +90,39 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $order = $this->getOrderWithFixtureData();
 
         $item = $this->getItemWithFixtureData();
-        $item->setTaxPercentage(self::TAX_PERCENTAGE_10);
+        $tax = new TaxItemTransfer();
+        $tax->setPercentage(self::TAX_PERCENTAGE_10);
+        $tax->setAmount(self::ITEM_GROSS_PRICE_1000);
+        $item->setTax($tax);
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
         $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
         $order->addItem($item);
 
         $expense = $this->getExpenseWithFixtureData();
+        $tax = new TaxItemTransfer();
+        $tax->setPercentage(self::TAX_PERCENTAGE_10);
+        $tax->setAmount(self::EXPENSE_1000);
+        $expense->setTax($tax);
         $expense->setGrossPrice(self::EXPENSE_1000);
         $expense->setPriceToPay(self::EXPENSE_1000);
-        $expense->setTaxPercentage(self::TAX_PERCENTAGE_10);
         $item->addExpense($expense);
 
         $item = $this->getItemWithFixtureData();
-        $item->setTaxPercentage(self::TAX_PERCENTAGE_20);
+        $tax = new TaxItemTransfer();
+        $tax->setPercentage(self::TAX_PERCENTAGE_20);
+        $tax->setAmount(self::ITEM_GROSS_PRICE_1000);
+        $item->setTax($tax);
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
         $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
         $order->addItem($item);
 
         $expense = $this->getExpenseWithFixtureData();
+        $tax = new TaxItemTransfer();
+        $tax->setPercentage(self::TAX_PERCENTAGE_30);
+        $tax->setAmount(self::EXPENSE_1000);
+        $expense->setTax($tax);
         $expense->setGrossPrice(self::EXPENSE_1000);
         $expense->setPriceToPay(self::EXPENSE_1000);
-        $expense->setTaxPercentage(self::TAX_PERCENTAGE_30);
         $order->addExpense($expense);
 
         $totalsTransfer = $this->getPriceTotals();

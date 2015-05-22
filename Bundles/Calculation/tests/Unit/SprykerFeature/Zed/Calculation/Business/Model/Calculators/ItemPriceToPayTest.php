@@ -3,7 +3,7 @@
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Zed\Ide\AutoCompletion;
-use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
@@ -117,11 +117,11 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return CalculationDiscountTransfer
+     * @return DiscountTransfer
      */
     protected function getPriceDiscount()
     {
-        return new CalculationDiscountTransfer();
+        return new DiscountTransfer();
     }
 
     /**

@@ -2,8 +2,10 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Calculation\DiscountInterface;
+use Generated\Shared\Calculation\ExpenseInterface;
+use Generated\Shared\Sales\OrderItemOptionInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class ItemPriceToPayCalculator implements
@@ -16,28 +18,29 @@ class ItemPriceToPayCalculator implements
     {
         foreach ($calculableContainer->getItems() as $item) {
             $priceToPay = $item->getGrossPrice();
-            $priceToPay -= $this->sumDiscounts($item);
+            $priceToPay -= $this->sumDiscounts($item->getDiscounts());
 
             $priceToPay = max(0, $priceToPay);
             if ($priceToPay == 0) {
                 $priceToPay = $item->getGrossPrice();
             }
 
-            $priceToPay += $this->sumExpenses($item);
-            $priceToPay += $this->sumOptions($item);
+            $priceToPay += $this->sumExpenses($item->getExpenses());
+            $priceToPay += $this->sumOptions($item->getOptions());
 
             $item->setPriceToPay($priceToPay);
         }
     }
 
     /**
-     * @param CalculableItemInterface $item
+     * @param \ArrayObject|DiscountInterface[] $discounts
+     *
      * @return int
      */
-    protected function sumDiscounts(CalculableItemInterface $item)
+    protected function sumDiscounts(\ArrayObject $discounts)
     {
         $discountAmount = 0;
-        foreach ($item->getDiscounts() as $discount) {
+        foreach ($discounts as $discount) {
             $discountAmount += $discount->getAmount();
         }
 
@@ -45,13 +48,14 @@ class ItemPriceToPayCalculator implements
     }
 
     /**
-     * @param CalculableItemInterface $item
+     * @param \ArrayObject|ExpenseInterface[] $expenses
+     *
      * @return int
      */
-    protected function sumExpenses(CalculableItemInterface $item)
+    protected function sumExpenses(\ArrayObject $expenses)
     {
         $expenseAmount = 0;
-        foreach ($item->getExpenses() as $expense) {
+        foreach ($expenses as $expense) {
             $expenseAmount += $expense->getPriceToPay();
         }
 
@@ -59,13 +63,14 @@ class ItemPriceToPayCalculator implements
     }
 
     /**
-     * @param CalculableItemInterface $item
+     * @param \ArrayObject|OrderItemOptionInterface[] $options
+     *
      * @return int
      */
-    protected function sumOptions(CalculableItemInterface $item)
+    protected function sumOptions(\ArrayObject $options)
     {
         $optionsAmount = 0;
-        foreach ($item->getOptions() as $option) {
+        foreach ($options as $option) {
             $optionsAmount += $option->getPriceToPay();
         }
 

@@ -3,7 +3,7 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
@@ -93,10 +93,10 @@ class CalculatorTest extends Test
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
         $discounts = new \ArrayObject();
-        $discount = new CalculationDiscountTransfer();
+        $discount = new DiscountTransfer();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $discounts->append($discount);
-        $discount = new CalculationDiscountTransfer();
+        $discount = new DiscountTransfer();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $discounts->append($discount);
 
@@ -145,11 +145,11 @@ class CalculatorTest extends Test
         $item = new OrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $discount = new CalculationDiscountTransfer();
+        $discount = new DiscountTransfer();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $discount = new CalculationDiscountTransfer();
+        $discount = new DiscountTransfer();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 

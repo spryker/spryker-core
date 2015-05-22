@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
@@ -56,21 +56,19 @@ class Distributor implements
             $discountAmount = $this->roundingError + $amount * $percentage;
             $discountAmountRounded = round($discountAmount, 2);
             $this->roundingError = $discountAmount - $discountAmountRounded;
-            $this->addDiscountToDiscountableObject($discountableObject, $discountAmountRounded);
+            $this->addDiscountToDiscounts($discountableObject->getDiscounts(), $discountAmountRounded);
         }
     }
 
     /**
-     * @param DiscountableItemInterface $discountableObject
+     * @param \ArrayObject $discounts
      * @param $discountAmount
      */
-    protected function addDiscountToDiscountableObject(DiscountableItemInterface $discountableObject, $discountAmount)
+    protected function addDiscountToDiscounts(\ArrayObject $discounts, $discountAmount)
     {
-        $discounts = $discountableObject->getDiscounts();
-        $discount = new CalculationDiscountTransfer();
+        $discount = new DiscountTransfer();
         $discount->setAmount($discountAmount);
         $discounts->append($discount);
-        $discountableObject->setDiscounts($discounts);
     }
 
     /**

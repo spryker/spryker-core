@@ -2,12 +2,17 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Calculation\ExpenseInterface;
+use Generated\Shared\Calculation\ExpensesInterface;
+use Generated\Shared\Calculation\TaxItemInterface;
+use Generated\Shared\Sales\OrderItemOptionInterface;
+use Generated\Shared\Transfer\OrderItemsTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\TaxItemTransfer;
 use Generated\Shared\Transfer\TaxTransfer;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxableItemInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\Tax\TaxSetInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
@@ -55,23 +60,24 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         \ArrayObject $calculableItems
     ) {
         $groupedPrices = [];
+        /* @var $item OrderItemTransfer */
         foreach ($calculableItems as $item) {
-            $this->addTaxInfo($item, $groupedPrices);
-            $this->addExpensesTaxInfo($item, $groupedPrices);
-            $this->addOptionsTaxInfo($item, $groupedPrices);
+            $this->addTaxInfo($item->getTax(), $groupedPrices);
+            $this->addExpensesTaxInfo($item->getExpenses(), $groupedPrices);
+            $this->addOptionsTaxInfo($item->getOptions(), $groupedPrices);
         }
-        $this->addExpensesTaxInfo($calculableContainer, $groupedPrices);
+        $this->addExpensesTaxInfo($calculableContainer->getExpenses(), $groupedPrices);
 
         return $groupedPrices;
     }
 
     /**
-     * @param TaxableItemInterface $taxableObject
+     * @param TaxItemInterface $tax
      * @param array $groupedPrices
      */
-    protected function addTaxInfo(TaxableItemInterface $taxableObject, array &$groupedPrices)
+    protected function addTaxInfo(TaxItemInterface $tax, array &$groupedPrices)
     {
-        $taxRate = (float) $taxableObject->getTaxPercentage();
+        $taxRate = (float) $tax->getPercentage();
         if ($taxRate === 0.0) {
             return;
         }
@@ -80,28 +86,28 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         if (!isset($groupedPrices[$taxRateIndex])) {
             $groupedPrices[$taxRateIndex] = ['percentage' => $taxRate, 'amount' => 0];
         }
-        $groupedPrices[$taxRateIndex]['amount'] += $taxableObject->getPriceToPay();
+        $groupedPrices[$taxRateIndex]['amount'] += $tax->getAmount();
     }
 
     /**
-     * @param ExpenseContainerInterface $expenseContainer
+     * @param \ArrayObject|ExpenseInterface[] $expenses
      * @param array $groupedPrices
      */
-    protected function addExpensesTaxInfo(ExpenseContainerInterface $expenseContainer, array &$groupedPrices)
+    protected function addExpensesTaxInfo(\ArrayObject $expenses, array &$groupedPrices)
     {
-        foreach ($expenseContainer->getExpenses() as $expense) {
-            $this->addTaxInfo($expense, $groupedPrices);
+        foreach ($expenses as $expense) {
+            $this->addTaxInfo($expense->getTax(), $groupedPrices);
         }
     }
 
     /**
-     * @param CalculableItemInterface $item
+     * @param \ArrayObject|OrderItemOptionInterface $options
      * @param array $groupedPrices
      */
-    protected function addOptionsTaxInfo(CalculableItemInterface $item, array &$groupedPrices)
+    protected function addOptionsTaxInfo(\ArrayObject $options, array &$groupedPrices)
     {
-        foreach ($item->getOptions() as $option) {
-            $this->addTaxInfo($option, $groupedPrices);
+        foreach ($options as $option) {
+            $this->addTaxInfo($option->getTax(), $groupedPrices);
         }
     }
 

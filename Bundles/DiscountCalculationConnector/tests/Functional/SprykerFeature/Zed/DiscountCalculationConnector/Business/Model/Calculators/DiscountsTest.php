@@ -11,7 +11,7 @@ use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\Di
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 
 /**
  * Class DiscountsTest
@@ -149,11 +149,11 @@ class DiscountsTest extends Test
     }
 
     /**
-     * @return CalculationDiscountTransfer
+     * @return DiscountTransfer
      */
     protected function getPriceDiscount()
     {
-        return new CalculationDiscountTransfer();
+        return new DiscountTransfer();
     }
 
     /**

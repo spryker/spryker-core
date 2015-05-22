@@ -7,7 +7,7 @@ use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -209,11 +209,11 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return CalculationDiscountTransfer
+     * @return DiscountTransfer
      */
     protected function getDiscount()
     {
-        return new CalculationDiscountTransfer();
+        return new DiscountTransfer();
     }
 
     /**
@@ -225,7 +225,7 @@ class GrandTotalWithDiscountTest extends Test
         $totals = new TotalsTransfer();
         $totals->setDiscount(new DiscountTotalsTransfer());
         $order->setTotals($totals);
-        $order->setDiscounts(new CalculationDiscountTransfer());
+        $order->setDiscounts(new DiscountTransfer());
 
         return $order;
     }

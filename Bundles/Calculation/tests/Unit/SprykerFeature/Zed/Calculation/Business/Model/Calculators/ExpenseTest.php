@@ -6,7 +6,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
-use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -99,11 +99,11 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return CalculationDiscountTransfer
+     * @return DiscountTransfer
      */
     protected function getPriceDiscount()
     {
-        return new CalculationDiscountTransfer();
+        return new DiscountTransfer();
     }
 
     /**

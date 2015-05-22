@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
-use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
@@ -129,11 +129,11 @@ class GrandTotalTest extends Test
     }
 
     /**
-     * @return CalculationDiscountTransfer
+     * @return DiscountTransfer
      */
     protected function getPriceDiscount()
     {
-        return new CalculationDiscountTransfer();
+        return new DiscountTransfer();
     }
 
     /**

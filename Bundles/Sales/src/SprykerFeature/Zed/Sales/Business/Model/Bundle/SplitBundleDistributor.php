@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Sales\Business\Model\Bundle;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\OrderItemOptionTransfer;
-use Generated\Shared\Transfer\CalculationDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 
 class SplitBundleDistributor

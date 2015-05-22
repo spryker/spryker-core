@@ -8,7 +8,7 @@
         <property name="fkDiscountVoucherPool" type="int" />
         <property name="displayName" type="string" />
         <property name="description" type="string" />
-        <property name="amount" type="string" />
+        <property name="amount" type="int" />
         <property name="calculatorPlugin" type="string" />
         <property name="collectorPlugin" type="string" />
         <property name="isPrivileged" type="string" />

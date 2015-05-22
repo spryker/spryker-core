@@ -17,7 +17,7 @@ abstract class AbstractDefinitionBuilder implements DefinitionBuilderInterface
         $definitionInstances = [];
         foreach ($definitions as $definition) {
             $definitionInstance = clone $definitionClass;
-            $definitionInstances[$definition['name']] = $definitionInstance->setDefinition($definition);
+            $definitionInstances[] = $definitionInstance->setDefinition($definition);
         }
 
         return $definitionInstances;
