@@ -9,10 +9,6 @@ use SprykerFeature\Sdk\Catalog\Model\Builder\FacetAggregationBuilderInterface;
 use SprykerFeature\Sdk\Catalog\Model\Extractor\AggregationExtractorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class AbstractSearch
- * @package SprykerFeature\Sdk\Catalog\Model
- */
 abstract class AbstractSearch
 {
     const DEFAULT_ITEMS_PER_PAGE = 10;
