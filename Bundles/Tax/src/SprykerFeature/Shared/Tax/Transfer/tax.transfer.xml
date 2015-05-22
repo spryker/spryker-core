@@ -3,9 +3,17 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
+    <transfer name="TaxSetCollection">
+        <property name="taxSets" type="TaxSet[]" singular="taxSet" />
+    </transfer>
+
     <transfer name="TaxSet">
         <property name="idTaxSet" type="int" />
         <property name="name" type="string" />
+        <property name="taxRates" type="TaxRate[]" singular="taxRate" />
+    </transfer>
+
+    <transfer name="TaxRateCollection">
         <property name="taxRates" type="TaxRate[]" singular="taxRate" />
     </transfer>
 
@@ -16,4 +24,3 @@
     </transfer>
 
 </transfers>
-

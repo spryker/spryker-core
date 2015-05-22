@@ -5,6 +5,8 @@ namespace SprykerFeature\Zed\Tax\Business;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Generated\Shared\Transfer\TaxRateCollectionTransfer;
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
@@ -14,6 +16,15 @@ use SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
  */
 class TaxFacade extends AbstractFacade
 {
+
+    /**
+     * @return TaxRateCollectionTransfer
+     * @throws PropelException
+     */
+    public function getTaxRates()
+    {
+        return $this->getDependencyContainer()->getReaderModel()->getTaxRates();
+    }
 
     /**
      * @param int $id
@@ -36,6 +47,15 @@ class TaxFacade extends AbstractFacade
     public function taxRateExists($id)
     {
         return $this->getDependencyContainer()->getReaderModel()->taxRateExists($id);
+    }
+
+    /**
+     * @return TaxSetCollectionTransfer
+     * @throws PropelException
+     */
+    public function getTaxSets()
+    {
+        return $this->getDependencyContainer()->getReaderModel()->getTaxSets();
     }
 
     /**

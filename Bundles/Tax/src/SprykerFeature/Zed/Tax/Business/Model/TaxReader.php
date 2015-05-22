@@ -4,6 +4,8 @@ namespace SprykerFeature\Zed\Tax\Business\Model;
 
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Generated\Shared\Transfer\TaxRateCollectionTransfer;
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
 use SprykerFeature\Zed\Tax\TaxConfig;
 use Propel\Runtime\Exception\PropelException;
@@ -35,6 +37,23 @@ class TaxReader implements TaxReaderInterface
     }
 
     /**
+     * @return TaxRateCollectionTransfer
+     * @throws PropelException
+     */
+    public function getTaxRates()
+    {
+        $propelCollection = $this->queryContainer->queryAllTaxRates()->find();
+
+        $transferCollection = new TaxRateCollectionTransfer();
+        foreach($propelCollection as $taxRateEntity) {
+            $taxRateTransfer = (new TaxRateTransfer)->fromArray($taxRateEntity->toArray());
+            $transferCollection->addTaxRate($taxRateTransfer);
+        }
+
+        return $transferCollection;
+    }
+
+    /**
      * @param int $id
      *
      * @return TaxRateTransfer
@@ -63,6 +82,23 @@ class TaxReader implements TaxReaderInterface
         $result = $this->queryContainer->queryTaxRate($id)->find();
 
         return $result->isEmpty() ? false : true;
+    }
+
+    /**
+     * @return TaxSetCollectionTransfer
+     * @throws PropelException
+     */
+    public function getTaxSets()
+    {
+        $propelCollection = $this->queryContainer->queryAllTaxsets()->find();
+
+        $transferCollection = new TaxSetCollectionTransfer();
+        foreach($propelCollection as $taxSetEntity) {
+            $taxSetTransfer = (new TaxSetTransfer)->fromArray($taxSetEntity->toArray());
+            $transferCollection->addTaxSet($taxSetTransfer);
+        }
+
+        return $transferCollection;
     }
 
     /**

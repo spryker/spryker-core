@@ -40,6 +40,13 @@ class ReaderTest extends Test
         $this->taxFacade = new TaxFacade(new Factory('Tax'), $this->locator);
     }
 
+    public function testGetTaxRates()
+    {
+        $this->loadFixtures();
+        $taxRateCollectionTransfer = $this->taxFacade->getTaxRates();
+        $this->assertNotEmpty($taxRateCollectionTransfer->getTaxRates());
+    }
+
     public function testGetTaxRate()
     {
         $persistedTaxSet = $this->loadFixtures();
@@ -54,6 +61,13 @@ class ReaderTest extends Test
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->taxRateExists($persistedTaxSet->getSpyTaxRates()[0]->getIdTaxRate());
         $this->assertTrue($result);
+    }
+
+    public function testGetTaxSets()
+    {
+        $this->loadFixtures();
+        $taxSetCollectionTransfer = $this->taxFacade->getTaxSets();
+        $this->assertNotEmpty($taxSetCollectionTransfer->getTaxSets());
     }
 
     public function testGetTaxSet()
