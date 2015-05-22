@@ -277,12 +277,10 @@ class User implements UserInterface
      */
     public function hasCurrentUser()
     {
-        try {
-            $test = $this->getCurrentUser();
-            return true;
-        } catch (UserNotFoundException $e) {
-            return false;
-        }
+        $key = sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
+        $user = unserialize($this->session->get($key));
+
+        return $user !== false;
     }
 
     /**
