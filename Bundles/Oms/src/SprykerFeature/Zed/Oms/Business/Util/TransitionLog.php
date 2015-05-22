@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\Oms\Business\Util;
 
 use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Zed\Auth\Business\Model\Auth;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
@@ -190,26 +189,32 @@ class TransitionLog implements TransitionLogInterface
 
         if (isset($this->logContext["module"])) {
             $logItem->setModule($this->logContext["module"]);
+        } else {
+            $logItem->setModule('Not available.');
         }
 
         if (isset($this->logContext["controller"])) {
             $logItem->setController($this->logContext["controller"]);
+        } else {
+            $logItem->setController('Not available.');
         }
 
         if (isset($this->logContext["action"])) {
             $logItem->setAction($this->logContext["action"]);
+        } else {
+            $logItem->setAction('Not available.');
         }
 
         if (isset($this->logContext["params"])) {
             $params = array();
             $this->getOutputParams($this->logContext["params"], $params);
             $logItem->setParams($params);
+        } else {
+            $logItem->setParams(['Not available.']);
         }
 
         $logItem->setOrder($orderItem->getOrder());
         $logItem->setOrderItem($orderItem);
-
-//        $logItem->setAclUser($this->getAclUser());
 
         $logItem->setError($this->error);
         $logItem->setErrorMessage($this->errorMessage);
