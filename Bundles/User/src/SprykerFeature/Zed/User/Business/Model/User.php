@@ -66,7 +66,7 @@ class User implements UserInterface
             throw new UsernameExistsException();
         }
 
-        $transferUser = new \Generated\Shared\Transfer\UserTransfer();
+        $transferUser = new UserTransfer();
         $transferUser->setFirstName($firstName);
         $transferUser->setLastName($lastName);
         $transferUser->setUsername($username);
@@ -111,7 +111,7 @@ class User implements UserInterface
         if ($user->getIdUserUser() !== null) {
             $entity = $this->getEntityUserById($user->getIdUserUser());
         } else {
-            $entity = $this->locator->user()->entitySpyUserUser();
+            $entity = new SpyUserUser();
         }
 
         $entity->setFirstName($user->getFirstName());
@@ -263,7 +263,7 @@ class User implements UserInterface
     /**
      * @param UserTransfer $user
      *
-     * @return UserTransfer
+     * @return mixed
      */
     public function setCurrentUser(UserTransfer $user)
     {
