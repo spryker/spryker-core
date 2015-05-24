@@ -193,7 +193,7 @@ class WriterTest extends Test
 
         $taxSetEntity = $taxSetQuery->findOne();
         $this->assertCount(1, $taxSetEntity->getSpyTaxRates());
-        $this->assertEquals($rate1Id, $taxSetQuery->getSpyTaxRates()[0]->getIdTaxRate());
+        $this->assertEquals($rate1Id, $taxSetEntity->getSpyTaxRates()[0]->getIdTaxRate());
     }
 
     public function testExceptionRaisedIfAttemptingToCreateTaxSetWithoutAnyTaxRates()
@@ -218,7 +218,7 @@ class WriterTest extends Test
         $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException');
 
         $taxRateTransfer = $this->createTaxRateTransfer();
-        $rateId = $this->taxFacade->createTaxRate($taxRateTransfer);
+        $rateId = $this->taxFacade->createTaxRate($taxRateTransfer)->getIdTaxRate();
 
         $taxSetTransfer = $this->createTaxSetTransfer();
         $taxSetTransfer->addTaxRate($taxRateTransfer);
@@ -229,39 +229,43 @@ class WriterTest extends Test
 
     public function testDeleteTaxRate()
     {
-        $id = $this->taxFacade->createTaxRate($this->createTaxRateTransfer());
+        $id = $this->taxFacade->createTaxRate($this->createTaxRateTransfer())->getIdTaxRate();
 
-        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($id)->findOne();
-        $this->assertNotEmpty($taxRateQuery);
+        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($id);
+
+        $taxRateEntity = $taxRateQuery->findOne();
+        $this->assertNotEmpty($taxRateEntity);
 
         $this->taxFacade->deleteTaxRate($id);
 
-        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($id)->findOne();
-        $this->assertEmpty($taxRateQuery);
+        $taxRateEntity = $taxRateQuery->findOne();
+        $this->assertEmpty($taxRateEntity);
     }
 
     public function testDeleteTaxSetShouldDeleteSetButNotTheAssociatedRate()
     {
         $taxRateTransfer = $this->createTaxRateTransfer();
-        $rateId = $this->taxFacade->createTaxRate($taxRateTransfer);
+        $rateId = $this->taxFacade->createTaxRate($taxRateTransfer)->getIdTaxRate();
         $taxRateTransfer->setIdTaxRate($rateId);
 
-        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($rateId)->findOne();
-        $this->assertNotEmpty($taxRateQuery);
+        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($rateId);
+        $taxRateEntity = $taxRateQuery->findOne();
+        $this->assertNotEmpty($taxRateEntity);
 
         $taxSetTransfer = $this->createTaxSetTransfer();
         $taxSetTransfer->addTaxRate($taxRateTransfer);
-        $setId = $this->taxFacade->createTaxSet($taxSetTransfer);
+        $setId = $this->taxFacade->createTaxSet($taxSetTransfer)->getIdTaxSet();
 
-        $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($setId)->findOne();
-        $this->assertNotEmpty($taxSetQuery);
+        $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($setId);
+        $taxSetEntity = $taxSetQuery->findOne();
+        $this->assertNotEmpty($taxSetEntity);
 
         $this->taxFacade->deleteTaxSet($setId);
 
-        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($rateId)->findOne();
-        $this->assertNotEmpty($taxRateQuery);
+        $taxRateEntity = $taxRateQuery->findOne();
+        $this->assertNotEmpty($taxRateEntity);
 
-        $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($setId)->findOne();
-        $this->assertEmpty($taxSetQuery);
+        $taxSetEntity = $taxSetQuery->findOne();
+        $this->assertEmpty($taxSetEntity);
     }
 }

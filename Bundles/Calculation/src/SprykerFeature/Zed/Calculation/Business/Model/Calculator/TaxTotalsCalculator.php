@@ -8,8 +8,8 @@ use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInt
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\TaxableItemInterface;
-use SprykerFeature\Shared\Tax\Dependency\Transfer\TaxSetInterface;
 use Generated\Shared\Calculation\TotalsInterface;
+use Generated\Shared\Tax\TaxSetInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
