@@ -84,7 +84,7 @@ class TaxFacade extends AbstractFacade
     /**
      * @param TaxRateTransfer $taxRate
      *
-     * @return int
+     * @return TaxRateTransfer
      * @throws PropelException
      */
     public function createTaxRate(TaxRateTransfer $taxRate)
@@ -93,7 +93,7 @@ class TaxFacade extends AbstractFacade
     }
 
     /**
-     * @param TaxRateTransfer $taxRate
+     * @param TaxRateTransfer $taxRateTransfer
      *
      * @return int
      * @throws PropelException
@@ -107,7 +107,7 @@ class TaxFacade extends AbstractFacade
     /**
      * @param TaxSetTransfer $taxSet
      *
-     * @return int
+     * @return TaxSetTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException

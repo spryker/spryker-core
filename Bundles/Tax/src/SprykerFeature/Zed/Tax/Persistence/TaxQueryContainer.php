@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
-class TaxQueryContainer extends AbstractQueryContainer
+class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContainerInterface
 {
     /**
      * @param int $id

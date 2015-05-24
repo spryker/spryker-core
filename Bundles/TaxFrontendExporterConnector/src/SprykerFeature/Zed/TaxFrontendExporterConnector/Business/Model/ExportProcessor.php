@@ -33,7 +33,7 @@ class ExportProcessor implements ExportProcessorInterface
      *
      * @return array
      */
-    protected function prepareTaxForResult(array $processedResultSet, $productRawData, $index)
+    protected function prepareTaxForResult(array $processedResultSet, array $productRawData, $index)
     {
         $taxRates = [];
         $taxRateNames = explode(',', $productRawData['tax_rate_names']);
@@ -41,11 +41,11 @@ class ExportProcessor implements ExportProcessorInterface
 
         $effectiveRate = 0;
 
-        foreach ($taxRateNames as $key => $taxRateName) {
-            $effectiveRate += $taxRateRates[$key];
+        foreach ($taxRateRates as $key => $taxRateRate) {
+            $effectiveRate += $taxRateRate;
             $taxRates[] = [
-                'rate' => (float) $taxRateRates[$key],
-                'name' => $taxRateName,
+                'name' => $taxRateNames[$key],
+                'rate' => (float) $taxRateRate,
             ];
         }
 

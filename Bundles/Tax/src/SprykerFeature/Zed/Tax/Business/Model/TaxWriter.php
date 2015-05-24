@@ -2,15 +2,15 @@
 
 namespace SprykerFeature\Zed\Tax\Business\Model;
 
-use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
-use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
+use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
 use SprykerFeature\Zed\Tax\TaxConfig;
+use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Propel\Runtime\Collection\Collection;
 
 class TaxWriter implements TaxWriterInterface
@@ -21,7 +21,7 @@ class TaxWriter implements TaxWriterInterface
     protected $locator;
 
     /**
-     * @var TaxQueryContainer
+     * @var TaxQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -32,12 +32,12 @@ class TaxWriter implements TaxWriterInterface
 
     /**
      * @param LocatorLocatorInterface $locator
-     * @param TaxQueryContainer $queryContainer
+     * @param TaxQueryContainerInterface $queryContainer
      * @param TaxConfig $taxSettings
      */
     public function __construct(
         LocatorLocatorInterface $locator,
-        TaxQueryContainer $queryContainer,
+        TaxQueryContainerInterface $queryContainer,
         TaxConfig $taxSettings
     ) {
         $this->locator = $locator;
@@ -48,14 +48,16 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param TaxRateTransfer $taxRateTransfer
      *
-     * @return int
+     * @return TaxRateTransfer
      * @throws PropelException
      */
     public function createTaxRate(TaxRateTransfer $taxRateTransfer)
     {
         $taxRateEntity = $this->createTaxRateEntity($taxRateTransfer);
 
-        return $taxRateEntity->getIdTaxRate();
+        $taxRateTransfer->setIdTaxRate($taxRateEntity->getIdTaxRate());
+
+        return $taxRateTransfer;
     }
 
     /**
@@ -74,13 +76,14 @@ class TaxWriter implements TaxWriterInterface
         }
 
         $taxRateEntity->fromArray($taxRateTransfer->toArray());
-        $taxRateEntity->save();
+
+        return $taxRateEntity->save();
     }
 
     /**
      * @param TaxSetTransfer $taxSetTransfer
      *
-     * @return int
+     * @return TaxSetTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException
@@ -94,14 +97,16 @@ class TaxWriter implements TaxWriterInterface
             throw new MissingTaxRateException();
         }
 
-        foreach($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
+        foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
             $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
             $taxSetEntity->addSpyTaxRate($taxRateEntity);
         }
 
         $taxSetEntity->save();
 
-        return $taxSetEntity->getIdTaxSet();
+        $taxSetTransfer->setIdTaxSet($taxSetEntity->getIdTaxSet());
+
+        return $taxSetTransfer;
     }
 
     /**
@@ -126,12 +131,12 @@ class TaxWriter implements TaxWriterInterface
 
         $taxSetEntity->setName($taxSetTransfer->getName())->setSpyTaxRates(new Collection());
 
-        foreach($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
+        foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
             $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
             $taxSetEntity->addSpyTaxRate($taxRateEntity);
         }
 
-        $taxSetEntity->save();
+        return $taxSetEntity->save();
     }
 
     /**
@@ -157,7 +162,8 @@ class TaxWriter implements TaxWriterInterface
 
         $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
         $taxSetEntity->addSpyTaxRate($taxRateEntity);
-        $taxSetEntity->save();
+
+        return $taxSetEntity->save();
     }
 
 
@@ -189,7 +195,8 @@ class TaxWriter implements TaxWriterInterface
         }
 
         $taxSetEntity->removeSpyTaxRate($taxRate);
-        $taxSetEntity->save();
+
+        return $taxSetEntity->save();
     }
 
     /**

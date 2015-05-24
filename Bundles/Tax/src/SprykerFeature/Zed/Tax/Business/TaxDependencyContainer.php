@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Tax\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\TaxBusiness;
-use SprykerFeature\Zed\Tax\TaxConfig;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
-use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
+use SprykerFeature\Zed\Tax\TaxConfig;
+use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
 use SprykerFeature\Zed\Tax\Business\Model\TaxReaderInterface;
 use SprykerFeature\Zed\Tax\Business\Model\TaxWriterInterface;
+use Generated\Zed\Ide\FactoryAutoCompletion\TaxBusiness;
 
 /**
  * @method TaxBusiness getFactory()
@@ -17,7 +17,7 @@ class TaxDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @var TaxQueryContainer
+     * @var TaxQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -45,7 +45,7 @@ class TaxDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return TaxQueryContainer
+     * @return TaxQueryContainerInterface
      */
     protected function getQueryContainer()
     {

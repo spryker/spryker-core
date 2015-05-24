@@ -4,21 +4,21 @@ namespace SprykerFeature\Zed\TaxFrontendExporterConnector\Persistence;
 
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Tax\Persistence\Propel\Map\SpyTaxSetTableMap;
-use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
+use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ProductTaxExpander implements ProductTaxExpanderInterface
 {
     /**
-     * @var TaxQueryContainer
+     * @var TaxQueryContainerInterface
      */
     protected $taxQueryContainer;
 
     /**
-     * @param TaxQueryContainer $taxQueryContainer
+     * @param TaxQueryContainerInterface $taxQueryContainer
      */
-    public function __construct(TaxQueryContainer $taxQueryContainer)
+    public function __construct(TaxQueryContainerInterface $taxQueryContainer)
     {
         $this->taxQueryContainer = $taxQueryContainer;
     }

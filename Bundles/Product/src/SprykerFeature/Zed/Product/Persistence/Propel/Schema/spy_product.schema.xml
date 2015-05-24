@@ -13,7 +13,7 @@
         <column name="sku" required="true" type="VARCHAR" size="255"/>
         <column name="fk_tax_set" type="INTEGER" required="false" />
         <foreign-key foreignTable="spy_tax_set">
-            <reference local="fk_tax_set" foreign="id_tax_set"/>
+            <reference local="fk_tax_set" foreign="id_tax_set" />
         </foreign-key>
         <unique>
             <unique-column name="sku"/>

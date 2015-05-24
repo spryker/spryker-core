@@ -14,7 +14,7 @@ interface TaxWriterInterface
     /**
      * @param TaxRateTransfer $taxRateTransfer
      *
-     * @return int
+     * @return TaxRateTransfer
      * @throws PropelException
      */
     public function createTaxRate(TaxRateTransfer $taxRateTransfer);
@@ -31,7 +31,7 @@ interface TaxWriterInterface
     /**
      * @param TaxSetTransfer $taxSetTransfer
      *
-     * @return int
+     * @return TaxSetTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException
