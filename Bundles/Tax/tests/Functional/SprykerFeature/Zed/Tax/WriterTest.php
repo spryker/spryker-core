@@ -13,7 +13,10 @@ use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRateQuery;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
 
 /**
- * @group TaxTest
+ * @group Business
+ * @group Zed
+ * @group Tax
+ * @group WriterTest
  */
 class WriterTest extends Test
 {

@@ -11,7 +11,10 @@ use SprykerFeature\Zed\Tax\Business\TaxFacade;
 use Generated\Zed\Ide\AutoCompletion;
 
 /**
- * @group TaxTest
+ * @group Business
+ * @group Zed
+ * @group Tax
+ * @group ReaderTest
  */
 class ReaderTest extends Test
 {

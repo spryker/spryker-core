@@ -4,7 +4,6 @@ namespace SprykerFeature\Zed\Tax\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Tax\TaxConfig;
-use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
 use SprykerFeature\Zed\Tax\Business\Model\TaxReaderInterface;
 use SprykerFeature\Zed\Tax\Business\Model\TaxWriterInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\TaxBusiness;
@@ -17,17 +16,12 @@ class TaxDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @var TaxQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
      * @return TaxReaderInterface
      */
     public function getReaderModel()
     {
         return $this->getFactory()->createModelTaxReader(
-            $this->getQueryContainer(),
+            $this->getLocator()->tax()->queryContainer(),
             $this->getConfig()
         );
     }
@@ -39,20 +33,8 @@ class TaxDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelTaxWriter(
             $this->getLocator(),
-            $this->getQueryContainer(),
+            $this->getLocator()->tax()->queryContainer(),
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return TaxQueryContainerInterface
-     */
-    protected function getQueryContainer()
-    {
-        if (empty($this->queryContainer)) {
-            $this->queryContainer = $this->getLocator()->tax()->queryContainer();
-        }
-
-        return $this->queryContainer;
     }
 }
