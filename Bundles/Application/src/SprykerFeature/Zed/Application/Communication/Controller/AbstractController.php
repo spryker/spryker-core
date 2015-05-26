@@ -9,7 +9,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 use Silex\Application;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
-use SprykerEngine\Zed\Messenger\Communication\Presenter\ZedUiPresenter;
+use SprykerEngine\Zed\Messenger\Communication\Presenter\YvesPresenter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -49,7 +49,7 @@ abstract class AbstractController
         $this->application = $application;
         $this->locator = $locator;
 
-        $this->presenter = new ZedUiPresenter(
+        $this->presenter = new YvesPresenter(
             $this->locator->messenger()->facade(),
             $this->locator->translation()->facade(),
             $this->locator->locale()->facade()->getCurrentLocale(),

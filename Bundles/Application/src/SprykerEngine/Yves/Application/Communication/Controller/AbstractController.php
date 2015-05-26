@@ -7,6 +7,8 @@ use SprykerEngine\Yves\Application\Business\Application;
 use SprykerEngine\Yves\Kernel\Communication\Factory;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\TwigPresenter;
+use SprykerEngine\Yves\Messenger\Business\Model\Messenger;
+use SprykerEngine\Yves\Messenger\Communication\Presenter\YvesPresenter;
 use SprykerFeature\Yves\Library\Session\FlashMessageHelper;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,6 +25,7 @@ use SprykerFeature\Yves\Library\Session\TransferSession;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
+use SprykerFeature\Sdk\Glossary\Translator;
 
 abstract class AbstractController
 {
@@ -48,11 +51,6 @@ abstract class AbstractController
     private $dependencyContainer;
 
     /**
-     * @var FlashMessageHelper
-     */
-    private $flashMessageHelper;
-
-    /**
      * @var ObservingPresenterInterface
      */
     private $presenter;
@@ -68,10 +66,11 @@ abstract class AbstractController
         $this->locator = $locator;
         $this->factory = $factory;
 
-        $this->presenter = new TwigPresenter(
-            $this->locator->messenger()->facade(),
-            $this->locator->translation()->facade(),
-            $this->locator->locale()->facade()->getCurrentLocale(),
+        var_dump($this->locator->messenger()->facade()); exit;
+
+        $this->presenter = new YvesPresenter(
+            new Messenger(),
+            $this->locator->glossary()->sdk()->createTranslator($app['locale']),
             $this->getTwig()
         );
 
@@ -351,4 +350,20 @@ abstract class AbstractController
     {
         return $this->dependencyContainer;
     }
+
+    /**
+     * @return Twig_Environment
+     * @throws LogicException
+     */
+    private function getTwig()
+    {
+        $twig = $this->getApplication()['twig'];
+        if ($twig === null) {
+            throw new LogicException('Twig environment not set up.');
+        }
+
+        return $twig;
+    }
+
+
 }
