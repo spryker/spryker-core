@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Cart\Dependency;
 
 use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
-use SprykerFeature\Shared\Cart2\Transfer\ItemInterface;
+use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
 
 interface ItemExpanderPluginInterface
 {
