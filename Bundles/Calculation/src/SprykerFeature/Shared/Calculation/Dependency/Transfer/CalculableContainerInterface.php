@@ -13,7 +13,7 @@ interface CalculableContainerInterface extends ExpenseContainerInterface
     public function getItems();
 
     /**
-     * @return \ArrayObject|TotalsInterface[]
+     * @return \ArrayObject[]
      */
     public function getTotals();
 
