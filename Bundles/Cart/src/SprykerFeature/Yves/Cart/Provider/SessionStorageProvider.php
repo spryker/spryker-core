@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Yves\Cart\Provider;
 
+use Generated\Shared\Cart\CartItemsInterface;
+use Generated\Shared\Transfer\CartTransfer;
 use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Sdk\Cart\StorageProvider\StorageProviderInterface;
-use SprykerFeature\Shared\Cart\Transfer\CartInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
 use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -36,11 +36,11 @@ class SessionStorageProvider implements StorageProviderInterface
     }
 
     /**
-     * @return CartInterface
+     * @return CartInterface|mixed
      */
     public function getCart()
     {
-        $cartTransfer = $this->getLocator()->Cart()->transferCart();
+        $cartTransfer = new CartTransfer();
 
         if ($this->session->has(self::CART_SESSION_IDENTIFIER)) {
             return $this->session->get(self::CART_SESSION_IDENTIFIER, $cartTransfer);
@@ -73,11 +73,11 @@ class SessionStorageProvider implements StorageProviderInterface
     }
 
     /**
-     * @param ItemCollectionInterface $items
+     * @param CartItemsInterface $items
      *
      * @return int
      */
-    protected function calculateCount(ItemCollectionInterface $items)
+    protected function calculateCount(CartItemsInterface $items)
     {
         $cartCount = 0;
 
