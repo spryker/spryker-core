@@ -5,10 +5,6 @@ namespace SprykerFeature\Sdk\Cart\Helper;
 use SprykerFeature\Sdk\Catalog\Model\Catalog;
 use SprykerFeature\Sdk\Catalog\Model\CatalogInterface;
 
-/**
- * Class CatalogHelper
- * @package SprykerFeature\Yves\Cart\Model
- */
 class CatalogHelper
 {
 

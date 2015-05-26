@@ -14,13 +14,16 @@
     </transfer>
 
     <transfer name="CartItem">
-        <interface name="SprykerFeature\Shared\Cart2\Transfer\ItemInterface" />
+        <interface name="SprykerFeature\Shared\Cart\Transfer\ItemInterface" />
+        <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\PriceItemInterface" />
 
         <property name="id" type="int" />
         <property name="sku" type="string" />
         <property name="uniqueIdentifier" type="string" />
         <property name="options" type="array" />
         <property name="quantity" type="string" />
+        <property name="grossPrice" type="int" />
+        <property name="priceToPay" type="int" />
     </transfer>
 
     <transfer name="CartItems">
