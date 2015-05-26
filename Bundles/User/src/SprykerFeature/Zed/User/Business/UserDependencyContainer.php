@@ -6,6 +6,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\UserBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\User\Business\Model\Installer;
+use SprykerFeature\Zed\User\Business\Model\UserInterface;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 use SprykerFeature\Zed\User\UserConfig;
 
@@ -16,13 +17,13 @@ use SprykerFeature\Zed\User\UserConfig;
 class UserDependencyContainer extends AbstractDependencyContainer
 {
     /**
-     * @return Model\User
+     * @return UserInterface
      */
     public function getUserModel()
     {
         return $this->getFactory()->createModelUser(
             $this->getQueryContainer(),
-            $this->getLocator(),
+            $this->getLocator()->application()->pluginSession(),
             $this->getConfig()
         );
     }
@@ -42,7 +43,7 @@ class UserDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelInstaller(
             $this->getQueryContainer(),
-            $this->getLocator(),
+            $this->getUserModel(),
             $this->getConfig()
         );
     }

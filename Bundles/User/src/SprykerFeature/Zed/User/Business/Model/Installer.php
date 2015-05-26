@@ -2,8 +2,6 @@
 
 namespace SprykerFeature\Zed\User\Business\Model;
 
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 use SprykerFeature\Zed\User\UserConfig;
 
@@ -15,9 +13,9 @@ class Installer implements InstallerInterface
     protected $queryContainer;
 
     /**
-     * @var AutoCompletion
+     * @var UserInterface
      */
-    protected $locator;
+    protected $user;
 
     /**
      * @var UserConfig
@@ -26,16 +24,16 @@ class Installer implements InstallerInterface
 
     /**
      * @param UserQueryContainer $queryContainer
-     * @param LocatorLocatorInterface $locator
+     * @param UserInterface $user
      * @param UserConfig $settings
      */
     public function __construct(
         UserQueryContainer $queryContainer,
-        LocatorLocatorInterface $locator,
+        UserInterface $user,
         UserConfig $settings
     ) {
         $this->queryContainer = $queryContainer;
-        $this->locator = $locator;
+        $this->user = $user;
         $this->settings = $settings;
     }
 
@@ -51,13 +49,14 @@ class Installer implements InstallerInterface
     protected function addUsers(array $usersArray)
     {
         foreach ($usersArray as $user) {
-            if ($this->queryContainer->queryUserByUsername($user['username'])->count() > 0) {
-                continue;
+            if (!$this->user->hasUserByUsername($user['username'])) {
+                $this->user->addUser(
+                    $user['firstName'],
+                    $user['lastName'],
+                    $user['username'],
+                    $user['password']
+                );
             }
-
-            $this->locator->user()
-                          ->facade()
-                          ->addUser($user['firstName'], $user['lastName'], $user['username'], $user['password']);
         }
     }
 }

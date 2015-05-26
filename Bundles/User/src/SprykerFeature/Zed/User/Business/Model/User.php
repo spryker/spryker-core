@@ -3,8 +3,6 @@
 namespace SprykerFeature\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\CollectionTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Library\Copy;
 use Propel\Runtime\Collection\ObjectCollection;
 use Generated\Shared\Transfer\UserTransfer;
@@ -14,6 +12,7 @@ use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUser;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use SprykerFeature\Zed\User\Business\Exception\UsernameExistsException;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class User implements UserInterface
 {
@@ -26,9 +25,9 @@ class User implements UserInterface
     protected $queryContainer;
 
     /**
-     * @var AutoCompletion
+     * @var SessionInterface
      */
-    protected $locator;
+    protected $session;
 
     /**
      * @var UserConfig
@@ -37,16 +36,16 @@ class User implements UserInterface
 
     /**
      * @param UserQueryContainer $queryContainer
-     * @param LocatorLocatorInterface $locator
+     * @param SessionInterface $session
      * @param UserConfig $settings
      */
     public function __construct(
         UserQueryContainer $queryContainer,
-        LocatorLocatorInterface $locator,
+        SessionInterface $session,
         UserConfig $settings
     ) {
         $this->queryContainer = $queryContainer;
-        $this->locator = $locator;
+        $this->session = $session;
         $this->settings = $settings;
     }
 
@@ -67,7 +66,7 @@ class User implements UserInterface
             throw new UsernameExistsException();
         }
 
-        $transferUser = new \Generated\Shared\Transfer\UserTransfer();
+        $transferUser = new UserTransfer();
         $transferUser->setFirstName($firstName);
         $transferUser->setLastName($lastName);
         $transferUser->setUsername($username);
@@ -112,7 +111,7 @@ class User implements UserInterface
         if ($user->getIdUserUser() !== null) {
             $entity = $this->getEntityUserById($user->getIdUserUser());
         } else {
-            $entity = $this->locator->user()->entitySpyUserUser();
+            $entity = new SpyUserUser();
         }
 
         $entity->setFirstName($user->getFirstName());
@@ -264,14 +263,13 @@ class User implements UserInterface
     /**
      * @param UserTransfer $user
      *
-     * @return UserTransfer
+     * @return mixed
      */
     public function setCurrentUser(UserTransfer $user)
     {
-        $session = $this->locator->application()->pluginSession();
         $key = sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
 
-        return $session->set($key, serialize($user));
+        return $this->session->set($key, serialize($user));
     }
 
     /**
@@ -279,12 +277,10 @@ class User implements UserInterface
      */
     public function hasCurrentUser()
     {
-        try {
-            $test = $this->getCurrentUser();
-            return true;
-        } catch (UserNotFoundException $e) {
-            return false;
-        }
+        $key = sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
+        $user = unserialize($this->session->get($key));
+
+        return $user !== false;
     }
 
     /**
@@ -337,9 +333,8 @@ class User implements UserInterface
      */
     public function getCurrentUser()
     {
-        $session = $this->locator->application()->pluginSession();
         $key = sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
-        $user = unserialize($session->get($key));
+        $user = unserialize($this->session->get($key));
 
         if ($user === false) {
             throw new UserNotFoundException();
