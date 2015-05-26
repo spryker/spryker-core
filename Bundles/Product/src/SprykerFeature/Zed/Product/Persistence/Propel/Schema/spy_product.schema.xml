@@ -11,6 +11,10 @@
     <table name="spy_abstract_product" idMethod="native" allowPkInsert="true" phpName="SpyAbstractProduct">
         <column name="id_abstract_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="sku" required="true" type="VARCHAR" size="255"/>
+        <column name="fk_tax_set" type="INTEGER" required="false" />
+        <foreign-key foreignTable="spy_tax_set">
+            <reference local="fk_tax_set" foreign="id_tax_set" />
+        </foreign-key>
         <unique>
             <unique-column name="sku"/>
         </unique>
@@ -54,12 +58,8 @@
         <column name="name" required="true" type="VARCHAR"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
         <column name="is_complete" required="false" defaultValue="true" type="BOOLEAN"/>
-        <column name="fk_tax" type="INTEGER" required="false" />
         <foreign-key foreignTable="spy_product" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_product" foreign="id_product"/>
-        </foreign-key>
-        <foreign-key foreignTable="spy_tax">
-            <reference local="fk_tax" foreign="id_tax"/>
         </foreign-key>
         <foreign-key foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
@@ -78,16 +78,6 @@
         </foreign-key>
         <foreign-key foreignTable="spy_product" phpName="BundleProduct" refPhpName="BundleProduct">
             <reference local="fk_related_product" foreign="id_product" />
-        </foreign-key>
-    </table>
-
-    <table name="spy_tax" idMethod="native" allowPkInsert="true" phpName="SpyTax" identifierQuoting="true">
-        <column name="id_tax" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="rate" type="INTEGER" required="true"/>
-        <column name="fk_locale" type="INTEGER" required="true"/>
-
-        <foreign-key foreignTable="spy_locale" phpName="Locale">
-            <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
     </table>
 

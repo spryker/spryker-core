@@ -64,7 +64,7 @@ interface TotalsInterface extends TransferInterface
     public function setTax(TaxTransfer $tax);
 
     /**
-     * @return TaxInterface
+     * @return TaxTransfer
      */
     public function getTax();
 

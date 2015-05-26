@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Business;
 
-use Composer\Installer\InstallerInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\FrontendExporterBusiness;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\FrontendExporter;
