@@ -52,19 +52,19 @@ class UrlDependencyContainer extends AbstractDependencyContainer
         );
     }
 
-        /**
-         * @param Request $request
-         *
-         * @return mixed
-         */
-        public function getDemoForm(Request $request)
-        {
-            return $this->getFactory()->createFormDemoForm(
-                $request,
-                $this->getQueryContainer(),
-                $this->getLocaleFacade()
-            );
-        }
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function getDemoForm(Request $request)
+    {
+        return $this->getFactory()->createFormDemoForm(
+            $request,
+            $this->getQueryContainer(),
+            $this->getLocaleFacade()
+        );
+    }
 
     /**
      * @param Request $request

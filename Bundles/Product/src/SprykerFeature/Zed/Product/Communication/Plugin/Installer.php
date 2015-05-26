@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Product\Communication\ProductDependencyContainer;
 class Installer extends AbstractInstallerPlugin
 {
 
-            public function install()
+    public function install()
     {
         $this->getDependencyContainer()->getInstallerFacade()->install($this->messenger);
     }
