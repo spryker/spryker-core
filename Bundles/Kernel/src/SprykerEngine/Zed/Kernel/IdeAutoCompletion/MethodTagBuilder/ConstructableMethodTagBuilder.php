@@ -78,14 +78,8 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
      */
     protected function createConstructor($className)
     {
-//        if (!class_exists($className)) {
-//            return false;
-//        }
         try {
             $class = new \ReflectionClass($className);
-//            if (is_null($class) || $class->isAbstract() || $class->isInterface() || $class->isTrait()) {
-//                return false;
-//            }
 
             $constructor = $class->getConstructor();
             /* @var $constructor \ReflectionMethod */
