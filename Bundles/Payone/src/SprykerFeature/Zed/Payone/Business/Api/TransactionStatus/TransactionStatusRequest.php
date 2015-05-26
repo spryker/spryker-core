@@ -1,7 +1,7 @@
 <?php
 
 namespace SprykerFeature\Zed\Payone\Business\Api\TransactionStatus;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\TransactionStatusUpdateInterface;
+use SprykerFeature\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\AbstractRequest;
 
 

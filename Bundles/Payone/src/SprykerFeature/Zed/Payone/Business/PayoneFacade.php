@@ -2,14 +2,14 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
+use Generated\Shared\Payone\AuthorizationInterface;
+use Generated\Shared\Payone\CaptureInterface;
+use Generated\Shared\Payone\DebitInterface;
+use Generated\Shared\Payone\PayonePaymentInterface;
+use Generated\Shared\Payone\RefundInterface;
 use Generated\Shared\Transfer\ApiCallResponseCheckTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\ApiCallResponseCheckInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\DebitDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\RefundDataInterface;
+use Generated\Shared\Payone\ApiCallResponseCheckInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
@@ -25,46 +25,46 @@ class PayoneFacade extends AbstractFacade
 {
 
     /**
-     * @param AuthorizationDataInterface $authorizationData
+     * @param AuthorizationInterface $authorizationData
      * @return AuthorizationResponseContainer
      */
-    public function authorize(AuthorizationDataInterface $authorizationData)
+    public function authorize(AuthorizationInterface $authorizationData)
     {
         return $this->getDependencyContainer()->createPaymentManager()->authorize($authorizationData);
     }
 
     /**
-     * @param AuthorizationDataInterface $authorizationData
+     * @param AuthorizationInterface $authorizationData
      * @return AuthorizationResponseContainer
      */
-    public function preAuthorize(AuthorizationDataInterface $authorizationData)
+    public function preAuthorize(AuthorizationInterface $authorizationData)
     {
         return $this->getDependencyContainer()->createPaymentManager()->preAuthorize($authorizationData);
     }
 
     /**
-     * @param CaptureDataInterface $captureData
+     * @param CaptureInterface $captureData
      * @return CaptureResponseContainer
      */
-    public function capture(CaptureDataInterface $captureData)
+    public function capture(CaptureInterface $captureData)
     {
         return $this->getDependencyContainer()->createPaymentManager()->capture($captureData);
     }
 
     /**
-     * @param DebitDataInterface $debitData
+     * @param DebitInterface $debitData
      * @return DebitResponseContainer
      */
-    public function debit(DebitDataInterface $debitData)
+    public function debit(DebitInterface $debitData)
     {
         return $this->getDependencyContainer()->createPaymentManager()->debit($debitData);
     }
 
     /**
-     * @param RefundDataInterface $refundData
+     * @param RefundInterface $refundData
      * @return RefundResponseContainer
      */
-    public function refund(RefundDataInterface $refundData)
+    public function refund(RefundInterface $refundData)
     {
         return $this->getDependencyContainer()->createPaymentManager()->refund($refundData);
     }
@@ -82,19 +82,20 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param PaymentInterface $payment
+     * @param PayonePaymentInterface $payment
      * @return bool
      */
-    public function isAuthorizationSuccessful(PaymentInterface $payment)
+    public function isAuthorizationSuccessful(PayonePaymentInterface $payment)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationSuccessful($payment);
     }
 
     /**
-     * @param PaymentInterface $payment
+     * @param PayonePaymentInterface $payment
+     *
      * @return AuthorizationCheckResponseTransfer
      */
-    public function getAuthorizationResponse(PaymentInterface $payment)
+    public function getAuthorizationResponse(PayonePaymentInterface $payment)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->getAuthorizationResponse($payment);
     }

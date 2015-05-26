@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\Payone\Business\ApiLog;
 
+use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Transfer\AuthorizationCheckResponseTransfer;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\ApiCallResponseCheckInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface;
+use Generated\Shared\Payone\ApiCallResponseCheckInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
@@ -32,10 +32,10 @@ class ApiLogFinder
     /**
      * @todo R E F A C T O R - Horrorcode - Only thougts of what could happen - Used by oms conditions
      *
-     * @param PaymentInterface $payment
+     * @param PayonePaymentInterface $payment
      * @return bool
      */
-    public function isAuthorizationSuccessful(PaymentInterface $payment)
+    public function isAuthorizationSuccessful(PayonePaymentInterface $payment)
     {
         // no payment - no success - but: what if auth call was successfull but
         // exception occurred....?
@@ -72,10 +72,10 @@ class ApiLogFinder
 
     /**
      * @todo R E F A C T O R - Horrorcode
-     * @param PaymentInterface $payment
+     * @param PayonePaymentInterface $payment
      * @return AuthorizationCheckResponseTransfer
      */
-    public function getAuthorizationResponse(PaymentInterface $payment)
+    public function getAuthorizationResponse(PayonePaymentInterface $payment)
     {
         $response = new AuthorizationCheckResponseTransfer();
 

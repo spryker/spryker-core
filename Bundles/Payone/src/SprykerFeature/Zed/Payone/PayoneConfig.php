@@ -11,7 +11,7 @@ use SprykerFeature\Shared\Payone\PayoneConfigConstants;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\System\SystemConfig;
 use \SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\StandardParameterInterface;
+use Generated\Shared\Payone\StandardParameterInterface;
 
 
 class PayoneConfig extends AbstractBundleConfig

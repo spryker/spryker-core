@@ -2,12 +2,11 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
-
-use SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\DebitDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\RefundDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\StandardParameterInterface;
+use Generated\Shared\Payone\AuthorizationInterface;
+use Generated\Shared\Payone\CaptureInterface;
+use Generated\Shared\Payone\DebitInterface;
+use Generated\Shared\Payone\RefundInterface;
+use Generated\Shared\Payone\StandardParameterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
@@ -34,33 +33,33 @@ interface PaymentMethodMapperInterface
     public function setStandardParameter(StandardParameterInterface $standardParameter);
 
     /**
-     * @param AuthorizationDataInterface $authorizationData
+     * @param AuthorizationInterface $authorizationData
      * @return AuthorizationContainer
      */
-    public function mapAuthorization(AuthorizationDataInterface $authorizationData);
+    public function mapAuthorization(AuthorizationInterface $authorizationData);
 
     /**
-     * @param AuthorizationDataInterface $authorizationData
+     * @param AuthorizationInterface $authorizationData
      * @return AuthorizationContainer
      */
-    public function mapPreAuthorization(AuthorizationDataInterface $authorizationData);
+    public function mapPreAuthorization(AuthorizationInterface $authorizationData);
 
     /**
-     * @param CaptureDataInterface $captureData
+     * @param CaptureInterface $captureData
      * @return CaptureContainer
      */
-    public function mapCapture(CaptureDataInterface $captureData);
+    public function mapCapture(CaptureInterface $captureData);
 
     /**
-     * @param DebitDataInterface $debitData
+     * @param DebitInterface $debitData
      * @return DebitContainer
      */
-    public function mapDebit(DebitDataInterface $debitData);
+    public function mapDebit(DebitInterface $debitData);
 
     /**
-     * @param RefundDataInterface $refundData
+     * @param RefundInterface $refundData
      * @return RefundContainer
      */
-    public function mapRefund(RefundDataInterface $refundData);
+    public function mapRefund(RefundInterface $refundData);
 
 }

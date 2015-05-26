@@ -1,11 +1,12 @@
 <?php
 
 namespace SprykerFeature\Sdk\Payone\ClientApi\Call;
+
 use SprykerFeature\Sdk\Payone\ClientApi\HashGeneratorInterface;
 use SprykerFeature\Sdk\Payone\ClientApi\Request\AbstractRequest;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\StandardParameterInterface;
+use Generated\Shared\Payone\StandardParameterInterface;
 
 
 abstract class AbstractCall

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
-use SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface;
+use Generated\Shared\Payone\AuthorizationInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
@@ -22,10 +22,10 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param AuthorizationDataInterface $authorizationData
+     * @param AuthorizationInterface $authorizationData
      * @return CreditCardContainer
      */
-    public function mapAuthorization(AuthorizationDataInterface $authorizationData)
+    public function mapAuthorization(AuthorizationInterface $authorizationData)
     {
         $authorizationContainer = new AuthorizationContainer();
 
@@ -42,10 +42,10 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param AuthorizationDataInterface $authorizationData
+     * @param AuthorizationInterface $authorizationData
      * @return AbstractRequestContainer
      */
-    public function mapPreAuthorization(AuthorizationDataInterface $authorizationData)
+    public function mapPreAuthorization(AuthorizationInterface $authorizationData)
     {
         $authorizationContainer = new PreAuthorizationContainer();
 
@@ -62,10 +62,10 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param AuthorizationDataInterface $authorizationData
+     * @param AuthorizationInterface $authorizationData
      * @return CreditCardContainer
      */
-    protected function createPaymentMethodContainer(AuthorizationDataInterface $authorizationData)
+    protected function createPaymentMethodContainer(AuthorizationInterface $authorizationData)
     {
         $paymentMethodContainer = new CreditCardContainer();
         $paymentMethodContainer->setPseudoCardPan($authorizationData->getPaymentUserData()->getCreditCardPseudoCardPan());
@@ -89,10 +89,10 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param AuthorizationDataInterface $authorizationData
+     * @param AuthorizationInterface $authorizationData
      * @return PersonalContainer
      */
-    protected function createAuthorizationPersonalData(AuthorizationDataInterface $authorizationData)
+    protected function createAuthorizationPersonalData(AuthorizationInterface $authorizationData)
     {
         $personalContainer = new PersonalContainer();
 

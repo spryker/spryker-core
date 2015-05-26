@@ -4,41 +4,35 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Authorization">
-        <interface name="SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface" />
         <property name="amount" type="int" />
         <property name="referenceId" type="string" />
         <property name="paymentMethod" type="string" />
         <property name="paymentUserData" type="PaymentUserData" />
-        <property name="order" type="string" /> <!-- @todo: Order Interface here -->
+        <property name="order" type="Order" />
     </transfer>
 
     <transfer name="Capture">
-        <interface name="SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface" />
         <property name="amount" type="int" />
         <property name="payment" type="Paymente" />
     </transfer>
 
     <transfer name="Debit">
-        <interface name="SprykerFeature\Shared\Payone\Dependency\Transfer\DebitDataInterface" />
         <property name="amount" type="int" />
         <property name="payment" type="Payment" />
     </transfer>
 
     <transfer name="Refund">
-        <interface name="SprykerFeature\Shared\Payone\Dependency\Transfer\RefundDataInterface" />
         <property name="amount" type="int" />
         <property name="payment" type="Payment" />
     </transfer>
 
     <transfer name="PayonePayment">
-        <interface name="SprykerFeature\Shared\Payone\Dependency\Transfer\PaymentInterface" />
         <property name="paymentMethod" type="string" />
         <property name="authorizationType" type="string" />
         <property name="transactionId" type="string" />
     </transfer>
 
     <transfer name="StandardParameter">
-        <interface name="SprykerFeature\Shared\Payone\Dependency\Transfer\StandardParameterInterface" />
         <property name="encoding" type="string" />
         <property name="mid" type="string" />
         <property name="aid" type="string" />
@@ -53,13 +47,11 @@
     </transfer>
 
     <transfer name="ApiCallResponseCheck">
-        <interface name="SprykerFeature\Shared\Payone\Dependency\Transfer\ApiCallResponseCheckInterface" />
         <property name="requestType" type="string" />
         <property name="payment" type="Payment" />
     </transfer>
 
     <transfer name="AuthorizationCheckResponse">
-        <interface name="SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationCheckResponseInterface" />
         <property name="isSuccess" type="bool" />
         <property name="request" type="string" />
         <property name="status" type="string" />

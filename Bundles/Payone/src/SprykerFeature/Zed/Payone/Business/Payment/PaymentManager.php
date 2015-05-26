@@ -3,16 +3,16 @@
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
 
+use Generated\Shared\Payone\AuthorizationInterface;
+use Generated\Shared\Payone\CaptureInterface;
+use Generated\Shared\Payone\DebitInterface;
+use Generated\Shared\Payone\RefundInterface;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\AuthorizationDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\DebitDataInterface;
 use SprykerFeature\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\RefundDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\StandardParameterInterface;
+use Generated\Shared\Payone\StandardParameterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
@@ -57,7 +57,6 @@ class PaymentManager
      * @var PaymentMethodMapperInterface[]
      */
     protected $registeredMethodMappers;
-
 
     /**
      * @param AdapterInterface $executionAdapter
@@ -122,10 +121,10 @@ class PaymentManager
     }
 
     /**
-     * @param AuthorizationDataInterface $authorizationData
+     * @param AuthorizationInterface $authorizationData
      * @return AuthorizationResponseContainer
      */
-    public function authorize(AuthorizationDataInterface $authorizationData)
+    public function authorize(AuthorizationInterface $authorizationData)
     {
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($authorizationData->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapAuthorization($authorizationData);
@@ -135,10 +134,10 @@ class PaymentManager
     }
 
     /**
-     * @param AuthorizationDataInterface $authorizationData
+     * @param AuthorizationInterface $authorizationData
      * @return AuthorizationResponseContainer
      */
-    public function preAuthorize(AuthorizationDataInterface $authorizationData)
+    public function preAuthorize(AuthorizationInterface $authorizationData)
     {
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($authorizationData->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapPreAuthorization($authorizationData);
@@ -148,11 +147,11 @@ class PaymentManager
     }
 
     /**
-     * @param AuthorizationDataInterface $authorizationData
+     * @param AuthorizationInterface $authorizationData
      * @param AuthorizationContainer $requestContainer
      * @return AuthorizationResponseContainer
      */
-    protected function performAuthorization(AuthorizationDataInterface $authorizationData, AuthorizationContainer $requestContainer)
+    protected function performAuthorization(AuthorizationInterface $authorizationData, AuthorizationContainer $requestContainer)
     {
         $this->setStandardParameter($requestContainer);
 
@@ -172,10 +171,10 @@ class PaymentManager
     }
 
     /**
-     * @param CaptureDataInterface $captureData
+     * @param CaptureInterface $captureData
      * @return CaptureResponseContainer
      */
-    public function capture(CaptureDataInterface $captureData)
+    public function capture(CaptureInterface $captureData)
     {
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($captureData->getPayment()->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapCapture($captureData);
@@ -193,10 +192,10 @@ class PaymentManager
     }
 
     /**
-     * @param DebitDataInterface $debitData
+     * @param DebitInterface $debitData
      * @return DebitResponseContainer
      */
-    public function debit(DebitDataInterface $debitData)
+    public function debit(DebitInterface $debitData)
     {
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($debitData->getPayment()->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapDebit($debitData);
@@ -214,10 +213,10 @@ class PaymentManager
     }
 
     /**
-     * @param RefundDataInterface $refundData
+     * @param RefundInterface $refundData
      * @return RefundResponseContainer
      */
-    public function refund(RefundDataInterface $refundData)
+    public function refund(RefundInterface $refundData)
     {
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($refundData->getPayment()->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapDebit($refundData);

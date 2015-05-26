@@ -2,17 +2,16 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
-use SprykerFeature\Shared\Payone\Dependency\Transfer\CaptureDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\DebitDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\RefundDataInterface;
-use SprykerFeature\Shared\Payone\Dependency\Transfer\StandardParameterInterface;
+use Generated\Shared\Payone\CaptureInterface;
+use Generated\Shared\Payone\DebitInterface;
+use Generated\Shared\Payone\RefundInterface;
+use Generated\Shared\Payone\StandardParameterInterface;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
-
 
 abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApiConstants
 {
@@ -25,7 +24,6 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApi
      * @var SequenceNumberProviderInterface
      */
     private $sequenceNumberProvider;
-
 
     /**
      * @param StandardParameterInterface $standardParameter
@@ -60,10 +58,10 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApi
     }
 
     /**
-     * @param CaptureDataInterface $captureData
+     * @param CaptureInterface $captureData
      * @return CaptureContainer
      */
-    public function mapCapture(CaptureDataInterface $captureData)
+    public function mapCapture(CaptureInterface $captureData)
     {
         $captureContainer = new CaptureContainer();
 
@@ -78,10 +76,10 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApi
     }
 
     /**
-     * @param DebitDataInterface $debitData
+     * @param DebitInterface $debitData
      * @return DebitContainer
      */
-    public function mapDebit(DebitDataInterface $debitData)
+    public function mapDebit(DebitInterface $debitData)
     {
         $debitContainer = new DebitContainer();
 
@@ -96,10 +94,10 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApi
     }
 
     /**
-     * @param RefundDataInterface $refundData
+     * @param RefundInterface $refundData
      * @return RefundContainer
      */
-    public function mapRefund(RefundDataInterface $refundData)
+    public function mapRefund(RefundInterface $refundData)
     {
         $refundContainer = new RefundContainer();
 
