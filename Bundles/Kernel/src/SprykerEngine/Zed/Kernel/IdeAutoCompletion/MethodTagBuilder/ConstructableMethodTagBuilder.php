@@ -48,11 +48,6 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
         if (!class_exists($className)) {
             return true;
         }
-        $class = new \ReflectionClass($className);
-
-        if (!$class->isInstantiable()) {
-            return true;
-        }
 
         return false;
     }
@@ -83,14 +78,14 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
      */
     protected function createConstructor($className)
     {
-        if (!class_exists($className)) {
-            return false;
-        }
+//        if (!class_exists($className)) {
+//            return false;
+//        }
         try {
             $class = new \ReflectionClass($className);
-            if (is_null($class) || $class->isAbstract() || $class->isInterface() || $class->isTrait()) {
-                return false;
-            }
+//            if (is_null($class) || $class->isAbstract() || $class->isInterface() || $class->isTrait()) {
+//                return false;
+//            }
 
             $constructor = $class->getConstructor();
             /* @var $constructor \ReflectionMethod */
