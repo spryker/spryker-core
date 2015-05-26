@@ -5,6 +5,8 @@ namespace SprykerEngine\Yves\Application\Communication\Controller;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Yves\Application\Business\Application;
 use SprykerEngine\Yves\Kernel\Communication\Factory;
+use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
+use SprykerEngine\Shared\Messenger\Communication\Presenter\TwigPresenter;
 use SprykerFeature\Yves\Library\Session\FlashMessageHelper;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,6 +22,7 @@ use ArrayObject;
 use SprykerFeature\Yves\Library\Session\TransferSession;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
 
 abstract class AbstractController
 {
@@ -50,6 +53,11 @@ abstract class AbstractController
     private $flashMessageHelper;
 
     /**
+     * @var ObservingPresenterInterface
+     */
+    private $presenter;
+
+    /**
      * @param Application $app
      * @param Factory $factory
      * @param LocatorLocatorInterface $locator
@@ -59,6 +67,13 @@ abstract class AbstractController
         $this->app = $app;
         $this->locator = $locator;
         $this->factory = $factory;
+
+        $this->presenter = new TwigPresenter(
+            $this->locator->messenger()->facade(),
+            $this->locator->translation()->facade(),
+            $this->locator->locale()->facade()->getCurrentLocale(),
+            $this->getTwig()
+        );
 
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
@@ -170,18 +185,15 @@ abstract class AbstractController
      */
     protected function addMessagesFromZedResponse(TransferResponse $transferResponse)
     {
-        $this->getFlashMessageHelper()->addMessagesFromResponse($transferResponse);
+        $this->getMessenger()->addMessagesFromResponse($transferResponse);
     }
 
     /**
-     * @return FlashMessageHelper
+     * @return MessengerInterface
      */
-    private function getFlashMessageHelper()
+    private function getMessenger()
     {
-        if (is_null($this->flashMessageHelper)) {
-            $this->flashMessageHelper = $this->createFlashMessageHelper();
-        }
-        return $this->flashMessageHelper;
+        return $this->presenter->getMessenger();
     }
 
     /**
@@ -202,7 +214,7 @@ abstract class AbstractController
      */
     protected function addMessageSuccess($message)
     {
-        $this->getFlashMessageHelper()->addMessage(FlashMessageHelper::SUCCESS, $message);
+        $this->getMessenger()->addSuccess($message);
 
         return $this;
     }
@@ -215,7 +227,7 @@ abstract class AbstractController
      */
     protected function addMessageWarning($message)
     {
-        $this->getFlashMessageHelper()->addMessage(FlashMessageHelper::WARNING, $message);
+        $this->getMessenger()->addWarning($message);
 
         return $this;
     }
@@ -228,7 +240,7 @@ abstract class AbstractController
      */
     protected function addMessageError($message)
     {
-        $this->getFlashMessageHelper()->addMessage(FlashMessageHelper::ERROR, $message);
+        $this->getMessenger()->addError($message);
 
         return $this;
     }

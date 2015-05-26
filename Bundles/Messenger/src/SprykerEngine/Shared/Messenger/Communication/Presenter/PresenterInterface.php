@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerEngine\Zed\Messenger\Communication\Presenter;
+namespace SprykerEngine\Shared\Messenger\Communication\Presenter;
 
 interface PresenterInterface
 {

@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerEngine\Zed\Messenger\Business\Model;
 
-use SprykerEngine\Zed\Messenger\Business\Model\Message\Message;
+use SprykerEngine\Shared\Messenger\Business\Model\Message\Message;
 use SprykerEngine\Zed\Messenger\Business\Model\Messenger;
 
 class MessengerTest extends \PHPUnit_Framework_TestCase
@@ -23,7 +23,7 @@ class MessengerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \SprykerEngine\Zed\Messenger\Business\Model\Exception\MessageTypeNotFoundException
+     * @expectedException \SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundException
      */
     public function testAddInvalid()
     {

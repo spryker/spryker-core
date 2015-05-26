@@ -5,10 +5,10 @@ namespace SprykerEngine\Zed\Messenger\Business;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
 use SprykerEngine\Zed\Messenger\Business\Model\Message\Message;
-use SprykerEngine\Zed\Messenger\Business\Model\Message\MessageInterface;
+use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
 use SprykerEngine\Zed\Messenger\Business\Model\Messenger;
-use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
-use SprykerEngine\Zed\Messenger\Communication\Presenter\ObservingPresenterInterface;
+use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
+use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface as LegacyMessengerInterface;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -31,6 +31,11 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
         $this->messenger = $this->getDependencyContainer()->getMessenger();
     }
 
+    /**
+     * @param string $type
+     *
+     * @return mixed
+     */
     public function getAll($type = null)
     {
         return $this->messenger->getAll($type);

@@ -3,10 +3,12 @@
 namespace SprykerEngine\Zed\Messenger\Communication\Presenter;
 
 use Generated\Shared\Transfer\TranslatedMessageTransfer;
+use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
 use SprykerEngine\Zed\Translation\Business\TranslationFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
+use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use Twig_Environment;
+use SprykerEngine\Shared\Messenger\Communication\Presenter\AbstractPresenter;
 
 class ZedUiPresenter extends AbstractPresenter implements
     ObservingPresenterInterface
