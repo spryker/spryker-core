@@ -49,6 +49,7 @@ class SellableTest extends Test
         $stockProductEntity->setIsNeverOutOfStock(false)->setQuantity(10)->save();
         $productEntity = SpyProductQuery::create()->findOneByIdProduct($stockProductEntity->getFkProduct());
         $isSellable = $this->availabilityFacade->isProductSellable($productEntity->getSku(), 1);
+
         $this->assertTrue($isSellable);
     }
 

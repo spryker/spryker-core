@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
+use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
 use SimpleXMLElement;
