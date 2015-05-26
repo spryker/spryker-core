@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface;
+use Generated\Shared\Calculation\OrderItemOptionInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class OptionPriceToPayCalculator implements
@@ -27,11 +27,11 @@ class OptionPriceToPayCalculator implements
     }
 
     /**
-     * @param OptionItemInterface $option
+     * @param OrderItemOptionInterface $option
      *
      * @return int
      */
-    protected function sumDiscounts(OptionItemInterface $option)
+    protected function sumDiscounts(OrderItemOptionInterface $option)
     {
         $discountAmount = 0;
         foreach ($option->getDiscounts() as $discount) {

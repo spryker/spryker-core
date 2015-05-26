@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Yves\Cart\Provider;
 
+use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Cart\CartItemsInterface;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Yves\Ide\AutoCompletion;

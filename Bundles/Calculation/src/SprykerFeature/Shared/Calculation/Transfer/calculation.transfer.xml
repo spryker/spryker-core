@@ -64,5 +64,10 @@
         <property name="grandTotal" type="int" />
     </transfer>
 
+    <transfer name="OrderItemOption">
+        <property name="grossPrice" type="int" />
+        <property name="discounts" type="Discount[]" singular="discount" />
+    </transfer>
+
 </transfers>
 

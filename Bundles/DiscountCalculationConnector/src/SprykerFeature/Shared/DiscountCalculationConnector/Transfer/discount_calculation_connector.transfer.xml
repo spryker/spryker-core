@@ -12,5 +12,9 @@
         <property name="discounts" type="Discount[]" singular="discountItem" />
     </transfer>
 
+    <transfer name="OrderItemOption">
+        <property name="discounts" type="Discount[]" singular="discount" />
+    </transfer>
+
 </transfers>
 

@@ -3,7 +3,6 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-
     <transfer name="Order">
         <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface" />
         <property name="idSalesOrder" type="int" />
@@ -51,6 +50,7 @@
         <property name="cellPhone" type="string" />
         <property name="description" type="string" />
     </transfer>
+
     <transfer name="Comment">
         <property name="idSalesOrderComment" type="int" />
         <property name="message" type="string" />
@@ -59,11 +59,13 @@
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
     </transfer>
+
     <transfer name="Document">
         <property name="header" type="string" />
         <property name="fileName" type="string" />
         <property name="filePath" type="string" />
     </transfer>
+
     <transfer name="Invoice">
         <property name="invoiceNumber" type="string" />
         <property name="fkSalesOrder" type="int" />
@@ -98,7 +100,6 @@
     </transfer>
 
     <transfer name="OrderItemOption">
-        <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface" />
         <property name="identifier" type="int" />
         <property name="name" type="string" />
         <property name="description" type="string" />

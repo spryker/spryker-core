@@ -9,7 +9,7 @@ use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterfac
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\ExpenseContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionContainerInterface;
 use Generated\Shared\Calculation\TotalsInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface;
+use Generated\Shared\Calculation\OrderItemOptionInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class SubtotalTotalsCalculator implements
@@ -49,7 +49,7 @@ class SubtotalTotalsCalculator implements
     }
 
     /**
-     * @param \ArrayObject|OptionItemInterface[] $options
+     * @param \ArrayObject|OrderItemOptionInterface[] $options
      *
      * @return int
      */

@@ -10,7 +10,7 @@ use Generated\Shared\DiscountCalculationConnector\DiscountInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
 use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionItemInterface;
+use Generated\Shared\DiscountCalculationConnector\OrderItemOptionInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
@@ -182,7 +182,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|OptionItemInterface[] $options
+     * @param \ArrayObject|OrderItemOptionInterface[] $options
      *
      * @return int
      */
@@ -191,7 +191,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
         $discountAmount = 0;
 
         foreach ($options as $option) {
-            if ($option instanceof DiscountableInterface) {
+            if ($option instanceof OrderItemOptionInterface) {
                 foreach ($option->getDiscounts() as $discount) {
                     $discountAmount += $discount->getAmount();
                 }
