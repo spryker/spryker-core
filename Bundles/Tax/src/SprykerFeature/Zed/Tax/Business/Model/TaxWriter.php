@@ -31,6 +31,11 @@ class TaxWriter implements TaxWriterInterface
     protected $taxSettings;
 
     /**
+     * @var array
+     */
+    protected $taxChangePlugins;
+
+    /**
      * @param LocatorLocatorInterface $locator
      * @param TaxQueryContainerInterface $queryContainer
      * @param TaxConfig $taxSettings
@@ -43,6 +48,7 @@ class TaxWriter implements TaxWriterInterface
         $this->locator = $locator;
         $this->queryContainer = $queryContainer;
         $this->taxSettings = $taxSettings;
+        $this->taxChangePlugins = $taxSettings->getTaxChangePlugins();
     }
 
     /**
@@ -76,6 +82,10 @@ class TaxWriter implements TaxWriterInterface
         }
 
         $taxRateEntity->fromArray($taxRateTransfer->toArray());
+
+        foreach($this->taxChangePlugins as $plugin) {
+            $plugin->handleTaxRateChange($taxRateEntity->getIdTaxRate());
+        }
 
         return $taxRateEntity->save();
     }
@@ -136,6 +146,10 @@ class TaxWriter implements TaxWriterInterface
             $taxSetEntity->addSpyTaxRate($taxRateEntity);
         }
 
+        foreach($this->taxChangePlugins as $plugin) {
+            $plugin->handleTaxSetChange($taxSetEntity->getIdTaxSet());
+        }
+
         return $taxSetEntity->save();
     }
 
@@ -162,6 +176,10 @@ class TaxWriter implements TaxWriterInterface
 
         $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
         $taxSetEntity->addSpyTaxRate($taxRateEntity);
+
+        foreach($this->taxChangePlugins as $plugin) {
+            $plugin->handleTaxSetChange($taxSetEntity->getIdTaxSet());
+        }
 
         return $taxSetEntity->save();
     }
@@ -195,6 +213,10 @@ class TaxWriter implements TaxWriterInterface
         }
 
         $taxSetEntity->removeSpyTaxRate($taxRate);
+
+        foreach($this->taxChangePlugins as $plugin) {
+            $plugin->handleTaxSetChange($taxSetEntity->getIdTaxSet());
+        }
 
         return $taxSetEntity->save();
     }

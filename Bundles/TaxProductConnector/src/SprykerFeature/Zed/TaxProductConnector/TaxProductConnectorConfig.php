@@ -1,11 +1,11 @@
 <?php
 
-namespace SprykerFeature\Zed\Tax;
+namespace SprykerFeature\Zed\TaxProductConnector;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 
-class TaxConfig extends AbstractBundleConfig
+class TaxProductConnectorConfig extends AbstractBundleConfig
 {
     /**
      * @return TaxChangePluginInterface[]
