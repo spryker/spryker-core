@@ -74,14 +74,16 @@ class UrlFacadeTest extends Test
 
     public function testSaveUrlInsertsAndReturnsSomethingOnCreate()
     {
-        $this->markTestSkipped('Logical code in transfer MUST be fixed');
         $urlQuery = $this->urlQueryContainer->queryUrls();
         $redirect = $this->urlFacade->createRedirect('/YetSomeOtherPageUrl2');
 
         $url = new UrlTransfer();
-        $url->setUrl('/YetSomeOtherPageUrl');
-        $url->setFkLocale($this->localeFacade->createLocale('QWERT')->getIdLocale());
-        $url->setResource('redirect', $redirect->getIdRedirect());
+        $url
+            ->setUrl('/YetSomeOtherPageUrl')
+            ->setFkLocale($this->localeFacade->createLocale('QWERT')->getIdLocale())
+            ->setResourceType('redirect')
+            ->setResourceId($redirect->getIdRedirect())
+        ;
 
         $urlCountBeforeCreation = $urlQuery->count();
         $url = $this->urlFacade->saveUrl($url);
@@ -94,21 +96,23 @@ class UrlFacadeTest extends Test
 
     public function testSaveUrlUpdatesSomething()
     {
-        $this->markTestSkipped('Logical code in transfer MUST be fixed');
         $url = new UrlTransfer();
         $urlQuery = $this->urlQueryContainer->queryUrl('/SoManyPageUrls');
         $redirect1 = $this->urlFacade->createRedirect('/SoManyPageUrls2');
         $redirect2 = $this->urlFacade->createRedirect('/SoManyPageUrls3');
 
-        $url->setUrl('/SoManyPageUrls');
-        $url->setFkLocale($this->localeFacade->createLocale('WERTZ')->getIdLocale());
-        $url->setResource('redirect', $redirect1->getIdRedirect());
+        $url
+            ->setUrl('/SoManyPageUrls')
+            ->setFkLocale($this->localeFacade->createLocale('WERTZ')->getIdLocale())
+            ->setResourceType('redirect')
+            ->setResourceId($redirect1->getIdRedirect())
+        ;
 
         $url = $this->urlFacade->saveUrl($url);
 
         $this->assertEquals($redirect1->getIdRedirect(), $urlQuery->findOne()->getResourceId());
 
-        $url->setResource('redirect', $redirect2->getIdRedirect());
+        $url->setResourceId($redirect2->getIdRedirect());
         $this->urlFacade->saveUrl($url);
 
         $this->assertEquals($redirect2->getIdRedirect(), $urlQuery->findOne()->getResourceId());
