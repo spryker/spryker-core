@@ -5,10 +5,9 @@ namespace SprykerEngine\Shared\Messenger\Business\Model;
 use SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\Message;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface as LegacyMessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
 
-abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerInterface
+abstract class AbstractMessenger implements MessengerInterface
 {
 
     /**
@@ -49,7 +48,6 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
         if (!in_array($type, $this->validMessageTypes)) {
             throw new MessageTypeNotFoundException();
         }
-
 
         $this->messages[] = new Message(
             $type,
@@ -305,7 +303,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
     }
 
     /**
-     * notifies registered presenters about available updates
+     * notifies registered presenter about available updates
      */
     protected function notify()
     {

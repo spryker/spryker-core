@@ -3,7 +3,7 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-namespace Mail;
+namespace Messenger;
 
 use \Codeception\Maybe;
 use Mail\Codeception\Module\CodeHelper;

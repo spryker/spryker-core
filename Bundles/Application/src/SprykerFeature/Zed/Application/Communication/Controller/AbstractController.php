@@ -86,6 +86,7 @@ abstract class AbstractController
      * @param null $data
      * @param int $status
      * @param array $headers
+     *
      * @return JsonResponse
      */
     protected function jsonResponse($data = null, $status = 200, $headers = array())
@@ -97,6 +98,7 @@ abstract class AbstractController
      * @param null $callback
      * @param int $status
      * @param array $headers
+     *
      * @return StreamedResponse
      */
     protected function streamedResponse($callback = null, $status = 200, $headers = array())
@@ -109,6 +111,7 @@ abstract class AbstractController
 
     /**
      * @param array $data
+     *
      * @return array
      */
     protected function viewResponse(array $data = [])
@@ -159,6 +162,7 @@ abstract class AbstractController
      * @param string $type
      * @param null $data
      * @param array $options
+     *
      * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
      */
     protected function createForm($type = 'form', $data = null, array $options = array())
