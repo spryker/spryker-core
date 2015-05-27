@@ -21,8 +21,7 @@ class TaxDependencyContainer extends AbstractDependencyContainer
     public function getReaderModel()
     {
         return $this->getFactory()->createModelTaxReader(
-            $this->getLocator()->tax()->queryContainer(),
-            $this->getConfig()
+            $this->getLocator()->tax()->queryContainer()
         );
     }
 
@@ -34,7 +33,7 @@ class TaxDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createModelTaxWriter(
             $this->getLocator(),
             $this->getLocator()->tax()->queryContainer(),
-            $this->getConfig()
+            $this->getConfig()->getTaxChangePlugins()
         );
     }
 }

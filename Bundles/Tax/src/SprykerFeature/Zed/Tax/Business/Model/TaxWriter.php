@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\Tax\Business\Model;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
+use SprykerFeature\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 use SprykerFeature\Zed\Tax\TaxConfig;
 use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Generated\Shared\Transfer\TaxRateTransfer;
@@ -31,24 +32,23 @@ class TaxWriter implements TaxWriterInterface
     protected $taxSettings;
 
     /**
-     * @var array
+     * @var TaxChangePluginInterface[]
      */
     protected $taxChangePlugins;
 
     /**
      * @param LocatorLocatorInterface $locator
      * @param TaxQueryContainerInterface $queryContainer
-     * @param TaxConfig $taxSettings
+     * @param TaxChangePluginInterface[] $taxChangePlugins
      */
     public function __construct(
         LocatorLocatorInterface $locator,
         TaxQueryContainerInterface $queryContainer,
-        TaxConfig $taxSettings
+        array $taxChangePlugins
     ) {
         $this->locator = $locator;
         $this->queryContainer = $queryContainer;
-        $this->taxSettings = $taxSettings;
-        $this->taxChangePlugins = $taxSettings->getTaxChangePlugins();
+        $this->taxChangePlugins = $taxChangePlugins;
     }
 
     /**
@@ -83,7 +83,7 @@ class TaxWriter implements TaxWriterInterface
 
         $taxRateEntity->fromArray($taxRateTransfer->toArray());
 
-        foreach($this->taxChangePlugins as $plugin) {
+        foreach ($this->taxChangePlugins as $plugin) {
             $plugin->handleTaxRateChange($taxRateEntity->getIdTaxRate());
         }
 
@@ -146,7 +146,7 @@ class TaxWriter implements TaxWriterInterface
             $taxSetEntity->addSpyTaxRate($taxRateEntity);
         }
 
-        foreach($this->taxChangePlugins as $plugin) {
+        foreach ($this->taxChangePlugins as $plugin) {
             $plugin->handleTaxSetChange($taxSetEntity->getIdTaxSet());
         }
 
@@ -177,7 +177,7 @@ class TaxWriter implements TaxWriterInterface
         $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
         $taxSetEntity->addSpyTaxRate($taxRateEntity);
 
-        foreach($this->taxChangePlugins as $plugin) {
+        foreach ($this->taxChangePlugins as $plugin) {
             $plugin->handleTaxSetChange($taxSetEntity->getIdTaxSet());
         }
 
@@ -214,7 +214,7 @@ class TaxWriter implements TaxWriterInterface
 
         $taxSetEntity->removeSpyTaxRate($taxRate);
 
-        foreach($this->taxChangePlugins as $plugin) {
+        foreach ($this->taxChangePlugins as $plugin) {
             $plugin->handleTaxSetChange($taxSetEntity->getIdTaxSet());
         }
 
