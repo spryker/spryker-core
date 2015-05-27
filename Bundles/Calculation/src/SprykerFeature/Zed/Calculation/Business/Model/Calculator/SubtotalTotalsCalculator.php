@@ -7,6 +7,7 @@ use Generated\Shared\Calculation\ExpensesInterface;
 use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\Calculation\OrderItemOptionInterface;
+use Generated\Shared\Sales\OrderItemsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class SubtotalTotalsCalculator implements
@@ -36,6 +37,11 @@ class SubtotalTotalsCalculator implements
     public function calculateSubtotal(\ArrayObject $calculableItems)
     {
         $subtotal = 0;
+
+        if ($calculableItems instanceof OrderItemsInterface) {
+            $calculableItems = $calculableItems->getOrderItems();
+        }
+
         foreach ($calculableItems as $item) {
             $subtotal += $item->getGrossPrice();
             $subtotal += $this->sumOptions($item->getOptions());

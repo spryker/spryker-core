@@ -2,8 +2,10 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
+use Generated\Shared\Calculation\DiscountItemsInterface;
 use Generated\Shared\DiscountCalculationConnector\ExpenseInterface;
 use Generated\Shared\Calculation\OrderInterface;
+use Generated\Shared\Sales\OrderItemsInterface;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTotalItemTransfer;
 use Generated\Shared\Calculation\TotalsInterface;
@@ -42,6 +44,10 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
         \ArrayObject $discountableItems
     ) {
         $discountAmount = 0;
+
+        if ($discountableItems instanceof OrderItemsInterface) {
+            $discountableItems = $discountableItems->getOrderItems();
+        }
 
         foreach ($discountableItems as $item) {
             $discountAmount += $this->sumItemDiscounts($item->getDiscounts());
@@ -144,13 +150,17 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|DiscountInterface[] $discounts
+     * @param \ArrayObject|DiscountItemsInterface $discounts
      *
      * @return int
      */
     protected function sumItemDiscounts(\ArrayObject $discounts)
     {
         $discountAmount = 0;
+
+        if ($discounts instanceof DiscountItemsInterface) {
+            $discounts = $discounts->getDiscounts();
+        }
 
         foreach ($discounts as $discount) {
             $discountAmount += $discount->getAmount();
