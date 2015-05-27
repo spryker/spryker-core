@@ -19,7 +19,6 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     public function getAbstractProductIdsForTaxRate($idTaxRate)
     {
         return SpyAbstractProductQuery::create()
-            ->groupByIdAbstractProduct()
             ->select([
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT
             ])

@@ -9,9 +9,8 @@ use SprykerFeature\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
-use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-
+use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 
 /**
  * @group Business
@@ -59,13 +58,16 @@ class TaxChangeTouchPluginTest extends Test
 
     private function performAssertion()
     {
-        $conn = Propel::getConnection();
-        $stmt = $conn->prepare("SELECT item_id FROM spy_touch ORDER BY id_touch DESC LIMIT 2");
-        $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_COLUMN);
-        $this->assertCount(2, $result);
-        $this->assertContains((string) $this->abstractProductIds[0], $result);
-        $this->assertContains((string) $this->abstractProductIds[1], $result);
+        $query = SpyTouchQuery::create()
+            ->filterByItemType('abstract_product')
+            ->limit(2)
+            ->orderByIdTouch('desc')
+            ->find();
+
+        $this->assertEquals(2, $query->count());
+        foreach($query as $touchEntity) {
+            $this->assertContains($touchEntity->getItemId(), $this->abstractProductIds);
+        }
     }
 
     private function loadFixtures()
