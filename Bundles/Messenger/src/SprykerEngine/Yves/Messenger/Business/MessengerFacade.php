@@ -2,7 +2,7 @@
 
 namespace SprykerEngine\Yves\Messenger\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Yves\Kernel\Business\AbstractFacade;
 use SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\Message;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
@@ -11,7 +11,7 @@ use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface as LegacyMessengerInterface;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Yves\Kernel\Locator;
 
 /**
  * @method MessengerInterface addSuccess($key, $options = [])
@@ -22,6 +22,10 @@ use SprykerEngine\Zed\Kernel\Locator;
 class MessengerFacade extends AbstractFacade implements MessengerInterface,
     LegacyMessengerInterface
 {
+
+    /**
+     * @var
+     */
     protected $messenger;
 
     public function __construct(FactoryInterface $factory, Locator $locator)

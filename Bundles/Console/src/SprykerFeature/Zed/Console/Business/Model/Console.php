@@ -21,6 +21,7 @@ use SprykerFeature\Zed\Application\Business\Model\Messenger\Messenger;
 
 class Console extends SymfonyCommand
 {
+
     use Helper;
 
     /**

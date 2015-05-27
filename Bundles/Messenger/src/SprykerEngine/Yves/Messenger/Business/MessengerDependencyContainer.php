@@ -8,19 +8,10 @@ use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
 class MessengerDependencyContainer extends AbstractDependencyContainer
 {
     /**
-     * @var MessengerInterface
-     */
-    protected $messenger;
-
-    /**
      * @return MessengerInterface
      */
     public function getMessenger()
     {
-        if (null === $this->messenger) {
-            $this->messenger = $this->getFactory()->createModelMessenger();
-        }
-
-        return $this->messenger;
+        return $this->messenger = $this->getFactory()->createModelMessenger();
     }
 }

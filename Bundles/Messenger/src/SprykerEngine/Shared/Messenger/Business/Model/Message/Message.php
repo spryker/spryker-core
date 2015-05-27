@@ -4,15 +4,16 @@ namespace SprykerEngine\Shared\Messenger\Business\Model\Message;
 
 class Message implements MessageInterface
 {
-    const MESSAGE_ALERT        = 'alert';
-    const MESSAGE_CRITICAL     = 'critical';
-    const MESSAGE_DEBUG        = 'debug';
-    const MESSAGE_EMERGENCY    = 'emergency';
-    const MESSAGE_ERROR        = 'error';
-    const MESSAGE_INFO         = 'info';
-    const MESSAGE_NOTICE       = 'notice';
-    const MESSAGE_SUCCESS      = 'success';
-    const MESSAGE_WARNING      = 'warning';
+
+    const MESSAGE_ALERT = 'alert';
+    const MESSAGE_CRITICAL = 'critical';
+    const MESSAGE_DEBUG = 'debug';
+    const MESSAGE_EMERGENCY = 'emergency';
+    const MESSAGE_ERROR = 'error';
+    const MESSAGE_INFO = 'info';
+    const MESSAGE_NOTICE = 'notice';
+    const MESSAGE_SUCCESS = 'success';
+    const MESSAGE_WARNING = 'warning';
 
     /**
      * @var string
@@ -36,7 +37,7 @@ class Message implements MessageInterface
      */
     public function __construct($type, $message, $options = [])
     {
-        $this->type    = $type;
+        $this->type = $type;
         $this->message = $message;
         $this->options = $options;
     }

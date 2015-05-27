@@ -9,7 +9,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 use Silex\Application;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
-use SprykerEngine\Zed\Messenger\Communication\Presenter\YvesPresenter;
+use SprykerEngine\Zed\Messenger\Communication\Presenter\ZedPresenter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -49,7 +49,7 @@ abstract class AbstractController
         $this->application = $application;
         $this->locator = $locator;
 
-        $this->presenter = new YvesPresenter(
+        $this->presenter = new ZedPresenter(
             $this->locator->messenger()->facade(),
             $this->locator->translation()->facade(),
             $this->locator->locale()->facade()->getCurrentLocale(),
@@ -64,7 +64,7 @@ abstract class AbstractController
     /**
      * @return MessengerInterface
      */
-    protected function getMessenger()
+    private function getMessenger()
     {
         return $this->presenter->getMessenger();
     }
@@ -123,7 +123,8 @@ abstract class AbstractController
      */
     protected function addMessageSuccess($message)
     {
-        $this->getMessenger()->addSuccess($message);
+        $this->getMessenger()->success($message);
+
         return $this;
     }
 
@@ -135,7 +136,8 @@ abstract class AbstractController
      */
     protected function addMessageWarning($message)
     {
-        $this->getMessenger()->addWarning($message);
+        $this->getMessenger()->warning($message);
+
         return $this;
     }
 
@@ -147,7 +149,8 @@ abstract class AbstractController
      */
     protected function addMessageError($message)
     {
-        $this->getMessenger()->addError($message);
+        $this->getMessenger()->error($message);
+
         return $this;
     }
 

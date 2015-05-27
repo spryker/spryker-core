@@ -10,7 +10,7 @@ use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use Twig_Environment;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\AbstractPresenter;
 
-class ZedUiPresenter extends AbstractPresenter implements
+class ZedPresenter extends AbstractPresenter implements
     ObservingPresenterInterface
 {
     /**
@@ -40,11 +40,17 @@ class ZedUiPresenter extends AbstractPresenter implements
         $this->messenger->registerPresenter($this);
     }
 
+    /**
+     * @return \SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface[]
+     */
     public function display()
     {
         return $this->messenger->getAll();
     }
 
+    /**
+     *
+     */
     public function update()
     {
         $messages = $this->twig->getGlobals()['messages'];
@@ -72,4 +78,5 @@ class ZedUiPresenter extends AbstractPresenter implements
 
         $this->twig->addGlobal('messages', $messages);
     }
+
 }

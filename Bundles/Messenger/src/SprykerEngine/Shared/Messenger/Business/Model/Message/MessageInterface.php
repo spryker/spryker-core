@@ -2,12 +2,9 @@
 
 namespace SprykerEngine\Shared\Messenger\Business\Model\Message;
 
-/**
- * Interface MessageInterface
- * @package SprykerFeature\Zed\Application\Business\Model\Messenger\Message
- */
 interface MessageInterface
 {
+
     /**
      * @return string
      */
@@ -22,4 +19,5 @@ interface MessageInterface
      * @return array
      */
     public function getOptions();
+
 }

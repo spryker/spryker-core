@@ -3,8 +3,8 @@
 namespace SprykerEngine\Zed\Messenger\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
-use SprykerEngine\Zed\Messenger\Business\Model\Message\Message;
+use SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
+use SprykerEngine\Shared\Messenger\Business\Model\Message\Message;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
 use SprykerEngine\Zed\Messenger\Business\Model\Messenger;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
@@ -242,7 +242,7 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
     }
 
 
-    function __call($name, $arguments)
+    public function __call($name, $arguments)
     {
         if (0 === strpos($name, 'add')) {
             $type    = lcfirst(substr($name, 3));
@@ -252,4 +252,5 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
             return $this->add($type, $message, $options);
         }
     }
+
 }

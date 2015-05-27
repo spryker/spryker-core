@@ -10,9 +10,6 @@ use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
 
 /**
- * Class Messenger
- * @package SprykerFeature\Zed\Application\Business\Model\Messenger
- *
  * @method Messenger addSuccess($key, $options = [])
  * @method Messenger addError($key, $options = [])
  * @method Messenger addNotice($key, $options = [])
@@ -20,7 +17,10 @@ use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInt
  */
 abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerInterface
 {
-    protected $validMessageTypes = [
+    /**
+     * @var array
+     */
+    private $validMessageTypes = [
         Message::MESSAGE_ALERT,
         Message::MESSAGE_CRITICAL,
         Message::MESSAGE_DEBUG,
@@ -38,9 +38,9 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
     protected $messages = [];
 
     /**
-     * @var ObservingPresenterInterface[]
+     * @var ObservingPresenterInterface
      */
-    protected $observingPresenters = [];
+    protected $observingPresenter;
 
     /**
      * @param string $type
@@ -70,7 +70,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
     /**
      * @param string $type
      *
-     * @return MessageInterface
+     * @return MessageInterface|null
      */
     public function get($type = null)
     {
@@ -119,10 +119,10 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      *
      * @return Messenger
      */
-    function __call($name, $arguments)
+    public function __call($name, $arguments)
     {
         if (0 === strpos($name, 'add')) {
-            $type    = lcfirst(substr($name, 3));
+            $type = lcfirst(substr($name, 3));
             $message = $arguments[0];
             $options = isset($arguments[1]) ? $arguments[1] : [];
 
@@ -298,7 +298,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      */
     public function registerPresenter(ObservingPresenterInterface $presenter)
     {
-        $this->observingPresenters[] = $presenter;
+        $this->observingPresenter = $presenter;
 
         return $this;
     }
@@ -308,8 +308,9 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      */
     protected function notify()
     {
-        foreach ($this->observingPresenters as $presenter) {
-            $presenter->update();
+        if (!is_null($this->observingPresenter)) {
+            $this->observingPresenter->update();
         }
     }
+
 }

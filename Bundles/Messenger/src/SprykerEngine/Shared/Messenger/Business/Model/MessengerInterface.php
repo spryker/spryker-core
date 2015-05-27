@@ -7,8 +7,6 @@ use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
 
 /**
- * Interface MessengerInterface
- *
  * @method Messenger addSuccess($key, $options = [])
  * @method Messenger addError($key, $options = [])
  * @method Messenger addNotice($key, $options = [])
@@ -16,6 +14,7 @@ use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInt
  */
 interface MessengerInterface
 {
+
     /**
      * @param string $type
      * @param string $message
@@ -46,4 +45,5 @@ interface MessengerInterface
      * @return MessengerInterface
      */
     public function registerPresenter(ObservingPresenterInterface $presenter);
+
 }

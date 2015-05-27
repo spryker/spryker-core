@@ -66,8 +66,6 @@ abstract class AbstractController
         $this->locator = $locator;
         $this->factory = $factory;
 
-        var_dump($this->locator->messenger()->facade()); exit;
-
         $this->presenter = new YvesPresenter(
             new Messenger(),
             $this->locator->glossary()->sdk()->createTranslator($app['locale']),
@@ -206,14 +204,13 @@ abstract class AbstractController
     }
 
     /**
-     * @param string $message
-     *
+     * @param $message
      * @return $this
      * @throws ErrorException
      */
     protected function addMessageSuccess($message)
     {
-        $this->getMessenger()->addSuccess($message);
+        $this->getMessenger()->success($message);
 
         return $this;
     }
@@ -226,7 +223,7 @@ abstract class AbstractController
      */
     protected function addMessageWarning($message)
     {
-        $this->getMessenger()->addWarning($message);
+        $this->getMessenger()->warning($message);
 
         return $this;
     }
@@ -239,7 +236,7 @@ abstract class AbstractController
      */
     protected function addMessageError($message)
     {
-        $this->getMessenger()->addError($message);
+        $this->getMessenger()->error($message);
 
         return $this;
     }
@@ -358,7 +355,7 @@ abstract class AbstractController
     private function getTwig()
     {
         $twig = $this->getApplication()['twig'];
-        if ($twig === null) {
+        if (is_null($twig)) {
             throw new LogicException('Twig environment not set up.');
         }
 
