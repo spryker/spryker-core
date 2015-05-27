@@ -47,7 +47,6 @@ class LocaleTest extends Test
      */
     public function testDeleteLocaleDeletesSoftly()
     {
-        $this->markTestSkipped('SprykerEngine\Zed\Locale\Business\Exception\LocaleExistsException: Tried to create locale ab_xy, but it already exists');
         $localeQuery = $this->localeQueryContainer->queryLocaleByName('ab_xy');
         $this->localeFacade->createLocale('ab_xy');
 

@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\ExpenseInterface;
 use Generated\Shared\Calculation\ExpensesInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TaxItemInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\Sales\OrderItemOptionInterface;
@@ -11,7 +12,6 @@ use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\TaxItemTransfer;
 use Generated\Shared\Transfer\TaxTransfer;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use Generated\Shared\Tax\TaxSetInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
@@ -33,12 +33,12 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        CalculableContainerInterface $calculableContainer,
+        OrderInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $groupedPrices = $this->sumPriceToPayGroupedByTaxRate($calculableContainer, $calculableItems);
@@ -48,13 +48,13 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return array
      */
     protected function sumPriceToPayGroupedByTaxRate(
-        CalculableContainerInterface $calculableContainer,
+        OrderInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $groupedPrices = [];

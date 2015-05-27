@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Communication\Plugin;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Communication\CalculationDependencyContainer;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
@@ -16,12 +16,12 @@ class GrandTotalTotalsCalculatorPlugin extends AbstractPlugin implements TotalsC
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        CalculableContainerInterface $calculableContainer,
+        OrderInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $this->getDependencyContainer()

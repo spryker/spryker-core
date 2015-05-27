@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
@@ -32,12 +32,12 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        CalculableContainerInterface $calculableContainer,
+        OrderInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $grandTotalWithoutDiscounts = $this->calculateGrandTotal(
@@ -50,14 +50,14 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return int
      */
     protected function calculateGrandTotal(
         TotalsInterface $totalsTransfer,
-        CalculableContainerInterface $calculableContainer,
+        OrderInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $grandTotalWithoutDiscounts = $this->getSubtotal($totalsTransfer, $calculableItems);
@@ -85,13 +85,13 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      *
      * @return int
      */
     protected function getOrderExpenseTotal(
         TotalsInterface $totalsTransfer,
-        CalculableContainerInterface $calculableContainer
+        OrderInterface $calculableContainer
     ) {
         if (!is_null($totalsTransfer->getExpenses()->getTotalOrderAmount())) {
             return $totalsTransfer->getExpenses()->getTotalOrderAmount();

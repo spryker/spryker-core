@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Dependency\Facade;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 
 interface DiscountCalculationToCalculationInterface
@@ -10,12 +10,12 @@ interface DiscountCalculationToCalculationInterface
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      */
     public function recalculateGrandTotalTotals(
         TotalsInterface $totalsTransfer,
-        CalculableContainerInterface $calculableContainer,
+        OrderInterface $calculableContainer,
         \ArrayObject $calculableItems
     );
 }

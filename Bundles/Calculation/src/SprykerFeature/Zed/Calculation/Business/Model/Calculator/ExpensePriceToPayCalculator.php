@@ -3,15 +3,15 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\ExpenseInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class ExpensePriceToPayCalculator implements CalculatorPluginInterface
 {
     /**
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      */
-    public function recalculate(CalculableContainerInterface $calculableContainer)
+    public function recalculate(OrderInterface $calculableContainer)
     {
         foreach ($calculableContainer->getItems() as $item) {
             foreach ($item->getExpenses() as $expense) {

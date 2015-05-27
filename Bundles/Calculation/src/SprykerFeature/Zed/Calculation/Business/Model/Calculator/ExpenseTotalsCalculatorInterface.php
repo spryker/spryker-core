@@ -2,25 +2,25 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 
 interface ExpenseTotalsCalculatorInterface
 {
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        CalculableContainerInterface $calculableContainer,
+        OrderInterface $calculableContainer,
         \ArrayObject $calculableItems
     );
 
     /**
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      * @return int
      */
-    public function calculateExpenseTotal(CalculableContainerInterface $calculableContainer);
+    public function calculateExpenseTotal(OrderInterface $calculableContainer);
 }

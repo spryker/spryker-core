@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Generated\Shared\DiscountCalculationConnector\OrderInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 interface DiscountTotalsCalculatorInterface extends TotalsCalculatorPluginInterface

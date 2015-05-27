@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Calculation\Dependency\Plugin;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Calculation\OrderInterface;
 
 interface CalculatorPluginInterface
 {
     /**
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      */
-    public function recalculate(CalculableContainerInterface $calculableContainer);
+    public function recalculate(OrderInterface $calculableContainer);
 }

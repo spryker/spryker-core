@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model;
 
+use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
@@ -15,10 +15,10 @@ class StackExecutor
 
     /**
      * @param array $calculatorStack
-     * @param CalculableContainerInterface $calculableContainer
-     * @return CalculableContainerInterface
+     * @param OrderInterface $calculableContainer
+     * @return OrderInterface
      */
-    public function recalculate(array $calculatorStack, CalculableContainerInterface $calculableContainer)
+    public function recalculate(array $calculatorStack, OrderInterface $calculableContainer)
     {
         foreach ($calculatorStack as $calculator) {
             if ($calculator instanceof CalculatorPluginInterface) {
@@ -38,13 +38,13 @@ class StackExecutor
 
     /**
      * @param array $calculatorStack
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      * @return TotalsInterface
      */
     public function recalculateTotals(
         array $calculatorStack,
-        CalculableContainerInterface $calculableContainer,
+        OrderInterface $calculableContainer,
         \ArrayObject $calculableItems = null
     ) {
         $totalsTransfer = new TotalsTransfer();

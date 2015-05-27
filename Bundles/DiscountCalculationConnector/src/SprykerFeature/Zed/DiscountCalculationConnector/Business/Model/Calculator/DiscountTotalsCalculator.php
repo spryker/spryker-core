@@ -3,14 +3,11 @@
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Generated\Shared\DiscountCalculationConnector\ExpenseInterface;
-use Generated\Shared\DiscountCalculationConnector\OrderInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTotalItemTransfer;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\DiscountCalculationConnector\DiscountInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\OptionContainerInterface;
 use Generated\Shared\DiscountCalculationConnector\OrderItemOptionInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
@@ -20,12 +17,12 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param CalculableContainerInterface $discountableContainer
+     * @param OrderInterface $discountableContainer
      * @param \ArrayObject $discountableContainers
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        CalculableContainerInterface $discountableContainer,
+        OrderInterface $discountableContainer,
         \ArrayObject $discountableContainers
     ) {
         if ($discountableContainer instanceof OrderInterface) {

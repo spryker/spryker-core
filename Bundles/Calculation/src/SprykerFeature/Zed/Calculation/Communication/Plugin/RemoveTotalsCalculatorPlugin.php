@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Communication\Plugin;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use SprykerFeature\Zed\Calculation\Communication\CalculationDependencyContainer;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
@@ -14,9 +14,9 @@ class RemoveTotalsCalculatorPlugin extends AbstractPlugin implements CalculatorP
 {
 
     /**
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      */
-    public function recalculate(CalculableContainerInterface $calculableContainer)
+    public function recalculate(OrderInterface $calculableContainer)
     {
         $this->getDependencyContainer()->getCalculationFacade()->recalculateRemoveTotals($calculableContainer);
     }

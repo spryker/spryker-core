@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\OrderItemOptionInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
@@ -11,9 +11,9 @@ class OptionPriceToPayCalculator implements
 {
 
     /**
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      */
-    public function recalculate(CalculableContainerInterface $calculableContainer)
+    public function recalculate(OrderInterface $calculableContainer)
     {
         foreach ($calculableContainer->getItems() as $item) {
             foreach ($item->getOptions() as $option) {

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Communication\Plugin;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use SprykerFeature\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
@@ -15,10 +15,10 @@ class DiscountCalculatorPlugin extends AbstractPlugin implements
 {
 
     /**
-     * @param CalculableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      * @return array
      */
-    public function recalculate(CalculableContainerInterface $calculableContainer)
+    public function recalculate(OrderInterface $calculableContainer)
     {
         return $this->getDependencyContainer()->getDiscountFacade()->calculateDiscounts($calculableContainer);
     }

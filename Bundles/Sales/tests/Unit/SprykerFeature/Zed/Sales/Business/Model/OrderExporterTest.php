@@ -51,7 +51,6 @@ class OrderExporterTest extends \PHPUnit_Framework_TestCase
 
     public function testExportShouldReturnTrue()
     {
-//        $this->markTestSkipped('EntityLoader not longer supported');
         $order = new SpySalesOrder();
         $orderCollection = new Collection();
         $orderCollection->append($order);

@@ -2,9 +2,7 @@
 
 namespace SprykerFeature\Shared\Discount\Dependency\Transfer;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableItemInterface;
-
-interface DiscountableItemInterface extends CalculableItemInterface
+interface DiscountableItemInterface
 {
 
     /**

@@ -2,8 +2,7 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Generated\Shared\DiscountCalculationConnector\OrderInterface;
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\CalculableContainerInterface;
+use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
@@ -35,12 +34,12 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param CalculableContainerInterface $container
+     * @param OrderInterface $container
      * @param \ArrayObject $items
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        CalculableContainerInterface $container,
+        OrderInterface $container,
         \ArrayObject $items
     ) {
         if ($container instanceof OrderInterface) {
