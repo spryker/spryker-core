@@ -64,7 +64,7 @@ abstract class AbstractController
 
         $this->messenger = $this->locator->messenger()->sdk()->createMessenger();
 
-        new YvesPresenter(
+        $this->locator->messenger()->pluginYvesPresenter()->createYvesPresenter(
             $this->messenger,
             $this->locator->glossary()->sdk()->createTranslator($app['locale']),
             $this->getTwig()

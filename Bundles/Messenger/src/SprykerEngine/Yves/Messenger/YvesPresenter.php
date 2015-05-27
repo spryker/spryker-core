@@ -1,16 +1,15 @@
 <?php
 
-namespace SprykerEngine\Zed\Messenger\Communication\Presenter;
+namespace SprykerEngine\Yves\Messenger;
 
 use Generated\Shared\Transfer\TranslatedMessageTransfer;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
-use SprykerEngine\Zed\Translation\Business\TranslationFacade;
-use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use Twig_Environment;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\AbstractPresenter;
+use SprykerFeature\Sdk\Glossary\Translator;
 
-class ZedPresenter extends AbstractPresenter implements
+class YvesPresenter extends AbstractPresenter implements
     ObservingPresenterInterface
 {
 
@@ -21,37 +20,28 @@ class ZedPresenter extends AbstractPresenter implements
 
     /**
      * @param MessengerInterface $messenger
-     * @param TranslationFacade $translator
-     * @param LocaleTransfer $locale
+     * @param Translator $translator
      * @param Twig_Environment $twig
      */
     public function __construct(
         MessengerInterface $messenger,
-        TranslationFacade $translator,
-        LocaleTransfer $locale,
+        Translator $translator,
         Twig_Environment $twig
     ) {
         parent::__construct($messenger);
 
         $this->translator = $translator;
-        $this->locale = $locale;
         $this->twig = $twig;
 
         $this->twig->addGlobal('messages', []);
         $this->messenger->registerPresenter($this);
     }
 
-    /**
-     * @return \SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface[]
-     */
     public function display()
     {
         return $this->messenger->getAll();
     }
 
-    /**
-     *
-     */
     public function update()
     {
         $messages = $this->twig->getGlobals()['messages'];
@@ -68,9 +58,7 @@ class ZedPresenter extends AbstractPresenter implements
                 ->setMessage(
                     $this->translator->translate(
                         $message->getMessage(),
-                        $message->getOptions(),
-                        null,
-                        $this->locale
+                        $message->getOptions()
                     )
                 );
 

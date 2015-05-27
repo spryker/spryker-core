@@ -50,7 +50,7 @@ abstract class AbstractController
 
         $this->messenger = $this->locator->messenger()->facade();
 
-        new ZedPresenter(
+        $this->locator->messenger()->facade()->createZedPresenter(
             $this->messenger,
             $this->locator->translation()->facade(),
             $this->locator->locale()->facade()->getCurrentLocale(),

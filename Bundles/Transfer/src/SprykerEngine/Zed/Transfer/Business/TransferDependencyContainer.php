@@ -13,6 +13,7 @@ use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInterface\Transf
 use SprykerEngine\Zed\Transfer\Business\Model\TransferCleaner;
 use SprykerEngine\Zed\Transfer\Business\Model\TransferGenerator;
 use SprykerEngine\Zed\Transfer\TransferConfig;
+use Psr\Log\LoggerInterface;
 
 /**
  * @method TransferBusiness getFactory()
@@ -26,7 +27,7 @@ class TransferDependencyContainer extends AbstractDependencyContainer
      *
      * @return TransferGenerator
      */
-    public function createTransferGenerator(MessengerInterface $messenger)
+    public function createTransferGenerator(LoggerInterface $messenger)
     {
         return $this->getFactory()->createModelTransferGenerator(
             $messenger,
@@ -73,7 +74,7 @@ class TransferDependencyContainer extends AbstractDependencyContainer
      *
      * @return TransferGenerator
      */
-    public function createTransferInterfaceGenerator(MessengerInterface $messenger)
+    public function createTransferInterfaceGenerator(LoggerInterface $messenger)
     {
         return $this->getFactory()->createModelTransferGenerator(
             $messenger,

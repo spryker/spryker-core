@@ -8,7 +8,6 @@ use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
 use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
-use SprykerEngine\Zed\Messenger\Communication\Presenter\ConsolePresenter;
 use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 
@@ -18,6 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use SprykerFeature\Zed\Application\Business\Model\Messenger\Messenger;
+use Psr\Log\LoggerInterface;
 
 class Console extends SymfonyCommand
 {
@@ -45,9 +45,9 @@ class Console extends SymfonyCommand
     private $dependencyContainer;
 
     /**
-     * @var ConsolePresenter
+     * @var LoggerInterface
      */
-    protected $presenter;
+    protected $messenger;
 
     /**
      * @param FactoryInterface $factory
@@ -93,26 +93,26 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return MessengerInterface
+     * @return LoggerInterface
      */
     protected function getMessenger()
     {
-        try {
-            if (null === $this->presenter) {
-                $this->presenter = new ConsolePresenter(
-                    $this->locator->messenger()->facade(),
+        if (is_null($this->messenger)) {
+            if (class_exists('\Generated\Shared\Transfer\LocaleTransfer')) {
+                $this->messenger = $this->locator->messenger()->facade();
+
+                $this->locator->messenger()->facade()->createConsolePresenter(
+                    $this->messenger,
                     $this->locator->translation()->facade(),
                     $this->locator->locale()->facade()->getCurrentLocale(),
                     $this->output
                 );
+            } else {
+                $this->messenger = new ConsoleMessenger($this->output);
             }
-
-            $messenger = $this->presenter->getMessenger();
-        } catch (\Exception $e) {
-            $messenger = new ConsoleMessenger($this->output);
         }
 
-        return $messenger;
+        return $this->messenger;
     }
 
     /**

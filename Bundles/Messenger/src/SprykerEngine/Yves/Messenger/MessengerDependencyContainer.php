@@ -1,27 +1,20 @@
 <?php
 
-namespace SprykerEngine\Yves\Messenger\Business;
+namespace SprykerEngine\Yves\Messenger;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
+use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use SprykerFeature\Sdk\Glossary\Translator;
+use Twig_Environment;
 
 class MessengerDependencyContainer extends AbstractDependencyContainer
 {
-
-    /**
-     * @return MessengerInterface
-     */
-    public function getMessenger()
-    {
-        return $this->messenger = $this->getFactory()->createModelMessenger();
-    }
-
     public function createYvesPresenter(
         MessengerInterface $messenger,
         Translator $translator,
         Twig_Environment $twig
     ){
-        return $this->getFactory()->createPresenterYvesPresenter(
+        return $this->getFactory()->createYvesPresenter(
             $messenger,
             $translator,
             $twig

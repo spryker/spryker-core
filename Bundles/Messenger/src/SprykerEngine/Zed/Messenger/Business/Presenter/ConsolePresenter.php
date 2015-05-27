@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerEngine\Zed\Messenger\Communication\Presenter;
+namespace SprykerEngine\Zed\Messenger\Business\Presenter;
 
 use SprykerEngine\Shared\Messenger\Communication\Presenter\AbstractPresenter;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
