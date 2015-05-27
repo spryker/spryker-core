@@ -11,18 +11,18 @@
         <thead>
             <tr>
                 <th spy-grid-head="columns['glossary_key']" label="Glossary Key"></th>
-                <th spy-grid-head="columns['locale']" label="Locale"></th>
-                <th spy-grid-head="columns['translation']" label="Localized"></th>
-                <th spy-grid-head="columns['translation_is_active']" label="Active"></th>
+                {% for key,locale in locales %}
+                <th spy-grid-head="columns['{{ key }}']" label="{{ locale }}"></th>
+                {% endfor %}
             </tr>
         </thead>
 
         <tbody>
             <tr ng-repeat="row in rows" ng-click="$emitAllChannels('glossary_edit', row)">
-                <td>{[{ row['glossary_key'] }]}</td>
-                <td>{[{ row['locale'] }]}</td>
-                <td>{[{ row['translation'] }]}</td>
-                <td><spy-format-boolean content="row['translation_is_active']"></spy-format-boolean></td>
+                <td>{[{ row.key }]}</td>
+                {% for key,locale in locales %}
+                <td>{[{ row.translation_{{ key }}_value }]}</td>
+                {% endfor %}
             </tr>
             <tr ng-if="!rows.length">
                 <td colspan="4">No results found</td>

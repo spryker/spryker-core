@@ -16,11 +16,9 @@
 
         <spy-listen on="glossary_edit" do="openLayer(); read($argument)" scope="key_edit" channel="glossary"></spy-listen>
 
-        <div class="spy-layout n4 f2">
-            {% include '@Glossary/Partials/form-add-translation.twig' %}
+        {% include '@Glossary/Partials/form-add-translation.twig' %}
 
-            {% include '@Glossary/Partials/glossary-grid.twig' %}
-        </div>
+        {% include '@Glossary/Partials/glossary-grid.twig' %}
 
         {% include '@Glossary/Partials/form-edit-translation.twig' %}
     </section>

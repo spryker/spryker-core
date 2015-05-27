@@ -8,6 +8,7 @@ namespace SprykerEngine\Zed\Locale\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Locale\Business\Exception\LocaleExistsException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
@@ -55,9 +56,14 @@ class LocaleFacade extends AbstractFacade
      */
     public function getRelevantLocaleNames()
     {
-        //TODO retrieve this
-        //just some different locales
-        return ['de_DE', 'en_US', 'fr_FR', 'de_CH', 'fr_CH'];
+        $availableLocales = Store::getInstance()->getLocales();
+        $locales = [];
+        foreach ($availableLocales as $localeName) {
+            $localeInfo = $this->getLocale($localeName);
+            $locales[$localeInfo->getIdLocale()] = $localeInfo->getLocaleName();
+        }
+
+        return $locales;
     }
 
     /**

@@ -6,18 +6,34 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication\Grid;
 
+use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
+use Symfony\Component\HttpFoundation\Request;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class TranslationGrid extends AbstractGrid
 {
-    const LOCALE = 'locale';
-    const TRANSLATION = 'translation';
-    const TRANSLATION_IS_ACTIVE = 'translation_is_active';
+
     const GLOSSARY_KEY = 'glossary_key';
-    const GLOSSARY_KEY_IS_ACTIVE = 'glossary_key_is_active';
 
     /**
-     * @return array
+     * @var array
+     */
+    private $availableLocales = [];
+
+    /**
+     * @param ModelCriteria $query
+     * @param Request $request
+     */
+    public function __construct(ModelCriteria $query, Request $request, array $availableLocales)
+    {
+        parent::__construct($query, $request);
+
+        $this->availableLocales = $availableLocales;
+    }
+
+    /**
+     * @return GridPluginInterface[]
      */
     public function definePlugins()
     {
@@ -25,28 +41,19 @@ class TranslationGrid extends AbstractGrid
             $this->createDefaultRowRenderer(),
             $this->createPagination(),
             $this->createDefaultColumn()
-                ->setName(self::LOCALE)
-                ->filterable()
-                ->sortable(),
-            $this->createDefaultColumn()
-                ->setName(self::TRANSLATION)
-                ->filterable()
-                ->sortable(),
-            $this->createDefaultColumn()
-                ->setName(self::TRANSLATION_IS_ACTIVE)
-                ->filterable()
-                ->sortable(),
-            $this->createDefaultColumn()
                 ->setName(self::GLOSSARY_KEY)
                 ->filterable()
-                ->sortable(),
-            $this->createDefaultColumn()
-                ->setName(self::GLOSSARY_KEY_IS_ACTIVE)
-                ->filterable()
                 ->sortable()
+            ,
         ];
+
+        foreach ($this->availableLocales as $locale) {
+            $plugins[] = $this->createDefaultColumn()
+                ->setName($locale)
+                ->filterable()
+                ->sortable();
+        }
 
         return $plugins;
     }
-
 }
