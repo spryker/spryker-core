@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Plugin;
 
+use Generated\Shared\Discount\OrderInterface;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount as DiscountEntity;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule as DecisionRuleEntity;
 
@@ -11,13 +11,13 @@ interface DiscountDecisionRulePluginInterface
 {
     /**
      * @param DiscountEntity $discountEntity
-     * @param DiscountableContainerInterface $discountableContainer
+     * @param OrderInterface $discountableContainer
      * @param DecisionRuleEntity $decisionRuleEntity
      * @return ModelResult
      */
     public function check(
         DiscountEntity $discountEntity,
-        DiscountableContainerInterface $discountableContainer,
+        OrderInterface $discountableContainer,
         DecisionRuleEntity $decisionRuleEntity = null
     );
 

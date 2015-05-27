@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount as DiscountEntity;
 use SprykerFeature\Zed\Discount\Business\DiscountSettingsInterface;
+use Generated\Shared\Discount\OrderInterface;
 
 class Calculator implements
     CalculatorInterface
@@ -20,14 +20,14 @@ class Calculator implements
 
     /**
      * @param DiscountEntity[] $discounts
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
      * @param DiscountSettingsInterface $settings
      * @param DistributorInterface $distributor
      * @return DiscountEntity[]
      */
     public function calculate(
         array $discounts,
-        DiscountableContainerInterface $container,
+        OrderInterface $container,
         DiscountSettingsInterface $settings,
         DistributorInterface $distributor
     ) {

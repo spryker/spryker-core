@@ -2,15 +2,15 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Collector;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\Discount\OrderInterface;
 
 class Expense implements CollectorInterface
 {
     /**
-     * @param DiscountableContainerInterface $container
-     * @return DiscountableContainerInterface[]
+     * @param OrderInterface $container
+     * @return OrderInterface[]
      */
-    public function collect(DiscountableContainerInterface $container)
+    public function collect(OrderInterface $container)
     {
         $discountableExpenses = [];
         $expenses = $container->getExpenses();

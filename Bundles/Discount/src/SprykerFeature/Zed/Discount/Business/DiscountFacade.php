@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Discount\Business;
 
+use Generated\Shared\Discount\OrderInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
@@ -26,10 +26,11 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 {
 
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
+     *
      * @return SpyDiscount[]
      */
-    public function calculateDiscounts(DiscountableContainerInterface $container)
+    public function calculateDiscounts(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getDiscount($container)->calculate();
     }
@@ -37,6 +38,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     /**
      * @param string $code
      * @param int $idDiscountVoucherPool
+     *
      * @return ModelResult
      */
     public function isVoucherUsable($code, $idDiscountVoucherPool)
@@ -45,11 +47,12 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
      * @param DecisionRule $decisionRule
+     *
      * @return $this|ModelResult
      */
-    public function isMinimumCartSubtotalReached(DiscountableContainerInterface $container, DecisionRule $decisionRule)
+    public function isMinimumCartSubtotalReached(OrderInterface $container, DecisionRule $decisionRule)
     {
         return $this->getDependencyContainer()
             ->getDecisionRuleMinimumCartSubtotal()
@@ -59,6 +62,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $percentage
+     *
      * @return float
      */
     public function calculatePercentage(array $discountableObjects, $percentage)
@@ -69,6 +73,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $amount
+     *
      * @return float
      */
     public function calculateFixed(array $discountableObjects, $amount)
@@ -98,6 +103,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     /**
      * @param string $code
      * @param int $idVoucherPool
+     *
      * @return SpyDiscountVoucher
      */
     public function createVoucherCode($code, $idVoucherPool)
@@ -115,6 +121,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param DiscountTransfer $discountTransfer
+     *
      * @return SpyDiscount
      */
     public function createDiscount(DiscountTransfer $discountTransfer)
@@ -124,6 +131,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param DiscountTransfer $discountTransfer
+     *
      * @return SpyDiscount
      */
     public function updateDiscount(DiscountTransfer $discountTransfer)
@@ -133,6 +141,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     *
      * @return SpyDiscountDecisionRule
      */
     public function createDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer)
@@ -142,6 +151,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     *
      * @return SpyDiscountDecisionRule
      */
     public function updateDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer)
@@ -151,6 +161,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param VoucherTransfer $discountVoucherTransfer
+     *
      * @return SpyDiscountVoucher
      */
     public function createDiscountVoucher(VoucherTransfer $discountVoucherTransfer)
@@ -160,6 +171,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param VoucherTransfer $discountVoucherTransfer
+     *
      * @return SpyDiscountVoucher
      */
     public function updateDiscountVoucher(VoucherTransfer $discountVoucherTransfer)
@@ -169,6 +181,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     *
      * @return SpyDiscountVoucher
      */
     public function createDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer)
@@ -178,6 +191,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     *
      * @return SpyDiscountVoucher
      */
     public function updateDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer)
@@ -187,6 +201,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     *
      * @return SpyDiscountVoucherPoolCategory
      */
     public function createDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
@@ -197,6 +212,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     *
      * @return SpyDiscountVoucherPoolCategory
      */
     public function updateDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
@@ -207,6 +223,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param string $pluginName
+     *
      * @return DiscountCalculatorPluginInterface
      */
     public function getCalculatorPluginByName($pluginName)
@@ -215,28 +232,31 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
+     *
      * @return array
      */
-    public function getDiscountableItems(DiscountableContainerInterface $container)
+    public function getDiscountableItems(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getItemCollector()->collect($container);
     }
 
     /**
-     * @param DiscountableContainerInterface $container
-     * @return DiscountableContainerInterface[]
+     * @param OrderInterface $container
+     *
+     * @return OrderInterface[]
      */
-    public function getDiscountableItemExpenses(DiscountableContainerInterface $container)
+    public function getDiscountableItemExpenses(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getItemExpenseCollector()->collect($container);
     }
 
     /**
-     * @param DiscountableContainerInterface $container
-     * @return DiscountableContainerInterface[]
+     * @param OrderInterface $container
+     *
+     * @return OrderInterface[]
      */
-    public function getDiscountableOrderExpenses(DiscountableContainerInterface $container)
+    public function getDiscountableOrderExpenses(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getOrderExpenseCollector()->collect($container);
     }
@@ -256,4 +276,5 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     {
         return array_keys($this->getDependencyContainer()->getAvailableCalculatorPlugins());
     }
+
 }

@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Discount\Business;
 
+use Generated\Shared\Discount\OrderInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountBusiness;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Zed\Discount\Business\Calculator\Fixed;
 use SprykerFeature\Zed\Discount\Business\Calculator\Percentage;
 use SprykerFeature\Zed\Discount\Business\Collector\Item;
@@ -53,10 +53,11 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
+     *
      * @return Discount
      */
-    public function getDiscount(DiscountableContainerInterface $container)
+    public function getDiscount(OrderInterface $container)
     {
         return $this->getFactory()->createModelDiscount(
             $container,

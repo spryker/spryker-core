@@ -2,16 +2,16 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
+use Generated\Shared\DiscountCalculationConnector\OrderInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 
 class RemoveAllCalculatedDiscountsCalculator
 {
 
     /**
-     * @param DiscountableContainerInterface $calculableContainer
+     * @param OrderInterface $calculableContainer
      */
-    public function recalculate(DiscountableContainerInterface $calculableContainer)
+    public function recalculate(OrderInterface $calculableContainer)
     {
         foreach ($calculableContainer->getItems() as $item) {
             $item->setDiscounts(new \ArrayObject());

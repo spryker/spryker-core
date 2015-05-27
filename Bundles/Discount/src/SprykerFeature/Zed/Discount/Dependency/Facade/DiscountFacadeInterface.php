@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Facade;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\Discount\OrderInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
@@ -19,25 +19,29 @@ use Generated\Shared\Transfer\DecisionRuleTransfer;
 
 interface DiscountFacadeInterface
 {
+
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
+     *
      * @return array
      */
-    public function calculateDiscounts(DiscountableContainerInterface $container);
+    public function calculateDiscounts(OrderInterface $container);
 
     /**
      * @param string $code
      * @param int $idDiscountVoucherPool
+     *
      * @return ModelResult
      */
     public function isVoucherUsable($code, $idDiscountVoucherPool);
 
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
      * @param DecisionRule $decisionRule
+     *
      * @return ModelResult
      */
-    public function isMinimumCartSubtotalReached(DiscountableContainerInterface $container, DecisionRule $decisionRule);
+    public function isMinimumCartSubtotalReached(OrderInterface $container, DecisionRule $decisionRule);
 
     /**
      * @param DiscountableInterface[] $discountableObjects
@@ -80,87 +84,101 @@ interface DiscountFacadeInterface
 
     /**
      * @param DiscountTransfer $discountTransfer
+     *
      * @return SpyDiscount
      */
     public function createDiscount(DiscountTransfer $discountTransfer);
 
     /**
      * @param DiscountTransfer $discountTransfer
+     *
      * @return SpyDiscount
      */
     public function updateDiscount(DiscountTransfer $discountTransfer);
 
     /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     *
      * @return SpyDiscountDecisionRule
      */
     public function createDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer);
 
     /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     *
      * @return SpyDiscountDecisionRule
      */
     public function updateDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer);
 
     /**
      * @param VoucherTransfer $discountVoucherTransfer
+     *
      * @return SpyDiscountVoucher
      */
     public function createDiscountVoucher(VoucherTransfer $discountVoucherTransfer);
 
     /**
      * @param VoucherTransfer $discountVoucherTransfer
+     *
      * @return SpyDiscountVoucher
      */
     public function updateDiscountVoucher(VoucherTransfer $discountVoucherTransfer);
 
     /**
      * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     *
      * @return SpyDiscountVoucher
      */
     public function createDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer);
 
     /**
      * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     *
      * @return SpyDiscountVoucher
      */
     public function updateDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer);
 
     /**
      * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     *
      * @return SpyDiscountVoucherPoolCategory
      */
     public function createDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer);
 
     /**
      * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     *
      * @return SpyDiscountVoucherPoolCategory
      */
     public function updateDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer);
 
     /**
      * @param string $pluginName
+     *
      * @return DiscountCalculatorPluginInterface
      */
     public function getCalculatorPluginByName($pluginName);
 
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
+     *
      * @return DiscountableInterface[]
      */
-    public function getDiscountableItems(DiscountableContainerInterface $container);
+    public function getDiscountableItems(OrderInterface $container);
 
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
+     *
      * @return DiscountableInterface[]
      */
-    public function getDiscountableItemExpenses(DiscountableContainerInterface $container);
+    public function getDiscountableItemExpenses(OrderInterface $container);
 
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
+     *
      * @return DiscountableInterface[]
      */
-    public function getDiscountableOrderExpenses(DiscountableContainerInterface $container);
+    public function getDiscountableOrderExpenses(OrderInterface $container);
 
     /**
      * @return array
@@ -171,4 +189,5 @@ interface DiscountFacadeInterface
      * @return array
      */
     public function getDiscountCalculators();
+
 }

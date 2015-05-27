@@ -7,10 +7,6 @@ use SprykerFeature\Zed\DiscountCalculationConnector\Business\DiscountCalculation
 use SprykerFeature\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountFacadeInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 
-/**
- * Class DiscountCalculationConnectorDependencyContainer
- * @package SprykerFeature\Zed\DiscountCalculationConnector\Communication
- */
 class DiscountCalculationConnectorDependencyContainer extends AbstractDependencyContainer
 {
     /**

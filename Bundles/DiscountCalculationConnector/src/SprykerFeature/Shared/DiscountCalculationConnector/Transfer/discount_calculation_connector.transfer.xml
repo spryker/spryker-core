@@ -12,6 +12,12 @@
         <property name="discounts" type="Discount[]" singular="discountItem" />
     </transfer>
 
+    <transfer name="Order">
+        <property name="items" type="OrderItem[]"  singular="item" />
+        <property name="expenses" type="Expense[]" singular="expense" />
+        <property name="discounts" type="Discount[]" />
+    </transfer>
+
     <transfer name="OrderItemOption">
         <property name="discounts" type="Discount[]" singular="discount" />
     </transfer>

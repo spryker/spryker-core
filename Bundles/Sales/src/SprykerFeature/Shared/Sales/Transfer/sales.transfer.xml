@@ -4,7 +4,6 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Order">
-        <interface name="SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface" />
         <property name="idSalesOrder" type="int" />
         <property name="fkSalesOrderAddressBilling" type="int" />
         <property name="fkSalesOrderAddressShipping" type="int" />

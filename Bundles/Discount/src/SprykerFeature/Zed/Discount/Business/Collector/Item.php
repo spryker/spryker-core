@@ -2,21 +2,21 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Collector;
 
-use Generated\Shared\Transfer\OrderItemsTransfer;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\Discount\OrderInterface;
+use Generated\Shared\Discount\OrderItemsInterface;
 
 class Item implements CollectorInterface
 {
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
      * @return array
      */
-    public function collect(DiscountableContainerInterface $container)
+    public function collect(OrderInterface $container)
     {
         $discountableItems = [];
         $items = $container->getItems();
 
-        if ($items instanceof OrderItemsTransfer) {
+        if ($items instanceof OrderItemsInterface) {
             foreach ($items->getOrderItems() as $item) {
                 $discountableItems[] = $item;
             }

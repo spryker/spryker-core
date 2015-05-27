@@ -2,14 +2,15 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Plugin;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\Discount\OrderInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 interface DiscountCollectorPluginInterface
 {
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
+     *
      * @return DiscountableInterface[]
      */
-    public function collect(DiscountableContainerInterface $container);
+    public function collect(OrderInterface $container);
 }

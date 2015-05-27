@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business;
 
+use Generated\Shared\DiscountCalculationConnector\OrderInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Calculation\TotalsInterface;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
 use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
 
 /**
@@ -15,12 +15,12 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param DiscountableContainerInterface $discountableContainer
+     * @param OrderInterface $discountableContainer
      * @param \ArrayObject $discountableContainers
      */
     public function recalculateDiscountTotals(
         TotalsInterface $totalsTransfer,
-        DiscountableContainerInterface $discountableContainer,
+        OrderInterface $discountableContainer,
         \ArrayObject $discountableContainers
     ) {
         $calculator = $this->getDependencyContainer()->getDiscountTotalsCalculator();
@@ -29,12 +29,12 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
      * @param \ArrayObject $items
      */
     public function recalculateGrandTotalWithDiscountsTotals(
         TotalsInterface $totalsTransfer,
-        DiscountableContainerInterface $container,
+        OrderInterface $container,
         \ArrayObject $items
     ) {
         $calculator = $this->getDependencyContainer()->getGrandTotalWithDiscountsTotalsCalculator();
@@ -42,9 +42,9 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
     }
 
     /**
-     * @param DiscountableContainerInterface $container
+     * @param OrderInterface $container
      */
-    public function recalculateRemoveAllCalculatedDiscounts(DiscountableContainerInterface $container)
+    public function recalculateRemoveAllCalculatedDiscounts(OrderInterface $container)
     {
         $calculator = $this->getDependencyContainer()->getRemoveAllCalculatedDiscountsCalculator();
         $calculator->recalculate($container);

@@ -2,13 +2,14 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Dependency\Facade;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableContainerInterface;
+use Generated\Shared\DiscountCalculationConnector\OrderInterface;
 
 interface DiscountFacadeInterface
 {
     /**
-     * @param DiscountableContainerInterface $calculableContainer
-     * @return array['discounts' => [], 'errors' => []]
+     * @param OrderInterface $calculableContainer
+     *
+     * @return array
      */
-    public function calculateDiscounts(DiscountableContainerInterface $calculableContainer);
+    public function calculateDiscounts(OrderInterface $calculableContainer);
 }
