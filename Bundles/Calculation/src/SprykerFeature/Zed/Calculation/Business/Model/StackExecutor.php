@@ -40,6 +40,7 @@ class StackExecutor
      * @param array $calculatorStack
      * @param OrderInterface $calculableContainer
      * @param \ArrayObject $calculableItems
+     *
      * @return TotalsInterface
      */
     public function recalculateTotals(

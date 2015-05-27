@@ -3,6 +3,7 @@
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\DiscountItemsTransfer;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpensesTransfer;
@@ -75,7 +76,6 @@ class CalculatorTest extends Test
 
     public function testCanRecalculateAnExampleOrderWithOneItemAndExpenseOnOrder()
     {
-        $this->markTestSkipped('Please fix this too complex test and give it a better name');
         $order = $this->getOrderWithFixtureData();
         $items = $this->getItemCollection();
         $item = $this->getItemWithFixtureData();
@@ -85,11 +85,11 @@ class CalculatorTest extends Test
 
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
-        $discounts->addUsedCode($discount);
+        $discounts->addDiscount($discount);
 
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_DISCOUNT_AMOUNT);
-        $discounts->addUsedCode($discount);
+        $discounts->addDiscount($discount);
 
         $expense = $this->getExpenseWithFixtureData();
         $expense->setName(self::EXPENSE_NAME_SHIPPING_COSTS)
@@ -108,14 +108,18 @@ class CalculatorTest extends Test
 
         $calculator = $this->getCalculator();
 
-        $calculatorStack = $this->createCalculatorStack();
-        $calculator->recalculate($calculatorStack, $order);
-        $calculator->recalculateTotals($calculatorStack, $order);
         $expected = self::ORDER_SHIPPING_COSTS
             + self::ITEM_GROSS_PRICE
             - self::ITEM_COUPON_DISCOUNT_AMOUNT
             - self::ITEM_DISCOUNT_AMOUNT;
 
+        $calculatorStack = $this->createCalculatorStack();
+
+        $calculator->recalculate($calculatorStack, $order);
+        $totals = $order->getTotals();
+        $this->assertEquals($expected, $totals->getGrandTotalWithDiscounts());
+
+        $calculator->recalculateTotals($calculatorStack, $order);
         $totals = $order->getTotals();
         $this->assertEquals($expected, $totals->getGrandTotalWithDiscounts());
 
@@ -191,11 +195,11 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return DiscountTransfer
+     * @return DiscountItemsTransfer
      */
     protected function getPriceDiscountCollection()
     {
-        return new DiscountTransfer();
+        return new DiscountItemsTransfer();
     }
 
     /**

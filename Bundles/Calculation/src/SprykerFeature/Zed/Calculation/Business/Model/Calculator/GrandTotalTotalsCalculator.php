@@ -72,11 +72,8 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
      *
      * @return int
      */
-    protected function getSubtotal(
-        TotalsInterface $totalsTransfer,
-        \ArrayObject $calculableItems
-    ) {
-        if (!is_null($totalsTransfer->getSubtotal())) {
+    protected function getSubtotal(TotalsInterface $totalsTransfer, \ArrayObject $calculableItems) {
+        if ($totalsTransfer->getSubtotal()) {
             return $totalsTransfer->getSubtotal();
         } else {
             return $this->subtotalTotalsCalculator->calculateSubtotal($calculableItems);
@@ -89,10 +86,8 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
      *
      * @return int
      */
-    protected function getOrderExpenseTotal(
-        TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer
-    ) {
+    protected function getOrderExpenseTotal(TotalsInterface $totalsTransfer, OrderInterface $calculableContainer)
+    {
         if (!is_null($totalsTransfer->getExpenses()->getTotalOrderAmount())) {
             return $totalsTransfer->getExpenses()->getTotalOrderAmount();
         } else {

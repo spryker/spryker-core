@@ -59,11 +59,13 @@ class GrandTotalTest extends Test
 
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-        $order->addItem($item);
-
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
+
+        $itemCollection = new OrderItemsTransfer();
+        $itemCollection->addOrderItem($item);
+        $order->setItems($itemCollection);
 
         $totalsTransfer = $this->getPriceTotals();
         $calculator = $this->getGrandTotalCalculator();
@@ -77,11 +79,13 @@ class GrandTotalTest extends Test
 
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-        $order->addItem($item);
-
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
+
+        $itemCollection = new OrderItemsTransfer();
+        $itemCollection->addOrderItem($item);
+        $order->setItems($itemCollection);
 
         $totalsTransfer = $this->getPriceTotals();
         $calculator = $this->getGrandTotalCalculator();
@@ -143,9 +147,11 @@ class GrandTotalTest extends Test
     {
         $order = new OrderTransfer();
         $order->setItems(new OrderItemsTransfer());
+
         $totalsTransfer = new TotalsTransfer();
         $totalsTransfer->setExpenses(new ExpenseTotalsTransfer());
         $order->setTotals($totalsTransfer);
+
         $order->setExpenses(new ExpenseTransfer());
 
         return $order;
