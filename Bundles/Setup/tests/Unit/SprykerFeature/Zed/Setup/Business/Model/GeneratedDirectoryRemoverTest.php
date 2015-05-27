@@ -1,6 +1,7 @@
 <?php
 
 namespace Unit\SprykerFeature\Zed\Setup\Business\Model;
+
 use SprykerFeature\Zed\Setup\Business\Model\GeneratedDirectoryRemover;
 use Symfony\Component\Filesystem\Filesystem;
 
