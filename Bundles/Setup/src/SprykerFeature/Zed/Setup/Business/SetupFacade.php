@@ -16,7 +16,7 @@ class SetupFacade extends AbstractFacade
      */
     public function generateCronjobs(array $roles)
     {
-        return $this->getDependencyContainer()->getModelCronjobs()->generateCronjobs($roles);
+        return $this->getDependencyContainer()->createModelCronjobs()->generateCronjobs($roles);
     }
 
     /**
@@ -24,7 +24,7 @@ class SetupFacade extends AbstractFacade
      */
     public function enableJenkins()
     {
-        return $this->getDependencyContainer()->getModelCronjobs()->enableJenkins();
+        return $this->getDependencyContainer()->createModelCronjobs()->enableJenkins();
     }
 
     /**
@@ -32,7 +32,12 @@ class SetupFacade extends AbstractFacade
      */
     public function disableJenkins()
     {
-        return $this->getDependencyContainer()->getModelCronjobs()->disableJenkins();
+        return $this->getDependencyContainer()->createModelCronjobs()->disableJenkins();
+    }
+
+    public function removeGeneratedDirectory()
+    {
+        $this->getDependencyContainer()->createModelGeneratedDirectoryRemover()->execute();
     }
 
 }
