@@ -65,4 +65,5 @@ class Message implements MessageInterface
     {
         return $this->options;
     }
+
 }

@@ -8,7 +8,6 @@ use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use Silex\Application;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
-use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
 use SprykerEngine\Zed\Messenger\Communication\Presenter\ZedPresenter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -35,9 +34,9 @@ abstract class AbstractController
     private $dependencyContainer;
 
     /**
-     * @var ObservingPresenterInterface
+     * @var MessengerInterface
      */
-    private $presenter;
+    private $messenger;
 
     /**
      * @param Application $application
@@ -49,8 +48,10 @@ abstract class AbstractController
         $this->application = $application;
         $this->locator = $locator;
 
-        $this->presenter = new ZedPresenter(
-            $this->locator->messenger()->facade(),
+        $this->messenger = $this->locator->messenger()->facade();
+
+        new ZedPresenter(
+            $this->messenger,
             $this->locator->translation()->facade(),
             $this->locator->locale()->facade()->getCurrentLocale(),
             $this->getTwig()
@@ -66,7 +67,7 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        return $this->presenter->getMessenger();
+        return $this->messenger;
     }
 
     /**

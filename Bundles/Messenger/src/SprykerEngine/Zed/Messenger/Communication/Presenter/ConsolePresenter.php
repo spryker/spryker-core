@@ -2,14 +2,17 @@
 
 namespace SprykerEngine\Zed\Messenger\Communication\Presenter;
 
+use SprykerEngine\Shared\Messenger\Communication\Presenter\AbstractPresenter;
+use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
 use SprykerEngine\Zed\Translation\Business\TranslationFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Symfony\Component\Console\Output\OutputInterface;
-use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
+use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 
 class ConsolePresenter extends AbstractPresenter implements
     ObservingPresenterInterface
 {
+
     /**
      * @var TranslationFacade
      */
@@ -64,4 +67,5 @@ class ConsolePresenter extends AbstractPresenter implements
             $this->output->writeln($displayedMessage);
         }
     }
+
 }

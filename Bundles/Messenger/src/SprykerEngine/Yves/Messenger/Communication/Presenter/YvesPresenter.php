@@ -4,16 +4,15 @@ namespace SprykerEngine\Yves\Messenger\Communication\Presenter;
 
 use Generated\Shared\Transfer\TranslatedMessageTransfer;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
-use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use Twig_Environment;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\AbstractPresenter;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Sdk\Glossary\Translator;
 
 class YvesPresenter extends AbstractPresenter implements
     ObservingPresenterInterface
 {
+
     /**
      * @var MessengerInterface
      */
@@ -68,4 +67,5 @@ class YvesPresenter extends AbstractPresenter implements
 
         $this->twig->addGlobal('messages', $messages);
     }
+
 }

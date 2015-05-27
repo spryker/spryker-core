@@ -6,17 +6,11 @@ use SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundE
 use SprykerEngine\Shared\Messenger\Business\Model\Message\Message;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface as LegacyMessengerInterface;
-use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
 
-/**
- * @method Messenger addSuccess($key, $options = [])
- * @method Messenger addError($key, $options = [])
- * @method Messenger addNotice($key, $options = [])
- * @method Messenger addWarning($key, $options = [])
- */
 abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerInterface
 {
+
     /**
      * @var array
      */
@@ -47,7 +41,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      * @param string $message
      * @param array $options
      *
-     * @return Messenger
+     * @return MessengerInterface
      * @throws MessageTypeNotFoundException
      */
     public function add($type, $message, array $options = [])
@@ -55,6 +49,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
         if (!in_array($type, $this->validMessageTypes)) {
             throw new MessageTypeNotFoundException();
         }
+
 
         $this->messages[] = new Message(
             $type,
@@ -104,30 +99,21 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
             return $messages;
         }
 
-        $messages = [];
+        $messages = array_filter(
+            $this->messages,
+            function (MessageInterface $message) use ($type) {
+                return $message->getType() === $type;
+            }
+        );
 
-        while (null !== $message = $this->get($type)) {
-            $messages[] = $message;
-        }
+        $this->messages = array_filter(
+            $this->messages,
+            function (MessageInterface $message) use ($type) {
+                return $message->getType() !== $type;
+            }
+        );
 
         return $messages;
-    }
-
-    /**
-     * @param string $name
-     * @param array $arguments
-     *
-     * @return Messenger
-     */
-    public function __call($name, $arguments)
-    {
-        if (0 === strpos($name, 'add')) {
-            $type = lcfirst(substr($name, 3));
-            $message = $arguments[0];
-            $options = isset($arguments[1]) ? $arguments[1] : [];
-
-            return $this->add($type, $message, $options);
-        }
     }
 
     /**
@@ -136,7 +122,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      * @param string $message
      * @param array $context
      *
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function emergency($message, array $context = [])
     {
@@ -156,7 +142,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      * @param string $message
      * @param array $context
      * 
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function alert($message, array $context = [])
     {
@@ -175,7 +161,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      * @param string $message
      * @param array $context
      * 
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function critical($message, array $context = [])
     {
@@ -193,7 +179,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      * @param string $message
      * @param array $context
      * 
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function error($message, array $context = [])
     {
@@ -213,7 +199,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      * @param string $message
      * @param array $context
      * 
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function warning($message, array $context = [])
     {
@@ -230,12 +216,27 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      * @param string $message
      * @param array $context
      * 
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function notice($message, array $context = [])
     {
         return $this->add(
             Message::MESSAGE_NOTICE,
+            $message,
+            $context
+        );
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     *
+     * @return MessengerInterface
+     */
+    public function success($message, array $context = [])
+    {
+        return $this->add(
+            Message::MESSAGE_SUCCESS,
             $message,
             $context
         );
@@ -249,7 +250,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      * @param string $message
      * @param array $context
      * 
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function info($message, array $context = [])
     {
@@ -266,7 +267,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      * @param string $message
      * @param array $context
      * 
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function debug($message, array $context = [])
     {
@@ -284,7 +285,7 @@ abstract class AbstractMessenger implements MessengerInterface, LegacyMessengerI
      * @param string $message
      * @param array $context
      * 
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function log($level, $message, array $context = [])
     {

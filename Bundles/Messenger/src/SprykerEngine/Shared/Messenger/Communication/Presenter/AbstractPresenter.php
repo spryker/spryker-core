@@ -6,6 +6,7 @@ use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 
 class AbstractPresenter implements PresenterInterface
 {
+
     /**
      * @var MessengerInterface
      */
@@ -26,4 +27,5 @@ class AbstractPresenter implements PresenterInterface
     {
         return $this->messenger;
     }
+
 }

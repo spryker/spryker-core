@@ -3,7 +3,7 @@
 namespace SprykerEngine\Zed\Messenger\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
-use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
+use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 
 class MessengerDependencyContainer extends AbstractDependencyContainer
 {

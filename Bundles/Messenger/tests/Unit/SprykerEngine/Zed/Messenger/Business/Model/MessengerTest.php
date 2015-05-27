@@ -40,11 +40,13 @@ class MessengerTest extends \PHPUnit_Framework_TestCase
             ->addError('Error 1')
             ->addSuccess('Success 3');
 
-        $message = $this->messenger->get(Message::MESSAGE_NOTICE);
+        $messages = $this->messenger->getAll(Message::MESSAGE_SUCCESS);
 
-        $this->assertEquals(
-            Message::MESSAGE_NOTICE,
-            $message->getType()
-        );
+        foreach ($messages as $message) {
+            $this->assertEquals(
+                Message::MESSAGE_SUCCESS,
+                $message->getType()
+            );
+        }
     }
 }

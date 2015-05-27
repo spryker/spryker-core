@@ -7,9 +7,7 @@ use SprykerEngine\Yves\Application\Business\Application;
 use SprykerEngine\Yves\Kernel\Communication\Factory;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\TwigPresenter;
-use SprykerEngine\Yves\Messenger\Business\Model\Messenger;
 use SprykerEngine\Yves\Messenger\Communication\Presenter\YvesPresenter;
-use SprykerFeature\Yves\Library\Session\FlashMessageHelper;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,8 +22,6 @@ use ArrayObject;
 use SprykerFeature\Yves\Library\Session\TransferSession;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
-use SprykerFeature\Sdk\Glossary\Translator;
 
 abstract class AbstractController
 {
@@ -51,9 +47,9 @@ abstract class AbstractController
     private $dependencyContainer;
 
     /**
-     * @var ObservingPresenterInterface
+     * @var MessengerInterface
      */
-    private $presenter;
+    private $messenger;
 
     /**
      * @param Application $app
@@ -66,8 +62,10 @@ abstract class AbstractController
         $this->locator = $locator;
         $this->factory = $factory;
 
-        $this->presenter = new YvesPresenter(
-            new Messenger(),
+        $this->messenger = $this->locator->messenger()->sdk()->createMessenger();
+
+        new YvesPresenter(
+            $this->messenger,
             $this->locator->glossary()->sdk()->createTranslator($app['locale']),
             $this->getTwig()
         );
@@ -190,7 +188,7 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        return $this->presenter->getMessenger();
+        return $this->messenger;
     }
 
     /**

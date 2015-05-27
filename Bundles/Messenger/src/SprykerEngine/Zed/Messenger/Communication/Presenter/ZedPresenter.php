@@ -13,6 +13,7 @@ use SprykerEngine\Shared\Messenger\Communication\Presenter\AbstractPresenter;
 class ZedPresenter extends AbstractPresenter implements
     ObservingPresenterInterface
 {
+
     /**
      * @var MessengerInterface
      */

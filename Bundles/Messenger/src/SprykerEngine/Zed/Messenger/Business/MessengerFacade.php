@@ -4,26 +4,24 @@ namespace SprykerEngine\Zed\Messenger\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
-use SprykerEngine\Shared\Messenger\Business\Model\Message\Message;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
-use SprykerEngine\Zed\Messenger\Business\Model\Messenger;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface as LegacyMessengerInterface;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 
-/**
- * @method MessengerInterface addSuccess($key, $options = [])
- * @method MessengerInterface addError($key, $options = [])
- * @method MessengerInterface addNotice($key, $options = [])
- * @method MessengerInterface addWarning($key, $options = [])
- */
-class MessengerFacade extends AbstractFacade implements MessengerInterface,
-    LegacyMessengerInterface
+class MessengerFacade extends AbstractFacade implements MessengerInterface
 {
+
+    /**
+     * @var MessengerInterface
+     */
     protected $messenger;
 
+    /**
+     * @param FactoryInterface $factory
+     * @param Locator $locator
+     */
     public function __construct(FactoryInterface $factory, Locator $locator)
     {
         parent::__construct($factory, $locator);
@@ -89,15 +87,11 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      * @param string $message
      * @param array $context
      *
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function alert($message, array $context = [])
     {
-        return $this->add(
-            Message::MESSAGE_ALERT,
-            $message,
-            $context
-        );
+        return $this->messenger->alert($message, $context);
     }
 
     /**
@@ -108,15 +102,11 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      * @param string $message
      * @param array $context
      *
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function critical($message, array $context = [])
     {
-        return $this->add(
-            Message::MESSAGE_CRITICAL,
-            $message,
-            $context
-        );
+        return $this->messenger->critical($message, $context);
     }
 
     /**
@@ -125,15 +115,11 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      * @param string $message
      * @param array $context
      *
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function emergency($message, array $context = [])
     {
-        return $this->add(
-            Message::MESSAGE_EMERGENCY,
-            $message,
-            $context
-        );
+        return $this->messenger->emergency($message, $context);
     }
 
     /**
@@ -143,15 +129,11 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      * @param string $message
      * @param array $context
      *
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function error($message, array $context = [])
     {
-        return $this->add(
-            Message::MESSAGE_ERROR,
-            $message,
-            $context
-        );
+        return $this->messenger->error($message, $context);
     }
 
     /**
@@ -163,15 +145,11 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      * @param string $message
      * @param array $context
      *
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function warning($message, array $context = [])
     {
-        return $this->add(
-            Message::MESSAGE_WARNING,
-            $message,
-            $context
-        );
+        return $this->messenger->warning($message, $context);
     }
 
     /**
@@ -180,15 +158,11 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      * @param string $message
      * @param array $context
      *
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function notice($message, array $context = [])
     {
-        return $this->add(
-            Message::MESSAGE_NOTICE,
-            $message,
-            $context
-        );
+        return $this->messenger->notice($message, $context);
     }
 
     /**
@@ -199,15 +173,22 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      * @param string $message
      * @param array $context
      *
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function info($message, array $context = [])
     {
-        return $this->add(
-            Message::MESSAGE_INFO,
-            $message,
-            $context
-        );
+        return $this->messenger->info($message, $context);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     *
+     * @return MessengerInterface
+     */
+    public function success($message, array $context = [])
+    {
+        return $this->messenger->success($message, $context);
     }
 
     /**
@@ -216,15 +197,11 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      * @param string $message
      * @param array $context
      *
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function debug($message, array $context = [])
     {
-        return $this->add(
-            Message::MESSAGE_DEBUG,
-            $message,
-            $context
-        );
+        return $this->messenger->debug($message, $context);
     }
 
     /**
@@ -234,23 +211,11 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface,
      * @param string $message
      * @param array $context
      *
-     * @return Messenger
+     * @return MessengerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        return $this->add($level, $message, $context);
-    }
-
-
-    public function __call($name, $arguments)
-    {
-        if (0 === strpos($name, 'add')) {
-            $type    = lcfirst(substr($name, 3));
-            $message = $arguments[0];
-            $options = isset($arguments[1]) ? $arguments[1] : [];
-
-            return $this->add($type, $message, $options);
-        }
+        return $this->messenger->log($level, $message, $context);
     }
 
 }
