@@ -3,12 +3,10 @@
 namespace SprykerEngine\Zed\Messenger\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Translation\Business\TranslationFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Twig_Environment;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -48,7 +46,6 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface
      * @param array $options
      *
      * @return MessengerInterface
-     * @throws MessageTypeNotFoundException
      */
     public function add($type, $message, array $options = [])
     {

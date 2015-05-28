@@ -22,14 +22,6 @@ class MessengerTest extends \PHPUnit_Framework_TestCase
         $this->messenger->addSuccess('Success');
     }
 
-    /**
-     * @expectedException \SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundException
-     */
-    public function testAddInvalid()
-    {
-        $this->messenger->add('invalid', 'invalid');
-    }
-
     public function testGetByType()
     {
         // add some messages

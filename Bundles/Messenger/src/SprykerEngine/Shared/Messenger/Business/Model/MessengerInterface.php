@@ -2,7 +2,6 @@
 
 namespace SprykerEngine\Shared\Messenger\Business\Model;
 
-use SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
 use Psr\Log\LoggerInterface;
 
@@ -15,7 +14,6 @@ interface MessengerInterface extends LoggerInterface
      * @param array $options
      *
      * @return MessengerInterface
-     * @throws MessageTypeNotFoundException
      */
     public function add($type, $message, array $options = []);
 

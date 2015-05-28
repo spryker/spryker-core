@@ -41,7 +41,6 @@ class ConsoleMessenger extends AbstractMessenger
      * @param array $options
      *
      * @return $this
-     * @throws \SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundException
      */
     public function add($type, $message, array $options = [])
     {

@@ -2,7 +2,6 @@
 
 namespace SprykerEngine\Shared\Messenger\Business\Model;
 
-use SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\Message;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
 
@@ -20,14 +19,9 @@ abstract class AbstractMessenger implements MessengerInterface
      * @param array $options
      *
      * @return MessengerInterface
-     * @throws MessageTypeNotFoundException
      */
     public function add($type, $message, array $options = [])
     {
-        if (!in_array($type, $this->validMessageTypes)) {
-            throw new MessageTypeNotFoundException();
-        }
-
         $this->messages[] = new Message(
             $type,
             $message,
