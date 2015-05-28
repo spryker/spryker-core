@@ -7,7 +7,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
-use SprykerEngine\Zed\Messenger\Business\Model\MessengerInterface;
 use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 
@@ -16,7 +15,6 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use SprykerFeature\Zed\Application\Business\Model\Messenger\Messenger;
 use Psr\Log\LoggerInterface;
 
 class Console extends SymfonyCommand
@@ -97,21 +95,12 @@ class Console extends SymfonyCommand
      */
     protected function getMessenger()
     {
-//        var_dump($this->locator->messenger()); exit;
-
         if (is_null($this->messenger)) {
-//            if (class_exists('\Generated\Shared\Transfer\LocaleTransfer')) {
-//                $this->messenger = $this->locator->messenger()->facade();
-//
-//                $this->locator->messenger()->facade()->createConsolePresenter(
-//                    $this->messenger,
-//                    $this->locator->translation()->facade(),
-//                    $this->locator->locale()->facade()->getCurrentLocale(),
-//                    $this->output
-//                );
-//            } else {
-                $this->messenger = new ConsoleMessenger($this->output);
-//            }
+            $this->messenger = new ConsoleMessenger($this->output);
+
+            $this->messenger->setTranslator(
+                $this->locator->translation()->facade()
+            );
         }
 
         return $this->messenger;

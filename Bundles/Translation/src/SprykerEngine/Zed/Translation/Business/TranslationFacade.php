@@ -2,11 +2,11 @@
 
 namespace SprykerEngine\Zed\Translation\Business;
 
+use SprykerEngine\Shared\Translation\TranslationInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Translation\Business\TranslatorInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 
-class TranslationFacade extends AbstractFacade
+class TranslationFacade extends AbstractFacade implements TranslationInterface
 {
     /**
      * @param string $id
@@ -48,4 +48,5 @@ class TranslationFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createTranslator($locale);
     }
+
 }
