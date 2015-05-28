@@ -45,4 +45,13 @@ class SetupConfig extends AbstractBundleConfig
     {
         return $this->getJenkinsDirectory() . '/jobs';
     }
+
+    /**
+     * @return string
+     */
+    public function getGeneratedDirectory()
+    {
+        return APPLICATION_SOURCE_DIR . DIRECTORY_SEPARATOR . 'Generated';
+
+    }
 }
