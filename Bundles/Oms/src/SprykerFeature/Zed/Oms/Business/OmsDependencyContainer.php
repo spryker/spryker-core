@@ -36,11 +36,13 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
+     * @param array $array
+     *
      * @return ReadOnlyArrayObject
      */
-    public function createUtilReadOnlyArrayObject()
+    public function createUtilReadOnlyArrayObject(array $array = [])
     {
-        return $this->getFactory()->createUtilReadOnlyArrayObject(array());
+        return $this->getFactory()->createUtilReadOnlyArrayObject($array);
     }
 
     /**
@@ -58,13 +60,15 @@ class OmsDependencyContainer extends AbstractDependencyContainer
      */
     public function createOrderStateMachineOrderStateMachine(array $logContext)
     {
+
+
         return $this->getFactory()->createOrderStateMachineOrderStateMachine(
             $this->createQueryContainer(),
             $this->createOrderStateMachineBuilder(),
             $this->createUtilTransitionLog($logContext),
             $this->createOrderStateMachineTimeout(),
             $this->createUtilCollectionToArrayTransformer(),
-            $this->createUtilReadOnlyArrayObject(),
+            $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
             $this->getConfig()->getConditions(),
             $this->getConfig()->getCommands(),
             $this->getFactory()
