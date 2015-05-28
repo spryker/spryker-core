@@ -20,40 +20,12 @@ class MessengerDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createModelMessenger();
     }
 
-    public function createZedPresenter(
-        MessengerInterface $messenger,
-        TranslationFacade $translator,
-        LocaleTransfer $locale,
-        Twig_Environment $twig
-    ) {
-        return $this->getFactory()->createPresenterZedPresenter(
-            $messenger,
-            $translator,
-            $locale,
-            $twig
-        );
-    }
-
     /**
-     * @param MessengerInterface $messenger
-     * @param TranslationFacade $translator
-     * @param LocaleTransfer $locale
-     * @param ConsoleOutput $output
-     *
-     * @return ConsolePresenter
+     * @return MessengerInterface
      */
-    public function createConsolePresenter(
-        MessengerInterface $messenger,
-        TranslationFacade $translator,
-        LocaleTransfer $locale,
-        ConsoleOutput $output
-    ) {
-        return $this->getFactory()->createPresenterConsolePresenter(
-            $messenger,
-            $translator,
-            $locale,
-            $output
-        );
+    public function getConsoleMessenger()
+    {
+        return $this->getFactory()->createModelConsoleMessenger();
     }
 
 }

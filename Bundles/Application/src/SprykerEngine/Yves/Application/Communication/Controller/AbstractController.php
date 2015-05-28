@@ -64,10 +64,10 @@ abstract class AbstractController
 
         $this->messenger = $this->locator->messenger()->sdk()->createMessenger();
 
-        $this->locator->messenger()->pluginYvesPresenter()->createYvesPresenter(
-            $this->messenger,
-            $this->locator->glossary()->sdk()->createTranslator($app['locale']),
-            $this->getTwig()
+        $this->getTwig()->addExtension(
+            $this->locator->messenger()->pluginTwigMessenger()->setMessenger(
+                $this->messenger
+            )
         );
 
         if ($factory->exists('DependencyContainer')) {

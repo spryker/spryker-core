@@ -16,15 +16,4 @@ class MessengerDependencyContainer extends AbstractDependencyContainer
         return $this->messenger = $this->getFactory()->createModelMessenger();
     }
 
-    public function createYvesPresenter(
-        MessengerInterface $messenger,
-        Translator $translator,
-        Twig_Environment $twig
-    ){
-        return $this->getFactory()->createPresenterYvesPresenter(
-            $messenger,
-            $translator,
-            $twig
-        );
-    }
 }

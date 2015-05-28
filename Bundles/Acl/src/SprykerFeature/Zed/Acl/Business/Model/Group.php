@@ -210,6 +210,7 @@ class Group implements GroupInterface
     public function addUser($idGroup, $idUser)
     {
         if ($this->hasUser($idGroup, $idUser)) {
+            return;
             throw new GroupAlreadyHasUserException();
         }
 

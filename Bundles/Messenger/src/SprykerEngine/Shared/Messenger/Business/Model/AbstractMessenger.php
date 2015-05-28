@@ -5,35 +5,14 @@ namespace SprykerEngine\Shared\Messenger\Business\Model;
 use SprykerEngine\Shared\Messenger\Business\Model\Exception\MessageTypeNotFoundException;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\Message;
 use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
-use SprykerEngine\Shared\Messenger\Communication\Presenter\ObservingPresenterInterface;
 
 abstract class AbstractMessenger implements MessengerInterface
 {
 
     /**
-     * @var array
-     */
-    private $validMessageTypes = [
-        Message::MESSAGE_ALERT,
-        Message::MESSAGE_CRITICAL,
-        Message::MESSAGE_DEBUG,
-        Message::MESSAGE_EMERGENCY,
-        Message::MESSAGE_ERROR,
-        Message::MESSAGE_INFO,
-        Message::MESSAGE_NOTICE,
-        Message::MESSAGE_SUCCESS,
-        Message::MESSAGE_WARNING,
-    ];
-
-    /**
      * @var MessageInterface[]
      */
     protected $messages = [];
-
-    /**
-     * @var ObservingPresenterInterface
-     */
-    protected $observingPresenter;
 
     /**
      * @param string $type
@@ -54,8 +33,6 @@ abstract class AbstractMessenger implements MessengerInterface
             $message,
             $options
         );
-
-        $this->notify();
 
         return $this;
     }
@@ -288,28 +265,6 @@ abstract class AbstractMessenger implements MessengerInterface
     public function log($level, $message, array $context = [])
     {
         return $this->add($level, $message, $context);
-    }
-
-    /**
-     * @param ObservingPresenterInterface $presenter
-     *
-     * @return MessengerInterface
-     */
-    public function registerPresenter(ObservingPresenterInterface $presenter)
-    {
-        $this->observingPresenter = $presenter;
-
-        return $this;
-    }
-
-    /**
-     * notifies registered presenter about available updates
-     */
-    protected function notify()
-    {
-        if (!is_null($this->observingPresenter)) {
-            $this->observingPresenter->update();
-        }
     }
 
 }

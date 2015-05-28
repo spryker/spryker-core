@@ -97,19 +97,21 @@ class Console extends SymfonyCommand
      */
     protected function getMessenger()
     {
-        if (is_null($this->messenger)) {
-            if (class_exists('\Generated\Shared\Transfer\LocaleTransfer')) {
-                $this->messenger = $this->locator->messenger()->facade();
+//        var_dump($this->locator->messenger()); exit;
 
-                $this->locator->messenger()->facade()->createConsolePresenter(
-                    $this->messenger,
-                    $this->locator->translation()->facade(),
-                    $this->locator->locale()->facade()->getCurrentLocale(),
-                    $this->output
-                );
-            } else {
+        if (is_null($this->messenger)) {
+//            if (class_exists('\Generated\Shared\Transfer\LocaleTransfer')) {
+//                $this->messenger = $this->locator->messenger()->facade();
+//
+//                $this->locator->messenger()->facade()->createConsolePresenter(
+//                    $this->messenger,
+//                    $this->locator->translation()->facade(),
+//                    $this->locator->locale()->facade()->getCurrentLocale(),
+//                    $this->output
+//                );
+//            } else {
                 $this->messenger = new ConsoleMessenger($this->output);
-            }
+//            }
         }
 
         return $this->messenger;

@@ -1,7 +1,7 @@
 <section class="spy-message-container spy-layout">
     <ul>
         {%- for message in messages -%}
-            <li class="message {{ message.getType() }}">{{ message.getMessage() }}</li>
+            <li class="message {{ message.getType() }}">{{ message.getMessage()|trans }}</li>
         {%- endfor -%}
     </ul>
 </section>

@@ -8,7 +8,7 @@ use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use Silex\Application;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
-use SprykerEngine\Zed\Messenger\Communication\Presenter\ZedPresenter;
+use SprykerEngine\Shared\Messenger\Communication\Presenter\ZedPresenter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -50,11 +50,10 @@ abstract class AbstractController
 
         $this->messenger = $this->locator->messenger()->facade();
 
-        $this->locator->messenger()->facade()->createZedPresenter(
-            $this->messenger,
-            $this->locator->translation()->facade(),
-            $this->locator->locale()->facade()->getCurrentLocale(),
-            $this->getTwig()
+        $this->getTwig()->addExtension(
+            $this->locator->messenger()->pluginTwigMessengerPlugin()->setMessenger(
+                $this->messenger
+            )
         );
 
         if ($factory->exists('DependencyContainer')) {
