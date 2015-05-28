@@ -54,7 +54,7 @@ class LocaleFacade extends AbstractFacade
     /**
      * @return array
      */
-    public function getRelevantLocaleNames()
+    public function getAvailableLocales()
     {
         $availableLocales = Store::getInstance()->getLocales();
         $locales = [];

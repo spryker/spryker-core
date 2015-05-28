@@ -44,7 +44,7 @@ class LocaleFacadeTest extends Test
         $this->localeFacade = new LocaleFacade(new Factory('Locale'), $locator);
         $this->localeQueryContainer = new LocaleQueryContainer(new PersistanceFactory('Locale'), $locator);
         $this->availableLocales = Store::getInstance()->getLocales();
-        $this->localeNames = $this->localeFacade->getRelevantLocaleNames();
+        $this->localeNames = $this->localeFacade->getAvailableLocales();
     }
 
     public function testAvailableLocalesToBeArrayType()
