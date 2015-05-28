@@ -3,7 +3,7 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-namespace Sales;
+namespace Transfer;
 use \Codeception\Maybe;
 use Codeception\Module\PhpBrowser;
 use Transfer\Codeception\Module\WebHelper;
