@@ -25,7 +25,7 @@ class OmsQueryContainer extends AbstractQueryContainer
     {
         return SpySalesOrderItemQuery::create()
             ->joinProcess(null, $joinType = Criteria::INNER_JOIN)
-            ->joinProcess(null, $joinType = Criteria::INNER_JOIN)
+            ->joinState(null, $joinType = Criteria::INNER_JOIN)
             ->where("Process.name = ?", $processName)
             ->where("State.name IN ('" . implode("', '", $states) . "')");
     }

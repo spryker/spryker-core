@@ -7,7 +7,6 @@ use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -201,7 +200,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @return int
      */
-    protected function checkConditionsForProcess(ProcessInterface $process, array $logContext = null)
+    protected function checkConditionsForProcess(ProcessInterface $process, array $logContext = [])
     {
         $transitions = $process->getAllTransitionsWithoutEvent();
 
@@ -639,7 +638,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function getOrderItemsByState($states, ProcessInterface $process)
     {
-        $orderItems = $this->queryContainer->getOrderItemsByState($states, $process)->find();
+        $orderItems = $this->queryContainer->getOrderItemsByState($states, $process->getName())->find();
 
         return $this->collectionToArrayTransformer->transformCollectionToArray($orderItems);
     }
