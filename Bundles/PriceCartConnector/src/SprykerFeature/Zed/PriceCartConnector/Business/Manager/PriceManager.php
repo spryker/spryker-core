@@ -2,9 +2,8 @@
 
 namespace SprykerFeature\Zed\PriceCartConnector\Business\Manager;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\PriceItemInterface;
-use Generated\Shared\Cart\CartItemsInterface;
-use Generated\Shared\Cart\CartItemInterface;
+use Generated\Shared\PriceCartConnector\CartItemInterface;
+use Generated\Shared\PriceCartConnector\CartItemsInterface;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 
@@ -38,10 +37,8 @@ class PriceManager implements PriceManagerInterface
      */
     public function addGrossPriceToItems(CartItemsInterface $items)
     {
-        /** @var PriceItemInterface|CartItemInterface $cartItem */
         foreach ($items->getCartItems() as $cartItem) {
-            if (!$cartItem instanceof PriceItemInterface ||
-                !$this->priceFacade->hasValidPrice($cartItem->getId(), $this->grossPriceType)) {
+            if (!$this->priceFacade->hasValidPrice($cartItem->getId(), $this->grossPriceType)) {
                 throw new PriceMissingException(sprintf('Cart item %s can not be priced', $cartItem->getId()));
             }
 

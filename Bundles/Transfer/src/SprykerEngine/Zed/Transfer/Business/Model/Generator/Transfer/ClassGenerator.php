@@ -4,7 +4,6 @@ namespace SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer;
 
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionInterface;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferTwigExtensions;
 
 class ClassGenerator implements GeneratorInterface
 {
@@ -32,7 +31,6 @@ class ClassGenerator implements GeneratorInterface
 
         $loader = new \Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
         $this->twig = new \Twig_Environment($loader, []);
-        $this->twig->addExtension(new TransferTwigExtensions());
     }
 
     /**
@@ -56,7 +54,7 @@ class ClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param ClassDefinitionInterface $classDefinition
+     * @param ClassDefinitionInterface|DefinitionInterface $classDefinition
      *
      * @return array
      */

@@ -12,14 +12,15 @@ use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\CollectionFixtur
 use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
 use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\PriceItemFixture;
 
+/**
+ * @group PriceCartConnector
+ * @group Business
+ * @group Zed
+ * @group Manager
+ */
 class PriceManagerTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @group PriceCartConnector
-     * @group Business
-     * @group Zed
-     * @group Manager
-     */
+
     public function testAddPriceToItems()
     {
         $priceFacadeStub = $this->createPriceFacadeStub();
@@ -41,11 +42,6 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group PriceCartConnector
-     * @group Business
-     * @group Zed
-     * @group Manager
-     *
      * @expectedException \SprykerFeature\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      * @expectedExceptionMessage Cart item 123 can not be priced
      */

@@ -2,7 +2,7 @@
     /**
      * @var {{ property.type }} ${{ property.name }}
      */
-    protected ${{ property.name }}{% if property.default is defined and property.default != '' %} = {{ property.default|quotedIfNotIntegers }}{% endif %};
+    protected ${{ property.name }};
 {% endmacro %}
 
 {% macro addConstructor(properties) %}

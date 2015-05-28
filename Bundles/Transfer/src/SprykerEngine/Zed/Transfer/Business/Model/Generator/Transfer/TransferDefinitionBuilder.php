@@ -10,9 +10,14 @@ class TransferDefinitionBuilder extends AbstractDefinitionBuilder
 {
 
     /**
-     * @var array
+     * @var TransferDefinitionLoader
      */
-    private $definitions;
+    private $loader;
+
+    /**
+     * @var TransferDefinitionMerger
+     */
+    private $merger;
 
     /**
      * @var ClassDefinition
@@ -26,8 +31,8 @@ class TransferDefinitionBuilder extends AbstractDefinitionBuilder
      */
     public function __construct(TransferDefinitionLoader $loader, TransferDefinitionMerger $merger, ClassDefinition $classDefinition)
     {
-        $definitions = $loader->getDefinitions();
-        $this->definitions = $merger->merge($definitions);
+        $this->loader = $loader;
+        $this->merger = $merger;
         $this->classDefinition = $classDefinition;
     }
 
@@ -36,6 +41,9 @@ class TransferDefinitionBuilder extends AbstractDefinitionBuilder
      */
     public function getDefinitions()
     {
-        return $this->buildDefinitions($this->definitions, $this->classDefinition);
+        $definitions = $this->loader->getDefinitions();
+        $definitions = $this->merger->merge($definitions);;
+
+        return $this->buildDefinitions($definitions, $this->classDefinition);
     }
 }
