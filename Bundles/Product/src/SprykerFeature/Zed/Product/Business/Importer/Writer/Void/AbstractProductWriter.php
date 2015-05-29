@@ -2,24 +2,19 @@
 
 namespace SprykerFeature\Zed\Product\Business\Importer\Writer\Void;
 
+use Generated\Shared\Transfer\AbstractProductTransfer;
 use SprykerFeature\Zed\Product\Business\Importer\Writer\AbstractProductWriterInterface;
-use SprykerFeature\Zed\Product\Business\Importer\Model\AbstractProduct;
 
-/**
- * Class AbstractProductWriter
- *
- * @package SprykerFeature\Zed\Product\Business\Importer\Writer\Void
- */
 class AbstractProductWriter implements AbstractProductWriterInterface
 {
+
     /**
-     * @param AbstractProduct $product
+     * @param AbstractProductTransfer $product
      *
      * @return bool
      */
-    public function writeAbstractProduct(AbstractProduct $product)
+    public function writeAbstractProduct(AbstractProductTransfer $product)
     {
         return is_object($product);
     }
 }
- 

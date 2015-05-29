@@ -2,19 +2,15 @@
 
 namespace SprykerFeature\Zed\Product\Business\Builder;
 
-use SprykerFeature\Shared\Product\Model\ProductInterface;
+use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ConcreteProductTransfer;
 
-/**
- * Class ProductBuilder
- *
- * @package SprykerFeature\Zed\Product\Business\Builder
- */
 interface ProductBuilderInterface
 {
     /**
      * @param array $data
      *
-     * @return ProductInterface
+     * @return AbstractProductTransfer|ConcreteProductTransfer
      */
     public function buildProduct(array $data);
 }

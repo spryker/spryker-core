@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Product\Business\Importer\Writer;
 
-use SprykerFeature\Zed\Product\Business\Importer\Model\ConcreteProduct;
+use Generated\Shared\Transfer\ConcreteProductTransfer;
 
 /**
  * Interface ProductWriterInterface
@@ -12,9 +12,9 @@ use SprykerFeature\Zed\Product\Business\Importer\Model\ConcreteProduct;
 interface ConcreteProductWriterInterface
 {
     /**
-     * @param ConcreteProduct $product
+     * @param ConcreteProductTransfer $product
      *
      * @return bool success
      */
-    public function writeProduct(ConcreteProduct $product);
+    public function writeProduct(ConcreteProductTransfer $product);
 }

@@ -6,11 +6,6 @@ use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use SprykerFeature\Zed\Product\Business\Builder\ProductBuilderInterface;
 
-/**
- * Class ProductBuilder
- *
- * @package SprykerFeature\Zed\Product\Business\Importer\Builder
- */
 class ProductBuilder implements ProductBuilderInterface
 {
     const ABSTRACT_PRODUCT_REFERENCE = 'refSku';

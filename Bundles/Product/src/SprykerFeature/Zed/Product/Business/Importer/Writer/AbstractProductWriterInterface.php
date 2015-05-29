@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Product\Business\Importer\Writer;
 
-use SprykerFeature\Zed\Product\Business\Importer\Model\AbstractProduct;
+use Generated\Shared\Transfer\AbstractProductTransfer;
 
 /**
  * Interface AbstractProductWriterInterface
@@ -12,9 +12,9 @@ use SprykerFeature\Zed\Product\Business\Importer\Model\AbstractProduct;
 interface AbstractProductWriterInterface
 {
     /**
-     * @param AbstractProduct $product
+     * @param AbstractProductTransfer $product
      *
      * @return bool
      */
-    public function writeAbstractProduct(AbstractProduct $product);
+    public function writeAbstractProduct(AbstractProductTransfer $product);
 }

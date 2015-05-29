@@ -35,12 +35,36 @@ class CsvReader implements IteratorReaderInterface
 
     /**
      * @param \SplFileInfo $file
-     * @param bool $hasHeadingRow
      *
      * @return \Iterator
      * @throws \FileNotFoundException
      */
-    public function getIteratorFromFile(\SplFileInfo $file, $hasHeadingRow = true)
+    public function getIteratorFromFile(\SplFileInfo $file)
+    {
+        $reader = $this->getFileReader($file);
+
+        return $reader->getIterator();
+    }
+
+    /**
+     * @param \SplFileInfo $file
+     *
+     * @return array
+     */
+    public function getArrayFromFile(\SplFileInfo $file)
+    {
+        $reader = $this->getFileReader($file);
+
+        return $reader->fetchAssoc();
+    }
+
+    /**
+     * @param \SplFileInfo $file
+     *
+     * @return Reader
+     * @throws \FileNotFoundException
+     */
+    protected function getFileReader(\SplFileInfo $file)
     {
         $path = $file->getRealPath();
         if (!file_exists($path)) {
@@ -53,8 +77,6 @@ class CsvReader implements IteratorReaderInterface
         $reader->setEnclosure($this->enclosure);
         $reader->setEscape($this->escape);
 
-        $iterator = $hasHeadingRow ? $reader->fetchAssoc() : $reader->getIterator();
-
-        return $iterator;
+        return $reader;
     }
 }

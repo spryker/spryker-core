@@ -2,9 +2,8 @@
 
 namespace SprykerFeature\Zed\Product\Business;
 
-use Generated\Zed\Ide\AutoCompletion;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductBusiness;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use SprykerFeature\Zed\Product\Business\Builder\ProductBuilderInterface;
@@ -49,7 +48,7 @@ class ProductDependencyContainer extends AbstractDependencyContainer
         $importer = $this->getFactory()->createImporterFileImporter(
             $this->createImportProductValidator(),
             $this->createCSVReader(),
-            $this->createProductBuilder(),
+            $this->createImportProductBuilder(),
             $this->createProductWriter(),
             $this->createProductBatchResult()
         );
@@ -76,7 +75,7 @@ class ProductDependencyContainer extends AbstractDependencyContainer
     /**
      * @return ProductBuilderInterface
      */
-    protected function createProductBuilder()
+    protected function createImportProductBuilder()
     {
         return $this->getFactory()->createImporterBuilderProductBuilder();
     }
@@ -98,7 +97,7 @@ class ProductDependencyContainer extends AbstractDependencyContainer
     protected function createAbstractProductWriter()
     {
         return $this->getFactory()->createImporterWriterDbAbstractProductWriter(
-            $this->getConfig()->getProductDefaultLocale()
+            $this->getCurrentLocale()
         );
     }
 
@@ -108,7 +107,7 @@ class ProductDependencyContainer extends AbstractDependencyContainer
     protected function createConcreteProductWriter()
     {
         return $this->getFactory()->createImporterWriterDbConcreteProductWriter(
-            $this->getConfig()->getProductDefaultLocale()
+            $this->getCurrentLocale()
         );
     }
 
@@ -190,5 +189,13 @@ class ProductDependencyContainer extends AbstractDependencyContainer
     protected function createUrlFacade()
     {
         return $this->getLocator()->url()->facade();
+    }
+
+    /**
+     * @return LocaleTransfer
+     */
+    protected function getCurrentLocale()
+    {
+        return $this->getLocator()->locale()->facade()->getCurrentLocale();
     }
 }

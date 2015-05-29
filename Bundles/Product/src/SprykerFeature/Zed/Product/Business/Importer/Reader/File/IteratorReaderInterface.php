@@ -6,9 +6,15 @@ interface IteratorReaderInterface
 {
     /**
      * @param \SplFileInfo $file
-     * @param bool $hasHeadingRow
      *
      * @return \Iterator
      */
-    public function getIteratorFromFile(\SplFileInfo $file, $hasHeadingRow = true);
+    public function getIteratorFromFile(\SplFileInfo $file);
+
+    /**
+     * @param \SplFileInfo $file
+     *
+     * @return array
+     */
+    public function getArrayFromFile(\SplFileInfo $file);
 }
