@@ -1,0 +1,15 @@
+{
+  "name": "spryker/taxproductconnector",
+  "autoload": {
+    "psr-0": {
+      "SprykerFeature": "src/",
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+  }
+}

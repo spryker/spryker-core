@@ -20,20 +20,12 @@ class TaxReader implements TaxReaderInterface
     protected $queryContainer;
 
     /**
-     * @var TaxConfig
-     */
-    protected $taxSettings;
-
-    /**
      * @param TaxQueryContainerInterface $queryContainer
-     * @param TaxConfig $taxSettings
      */
     public function __construct(
-        TaxQueryContainerInterface $queryContainer,
-        TaxConfig $taxSettings
+        TaxQueryContainerInterface $queryContainer
     ) {
         $this->queryContainer = $queryContainer;
-        $this->taxSettings = $taxSettings;
     }
 
     /**
