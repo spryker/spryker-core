@@ -39,11 +39,11 @@
     <body class="{% block body_class %}spy-page{% endblock %}">
         {% block body %}
             {% block body_header %}
-                {% include '@Application/Partials/header.twig' %}
+                {% include '@Application/Layout/Partials/header.twig' %}
             {% endblock %}
 
             {% block body_menu %}
-                {% include '@Application/Partials/menu.twig' %}
+                {% include '@Application/Layout/Partials/menu.twig' %}
             {% endblock %}
 
             <main class="{% block content_class %}spy-page-content{% endblock %}" role="main">
