@@ -260,7 +260,6 @@ class Customer
     {
         $customer = $this->getCustomer($customerTransfer);
         $customer->setFirstName($customerTransfer->getFirstName());
-        $customer->setMiddleName($customerTransfer->getMiddleName());
         $customer->setLastName($customerTransfer->getLastName());
         $customer->setCompany($customerTransfer->getCompany());
         $customer->setDateOfBirth($customerTransfer->getDateOfBirth());

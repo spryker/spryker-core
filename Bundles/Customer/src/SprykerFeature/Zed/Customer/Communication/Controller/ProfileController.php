@@ -60,7 +60,8 @@ class ProfileController extends AbstractController
         foreach ($addressesItems as $address) {
             $addresses[] = [
                 'id' => $address->getIdCustomerAddress(),
-                'name' => $address->getName(),
+                'first_name' => $address->getFirstName(),
+                'last_name' => $address->getLastName(),
                 'address1' => $address->getAddress1(),
                 'address2' => $address->getAddress2(),
                 'address3' => $address->getAddress3(),

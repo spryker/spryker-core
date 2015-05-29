@@ -204,9 +204,10 @@ class Address
         }
 
         $address[] = sprintf(
-            '%s %s',
+            '%s %s %s',
             $addressTransfer->getSalutation(),
-            $addressTransfer->getName()
+            $addressTransfer->getFirstName(),
+            $addressTransfer->getLastName()
         );
 
         if (count($addressTransfer->getAddress1()) > 0) {

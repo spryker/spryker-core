@@ -9,16 +9,15 @@
         <property name="fkCustomer" type="int" />
         <property name="email" type="string" />
         <property name="salutation" type="string" />
-        <property name="name" type="string" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
         <property name="address1" type="string" />
         <property name="address2" type="string" />
         <property name="address3" type="string" />
         <property name="company" type="string" />
         <property name="city" type="string" />
         <property name="zipCode" type="string" />
-        <property name="poBox" type="string" />
         <property name="phone" type="string" />
-        <property name="cellPhone" type="string" />
         <property name="comment" type="string" />
         <property name="state" type="string" />
         <property name="isDeleted" type="string" />
@@ -35,10 +34,8 @@
     <transfer name="Customer">
         <property name="email" type="string" />
         <property name="idCustomer" type="int" />
-        <property name="incrementId" type="string" />
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
-        <property name="middleName" type="string" />
         <property name="company" type="string" />
         <property name="gender" type="string" />
         <property name="dateOfBirth" type="string" />
