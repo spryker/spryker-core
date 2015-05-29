@@ -36,7 +36,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      *
      * @return TranslationForm
      */
-    public function getTranslationForm(Request $request)
+    public function createTranslationForm(Request $request)
     {
         return $this->getFactory()->createFormTranslationForm(
             $request,
@@ -50,20 +50,35 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      *
      * @return TranslationGrid
      */
-    public function getGlossaryKeyTranslationGrid(Request $request)
+    public function createGlossaryKeyTranslationGrid(Request $request)
     {
-        $glossaryQueryContainer = $this->getQueryContainer();
-        $translationQuery = $glossaryQueryContainer->joinTranslationQueryWithKeysAndLocales($glossaryQueryContainer->queryTranslations());
+        $glossaryQueryContainer = $this->createQueryContainer();
+
+        $availableLocales = $this->createEnabledLocales();
+
+        $translationQuery = $glossaryQueryContainer->queryKeysAndTranslationsForEachLanguage(
+            array_keys($availableLocales)
+        );
+
         return $this->getFactory()->createGridTranslationGrid(
             $translationQuery,
-            $request
+            $request,
+            $availableLocales
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function createEnabledLocales()
+    {
+        return $this->createLocaleFacade()->getRelevantLocaleNames();
     }
 
     /**
      * @return GlossaryQueryContainerInterface
      */
-    public function getQueryContainer()
+    public function createQueryContainer()
     {
         return $this->getLocator()->glossary()->queryContainer();
     }
@@ -71,7 +86,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     /**
      * @return Validator
      */
-    public function getValidator()
+    public function createValidator()
     {
         return $this->getLocator()->application()->pluginPimple()->getApplication()['validator'];
     }
@@ -79,7 +94,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     /**
      * @return LocaleFacade
      */
-    protected function getLocaleFacade()
+    protected function createLocaleFacade()
     {
         return $this->getLocator()->locale()->facade();
     }

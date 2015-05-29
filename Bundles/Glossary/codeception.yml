@@ -23,3 +23,10 @@ modules:
 
 coverage:
     enabled: true
+    whitelist:
+        include:
+            - src/*
+    blacklist:
+        include:
+            - src/SprykerFeature/Zed/Glossary/Presentation/*
+            - tests/*

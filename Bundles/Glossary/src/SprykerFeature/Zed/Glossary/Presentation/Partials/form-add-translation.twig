@@ -4,11 +4,7 @@
     name="key_add"
     channel="glossary"
 >
-    <h3>Add Translation</h3>
-
-    <div spy-input-text-select="field.fk_glossary_key" options="{ label : 'Key' }"></div>
-
     <div class="spy-layout buttons">
-        <button class="button default" ng-disabled="query || !field.fk_glossary_key.value" ng-click="$emitAllChannels('glossary_edit', { fk_glossary_key : model.fields.fk_glossary_key.value })">Add</button>
+        <button class="button default" ng-click="$emitAllChannels('glossary_edit')">Add Translation</button>
     </div>
 </spy-form>

@@ -23,7 +23,7 @@ class GridController extends AbstractController
      */
     public function translationAction(Request $request)
     {
-        $grid = $this->getDependencyContainer()->getGlossaryKeyTranslationGrid($request);
+        $grid = $this->getDependencyContainer()->createGlossaryKeyTranslationGrid($request);
 
         return $this->jsonResponse($grid->renderData());
     }

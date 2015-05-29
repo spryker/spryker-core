@@ -23,7 +23,7 @@ class FormController extends AbstractController
      */
     public function translationAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->getTranslationForm($request);
+        $form = $this->getDependencyContainer()->createTranslationForm($request);
         $form->init();
 
         if ($form->isValid()) {
