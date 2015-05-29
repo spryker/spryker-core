@@ -10,9 +10,7 @@ class Cronjobs
     const ROLE_ADMIN = 'admin';
     const ROLE_REPORTING = 'reporting';
     const ROLE_EMPTY = 'empty';
-
     const DEFAULT_ROLE = self::ROLE_ADMIN;
-
     const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
 
     /**
@@ -29,7 +27,11 @@ class Cronjobs
      */
     protected $config;
 
-    function __construct($config) {
+    /**
+     * @param SetupConfig $config
+     */
+    public function __construct(SetupConfig $config)
+    {
         $this->config = $config;
     }
 
@@ -40,18 +42,18 @@ class Cronjobs
     public function generateCronjobs($roles)
     {
         if (empty($roles)) {
-           $roles = array(self::DEFAULT_ROLE);
+            $roles = array(self::DEFAULT_ROLE);
         }
 
         $this->checkRoles($roles);
 
         $jobsByName = $this->getCronjobs($roles);
 
-        $console_output = '';
-        $console_output .= $this->updateOrDelete($jobsByName);
-        $console_output .= $this->createJobDefinitions($jobsByName);
+        $consoleOutput = '';
+        $consoleOutput .= $this->updateOrDelete($jobsByName);
+        $consoleOutput .= $this->createJobDefinitions($jobsByName);
 
-        return $console_output;
+        return $consoleOutput;
     }
 
     /**
@@ -75,10 +77,10 @@ class Cronjobs
     }
 
     /**
-     * @param $roles
+     * @param array $roles
      * @throws \ErrorException
      */
-    protected function checkRoles($roles)
+    protected function checkRoles(array $roles)
     {
         foreach ($roles as $role) {
             if (!in_array($role, $this->allowedRoles)) {
@@ -91,10 +93,10 @@ class Cronjobs
 
 
     /**
-     * @param $roles
+     * @param array $roles
      * @return array
      */
-    protected function getCronjobs($roles)
+    protected function getCronjobs(array $roles)
     {
         $jobs = array();
 
@@ -163,7 +165,8 @@ class Cronjobs
     /**
      * @return array
      */
-    protected function getExistingJobs() {
+    protected function getExistingJobs()
+    {
         return glob($this->getJobsDir() . "/*/config.xml");
     }
 
@@ -180,7 +183,7 @@ class Cronjobs
 
         if (!empty($existing_jobs)) {
             foreach ($existing_jobs as $v) {
-                $name=basename(dirname($v));
+                $name = basename(dirname($v));
 
                 if (false === in_array($name, array_keys($jobsByName))) {
                     // Job does not exist anymore - we have to delete it.
@@ -247,7 +250,6 @@ class Cronjobs
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 
-
 //        \SprykerFeature_Shared_Library_Log::logRaw('CURL call: ' . $postUrl . "body:\n[" . $body . "]\n\n", self::LOGFILE);
         $curl_response = curl_exec($ch);
 //        \SprykerFeature_Shared_Library_Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
@@ -275,10 +277,10 @@ class Cronjobs
         $disabled = (true === $job['enable']) ? 'false' : 'true';
         $schedule = $this->getSchedule($job);
         $daysToKeep = $this->getDaysToKeep($job);
-        $command  = $job['command'];
+        $command = $job['command'];
         $store = $job['store'];
 
-        $xml="<?xml version='1.0' encoding='UTF-8'?>
+        $xml = "<?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
   <description></description>
@@ -311,13 +313,13 @@ class Cronjobs
     }
 
 
-   /**
-    * Render partial for job description with publisher settings
-    * it returns not empty XML entity if job has email notifications set.
-    *
-    * @param $job
-    * @return string
-    */
+    /**
+     * Render partial for job description with publisher settings
+     * it returns not empty XML entity if job has email notifications set.
+     *
+     * @param $job
+     * @return string
+     */
     protected function getPublisherString($job)
     {
         if (array_key_exists('notifications', $job) && is_array($job['notifications']) && !empty($job['notifications'])) {
@@ -347,7 +349,7 @@ class Cronjobs
 
     protected function getSchedule(array $job)
     {
-        $schedule = ('' === $job['schedule']) ? "":" <hudson.triggers.TimerTrigger><spec>".$job['schedule']."</spec></hudson.triggers.TimerTrigger>";
+        $schedule = ('' === $job['schedule']) ? "" : " <hudson.triggers.TimerTrigger><spec>" . $job['schedule'] . "</spec></hudson.triggers.TimerTrigger>";
 
         if (array_key_exists('run_on_non_production', $job) && $job['run_on_non_production'] === true) {
             return $schedule;

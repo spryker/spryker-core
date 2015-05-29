@@ -40,4 +40,14 @@ class SetupFacade extends AbstractFacade
         $this->getDependencyContainer()->createModelGeneratedDirectoryRemover()->execute();
     }
 
+    public function cleanPropelSchemaDirectory()
+    {
+        $this->getDependencyContainer()->createModelPropelSchema()->cleanTargetDirectory();
+    }
+
+    public function copySchemaFilesToTargetDirectory()
+    {
+        $this->getDependencyContainer()->createModelPropelSchema()->copyToTargetDirectory();
+    }
+
 }

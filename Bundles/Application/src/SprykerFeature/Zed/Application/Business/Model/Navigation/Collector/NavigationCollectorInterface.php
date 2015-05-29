@@ -2,11 +2,16 @@
 
 namespace SprykerFeature\Zed\Application\Business\Model\Navigation\Collector;
 
+use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinderInterface;
+
 interface NavigationCollectorInterface
 {
+
     /**
-     * @param array $navigationFiles
-     * @throws \ErrorException
+     * @param NavigationSchemaFinderInterface $navigationSchemaFinder
+     *
+     * @return array
      */
-    public function mergeNavigationFiles(array $navigationFiles);
+    public function mergeNavigationFiles(NavigationSchemaFinderInterface $navigationSchemaFinder);
+
 }

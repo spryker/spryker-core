@@ -2,8 +2,6 @@
 
 namespace SprykerFeature\Zed\Setup\Communication\Console\Propel;
 
-use SprykerFeature\Shared\Library\Bundle\BundleConfig;
-use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
@@ -28,48 +26,20 @@ class SchemaCopyConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->removeSchemas();
-        $this->copySchemas();
-    }
-
-    private function removeSchemas()
-    {
-        $schemaDirectory = $this->getSchemaDir();
-        if (is_dir($schemaDirectory)) {
-            $this->info('Remove schemas');
-            $finder = new Finder();
-            $filesystem = new Filesystem();
-            foreach ($finder->files()->in($schemaDirectory) as $schema) {
-                $filesystem->remove($schema);
-            }
-        }
+        $this->getFacade()->cleanPropelSchemaDirectory();
+        $this->getFacade()->copySchemaFilesToTargetDirectory();
     }
 
     /**
-     * @return string
-     * @throws \Exception
+     * @return \SprykerFeature\Zed\Setup\Business\SetupFacade
      */
-    protected function getSchemaDir()
+    private function getFacade()
     {
-        $config = Config::get(SystemConfig::PROPEL);
-        $schemaDir = $config['paths']['schemaDir'] . DIRECTORY_SEPARATOR;
-
-        return $schemaDir;
-    }
-
-    private function copySchemas()
-    {
-        $this->info('Copy schemas');
-        $schemaDir = $this->getSchemaDir();
-        $activeSchemas = (new BundleConfig())->getActiveSchemas();
-
-        $filesystem = new Filesystem();
-        foreach ($activeSchemas as $schema) {
-            $filesystem->copy($schema, $schemaDir . basename($schema));
-        }
+        return $this->getLocator()->setup()->facade();
     }
 }

@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\Application\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ApplicationBusiness;
-use SprykerFeature\Shared\Library\Bundle\BundleConfig;
 use SprykerFeature\Zed\Application\ApplicationConfig;
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep;
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption;
@@ -17,6 +16,7 @@ use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\Navigatio
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Extractor\PathExtractor;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\NavigationBuilder;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidator;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidator;
 use SprykerFeature\Zed\Application\Business\Model\Url\UrlBuilder;
@@ -134,15 +134,11 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      */
     public function getNavigationBuilder()
     {
-        $navigationCollector = $this->getNavigationCollector();
-        $menuFormatter = $this->getMenuFormatter();
-        $pathExtractor = $this->getPathExtractor();
-
         return $this->getFactory()->createModelNavigationNavigationBuilder(
-            new BundleConfig(),
-            $navigationCollector,
-            $menuFormatter,
-            $pathExtractor
+            $this->getNavigationSchemaFinder(),
+            $this->getNavigationCollector(),
+            $this->getMenuFormatter(),
+            $this->getPathExtractor()
         );
     }
 
@@ -160,6 +156,14 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
             $menuLevelValidator,
             $urlBuilder
         );
+    }
+
+    /**
+     * @return NavigationSchemaFinder
+     */
+    protected function getNavigationSchemaFinder()
+    {
+        return $this->getFactory()->createModelNavigationSchemaFinderNavigationSchemaFinder();
     }
 
     /**

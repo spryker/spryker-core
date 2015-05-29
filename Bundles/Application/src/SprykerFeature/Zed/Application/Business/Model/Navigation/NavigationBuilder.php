@@ -2,20 +2,21 @@
 
 namespace SprykerFeature\Zed\Application\Business\Model\Navigation;
 
-use SprykerFeature\Shared\Library\Bundle\BundleConfig;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinderInterface;
 
 class NavigationBuilder
 {
+
     const MENU = 'menu';
     const PATH = 'path';
 
     /**
-     * @var BundleConfig
+     * @var NavigationSchemaFinderInterface
      */
-    protected $bundleConfig;
+    protected $navigationSchemaFinder;
 
     /**
      * @var NavigationCollectorInterface
@@ -28,18 +29,18 @@ class NavigationBuilder
     protected $menuFormatter;
 
     /**
-     * @param BundleConfig $bundleConfig
+     * @param NavigationSchemaFinderInterface $navigationSchemaFinder
      * @param NavigationCollectorInterface $navigationCollector
      * @param MenuFormatterInterface $menuFormatter
      * @param PathExtractorInterface $pathExtractor
      */
     public function __construct(
-        BundleConfig $bundleConfig,
+        NavigationSchemaFinderInterface $navigationSchemaFinder,
         NavigationCollectorInterface $navigationCollector,
         MenuFormatterInterface $menuFormatter,
         PathExtractorInterface $pathExtractor
     ) {
-        $this->bundleConfig = $bundleConfig;
+        $this->navigationSchemaFinder = $navigationSchemaFinder;
         $this->navigationCollector = $navigationCollector;
         $this->menuFormatter = $menuFormatter;
         $this->pathExtractor = $pathExtractor;
@@ -47,12 +48,14 @@ class NavigationBuilder
 
     /**
      * @param $pathInfo
+     *
      * @return array
      */
     public function build($pathInfo)
     {
-        $navigationFiles = $this->bundleConfig->getActiveNavigations();
-        $navigationPages = $this->navigationCollector->mergeNavigationFiles($navigationFiles);
+        $navigationPages = $this->navigationCollector->mergeNavigationFiles(
+            $this->navigationSchemaFinder
+        );
 
         $menu = $this->menuFormatter->formatMenu($navigationPages, $pathInfo);
         $path = $this->pathExtractor->extractPathFromMenu($menu);
@@ -62,4 +65,5 @@ class NavigationBuilder
             self::PATH => $path
         ];
     }
+
 }

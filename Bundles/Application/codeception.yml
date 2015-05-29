@@ -23,3 +23,13 @@ modules:
 
 coverage:
     enabled: true
+    whitelist:
+        include:
+            - src/*
+        exclude:
+            - src/SprykerFeature/Zed/Application/Communication/*
+            - src/SprykerFeature/Zed/Application/Presentation/*
+            - src/SprykerFeature/Zed/Application/Static/*
+    blacklist:
+        include:
+            - tests/*

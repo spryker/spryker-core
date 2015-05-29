@@ -35,4 +35,22 @@ class ApplicationConfig extends AbstractBundleConfig
     {
         return self::MAX_LEVEL_COUNT;
     }
+
+    /**
+     * @return array
+     */
+    public function getNavigationSchemaPathPattern()
+    {
+        return [
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Zed/*/Communication'
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getNavigationSchemaFileNamePattern()
+    {
+        return 'navigation.xml';
+    }
 }
