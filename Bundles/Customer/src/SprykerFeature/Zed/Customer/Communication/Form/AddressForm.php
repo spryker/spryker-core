@@ -30,7 +30,18 @@ class AddressForm extends AbstractForm
             ])
         ;
 
-        $this->addField('name')
+        $this->addField('first_name')
+            ->setConstraints([
+                new Constraints\Required([
+                    new Constraints\Type([
+                        'type' => 'string'
+                    ]),
+                    new Constraints\NotBlank()
+                ])
+            ])
+        ;
+
+        $this->addField('last_name')
             ->setConstraints([
                 new Constraints\Required([
                     new Constraints\Type([
