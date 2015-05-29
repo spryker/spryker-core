@@ -6,7 +6,6 @@ use Generated\Shared\Transfer\AttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
-use SprykerEngine\Shared\Transfer\TransferArrayObject;
 
 class MandrillMailSender implements MailSenderInterface
 {
@@ -111,7 +110,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param TransferArrayObject $recipients
+     * @param \ArrayObject $recipients
      *
      * @return array
      */
@@ -132,7 +131,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param TransferArrayObject $headers
+     * @param \ArrayObject $headers
      *
      * @return array
      */
@@ -149,7 +148,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param TransferArrayObject $recipients
+     * @param \ArrayObject $recipients
      *
      * @return array
      */
@@ -173,7 +172,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param TransferArrayObject $recipientMetadata
+     * @param \ArrayObject $recipientMetadata
      *
      * @return array
      */
@@ -196,7 +195,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param TransferArrayObject $fileInfo
+     * @param \ArrayObject $fileInfo
      *
      * @return array
      */

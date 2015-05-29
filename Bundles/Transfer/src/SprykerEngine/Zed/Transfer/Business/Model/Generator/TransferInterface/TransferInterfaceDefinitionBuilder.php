@@ -7,10 +7,11 @@ use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader
 
 class TransferInterfaceDefinitionBuilder extends AbstractDefinitionBuilder
 {
+
     /**
-     * @var array
+     * @var TransferDefinitionLoader
      */
-    private $definitions;
+    private $loader;
 
     /**
      * @var InterfaceDefinition
@@ -23,7 +24,7 @@ class TransferInterfaceDefinitionBuilder extends AbstractDefinitionBuilder
      */
     public function __construct(TransferDefinitionLoader $loader, InterfaceDefinition $interfaceDefinition)
     {
-        $this->definitions = $loader->getDefinitions();
+        $this->loader = $loader;
         $this->interfaceDefinition = $interfaceDefinition;
     }
 
@@ -32,6 +33,8 @@ class TransferInterfaceDefinitionBuilder extends AbstractDefinitionBuilder
      */
     public function getDefinitions()
     {
-        return $this->buildDefinitions($this->definitions, $this->interfaceDefinition);
+        $definitions = $this->loader->getDefinitions();
+
+        return $this->buildDefinitions($definitions, $this->interfaceDefinition);
     }
 }

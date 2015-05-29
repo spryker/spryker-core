@@ -50,7 +50,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     public function setDefinition(array $definition)
     {
         $this->setBundle($definition);
-        $this->setName($definition['name']);
+        $this->setName($definition);
 
         if (isset($definition['property'])) {
             $properties = $this->normalizePropertyTypes($definition['property']);
@@ -86,12 +86,13 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     }
 
     /**
-     * @param string $name
+     * @param array $definition
      *
      * @return $this
      */
-    private function setName($name)
+    private function setName(array $definition)
     {
+        $name = $definition['name'];
         if (strpos($name, 'Interface') === false) {
             $name .= 'Interface';
         }
@@ -154,22 +155,14 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     {
         $normalizedProperties = [];
         foreach ($properties as $property) {
-            try {
-                if (!preg_match('/^int|integer|string|array|bool|boolean/', $property['type'])) {
-                    if (preg_match('/\[\]$/', $property['type'])) {
-                        $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
-                    } else {
-                        $property['type'] = $property['type'] . 'Transfer';
-                    }
+            if (!preg_match('/^int|integer|string|array|bool|boolean/', $property['type'])) {
+                if (preg_match('/\[\]$/', $property['type'])) {
+                    $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
+                } else {
+                    $property['type'] = $property['type'] . 'Transfer';
                 }
-                $normalizedProperties[] = $property;
-            } catch (\Exception $e) {
-                throw new \InvalidArgumentException(sprintf(
-                    'Invalid transfer object definition in "%s" bundle - no type set for property "%s".',
-                    $property['bundle'],
-                    isset($property['name']) ? $property['name'] : ''
-                ));
             }
+            $normalizedProperties[] = $property;
         }
 
         return $normalizedProperties;
@@ -229,21 +222,9 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     {
         if ($this->isArray($property)) {
             return 'array';
-        }
-
-        if ($this->isCollection($property)) {
+        } else {
             return str_replace('[]', '', $property['type']);
         }
-
-        return $property['type'];
-    }
-
-    /**
-     * @return array
-     */
-    public function getProperties()
-    {
-        return $this->properties;
     }
 
     /**
@@ -266,24 +247,6 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
         } else {
             $this->buildGetterAndSetter($property);
         }
-    }
-
-    /**
-     * @param array $property
-     */
-    private function addPropertyConstructorIfCollection(array $property)
-    {
-        if ($this->isCollection($property)) {
-            $this->constructorDefinition[$property['name']] = '\ArrayObject';
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getConstructorDefinition()
-    {
-        return $this->constructorDefinition;
     }
 
     /**
@@ -389,13 +352,9 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     {
         if (preg_match('/^(string|int|bool|boolean|array|\[\])/', $property['type'])) {
             return false;
-        }
-
-        if ($this->isCollection($property)) {
+        } else {
             return str_replace('[]', '', $property['type']);
         }
-
-        return $property['type'];
     }
 
     /**
@@ -403,7 +362,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
      */
     private function buildGetMethod(array $property)
     {
-        $propertyName = $this->getPropertyName($property, 'get');
+        $propertyName = $this->getPropertyName($property);
         $methodName = 'get' . ucfirst($propertyName);
         $method = [
             'name' => $methodName,
@@ -467,21 +426,6 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
         $typeHint = $this->getTypeHint($property);
         if ($typeHint) {
             $method['typeHint'] = $typeHint;
-        }
-
-        return $method;
-    }
-
-    /**
-     * @param array $property
-     * @param array $method
-     *
-     * @return array
-     */
-    private function addDefault(array $property, array $method)
-    {
-        if (array_key_exists('default', $property)) {
-            $method['default'] = $property['default'];
         }
 
         return $method;

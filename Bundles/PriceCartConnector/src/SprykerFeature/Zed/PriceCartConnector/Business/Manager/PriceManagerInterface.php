@@ -2,15 +2,14 @@
 
 namespace SprykerFeature\Zed\PriceCartConnector\Business\Manager;
 
-use Generated\Shared\Cart\CartItemsInterface;
-use SprykerFeature\Shared\Cart2\Transfer\ItemInterface;
+use Generated\Shared\PriceCartConnector\CartItemsInterface;
 
 interface PriceManagerInterface
 {
     /**
-     * @param CartItemsInterface|ItemInterface[] $items
+     * @param CartItemsInterface|CartItemsInterface[] $items
      *
-     * @return CartItemsInterface|ItemInterface[]
+     * @return CartItemsInterface|CartItemsInterface[]
      */
     public function addGrossPriceToItems(CartItemsInterface $items);
 }

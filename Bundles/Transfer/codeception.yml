@@ -23,3 +23,12 @@ modules:
 
 coverage:
     enabled: true
+    whitelist:
+        include:
+            - src/*
+        exclude:
+            - src/SprykerEngine/Zed/Transfer/Business/Model/Generator/Templates/*
+            - src/SprykerEngine/Zed/Transfer/Communication/Console/*
+    blacklist:
+        include:
+            - tests/*

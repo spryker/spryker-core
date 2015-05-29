@@ -11,6 +11,16 @@ class TransferDefinitionLoader
 {
 
     /**
+     * @var DefinitionNormalizer
+     */
+    private $definitionNormalizer;
+
+    /**
+     * @var array
+     */
+    private $sourceDirectories;
+
+    /**
      * @var array
      */
     private $transferDefinitions = [];
@@ -21,10 +31,8 @@ class TransferDefinitionLoader
      */
     public function __construct(DefinitionNormalizer $normalizer, array $sourceDirectories)
     {
-        $this->loadDefinitions($sourceDirectories);
-        $this->transferDefinitions = $normalizer->normalizeDefinitions(
-            $this->transferDefinitions
-        );
+        $this->definitionNormalizer = $normalizer;
+        $this->sourceDirectories = $sourceDirectories;
     }
 
     /**
@@ -32,6 +40,11 @@ class TransferDefinitionLoader
      */
     public function getDefinitions()
     {
+        $this->loadDefinitions($this->sourceDirectories);
+        $this->transferDefinitions = $this->definitionNormalizer->normalizeDefinitions(
+            $this->transferDefinitions
+        );
+
         return $this->transferDefinitions;
     }
 

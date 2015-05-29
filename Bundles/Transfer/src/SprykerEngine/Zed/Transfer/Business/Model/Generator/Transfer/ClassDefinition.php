@@ -225,13 +225,9 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         if ($this->isArray($property)) {
             return 'array';
-        }
-
-        if ($this->isCollection($property)) {
+        } else {
             return str_replace('[]', '', $property['type']);
         }
-
-        return $property['type'];
     }
 
     /**
@@ -385,13 +381,9 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         if (preg_match('/^(string|int|bool|boolean|array|\[\])/', $property['type'])) {
             return false;
-        }
-
-        if ($this->isCollection($property)) {
+        } else {
             return str_replace('[]', '', $property['type']);
         }
-
-        return $property['type'];
     }
 
     /**

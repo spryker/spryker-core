@@ -21,28 +21,12 @@ class DefinitionNormalizer
                 'property' => $this->normalizeAttributes($transferDefinition['property'], $transferDefinition['bundle']),
             ];
 
-
-            // @TODO this code block can be removed when all <interface> elements of the xml are removed [
-            $internalInterface = [
-                'name' => 'Generated\\Shared\\' . $transferDefinition['bundle'] . '\\' . $transferDefinition['name'] . 'Interface',
-                'bundle' => $transferDefinition['bundle']
+            $normalizedDefinition['interface'] = [
+                [
+                    'name' => 'Generated\\Shared\\' . $transferDefinition['bundle'] . '\\' . $transferDefinition['name'] . 'Interface',
+                    'bundle' => $transferDefinition['bundle']
+                ]
             ];
-
-            if (array_key_exists('interface', $transferDefinition)) {
-                $normalizedDefinition['interface'] = $this->normalizeAttributes($transferDefinition['interface'], $transferDefinition['bundle']);
-                $normalizedDefinition['interface'][] = $internalInterface;
-            } else {
-                $normalizedDefinition['interface'] = [$internalInterface];
-            }
-            // ]
-
-            // @TODO this code block must be uncommented
-//            $normalizedDefinition['interface'] = [
-//                [
-//                    'name' => 'Generated\\Shared\\' . $transferDefinition['bundle'] . '\\' . $transferDefinition['name'] . 'Interface',
-//                    'bundle' => $transferDefinition['bundle']
-//                ]
-//            ];
 
             $normalizedDefinitions[] = $normalizedDefinition;
         }
