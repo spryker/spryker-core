@@ -5,20 +5,21 @@
 
 namespace SprykerFeature\Zed\Cart\Business\StorageProvider;
 
-use Generated\Shared\Cart\CartInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
 use SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
+use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Cart\CartItemInterface;
+use Generated\Shared\Cart\CartItemsInterface;
 
 class InMemoryProvider implements StorageProviderInterface
 {
     /**
      * @param CartInterface $cart
-     * @param ItemCollectionInterface $addedItems
+     * @param CartItemsInterface $addedItems
      *
      * @return CartInterface
      */
-    public function addItems(CartInterface $cart, ItemCollectionInterface $addedItems)
+    public function addItems(CartInterface $cart, CartItemsInterface $addedItems)
     {
         $existingItems = $cart->getItems();
 
@@ -31,7 +32,7 @@ class InMemoryProvider implements StorageProviderInterface
             }
 
             if ($existingItems->offsetExists($item->getId())) {
-                /** @var ItemInterface $existingItem */
+                /** @var CartItemInterface $existingItem */
                 $existingItem = $existingItems->offsetGet($item->getId());
                 $existingItem->setQuantity($existingItem->getQuantity() + $item->getQuantity());
             } else {
@@ -44,15 +45,15 @@ class InMemoryProvider implements StorageProviderInterface
 
     /**
      * @param CartInterface $cart
-     * @param ItemCollectionInterface $removedItems
+     * @param CartItemsInterface $removedItems
      *
      * @return CartInterface
      */
-    public function removeItems(CartInterface $cart, ItemCollectionInterface $removedItems)
+    public function removeItems(CartInterface $cart, CartItemsInterface $removedItems)
     {
         $existingItems = $cart->getItems();
 
-        /** @var AbstractTransfer|ItemInterface $item */
+        /** @var CartItemInterface $item */
         foreach ($removedItems as $item) {
             if ($item->getQuantity() < 1) {
                 throw new InvalidArgumentException(
@@ -70,35 +71,34 @@ class InMemoryProvider implements StorageProviderInterface
 
     /**
      * @param CartInterface $cart
-     * @param ItemCollectionInterface $increasedItems
+     * @param CartItemsInterface $increasedItems
      *
      * @return CartInterface
      */
-    public function increaseItems(CartInterface $cart, ItemCollectionInterface $increasedItems)
+    public function increaseItems(CartInterface $cart, CartItemsInterface $increasedItems)
     {
         return $this->addItems($cart, $increasedItems);
     }
 
     /**
      * @param CartInterface $cart
-     * @param ItemCollectionInterface $decreasedItems
+     * @param CartItemsInterface $decreasedItems
      *
      * @return CartInterface
      */
-    public function decreaseItems(CartInterface $cart, ItemCollectionInterface $decreasedItems)
+    public function decreaseItems(CartInterface $cart, CartItemsInterface $decreasedItems)
     {
         return $this->removeItems($cart, $decreasedItems);
     }
 
 
     /**
-     * @param ItemInterface[]|ItemCollectionInterface $existingItems
-     * @param ItemInterface $item
-     *
+     * @param CartItemsInterface|CartItemInterface[] $existingItems
+     * @param CartItemInterface $item
      */
     private function decreaseExistingItem($existingItems, $item)
     {
-        /** @var ItemInterface $existingItem */
+        /** @var CartItemInterface $existingItem */
         $existingItem = $existingItems->offsetGet($item->getId());
         $newQuantity = $existingItem->getQuantity() - $item->getQuantity();
 

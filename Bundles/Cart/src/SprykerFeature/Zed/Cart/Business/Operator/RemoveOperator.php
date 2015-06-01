@@ -6,18 +6,18 @@
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
 use SprykerFeature\Shared\Cart\Messages\Messages;
-use Generated\Shared\Transfer\CartCartInterfaceTransfer;
-use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
+use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Cart\CartItemsInterface;
 
 class RemoveOperator extends AbstractOperator
 {
     /**
      * @param CartInterface $cart
-     * @param ItemCollectionInterface $changedItems
+     * @param CartItemsInterface $changedItems
      *
      * @return CartInterface
      */
-    protected function changeCart(CartInterface $cart, ItemCollectionInterface $changedItems)
+    protected function changeCart(CartInterface $cart, CartItemsInterface $changedItems)
     {
         return $this->storageProvider->removeItems($cart, $changedItems);
     }

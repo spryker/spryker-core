@@ -5,12 +5,11 @@
 
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
-use Generated\Shared\Transfer\CartItemInterfaceTransfer;
+use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Cart\CartItemsInterface;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
-use Generated\Shared\Transfer\CartCartChangeInterfaceTransfer;
-use Generated\Shared\Transfer\CartCartInterfaceTransfer;
+use Generated\Shared\Cart\ChangeInterface;
 use Psr\Log\LoggerInterface;
-use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
@@ -51,13 +50,13 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param CartChangeInterface $cartChange
+     * @param ChangeInterface $cartChange
      *
      * @return CartInterface
      */
-    public function executeOperation(CartChangeInterface $cartChange)
+    public function executeOperation(ChangeInterface $cartChange)
     {
-        $changedItems = $this->expandChangedItems($cartChange->getChangedItems());
+        $changedItems = $this->expandChangedItems($cartChange->getChangedCartItems());
         $cart = $this->changeCart($cartChange->getCart(), $changedItems);
 
         if ($this->messenger) {
@@ -83,11 +82,11 @@ abstract class AbstractOperator implements OperatorInterface
 
     /**
      * @param CartInterface $cart
-     * @param ItemCollectionInterface $changedItems
+     * @param CartItemsInterface $changedItems
      *
      * @return CartInterface
      */
-    abstract protected function changeCart(CartInterface $cart, ItemCollectionInterface $changedItems);
+    abstract protected function changeCart(CartInterface $cart, CartItemsInterface $changedItems);
 
     /**
      * @return string
@@ -95,11 +94,11 @@ abstract class AbstractOperator implements OperatorInterface
     abstract protected function createSuccessMessage();
 
     /**
-     * @param ItemCollectionInterface|ItemInterface[] $changedItems
+     * @param CartItemsInterface|CartItemTransfer[] $changedItems
      *
-     * @return ItemCollectionInterface|ItemInterface[]
+     * @return CartItemsInterface|CartItemTransfer[]
      */
-    protected function expandChangedItems(ItemCollectionInterface $changedItems)
+    protected function expandChangedItems(CartItemsInterface $changedItems)
     {
         foreach ($this->itemExpanderPlugins as $itemExpander) {
             $changedItems = $itemExpander->expandItems($changedItems);

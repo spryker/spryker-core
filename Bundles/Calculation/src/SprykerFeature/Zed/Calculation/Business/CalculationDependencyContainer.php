@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Calculation\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\CalculationBusiness;
 use SprykerFeature\Zed\Calculation\Business\Model\StackExecutor;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpensePriceToPayCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
@@ -19,6 +18,7 @@ use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItem
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Calculation\CalculationConfig;
+use Generated\Zed\Ide\FactoryAutoCompletion\CalculationBusiness;
 
 /**
  * @method CalculationBusiness getFactory()

@@ -5,10 +5,10 @@
 
 namespace SprykerFeature\Zed\Calculation\Business;
 
-use Generated\Shared\Calculation\OrderInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\CalculationConfig;
+use Generated\Shared\Calculation\OrderInterface;
+use Generated\Shared\Calculation\TotalsInterface;
 
 /**
  * @method CalculationDependencyContainer getDependencyContainer()

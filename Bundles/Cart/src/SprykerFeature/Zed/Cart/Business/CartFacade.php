@@ -6,8 +6,8 @@
 namespace SprykerFeature\Zed\Cart\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\Transfer\CartCartChangeInterfaceTransfer;
-use Generated\Shared\Transfer\CartCartInterfaceTransfer;
+use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Cart\ChangeInterface;
 
 /**
  * @method CartDependencyContainer getDependencyContainer()
@@ -15,11 +15,11 @@ use Generated\Shared\Transfer\CartCartInterfaceTransfer;
 class CartFacade extends AbstractFacade
 {
     /**
-     * @param CartChangeInterface $cartChange
+     * @param ChangeInterface $cartChange
      *
      * @return CartInterface
      */
-    public function addToCart(CartChangeInterface $cartChange)
+    public function addToCart(ChangeInterface $cartChange)
     {
         $addOperator = $this->getDependencyContainer()->createAddOperator();
 
@@ -27,11 +27,11 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param CartChangeInterface $cartChange
+     * @param ChangeInterface $cartChange
      *
      * @return CartInterface
      */
-    public function increaseQuantity(CartChangeInterface $cartChange)
+    public function increaseQuantity(ChangeInterface $cartChange)
     {
         $increaseOperator = $this->getDependencyContainer()->createIncreaseOperator();
 
@@ -39,11 +39,11 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param CartChangeInterface $cartChange
+     * @param ChangeInterface $cartChange
      *
      * @return CartInterface
      */
-    public function removeFromCart(CartChangeInterface $cartChange)
+    public function removeFromCart(ChangeInterface $cartChange)
     {
         $removeOperator = $this->getDependencyContainer()->createRemoveOperator();
 
@@ -51,11 +51,11 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param CartChangeInterface $cartChange
+     * @param ChangeInterface $cartChange
      *
      * @return CartInterface
      */
-    public function decreaseQuantity(CartChangeInterface $cartChange)
+    public function decreaseQuantity(ChangeInterface $cartChange)
     {
         $decreaseOperator = $this->getDependencyContainer()->createDecreaseOperator();
 

@@ -8,9 +8,7 @@ namespace SprykerFeature\Sdk\Cart\Model;
 use Generated\Sdk\Ide\AutoCompletion;
 use Generated\Shared\Cart\CartItemsInterface;
 use Generated\Shared\Cart\ChangeInterface;
-use Generated\Shared\Transfer\CartItemsTransfer;
-use Generated\Shared\Transfer\CartItemTransfer;
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Cart\CartInterface as GeneratedCartInterface;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Yves\Kernel\Locator;
 use SprykerFeature\Sdk\Cart\StorageProvider\StorageProviderInterface;
@@ -46,7 +44,7 @@ class Cart implements CartInterface
     }
 
     /**
-     * @return CartTransferInterface
+     * @return GeneratedCartInterface
      */
     public function getCart()
     {
@@ -57,7 +55,7 @@ class Cart implements CartInterface
      * @param string $sku
      * @param int $quantity
      *
-     * @return CartTransferInterface
+     * @return GeneratedCartInterface
      */
     public function addToCart($sku, $quantity = 1)
     {
@@ -196,7 +194,7 @@ class Cart implements CartInterface
     }
 
     /**
-     * @return CartTransferInterface
+     * @return GeneratedCartInterface
      */
     protected function handleCartResponse()
     {
@@ -208,7 +206,7 @@ class Cart implements CartInterface
             return $this->getStorageProvider()->getCart();
         }
 
-        /** @var CartTransferInterface $cart */
+        /** @var GeneratedCartInterface $cart */
         $cart = $cartResponse->getTransfer();
         $this->getStorageProvider()->setCart($cart);
 
