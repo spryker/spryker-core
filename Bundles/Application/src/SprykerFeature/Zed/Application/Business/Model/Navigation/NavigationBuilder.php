@@ -47,7 +47,7 @@ class NavigationBuilder
     }
 
     /**
-     * @param $pathInfo
+     * @param string $pathInfo
      *
      * @return array
      */

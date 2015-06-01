@@ -33,7 +33,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
     /**
      * @return AbstractApplicationCheckStep[]
      */
-    public function getCheckSteps()
+    public function createCheckSteps()
     {
         return $this->getConfig()->getCheckSteps();
     }
@@ -43,7 +43,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      *
      * @return CodeCeption
      */
-    public function getCheckStepCodeCeption(LoggerInterface $logger = null)
+    public function createCheckStepCodeCeption(LoggerInterface $logger = null)
     {
         $checkStep = $this->getFactory()->createModelApplicationCheckStepCodeCeption();
         $checkStep->setLogger($logger);
@@ -56,7 +56,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      *
      * @return DeleteDatabase
      */
-    public function getCheckStepDeleteDatabase(LoggerInterface $logger = null)
+    public function createCheckStepDeleteDatabase(LoggerInterface $logger = null)
     {
         $checkStep = $this->getFactory()->createModelApplicationCheckStepDeleteDatabase();
         $checkStep->setLogger($logger);
@@ -69,7 +69,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      *
      * @return DeleteGeneratedDirectory
      */
-    public function getCheckStepDeleteGeneratedDirectory(LoggerInterface $logger = null)
+    public function createCheckStepDeleteGeneratedDirectory(LoggerInterface $logger = null)
     {
         $checkStep = $this->getFactory()->createModelApplicationCheckStepDeleteGeneratedDirectory();
         $checkStep->setLogger($logger);
@@ -82,7 +82,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      *
      * @return InstallDemoData
      */
-    public function getCheckStepInstallDemoData(LoggerInterface $logger = null)
+    public function createCheckStepInstallDemoData(LoggerInterface $logger = null)
     {
         $checkStep = $this->getFactory()->createModelApplicationCheckStepInstallDemoData();
         $checkStep->setLogger($logger);
@@ -95,7 +95,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      *
      * @return SetupInstall
      */
-    public function getCheckStepSetupInstall(LoggerInterface $logger = null)
+    public function createCheckStepSetupInstall(LoggerInterface $logger = null)
     {
         $checkStep = $this->getFactory()->createModelApplicationCheckStepSetupInstall();
         $checkStep->setLogger($logger);
@@ -108,7 +108,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      *
      * @return ExportKeyValue
      */
-    public function getCheckStepExportKeyValue(LoggerInterface $logger = null)
+    public function createCheckStepExportKeyValue(LoggerInterface $logger = null)
     {
         $checkStep = $this->getFactory()->createModelApplicationCheckStepExportKeyValue();
         $checkStep->setLogger($logger);
@@ -121,7 +121,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      *
      * @return ExportSearch
      */
-    public function getCheckStepExportSearch(LoggerInterface $logger = null)
+    public function createCheckStepExportSearch(LoggerInterface $logger = null)
     {
         $checkStep = $this->getFactory()->createModelApplicationCheckStepExportSearch();
         $checkStep->setLogger($logger);
@@ -132,24 +132,24 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
     /**
      * @return NavigationBuilder
      */
-    public function getNavigationBuilder()
+    public function createNavigationBuilder()
     {
         return $this->getFactory()->createModelNavigationNavigationBuilder(
-            $this->getNavigationSchemaFinder(),
-            $this->getNavigationCollector(),
-            $this->getMenuFormatter(),
-            $this->getPathExtractor()
+            $this->createNavigationSchemaFinder(),
+            $this->createNavigationCollector(),
+            $this->createMenuFormatter(),
+            $this->createPathExtractor()
         );
     }
 
     /**
      * @return MenuFormatter
      */
-    protected function getMenuFormatter()
+    protected function createMenuFormatter()
     {
-        $urlBuilder = $this->getUrlBuilder();
-        $urlUniqueValidator = $this->getUrlUniqueValidator();
-        $menuLevelValidator = $this->getMenuLevelValidator();
+        $urlBuilder = $this->createUrlBuilder();
+        $urlUniqueValidator = $this->createUrlUniqueValidator();
+        $menuLevelValidator = $this->createMenuLevelValidator();
 
         return $this->getFactory()->createModelNavigationFormatterMenuFormatter(
             $urlUniqueValidator,
@@ -161,15 +161,18 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
     /**
      * @return NavigationSchemaFinder
      */
-    protected function getNavigationSchemaFinder()
+    protected function createNavigationSchemaFinder()
     {
-        return $this->getFactory()->createModelNavigationSchemaFinderNavigationSchemaFinder();
+        return $this->getFactory()->createModelNavigationSchemaFinderNavigationSchemaFinder(
+            $this->getConfig()->getNavigationSchemaPathPattern(),
+            $this->getConfig()->getNavigationSchemaFileNamePattern()
+        );
     }
 
     /**
      * @return NavigationCollector
      */
-    protected function getNavigationCollector()
+    protected function createNavigationCollector()
     {
         return $this->getFactory()->createModelNavigationCollectorNavigationCollector();
     }
@@ -177,7 +180,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
     /**
      * @return PathExtractor
      */
-    protected function getPathExtractor()
+    protected function createPathExtractor()
     {
         return $this->getFactory()->createModelNavigationExtractorPathExtractor();
     }
@@ -185,7 +188,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
     /**
      * @return UrlBuilder
      */
-    protected function getUrlBuilder()
+    protected function createUrlBuilder()
     {
         return $this->getFactory()->createModelUrlUrlBuilder();
     }
@@ -193,7 +196,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
     /**
      * @return UrlUniqueValidator
      */
-    protected function getUrlUniqueValidator()
+    protected function createUrlUniqueValidator()
     {
         return $this->getFactory()->createModelNavigationValidatorUrlUniqueValidator();
     }
@@ -201,7 +204,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
     /**
      * @return MenuLevelValidator
      */
-    protected function getMenuLevelValidator()
+    protected function createMenuLevelValidator()
     {
         $maxMenuCount = $this->getConfig()->getMaxMenuLevelCount();
 

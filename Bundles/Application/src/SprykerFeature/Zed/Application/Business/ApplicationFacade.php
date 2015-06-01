@@ -17,7 +17,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function getCheckSteps()
     {
-        return $this->getDependencyContainer()->getCheckSteps();
+        return $this->getDependencyContainer()->createCheckSteps();
     }
 
     /**
@@ -25,7 +25,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepCodeCeption(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->getCheckStepCodeCeption($logger)->run();
+        $this->getDependencyContainer()->createCheckStepCodeCeption($logger)->run();
     }
 
     /**
@@ -33,7 +33,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepDeleteDatabase(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->getCheckStepDeleteDatabase($logger)->run();
+        $this->getDependencyContainer()->createCheckStepDeleteDatabase($logger)->run();
     }
 
     /**
@@ -41,7 +41,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepDeleteGeneratedDirectory(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->getCheckStepDeleteGeneratedDirectory($logger)->run();
+        $this->getDependencyContainer()->createCheckStepDeleteGeneratedDirectory($logger)->run();
     }
 
     /**
@@ -49,7 +49,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepExportKeyValue(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->getCheckStepExportKeyValue($logger)->run();
+        $this->getDependencyContainer()->createCheckStepExportKeyValue($logger)->run();
     }
 
     /**
@@ -57,7 +57,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepExportSearch(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->getCheckStepExportSearch($logger)->run();
+        $this->getDependencyContainer()->createCheckStepExportSearch($logger)->run();
     }
 
     /**
@@ -65,7 +65,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepInstallDemoData(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->getCheckStepInstallDemoData($logger)->run();
+        $this->getDependencyContainer()->createCheckStepInstallDemoData($logger)->run();
     }
 
     /**
@@ -73,16 +73,16 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepSetupInstall(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->getCheckStepSetupInstall($logger)->run();
+        $this->getDependencyContainer()->createCheckStepSetupInstall($logger)->run();
     }
 
     /**
-     * @param $pathInfo
+     * @param string $pathInfo
      *
      * @return array
      */
     public function buildNavigation($pathInfo)
     {
-        return $this->getDependencyContainer()->getNavigationBuilder()->build($pathInfo);
+        return $this->getDependencyContainer()->createNavigationBuilder()->build($pathInfo);
     }
 }
