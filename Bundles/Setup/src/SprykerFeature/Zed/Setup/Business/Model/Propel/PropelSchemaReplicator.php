@@ -28,11 +28,21 @@ class PropelSchemaReplicator implements PropelSchemaReplicatorInterface
     {
         $fileSystem = new Filesystem();
 
+        //TODO HAAAAACK, remove this when Schema merging works ...
+        //GOD this looks ugly, but there is no point making it pretty because it will be obsolete
+        //with schema merging
+        $targetFileMap = [];
+
         foreach ($schemaFinder->getSchemaFiles() as $schemaFile) {
-            $fileSystem->copy(
-                $schemaFile->getPathname(),
-                $this->getTargetFileName($schemaFile)
-            );
+            $fileName = $this->getTargetFileName($schemaFile);
+            $bundleName = explode('_', explode('.', $fileName)[0])[1];
+            if (!isset($targetFileMap[$bundleName])) {
+                $targetFileMap[$bundleName] = true;
+                $fileSystem->copy(
+                    $schemaFile->getPathname(),
+                    $this->getTargetFileName($schemaFile)
+                );
+            }
         }
     }
 
