@@ -16,6 +16,10 @@
         <property name="payment" type="Paymente" />
     </transfer>
 
+    <transfer name="PaymentUserData">
+        <property name="creditCardPseudoCardPan" type="string" />
+    </transfer>
+
     <transfer name="Debit">
         <property name="amount" type="int" />
         <property name="payment" type="Payment" />
