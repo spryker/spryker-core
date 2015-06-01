@@ -27,5 +27,5 @@ interface GlossaryToLocaleInterface
     /**
      * @return array
      */
-    public function getRelevantLocaleNames();
+    public function getAvailableLocales();
 }

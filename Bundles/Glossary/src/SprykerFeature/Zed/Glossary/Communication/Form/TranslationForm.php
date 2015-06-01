@@ -127,7 +127,7 @@ class TranslationForm extends AbstractForm
      */
     protected function getNotFullyTranslatedGlossaryKeys()
     {
-        $query = $this->queryContainer->queryAllMissingTranslations($this->localeFacade->getRelevantLocaleNames());
+        $query = $this->queryContainer->queryAllMissingTranslations($this->localeFacade->getAvailableLocales());
         $query = $this->queryContainer->queryDistinctKeysFromQuery($query);
 
         $query->setFormatter(new PropelArraySetFormatter());
@@ -264,7 +264,7 @@ class TranslationForm extends AbstractForm
      */
     protected function getLocalesForKey($idKey)
     {
-        $query = $this->queryContainer->queryMissingTranslationsForKey($idKey, $this->localeFacade->getRelevantLocaleNames());
+        $query = $this->queryContainer->queryMissingTranslationsForKey($idKey, $this->localeFacade->getAvailableLocales());
         $query = $this->queryContainer->queryDistinctLocalesFromQuery($query);
         $query->setFormatter(new PropelArraySetFormatter());
 

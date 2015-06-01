@@ -72,7 +72,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      */
     public function createEnabledLocales()
     {
-        return $this->createLocaleFacade()->getRelevantLocaleNames();
+        return $this->createLocaleFacade()->getAvailableLocales();
     }
 
     /**
