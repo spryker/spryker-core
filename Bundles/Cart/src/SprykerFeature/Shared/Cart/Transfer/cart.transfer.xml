@@ -14,6 +14,7 @@
     <transfer name="Change">
         <property name="changedCartItems" type="CartItem[]" />
         <property name="couponCode" type="string" />
+        <property name="cart" type="Cart[]" />
         <property name="order" type="SalesOrder[]" />
         <property name="userId" type="string" />
         <property name="cartHash" type="string" />
@@ -22,9 +23,6 @@
     </transfer>
 
     <transfer name="CartItem">
-        <interface name="SprykerFeature\Shared\Cart\Transfer\ItemInterface" />
-        <interface name="SprykerFeature\Shared\Calculation\Dependency\Transfer\PriceItemInterface" />
-
         <property name="id" type="int" />
         <property name="sku" type="string" />
         <property name="uniqueIdentifier" type="string" />
