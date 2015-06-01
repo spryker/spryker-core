@@ -4,7 +4,6 @@ namespace Functional\SprykerFeature\Zed\Cart;
 
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\Cart\Fixture\CartFacadeFixture;
-use Generated\Zed\Ide\FactoryAutoCompletion\CartBusiness;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\ChangeTransfer;
@@ -12,13 +11,31 @@ use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\CartItemsTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
+use SprykerFeature\Zed\Price\Business\PriceFacade;
+use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProductQuery;
+use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 
 class CartTest extends Test
 {
+    const DUMMY_PRICE_TYPE = 'DUMMY';
+    const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
+    const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
+    const DUMMY_1_PRICE = 99;
+    const DUMMY_2_SKU_ABSTRACT_PRODUCT = 'ABSTRACT2';
+    const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
+    const DUMMY_2_PRICE = 100;
+
     /**
      * @var CartFacade
      */
     private $cartFacade;
+
+    /**
+     * @var PriceFacade
+     */
+    private $priceFacade;
 
     /**
      * @var Locator
@@ -29,11 +46,12 @@ class CartTest extends Test
     {
         parent::setUp();
         $this->locator = Locator::getInstance();
-        /** @var CartBusiness $factory */
-        $factory = new Factory('Cart');
 
         //use fixture here which wraps the original facade to override DI and Settings to not tests plugins
-        $this->cartFacade = new CartFacadeFixture($factory, $this->locator);
+        $this->cartFacade = new CartFacadeFixture(new Factory('Cart'), $this->locator);
+        $this->priceFacade = new PriceFacade(new Factory('Price'), $this->locator);
+
+        $this->setTestData();
     }
 
     /**
@@ -166,5 +184,32 @@ class CartTest extends Test
         $this->assertEquals(2, $changedItem->getQuantity());
 
         //@todo test recalculation
+    }
+
+    protected function setTestData()
+    {
+        $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE)->findOneOrCreate();
+        $defaultPriceType->setName(self::DUMMY_PRICE_TYPE)->save();
+
+        $abstractProduct1 = SpyAbstractProductQuery::create()
+            ->filterBySku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
+            ->findOneOrCreate()
+        ;
+        $abstractProduct1->setSku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)->save();
+
+        $concreteProduct1 = SpyProductQuery::create()->filterBySku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)->findOneOrCreate();
+        $concreteProduct1->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)->setSpyAbstractProduct($abstractProduct1)->save();
+
+        $abstractProduct2 = SpyAbstractProductQuery::create()
+            ->filterBySku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)
+            ->findOneOrCreate()
+        ;
+        $abstractProduct2->setSku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)->save();
+
+        $concreteProduct2 = SpyProductQuery::create()->filterBySku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)->findOneOrCreate();
+        $concreteProduct2->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)->setSpyAbstractProduct($abstractProduct2)->save();
+
+//        $this->deletePriceEntitiesConcrete($concreteProduct1);
+//        $this->deletePriceEntitiesAbstract($abstractProduct);
     }
 }
