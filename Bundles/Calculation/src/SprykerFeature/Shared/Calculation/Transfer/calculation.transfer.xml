@@ -81,7 +81,7 @@
     </transfer>
 
     <transfer name="CalculableContainer">
-        <property name="items" type="Item[]" singualr="item" />
+        <property name="items" type="Item[]" singular="item" />
     </transfer>
 
 </transfers>

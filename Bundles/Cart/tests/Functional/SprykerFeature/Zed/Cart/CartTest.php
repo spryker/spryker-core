@@ -3,6 +3,8 @@
 namespace Functional\SprykerFeature\Zed\Cart;
 
 use Codeception\TestCase\Test;
+use Functional\SprykerFeature\Zed\Cart\Fixture\CartFacadeFixture;
+use Generated\Zed\Ide\FactoryAutoCompletion\CartBusiness;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\ChangeTransfer;
@@ -25,17 +27,18 @@ class CartTest extends Test
 
     public function setUp()
     {
-        // $this->markTestSkipped();
         parent::setUp();
         $this->locator = Locator::getInstance();
+        /** @var CartBusiness $factory */
+        $factory = new Factory('Cart');
 
-        $this->cartFacade = new CartFacade(
-            new Factory('Cart'),
-            $this->locator
-        );
+        //use fixture here which wraps the original facade to override DI and Settings to not tests plugins
+        $this->cartFacade = new CartFacadeFixture($factory, $this->locator);
     }
 
     /**
+     * @group Zed
+     * @group Business
      * @group Cart
      */
     public function testAddToCart()
