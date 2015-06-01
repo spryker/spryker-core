@@ -80,5 +80,9 @@
         <property name="discounts" type="Discount[]" singular="discount" />
     </transfer>
 
+    <transfer name="CalculableContainer">
+        <property name="items" type="Item[]" singualr="item" />
+    </transfer>
+
 </transfers>
 
