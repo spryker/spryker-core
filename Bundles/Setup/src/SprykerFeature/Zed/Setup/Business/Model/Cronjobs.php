@@ -317,10 +317,10 @@ class Cronjobs
      * Render partial for job description with publisher settings
      * it returns not empty XML entity if job has email notifications set.
      *
-     * @param $job
+     * @param array $job
      * @return string
      */
-    protected function getPublisherString($job)
+    protected function getPublisherString(array $job)
     {
         if (array_key_exists('notifications', $job) && is_array($job['notifications']) && !empty($job['notifications'])) {
             $recipients = implode(' ', $job['notifications']);

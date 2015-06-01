@@ -33,7 +33,7 @@ class SetupDependencyContainer extends AbstractDependencyContainer
      */
     public function createModelGeneratedDirectoryRemover()
     {
-        return $this->getDirectoryRemover(
+        return $this->createDirectoryRemover(
             $this->getConfig()->getGeneratedDirectory()
         );
     }
@@ -44,18 +44,18 @@ class SetupDependencyContainer extends AbstractDependencyContainer
     public function createModelPropelSchema()
     {
         return $this->getFactory()->createModelPropelPropelSchema(
-            $this->getDirectoryRemover($this->getConfig()->getSchemaDirectory()),
-            $this->getSchemaFinder(),
-            $this->getSchemaReplicator()
+            $this->createDirectoryRemover($this->getConfig()->getSchemaDirectory()),
+            $this->createSchemaFinder(),
+            $this->createSchemaReplicator()
         );
     }
 
     /**
-     * @param $path
+     * @param string $path
      *
      * @return DirectoryRemoverInterface
      */
-    private function getDirectoryRemover($path)
+    private function createDirectoryRemover($path)
     {
         return $this->getFactory()->createModelDirectoryRemover($path);
     }
@@ -63,7 +63,7 @@ class SetupDependencyContainer extends AbstractDependencyContainer
     /**
      * @return PropelSchemaReplicatorInterface
      */
-    private function getSchemaReplicator()
+    private function createSchemaReplicator()
     {
         $schemaReplicator = $this->getFactory()->createModelPropelPropelSchemaReplicator(
             $this->getConfig()->getSchemaDirectory()
@@ -75,7 +75,7 @@ class SetupDependencyContainer extends AbstractDependencyContainer
     /**
      * @return PropelSchemaFinderInterface
      */
-    private function getSchemaFinder()
+    private function createSchemaFinder()
     {
         $schemaFinder = $this->getFactory()->createModelPropelPropelSchemaFinder(
             $this->getConfig()->getPropelSchemaPathPattern(),

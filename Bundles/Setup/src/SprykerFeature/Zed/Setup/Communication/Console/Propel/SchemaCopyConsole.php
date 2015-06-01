@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Setup\Communication\Console\Propel;
 
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Console\Business\Model\Console;
+use SprykerFeature\Zed\Setup\Business\SetupFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -36,7 +37,7 @@ class SchemaCopyConsole extends Console
     }
 
     /**
-     * @return \SprykerFeature\Zed\Setup\Business\SetupFacade
+     * @return SetupFacade
      */
     private function getFacade()
     {
