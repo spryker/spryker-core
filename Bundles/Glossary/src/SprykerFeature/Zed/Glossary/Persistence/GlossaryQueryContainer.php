@@ -156,7 +156,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
-     * @param array $locales
+     * @param array $localeIds
      *
      * @return SpyGlossaryKeyQuery
      * @throws PropelException

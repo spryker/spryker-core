@@ -3,21 +3,27 @@
 namespace Functional\SprykerFeature\Zed\Glossary\Communication\Grid;
 
 use Codeception\TestCase\Test;
+use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Glossary\Communication\Grid\TranslationGrid;
+use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryKeyQuery;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @group SprykerFeature
  * @group Zed
  * @group Glossary
+ * @group Business
  * @group TranslationGrid
  */
 class TranslationGridTest extends Test
 {
 
     /**
-     * @var query
+     * @var SpyGlossaryKeyQuery
      */
     private $query;
 
@@ -38,9 +44,7 @@ class TranslationGridTest extends Test
         $this->generateTestLocales();
 
         $dependencyContainer = $this->getGlossaryQueryContainer();
-
         $this->query = $dependencyContainer->queryKeysAndTranslationsForEachLanguage(array_keys($this->locales));
-
         $this->request = Request::createFromGlobals();
     }
 
@@ -58,7 +62,15 @@ class TranslationGridTest extends Test
      */
     private function getLocaleFacade()
     {
-        return Locator::getInstance()->locale()->facade();
+        return new LocaleFacade(new Factory('Locale'), $this->getLocator());
+    }
+
+    /**
+     * @return AutoCompletion|Locator
+     */
+    private function getLocator()
+    {
+        return Locator::getInstance();
     }
 
     /**
@@ -66,15 +78,12 @@ class TranslationGridTest extends Test
      */
     private function getGlossaryQueryContainer()
     {
-        $locator = Locator::getInstance();
-
-        return $locator->glossary()->queryContainer();
+        return $this->getLocator()->glossary()->queryContainer();
     }
 
     public function testRenderedDataShouldContainFormColumnsWithNameOfGivenLocales()
     {
         $grid = new TranslationGrid($this->query, $this->request, array_keys($this->locales));
-
         $gridData = $grid->renderData();
 
         $localeIds = array_keys($this->locales);
@@ -83,15 +92,16 @@ class TranslationGridTest extends Test
         $this->assertSame($localeIds[1], $gridData['content']['columns'][$localeIds[1]]['name']);
     }
 
-    public function testRenderedDataShouldContainColumnResultsWithNameOfGivenLocales()
+//    public function testRenderedDataShouldContainColumnResultsWithNameOfGivenLocales()
+    public function testRenderedGridDataShouldContainColumnsWhereIdOfGivenLocaleIsTheColumKey()
     {
         $grid = new TranslationGrid($this->query, $this->request, array_keys($this->locales));
-
         $gridData = $grid->renderData();
 
         $localeIds = array_keys($this->locales);
 
-        $this->assertArrayHasKey('translation_' . $localeIds[0] . '_value', $gridData['content']['rows'][0]);
-        $this->assertArrayHasKey('translation_' . $localeIds[1] . '_value', $gridData['content']['rows'][1]);
+        $this->assertArrayHasKey($localeIds[0], $gridData['content']['columns']);
+        $this->assertArrayHasKey($localeIds[1], $gridData['content']['columns']);
     }
+
 }
