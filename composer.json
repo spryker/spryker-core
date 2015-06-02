@@ -83,7 +83,6 @@
     "digital-canvas/zend-framework": ">=1.12.2",
 
     "guzzle/http": "~3.7, <= 3.8",
-    "ircmaxell/password-compat": "~1.0.0",
     "league/csv": "*",
 
     "monolog/monolog": "~1.7",
