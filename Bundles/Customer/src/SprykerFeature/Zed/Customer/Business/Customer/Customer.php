@@ -24,15 +24,11 @@ use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class Customer
 {
+
     /**
      * @var CustomerQueryContainerInterface
      */
     protected $queryContainer;
-
-    /**
-     * @var AutoCompletion
-     */
-    protected $locator;
 
     /**
      * @var PasswordRestoredConfirmationSenderPluginInterface[]
@@ -51,11 +47,9 @@ class Customer
 
     /**
      * @param QueryContainerInterface $queryContainer
-     * @param LocatorLocatorInterface $locator
      */
-    public function __construct(QueryContainerInterface $queryContainer, LocatorLocatorInterface $locator)
+    public function __construct(QueryContainerInterface $queryContainer)
     {
-        $this->locator = $locator;
         $this->queryContainer = $queryContainer;
     }
 

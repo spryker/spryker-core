@@ -30,7 +30,9 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
      */
     public function createCustomer()
     {
-        $customer = $this->getFactory()->createCustomerCustomer($this->createQueryContainer(), $this->getLocator());
+        $customer = $this->getFactory()->createCustomerCustomer(
+            $this->createQueryContainer()
+        );
 
         $config = $this->getConfig();
 
