@@ -4,9 +4,11 @@ namespace SprykerFeature\Zed\Customer\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
-use SprykerFeature\Zed\Customer\CustomerConfig;
 use SprykerFeature\Zed\Customer\Business\Customer\Customer;
 use SprykerFeature\Zed\Customer\Business\Customer\Address;
+use SprykerFeature\Zed\Customer\CustomerConfig;
+use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
+use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 /**
@@ -52,6 +54,28 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
      */
     public function createAddress()
     {
-        return $this->getFactory()->createCustomerAddress($this->createQueryContainer(), $this->getLocator());
+        return $this->getFactory()->createCustomerAddress(
+            $this->createQueryContainer(),
+            $this->createCountryFacade(),
+            $this->createLocaleFacade()
+        );
     }
+
+    /**
+     * @return CustomerToCountryInterface
+     */
+    protected function createCountryFacade()
+    {
+        return $this->getLocator()->country()->facade();
+    }
+
+    /**
+     * @return CustomerToLocaleInterface
+     */
+    protected function createLocaleFacade()
+    {
+        return $this->getLocator()->locale()->facade();
+    }
+
+
 }
