@@ -2,25 +2,25 @@
 
 namespace SprykerFeature\Zed\Customer\Business\Customer;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddress;
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use Propel\Runtime\Collection\ObjectCollection;
-use Generated\Shared\Transfer\CustomerAddressTransfer;
-use Generated\Shared\Transfer\AddressesTransfer;
 use DateTime;
+use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
-use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
-use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
+use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
 use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredException;
+use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
+use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
+use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
+use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddress;
 
 class Customer
 {
