@@ -93,7 +93,7 @@ class TranslationGridTest extends Test
     }
 
 //    public function testRenderedDataShouldContainColumnResultsWithNameOfGivenLocales()
-    public function testRenderedGridDataShouldContainColumnsWhereIdOfGivenLocaleIsTheColumKey()
+    public function testRenderedGridDataShouldContainColumnsWhereIdOfGivenLocaleIsTheColumnKey()
     {
         $grid = new TranslationGrid($this->query, $this->request, array_keys($this->locales));
         $gridData = $grid->renderData();
