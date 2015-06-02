@@ -2,11 +2,6 @@
 
 namespace SprykerFeature\Zed\Product\Business\Model;
 
-/**
- * Class ImportProducts
- *
- * @package SprykerFeature\Zed\Product\Business\Importer\Model
- */
 class ProductBatchResult implements ProductBatchResultInterface
 {
     /**

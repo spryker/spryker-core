@@ -1,13 +1,9 @@
 <?php
 
 namespace SprykerFeature\Zed\Product\Business\Importer\Validator;
+
 use SprykerFeature\Zed\Product\Business\Validator\DataValidatorInterface;
 
-/**
- * Class ImportProductValidator
- *
- * @package SprykerFeature\Zed\Product\Business\Importer\Validator
- */
 class ImportProductValidator implements DataValidatorInterface
 {
     /**
