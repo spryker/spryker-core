@@ -35,7 +35,7 @@ class PropelSchemaReplicator implements PropelSchemaReplicatorInterface
 
         foreach ($schemaFinder->getSchemaFiles() as $schemaFile) {
             $fileName = $this->getTargetFileName($schemaFile);
-            $bundleName = explode('_', explode('.', $fileName)[0])[1];
+            $bundleName = explode('_', explode('.', $fileName, 1)[0])[1];
             if (!isset($targetFileMap[$bundleName])) {
                 $targetFileMap[$bundleName] = true;
                 $fileSystem->copy(
