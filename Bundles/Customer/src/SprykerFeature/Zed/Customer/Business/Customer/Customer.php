@@ -7,7 +7,6 @@ use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddress;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\AddressesTransfer;
@@ -21,11 +20,12 @@ use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSe
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
 use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredException;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class Customer
 {
     /**
-     * @var CustomerQueryContainer
+     * @var CustomerQueryContainerInterface
      */
     protected $queryContainer;
 

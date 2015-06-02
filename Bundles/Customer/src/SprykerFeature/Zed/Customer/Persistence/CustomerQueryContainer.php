@@ -10,7 +10,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * @method CustomerDependencyContainer getDependencyContainer()
  */
-class CustomerQueryContainer extends AbstractQueryContainer
+class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQueryContainerInterface
 {
     /**
      * @param string $email

@@ -5,9 +5,9 @@ namespace SprykerFeature\Zed\Customer\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Customer\CustomerConfig;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
 use SprykerFeature\Zed\Customer\Business\Customer\Customer;
 use SprykerFeature\Zed\Customer\Business\Customer\Address;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 /**
  * @method CustomerConfig getConfig()
@@ -16,7 +16,7 @@ use SprykerFeature\Zed\Customer\Business\Customer\Address;
 class CustomerDependencyContainer extends AbstractDependencyContainer
 {
     /**
-     * @return CustomerQueryContainer
+     * @return CustomerQueryContainerInterface
      */
     public function createQueryContainer()
     {

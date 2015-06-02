@@ -8,9 +8,9 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CountryNotFoundException;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddress;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
@@ -18,7 +18,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class Address
 {
-    /** @var CustomerQueryContainer */
+    /** @var CustomerQueryContainerInterface */
     protected $queryContainer;
 
     /** @var AutoCompletion */
