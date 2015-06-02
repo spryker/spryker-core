@@ -65,33 +65,33 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
-     * @param int $id_address
+     * @param int $idAddress
      * @param string $email
      *
      * @return SpyCustomerAddressQuery
      * @throws PropelException
      */
-    public function queryAddressForCustomer($id_address, $email)
+    public function queryAddressForCustomer($idAddress, $email)
     {
         $customer = $this->queryCustomerByEmail($email)->findOne();
 
         $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();
-        $query->filterByIdCustomerAddress($id_address);
+        $query->filterByIdCustomerAddress($idAddress);
         $query->filterByCustomer($customer);
 
         return $query;
     }
 
     /**
-     * @param int $id_address
+     * @param int $idAddress
      *
      * @return SpyCustomerAddressQuery
      * @throws PropelException
      */
-    public function queryAddress($id_address)
+    public function queryAddress($idAddress)
     {
         $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();
-        $query->filterByIdCustomerAddress($id_address);
+        $query->filterByIdCustomerAddress($idAddress);
 
         return $query;
     }
