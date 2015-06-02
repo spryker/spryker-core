@@ -41,7 +41,7 @@ class Address
      * @throws CustomerNotFoundException
      * @throws PropelException
      */
-    public function newAddress(CustomerAddressTransfer $addressTransfer)
+    public function createAddress(CustomerAddressTransfer $addressTransfer)
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 

@@ -145,7 +145,7 @@ class ProfileController extends AbstractController
                 return $this->jsonResponse($form->renderData());
             }
 
-            $this->getLocator()->customer()->facade()->newAddress($addressTransfer);
+            $this->getLocator()->customer()->facade()->createAddress($addressTransfer);
         }
 
         return $this->jsonResponse($form->renderData());

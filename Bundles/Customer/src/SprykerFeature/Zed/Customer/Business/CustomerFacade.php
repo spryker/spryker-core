@@ -115,10 +115,10 @@ class CustomerFacade extends AbstractFacade
      *
      * @return CustomerAddressTransfer
      */
-    public function newAddress(CustomerAddressTransfer $addressTransfer)
+    public function createAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()->createAddress()
-            ->newAddress($addressTransfer);
+            ->createAddress($addressTransfer);
     }
 
     /**
