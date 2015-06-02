@@ -10,8 +10,8 @@ abstract class AbstractPropelSchemaTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         mkdir($this->getFixtureDirectory());
-        touch($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'foo.schema.xml');
-        touch($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'bar.schema.xml');
+        touch($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'spy_foo.schema.xml');
+        touch($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'spy_bar.schema.xml');
     }
 
     public function tearDown()

@@ -22,23 +22,20 @@ class PropelSchemaTest extends AbstractPropelSchemaTest
     {
         $propelSchema = $this->getPropelSchemaModel();
 
-        $this->assertTrue(file_exists($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'foo.schema.xml'));
+        $this->assertTrue(file_exists($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'spy_foo.schema.xml'));
 
         $propelSchema->cleanTargetDirectory();
 
         $this->assertFalse(is_dir($this->getFixtureDirectory()));
     }
 
-    /**
-     * @group SingleTest
-     */
     public function testCopySchemasShouldCollectAllSchemaFilesAndCopyThemToSchemaDirectory()
     {
         $propelSchema = $this->getPropelSchemaModel();
         $propelSchema->copyToTargetDirectory();
 
-        $this->assertTrue(file_exists($this->getTargetDirectory() . DIRECTORY_SEPARATOR . 'foo.schema.xml'));
-        $this->assertTrue(file_exists($this->getTargetDirectory() . DIRECTORY_SEPARATOR . 'bar.schema.xml'));
+        $this->assertTrue(file_exists($this->getTargetDirectory() . DIRECTORY_SEPARATOR . 'spy_foo.schema.xml'));
+        $this->assertTrue(file_exists($this->getTargetDirectory() . DIRECTORY_SEPARATOR . 'spy_bar.schema.xml'));
     }
 
     /**
