@@ -4,34 +4,49 @@ namespace SprykerFeature\Zed\Customer\Business\Customer;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
+use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CountryNotFoundException;
+use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
+use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
+use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddress;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class Address
 {
-    /** @var CustomerQueryContainer */
+
+    /**
+     * @var CustomerQueryContainerInterface
+     */
     protected $queryContainer;
 
-    /** @var AutoCompletion */
-    protected $locator;
+    /**
+     * @var CustomerToCountryInterface
+     */
+    private $countryFacade;
+
+    /**
+     * @var CustomerToLocaleInterface
+     */
+    private $localeFacade;
 
     /**
      * @param QueryContainerInterface $queryContainer
-     * @param LocatorLocatorInterface $locator
+     * @param CustomerToCountryInterface $countryFacade
+     * @param CustomerToLocaleInterface $localeFacade
      */
-    public function __construct(QueryContainerInterface $queryContainer, LocatorLocatorInterface $locator)
-    {
-        $this->locator = $locator;
+    public function __construct(
+        QueryContainerInterface $queryContainer,
+        CustomerToCountryInterface $countryFacade,
+        CustomerToLocaleInterface $localeFacade
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->countryFacade = $countryFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -41,7 +56,7 @@ class Address
      * @throws CustomerNotFoundException
      * @throws PropelException
      */
-    public function newAddress(CustomerAddressTransfer $addressTransfer)
+    public function createAddress(CustomerAddressTransfer $addressTransfer)
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
@@ -320,13 +335,9 @@ class Address
      */
     protected function getCustomerCountryId()
     {
-        $idCountry = $this->locator
-            ->country()
-            ->facade()
-            ->getIdCountryByIso2Code($this->getIsoCode())
-        ;
+        $idCountry = $this->countryFacade->getIdCountryByIso2Code($this->getIsoCode());
 
-        if ($idCountry == null) {
+        if (is_null($idCountry)) {
             throw new CountryNotFoundException;
         }
 
@@ -374,11 +385,7 @@ class Address
      */
     private function getIsoCode()
     {
-        $localeName = $this->locator
-            ->locale()
-            ->facade()
-            ->getCurrentLocale()
-            ->getLocaleName();
+        $localeName = $this->localeFacade->getCurrentLocale()->getLocaleName();
 
         return explode('_', $localeName)[1];
     }

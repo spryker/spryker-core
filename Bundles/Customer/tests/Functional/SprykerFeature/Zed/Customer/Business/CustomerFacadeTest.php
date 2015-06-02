@@ -90,7 +90,7 @@ class CustomerFacadeTest extends Test
     protected function createTestAddress(CustomerTransfer $customerTransfer)
     {
         $addressTransfer = $this->createTestAddressTransfer($customerTransfer);
-        $addressTransfer = $this->locator->customer()->facade()->newAddress($addressTransfer);
+        $addressTransfer = $this->locator->customer()->facade()->createAddress($addressTransfer);
 
         return $addressTransfer;
     }
@@ -188,7 +188,7 @@ class CustomerFacadeTest extends Test
         $addressTransfer->setEmail($customerTransfer->getEmail());
         $addressTransfer->setFirstName(self::TESTER_NAME);
         $addressTransfer->setLastName(self::TESTER_NAME);
-        $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
+        $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
     }
 
@@ -199,7 +199,7 @@ class CustomerFacadeTest extends Test
         $addressTransfer->setEmail($customerTransfer->getEmail());
         $addressTransfer->setFirstName(self::TESTER_NAME);
         $addressTransfer->setLastName(self::TESTER_NAME);
-        $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
+        $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
 
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
@@ -222,7 +222,7 @@ class CustomerFacadeTest extends Test
         $addressTransfer->setFirstName(self::TESTER_NAME);
         $addressTransfer->setLastName(self::TESTER_NAME);
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
-        $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
+        $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
 
@@ -241,7 +241,7 @@ class CustomerFacadeTest extends Test
         $addressTransfer->setFirstName(self::TESTER_NAME);
         $addressTransfer->setLastName(self::TESTER_NAME);
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
-        $addressTransfer = $this->customerFacade->newAddress($addressTransfer);
+        $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
 

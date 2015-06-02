@@ -121,7 +121,7 @@ class SdkController extends AbstractSdkController
      */
     public function newAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getLocator()->customer()->facade()->newAddress($addressTransfer);
+        $success = $this->getLocator()->customer()->facade()->createAddress($addressTransfer);
         $this->setSuccess($success);
 
         return $addressTransfer;
