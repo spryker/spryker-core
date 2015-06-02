@@ -7,7 +7,6 @@ use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 
-
 interface CustomerQueryContainerInterface extends QueryContainerInterface
 {
 

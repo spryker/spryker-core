@@ -78,6 +78,4 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getLocator()->locale()->facade();
     }
-
-
 }

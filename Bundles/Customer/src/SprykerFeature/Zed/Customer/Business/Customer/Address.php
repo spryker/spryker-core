@@ -335,10 +335,9 @@ class Address
      */
     protected function getCustomerCountryId()
     {
-        $idCountry = $this->countryFacade->getIdCountryByIso2Code($this->getIsoCode())
-        ;
+        $idCountry = $this->countryFacade->getIdCountryByIso2Code($this->getIsoCode());
 
-        if ($idCountry == null) {
+        if (is_null($idCountry)) {
             throw new CountryNotFoundException;
         }
 

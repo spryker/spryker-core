@@ -19,7 +19,8 @@ class CustomerFacade extends AbstractFacade
     public function registerCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createCustomer()
-            ->register($customerTransfer);
+            ->register($customerTransfer)
+        ;
     }
 
     /**
@@ -30,7 +31,8 @@ class CustomerFacade extends AbstractFacade
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createCustomer()
-            ->confirmRegistration($customerTransfer);
+            ->confirmRegistration($customerTransfer)
+        ;
     }
 
     /**
@@ -41,7 +43,8 @@ class CustomerFacade extends AbstractFacade
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createCustomer()
-            ->forgotPassword($customerTransfer);
+            ->forgotPassword($customerTransfer)
+        ;
     }
 
     /**
@@ -52,7 +55,8 @@ class CustomerFacade extends AbstractFacade
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createCustomer()
-            ->restorePassword($customerTransfer);
+            ->restorePassword($customerTransfer)
+        ;
     }
 
     /**
@@ -63,7 +67,8 @@ class CustomerFacade extends AbstractFacade
     public function deleteCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createCustomer()
-            ->delete($customerTransfer);
+            ->delete($customerTransfer)
+        ;
     }
 
     /**
@@ -74,7 +79,8 @@ class CustomerFacade extends AbstractFacade
     public function getCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createCustomer()
-            ->get($customerTransfer);
+            ->get($customerTransfer)
+        ;
     }
 
     /**
@@ -85,7 +91,8 @@ class CustomerFacade extends AbstractFacade
     public function updateCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createCustomer()
-            ->update($customerTransfer);
+            ->update($customerTransfer)
+        ;
     }
 
     /**
@@ -96,7 +103,8 @@ class CustomerFacade extends AbstractFacade
     public function getAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()->createAddress()
-            ->getAddress($addressTransfer);
+            ->getAddress($addressTransfer)
+        ;
     }
 
     /**
@@ -107,7 +115,8 @@ class CustomerFacade extends AbstractFacade
     public function updateAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()->createAddress()
-            ->updateAddress($addressTransfer);
+            ->updateAddress($addressTransfer)
+        ;
     }
 
     /**
@@ -118,7 +127,8 @@ class CustomerFacade extends AbstractFacade
     public function createAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()->createAddress()
-            ->createAddress($addressTransfer);
+            ->createAddress($addressTransfer)
+        ;
     }
 
     /**
@@ -129,7 +139,8 @@ class CustomerFacade extends AbstractFacade
     public function setDefaultBillingAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()->createAddress()
-            ->setDefaultBillingAddress($addressTransfer);
+            ->setDefaultBillingAddress($addressTransfer)
+        ;
     }
 
     /**
@@ -140,7 +151,8 @@ class CustomerFacade extends AbstractFacade
     public function setDefaultShippingAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()->createAddress()
-            ->setDefaultShippingAddress($addressTransfer);
+            ->setDefaultShippingAddress($addressTransfer)
+        ;
     }
 
     /**
@@ -151,7 +163,8 @@ class CustomerFacade extends AbstractFacade
     public function renderAddress(CustomerAddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()->createAddress()
-            ->getFormattedAddressString($addressTransfer);
+            ->getFormattedAddressString($addressTransfer)
+        ;
     }
 
     /**
@@ -161,7 +174,8 @@ class CustomerFacade extends AbstractFacade
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createAddress()
-            ->getDefaultShippingAddress($customerTransfer);
+            ->getDefaultShippingAddress($customerTransfer)
+        ;
     }
 
     /**
@@ -172,6 +186,7 @@ class CustomerFacade extends AbstractFacade
     public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createAddress()
-            ->getDefaultBillingAddress($customerTransfer);
+            ->getDefaultBillingAddress($customerTransfer)
+        ;
     }
 }
