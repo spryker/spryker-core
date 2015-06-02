@@ -118,6 +118,10 @@ class MenuFormatter implements MenuFormatterInterface
             self::INDEX !== $page[self::CONTROLLER]) ? $page[self::CONTROLLER] : null;
         $action = (isset($page[self::ACTION]) && self::INDEX !== $page[self::ACTION]) ? $page[self::ACTION] : null;
 
+        if (!array_key_exists(self::BUNDLE, $page)) {
+            $foo = '';
+        }
+
         return $this->urlBuilder->build($page[self::BUNDLE], $controller, $action);
     }
 

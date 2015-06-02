@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Setup\Communication\Console;
 
+use SprykerEngine\Zed\Maintenance\Communication\Console\FossMarkDownGeneratorConsole;
 use SprykerEngine\Zed\Transfer\Communication\Console\GeneratorConsole;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerFeature\Zed\Setup\Business\Model\GeneratedDirectoryRemover;
@@ -43,5 +44,6 @@ class InstallConsole extends Console
         $this->runDependingCommand(InitializeDatabaseConsole::COMMAND_NAME);
         $this->runDependingCommand(GenerateIdeAutoCompletionConsole::COMMAND_NAME);
         $this->runDependingCommand(RunnerConsole::COMMAND_NAME, ['--' . RunnerConsole::OPTION_TASK_BUILD_ALL]);
+        $this->runDependingCommand(FossMarkDownGeneratorConsole::COMMAND_NAME);
     }
 }

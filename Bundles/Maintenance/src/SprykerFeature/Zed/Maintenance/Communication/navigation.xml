@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <maintenance>
+        <label>maintenance</label>
+        <title>Maintenance</title>
+        <bundle>maintenance</bundle>
+        <controller>index</controller>
+        <action>index</action>
+        <pages>
+            <packages>
+                <label>packages</label>
+                <title>Installed packages</title>
+                <bundle>maintenance</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </packages>
+        </pages>
+    </maintenance>
+</config>

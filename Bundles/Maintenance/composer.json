@@ -1,0 +1,17 @@
+{
+  "name": "spryker/maintenance",
+  "autoload": {
+    "psr-0": {
+      "SprykerEngine": "src/",
+      "Acceptance": "tests/",
+      "Function": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "require": {
+    "twig/twig": "~1.0"
+  },
+  "require-dev": {
+  }
+}
