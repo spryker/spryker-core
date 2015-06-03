@@ -1,0 +1,22 @@
+{% extends '@Application/layout.twig' %}
+
+{% block body_class %}spy-page{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>License</td>
+            <td>Version</td>
+            <td>Type</td>
+        </tr>
+        {% for installedPackage in installedPackages.packages %}
+            <tr>
+                <td><a href="{{ installedPackage.url }}">{{ installedPackage.name }}</a></td>
+                <td>{{ installedPackage.license|join(', ') }}</td>
+                <td>{{ installedPackage.version }}</td>
+                <td>{{ installedPackage.type }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
