@@ -130,7 +130,7 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
     /**
      * @return SearchPageQueryContainer
      */
-    private function getQueryContainer()
+    protected function getQueryContainer()
     {
         return $this->getLocator()->searchPage()->queryContainer();
     }

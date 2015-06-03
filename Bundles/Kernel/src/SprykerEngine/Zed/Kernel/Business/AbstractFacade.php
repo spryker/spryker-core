@@ -5,6 +5,8 @@ namespace SprykerEngine\Zed\Kernel\Business;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
+use SprykerEngine\Zed\Kernel\Container;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractFacade
 {
@@ -31,5 +33,17 @@ abstract class AbstractFacade
     protected function getDependencyContainer()
     {
         return $this->dependencyContainer;
+    }
+
+    /**
+     * TODO move to constructor
+     * @param AbstractQueryContainer $queryContainer
+     */
+    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
+    {
+        $dependencyContainer = $this->getDependencyContainer();
+        if (isset($dependencyContainer)) {
+            $this->getDependencyContainer()->setQueryContainer($queryContainer);
+        }
     }
 }

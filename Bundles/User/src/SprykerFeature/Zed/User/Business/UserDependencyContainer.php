@@ -31,7 +31,7 @@ class UserDependencyContainer extends AbstractDependencyContainer
     /**
      * @return UserQueryContainer
      */
-    private function getQueryContainer()
+    protected function getQueryContainer()
     {
         return $this->getLocator()->user()->queryContainer();
     }
