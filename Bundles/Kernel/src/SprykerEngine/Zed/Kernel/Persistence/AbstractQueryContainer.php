@@ -71,6 +71,8 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
+     * TODO Will be removed.
+     * @deprecated
      * @return DependencyContainerInterface
      */
     protected function getDependencyContainer()

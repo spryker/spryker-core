@@ -17,6 +17,7 @@ abstract class AbstractFacade implements FacadeInterface
     private $dependencyContainer;
 
     /**
+     * TODO Locator will be removed
      * @param FactoryInterface $factory
      * @param Locator $locator
      */

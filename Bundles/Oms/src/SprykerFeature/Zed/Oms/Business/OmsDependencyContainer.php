@@ -180,6 +180,6 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     public function createUtilDrawer()
     {
         return $this->getFactory()
-            ->createUtilDrawer($this->getConfig());
+            ->createUtilDrawer($this->getConfig()); // TODO do not inject the whole config, just inject what is needed
     }
 }
