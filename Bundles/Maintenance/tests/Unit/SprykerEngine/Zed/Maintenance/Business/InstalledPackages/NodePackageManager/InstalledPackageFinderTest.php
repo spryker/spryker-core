@@ -17,7 +17,7 @@ use Symfony\Component\Process\Process;
 class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testGetInstalledPackagesShouldReturnInstalledPackageCollection()
+    public function testFindInstalledPackagesShouldReturnCollectionWithInstalledPackage()
     {
         $collection = new InstalledPackagesTransfer();
         $finder = new InstalledPackageFinder($collection, $this->getProcessMockWithSuccessFullResponse(), '');
@@ -28,7 +28,7 @@ class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetInstalledPackagesShouldThrowExceptionIfProcessWasNotSuccessful()
+    public function testFindInstalledPackagesShouldThrowExceptionIfProcessWasNotSuccessful()
     {
         $this->setExpectedException('\RuntimeException');
 
@@ -108,5 +108,5 @@ class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
             }
         ';
     }
-    
+
 }

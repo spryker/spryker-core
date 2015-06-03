@@ -24,7 +24,7 @@ class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
         return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures';
     }
 
-    public function testGetInstalledPackagesShouldReturnInstalledPackageCollection()
+    public function testFindInstalledPackagesShouldReturnCollectionWithInstalledPackages()
     {
         $collection = new InstalledPackagesTransfer();
         $finder = new InstalledPackageFinder($collection, $this->getFixturesDirectory() . DIRECTORY_SEPARATOR . 'composerLock.mock');
