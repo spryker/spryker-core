@@ -1,6 +1,6 @@
 <?php
 
-namespace Functional\SprykerEngine\Zed\Transfer\Business;
+namespace Functional\SprykerFeature\Zed\Setup\Business;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Config;
@@ -42,13 +42,6 @@ class SetupDependencyContainerTest extends \PHPUnit_Framework_TestCase
         $instance = $this->getDependencyContainer()->createModelGeneratedDirectoryRemover();
 
         $this->assertInstanceOf('SprykerFeature\Zed\Setup\Business\Model\DirectoryRemover', $instance);
-    }
-
-    public function testCreateModelSchemaShouldReturnFullyConfiguredInstance()
-    {
-        $instance = $this->getDependencyContainer()->createModelPropelSchema();
-
-        $this->assertInstanceOf('SprykerFeature\Zed\Setup\Business\Model\Propel\PropelSchema', $instance);
     }
 
 }

@@ -1,0 +1,16 @@
+{
+  "name": "spryker/propel",
+  "autoload": {
+    "psr-0": {
+      "SprykerEngine": "src/",
+      "Acceptance": "tests/",
+      "Function": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+  }
+}

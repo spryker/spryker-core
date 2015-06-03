@@ -49,20 +49,4 @@ class SetupConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_dir($this->getConfig()->getGeneratedDirectory()));
     }
 
-    public function testGetSchemaDirectoryShouldReturnPathToSchemas()
-    {
-        $this->assertTrue(is_dir($this->getConfig()->getSchemaDirectory()));
-    }
-
-    public function testGetPropelSchemaPathPatterShouldReturnArrayWithOnePatternToSchemaDirectories()
-    {
-        $pathPatterns = $this->getConfig()->getPropelSchemaPathPattern();
-        $this->assertTrue(is_array($pathPatterns));
-        $this->assertCount(1, $pathPatterns);
-    }
-
-    public function testGetPropelSchemaFileNamePatterShouldReturnString()
-    {
-        $this->assertTrue(is_string($this->getConfig()->getPropelSchemaFileNamePattern()));
-    }
 }
