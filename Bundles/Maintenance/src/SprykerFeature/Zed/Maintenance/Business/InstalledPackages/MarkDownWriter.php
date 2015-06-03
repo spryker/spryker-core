@@ -40,5 +40,4 @@ class MarkDownWriter implements MarkDownWriterInterface
         file_put_contents($this->path, implode("\n", $markDownLines));
     }
 
-
 }

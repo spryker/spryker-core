@@ -61,4 +61,5 @@ class MarkDownWriterTest extends \PHPUnit_Framework_TestCase
         $filesystem = new Filesystem();
         $filesystem->remove($this->getFixtureDirectory());
     }
+
 }

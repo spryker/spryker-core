@@ -21,7 +21,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
 
     /**
      * @param InstalledPackagesInterface $collection
-     * @param $pathToComposerLock
+     * @param string $pathToComposerLock
      */
     public function __construct(InstalledPackagesInterface $collection, $pathToComposerLock)
     {

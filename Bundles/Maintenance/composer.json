@@ -10,7 +10,6 @@
     }
   },
   "require": {
-    "twig/twig": "~1.0"
   },
   "require-dev": {
   }

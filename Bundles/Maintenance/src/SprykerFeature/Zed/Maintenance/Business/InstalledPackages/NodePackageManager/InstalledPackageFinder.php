@@ -49,7 +49,9 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     }
 
     /**
-     * @return mixed
+     * @throws \RuntimeException
+     *
+     * @return array
      */
     private function getPackageList()
     {
@@ -64,7 +66,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     }
 
     /**
-     * @param $packages
+     * @param array $packages
      */
     private function addInstalledPackages(array $packages)
     {
@@ -94,7 +96,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     }
 
     /**
-     * @param $package
+     * @param array $package
      *
      * @return array
      */
@@ -147,6 +149,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
 
     /**
      * @param array $package
+     *
      * @return string
      */
     private function getUrl(array $package)

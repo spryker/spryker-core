@@ -26,4 +26,5 @@ class MaintenanceFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->createMarkDownWriter($installedPackages)->write();
     }
+    
 }
