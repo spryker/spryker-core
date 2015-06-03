@@ -48,6 +48,20 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     /**
      * @param Request $request
      *
+     * @return TranslationForm
+     */
+    public function createKeyForm(Request $request)
+    {
+        return $this->getFactory()->createFormKeyForm(
+            $request,
+            $this->createQueryContainer(),
+            $this->createLocaleFacade()
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
      * @return TranslationGrid
      */
     public function createGlossaryKeyTranslationGrid(Request $request)

@@ -7,10 +7,9 @@
     >
         <h3>Edit translation</h3>
 
-        <div spy-input-select="field.fk_glossary_key" options="{ label : 'Key', reload : true }"></div>
-        <div spy-input-select="field.fk_locale" options="{ label : 'Locale', reload : true }"></div>
-        <div spy-input-select="field.is_active" options="{ label : 'Active' }"></div>
-        <div spy-input-area="field.value" options="{ label : 'Localization', optional : 'optional' }"></div>
+        <div spy-input-text="field.key" options="{ label : 'Key' }"></div>
+
+        <div spy-fieldset="field.translations"></div>
 
         <div class="spy-layout buttons">
             <button class="button accept" ng-disabled="query" ng-click="update()">Update</button>

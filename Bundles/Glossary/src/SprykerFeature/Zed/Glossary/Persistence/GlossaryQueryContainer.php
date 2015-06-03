@@ -119,6 +119,35 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @param integer $localeId
+     * @param integer $glossaryKeyId
+     *
+     * @return SpyGlossaryTranslationQuery
+     */
+    public function queryTranslationByIdLocaleAndKeyId($localeId, $glossaryKeyId)
+    {
+        $query = $this->queryTranslations();
+        $query->filterByFkLocale($localeId);
+        $query->filterByFkGlossaryKey($glossaryKeyId);
+
+        return $query;
+    }
+
+    /**
+     * @param $fkGlossaryKeyId
+     *
+     * @return SpyGlossaryTranslationQuery
+     */
+    public function queryTranslationsByKeyId($fkGlossaryKeyId)
+    {
+        $query = $this->queryTranslations()
+            ->filterByFkGlossaryKey($fkGlossaryKeyId)
+        ;
+
+        return $query;
+    }
+
+    /**
      * @param string $keyName
      *
      * @return SpyGlossaryTranslationQuery
