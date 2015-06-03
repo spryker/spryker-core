@@ -10,12 +10,7 @@ class Autoloader
      */
     private static $allowedNamespaces = [
         'SprykerFeature',
-        'SprykerEngine',
-        'Functional',
-        'Acceptance',
-        'Unit',
-        'YvesUnit',
-        'Generated'
+        'SprykerEngine'
     ];
 
     /**
@@ -32,6 +27,11 @@ class Autoloader
      * @var bool
      */
     private $disableApplicationCheck;
+
+    /**
+     * @var array
+     */
+    private $classMap = [];
 
     /**
      * @param $rootDirectory
@@ -76,44 +76,14 @@ class Autoloader
     /**
      * Transform resource name into its relative resource path representation.
      *
-     * @param string $resourceName
+     * @param string $resourceParts
+     *
      * @return string Resource relative path.
      */
-    private function getResourceRelativePath($resourceName)
+    private function getResourceRelativePath($resourceParts)
     {
-        //manual namespacing
-        $resourcePath = '%dir%\\' . str_replace('_', '\\', $resourceName);
-
-        $testDirs = ['Functional', 'YvesUnit', 'Unit', 'Acceptance'];
-        $testDirSearch = array_map(function($value) {
-            return '%dir%\\' . $value;
-        }, $testDirs);
-
-        $testDirReplace = array_map(function($value) {
-            return 'tests\\' . $value;
-        }, $testDirs);
-
-        $resourcePath = str_replace($testDirSearch, $testDirReplace, $resourcePath);
-        $resourcePath = str_replace('%dir%', 'src\\%remove%', $resourcePath);
-
-        $resourceParts = explode('\\', $resourcePath);
-        $bundle = $resourceParts[4];
-
-        $resourcePath = str_replace(DIRECTORY_SEPARATOR . '%remove%', '', implode(DIRECTORY_SEPARATOR, $resourceParts));
-
-        //'SprykerFeature\Shared\Library\Filter';
-        //'Bundles/Library/src/SprykerFeature/Shared/Library/Filter'
-
-        //'Functional\SprykerFeature\Shared\Library\Filter
-        //'Bundles/Library/tests/Functional/SprykerFeature/Shared/Library/Filter'
-
-        //\%dir%\Functional \SprykerFeature\Shared\Library\Filter
-        //\tests\Functional \SprykerFeature\Shared\Library\Filter
-
-        //\%dir%\SprykerFeature\Shared\Library\Filter
-        //\src\%remove%\SprykerFeature\Shared\Library\Filter
-
-        $relativeResourcePath = implode(DIRECTORY_SEPARATOR, ['Bundles', $bundle, $resourcePath]);
+        $bundle = $resourceParts[2];
+        $relativeResourcePath = 'Bundles/' . $bundle . '/src/' . implode(DIRECTORY_SEPARATOR, $resourceParts);
 
         return $relativeResourcePath . '.php';
     }
@@ -122,6 +92,7 @@ class Autoloader
      * Transform relative path into its absolute resource path representation.
      *
      * @param string $relativePath
+     *
      * @return string|null Resource relative path.
      */
     private function getResourceAbsolutePath($relativePath)
@@ -136,25 +107,46 @@ class Autoloader
      * with fallback to composer
      *
      * @param string $resourceName
+     *
      * @return bool
      */
     protected function autoload($resourceName)
     {
+        if ($file = $this->findFile($resourceName)) {
+            include $file;
+        } else {
+            $this->classMap[$resourceName] = false;
+
+            return false;
+        }
+    }
+
+    protected function findFile($resourceName)
+    {
         // We always work with FQCN in our context
         // php bug from 5.3.0 to 5.3.2
         $resourceName = ltrim($resourceName, '\\');
-        if ($this->isLoadingAllowed($resourceName)) {
-            if (!$this->disableApplicationCheck) {
-                $this->checkApplication($resourceName);
-            }
 
-            $relativePath = $this->getResourceRelativePath($resourceName);
-            $absolutePath = $this->getResourceAbsolutePath($relativePath);
+        if (isset($this->classMap[$resourceName])) {
+            return $this->classMap[$resourceName];
+        }
 
-            if (file_exists($absolutePath)) {
-                require_once $absolutePath;
-                return true;
-            }
+        if (!$this->isLoadingAllowed($resourceName)) {
+            return false;
+        }
+
+        $resourceName = str_replace('_', '\\', $resourceName);
+        $resourceParts = explode('\\', $resourceName);
+
+        if (!$this->disableApplicationCheck) {
+            $this->checkApplication($resourceParts);
+        }
+
+        $relativePath = $this->getResourceRelativePath($resourceParts);
+        $absolutePath = $this->getResourceAbsolutePath($relativePath);
+
+        if (file_exists($absolutePath)) {
+            return $absolutePath;
         }
 
         return false;
@@ -167,9 +159,11 @@ class Autoloader
     private function isLoadingAllowed($resourceName)
     {
         foreach (self::$allowedNamespaces as $ns) {
-            // due to the fact that we could have a namespace like "Pro" and a resource name "Propel"
-            // therefore after the namespace we have either a  "\" or a "_"
-            if ((strpos($resourceName, $ns . '\\') === 0) || (strpos($resourceName, $ns . '_') === 0)) {
+            $namespaceLength = strlen($ns);
+            if (substr($resourceName, 0, $namespaceLength) !== $ns) {
+                continue;
+            }
+            if ($resourceName[$namespaceLength] === '_' || $resourceName[$namespaceLength] === '\\') {
                 return true;
             }
         }
@@ -181,30 +175,27 @@ class Autoloader
      */
     public static function allowNamespace($namespace)
     {
-        self::$allowedNamespaces[] = $namespace;
+        if (!in_array($namespace, self::$allowedNamespaces)) {
+            self::$allowedNamespaces[] = $namespace;
+        }
     }
 
     /**
      * Checks if the class is allowed inside Yves or Zed
      *
-     * @param $resourceName
+     * @param array $resourceParts
+     *
      * @throws \Exception
      */
-    protected function checkApplication($resourceName)
+    protected function checkApplication($resourceParts)
     {
         if (!$this->application) {
             return;
         }
-        // Check if it is a namespace class
-        if (strpos($resourceName, '\\') !== false) {
-            $classPieces = explode('\\', $resourceName);
-        } else {
-            $classPieces = explode('_', $resourceName);
-        }
 
         $app = ucfirst(strtolower($this->application));
-        if (($classPieces[1] !== $app && ($classPieces[1] === 'Yves' || $classPieces[1] === 'Zed')) && $classPieces[1] !== 'Shared') {
-            throw new \Exception('You are not allowed to load this class in your app. (' . $resourceName . ')');
+        if (($resourceParts[1] !== $app && ($resourceParts[1] === 'Yves' || $resourceParts[1] === 'Zed')) && $resourceParts[1] !== 'Shared') {
+            throw new \Exception('You are not allowed to load this class in your app. (' . implode('\\', $resourceParts) . ')');
         }
     }
 

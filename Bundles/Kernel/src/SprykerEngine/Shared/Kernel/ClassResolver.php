@@ -12,6 +12,11 @@ use SprykerFeature\Shared\System\SystemConfig;
 class ClassResolver implements ClassResolverInterface
 {
 
+    /**
+     * @var array
+     */
+    private $existsMap = [];
+
     const MESSAGE_CLASS_NAME_AMBIGUOUS =
         'It\'s not allowed to have the same bundle in two namespaces in one layer. Check: "%s"'
     ;
@@ -63,7 +68,7 @@ class ClassResolver implements ClassResolverInterface
         foreach ($namespaces as $namespace) {
             foreach ($this->getStores() as $store) {
                 $className = $this->buildClassName($namespace, $store, $class);
-                if (class_exists($className)) {
+                if ($this->classExists($className)) {
                     if ($this->classAlreadyResolvedInSameNamespace($resolvedClass, $namespace, $resolvedInNamespace)) {
                         throw new ClassNameAmbiguousException(
                             sprintf(self::MESSAGE_CLASS_NAME_AMBIGUOUS, $class)
@@ -167,7 +172,7 @@ class ClassResolver implements ClassResolverInterface
         foreach ($namespaces as $namespace) {
             foreach ($this->getStores() as $store) {
                 $className = $this->buildClassName($namespace, $store, $class);
-                if (class_exists($className)) {
+                if ($this->classExists($className)) {
                     if ($this->classAlreadyResolvedInSameNamespace($resolvedClass, $namespace, $resolvedInNamespace)) {
                         throw new ClassNameAmbiguousException(
                             sprintf(self::MESSAGE_CLASS_NAME_AMBIGUOUS, $class)
@@ -215,5 +220,18 @@ class ClassResolver implements ClassResolverInterface
     private function createClass($className, array $arguments = [])
     {
         return (new InstanceBuilder())->createInstance($className, $arguments);
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return bool
+     */
+    private function classExists($className)
+    {
+        if (isset($this->existsMap[$className])) {
+            return $this->existsMap[$className];
+        }
+        return $this->existsMap[$className] = class_exists($className);
     }
 }

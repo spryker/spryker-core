@@ -112,7 +112,7 @@ class TwigServiceProvider extends SilexTwigServiceProvider
                 [
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s' . $store . '/Theme/' . $themeName,
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s/Theme/' . $themeName,
-                    APPLICATION_VENDOR_DIR . '/*/*/Yves/%s/Theme/' . $themeName,
+                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/Yves/%1$s/Theme/' . $themeName,
                 ]
             );
         });
