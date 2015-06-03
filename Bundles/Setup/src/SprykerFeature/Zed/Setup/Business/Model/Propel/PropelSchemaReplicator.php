@@ -35,7 +35,8 @@ class PropelSchemaReplicator implements PropelSchemaReplicatorInterface
 
         foreach ($schemaFinder->getSchemaFiles() as $schemaFile) {
             $fileName = $this->getTargetFileName($schemaFile);
-            $bundleName = explode('_', explode('.', $fileName, 1)[0])[1];
+            $bundleName = $this->getBundleNameFromSchemaFile($schemaFile);
+
             if (!isset($targetFileMap[$bundleName])) {
                 $targetFileMap[$bundleName] = true;
                 $fileSystem->copy(
@@ -54,6 +55,16 @@ class PropelSchemaReplicator implements PropelSchemaReplicatorInterface
     private function getTargetFileName(SplFileInfo $schemaFile)
     {
         return $this->targetDirectory . DIRECTORY_SEPARATOR . $schemaFile->getFilename();
+    }
+
+    /**
+     * @param SplFileInfo $schemaFile
+     *
+     * @return string
+     */
+    private function getBundleNameFromSchemaFile(SplFileInfo $schemaFile)
+    {
+        return str_replace(['spy_', '.schema.xml'], '', $schemaFile->getFilename());
     }
 
 }
