@@ -6,20 +6,19 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Communication\Form\TranslationForm;
 use SprykerFeature\Zed\Glossary\Communication\Grid\TranslationGrid;
+use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
+use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator;
 
 /**
  * @method GlossaryCommunication getFactory()
+ * @method GlossaryQueryContainerInterface getQueryContainer()
  */
 class GlossaryDependencyContainer extends AbstractDependencyContainer
 {
@@ -66,7 +65,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      */
     public function createGlossaryKeyTranslationGrid(Request $request)
     {
-        $glossaryQueryContainer = $this->createQueryContainer();
+        $glossaryQueryContainer = $this->getQueryContainer();
 
         $availableLocales = $this->createEnabledLocales();
 
@@ -86,15 +85,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      */
     public function createEnabledLocales()
     {
-        return $this->createLocaleFacade()->getAvailableLocales();
-    }
-
-    /**
-     * @return GlossaryQueryContainerInterface
-     */
-    public function createQueryContainer()
-    {
-        return $this->getLocator()->glossary()->queryContainer();
+        return $this->getLocaleFacade()->getAvailableLocales();
     }
 
     /**
@@ -102,14 +93,14 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      */
     public function createValidator()
     {
-        return $this->getLocator()->application()->pluginPimple()->getApplication()['validator'];
+        return $this->getExternalDependency(GlossaryDependencyProvider::PLUGIN_VALIDATOR);
     }
 
     /**
-     * @return LocaleFacade
+     * @return GlossaryToLocaleInterface
      */
-    protected function createLocaleFacade()
+    protected function getLocaleFacade()
     {
-        return $this->getLocator()->locale()->facade();
+        return $this->getExternalDependency(GlossaryDependencyProvider::LOCALE_FACADE);
     }
 }

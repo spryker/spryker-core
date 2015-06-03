@@ -6,60 +6,52 @@
 
 namespace SprykerFeature\Zed\Glossary\Business;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryBusiness;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Glossary\Business\Key\KeyManagerInterface;
 use SprykerFeature\Zed\Glossary\Business\Key\KeySourceInterface;
 use SprykerFeature\Zed\Glossary\Business\Translation\TranslationManagerInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
+use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
 use SprykerFeature\Zed\Glossary\GlossaryConfig;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
  * @method GlossaryBusiness getFactory()
  * @method GlossaryConfig getConfig()
+ * @method GlossaryQueryContainerInterface getQueryContainer()
  */
 class GlossaryDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @return TranslationManagerInterface
      */
     public function createTranslationManager()
     {
         return $this->getFactory()->createTranslationTranslationManager(
-            $this->createGlossaryQueryContainer(),
-            $this->createTouchFacade(),
-            $this->createLocaleFacade(),
-            $this->createKeyManager(),
-            $this->getLocator()
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
+            $this->getLocaleFacade(),
+            $this->createKeyManager()
         );
-    }
-
-    /**
-     * @return GlossaryQueryContainerInterface
-     */
-    protected function createGlossaryQueryContainer()
-    {
-        return $this->getLocator()->glossary()->queryContainer();
     }
 
     /**
      * @return GlossaryToTouchInterface
      */
-    protected function createTouchFacade()
+    protected function getTouchFacade()
     {
-        return $this->getLocator()->touch()->facade();
+        return $this->getExternalDependency(GlossaryDependencyProvider::TOUCH_FACADE);
     }
 
     /**
      * @return GlossaryToLocaleInterface
      */
-    protected function createLocaleFacade()
+    protected function getLocaleFacade()
     {
-        return $this->getLocator()->locale()->facade();
+        return $this->getExternalDependency(GlossaryDependencyProvider::LOCALE_FACADE);
     }
 
     /**
@@ -69,8 +61,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createKeyKeyManager(
             $this->createKeySource(),
-            $this->createGlossaryQueryContainer(),
-            $this->getLocator()
+            $this->getQueryContainer()
         );
     }
 
@@ -82,5 +73,14 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createKeyFileKeySource(
             $this->getConfig()->getGlossaryKeyFileName()
         );
+    }
+
+    /**
+     * TODO remove
+     * @throws \Exception
+     */
+    protected function getLocator()
+    {
+        throw new \Exception('Not allowed here anymore');
     }
 }
