@@ -64,7 +64,7 @@ class PropelSchemaReplicator implements PropelSchemaReplicatorInterface
      */
     private function getBundleNameFromSchemaFile(SplFileInfo $schemaFile)
     {
-        return str_replace(['spy_', '.schema.xml'], '', $schemaFile->getFilename());
+        return str_replace(['spy_', 'kam_', '.schema.xml'], '', $schemaFile->getFilename());
     }
 
 }
