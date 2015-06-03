@@ -2,7 +2,7 @@
   "name": "spryker/maintenance",
   "autoload": {
     "psr-0": {
-      "SprykerEngine": "src/",
+      "SprykerFeature": "src/",
       "Acceptance": "tests/",
       "Function": "tests/",
       "Integration": "tests/",
