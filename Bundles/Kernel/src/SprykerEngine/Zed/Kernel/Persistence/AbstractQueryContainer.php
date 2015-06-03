@@ -16,6 +16,11 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     private $dependencyContainer;
 
     /**
+     * @var Factory
+     */
+    private $factory;
+
+    /**
      * External dependencies
      * @var Container
      */
@@ -56,6 +61,16 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
 
         return $this->container[$key];
     }
+
+    /**
+     * @return Factory
+     */
+    public function getFactory()
+    {
+        return $this->factory;
+    }
+
+    /**
      * @return DependencyContainerInterface
      */
     protected function getDependencyContainer()
