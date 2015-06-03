@@ -5,12 +5,14 @@ namespace Functional\SprykerFeature\Zed\Cms;
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\Factory;
+use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
+use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
@@ -58,10 +60,12 @@ class CmsFacadeTest extends Test
         $this->locator = Locator::getInstance();
         $this->cmsFacade = new CmsFacade(new Factory('Cms'), $this->locator);
         $this->urlFacade = new UrlFacade(new Factory('Url'), $this->locator);
-        $this->glossaryFacade = new GlossaryFacade(new Factory('Glossary'), $this->locator);
+
         $this->localeFacade = new LocaleFacade(new Factory('Locale'), $this->locator);
         $this->cmsQueryContainer = new CmsQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Cms'), $this->locator);
         $this->glossaryQueryContainer = new GlossaryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Glossary'), $this->locator);
+
+        $this->buildGlossaryFacade();
     }
 
     /**
@@ -266,5 +270,20 @@ class CmsFacadeTest extends Test
 
         $translation = $this->cmsFacade->translatePlaceholder($page->getIdCmsPage(), 'Placeholder1');
         $this->assertEquals('A Placeholder Translation', $translation);
+    }
+
+    protected function buildGlossaryFacade()
+    {
+        $this->glossaryFacade = new GlossaryFacade(new Factory('Glossary'), $this->locator);
+
+        $container = new Container();
+
+        $container[GlossaryDependencyProvider::LOCALE_FACADE] = function (Container $container) {
+            return $this->localeFacade;
+        };
+
+        $this->glossaryFacade->setExternalDependencies($container);
+
+        $this->glossaryFacade->setOwnQueryContainer($this->glossaryQueryContainer);
     }
 }

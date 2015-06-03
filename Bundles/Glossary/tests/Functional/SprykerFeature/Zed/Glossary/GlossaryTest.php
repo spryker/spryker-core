@@ -7,14 +7,17 @@
 namespace Functional\SprykerFeature\Zed\Glossary;
 
 use Codeception\TestCase\Test;
+use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
+use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Persistence\Factory;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
+use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Generated\Shared\Transfer\TranslationTransfer;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
+use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
+use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
+use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
@@ -31,9 +34,15 @@ class GlossaryTest extends Test
     private $glossaryFacade;
 
     /**
-     * @var LocaleFacade
+     * @var GlossaryToLocaleInterface
      */
     private $localeFacade;
+
+    /**
+     * @var GlossaryToTouchInterface
+     */
+    private $touchFacade;
+
 
     /**
      * @var GlossaryQueryContainerInterface
@@ -46,7 +55,7 @@ class GlossaryTest extends Test
     private $touchQueryContainer;
 
     /**
-     * @var Locator
+     * @var AutoCompletion
      */
     private $locator;
 
@@ -56,13 +65,12 @@ class GlossaryTest extends Test
 
         $this->locator = Locator::getInstance();
 
-        $this->glossaryFacade = new GlossaryFacade(
-            new \SprykerEngine\Zed\Kernel\Business\Factory('Glossary'),
-            $this->locator
-        );
-        $this->localeFacade = new LocaleFacade(new \SprykerEngine\Zed\Kernel\Business\Factory('Locale'), $this->locator);
-        $this->glossaryQueryContainer = new GlossaryQueryContainer(new Factory('Glossary'), $this->locator);
-        $this->touchQueryContainer = new TouchQueryContainer(new Factory('Touch'), $this->locator);
+        $this->localeFacade = new Mock\LocaleFacade(new BusinessFactory('Locale'), $this->locator);
+        $this->touchFacade = new Mock\TouchFacade(new BusinessFactory('Touch'), $this->locator);
+        $this->glossaryQueryContainer = new Mock\GlossaryQueryContainer(new PersistenceFactory('Glossary'), $this->locator);
+        $this->touchQueryContainer = new Mock\TouchQueryContainer(new PersistenceFactory('Touch'), $this->locator);
+
+        $this->buildGlossaryFacade();
     }
 
     public function testCreateKeyInsertsSomething()
@@ -300,5 +308,27 @@ class GlossaryTest extends Test
         $this->assertTrue($translationCountAfterCreation > $translationCountBeforeCreation);
 
         $this->assertNotNull($translation->getIdGlossaryTranslation());
+    }
+
+    protected function buildGlossaryFacade()
+    {
+        $this->glossaryFacade = new GlossaryFacade(
+            new BusinessFactory('Glossary'),
+            $this->locator // DEPRECATED
+        );
+
+        $container = new Container();
+
+        $container[GlossaryDependencyProvider::TOUCH_FACADE] = function (Container $container) {
+            return $this->touchFacade ;
+        };
+
+        $container[GlossaryDependencyProvider::LOCALE_FACADE] = function (Container $container) {
+            return $this->localeFacade;
+        };
+
+        $this->glossaryFacade->setExternalDependencies($container);
+
+        $this->glossaryFacade->setOwnQueryContainer($this->glossaryQueryContainer);
     }
 }
