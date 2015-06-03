@@ -14,6 +14,7 @@ use Silex\Application;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ZedPresenter;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -167,7 +168,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param null $data
+     * @param array|null $data
      * @param int $status
      * @param array $headers
      *
@@ -246,8 +247,13 @@ abstract class AbstractController
      * @param string $type
      * @param null $data
      * @param array $options
+<<<<<<< HEAD
      *
      * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
+=======
+     * 
+     * @return FormInterface
+>>>>>>> cleanup the code
      */
     protected function createForm($type = 'form', $data = null, array $options = [])
     {

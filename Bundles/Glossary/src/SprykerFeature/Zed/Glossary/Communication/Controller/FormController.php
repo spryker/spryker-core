@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication\Controller;
 
+use Generated\Shared\Transfer\TranslationTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
@@ -29,11 +30,8 @@ class FormController extends AbstractController
 
         if ($form->isValid()) {
 
-            // @todo check this code
-            $formData = $form->getRequestData();
-
-            $facade = $this->getDependencyContainer()->createGlossaryFacade();
-            $facade->saveGlossaryKeyTranslations($formData);
+            $translation = new TranslationTransfer();
+            $translation->fromArray($form->getRequestData());
 
             $this->getFacade()->saveTranslation($translation);
         }
