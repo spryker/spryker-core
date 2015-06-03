@@ -22,5 +22,21 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
     {
         $this->container = $container;
     }
+
+    /**
+     * TODO remove from here. This should go to QueryContainer directly
+     * @param string $key
+     * @return mixed
+     * @throws \ErrorException
+     */
+    public function getExternalDependency($key)
+    {
+        if(false === $this->container->offsetExists($key)){
+            throw new \ErrorException("Key $key does not exist in container.");
+        }
+
+        return $this->container[$key];
+    }
+
 }
 

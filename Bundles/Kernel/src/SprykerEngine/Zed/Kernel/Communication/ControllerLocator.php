@@ -7,7 +7,9 @@ use SprykerEngine\Shared\Kernel\Communication\ControllerLocatorInterface;
 use SprykerEngine\Shared\Kernel\IdentityMapClassResolver;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\ClassResolver;
+use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\ClassNamePattern;
+use SprykerEngine\Zed\Kernel\Container;
 
 class ControllerLocator implements ControllerLocatorInterface
 {
@@ -93,6 +95,20 @@ class ControllerLocator implements ControllerLocatorInterface
         if (!method_exists($resolvedController, 'setOwnFacade')) {
             \SprykerFeature_Shared_Library_Log::log($resolvedController, 'wrong_controller.txt');
         }
+
+        try {
+            $bundleConfigLocator = new BundleDependencyProviderLocator(); // TODO Make singleton because of performance
+            $bundleBuilder = $bundleConfigLocator->locate($bundleName, $locator);
+
+            $container = new Container();
+            $bundleBuilder->provideBusinessLayerDependencies($container);
+            $resolvedController->setExternalDependencies($container);
+
+        } catch (\SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException $e) {
+            // TODO remove try-catch when all bundles have a DependencyProvider
+            \SprykerFeature_Shared_Library_Log::log($bundleName, 'builder_missing.log');
+        }
+
         // TODO make lazy
         if ($locator->$bundleName()->hasFacade()) {
             $resolvedController->setOwnFacade($locator->$bundleName()->facade());

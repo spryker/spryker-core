@@ -11,4 +11,11 @@ interface DependencyContainerInterface
      * @param Container $container
      */
     public function setContainer(Container $container);
+
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function getExternalDependency($key);
 }

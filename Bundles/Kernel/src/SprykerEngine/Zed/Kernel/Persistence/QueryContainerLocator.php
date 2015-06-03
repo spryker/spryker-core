@@ -2,9 +2,12 @@
 
 namespace SprykerEngine\Zed\Kernel\Persistence;
 
+use SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException;
 use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\AbstractLocator;
+use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
+use SprykerEngine\Zed\Kernel\Container;
 
 class QueryContainerLocator extends AbstractLocator
 {
@@ -26,7 +29,24 @@ class QueryContainerLocator extends AbstractLocator
     {
         $factory = $this->getFactory($bundle);
 
-        return $factory->create($bundle . 'QueryContainer', $factory, $locator);
+        $queryContainer = $factory->create($bundle . 'QueryContainer', $factory, $locator);
+
+        try {
+            // TODO Make singleton because of performance
+            $bundleConfigLocator = new BundleDependencyProviderLocator();
+
+            $bundleBuilder = $bundleConfigLocator->locate($bundle, $locator);
+
+            $container = new Container();
+            $bundleBuilder->providePersistenceLayerDependencies($container);
+            $queryContainer->setContainer($container);
+
+        } catch (ClassNotFoundException $e) {
+            // TODO remove try-catch when all bundles have a DependencyProvider
+            \SprykerFeature_Shared_Library_Log::log($bundle, 'builder_missing.log');
+        }
+
+        return $queryContainer;
     }
 
     /**
