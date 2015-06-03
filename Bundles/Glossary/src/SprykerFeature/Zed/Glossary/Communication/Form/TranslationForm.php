@@ -22,7 +22,7 @@ class TranslationForm extends AbstractForm
      * @param GlossaryToLocaleInterface $localeFacade
      */
     public function __construct(
-        Request $request,
+        Request $request = null,
         QueryContainerInterface $queryContainer,
         GlossaryToLocaleInterface $localeFacade
     ) {

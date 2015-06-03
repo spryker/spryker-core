@@ -41,11 +41,16 @@ abstract class AbstractGrid
      * @param ModelCriteria $query
      * @param Request $request
      */
-    public function __construct(ModelCriteria $query, Request $request)
+    public function __construct(ModelCriteria $query, Request $request = null)
     {
         $this->query = $query;
-        $this->request = $request;
         $this->locator = Locator::getInstance();
+
+        if (is_null($request)) {
+            $request = $this->locator->application()->pluginPimple()->getApplication()['request'];
+        }
+
+        $this->request = $request;
     }
 
     /**

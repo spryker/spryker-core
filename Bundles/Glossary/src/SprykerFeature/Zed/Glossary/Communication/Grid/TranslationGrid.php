@@ -25,7 +25,7 @@ class TranslationGrid extends AbstractGrid
      * @param ModelCriteria $query
      * @param Request $request
      */
-    public function __construct(ModelCriteria $query, Request $request, array $availableLocales)
+    public function __construct(ModelCriteria $query, Request $request = null, array $availableLocales)
     {
         parent::__construct($query, $request);
 

@@ -61,10 +61,15 @@ abstract class AbstractForm
      * @param QueryContainerInterface $queryContainer
      */
     public function __construct(
-        Request $request,
+        Request $request = null,
         QueryContainerInterface $queryContainer = null
     ) {
         $this->locator = Locator::getInstance();
+
+        if (is_null($request)) {
+            $request = $this->locator->application()->pluginPimple()->getApplication()['request'];
+        }
+
         $this->stateContainer = $this->locator->ui()->pluginFormStateContainerStateContainer()->setRequest($request);
         $this->queryContainer = $queryContainer;
     }
