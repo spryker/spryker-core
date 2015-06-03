@@ -1,0 +1,38 @@
+{% extends '@Application/layout.twig' %}
+{% block content %}
+
+    <a href="/oms/index/draw?process=Nopayment01&format=gif&font=14">'Nopayment' Prozess anzeigen</a>
+
+    <form action="/oms/sandbox/add">
+        <button>Add OrderItem</button>
+    </form>
+
+    <table border="1px solid lightgrey" width="100%">
+        <tr>
+            <th>OrderItem ID</th>
+            <th>Process</th>
+            <th>State</th>
+            <th>Event triggern</th>
+        </tr>
+        {% for orderItem in orderItems %}
+        <tr>
+            <td>{{ orderItem['id'] }}</td>
+            <td>{{ orderItem['process'] }}</td>
+            <td>{{ orderItem['state'] }}</td>
+            <td>
+                <form action="/oms/sandbox/trigger">
+                    <input type="hidden" name="event" value="nopayment">
+                    <input type="hidden" name="id" value="{{ orderItem['id'] }}">
+                    <button>Event 'nopayment' triggern</button>
+                </form>
+                <form action="/oms/sandbox/trigger">
+                    <input type="hidden" name="event" value="cancel">
+                    <input type="hidden" name="id" value="{{ orderItem['id'] }}">
+                    <button>Event 'cancel' triggern</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
