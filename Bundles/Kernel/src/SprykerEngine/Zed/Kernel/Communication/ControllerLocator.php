@@ -87,6 +87,22 @@ class ControllerLocator implements ControllerLocatorInterface
             );
         }
 
+        // TODO REFACTOR -  move to constructor when all controllers are upgraded
+        $bundleName = lcfirst($this->bundle);
+
+        if (!method_exists($resolvedController, 'setOwnFacade')) {
+            \SprykerFeature_Shared_Library_Log::log($resolvedController, 'wrong_controller.txt');
+        }
+        // TODO make lazy
+        if ($locator->$bundleName()->hasFacade()) {
+            $resolvedController->setOwnFacade($locator->$bundleName()->facade());
+        }
+
+        // TODO make lazy
+        if ($locator->$bundleName()->hasQueryContainer()) {
+            $resolvedController->setOwnQueryContainer($locator->$bundleName()->queryContainer());
+        }
+
         return $resolvedController;
     }
 

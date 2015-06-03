@@ -33,6 +33,16 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
+     * @var AbstractFacade
+     */
+    private $facade;
+
+    /**
+     * @var AbstractQueryContainer
+     */
+    private $queryContainer;
+
+    /**
      * @param Factory $factory
      * @param Locator $locator
      */
@@ -59,7 +69,46 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
-     * @return DependencyContainerInterface
+     * TODO move to constructor
+     * @param $facade
+     */
+    public function setOwnFacade($facade)
+    {
+        $this->facade = $facade;
+    }
+
+    /**
+     * TODO move to constructor
+     * @param AbstractQueryContainer $queryContainer
+     */
+    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
+    {
+        $this->queryContainer = $queryContainer;
+        $this->getDependencyContainer()->setQueryContainer($queryContainer);
+    }
+
+    /**
+     * For autocompletion use typehint in class docblock like this: "@method MyFacade getFacade()"
+     *
+     * @return AbstractFacade
+     */
+    public function getFacade()
+    {
+        return $this->facade;
+    }
+
+    /**
+     * For autocompletion use typehint in class docblock like this: "@method MyQueryContainer getQueryContainer()"
+     *
+     * @return AbstractQueryContainer
+     */
+    public function getQueryContainer()
+    {
+        return $this->queryContainer;
+    }
+
+    /**
+     * @return AbstractDependencyContainer
      */
     protected function getDependencyContainer()
     {

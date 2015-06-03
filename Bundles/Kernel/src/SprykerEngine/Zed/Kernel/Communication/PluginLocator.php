@@ -27,7 +27,20 @@ class PluginLocator extends AbstractLocator
     {
         $factory = $this->getFactory($bundle);
 
-        return $factory->create('Plugin' . $className, $factory, $locator);
+        $plugin = $factory->create('Plugin' . $className, $factory, $locator);
+
+        // TODO REFACTOR -  move to constructor when all controllers are upgraded
+        $bundleName = lcfirst($bundle);
+
+        if ($locator->$bundleName()->hasFacade()) {
+
+            // TODO temporary hack needed because the "UI-plugins" do not extend AbstractPlugin....
+            if (method_exists($plugin, 'setOwnFacade')) {
+                $plugin->setOwnFacade($locator->$bundleName()->facade());
+            }
+        }
+
+        return $plugin;
     }
 
 }
