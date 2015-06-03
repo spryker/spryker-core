@@ -40,8 +40,8 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormTranslationForm(
             $request,
-            $this->getQueryContainer(),
-            $this->getLocaleFacade()
+            $this->createQueryContainer(),
+            $this->createLocaleFacade()
         );
     }
 
