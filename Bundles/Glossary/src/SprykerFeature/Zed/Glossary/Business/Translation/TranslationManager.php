@@ -6,12 +6,10 @@
 
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
-use Generated\Shared\Transfer\TranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\AutoCompletion;
+use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
@@ -48,30 +46,23 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected $localeFacade;
 
-    /**
-     * @var AutoCompletion
-     */
-    protected $locator;
 
     /**
      * @param GlossaryQueryContainerInterface $glossaryQueryContainer
      * @param GlossaryToTouchInterface $touchFacade
      * @param GlossaryToLocaleInterface $localeFacade
      * @param KeyManagerInterface $keyManager
-     * @param LocatorLocatorInterface $locator
      */
     public function __construct(
         GlossaryQueryContainerInterface $glossaryQueryContainer,
         GlossaryToTouchInterface $touchFacade,
         GlossaryToLocaleInterface $localeFacade,
-        KeyManagerInterface $keyManager,
-        LocatorLocatorInterface $locator
+        KeyManagerInterface $keyManager
     ) {
         $this->glossaryQueryContainer = $glossaryQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->keyManager = $keyManager;
         $this->localeFacade = $localeFacade;
-        $this->locator = $locator;
     }
 
     /**
@@ -216,7 +207,7 @@ class TranslationManager implements TranslationManagerInterface
     {
         $this->checkTranslationDoesNotExist($idKey, $idLocale);
 
-        $translation = $this->locator->glossary()->entitySpyGlossaryTranslation();
+        $translation = new SpyGlossaryTranslation();
 
         $translation
             ->setFkGlossaryKey($idKey)
