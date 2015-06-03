@@ -29,4 +29,14 @@ class QueryContainerLocator extends AbstractLocator
         return $factory->create($bundle . 'QueryContainer', $factory, $locator);
     }
 
+    /**
+     * @param string $bundle
+     * 
+     * @return bool
+     */
+    public function canLocate($bundle)
+    {
+        $factory = $this->getFactory($bundle);
+        return $factory->exists($bundle . 'QueryContainer');
+    }
 }

@@ -41,6 +41,17 @@ abstract class AbstractLocator implements LocatorInterface
     abstract public function locate($bundle, LocatorLocatorInterface $locator, $className = null);
 
     /**
+     * TODO make abstract
+     * @param $bundle
+     * @return boolean
+     * @throws \ErrorException
+     */
+    public function canLocate($bundle)
+    {
+        throw new \ErrorException('Need implementation in each locator');
+    }
+
+    /**
      * @param string $bundle
      *
      * @return AbstractFactory

@@ -20,5 +20,12 @@ class LocatorWithoutMatcher implements LocatorInterface
 
     }
 
-
+    /**
+     * @param string $bundle
+     *
+     * @return boolean
+     */
+    public function canLocate($bundle)
+    {
+    }
 }

@@ -42,4 +42,15 @@ class TransferLocator implements LocatorInterface
 
         return $resolvedTransfer;
     }
+
+    /**
+     * @param string $bundle
+     *
+     * @return boolean
+     * @throws \ErrorException
+     */
+    public function canLocate($bundle)
+    {
+        throw new \ErrorException('Not available here');
+    }
 }

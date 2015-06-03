@@ -16,4 +16,10 @@ interface LocatorInterface
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null);
 
+    /**
+     * @param string $bundle
+     *
+     * @return boolean
+     */
+    public function canLocate($bundle);
 }
