@@ -31,7 +31,7 @@ class ProductCategoryPathQueryExpanderPlugin extends AbstractPlugin implements Q
     {
         $queryContainer = $this->getDependencyContainer()->getProductCategoryQueryContainer();
 
-        return $queryContainer->expandProductCategoryPathQuery($expandableQuery, $locale);
+        return $queryContainer->expandProductCategoryPathQuery($expandableQuery, $locale, true, false);
     }
 
     /**

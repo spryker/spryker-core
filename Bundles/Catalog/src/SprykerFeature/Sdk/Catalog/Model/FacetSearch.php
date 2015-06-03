@@ -87,7 +87,7 @@ class FacetSearch extends AbstractSearch
         $query->setQuery(
             (new Query\Filtered())
                 ->setFilter(new Term([
-                    'category.all-parents' => $this->category['node_id']
+                    'category.direct-parents' => $this->category['node_id']
                 ]))
         );
     }
