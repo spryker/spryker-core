@@ -88,6 +88,17 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
+     * @param Container $container
+     */
+    public function setExternalDependencies(Container $container)
+    {
+        $dependencyContainer = $this->getDependencyContainer();
+        if (isset($dependencyContainer)) {
+            $this->getDependencyContainer()->setContainer($container);
+        }
+    }
+
+    /**
      * For autocompletion use typehint in class docblock like this: "@method MyFacade getFacade()"
      *
      * @return AbstractFacade

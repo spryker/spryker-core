@@ -8,7 +8,7 @@ use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
-abstract class AbstractFacade
+abstract class AbstractFacade implements FacadeInterface
 {
 
     /**
@@ -24,6 +24,17 @@ abstract class AbstractFacade
     {
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
+        }
+    }
+
+    /**
+     * @param Container $container
+     */
+    public function setExternalDependencies(Container $container)
+    {
+        $dependencyContainer = $this->getDependencyContainer();
+        if (isset($dependencyContainer)) {
+            $this->getDependencyContainer()->setContainer($container);
         }
     }
 

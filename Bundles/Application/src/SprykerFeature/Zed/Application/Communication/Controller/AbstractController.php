@@ -6,6 +6,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
+use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use Silex\Application;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
@@ -79,6 +80,17 @@ abstract class AbstractController
     private function getMessenger()
     {
         return $this->messenger;
+    }
+
+    /**
+     * @param Container $container
+     */
+    public function setExternalDependencies(Container $container)
+    {
+        $dependencyContainer = $this->getDependencyContainer();
+        if (isset($dependencyContainer)) {
+            $this->getDependencyContainer()->setContainer($container);
+        }
     }
 
     /**
