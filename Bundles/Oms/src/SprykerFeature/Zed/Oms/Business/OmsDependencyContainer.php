@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
+use SprykerFeature\Zed\Oms\OmsDependencyProvider;
 use SprykerFeature\Zed\Oms\OmsConfig;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use Generated\Zed\Ide\FactoryAutoCompletion\OmsBusiness;
@@ -24,6 +25,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\OmsBusiness;
 /**
  * @method OmsBusiness getFactory()
  * @method OmsConfig getConfig()
+ * @method OmsQueryContainer getQueryContainer()
  */
 class OmsDependencyContainer extends AbstractDependencyContainer
 {
@@ -46,31 +48,24 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return OmsQueryContainer
-     */
-    public function createQueryContainer()
-    {
-        return $this->getLocator()->oms()->queryContainer();
-    }
-
-    /**
      * @param array $logContext
      *
      * @return OrderStateMachineInterface
      */
     public function createOrderStateMachineOrderStateMachine(array $logContext)
     {
-
-
         return $this->getFactory()->createOrderStateMachineOrderStateMachine(
-            $this->createQueryContainer(),
+            $this->getQueryContainer(),
+        
             $this->createOrderStateMachineBuilder(),
             $this->createUtilTransitionLog($logContext),
             $this->createOrderStateMachineTimeout(),
             $this->createUtilCollectionToArrayTransformer(),
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
-            $this->getConfig()->getConditions(),
-            $this->getConfig()->getCommands(),
+
+            $this->getExternalDependency(OmsDependencyProvider::CONDITION_PLUGINS),
+            $this->getExternalDependency(OmsDependencyProvider::COMMAND_PLUGINS),
+        
             $this->getFactory()
         );
     }
@@ -109,7 +104,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
         $config = $this->getConfig();
 
         return $this->getFactory()->createOrderStateMachineFinder(
-            $this->createQueryContainer(),
+            $this->getExternalDependency(OmsDependencyProvider::QUERY_CONTAINER),
             $this->createOrderStateMachineBuilder(),
             $config->getActiveProcesses()
         );
@@ -121,7 +116,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     public function createOrderStateMachineTimeout()
     {
         return $this->getFactory()->createOrderStateMachineTimeout(
-            $this->createQueryContainer()
+            $this->getExternalDependency(OmsDependencyProvider::QUERY_CONTAINER)
         );
     }
 
@@ -132,7 +127,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
      */
     public function createUtilTransitionLog(array $logContext)
     {
-        $queryContainer = $this->createQueryContainer();
+        $queryContainer = $this->getQueryContainer();
 
         return $this->getFactory()
             ->createUtilTransitionLog($queryContainer, $logContext);

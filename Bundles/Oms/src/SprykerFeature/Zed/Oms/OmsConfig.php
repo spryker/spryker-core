@@ -39,19 +39,4 @@ class OmsConfig extends AbstractBundleConfig
         return null;
     }
 
-    /**
-     * @return CommandInterface[]
-     */
-    public function getCommands()
-    {
-        return [];
-    }
-
-    /**
-     * @return ConditionInterface[]
-     */
-    public function getConditions()
-    {
-        return [];
-    }
 }
