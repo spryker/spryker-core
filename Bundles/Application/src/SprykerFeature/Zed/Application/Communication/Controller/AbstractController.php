@@ -3,6 +3,8 @@
 namespace SprykerFeature\Zed\Application\Communication\Controller;
 
 use Generated\Zed\Ide\AutoCompletion;
+use LogicException;
+use Silex\Application;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
@@ -15,7 +17,6 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use LogicException;
 use Twig_Environment;
 
 abstract class AbstractController
@@ -94,6 +95,14 @@ abstract class AbstractController
     }
 
     /**
+     * @return AbstractDependencyContainer
+     */
+    public function getDependencyContainer()
+    {
+        return $this->dependencyContainer;
+    }
+
+    /**
      * TODO move to constructor
      * @param AbstractFacade $facade
      */
@@ -134,6 +143,15 @@ abstract class AbstractController
     protected function getQueryContainer()
     {
         return $this->queryContainer;
+    }
+
+    /**
+     * @deprecated Will be removed. Use getFacade() instead.
+     * @return AutoCompletion
+     */
+    public function getLocator()
+    {
+        return $this->locator;
     }
 
     /**
@@ -240,27 +258,11 @@ abstract class AbstractController
     }
 
     /**
-     * @return AutoCompletion
+     * @return void
      */
-    public function getLocator()
+    protected function clearBreadcrumbs()
     {
-        return $this->locator;
-    }
-
-    /**
-     * @return AbstractDependencyContainer
-     */
-    public function getDependencyContainer()
-    {
-        return $this->dependencyContainer;
-    }
-
-    /**
-     * @return \Pimple
-     */
-    protected function getApplication()
-    {
-        return $this->application;
+        $this->getTwig()->addGlobal('breadcrumbs', []);
     }
 
     /**
@@ -278,11 +280,11 @@ abstract class AbstractController
     }
 
     /**
-     * @return void
+     * @return \Pimple
      */
-    protected function clearBreadcrumbs()
+    protected function getApplication()
     {
-        $this->getTwig()->addGlobal('breadcrumbs', []);
+        return $this->application;
     }
 
     /**

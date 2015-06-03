@@ -2,10 +2,10 @@
 
 namespace SprykerEngine\Zed\Kernel\Business;
 
-use SprykerEngine\Shared\Kernel\Locator\LocatorException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\AbstractLocator;
 use SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException;
+use SprykerEngine\Shared\Kernel\Locator\LocatorException;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\Container;
 

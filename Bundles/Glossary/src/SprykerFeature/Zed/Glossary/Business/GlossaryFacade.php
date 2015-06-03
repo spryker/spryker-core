@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Glossary\Business;
 
-use Generated\Shared\Transfer\TranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Glossary\Business\Exception;
@@ -21,6 +21,7 @@ use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
  */
 class GlossaryFacade extends AbstractFacade
 {
+    
     /**
      * @param string $keyName
      *

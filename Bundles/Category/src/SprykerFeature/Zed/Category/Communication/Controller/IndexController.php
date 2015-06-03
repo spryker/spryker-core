@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Controller;
 
+use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
 /**
  * @method CategoryDependencyContainer getDependencyContainer()

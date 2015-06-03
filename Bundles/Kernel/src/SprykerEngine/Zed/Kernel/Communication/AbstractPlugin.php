@@ -2,35 +2,27 @@
 
 namespace SprykerEngine\Zed\Kernel\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use Psr\Log\AbstractLogger;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractPlugin extends AbstractLogger implements MessengerInterface
 {
 
     /**
-     * @var DependencyContainerInterface
-     */
-    private $dependencyContainer;
-
-    /**
      * @var MessengerInterface
      */
+
     protected $messenger;
 
     /**
-     * @param MessengerInterface $messenger
-     *
-     * @return $this
+     * @var AbstractDependencyContainer
      */
-    public function setMessenger(MessengerInterface $messenger)
-    {
-        $this->messenger = $messenger;
 
-        return $this;
-    }
+    private $dependencyContainer;
 
     /**
      * @var AbstractFacade
@@ -51,6 +43,18 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
         }
+    }
+
+    /**
+     * @param MessengerInterface $messenger
+     *
+     * @return $this
+     */
+    public function setMessenger(MessengerInterface $messenger)
+    {
+        $this->messenger = $messenger;
+
+        return $this;
     }
 
     /**

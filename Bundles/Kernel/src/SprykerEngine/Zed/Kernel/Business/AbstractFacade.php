@@ -2,10 +2,10 @@
 
 namespace SprykerEngine\Zed\Kernel\Business;
 
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
+use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Zed\Kernel\Container;
+use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractFacade implements FacadeInterface

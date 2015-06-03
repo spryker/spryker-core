@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication\Grid;
 
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
-use Symfony\Component\HttpFoundation\Request;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
+use SprykerFeature\Zed\Ui\Dependency\Plugin\GridPluginInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class TranslationGrid extends AbstractGrid
 {
