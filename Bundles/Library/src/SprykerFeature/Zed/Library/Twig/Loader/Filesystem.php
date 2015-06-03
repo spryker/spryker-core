@@ -2,6 +2,8 @@
 
 namespace SprykerFeature\Zed\Library\Twig\Loader;
 
+use Zend\Filter\Word\CamelCaseToDash;
+
 class Filesystem extends \Twig_Loader_Filesystem
 {
 
@@ -81,7 +83,7 @@ class Filesystem extends \Twig_Loader_Filesystem
 
         $nameParts = explode('/', $name);
         $templateName = array_pop($nameParts);
-        $filter = new \Zend_Filter_Word_CamelCaseToDash();
+        $filter = new CamelCaseToDash();
         $templateName = strtolower($filter->filter($templateName));
         array_push($nameParts, $templateName);
         $name = implode('/', $nameParts);
