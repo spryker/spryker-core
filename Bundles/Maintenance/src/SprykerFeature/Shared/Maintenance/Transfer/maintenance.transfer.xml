@@ -3,11 +3,11 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="InstalledPackage">
-        <property name="name" type="string"/>
-        <property name="version" type="string"/>
-        <property name="license" type="string"/>
-        <property name="url" type="string"/>
-        <property name="type" type="string"/>
+        <property name="name" type="string" />
+        <property name="version" type="string" />
+        <property name="license" type="string" />
+        <property name="url" type="string" />
+        <property name="type" type="string" />
     </transfer>
 
     <transfer name="InstalledPackages">
