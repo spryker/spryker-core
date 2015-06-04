@@ -14,7 +14,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 class TranslationGrid extends AbstractGrid
 {
 
-    const GLOSSARY_KEY = 'glossary_key';
+    const GLOSSARY_KEY = 'key';
 
     /**
      * @var array

@@ -119,8 +119,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
-     * @param integer $localeId
-     * @param integer $glossaryKeyId
+     * @param int $localeId
+     * @param int $glossaryKeyId
      *
      * @return SpyGlossaryTranslationQuery
      */
@@ -134,7 +134,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
-     * @param $fkGlossaryKeyId
+     * @param int $fkGlossaryKeyId
      *
      * @return SpyGlossaryTranslationQuery
      */

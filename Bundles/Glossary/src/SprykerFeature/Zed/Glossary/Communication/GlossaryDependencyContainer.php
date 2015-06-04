@@ -26,7 +26,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     /**
      * @return GlossaryFacade
      */
-    public function getGlossaryFacade()
+    public function createGlossaryFacade()
     {
         return $this->getLocator()->glossary()->facade();
     }
