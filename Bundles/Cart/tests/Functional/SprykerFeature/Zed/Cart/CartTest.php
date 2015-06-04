@@ -17,6 +17,12 @@ use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 
+/**
+ * @group Business
+ * @group Zed
+ * @group Cart
+ * @group CartTest
+ */
 class CartTest extends Test
 {
     const DUMMY_PRICE_TYPE = 'DUMMY';
@@ -54,29 +60,25 @@ class CartTest extends Test
         $this->setTestData();
     }
 
-    /**
-     * @group Zed
-     * @group Business
-     * @group Cart
-     */
     public function testAddToCart()
     {
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
-        $cartItem->setId('123');
+        //$cartItem->setId('123');
+        $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
         $cart->addItem($cartItem);
 
         $newItems = new CartItemsTransfer();
         // $newItems = new \ArrayObject();
         $newItem = new CartItemTransfer();
-        $newItem->setId('222');
+        $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItems->addCartItem($newItem);
         // $newItems->append($newItem);
 
         $cartChange = new ChangeTransfer();
-        // $cartChange->setCart($cart);
+        $cartChange->setCart($cart);
         $cartChange->setChangedCartItems($newItems);
 
         $changedCart = $this->cartFacade->addToCart($cartChange);
@@ -95,9 +97,6 @@ class CartTest extends Test
         }
     }
 
-    /**
-     * @group Cart
-     */
     public function testIncreaseCartQuantity()
     {
         $cart = new CartTransfer();
@@ -113,7 +112,7 @@ class CartTest extends Test
         $newItems->addCartItem($newItem);
 
         $cartChange = new ChangeTransfer();
-        // $cartChange->setCart($cart);
+        $cartChange->setCart($cart);
         $cartChange->setChangedCartItems($newItems);
 
         $changedCart = $this->cartFacade->increaseQuantity($cartChange);
@@ -126,9 +125,6 @@ class CartTest extends Test
         //@todo test recalculation
     }
 
-    /**
-     * @group Cart
-     */
     public function testRemoveFromCart()
     {
         $cart = new CartTransfer();
@@ -144,7 +140,7 @@ class CartTest extends Test
         $newItems->addCartItem($newItem);
 
         $cartChange = new ChangeTransfer();
-        // $cartChange->setCart($cart);
+        $cartChange->setCart($cart);
         $cartChange->setChangedCartItems($newItems);
 
         $changedCart = $this->cartFacade->removeFromCart($cartChange);
@@ -153,9 +149,6 @@ class CartTest extends Test
         //@todo test recalculation
     }
 
-    /**
-     * @group Cart
-     */
     public function testDecreaseCartItem()
     {
         $cart = new CartTransfer();
@@ -173,7 +166,7 @@ class CartTest extends Test
         $newItems->addCartItem($newItem);
 
         $cartChange = new ChangeTransfer();
-        // $cartChange->setCart($cart);
+        $cartChange->setCart($cart);
         $cartChange->setChangedCartItems($newItems);
 
         $changedCart = $this->cartFacade->decreaseQuantity($cartChange);

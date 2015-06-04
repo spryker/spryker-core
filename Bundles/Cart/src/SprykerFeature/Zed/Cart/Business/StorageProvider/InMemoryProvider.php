@@ -24,7 +24,7 @@ class InMemoryProvider implements StorageProviderInterface
         $existingItems = $cart->getItems();
 
         /** @var ItemExpanderPluginInterface $item */
-        foreach ($addedItems as $item) {
+        foreach ($addedItems->getCartItems() as $item) {
             if ($item->getQuantity() < 1) {
                 throw new InvalidArgumentException(
                     sprintf('Could not increase cart item %d with %d as value', $item->getId(), $item->getQuantity())

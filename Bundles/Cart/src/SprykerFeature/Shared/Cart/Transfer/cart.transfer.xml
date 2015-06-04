@@ -14,8 +14,9 @@
     <transfer name="Change">
         <property name="changedCartItems" type="CartItem[]" />
         <property name="couponCode" type="string" />
-        <property name="cart" type="Cart[]" />
-        <property name="order" type="SalesOrder[]" />
+        <property name="cart" type="Cart" />
+        <property name="order" type="Order" />
+        <!--<property name="order" type="SalesOrder" />-->
         <property name="userId" type="string" />
         <property name="cartHash" type="string" />
         <property name="deleteReason" type="string" />
