@@ -13,7 +13,11 @@
 
     <transfer name="Capture">
         <property name="amount" type="int" />
-        <property name="payment" type="Paymente" />
+        <property name="payment" type="Payment" />
+    </transfer>
+
+    <transfer name="PaymentUserData">
+        <property name="creditCardPseudoCardPan" type="string" />
     </transfer>
 
     <transfer name="Debit">
@@ -26,7 +30,7 @@
         <property name="payment" type="Payment" />
     </transfer>
 
-    <transfer name="PayonePayment">
+    <transfer name="Payment">
         <property name="paymentMethod" type="string" />
         <property name="authorizationType" type="string" />
         <property name="transactionId" type="string" />

@@ -11,7 +11,8 @@ interface CommandByItemInterface extends CommandInterface
     /**
      * @param SpySalesOrderItem $orderItem
      * @param ReadOnlyArrayObject $data
-     * @return void
+     *
+     * @return array
      */
     public function run(SpySalesOrderItem $orderItem, ReadOnlyArrayObject $data);
 }

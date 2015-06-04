@@ -99,7 +99,7 @@ class CreditCardPseudo extends AbstractMapper
         // @todo fix country and order transfer interface (sales refactoring?)
         $personalContainer->setFirstName($authorizationData->getOrder()->getFirstName());
         $personalContainer->setLastName($authorizationData->getOrder()->getLastName());
-        $personalContainer->setCountry($this->getStandardParameter()->getLanguage());
+        $personalContainer->setCountry(strtoupper($this->getStandardParameter()->getLanguage()));
 
         return $personalContainer;
     }
