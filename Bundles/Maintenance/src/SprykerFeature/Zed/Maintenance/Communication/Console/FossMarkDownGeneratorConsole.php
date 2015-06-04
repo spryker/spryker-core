@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerEngine\Zed\Maintenance\Communication\Console;
+namespace SprykerFeature\Zed\Maintenance\Communication\Console;
 
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
