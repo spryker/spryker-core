@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Calculation\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\CalculationConfig;
 use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
@@ -24,6 +25,17 @@ class CalculationFacade extends AbstractFacade
     public function recalculate(OrderInterface $calculableContainer)
     {
 
+        $calculatorStack = $this->getDependencyContainer()->getConfig()->getCalculatorStack();
+
+        return $this->getDependencyContainer()->getStackExecutor()->recalculate($calculatorStack, $calculableContainer);
+    }
+
+    /**
+     * @param OrderInterface $calculableContainer
+     * @return OrderInterface
+     */
+    public function recalculate2(CalculableInterface $calculableContainer)
+    {
         $calculatorStack = $this->getDependencyContainer()->getConfig()->getCalculatorStack();
 
         return $this->getDependencyContainer()->getStackExecutor()->recalculate($calculatorStack, $calculableContainer);
@@ -115,18 +127,22 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @ param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      */
-    public function recalculateRemoveAllExpenses(OrderInterface $calculableContainer)
+    public function recalculateRemoveAllExpenses(CalculableInterface $calculableContainer)
+    //public function recalculateRemoveAllExpenses(OrderInterface $calculableContainer)
     {
         $calculator = $this->getDependencyContainer()->getRemoveAllExpensesCalculator();
         $calculator->recalculate($calculableContainer);
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @ param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      */
-    public function recalculateRemoveTotals(OrderInterface $calculableContainer)
+    public function recalculateRemoveTotals(CalculableInterface $calculableContainer)
+    //public function recalculateRemoveTotals(OrderInterface $calculableContainer)
     {
         $calculator = $this->getDependencyContainer()->getRemoveTotalsCalculator();
         $calculator->recalculate($calculableContainer);

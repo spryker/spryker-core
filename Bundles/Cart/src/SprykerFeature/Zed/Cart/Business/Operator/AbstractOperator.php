@@ -10,6 +10,7 @@ use Generated\Shared\Cart\CartItemsInterface;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use Generated\Shared\Cart\ChangeInterface;
 use Psr\Log\LoggerInterface;
+use SprykerFeature\Zed\Cart\Business\Model\CalculableContainer;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
@@ -75,7 +76,8 @@ abstract class AbstractOperator implements OperatorInterface
      */
     private function recalculate(CartInterface $cart)
     {
-        $cart = $this->cartCalculator->recalculate($cart);
+        $calculableCart = new CalculableContainer($cart);
+        $cart = $this->cartCalculator->recalculate2($calculableCart);
 
         return $cart;
     }
