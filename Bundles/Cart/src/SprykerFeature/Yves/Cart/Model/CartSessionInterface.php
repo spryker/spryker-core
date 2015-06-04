@@ -7,7 +7,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 interface CartSessionInterface
 {
     /**
-     * @return \SprykerFeature\Shared\Sales\Transfer\Order
+     * @return SalesOrderTransfer
      */
     public function getOrder();
 
@@ -20,13 +20,14 @@ interface CartSessionInterface
      * Save a new CartOrder, if you just changed the order from get()
      * there is no need to call set().
      *
-     * @param Order $order
+     * @param SalesOrderTransfer $order
      * @return $this
      */
-    public function setOrder(Order $order);
+    public function setOrder(SalesOrderTransfer $order);
 
     /**
-     * @param $sku
+     * @param string $sku
+     *
      * @return int
      */
     public function getQuantityBySku($sku);

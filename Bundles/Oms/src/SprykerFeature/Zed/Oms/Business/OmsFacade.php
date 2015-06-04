@@ -20,7 +20,7 @@ use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInt
 class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterface
 {
     /**
-     * @param $eventId
+     * @param string $eventId
      * @param ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data

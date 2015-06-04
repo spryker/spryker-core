@@ -47,7 +47,7 @@ interface TransitionLogInterface
     public function addTargetState(SpySalesOrderItem $item, StateInterface $state);
 
     /**
-     * @param $error
+     * @param bool $error
      */
     public function setError($error);
 

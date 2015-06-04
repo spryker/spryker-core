@@ -37,8 +37,8 @@ interface ReaderInterface
     public function hasStockProduct($sku, $stockType);
 
     /**
-     * @param $sku
-     * @param $stockType
+     * @param string $sku
+     * @param string $stockType
      *
      * @return int
      */

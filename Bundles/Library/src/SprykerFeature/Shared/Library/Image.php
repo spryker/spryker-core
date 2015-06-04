@@ -36,7 +36,8 @@ class SprykerFeature_Shared_Library_Image
     protected static $config;
 
     /**
-     * @param $filename
+     * @param string $filename
+     *
      * @return string
      */
     public static function getAbsoluteProductImageUrl($filename)

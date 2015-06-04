@@ -47,7 +47,7 @@ class Environment
     }
 
     /**
-     * @param $application
+     * @param string $application
      * @param bool $disableApplicationCheck
      *
      * @throws \Exception

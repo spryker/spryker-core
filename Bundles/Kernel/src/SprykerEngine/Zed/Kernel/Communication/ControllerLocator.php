@@ -51,9 +51,10 @@ class ControllerLocator implements ControllerLocatorInterface
     }
 
     /**
-     * @param $controller
-     * @param $pattern
-     * @return mixed
+     * @param string $controller
+     * @param string $pattern
+     *
+     * @return string
      */
     private function preparePattern($controller, $pattern)
     {

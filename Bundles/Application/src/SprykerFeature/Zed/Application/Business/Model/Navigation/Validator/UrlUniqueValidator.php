@@ -11,7 +11,8 @@ class UrlUniqueValidator implements UrlUniqueValidatorInterface
     protected $urls = [];
 
     /**
-     * @param $url
+     * @param string $url
+     *
      * @throws \Exception
      */
     public function validate($url)

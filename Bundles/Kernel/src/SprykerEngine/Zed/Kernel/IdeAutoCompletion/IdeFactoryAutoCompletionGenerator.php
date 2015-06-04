@@ -58,11 +58,11 @@ class IdeFactoryAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerat
     }
 
     /**
-     * @param $methodTags
+     * @param array $methodTags
      *
      * @return string
      */
-    private function getLayerFromMethodTags($methodTags)
+    private function getLayerFromMethodTags(array $methodTags)
     {
         if (!$this->options[self::OPTION_KEY_HAS_LAYERS]) {
             return '';

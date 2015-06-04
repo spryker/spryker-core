@@ -27,9 +27,9 @@ class EntityLocator implements LocatorInterface
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param LocatorLocatorInterface $locator
-     * @param null $className
+     * @param null|string $className
      *
      * @return object
      * @throws ClassResolver\ClassNameAmbiguousException

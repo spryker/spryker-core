@@ -58,7 +58,7 @@ abstract class AbstractKeyValue implements AdapterInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      */
     protected function addReadAccessStats($key)
     {
@@ -80,7 +80,7 @@ abstract class AbstractKeyValue implements AdapterInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      */
     protected function addWriteAccessStats($key)
     {
@@ -102,7 +102,7 @@ abstract class AbstractKeyValue implements AdapterInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      */
     protected function addDeleteAccessStats($key)
     {

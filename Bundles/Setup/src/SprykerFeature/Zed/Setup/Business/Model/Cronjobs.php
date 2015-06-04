@@ -36,10 +36,11 @@ class Cronjobs
     }
 
     /**
-     * @param $roles
+     * @param array $roles
+     *
      * @return string
      */
-    public function generateCronjobs($roles)
+    public function generateCronjobs(array $roles)
     {
         if (empty($roles)) {
             $roles = array(self::DEFAULT_ROLE);
@@ -78,6 +79,7 @@ class Cronjobs
 
     /**
      * @param array $roles
+     *
      * @throws \ErrorException
      */
     protected function checkRoles(array $roles)
@@ -269,10 +271,10 @@ class Cronjobs
      * Render Job description (as XML) for Jenkins API call
      *
      * @todo Move XML snippet to twig template
-     * @param $job
+     * @param array $job
      * @return string
      */
-    private function prepareJobXml($job)
+    private function prepareJobXml(array $job)
     {
         $disabled = (true === $job['enable']) ? 'false' : 'true';
         $schedule = $this->getSchedule($job);
@@ -313,13 +315,14 @@ class Cronjobs
     }
 
 
-    /**
-     * Render partial for job description with publisher settings
-     * it returns not empty XML entity if job has email notifications set.
-     *
-     * @param array $job
-     * @return string
-     */
+   /**
+    * Render partial for job description with publisher settings
+    * it returns not empty XML entity if job has email notifications set.
+    *
+    * @param array $job
+    * 
+    * @return string
+    */
     protected function getPublisherString(array $job)
     {
         if (array_key_exists('notifications', $job) && is_array($job['notifications']) && !empty($job['notifications'])) {
@@ -416,7 +419,8 @@ $command</command>";
     }
 
     /**
-     * @param $location
+     * @param string $location
+     *
      * @return string
      */
     protected function getJenkinsUrl($location)

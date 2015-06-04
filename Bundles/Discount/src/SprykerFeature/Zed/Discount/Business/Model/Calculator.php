@@ -105,10 +105,11 @@ class Calculator implements
     }
 
     /**
-     * @param $discount
+     * @param array $discount
+     *
      * @return DiscountEntity
      */
-    protected function getDiscountEntity($discount)
+    protected function getDiscountEntity(array $discount)
     {
         return $discount[self::KEY_DISCOUNT_ENTITY];
     }

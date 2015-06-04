@@ -16,10 +16,11 @@ class FilterBuilder implements FilterBuilderInterface
 {
     /**
      * @param string $fieldName
-     * @param float  $minValue
-     * @param float  $maxValue
+     * @param float $minValue
+     * @param float $maxValue
      * @param string $greaterParam
      * @param string $lessParam
+     *
      * @return Range
      */
     public function createRangeFilter($fieldName, $minValue, $maxValue, $greaterParam = 'gte', $lessParam = 'lte')

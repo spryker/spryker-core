@@ -6,6 +6,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Price\Persistence\Propel\Map\SpyPriceTypeTableMap;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProductQuery;
+use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
@@ -19,6 +20,7 @@ class PriceQueryContainer extends AbstractQueryContainer
 
     /**
      * @param string $name
+     *
      * @return SpyPriceTypeQuery
      */
     public function queryPriceType($name)
@@ -36,11 +38,12 @@ class PriceQueryContainer extends AbstractQueryContainer
 
     /**
      * @param string $sku
-     * @param $priceType
+     * @param SpyPriceType $priceType
+     *
      * @return Propel\SpyPriceProductQuery
      * @throws PropelException
      */
-    public function queryPriceEntityForAbstractProduct($sku, $priceType)
+    public function queryPriceEntityForAbstractProduct($sku, SpyPriceType $priceType)
     {
         return SpyPriceProductQuery::create()
             ->filterByPriceType($priceType)
@@ -52,11 +55,12 @@ class PriceQueryContainer extends AbstractQueryContainer
 
     /**
      * @param string $sku
-     * @param $priceType
+     * @param SpyPriceType $priceType
+     *
      * @return Propel\SpyPriceProductQuery
      * @throws PropelException
      */
-    public function queryPriceEntityForConcreteProduct($sku, $priceType)
+    public function queryPriceEntityForConcreteProduct($sku, SpyPriceType $priceType)
     {
         return SpyPriceProductQuery::create()
             ->filterByPriceType($priceType)
@@ -68,7 +72,8 @@ class PriceQueryContainer extends AbstractQueryContainer
 
     /**
      * @param SpyPriceProductQuery $query
-     * @param $idPriceProduct
+     * @param int $idPriceProduct
+     *
      * @return SpyPriceProductQuery
      */
     public function addFilter($query, $idPriceProduct)
@@ -77,12 +82,13 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param Product $transferPriceProduct
-     * @param $priceType
+     * @param PriceProductTransfer $transferPriceProduct
+     * @param SpyPriceType $priceType
+     *
      * @return Propel\SpyPriceProductQuery
      * @throws PropelException
      */
-    public function querySpecificPriceForAbstractProduct(Product $transferPriceProduct, $priceType)
+    public function querySpecificPriceForAbstractProduct(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType)
     {
         return SpyPriceProductQuery::create()
             ->filterByPrice($transferPriceProduct->getPrice())
@@ -94,12 +100,13 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param Product $transferPriceProduct
-     * @param $priceType
+     * @param PriceProductTransfer $transferPriceProduct
+     * @param SpyPriceType $priceType
+     *
      * @return SpyPriceProductQuery
      * @throws PropelException
      */
-    public function querySpecificPriceForConcreteProduct(Product $transferPriceProduct, $priceType)
+    public function querySpecificPriceForConcreteProduct(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType)
     {
         return SpyPriceProductQuery::create()
             ->filterByPrice($transferPriceProduct->getPrice())
@@ -112,6 +119,7 @@ class PriceQueryContainer extends AbstractQueryContainer
 
     /**
      * @param int $idPriceProduct
+     *
      * @return SpyPriceProductQuery
 
      */
@@ -147,7 +155,7 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return $this|ModelCriteria
+     * @return ModelCriteria
      * @throws PropelException
      */
     public function queryPriceTypeForm()

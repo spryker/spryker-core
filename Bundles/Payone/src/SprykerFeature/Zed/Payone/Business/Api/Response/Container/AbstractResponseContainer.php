@@ -168,7 +168,8 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
     }
 
     /**
-     * @param $name
+     * @param string $name
+     *
      * @return null|mixed
      */
     protected function get($name)
@@ -194,7 +195,7 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
     }
 
     /**
-     * @param $rawResponse
+     * @param string $rawResponse
      */
     public function setRawResponse($rawResponse)
     {

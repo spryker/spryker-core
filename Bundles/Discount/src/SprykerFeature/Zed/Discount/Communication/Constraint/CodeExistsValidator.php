@@ -37,7 +37,7 @@ class CodeExistsValidator extends ConstraintValidator
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @param Constraint|CodeExists $constraint
      */
     protected function addValidation($value, Constraint $constraint)

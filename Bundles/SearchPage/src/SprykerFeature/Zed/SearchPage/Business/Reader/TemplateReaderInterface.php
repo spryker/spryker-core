@@ -7,14 +7,14 @@ use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplat
 interface TemplateReaderInterface
 {
     /**
-     * @param $idTemplate
+     * @param int $idTemplate
      *
      * @return SpySearchPageElementTemplate
      */
     public function getTemplateById($idTemplate);
 
     /**
-     * @param $templateName
+     * @param string $templateName
      *
      * @return bool
      */

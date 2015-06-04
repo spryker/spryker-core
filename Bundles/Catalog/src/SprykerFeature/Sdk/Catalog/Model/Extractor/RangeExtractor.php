@@ -2,16 +2,13 @@
 
 namespace SprykerFeature\Sdk\Catalog\Model\Extractor;
 
-/**
- * Class RangeExtractor
- * @package SprykerFeature\Sdk\Catalog\Model\Extractor
- */
 class RangeExtractor extends AbstractAggregationExtractor
 {
     /**
      * @param array $aggregation
-     * @param $fieldName
-     * @return mixed
+     * @param string $fieldName
+     *
+     * @return array
      */
     protected function extractData(array $aggregation, $fieldName)
     {

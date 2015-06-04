@@ -183,8 +183,9 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param $sku
+     * @param string $sku
      * @param string $priceType
+     *
      * @return bool
      */
     protected function hasPriceForConcreteProduct($sku, $priceType)

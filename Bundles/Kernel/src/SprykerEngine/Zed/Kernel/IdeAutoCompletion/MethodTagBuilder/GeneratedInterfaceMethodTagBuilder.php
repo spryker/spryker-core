@@ -35,7 +35,7 @@ class GeneratedInterfaceMethodTagBuilder implements MethodTagBuilderInterface
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param array $methodTags
      *
      * @return array
@@ -48,7 +48,7 @@ class GeneratedInterfaceMethodTagBuilder implements MethodTagBuilderInterface
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      *
      * @return string
      */

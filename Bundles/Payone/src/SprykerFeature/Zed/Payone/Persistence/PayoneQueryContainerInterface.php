@@ -11,13 +11,13 @@ interface PayoneQueryContainerInterface
 {
 
     /**
-     * @param $idPaymentPayone
+     * @param int $idPaymentPayone
      * @return SpyPaymentPayoneTransactionStatusLogQuery
      */
     public function getCurrentSequenceNumberQuery($idPaymentPayone);
 
     /**
-     * @param $transactionId
+     * @param int $transactionId
      * @return SpyPaymentPayoneQuery
      */
     public function getPaymentByTransactionIdQuery($transactionId);

@@ -159,11 +159,11 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
     }
 
     /**
-     * @param $attributes
+     * @param array $attributes
      *
      * @return array
      */
-    protected function formatAttributes($attributes)
+    protected function formatAttributes(array $attributes)
     {
         $newKeys = array_map(function ($name) {
             return str_replace(' ', '', lcfirst(ucwords($name)));

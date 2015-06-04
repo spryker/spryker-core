@@ -68,7 +68,8 @@ class SystemConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param $hostname
+     * @param string $hostname
+     *
      * @return string
      */
     public function getHostIpAddressByHostname($hostname)
@@ -77,7 +78,8 @@ class SystemConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param $store
+     * @param string $store
+     *
      * @return string
      */
     public function getStorePoolNumberByStore($store)

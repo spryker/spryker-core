@@ -2,15 +2,13 @@
 
 namespace SprykerFeature\Sdk\Catalog\Model\Extractor;
 
-/**
- * Class FacetExtractor
- */
 class FacetExtractor extends AbstractAggregationExtractor
 {
     /**
      * @param array $aggregation
-     * @param $fieldName
-     * @return mixed
+     * @param string $fieldName
+     *
+     * @return array
      */
     protected function extractData(array $aggregation, $fieldName)
     {

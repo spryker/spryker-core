@@ -224,13 +224,14 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param $idGroup
-     * @param $idUser
+     * @param int $idGroup
+     * @param int $idUser
      */
     public function removeUser($idGroup, $idUser)
     {
         $entity = $this->queryContainer->queryUserHasGroupById($idGroup, $idUser)->findOne();
 
+        //TODO guard against NPE
         $entity->delete();
     }
 

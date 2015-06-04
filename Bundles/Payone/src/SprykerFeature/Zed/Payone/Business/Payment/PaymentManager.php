@@ -106,7 +106,7 @@ class PaymentManager
     }
 
     /**
-     * @param $paymentMethodName
+     * @param string $paymentMethodName
      * @return null|PaymentMethodMapperInterface
      */
     protected function getRegisteredPaymentMethodMapper($paymentMethodName)

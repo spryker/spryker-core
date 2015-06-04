@@ -11,7 +11,7 @@ interface DiscountItemInterface
     public function getAmount();
 
     /**
-     * @param $amount
+     * @param int $amount
      */
     public function setAmount($amount);
 

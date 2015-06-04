@@ -57,7 +57,8 @@ class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
     }
 
     /**
-     * @param $portNumber
+     * @param string $portNumber
+     *
      * @return number
      */
     protected function getStringByPortNumber($portNumber)

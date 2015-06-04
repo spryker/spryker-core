@@ -216,7 +216,7 @@ abstract class AbstractExporter implements ExporterInterface
 
     /**
      * @param string $type
-     * @param $result
+     * @param BatchResultInterface $result
      *
      * @return bool
      */

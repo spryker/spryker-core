@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Console\Business\Model;
 
+use Silex\Application;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\InputInterface;
@@ -120,7 +121,7 @@ trait Helper
     }
 
     /**
-     * @param $question
+     * @param string $question
      * @param null $default
      * @return mixed
      */
@@ -131,9 +132,10 @@ trait Helper
     }
 
     /**
-     * @param $question
+     * @param string $question
      * @param array $options
      * @param $default
+     *
      * @return mixed
      */
     public function select($question, array $options, $default)

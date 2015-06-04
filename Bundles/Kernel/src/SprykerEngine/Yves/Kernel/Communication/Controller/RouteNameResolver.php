@@ -13,7 +13,7 @@ class RouteNameResolver implements RouteNameResolverInterface
     private $path;
 
     /**
-     * @param $path
+     * @param string $path
      */
     public function __construct($path)
     {

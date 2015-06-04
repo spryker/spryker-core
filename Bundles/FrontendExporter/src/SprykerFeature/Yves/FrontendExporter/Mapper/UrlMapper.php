@@ -6,8 +6,6 @@ use SprykerFeature\Sdk\Catalog\Model\FacetConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class UrlMapper
- * @package SprykerFeature\Sdk\Catalog\Model
  * @TODO This class needs a refactoring!!!
  */
 class UrlMapper implements UrlMapperInterface
@@ -89,11 +87,12 @@ class UrlMapper implements UrlMapperInterface
     }
 
     /**
-     * @param $requestParameters
-     * @param $generationParameters
+     * @param array $requestParameters
+     * @param array $generationParameters
+     *
      * @return array
      */
-    public function mergeParameters($requestParameters, $generationParameters)
+    public function mergeParameters(array $requestParameters, array $generationParameters)
     {
         $mergedParameters = $requestParameters;
         $defaultActive = true;
@@ -137,8 +136,8 @@ class UrlMapper implements UrlMapperInterface
     }
 
     /**
-     * @param $mergedParameters
-     * @param $generationParameterName
+     * @param array $mergedParameters
+     * @param string $generationParameterName
      * @param $value
      * @param $inValue
      * @param $active
@@ -202,10 +201,10 @@ class UrlMapper implements UrlMapperInterface
     }
 
     /**
-     * @param $pathinfo
+     * @param string $pathInfo
      * @param Request $request
      */
-    public function injectParametersFromUrlIntoRequest($pathinfo, Request $request)
+    public function injectParametersFromUrlIntoRequest($pathInfo, Request $request)
     {
         $parameters = [];
         $queryParameters = $request->query;
@@ -219,8 +218,8 @@ class UrlMapper implements UrlMapperInterface
         }
 
         //second prepare path segments
-        $pathinfo = trim($pathinfo, '/');
-        $split = explode(self::OFFSET_RECOGNITION_VALUE_DIVIDER, $pathinfo);
+        $pathInfo = trim($pathInfo, '/');
+        $split = explode(self::OFFSET_RECOGNITION_VALUE_DIVIDER, $pathInfo);
         $offset = 0;
         $shortParameter = 'c'; // first element is always category with shortParam = c
 

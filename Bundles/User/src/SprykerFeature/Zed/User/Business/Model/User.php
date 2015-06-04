@@ -134,7 +134,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param $idUser
+     * @param int $idUser
      *
      * @return UserTransfer
      */

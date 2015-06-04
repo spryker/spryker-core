@@ -90,7 +90,7 @@ interface GlossaryQueryContainerInterface
     public function queryAllMissingTranslations(array $relevantLocales);
 
     /**
-     * @param $idKey
+     * @param int $idKey
      * @param array $relevantLocales
      *
      * @return ModelCriteria

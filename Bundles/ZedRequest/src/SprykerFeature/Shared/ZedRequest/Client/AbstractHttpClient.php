@@ -117,7 +117,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param $pathInfo
+     * @param string $pathInfo
+     *
      * @return bool
      */
     protected function isLoggingAllowed($pathInfo)
@@ -141,9 +142,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param $pathInfo
+     * @param string $pathInfo
      * @param RequestInterface $requestTransfer
      * @param null $timeoutInSeconds
+     *
      * @return EntityEnclosingRequest
      */
     protected function createGuzzleRequest($pathInfo, RequestInterface $requestTransfer, $timeoutInSeconds = null)
@@ -251,9 +253,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param $pathInfo
+     * @param string $pathInfo
      * @param ZedResponse $responseTransfer
-     * @param $rawBody
+     * @param string $rawBody
      */
     protected function logResponse($pathInfo, ZedResponse $responseTransfer, $rawBody)
     {

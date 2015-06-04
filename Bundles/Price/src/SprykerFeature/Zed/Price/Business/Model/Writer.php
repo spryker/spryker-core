@@ -167,7 +167,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param $idPriceProduct
+     * @param int $idPriceProduct
      *
      * @return SpyPriceProduct
      * @throws \Exception

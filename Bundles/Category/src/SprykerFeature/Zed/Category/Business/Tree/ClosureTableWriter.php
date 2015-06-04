@@ -78,8 +78,8 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param $nodeId
-     * @param $parentId
+     * @param int $nodeId
+     * @param int $parentId
      */
     protected function persistNode($nodeId, $parentId)
     {

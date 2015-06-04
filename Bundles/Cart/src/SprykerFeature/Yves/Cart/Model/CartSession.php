@@ -12,7 +12,7 @@ class CartSession implements CartSessionInterface
     const SESSION_CART_ORDER_KEY = 'CART_SALES_ORDER';
 
     /**
-     * @var \SprykerFeature\Shared\Sales\Transfer\Order
+     * @var OrderTransfer
      * @static
      */
     protected static $cartOrder;
@@ -48,7 +48,7 @@ class CartSession implements CartSessionInterface
     }
 
     /**
-     * @return \SprykerFeature\Shared\Sales\Transfer\Order
+     * @return OrderTransfer
      */
     public function getOrder()
     {
@@ -69,10 +69,10 @@ class CartSession implements CartSessionInterface
      * Save a new CartOrder, if you just changed the order from get()
      * there is no need to call set().
      *
-     * @param Order $order
+     * @param OrderTransfer $order
      * @return $this
      */
-    public function setOrder(Order $order)
+    public function setOrder(OrderTransfer $order)
     {
         self::$cartOrder = $order;
 
@@ -80,7 +80,8 @@ class CartSession implements CartSessionInterface
     }
 
     /**
-     * @param $sku
+     * @param string $sku
+     *
      * @return int
      */
     public function getQuantityBySku($sku)
@@ -104,7 +105,7 @@ class CartSession implements CartSessionInterface
     {
         if (!self::$cartOrder) {
             // TODO this must be removed
-            $salesOrderTransfer = new \Generated\Shared\Transfer\OrderTransfer();
+            $salesOrderTransfer = new OrderTransfer();
             self::$cartOrder = $this->session->get(self::SESSION_CART_ORDER_KEY, $salesOrderTransfer);
         }
     }

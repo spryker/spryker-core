@@ -182,8 +182,8 @@ class CategoryQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param $idNode
-     * @param $idLocale
+     * @param int $idNode
+     * @param int $idLocale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
@@ -280,6 +280,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
     /**
      * @return SpyCategoryQuery
      * @param int $idLocale
+     *
      * @return SpyCategoryQuery
      */
     public function queryCategory($idLocale)
@@ -300,7 +301,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
      * @param int $idCategory
      * @param int $idLocale
      *
-     * @return $this|SpyCategoryAttributeQuery
+     * @return SpyCategoryAttributeQuery
      */
     public function queryAttributeByCategoryIdAndLocale($idCategory, $idLocale)
     {

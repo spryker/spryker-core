@@ -6,10 +6,6 @@ use SprykerEngine\Shared\Kernel\ClassResolver;
 use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
 use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 
-/**
- * Class AbstractLocator
- * @package SprykerEngine\Shared\Kernel
- */
 abstract class AbstractLocator implements LocatorInterface
 {
 
@@ -19,7 +15,7 @@ abstract class AbstractLocator implements LocatorInterface
     protected $factoryClassNamePattern;
 
     /**
-     * @param null $factoryClassNamePattern
+     * @param string $factoryClassNamePattern
      * @throws LocatorException
      */
     final public function __construct($factoryClassNamePattern = null)
@@ -36,7 +32,7 @@ abstract class AbstractLocator implements LocatorInterface
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param LocatorLocatorInterface $locator
      * @param null|string $className
      *
@@ -45,7 +41,8 @@ abstract class AbstractLocator implements LocatorInterface
     abstract public function locate($bundle, LocatorLocatorInterface $locator, $className = null);
 
     /**
-     * @param $bundle
+     * @param string $bundle
+     *
      * @return AbstractFactory
      * @throws LocatorException
      */

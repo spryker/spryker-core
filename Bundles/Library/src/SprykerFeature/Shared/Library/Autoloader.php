@@ -32,11 +32,11 @@ class Autoloader
      * @var array
      */
     private $classMap = [];
-
+    
     /**
-     * @param $rootDirectory
-     * @param $vendorDirectory
-     * @param null $application
+     * @param string $rootDirectory
+     * @param string $vendorDirectory
+     * @param null|string $application
      * @param bool $disableApplicationCheck
      */
     private function __construct($rootDirectory, $vendorDirectory, $application = null, $disableApplicationCheck = false)
@@ -49,8 +49,8 @@ class Autoloader
     }
 
     /**
-     * @param $rootDirectory
-     * @param $vendorDirectory
+     * @param string $rootDirectory
+     * @param string $vendorDirectory
      * @param null $application
      * @param bool $disableApplicationCheck
      */
@@ -121,6 +121,12 @@ class Autoloader
         }
     }
 
+    /**
+     * @param string $resourceName
+     *
+     * @return bool|string
+     * @throws \Exception
+     */
     protected function findFile($resourceName)
     {
         // We always work with FQCN in our context
@@ -154,6 +160,7 @@ class Autoloader
 
     /**
      * @param string $resourceName
+     *
      * @return bool
      */
     private function isLoadingAllowed($resourceName)
@@ -198,5 +205,4 @@ class Autoloader
             throw new \Exception('You are not allowed to load this class in your app. (' . implode('\\', $resourceParts) . ')');
         }
     }
-
 }

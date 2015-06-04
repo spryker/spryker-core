@@ -49,7 +49,7 @@ class SprykerFeature_Shared_Library_Log
      *
      * @static
      * @param $expression
-     * @param $fileName
+     * @param string $fileName
      */
     public static function setFlashInFile($expression, $fileName)
     {
@@ -62,7 +62,7 @@ class SprykerFeature_Shared_Library_Log
      * Retrieves Content from Flashfile
      *
      * @static
-     * @param $fileName
+     * @param string $fileName
      * @return string
      * @static
      */

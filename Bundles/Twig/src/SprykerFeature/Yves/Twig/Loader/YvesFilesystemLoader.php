@@ -205,7 +205,7 @@ class YvesFilesystemLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderI
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @throws \Twig_Error_Loader
      */

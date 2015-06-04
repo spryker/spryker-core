@@ -195,7 +195,8 @@ abstract class AbstractController
     }
 
     /**
-     * @param $message
+     * @param string $message
+     *
      * @return $this
      * @throws ErrorException
      */
@@ -207,7 +208,8 @@ abstract class AbstractController
     }
 
     /**
-     * @param $message
+     * @param string $message
+     *
      * @return $this
      * @throws ErrorException
      */
@@ -219,7 +221,8 @@ abstract class AbstractController
     }
 
     /**
-     * @param $message
+     * @param string $message
+     *
      * @return $this
      * @throws ErrorException
      */
@@ -234,6 +237,7 @@ abstract class AbstractController
      * @param string $type
      * @param null $data
      * @param array $options
+     *
      * @return FormInterface
      *
      * @deprecated will be removed when we have our ComFactory
@@ -246,7 +250,8 @@ abstract class AbstractController
     /**
      * TODO rethink
      *
-     * @param $role
+     * @param string $role
+     *
      * @return mixed
      */
     protected function isGranted($role)
@@ -309,7 +314,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param $viewPath
+     * @param string $viewPath
      * @param array $parameters
      *
      * @return Response

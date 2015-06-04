@@ -4,6 +4,7 @@ namespace SprykerEngine\Zed\Kernel\Communication;
 
 use SprykerEngine\Shared\Kernel\AbstractLocator;
 use SprykerEngine\Shared\Kernel\ClassResolver;
+use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
 class PluginLocator extends AbstractLocator
@@ -15,12 +16,12 @@ class PluginLocator extends AbstractLocator
     protected $factoryClassNamePattern = '\\{{namespace}}\\Zed\\Kernel\\Communication\\Factory';
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param LocatorLocatorInterface $locator
      * @param null|string $className
      *
      * @return object
-     * @throws \SprykerEngine\Shared\Kernel\Locator\LocatorException
+     * @throws LocatorException
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {

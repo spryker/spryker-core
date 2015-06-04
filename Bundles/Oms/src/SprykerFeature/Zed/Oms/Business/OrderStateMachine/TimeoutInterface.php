@@ -30,7 +30,7 @@ interface TimeoutInterface
     /**
      * @param ProcessInterface $process
      * @param string $stateId
-     * @param $orderItem
+     * @param SpySalesOrderItem $orderItem
      *
      * @throws Exception
      * @throws PropelException

@@ -21,7 +21,7 @@ class ClassGenerator implements GeneratorInterface
     protected $twig;
 
     /**
-     * @param $targetDirectory
+     * @param string $targetDirectory
      */
     public function __construct($targetDirectory)
     {

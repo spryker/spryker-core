@@ -42,7 +42,7 @@ class BundleControllerActionRouteNameResolver implements RouteNameResolverInterf
     }
 
     /**
-     * @param $string
+     * @param string $string
      *
      * @return string
      */

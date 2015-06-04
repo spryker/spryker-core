@@ -81,12 +81,13 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * @param $path
-     * @param $name
-     * @param $bundle
-     * @param $controllerName
+     * @param string $path
+     * @param string $name
+     * @param string $bundle
+     * @param string $controllerName
      * @param string $actionName
      * @param bool $parseJsonBody
+     *
      * @return Controller
      */
     protected function createController(
@@ -146,11 +147,12 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * @param $path
-     * @param $name
-     * @param $bundle
-     * @param $controllerName
+     * @param string $path
+     * @param string $name
+     * @param string $bundle
+     * @param string $controllerName
      * @param string $actionName
+     *
      * @return Controller
      */
     protected function createGetController($path, $name, $bundle, $controllerName, $actionName = 'index')
@@ -160,12 +162,13 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * @param $path
-     * @param $name
-     * @param $bundle
-     * @param $controllerName
+     * @param string $path
+     * @param string $name
+     * @param string $bundle
+     * @param string $controllerName
      * @param string $actionName
      * @param bool $parseJsonBody
+     *
      * @return Controller
      */
     protected function createPostController($path, $name, $bundle, $controllerName, $actionName = 'index', $parseJsonBody = false)

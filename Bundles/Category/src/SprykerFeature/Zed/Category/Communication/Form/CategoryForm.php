@@ -30,9 +30,8 @@ class CategoryForm extends AbstractForm
 
     /**
      * @param Request $request
-     * @param LocatorLocatorInterface $locator
      * @param FactoryInterface $factory
-     * @param $idLocale
+     * @param LocaleTransfer $locale
      * @param QueryContainerInterface $queryContainer
      */
     public function __construct(

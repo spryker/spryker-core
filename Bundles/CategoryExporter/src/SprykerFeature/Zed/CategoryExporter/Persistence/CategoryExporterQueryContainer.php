@@ -23,10 +23,10 @@ class CategoryExporterQueryContainer extends AbstractQueryContainer
 
     /**
      * @param ModelCriteria $query
-     * @param $locale
+     * @param LocaleTransfer $locale
      * @return ModelCriteria
      */
-    public function expandNavigationQuery(ModelCriteria $query, $locale)
+    public function expandNavigationQuery(ModelCriteria $query, LocaleTransfer $locale)
     {
         return $this->getDependencyContainer()->createNavigationQueryExpander($locale)->expandQuery($query);
     }

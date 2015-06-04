@@ -68,7 +68,8 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
+     *
      * @return string
      */
     protected function getMethodTag($bundle)
@@ -119,8 +120,8 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
     }
 
     /**
-     * @param $fileName
-     * @param $path
+     * @param string $fileName
+     * @param string $path
      *
      * @return bool|SplFileInfo
      */
@@ -140,7 +141,8 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
 
     /**
      * @param SplFileInfo $file
-     * @param $methodPattern
+     * @param string $methodPattern
+     *
      * @return string
      */
     private function buildMethodTagFromFile(SplFileInfo $file, $methodPattern)
@@ -157,7 +159,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
     }
 
     /**
-     * @param $filePathName
+     * @param string $filePathName
      *
      * @return string
      */
@@ -167,7 +169,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
     }
 
     /**
-     * @param $filePathName
+     * @param string $filePathName
      *
      * @return string
      */
@@ -177,8 +179,8 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
     }
 
     /**
-     * @param $filePathName
-     * @param $path
+     * @param string $filePathName
+     * @param string $path
      *
      * @return string
      */

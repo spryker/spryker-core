@@ -103,7 +103,8 @@ abstract class BaseCommand extends Console
 
 
     /**
-     * @param $dir
+     * @param string $dir
+     *
      * @return bool
      */
     protected function runCommand($dir)
@@ -130,7 +131,8 @@ abstract class BaseCommand extends Console
     }
 
     /**
-     * @param $dir
+     * @param string $dir
+     *
      * @return bool
      */
     protected function checkGit($dir)

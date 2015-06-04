@@ -60,7 +60,7 @@ class Finder implements FinderInterface
 
     /**
      * @param array $states
-     * @param $sku
+     * @param string $sku
      * @param bool $returnTest
      *
      * @return SpySalesOrderItemQuery

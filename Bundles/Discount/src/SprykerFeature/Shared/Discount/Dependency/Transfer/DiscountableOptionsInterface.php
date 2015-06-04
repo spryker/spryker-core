@@ -6,7 +6,7 @@ interface DiscountableOptionsInterface
 {
 
     /**
-     * @return \ArrayObject|DiscountItemInterface[]
+     * @return DiscountItemInterface[]
      */
     public function getDiscounts();
 

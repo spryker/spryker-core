@@ -8,13 +8,12 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogQuery;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLogQuery;
 
-
 class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQueryContainerInterface
 {
 
     /**
      * @todo think of doing it with MAX(sequence_number) ?
-     * @param $transactionId
+     * @param int $transactionId
      * @return SpyPaymentPayoneTransactionStatusLogQuery
      */
     public function getCurrentSequenceNumberQuery($transactionId)
@@ -27,8 +26,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
-     * @param $transactionId
-     * @return Propel\SpyPaymentPayoneQuery
+     * @param int $transactionId
+     * @return SpyPaymentPayoneQuery
      */
     public function getPaymentByTransactionIdQuery($transactionId)
     {

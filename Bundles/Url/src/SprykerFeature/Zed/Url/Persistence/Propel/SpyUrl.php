@@ -84,7 +84,7 @@ class SpyUrl extends BaseSpyUrl
     }
 
     /**
-     * @param $resourceType
+     * @param string $resourceType
      *
      * @return string
      * @throws UnknownResourceTypeException

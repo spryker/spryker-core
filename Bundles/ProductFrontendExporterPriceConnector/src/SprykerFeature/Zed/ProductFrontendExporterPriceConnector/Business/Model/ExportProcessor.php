@@ -41,8 +41,9 @@ class ExportProcessor implements ExportProcessorInterface
 
     /**
      * @param array $processedResultSet
-     * @param $productRawData
-     * @param $index
+     * @param array $productRawData
+     * @param int $index
+     *
      * @return array
      */
     protected function preparePriceForResult(array $processedResultSet, $productRawData, $index)

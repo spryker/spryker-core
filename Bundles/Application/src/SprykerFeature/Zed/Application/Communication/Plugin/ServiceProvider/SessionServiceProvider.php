@@ -75,8 +75,9 @@ class SessionServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param $saveHandler
-     * @return null|string
+     * @param string $saveHandler
+     * @return string
+     *
      * @throws \Exception
      */
     protected function getSavePath($saveHandler)

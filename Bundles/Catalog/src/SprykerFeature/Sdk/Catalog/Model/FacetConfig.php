@@ -2,9 +2,6 @@
 
 namespace SprykerFeature\Sdk\Catalog\Model;
 
-/**
- * @package SprykerFeature\Sdk\Catalog\Model
- */
 class FacetConfig
 {
     const KEY_FACET_FIELD_NAME = 'facet_field_name';
@@ -257,35 +254,39 @@ class FacetConfig
     }
 
     /**
-     * @param $attribute
-     * @return mixed
+     * @param array $attribute
+     *
+     * @return bool
      */
-    protected static function filterActiveFacetsCallback($attribute)
+    protected static function filterActiveFacetsCallback(array $attribute)
     {
         return $attribute[self::KEY_FACET_ACTIVE];
     }
 
     /**
-     * @param $attribute
-     * @return mixed
+     * @param array $attribute
+     *
+     * @return bool
      */
-    protected static function filterActiveSortAttributesCallback($attribute)
+    protected static function filterActiveSortAttributesCallback(array $attribute)
     {
         return $attribute[self::KEY_SORT_ACTIVE];
     }
 
     /**
-     * @param $facet
-     * @return mixed
+     * @param array $facet
+     *
+     * @return bool
      */
-    protected static function filterActiveInUrlFacetsCallback($facet)
+    protected static function filterActiveInUrlFacetsCallback(array $facet)
     {
         return $facet[self::KEY_FACET_ACTIVE] && isset($facet[self::KEY_IN_URL]) && $facet[self::KEY_IN_URL];
     }
 
     /**
-     * @param $facet
-     * @param $paramName
+     * @param array $facet
+     * @param string $paramName
+     *
      * @return bool
      */
     protected static function filterFacetByParamNameCallback($facet, $paramName)
@@ -294,8 +295,9 @@ class FacetConfig
     }
 
     /**
-     * @param $facet
-     * @param $shortParamName
+     * @param array $facet
+     * @param string $shortParamName
+     *
      * @return bool
      */
     protected static function filterFacetByShortParamNameCallback($facet, $shortParamName)

@@ -98,9 +98,10 @@ class SandboxController extends AbstractController{
     }
 
     /**
-     * @param $masterKey
-     * @param $key
-     * @return mixed
+     * @param string $masterKey
+     * @param string $key
+     *
+     * @return string
      */
     protected function createVar($masterKey, $key)
     {

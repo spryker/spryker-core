@@ -70,7 +70,8 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
+     *
      * @return array
      */
     protected function getMethodTags($bundle)
@@ -82,8 +83,9 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
     }
 
     /**
-     * @param $bundle
-     * @param $dir
+     * @param string $bundle
+     * @param string $dir
+     *
      * @return array
      */
     private function buildMethodTagsFrom($bundle, $dir)
@@ -117,7 +119,7 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
     }
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return bool
      */
@@ -141,7 +143,7 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
     }
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return string
      */
@@ -154,7 +156,7 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
     }
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return string
      */
@@ -167,8 +169,8 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
     }
 
     /**
-     * @param $className
-     * @param $methodName
+     * @param string $className
+     * @param string $methodName
      *
      * @return string
      */
@@ -187,7 +189,7 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
     }
 
     /**
-     * @param $filePathName
+     * @param string $filePathName
      *
      * @return string
      */
@@ -197,7 +199,7 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
     }
 
     /**
-     * @param $filePathName
+     * @param string $filePathName
      *
      * @return string
      */
@@ -207,8 +209,8 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
     }
 
     /**
-     * @param $filePathName
-     * @param $path
+     * @param string $filePathName
+     * @param string $path
      *
      * @return string
      */

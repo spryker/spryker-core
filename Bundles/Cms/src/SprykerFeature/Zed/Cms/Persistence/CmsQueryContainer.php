@@ -129,7 +129,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @param $idCmsPage
+     * @param int $idCmsPage
      * @return SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsByPageId($idCmsPage)

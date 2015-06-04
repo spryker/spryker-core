@@ -80,7 +80,8 @@ class SessionServiceProvider extends SilexSessionServiceProvider
     }
 
     /**
-     * @param $saveHandler
+     * @param string $saveHandler
+     *
      * @return string
      * @throws \Exception
      */

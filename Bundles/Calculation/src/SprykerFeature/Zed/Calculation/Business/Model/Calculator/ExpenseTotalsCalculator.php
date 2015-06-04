@@ -7,7 +7,6 @@ use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\ExpenseTotalItemTransfer;
 use Generated\Shared\Transfer\ExpenseTotalsTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
@@ -104,10 +103,10 @@ class ExpenseTotalsCalculator implements
     }
 
     /**
-     * @param $expense
-     * @param $arrayOfExpenseTotalItems
+     * @param ExpenseInterface $expense
+     * @param array $arrayOfExpenseTotalItems
      */
-    protected function transformExpenseToExpenseTotalItemInArray(ExpenseInterface $expense, &$arrayOfExpenseTotalItems)
+    protected function transformExpenseToExpenseTotalItemInArray(ExpenseInterface $expense, array &$arrayOfExpenseTotalItems)
     {
         if (!isset($arrayOfExpenseTotalItems[$expense->getType()])) {
             $item = new ExpenseTotalItemTransfer();

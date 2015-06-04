@@ -299,7 +299,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * Filters out all items that are not affected by the current event
      *
-     * @param $eventId
+     * @param string $eventId
      * @param SpySalesOrderItem[] $orderItems
      * @param ProcessInterface[] $processes
      *
@@ -324,7 +324,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param $eventId
+     * @param string $eventId
      * @param SpySalesOrderItem[] $orderItems
      * @param Process[] $processes
      *
@@ -372,7 +372,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param $eventId
+     * @param string $eventId
      * @param SpySalesOrderItem[] $orderItems
      * @param ProcessInterface[] $processes
      * @param ReadOnlyArrayObject $data
@@ -420,7 +420,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param $eventId
+     * @param string $eventId
      * @param SpySalesOrderItem[] $orderItems
      * @param array $sourceStateBuffer
      * @param TransitionLogInterface $log
@@ -504,7 +504,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param SpySalesOrderItem $orderItem
-     * @param $stateName
+     * @param string $stateName
      */
     protected function setState($orderItem, $stateName)
     {
@@ -524,13 +524,13 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param SpySalesOrderItem[] $orderItems
-     * @param $processes
+     * @param array $processes
      * @param array $sourceStateBuffer
      *
      * @return array
      * @throws LogicException
      */
-    protected function filterItemsWithOnEnterEvent(array $orderItems, $processes, array $sourceStateBuffer)
+    protected function filterItemsWithOnEnterEvent(array $orderItems, array $processes, array $sourceStateBuffer)
     {
         $orderItemsWithOnEnterEvent = array();
         foreach ($orderItems as $orderItem) {
@@ -583,7 +583,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * To protect of loops, every event can only be used some times
      *
-     * @param $eventId
+     * @param string $eventId
      *
      * @return bool
      */
@@ -598,10 +598,10 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param $orderItemsWithOnEnterEvent
+     * @param array $orderItemsWithOnEnterEvent
      * @param ReadOnlyArrayObject $data
      */
-    protected function triggerOnEnterEvents($orderItemsWithOnEnterEvent, ReadOnlyArrayObject $data)
+    protected function triggerOnEnterEvents(array $orderItemsWithOnEnterEvent, ReadOnlyArrayObject $data)
     {
 
         if (count($orderItemsWithOnEnterEvent) > 0) {
@@ -631,12 +631,12 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param $states
+     * @param array $states
      * @param ProcessInterface $process
      *
      * @return SpySalesOrderItem[]
      */
-    protected function getOrderItemsByState($states, ProcessInterface $process)
+    protected function getOrderItemsByState(array $states, ProcessInterface $process)
     {
         $orderItems = $this->queryContainer->getOrderItemsByState($states, $process->getName())->find();
 
@@ -679,7 +679,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param $commandString
+     * @param string $commandString
      *
      * @return CommandByOrderInterface|CommandByItemInterface
      * @throws LogicException
@@ -694,7 +694,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param $conditionString
+     * @param string $conditionString
      *
      * @return ConditionInterface
      */

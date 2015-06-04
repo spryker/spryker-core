@@ -6,7 +6,7 @@ class InstanceBuilder
 {
 
     /**
-     * @param $className
+     * @param string $className
      * @param array $arguments
      *
      * @return object

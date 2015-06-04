@@ -23,9 +23,9 @@ class BundleControllerAction implements BundleControllerActionInterface
     private $action;
 
     /**
-     * @param $bundle
-     * @param $controller
-     * @param $action
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
      */
     public function __construct($bundle, $controller, $action)
     {
