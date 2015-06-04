@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Cart\CartItemInterface;
 use Generated\Shared\Cart\CartItemsInterface;
+use Generated\Shared\Transfer\CartItemTransfer;
 
 class InMemoryProvider implements StorageProviderInterface
 {
@@ -22,6 +23,7 @@ class InMemoryProvider implements StorageProviderInterface
     public function addItems(CartInterface $cart, CartItemsInterface $addedItems)
     {
         $existingItems = $cart->getItems();
+        $skuIndex = $this->createSkuIndex($existingItems);
 
         /** @var ItemExpanderPluginInterface $item */
         foreach ($addedItems->getCartItems() as $item) {
@@ -31,12 +33,12 @@ class InMemoryProvider implements StorageProviderInterface
                 );
             }
 
-            if ($existingItems->offsetExists($item->getId())) {
+            if (isset($skuIndex[$item->getId()])) {
                 /** @var CartItemInterface $existingItem */
-                $existingItem = $existingItems->offsetGet($item->getId());
+                $existingItem = $existingItems->offsetGet($skuIndex[$item->getId()]);
                 $existingItem->setQuantity($existingItem->getQuantity() + $item->getQuantity());
             } else {
-                $existingItems->add($item);
+                $existingItems->append($item);
             }
         }
 
@@ -107,5 +109,24 @@ class InMemoryProvider implements StorageProviderInterface
         } else {
             $existingItems->offsetUnset($item->getId());
         }
+    }
+
+    /**
+     * Index cart items by SKU.
+     *
+     * @param \ArrayObject|CartItemInterface[]
+     *
+     * @return array
+     */
+    protected function createSkuIndex(\ArrayObject $cartItems)
+    {
+        $skuIndex = [];
+
+        /** @var CartItemInterface $cartItem */
+        foreach ($cartItems as $key => $cartItem) {
+            $skuIndex[$cartItem->getId()] = $key;
+        }
+
+        return $skuIndex;
     }
 }
