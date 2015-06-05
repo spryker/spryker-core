@@ -1,9 +1,9 @@
 <?php
 
-namespace Functional\SprykerFeature\Zed\User;
+namespace Functional\SprykerFeature\Zed\Acl;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\UserUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -13,6 +13,9 @@ use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
 use SprykerFeature\Zed\User\Business\UserFacade;
 
 /**
+ * @group Zed
+ * @group Business
+ * @group Acl
  * @group AclTest
  */
 class AclTest extends Test
@@ -105,16 +108,13 @@ class AclTest extends Test
     /**
      * @param array $data
      *
-     * @return UserUserTransfer
+     * @return UserTransfer
      */
     private function mockAddUser(array $data)
     {
         return $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
     }
 
-    /**
-     * @group Acl
-     */
     public function testAddGroup()
     {
         $data = $this->mockGroupData();
@@ -126,9 +126,6 @@ class AclTest extends Test
         $this->assertEquals($data['name'], $transfer->getName());
     }
 
-    /**
-     * @group Acl
-     */
     public function testUpdateGroup()
     {
         $groupData = $this->mockGroupData();
@@ -146,9 +143,6 @@ class AclTest extends Test
         $this->assertEquals($groupData2['name'], $dto2->getName());
     }
 
-    /**
-     * @group Acl
-     */
     public function testGetGroupById()
     {
         $groupData = $this->mockGroupData();
@@ -166,9 +160,6 @@ class AclTest extends Test
         $this->assertEquals($groupData['name'], $groupDto->getName());
     }
 
-    /**
-     * @group Acl
-     */
     public function testRemoveGroup()
     {
         $groupData = $this->mockGroupData();
@@ -184,9 +175,6 @@ class AclTest extends Test
         }
     }
 
-    /**
-     * @group Acl
-     */
     public function testAddRole()
     {
         $groupData = $this->mockGroupData();
@@ -199,9 +187,6 @@ class AclTest extends Test
         $this->assertEquals($roleData['name'], $roleDto->getName());
     }
 
-    /**
-     * @group Acl
-     */
     public function testRemoveRole()
     {
         $groupData = $this->mockGroupData();
@@ -219,9 +204,6 @@ class AclTest extends Test
         }
     }
 
-    /**
-     * @group Acl
-     */
     public function testAddRoleAndIsPresentInGroup()
     {
         $groupData = $this->mockGroupData();
@@ -245,9 +227,6 @@ class AclTest extends Test
         $this->assertTrue($isPresent);
     }
 
-    /**
-     * @group Acl
-     */
     public function testAddRuleAndAddToRole()
     {
         $groupData = $this->mockGroupData();
@@ -278,9 +257,6 @@ class AclTest extends Test
         }
     }
 
-    /**
-     * @group Acl
-     */
     public function testGetRulesFromRoles()
     {
         $groupData = $this->mockGroupData();
@@ -306,9 +282,6 @@ class AclTest extends Test
         }
     }
 
-    /**
-     * @group Acl
-     */
     public function testGetRulesFromGroup()
     {
         $groupData = $this->mockGroupData();
@@ -334,9 +307,6 @@ class AclTest extends Test
         }
     }
 
-    /**
-     * @group Acl
-     */
     public function testRemoveRule()
     {
         $groupData = $this->mockGroupData();
@@ -368,9 +338,6 @@ class AclTest extends Test
         }
     }
 
-    /**
-     * @group Acl
-     */
     public function testAddUserToGroup()
     {
         $groupData = $this->mockGroupData();
@@ -382,9 +349,6 @@ class AclTest extends Test
         $this->assertEquals($added, 1);
     }
 
-    /**
-     * @group Acl
-     */
     public function testGetUserGroup()
     {
         $groupData = $this->mockGroupData();
@@ -407,9 +371,6 @@ class AclTest extends Test
         $this->assertEquals($groupData['name'], $groupDto->getName());
     }
 
-    /**
-     * @group Acl
-     */
     public function testCheckPermissionSimple()
     {
         $groupData = $this->mockGroupData();
@@ -445,9 +406,6 @@ class AclTest extends Test
         }
     }
 
-    /**
-     * @group Acl
-     */
     public function testCheckPermissionSimpleHasNoAccess()
     {
         $groupData = $this->mockGroupData();
@@ -481,9 +439,6 @@ class AclTest extends Test
         }
     }
 
-    /**
-     * @group Acl
-     */
     public function testCheckPermissionWildcards()
     {
         $groupData = $this->mockGroupData();
@@ -513,9 +468,6 @@ class AclTest extends Test
         }
     }
 
-    /**
-     * @group Acl
-     */
     public function testPermissionsWithSystemUser()
     {
         $systemUsers = $this->userFacade->getSystemUsers();
@@ -533,9 +485,6 @@ class AclTest extends Test
         }
     }
 
-    /**
-     * @group Acl
-     */
     public function testPermissionsWithSystemUserShouldNotAllow()
     {
         $systemUsers = $this->userFacade->getSystemUsers();

@@ -14,9 +14,11 @@ use SprykerFeature\Zed\Acl\Business\Exception\RoleNameExistsException;
 
 class Role implements RoleInterface
 {
+
     /**
      * @var AclQueryContainer
      */
+
     protected $queryContainer;
 
     /**
@@ -60,7 +62,7 @@ class Role implements RoleInterface
      * @return RoleTransfer
      * @throws RoleNameExistsException
      * @throws RoleNotFoundException
-d     */
+     */
     public function save(RoleTransfer $data)
     {
         $entity = new SpyAclRole();

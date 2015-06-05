@@ -3,18 +3,16 @@
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RolesTransfer;
-
-use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Zed\Library\Copy;
 use Generated\Shared\Transfer\RoleTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
+use Generated\Shared\Transfer\RulesTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
 use SprykerFeature\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use Generated\Shared\Transfer\RuleTransfer;
-use Generated\Shared\Transfer\RulesTransfer;
-
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRule;
+use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 
 class Rule implements RuleInterface

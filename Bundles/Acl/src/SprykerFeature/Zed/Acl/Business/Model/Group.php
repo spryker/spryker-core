@@ -90,7 +90,7 @@ class Group implements GroupInterface
     /**
      * @param int $id
      *
-     * @return GroupTransfer
+     * @return SpyAclGroup
      * @throws GroupNotFoundException
      */
     public function getEntityGroupById($id)
