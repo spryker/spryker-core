@@ -97,7 +97,11 @@ class TranslationManager implements TranslationManagerInterface
         foreach ($availableLocales as $localeId => $localeName) {
             if (array_key_exists('locale_' . $localeId, $formData)) {
                 $locale = $this->localeFacade->getLocale($availableLocales[$localeId]);
-                $translationTransfer = $this->createTranslationTransfer($formData, $locale, $glossaryKey);
+                $translationTransfer = $this->createTranslationTransfer(
+                    $locale,
+                    $glossaryKey,
+                    $formData['locale_' . $locale->getIdLocale()]
+                );
 
                 $this->saveTranslation($translationTransfer);
             }
@@ -113,10 +117,10 @@ class TranslationManager implements TranslationManagerInterface
      *
      * @return TranslationTransfer
      */
-    private function createTranslationTransfer(array $formData, LocaleTransfer $locale, $glossaryKey)
+    private function createTranslationTransfer(LocaleTransfer $locale, $glossaryKey, $value)
     {
         $translationTransfer = new TranslationTransfer();
-        $translationTransfer->setValue($formData['locale_' . $locale->getIdLocale()]);
+        $translationTransfer->setValue($value);
         $translationTransfer->setFkGlossaryKey($glossaryKey);
         $translationTransfer->setFkLocale($locale->getIdLocale());
 
@@ -362,12 +366,14 @@ class TranslationManager implements TranslationManagerInterface
     public function saveTranslation(TranslationTransfer $transferTranslation)
     {
         if ($this->hasTranslationByIds($transferTranslation->getFkGlossaryKey(), $transferTranslation->getFkLocale())) {
-            $translation = $this->getTranslationByIds(
+            $translationEntity = $this->getTranslationByIds(
                 $transferTranslation->getFkGlossaryKey(),
                 $transferTranslation->getFkLocale()
             );
-            $translation->setValue($transferTranslation->getValue());
-            $translation->save();
+            $translationEntity->setValue($transferTranslation->getValue());
+            $translationEntity->save();
+
+            $translation = (new TranslationTransfer())->fromArray($translationEntity->toArray());
         } else {
             $translation = $this->createTranslationFromTransfer($transferTranslation);
         }
