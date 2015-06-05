@@ -15,7 +15,8 @@ class Repeater extends AbstractPlugin
     protected $isRepeatInProgress = false;
 
     /**
-     * @param null $mvc
+     * @param string|null $mvc
+     *
      * @return string
      */
     public function getRepeatData($mvc = null)
@@ -49,7 +50,13 @@ class Repeater extends AbstractPlugin
             'params' => $transferObject->toArray(false),
         );
 
-        $mvc = $httpRequest->attributes->get('module') . '_' . $httpRequest->attributes->get('controller') . '_' . $httpRequest->attributes->get('action');
+        $mvc = sprintf(
+            '%s_%s_%s',
+            $httpRequest->attributes->get('module'),
+            $httpRequest->attributes->get('controller'),
+            $httpRequest->attributes->get('action')
+        );
+
         \SprykerFeature_Shared_Library_Log::setFlashInFile($repeatData, 'last_yves_request_' . $mvc . '.log');
         \SprykerFeature_Shared_Library_Log::setFlashInFile($repeatData, 'last_yves_request.log');
     }

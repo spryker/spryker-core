@@ -3,11 +3,12 @@
 namespace Unit\SprykerFeature\Zed\Sdk\Communication\Plugin;
 
 use Generated\Shared\Transfer\GoodTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Foo\Sdk\NotTransferTransferObject;
 use SprykerFeature\Shared\Library\Communication\Response;
-use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 use SprykerFeature\Zed\Sdk\Communication\Plugin\SdkControllerListenerPlugin;
@@ -19,8 +20,10 @@ use Unit\SprykerFeature\Zed\Sdk\Communication\Plugin\Fixture\SdkController;
 use Unit\SprykerFeature\Zed\Sdk\Communication\Plugin\Fixture\TransferServer;
 
 /**
+ * @group Zed
+ * @group Communication
+ * @group Sdk
  * @group SdkListener
- *
  */
 class SdkControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
 {
@@ -228,6 +231,7 @@ class SdkControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $action
+     * @param AbstractTransfer $transfer
      *
      * @return callable
      */

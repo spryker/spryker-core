@@ -23,6 +23,4 @@ class GoodTransfer extends AbstractTransfer
     {
         $this->foo = $foo;
     }
-
-
 }

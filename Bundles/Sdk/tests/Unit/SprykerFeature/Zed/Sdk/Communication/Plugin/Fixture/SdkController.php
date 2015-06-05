@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Unit\SprykerFeature\Zed\Sdk\Communication\Plugin\Fixture;
-
 
 require_once __DIR__ . '/GoodTransfer.php';
 
 use Generated\Shared\Transfer\GoodTransfer;
 use SprykerFeature\Shared\Foo\Sdk\NotTransferTransferObject;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
-
 
 class SdkController extends AbstractSdkController
 {
