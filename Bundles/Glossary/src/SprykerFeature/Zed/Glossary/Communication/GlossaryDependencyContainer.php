@@ -26,7 +26,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     /**
      * @return GlossaryFacade
      */
-    public function getGlossaryFacade()
+    public function createGlossaryFacade()
     {
         return $this->getLocator()->glossary()->facade();
     }
@@ -40,8 +40,22 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createFormTranslationForm(
             $request,
-            $this->getQueryContainer(),
-            $this->getLocaleFacade()
+            $this->createQueryContainer(),
+            $this->createLocaleFacade()
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return TranslationForm
+     */
+    public function createKeyForm(Request $request)
+    {
+        return $this->getFactory()->createFormKeyForm(
+            $request,
+            $this->createQueryContainer(),
+            $this->createLocaleFacade()
         );
     }
 

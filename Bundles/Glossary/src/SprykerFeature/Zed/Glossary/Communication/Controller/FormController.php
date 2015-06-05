@@ -23,14 +23,17 @@ class FormController extends AbstractController
      */
     public function translationAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createTranslationForm($request);
+        $form = $this->getDependencyContainer()
+            ->createKeyForm($request)
+        ;
         $form->init();
 
         if ($form->isValid()) {
-            $translation = new \Generated\Shared\Transfer\TranslationTransfer();
-            $translation->fromArray($form->getRequestData());
 
-            $this->getLocator()->glossary()->facade()->saveTranslation($translation);
+            $formData = $form->getRequestData();
+
+            $facade = $this->getDependencyContainer()->createGlossaryFacade();
+            $facade->saveGlossaryKeyTranslations($formData);
         }
 
         return $this->jsonResponse($form->renderData());

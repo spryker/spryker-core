@@ -53,7 +53,11 @@ class DefaultColumn extends AbstractGridPlugin
      */
     public function filterable()
     {
-        $this->isFilterable = true;
+        /**
+         * @todo SprykerFeature_Zed_Library_Propel_Helper is missing.
+         * need to be included again and used for filterable elements
+         */
+        //$this->isFilterable = true;
 
         return $this;
     }
