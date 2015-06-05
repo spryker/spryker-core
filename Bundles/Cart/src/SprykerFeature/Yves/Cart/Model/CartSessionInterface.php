@@ -7,7 +7,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 interface CartSessionInterface
 {
     /**
-     * @return SalesOrderTransfer
+     * @return OrderTransfer
      */
     public function getOrder();
 
@@ -20,10 +20,10 @@ interface CartSessionInterface
      * Save a new CartOrder, if you just changed the order from get()
      * there is no need to call set().
      *
-     * @param SalesOrderTransfer $order
+     * @param OrderTransfer $order
      * @return $this
      */
-    public function setOrder(SalesOrderTransfer $order);
+    public function setOrder(OrderTransfer $order);
 
     /**
      * @param string $sku
