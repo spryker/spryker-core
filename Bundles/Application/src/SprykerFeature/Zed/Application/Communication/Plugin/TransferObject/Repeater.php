@@ -12,15 +12,16 @@ class Repeater extends AbstractPlugin
     /**
      * @var bool
      */
-    protected static $isRepeatInProgress = false;
+    protected $isRepeatInProgress = false;
 
     /**
-     * @param null $mvc
+     * @param string|null $mvc
+     *
      * @return string
      */
-    public static function getRepeatData($mvc = null)
+    public function getRepeatData($mvc = null)
     {
-        self::$isRepeatInProgress = true;
+        $this->isRepeatInProgress = true;
         if (!is_null($mvc)) {
             return \SprykerFeature_Shared_Library_Log::getFlashInFile('last_yves_request_' . $mvc . '.log');
         } else {
@@ -32,9 +33,9 @@ class Repeater extends AbstractPlugin
      * @param RequestInterface $transferObject
      * @param HttpRequest $httpRequest
      */
-    public static function setRepeatData(RequestInterface $transferObject, HttpRequest $httpRequest)
+    public function setRepeatData(RequestInterface $transferObject, HttpRequest $httpRequest)
     {
-        if (self::$isRepeatInProgress) {
+        if ($this->isRepeatInProgress) {
             return;
         }
 
@@ -49,7 +50,13 @@ class Repeater extends AbstractPlugin
             'params' => $transferObject->toArray(false),
         );
 
-        $mvc = $httpRequest->attributes->get('module') . '_' . $httpRequest->attributes->get('controller') . '_' . $httpRequest->attributes->get('action');
+        $mvc = sprintf(
+            '%s_%s_%s',
+            $httpRequest->attributes->get('module'),
+            $httpRequest->attributes->get('controller'),
+            $httpRequest->attributes->get('action')
+        );
+
         \SprykerFeature_Shared_Library_Log::setFlashInFile($repeatData, 'last_yves_request_' . $mvc . '.log');
         \SprykerFeature_Shared_Library_Log::setFlashInFile($repeatData, 'last_yves_request.log');
     }
