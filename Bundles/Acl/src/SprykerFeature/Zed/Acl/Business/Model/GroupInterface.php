@@ -5,11 +5,13 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
-use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNameExistsException;
+use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
+use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroup;
 
 interface GroupInterface
 {
+
     /**
      * @param string $name
      *
@@ -21,10 +23,50 @@ interface GroupInterface
      * @param GroupTransfer $group
      *
      * @return GroupTransfer
+     */
+    public function updateGroup(GroupTransfer $group);
+
+    /**
+     * @param GroupTransfer $group
+     *
+     * @return GroupTransfer
      * @throws GroupNameExistsException
      * @throws GroupNotFoundException
      */
     public function save(GroupTransfer $group);
+
+    /**
+     * @param int $id
+     *
+     * @return SpyAclGroup
+     * @throws GroupNotFoundException
+     */
+    public function getEntityGroupById($id);
+
+    /**
+     * @param int $idGroup
+     * @param int $idUser
+     */
+    public function removeUser($idGroup, $idUser);
+
+    /**
+     * @return GroupTransfer
+     */
+    public function getAllGroups();
+
+    /**
+     * @param GroupTransfer $group
+     *
+     * @throws GroupNameExistsException
+     */
+    public function assertGroupHasName(GroupTransfer $group);
+
+    /**
+     * @param GroupTransfer $group
+     *
+     * @throws GroupNotFoundException
+     */
+    public function assertGroupExists(GroupTransfer $group);
 
     /**
      * @param int $idGroup

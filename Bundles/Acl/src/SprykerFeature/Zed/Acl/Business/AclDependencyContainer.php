@@ -5,6 +5,8 @@ namespace SprykerFeature\Zed\Acl\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\AclBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Acl\AclConfig;
+use SprykerFeature\Zed\Acl\Business\Model\GroupInterface;
+use SprykerFeature\Zed\Acl\Business\Model\RoleInterface;
 use SprykerFeature\Zed\Acl\Business\Model\RuleValidator;
 use SprykerFeature\Zed\Acl\Business\Model\Group;
 use SprykerFeature\Zed\Acl\Business\Model\Installer;
@@ -24,7 +26,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
     protected $queryContainer;
 
     /**
-     * @return Group
+     * @return GroupInterface
      */
     public function createGroupModel()
     {
@@ -35,7 +37,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return Role
+     * @return RoleInterface
      */
     public function createRoleModel()
     {
