@@ -144,19 +144,6 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idRole
-     * @param int $idGroup
-     *
-     * @return int
-     */
-    public function addRoleToGroup($idRole, $idGroup)
-    {
-        return $this->getDependencyContainer()
-            ->createGroupModel()
-            ->addRole($idGroup, $idRole);
-    }
-
-    /**
      * @param int $idUser
      * @param int $idGroup
      *
