@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Acl\Business\Model\Group;
 use SprykerFeature\Zed\Acl\Business\Model\Installer;
 use SprykerFeature\Zed\Acl\Business\Model\Role;
 use SprykerFeature\Zed\Acl\Business\Model\Rule;
+use SprykerFeature\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 
 /**
@@ -52,11 +53,20 @@ class AclDependencyContainer extends AbstractDependencyContainer
     public function createRuleModel()
     {
         return $this->getFactory()->createModelRule(
-            $this->locateQueryContainer(),
-            $this->getLocator(),
+            $this->getUserFacade(),
+            $this->createGroupModel(),
             $this->createRuleValidatorHelper(),
+            $this->locateQueryContainer(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return AclToUserInterface
+     */
+    protected function getUserFacade()
+    {
+        return $this->getLocator()->user()->facade();
     }
 
     /**
