@@ -254,7 +254,7 @@ class AclFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createRuleModel()
-            ->findByGroupId($idGroup);
+            ->getRulesForGroupId($idGroup);
     }
 
     /**

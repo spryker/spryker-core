@@ -106,13 +106,13 @@ interface GroupInterface
     public function getUserGroup($idUser);
 
     /**
-     * @param int $idGroup
      * @param int $idRole
+     * @param int $idGroup
      *
      * @return int
      * @throws GroupAlreadyHasRoleException
      */
-    public function addRole($idGroup, $idRole);
+    public function addRoleToGroup($idRole, $idGroup);
 
     /**
      * @param int $idGroup

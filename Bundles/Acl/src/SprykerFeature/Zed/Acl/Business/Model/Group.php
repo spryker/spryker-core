@@ -170,13 +170,13 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param int $idGroup
      * @param int $idRole
+     * @param int $idGroup
      *
      * @return int
      * @throws GroupAlreadyHasRoleException
      */
-    public function addRole($idGroup, $idRole)
+    public function addRoleToGroup($idRole, $idGroup)
     {
         if ($this->hasRole($idGroup, $idRole)) {
             throw new GroupAlreadyHasRoleException();

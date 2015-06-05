@@ -197,9 +197,9 @@ class Rule implements RuleInterface
     /**
      * @param int $idGroup
      *
-     * @return RuleTransfer
+     * @return RulesTransfer
      */
-    public function findByGroupId($idGroup)
+    public function getRulesForGroupId($idGroup)
     {
         $relationshipCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find();
         $results = $this->queryContainer->queryGroupRules($relationshipCollection)->find();

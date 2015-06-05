@@ -49,7 +49,7 @@ class Role implements RoleInterface
         $role = $this->save($data);
         $role->setIdGroup($idGroup);
 
-        $this->groupModel->addRole($role->getIdAclRole(), $idGroup);
+        $this->groupModel->addRoleToGroup($role->getIdAclRole(), $idGroup);
 
         return $role;
     }
