@@ -12,15 +12,15 @@ class Repeater extends AbstractPlugin
     /**
      * @var bool
      */
-    protected static $isRepeatInProgress = false;
+    protected $isRepeatInProgress = false;
 
     /**
      * @param null $mvc
      * @return string
      */
-    public static function getRepeatData($mvc = null)
+    public function getRepeatData($mvc = null)
     {
-        self::$isRepeatInProgress = true;
+        $this->isRepeatInProgress = true;
         if (!is_null($mvc)) {
             return \SprykerFeature_Shared_Library_Log::getFlashInFile('last_yves_request_' . $mvc . '.log');
         } else {
@@ -32,9 +32,9 @@ class Repeater extends AbstractPlugin
      * @param RequestInterface $transferObject
      * @param HttpRequest $httpRequest
      */
-    public static function setRepeatData(RequestInterface $transferObject, HttpRequest $httpRequest)
+    public function setRepeatData(RequestInterface $transferObject, HttpRequest $httpRequest)
     {
-        if (self::$isRepeatInProgress) {
+        if ($this->isRepeatInProgress) {
             return;
         }
 
