@@ -41,8 +41,8 @@ class AclDependencyContainer extends AbstractDependencyContainer
     public function createRoleModel()
     {
         return $this->getFactory()->createModelRole(
-            $this->locateQueryContainer(),
-            $this->getLocator()
+            $this->createGroupModel(),
+            $this->locateQueryContainer()
         );
     }
 

@@ -3,8 +3,7 @@
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RolesTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRole;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
@@ -21,18 +20,18 @@ class Role implements RoleInterface
     protected $queryContainer;
 
     /**
-     * @var AutoCompletion
+     * @var GroupInterface
      */
-    protected $locator;
+    private $groupModel;
 
     /**
+     * @param GroupInterface $groupModel
      * @param AclQueryContainer $queryContainer
-     * @param LocatorLocatorInterface $locator
      */
-    public function __construct(AclQueryContainer $queryContainer, LocatorLocatorInterface $locator)
+    public function __construct(GroupInterface $groupModel, AclQueryContainer $queryContainer)
     {
         $this->queryContainer = $queryContainer;
-        $this->locator = $locator;
+        $this->groupModel = $groupModel;
     }
 
     /**
@@ -50,7 +49,7 @@ class Role implements RoleInterface
         $role = $this->save($data);
         $role->setIdGroup($idGroup);
 
-        $this->locator->acl()->facade()->addRoleToGroup($role->getIdAclRole(), $idGroup);
+        $this->groupModel->addRole($role->getIdAclRole(), $idGroup);
 
         return $role;
     }
@@ -64,7 +63,7 @@ class Role implements RoleInterface
 d     */
     public function save(RoleTransfer $data)
     {
-        $entity = $this->locator->acl()->entitySpyAclRole();
+        $entity = new SpyAclRole();
 
         if ($data->getIdAclRole() !== null && $this->hasRoleId($data->getIdAclRole()) === true) {
             throw new RoleNotFoundException();
@@ -114,7 +113,7 @@ d     */
      */
     public function getUserRoles($idUser)
     {
-        $group = $this->locator->acl()->facade()->getUserGroup($idUser);
+        $group = $this->groupModel->getUserGroup($idUser);
 
         return $this->getGroupRoles($group->getIdAclGroup());
     }
