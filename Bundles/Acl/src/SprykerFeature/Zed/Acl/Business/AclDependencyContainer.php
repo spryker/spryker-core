@@ -31,8 +31,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
     public function createGroupModel()
     {
         return $this->getFactory()->createModelGroup(
-            $this->locateQueryContainer(),
-            $this->getLocator()
+            $this->locateQueryContainer()
         );
     }
 

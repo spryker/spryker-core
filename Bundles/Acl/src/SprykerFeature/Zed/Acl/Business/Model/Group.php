@@ -4,13 +4,12 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\GroupsTransfer;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroup;
+use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRoles;
+use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclUserHasGroup;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
@@ -27,18 +26,11 @@ class Group implements GroupInterface
     protected $queryContainer;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @param AclQueryContainer $queryContainer
-     * @param LocatorLocatorInterface $locator
      */
-    public function __construct(AclQueryContainer $queryContainer, LocatorLocatorInterface $locator)
+    public function __construct(AclQueryContainer $queryContainer)
     {
         $this->queryContainer = $queryContainer;
-        $this->locator = $locator;
     }
 
     /**
@@ -83,7 +75,7 @@ class Group implements GroupInterface
         if ($group->getIdAclGroup() !== null) {
             $entity = $this->getEntityGroupById($group->getIdAclGroup());
         } else {
-            $entity = $this->locator->acl()->entitySpyAclGroup();
+            $entity = new SpyAclGroup();
         }
 
         $entity->setName($group->getName());
@@ -190,9 +182,7 @@ class Group implements GroupInterface
             throw new GroupAlreadyHasRoleException();
         }
 
-        $entity = $this->locator
-            ->acl()
-            ->entitySpyAclGroupsHasRoles();
+        $entity = new SpyAclGroupsHasRoles();
 
         $entity->setFkAclGroup($idGroup)
             ->setFkAclRole($idRole);
@@ -214,9 +204,7 @@ class Group implements GroupInterface
             throw new GroupAlreadyHasUserException();
         }
 
-        $entity = $this->locator
-            ->acl()
-            ->entitySpyAclUserHasGroup();
+        $entity = new SpyAclUserHasGroup();
 
         $entity->setFkAclGroup($idGroup)
             ->setFkUserUser($idUser);
