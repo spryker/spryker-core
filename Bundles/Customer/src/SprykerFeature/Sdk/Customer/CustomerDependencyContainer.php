@@ -11,11 +11,16 @@ use Generated\Yves\Ide\FactoryAutoCompletion\Customer as CustomerFactory;
  */
 class CustomerDependencyContainer extends AbstractDependencyContainer
 {
+    protected function createZedClient()
+    {
+        return $this->getLocator()->zedRequest()->zedClient();
+    }
+
     /**
      * @return Customer
      */
     public function createModelCustomer()
     {
-        return $this->getFactory()->createModelCustomer($this->getFactory(), $this->getLocator());
+        return $this->getFactory()->createModelCustomer($this->createZedClient());
     }
 }
