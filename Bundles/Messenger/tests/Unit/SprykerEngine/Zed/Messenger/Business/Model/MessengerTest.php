@@ -12,30 +12,72 @@ class MessengerTest extends \PHPUnit_Framework_TestCase
      */
     protected $messenger;
 
+    protected $testMessages = [
+        [
+            'type' => 'success',
+            'text' => 'Success 1',
+        ],
+        [
+            'type' => 'success',
+            'text' => 'Success 2',
+        ],
+        [
+            'type' => 'notice',
+            'text' => 'Notification 1',
+        ],
+        [
+            'type' => 'error',
+            'text' => 'Error 1',
+        ],
+        [
+            'type' => 'success',
+            'text' => 'Success 3',
+        ],
+    ];
+
     protected function setUp()
     {
         $this->messenger = new Messenger();
     }
 
-    public function testAddSuccess()
+    protected function addTestMessages()
     {
-        $this->messenger->addSuccess('Success');
+        foreach ($this->testMessages as $message) {
+            $this->messenger->add($message['type'], $message['text']);
+        }
     }
 
-    public function testGetByType()
+    public function testNewCreatedMessengerHasEmptyQueue()
+    {
+        $messages = $this->messenger->getAll();
+
+        $this->assertEmpty($messages);
+    }
+
+    public function testGetAllByTypeReturnsOnlyMessagesWithRequestedTypeAndLeavesOtherMessagesInTheQueue()
     {
         // add some messages
-        $this->messenger
-            ->addSuccess('Success 1')
-            ->addSuccess('Success 2')
-            ->addNotice('Notification 1')
-            ->addError('Error 1')
-            ->addSuccess('Success 3');
+        $this->addTestMessages();
 
+        // get all messages of type success
         $messages = $this->messenger->getAll(Message::MESSAGE_SUCCESS);
+
+        $this->assertCount(3, $messages);
 
         foreach ($messages as $message) {
             $this->assertEquals(
+                Message::MESSAGE_SUCCESS,
+                $message->getType()
+            );
+        }
+
+        // get all messages left
+        $messages = $this->messenger->getAll();
+
+        $this->assertCount(2, $messages);
+
+        foreach ($messages as $message) {
+            $this->assertNotEquals(
                 Message::MESSAGE_SUCCESS,
                 $message->getType()
             );
