@@ -7,7 +7,6 @@ use Generated\Shared\Payone\CaptureInterface;
 use Generated\Shared\Payone\DebitInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Payone\RefundInterface;
-use Generated\Shared\Transfer\ApiCallResponseCheckTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Payone\ApiCallResponseCheckInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
@@ -92,7 +91,6 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param PayonePaymentInterface $payment
-     *
      * @return AuthorizationCheckResponseTransfer
      */
     public function getAuthorizationResponse(PayonePaymentInterface $payment)
