@@ -3,7 +3,7 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-namespace Tax;
+namespace ProductOptions;
 
 use \Codeception\Maybe;
 use Codeception\Module\Filesystem;
