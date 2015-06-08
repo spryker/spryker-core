@@ -16,7 +16,7 @@ use SprykerFeature\Zed\ProductOptions\Persistence\Propel\Map\SpyOptionTypeTableM
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\Map\SpyOptionValueTableMap;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\Map\SpyProductOptionTypeTableMap;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\Map\SpyProductOptionValueTableMap;
-use SprykerFeature\Zed\Product\Business\ProductFacade;
+use SprykerFeature\Zed\ProductOptions\Dependency\Facade\ProductOptionsToProductInterface;
 
 class DataImportWriter implements DataImportWriterInterface
 {
@@ -28,7 +28,7 @@ class DataImportWriter implements DataImportWriterInterface
 
 
     /**
-     * @var ProductFacade
+     * @var ProductOptionsToProductInterface
      */
     protected $productFacade;
 
@@ -37,7 +37,7 @@ class DataImportWriter implements DataImportWriterInterface
      */
     public function __construct(
         ProductOptionsQueryContainerInterface $queryContainer,
-        ProductFacade $productFacade
+        ProductOptionsToProductInterface $productFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;

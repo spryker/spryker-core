@@ -6,7 +6,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\ProductOptions\ProductOptionsConfig;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionsBusiness;
 use SprykerFeature\Zed\ProductOptions\Business\Model\DataImportWriterInterface;
-use SprykerFeature\Zed\Product\Business\ProductFacade;
+use SprykerFeature\Zed\ProductOptions\Dependency\Facade\ProductOptionsToProductInterface;
 
 /**
  * @method ProductOptionsBusiness getFactory()
@@ -27,7 +27,7 @@ class ProductOptionsDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return ProductFacade
+     * @return ProductOptionsToProductInterface
      */
     protected function createProductFacade()
     {
