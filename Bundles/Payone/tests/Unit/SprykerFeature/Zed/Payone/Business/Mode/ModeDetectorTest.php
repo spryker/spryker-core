@@ -3,7 +3,7 @@
 namespace Unit\SprykerFeature\Zed\Payone\Business\Mode;
 
 use SprykerFeature\Zed\Payone\Business\Mode\ModeDetector;
-use SprykerFeature\Zed\Payone\Business\Mode\ModeDetectorInterface;
+use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 
 /**
  * @group ModeDetector
