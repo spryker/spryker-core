@@ -9,6 +9,8 @@ abstract class AbstractPropelSchemaTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        parent::setUp();
+
         mkdir($this->getFixtureDirectory());
         touch($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'spy_foo.schema.xml');
         touch($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'spy_bar.schema.xml');
@@ -25,6 +27,6 @@ abstract class AbstractPropelSchemaTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFixtureDirectory()
     {
-        return __DIR__ . '/Fixtures';
+        return __DIR__ . '/TempFixtures';
     }
 }

@@ -19,7 +19,7 @@ class SchemaCopyConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Copies schema file from packages to generated folder');
+        $this->setDescription('Copy schema files from packages to generated folder');
 
         parent::configure();
     }
@@ -32,10 +32,8 @@ class SchemaCopyConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-//        $this->getFacade()->cleanPropelSchemaDirectory();
-//        $this->getFacade()->copySchemaFilesToTargetDirectory();
-
-        $this->getFacade()->copyMergedSchemaFilesToTargetDirectory();
+        $this->getFacade()->cleanPropelSchemaDirectory();
+        $this->getFacade()->copySchemaFilesToTargetDirectory();
     }
 
     /**

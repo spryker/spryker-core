@@ -51,7 +51,7 @@ class PropelFacadeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(is_dir($this->getConfig()->getSchemaDirectory()));
     }
 
-    public function testCopySchemaFilesToTargetDirectoryShouldCollectAllSchemaFilesAndCopyThemToSpecifiedDirectory()
+    public function testCopySchemaFilesToTargetDirectoryShouldCollectAllSchemaFilesMergeAndCopyThemToSpecifiedDirectory()
     {
         $this->assertFalse(is_dir($this->getConfig()->getSchemaDirectory()));
         $this->getFacade()->copySchemaFilesToTargetDirectory();

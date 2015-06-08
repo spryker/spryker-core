@@ -8,24 +8,19 @@ use Symfony\Component\Finder\SplFileInfo;
 class PropelSchemaFinder implements PropelSchemaFinderInterface
 {
 
-    /**
-     * @var array
-     */
-    protected $pathPattern;
+    const FILE_NAME_PATTERN = '*_*.schema.xml';
 
     /**
      * @var array
      */
-    protected $fileNamePattern;
+    protected $pathPatterns;
 
     /**
-     * @param array $pathPattern
-     * @param $fileNamePattern
+     * @param array $pathPatterns
      */
-    public function __construct(array $pathPattern, $fileNamePattern)
+    public function __construct(array $pathPatterns)
     {
-        $this->pathPattern = $pathPattern;
-        $this->fileNamePattern = $fileNamePattern;
+        $this->pathPatterns = $pathPatterns;
     }
 
     /**
@@ -35,8 +30,9 @@ class PropelSchemaFinder implements PropelSchemaFinderInterface
     {
         $finder = new Finder();
         $finder
-            ->in($this->pathPattern)
-            ->name($this->fileNamePattern)
+            ->in($this->pathPatterns)
+            ->name(self::FILE_NAME_PATTERN)
+            ->depth(0)
         ;
 
         return $finder;

@@ -17,8 +17,7 @@ class PropelSchemaFinderTest extends AbstractPropelSchemaTest
     public function testGetSchemasShouldReturnIterateableFileCollection()
     {
         $schemaFinder = new PropelSchemaFinder(
-            [$this->getFixtureDirectory()],
-            'file name pattern'
+            [$this->getFixtureDirectory()]
         );
 
         $this->assertInstanceOf('Symfony\Component\Finder\Finder', $schemaFinder->getSchemaFiles());

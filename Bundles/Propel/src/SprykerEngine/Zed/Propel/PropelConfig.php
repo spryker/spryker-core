@@ -32,19 +32,11 @@ class PropelConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getPropelSchemaPathPattern()
+    public function getPropelSchemaPathPatterns()
     {
         return [
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Zed/*/Persistence/Propel/Schema/'
+            APPLICATION_VENDOR_DIR . '/*/*/*/*/src/*/Zed/*/Persistence/Propel/Schema/'
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getPropelSchemaFileNamePattern()
-    {
-        return '*.schema.xml';
     }
 
 }

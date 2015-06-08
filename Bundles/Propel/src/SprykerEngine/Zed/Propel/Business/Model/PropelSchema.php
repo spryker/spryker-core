@@ -2,52 +2,69 @@
 
 namespace SprykerEngine\Zed\Propel\Business\Model;
 
-use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemoverInterface;
-
 class PropelSchema implements PropelSchemaInterface
 {
 
     /**
-     * @var DirectoryRemoverInterface
+     * @var PropelGroupedSchemaFinderInterface
      */
-    protected $directoryRemover;
+    private $finder;
 
     /**
-     * @var PropelSchemaFinder
+     * @var PropelSchemaWriterInterface
      */
-    protected $schemaFinder;
+    private $writer;
 
     /**
-     * @var PropelSchemaReplicator
+     * @var PropelSchemaMergerInterface
      */
-    protected $schemaReplicator;
+    private $merger;
 
     /**
-     * @param DirectoryRemoverInterface $directoryRemover
-     * @param PropelSchemaFinderInterface $schemaFinder
-     * @param PropelSchemaReplicatorInterface $schemaReplicator
+     * @param PropelGroupedSchemaFinderInterface $finder
+     * @param PropelSchemaWriterInterface $writer
+     * @param PropelSchemaMergerInterface $merger
      */
-    public function __construct(
-        DirectoryRemoverInterface $directoryRemover,
-        PropelSchemaFinderInterface $schemaFinder,
-        PropelSchemaReplicatorInterface $schemaReplicator
-    )
+    public function __construct(PropelGroupedSchemaFinderInterface $finder, PropelSchemaWriterInterface $writer, PropelSchemaMergerInterface $merger)
     {
-        $this->directoryRemover = $directoryRemover;
-        $this->schemaFinder = $schemaFinder;
-        $this->schemaReplicator = $schemaReplicator;
+        $this->finder = $finder;
+        $this->writer = $writer;
+        $this->merger = $merger;
     }
 
-    public function cleanTargetDirectory()
+    public function copy()
     {
-        $this->directoryRemover->execute();
+        $schemaFiles = $this->finder->getGroupedSchemaFiles();
+        foreach ($schemaFiles as $fileName => $groupedSchemas) {
+            if ($this->needMerge($groupedSchemas)) {
+                $content = $this->merger->merge($groupedSchemas);
+            } else {
+                $content = $this->getCurrentSchemaContent($groupedSchemas);
+            }
+            $this->writer->write($fileName, $content);
+        }
     }
 
-    public function copyToTargetDirectory()
+    /**
+     * @param array $groupedSchemas
+     *
+     * @return bool
+     */
+    private function needMerge(array $groupedSchemas)
     {
-        $this->schemaReplicator->replicateSchemaFiles(
-            $this->schemaFinder
-        );
+        return (count($groupedSchemas) > 1);
+    }
+
+    /**
+     * @param array $groupedSchemas
+     *
+     * @return mixed
+     */
+    private function getCurrentSchemaContent(array $groupedSchemas)
+    {
+        $schemaFile = current($groupedSchemas);
+
+        return $schemaFile->getContents();
     }
 
 }

@@ -5,13 +5,13 @@ namespace SprykerEngine\Zed\Propel\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\PropelBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemoverInterface;
-use SprykerEngine\Zed\Propel\Business\Model\Merge;
+use SprykerEngine\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaFinderInterface;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaInterface;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaReplicatorInterface;
+use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaMergerInterface;
+use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaWriterInterface;
 use SprykerEngine\Zed\Propel\PropelConfig;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 
 /**
  * @method PropelBusiness getFactory()
@@ -23,47 +23,25 @@ class PropelDependencyContainer extends AbstractDependencyContainer
     /**
      * @return PropelSchemaInterface
      */
-    public function createModelPropelSchema()
+    public function createModelSchema()
     {
         return $this->getFactory()->createModelPropelSchema(
-            $this->createDirectoryRemover($this->getConfig()->getSchemaDirectory()),
-            $this->createSchemaFinder(),
-            $this->createSchemaReplicator()
+            $this->createGroupedSchemaFinder(),
+            $this->createSchemaWriter(),
+            $this->createSchemaMerger()
         );
     }
 
     /**
-     * @return Merge
+     * @return PropelGroupedSchemaFinderInterface
      */
-    public function createModelMerge()
+    private function createGroupedSchemaFinder()
     {
-        return $this->getFactory()->createModelMerge(
-            new Filesystem(),
-            new Finder(),
-            $this->getConfig()->getSchemaDirectory()
-        );
-    }
-
-    /**
-     * @param string $path
-     *
-     * @return DirectoryRemoverInterface
-     */
-    private function createDirectoryRemover($path)
-    {
-        return $this->getFactory()->createModelDirectoryRemover($path);
-    }
-
-    /**
-     * @return PropelSchemaReplicatorInterface
-     */
-    private function createSchemaReplicator()
-    {
-        $schemaReplicator = $this->getFactory()->createModelPropelSchemaReplicator(
-            $this->getConfig()->getSchemaDirectory()
+        $schemaFinder = $this->getFactory()->createModelPropelGroupedSchemaFinder(
+            $this->createSchemaFinder()
         );
 
-        return $schemaReplicator;
+        return $schemaFinder;
     }
 
     /**
@@ -72,11 +50,41 @@ class PropelDependencyContainer extends AbstractDependencyContainer
     private function createSchemaFinder()
     {
         $schemaFinder = $this->getFactory()->createModelPropelSchemaFinder(
-            $this->getConfig()->getPropelSchemaPathPattern(),
-            $this->getConfig()->getPropelSchemaFileNamePattern()
+            $this->getConfig()->getPropelSchemaPathPatterns()
         );
 
         return $schemaFinder;
+    }
+
+    /**
+     * @return PropelSchemaWriterInterface
+     */
+    private function createSchemaWriter()
+    {
+        $schemaWriter = $this->getFactory()->createModelPropelSchemaWriter(
+            new Filesystem(),
+            $this->getConfig()->getSchemaDirectory()
+        );
+
+        return $schemaWriter;
+    }
+
+    /**
+     * @return PropelSchemaMergerInterface
+     */
+    private function createSchemaMerger()
+    {
+        return $this->getFactory()->createModelPropelSchemaMerger();
+    }
+
+    /**
+     * @return DirectoryRemoverInterface
+     */
+    public function createDirectoryRemover()
+    {
+        return $this->getFactory()->createModelDirectoryRemover(
+            $this->getConfig()->getSchemaDirectory()
+        );
     }
 
 }

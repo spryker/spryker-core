@@ -12,17 +12,12 @@ class PropelFacade extends AbstractFacade
 
     public function cleanPropelSchemaDirectory()
     {
-        $this->getDependencyContainer()->createModelPropelSchema()->cleanTargetDirectory();
+        $this->getDependencyContainer()->createDirectoryRemover()->execute();
     }
 
     public function copySchemaFilesToTargetDirectory()
     {
-        $this->getDependencyContainer()->createModelPropelSchema()->copyToTargetDirectory();
-    }
-
-    public function copyMergedSchemaFilesToTargetDirectory()
-    {
-        $this->getDependencyContainer()->createModelMerge()->mergeOrCopySchemaFiles();
+        $this->getDependencyContainer()->createModelSchema()->copy();
     }
 
 }

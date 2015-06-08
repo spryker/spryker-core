@@ -30,11 +30,4 @@ class PropelDependencyContainerTest extends \PHPUnit_Framework_TestCase
         return new PropelDependencyContainer($factory, Locator::getInstance(), $config);
     }
 
-    public function testCreateModelSchemaShouldReturnFullyConfiguredInstance()
-    {
-        $instance = $this->getDependencyContainer()->createModelPropelSchema();
-
-        $this->assertInstanceOf('SprykerEngine\Zed\Propel\Business\Model\PropelSchema', $instance);
-    }
-
 }
