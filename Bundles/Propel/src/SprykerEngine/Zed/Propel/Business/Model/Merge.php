@@ -2,7 +2,6 @@
 
 namespace SprykerEngine\Zed\Propel\Business\Model;
 
-use ArrayObject;
 use SprykerEngine\Zed\Propel\Business\Exception\SchemaMergeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -43,7 +42,6 @@ class Merge
     public function mergeOrCopySchemaFiles()
     {
         $schemaDirectories = $this->listAllSchemaDirectories();
-
         $schemaPathsGroupedByFileId = $this->findAllSchemasGroupedByFileId($schemaDirectories);
 
         foreach ($schemaPathsGroupedByFileId as $fileId => $existingSchemaPaths) {
@@ -74,9 +72,15 @@ class Merge
         foreach ($directoryPatterns as $directoryPattern) {
             $dirs = array_merge($dirs, glob($directoryPattern));
         }
+
         return $dirs;
     }
 
+    /**
+     * @param $schemaDirectories
+     *
+     * @return ArrayObject
+     */
     protected function findAllSchemasGroupedByFileId($schemaDirectories)
     {
         $schemaIterator = $this->finder
@@ -95,16 +99,18 @@ class Merge
 
     /**
      * @param SplFileInfo $schemaData
-     * @param ArrayObject $schemaArray
-     * @return ArrayObject
+     * @param \ArrayObject $schemaArray
+     *
+     * @return \ArrayObject
      */
-    protected function addSchemaToList(SplFileInfo $schemaData, ArrayObject $schemaArray)
+    protected function addSchemaToList(SplFileInfo $schemaData, \ArrayObject $schemaArray)
     {
         $fileId = $schemaData->getRelativePathName();
         if (false === isset($schemaArray[$fileId])) {
             $schemaArray[$fileId] = [];
         }
         $schemaArray[$fileId][] = $schemaData->getPathName();
+
         return $schemaArray;
     }
 
@@ -122,9 +128,10 @@ class Merge
 
     /**
      * @param $schemaPaths
+     *
      * @return bool
      */
-    protected function needsMerge($schemaPaths)
+    protected function needsMerge(array $schemaPaths)
     {
         return count($schemaPaths) > 1;
     }
@@ -137,13 +144,9 @@ class Merge
     protected function mergeSchemasOfOneSchemaFile(array $schemaPaths, $fileId, $pathForGeneratedFile)
     {
         $this->checkConsistency($schemaPaths, $fileId);
-
         $mergeTargetXmlElement = $this->createMergeTargetXmlElement(current($schemaPaths));
-
         $schemaXmlElements = $this->createSchemaXmlElements($schemaPaths, $fileId);
-
         $newXml = $this->mergeSchema($mergeTargetXmlElement, $schemaXmlElements);
-
         $this->filesystem->dumpFile($pathForGeneratedFile, $newXml);
     }
 
@@ -156,7 +159,6 @@ class Merge
     {
         $childArray = [];
         foreach ($schemaPaths as $schemaPath) {
-
             $schemaAttributes = $this->createXmlElement($schemaPath)->attributes();
             $schemaKey = $this->createKey($schemaAttributes['name'], $schemaAttributes['package'], $schemaAttributes['namespace']);
             $childArray[$schemaKey] = true;
@@ -165,39 +167,44 @@ class Merge
         if (count($childArray) !== 1) {
             throw new SchemaMergeException('Ambiguous use of name, package and namespace in schema file "' . $fileId . '"');
         }
-
     }
 
     /**
-     * @param $orginalSchemaFile
+     * @param $originalSchemaFile
+     *
      * @return \SimpleXMLElement
      */
-    protected function createXmlElement($orginalSchemaFile)
+    protected function createXmlElement($originalSchemaFile)
     {
-        $content = file_get_contents($orginalSchemaFile);
+        $content = file_get_contents($originalSchemaFile);
         $xml = new \SimpleXMLElement($content);
+
         return $xml;
     }
 
     /**
-     * @param $schemaDatabase
-     * @param $schemaPackage
-     * @param $schemaNamespace
+     * @param string $schemaDatabase
+     * @param string $schemaPackage
+     * @param string $schemaNamespace
+     *
      * @return string
      */
     protected function createKey($schemaDatabase, $schemaPackage, $schemaNamespace)
     {
         $key = $schemaDatabase . '|' . $schemaPackage . '|' . $schemaNamespace;
+
         return $key;
     }
 
     /**
      * @param $schemaPath
+     *
      * @return \SimpleXMLElement
      */
     protected function createMergeTargetXmlElement($schemaPath)
     {
         $schemaAttributes = $this->createXmlElement($schemaPath)->attributes();
+
         return $this->createNewXml($schemaAttributes['name'], $schemaAttributes['namespace'], $schemaAttributes['package']);
     }
 
@@ -205,52 +212,58 @@ class Merge
      * @param $schemaDatabase
      * @param $schemaNamespace
      * @param $schemaPackage
+     *
      * @return \SimpleXMLElement
      */
     protected function createNewXml($schemaDatabase, $schemaNamespace, $schemaPackage)
     {
-        return new \SimpleXMLElement('<database
-          name="' . $schemaDatabase . '"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="' . $schemaNamespace . '"
-          package="' . $schemaPackage . '"
-          ></database>');
+        return new SimpleXMLElement('<database
+            name="' . $schemaDatabase . '"
+            defaultIdMethod="native"
+            defaultPhpNamingMethod="underscore"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+            namespace="' . $schemaNamespace . '"
+            package="' . $schemaPackage . '"
+            ></database>'
+        );
     }
 
     /**
-     * @param $schemaPaths
-     * @param $fileName
-     * @return \SimpleXMLElement[]
+     * @param array $schemaPaths
+     *
      * @throws \ErrorException
+     * @return \SimpleXMLElement[]
      */
-    protected function createSchemaXmlElements($schemaPaths)
+    protected function createSchemaXmlElements(array $schemaPaths)
     {
         $mergeSourceXmlElements = new \ArrayObject();
         foreach ($schemaPaths as $schemaPath) {
             $mergeSourceXmlElements[] = $this->createXmlElement($schemaPath);
         }
+
         return $mergeSourceXmlElements;
     }
 
     /**
-     * @param $mergeTargetXmlElement
-     * @param $schemaXmlElements
+     * @param \SimpleXMLElement $mergeTargetXmlElement
+     * @param \SimpleXMLElement[] $schemaXmlElements
+     *
      * @return string $xml
      */
-    protected function mergeSchema($mergeTargetXmlElement, $schemaXmlElements)
+    protected function mergeSchema(\SimpleXMLElement $mergeTargetXmlElement, $schemaXmlElements)
     {
         foreach ($schemaXmlElements as $schemaXmlElement) {
             $mergeTargetXmlElement = $this->mergeSchemasRecursive($mergeTargetXmlElement, $schemaXmlElement);
         }
+
         return $mergeTargetXmlElement->asXML();
     }
 
     /**
      * @param \SimpleXMLElement $toXmlElement
      * @param \SimpleXMLElement $fromXmlElement
+     *
      * @return \SimpleXMLElement
      */
     protected function mergeSchemasRecursive(\SimpleXMLElement $toXmlElement, \SimpleXMLElement $fromXmlElement)
@@ -278,7 +291,8 @@ class Merge
 
     /**
      * @param \SimpleXMLElement $toXmlElement
-     * @return ArrayObject
+     *
+     * @return \ArrayObject
      */
     protected function retrieveToXmlElements(\SimpleXMLElement $toXmlElement)
     {
@@ -288,17 +302,19 @@ class Merge
             $toXmlElementName = $this->getElementName($toXmlChildElement, $toXmlChildTagName);
             $toXmlElementNames[$toXmlElementName] = $toXmlChildElement;
         }
+
         return $toXmlElementNames;
     }
 
     /**
-     * @param $fromXmlChildElement
-     * @param $tagName
-     * @return array|mixed|string
+     * @param \SimpleXMLElement $fromXmlChildElement
+     * @param string $tagName
+     *
+     * @return string
      */
-    protected function getElementName($fromXmlChildElement, $tagName)
+    protected function getElementName(\SimpleXMLElement $fromXmlChildElement, $tagName)
     {
-        $elementName = (array)$fromXmlChildElement->attributes();
+        $elementName = (array) $fromXmlChildElement->attributes();
         $elementName = current($elementName);
         if (is_array($elementName) && array_key_exists('name', $elementName)) {
             $elementName = $tagName . '|' . $elementName['name'];
@@ -314,8 +330,9 @@ class Merge
     /**
      * @param \SimpleXMLElement $toXmlElement
      * @param \SimpleXMLElement $fromXmlElement
-     * @return \SimpleXMLElement
+     *
      * @throws SchemaMergeException
+     * @return \SimpleXMLElement
      */
     protected function mergeAttributes(\SimpleXMLElement $toXmlElement, \SimpleXMLElement $fromXmlElement)
     {
@@ -327,7 +344,6 @@ class Merge
             $alreadyHasAttributes = false;
         }
         foreach ($fromXmlElement->attributes() as $key => $value) {
-
             if (true === $alreadyHasAttributes
                 && true === array_key_exists($key, $toXmlAttributes)
                 && $toXmlAttributes[$key] != $value
@@ -340,31 +356,30 @@ class Merge
                 $toXmlElement->addAttribute($key, $value);
             }
         }
+
         return $toXmlElement;
     }
 
     /**
      * @param array $schemaPaths
-     * @param $pathForGeneratedFile
+     * @param string $pathForGeneratedFile
      */
     protected function copySchema(array $schemaPaths, $pathForGeneratedFile)
     {
         $oldFilePath = current($schemaPaths);
-
-
         $this->filesystem->copy($oldFilePath, $pathForGeneratedFile);
     }
 
     /**
-     * @param $fileId
-     * @param $newSchemas
-     * @throws \ErrorException
+     * @param int $fileId
+     * @param array $newSchemas
+     *
+     * @throws SchemaMergeException
      */
-    protected function doConsistencyCheck($fileId, $newSchemas)
+    protected function doConsistencyCheck($fileId, array $newSchemas)
     {
         if (count($newSchemas) !== 1) {
-            // TODO own bundle exception
-            throw new \ErrorException('Ambiguous use of name, package and namespace in schema file "' . $fileId . '"');
+            throw new SchemaMergeException('Ambiguous use of name, package and namespace in schema file "' . $fileId . '"');
         }
     }
 }
