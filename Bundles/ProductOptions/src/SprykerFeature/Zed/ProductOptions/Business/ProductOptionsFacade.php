@@ -12,20 +12,22 @@ class ProductOptionsFacade extends AbstractFacade
 
     /**
      * @param string $importKeyOptionType
+     * @param array $localizedNames
      * @param null $importKeyTaxSet
      *
      * @return int
      *
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function importOptionType($importKeyOptionType, $importKeyTaxSet = null)
+    public function importOptionType($importKeyOptionType, array $localizedNames = [], $importKeyTaxSet = null)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importOptionType($importKeyOptionType, $importKeyTaxSet);
+        return $this->getDependencyContainer()->getDataImportWriterModel()->importOptionType($importKeyOptionType, $localizedNames, $importKeyTaxSet);
     }
 
     /**
      * @param string $importKeyOptionValue
      * @param string $importKeyOptionType
+     * @param array $localizedNames
      * @param float $price
      *
      * @return int
@@ -33,9 +35,9 @@ class ProductOptionsFacade extends AbstractFacade
      * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function importOptionValue($importKeyOptionValue, $importKeyOptionType, $price = null)
+    public function importOptionValue($importKeyOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importOptionValue($importKeyOptionValue, $importKeyOptionType, $price);
+        return $this->getDependencyContainer()->getDataImportWriterModel()->importOptionValue($importKeyOptionValue, $importKeyOptionType, $localizedNames, $price);
     }
 
     /**

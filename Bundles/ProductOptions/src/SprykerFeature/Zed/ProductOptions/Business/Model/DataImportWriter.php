@@ -5,6 +5,8 @@ namespace SprykerFeature\Zed\ProductOptions\Business\Model;
 use SprykerFeature\Zed\ProductOptions\Persistence\ProductOptionsQueryContainerInterface;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyOptionType;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyOptionValue;
+use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyOptionTypeTranslation;
+use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyOptionValueTranslation;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyOptionValuePrice;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyProductOptionType;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyProductOptionValue;
@@ -17,6 +19,7 @@ use SprykerFeature\Zed\ProductOptions\Persistence\Propel\Map\SpyOptionValueTable
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\Map\SpyProductOptionTypeTableMap;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\Map\SpyProductOptionValueTableMap;
 use SprykerFeature\Zed\ProductOptions\Dependency\Facade\ProductOptionsToProductInterface;
+use SprykerFeature\Zed\ProductOptions\Dependency\Facade\ProductOptionsToLocaleInterface;
 
 class DataImportWriter implements DataImportWriterInterface
 {
@@ -33,28 +36,38 @@ class DataImportWriter implements DataImportWriterInterface
     protected $productFacade;
 
     /**
+     * @var ProductOptionsToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param ProductOptionsQueryContainerInterface $queryContainer
      */
     public function __construct(
         ProductOptionsQueryContainerInterface $queryContainer,
-        ProductOptionsToProductInterface $productFacade
+        ProductOptionsToProductInterface $productFacade,
+        ProductOptionsToLocaleInterface $localeFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
      * @param string $importKeyOptionType
+     * @param array $localizedNames
      * @param string $importKeyTaxSet
      *
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function importOptionType($importKeyOptionType, $importKeyTaxSet = null)
+    public function importOptionType($importKeyOptionType, array $localizedNames = [], $importKeyTaxSet = null)
     {
         if (!$optionTypeEntity = $this->queryContainer->queryOptionTypeByImportKey($importKeyOptionType)->findOne()) {
             $optionTypeEntity = (new SpyOptionType())
                 ->setImportKey($importKeyOptionType);
         }
+
+        $this->createOrUpdateOptionTypeTranslations($optionTypeEntity, $localizedNames);
 
         $optionTypeEntity->save();
 
@@ -62,14 +75,39 @@ class DataImportWriter implements DataImportWriterInterface
     }
 
     /**
+     * @param SpyOptionType $optionTypeEntity
+     * @param array $localizedNames
+     */
+    private function createOrUpdateOptionTypeTranslations(SpyOptionType $optionTypeEntity, array $localizedNames)
+    {
+        foreach ($localizedNames as $localeName => $localizedOptionTypeName) {
+
+            if (!$this->localeFacade->hasLocale($localeName)) {
+                continue;
+            }
+
+            $localeTransfer = $this->localeFacade->getLocale($localeName);
+
+            if (!$translationEntity = $this->queryContainer->queryOptionTypeTranslationByFks($optionTypeEntity->getIdOptionType(), $localeTransfer->getIdLocale())->findOne()) {
+                $translationEntity = (new SpyOptionTypeTranslation())->setFkLocale($localeTransfer->getIdLocale());
+            }
+
+            $translationEntity->setName($localizedOptionTypeName);
+
+            $optionTypeEntity->addSpyOptionTypeTranslation($translationEntity);
+        }
+    }
+
+    /**
      * @param string $importKeyOptionValue
      * @param string $importKeyOptionType
+     * @param array $localizedNames
      * @param float $price
      *
      * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function importOptionValue($importKeyOptionValue, $importKeyOptionType, $price = null)
+    public function importOptionValue($importKeyOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null)
     {
         if (!$idOptionType = $this->queryContainer->queryOptionTypeByImportKey($importKeyOptionType)->select(SpyOptionTypeTableMap::COL_ID_OPTION_TYPE)->findOne()) {
             throw new \Exception("OptionType '$importKeyOptionType' not found");
@@ -89,9 +127,35 @@ class DataImportWriter implements DataImportWriterInterface
             $optionValueEntity->setSpyOptionValuePrice($priceEntity);
         }
 
+        $this->createOrUpdateOptionValueTranslations($optionValueEntity, $localizedNames);
+
         $optionValueEntity->save();
 
         return $optionValueEntity->getIdOptionValue();
+    }
+
+    /**
+     * @param SpyOptionValue $optionValueEntity
+     * @param array $localizedNames
+     */
+    private function createOrUpdateOptionValueTranslations(SpyOptionValue $optionValueEntity, array $localizedNames)
+    {
+        foreach ($localizedNames as $localeName => $localizedOptionValueName) {
+
+            if (!$this->localeFacade->hasLocale($localeName)) {
+                continue;
+            }
+
+            $localeTransfer = $this->localeFacade->getLocale($localeName);
+
+            if (!$translationEntity = $this->queryContainer->queryOptionValueTranslationByFks($optionValueEntity->getIdOptionValue(), $localeTransfer->getIdLocale())->findOne()) {
+                $translationEntity = (new SpyOptionValueTranslation())->setFkLocale($localeTransfer->getIdLocale());
+            }
+
+            $translationEntity->setName($localizedOptionValueName);
+
+            $optionValueEntity->addSpyOptionValueTranslation($translationEntity);
+        }
     }
 
     /**

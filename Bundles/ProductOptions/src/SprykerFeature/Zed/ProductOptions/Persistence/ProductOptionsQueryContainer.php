@@ -7,23 +7,13 @@ use SprykerFeature\Zed\ProductOptions\Persistence\Propel\Base\SpyProductOptionTy
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\Base\SpyProductOptionValueConstraintQuery;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyOptionTypeQuery;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyOptionValueQuery;
+use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyOptionTypeTranslationQuery;
+use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyOptionValueTranslationQuery;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyProductOptionTypeQuery;
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\SpyProductOptionValueQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 
 class ProductOptionsQueryContainer extends AbstractQueryContainer implements ProductOptionsQueryContainerInterface
 {
-    /**
-     * @param string $sku
-     *
-     * @return SpyProductQuery
-     */
-    public function queryProductBySku($sku)
-    {
-        return SpyProductQuery::create()
-            ->filterBySku($sku);
-    }
-
     /**
      * @param string $importKeyOptionType
      *
@@ -33,6 +23,19 @@ class ProductOptionsQueryContainer extends AbstractQueryContainer implements Pro
     {
         return SpyOptionTypeQuery::create()
             ->filterByImportKey($importKeyOptionType);
+    }
+
+    /**
+     * @param int $fkOptionType
+     * @param int $fkLocale
+     *
+     * @return SpyOptionTypeTranslationQuery
+     */
+    public function queryOptionTypeTranslationByFks($fkOptionType, $fkLocale)
+    {
+        return SpyOptionTypeTranslationQuery::create()
+            ->filterByFkOptionType($fkOptionType)
+            ->filterByFkLocale($fkLocale);
     }
 
     /**
@@ -68,6 +71,19 @@ class ProductOptionsQueryContainer extends AbstractQueryContainer implements Pro
     {
         return SpyOptionValueQuery::create()
             ->filterByImportKey($importKeyOptionValue);
+    }
+
+    /**
+     * @param int $fkOptionValue
+     * @param int $fkLocale
+     *
+     * @return SpyOptionValueTranslationQuery
+     */
+    public function queryOptionValueTranslationByFks($fkOptionValue, $fkLocale)
+    {
+        return SpyOptionValueTranslationQuery::create()
+            ->filterByFkOptionValue($fkOptionValue)
+            ->filterByFkLocale($fkLocale);
     }
 
     /**

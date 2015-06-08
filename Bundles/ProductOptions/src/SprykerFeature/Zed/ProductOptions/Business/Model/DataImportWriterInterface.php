@@ -7,20 +7,22 @@ interface DataImportWriterInterface
 
     /**
      * @param string $importKeyOptionType
+     * @param array $localizedNames
      * @param string $importKeyTaxSet
      *
      * @return int
      */
-    public function importOptionType($importKeyOptionType, $importKeyTaxSet = null);
+    public function importOptionType($importKeyOptionType, array $localizedNames = [], $importKeyTaxSet = null);
 
     /**
      * @param string $importKeyOptionValue
      * @param string $importKeyOptionType
+     * @param array $localizedNames
      * @param float $price
      *
      * @return int
      */
-    public function importOptionValue($importKeyOptionValue, $importKeyOptionType, $price = null);
+    public function importOptionValue($importKeyOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null);
 
     /**
      * @param string $sku

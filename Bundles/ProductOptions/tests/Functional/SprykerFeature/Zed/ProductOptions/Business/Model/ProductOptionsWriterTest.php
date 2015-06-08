@@ -53,12 +53,14 @@ class DataImportWriterTest extends Test
 
     public function testImportOptionType()
     {
-        $this->facade->importOptionType('SHADE');
-        $this->facade->importOptionType('SHADE');
+        $this->facade->importOptionType('SHADE', ['en_GB' => 'Shade']);
+        $this->facade->importOptionType('SHADE', ['en_GB' => 'Shade']);
 
         $result = SpyOptionTypeQuery::create()->findByImportKey('SHADE');
+
         $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
         $this->assertEquals('SHADE', $result[0]->getImportKey());
+        $this->assertEquals('Shade', $result[0]->getSpyOptionTypeTranslations()[0]->getName());
     }
 
     public function testImportOptionValue()
@@ -66,8 +68,8 @@ class DataImportWriterTest extends Test
         $optionType = (new SpyOptionType)->setImportKey('SHADE');
         $optionType->save();
 
-        $this->facade->importOptionValue('VIOLET', 'SHADE', '2.99');
-        $this->facade->importOptionValue('VIOLET', 'SHADE', '2.99');
+        $this->facade->importOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
+        $this->facade->importOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
 
         $result = SpyOptionTypeQuery::create()
             ->findByImportKey('SHADE');
@@ -80,6 +82,7 @@ class DataImportWriterTest extends Test
 
         $this->assertEquals('VIOLET', $optionValues[0]->getImportKey());
         $this->assertEquals(299, $optionValues[0]->getSpyOptionValuePrice()->getPrice());
+        $this->assertEquals('Violet', $optionValues[0]->getSpyOptionValueTranslations()[0]->getName());
     }
 
     public function testImportProductOptionType()

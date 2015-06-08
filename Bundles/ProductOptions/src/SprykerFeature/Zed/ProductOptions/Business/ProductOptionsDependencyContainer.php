@@ -7,6 +7,7 @@ use SprykerFeature\Zed\ProductOptions\ProductOptionsConfig;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionsBusiness;
 use SprykerFeature\Zed\ProductOptions\Business\Model\DataImportWriterInterface;
 use SprykerFeature\Zed\ProductOptions\Dependency\Facade\ProductOptionsToProductInterface;
+use SprykerFeature\Zed\ProductOptions\Dependency\Facade\ProductOptionsToLocaleInterface;
 
 /**
  * @method ProductOptionsBusiness getFactory()
@@ -22,7 +23,8 @@ class ProductOptionsDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelDataImportWriter(
             $this->getLocator()->productOptions()->queryContainer(),
-            $this->createProductFacade()
+            $this->createProductFacade(),
+            $this->createLocaleFacade()
         );
     }
 
@@ -32,5 +34,13 @@ class ProductOptionsDependencyContainer extends AbstractDependencyContainer
     protected function createProductFacade()
     {
         return $this->getLocator()->product()->facade();
+    }
+
+    /**
+     * @return ProductOptionsToLocaleInterface
+     */
+    protected function createLocaleFacade()
+    {
+        return $this->getLocator()->locale()->facade();
     }
 }
