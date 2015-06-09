@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 
+
 class ThreeDSecureContainer extends AbstractContainer
 {
 
