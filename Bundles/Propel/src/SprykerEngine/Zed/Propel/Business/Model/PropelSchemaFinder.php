@@ -37,4 +37,5 @@ class PropelSchemaFinder implements PropelSchemaFinderInterface
 
         return $finder;
     }
+
 }

@@ -25,8 +25,11 @@ class PropelSchema implements PropelSchemaInterface
      * @param PropelSchemaWriterInterface $writer
      * @param PropelSchemaMergerInterface $merger
      */
-    public function __construct(PropelGroupedSchemaFinderInterface $finder, PropelSchemaWriterInterface $writer, PropelSchemaMergerInterface $merger)
-    {
+    public function __construct(
+        PropelGroupedSchemaFinderInterface $finder,
+        PropelSchemaWriterInterface $writer,
+        PropelSchemaMergerInterface $merger
+    ) {
         $this->finder = $finder;
         $this->writer = $writer;
         $this->merger = $merger;
@@ -58,7 +61,7 @@ class PropelSchema implements PropelSchemaInterface
     /**
      * @param array $groupedSchemas
      *
-     * @return mixed
+     * @return string
      */
     private function getCurrentSchemaContent(array $groupedSchemas)
     {

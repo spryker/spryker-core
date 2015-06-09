@@ -19,7 +19,7 @@ class PropelSchemaWriter implements PropelSchemaWriterInterface
 
     /**
      * @param Filesystem $filesystem
-     * @param $targetDirectory
+     * @param string $targetDirectory
      */
     public function __construct(Filesystem $filesystem, $targetDirectory)
     {
@@ -38,6 +38,5 @@ class PropelSchemaWriter implements PropelSchemaWriterInterface
             $content
         );
     }
-
 
 }

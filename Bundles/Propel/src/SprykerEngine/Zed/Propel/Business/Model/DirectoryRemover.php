@@ -13,7 +13,7 @@ class DirectoryRemover implements DirectoryRemoverInterface
     private $directoryToRemove;
 
     /**
-     * @param $directoryToRemove
+     * @param string $directoryToRemove
      */
     public function __construct($directoryToRemove)
     {

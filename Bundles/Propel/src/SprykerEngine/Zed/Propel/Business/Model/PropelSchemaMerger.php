@@ -83,24 +83,24 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param $schemaDatabase
-     * @param $schemaNamespace
-     * @param $schemaPackage
+     * @param string $schemaDatabase
+     * @param string $schemaNamespace
+     * @param string $schemaPackage
      *
      * @return \SimpleXMLElement
      */
     private function createNewXml($schemaDatabase, $schemaNamespace, $schemaPackage)
     {
-        return new \SimpleXMLElement('<database
-            name="' . $schemaDatabase . '"
+        return new \SimpleXMLElement(sprintf('<database
+            name="%s"
             defaultIdMethod="native"
             defaultPhpNamingMethod="underscore"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-            namespace="' . $schemaNamespace . '"
-            package="' . $schemaPackage . '"
+            namespace="%s"
+            package="%s"
             ></database>'
-        );
+        ), $schemaDatabase, $schemaNamespace, $schemaPackage);
     }
 
     /**
@@ -123,7 +123,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * @param \SimpleXMLElement $mergeTargetXmlElement
      * @param \SimpleXMLElement[] $schemaXmlElements
      *
-     * @return string $xml
+     * @return string
      */
     private function mergeSchema(\SimpleXMLElement $mergeTargetXmlElement, $schemaXmlElements)
     {
@@ -216,7 +216,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         foreach ($fromXmlElement->attributes() as $key => $value) {
             if (true === $alreadyHasAttributes
                 && true === array_key_exists($key, $toXmlAttributes)
-                && $toXmlAttributes[$key] != $value
+                && $toXmlAttributes[$key] !== $value
             ) {
                 throw new SchemaMergeException('Ambiguous value for the same attribute for key: ' . $key . ': "' . $toXmlAttributes[$key] . '" !== "' . $value . '"');
             }

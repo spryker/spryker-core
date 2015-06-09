@@ -7,7 +7,6 @@ use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 class ConvertConfigConsole extends Console
 {
@@ -36,7 +35,8 @@ class ConvertConfigConsole extends Console
         ];
 
         $dsn = 'mysql:host=' . Config::get(SystemConfig::ZED_MYSQL_HOST)
-            . ';dbname=' . Config::get(SystemConfig::ZED_MYSQL_DATABASE);
+            . ';dbname=' . Config::get(SystemConfig::ZED_MYSQL_DATABASE)
+        ;
 
         $config['propel']['database']['connections']['default']['dsn'] = $dsn;
         $config['propel']['database']['connections']['default']['user'] = Config::get(SystemConfig::ZED_MYSQL_USERNAME);
@@ -48,7 +48,8 @@ class ConvertConfigConsole extends Console
 
         $fileName = $config['propel']['paths']['phpConfDir']
             . DIRECTORY_SEPARATOR
-            . 'propel.json';
+            . 'propel.json'
+        ;
 
         if (!is_dir(dirname($fileName))) {
             mkdir(dirname($fileName), 0777, true);

@@ -20,7 +20,7 @@ class DirectoryRemoverTest extends \PHPUnit_Framework_TestCase
      */
     protected $fixtureDirectory;
 
-    public function Propel()
+    public function setUp()
     {
         $this->fixtureDirectory = __DIR__ . '/Fixtures';
         $directory = $this->fixtureDirectory . DIRECTORY_SEPARATOR . 'Foo';
