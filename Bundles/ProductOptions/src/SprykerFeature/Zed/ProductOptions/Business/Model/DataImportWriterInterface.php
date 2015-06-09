@@ -2,6 +2,11 @@
 
 namespace SprykerFeature\Zed\ProductOptions\Business\Model;
 
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingOptionTypeException;
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingOptionValueException;
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingProductOptionTypeException;
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingProductOptionValueException;
+
 interface DataImportWriterInterface
 {
 
@@ -21,6 +26,8 @@ interface DataImportWriterInterface
      * @param float $price
      *
      * @return int
+     *
+     * @throws MissingOptionTypeException
      */
     public function importOptionValue($importKeyOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null);
 
@@ -31,6 +38,8 @@ interface DataImportWriterInterface
      * @param int $sequence
      *
      * @return int
+     *
+     * @throws MissingOptionTypeException
      */
     public function importProductOptionType($sku, $importKeyOptionType, $isOptional = false, $sequence = null);
 
@@ -40,6 +49,9 @@ interface DataImportWriterInterface
      * @param int $sequence
      *
      * @return int
+     *
+     * @throws MissingProductOptionTypeException
+     * @throws MissingOptionValueException
      */
     public function importProductOptionValue($idProductOptionType, $importKeyOptionValue, $sequence = null);
 
@@ -47,6 +59,9 @@ interface DataImportWriterInterface
      * @param string $sku
      * @param string $importKeyOptionTypeA
      * @param string $importKeyOptionTypeB
+     *
+     * @throws MissingOptionTypeException
+     * @throw MissingProductOptionTypeException
      */
     public function importProductOptionTypeExclusion($sku, $importKeyOptionTypeA, $importKeyOptionTypeB);
 
@@ -55,6 +70,10 @@ interface DataImportWriterInterface
      * @param int $idProductOptionValueSource
      * @param string $importKeyOptionValueTarget
      * @param string $operator
+     *
+     * @throws MissingProductOptionValueException
+     * @throws MissingOptionValueException
+     * @throws MissingProductOptionValueException
      */
     public function importProductOptionValueConstraint($sku, $idProductOptionValueSource, $importKeyOptionValueTarget, $operator);
 
@@ -65,6 +84,10 @@ interface DataImportWriterInterface
      * @param int $sequence
      *
      * @return int
+     *
+     * @throws MissingProductOptionValueException
+     * @throws MissingOptionValueException
+     * @throws MissingProductOptionValueException
      */
     public function importPresetConfiguration($sku, array $importKeysOptionValues, $isDefault = false, $sequence = null);
 }

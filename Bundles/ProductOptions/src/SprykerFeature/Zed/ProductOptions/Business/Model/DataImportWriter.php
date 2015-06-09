@@ -20,6 +20,10 @@ use SprykerFeature\Zed\ProductOptions\Persistence\Propel\Map\SpyProductOptionTyp
 use SprykerFeature\Zed\ProductOptions\Persistence\Propel\Map\SpyProductOptionValueTableMap;
 use SprykerFeature\Zed\ProductOptions\Dependency\Facade\ProductOptionsToProductInterface;
 use SprykerFeature\Zed\ProductOptions\Dependency\Facade\ProductOptionsToLocaleInterface;
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingOptionTypeException;
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingOptionValueException;
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingProductOptionTypeException;
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingProductOptionValueException;
 
 class DataImportWriter implements DataImportWriterInterface
 {
@@ -57,8 +61,6 @@ class DataImportWriter implements DataImportWriterInterface
      * @param string $importKeyOptionType
      * @param array $localizedNames
      * @param string $importKeyTaxSet
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function importOptionType($importKeyOptionType, array $localizedNames = [], $importKeyTaxSet = null)
     {
@@ -104,13 +106,19 @@ class DataImportWriter implements DataImportWriterInterface
      * @param array $localizedNames
      * @param float $price
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @return int
+     *
+     * @throws MissingOptionTypeException
      */
     public function importOptionValue($importKeyOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null)
     {
         if (!$idOptionType = $this->queryContainer->queryOptionTypeByImportKey($importKeyOptionType)->select(SpyOptionTypeTableMap::COL_ID_OPTION_TYPE)->findOne()) {
-            throw new \Exception("OptionType '$importKeyOptionType' not found");
+            throw new MissingOptionTypeException(
+                sprintf(
+                    'Tried to retrieve an option type with import key %s, but it does not exist.',
+                    $importKeyOptionType
+                )
+            );
         }
 
         $optionValueEntity =  $this->queryContainer->queryOptionValueByImportKeyAndFkOptionType($importKeyOptionValue, $idOptionType)->findOne();
@@ -166,17 +174,19 @@ class DataImportWriter implements DataImportWriterInterface
      *
      * @return int
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws MissingOptionTypeException
      */
     public function importProductOptionType($sku, $importKeyOptionType, $isOptional = false, $sequence  = null)
     {
-        if (!$idProduct = $this->productFacade->getConcreteProductIdBySku($sku)) {
-            throw new \Exception("Product '$sku' not found");
-        }
+        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
         if (!$idOptionType = $this->queryContainer->queryOptionTypeByImportKey($importKeyOptionType)->select(SpyOptionTypeTableMap::COL_ID_OPTION_TYPE)->findOne()) {
-            throw new \Exception("OptionType $importKeyOptionType not found");
+            throw new MissingOptionTypeException(
+                sprintf(
+                    'Tried to retrieve an option type with import key %s, but it does not exist.',
+                    $importKeyOptionType
+                )
+            );
         }
 
         $productOptionTypeEntity = $this->queryContainer->queryProductOptionTypeByFKs($idProduct, $idOptionType)->findOne();
@@ -201,17 +211,27 @@ class DataImportWriter implements DataImportWriterInterface
      *
      * @return int
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws MissingProductOptionTypeException
+     * @throws MissingOptionValueException
      */
     public function importProductOptionValue($idProductOptionType, $importKeyOptionValue, $sequence = null)
     {
         if ($this->queryContainer->queryProductOptonTypeById($idProductOptionType)->count() === 0) {
-            throw new \Exception("ProductOptionType '$idProductOptionType' for product '$idProductOptionType' not found");
+            throw new MissingProductOptionTypeException(
+                sprintf(
+                    'Tried to retrieve a product option type with import id %d, but it does not exist.',
+                    $idProductOptionType
+                )
+            );
         }
 
         if (!$optionValueId = $this->queryContainer->queryOptionValueByImportKey($importKeyOptionValue)->select(SpyOptionValueTableMap::COL_ID_OPTION_VALUE)->findOne()) {
-            throw new \Exception("OptionValue '$importKeyOptionValue' not found");
+            throw new MissingOptionValueException(
+                sprintf(
+                    'Tried to retrieve an option value with import key %s, but it does not exist.',
+                    $importKeyOptionValue
+                )
+            );
         }
 
         $productOptionValue = $this->queryContainer->queryProductOptionValueByFKs($idProductOptionType, $optionValueId)->findOne();
@@ -234,31 +254,39 @@ class DataImportWriter implements DataImportWriterInterface
      * @param string $importKeyOptionTypeA
      * @param string $importKeyOptionTypeB
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws MissingOptionTypeException
+     * @throw MissingProductOptionTypeException
      */
     public function importProductOptionTypeExclusion($sku, $importKeyOptionTypeA, $importKeyOptionTypeB)
     {
-        if (!$idProduct = $this->productFacade->getConcreteProductIdBySku($sku)) {
-            throw new \Exception("Product '$sku' not found");
-        }
+        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
         if (!$idOptionTypeA = $this->queryContainer->queryOptionTypeByImportKey($importKeyOptionTypeA)->select(SpyOptionTypeTableMap::COL_ID_OPTION_TYPE)->findOne()) {
-            throw new \Exception("OptionType '$importKeyOptionTypeA' not found");
+            throw new MissingOptionTypeException(
+                sprintf(
+                    'Tried to retrieve an option type with import key %s, but it does not exist.',
+                    $importKeyOptionTypeA
+                )
+            );
         }
 
         if (!$idOptionTypeB = $this->queryContainer->queryOptionTypeByImportKey($importKeyOptionTypeB)->select(SpyOptionTypeTableMap::COL_ID_OPTION_TYPE)->findOne()) {
-            throw new \Exception("OptionType '$importKeyOptionTypeB' not found");
+            throw new MissingOptionTypeException(
+                sprintf(
+                    'Tried to retrieve an option type with import key %s, but it does not exist.',
+                    $importKeyOptionTypeB
+                )
+            );
         }
 
         $idProductOptionTypeA = $this->queryContainer->queryProductOptionTypeByFKs($idProduct, $idOptionTypeA)->select(SpyProductOptionTypeTableMap::COL_ID_PRODUCT_OPTION_TYPE)->findOne();
         if (!$idProductOptionTypeA) {
-            throw new \Exception("ProductOptionType '$importKeyOptionTypeA' for product '$sku' not found");
+            throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
         }
 
         $idProductOptionTypeB = $this->queryContainer->queryProductOptionTypeByFKs($idProduct, $idOptionTypeB)->select(SpyProductOptionTypeTableMap::COL_ID_PRODUCT_OPTION_TYPE)->findOne();
         if (!$idProductOptionTypeB) {
-            throw new \Exception("ProductOptionType '$importKeyOptionTypeB' for product '$sku' not found");
+            throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
         }
 
         if ($this->queryContainer->queryProductOptionTypeExclusionByFks($idProductOptionTypeA, $idProductOptionTypeB)->count() > 0) {
@@ -278,35 +306,44 @@ class DataImportWriter implements DataImportWriterInterface
      * @param string $importKeyOptionValueTarget
      * @param string $operator
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws MissingProductOptionValueException
+     * @throws MissingOptionValueException
+     * @throws MissingProductOptionValueException
      */
     public function importProductOptionValueConstraint($sku, $idProductOptionValueSource, $importKeyOptionValueTarget, $operator)
     {
-        if (!$idProduct = $this->productFacade->getConcreteProductIdBySku($sku)) {
-            throw new \Exception("Product '$sku' not found");
-        }
+        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
         if ($this->queryContainer->queryProductOptonValueById($idProductOptionValueSource)->count() === 0) {
-            throw new \Exception("ProductOptionValue '$idProductOptionValueSource' not found");
+            throw new MissingProductOptionValueException(
+                sprintf(
+                    'Tried to retrieve a product option value with id %d, but it does not exist.',
+                    $idProductOptionValueSource
+                )
+            );
         }
 
         if (!$optionValueBEntity = $this->queryContainer->queryOptionValueByImportKey($importKeyOptionValueTarget)->findOne()) {
-            throw new \Exception("OptionValue $importKeyOptionValueTarget not found");
+            throw new MissingOptionValueException(
+                sprintf(
+                    'Tried to retrieve an option value with import key %s, but it does not exist.',
+                    $importKeyOptionValueTarget
+                )
+            );
         }
 
         $idProductOptionTypeB = $this->queryContainer
             ->queryProductOptionTypeByFKs($idProduct, $optionValueBEntity->getFkOptionType())->select(SpyProductOptionTypeTableMap::COL_ID_PRODUCT_OPTION_TYPE)
             ->findOne();
         if (!$idProductOptionTypeB) {
-            throw new \Exception("ProductOptionType for value '$importKeyOptionValueTarget' and product '$sku' not found");
+            throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
         }
 
         $idProductOptionValueB = $this->queryContainer
             ->queryProductOptionValueByFKs($idProductOptionTypeB, $optionValueBEntity->getIdOptionValue())->select(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
             ->findOne();
         if (!$idProductOptionValueB) {
-            throw new \Exception("ProductOptionValue '$importKeyOptionValueTarget' for product '$sku' not found");
+            throw new MissingProductOptionValueException('Tried to retrieve a product option value, but it does not exist.');
         }
 
         if ($this->queryContainer->queryProductOptionValueConstraintsByFks($idProductOptionValueSource, $idProductOptionValueB)->count() > 0) {
@@ -326,14 +363,15 @@ class DataImportWriter implements DataImportWriterInterface
      * @param bool $isDefault
      * @param int $sequence
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @return int
+     *
+     * @throws MissingProductOptionValueException
+     * @throws MissingOptionValueException
+     * @throws MissingProductOptionValueException
      */
     public function importPresetConfiguration($sku, array $importKeysOptionValues, $isDefault = false, $sequence = null)
     {
-        if (!$idProduct = $this->productFacade->getConcreteProductIdBySku($sku)) {
-            throw new \Exception("Product '$sku' not found");
-        }
+        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
         $presetConfig = (new SpyConfigurationPreset)
             ->setFkProduct($idProduct)
@@ -343,7 +381,12 @@ class DataImportWriter implements DataImportWriterInterface
         foreach ($importKeysOptionValues as $importKeyOptionValue) {
 
             if (!$optionValueEntity = $this->queryContainer->queryOptionValueByImportKey($importKeyOptionValue)->findOne()) {
-                throw new \Exception("OptionValue $importKeyOptionValue not found");
+                throw new MissingOptionValueException(
+                    sprintf(
+                        'Tried to retrieve an option value with import key %s, but it does not exist.',
+                        $importKeyOptionValue
+                    )
+                );
             }
 
             $idProductOptionType = $this->queryContainer
@@ -351,7 +394,7 @@ class DataImportWriter implements DataImportWriterInterface
                 ->select(SpyProductOptionTypeTableMap::COL_ID_PRODUCT_OPTION_TYPE)
                 ->findOne();
             if (!$idProductOptionType) {
-                throw new \Exception("ProductOptionType for '$importKeyOptionValue' and product '$sku' not found");
+                throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
             }
 
             $idPoductOptionValue = $this->queryContainer
@@ -359,7 +402,7 @@ class DataImportWriter implements DataImportWriterInterface
                 ->select(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
                 ->findOne();
             if (!$idPoductOptionValue) {
-                throw new \Exception("ProductOptionValue with '$importKeyOptionValue' for product '$sku' not found");
+                throw new MissingProductOptionValueException('Tried to retrieve a product option value, but it does not exist.');
             }
 
             $configPresetValue = (new SpyConfigurationPresetValue())

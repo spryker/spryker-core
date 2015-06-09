@@ -4,6 +4,11 @@ namespace SprykerFeature\Zed\ProductOptions\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingOptionTypeException;
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingOptionValueException;
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingProductOptionTypeException;
+use SprykerFeature\Zed\ProductOptions\Business\Exception\MissingProductOptionValueException;
+
 /**
  * @method ProductOptionsDependencyContainer getDependencyContainer()
  */
@@ -13,11 +18,9 @@ class ProductOptionsFacade extends AbstractFacade
     /**
      * @param string $importKeyOptionType
      * @param array $localizedNames
-     * @param null $importKeyTaxSet
+     * @param string $importKeyTaxSet
      *
      * @return int
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function importOptionType($importKeyOptionType, array $localizedNames = [], $importKeyTaxSet = null)
     {
@@ -32,8 +35,7 @@ class ProductOptionsFacade extends AbstractFacade
      *
      * @return int
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws MissingOptionTypeException
      */
     public function importOptionValue($importKeyOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null)
     {
@@ -48,8 +50,7 @@ class ProductOptionsFacade extends AbstractFacade
      *
      * @return int
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws MissingOptionTypeException
      */
     public function importProductOptionType($sku, $importKeyOptionType, $isOptional = false, $sequence = null)
     {
@@ -63,8 +64,8 @@ class ProductOptionsFacade extends AbstractFacade
      *
      * @return int
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws MissingProductOptionTypeException
+     * @throws MissingOptionValueException
      */
     public function importProductOptionValue($idProductOptionType, $importKeyOptionValue, $sequence = null)
     {
@@ -76,8 +77,8 @@ class ProductOptionsFacade extends AbstractFacade
      * @param string $importKeyOptionTypeA
      * @param string $importKeyOptionTypeB
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws MissingOptionTypeException
+     * @throw MissingProductOptionTypeException
      */
     public function importProductOptionTypeExclusion($sku, $importKeyOptionTypeA, $importKeyOptionTypeB)
     {
@@ -90,8 +91,9 @@ class ProductOptionsFacade extends AbstractFacade
      * @param string $importKeyOptionValueTarget
      * @param string $operator
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws MissingProductOptionValueException
+     * @throws MissingOptionValueException
+     * @throws MissingProductOptionValueException
      */
     public function importProductOptionValueConstraint($sku, $idProductOptionValueSource, $importKeyOptionValueTarget, $operator)
     {
@@ -106,8 +108,9 @@ class ProductOptionsFacade extends AbstractFacade
      *
      * @return int
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws MissingProductOptionValueException
+     * @throws MissingOptionValueException
+     * @throws MissingProductOptionValueException
      */
     public function importPresetConfiguration($sku, array $importKeysOptionValues, $isDefault = false, $sequence = null)
     {
