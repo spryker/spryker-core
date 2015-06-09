@@ -34,7 +34,7 @@ class ProductTaxExpander implements ProductTaxExpanderInterface
             ->addJoin(
                 SpyAbstractProductTableMap::COL_FK_TAX_SET,
                 SpyTaxSetTableMap::COL_ID_TAX_SET,
-                Criteria::LEFT_JOIN // @TODO Check workflow of Criteria::INNER_JOIN should be used instead
+                Criteria::LEFT_JOIN // @TODO Change to Criteria::INNER_JOIN as soon as there is a Tax GUI/Importer in Zed
             )
         ;
 
