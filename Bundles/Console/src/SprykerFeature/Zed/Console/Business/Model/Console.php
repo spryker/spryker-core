@@ -97,10 +97,6 @@ class Console extends SymfonyCommand
     {
         if (is_null($this->messenger)) {
             $this->messenger = new ConsoleMessenger($this->output);
-
-            $this->messenger->setTranslator(
-                $this->locator->translation()->facade()
-            );
         }
 
         return $this->messenger;
