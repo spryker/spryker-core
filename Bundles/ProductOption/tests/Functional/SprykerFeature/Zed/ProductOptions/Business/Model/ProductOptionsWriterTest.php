@@ -8,21 +8,21 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
 use Generated\Zed\Ide\AutoCompletion;
 
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyConfigurationPresetQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyConfigurationPresetValueQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionTypeQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeExclusionQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionConfigurationPresetQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValueQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusionQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageQuery;
 
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionType;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionValue;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsage;
 
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueConstraintQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraintQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
 
 /**
  * @group Business
@@ -53,112 +53,112 @@ class DataImportWriterTest extends Test
 
     public function testImportOptionType()
     {
-        $this->facade->importOptionType('SHADE', ['en_GB' => 'Shade']);
-        $this->facade->importOptionType('SHADE', ['en_GB' => 'Shade']);
+        $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
+        $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
 
-        $result = SpyOptionTypeQuery::create()->findByImportKey('SHADE');
+        $result = SpyProductOptionTypeQuery::create()->findByImportKey('SHADE');
 
         $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
         $this->assertEquals('SHADE', $result[0]->getImportKey());
-        $this->assertEquals('Shade', $result[0]->getSpyOptionTypeTranslations()[0]->getName());
+        $this->assertEquals('Shade', $result[0]->getSpyProductOptionTypeTranslations()[0]->getName());
     }
 
     public function testImportOptionValue()
     {
-        $optionType = (new SpyOptionType)->setImportKey('SHADE');
+        $optionType = (new SpyProductOptionType)->setImportKey('SHADE');
         $optionType->save();
 
-        $this->facade->importOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
-        $this->facade->importOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
+        $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
+        $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
 
-        $result = SpyOptionTypeQuery::create()
+        $result = SpyProductOptionTypeQuery::create()
             ->findByImportKey('SHADE');
 
         $this->assertEquals('SHADE', $result[0]->getImportKey());
         $this->assertEquals(1, $result->count());
 
-        $optionValues = $result[0]->getSpyOptionValues();
+        $optionValues = $result[0]->getSpyProductOptionValues();
         $this->assertEquals(1, $optionValues->count(), 'Failed assetting that method is idempotent');
 
         $this->assertEquals('VIOLET', $optionValues[0]->getImportKey());
-        $this->assertEquals(299, $optionValues[0]->getSpyOptionValuePrice()->getPrice());
-        $this->assertEquals('Violet', $optionValues[0]->getSpyOptionValueTranslations()[0]->getName());
+        $this->assertEquals(299, $optionValues[0]->getSpyProductOptionValuePrice()->getPrice());
+        $this->assertEquals('Violet', $optionValues[0]->getSpyProductOptionValueTranslations()[0]->getName());
     }
 
-    public function testImportProductOptionType()
+    public function testImportProductOptionTypeUsage()
     {
         $product = $this->createConcreteProduct();
 
-        $optionType = (new SpyOptionType)->setImportKey('SHADE');
+        $optionType = (new SpyProductOptionType)->setImportKey('SHADE');
         $optionType->save();
 
-        $this->facade->importProductOptionType('ABC123', 'SHADE');
-        $this->facade->importProductOptionType('ABC123', 'SHADE');
+        $this->facade->importProductOptionTypeUsage('ABC123', 'SHADE');
+        $this->facade->importProductOptionTypeUsage('ABC123', 'SHADE');
 
-        $result = SpyProductOptionTypeQuery::create()
-            ->filterByFkOptionType($optionType->getIdOptionType())
+        $result = SpyProductOptionTypeUsageQuery::create()
+            ->filterByFkProductOptionType($optionType->getIdProductOptionType())
             ->filterByFkProduct($product->getIdProduct())
             ->find();
 
         $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
     }
 
-    public function testImportProductOptionValue()
+    public function testImportProductOptionValueUsage()
     {
         $product = $this->createConcreteProduct();
         $optionType = $this->createOptionTypeWithValue();
-        $productOptionType = $this->createProductOptionType($product, $optionType);
+        $productOptionTypeUsage = $this->createProductOptionTypeUsage($product, $optionType);
 
-        $this->facade->importProductOptionValue($productOptionType->getIdProductOptionType(),  'VIOLET');
-        $this->facade->importProductOptionValue($productOptionType->getIdProductOptionType(),  'VIOLET');
+        $this->facade->importProductOptionValueUsage($productOptionTypeUsage->getIdProductOptionTypeUsage(),  'VIOLET');
+        $this->facade->importProductOptionValueUsage($productOptionTypeUsage->getIdProductOptionTypeUsage(),  'VIOLET');
 
-        $result = SpyProductOptionValueQuery::create()
-            ->filterByFkProductOptionType($productOptionType->getIdProductOptionType())
-            ->filterByFkOptionValue($optionType->getSpyOptionValues()[0]->getIdOptionValue())
+        $result = SpyProductOptionValueUsageQuery::create()
+            ->filterByFkProductOptionTypeUsage($productOptionTypeUsage->getIdProductOptionTypeUsage())
+            ->filterByFkProductOptionValue($optionType->getSpyProductOptionValues()[0]->getIdProductOptionValue())
             ->find();
 
         $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
     }
 
-    public function testImportProductOptionTypeExclusion()
+    public function testImportProductOptionTypeUsageExclusion()
     {
         $product = $this->createConcreteProduct();
         $optionShadeViolet = $this->createOptionTypeWithValue();
         $optionFittingClassic = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
-        $productOptionFitting = $this->createProductOptionType($product, $optionFittingClassic);
-        $productOptionShade = $this->createProductOptionType($product, $optionShadeViolet);
+        $productOptionFitting = $this->createProductOptionTypeUsage($product, $optionFittingClassic);
+        $productOptionShade = $this->createProductOptionTypeUsage($product, $optionShadeViolet);
 
-        $this->facade->importProductOptionTypeExclusion($product->getSku(), 'SHADE', 'FITTING');
-        $this->facade->importProductOptionTypeExclusion($product->getSku(), 'SHADE', 'FITTING');
+        $this->facade->importProductOptionTypeUsageExclusion($product->getSku(), 'SHADE', 'FITTING');
+        $this->facade->importProductOptionTypeUsageExclusion($product->getSku(), 'SHADE', 'FITTING');
 
-        $result = SpyProductOptionTypeExclusionQuery::create()
-            ->filterByFkProductOptionTypeA($productOptionShade->getIdProductOptionType())
-            ->filterByFkProductOptionTypeB($productOptionFitting->getIdProductOptionType())
+        $result = SpyProductOptionTypeUsageExclusionQuery::create()
+            ->filterByFkProductOptionTypeUsageA($productOptionShade->getIdProductOptionTypeUsage())
+            ->filterByFkProductOptionTypeUsageB($productOptionFitting->getIdProductOptionTypeUsage())
             ->find();
 
         $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
     }
 
-    public function testImportProductOptionValueConstraint()
+    public function testImportProductOptionValueUsageConstraint()
     {
         $product = $this->createConcreteProduct();
 
         $optionShadeViolet = $this->createOptionTypeWithValue();
         $optionFittingClassic = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
-        $productOptionFitting = $this->createProductOptionType($product, $optionFittingClassic);
-        $productOptionShade = $this->createProductOptionType($product, $optionShadeViolet);
+        $productOptionFitting = $this->createProductOptionTypeUsage($product, $optionFittingClassic);
+        $productOptionShade = $this->createProductOptionTypeUsage($product, $optionShadeViolet);
 
-        $idProductOptionValueSmall = $this->facade->importProductOptionValue($productOptionFitting->getIdProductOptionType(),  'CLASSIC');
-        $idProductOptionValueViolet = $this->facade->importProductOptionValue($productOptionShade->getIdProductOptionType(),  'VIOLET');
+        $idProductOptionValueUsageSmall = $this->facade->importProductOptionValueUsage($productOptionFitting->getIdProductOptionTypeUsage(),  'CLASSIC');
+        $idProductOptionValueUsageViolet = $this->facade->importProductOptionValueUsage($productOptionShade->getIdProductOptionTypeUsage(),  'VIOLET');
 
-        $this->facade->importProductOptionValueConstraint($product->getSku(), $idProductOptionValueSmall, 'VIOLET', 'NOT');
-        $this->facade->importProductOptionValueConstraint($product->getSku(), $idProductOptionValueViolet, 'CLASSIC', 'NOT');
+        $this->facade->importProductOptionValueUsageConstraint($product->getSku(), $idProductOptionValueUsageSmall, 'VIOLET', 'NOT');
+        $this->facade->importProductOptionValueUsageConstraint($product->getSku(), $idProductOptionValueUsageViolet, 'CLASSIC', 'NOT');
 
-        $result = SpyProductOptionValueConstraintQuery::create()
-            ->filterByFkProductOptionValueA([$idProductOptionValueSmall, $idProductOptionValueViolet])
-            ->filterByFkProductOptionValueB([$idProductOptionValueSmall, $idProductOptionValueViolet])
+        $result = SpyProductOptionValueUsageConstraintQuery::create()
+            ->filterByFkProductOptionValueUsageA([$idProductOptionValueUsageSmall, $idProductOptionValueUsageViolet])
+            ->filterByFkProductOptionValueUsageB([$idProductOptionValueUsageSmall, $idProductOptionValueUsageViolet])
             ->find();
 
         $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
@@ -170,25 +170,25 @@ class DataImportWriterTest extends Test
         $optionShade = $this->createOptionTypeWithValue();
         $optionFitting = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
-        $productOptionShade = $this->createProductOptionType($product, $optionShade);
-        $productOptionValueViolet = (new SpyProductOptionValue)
-            ->setSpyOptionValue($optionShade->getSpyOptionValues()[0]);
-        $productOptionShade->addSpyProductOptionValue($productOptionValueViolet);
+        $productOptionShade = $this->createProductOptionTypeUsage($product, $optionShade);
+        $productOptionValueUsageViolet = (new SpyProductOptionValueUsage)
+            ->setSpyProductOptionValue($optionShade->getSpyProductOptionValues()[0]);
+        $productOptionShade->addSpyProductOptionValueUsage($productOptionValueUsageViolet);
         $productOptionShade->save();
 
-        $productOptionFitting = $this->createProductOptionType($product, $optionFitting);
-        $productOptionValueSmall = (new SpyProductOptionValue)
-            ->setSpyOptionValue($optionFitting->getSpyOptionValues()[0]);
-        $productOptionFitting->addSpyProductOptionValue($productOptionValueSmall);
+        $productOptionFitting = $this->createProductOptionTypeUsage($product, $optionFitting);
+        $productOptionValueUsageSmall = (new SpyProductOptionValueUsage)
+            ->setSpyProductOptionValue($optionFitting->getSpyProductOptionValues()[0]);
+        $productOptionFitting->addSpyProductOptionValueUsage($productOptionValueUsageSmall);
         $productOptionFitting->save();
 
         $this->facade->importPresetConfiguration($product->getSku(), ['VIOLET', 'CLASSIC']);
 
-        $result = SpyConfigurationPresetQuery::create()->findByFkProduct($product->getIdProduct());
+        $result = SpyProductOptionConfigurationPresetQuery::create()->findByFkProduct($product->getIdProduct());
         $this->assertEquals(1, $result->count());
-        $values = $result[0]->getSpyConfigurationPresetValues();
+        $values = $result[0]->getSpyProductOptionConfigurationPresetValues();
         foreach($values as $value) {
-            $this->assertContains($value->getFkProductOptionValue(), [$productOptionValueSmall->getIdProductOptionValue(), $productOptionValueViolet->getIdProductOptionValue()]);
+            $this->assertContains($value->getFkProductOptionValueUsage(), [$productOptionValueUsageSmall->getIdProductOptionValueUsage(), $productOptionValueUsageViolet->getIdProductOptionValueUsage()]);
         }
     }
 
@@ -205,22 +205,22 @@ class DataImportWriterTest extends Test
 
     private function createOptionTypeWithValue($typeKey = 'SHADE', $valueKey = 'VIOLET')
     {
-        $optionValue = (new SpyOptionValue)->setImportKey($valueKey);
-        $optionType = (new SpyOptionType)->setImportKey($typeKey)->addSpyOptionValue($optionValue);
+        $optionValue = (new SpyProductOptionValue)->setImportKey($valueKey);
+        $optionType = (new SpyProductOptionType)->setImportKey($typeKey)->addSpyProductOptionValue($optionValue);
         $optionType->save();
 
         return $optionType;
     }
 
-    private function createProductOptionType($product, $optionType)
+    private function createProductOptionTypeUsage($product, $optionType)
     {
-        $productOptionType = (new SpyProductOptionType())
+        $productOptionTypeUsage = (new SpyProductOptionTypeUsage())
             ->setSpyProduct($product)
-            ->setSpyOptionType($optionType)
+            ->setSpyProductOptionType($optionType)
             ->setIsOptional(false);
 
-        $productOptionType->save();
+        $productOptionTypeUsage->save();
 
-        return $productOptionType;
+        return $productOptionTypeUsage;
     }
 }

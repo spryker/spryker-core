@@ -2,128 +2,128 @@
 
 namespace SprykerFeature\Zed\ProductOption\Persistence;
 
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionTypeExclusionQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionValueConstraintQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionTypeQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionValueQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionTypeTranslationQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionValueTranslationQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionTypeUsageExclusionQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionValueUsageConstraintQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTranslationQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslationQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
 
 interface ProductOptionQueryContainerInterface
 {
     /**
      * @param string $importKeyOptionType
      *
-     * @return SpyOptionTypeQuery
+     * @return SpyProductOptionTypeQuery
      */
-    public function queryOptionTypeByImportKey($importKeyOptionType);
+    public function queryProductOptionTypeByImportKey($importKeyOptionType);
 
     /**
      * @param string $importKeyOptionType
      *
-     * @return SpyOptionTypeQuery
-     */
-    public function queryOptionTypeIdByImportKey($importKeyOptionType);
-
-    /**
-     * @param int $fkOptionType
-     * @param int $fkLocale
-     *
-     * @return SpyOptionTypeTranslationQuery
-     */
-    public function queryOptionTypeTranslationByFks($fkOptionType, $fkLocale);
-
-    /**
-     * @param string $importKeyOptionValue
-     * @param int $fkOptionType
-     *
-     * @return SpyOptionValueQuery
-     */
-    public function queryOptionValueByImportKeyAndFkOptionType($importKeyOptionValue, $fkOptionType);
-
-    /**
-     * @param string $importKeyOptionValue
-     *
-     * @return SpyOptionValueQuery
-     */
-    public function queryOptionValueByImportKey($importKeyOptionValue);
-
-    /**
-     * @param string $importKeyOptionValue
-     *
-     * @return SpyOptionValueQuery
-     */
-    public function queryOptionValueIdByImportKey($importKeyOptionValue);
-
-    /**
-     * @param int $fkOptionValue
-     * @param int $fkLocale
-     *
-     * @return SpyOptionValueTranslationQuery
-     */
-    public function queryOptionValueTranslationByFks($fkOptionValue, $fkLocale);
-
-    /**
-     * @param int $idProductOptionType
-     *
      * @return SpyProductOptionTypeQuery
      */
-    public function queryProductOptonTypeById($idProductOptionType);
-
-    /**
-     * @param int $fkProduct
-     * @param int $fkOptionType
-     *
-     * @return SpyProductOptionTypeQuery
-     */
-    public function queryProductOptionTypeByFKs($fkProduct, $fkOptionType);
-
-    /**
-     * @param int $fkProduct
-     * @param int $fkOptionType
-     *
-     * @return SpyProductOptionTypeQuery
-     */
-    public function queryProductOptionTypeIdByFKs($fkProduct, $fkOptionType);
-
-    /**
-     * @param int $idProductOptionValue
-     *
-     * @return SpyProductOptionValueQuery
-     */
-    public function queryProductOptonValueById($idProductOptionValue);
+    public function queryProductOptionTypeIdByImportKey($importKeyOptionType);
 
     /**
      * @param int $fkProductOptionType
-     * @param int $fkOptionType
+     * @param int $fkLocale
      *
-     * @return SpyProductOptionValueQuery
+     * @return SpyProductOptionTypeTranslationQuery
      */
-    public function queryProductOptionValueByFKs($fkProductOptionType, $fkOptionType);
+    public function queryProductOptionTypeTranslationByFks($fkProductOptionType, $fkLocale);
 
     /**
+     * @param string $importKeyOptionValue
      * @param int $fkProductOptionType
-     * @param int $fkOptionType
      *
      * @return SpyProductOptionValueQuery
      */
-    public function queryProductOptionValueIdByFKs($fkProductOptionType, $fkOptionType);
+    public function queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyOptionValue, $fkProductOptionType);
 
     /**
-     * @param int $fkProductOptionTypeA
-     * @param int $fkProductOptionTypeB
+     * @param string $importKeyOptionValue
      *
-     * @return SpyProductOptionTypeExclusionQuery
+     * @return SpyProductOptionValueQuery
      */
-    public function queryProductOptionTypeExclusionByFks($fkProductOptionTypeA, $fkProductOptionTypeB);
+    public function queryProductOptionValueByImportKey($importKeyOptionValue);
 
     /**
-     * @param int $fkProductOptionValueA
-     * @param int $fkProductOptionValueB
+     * @param string $importKeyOptionValue
      *
-     * @return SpyProductOptionValueConstraintQuery
+     * @return SpyProductOptionValueQuery
      */
-    public function queryProductOptionValueConstraintsByFks($fkProductOptionValueA, $fkProductOptionValueB);
+    public function queryProductOptionValueIdByImportKey($importKeyOptionValue);
+
+    /**
+     * @param int $fkProductOptionValue
+     * @param int $fkLocale
+     *
+     * @return SpyProductOptionValueTranslationQuery
+     */
+    public function queryProductOptionValueTranslationByFks($fkProductOptionValue, $fkLocale);
+
+    /**
+     * @param int $idProductOptionTypeUsage
+     *
+     * @return SpyProductOptionTypeUsageQuery
+     */
+    public function queryProductOptonTypeUsageById($idProductOptionTypeUsage);
+
+    /**
+     * @param int $fkProduct
+     * @param int $fkProductOptionType
+     *
+     * @return SpyProductOptionTypeUsageQuery
+     */
+    public function queryProductOptionTypeUsageByFKs($fkProduct, $fkProductOptionType);
+
+    /**
+     * @param int $fkProduct
+     * @param int $fkProductOptionType
+     *
+     * @return SpyProductOptionTypeUsageQuery
+     */
+    public function queryProductOptionTypeUsageIdByFKs($fkProduct, $fkProductOptionType);
+
+    /**
+     * @param int $idProductOptionValueUsage
+     *
+     * @return SpyProductOptionValueUsageQuery
+     */
+    public function queryProductOptonValueUsageById($idProductOptionValueUsage);
+
+    /**
+     * @param int $fkProductOptionTypeUsage
+     * @param int $fkProductOptionType
+     *
+     * @return SpyProductOptionValueUsageQuery
+     */
+    public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionType);
+
+    /**
+     * @param int $fkProductOptionTypeUsage
+     * @param int $fkProductOptionType
+     *
+     * @return SpyProductOptionValueUsageQuery
+     */
+    public function queryProductOptionValueUsageIdByFKs($fkProductOptionTypeUsage, $fkProductOptionType);
+
+    /**
+     * @param int $fkProductOptionTypeUsageA
+     * @param int $fkProductOptionTypeUsageB
+     *
+     * @return SpyProductOptionTypeUsageExclusionQuery
+     */
+    public function queryProductOptionTypeUsageExclusionByFks($fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB);
+
+    /**
+     * @param int $fkProductOptionValueUsageA
+     * @param int $fkProductOptionValueUsageB
+     *
+     * @return SpyProductOptionValueUsageConstraintQuery
+     */
+    public function queryProductOptionValueUsageConstraintsByFks($fkProductOptionValueUsageA, $fkProductOptionValueUsageB);
 }

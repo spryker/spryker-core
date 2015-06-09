@@ -2,92 +2,92 @@
 
 namespace SprykerFeature\Zed\ProductOption\Business\Model;
 
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingOptionTypeException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingOptionValueException;
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
+use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
+use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
 
 interface DataImportWriterInterface
 {
 
     /**
-     * @param string $importKeyOptionType
+     * @param string $importKeyProductOptionType
      * @param array $localizedNames
      * @param string $importKeyTaxSet
      *
      * @return int
      */
-    public function importOptionType($importKeyOptionType, array $localizedNames = [], $importKeyTaxSet = null);
+    public function importProductOptionType($importKeyProductOptionType, array $localizedNames = [], $importKeyTaxSet = null);
 
     /**
-     * @param string $importKeyOptionValue
+     * @param string $importKeyProductOptionValue
      * @param string $importKeyOptionType
      * @param array $localizedNames
      * @param float $price
      *
      * @return int
      *
-     * @throws MissingOptionTypeException
+     * @throws MissingProductOptionTypeException
      */
-    public function importOptionValue($importKeyOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null);
+    public function importProductOptionValue($importKeyProductOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null);
 
     /**
      * @param string $sku
-     * @param string $importKeyOptionType
+     * @param string $importKeyProductOptionType
      * @param bool $isOptional
      * @param int $sequence
      *
      * @return int
      *
-     * @throws MissingOptionTypeException
+     * @throws MissingProductOptionTypeException
      */
-    public function importProductOptionType($sku, $importKeyOptionType, $isOptional = false, $sequence = null);
+    public function importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional = false, $sequence = null);
 
     /**
-     * @param int $idProductOptionType
-     * @param string $importKeyOptionValue
+     * @param int $idProductOptionTypeUsage
+     * @param string $importKeyProductOptionValue
      * @param int $sequence
      *
      * @return int
      *
-     * @throws MissingProductOptionTypeException
-     * @throws MissingOptionValueException
+     * @throws MissingProductOptionTypeUsageException
+     * @throws MissingProductOptionValueException
      */
-    public function importProductOptionValue($idProductOptionType, $importKeyOptionValue, $sequence = null);
+    public function importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyProductOptionValue, $sequence = null);
 
     /**
      * @param string $sku
-     * @param string $importKeyOptionTypeA
-     * @param string $importKeyOptionTypeB
+     * @param string $importKeyProductOptionTypeA
+     * @param string $importKeyProductOptionTypeB
      *
-     * @throws MissingOptionTypeException
-     * @throw MissingProductOptionTypeException
+     * @throws MissingProductOptionTypeException
+     * @throw MissingProductOptionTypeUsageException
      */
-    public function importProductOptionTypeExclusion($sku, $importKeyOptionTypeA, $importKeyOptionTypeB);
+    public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
 
     /**
      * @param string $sku
-     * @param int $idProductOptionValueSource
-     * @param string $importKeyOptionValueTarget
+     * @param int $idProductOptionValueUsageSource
+     * @param string $importKeyProductOptionValueTarget
      * @param string $operator
      *
+     * @throws MissingProductOptionValueUsageException
      * @throws MissingProductOptionValueException
-     * @throws MissingOptionValueException
-     * @throws MissingProductOptionValueException
+     * @throws MissingProductOptionValueUsageException
      */
-    public function importProductOptionValueConstraint($sku, $idProductOptionValueSource, $importKeyOptionValueTarget, $operator);
+    public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
 
     /**
      * @param $sku
-     * @param array $importKeysOptionValues
+     * @param array $importKeysProductOptionValues
      * @param bool $isDefault
      * @param int $sequence
      *
      * @return int
      *
+     * @throws MissingProductOptionValueUsageException
      * @throws MissingProductOptionValueException
-     * @throws MissingOptionValueException
-     * @throws MissingProductOptionValueException
+     * @throws MissingProductOptionValueUsageException
      */
-    public function importPresetConfiguration($sku, array $importKeysOptionValues, $isDefault = false, $sequence = null);
+    public function importPresetConfiguration($sku, array $importKeysProductOptionValues, $isDefault = false, $sequence = null);
 }

@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\ProductOption\Persistence\Propel;
 
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyOptionValueTranslation as BaseSpyOptionValueTranslation;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionValuePrice as BaseSpyProductOptionValuePrice;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_option_value_translation' table.
+ * Skeleton subclass for representing a row from the 'spy_product_option_value_price' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyOptionValueTrans
  * long as it does not already exist in the output directory.
  *
  */
-class SpyOptionValueTranslation extends BaseSpyOptionValueTranslation
+class SpyProductOptionValuePrice extends BaseSpyProductOptionValuePrice
 {
 
 }

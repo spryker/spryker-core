@@ -8,8 +8,8 @@
           package="vendor.spryker.spryker.Bundles.ProductOption.src.SprykerFeature.Zed.ProductOption.Persistence.Propel">
 
     <!-- Option Type -->
-    <table name="spy_option_type" idMethod="native" allowPkInsert="true" phpName="SpyOptionType">
-        <column name="id_option_type" type="INTEGER" primaryKey="true" autoIncrement="true" />
+    <table name="spy_product_option_type" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionType">
+        <column name="id_product_option_type" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="import_key" type="VARCHAR" />
         <column name="fk_tax_set" type="INTEGER" required="false" />
 
@@ -22,37 +22,37 @@
     </table>
 
     <!-- Option Value -->
-    <table name="spy_option_value" idMethod="native" allowPkInsert="true" phpName="SpyOptionValue">
-        <column name="id_option_value" type="INTEGER" primaryKey="true" autoIncrement="true" />
+    <table name="spy_product_option_value" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValue">
+        <column name="id_product_option_value" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="import_key" type="VARCHAR" />
-        <column name="fk_option_type" type="INTEGER" required="true" />
-        <column name="fk_option_value_price" type="INTEGER" required="false" />
+        <column name="fk_product_option_type" type="INTEGER" required="true" />
+        <column name="fk_product_option_value_price" type="INTEGER" required="false" />
 
         <unique>
             <unique-column name="import_key" />
         </unique>
-        <foreign-key foreignTable="spy_option_type" onDelete="CASCADE">
-            <reference local="fk_option_type" foreign="id_option_type" />
+        <foreign-key foreignTable="spy_product_option_type" onDelete="CASCADE">
+            <reference local="fk_product_option_type" foreign="id_product_option_type" />
         </foreign-key>
-        <foreign-key foreignTable="spy_option_value_price" onDelete="SETNULL">
-            <reference local="fk_option_value_price" foreign="id_option_value_price" />
+        <foreign-key foreignTable="spy_product_option_value_price" onDelete="SETNULL">
+            <reference local="fk_product_option_value_price" foreign="id_product_option_value_price" />
         </foreign-key>
     </table>
 
     <!-- Option Value Price -->
-    <table name="spy_option_value_price" idMethod="native" allowPkInsert="true" phpName="SpyOptionValuePrice">
-        <column name="id_option_value_price" type="INTEGER" primaryKey="true" autoIncrement="true" />
+    <table name="spy_product_option_value_price" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValuePrice">
+        <column name="id_product_option_value_price" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="price" required="true" type="INTEGER" />
     </table>
 
     <!-- Option Value Translation -->
-    <table name="spy_option_value_translation" idMethod="native" allowPkInsert="true" phpName="SpyOptionValueTranslation">
+    <table name="spy_product_option_value_translation" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValueTranslation">
         <column name="name" required="true" type="VARCHAR" />
-        <column name="fk_option_value" type="INTEGER" primaryKey="true" />
+        <column name="fk_product_option_value" type="INTEGER" primaryKey="true" />
         <column name="fk_locale" type="INTEGER" primaryKey="true" />
 
-        <foreign-key foreignTable="spy_option_value" onDelete="CASCADE">
-            <reference local="fk_option_value" foreign="id_option_value" />
+        <foreign-key foreignTable="spy_product_option_value" onDelete="CASCADE">
+            <reference local="fk_product_option_value" foreign="id_product_option_value" />
         </foreign-key>
         <foreign-key foreignTable="spy_locale" onDelete="CASCADE">
             <reference local="fk_locale" foreign="id_locale" />
@@ -60,13 +60,13 @@
     </table>
 
     <!-- Option Type Translation -->
-    <table name="spy_option_type_translation" idMethod="native" allowPkInsert="true" phpName="SpyOptionTypeTranslation">
+    <table name="spy_product_option_type_translation" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionTypeTranslation">
         <column name="name" required="true" type="VARCHAR" />
-        <column name="fk_option_type" type="INTEGER" primaryKey="true" />
+        <column name="fk_product_option_type" type="INTEGER" primaryKey="true" />
         <column name="fk_locale" type="INTEGER" primaryKey="true" />
 
-        <foreign-key foreignTable="spy_option_type" onDelete="CASCADE">
-            <reference local="fk_option_type" foreign="id_option_type" />
+        <foreign-key foreignTable="spy_product_option_type" onDelete="CASCADE">
+            <reference local="fk_product_option_type" foreign="id_product_option_type" />
         </foreign-key>
         <foreign-key foreignTable="spy_locale" onDelete="CASCADE">
             <reference local="fk_locale" foreign="id_locale" />
@@ -74,66 +74,66 @@
     </table>
 
     <!-- Product Option Type -->
-    <table name="spy_product_option_type" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionType">
-        <column name="id_product_option_type" type="INTEGER" primaryKey="true" autoIncrement="true" />
+    <table name="spy_product_option_type_usage" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionTypeUsage">
+        <column name="id_product_option_type_usage" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="is_optional" type="INTEGER" required="true" />
         <column name="sequence" type="INTEGER" required="false" />
         <column name="fk_product" type="INTEGER" required="true" />
-        <column name="fk_option_type" type="INTEGER" required="true" />
+        <column name="fk_product_option_type" type="INTEGER" required="true" />
 
         <foreign-key foreignTable="spy_product" onDelete="CASCADE">
             <reference local="fk_product" foreign="id_product" />
         </foreign-key>
-        <foreign-key foreignTable="spy_option_type"> <!-- prevent cascade delete -->
-            <reference local="fk_option_type" foreign="id_option_type" />
+        <foreign-key foreignTable="spy_product_option_type"> <!-- prevent cascade delete -->
+            <reference local="fk_product_option_type" foreign="id_product_option_type" />
         </foreign-key>
     </table>
 
     <!-- Product Option Value -->
-    <table name="spy_product_option_value" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValue">
-        <column name="id_product_option_value" type="INTEGER" primaryKey="true" autoIncrement="true" />
+    <table name="spy_product_option_value_usage" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValueUsage">
+        <column name="id_product_option_value_usage" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="sequence" type="INTEGER" required="false" />
-        <column name="fk_product_option_type" type="INTEGER" required="true" />
-        <column name="fk_option_value" type="INTEGER" required="true" />
+        <column name="fk_product_option_type_usage" type="INTEGER" required="true" />
+        <column name="fk_product_option_value" type="INTEGER" required="true" />
 
-        <foreign-key foreignTable="spy_product_option_type" onDelete="CASCADE">
-            <reference local="fk_product_option_type" foreign="id_product_option_type" />
+        <foreign-key foreignTable="spy_product_option_type_usage" onDelete="CASCADE">
+            <reference local="fk_product_option_type_usage" foreign="id_product_option_type_usage" />
         </foreign-key>
-        <foreign-key foreignTable="spy_option_value"> <!-- prevent cascade delete -->
-            <reference local="fk_option_value" foreign="id_option_value" />
+        <foreign-key foreignTable="spy_product_option_value"> <!-- prevent cascade delete -->
+            <reference local="fk_product_option_value" foreign="id_product_option_value" />
         </foreign-key>
     </table>
 
     <!-- Product Option Type Exclusion -->
-    <table name="spy_product_option_type_exclusion" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionTypeExclusion">
-        <column name="fk_product_option_type_a" type="INTEGER" primaryKey="true" />
-        <column name="fk_product_option_type_b" type="INTEGER" primaryKey="true" />
+    <table name="spy_product_option_type_usage_exclusion" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionTypeUsageExclusion">
+        <column name="fk_product_option_type_usage_a" type="INTEGER" primaryKey="true" />
+        <column name="fk_product_option_type_usage_b" type="INTEGER" primaryKey="true" />
 
-        <foreign-key foreignTable="spy_product_option_type" onDelete="CASCADE" >
-            <reference local="fk_product_option_type_a" foreign="id_product_option_type" />
+        <foreign-key foreignTable="spy_product_option_type_usage" onDelete="CASCADE" >
+            <reference local="fk_product_option_type_usage_a" foreign="id_product_option_type_usage" />
         </foreign-key>
-        <foreign-key foreignTable="spy_product_option_type" onDelete="CASCADE">
-            <reference local="fk_product_option_type_b" foreign="id_product_option_type" />
+        <foreign-key foreignTable="spy_product_option_type_usage" onDelete="CASCADE">
+            <reference local="fk_product_option_type_usage_b" foreign="id_product_option_type_usage" />
         </foreign-key>
     </table>
 
     <!-- Product Option Value Constraint -->
-    <table name="spy_product_option_value_constraint" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValueConstraint">
-        <column name="fk_product_option_value_a" type="INTEGER" primaryKey="true" />
-        <column name="fk_product_option_value_b" type="INTEGER" primaryKey="true" />
+    <table name="spy_product_option_value_usage_constraint" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValueUsageConstraint">
+        <column name="fk_product_option_value_usage_a" type="INTEGER" primaryKey="true" />
+        <column name="fk_product_option_value_usage_b" type="INTEGER" primaryKey="true" />
         <column name="operator" type="VARCHAR" size="255" required="true" />
 
-        <foreign-key foreignTable="spy_product_option_value" onDelete="CASCADE">
-            <reference local="fk_product_option_value_a" foreign="id_product_option_value" />
+        <foreign-key foreignTable="spy_product_option_value_usage" onDelete="CASCADE">
+            <reference local="fk_product_option_value_usage_a" foreign="id_product_option_value_usage" />
         </foreign-key>
-        <foreign-key foreignTable="spy_product_option_value" onDelete="CASCADE">
-            <reference local="fk_product_option_value_b" foreign="id_product_option_value" />
+        <foreign-key foreignTable="spy_product_option_value_usage" onDelete="CASCADE">
+            <reference local="fk_product_option_value_usage_b" foreign="id_product_option_value_usage" />
         </foreign-key>
     </table>
 
     <!-- Configuration Preset -->
-    <table name="spy_configuration_preset" idMethod="native" allowPkInsert="true" phpName="SpyConfigurationPreset">
-        <column name="id_configuration_preset" type="INTEGER" primaryKey="true" autoIncrement="true" />
+    <table name="spy_product_option_configuration_preset" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionConfigurationPreset">
+        <column name="id_product_option_configuration_preset" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="is_default" type="BOOLEAN" required="true" />
         <column name="sequence" type="INTEGER" required="false" />
         <column name="fk_product" type="INTEGER" required="true" />
@@ -144,15 +144,15 @@
     </table>
 
     <!-- Configuration Preset Value -->
-    <table name="spy_configuration_preset_value" idMethod="native" allowPkInsert="true" phpName="SpyConfigurationPresetValue">
-        <column name="fk_configuration_preset" type="INTEGER" primaryKey="true" />
-        <column name="fk_product_option_value" type="INTEGER" primaryKey="true" />
+    <table name="spy_product_option_configuration_preset_value" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionConfigurationPresetValue">
+        <column name="fk_product_option_configuration_preset" type="INTEGER" primaryKey="true" />
+        <column name="fk_product_option_value_usage" type="INTEGER" primaryKey="true" />
 
-        <foreign-key foreignTable="spy_configuration_preset" onDelete="CASCADE">
-            <reference local="fk_configuration_preset" foreign="id_configuration_preset" />
+        <foreign-key foreignTable="spy_product_option_configuration_preset" onDelete="CASCADE">
+            <reference local="fk_product_option_configuration_preset" foreign="id_product_option_configuration_preset" />
         </foreign-key>
-        <foreign-key foreignTable="spy_product_option_value" onDelete="CASCADE">
-            <reference local="fk_product_option_value" foreign="id_product_option_value" />
+        <foreign-key foreignTable="spy_product_option_value_usage" onDelete="CASCADE">
+            <reference local="fk_product_option_value_usage" foreign="id_product_option_value_usage" />
         </foreign-key>
     </table>
 

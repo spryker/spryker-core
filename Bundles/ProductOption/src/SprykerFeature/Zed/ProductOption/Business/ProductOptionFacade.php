@@ -6,8 +6,8 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingOptionTypeException;
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingOptionValueException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
+use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
+use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
 
 /**
  * @method ProductOptionDependencyContainer getDependencyContainer()
@@ -22,9 +22,9 @@ class ProductOptionFacade extends AbstractFacade
      *
      * @return int
      */
-    public function importOptionType($importKeyOptionType, array $localizedNames = [], $importKeyTaxSet = null)
+    public function importProductOptionType($importKeyOptionType, array $localizedNames = [], $importKeyTaxSet = null)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importOptionType($importKeyOptionType, $localizedNames, $importKeyTaxSet);
+        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionType($importKeyOptionType, $localizedNames, $importKeyTaxSet);
     }
 
     /**
@@ -37,9 +37,9 @@ class ProductOptionFacade extends AbstractFacade
      *
      * @throws MissingOptionTypeException
      */
-    public function importOptionValue($importKeyOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null)
+    public function importProductOptionValue($importKeyOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importOptionValue($importKeyOptionValue, $importKeyOptionType, $localizedNames, $price);
+        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionValue($importKeyOptionValue, $importKeyOptionType, $localizedNames, $price);
     }
 
     /**
@@ -52,24 +52,24 @@ class ProductOptionFacade extends AbstractFacade
      *
      * @throws MissingOptionTypeException
      */
-    public function importProductOptionType($sku, $importKeyOptionType, $isOptional = false, $sequence = null)
+    public function importProductOptionTypeUsage($sku, $importKeyOptionType, $isOptional = false, $sequence = null)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionType($sku, $importKeyOptionType, $isOptional, $sequence);
+        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionTypeUsage($sku, $importKeyOptionType, $isOptional, $sequence);
     }
 
     /**
-     * @param int $idProductOptionType
+     * @param int $idProductOptionTypeUsage
      * @param string $importKeyOptionValue
      * @param int $sequence
      *
      * @return int
      *
-     * @throws MissingProductOptionTypeException
+     * @throws MissingProductOptionTypeUsageException
      * @throws MissingOptionValueException
      */
-    public function importProductOptionValue($idProductOptionType, $importKeyOptionValue, $sequence = null)
+    public function importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyOptionValue, $sequence = null)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionValue($idProductOptionType, $importKeyOptionValue, $sequence);
+        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyOptionValue, $sequence);
     }
 
     /**
@@ -78,26 +78,26 @@ class ProductOptionFacade extends AbstractFacade
      * @param string $importKeyOptionTypeB
      *
      * @throws MissingOptionTypeException
-     * @throw MissingProductOptionTypeException
+     * @throw MissingProductOptionTypeUsageException
      */
-    public function importProductOptionTypeExclusion($sku, $importKeyOptionTypeA, $importKeyOptionTypeB)
+    public function importProductOptionTypeUsageExclusion($sku, $importKeyOptionTypeA, $importKeyOptionTypeB)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionTypeExclusion($sku, $importKeyOptionTypeA, $importKeyOptionTypeB);
+        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionTypeUsageExclusion($sku, $importKeyOptionTypeA, $importKeyOptionTypeB);
     }
 
     /**
      * @param string $sku
-     * @param int $idProductOptionValueSource
+     * @param int $idProductOptionValueUsageSource
      * @param string $importKeyOptionValueTarget
      * @param string $operator
      *
-     * @throws MissingProductOptionValueException
+     * @throws MissingProductOptionValueUsageException
      * @throws MissingOptionValueException
-     * @throws MissingProductOptionValueException
+     * @throws MissingProductOptionValueUsageException
      */
-    public function importProductOptionValueConstraint($sku, $idProductOptionValueSource, $importKeyOptionValueTarget, $operator)
+    public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyOptionValueTarget, $operator)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionValueConstraint($sku, $idProductOptionValueSource, $importKeyOptionValueTarget, $operator);
+        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyOptionValueTarget, $operator);
     }
 
     /**
@@ -108,9 +108,9 @@ class ProductOptionFacade extends AbstractFacade
      *
      * @return int
      *
-     * @throws MissingProductOptionValueException
+     * @throws MissingProductOptionValueUsageException
      * @throws MissingOptionValueException
-     * @throws MissingProductOptionValueException
+     * @throws MissingProductOptionValueUsageException
      */
     public function importPresetConfiguration($sku, array $importKeysOptionValues, $isDefault = false, $sequence = null)
     {

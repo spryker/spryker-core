@@ -3,23 +3,23 @@
 namespace SprykerFeature\Zed\ProductOption\Business\Model;
 
 use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionType;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionValue;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionTypeTranslation;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionValueTranslation;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyOptionValuePrice;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeExclusion;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueConstraint;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyConfigurationPreset;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyConfigurationPresetValue;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTranslation;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslation;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValuePrice;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsage;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusion;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraint;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPreset;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue;
 use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
 use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingOptionTypeException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingOptionValueException;
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
+use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
+use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
 
 class DataImportWriter implements DataImportWriterInterface
 {
@@ -54,33 +54,33 @@ class DataImportWriter implements DataImportWriterInterface
     }
 
     /**
-     * @param string $importKeyOptionType
+     * @param string $importKeyProductOptionType
      * @param array $localizedNames
      * @param string $importKeyTaxSet
      */
-    public function importOptionType($importKeyOptionType, array $localizedNames = [], $importKeyTaxSet = null)
+    public function importProductOptionType($importKeyProductOptionType, array $localizedNames = [], $importKeyTaxSet = null)
     {
-        $optionTypeEntity = $this->queryContainer
-            ->queryOptionTypeByImportKey($importKeyOptionType)
+        $productOptionTypeEntity = $this->queryContainer
+            ->queryProductOptionTypeByImportKey($importKeyProductOptionType)
             ->findOne();
 
-        if (null === $optionTypeEntity) {
-            $optionTypeEntity = (new SpyOptionType())
-                ->setImportKey($importKeyOptionType);
+        if (null === $productOptionTypeEntity) {
+            $productOptionTypeEntity = (new SpyProductOptionType())
+                ->setImportKey($importKeyProductOptionType);
         }
 
-        $this->createOrUpdateOptionTypeTranslations($optionTypeEntity, $localizedNames);
+        $this->createOrUpdateOptionTypeTranslations($productOptionTypeEntity, $localizedNames);
 
-        $optionTypeEntity->save();
+        $productOptionTypeEntity->save();
 
-        return $optionTypeEntity->getIdOptionType();
+        return $productOptionTypeEntity->getIdProductOptionType();
     }
 
     /**
-     * @param SpyOptionType $optionTypeEntity
+     * @param SpyProductOptionType $productOptionTypeEntity
      * @param array $localizedNames
      */
-    private function createOrUpdateOptionTypeTranslations(SpyOptionType $optionTypeEntity, array $localizedNames)
+    private function createOrUpdateOptionTypeTranslations(SpyProductOptionType $productOptionTypeEntity, array $localizedNames)
     {
         foreach ($localizedNames as $localeName => $localizedOptionTypeName) {
 
@@ -91,37 +91,37 @@ class DataImportWriter implements DataImportWriterInterface
             $localeTransfer = $this->localeFacade->getLocale($localeName);
 
             $translationEntity = $this->queryContainer
-                ->queryOptionTypeTranslationByFks($optionTypeEntity->getIdOptionType(), $localeTransfer->getIdLocale())
+                ->queryProductOptionTypeTranslationByFks($productOptionTypeEntity->getIdProductOptionType(), $localeTransfer->getIdLocale())
                 ->findOne();
 
             if (null === $translationEntity) {
-                $translationEntity = (new SpyOptionTypeTranslation())->setFkLocale($localeTransfer->getIdLocale());
+                $translationEntity = (new SpyProductOptionTypeTranslation())->setFkLocale($localeTransfer->getIdLocale());
             }
 
             $translationEntity->setName($localizedOptionTypeName);
 
-            $optionTypeEntity->addSpyOptionTypeTranslation($translationEntity);
+            $productOptionTypeEntity->addSpyProductOptionTypeTranslation($translationEntity);
         }
     }
 
     /**
-     * @param string $importKeyOptionValue
+     * @param string $importKeyProductOptionValue
      * @param string $importKeyOptionType
      * @param array $localizedNames
      * @param float $price
      *
      * @return int
      *
-     * @throws MissingOptionTypeException
+     * @throws MissingProductOptionTypeException
      */
-    public function importOptionValue($importKeyOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null)
+    public function importProductOptionValue($importKeyProductOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null)
     {
-        $idOptionType = $this->queryContainer
-            ->queryOptionTypeIdByImportKey($importKeyOptionType)
+        $idProductOptionType = $this->queryContainer
+            ->queryProductOptionTypeIdByImportKey($importKeyOptionType)
             ->findOne();
 
-        if (null === $idOptionType) {
-            throw new MissingOptionTypeException(
+        if (null === $idProductOptionType) {
+            throw new MissingProductOptionTypeException(
                 sprintf(
                     'Tried to retrieve an option type with import key %s, but it does not exist.',
                     $importKeyOptionType
@@ -130,34 +130,34 @@ class DataImportWriter implements DataImportWriterInterface
         }
 
         $optionValueEntity = $this->queryContainer
-            ->queryOptionValueByImportKeyAndFkOptionType($importKeyOptionValue, $idOptionType)
+            ->queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyProductOptionValue, $idProductOptionType)
             ->findOne();
 
         if (null === $optionValueEntity) {
-            $optionValueEntity = (new SpyOptionValue())
-                ->setImportKey($importKeyOptionValue)
-                ->setFkOptionType($idOptionType);
+            $optionValueEntity = (new SpyProductOptionValue())
+                ->setImportKey($importKeyProductOptionValue)
+                ->setFkProductOptionType($idProductOptionType);
         }
 
         if (null !== $price) {
             $normalizedPrice = (int) str_replace('.', '', number_format($price, 2));
-            $priceEntity = (new SpyOptionValuePrice())
+            $priceEntity = (new SpyProductOptionValuePrice())
                 ->setPrice($normalizedPrice);
-            $optionValueEntity->setSpyOptionValuePrice($priceEntity);
+            $optionValueEntity->setSpyProductOptionValuePrice($priceEntity);
         }
 
         $this->createOrUpdateOptionValueTranslations($optionValueEntity, $localizedNames);
 
         $optionValueEntity->save();
 
-        return $optionValueEntity->getIdOptionValue();
+        return $optionValueEntity->getIdProductOptionValue();
     }
 
     /**
-     * @param SpyOptionValue $optionValueEntity
+     * @param SpyProductOptionValue $optionValueEntity
      * @param array $localizedNames
      */
-    private function createOrUpdateOptionValueTranslations(SpyOptionValue $optionValueEntity, array $localizedNames)
+    private function createOrUpdateOptionValueTranslations(SpyProductOptionValue $optionValueEntity, array $localizedNames)
     {
         foreach ($localizedNames as $localeName => $localizedOptionValueName) {
 
@@ -168,241 +168,241 @@ class DataImportWriter implements DataImportWriterInterface
             $localeTransfer = $this->localeFacade->getLocale($localeName);
 
             $translationEntity = $this->queryContainer
-                ->queryOptionValueTranslationByFks($optionValueEntity->getIdOptionValue(), $localeTransfer->getIdLocale())
+                ->queryProductOptionValueTranslationByFks($optionValueEntity->getIdProductOptionValue(), $localeTransfer->getIdLocale())
                 ->findOne();
 
             if (null === $translationEntity) {
-                $translationEntity = (new SpyOptionValueTranslation())
+                $translationEntity = (new SpyProductOptionValueTranslation())
                     ->setFkLocale($localeTransfer->getIdLocale());
             }
 
             $translationEntity->setName($localizedOptionValueName);
 
-            $optionValueEntity->addSpyOptionValueTranslation($translationEntity);
+            $optionValueEntity->addSpyProductOptionValueTranslation($translationEntity);
         }
     }
 
     /**
      * @param string $sku
-     * @param string $importKeyOptionType
+     * @param string $importKeyProductOptionType
      * @param bool $isOptional
      * @param int $sequence
      *
      * @return int
      *
-     * @throws MissingOptionTypeException
+     * @throws MissingProductOptionTypeException
      */
-    public function importProductOptionType($sku, $importKeyOptionType, $isOptional = false, $sequence  = null)
+    public function importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional = false, $sequence  = null)
     {
         $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
-        $idOptionType = $this->queryContainer
-            ->queryOptionTypeIdByImportKey($importKeyOptionType)
+        $idProductOptionType = $this->queryContainer
+            ->queryProductOptionTypeIdByImportKey($importKeyProductOptionType)
             ->findOne();
 
-        if (null === $idOptionType) {
-            throw new MissingOptionTypeException(
+        if (null === $idProductOptionType) {
+            throw new MissingProductOptionTypeException(
                 sprintf(
                     'Tried to retrieve an option type with import key %s, but it does not exist.',
-                    $importKeyOptionType
+                    $importKeyProductOptionType
                 )
             );
         }
 
-        $productOptionTypeEntity = $this->queryContainer
-            ->queryProductOptionTypeByFKs($idProduct, $idOptionType)
+        $productOptionTypeUsageEntity = $this->queryContainer
+            ->queryProductOptionTypeUsageByFKs($idProduct, $idProductOptionType)
             ->findOne();
 
-        if (null === $productOptionTypeEntity) {
-            $productOptionTypeEntity = (new SpyProductOptionType)
+        if (null === $productOptionTypeUsageEntity) {
+            $productOptionTypeUsageEntity = (new SpyProductOptionTypeUsage)
                 ->setFkProduct($idProduct)
-                ->setFkOptionType($idOptionType);
+                ->setFkProductOptionType($idProductOptionType);
         }
 
-        $productOptionTypeEntity
+        $productOptionTypeUsageEntity
             ->setIsOptional($isOptional)
             ->setSequence($sequence)
             ->save();
 
-        return $productOptionTypeEntity->getIdProductOptionType();
+        return $productOptionTypeUsageEntity->getIdProductOptionTypeUsage();
     }
 
     /**
-     * @param int $idProductOptionType
-     * @param string $importKeyOptionValue
+     * @param int $idProductOptionTypeUsage
+     * @param string $importKeyProductOptionValue
      * @param int $sequence
      *
      * @return int
      *
-     * @throws MissingProductOptionTypeException
-     * @throws MissingOptionValueException
+     * @throws MissingProductOptionTypeUsageException
+     * @throws MissingProductOptionValueException
      */
-    public function importProductOptionValue($idProductOptionType, $importKeyOptionValue, $sequence = null)
+    public function importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyProductOptionValue, $sequence = null)
     {
-        if ($this->queryContainer->queryProductOptonTypeById($idProductOptionType)->count() === 0) {
-            throw new MissingProductOptionTypeException(
+        if ($this->queryContainer->queryProductOptonTypeUsageById($idProductOptionTypeUsage)->count() === 0) {
+            throw new MissingProductOptionTypeUsageException(
                 sprintf(
                     'Tried to retrieve a product option type with import id %d, but it does not exist.',
-                    $idProductOptionType
+                    $idProductOptionTypeUsage
                 )
             );
         }
 
         $optionValueId = $this->queryContainer
-            ->queryOptionValueIdByImportKey($importKeyOptionValue)
+            ->queryProductOptionValueIdByImportKey($importKeyProductOptionValue)
             ->findOne();
 
         if (null === $optionValueId) {
-            throw new MissingOptionValueException(
+            throw new MissingProductOptionValueException(
                 sprintf(
                     'Tried to retrieve an option value with import key %s, but it does not exist.',
-                    $importKeyOptionValue
+                    $importKeyProductOptionValue
                 )
             );
         }
 
-        $productOptionValue = $this->queryContainer
-            ->queryProductOptionValueByFKs($idProductOptionType, $optionValueId)
+        $productOptionValueUsage = $this->queryContainer
+            ->queryProductOptionValueUsageByFKs($idProductOptionTypeUsage, $optionValueId)
             ->findOne();
 
-        if (null === $productOptionValue) {
-            $productOptionValue = (new SpyProductOptionValue)
-                ->setFkOptionValue($optionValueId)
-                ->setFkProductOptionType($idProductOptionType);
+        if (null === $productOptionValueUsage) {
+            $productOptionValueUsage = (new SpyProductOptionValueUsage)
+                ->setFkProductOptionValue($optionValueId)
+                ->setFkProductOptionTypeUsage($idProductOptionTypeUsage);
         }
 
-        $productOptionValue
+        $productOptionValueUsage
             ->setSequence($sequence)
             ->save();
 
-        return $productOptionValue->getIdProductOptionValue();
+        return $productOptionValueUsage->getIdProductOptionValueUsage();
     }
 
     /**
      * @param string $sku
-     * @param string $importKeyOptionTypeA
-     * @param string $importKeyOptionTypeB
+     * @param string $importKeyProductOptionTypeA
+     * @param string $importKeyProductOptionTypeB
      *
-     * @throws MissingOptionTypeException
-     * @throw MissingProductOptionTypeException
+     * @throws MissingProductOptionTypeException
+     * @throw MissingProductOptionTypeUsageException
      */
-    public function importProductOptionTypeExclusion($sku, $importKeyOptionTypeA, $importKeyOptionTypeB)
+    public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB)
     {
         $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
-        $idOptionTypeA = $this->queryContainer
-            ->queryOptionTypeIdByImportKey($importKeyOptionTypeA)
-            ->findOne();
-
-        if (null === $idOptionTypeA) {
-            throw new MissingOptionTypeException(
-                sprintf(
-                    'Tried to retrieve an option type with import key %s, but it does not exist.',
-                    $importKeyOptionTypeA
-                )
-            );
-        }
-
-        $idOptionTypeB = $this->queryContainer
-            ->queryOptionTypeIdByImportKey($importKeyOptionTypeB)
-            ->findOne();
-
-        if (null === $idOptionTypeB) {
-            throw new MissingOptionTypeException(
-                sprintf(
-                    'Tried to retrieve an option type with import key %s, but it does not exist.',
-                    $importKeyOptionTypeB
-                )
-            );
-        }
-
         $idProductOptionTypeA = $this->queryContainer
-            ->queryProductOptionTypeIdByFKs($idProduct, $idOptionTypeA)
+            ->queryProductOptionTypeIdByImportKey($importKeyProductOptionTypeA)
             ->findOne();
-
 
         if (null === $idProductOptionTypeA) {
-            throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
+            throw new MissingProductOptionTypeException(
+                sprintf(
+                    'Tried to retrieve an option type with import key %s, but it does not exist.',
+                    $importKeyProductOptionTypeA
+                )
+            );
         }
 
         $idProductOptionTypeB = $this->queryContainer
-            ->queryProductOptionTypeIdByFKs($idProduct, $idOptionTypeB)
+            ->queryProductOptionTypeIdByImportKey($importKeyProductOptionTypeB)
             ->findOne();
 
         if (null === $idProductOptionTypeB) {
-            throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
+            throw new MissingProductOptionTypeException(
+                sprintf(
+                    'Tried to retrieve an option type with import key %s, but it does not exist.',
+                    $importKeyProductOptionTypeB
+                )
+            );
         }
 
-        if ($this->queryContainer->queryProductOptionTypeExclusionByFks($idProductOptionTypeA, $idProductOptionTypeB)->count() > 0) {
+        $idProductOptionTypeUsageA = $this->queryContainer
+            ->queryProductOptionTypeUsageIdByFKs($idProduct, $idProductOptionTypeA)
+            ->findOne();
+
+
+        if (null === $idProductOptionTypeUsageA) {
+            throw new MissingProductOptionTypeUsageException('Tried to retrieve a product option type, but it does not exist.');
+        }
+
+        $idProductOptionTypeUsageB = $this->queryContainer
+            ->queryProductOptionTypeUsageIdByFKs($idProduct, $idProductOptionTypeB)
+            ->findOne();
+
+        if (null === $idProductOptionTypeUsageB) {
+            throw new MissingProductOptionTypeUsageException('Tried to retrieve a product option type, but it does not exist.');
+        }
+
+        if ($this->queryContainer->queryProductOptionTypeUsageExclusionByFks($idProductOptionTypeUsageA, $idProductOptionTypeUsageB)->count() > 0) {
             return;
         }
 
-        $optionTypeExclusion = (new SpyProductOptionTypeExclusion)
-            ->setFkProductOptionTypeA($idProductOptionTypeA)
-            ->setFkProductOptionTypeB($idProductOptionTypeB);
+        $optionTypeExclusion = (new SpyProductOptionTypeUsageExclusion)
+            ->setFkProductOptionTypeUsageA($idProductOptionTypeUsageA)
+            ->setFkProductOptionTypeUsageB($idProductOptionTypeUsageB);
 
         $optionTypeExclusion->save();
     }
 
     /**
      * @param string $sku
-     * @param int $idProductOptionValueSource
-     * @param string $importKeyOptionValueTarget
+     * @param int $idProductOptionValueUsageSource
+     * @param string $importKeyProductOptionValueTarget
      * @param string $operator
      *
+     * @throws MissingProductOptionValueUsageException
      * @throws MissingProductOptionValueException
-     * @throws MissingOptionValueException
-     * @throws MissingProductOptionValueException
+     * @throws MissingProductOptionValueUsageException
      */
-    public function importProductOptionValueConstraint($sku, $idProductOptionValueSource, $importKeyOptionValueTarget, $operator)
+    public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator)
     {
         $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
-        if ($this->queryContainer->queryProductOptonValueById($idProductOptionValueSource)->count() === 0) {
-            throw new MissingProductOptionValueException(
+        if ($this->queryContainer->queryProductOptonValueUsageById($idProductOptionValueUsageSource)->count() === 0) {
+            throw new MissingProductOptionValueUsageException(
                 sprintf(
                     'Tried to retrieve a product option value with id %d, but it does not exist.',
-                    $idProductOptionValueSource
+                    $idProductOptionValueUsageSource
                 )
             );
         }
 
         $optionValueBEntity = $this->queryContainer
-            ->queryOptionValueByImportKey($importKeyOptionValueTarget)
+            ->queryProductOptionValueByImportKey($importKeyProductOptionValueTarget)
             ->findOne();
 
         if (null === $optionValueBEntity) {
-            throw new MissingOptionValueException(
+            throw new MissingProductOptionValueException(
                 sprintf(
                     'Tried to retrieve an option value with import key %s, but it does not exist.',
-                    $importKeyOptionValueTarget
+                    $importKeyProductOptionValueTarget
                 )
             );
         }
 
-        $idProductOptionTypeB = $this->queryContainer
-            ->queryProductOptionTypeIdByFKs($idProduct, $optionValueBEntity->getFkOptionType())
+        $idProductOptionTypeUsageB = $this->queryContainer
+            ->queryProductOptionTypeUsageIdByFKs($idProduct, $optionValueBEntity->getFkProductOptionType())
             ->findOne();
 
-        if (null === $idProductOptionTypeB) {
-            throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
+        if (null === $idProductOptionTypeUsageB) {
+            throw new MissingProductOptionTypeUsageException('Tried to retrieve a product option type, but it does not exist.');
         }
 
-        $idProductOptionValueB = $this->queryContainer
-            ->queryProductOptionValueIdByFKs($idProductOptionTypeB, $optionValueBEntity->getIdOptionValue())
+        $idProductOptionValueUsageB = $this->queryContainer
+            ->queryProductOptionValueUsageIdByFKs($idProductOptionTypeUsageB, $optionValueBEntity->getIdProductOptionValue())
             ->findOne();
 
-        if (null === $idProductOptionValueB) {
-            throw new MissingProductOptionValueException('Tried to retrieve a product option value, but it does not exist.');
+        if (null === $idProductOptionValueUsageB) {
+            throw new MissingProductOptionValueUsageException('Tried to retrieve a product option value, but it does not exist.');
         }
 
-        if ($this->queryContainer->queryProductOptionValueConstraintsByFks($idProductOptionValueSource, $idProductOptionValueB)->count() > 0) {
+        if ($this->queryContainer->queryProductOptionValueUsageConstraintsByFks($idProductOptionValueUsageSource, $idProductOptionValueUsageB)->count() > 0) {
             return;
         }
 
-        $optionValueConstraint = (new SpyProductOptionValueConstraint())
-            ->setFkProductOptionValueA($idProductOptionValueSource)
-            ->setFkProductOptionValueB($idProductOptionValueB)
+        $optionValueConstraint = (new SpyProductOptionValueUsageConstraint())
+            ->setFkProductOptionValueUsageA($idProductOptionValueUsageSource)
+            ->setFkProductOptionValueUsageB($idProductOptionValueUsageB)
             ->setOperator($operator);
 
         $optionValueConstraint->save();
@@ -410,33 +410,33 @@ class DataImportWriter implements DataImportWriterInterface
 
     /**
      * @param $sku
-     * @param array $importKeysOptionValues
+     * @param array $importKeysProductOptionValues
      * @param bool $isDefault
      * @param int $sequence
      *
      * @return int
      *
+     * @throws MissingProductOptionValueUsageException
      * @throws MissingProductOptionValueException
-     * @throws MissingOptionValueException
-     * @throws MissingProductOptionValueException
+     * @throws MissingProductOptionValueUsageException
      */
-    public function importPresetConfiguration($sku, array $importKeysOptionValues, $isDefault = false, $sequence = null)
+    public function importPresetConfiguration($sku, array $importKeysProductOptionValues, $isDefault = false, $sequence = null)
     {
         $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
-        $presetConfig = (new SpyConfigurationPreset)
+        $presetConfig = (new SpyProductOptionConfigurationPreset)
             ->setFkProduct($idProduct)
             ->setIsDefault($isDefault)
             ->setSequence($sequence);
 
-        foreach ($importKeysOptionValues as $importKeyOptionValue) {
+        foreach ($importKeysProductOptionValues as $importKeyOptionValue) {
 
             $optionValueEntity = $this->queryContainer
-                ->queryOptionValueByImportKey($importKeyOptionValue)
+                ->queryProductOptionValueByImportKey($importKeyOptionValue)
                 ->findOne();
 
             if (null === $optionValueEntity) {
-                throw new MissingOptionValueException(
+                throw new MissingProductOptionValueException(
                     sprintf(
                         'Tried to retrieve an option value with import key %s, but it does not exist.',
                         $importKeyOptionValue
@@ -444,30 +444,30 @@ class DataImportWriter implements DataImportWriterInterface
                 );
             }
 
-            $idProductOptionType = $this->queryContainer
-                ->queryProductOptionTypeIdByFKs($idProduct, $optionValueEntity->getFkOptionType())
+            $idProductOptionTypeUsage = $this->queryContainer
+                ->queryProductOptionTypeUsageIdByFKs($idProduct, $optionValueEntity->getFkProductOptionType())
                 ->findOne();
 
-            if (null === $idProductOptionType) {
-                throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
+            if (null === $idProductOptionTypeUsage) {
+                throw new MissingProductOptionTypeUsageException('Tried to retrieve a product option type, but it does not exist.');
             }
 
             $idPoductOptionValue = $this->queryContainer
-                ->queryProductOptionValueIdByFKs($idProductOptionType, $optionValueEntity->getIdOptionValue())
+                ->queryProductOptionValueUsageIdByFKs($idProductOptionTypeUsage, $optionValueEntity->getIdProductOptionValue())
                 ->findOne();
 
             if (null === $idPoductOptionValue) {
-                throw new MissingProductOptionValueException('Tried to retrieve a product option value, but it does not exist.');
+                throw new MissingProductOptionValueUsageException('Tried to retrieve a product option value, but it does not exist.');
             }
 
-            $configPresetValue = (new SpyConfigurationPresetValue())
-                ->setFkProductOptionValue($idPoductOptionValue);
+            $configPresetValue = (new SpyProductOptionConfigurationPresetValue())
+                ->setFkProductOptionValueUsage($idPoductOptionValue);
 
-            $presetConfig->addSpyConfigurationPresetValue($configPresetValue);
+            $presetConfig->addSpyProductOptionConfigurationPresetValue($configPresetValue);
         }
 
         $presetConfig->save();
 
-        return $presetConfig->getIdConfigurationPreset();
+        return $presetConfig->getIdProductOptionConfigurationPreset();
     }
 }
