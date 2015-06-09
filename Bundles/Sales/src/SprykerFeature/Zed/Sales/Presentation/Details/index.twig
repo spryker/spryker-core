@@ -1,0 +1,141 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block head_css %}
+{{ parent() }}
+    <style>
+        table.spy-grid caption {
+            text-align: left;
+            border: 1px solid #d2dce7;
+            padding: 10px 5px;
+        }
+        .text-left           { text-align: left; }
+        .text-right          { text-align: right; }
+        .text-center         { text-align: center; }
+        .text-justify        { text-align: justify; }
+        .text-nowrap         { white-space: nowrap; }
+
+        .text-lowercase      { text-transform: lowercase; }
+        .text-uppercase      { text-transform: uppercase; }
+        .text-capitalize     { text-transform: capitalize; }
+
+        .pull-right { float: right; }
+        .pull-left { float: left; }
+        .notes-item {
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Sales Order 987654321</h1>
+
+    <div class="spy-layout n2">
+        <div class="spy-layout sparse">
+            <h3>Sales Orders Items</h3>
+            <table class="spy-grid">
+                <caption>
+                    <span>New (3)</span>
+                    <div class="pull-right text-right"><a href="">View State Machine</a></div>
+                </caption>
+                <tr class="text-left">
+                    <th></th>
+                    <th>Title</th>
+                    <th>SKU</th>
+                    <th>Price</th>
+                </tr>
+                {% for i in 1..5 %}
+                <tr class="ng-scope">
+                    <td>a</td>
+                    <td>v</td>
+                    <td>c</td>
+                    <td>s</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <button class="button button-generic">Invalidate</button>
+            <button class="button button-generic">Set</button>
+
+            <table class="spy-grid">
+                <caption>
+                    <span>Ready for order export (3)</span>
+                    <div class="pull-right text-right"><a href="">View State Machine</a></div>
+                </caption>
+                {% for i in 1..5 %}
+                <tr class="ng-scope">
+                    <td>a</td>
+                    <td>v</td>
+                    <td>c</td>
+                    <td>s</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <button class="button button-generic">Start order export</button>
+            <div class="spy-layout n2">
+                <div>Total</div>
+                <div class="text-right">&euro; 99.44</div>
+            </div>
+
+        </div>
+        <div class="spy-layout sparse" spy-app="spyForm">
+            <h3>Comments</h3>
+            <div class="compact notes">
+                {% for i in 1..4 %}
+                <div class="notes-item">
+                    <div class=""><b>Username</b> @ 12.05.2015 12:23</div>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta enim libero quos rem! Culpa eos, eum obcaecati, officia officiis omnis pariatur perspiciatis rem repellendus saepe similique sunt vero voluptatibus. Ex.
+                </div>
+                {% endfor %}
+
+                <spy-form
+                        class="spy-layout sparse"
+                        src="/sales/comment/add?order_id={[{ order_id }]}"
+                        name="order_comment"
+                        channel="sales"
+                        >
+                    <div spy-input-area="field.comment" options="{ label: 'Add new comment' }"></div>
+                    <button class="button button-accept">Add Comment</button>
+                </spy-form>
+            </div>
+        </div>
+        <div class="spy-layout sparse">
+            <h3>Payment</h3>
+            <table class="spy-grid">
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Value</th>
+                </tr>
+                {% for i in 1..3 %}
+                <tr>
+                    <td>PayOne</td>
+                    <td>12564987</td>
+                    <td>+ 19.99 &euro;</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="spy-layout sparse">
+            <h3>Shipping</h3>
+            <table class="spy-grid">
+                <tr>
+                    <th>Type</th>
+                    <th>Date</th>
+                </tr>
+                {% for i in 1..3 %}
+                    <tr>
+                        <td>Shipping</td>
+                        <td>12.05.2015</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="spy-layout sparse">
+            <h3>General</h3>
+        </div>
+        <div class="spy-layout sparse">
+            <h3>Invoices</h3>
+        </div>
+    </div>
+
+{% endblock %}

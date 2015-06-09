@@ -18,8 +18,9 @@
         <h3>{{ 'sales.index' | trans }}</h3>
 
         <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+        <spy-listen on="row_edit" do="openLayer(); read($argument)" scope="key_edit" channel="glossary"></spy-listen>
 
-        <table class="spy-grid spy-interactive">
+        <table class="spy-grid">
             <thead>
             <tr>
                 <th spy-grid-head="columns['id_sales_order']" label="ID"></th>
@@ -32,7 +33,7 @@
             <tbody>
             <tr ng-repeat="row in rows">
                 <td>{[{ row.id_sales_order }]}</td>
-                <td>{[{ row.first_name + ' ' + for.last_name }]}</td>
+                <td><a href="/sales/details/?id={[{ row.id_sales_order }]}">{[{ row.first_name + ' ' + for.last_name }]}</a></td>
                 <td>{[{ row.nr_of_items }]}</td>
                 <td>{[{ row.grand_total }]}</td>
             </tr>
