@@ -31,13 +31,11 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface
     }
 
     /**
-     * @param string $type
-     *
      * @return mixed
      */
-    public function getAll($type = null)
+    public function getAll()
     {
-        return $this->messenger->getAll($type);
+        return $this->messenger->getAll();
     }
 
     /**
@@ -195,5 +193,16 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface
     {
         return $this->messenger->log($level, $message, $context);
     }
+
+    /**
+     * @param string $type
+     *
+     * @return MessageInterface[]
+     */
+    public function getByType($type = null)
+    {
+        return $this->messenger->getByType($type);
+    }
+
 
 }
