@@ -2,8 +2,7 @@
 
 namespace SprykerFeature\Zed\Sales\Persistence;
 
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpyRedirectQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpyUrlQuery;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 
 interface SalesQueryContainerInterface
 {
@@ -11,12 +10,12 @@ interface SalesQueryContainerInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return SpyUrlQuery
+     * @return SpySalesOrderQuery
      */
     public function querySalesById($idSalesOrder);
 
     /**
-     * @return SpyUrlQuery
+     * @return SpySalesOrderQuery
      */
     public function querySales();
 

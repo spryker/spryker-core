@@ -9,9 +9,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 {
 
     /**
-     * @param string $url
-     *
-     * @return SpyUrl
+     * @return SpySalesOrderQuery
      */
     public function querySales()
     {
@@ -23,7 +21,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @param int $idSalesOrder
      *
-     * @return SpySalesQuery
+     * @return SpySalesOrderQuery
      */
     public function querySalesById($idSalesOrder)
     {
