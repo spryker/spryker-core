@@ -43,7 +43,8 @@ class PropelSchemaMergerTest extends \PHPUnit_Framework_TestCase
         $merger = new PropelSchemaMerger();
         $content = $merger->merge($filesToMerge['foo_bar.schema.xml']);
 
-        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($content) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+        $expected = file_get_contents($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'expected.merged.schema.xml');
+        $this->assertSame($expected, $content);
     }
 
 }

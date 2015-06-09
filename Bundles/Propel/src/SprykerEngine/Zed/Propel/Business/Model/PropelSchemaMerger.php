@@ -91,16 +91,16 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     private function createNewXml($schemaDatabase, $schemaNamespace, $schemaPackage)
     {
-        return new \SimpleXMLElement(sprintf('<database
-            name="%s"
+        return new \SimpleXMLElement('<database
+            name="' . $schemaDatabase . '"
             defaultIdMethod="native"
             defaultPhpNamingMethod="underscore"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-            namespace="%s"
-            package="%s"
+            namespace="' . $schemaNamespace . '"
+            package="' . $schemaPackage . '"
             ></database>'
-        ), $schemaDatabase, $schemaNamespace, $schemaPackage);
+        );
     }
 
     /**
@@ -131,7 +131,26 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             $mergeTargetXmlElement = $this->mergeSchemasRecursive($mergeTargetXmlElement, $schemaXmlElement);
         }
 
-        return $mergeTargetXmlElement->asXML();
+        return $this->prettyPrint($mergeTargetXmlElement);
+    }
+
+    /**
+     * @param \SimpleXmlElement $xml
+     *
+     * @return string
+     */
+    private function prettyPrint(\SimpleXmlElement $xml)
+    {
+        $dom = new \DOMDocument('1.0');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = true;
+        $dom->loadXML($xml->asXML());
+
+        $callback = function ($a) {
+            return str_repeat(' ', intval(strlen($a[1]) / 2) * 4) . '<';
+        };
+
+        return preg_replace_callback('/^( +)</m', $callback, $dom->saveXML());
     }
 
     /**
@@ -216,7 +235,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         foreach ($fromXmlElement->attributes() as $key => $value) {
             if (true === $alreadyHasAttributes
                 && true === array_key_exists($key, $toXmlAttributes)
-                && $toXmlAttributes[$key] !== $value
+                && $toXmlAttributes[$key] != $value
             ) {
                 throw new SchemaMergeException('Ambiguous value for the same attribute for key: ' . $key . ': "' . $toXmlAttributes[$key] . '" !== "' . $value . '"');
             }
