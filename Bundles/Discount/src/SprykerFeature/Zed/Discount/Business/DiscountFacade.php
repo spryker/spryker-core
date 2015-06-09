@@ -241,31 +241,37 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     * @param CalculableInterface $container
      *
      * @return array
      */
-    public function getDiscountableItems(OrderInterface $container)
+    public function getDiscountableItems(CalculableInterface $container)
+    //public function getDiscountableItems(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getItemCollector()->collect($container);
     }
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     * @param CalculableInterface $container
      *
      * @return OrderInterface[]
      */
-    public function getDiscountableItemExpenses(OrderInterface $container)
+    public function getDiscountableItemExpenses(CalculableInterface $container)
+    //public function getDiscountableItemExpenses(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getItemExpenseCollector()->collect($container);
     }
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     * @param CalculableInterface $container
      *
      * @return OrderInterface[]
      */
-    public function getDiscountableOrderExpenses(OrderInterface $container)
+    public function getDiscountableOrderExpenses(CalculableInterface $container)
+    //public function getDiscountableOrderExpenses(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getOrderExpenseCollector()->collect($container);
     }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * Class SubtotalTest
@@ -26,11 +27,11 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     public function testSubtotalShouldBeZeroForAnEmptyOrder()
     {
         $order = $this->getOrderWithFixtureData();
-        $order->setItems(new \ArrayObject());
+        $order->getCalculableObject()->setItems(new \ArrayObject());
 
         $totalsTransfer = $this->getTotals();
         $calculator = new SubtotalTotalsCalculator(Locator::getInstance());
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
+        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
         $this->assertEquals(0, $totalsTransfer->getSubtotal());
     }
 
@@ -40,11 +41,11 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
 
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $totalsTransfer = $this->getTotals();
         $calculator = new SubtotalTotalsCalculator(Locator::getInstance());
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
+        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
         $this->assertEquals(self::ITEM_GROSS_PRICE, $totalsTransfer->getSubtotal());
     }
 
@@ -55,23 +56,23 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
         $item = $this->getItemWithFixtureData();
 
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-        $order->addItem($item);
-        $order->addItem(clone $item);
+        $order->getCalculableObject()->addItem($item);
+        $order->getCalculableObject()->addItem(clone $item);
 
         $totalsTransfer = $this->getTotals();
         $calculator = new SubtotalTotalsCalculator(Locator::getInstance());
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
+        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
         $this->assertEquals(2 * self::ITEM_GROSS_PRICE, $totalsTransfer->getSubtotal());
     }
 
     /**
-     * @return OrderTransfer
+     * @return CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
         $order = new OrderTransfer();
 
-        return $order;
+        return new CalculableContainer($order);
     }
 
     /**

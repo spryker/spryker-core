@@ -48,11 +48,9 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
         CalculableInterface $container,
         \ArrayObject $items
     ) {
-        if ($container instanceof OrderInterface) {
-            $grandTotal = $this->calculateGrandTotal($totalsTransfer, $container, $items);
-            $grandTotal -= $this->getDiscount($totalsTransfer, $container, $items);
-            $totalsTransfer->setGrandTotalWithDiscounts($grandTotal);
-        }
+        $grandTotal = $this->calculateGrandTotal($totalsTransfer, $container, $items);
+        $grandTotal -= $this->getDiscount($totalsTransfer, $container, $items);
+        $totalsTransfer->setGrandTotalWithDiscounts($grandTotal);
     }
 
     /**

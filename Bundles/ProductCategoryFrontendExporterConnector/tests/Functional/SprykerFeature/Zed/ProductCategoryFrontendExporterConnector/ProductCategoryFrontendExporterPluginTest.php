@@ -16,6 +16,7 @@ use Propel\Runtime\Propel;
 use Pyz\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Touch\Business\TouchFacade;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;

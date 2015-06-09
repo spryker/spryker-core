@@ -18,6 +18,7 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
+use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group DiscountCalculatorTest
@@ -254,11 +255,10 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return mixed
+     * @return CalculableContainer
      */
     protected function getOrderWithTwoItems()
     {
-        $locator = Locator::getInstance();
         $order = new OrderTransfer();
         $item = new OrderItemTransfer();
         $itemCollection = new OrderItemsTransfer();
@@ -269,7 +269,7 @@ class CalculatorTest extends Test
 
         $order->setItems($itemCollection);
 
-        return $order;
+        return new CalculableContainer($order);
     }
 
     /**

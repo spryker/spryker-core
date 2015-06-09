@@ -32,7 +32,8 @@ class Discount
     protected $decisionRule;
 
     /**
-     * @var OrderInterface
+     * @ var OrderInterface
+     * @var CalculableInterface
      */
     protected $discountContainer;
 
@@ -192,7 +193,7 @@ class Discount
      */
     protected function getDefaultVoucherDecisionRulePluginIfNeeded($idDiscount)
     {
-        if (count($this->discountContainer->getCouponCodes()) == 0) {
+        if (count($this->discountContainer->getCalculableObject()->getCouponCodes()) == 0) {
             return null;
         }
 

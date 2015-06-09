@@ -168,25 +168,31 @@ interface DiscountFacadeInterface
     public function getCalculatorPluginByName($pluginName);
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
      */
-    public function getDiscountableItems(OrderInterface $container);
+    public function getDiscountableItems(CalculableInterface $container);
+    //public function getDiscountableItems(OrderInterface $container);
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
      */
-    public function getDiscountableItemExpenses(OrderInterface $container);
+    public function getDiscountableItemExpenses(CalculableInterface $container);
+    //public function getDiscountableItemExpenses(OrderInterface $container);
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
      */
-    public function getDiscountableOrderExpenses(OrderInterface $container);
+    public function getDiscountableOrderExpenses(CalculableInterface $container);
+    //public function getDiscountableOrderExpenses(OrderInterface $container);
 
     /**
      * @return array

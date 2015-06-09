@@ -234,9 +234,7 @@ class CalculatorTest extends AbstractFunctionalTest
 
         $order->setDiscounts(new DiscountTransfer());
 
-        $calculableOrder = new CalculableContainer($order);
-
-        return $calculableOrder;
+        return new CalculableContainer($order);
     }
 
     /**

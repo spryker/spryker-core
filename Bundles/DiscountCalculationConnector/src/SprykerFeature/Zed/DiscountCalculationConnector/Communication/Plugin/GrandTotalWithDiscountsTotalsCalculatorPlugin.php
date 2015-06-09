@@ -17,7 +17,6 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GrandTotalWithDiscountsTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculatorPluginInterface
 {
-
     /**
      * @param TotalsInterface $totalsTransfer
      * @ param OrderInterface $calculableContainer
@@ -30,10 +29,10 @@ class GrandTotalWithDiscountsTotalsCalculatorPlugin extends AbstractPlugin imple
         CalculableInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
-        if ($calculableContainer instanceof OrderInterface) {
-            $this->getDependencyContainer()
-                ->getDiscountCalculationFacade()
-                ->recalculateGrandTotalWithDiscountsTotals($totalsTransfer, $calculableContainer, $calculableItems);
-        }
+        $this
+            ->getDependencyContainer()
+            ->getDiscountCalculationFacade()
+            ->recalculateGrandTotalWithDiscountsTotals($totalsTransfer, $calculableContainer, $calculableItems)
+        ;
     }
 }
