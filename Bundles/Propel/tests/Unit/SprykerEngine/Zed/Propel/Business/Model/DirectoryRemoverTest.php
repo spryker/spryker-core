@@ -22,7 +22,7 @@ class DirectoryRemoverTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->fixtureDirectory = __DIR__ . '/Fixtures';
+        $this->fixtureDirectory = __DIR__ . '/TempFixtures';
         $directory = $this->fixtureDirectory . DIRECTORY_SEPARATOR . 'Foo';
         mkdir($directory, 0777, true);
         $filename = $directory . DIRECTORY_SEPARATOR . 'bar';
