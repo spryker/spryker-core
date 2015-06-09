@@ -89,11 +89,12 @@
 
                 <spy-form
                         class="spy-layout sparse"
-                        src="/sales/comment/add?order_id={[{ order_id }]}"
+                        src="/sales/comment/add?order_id={{ order_id }}"
                         name="order_comment"
                         channel="sales"
+                        model='{"fields":[{"name":"comment","type":"field","refresh":false}],"state":"new"}'
                         >
-                    <div spy-input-area="field.comment" options="{ label: 'Add new comment' }"></div>
+                    <div spy-input-area="comment" options="{ label: 'Add new comment', refresh: false }"></div>
                     <button class="button button-accept">Add Comment</button>
                 </spy-form>
             </div>
