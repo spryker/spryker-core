@@ -2,12 +2,10 @@
 
 namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
-use Generated\Shared\Transfer\PersonalDataTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\AuthorizationTransfer;
 use Generated\Shared\Transfer\CaptureTransfer;
 use Generated\Shared\Transfer\DebitTransfer;
-use Generated\Shared\Transfer\RefundTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\CreditCardTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
