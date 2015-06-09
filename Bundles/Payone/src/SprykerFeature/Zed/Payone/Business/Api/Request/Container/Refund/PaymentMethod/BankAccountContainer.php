@@ -1,8 +1,6 @@
 <?php
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\AbstractPaymentMethodContainer;
-
 
 class BankAccountContainer extends AbstractPaymentMethodContainer
 {

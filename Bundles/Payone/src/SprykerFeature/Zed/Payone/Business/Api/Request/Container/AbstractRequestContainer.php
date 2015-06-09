@@ -1,9 +1,8 @@
 <?php
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
 abstract class AbstractRequestContainer extends AbstractContainer implements PayoneApiConstants
 {

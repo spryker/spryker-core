@@ -1,8 +1,8 @@
 <?php
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
 class ItemContainer extends AbstractContainer
 {
