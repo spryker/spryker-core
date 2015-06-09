@@ -60,12 +60,12 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
             ->addJoin(
                 SpyTaxSetTableMap::COL_ID_TAX_SET,
                 SpyTaxSetTaxTableMap::COL_FK_TAX_SET,
-                Criteria::INNER_JOIN
+                Criteria::LEFT_JOIN // @TODO Change to Criteria::INNER_JOIN as soon as there is a Tax GUI/Importer in Zed
             )
             ->addJoin(
                 SpyTaxSetTaxTableMap::COL_FK_TAX_RATE,
                 SpyTaxRateTableMap::COL_ID_TAX_RATE,
-                Criteria::INNER_JOIN
+                Criteria::LEFT_JOIN // @TODO Change to Criteria::INNER_JOIN as soon as there is a Tax GUI/Importer in Zed
             )
         ;
 
