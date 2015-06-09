@@ -5,6 +5,7 @@ namespace Unit\SprykerEngine\Zed\Transfer\Business;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Transfer\TransferConfig;
+use Symfony\Component\Filesystem\Filesystem;
 
 class TransferConfigTest extends \PHPUnit_Framework_TestCase
 {
@@ -49,6 +50,14 @@ class TransferConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($this->getConfig()->getSourceDirectories()));
         $this->assertCount(2, $this->getConfig()->getSourceDirectories());
 
-        rmdir($directory);
+        $this->cleanTestDirectories();
     }
+
+    public function cleanTestDirectories()
+    {
+        $filesystem = new Filesystem();
+        $directory = APPLICATION_SOURCE_DIR . '/Foo';
+        $filesystem->remove($directory);
+    }
+
 }
