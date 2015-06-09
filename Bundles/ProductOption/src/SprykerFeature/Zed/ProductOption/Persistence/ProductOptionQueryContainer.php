@@ -19,25 +19,25 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValu
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
     /**
-     * @param string $importKeyOptionType
+     * @param string $importKeyProductOptionType
      *
      * @return SpyProductOptionTypeQuery
      */
-    public function queryProductOptionTypeByImportKey($importKeyOptionType)
+    public function queryProductOptionTypeByImportKey($importKeyProductOptionType)
     {
         return SpyProductOptionTypeQuery::create()
-            ->filterByImportKey($importKeyOptionType);
+            ->filterByImportKey($importKeyProductOptionType);
     }
 
     /**
-     * @param string $importKeyOptionType
+     * @param string $importKeyProductOptionType
      *
      * @return SpyProductOptionTypeQuery
      */
-    public function queryProductOptionTypeIdByImportKey($importKeyOptionType)
+    public function queryProductOptionTypeIdByImportKey($importKeyProductOptionType)
     {
         return SpyProductOptionTypeQuery::create()
-            ->filterByImportKey($importKeyOptionType)
+            ->filterByImportKey($importKeyProductOptionType)
             ->select(SpyProductOptionTypeTableMap::COL_ID_PRODUCT_OPTION_TYPE);
     }
 
@@ -55,7 +55,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param string $importKeyOptionValue
+     * @param string $importKeyProductOptionValue
      *
      * @return SpyProductOptionValueQuery
      */
@@ -66,38 +66,38 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param string $importKeyOptionValue
+     * @param string $importKeyProductOptionValue
      * @param int $fkProductOptionType
      *
      * @return SpyProductOptionValueQuery
      */
-    public function queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyOptionValue, $fkProductOptionType)
+    public function queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyProductOptionValue, $fkProductOptionType)
     {
         return SpyProductOptionValueQuery::create()
-            ->filterByImportKey($importKeyOptionValue)
+            ->filterByImportKey($importKeyProductOptionValue)
             ->filterByFkProductOptionType($fkProductOptionType);
     }
 
     /**
-     * @param string $importKeyOptionValue
+     * @param string $importKeyProductOptionValue
      *
      * @return SpyProductOptionValueQuery
      */
-    public function queryProductOptionValueByImportKey($importKeyOptionValue)
+    public function queryProductOptionValueByImportKey($importKeyProductOptionValue)
     {
         return SpyProductOptionValueQuery::create()
-            ->filterByImportKey($importKeyOptionValue);
+            ->filterByImportKey($importKeyProductOptionValue);
     }
 
     /**
-     * @param string $importKeyOptionValue
+     * @param string $importKeyProductOptionValue
      *
      * @return SpyProductOptionValueQuery
      */
-    public function queryProductOptionValueIdByImportKey($importKeyOptionValue)
+    public function queryProductOptionValueIdByImportKey($importKeyProductOptionValue)
     {
         return SpyProductOptionValueQuery::create()
-            ->filterByImportKey($importKeyOptionValue)
+            ->filterByImportKey($importKeyProductOptionValue)
             ->select(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE);
     }
 

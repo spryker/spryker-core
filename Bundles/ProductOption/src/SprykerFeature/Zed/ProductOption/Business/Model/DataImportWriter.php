@@ -106,7 +106,7 @@ class DataImportWriter implements DataImportWriterInterface
 
     /**
      * @param string $importKeyProductOptionValue
-     * @param string $importKeyOptionType
+     * @param string $importKeyProductOptionType
      * @param array $localizedNames
      * @param float $price
      *
@@ -114,17 +114,17 @@ class DataImportWriter implements DataImportWriterInterface
      *
      * @throws MissingProductOptionTypeException
      */
-    public function importProductOptionValue($importKeyProductOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null)
+    public function importProductOptionValue($importKeyProductOptionValue, $importKeyProductOptionType, array $localizedNames = [], $price = null)
     {
         $idProductOptionType = $this->queryContainer
-            ->queryProductOptionTypeIdByImportKey($importKeyOptionType)
+            ->queryProductOptionTypeIdByImportKey($importKeyProductOptionType)
             ->findOne();
 
         if (null === $idProductOptionType) {
             throw new MissingProductOptionTypeException(
                 sprintf(
                     'Tried to retrieve an option type with import key %s, but it does not exist.',
-                    $importKeyOptionType
+                    $importKeyProductOptionType
                 )
             );
         }
@@ -429,17 +429,17 @@ class DataImportWriter implements DataImportWriterInterface
             ->setIsDefault($isDefault)
             ->setSequence($sequence);
 
-        foreach ($importKeysProductOptionValues as $importKeyOptionValue) {
+        foreach ($importKeysProductOptionValues as $importKeyProductOptionValue) {
 
             $optionValueEntity = $this->queryContainer
-                ->queryProductOptionValueByImportKey($importKeyOptionValue)
+                ->queryProductOptionValueByImportKey($importKeyProductOptionValue)
                 ->findOne();
 
             if (null === $optionValueEntity) {
                 throw new MissingProductOptionValueException(
                     sprintf(
                         'Tried to retrieve an option value with import key %s, but it does not exist.',
-                        $importKeyOptionValue
+                        $importKeyProductOptionValue
                     )
                 );
             }

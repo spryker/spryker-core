@@ -21,7 +21,7 @@ interface DataImportWriterInterface
 
     /**
      * @param string $importKeyProductOptionValue
-     * @param string $importKeyOptionType
+     * @param string $importKeyProductOptionType
      * @param array $localizedNames
      * @param float $price
      *
@@ -29,7 +29,7 @@ interface DataImportWriterInterface
      *
      * @throws MissingProductOptionTypeException
      */
-    public function importProductOptionValue($importKeyProductOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null);
+    public function importProductOptionValue($importKeyProductOptionValue, $importKeyProductOptionType, array $localizedNames = [], $price = null);
 
     /**
      * @param string $sku

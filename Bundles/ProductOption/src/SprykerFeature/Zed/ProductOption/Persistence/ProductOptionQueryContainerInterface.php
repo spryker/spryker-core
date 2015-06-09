@@ -14,18 +14,18 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsa
 interface ProductOptionQueryContainerInterface
 {
     /**
-     * @param string $importKeyOptionType
+     * @param string $importKeyProductOptionType
      *
      * @return SpyProductOptionTypeQuery
      */
-    public function queryProductOptionTypeByImportKey($importKeyOptionType);
+    public function queryProductOptionTypeByImportKey($importKeyProductOptionType);
 
     /**
-     * @param string $importKeyOptionType
+     * @param string $importKeyProductOptionType
      *
      * @return SpyProductOptionTypeQuery
      */
-    public function queryProductOptionTypeIdByImportKey($importKeyOptionType);
+    public function queryProductOptionTypeIdByImportKey($importKeyProductOptionType);
 
     /**
      * @param int $fkProductOptionType
@@ -36,26 +36,26 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionTypeTranslationByFks($fkProductOptionType, $fkLocale);
 
     /**
-     * @param string $importKeyOptionValue
+     * @param string $importKeyProductOptionValue
      * @param int $fkProductOptionType
      *
      * @return SpyProductOptionValueQuery
      */
-    public function queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyOptionValue, $fkProductOptionType);
+    public function queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyProductOptionValue, $fkProductOptionType);
 
     /**
-     * @param string $importKeyOptionValue
+     * @param string $importKeyProductOptionValue
      *
      * @return SpyProductOptionValueQuery
      */
-    public function queryProductOptionValueByImportKey($importKeyOptionValue);
+    public function queryProductOptionValueByImportKey($importKeyProductOptionValue);
 
     /**
-     * @param string $importKeyOptionValue
+     * @param string $importKeyProductOptionValue
      *
      * @return SpyProductOptionValueQuery
      */
-    public function queryProductOptionValueIdByImportKey($importKeyOptionValue);
+    public function queryProductOptionValueIdByImportKey($importKeyProductOptionValue);
 
     /**
      * @param int $fkProductOptionValue
