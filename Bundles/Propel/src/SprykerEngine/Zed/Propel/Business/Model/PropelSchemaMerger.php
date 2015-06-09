@@ -91,16 +91,19 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     private function createNewXml($schemaDatabase, $schemaNamespace, $schemaPackage)
     {
-        return new \SimpleXMLElement('<database
-            name="' . $schemaDatabase . '"
+        return new \SimpleXMLElement(sprintf('<database
+            name="%s"
             defaultIdMethod="native"
             defaultPhpNamingMethod="underscore"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-            namespace="' . $schemaNamespace . '"
-            package="' . $schemaPackage . '"
-            ></database>'
-        );
+            namespace="%s"
+            package="%s"
+            ></database>',
+            $schemaDatabase,
+            $schemaNamespace,
+            $schemaPackage
+        ));
     }
 
     /**
@@ -237,7 +240,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
                 && true === array_key_exists($key, $toXmlAttributes)
                 && $toXmlAttributes[$key] != $value
             ) {
-                throw new SchemaMergeException('Ambiguous value for the same attribute for key: ' . $key . ': "' . $toXmlAttributes[$key] . '" !== "' . $value . '"');
+                throw new SchemaMergeException('Ambiguous value for the same attribute for key "' . $key . '": "' . $toXmlAttributes[$key] . '" !== "' . $value . '"');
             }
 
             if (false === $alreadyHasAttributes || false === array_key_exists($key, $toXmlAttributes)) {
