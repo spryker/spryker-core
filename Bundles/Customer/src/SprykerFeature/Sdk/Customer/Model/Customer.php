@@ -31,9 +31,9 @@ class Customer
     public function register(CustomerTransfer $customerTransfer)
     {
         $encoder = new MessageDigestPasswordEncoder();
-        $customerTransfer->setPassword($encoder->encodePassword($customerTransfer->getPassword(), ""));
+        $customerTransfer->setPassword($encoder->encodePassword($customerTransfer->getPassword(), ''));
 
-        return $this->zedClient->createClient()->call("/customer/sdk/register", $customerTransfer);
+        return $this->zedClient->createClient()->call('/customer/sdk/register', $customerTransfer);
     }
 
     /**
@@ -43,7 +43,7 @@ class Customer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
-        return $this->zedClient->createClient()->call("/customer/sdk/confirm-registration", $customerTransfer);
+        return $this->zedClient->createClient()->call('/customer/sdk/confirm-registration', $customerTransfer);
     }
 
     /**
@@ -53,7 +53,7 @@ class Customer
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
-        return $this->zedClient->createClient()->call("/customer/sdk/forgot-password", $customerTransfer);
+        return $this->zedClient->createClient()->call('/customer/sdk/forgot-password', $customerTransfer);
     }
 
     /**
@@ -64,8 +64,8 @@ class Customer
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
         $encoder = new MessageDigestPasswordEncoder();
-        $customerTransfer->setPassword($encoder->encodePassword($customerTransfer->getPassword(), ""));
-        return $this->zedClient->createClient()->call("/customer/sdk/restore-password", $customerTransfer);
+        $customerTransfer->setPassword($encoder->encodePassword($customerTransfer->getPassword(), ''));
+        return $this->zedClient->createClient()->call('/customer/sdk/restore-password', $customerTransfer);
     }
 
     /**
@@ -75,7 +75,7 @@ class Customer
      */
     public function delete(CustomerTransfer $customerTransfer)
     {
-        return $this->zedClient->createClient()->call("/customer/sdk/delete", $customerTransfer);
+        return $this->zedClient->createClient()->call('/customer/sdk/delete', $customerTransfer);
     }
 
     /**
@@ -85,7 +85,7 @@ class Customer
      */
     public function get(CustomerTransfer $customerTransfer)
     {
-        return $this->zedClient->createClient()->call("/customer/sdk/customer", $customerTransfer);
+        return $this->zedClient->createClient()->call('/customer/sdk/customer', $customerTransfer);
     }
 
     /**
@@ -95,7 +95,7 @@ class Customer
      */
     public function update(CustomerTransfer $customerTransfer)
     {
-        return $this->zedClient->createClient()->call("/customer/sdk/update", $customerTransfer);
+        return $this->zedClient->createClient()->call('/customer/sdk/update', $customerTransfer);
     }
 
     /**
@@ -105,7 +105,7 @@ class Customer
      */
     public function updateAddress(CustomerAddressTransfer $addressTransfer)
     {
-        return $this->zedClient->createClient()->call("/customer/sdk/update-address", $addressTransfer);
+        return $this->zedClient->createClient()->call('/customer/sdk/update-address', $addressTransfer);
     }
 
     /**
@@ -115,7 +115,7 @@ class Customer
      */
     public function getAddress(CustomerAddressTransfer $addressTransfer)
     {
-        return $this->zedClient->createClient()->call("/customer/sdk/address", $addressTransfer);
+        return $this->zedClient->createClient()->call('/customer/sdk/address', $addressTransfer);
     }
 
     /**
@@ -125,6 +125,6 @@ class Customer
      */
     public function createAddress(CustomerAddressTransfer $addressTransfer)
     {
-        return $this->zedClient->createClient()->call("/customer/sdk/new-address", $addressTransfer);
+        return $this->zedClient->createClient()->call('/customer/sdk/new-address', $addressTransfer);
     }
 }
