@@ -5,6 +5,7 @@ namespace SprykerFeature\Sdk\Catalog\Model;
 use Elastica\Filter\Term;
 use Elastica\Index;
 use Elastica\Query;
+use Elastica\Query\Filtered;
 use SprykerFeature\Sdk\Catalog\Model\Builder\FacetAggregationBuilderInterface;
 use SprykerFeature\Sdk\Catalog\Model\Builder\NestedFilterBuilderInterface;
 use SprykerFeature\Sdk\Catalog\Model\Extractor\AggregationExtractorInterface;
@@ -85,9 +86,9 @@ class FacetSearch extends AbstractSearch
     protected function addCategoryFilterToQuery(Query $query)
     {
         $query->setQuery(
-            (new Query\Filtered())
+            (new Filtered())
                 ->setFilter(new Term([
-                    'category.all-parents' => $this->category['node_id']
+                    'category.direct-parents' => $this->category['node_id']
                 ]))
         );
     }
