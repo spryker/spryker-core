@@ -54,13 +54,13 @@ class MessengerTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($messages);
     }
 
-    public function testGetAllByTypeReturnsOnlyMessagesWithRequestedTypeAndLeavesOtherMessagesInTheQueue()
+    public function testGetByTypeReturnsOnlyMessagesWithRequestedTypeAndLeavesOtherMessagesInTheQueue()
     {
         // add some messages
         $this->addTestMessages();
 
         // get all messages of type success
-        $messages = $this->messenger->getAll(Message::MESSAGE_SUCCESS);
+        $messages = $this->messenger->getByType(Message::MESSAGE_SUCCESS);
 
         $this->assertCount(3, $messages);
 

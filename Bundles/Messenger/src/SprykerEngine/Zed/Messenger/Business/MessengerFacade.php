@@ -57,16 +57,6 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface
     }
 
     /**
-     * @param string $type
-     *
-     * @return MessageInterface
-     */
-    public function get($type = null)
-    {
-        return $this->messenger->get($type);
-    }
-
-    /**
      * Action must be taken immediately.
      *
      * Example: Entire website down, database unavailable, etc. This should

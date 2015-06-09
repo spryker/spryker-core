@@ -18,18 +18,16 @@ interface MessengerInterface extends LoggerInterface
     public function add($type, $message, array $options = []);
 
     /**
-     * @param string $type
-     *
-     * @return MessageInterface
+     * @return MessageInterface[]
      */
-    public function get($type = null);
+    public function getAll();
 
     /**
      * @param string $type
      *
      * @return MessageInterface[]
      */
-    public function getAll($type = null);
+    public function getByType($type = null);
 
     /**
      * @param string $key

@@ -32,25 +32,15 @@ abstract class AbstractMessenger implements MessengerInterface
     }
 
     /**
-     * @param string $type
-     *
-     * @return MessageInterface|null
+     * @return MessageInterface[]
      */
-    public function get($type = null)
+    public function getAll()
     {
-        if ($type === null) {
-            return array_shift($this->messages);
-        }
+        $messages = $this->messages;
 
-        foreach ($this->messages as $key => $message) {
-            if ($message->getType() === $type) {
-                $returnMessage = array_splice($this->messages, $key, 1);
+        $this->messages = [];
 
-                return $returnMessage[0];
-            }
-        }
-
-        return null;
+        return $messages;
     }
 
     /**
@@ -58,16 +48,8 @@ abstract class AbstractMessenger implements MessengerInterface
      *
      * @return MessageInterface[]
      */
-    public function getAll($type = null)
+    public function getByType($type = null)
     {
-        if ($type === null) {
-            $messages = $this->messages;
-
-            $this->messages = [];
-
-            return $messages;
-        }
-
         $messages = array_filter(
             $this->messages,
             function (MessageInterface $message) use ($type) {
