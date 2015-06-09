@@ -1,8 +1,8 @@
 <?php
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Capture;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
 class BusinessContainer extends AbstractContainer
 {

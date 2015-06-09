@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Adapter\Http;
 
-
 class Curl extends AbstractHttpAdapter
 {
 

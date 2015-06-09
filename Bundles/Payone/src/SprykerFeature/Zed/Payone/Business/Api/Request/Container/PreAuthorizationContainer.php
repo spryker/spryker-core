@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
-
 class PreAuthorizationContainer extends AuthorizationContainer
 {
 
