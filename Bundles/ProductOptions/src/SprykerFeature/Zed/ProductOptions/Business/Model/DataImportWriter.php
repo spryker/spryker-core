@@ -60,7 +60,11 @@ class DataImportWriter implements DataImportWriterInterface
      */
     public function importOptionType($importKeyOptionType, array $localizedNames = [], $importKeyTaxSet = null)
     {
-        if (!$optionTypeEntity = $this->queryContainer->queryOptionTypeByImportKey($importKeyOptionType)->findOne()) {
+        $optionTypeEntity = $this->queryContainer
+            ->queryOptionTypeByImportKey($importKeyOptionType)
+            ->findOne();
+
+        if (null === $optionTypeEntity) {
             $optionTypeEntity = (new SpyOptionType())
                 ->setImportKey($importKeyOptionType);
         }
@@ -80,13 +84,17 @@ class DataImportWriter implements DataImportWriterInterface
     {
         foreach ($localizedNames as $localeName => $localizedOptionTypeName) {
 
-            if (!$this->localeFacade->hasLocale($localeName)) {
+            if (false === $this->localeFacade->hasLocale($localeName)) {
                 continue;
             }
 
             $localeTransfer = $this->localeFacade->getLocale($localeName);
 
-            if (!$translationEntity = $this->queryContainer->queryOptionTypeTranslationByFks($optionTypeEntity->getIdOptionType(), $localeTransfer->getIdLocale())->findOne()) {
+            $translationEntity = $this->queryContainer
+                ->queryOptionTypeTranslationByFks($optionTypeEntity->getIdOptionType(), $localeTransfer->getIdLocale())
+                ->findOne();
+
+            if (null === $translationEntity) {
                 $translationEntity = (new SpyOptionTypeTranslation())->setFkLocale($localeTransfer->getIdLocale());
             }
 
@@ -108,7 +116,11 @@ class DataImportWriter implements DataImportWriterInterface
      */
     public function importOptionValue($importKeyOptionValue, $importKeyOptionType, array $localizedNames = [], $price = null)
     {
-        if (!$idOptionType = $this->queryContainer->queryOptionTypeIdByImportKey($importKeyOptionType)->findOne()) {
+        $idOptionType = $this->queryContainer
+            ->queryOptionTypeIdByImportKey($importKeyOptionType)
+            ->findOne();
+
+        if (null === $idOptionType) {
             throw new MissingOptionTypeException(
                 sprintf(
                     'Tried to retrieve an option type with import key %s, but it does not exist.',
@@ -117,17 +129,20 @@ class DataImportWriter implements DataImportWriterInterface
             );
         }
 
-        $optionValueEntity =  $this->queryContainer->queryOptionValueByImportKeyAndFkOptionType($importKeyOptionValue, $idOptionType)->findOne();
+        $optionValueEntity = $this->queryContainer
+            ->queryOptionValueByImportKeyAndFkOptionType($importKeyOptionValue, $idOptionType)
+            ->findOne();
 
-        if (!$optionValueEntity) {
+        if (null === $optionValueEntity) {
             $optionValueEntity = (new SpyOptionValue())
                 ->setImportKey($importKeyOptionValue)
                 ->setFkOptionType($idOptionType);
         }
 
-        if ($price) {
+        if (null !== $price) {
             $normalizedPrice = (int) str_replace('.', '', number_format($price, 2));
-            $priceEntity = (new SpyOptionValuePrice())->setPrice($normalizedPrice);
+            $priceEntity = (new SpyOptionValuePrice())
+                ->setPrice($normalizedPrice);
             $optionValueEntity->setSpyOptionValuePrice($priceEntity);
         }
 
@@ -146,14 +161,19 @@ class DataImportWriter implements DataImportWriterInterface
     {
         foreach ($localizedNames as $localeName => $localizedOptionValueName) {
 
-            if (!$this->localeFacade->hasLocale($localeName)) {
+            if (false === $this->localeFacade->hasLocale($localeName)) {
                 continue;
             }
 
             $localeTransfer = $this->localeFacade->getLocale($localeName);
 
-            if (!$translationEntity = $this->queryContainer->queryOptionValueTranslationByFks($optionValueEntity->getIdOptionValue(), $localeTransfer->getIdLocale())->findOne()) {
-                $translationEntity = (new SpyOptionValueTranslation())->setFkLocale($localeTransfer->getIdLocale());
+            $translationEntity = $this->queryContainer
+                ->queryOptionValueTranslationByFks($optionValueEntity->getIdOptionValue(), $localeTransfer->getIdLocale())
+                ->findOne();
+
+            if (null === $translationEntity) {
+                $translationEntity = (new SpyOptionValueTranslation())
+                    ->setFkLocale($localeTransfer->getIdLocale());
             }
 
             $translationEntity->setName($localizedOptionValueName);
@@ -176,7 +196,11 @@ class DataImportWriter implements DataImportWriterInterface
     {
         $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
-        if (!$idOptionType = $this->queryContainer->queryOptionTypeIdByImportKey($importKeyOptionType)->findOne()) {
+        $idOptionType = $this->queryContainer
+            ->queryOptionTypeIdByImportKey($importKeyOptionType)
+            ->findOne();
+
+        if (null === $idOptionType) {
             throw new MissingOptionTypeException(
                 sprintf(
                     'Tried to retrieve an option type with import key %s, but it does not exist.',
@@ -185,17 +209,20 @@ class DataImportWriter implements DataImportWriterInterface
             );
         }
 
-        $productOptionTypeEntity = $this->queryContainer->queryProductOptionTypeByFKs($idProduct, $idOptionType)->findOne();
+        $productOptionTypeEntity = $this->queryContainer
+            ->queryProductOptionTypeByFKs($idProduct, $idOptionType)
+            ->findOne();
 
-        if (!$productOptionTypeEntity) {
+        if (null === $productOptionTypeEntity) {
             $productOptionTypeEntity = (new SpyProductOptionType)
                 ->setFkProduct($idProduct)
                 ->setFkOptionType($idOptionType);
         }
 
-        $productOptionTypeEntity->setIsOptional($isOptional)->setSequence($sequence);
-
-        $productOptionTypeEntity->save();
+        $productOptionTypeEntity
+            ->setIsOptional($isOptional)
+            ->setSequence($sequence)
+            ->save();
 
         return $productOptionTypeEntity->getIdProductOptionType();
     }
@@ -221,7 +248,11 @@ class DataImportWriter implements DataImportWriterInterface
             );
         }
 
-        if (!$optionValueId = $this->queryContainer->queryOptionValueIdByImportKey($importKeyOptionValue)->findOne()) {
+        $optionValueId = $this->queryContainer
+            ->queryOptionValueIdByImportKey($importKeyOptionValue)
+            ->findOne();
+
+        if (null === $optionValueId) {
             throw new MissingOptionValueException(
                 sprintf(
                     'Tried to retrieve an option value with import key %s, but it does not exist.',
@@ -230,17 +261,19 @@ class DataImportWriter implements DataImportWriterInterface
             );
         }
 
-        $productOptionValue = $this->queryContainer->queryProductOptionValueByFKs($idProductOptionType, $optionValueId)->findOne();
+        $productOptionValue = $this->queryContainer
+            ->queryProductOptionValueByFKs($idProductOptionType, $optionValueId)
+            ->findOne();
 
-        if (!$productOptionValue) {
+        if (null === $productOptionValue) {
             $productOptionValue = (new SpyProductOptionValue)
                 ->setFkOptionValue($optionValueId)
                 ->setFkProductOptionType($idProductOptionType);
         }
 
-        $productOptionValue->setSequence($sequence);
-
-        $productOptionValue->save();
+        $productOptionValue
+            ->setSequence($sequence)
+            ->save();
 
         return $productOptionValue->getIdProductOptionValue();
     }
@@ -257,7 +290,11 @@ class DataImportWriter implements DataImportWriterInterface
     {
         $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
-        if (!$idOptionTypeA = $this->queryContainer->queryOptionTypeIdByImportKey($importKeyOptionTypeA)->findOne()) {
+        $idOptionTypeA = $this->queryContainer
+            ->queryOptionTypeIdByImportKey($importKeyOptionTypeA)
+            ->findOne();
+
+        if (null === $idOptionTypeA) {
             throw new MissingOptionTypeException(
                 sprintf(
                     'Tried to retrieve an option type with import key %s, but it does not exist.',
@@ -266,7 +303,11 @@ class DataImportWriter implements DataImportWriterInterface
             );
         }
 
-        if (!$idOptionTypeB = $this->queryContainer->queryOptionTypeIdByImportKey($importKeyOptionTypeB)->findOne()) {
+        $idOptionTypeB = $this->queryContainer
+            ->queryOptionTypeIdByImportKey($importKeyOptionTypeB)
+            ->findOne();
+
+        if (null === $idOptionTypeB) {
             throw new MissingOptionTypeException(
                 sprintf(
                     'Tried to retrieve an option type with import key %s, but it does not exist.',
@@ -275,13 +316,20 @@ class DataImportWriter implements DataImportWriterInterface
             );
         }
 
-        $idProductOptionTypeA = $this->queryContainer->queryProductOptionTypeIdByFKs($idProduct, $idOptionTypeA)->findOne();
-        if (!$idProductOptionTypeA) {
+        $idProductOptionTypeA = $this->queryContainer
+            ->queryProductOptionTypeIdByFKs($idProduct, $idOptionTypeA)
+            ->findOne();
+
+
+        if (null === $idProductOptionTypeA) {
             throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
         }
 
-        $idProductOptionTypeB = $this->queryContainer->queryProductOptionTypeIdByFKs($idProduct, $idOptionTypeB)->findOne();
-        if (!$idProductOptionTypeB) {
+        $idProductOptionTypeB = $this->queryContainer
+            ->queryProductOptionTypeIdByFKs($idProduct, $idOptionTypeB)
+            ->findOne();
+
+        if (null === $idProductOptionTypeB) {
             throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
         }
 
@@ -319,7 +367,11 @@ class DataImportWriter implements DataImportWriterInterface
             );
         }
 
-        if (!$optionValueBEntity = $this->queryContainer->queryOptionValueByImportKey($importKeyOptionValueTarget)->findOne()) {
+        $optionValueBEntity = $this->queryContainer
+            ->queryOptionValueByImportKey($importKeyOptionValueTarget)
+            ->findOne();
+
+        if (null === $optionValueBEntity) {
             throw new MissingOptionValueException(
                 sprintf(
                     'Tried to retrieve an option value with import key %s, but it does not exist.',
@@ -331,20 +383,23 @@ class DataImportWriter implements DataImportWriterInterface
         $idProductOptionTypeB = $this->queryContainer
             ->queryProductOptionTypeIdByFKs($idProduct, $optionValueBEntity->getFkOptionType())
             ->findOne();
-        if (!$idProductOptionTypeB) {
+
+        if (null === $idProductOptionTypeB) {
             throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
         }
 
         $idProductOptionValueB = $this->queryContainer
             ->queryProductOptionValueIdByFKs($idProductOptionTypeB, $optionValueBEntity->getIdOptionValue())
             ->findOne();
-        if (!$idProductOptionValueB) {
+
+        if (null === $idProductOptionValueB) {
             throw new MissingProductOptionValueException('Tried to retrieve a product option value, but it does not exist.');
         }
 
         if ($this->queryContainer->queryProductOptionValueConstraintsByFks($idProductOptionValueSource, $idProductOptionValueB)->count() > 0) {
             return;
         }
+
         $optionValueConstraint = (new SpyProductOptionValueConstraint())
             ->setFkProductOptionValueA($idProductOptionValueSource)
             ->setFkProductOptionValueB($idProductOptionValueB)
@@ -376,7 +431,11 @@ class DataImportWriter implements DataImportWriterInterface
 
         foreach ($importKeysOptionValues as $importKeyOptionValue) {
 
-            if (!$optionValueEntity = $this->queryContainer->queryOptionValueByImportKey($importKeyOptionValue)->findOne()) {
+            $optionValueEntity = $this->queryContainer
+                ->queryOptionValueByImportKey($importKeyOptionValue)
+                ->findOne();
+
+            if (null === $optionValueEntity) {
                 throw new MissingOptionValueException(
                     sprintf(
                         'Tried to retrieve an option value with import key %s, but it does not exist.',
@@ -388,14 +447,16 @@ class DataImportWriter implements DataImportWriterInterface
             $idProductOptionType = $this->queryContainer
                 ->queryProductOptionTypeIdByFKs($idProduct, $optionValueEntity->getFkOptionType())
                 ->findOne();
-            if (!$idProductOptionType) {
+
+            if (null === $idProductOptionType) {
                 throw new MissingProductOptionTypeException('Tried to retrieve a product option type, but it does not exist.');
             }
 
             $idPoductOptionValue = $this->queryContainer
                 ->queryProductOptionValueIdByFKs($idProductOptionType, $optionValueEntity->getIdOptionValue())
                 ->findOne();
-            if (!$idPoductOptionValue) {
+
+            if (null === $idPoductOptionValue) {
                 throw new MissingProductOptionValueException('Tried to retrieve a product option value, but it does not exist.');
             }
 
