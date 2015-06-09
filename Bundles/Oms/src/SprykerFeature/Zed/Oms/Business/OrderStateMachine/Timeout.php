@@ -80,15 +80,19 @@ class Timeout implements TimeoutInterface
         if ($targetState->hasTimeoutEvent()) {
             $events = $targetState->getTimeoutEvents();
 
+            $handledEvents = [];
             foreach ($events as $event) {
-                $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event);
+                if (in_array($event->getName(), $handledEvents) == false) {
+                    $handledEvents[] = $event->getName();
+                    $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event);
 
-                (new SpyOmsEventTimeout())
-                    ->setTimeout($timeoutDate)
-                    ->setFkSalesOrderItem($orderItem->getPrimaryKey())
-                    ->setState($targetStateEntity)
-                    ->setEvent($event->getName())
-                    ->save();
+                    (new SpyOmsEventTimeout())
+                        ->setTimeout($timeoutDate)
+                        ->setOrderItem($orderItem)
+                        ->setState($targetStateEntity)
+                        ->setEvent($event->getName())
+                        ->save();
+                }
             }
         }
     }
