@@ -82,7 +82,7 @@ class Timeout implements TimeoutInterface
 
             $handledEvents = [];
             foreach ($events as $event) {
-                if (in_array($event->getName(), $handledEvents) == false) {
+                if (in_array($event->getName(), $handledEvents) === false) {
                     $handledEvents[] = $event->getName();
                     $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event);
 
