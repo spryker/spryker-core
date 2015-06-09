@@ -1,8 +1,6 @@
 <?php
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\AbstractPaymentMethodContainer;
-
 
 class CreditCardContainer extends AbstractPaymentMethodContainer
 {

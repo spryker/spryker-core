@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\TransactionStatus;
 
-
 interface TransactionStatusConstants
 {
 

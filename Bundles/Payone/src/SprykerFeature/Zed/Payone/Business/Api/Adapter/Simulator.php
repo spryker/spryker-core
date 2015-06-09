@@ -4,7 +4,6 @@ namespace SprykerFeature\Zed\Payone\Business\Api\Adapter;
 
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\Http\AbstractHttpAdapter;
 
-
 class Simulator extends AbstractHttpAdapter
 {
 

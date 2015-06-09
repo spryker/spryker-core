@@ -1,10 +1,9 @@
 <?php
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
-
 
 class CaptureContainer extends AbstractRequestContainer
 {
