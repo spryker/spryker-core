@@ -21,6 +21,13 @@ interface ProductOptionsQueryContainerInterface
     public function queryOptionTypeByImportKey($importKeyOptionType);
 
     /**
+     * @param string $importKeyOptionType
+     *
+     * @return SpyOptionTypeQuery
+     */
+    public function queryOptionTypeIdByImportKey($importKeyOptionType);
+
+    /**
      * @param int $fkOptionType
      * @param int $fkLocale
      *
@@ -42,6 +49,13 @@ interface ProductOptionsQueryContainerInterface
      * @return SpyOptionValueQuery
      */
     public function queryOptionValueByImportKey($importKeyOptionValue);
+
+    /**
+     * @param string $importKeyOptionValue
+     *
+     * @return SpyOptionValueQuery
+     */
+    public function queryOptionValueIdByImportKey($importKeyOptionValue);
 
     /**
      * @param int $fkOptionValue
@@ -67,6 +81,14 @@ interface ProductOptionsQueryContainerInterface
     public function queryProductOptionTypeByFKs($fkProduct, $fkOptionType);
 
     /**
+     * @param int $fkProduct
+     * @param int $fkOptionType
+     *
+     * @return SpyProductOptionTypeQuery
+     */
+    public function queryProductOptionTypeIdByFKs($fkProduct, $fkOptionType);
+
+    /**
      * @param int $idProductOptionValue
      *
      * @return SpyProductOptionValueQuery
@@ -80,6 +102,14 @@ interface ProductOptionsQueryContainerInterface
      * @return SpyProductOptionValueQuery
      */
     public function queryProductOptionValueByFKs($fkProductOptionType, $fkOptionType);
+
+    /**
+     * @param int $fkProductOptionType
+     * @param int $fkOptionType
+     *
+     * @return SpyProductOptionValueQuery
+     */
+    public function queryProductOptionValueIdByFKs($fkProductOptionType, $fkOptionType);
 
     /**
      * @param int $fkProductOptionTypeA
