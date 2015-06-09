@@ -4,12 +4,12 @@ namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Payone\AuthorizationInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\EWalletContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
+use SprykerEngine\Shared\Kernel\Store;
 
 class PayPal extends AbstractMapper
 {
@@ -24,7 +24,7 @@ class PayPal extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
-     * @return CreditCardContainer
+     * @return AbstractRequestContainer
      */
     public function mapAuthorization(AuthorizationInterface $authorizationData)
     {
@@ -98,10 +98,9 @@ class PayPal extends AbstractMapper
     {
         $personalContainer = new PersonalContainer();
 
-        // @todo fix country and order transfer interface (sales refactoring?)
         $personalContainer->setFirstName($authorizationData->getOrder()->getFirstName());
         $personalContainer->setLastName($authorizationData->getOrder()->getLastName());
-        $personalContainer->setCountry($this->getStandardParameter()->getLanguage());
+        $personalContainer->setCountry(Store::getInstance()->getCurrentCountry());
 
         return $personalContainer;
     }

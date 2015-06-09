@@ -6,7 +6,7 @@ use Generated\Shared\Payone\AuthorizationInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
-
+use SprykerEngine\Shared\Kernel\Store;
 
 class PrePayment extends AbstractMapper
 {
@@ -65,10 +65,9 @@ class PrePayment extends AbstractMapper
     {
         $personalContainer = new PersonalContainer();
 
-        // @todo fix country and order transfer interface (sales refactoring?)
         $personalContainer->setFirstName($authorizationData->getOrder()->getFirstName());
         $personalContainer->setLastName($authorizationData->getOrder()->getLastName());
-        $personalContainer->setCountry($this->getStandardParameter()->getLanguage());
+        $personalContainer->setCountry(Store::getInstance()->getCurrentCountry());
 
         return $personalContainer;
     }
