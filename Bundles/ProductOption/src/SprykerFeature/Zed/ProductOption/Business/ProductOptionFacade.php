@@ -78,7 +78,7 @@ class ProductOptionFacade extends AbstractFacade
      * @param string $importKeyProductOptionTypeB
      *
      * @throws MissingProductOptionTypeException
-     * @throw MissingProductOptionTypeUsageException
+     * @throws MissingProductOptionTypeUsageException
      */
     public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB)
     {

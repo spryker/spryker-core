@@ -61,7 +61,7 @@ interface DataImportWriterInterface
      * @param string $importKeyProductOptionTypeB
      *
      * @throws MissingProductOptionTypeException
-     * @throw MissingProductOptionTypeUsageException
+     * @throws MissingProductOptionTypeUsageException
      */
     public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
 

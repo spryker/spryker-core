@@ -126,6 +126,9 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @param int $fkProduct
+     * @param int $fkProductOptionType
+     *
      * @return SpyProductOptionTypeUsageQuery
      */
     public function queryProductOptionTypeUsageByFKs($fkProduct, $fkProductOptionType)

@@ -7,17 +7,14 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
 use Generated\Zed\Ide\AutoCompletion;
-
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionConfigurationPresetQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusionQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageQuery;
-
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsage;
-
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraintQuery;
@@ -26,8 +23,8 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsa
 /**
  * @group Business
  * @group Zed
- * @group ProdutOptions
- * @group KeyBasedWriterTest
+ * @group ProdutOption
+ * @group DataImportWriterTest
  */
 class DataImportWriterTest extends Test
 {
@@ -50,7 +47,7 @@ class DataImportWriterTest extends Test
         $this->facade = new ProductOptionFacade(new Factory('ProductOption'), $this->locator);
     }
 
-    public function testImportOptionType()
+    public function testImportProductOptionType()
     {
         $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
         $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
@@ -62,7 +59,7 @@ class DataImportWriterTest extends Test
         $this->assertEquals('Shade', $result[0]->getSpyProductOptionTypeTranslations()[0]->getName());
     }
 
-    public function testImportOptionValue()
+    public function testImportProductOptionValue()
     {
         $optionType = (new SpyProductOptionType)->setImportKey('SHADE');
         $optionType->save();
@@ -163,7 +160,7 @@ class DataImportWriterTest extends Test
         $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
     }
 
-    public function testImportPresetConfiguration()
+    public function testImportProductOptionPresetConfiguration()
     {
         $product = $this->createConcreteProduct();
         $optionShade = $this->createOptionTypeWithValue();
