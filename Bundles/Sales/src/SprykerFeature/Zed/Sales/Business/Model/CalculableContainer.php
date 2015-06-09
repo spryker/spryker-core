@@ -1,24 +1,24 @@
 <?php
 
-namespace SprykerFeature\Zed\Cart\Business\Model;
+namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use Generated\Shared\Calculation\CalculableContainerInterface;
-use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Sales\OrderInterface;
 
 class CalculableContainer implements CalculableInterface
 {
     /**
-     * @var CartInterface
+     * @var OrderInterface
      */
-    private $cart;
+    private $order;
 
     /**
-     * @param CartInterface $cart
+     * @param OrderInterface $order
      */
-    public function __construct(CartInterface $cart)
+    public function __construct(OrderInterface $order)
     {
-        $this->cart = $cart;
+        $this->order = $order;
     }
 
     /**
@@ -26,6 +26,6 @@ class CalculableContainer implements CalculableInterface
      */
     public function getCalculableObject()
     {
-        return $this->cart;
+        return $this->order;
     }
 }

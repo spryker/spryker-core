@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\ExpenseTotalItemTransfer;
 use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Calculation\TotalsInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class ExpenseTotalsCalculator implements
@@ -19,12 +20,16 @@ class ExpenseTotalsCalculator implements
 {
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
+     * @ param \ArrayObject $totalsTransfer
+     * @ param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
+        //\ArrayObject $totalsTransfer,
+        CalculableInterface $calculableContainer,
+        //OrderInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $expenseTotal = $this->createExpenseTotalTransfer($calculableContainer, $calculableItems);
@@ -32,17 +37,19 @@ class ExpenseTotalsCalculator implements
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @ param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      *
      * @return int
      */
-    public function calculateExpenseTotal(OrderInterface $calculableContainer)
+    public function calculateExpenseTotal(CalculableInterface $calculableContainer)
+    //public function calculateExpenseTotal(OrderInterface $calculableContainer)
     {
         $orderExpensesTotal = 0;
-        if ($calculableContainer->getExpenses() instanceof ExpensesTransfer) {
-            $expenses = $calculableContainer->getExpenses()->getCalculationExpenses();
+        if ($calculableContainer->getCalculableObject()->getExpenses() instanceof ExpensesTransfer) {
+            $expenses = $calculableContainer->getCalculableObject()->getExpenses()->getCalculationExpenses();
         } else {
-            $expenses = $calculableContainer->getExpenses();
+            $expenses = $calculableContainer->getCalculableObject()->getExpenses();
         }
 
         foreach ($expenses as $expense) {
@@ -79,19 +86,21 @@ class ExpenseTotalsCalculator implements
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @ param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return array
      */
     protected function sumExpenseItems(
-        OrderInterface $calculableContainer,
+        //OrderInterface $calculableContainer,
+        CalculableInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $orderExpenseItems = [];
 
-        if ($calculableContainer->getExpenses() instanceof ExpensesTransfer) {
-            foreach ($calculableContainer->getExpenses()->getCalculationExpenses() as $expense) {
+        if ($calculableContainer->getCalculableObject()->getExpenses() instanceof ExpensesTransfer) {
+            foreach ($calculableContainer->getCalculableObject()->getExpenses()->getCalculationExpenses() as $expense) {
                 $this->transformExpenseToExpenseTotalItemInArray($expense, $orderExpenseItems);
             }
         }
@@ -125,13 +134,15 @@ class ExpenseTotalsCalculator implements
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @ param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return ExpenseTotalsTransfer
      */
     protected function createExpenseTotalTransfer(
-        OrderInterface $calculableContainer,
+        //OrderInterface $calculableContainer,
+        CalculableInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $expenseTotalTransfer = new ExpenseTotalsTransfer();

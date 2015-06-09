@@ -19,7 +19,7 @@ class RemoveAllCalculatedDiscountsCalculator
     public function recalculate(CalculableInterface $calculableContainer)
     //public function recalculate(OrderInterface $calculableContainer)
     {
-        foreach ($calculableContainer->getItems() as $item) {
+        foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
             $item->setDiscounts(new \ArrayObject());
 
             foreach ($item->getOptions() as $option) {
@@ -30,10 +30,10 @@ class RemoveAllCalculatedDiscountsCalculator
             }
         }
 
-        foreach ($calculableContainer->getExpenses() as $expense) {
+        foreach ($calculableContainer->getCalculableObject()->getExpenses() as $expense) {
             $expense->setDiscounts(new \ArrayObject());
         }
 
-        $calculableContainer->setDiscounts(new \ArrayObject());
+        $calculableContainer->getCalculableObject()->setDiscounts(new \ArrayObject());
     }
 }

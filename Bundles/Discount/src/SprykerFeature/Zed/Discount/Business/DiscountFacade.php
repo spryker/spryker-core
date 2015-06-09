@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
@@ -33,7 +34,8 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return SpyDiscount[]
      */
-    public function calculateDiscounts(OrderInterface $container)
+    public function calculateDiscounts(CalculableInterface $container)
+    //public function calculateDiscounts(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getDiscount($container)->calculate();
     }
@@ -50,16 +52,19 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     * @param CalculableInterface $container
      * @param DecisionRule $decisionRule
      *
      * @return $this|ModelResult
      */
-    public function isMinimumCartSubtotalReached(OrderInterface $container, DecisionRule $decisionRule)
+    public function isMinimumCartSubtotalReached(CalculableInterface $container, DecisionRule $decisionRule)
+    //public function isMinimumCartSubtotalReached(OrderInterface $container, DecisionRule $decisionRule)
     {
         return $this->getDependencyContainer()
             ->getDecisionRuleMinimumCartSubtotal()
-            ->isMinimumCartSubtotalReached($container, $decisionRule);
+            ->isMinimumCartSubtotalReached($container, $decisionRule)
+        ;
     }
 
     /**
@@ -221,7 +226,8 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function updateDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
         return $this->getDependencyContainer()->getDiscountVoucherPoolCategoryWriter()
-            ->update($discountVoucherPoolCategoryTransfer);
+            ->update($discountVoucherPoolCategoryTransfer)
+        ;
     }
 
     /**

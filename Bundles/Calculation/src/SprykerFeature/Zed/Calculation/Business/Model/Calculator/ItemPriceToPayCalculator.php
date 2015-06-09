@@ -22,7 +22,7 @@ class ItemPriceToPayCalculator implements
     public function recalculate(CalculableInterface $calculableContainer)
     //public function recalculate(OrderInterface $calculableContainer)
     {
-        foreach ($calculableContainer->getItems() as $item) {
+        foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
             $priceToPay = $item->getGrossPrice();
             $priceToPay -= $this->sumDiscounts($item->getDiscounts());
 

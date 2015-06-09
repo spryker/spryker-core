@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\TaxItemTransfer;
 use Generated\Shared\Transfer\TaxTransfer;
 use Generated\Shared\Tax\TaxSetInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
@@ -36,12 +37,14 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
+     * @ param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
+        //OrderInterface $calculableContainer,
+        CalculableInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $groupedPrices = $this->sumPriceToPayGroupedByTaxRate($calculableContainer, $calculableItems);
@@ -51,13 +54,15 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @ param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return array
      */
     protected function sumPriceToPayGroupedByTaxRate(
-        OrderInterface $calculableContainer,
+        //OrderInterface $calculableContainer,
+        CalculableInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $groupedPrices = [];
@@ -67,7 +72,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
             $this->addExpensesTaxInfo($item->getExpenses(), $groupedPrices);
             $this->addOptionsTaxInfo($item->getOptions(), $groupedPrices);
         }
-        $this->addExpensesTaxInfo($calculableContainer->getExpenses(), $groupedPrices);
+        $this->addExpensesTaxInfo($calculableContainer->getCalculableObject()->getExpenses(), $groupedPrices);
 
         return $groupedPrices;
     }

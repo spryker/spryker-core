@@ -19,13 +19,13 @@ class ExpensePriceToPayCalculator implements CalculatorPluginInterface
     public function recalculate(CalculableInterface $calculableContainer)
     //public function recalculate(OrderInterface $calculableContainer)
     {
-        foreach ($calculableContainer->getItems() as $item) {
+        foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
             foreach ($item->getExpenses() as $expense) {
                 $expense->setPriceToPay($expense->getGrossPrice() - $this->getExpenseDiscountAmount($expense));
             }
         }
 
-        foreach ($calculableContainer->getExpenses() as $expense) {
+        foreach ($calculableContainer->getCalculableObject()->getExpenses() as $expense) {
             $expense->setPriceToPay($expense->getGrossPrice() - $this->getExpenseDiscountAmount($expense));
         }
     }

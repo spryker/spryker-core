@@ -14,34 +14,37 @@ use Generated\Shared\DiscountCalculationConnector\OrderItemOptionInterface;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTotalItemTransfer;
 use Generated\Shared\Sales\OrderItemsInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 {
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $discountableContainer
+     * @ param OrderInterface $discountableContainer
+     * @param CalculableInterface $discountableContainer
      * @param \ArrayObject $discountableContainers
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $discountableContainer,
+        //OrderInterface $discountableContainer,
+        CalculableInterface $discountableContainer,
         \ArrayObject $discountableContainers
     ) {
-        if ($discountableContainer instanceof OrderInterface) {
-            $discount = $this->createDiscountTransfer($discountableContainer, $discountableContainers);
-            $totalsTransfer->setDiscount($discount);
-        }
+        $discount = $this->createDiscountTransfer($discountableContainer, $discountableContainers);
+        $totalsTransfer->setDiscount($discount);
     }
 
     /**
-     * @param OrderInterface $discountableContainer
+     * @ param OrderInterface $discountableContainer
+     * @param CalculableInterface $discountableContainer
      * @param \ArrayObject $discountableItems
      *
      * @return array|int
      */
     public function calculateDiscount(
-        OrderInterface $discountableContainer,
+        CalculableInterface $discountableContainer,
+        //OrderInterface $discountableContainer,
         \ArrayObject $discountableItems
     ) {
         $discountAmount = 0;
@@ -62,13 +65,15 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param OrderInterface $discountableContainer
+     * @ param OrderInterface $discountableContainer
+     * @param CalculableInterface $discountableContainer
      * @param \ArrayObject $discountableContainers
      *
      * @return DiscountTotalsTransfer
      */
     protected function createDiscountTransfer(
-        OrderInterface $discountableContainer,
+        //OrderInterface $discountableContainer,
+        CalculableInterface $discountableContainer,
         \ArrayObject $discountableContainers
     ) {
         $discountTransfer = new DiscountTotalsTransfer();
@@ -82,22 +87,24 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param OrderInterface $discountableContainer
+     * @ param OrderInterface $discountableContainer
+     * @param CalculableInterface $discountableContainer
      * @param \ArrayObject $discountableItems
      *
      * @return array
      */
     protected function sumDiscountItems(
-        OrderInterface $discountableContainer,
+        //OrderInterface $discountableContainer,
+        CalculableInterface $discountableContainer,
         \ArrayObject $discountableItems
     ) {
         $orderExpenseItems = [];
 
-        foreach ($discountableContainer->getDiscounts() as $discount) {
+        foreach ($discountableContainer->getCalculableObject()->getDiscounts() as $discount) {
             $this->transformDiscountToDiscountTotalItemInArray($discount, $orderExpenseItems);
         }
 
-        foreach ($discountableContainer->getExpenses() as $expenses) {
+        foreach ($discountableContainer->getCalculableObject()->getExpenses() as $expenses) {
             foreach ($expenses->getDiscounts() as $discount) {
                 $this->transformDiscountToDiscountTotalItemInArray($discount, $orderExpenseItems);
             }
@@ -210,15 +217,17 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param OrderInterface $discountableContainer
+     * @ param OrderInterface $discountableContainer
+     * @param CalculableInterface $discountableContainer
      *
      * @return int
      */
-    protected function sumTotalExpenseDiscounts(OrderInterface $discountableContainer)
+    protected function sumTotalExpenseDiscounts(CalculableInterface $discountableContainer)
+    //protected function sumTotalExpenseDiscounts(OrderInterface $discountableContainer)
     {
         $discountAmount = 0;
 
-        foreach ($discountableContainer->getExpenses() as $expense) {
+        foreach ($discountableContainer->getCalculableObject()->getExpenses() as $expense) {
             foreach ($expense->getDiscounts() as $discount) {
                 $discountAmount += $discount->getAmount();
             }

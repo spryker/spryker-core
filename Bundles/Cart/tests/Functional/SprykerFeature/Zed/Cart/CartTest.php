@@ -4,6 +4,7 @@ namespace Functional\SprykerFeature\Zed\Cart;
 
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\Cart\Fixture\CartFacadeFixture;
+use Generated\Shared\Transfer\TaxItemTransfer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\ChangeTransfer;
@@ -67,13 +68,19 @@ class CartTest extends Test
         //$cartItem->setId('123');
         $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
+        $cartItemTax = new TaxItemTransfer();
+        $cartItemTax->setPercentage(10);
+        $cartItem->setTax($cartItemTax);
         $cart->addItem($cartItem);
 
         $newItems = new CartItemsTransfer();
         // $newItems = new \ArrayObject();
         $newItem = new CartItemTransfer();
-        $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
+        $newItemTax = new TaxItemTransfer();
+        $newItemTax->setPercentage(10);
+        $newItem->setTax($newItemTax);
         $newItems->addCartItem($newItem);
         // $newItems->append($newItem);
 

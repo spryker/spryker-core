@@ -79,7 +79,7 @@ abstract class AbstractOperator implements OperatorInterface
         $calculableCart = new CalculableContainer($cart);
         $cart = $this->cartCalculator->recalculate2($calculableCart);
 
-        return $cart;
+        return $cart->getCalculableObject();
     }
 
     /**

@@ -21,7 +21,7 @@ class OptionPriceToPayCalculator implements
     public function recalculate(CalculableInterface $calculableContainer)
     //public function recalculate(OrderInterface $calculableContainer)
     {
-        foreach ($calculableContainer->getItems() as $item) {
+        foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
             foreach ($item->getOptions() as $option) {
                 $priceToPay = $option->getGrossPrice();
                 $priceToPay -= $this->sumDiscounts($option);

@@ -7,6 +7,8 @@ namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
+use Generated\Shared\Cart\CartItemInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class SubtotalWithoutItemExpensesTotalsCalculator implements
@@ -15,12 +17,14 @@ class SubtotalWithoutItemExpensesTotalsCalculator implements
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
+     * @ param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
+        //OrderInterface $calculableContainer,
+        CalculableInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $expense = $this->calculateSubtotalWithoutItemExpense($calculableItems);
@@ -44,11 +48,12 @@ class SubtotalWithoutItemExpensesTotalsCalculator implements
     }
 
     /**
-     * @param CalculableItemInterface $item
+     * @ param CalculableItemInterface $item
+     * @param CartItemInterface $item
      *
      * @return int
      */
-    protected function sumOptions(CalculableItemInterface $item)
+    protected function sumOptions($item)
     {
         $optionsPrice = 0;
         foreach ($item->getOptions() as $option) {

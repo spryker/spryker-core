@@ -20,7 +20,7 @@ class RemoveTotalsCalculator implements CalculatorPluginInterface
     public function recalculate(CalculableInterface $calculableContainer)
     //public function recalculate(OrderInterface $calculableContainer)
     {
-        $calculableContainer->getCalculableObject()->setTotals(new \ArrayObject());
-        //$calculableContainer->setTotals(new TotalsTransfer());
+        //$$calculableContainer->getCalculableObject()->setTotals(new \ArrayObject());
+        $calculableContainer->getCalculableObject()->setTotals(new TotalsTransfer());
     }
 }

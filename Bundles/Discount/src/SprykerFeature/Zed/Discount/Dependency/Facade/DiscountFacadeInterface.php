@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Discount\Dependency\Facade;
 
 use Generated\Shared\Discount\OrderInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
@@ -24,11 +25,13 @@ interface DiscountFacadeInterface
 {
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     * @param CalculableInterface $container
      *
      * @return array
      */
-    public function calculateDiscounts(OrderInterface $container);
+    public function calculateDiscounts(CalculableInterface $container);
+    //public function calculateDiscounts(OrderInterface $container);
 
     /**
      * @param string $code
@@ -39,12 +42,14 @@ interface DiscountFacadeInterface
     public function isVoucherUsable($code, $idDiscountVoucherPool);
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     * @param CalculableInterface $container
      * @param DecisionRule $decisionRule
      *
      * @return ModelResult
      */
-    public function isMinimumCartSubtotalReached(OrderInterface $container, DecisionRule $decisionRule);
+    public function isMinimumCartSubtotalReached(CalculableInterface $container, DecisionRule $decisionRule);
+    //public function isMinimumCartSubtotalReached(OrderInterface $container, DecisionRule $decisionRule);
 
     /**
      * @param DiscountableInterface[] $discountableObjects

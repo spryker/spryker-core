@@ -7,6 +7,7 @@ namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calcula
 
 use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use SprykerFeature\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface;
@@ -37,12 +38,14 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     * @param CalculableInterface $container
      * @param \ArrayObject $items
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $container,
+        //OrderInterface $container,
+        CalculableInterface $container,
         \ArrayObject $items
     ) {
         if ($container instanceof OrderInterface) {
@@ -54,14 +57,16 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
+     * @ param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return int
      */
     protected function calculateGrandTotal(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
+        //OrderInterface $calculableContainer,
+        CalculableInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $this->grandTotalsCalculator->recalculateGrandTotalTotals(
@@ -75,14 +80,16 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
+     * @ param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return int
      */
     protected function getDiscount(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
+        //OrderInterface $calculableContainer,
+        CalculableInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         if (!is_null($totalsTransfer->getDiscount()->getTotalAmount())) {
