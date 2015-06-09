@@ -7,23 +7,35 @@
         <property name="amount" type="int" />
         <property name="referenceId" type="string" />
         <property name="paymentMethod" type="string" />
-        <property name="paymentUserData" type="PaymentUserData" />
+        <property name="personalData" type="PersonalData" />
         <property name="order" type="Order" />
     </transfer>
 
     <transfer name="Capture">
         <property name="amount" type="int" />
-        <property name="payment" type="Paymente" />
+        <property name="payment" type="PayonePayment" />
     </transfer>
 
     <transfer name="Debit">
         <property name="amount" type="int" />
-        <property name="payment" type="Payment" />
+        <property name="payment" type="PayonePayment" />
+    </transfer>
+
+    <transfer name="CreditCard">
+        <property name="aid" type="string" />
+        <property name="cardPan" type="string" />
+        <property name="cardType" type="string" />
+        <property name="cardExpireDate" type="string" />
+        <property name="cardCvc2" type="string" />
+        <property name="cardIssueNumber" type="string" />
+        <property name="storeCardData" type="string" />
+        <property name="language" type="string" />
+        <property name="payment" type="PayonePayment" />
     </transfer>
 
     <transfer name="Refund">
         <property name="amount" type="int" />
-        <property name="payment" type="Payment" />
+        <property name="payment" type="PayonePayment" />
     </transfer>
 
     <transfer name="PayonePayment">
@@ -38,6 +50,7 @@
         <property name="aid" type="string" />
         <property name="portalId" type="string" />
         <property name="key" type="string" />
+        <property name="api_version" type="string" />
         <property name="paymentGatewayUrl" type="string" />
         <property name="currency" type="string" />
         <property name="language" type="string" />
@@ -62,4 +75,28 @@
         <property name="errorCode" type="string" />
     </transfer>
 
+    <transfer name="PersonalData">
+        <property name="customerid" type="string" />
+        <property name="userid" type="string" />
+        <property name="salutation" type="string" />
+        <property name="title" type="string" />
+        <property name="firstname" type="string" />
+        <property name="lastname" type="string" />
+        <property name="company" type="string" />
+        <property name="street" type="string" />
+        <property name="addressaddition" type="string" />
+        <property name="zip" type="string" />
+        <property name="city" type="string" />
+        <property name="country" type="string" />
+        <property name="state" type="string" />
+        <property name="email" type="string" />
+        <property name="telephonenumber" type="string" />
+        <property name="birthday" type="string" />
+        <property name="language" type="string" />
+        <property name="vatid" type="string" />
+        <property name="gender" type="string" />
+        <property name="personalid" type="string" />
+        <property name="ip" type="string" />
+        <property name="pseudoCardPan" type="string" />
+    </transfer>
 </transfers>
