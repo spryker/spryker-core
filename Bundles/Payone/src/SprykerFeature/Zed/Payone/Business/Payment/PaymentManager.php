@@ -7,6 +7,7 @@ use Generated\Shared\Payone\AuthorizationInterface;
 use Generated\Shared\Payone\CaptureInterface;
 use Generated\Shared\Payone\DebitInterface;
 use Generated\Shared\Payone\RefundInterface;
+use Generated\Shared\Payone\CreditCardInterface;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
@@ -19,6 +20,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContai
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
@@ -107,7 +109,7 @@ class PaymentManager
 
     /**
      * @param string $paymentMethodName
-     * @return null|PaymentMethodMapperInterface
+     * @return PaymentMethodMapperInterface
      */
     protected function getRegisteredPaymentMethodMapper($paymentMethodName)
     {
@@ -201,13 +203,31 @@ class PaymentManager
         $requestContainer = $paymentMethodMapper->mapDebit($debitData);
         $this->setStandardParameter($requestContainer);
 
-        $paymentEntity = $this->findPaymentByTransactionId($debitData->getPayment()->getTransactionId());
-        $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
+//        @todo fix this returns null
+//        $paymentEntity = $this->findPaymentByTransactionId($debitData->getPayment()->getTransactionId());
+//        var_dump($debitData->getPayment()->getTransactionId());
+//        $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new DebitResponseContainer($rawResponse);
 
-        $this->updateApiLogAfterDebit($apiLogEntity, $responseContainer);
+//        $this->updateApiLogAfterDebit($apiLogEntity, $responseContainer);
+
+        return $responseContainer;
+    }
+
+    /**
+     * @param CreditCardInterface $creditCardData
+     * @return CreditCardCheckResponseContainer
+     */
+    public function creditCardCheck(CreditCardInterface $creditCardData)
+    {
+        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($creditCardData->getPayment()->getPaymentMethod());
+        $requestContainer = $paymentMethodMapper->mapCreditCardCheck($creditCardData);
+        $this->setStandardParameter($requestContainer);
+
+        $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+        $responseContainer = new CreditCardCheckResponseContainer($rawResponse);
 
         return $responseContainer;
     }

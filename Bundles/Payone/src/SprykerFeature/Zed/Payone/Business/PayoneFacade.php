@@ -6,12 +6,11 @@ use Generated\Shared\Payone\AuthorizationInterface;
 use Generated\Shared\Payone\CaptureInterface;
 use Generated\Shared\Payone\DebitInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
-use Generated\Shared\Payone\RefundInterface;
+use Generated\Shared\Payone\CreditCardInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Payone\ApiCallResponseCheckInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use Generated\Shared\Transfer\AuthorizationCheckResponseTransfer;
@@ -60,12 +59,12 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param RefundInterface $refundData
-     * @return RefundResponseContainer
+     * @param CreditCardInterface $creditCardData
+     * @return CreditCardCheckContainer
      */
-    public function refund(RefundInterface $refundData)
+    public function creditCardCheck(CreditCardInterface $creditCardData)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->refund($refundData);
+        return $this->getDependencyContainer()->createPaymentManager()->creditCardCheck($creditCardData);
     }
 
     /**

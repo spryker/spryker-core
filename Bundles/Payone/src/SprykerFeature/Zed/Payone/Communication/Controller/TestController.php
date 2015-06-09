@@ -2,100 +2,124 @@
 
 namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
-use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\PersonalDataTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\AuthorizationTransfer;
 use Generated\Shared\Transfer\CaptureTransfer;
 use Generated\Shared\Transfer\DebitTransfer;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Generated\Shared\Transfer\CreditCardTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerFeature\Zed\Payone\Business\PayoneFacade;
 
-/**
- * @method PayoneFacade getFacade()
- */
 class TestController extends AbstractController implements PayoneApiConstants
 {
+    const TEST_TRANSACTION_ID = '164140236';
+    const TEST_VISA_PAN = '4111111111111111';
+    const TEST_PSEUDO_PAN = '4100000145859436';
 
-    public function prepaymentAction()
+    public function vorPreAuthAction()
     {
         $order = $this->getOrder();
 
         $authorization = new AuthorizationTransfer();
-        $authorization->setPaymentMethod('payment.payone.prepayment');
+        $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
         $authorization->setReferenceId($order->getIncrementId());
         $authorization->setOrder($order);
 
-        $this->getFacade()->preAuthorize($authorization);
+        $result = $this->getLocator()->payone()->facade()->preAuthorize($authorization);
 
-        die('|-o-|');
+        echo '<pre>' . var_dump($result) . '</pre>';die;
     }
 
-    public function preAuthAction()
+    public function vorCaptureAction()
     {
         $order = $this->getOrder();
 
-        $authorization = new AuthorizationTransfer();
-        $authorization->setPaymentMethod('payment.payone.prepayment');
-        $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getIncrementId());
-        $authorization->setOrder($this->getOrder());
-
-        $this->getFacade()->preAuthorize($authorization);
-
-        die('|-o-|');
-    }
-
-    public function captureAction()
-    {
-        $order = $this->getOrder();
-
-        $payment = new PaymentTransfer();
-        $payment->setTransactionId('161913038');
+        $payment = new PayonePaymentTransfer();
+        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
         $payment->setPaymentMethod(self::PAYMENT_METHOD_PREPAYMENT);
 
         $capture = new CaptureTransfer();
         $capture->setPayment($payment);
         $capture->setAmount($order->getTotals()->getGrandTotal());
 
-        $this->getFacade()->capture($capture);
+        $result = $this->getLocator()->payone()->facade()->capture($capture);
 
-        die('|-o-|');
+        echo '<pre>' . var_dump($result) . '</pre>';die;
     }
 
-    public function debitAction()
+    public function ccClientCheckAction()
     {
-        $payment = new PaymentTransfer();
-        $payment->setTransactionId('161237526');
-        $payment->setPaymentMethod('payment.payone.prepayment');
+        $payment = new PayonePaymentTransfer();
+        $payment->setPaymentMethod(self::PAYMENT_METHOD_CREDITCARD_PSEUDO);
 
-        $debit = new DebitTransfer();
-        $debit->setPayment($payment);
-        $debit->setAmount(1000);
+        $creditCard = new CreditCardTransfer();
+        $creditCard->setPayment($payment);
+        $creditCard->setCardPan(self::TEST_VISA_PAN);
+        $creditCard->setCardType(PayoneApiConstants::CREDITCARD_TYPE_VISA);
+        $creditCard->setCardExpireDate('2012');
+//        $creditCard->setCardCvc2('123');
+        $creditCard->setStoreCardData('yes');
 
-        $this->getFacade()->debit($debit);
+        $result = $this->getLocator()->payone()->facade()->creditCardCheck($creditCard);
 
-        die('|-o-|');
+        echo '<pre>' . var_dump($result) . '</pre>';die;
     }
 
-    public function checkAuthAction()
+    public function ccPreAuthAction()
     {
-        $payment = new PaymentTransfer();
-        $payment->setTransactionId('162180281');
-        $payment->setPaymentMethod('payment.payone.paypal');
-        $payment->setAuthorizationType('preauthorization');
+        $order = $this->getOrder();
 
+        $personalData = new PersonalDataTransfer();
+        $personalData->setPseudoCardPan(self::TEST_PSEUDO_PAN);
+        $personalData->setCountry('DE');
 
-        $result = $this->getFacade()->getAuthorizationResponse($payment);
+        $authorization = new AuthorizationTransfer();
+        $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO);
+        $authorization->setPersonalData($personalData);
+        $authorization->setAmount($order->getTotals()->getGrandTotal());
+        $authorization->setReferenceId($order->getIncrementId());
+        $authorization->setOrder($order);
 
-        echo '<pre>' . print_r($result,false) . '</pre>';die;
+        $result = $this->getLocator()->payone()->facade()->preAuthorize($authorization);
 
-        die('|-o-|');
+        echo '<pre>' . var_dump($result) . '</pre>';die;
     }
 
-    public function paypalAction()
+    public function ccCaptureAction()
+    {
+        $order = $this->getOrder();
+
+        $payment = new PayonePaymentTransfer();
+        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setPaymentMethod(self::PAYMENT_METHOD_PREPAYMENT);
+
+        $capture = new CaptureTransfer();
+        $capture->setPayment($payment);
+        $capture->setAmount($order->getTotals()->getGrandTotal());
+
+        $result = $this->getLocator()->payone()->facade()->capture($capture);
+
+        echo '<pre>' . var_dump($result) . '</pre>';die;
+    }
+
+
+    public function ppCheckAuthAction()
+    {
+        $payment = new PayonePaymentTransfer();
+//        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setPaymentMethod(self::PAYMENT_METHOD_PAYPAL);
+        $payment->setAuthorizationType(PayoneApiConstants::REQUEST_TYPE_AUTHORIZATION);
+
+        $result = $this->getLocator()->payone()->facade()->getAuthorizationResponse($payment);
+
+        echo '<pre>' . var_dump($result) . '</pre>';die;
+    }
+
+    public function ppPreAuthAction()
     {
         $order = $this->getOrder();
 
@@ -106,9 +130,57 @@ class TestController extends AbstractController implements PayoneApiConstants
 
         $authorization->setOrder($order);
 
-        $this->getFacade()->preAuthorize($authorization);
+        $result = $this->getLocator()->payone()->facade()->preAuthorize($authorization);
+        header('Location: ' . $result->getRedirecturl());
 
-        die('|-o-|');
+        echo '<pre>' . var_dump($result) . '</pre>';die;
+    }
+
+    public function ppCaptureAction()
+    {
+        $order = $this->getOrder();
+
+        $payment = new PayonePaymentTransfer();
+        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setPaymentMethod(self::PAYMENT_METHOD_PAYPAL);
+
+        $capture = new CaptureTransfer();
+        $capture->setPayment($payment);
+        $capture->setAmount($order->getTotals()->getGrandTotal());
+
+        $result = $this->getLocator()->payone()->facade()->capture($capture);
+
+        echo '<pre>' . var_dump($result) . '</pre>';die;
+    }
+
+    public function debitAction()
+    {
+        $payment = new PayonePaymentTransfer();
+        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setPaymentMethod(self::PAYMENT_METHOD_PREPAYMENT);
+
+        $debit = new DebitTransfer();
+        $debit->setPayment($payment);
+        $debit->setAmount(1000);
+
+        $result = $this->getLocator()->payone()->facade()->debit($debit);
+
+        echo '<pre>' . var_dump($result) . '</pre>';die;
+    }
+
+    public function giropayPreAuthAction()
+    {
+        $order = $this->getOrder();
+
+        $authorization = new AuthorizationTransfer();
+        $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_GIROPAY);
+        $authorization->setAmount($order->getTotals()->getGrandTotal());
+        $authorization->setReferenceId($order->getIncrementId());
+        $authorization->setOrder($order);
+
+        $result = $this->getLocator()->payone()->facade()->preAuthorize($authorization);
+
+        echo '<pre>' . var_dump($result) . '</pre>';die;
     }
 
     /**
@@ -122,6 +194,10 @@ class TestController extends AbstractController implements PayoneApiConstants
         $order->setEmail('horst@wurst.de');
         $order->setIsTest(true);
         $order->setIncrementId('DY999991011');
+
+//        @todo remove
+        $order->setIncrementId(rand(0,100000));
+
         $order->setIdSalesOrder(1);
         $order->setSalutation('Mr');
 
@@ -149,7 +225,7 @@ class TestController extends AbstractController implements PayoneApiConstants
             'receivable' => '0',
             'balance' => '0',
             'currency' => 'EUR',
-            'txid' => '161913038',
+            'txid' => self::TEST_TRANSACTION_ID,
             'userid' => '67518130',
             'txtime' => '1354187955',
             'clearingtype' => 'wlt',
@@ -157,24 +233,9 @@ class TestController extends AbstractController implements PayoneApiConstants
         ];
 
 
-         $r = $this->getFacade()->processTransactionStatusUpdate($params);
+        $r = $this->getLocator()->payone()->facade()->processTransactionStatusUpdate($params);
 
         echo '<pre>' . print_r($r,false) . '</pre>';die;
-
-        die('|-o-|');
-    }
-
-    public function myTestAction()
-    {
-        $a = ['aa' => 'sjdlfkjsrf',
-              'bb' => 45456,
-        'cc' => 'sjdflsdjflskdjf'];
-
-        $x = $this->rawResponseFromArray($a);
-        \SprykerFeature_Shared_Library_Log::log($x, 'payone-test.log');
-        echo '<pre>' . print_r($x,false) . '</pre>';die;
-
-        die('|-o-|');
     }
 
     protected function rawResponseFromArray(array $request)
