@@ -21,8 +21,13 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[OmsDependencyProvider::CONDITION_PLUGINS] = $this->getConditionPlugins($container);
-        $container[OmsDependencyProvider::COMMAND_PLUGINS] = $this->getCommandPlugins($container);
+        $container[self::CONDITION_PLUGINS] = function (Container $container) {
+            return $this->getConditionPlugins($container);
+        };
+
+        $container[self::COMMAND_PLUGINS] = function (Container $container) {
+            return $this->getCommandPlugins($container);
+        };
 
         return $container;
     }
