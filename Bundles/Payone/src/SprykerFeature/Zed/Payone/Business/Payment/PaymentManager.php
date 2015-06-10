@@ -8,12 +8,13 @@ use Generated\Shared\Payone\CaptureInterface;
 use Generated\Shared\Payone\DebitInterface;
 use Generated\Shared\Payone\RefundInterface;
 use Generated\Shared\Payone\CreditCardInterface;
+use Generated\Shared\Payone\StandardParameterInterface;
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 use SprykerFeature\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
-use Generated\Shared\Payone\StandardParameterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
@@ -374,6 +375,7 @@ class PaymentManager
      */
     protected function setStandardParameter(AbstractRequestContainer $container)
     {
+        $container->setApiVersion(PayoneApiConstants::API_VERSION_3_9);
         $container->setEncoding($this->standardParameter->getEncoding());
         $container->setKey($this->hashProvider->hash($this->standardParameter->getKey()));
         $container->setMid($this->standardParameter->getMid());
