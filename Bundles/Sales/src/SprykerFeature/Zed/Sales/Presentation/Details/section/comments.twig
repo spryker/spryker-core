@@ -1,0 +1,22 @@
+<div class="spy-layout sparse" spy-app="spyForm">
+    <h3>Comments</h3>
+    <div class="compact notes">
+        {% for i in 1..4 %}
+            <div class="notes-item">
+                <div class="">12.05.2015 12:23 by <strong>Username</strong></div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta enim libero quos rem! Culpa eos, eum obcaecati, officia officiis omnis pariatur perspiciatis rem repellendus saepe similique sunt vero voluptatibus. Ex.
+            </div>
+        {% endfor %}
+
+        <spy-form
+                class="spy-layout sparse"
+                src="/sales/comment/add?order_id={{ order_id }}"
+                name="order_comment"
+                channel="sales"
+                model='{"fields":[{"name":"comment","type":"field","refresh":false}],"state":"new"}'
+                >
+            <div spy-input-area="comment" options="{ label: 'Add new comment', refresh: false }"></div>
+            <button class="button button-accept">Add Comment</button>
+        </spy-form>
+    </div>
+</div>

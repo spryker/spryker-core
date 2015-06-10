@@ -1,0 +1,42 @@
+<div class="spy-layout sparse">
+    <h3>Order Items Overview</h3>
+    <spy-form
+            model='{"fields":[{"name":"select", "type":"field", "label":"asd", "refresh":"false", "accepts":["On"]}]}'
+            >
+        <form action="">
+            <table class="spy-grid">
+                <tr class="text-left">
+                    <th>select</th>
+                    <th>Item</th>
+                    <th>SKU</th>
+                    <th>EAN</th>
+                    <th>Unit Price</th>
+                    <th>QTY</th>
+                    <th>Total Price</th>
+                </tr>
+                {% for i in 1..3 %}
+                    <tr class="ng-scope">
+                        <td><input type="checkbox" name="select[]"/></td>
+                        <td>Sample product</td>
+                        <td>SKU123456</td>
+                        <td>00758465882541</td>
+                        <td>9.99</td>
+                        <td>1</td>
+                        <td>&euro; 9.99</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td>Total</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>3</td>
+                    <td>&euro; 9.99</td>
+                </tr>
+            </table>
+        </form>
+    </spy-form>
+    <button class="button accept">Add Item</button>
+    <button class="button cancel">Remove Item</button>
+</div>

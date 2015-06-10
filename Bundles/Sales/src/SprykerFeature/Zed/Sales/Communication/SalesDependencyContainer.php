@@ -16,6 +16,14 @@ class SalesDependencyContainer extends AbstractDependencyContainer
         return $this->getLocator()->sales()->facade();
     }
 
+    public function getCommentForm(Request $request)
+    {
+        return $this->getFactory()->createFormCommentForm(
+            $request,
+            $this->getQueryContainer()
+        );
+    }
+
     /**
      * @param Request $request
      *
