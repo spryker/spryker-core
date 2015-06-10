@@ -6,19 +6,23 @@
 
 namespace SprykerFeature\Zed\Glossary\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
-use Propel\Runtime\ActiveQuery\Join;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
 
+/**
+ * @method GlossaryPersistence getFactory()
+ */
 class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQueryContainerInterface
 {
     const TRANSLATION = 'translation';
@@ -42,6 +46,14 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @return SpyGlossaryKeyQuery
+     */
+    public function queryKeys()
+    {
+        return $this->getFactory()->createPropelSpyGlossaryKeyQuery();
+    }
+
+    /**
      * @param string $keyName
      * @param string $localeName
      *
@@ -61,6 +73,14 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         ;
 
         return $query;
+    }
+
+    /**
+     * @return SpyGlossaryTranslationQuery
+     */
+    public function queryTranslations()
+    {
+        return $this->getFactory()->createPropelSpyGlossaryTranslationQuery();
     }
 
     /**
@@ -91,14 +111,6 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $query->filterByIdGlossaryTranslation($idSpyGlossaryTranslation);
 
         return $query;
-    }
-
-    /**
-     * @return SpyGlossaryTranslationQuery
-     */
-    public function queryTranslations()
-    {
-        return SpyGlossaryTranslationQuery::create();
     }
 
     /**
@@ -247,14 +259,6 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
-     * @return SpyGlossaryKeyQuery
-     */
-    public function queryKeys()
-    {
-        return SpyGlossaryKeyQuery::create();
-    }
-
-    /**
      * @param SpyGlossaryKeyQuery $keyQuery
      * @param array $relevantLocales
      *
@@ -359,9 +363,6 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      */
     protected function queryKeyById($idKey)
     {
-        $query = SpyGlossaryKeyQuery::create();
-        $query->filterByIdGlossaryKey($idKey);
-
-        return $query;
+        return $this->queryKeys()->filterByIdGlossaryKey($idKey);
     }
 }

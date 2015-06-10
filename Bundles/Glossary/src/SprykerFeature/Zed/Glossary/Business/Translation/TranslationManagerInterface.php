@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
-use Generated\Shared\Transfer\TranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;

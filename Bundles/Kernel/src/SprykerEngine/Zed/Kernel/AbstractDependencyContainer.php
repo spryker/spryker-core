@@ -46,6 +46,7 @@ abstract class AbstractDependencyContainer
     }
 
     /**
+     * @deprecated
      * @return AutoCompletion|LocatorLocatorInterface
      */
     protected function getLocator()

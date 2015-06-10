@@ -41,11 +41,16 @@ abstract class AbstractGrid
      * @param ModelCriteria $query
      * @param Request $request
      */
-    public function __construct(ModelCriteria $query, Request $request)
+    public function __construct(ModelCriteria $query, Request $request = null)
     {
         $this->query = $query;
-        $this->request = $request;
         $this->locator = Locator::getInstance();
+
+        if (is_null($request)) {
+            $request = $this->locator->application()->pluginPimple()->getApplication()['request'];
+        }
+
+        $this->request = $request;
     }
 
     /**
@@ -71,35 +76,40 @@ abstract class AbstractGrid
     /**
      * @return DefaultRowsRenderer
      */
-    public function createDefaultRowRenderer(){
+    public function createDefaultRowRenderer()
+    {
         return $this->locator->ui()->pluginGridDefaultRowsRenderer();
     }
 
     /**
      * @return Pagination
      */
-    public function createPagination(){
+    public function createPagination()
+    {
         return $this->locator->ui()->pluginGridPagination();
     }
 
     /**
      * @return DefaultColumn
      */
-    public function createDefaultColumn(){
+    public function createDefaultColumn()
+    {
         return $this->locator->ui()->pluginGridDefaultColumn();
     }
 
     /**
      * @return BooleanColumn
      */
-    public function createBooleanColumn(){
+    public function createBooleanColumn()
+    {
         return $this->locator->ui()->pluginGridBooleanColumn();
     }
 
     /**
      * @return DateTimeColumn
      */
-    public function createDateColumn(){
+    public function createDateColumn()
+    {
         return $this->locator->ui()->pluginGridDateTimeColumn();
     }
 }

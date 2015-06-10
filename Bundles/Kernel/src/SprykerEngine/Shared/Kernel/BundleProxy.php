@@ -82,8 +82,10 @@ class BundleProxy
     }
 
     /**
+     * TODO Check if performance is good enough here!?
+     *
      * @param string $method
-     * @param array $arguments
+     * @param string $arguments
      *
      * @return object
      */
@@ -97,5 +99,38 @@ class BundleProxy
         }
 
         throw new \LogicException(sprintf('Could not map method "%s" to a locator!', $method));
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasFacade()
+    {
+        return $this->hasItem('facade');
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasQueryContainer()
+    {
+        return $this->hasItem('queryContainer');
+    }
+
+    /**
+     * TODO Check if performance is good enough here!?
+     *
+     * @param $method
+     * @return bool
+     */
+    protected function hasItem($method)
+    {
+        foreach ($this->locator as $locator) {
+            $matcher = $this->locatorMatcher[get_class($locator)];
+            if ($matcher->match($method)) {
+                return $locator->canLocate($this->bundle, $this->locatorLocator, $matcher->filter($method));
+            }
+        }
+        return false;
     }
 }

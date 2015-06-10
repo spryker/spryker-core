@@ -2,23 +2,48 @@
 
 namespace SprykerEngine\Zed\Kernel\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use Psr\Log\AbstractLogger;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractPlugin extends AbstractLogger implements MessengerInterface
 {
 
     /**
-     * @var DependencyContainerInterface
+     * @var MessengerInterface
      */
+
+    protected $messenger;
+
+    /**
+     * @var AbstractDependencyContainer
+     */
+
     private $dependencyContainer;
 
     /**
-     * @var MessengerInterface
+     * @var AbstractFacade
      */
-    protected $messenger;
+    private $facade;
+
+    /**
+     * @var AbstractQueryContainer
+     */
+    private $queryContainer;
+
+    /**
+     * @param Factory $factory
+     * @param Locator $locator
+     */
+    public function __construct(Factory $factory, Locator $locator)
+    {
+        if ($factory->exists('DependencyContainer')) {
+            $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
+        }
+    }
 
     /**
      * @param MessengerInterface $messenger
@@ -30,17 +55,6 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
         $this->messenger = $messenger;
 
         return $this;
-    }
-
-    /**
-     * @param Factory $factory
-     * @param Locator $locator
-     */
-    public function __construct(Factory $factory, Locator $locator)
-    {
-        if ($factory->exists('DependencyContainer')) {
-            $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
-        }
     }
 
     /**
@@ -59,7 +73,57 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
-     * @return DependencyContainerInterface
+     * TODO move to constructor
+     * @param $facade
+     */
+    public function setOwnFacade($facade)
+    {
+        $this->facade = $facade;
+    }
+
+    /**
+     * TODO move to constructor
+     * @param AbstractQueryContainer $queryContainer
+     */
+    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
+    {
+        $this->queryContainer = $queryContainer;
+        $this->getDependencyContainer()->setQueryContainer($queryContainer);
+    }
+
+    /**
+     * @param Container $container
+     */
+    public function setExternalDependencies(Container $container)
+    {
+        $dependencyContainer = $this->getDependencyContainer();
+        if (isset($dependencyContainer)) {
+            $this->getDependencyContainer()->setContainer($container);
+        }
+    }
+
+    /**
+     * For autocompletion use typehint in class docblock like this: "@method MyFacade getFacade()"
+     *
+     * @return AbstractFacade
+     */
+    public function getFacade()
+    {
+        return $this->facade;
+    }
+
+    /**
+     * For autocompletion use typehint in class docblock like this: "@method MyQueryContainer getQueryContainer()"
+     *
+     * @return AbstractQueryContainer
+     */
+    public function getQueryContainer()
+    {
+        return $this->queryContainer;
+    }
+
+    /**
+     * @return AbstractDependencyContainer
      */
     protected function getDependencyContainer()
     {

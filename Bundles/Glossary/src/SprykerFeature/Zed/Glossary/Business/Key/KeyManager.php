@@ -6,8 +6,6 @@
 
 namespace SprykerFeature\Zed\Glossary\Business\Key;
 
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
@@ -27,20 +25,13 @@ class KeyManager implements KeyManagerInterface
     protected $keySource;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @param KeySourceInterface $keySource
      * @param GlossaryQueryContainerInterface $queryContainer
-     * @param LocatorLocatorInterface $locator
      */
-    public function __construct(KeySourceInterface $keySource, GlossaryQueryContainerInterface $queryContainer, LocatorLocatorInterface $locator)
+    public function __construct(KeySourceInterface $keySource, GlossaryQueryContainerInterface $queryContainer)
     {
         $this->keySource = $keySource;
         $this->queryContainer = $queryContainer;
-        $this->locator = $locator;
     }
 
     /**
@@ -147,7 +138,7 @@ class KeyManager implements KeyManagerInterface
     {
         $this->checkKeyDoesNotExist($keyName);
 
-        $keyEntity = $this->locator->glossary()->entitySpyGlossaryKey();
+        $keyEntity = new SpyGlossaryKey();
         $keyEntity->setKey($keyName);
         $keyEntity->save();
 

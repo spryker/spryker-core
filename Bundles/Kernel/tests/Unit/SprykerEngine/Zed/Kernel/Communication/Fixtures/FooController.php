@@ -2,7 +2,9 @@
 
 namespace Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures;
 
-class FooController
+use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+
+class FooController extends AbstractController
 {
 
     public function __construct($something)

@@ -2,12 +2,18 @@
 
 namespace SprykerFeature\Zed\Oms\Communication\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
+use SprykerFeature\Zed\Oms\Business\OmsFacade;
+use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method OmsFacade getFacade()
+ * @method OmsQueryContainer getQueryContainer()
+ */
 class IndexController extends AbstractController
 {
 

@@ -19,7 +19,7 @@ class SalesFacade extends AbstractFacade
      * @param RequestInterface $request
      * @return ModelResult
      */
-    public function saveOrder(Order $transferOrder, RequestInterface $request)
+    public function saveOrder(OrderTransfer $transferOrder, RequestInterface $request)
     {
         return $this->factory
             ->createModelOrderManager(Locator::getInstance(), $this->factory)
