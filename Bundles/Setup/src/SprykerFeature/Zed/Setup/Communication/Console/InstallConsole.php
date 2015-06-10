@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Setup\Communication\Console;
 
+use SprykerEngine\Zed\Propel\Communication\Console\PropelConsole;
 use SprykerFeature\Zed\Maintenance\Communication\Console\FossMarkDownGeneratorConsole;
 use SprykerEngine\Zed\Transfer\Communication\Console\GeneratorConsole;
 use SprykerFeature\Zed\Console\Business\Model\Console;
-use SprykerFeature\Zed\Setup\Business\Model\GeneratedDirectoryRemover;
 use SprykerFeature\Zed\Setup\Communication\Console\Npm\RunnerConsole;
 use SprykerFeature\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 use Symfony\Component\Console\Input\InputInterface;
