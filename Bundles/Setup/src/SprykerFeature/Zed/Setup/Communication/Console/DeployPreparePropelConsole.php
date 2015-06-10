@@ -3,9 +3,9 @@
 namespace SprykerFeature\Zed\Setup\Communication\Console;
 
 use SprykerFeature\Zed\Console\Business\Model\Console;
-use SprykerFeature\Zed\Setup\Communication\Console\Propel\BuildModelConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\Propel\ConvertConfigConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\Propel\SchemaCopyConsole;
+use SprykerEngine\Zed\Propel\Communication\Console\BuildModelConsole;
+use SprykerEngine\Zed\Propel\Communication\Console\ConvertConfigConsole;
+use SprykerEngine\Zed\Propel\Communication\Console\SchemaCopyConsole;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
