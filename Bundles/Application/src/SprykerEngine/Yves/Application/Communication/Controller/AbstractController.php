@@ -2,26 +2,21 @@
 
 namespace SprykerEngine\Yves\Application\Communication\Controller;
 
+use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Yves\Application\Business\Application;
-use SprykerEngine\Yves\Kernel\Communication\Factory;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\TwigPresenter;
+use SprykerEngine\Yves\Application\Business\Application;
+use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use SprykerEngine\Yves\Kernel\Communication\Factory;
 use SprykerEngine\Yves\Messenger\Communication\Presenter\YvesPresenter;
+use SprykerFeature\Shared\ZedRequest\Client\Response as TransferResponse;
+use SprykerFeature\Yves\Library\Session\TransferSession;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Shared\ZedRequest\Client\Response as TransferResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Generated\Yves\Ide\AutoCompletion;
-use LogicException;
-use ErrorException;
-use Symfony\Component\Form\FormInterface;
-use ArrayObject;
-use SprykerFeature\Yves\Library\Session\TransferSession;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractController
 {
@@ -68,7 +63,8 @@ abstract class AbstractController
             $this->locator->messenger()->pluginTwigMessenger()->setMessenger(
                 $this->messenger
             )
-        );
+        )
+        ;
 
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
@@ -85,17 +81,9 @@ abstract class AbstractController
     }
 
     /**
-     * @return Factory
-     */
-    protected function getFactory()
-    {
-        return $this->factory;
-    }
-
-    /**
      * @param string $path
-     * @param array  $parameters
-     * @param int    $code
+     * @param array $parameters
+     * @param int $code
      *
      * @return RedirectResponse
      */
@@ -113,7 +101,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return ArrayObject
+     * @return \ArrayObject
      */
     protected function getCookieBag()
     {
@@ -146,7 +134,7 @@ abstract class AbstractController
 
     /**
      * @param string $absoluteUrl
-     * @param int    $code
+     * @param int $code
      *
      * @return RedirectResponse
      */
@@ -161,7 +149,7 @@ abstract class AbstractController
      * @param array $headers
      * @return JsonResponse
      */
-    protected function jsonResponse($data = null, $status = 200, $headers = array())
+    protected function jsonResponse($data = null, $status = 200, $headers = [])
     {
         return new JsonResponse($data, $status, $headers);
     }
@@ -192,19 +180,9 @@ abstract class AbstractController
     }
 
     /**
-     * @return FlashMessageHelper
-     */
-    private function createFlashMessageHelper()
-    {
-        $flashBag = $this->getApplication()->getSession()->getFlashBag();
-        // TODO Use factory to get FlashMessageHelper
-        return new FlashMessageHelper($flashBag, $this->getApplication()['translator']);
-    }
-
-    /**
      * @param $message
      * @return $this
-     * @throws ErrorException
+     * @throws \ErrorException
      */
     protected function addMessageSuccess($message)
     {
@@ -217,7 +195,7 @@ abstract class AbstractController
      * @param string $message
      *
      * @return $this
-     * @throws ErrorException
+     * @throws \ErrorException
      */
     protected function addMessageWarning($message)
     {
@@ -230,7 +208,7 @@ abstract class AbstractController
      * @param string $message
      *
      * @return $this
-     * @throws ErrorException
+     * @throws \ErrorException
      */
     protected function addMessageError($message)
     {
@@ -248,13 +226,13 @@ abstract class AbstractController
      *
      * @deprecated will be removed when we have our ComFactory
      */
-    protected function createForm($type = 'form', $data = null, array $options = array())
+    protected function createForm($type = 'form', $data = null, array $options = [])
     {
         return $this->getApplication()->createForm($type, $data, $options);
     }
 
     /**
-     * TODO rethink
+     * @TODO rethink
      *
      * @param string $role
      *
@@ -280,27 +258,28 @@ abstract class AbstractController
     }
 
     /**
-     * @return SecurityContextInterface
+     * @return mixed
+     * @throws \LogicException
      */
     protected function getSecurityContext()
     {
         $securityContext = $this->getApplication()['security'];
         if (is_null($securityContext)) {
-            throw new LogicException('Security is not enabled!');
+            throw new \LogicException('Security is not enabled!');
         }
 
         return $securityContext;
     }
 
     /**
-     * @return UserInterface
+     * @return mixed
      */
     protected function getUser()
     {
         $securityContext = $this->getSecurityContext();
         $token = $securityContext->getToken();
         if (is_null($token)) {
-            throw new LogicException("No logged in user found.");
+            throw new \LogicException("No logged in user found.");
         }
 
         return $token->getUser();
@@ -347,18 +326,17 @@ abstract class AbstractController
     }
 
     /**
-     * @return Twig_Environment
-     * @throws LogicException
+     * @return \Twig_Environment
+     * @throws \LogicException
      */
     private function getTwig()
     {
         $twig = $this->getApplication()['twig'];
         if (is_null($twig)) {
-            throw new LogicException('Twig environment not set up.');
+            throw new \LogicException('Twig environment not set up.');
         }
 
         return $twig;
     }
-
 
 }

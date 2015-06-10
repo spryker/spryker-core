@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Stock\Communication\Controller;
 
+use Generated\Shared\Transfer\TypeTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Stock\Communication\StockDependencyContainer;
 use Pyz\Zed\Stock\Business\StockFacade;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method StockDependencyContainer getDependencyContainer()
+ * @method StockFacade getFacade()
  */
 class FormController extends AbstractController
 {
@@ -26,13 +28,13 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $stockTypeTransfer = new \Generated\Shared\Transfer\TypeTransfer();
+            $stockTypeTransfer = new TypeTransfer();
             $stockTypeTransfer->fromArray($form->getRequestData());
 
             if (null === $stockTypeTransfer->getIdStock()) {
-                $this->getStockFacade()->createStockType($stockTypeTransfer);
+                $this->getFacade()->createStockType($stockTypeTransfer);
             } else {
-                $this->getStockFacade()->updateStockType($stockTypeTransfer);
+                $this->getFacade()->updateStockType($stockTypeTransfer);
             }
             $form->setActiveValuesToDefault();
         }
@@ -66,11 +68,4 @@ class FormController extends AbstractController
         return $this->jsonResponse($form->renderData());
     }
 
-    /**
-     * @return StockFacade
-     */
-    protected function getStockFacade()
-    {
-        return $this->getLocator()->stock()->facade();
-    }
 }

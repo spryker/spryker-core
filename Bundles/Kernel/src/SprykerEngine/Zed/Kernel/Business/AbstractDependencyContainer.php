@@ -29,6 +29,12 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
         $this->container = $container;
     }
 
+    /**
+     * @param $key
+     *
+     * @return Object
+     * @throws \ErrorException
+     */
     public function getExternalDependency($key)
     {
         if(is_null($this->container)){

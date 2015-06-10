@@ -3,21 +3,18 @@
 namespace SprykerFeature\Zed\Application\Communication\Controller;
 
 use Generated\Zed\Ide\AutoCompletion;
-use LogicException;
 use Silex\Application;
+use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
-use SprykerEngine\Shared\Messenger\Communication\Presenter\ZedPresenter;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Twig_Environment;
 
 abstract class AbstractController
 {
@@ -68,7 +65,8 @@ abstract class AbstractController
             $this->locator->messenger()->pluginTwigMessengerPlugin()->setMessenger(
                 $this->messenger
             )
-        );
+        )
+        ;
 
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
@@ -126,8 +124,6 @@ abstract class AbstractController
     }
 
     /**
-     * For autocompletion use typehint in class docblock like this: "@method MyFacade getFacade()"
-     *
      * @return AbstractFacade
      */
     protected function getFacade()
@@ -136,22 +132,11 @@ abstract class AbstractController
     }
 
     /**
-     * For autocompletion use typehint in class docblock like this: "@method MyQueryContainer getQueryContainer()"
-     *
      * @return AbstractQueryContainer
      */
     protected function getQueryContainer()
     {
         return $this->queryContainer;
-    }
-
-    /**
-     * @deprecated Will be removed. Use getFacade() instead.
-     * @return AutoCompletion
-     */
-    public function getLocator()
-    {
-        return $this->locator;
     }
 
     /**
@@ -246,13 +231,8 @@ abstract class AbstractController
      * @param string $type
      * @param null $data
      * @param array $options
-<<<<<<< HEAD
-     *
-     * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
-=======
      *
      * @return FormInterface
->>>>>>> cleanup the code
      */
     protected function createForm($type = 'form', $data = null, array $options = [])
     {
@@ -271,14 +251,14 @@ abstract class AbstractController
     }
 
     /**
-     * @return Twig_Environment
-     * @throws LogicException
+     * @return \Twig_Environment
+     * @throws \LogicException
      */
     private function getTwig()
     {
         $twig = $this->getApplication()['twig'];
         if ($twig === null) {
-            throw new LogicException('Twig environment not set up.');
+            throw new \LogicException('Twig environment not set up.');
         }
 
         return $twig;
@@ -321,4 +301,5 @@ abstract class AbstractController
     {
         $this->getTwig()->addGlobal('menu_highlight', $uri);
     }
+
 }

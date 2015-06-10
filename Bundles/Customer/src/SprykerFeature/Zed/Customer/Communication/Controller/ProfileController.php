@@ -2,17 +2,19 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerFacade getFacade()
  */
 class ProfileController extends AbstractController
 {
@@ -28,7 +30,7 @@ class ProfileController extends AbstractController
 
         $this->clearBreadcrumbs();
         $this->addBreadcrumb('Customer', $customerUri);
-        $this->addBreadcrumb('Customer ID '.$idCustomer, '/customer/profile?id='.$idCustomer);
+        $this->addBreadcrumb('Customer ID ' . $idCustomer, '/customer/profile?id=' . $idCustomer);
 
         $this->setMenuHighlight($customerUri);
 
@@ -37,20 +39,22 @@ class ProfileController extends AbstractController
 
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
-        $customerTransfer = $this->getLocator()->customer()->facade()->getCustomer($customerTransfer);
+        $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
 
         try {
-            $idShippingAddress = $this->getLocator()->customer()->facade()
+            $idShippingAddress = $this->getFacade()
                 ->getDefaultShippingAddress($customerTransfer)
-                ->getIdCustomerAddress();
+                ->getIdCustomerAddress()
+            ;
         } catch (AddressNotFoundException $e) {
             $idShippingAddress = null;
         }
 
         try {
-            $idBillingAddress = $this->getLocator()->customer()->facade()
+            $idBillingAddress = $this->getFacade()
                 ->getDefaultBillingAddress($customerTransfer)
-                ->getIdCustomerAddress();
+                ->getIdCustomerAddress()
+            ;
         } catch (AddressNotFoundException $e) {
             $idBillingAddress = null;
         }
@@ -90,9 +94,9 @@ class ProfileController extends AbstractController
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($request->query->get('id'));
-        $this->getLocator()->customer()->facade()->forgotPassword($customerTransfer);
+        $this->getFacade()->forgotPassword($customerTransfer);
 
-        return $this->redirectResponse('/customer/profile?id='.$request->query->get('id'));
+        return $this->redirectResponse('/customer/profile?id=' . $request->query->get('id'));
     }
 
     /**
@@ -108,7 +112,7 @@ class ProfileController extends AbstractController
         if ($form->isValid()) {
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getRequestData());
-            $this->getLocator()->customer()->facade()->updateCustomer($customerTransfer);
+            $this->getFacade()->updateCustomer($customerTransfer);
         }
 
         return $this->jsonResponse($form->renderData());
@@ -140,12 +144,12 @@ class ProfileController extends AbstractController
             $addressTransfer = new CustomerAddressTransfer();
             $addressTransfer->fromArray($form->getRequestData());
             if ($addressTransfer->getIdCustomerAddress()) {
-                $this->getLocator()->customer()->facade()->updateAddress($addressTransfer);
+                $this->getFacade()->updateAddress($addressTransfer);
 
                 return $this->jsonResponse($form->renderData());
             }
 
-            $this->getLocator()->customer()->facade()->createAddress($addressTransfer);
+            $this->getFacade()->createAddress($addressTransfer);
         }
 
         return $this->jsonResponse($form->renderData());
@@ -161,9 +165,9 @@ class ProfileController extends AbstractController
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
-        $this->getLocator()->customer()->facade()->setDefaultShippingAddress($addressTransfer);
+        $this->getFacade()->setDefaultShippingAddress($addressTransfer);
 
-        return $this->redirectResponse('/customer/profile?id='.$request->query->get('customer_id'));
+        return $this->redirectResponse('/customer/profile?id=' . $request->query->get('customer_id'));
     }
 
     /**
@@ -176,8 +180,8 @@ class ProfileController extends AbstractController
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
-        $this->getLocator()->customer()->facade()->setDefaultBillingAddress($addressTransfer);
+        $this->getFacade()->setDefaultBillingAddress($addressTransfer);
 
-        return $this->redirectResponse('/customer/profile?id='.$request->query->get('customer_id'));
+        return $this->redirectResponse('/customer/profile?id=' . $request->query->get('customer_id'));
     }
 }

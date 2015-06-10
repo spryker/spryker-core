@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Setup\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method SetupDependencyContainer getDependencyContainer()
@@ -12,6 +13,7 @@ class SetupFacade extends AbstractFacade
 
     /**
      * @param array $roles
+     *
      * @return mixed
      */
     public function generateCronjobs(array $roles)
@@ -38,6 +40,18 @@ class SetupFacade extends AbstractFacade
     public function removeGeneratedDirectory()
     {
         $this->getDependencyContainer()->createModelGeneratedDirectoryRemover()->execute();
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return string
+     */
+    public function getRepeatData(Request $request)
+    {
+        return $this->getDependencyContainer()->createTransferObjectRepeater()
+            ->getRepeatData($request->query->get('mvc', null))
+        ;
     }
 
 }

@@ -5,7 +5,11 @@ namespace SprykerFeature\Zed\Customer\Communication\Controller;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
+use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 
+/**
+ * @method CustomerFacade getFacade()
+ */
 class SdkController extends AbstractSdkController
 {
     /**
@@ -15,7 +19,7 @@ class SdkController extends AbstractSdkController
      */
     public function registerAction(CustomerTransfer $customerTransfer)
     {
-        return $this->getLocator()->customer()->facade()->registerCustomer($customerTransfer);
+        return $this->getFacade()->registerCustomer($customerTransfer);
     }
 
     /**
@@ -25,7 +29,7 @@ class SdkController extends AbstractSdkController
      */
     public function confirmRegistrationAction(CustomerTransfer $customerTransfer)
     {
-        return $this->getLocator()->customer()->facade()->confirmRegistration($customerTransfer);
+        return $this->getFacade()->confirmRegistration($customerTransfer);
     }
 
     /**
@@ -35,7 +39,7 @@ class SdkController extends AbstractSdkController
      */
     public function forgotPasswordAction(CustomerTransfer $customerTransfer)
     {
-        return $this->getLocator()->customer()->facade()->forgotPassword($customerTransfer);
+        return $this->getFacade()->forgotPassword($customerTransfer);
     }
 
     /**
@@ -45,7 +49,7 @@ class SdkController extends AbstractSdkController
      */
     public function restorePasswordAction(CustomerTransfer $customerTransfer)
     {
-        return $this->getLocator()->customer()->facade()->restorePassword($customerTransfer);
+        return $this->getFacade()->restorePassword($customerTransfer);
     }
 
     /**
@@ -53,7 +57,7 @@ class SdkController extends AbstractSdkController
      */
     public function deleteAction(CustomerTransfer $customerTransfer)
     {
-        $success = $this->getLocator()->customer()->facade()->deleteCustomer($customerTransfer);
+        $success = $this->getFacade()->deleteCustomer($customerTransfer);
         $this->setSuccess($success);
 
         return;
@@ -66,7 +70,7 @@ class SdkController extends AbstractSdkController
      */
     public function customerAction(CustomerTransfer $customerTransfer)
     {
-        return $this->getLocator()->customer()->facade()->getCustomer($customerTransfer);
+        return $this->getFacade()->getCustomer($customerTransfer);
     }
 
     /**
@@ -76,7 +80,7 @@ class SdkController extends AbstractSdkController
      */
     public function updateAction(CustomerTransfer $customerTransfer)
     {
-        $success = $this->getLocator()->customer()->facade()->updateCustomer($customerTransfer);
+        $success = $this->getFacade()->updateCustomer($customerTransfer);
         $this->setSuccess($success);
 
         return $customerTransfer;
@@ -89,7 +93,7 @@ class SdkController extends AbstractSdkController
      */
     public function addressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $addressTransfer = $this->getLocator()->customer()->facade()->getAddress($addressTransfer);
+        $addressTransfer = $this->getFacade()->getAddress($addressTransfer);
         if (!$addressTransfer) {
             $this->setSuccess(false);
 
@@ -106,7 +110,7 @@ class SdkController extends AbstractSdkController
      */
     public function updateAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getLocator()->customer()->facade()->updateAddress($addressTransfer);
+        $success = $this->getFacade()->updateAddress($addressTransfer);
         $this->setSuccess($success);
 
         return $addressTransfer;
@@ -119,7 +123,7 @@ class SdkController extends AbstractSdkController
      */
     public function newAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getLocator()->customer()->facade()->createAddress($addressTransfer);
+        $success = $this->getFacade()->createAddress($addressTransfer);
         $this->setSuccess($success);
 
         return $addressTransfer;

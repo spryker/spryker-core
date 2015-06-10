@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Oms\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
+use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Oms\Persistence\Propel\Base\SpyOmsOrderProcessQuery;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStateQuery;
@@ -15,6 +16,9 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * @method OmsFacade getFacade()
+ */
 class SandboxController extends AbstractController
 {
 
@@ -51,7 +55,7 @@ class SandboxController extends AbstractController
             throw new NotFoundHttpException('Unknown OrderItem Id');
         }
 
-        $this->getLocator()->oms()->facade()->triggerEventForOneItem($event, $orderItem, []);
+        $this->getFacade()->triggerEventForOneItem($event, $orderItem, []);
 
         return $this->redirectResponse('/oms/sandbox');
     }

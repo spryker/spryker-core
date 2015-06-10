@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Acl\Communication\Controller;
 
 use Generated\Shared\Transfer\UserTransfer;
+use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,17 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method AclDependencyContainer getDependencyContainer()
+ * @method AclFacade getFacade()
  */
 class UsersController extends AbstractController
 {
+
     const USER_LIST_URL = '/acl/users';
 
-    /**
-     *
-     */
     public function indexAction()
     {
-
     }
 
     /**
@@ -61,7 +60,8 @@ class UsersController extends AbstractController
     {
         $form = $this->getDependencyContainer()->createUserWithGroupForm(
             $request
-        );
+        )
+        ;
 
         $idUser = $request->get('id');
 
@@ -80,40 +80,38 @@ class UsersController extends AbstractController
             $user->setFirstName($data['first_name'])
                 ->setLastName($data['last_name'])
                 ->setUsername($data['username'])
-                ->setPassword($data['password']);
+                ->setPassword($data['password'])
+            ;
 
             if (false === empty($idUser)) {
                 $user->setIdUserUser($data['id_user_user']);
-                $user = $this->getLocator()
-                    ->user()
-                    ->facade()
-                    ->updateUser($user);
+                $user = $this->getDependencyContainer()
+                    ->createUserFacade()
+                    ->updateUser($user)
+                ;
 
-                $userGroup = $this->getLocator()
-                    ->acl()
-                    ->facade()
-                    ->getUserGroup($idUser);
+                $userGroup = $this->getFacade()
+                    ->getUserGroup($idUser)
+                ;
 
                 if ($userGroup->getIdAclGroup() !== $data['id_acl_group']) {
-                    $this->getLocator()
-                        ->acl()
-                        ->facade()
-                        ->removeUserFromGroup($idUser, $userGroup->getIdAclGroup());
+                    $this->getFacade()
+                        ->removeUserFromGroup($idUser, $userGroup->getIdAclGroup())
+                    ;
                 }
             } else {
-                $user = $this->getLocator()
-                    ->user()
-                    ->facade()
+                $user = $this->getDependencyContainer()->createUserFacade()
                     ->addUser(
                         $user->getFirstName(),
                         $user->getLastName(),
                         $user->getUsername(),
                         $user->getPassword()
-                    );
+                    )
+                ;
             }
 
             if ($userGroup === false || $userGroup->getIdAclGroup() !== $data['id_acl_group']) {
-                $this->getLocator()->acl()->facade()->addUserToGroup($user->getIdUserUser(), $data['id_acl_group']);
+                $this->getFacade()->addUserToGroup($user->getIdUserUser(), $data['id_acl_group']);
             }
         }
 

@@ -2,7 +2,9 @@
 
 namespace SprykerFeature\Zed\Price\Communication\Controller;
 
+use Generated\Shared\Transfer\PriceProductTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\Price\Communication\PriceDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,6 +12,7 @@ use SprykerFeature\Zed\Price\Communication\Form\PriceForm;
 
 /**
  * @method PriceDependencyContainer getDependencyContainer()
+ * @method PriceFacade getFacade()
  */
 class PriceFormController extends AbstractController
 {
@@ -24,13 +27,13 @@ class PriceFormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $transferPriceProduct = new \Generated\Shared\Transfer\PriceProductTransfer();
+            $transferPriceProduct = new PriceProductTransfer();
             $transferPriceProduct->fromArray($form->getRequestData());
 
             if (null == $transferPriceProduct->getIdPriceProduct()) {
-                $this->getLocator()->price()->facade()->createPriceForProduct($transferPriceProduct);
+                $this->getFacade()->createPriceForProduct($transferPriceProduct);
             } else {
-                $this->getLocator()->price()->facade()->setPriceForProduct($transferPriceProduct);
+                $this->getFacade()->setPriceForProduct($transferPriceProduct);
             }
         }
 
@@ -49,7 +52,7 @@ class PriceFormController extends AbstractController
 
         if ($form->isValid()) {
             $data = $form->getRequestData();
-            $this->getLocator()->price()->facade()->createPriceType($data['name']);
+            $this->getFacade()->createPriceType($data['name']);
         }
 
         return $this->jsonResponse($form->toArray());

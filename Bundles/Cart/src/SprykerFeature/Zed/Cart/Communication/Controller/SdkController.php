@@ -24,7 +24,7 @@ class SdkController extends AbstractSdkController
     public function __construct(\Pimple $application, Factory $factory, Locator $locator)
     {
         parent::__construct($application, $factory, $locator);
-        $this->facade = $this->getLocator()->Cart()->facade();
+        $this->facade = $this->getFacade();
     }
 
     /**

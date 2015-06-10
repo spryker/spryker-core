@@ -87,6 +87,7 @@ class DiscountDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param Request $request
+     *
      * @return VoucherPoolForm
      */
     public function getVoucherPoolForm(Request $request)
