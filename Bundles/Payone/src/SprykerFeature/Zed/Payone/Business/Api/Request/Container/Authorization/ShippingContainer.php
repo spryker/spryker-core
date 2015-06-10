@@ -32,8 +32,8 @@ class ShippingContainer extends AbstractContainer
      */
     protected $shipping_city;
     /**
-     * ISO-3166 Subdivisions
-     * only necessary for country US or CA
+     * ISO-3166-2 Subdivisions
+     * only necessary for country US, CA, CN, JP, MX, BR, AR, ID, TH, IN
      * @var string
      */
     protected $shipping_state;

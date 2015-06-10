@@ -28,10 +28,6 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
      */
     protected $bankgrouptype;
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
-     */
-    protected $redirect;
-    /**
      * @var string
      */
     protected $iban;
@@ -39,6 +35,10 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
      * @var string
      */
     protected $bic;
+    /**
+     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
+     */
+    protected $redirect;
 
 
     /**

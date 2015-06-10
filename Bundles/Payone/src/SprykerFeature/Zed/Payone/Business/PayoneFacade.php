@@ -7,13 +7,13 @@ use Generated\Shared\Payone\CaptureInterface;
 use Generated\Shared\Payone\DebitInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Payone\CreditCardInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Payone\ApiCallResponseCheckInterface;
+use Generated\Shared\Transfer\AuthorizationCheckResponseTransfer;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
-use Generated\Shared\Transfer\AuthorizationCheckResponseTransfer;
 
 
 /**

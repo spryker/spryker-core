@@ -8,32 +8,37 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
 {
 
     /**
-     * @var int
+     * @var int merchant id
      */
     protected $mid;
 
     /**
-     * @var int
+     * @var int payment portal id
      */
     protected $portalid;
 
     /**
-     * @var string
+     * @var string payment portal id as md5
      */
     protected $key;
 
     /**
-     * @var string
+     * @var string version of the the payone api defaults to 3.8
+     */
+    protected $api_version;
+
+    /**
+     * @var string test or live mode
      */
     protected $mode;
 
     /**
-     * @var string
+     * @var string payone query name (e.g. preauthorization, authorization...)
      */
     protected $request;
 
     /**
-     * @var string
+     * @var string encoding (ISO 8859-1 or UTF-8)
      */
     protected $encoding;
 
@@ -92,6 +97,22 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
     public function getKey()
     {
         return $this->key;
+    }
+
+    /**
+     * @param string $api_version
+     */
+    public function setApiVersion($api_version)
+    {
+        $this->api_version = $api_version;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiVersion()
+    {
+        return $this->api_version;
     }
 
     /**
