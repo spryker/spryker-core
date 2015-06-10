@@ -5,7 +5,7 @@ namespace SprykerEngine\Yves\Application\Communication\Controller;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;
 
-class ExceptionController extends AbstractController
+class ExceptionController
 {
     /**
      * @param FlattenException $exception
