@@ -20,10 +20,6 @@ class DirectDebitContainer extends AbstractPaymentMethodContainer
     /**
      * @var string
      */
-    protected $bankaccountholder;
-    /**
-     * @var string
-     */
     protected $iban;
     /**
      * @var string
@@ -32,10 +28,13 @@ class DirectDebitContainer extends AbstractPaymentMethodContainer
     /**
      * @var string
      */
+    protected $bankaccountholder;
+    /**
+     * @var string
+     */
     protected $mandate_identification;
 
-    
-    
+
     /**
      * @param string $bankaccount
      */

@@ -15,6 +15,10 @@ interface PayoneApiConstants
     const MODE_TEST = 'test';
     const MODE_LIVE = 'live';
 
+    // VERSIONS
+
+    const API_VERSION_3_8 = '3.8';
+    const API_VERSION_3_9 = '3.9';
 
     // PAYMENT METHODS
 
@@ -184,6 +188,10 @@ interface PayoneApiConstants
     const DEBIT_TRANSACTION_TYPE_CREDIT = 'GT'; //GT: Gutschrift (default bei amount <0)
     const DEBIT_TRANSACTION_TYPE_RETURNS = 'RT'; //RT: Retoure
 
+    // PERSONAL DATA
+
+    const PERSONAL_GENDER_MALE = 'm';
+    const PERSONAL_GENDER_FEMALE = 'f';
 
     // CREDITCARD TYPE
 
