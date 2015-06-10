@@ -55,6 +55,15 @@ interface SystemConfig extends ConfigInterface
     const ZED_MYSQL_PORT = 'ZED_MYSQL_PORT';
 
     /**
+     * RabbitMQ
+     */
+    const ZED_RABBITMQ_USERNAME = 'ZED_RABBITMQ_USERNAME';
+    const ZED_RABBITMQ_PASSWORD = 'ZED_RABBITMQ_PASSWORD';
+    const ZED_RABBITMQ_HOST = 'ZED_RABBITMQ_HOST';
+    const ZED_RABBITMQ_PORT = 'ZED_RABBITMQ_PORT';
+    const ZED_RABBITMQ_VHOST = 'ZED_RABBITMQ_VHOST';
+
+    /**
      * Global timezone used to for underlying data, timezones for presentation layer can be changed in stores configuration
      */
     const PROJECT_TIMEZONE = 'PROJECT_TIMEZONE';
