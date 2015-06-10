@@ -278,7 +278,7 @@ class CmsFacadeTest extends Test
 
         $container = new Container();
 
-        $container[GlossaryDependencyProvider::LOCALE_FACADE] = function (Container $container) {
+        $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
             return $this->localeFacade;
         };
 

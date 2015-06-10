@@ -319,11 +319,11 @@ class GlossaryTest extends Test
 
         $container = new Container();
 
-        $container[GlossaryDependencyProvider::TOUCH_FACADE] = function (Container $container) {
+        $container[GlossaryDependencyProvider::FACADE_TOUCH] = function (Container $container) {
             return $this->touchFacade ;
         };
 
-        $container[GlossaryDependencyProvider::LOCALE_FACADE] = function (Container $container) {
+        $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
             return $this->localeFacade;
         };
 

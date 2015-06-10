@@ -43,7 +43,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      */
     protected function getTouchFacade()
     {
-        return $this->getExternalDependency(GlossaryDependencyProvider::TOUCH_FACADE);
+        return $this->getExternalDependency(GlossaryDependencyProvider::FACADE_TOUCH);
     }
 
     /**
@@ -51,7 +51,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      */
     protected function getLocaleFacade()
     {
-        return $this->getExternalDependency(GlossaryDependencyProvider::LOCALE_FACADE);
+        return $this->getExternalDependency(GlossaryDependencyProvider::FACADE_LOCALE);
     }
 
     /**
@@ -75,12 +75,4 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
         );
     }
 
-    /**
-     * TODO remove
-     * @throws \Exception
-     */
-    protected function getLocator()
-    {
-        throw new \Exception('Not allowed here anymore');
-    }
 }

@@ -1,9 +1,5 @@
 <?php
 
-/*
- * (c) Copyright Spryker Systems GmbH 2015
- */
-
 namespace SprykerFeature\Zed\Glossary;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -12,12 +8,11 @@ use SprykerEngine\Zed\Kernel\Container;
 class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const TOUCH_FACADE = 'TOUCH_FACADE';
+    const FACADE_TOUCH = 'touch facade';
 
-    const LOCALE_FACADE = 'LOCALE_FACADE';
+    const FACADE_LOCALE = 'locale facade';
 
-    const PLUGIN_VALIDATOR = 'PLUGIN_VALIDATOR';
-
+    const PLUGIN_VALIDATOR = 'validator plugin';
 
     /**
      * @param Container $container
@@ -26,7 +21,7 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[GlossaryDependencyProvider::LOCALE_FACADE] = function (Container $container) {
+        $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
         };
 
@@ -44,11 +39,11 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[GlossaryDependencyProvider::TOUCH_FACADE] = function (Container $container) {
+        $container[GlossaryDependencyProvider::FACADE_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->facade();
         };
 
-        $container[GlossaryDependencyProvider::LOCALE_FACADE] = function (Container $container) {
+        $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
         };
 

@@ -98,6 +98,6 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      */
     protected function getLocaleFacade()
     {
-        return $this->getExternalDependency(GlossaryDependencyProvider::LOCALE_FACADE);
+        return $this->getExternalDependency(GlossaryDependencyProvider::FACADE_LOCALE);
     }
 }
