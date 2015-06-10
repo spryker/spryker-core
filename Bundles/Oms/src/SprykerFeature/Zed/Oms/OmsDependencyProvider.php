@@ -1,16 +1,11 @@
 <?php
 
-/*
- * (c) Copyright Spryker Systems GmbH 2015
- */
-
 namespace SprykerFeature\Zed\Oms;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -26,14 +21,11 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-
         $container[OmsDependencyProvider::CONDITION_PLUGINS] = $this->getConditionPlugins($container);
-
         $container[OmsDependencyProvider::COMMAND_PLUGINS] = $this->getCommandPlugins($container);
 
         return $container;
     }
-
 
     /**
      * Overwrite in project

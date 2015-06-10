@@ -9,8 +9,6 @@ namespace SprykerFeature\Zed\Glossary\Communication\Form;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field;
@@ -210,19 +208,4 @@ class TranslationForm extends AbstractForm
         return $this->getLocalesWithKeyChange($requestData);
     }
 
-    /**
-     * @return array
-     */
-    public function getDefaultData()
-    {
-        $idGlossaryTranslation = $this->stateContainer->getRequestValue('id_glossary_translation');
-        $translationQuery = $this->queryContainer->queryTranslationById($idGlossaryTranslation);
-        $translationEntity = $translationQuery->findOne();
-
-        if ($translationEntity) {
-            return $translationEntity->toArray();
-        }
-
-        return [];
-    }
 }

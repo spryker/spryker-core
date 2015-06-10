@@ -10,7 +10,6 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
-use Silex\Application;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Messenger\Communication\Presenter\ZedPresenter;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -251,7 +250,7 @@ abstract class AbstractController
      *
      * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
 =======
-     * 
+     *
      * @return FormInterface
 >>>>>>> cleanup the code
      */

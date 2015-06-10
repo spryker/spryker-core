@@ -56,7 +56,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createOrderStateMachineOrderStateMachine(
             $this->getQueryContainer(),
-        
+
             $this->createOrderStateMachineBuilder(),
             $this->createUtilTransitionLog($logContext),
             $this->createOrderStateMachineTimeout(),
@@ -65,7 +65,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
 
             $this->getExternalDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getExternalDependency(OmsDependencyProvider::COMMAND_PLUGINS),
-        
+
             $this->getFactory()
         );
     }
@@ -104,7 +104,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
         $config = $this->getConfig();
 
         return $this->getFactory()->createOrderStateMachineFinder(
-            $this->getExternalDependency(OmsDependencyProvider::QUERY_CONTAINER),
+            $this->getQueryContainer(),
             $this->createOrderStateMachineBuilder(),
             $config->getActiveProcesses()
         );
@@ -116,7 +116,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     public function createOrderStateMachineTimeout()
     {
         return $this->getFactory()->createOrderStateMachineTimeout(
-            $this->getExternalDependency(OmsDependencyProvider::QUERY_CONTAINER)
+            $this->getQueryContainer()
         );
     }
 
@@ -180,6 +180,6 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     public function createUtilDrawer()
     {
         return $this->getFactory()
-            ->createUtilDrawer($this->getConfig()); // TODO do not inject the whole config, just inject what is needed
+            ->createUtilDrawer($this->getConfig()); // @TODO do not inject the whole config, just inject what is needed
     }
 }
