@@ -100,7 +100,7 @@ class ControllerLocator implements ControllerLocatorInterface
         $bundleBuilder = $bundleConfigLocator->locate($this->bundle, $locator);
 
         $container = new Container();
-        $bundleBuilder->provideBusinessLayerDependencies($container);
+        $bundleBuilder->provideCommunicationLayerDependencies($container);
         $resolvedController->setExternalDependencies($container);
 
         // @todo make lazy
