@@ -43,7 +43,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      */
     protected function getTouchFacade()
     {
-        return $this->getExternalDependency(GlossaryDependencyProvider::FACADE_TOUCH);
+        return $this->getInjectedDependency(GlossaryDependencyProvider::FACADE_TOUCH);
     }
 
     /**
@@ -51,7 +51,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      */
     protected function getLocaleFacade()
     {
-        return $this->getExternalDependency(GlossaryDependencyProvider::FACADE_LOCALE);
+        return $this->getInjectedDependency(GlossaryDependencyProvider::FACADE_LOCALE);
     }
 
     /**

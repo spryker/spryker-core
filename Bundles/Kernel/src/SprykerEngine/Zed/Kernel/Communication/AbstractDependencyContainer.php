@@ -15,7 +15,7 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
      * @var Container
      */
     private $container;
-    
+
     /**
      * @var AbstractQueryContainer
      */
@@ -29,7 +29,13 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
         $this->container = $container;
     }
 
-    public function getExternalDependency($key)
+    /**
+     * @param $key
+     *
+     * @return mixed
+     * @throws \ErrorException
+     */
+    public function getInjectedDependency($key)
     {
         if(is_null($this->container)){
             throw new \ErrorException("Container does not exist in ".get_class($this));

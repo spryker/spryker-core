@@ -22,7 +22,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
      */
     public function createUserFacade()
     {
-        return $this->getExternalDependency(AclDependencyProvider::FACADE_USER);
+        return $this->getInjectedDependency(AclDependencyProvider::FACADE_USER);
     }
 
     /**

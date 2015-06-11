@@ -90,7 +90,7 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      */
     public function createValidator()
     {
-        return $this->getExternalDependency(GlossaryDependencyProvider::PLUGIN_VALIDATOR);
+        return $this->getInjectedDependency(GlossaryDependencyProvider::PLUGIN_VALIDATOR);
     }
 
     /**
@@ -98,6 +98,6 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
      */
     protected function getLocaleFacade()
     {
-        return $this->getExternalDependency(GlossaryDependencyProvider::FACADE_LOCALE);
+        return $this->getInjectedDependency(GlossaryDependencyProvider::FACADE_LOCALE);
     }
 }

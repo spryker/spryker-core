@@ -34,7 +34,7 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
      * @return Object
      * @throws \ErrorException
      */
-    public function getExternalDependency($key)
+    public function getInjectedDependency($key)
     {
         if (is_null($this->container)) {
             throw new \ErrorException('Container does not exist in ' . get_class($this));
