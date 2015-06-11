@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\Acl\Communication\Plugin\Bootstrap;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +30,7 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
     public function boot(Application $app)
     {
         $aclFacade = $this->getFacade();
-        $userFacade = $this->getDependencyContainer()->createUserFacade();
+        $userFacade = Locator::getInstance()->user()->facade();
         $settings = $this->getDependencyContainer()->getConfig();
 
         $app->before(function (Request $request) use ($app, $aclFacade, $userFacade, $settings) {

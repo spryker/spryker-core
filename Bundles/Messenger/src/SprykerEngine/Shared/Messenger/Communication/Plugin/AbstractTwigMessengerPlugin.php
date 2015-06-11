@@ -3,6 +3,7 @@
 namespace SprykerEngine\Shared\Messenger\Communication\Plugin;
 
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
+use SprykerEngine\Zed\Kernel\Container;
 
 abstract class AbstractTwigMessengerPlugin extends \Twig_Extension
 {

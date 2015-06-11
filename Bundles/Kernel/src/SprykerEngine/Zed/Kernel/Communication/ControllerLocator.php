@@ -96,18 +96,12 @@ class ControllerLocator implements ControllerLocatorInterface
             \SprykerFeature_Shared_Library_Log::log($resolvedController, 'wrong_controller.txt');
         }
 
-        try {
-            $bundleConfigLocator = new BundleDependencyProviderLocator(); // TODO Make singleton because of performance
-            $bundleBuilder = $bundleConfigLocator->locate($bundleName, $locator);
+        $bundleConfigLocator = new BundleDependencyProviderLocator(); // TODO Make singleton because of performance
+        $bundleBuilder = $bundleConfigLocator->locate($bundleName, $locator);
 
-            $container = new Container();
-            $bundleBuilder->provideBusinessLayerDependencies($container);
-            $resolvedController->setExternalDependencies($container);
-
-        } catch (\SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException $e) {
-            // TODO remove try-catch when all bundles have a DependencyProvider
-            \SprykerFeature_Shared_Library_Log::log($bundleName, 'builder_missing.log');
-        }
+        $container = new Container();
+        $bundleBuilder->provideBusinessLayerDependencies($container);
+        $resolvedController->setExternalDependencies($container);
 
         // TODO make lazy
         if ($locator->$bundleName()->hasFacade()) {

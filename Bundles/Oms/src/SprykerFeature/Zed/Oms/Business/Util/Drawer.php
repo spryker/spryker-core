@@ -6,20 +6,19 @@ use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
-use SprykerFeature\Zed\Oms\OmsConfig;
 
 class Drawer implements DrawerInterface
 {
 
-    protected $graphDefault = array('fontname' => 'Verdana', 'labelfontname' => 'Verdana', 'nodesep' => 0.6, 'ranksep' => 0.8);
+    protected $graphDefault = ['fontname' => 'Verdana', 'labelfontname' => 'Verdana', 'nodesep' => 0.6, 'ranksep' => 0.8];
 
-    protected $attributesProcess = array('fontname' => 'Verdana', 'fillcolor' => '#cfcfcf', 'style' => 'filled', 'color' => '#ffffff', 'fontsize' => 12, 'fontcolor' => 'black');
+    protected $attributesProcess = ['fontname' => 'Verdana', 'fillcolor' => '#cfcfcf', 'style' => 'filled', 'color' => '#ffffff', 'fontsize' => 12, 'fontcolor' => 'black'];
 
-    protected $attributesState = array('fontname' => 'Verdana', 'fontsize' => 14, 'style' => 'filled', 'fillcolor' => '#f9f9f9');
+    protected $attributesState = ['fontname' => 'Verdana', 'fontsize' => 14, 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
 
-    protected $attributesDiamond = array('fontname' => 'Verdana', 'label' => '?', 'shape' => 'diamond', 'fontcolor' => 'white', 'fontsize' => '1', 'style' => 'filled', 'fillcolor' => '#f9f9f9');
+    protected $attributesDiamond = ['fontname' => 'Verdana', 'label' => '?', 'shape' => 'diamond', 'fontcolor' => 'white', 'fontsize' => '1', 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
 
-    protected $attributesTransition = array('fontname' => 'Verdana', 'fontsize' => 12);
+    protected $attributesTransition = ['fontname' => 'Verdana', 'fontsize' => 12];
 
     protected $brLeft = '<BR align="left" />  ';
 
@@ -33,16 +32,23 @@ class Drawer implements DrawerInterface
 
     protected $fontsizeSmall = null;
 
-    protected $conditionModels = array();
+    protected $conditionModels = [];
 
-    protected $commandModels = array();
+    protected $commandModels = [];
 
     const EDGE_UPPER_HALF = 'upper half';
     const EDGE_LOWER_HALF = 'lower half';
     const EDGE_FULL = 'edge full';
 
-    /** @var OmsConfig */
-    protected $settings;
+    /**
+     * @var array
+     */
+    protected $conditions;
+
+    /**
+     * @var array
+     */
+    protected $commands;
 
     /**
      * @var \SprykerFeature_Zed_Library_Service_GraphViz
@@ -50,11 +56,13 @@ class Drawer implements DrawerInterface
     protected $graph;
 
     /**
-     * @param OmsConfig $settings
+     * @param array $commands
+     * @param array $conditions
      */
-    public function __construct(OmsConfig $settings)
+    public function __construct(array $commands, array $conditions)
     {
-        $this->settings = $settings;
+        $this->commandModels = $commands;
+        $this->conditionModels = $conditions;
         $this->graph = new \SprykerFeature_Zed_Library_Service_GraphViz(true, $this->graphDefault, 'G', false, true);
     }
 
@@ -89,7 +97,7 @@ class Drawer implements DrawerInterface
         $states = $process->getAllStates();
         foreach ($states as $state) {
             $highlight = $highlightState === $state->getName();
-            $this->addNode($state, array(), null, $highlight);
+            $this->addNode($state, [], null, $highlight);
         }
     }
 
@@ -119,10 +127,10 @@ class Drawer implements DrawerInterface
 
                 $this->graph->addNode($diamondId, $this->attributesDiamond, $state->getProcess()->getName());
 
-                $this->addEdge(current($transitions), self::EDGE_UPPER_HALF, array(), null, $diamondId);
+                $this->addEdge(current($transitions), self::EDGE_UPPER_HALF, [], null, $diamondId);
 
                 foreach ($transitions as $transition) {
-                    $this->addEdge($transition, self::EDGE_LOWER_HALF, array(), $diamondId);
+                    $this->addEdge($transition, self::EDGE_LOWER_HALF, [], $diamondId);
                 }
 
             } else {
@@ -163,11 +171,11 @@ class Drawer implements DrawerInterface
      * @param string $name
      * @param bool $highlight
      */
-    protected function addNode(StateInterface $state, $attributes = array(), $name = null, $highlight = false)
+    protected function addNode(StateInterface $state, $attributes = [], $name = null, $highlight = false)
     {
         $name = is_null($name) ? $state->getName() : $name;
 
-        $label = array();
+        $label = [];
         $label[] = str_replace(' ', $this->br, trim($name));
 
         if ($state->isReserved()) {
@@ -219,10 +227,10 @@ class Drawer implements DrawerInterface
      * @param null $fromName
      * @param null $toName
      */
-    protected function addEdge(TransitionInterface $transition, $type = self::EDGE_FULL, $attributes = array(), $fromName = null, $toName = null)
+    protected function addEdge(TransitionInterface $transition, $type = self::EDGE_FULL, $attributes = [], $fromName = null, $toName = null)
     {
 
-        $label = array();
+        $label = [];
 
         if ($type !== self::EDGE_LOWER_HALF) {
             $label = $this->addEdgeEventText($transition, $label);
@@ -237,7 +245,7 @@ class Drawer implements DrawerInterface
         $toName = $this->addEdgeToState($transition, $toName);
         $attributes = $this->addEdgeAttributes($transition, $attributes, $label, $type);
 
-        $this->graph->addEdge(array($fromName => $toName), $attributes);
+        $this->graph->addEdge([$fromName => $toName], $attributes);
     }
 
     /**
@@ -404,9 +412,5 @@ class Drawer implements DrawerInterface
             $this->fontsizeBig = $fontsize;
             $this->fontsizeSmall = $fontsize - 2;
         }
-
-        $this->conditionModels = $this->settings->getConditions();
-
-        $this->commandModels = $this->settings->getCommands();
     }
 }

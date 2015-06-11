@@ -2,25 +2,25 @@
 
 namespace SprykerFeature\Zed\Oms\Business;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\OmsBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\DummyInterface;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\FinderInterface;
-use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\PersistenceManagerInterface;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
+use SprykerFeature\Zed\Oms\Business\OrderStateMachine\PersistenceManagerInterface;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
-use SprykerFeature\Zed\Oms\Business\Util\CollectionToArrayTransformerInterface;
-use SprykerFeature\Zed\Oms\Business\Util\DrawerInterface;
-use SprykerFeature\Zed\Oms\Business\Util\TransitionLogInterface;
-use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
+use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
-use SprykerFeature\Zed\Oms\OmsDependencyProvider;
+use SprykerFeature\Zed\Oms\Business\Util\CollectionToArrayTransformerInterface;
+use SprykerFeature\Zed\Oms\Business\Util\DrawerInterface;
+use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use SprykerFeature\Zed\Oms\Business\Util\TransitionLogInterface;
 use SprykerFeature\Zed\Oms\OmsConfig;
+use SprykerFeature\Zed\Oms\OmsDependencyProvider;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
-use Generated\Zed\Ide\FactoryAutoCompletion\OmsBusiness;
 
 /**
  * @method OmsBusiness getFactory()
@@ -29,6 +29,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\OmsBusiness;
  */
 class OmsDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @return CollectionToArrayTransformerInterface
      */
@@ -130,7 +131,8 @@ class OmsDependencyContainer extends AbstractDependencyContainer
         $queryContainer = $this->getQueryContainer();
 
         return $this->getFactory()
-            ->createUtilTransitionLog($queryContainer, $logContext);
+            ->createUtilTransitionLog($queryContainer, $logContext)
+        ;
     }
 
     /**
@@ -171,7 +173,8 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     public function createProcessProcess()
     {
         return $this->getFactory()
-            ->createProcessProcess($this->createUtilDrawer());
+            ->createProcessProcess($this->createUtilDrawer())
+        ;
     }
 
     /**
@@ -180,6 +183,10 @@ class OmsDependencyContainer extends AbstractDependencyContainer
     public function createUtilDrawer()
     {
         return $this->getFactory()
-            ->createUtilDrawer($this->getConfig()); // @TODO do not inject the whole config, just inject what is needed
+            ->createUtilDrawer(
+                $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
+                $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS)
+            )
+        ; // @TODO do not inject the whole config, just inject what is needed
     }
 }
