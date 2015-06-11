@@ -7,7 +7,6 @@ use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\MaintenanceBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectionInterface;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
@@ -41,6 +40,8 @@ class MaintenanceDependencyContainer extends AbstractDependencyContainer
             $collection,
             $finder
         );
+
+        $collector = $this->getFactory()->createInstalledPackagesInstalledPackageCollectorFilter($collector);
 
         return $collector;
     }
