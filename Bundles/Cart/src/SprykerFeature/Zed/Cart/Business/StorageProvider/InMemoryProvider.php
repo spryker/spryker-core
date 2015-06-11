@@ -52,17 +52,18 @@ class InMemoryProvider implements StorageProviderInterface
     public function removeItems(CartInterface $cart, CartItemsInterface $removedItems)
     {
         $existingItems = $cart->getItems();
+        $skuIndex = $this->createSkuIndex($existingItems);
 
         /** @var CartItemInterface $item */
-        foreach ($removedItems as $item) {
+        foreach ($removedItems->getCartItems() as $item) {
             if ($item->getQuantity() < 1) {
                 throw new InvalidArgumentException(
                     sprintf('Could not decrease cart item %d with %d as value', $item->getId(), $item->getQuantity())
                 );
             }
 
-            if ($existingItems->offsetExists($item->getId())) {
-                $this->decreaseExistingItem($existingItems, $item);
+            if (isset($skuIndex[$item->getId()])) {
+                $this->decreaseExistingItem($existingItems, $skuIndex[$item->getId()], $item);
             }
         }
 
@@ -94,18 +95,18 @@ class InMemoryProvider implements StorageProviderInterface
 
     /**
      * @param CartItemsInterface|CartItemInterface[] $existingItems
+     * @param int $index
      * @param CartItemInterface $item
      */
-    private function decreaseExistingItem($existingItems, $item)
+    private function decreaseExistingItem($existingItems, $index, $item)
     {
-        /** @var CartItemInterface $existingItem */
-        $existingItem = $existingItems->offsetGet($item->getId());
+        $existingItem = $existingItems[$index];
         $newQuantity = $existingItem->getQuantity() - $item->getQuantity();
 
         if ($newQuantity > 0) {
             $existingItem->setQuantity($newQuantity);
         } else {
-            $existingItems->offsetUnset($item->getId());
+            unset($existingItems[$index]);
         }
     }
 

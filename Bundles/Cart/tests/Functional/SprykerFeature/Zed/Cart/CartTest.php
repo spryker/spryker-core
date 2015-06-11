@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CartItemsTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProductQuery;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
@@ -65,7 +64,6 @@ class CartTest extends Test
     {
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
-        //$cartItem->setId('123');
         $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
         $cartItemTax = new TaxItemTransfer();
@@ -74,7 +72,6 @@ class CartTest extends Test
         $cart->addItem($cartItem);
 
         $newItems = new CartItemsTransfer();
-        // $newItems = new \ArrayObject();
         $newItem = new CartItemTransfer();
         $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
@@ -82,7 +79,6 @@ class CartTest extends Test
         $newItemTax->setPercentage(10);
         $newItem->setTax($newItemTax);
         $newItems->addCartItem($newItem);
-        // $newItems->append($newItem);
 
         $cartChange = new ChangeTransfer();
         $cartChange->setCart($cart);
@@ -106,17 +102,22 @@ class CartTest extends Test
 
     public function testIncreaseCartQuantity()
     {
-        $this->markTestSkipped();
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
-        $cartItem->setId('123');
+        $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
+        $cartItemTax = new TaxItemTransfer();
+        $cartItemTax->setPercentage(10);
+        $cartItem->setTax($cartItemTax);
         $cart->addItem($cartItem);
 
         $newItems = new CartItemsTransfer();
         $newItem = new CartItemTransfer();
-        $newItem->setId('123');
+        $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
+        $newItemTax = new TaxItemTransfer();
+        $newItemTax->setPercentage(10);
+        $newItem->setTax($newItemTax);
         $newItems->addCartItem($newItem);
 
         $cartChange = new ChangeTransfer();
@@ -127,25 +128,28 @@ class CartTest extends Test
 
         $this->assertCount(1, $changedCart->getItems());
         /** @var CartItemTransfer $item */
-        $changedItem = $changedCart->getItems()->getFirstItem();
+        $changedItem = $changedCart->getItems()[0];
         $this->assertEquals(4, $changedItem->getQuantity());
-
-        //@todo test recalculation
     }
 
     public function testRemoveFromCart()
     {
-        $this->markTestSkipped();
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
-        $cartItem->setId('222');
+        $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(1);
+        $cartItemTax = new TaxItemTransfer();
+        $cartItemTax->setPercentage(10);
+        $cartItem->setTax($cartItemTax);
         $cart->addItem($cartItem);
 
         $newItems = new CartItemsTransfer();
         $newItem = new CartItemTransfer();
-        $newItem->setId('222');
+        $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
+        $newItemTax = new TaxItemTransfer();
+        $newItemTax->setPercentage(10);
+        $newItem->setTax($newItemTax);
         $newItems->addCartItem($newItem);
 
         $cartChange = new ChangeTransfer();
@@ -155,24 +159,26 @@ class CartTest extends Test
         $changedCart = $this->cartFacade->removeFromCart($cartChange);
 
         $this->assertCount(0, $changedCart->getItems());
-        //@todo test recalculation
     }
 
     public function testDecreaseCartItem()
     {
-        $this->markTestSkipped();
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
-        $cartItem->setId('123');
+        $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
-//        $cartItems = new ItemCollection();
-//        $cartItems->add($cartItem);
+        $cartItemTax = new TaxItemTransfer();
+        $cartItemTax->setPercentage(10);
+        $cartItem->setTax($cartItemTax);
         $cart->addItem($cartItem);
 
         $newItems = new CartItemsTransfer();
         $newItem = new CartItemTransfer();
-        $newItem->setId('123');
+        $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
+        $newItemTax = new TaxItemTransfer();
+        $newItemTax->setPercentage(10);
+        $newItem->setTax($newItemTax);
         $newItems->addCartItem($newItem);
 
         $cartChange = new ChangeTransfer();
@@ -183,10 +189,8 @@ class CartTest extends Test
 
         $this->assertCount(1, $changedCart->getItems());
         /** @var CartItemTransfer $item */
-        $changedItem = $changedCart->getItems()->getFirstItem();
+        $changedItem = $changedCart->getItems()[0];
         $this->assertEquals(2, $changedItem->getQuantity());
-
-        //@todo test recalculation
     }
 
     protected function setTestData()
@@ -211,8 +215,5 @@ class CartTest extends Test
 
         $concreteProduct2 = SpyProductQuery::create()->filterBySku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)->findOneOrCreate();
         $concreteProduct2->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)->setSpyAbstractProduct($abstractProduct2)->save();
-
-//        $this->deletePriceEntitiesConcrete($concreteProduct1);
-//        $this->deletePriceEntitiesAbstract($abstractProduct);
     }
 }
