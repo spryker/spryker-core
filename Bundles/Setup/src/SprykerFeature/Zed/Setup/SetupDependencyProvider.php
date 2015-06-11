@@ -15,7 +15,7 @@ class SetupDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::PLUGIN_TRANSFER_OBJECT_REPEATER] = function (Container $container) {
             return $container->getLocator()->application()->pluginTransferObjectRepeater();
