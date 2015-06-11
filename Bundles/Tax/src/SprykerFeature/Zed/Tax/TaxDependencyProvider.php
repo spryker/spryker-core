@@ -1,0 +1,10 @@
+<?php
+
+namespace SprykerFeature\Zed\Tax;
+
+use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
+use SprykerEngine\Zed\Kernel\Container;
+
+class TaxDependencyProvider extends AbstractBundleDependencyProvider
+{
+}

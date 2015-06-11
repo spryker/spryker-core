@@ -31,7 +31,7 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
     /**
      * @param $key
      *
-     * @return Object
+     * @return mixed
      * @throws \ErrorException
      */
     public function getProvidedDependency($key)

@@ -89,32 +89,26 @@ class ControllerLocator implements ControllerLocatorInterface
             );
         }
 
-        // TODO REFACTOR -  move to constructor when all controllers are upgraded
+        // @todo REFACTOR -  move to constructor when all controllers are upgraded
         $bundleName = lcfirst($this->bundle);
 
         if (!method_exists($resolvedController, 'setOwnFacade')) {
             \SprykerFeature_Shared_Library_Log::log($resolvedController, 'wrong_controller.txt');
         }
 
-        try {
-            $bundleConfigLocator = new BundleDependencyProviderLocator(); // TODO Make singleton because of performance
-            $bundleBuilder = $bundleConfigLocator->locate($bundleName, $locator);
+        $bundleConfigLocator = new BundleDependencyProviderLocator(); // @todo Make singleton because of performance
+        $bundleBuilder = $bundleConfigLocator->locate($bundleName, $locator);
 
-            $container = new Container();
-            $bundleBuilder->provideBusinessLayerDependencies($container);
-            $resolvedController->setExternalDependencies($container);
+        $container = new Container();
+        $bundleBuilder->provideBusinessLayerDependencies($container);
+        $resolvedController->setExternalDependencies($container);
 
-        } catch (\SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException $e) {
-            // TODO remove try-catch when all bundles have a DependencyProvider
-            \SprykerFeature_Shared_Library_Log::log($bundleName, 'builder_missing.log');
-        }
-
-        // TODO make lazy
+        // @todo make lazy
         if ($locator->$bundleName()->hasFacade()) {
             $resolvedController->setOwnFacade($locator->$bundleName()->facade());
         }
 
-        // TODO make lazy
+        // @todo make lazy
         if ($locator->$bundleName()->hasQueryContainer()) {
             $resolvedController->setOwnQueryContainer($locator->$bundleName()->queryContainer());
         }
