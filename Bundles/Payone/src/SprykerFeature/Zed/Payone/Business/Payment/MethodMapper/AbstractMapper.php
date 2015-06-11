@@ -88,7 +88,6 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApi
         $debitContainer->setAmount($debitData->getAmount());
         $debitContainer->setSequenceNumber(
             $this->getSequenceNumberProvider()->getNextSequenceNumber($debitData->getPayment()->getTransactionId())
-        +1
         );
 //@todo fix sequence numbers
         return $debitContainer;
@@ -104,6 +103,8 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApi
         $refundContainer = new RefundContainer();
 
         $refundContainer->setTxid($refundData->getPayment()->getTransactionId());
+        $refundContainer->setCurrency($this->getStandardParameter()->getCurrency());
+        $refundContainer->setAmount($refundData->getAmount());
         $refundContainer->setSequenceNumber(
             $this->getSequenceNumberProvider()->getNextSequenceNumber($refundData->getPayment()->getTransactionId())
         +1
