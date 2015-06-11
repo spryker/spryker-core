@@ -32,10 +32,10 @@ class PluginLocator extends AbstractLocator
 
         $plugin = $factory->create('Plugin' . $className, $factory, $locator);
 
-        // @TODO REFACTOR -  move to constructor when all controllers are upgraded
+        // @todo REFACTOR -  move to constructor when all controllers are upgraded
         $bundleName = lcfirst($bundle);
 
-        $bundleConfigLocator = new BundleDependencyProviderLocator(); // TODO Make singleton because of performance
+        $bundleConfigLocator = new BundleDependencyProviderLocator(); // @todo Make singleton because of performance
         $bundleBuilder = $bundleConfigLocator->locate($bundle, $locator);
 
         $container = new Container();
@@ -45,7 +45,7 @@ class PluginLocator extends AbstractLocator
         }
 
         if ($locator->$bundleName()->hasFacade()) {
-            // @TODO temporary hack needed because the "UI-plugins" do not extend AbstractPlugin....
+            // @todo temporary hack needed because the "UI-plugins" do not extend AbstractPlugin....
             if (method_exists($plugin, 'setOwnFacade')) {
                 $plugin->setOwnFacade($locator->$bundleName()->facade());
             }
