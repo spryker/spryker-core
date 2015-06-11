@@ -79,8 +79,6 @@ abstract class AbstractIdeAutoCompletionGenerator
 
     /**
      * @param null $output
-     *
-     * @return mixed
      */
     abstract public function create($output = null);
 

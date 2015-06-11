@@ -36,7 +36,7 @@ class Application extends \Silex\Application
     {
         /** @var FormInterface $form */
         $form = $this['form.factory']->create($type, $data, $options);
-        $request = ($this['request_stack'])? $this['request_stack']->getCurrentRequest():$this['request'];
+        $request = ($this['request_stack']) ? $this['request_stack']->getCurrentRequest() : $this['request'];
         $form->handleRequest($request);
 
         return $form;

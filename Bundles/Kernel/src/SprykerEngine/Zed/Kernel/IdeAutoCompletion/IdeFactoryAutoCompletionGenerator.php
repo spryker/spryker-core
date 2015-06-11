@@ -25,7 +25,6 @@ class IdeFactoryAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerat
 
     /**
      * @param null $output
-     * @return mixed
      */
     public function create($output = null)
     {

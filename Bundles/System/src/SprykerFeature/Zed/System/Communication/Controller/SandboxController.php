@@ -6,9 +6,6 @@
 namespace SprykerFeature\Zed\System\Communication\Controller;
 
 use Exception;
-use PhpParser\Lexer;
-use PhpParser\Lexer\Emulative;
-use PhpParser\Parser;
 use SprykerEngine\Shared\Kernel\TransferLocator;
 use SprykerFeature\Shared\Library\Config;
 
@@ -32,11 +29,9 @@ class SandboxController extends AbstractController
 
             $className = $classNameGenerator->extractClassNameFromPath($filePath);
         }
-
     }
 
     /**
-     * from library
      * @return array
      */
     protected function createFilelist()

@@ -13,6 +13,7 @@ class TableMapBuilder extends \Propel\Generator\Builder\Om\TableMapBuilder
      *
      * @param string $objName
      * @param string $clsName
+     *
      * @return string
      */
     public function buildObjectInstanceCreationCode($objName, $clsName)

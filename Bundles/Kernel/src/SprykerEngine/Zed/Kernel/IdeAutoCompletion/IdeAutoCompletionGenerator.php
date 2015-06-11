@@ -10,7 +10,6 @@ class IdeAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerator
 
     /**
      * @param null $output
-     * @return mixed
      */
     public function create($output = null)
     {
