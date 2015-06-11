@@ -102,11 +102,13 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApi
         $refundContainer = new RefundContainer();
 
         $refundContainer->setTxid($refundData->getPayment()->getTransactionId());
-        $refundContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $refundContainer->setAmount($refundData->getAmount());
         $refundContainer->setSequenceNumber(
             $this->getSequenceNumberProvider()->getNextSequenceNumber($refundData->getPayment()->getTransactionId())
         );
+        $refundContainer->setAmount($refundData->getAmount());
+        $refundContainer->setCurrency($this->getStandardParameter()->getCurrency());
+        $refundContainer->setNarrativeText($refundData->getNarrativeText());
+        $refundContainer->setUseCustomerData($refundData->getUseCustomerdata());
 
         return $refundContainer;
     }
