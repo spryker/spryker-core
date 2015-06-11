@@ -11,7 +11,6 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
 {
 
     /**
-     * External dependencies
      * @var Container
      */
     private $container;
@@ -37,11 +36,11 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
      */
     public function getExternalDependency($key)
     {
-        if(is_null($this->container)){
+        if (is_null($this->container)) {
             throw new \ErrorException('Container does not exist in ' . get_class($this));
         }
 
-        if(false === $this->container->offsetExists($key)){
+        if (false === $this->container->offsetExists($key)) {
             throw new \ErrorException('Key $key does not exist in container: ' . get_class($this));
         }
 

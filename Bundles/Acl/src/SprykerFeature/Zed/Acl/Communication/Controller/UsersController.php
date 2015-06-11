@@ -58,10 +58,7 @@ class UsersController extends AbstractController
      */
     public function formAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createUserWithGroupForm(
-            $request
-        )
-        ;
+        $form = $this->getDependencyContainer()->createUserWithGroupForm($request);
 
         $idUser = $request->get('id');
 
