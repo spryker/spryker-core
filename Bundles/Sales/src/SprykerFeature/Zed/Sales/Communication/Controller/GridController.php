@@ -23,4 +23,18 @@ class GridController extends AbstractController
 
         return $this->jsonResponse($grid->renderData());
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function ordersAction(Request $request)
+    {
+        $grid = $this->getDependencyContainer()
+            ->getOrdersItemsGridByOrderId($request)
+        ;
+
+        return $this->jsonResponse($grid->renderData());
+    }
 }

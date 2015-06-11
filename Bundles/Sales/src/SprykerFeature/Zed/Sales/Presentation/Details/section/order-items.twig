@@ -1,30 +1,36 @@
 <div class="spy-layout sparse">
     <h3>Order Items Overview</h3>
-    <spy-form
-            model='{"fields":[{"name":"select", "type":"field", "label":"asd", "refresh":"false", "accepts":["On"]}]}'
-            >
-        <form action="">
+        <section
+                class="spy-layout compact"
+                spy-app="spyGrid,spyForm"
+                ng-controller="GridController"
+                ng-strict-di
+                src="/sales/grid/orders?orderId={{ order_id }}"
+                name="orders_grid"
+                >
             <table class="spy-grid">
                 <tr class="text-left">
-                    <th>select</th>
-                    <th>Item</th>
+                    {#<th>select</th>#}
+                    <th>Item name</th>
                     <th>SKU</th>
-                    <th>EAN</th>
+                    {#<th>EAN</th>#}
                     <th>Unit Price</th>
                     <th>QTY</th>
                     <th>Total Price</th>
                 </tr>
-                {% for i in 1..3 %}
-                    <tr class="ng-scope">
-                        <td><input type="checkbox" name="select[]"/></td>
-                        <td>Sample product</td>
-                        <td>SKU123456</td>
-                        <td>00758465882541</td>
-                        <td>9.99</td>
-                        <td>1</td>
-                        <td>&euro; 9.99</td>
-                    </tr>
-                {% endfor %}
+
+                <tr class="ng-scope" ng-repeat="row in rows">
+                    {#<td><input type="checkbox" name="select[]"/></td>#}
+                    <td>{[{ row.name }]}</td>
+                    <td>{[{ row.sku }]}</td>
+                    {#<td>{[{ row.ean }]}</td>#}
+                    <td>{[{ row.gross_price }]} &euro;</td>
+                    <td>{[{ row.qty }]}</td>
+                    <td>{[{ row.gross_price * row.qty }]} &euro;</td>
+                </tr>
+
+                {#
+                @todo add a new createCustomRowRenderer later, now this needs to be finished with less features
                 <tr>
                     <td>Total</td>
                     <td>-</td>
@@ -34,9 +40,9 @@
                     <td>3</td>
                     <td>&euro; 9.99</td>
                 </tr>
+                #}
             </table>
-        </form>
-    </spy-form>
-    <button class="button accept">Add Item</button>
-    <button class="button cancel">Remove Item</button>
+        </section>
+    {#<button class="button accept">Add Item</button>#}
+    {#<button class="button cancel">Remove Item</button>#}
 </div>
