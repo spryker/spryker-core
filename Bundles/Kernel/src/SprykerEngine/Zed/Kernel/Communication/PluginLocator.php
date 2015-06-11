@@ -39,7 +39,7 @@ class PluginLocator extends AbstractLocator
         $bundleBuilder = $bundleConfigLocator->locate($bundle, $locator);
 
         $container = new Container();
-        $bundleBuilder->provideBusinessLayerDependencies($container);
+        $bundleBuilder->provideCommunicationLayerDependencies($container);
         if ($plugin instanceof AbstractPlugin) {
             $plugin->setExternalDependencies($container);
         }
