@@ -97,7 +97,7 @@ class ControllerLocator implements ControllerLocatorInterface
         }
 
         $bundleConfigLocator = new BundleDependencyProviderLocator(); // @todo Make singleton because of performance
-        $bundleBuilder = $bundleConfigLocator->locate($bundleName, $locator);
+        $bundleBuilder = $bundleConfigLocator->locate($this->bundle, $locator);
 
         $container = new Container();
         $bundleBuilder->provideBusinessLayerDependencies($container);
