@@ -53,7 +53,7 @@ class SetupDependencyContainer extends AbstractDependencyContainer
      */
     public function createTransferObjectRepeater()
     {
-        return $this->getInjectedDependency(SetupDependencyProvider::PLUGIN_TRANSFER_OBJECT_REPEATER);
+        return $this->getProvidedDependency(SetupDependencyProvider::PLUGIN_TRANSFER_OBJECT_REPEATER);
     }
 
 }

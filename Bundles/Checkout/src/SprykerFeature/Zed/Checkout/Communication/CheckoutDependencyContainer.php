@@ -17,7 +17,7 @@ class CheckoutDependencyContainer extends AbstractDependencyContainer
      */
     public function createCalculationFacade()
     {
-        return $this->getInjectedDependency(CheckoutDependencyProvider::FACADE_CALCULATION);
+        return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_CALCULATION);
     }
 
 }
