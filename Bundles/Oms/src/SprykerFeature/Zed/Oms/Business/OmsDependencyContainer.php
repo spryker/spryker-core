@@ -63,8 +63,8 @@ class OmsDependencyContainer extends AbstractDependencyContainer
             $this->createUtilCollectionToArrayTransformer(),
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
 
-            $this->getExternalDependency(OmsDependencyProvider::CONDITION_PLUGINS),
-            $this->getExternalDependency(OmsDependencyProvider::COMMAND_PLUGINS),
+            $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
+            $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
 
             $this->getFactory()
         );

@@ -17,5 +17,5 @@ interface DependencyContainerInterface
      *
      * @return mixed
      */
-    public function getExternalDependency($key);
+    public function getProvidedDependency($key);
 }

@@ -29,7 +29,7 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
      * @return mixed
      * @throws \ErrorException
      */
-    public function getExternalDependency($key)
+    public function getProvidedDependency($key)
     {
         if(false === $this->container->offsetExists($key)){
             throw new \ErrorException("Key $key does not exist in container.");
