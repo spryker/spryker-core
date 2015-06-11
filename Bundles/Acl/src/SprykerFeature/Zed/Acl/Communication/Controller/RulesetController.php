@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Acl\Communication\Controller;
 
 use Generated\Shared\Transfer\GroupTransfer;
+use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,9 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method AclDependencyContainer getDependencyContainer()
+ * @method AclFacade getFacade()
  */
 class RulesetController extends AbstractController
 {
+
     const USER_LIST_URL = '/acl/users';
 
     /**
@@ -55,9 +58,9 @@ class RulesetController extends AbstractController
 
             if (!empty($idGroup)) {
                 $group->setIdAclGroup($idGroup);
-                $this->getLocator()->acl()->facade()->updateGroup($group);
+                $this->getFacade()->updateGroup($group);
             } else {
-                $this->getLocator()->acl()->facade()->addGroup($group->getName());
+                $this->getFacade()->addGroup($group->getName());
             }
         }
 

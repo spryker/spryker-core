@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Url\Communication\Controller;
 
-use Generated\Shared\Transfer\UrlUrlTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Zed\Url\Communication\UrlDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,9 +25,9 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $facade = $this->getLocator()->url()->facade();
+            $facade = $this->getFacade();
 
-            $url = new UrlUrlTransfer();
+            $url = new UrlTransfer();
             $url->fromArray($form->getRequestData());
             $url->setResourceType('product');
 

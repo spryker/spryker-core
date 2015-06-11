@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Acl\Communication;
 
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
 use SprykerFeature\Zed\Acl\Communication\Form\UserForm;
 use SprykerFeature\Zed\Acl\Communication\Grid\RulesetGrid;
@@ -17,19 +18,11 @@ class AclDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @return AclFacade
-     */
-    public function locateAclFacade()
-    {
-        return $this->getLocator()->acl()->facade();
-    }
-
-    /**
      * @return UserFacade
      */
-    public function locateUserFacade()
+    public function createUserFacade()
     {
-        return $this->getLocator()->user()->facade();
+        return $this->getExternalDependency(AclDependencyProvider::FACADE_USER);
     }
 
     /**

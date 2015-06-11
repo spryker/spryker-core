@@ -23,7 +23,7 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         return $this->viewResponse([
-            'processes' => $this->getLocator()->oms()->facade()->getProcesses()
+            'processes' => $this->getFacade()->getProcesses()
         ]);
     }
 
@@ -56,7 +56,7 @@ class IndexController extends AbstractController
             return $this->redirectResponse('/oms/index/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontsize);
         }
 
-        $response = $this->getLocator()->oms()->facade()->drawProcess($processName, null, $format, $fontsize);
+        $response = $this->getFacade()->drawProcess($processName, null, $format, $fontsize);
 
         $callback = function() use ($response) {
             echo $response;
@@ -78,7 +78,7 @@ class IndexController extends AbstractController
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();
 
-        echo $this->getLocator()->oms()->facade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName()), $format, $fontsize;
+        echo $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName()), $format, $fontsize;
     }
 
     /**
@@ -125,7 +125,7 @@ class IndexController extends AbstractController
         echo '</tr>';
 
         foreach ($orderItems as $orderItem) {
-            $process = $this->getLocator()->oms()->facade()->getProcess($orderItem->getProcess()->getName());
+            $process = $this->getFacade()->getProcess($orderItem->getProcess()->getName());
             $events = $process->getStateFromAllProcesses($orderItem->getState()->getName())->getEvents();
 
             /* @var $orderItem SpySalesOrderItem */
@@ -167,7 +167,7 @@ class IndexController extends AbstractController
         );
 
         $orderItems = SpySalesOrderItemQuery::create()->findByIdSalesOrderItem($orderItemId);
-        $this->getLocator()->oms()->facade()->triggerEvent($event, $orderItems, $data);
+        $this->getFacade()->triggerEvent($event, $orderItems, $data);
 
         return $this->redirectResponse('/oms/index/index?process=' . $processName);
     }
@@ -180,7 +180,7 @@ class IndexController extends AbstractController
     public function checkConditionsAction(Request $request)
     {
         $processName = $request->query->get('process', 'PayonePaypal01');
-        $this->getLocator()->oms()->facade()->checkConditions($processName);
+        $this->getFacade()->checkConditions($processName);
 
         return $this->redirectResponse('/oms/index/index?process=' . $processName);
     }

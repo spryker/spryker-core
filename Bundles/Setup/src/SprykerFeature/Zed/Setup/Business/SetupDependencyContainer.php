@@ -4,9 +4,11 @@ namespace SprykerFeature\Zed\Setup\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SetupBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use SprykerFeature\Zed\Setup\Business\Model\Cronjobs;
 use SprykerFeature\Zed\Setup\Business\Model\DirectoryRemoverInterface;
 use SprykerFeature\Zed\Setup\SetupConfig;
+use SprykerFeature\Zed\Setup\SetupDependencyProvider;
 
 /**
  * @method SetupConfig getConfig()
@@ -43,6 +45,15 @@ class SetupDependencyContainer extends AbstractDependencyContainer
     private function createDirectoryRemover($path)
     {
         return $this->getFactory()->createModelDirectoryRemover($path);
+    }
+
+    /**
+     * @return Repeater
+     * @throws \ErrorException
+     */
+    public function createTransferObjectRepeater()
+    {
+        return $this->getExternalDependency(SetupDependencyProvider::PLUGIN_TRANSFER_OBJECT_REPEATER);
     }
 
 }

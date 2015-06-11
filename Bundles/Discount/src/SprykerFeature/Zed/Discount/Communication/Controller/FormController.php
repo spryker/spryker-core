@@ -2,19 +2,27 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
+use Generated\Shared\Transfer\DecisionRuleTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
+use Generated\Shared\Transfer\VoucherPoolTransfer;
+use Generated\Shared\Transfer\VoucherTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountFacade getFacade()
  */
 class FormController extends AbstractController
 {
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function decisionRuleAction(Request $request)
     {
@@ -23,13 +31,13 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $discountDecisionRule = new \Generated\Shared\Transfer\DecisionRuleTransfer();
+            $discountDecisionRule = new DecisionRuleTransfer();
             $discountDecisionRule->fromArray($form->getRequestData());
 
             if (is_null($discountDecisionRule->getIdDiscountDecisionRule())) {
-                $this->getDiscountFacade()->createDiscountDecisionRule($discountDecisionRule);
+                $this->getFacade()->createDiscountDecisionRule($discountDecisionRule);
             } else {
-                $this->getDiscountFacade()->updateDiscountDecisionRule($discountDecisionRule);
+                $this->getFacade()->updateDiscountDecisionRule($discountDecisionRule);
             }
 
             $form->setActiveValuesToDefault();
@@ -40,7 +48,8 @@ class FormController extends AbstractController
 
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function discountAction(Request $request)
     {
@@ -49,13 +58,13 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $discount = new \Generated\Shared\Transfer\DiscountTransfer();
+            $discount = new DiscountTransfer();
             $discount->fromArray($form->getRequestData());
 
             if (is_null($discount->getIdDiscount())) {
-                $this->getDiscountFacade()->createDiscount($discount);
+                $this->getFacade()->createDiscount($discount);
             } else {
-                $this->getDiscountFacade()->updateDiscount($discount);
+                $this->getFacade()->updateDiscount($discount);
             }
         }
 
@@ -64,7 +73,8 @@ class FormController extends AbstractController
 
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function voucherAction(Request $request)
     {
@@ -73,13 +83,13 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $voucher = new \Generated\Shared\Transfer\VoucherTransfer();
+            $voucher = new VoucherTransfer();
             $voucher->fromArray($form->getRequestData());
 
             if (is_null($voucher->getIdDiscountVoucher())) {
-                $this->getDiscountFacade()->createDiscountVoucher($voucher);
+                $this->getFacade()->createDiscountVoucher($voucher);
             } else {
-                $this->getDiscountFacade()->updateDiscountVoucher($voucher);
+                $this->getFacade()->updateDiscountVoucher($voucher);
             }
 
             $form->setActiveValuesToDefault();
@@ -90,7 +100,8 @@ class FormController extends AbstractController
 
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function voucherPoolCategoryAction(Request $request)
     {
@@ -99,13 +110,13 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $voucherPoolCategory = new \Generated\Shared\Transfer\VoucherPoolCategoryTransfer();
+            $voucherPoolCategory = new VoucherPoolCategoryTransfer();
             $voucherPoolCategory->fromArray($form->getRequestData());
 
             if (is_null($voucherPoolCategory->getIdDiscountVoucherPoolCategory())) {
-                $this->getDiscountFacade()->createDiscountVoucherPoolCategory($voucherPoolCategory);
+                $this->getFacade()->createDiscountVoucherPoolCategory($voucherPoolCategory);
             } else {
-                $this->getDiscountFacade()->updateDiscountVoucherPoolCategory($voucherPoolCategory);
+                $this->getFacade()->updateDiscountVoucherPoolCategory($voucherPoolCategory);
             }
 
             $form->setActiveValuesToDefault();
@@ -116,7 +127,8 @@ class FormController extends AbstractController
 
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function voucherPoolAction(Request $request)
     {
@@ -125,26 +137,19 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $voucherPool = new \Generated\Shared\Transfer\VoucherPoolTransfer();
+            $voucherPool = new VoucherPoolTransfer();
             $voucherPool->fromArray($form->getRequestData());
 
             if (is_null($voucherPool->getIdDiscountVoucherPool())) {
-                $discountVoucherPoolEntity = $this->getDiscountFacade()->createDiscountVoucherPool($voucherPool);
+                $discountVoucherPoolEntity = $this->getFacade()->createDiscountVoucherPool($voucherPool);
             } else {
-                $discountVoucherPoolEntity = $this->getDiscountFacade()->updateDiscountVoucherPool($voucherPool);
+                $discountVoucherPoolEntity = $this->getFacade()->updateDiscountVoucherPool($voucherPool);
             }
 
-            $form->setActiveValuesToDefault($discountVoucherPoolEntity->toArray());
+            $form->setActiveValuesToDefault();
         }
 
         return $this->jsonResponse($form->toArray());
     }
 
-    /**
-     * @return DiscountFacade
-     */
-    protected function getDiscountFacade()
-    {
-        return $this->getLocator()->discount()->facade();
-    }
 }
