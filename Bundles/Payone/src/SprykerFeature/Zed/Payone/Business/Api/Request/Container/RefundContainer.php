@@ -18,26 +18,37 @@ class RefundContainer extends AbstractRequestContainer
      * @var string
      */
     protected $txid;
+
     /**
      * @var int
      */
     protected $sequencenumber;
+
     /**
      * @var int
      */
     protected $amount;
+
     /**
      * @var string
      */
     protected $currency;
+
+    /**
+     * @var string
+     */
+    protected $narrative_text;
+
     /**
      * @var string
      */
     protected $use_customerdata;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer
      */
     protected $paymentMethod;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
@@ -74,6 +85,23 @@ class RefundContainer extends AbstractRequestContainer
     public function getCurrency()
     {
         return $this->currency;
+    }
+
+
+    /**
+     * @param string $narrative_text
+     */
+    public function setNarrativeText($narrative_text)
+    {
+        $this->narrative_text = $narrative_text;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNarrativeText()
+    {
+        return $this->narrative_text;
     }
 
     /**
