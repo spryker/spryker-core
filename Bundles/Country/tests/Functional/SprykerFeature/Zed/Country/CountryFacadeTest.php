@@ -5,6 +5,7 @@ namespace Functional\SprykerFeature\Zed\Country;
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use Propel\Runtime\Propel;
@@ -17,7 +18,7 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 /**
  * @group Country
  */
-class CountryFacadeTest extends Test
+class CountryFacadeTest extends AbstractFunctionalTest
 {
     /**
      * @var Locator|AutoCompletion
@@ -38,7 +39,7 @@ class CountryFacadeTest extends Test
     {
         parent::setUp();
         $this->locator = Locator::getInstance();
-        $this->countryFacade = new CountryFacade(new Factory('Country'), $this->locator);
+        $this->countryFacade = $this->getFacade();
         $this->countryQueryContainer = new CountryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Country'), $this->locator);
     }
 

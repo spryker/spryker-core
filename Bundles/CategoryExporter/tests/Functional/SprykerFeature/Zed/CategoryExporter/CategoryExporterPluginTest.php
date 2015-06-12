@@ -10,6 +10,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Touch\Business\TouchFacade;
@@ -33,7 +34,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
  * @group CategoryExporterPluginTest
  * @group FrontendExporterPlugin
  */
-class CategoryExporterPluginTest extends Test
+class CategoryExporterPluginTest extends AbstractFunctionalTest
 {
     /**
      * @var AutoCompletion
@@ -70,13 +71,13 @@ class CategoryExporterPluginTest extends Test
         parent::setUp();
         $this->locator = Locator::getInstance();
 
-        $this->localeFacade = $this->locator->locale()->facade();
+        $this->localeFacade = $this->getFacade('SprykerEngine', 'Locale');
         $this->locale = $this->localeFacade->createLocale('ABCDE');
 
-        $this->categoryFacade = $this->locator->category()->facade();
+        $this->categoryFacade = $this->getFacade('SprykerFeature', 'Category');
 
-        $this->touchFacade = $this->locator->touch()->facade();
-        $this->urlFacade = $this->locator->url()->facade();
+        $this->touchFacade = $this->getFacade('SprykerEngine', 'Touch');
+        $this->urlFacade = $this->getFacade('SprykerFeature', 'Url');
     }
 
     public function testNavigationExporter()
@@ -203,8 +204,10 @@ class CategoryExporterPluginTest extends Test
             ]
         ];
 
-        $expander = [$this->locator->categoryExporter()->pluginNavigationQueryExpanderPlugin()];
-        $processor = [$this->locator->categoryExporter()->pluginNavigationProcessorPlugin()];
+        $navigationQueryExpanderPlugin = $this->getPluginByClassName('SprykerFeature\Zed\CategoryExporter\Communication\Plugin\NavigationQueryExpanderPlugin');
+        $navigationProcessorPlugin = $this->getPluginByClassName('SprykerFeature\Zed\CategoryExporter\Communication\Plugin\NavigationProcessorPlugin');
+        $expander = [$navigationQueryExpanderPlugin];
+        $processor = [$navigationProcessorPlugin];
         $this->doExporterTest(
             $expander,
             $processor,
@@ -248,10 +251,10 @@ class CategoryExporterPluginTest extends Test
 
         $this->doExporterTest(
             [   //expanders
-                $this->locator->categoryExporter()->pluginCategoryNodeQueryExpanderPlugin()
+                $this->getPluginByClassName('SprykerFeature\Zed\CategoryExporter\Communication\Plugin\CategoryNodeQueryExpanderPlugin')
             ],
             [   //processors
-                $this->locator->categoryExporter()->pluginCategoryNodeProcessorPlugin()
+                $this->getPluginByClassName('SprykerFeature\Zed\CategoryExporter\Communication\Plugin\CategoryNodeProcessorPlugin')
             ],
             [
                 'de.abcde.resource.categorynode.' . $idCategoryNode =>

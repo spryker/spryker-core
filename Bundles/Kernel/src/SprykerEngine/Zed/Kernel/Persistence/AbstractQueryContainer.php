@@ -48,6 +48,17 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
+     * @param Container $container
+     */
+    public function setExternalDependencies(Container $container)
+    {
+        $dependencyContainer = $this->getDependencyContainer();
+        if (isset($dependencyContainer)) {
+            $this->getDependencyContainer()->setContainer($container);
+        }
+    }
+
+    /**
      * @param string $key
      * @return mixed
      *

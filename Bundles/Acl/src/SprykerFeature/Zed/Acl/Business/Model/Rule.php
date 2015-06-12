@@ -50,22 +50,23 @@ class Rule implements RuleInterface
     private $groupModel;
 
     /**
-     * @param AclToUserInterface $facadeUser
      * @param GroupInterface $groupModel
      * @param AclQueryContainer $queryContainer
+     * @param AclToUserInterface $facadeUser
+     * @param RuleValidator $rulesValidator
      * @param RuleValidator $rulesValidator
      * @param AclConfig $settings
      */
     public function __construct(
-        AclToUserInterface $facadeUser,
         GroupInterface $groupModel,
         AclQueryContainer $queryContainer,
+        AclToUserInterface $facadeUser,
         RuleValidator $rulesValidator,
         AclConfig $settings
     ) {
-        $this->facadeUser = $facadeUser;
         $this->groupModel = $groupModel;
         $this->queryContainer = $queryContainer;
+        $this->facadeUser = $facadeUser;
         $this->rulesValidator = $rulesValidator;
         $this->settings = $settings;
     }

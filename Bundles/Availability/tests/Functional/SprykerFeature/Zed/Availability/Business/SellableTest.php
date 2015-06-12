@@ -3,6 +3,7 @@
 namespace Functional\SprykerFeature\Zed\Availability;
 
 use Codeception\TestCase\Test;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Availability\Business\AvailabilityFacade;
@@ -14,7 +15,7 @@ use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockQuery;
 /**
  * @group AvailabilityTest
  */
-class SellableTest extends Test
+class SellableTest extends AbstractFunctionalTest
 {
     /**
      * @var AvailabilityFacade
@@ -26,7 +27,7 @@ class SellableTest extends Test
         parent::setUp();
 
         $locator = Locator::getInstance();
-        $this->availabilityFacade = new AvailabilityFacade(new Factory('Availability'), $locator);
+        $this->availabilityFacade = $this->getFacade('SprykerFeature', 'Availability');
     }
 
 

@@ -11,11 +11,13 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use Pyz\Zed\Locale\Business\LocaleFacade;
+use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Touch\Business\TouchFacade;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
+use SprykerFeature\Zed\Category\CategoryDependencyProvider;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
@@ -85,7 +87,12 @@ class ProductCategoryFrontendExporterPluginTest extends Test
         $this->localeFacade = $this->locator->locale()->facade();
         $this->locale = $this->localeFacade->createLocale('ABCDE');
 
+        $container = new Container();
         $this->categoryFacade = $this->locator->category()->facade();
+        $dependencyProvider = new CategoryDependencyProvider();
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $this->categoryFacade->setExternalDependencies($container);
+
         $this->productFacade = $this->locator->product()->facade();
         $this->productCategoryFacade = $this->locator->productCategory()->facade();
 
