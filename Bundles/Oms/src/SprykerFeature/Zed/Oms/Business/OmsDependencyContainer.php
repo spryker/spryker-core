@@ -53,7 +53,7 @@ class OmsDependencyContainer extends AbstractDependencyContainer
      *
      * @return OrderStateMachineInterface
      */
-    public function createOrderStateMachineOrderStateMachine(array $logContext)
+    public function createOrderStateMachineOrderStateMachine(array $logContext = [])
     {
         return $this->getFactory()->createOrderStateMachineOrderStateMachine(
             $this->getQueryContainer(),

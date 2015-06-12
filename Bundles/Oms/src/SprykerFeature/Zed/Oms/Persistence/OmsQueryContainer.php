@@ -109,4 +109,17 @@ class OmsQueryContainer extends AbstractQueryContainer
 
         return $query;
     }
+
+    /**
+     * @param array $orderItemIds
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function getOrderItems(array $orderItemIds)
+    {
+        $query = SpySalesOrderItemQuery::create();
+        $query->findPks($orderItemIds);
+
+        return $query;
+    }
 }

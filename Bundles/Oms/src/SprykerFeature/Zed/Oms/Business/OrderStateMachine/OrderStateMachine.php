@@ -161,9 +161,44 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
+     * @param $eventId
+     * @param array $orderItemIds
+     * @param $data
+     *
+     * @return array
+     */
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, $data)
+    {
+        $orderItems = $this->queryContainer
+            ->getOrderItems($orderItemIds)
+            ->find()
+        ;
+
+        return $this->triggerEvent($eventId, $orderItems, $data);
+    }
+
+    /**
+     * @param $eventId
+     * @param $orderItemId
+     * @param $data
+     *
+     * @return array
+     */
+    public function triggerEventForOneOrderItem($eventId, $orderItemId, $data)
+    {
+        $orderItems = $this->queryContainer
+            ->getOrderItems([$orderItemId])
+            ->find()
+        ;
+
+        return $this->triggerEvent($eventId, $orderItems, $data);
+    }
+
+    /**
      * @param SpySalesOrderItem[] $orderItems
      * @param array $data
      * @param array $logContext
+     *
      * @return array
      */
     public function triggerEventForNewItem(array $orderItems, array $data, array $logContext = array())
@@ -175,6 +210,16 @@ class OrderStateMachine implements OrderStateMachineInterface
         $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent, $data, $logContext);
 
         return $this->returnData;
+    }
+
+    public function triggerEventForNewOrderItem(array $orderItemIds, array $data)
+    {
+        $orderItems = $this->queryContainer
+            ->getOrderItems($orderItemIds)
+            ->find()
+        ;
+
+        return $this->triggerEventForNewItem($orderItems, $data);
     }
 
     /**
@@ -706,5 +751,4 @@ class OrderStateMachine implements OrderStateMachineInterface
 
         return $this->conditions[$conditionString];
     }
-
 }

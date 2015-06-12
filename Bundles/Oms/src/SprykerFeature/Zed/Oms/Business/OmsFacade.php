@@ -34,7 +34,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine()
             ->triggerEventForOrderItems($eventId, $orderItemIds, $data)
-            ;
+        ;
     }
 
     /**
@@ -62,7 +62,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine()
-            ->triggerEventForOneOrderItem($eventId, $orderItemsId, $data)
+            ->triggerEventForOneOrderItem($eventId, $orderItemId, $data)
         ;
     }
 
@@ -264,11 +264,11 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @param Order $transferOrder
+     * @param OrderTransfer $transferOrder
      *
      * @return string
      */
-    public function selectProcess(Order $transferOrder)
+    public function selectProcess(OrderTransfer $transferOrder)
     {
         return $this->getDependencyContainer()
             ->getConfig()
@@ -330,7 +330,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     /**
      * @deprecated
      * @param string $eventId
-     * @param Order $orderItem
+     * @param OrderTransfer $orderItem
      * @param array $logContext
      * @param array $data
      *
