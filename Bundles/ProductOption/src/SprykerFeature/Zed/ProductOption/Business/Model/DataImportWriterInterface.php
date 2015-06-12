@@ -78,7 +78,7 @@ interface DataImportWriterInterface
     public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
 
     /**
-     * @param $sku
+     * @param string $sku
      * @param array $importKeysProductOptionValues
      * @param bool $isDefault
      * @param int $sequence

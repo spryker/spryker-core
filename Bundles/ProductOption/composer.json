@@ -1,5 +1,5 @@
 {
-  "name": "spryker/productoptions",
+  "name": "spryker/product-option",
   "autoload": {
     "psr-0": {
       "SprykerFeature": "src/",

@@ -101,7 +101,7 @@ class ProductOptionFacade extends AbstractFacade
     }
 
     /**
-     * @param $sku
+     * @param string $sku
      * @param array $importKeysOptionValues
      * @param bool $isDefault
      * @param int $sequence

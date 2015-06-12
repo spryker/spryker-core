@@ -41,6 +41,8 @@ class DataImportWriter implements DataImportWriterInterface
 
     /**
      * @param ProductOptionQueryContainerInterface $queryContainer
+     * @param ProductOptionToProductInterface $productFacade
+     * @param ProductOptionToLocaleInterface $localeFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $queryContainer,
@@ -56,6 +58,8 @@ class DataImportWriter implements DataImportWriterInterface
      * @param string $importKeyProductOptionType
      * @param array $localizedNames
      * @param string $importKeyTaxSet
+     *
+     * @return int
      */
     public function importProductOptionType($importKeyProductOptionType, array $localizedNames = [], $importKeyTaxSet = null)
     {
@@ -94,7 +98,8 @@ class DataImportWriter implements DataImportWriterInterface
                 ->findOne();
 
             if (null === $translationEntity) {
-                $translationEntity = (new SpyProductOptionTypeTranslation())->setFkLocale($localeTransfer->getIdLocale());
+                $translationEntity = (new SpyProductOptionTypeTranslation())
+                    ->setFkLocale($localeTransfer->getIdLocale());
             }
 
             $translationEntity->setName($localizedOptionTypeName);
@@ -408,7 +413,7 @@ class DataImportWriter implements DataImportWriterInterface
      }
 
     /**
-     * @param $sku
+     * @param string $sku
      * @param array $importKeysProductOptionValues
      * @param bool $isDefault
      * @param int $sequence
