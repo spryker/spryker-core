@@ -118,7 +118,7 @@ class OmsQueryContainer extends AbstractQueryContainer
     public function getOrderItems(array $orderItemIds)
     {
         return SpySalesOrderItemQuery::create()
-            ->findPks($orderItemIds)
+            ->filterByIdSalesOrderItem($orderItemIds)
         ;
     }
 }
