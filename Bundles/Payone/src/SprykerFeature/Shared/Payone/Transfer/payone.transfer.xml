@@ -36,6 +36,8 @@
     <transfer name="Refund">
         <property name="amount" type="int" />
         <property name="payment" type="PayonePayment" />
+        <property name="useCustomerdata" type="string" />
+        <property name="narrativeText" type="string" />
     </transfer>
 
     <transfer name="PayonePayment">
