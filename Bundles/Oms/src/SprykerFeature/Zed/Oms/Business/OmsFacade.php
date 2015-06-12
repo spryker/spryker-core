@@ -19,7 +19,9 @@ use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInt
  */
 class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterface
 {
+
     /**
+     * @deprecated
      * @param string $eventId
      * @param ObjectCollection $orderItems
      * @param array $logContext
@@ -40,6 +42,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
+     * @deprecated
      * @param ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
@@ -56,6 +59,25 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
             ->createOrderStateMachineOrderStateMachine($logContext)
             ->triggerEventForNewItem($orderItemsArray, $data);
     }
+
+    /**
+     * @deprecated
+     * @param string $eventId
+     * @param Order $orderItem
+     * @param array $logContext
+     * @param array $data
+     *
+     * @return array
+     */
+    public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = array())
+    {
+        $orderItemsArray = array($orderItem);
+
+        return $this->getDependencyContainer()
+            ->createOrderStateMachineOrderStateMachine($logContext)
+            ->triggerEvent($eventId, $orderItemsArray, $data);
+    }
+
 
     /**
      * @return Process[]
@@ -75,23 +97,6 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
         return $this->getDependencyContainer()
             ->getConfig()
             ->getActiveProcesses();
-    }
-
-    /**
-     * @param string $eventId
-     * @param Order $orderItem
-     * @param array $logContext
-     * @param array $data
-     *
-     * @return array
-     */
-    public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = array())
-    {
-        $orderItemsArray = array($orderItem);
-
-        return $this->getDependencyContainer()
-            ->createOrderStateMachineOrderStateMachine($logContext)
-            ->triggerEvent($eventId, $orderItemsArray, $data);
     }
 
     /**
