@@ -161,8 +161,8 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param $eventId
-     * @param array $orderItemIds
+     * @param string $eventId
+     * @param int[] $orderItemIds
      * @param $data
      *
      * @return array
@@ -178,8 +178,8 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param $eventId
-     * @param $orderItemId
+     * @param string $eventId
+     * @param int $orderItemId
      * @param $data
      *
      * @return array
@@ -213,7 +213,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param array $orderItemIds
+     * @param int[] $orderItemIds
      * @param array $data
      *
      * @return array
