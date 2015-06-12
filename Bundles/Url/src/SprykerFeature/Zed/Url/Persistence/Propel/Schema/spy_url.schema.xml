@@ -41,9 +41,6 @@
             <unique-column name="url"/>
         </unique>
 
-        <index>
-            <index-column name="url"/>
-        </index>
     </table>
 
     <table name="spy_redirect" phpName="SpyRedirect">
