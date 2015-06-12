@@ -212,6 +212,12 @@ class OrderStateMachine implements OrderStateMachineInterface
         return $this->returnData;
     }
 
+    /**
+     * @param array $orderItemIds
+     * @param array $data
+     *
+     * @return array
+     */
     public function triggerEventForNewOrderItem(array $orderItemIds, array $data)
     {
         $orderItems = $this->queryContainer
