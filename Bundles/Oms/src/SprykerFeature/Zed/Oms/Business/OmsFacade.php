@@ -19,42 +19,51 @@ use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInt
  */
 class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterface
 {
+
     /**
      * @param string $eventId
-     * @param ObjectCollection $orderItems
-     * @param array $logContext
+     * @param array $orderItemIds
      * @param array $data
      *
      * @return array
      */
-    public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = array())
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = [])
     {
         assert(is_string($eventId));
-        $orderItemsArray = $this->getDependencyContainer()
-            ->createUtilCollectionToArrayTransformer()
-            ->transformCollectionToArray($orderItems);
 
         return $this->getDependencyContainer()
-            ->createOrderStateMachineOrderStateMachine($logContext)
-            ->triggerEvent($eventId, $orderItemsArray, $data);
+            ->createOrderStateMachineOrderStateMachine()
+            ->triggerEventForOrderItems($eventId, $orderItemIds, $data)
+        ;
     }
 
     /**
-     * @param ObjectCollection $orderItems
-     * @param array $logContext
+     * @param array $orderItemIds
      * @param array $data
      *
      * @return array
      */
-    public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = array())
+    public function triggerEventForNewOrderItems(array $orderItemIds, array $data = [])
     {
-        $orderItemsArray = $this->getDependencyContainer()
-            ->createUtilCollectionToArrayTransformer()
-            ->transformCollectionToArray($orderItems);
-
         return $this->getDependencyContainer()
-            ->createOrderStateMachineOrderStateMachine($logContext)
-            ->triggerEventForNewItem($orderItemsArray, $data);
+            ->createOrderStateMachineOrderStateMachine()
+            ->triggerEventForNewOrderItems($orderItemIds, $data)
+        ;
+    }
+
+    /**
+     * @param string $eventId
+     * @param int $orderItemId
+     * @param array $data
+     *
+     * @return array
+     */
+    public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = [])
+    {
+        return $this->getDependencyContainer()
+            ->createOrderStateMachineOrderStateMachine()
+            ->triggerEventForOneOrderItem($eventId, $orderItemId, $data)
+        ;
     }
 
     /**
@@ -75,23 +84,6 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
         return $this->getDependencyContainer()
             ->getConfig()
             ->getActiveProcesses();
-    }
-
-    /**
-     * @param string $eventId
-     * @param Order $orderItem
-     * @param array $logContext
-     * @param array $data
-     *
-     * @return array
-     */
-    public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = array())
-    {
-        $orderItemsArray = array($orderItem);
-
-        return $this->getDependencyContainer()
-            ->createOrderStateMachineOrderStateMachine($logContext)
-            ->triggerEvent($eventId, $orderItemsArray, $data);
     }
 
     /**
@@ -272,11 +264,11 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @param Order $transferOrder
+     * @param OrderTransfer $transferOrder
      *
      * @return string
      */
-    public function selectProcess(Order $transferOrder)
+    public function selectProcess(OrderTransfer $transferOrder)
     {
         return $this->getDependencyContainer()
             ->getConfig()
@@ -293,6 +285,64 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
         return $this->getDependencyContainer()
             ->createOrderStateMachineFinder()
             ->getStateDisplayName($orderItem);
+    }
+
+    /**
+     * @deprecated
+     * @param string $eventId
+     * @param ObjectCollection $orderItems
+     * @param array $logContext
+     * @param array $data
+     *
+     * @return array
+     */
+    public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = [])
+    {
+        assert(is_string($eventId));
+        $orderItemsArray = $this->getDependencyContainer()
+            ->createUtilCollectionToArrayTransformer()
+            ->transformCollectionToArray($orderItems);
+
+        return $this->getDependencyContainer()
+            ->createOrderStateMachineOrderStateMachine($logContext)
+            ->triggerEvent($eventId, $orderItemsArray, $data);
+    }
+
+    /**
+     * @deprecated
+     * @param ObjectCollection $orderItems
+     * @param array $logContext
+     * @param array $data
+     *
+     * @return array
+     */
+    public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = [])
+    {
+        $orderItemsArray = $this->getDependencyContainer()
+            ->createUtilCollectionToArrayTransformer()
+            ->transformCollectionToArray($orderItems);
+
+        return $this->getDependencyContainer()
+            ->createOrderStateMachineOrderStateMachine($logContext)
+            ->triggerEventForNewItem($orderItemsArray, $data);
+    }
+
+    /**
+     * @deprecated
+     * @param string $eventId
+     * @param OrderTransfer $orderItem
+     * @param array $logContext
+     * @param array $data
+     *
+     * @return array
+     */
+    public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = [])
+    {
+        $orderItemsArray = array($orderItem);
+
+        return $this->getDependencyContainer()
+            ->createOrderStateMachineOrderStateMachine($logContext)
+            ->triggerEvent($eventId, $orderItemsArray, $data);
     }
 
 }

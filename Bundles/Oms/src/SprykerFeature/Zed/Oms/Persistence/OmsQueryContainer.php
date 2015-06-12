@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Oms\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Oms\Business\Model\Process\StateInterface;
+use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -108,5 +108,17 @@ class OmsQueryContainer extends AbstractQueryContainer
         $query->filterBySku($sku);
 
         return $query;
+    }
+
+    /**
+     * @param array $orderItemIds
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function getOrderItems(array $orderItemIds)
+    {
+        return SpySalesOrderItemQuery::create()
+            ->findPks($orderItemIds)
+        ;
     }
 }
