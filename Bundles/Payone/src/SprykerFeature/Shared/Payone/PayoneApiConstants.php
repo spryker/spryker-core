@@ -24,6 +24,7 @@ interface PayoneApiConstants
 
     // credit/debit card methods
     const PAYMENT_METHOD_CREDITCARD = 'payment.payone.creditcard';
+    const PAYMENT_METHOD_CREDITCARD_PSEUDO = 'payment.payone.creditcardpseudo';
 
     // e-wallet methods
     const PAYMENT_METHOD_PAYPAL = 'payment.payone.paypal';
