@@ -2,11 +2,10 @@
 
 namespace SprykerFeature\Zed\Country\Business;
 
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Country\Business\Exception\CountryExistsException;
 use SprykerFeature\Zed\Country\Business\Exception\MissingCountryException;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
+use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
 
 class CountryManager implements CountryManagerInterface
 {
@@ -16,20 +15,12 @@ class CountryManager implements CountryManagerInterface
     protected $countryQueryContainer;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @param CountryQueryContainerInterface $countryQueryContainer
-     * @param LocatorLocatorInterface $locator
      */
     public function __construct(
-        CountryQueryContainerInterface $countryQueryContainer,
-        LocatorLocatorInterface $locator
+        CountryQueryContainerInterface $countryQueryContainer
     ) {
         $this->countryQueryContainer = $countryQueryContainer;
-        $this->locator = $locator;
     }
 
     /**
@@ -55,7 +46,7 @@ class CountryManager implements CountryManagerInterface
     {
         $this->checkCountryDoesNotExist($iso2code);
 
-        $country = $this->locator->country()->entitySpyCountry();
+        $country = new SpyCountry();
         $country
             ->setName($countryData['name'])
             ->setPostalCodeMandatory($countryData['postal_code_mandatory'])

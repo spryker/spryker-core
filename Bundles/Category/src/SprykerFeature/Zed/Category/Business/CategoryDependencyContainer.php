@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReader;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeWriter;
 use SprykerFeature\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use SprykerFeature\Zed\Category\Business\Tree\NodeWriterInterface;
+use SprykerFeature\Zed\Category\CategoryDependencyProvider;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
@@ -19,6 +20,7 @@ use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
  * @method CategoryBusiness getFactory()
+ * @method CategoryQueryContainer getQueryContainer()
  */
 class CategoryDependencyContainer extends AbstractDependencyContainer
 {
@@ -44,7 +46,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
     public function createCategoryTreeReader()
     {
         return $this->getFactory()->createTreeCategoryTreeReader(
-            $this->createQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
@@ -56,18 +58,11 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
         $locale = $this->createLocaleFacade()->getCurrentLocale();
 
         return $this->getFactory()->createRendererCategoryTreeRenderer(
-            $this->createQueryContainer(),
+            $this->getQueryContainer(),
             $locale
         );
     }
 
-    /**
-     * @return CategoryQueryContainer
-     */
-    protected function createQueryContainer()
-    {
-        return $this->getLocator()->category()->queryContainer();
-    }
 
     /**
      * @return CategoryWriterInterface
@@ -75,8 +70,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
     public function createCategoryWriter()
     {
         return $this->getFactory()->createModelCategoryWriter(
-            $this->getLocator(),
-            $this->createQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
@@ -86,8 +80,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
     protected function createNodeWriter()
     {
         return $this->getFactory()->createTreeNodeWriter(
-            $this->getLocator(),
-            $this->createQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
@@ -97,8 +90,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
     protected function createClosureTableWriter()
     {
         return $this->getFactory()->createTreeClosureTableWriter(
-            $this->getLocator(),
-            $this->createQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
@@ -127,7 +119,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
      */
     protected function createTouchFacade()
     {
-        return $this->getLocator()->touch()->facade();
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_TOUCH);
     }
 
     /**
@@ -135,7 +127,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
      */
     protected function createLocaleFacade()
     {
-        return $this->getLocator()->locale()->facade();
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE);
     }
 
     /**
@@ -143,6 +135,6 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
      */
     protected function createUrlFacade()
     {
-        return $this->getLocator()->url()->facade();
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_URL);
     }
 }

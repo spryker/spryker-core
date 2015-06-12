@@ -2,7 +2,9 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Controller;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
@@ -11,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CategoryDependencyContainer getDependencyContainer()
+ * @method CategoryFacade getFacade()
  */
 class FormController extends AbstractController
 {
@@ -27,13 +30,13 @@ class FormController extends AbstractController
 
         if ($form->isValid()) {
             $locale = $this->getLocale();
-            $category = new \Generated\Shared\Transfer\CategoryTransfer();
+            $category = new CategoryTransfer();
             $category->fromArray($form->getRequestData());
 
             if (is_null($category->getIdCategory())) {
-                $this->getCategoryFacade()->createCategory($category, $locale);
+                $this->getFacade()->createCategory($category, $locale);
             } else {
-                $this->getCategoryFacade()->updateCategory($category, $locale);
+                $this->getFacade()->updateCategory($category, $locale);
             }
         }
 
@@ -53,25 +56,17 @@ class FormController extends AbstractController
 
         if ($form->isValid()) {
             $locale = $this->getLocale();
-            $categoryNode = new \Generated\Shared\Transfer\NodeTransfer();
+            $categoryNode = new NodeTransfer();
             $categoryNode->fromArray($form->getRequestData());
 
             if (is_null($categoryNode->getIdCategoryNode())) {
-                $this->getCategoryFacade()->createCategoryNode($categoryNode, $locale);
+                $this->getFacade()->createCategoryNode($categoryNode, $locale);
             } else {
-                $this->getCategoryFacade()->moveCategoryNode($categoryNode);
+                $this->getFacade()->moveCategoryNode($categoryNode);
             }
         }
 
         return $this->jsonResponse($form->renderData());
-    }
-
-    /**
-     * @return CategoryFacade
-     */
-    protected function getCategoryFacade()
-    {
-        return $this->getDependencyContainer()->createCategoryFacade();
     }
 
     /**
@@ -81,4 +76,5 @@ class FormController extends AbstractController
     {
         return $this->getDependencyContainer()->getCurrentLocale();
     }
+
 }

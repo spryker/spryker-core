@@ -5,12 +5,14 @@ namespace SprykerFeature\Zed\CategoryExporter\Communication\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
+use SprykerFeature\Zed\CategoryExporter\Business\CategoryExporterFacade;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 
 /**
  * @method CategoryExporterDependencyContainer getDependencyContainer()
+ * @method CategoryExporterFacade getFacade()
  */
 class NavigationProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
@@ -41,7 +43,7 @@ class NavigationProcessorPlugin extends AbstractPlugin implements DataProcessorP
      */
     public function processData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
-        $facade = $this->getDependencyContainer()->getCategoryExporterFacade();
+        $facade = $this->getFacade();
 
         return $facade->processNavigation($resultSet, $locale);
     }

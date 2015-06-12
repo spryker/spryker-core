@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Availability\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerFeature\Zed\Availability\AvailabilityDependencyProvider;
 use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use SprykerFeature\Zed\Availability\Business\Model\SellableInterface;
@@ -30,7 +31,7 @@ class AvailabilityDependencyContainer extends AbstractDependencyContainer
      */
     protected function getStockFacade()
     {
-        return $this->getLocator()->stock()->facade();
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_STOCK);
     }
 
     /**
@@ -38,7 +39,7 @@ class AvailabilityDependencyContainer extends AbstractDependencyContainer
      */
     protected function getOmsFacade()
     {
-        return $this->getLocator()->oms()->facade();
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_OMS);
     }
 
 }

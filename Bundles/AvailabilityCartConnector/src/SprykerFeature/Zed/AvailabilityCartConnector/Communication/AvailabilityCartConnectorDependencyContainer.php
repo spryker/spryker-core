@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\AvailabilityCartConnector\Communication;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerFeature\Zed\AvailabilityCartConnector\AvailabilityCartConnectorDependencyProvider;
 use SprykerFeature\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityToCartConnectorFacadeInterface as AvailabilityFacade;
 
 class AvailabilityCartConnectorDependencyContainer extends AbstractDependencyContainer
@@ -12,7 +13,7 @@ class AvailabilityCartConnectorDependencyContainer extends AbstractDependencyCon
      */
     public function getAvailabilityFacade()
     {
-        return $this->getLocator()->availability()->facade();
+        return $this->getProvidedDependency(AvailabilityCartConnectorDependencyProvider::FACADE_AVAILABILITY);
     }
 
 }

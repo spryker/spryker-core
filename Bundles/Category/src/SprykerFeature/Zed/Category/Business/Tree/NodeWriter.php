@@ -2,12 +2,11 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\NodeTransfer;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 
 class NodeWriter implements NodeWriterInterface
 {
@@ -20,19 +19,10 @@ class NodeWriter implements NodeWriterInterface
     protected $queryContainer;
 
     /**
-     * @var LocatorLocatorInterface|AutoCompletion
-     */
-    protected $locator;
-
-    /**
-     * @param LocatorLocatorInterface $locator
      * @param CategoryQueryContainer $queryContainer
      */
-    public function __construct(
-        LocatorLocatorInterface $locator,
-        CategoryQueryContainer $queryContainer
-    ) {
-        $this->locator = $locator;
+    public function __construct(CategoryQueryContainer $queryContainer)
+    {
         $this->queryContainer = $queryContainer;
     }
 
@@ -43,7 +33,7 @@ class NodeWriter implements NodeWriterInterface
      */
     public function create(NodeTransfer $categoryNode)
     {
-        $nodeEntity = $this->locator->category()->entitySpyCategoryNode();
+        $nodeEntity = new SpyCategoryNode();
         $nodeEntity->fromArray($categoryNode->toArray());
         $nodeEntity->save();
 
@@ -63,8 +53,7 @@ class NodeWriter implements NodeWriterInterface
     {
         $nodeEntity = $this->queryContainer
             ->queryNodeById($nodeId)
-            ->findOne()
-        ;
+            ->findOne();
         if (!$nodeEntity) {
             throw new NodeNotFoundException();
         }
@@ -82,8 +71,7 @@ class NodeWriter implements NodeWriterInterface
     {
         $nodeEntity = $this->queryContainer
             ->queryNodeById($categoryNode->getIdCategoryNode())
-            ->findOne()
-        ;
+            ->findOne();
         if ($nodeEntity) {
             $nodeEntity->setFkParentCategoryNode($categoryNode->getFkParentCategoryNode());
             $nodeEntity->save();

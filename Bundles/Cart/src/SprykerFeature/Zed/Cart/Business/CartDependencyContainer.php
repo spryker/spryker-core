@@ -9,6 +9,7 @@ use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Cart\Business\Operator\OperatorInterface;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Zed\Cart\CartConfig;
+use SprykerFeature\Zed\Cart\CartDependencyProvider;
 
 /**
  * @method Factory|CartBusiness getFactory()
@@ -89,7 +90,7 @@ class CartDependencyContainer extends AbstractDependencyContainer
      */
     public function createCartCalculator()
     {
-        return $this->getLocator()->calculation()->facade();
+        return $this->getProvidedDependency(CartDependencyProvider::FACADE_CALCULATION);
     }
 
     /**

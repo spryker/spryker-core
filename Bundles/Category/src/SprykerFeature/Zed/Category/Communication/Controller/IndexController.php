@@ -5,13 +5,11 @@ namespace SprykerFeature\Zed\Category\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method CategoryDependencyContainer getDependencyContainer()
  * @method CategoryFacade getFacade()
- * @method CategoryQueryContainer getQueryContainer()
  */
 class IndexController extends AbstractController
 {
@@ -25,7 +23,7 @@ class IndexController extends AbstractController
      */
     public function renderAction()
     {
-        $categoryFacade = $this->getDependencyContainer()->createCategoryFacade();
+        $categoryFacade = $this->getFacade();
 
         return $this->streamedResponse(
             function () use ($categoryFacade) {

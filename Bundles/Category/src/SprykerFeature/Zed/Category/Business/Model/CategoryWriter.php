@@ -21,19 +21,10 @@ class CategoryWriter implements CategoryWriterInterface
     protected $queryContainer;
 
     /**
-     * @var LocatorLocatorInterface|AutoCompletion
-     */
-    protected $locator;
-
-    /**
-     * @param LocatorLocatorInterface $locator
      * @param CategoryQueryContainer $queryContainer
      */
-    public function __construct(
-        LocatorLocatorInterface $locator,
-        CategoryQueryContainer $queryContainer
-    ) {
-        $this->locator = $locator;
+    public function __construct(CategoryQueryContainer $queryContainer)
+    {
         $this->queryContainer = $queryContainer;
     }
 
@@ -90,7 +81,7 @@ class CategoryWriter implements CategoryWriterInterface
      */
     protected function persistCategory()
     {
-        $categoryEntity = $this->locator->category()->entitySpyCategory();
+        $categoryEntity = new SpyCategory();
 
         $categoryEntity->setIsActive(true);
         $categoryEntity->save();
@@ -106,7 +97,7 @@ class CategoryWriter implements CategoryWriterInterface
      */
     protected function persistCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale)
     {
-        $categoryAttributeEntity = $this->locator->category()->entitySpyCategoryAttribute();
+        $categoryAttributeEntity = new SpyCategoryAttribute();
 
         $categoryAttributeEntity->setFkCategory($category->getIdCategory());
         $categoryAttributeEntity->setName($category->getName());

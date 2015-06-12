@@ -6,6 +6,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
+use SprykerFeature\Zed\Category\CategoryDependencyProvider;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryForm;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
 use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
@@ -19,22 +20,13 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @return CategoryFacade
-     */
-    public function createCategoryFacade()
-    {
-        return $this->getLocator()->category()->facade();
-    }
-
-    /**
      * @return LocaleTransfer
      */
     public function getCurrentLocale()
     {
-        return $this->getLocator()
-            ->locale()
-            ->facade()
-            ->getCurrentLocale();
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE)
+            ->getCurrentLocale()
+        ;
     }
 
     /**
