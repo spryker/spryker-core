@@ -63,7 +63,6 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
         );
     }
 
-
     /**
      * @return CategoryWriterInterface
      */
