@@ -21,7 +21,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 {
 
     /**
-     * @param $eventId
+     * @param string $eventId
      * @param array $orderItemIds
      * @param array $data
      *
@@ -43,7 +43,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      *
      * @return array
      */
-    public function triggerEventForNewOrderItems(array $orderItemIds, array $data = array())
+    public function triggerEventForNewOrderItems(array $orderItemIds, array $data = [])
     {
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine()
@@ -52,13 +52,13 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @param $eventId
-     * @param $orderItemId
+     * @param string $eventId
+     * @param int $orderItemId
      * @param array $data
      *
-     * return array
+     * @return array
      */
-    public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = array())
+    public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = [])
     {
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine()
@@ -296,7 +296,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      *
      * @return array
      */
-    public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = array())
+    public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = [])
     {
         assert(is_string($eventId));
         $orderItemsArray = $this->getDependencyContainer()
@@ -316,7 +316,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      *
      * @return array
      */
-    public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = array())
+    public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = [])
     {
         $orderItemsArray = $this->getDependencyContainer()
             ->createUtilCollectionToArrayTransformer()
@@ -336,7 +336,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      *
      * @return array
      */
-    public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = array())
+    public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = [])
     {
         $orderItemsArray = array($orderItem);
 
