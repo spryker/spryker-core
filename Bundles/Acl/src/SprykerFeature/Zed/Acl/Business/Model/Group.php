@@ -201,7 +201,6 @@ class Group implements GroupInterface
     {
         if ($this->hasUser($idGroup, $idUser)) {
             return;
-            throw new GroupAlreadyHasUserException();
         }
 
         $entity = new SpyAclUserHasGroup();

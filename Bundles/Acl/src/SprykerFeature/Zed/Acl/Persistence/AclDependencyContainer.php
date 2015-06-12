@@ -4,12 +4,14 @@ namespace SprykerFeature\Zed\Acl\Persistence;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\AclPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRoleQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRuleQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclUserHasGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRolesQuery;
 use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUserQuery;
+use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
 /**
  * @method AclPersistence getFactory()
@@ -62,7 +64,16 @@ class AclDependencyContainer extends AbstractDependencyContainer
      */
     public function createUserQuery()
     {
-        return $this->getLocator()->user()->queryContainer()->queryUsers();
+        return $this->createUserQueryContainer()->queryUsers();
+    }
+
+    /**
+     * @throws \ErrorException
+     * @return UserQueryContainer
+     */
+    private function createUserQueryContainer()
+    {
+        return $this->getProvidedDependency(AclDependencyProvider::QUERY_CONTAINER_USER);
     }
 
 }

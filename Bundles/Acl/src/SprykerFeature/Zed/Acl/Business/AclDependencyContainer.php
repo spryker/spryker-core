@@ -7,10 +7,9 @@ use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Model\GroupInterface;
 use SprykerFeature\Zed\Acl\Business\Model\RoleInterface;
+use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Business\Model\RuleValidator;
-use SprykerFeature\Zed\Acl\Business\Model\Group;
 use SprykerFeature\Zed\Acl\Business\Model\Installer;
-use SprykerFeature\Zed\Acl\Business\Model\Role;
 use SprykerFeature\Zed\Acl\Business\Model\Rule;
 use SprykerFeature\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
@@ -18,13 +17,10 @@ use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 /**
  * @method AclBusiness getFactory()
  * @method AclConfig getConfig()
+ * @method AclQueryContainer getQueryContainer()
  */
 class AclDependencyContainer extends AbstractDependencyContainer
 {
-    /**
-    * @var AclQueryContainer
-    */
-    protected $queryContainer;
 
     /**
      * @return GroupInterface
@@ -32,7 +28,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
     public function createGroupModel()
     {
         return $this->getFactory()->createModelGroup(
-            $this->locateQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
@@ -43,7 +39,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelRole(
             $this->createGroupModel(),
-            $this->locateQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
@@ -53,20 +49,12 @@ class AclDependencyContainer extends AbstractDependencyContainer
     public function createRuleModel()
     {
         return $this->getFactory()->createModelRule(
-            $this->getUserFacade(),
             $this->createGroupModel(),
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
             $this->createRuleValidatorHelper(),
-            $this->locateQueryContainer(),
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return AclToUserInterface
-     */
-    protected function getUserFacade()
-    {
-        return $this->getLocator()->user()->facade();
     }
 
     /**
@@ -78,25 +66,15 @@ class AclDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return AclQueryContainer
-     */
-    protected function locateQueryContainer()
-    {
-        if (empty($this->queryContainer)) {
-            $this->queryContainer = $this->getLocator()->acl()->queryContainer();
-        }
-
-        return $this->queryContainer;
-    }
-
-    /**
      * @return Installer
      */
     public function createInstallerModel()
     {
         return $this->getFactory()->createModelInstaller(
-            $this->getLocator()->acl()->facade(),
-            $this->getLocator()->user()->facade(),
+            $this->createGroupModel(),
+            $this->createRoleModel(),
+            $this->createRuleModel(),
+            $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
             $this->getConfig()
         );
     }

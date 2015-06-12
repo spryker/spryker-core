@@ -32,7 +32,7 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
     public function getProvidedDependency($key)
     {
         if(false === $this->container->offsetExists($key)){
-            throw new \ErrorException("Key $key does not exist in container.");
+            throw new \ErrorException('Key ' . $key . ' does not exist in container.');
         }
 
         return $this->container[$key];

@@ -16,9 +16,8 @@ class Role implements RoleInterface
 {
 
     /**
-     * @var AclQueryContainer
+     * @var Group
      */
-
     protected $queryContainer;
 
     /**
@@ -32,8 +31,8 @@ class Role implements RoleInterface
      */
     public function __construct(GroupInterface $groupModel, AclQueryContainer $queryContainer)
     {
-        $this->queryContainer = $queryContainer;
         $this->groupModel = $groupModel;
+        $this->queryContainer = $queryContainer;
     }
 
     /**
@@ -192,4 +191,5 @@ class Role implements RoleInterface
 
         return $transfer;
     }
+
 }

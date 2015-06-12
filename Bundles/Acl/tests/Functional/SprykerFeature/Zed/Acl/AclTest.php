@@ -6,11 +6,15 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\UserTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\Factory;
+use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
+use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\User\Business\UserFacade;
+use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
 /**
  * @group Zed
@@ -41,15 +45,30 @@ class AclTest extends Test
 
         $this->locator = Locator::getInstance();
 
+        $container = new Container();
+
+        $dependencyProvider = new AclDependencyProvider();
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $dependencyProvider->provideCommunicationLayerDependencies($container);
+        $dependencyProvider->providePersistenceLayerDependencies($container);
+
         $this->facade = new AclFacade(
             new Factory('Acl'),
             $this->locator
         );
+        $this->facade->setOwnQueryContainer(new AclQueryContainer(
+            new \SprykerEngine\Zed\Kernel\Persistence\Factory('Acl'), $this->locator
+        ));
+        $this->facade->setExternalDependencies($container);
 
         $this->userFacade = new UserFacade(
             new Factory('User'),
             $this->locator
         );
+        $this->userFacade->setOwnQueryContainer(new UserQueryContainer(
+            new \SprykerEngine\Zed\Kernel\Persistence\Factory('User'), $this->locator
+        ));
+        $this->userFacade->setExternalDependencies($container);
     }
 
     /**

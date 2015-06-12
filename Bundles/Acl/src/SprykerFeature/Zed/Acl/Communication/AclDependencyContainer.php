@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Acl\Communication;
 
 use Generated\Zed\Ide\AutoCompletion;
+use Generated\Zed\Ide\FactoryAutoCompletion\AclCommunication;
 use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
 use SprykerFeature\Zed\Acl\Communication\Form\UserForm;
@@ -14,6 +15,10 @@ use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method AclCommunication getFactory()
+ * @method AclQueryContainer getQueryContainer()
+ */
 class AclDependencyContainer extends AbstractDependencyContainer
 {
 
@@ -26,21 +31,13 @@ class AclDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return AclQueryContainer
-     */
-    public function createAclQueryContainer()
-    {
-        return $this->getLocator()->acl()->queryContainer();
-    }
-
-    /**
      * @param Request $request
      *
      * @return UserGrid
      */
     public function createUserGrid(Request $request)
     {
-        $aclQueryContainer = $this->createAclQueryContainer();
+        $aclQueryContainer = $this->getQueryContainer();
         $query = $aclQueryContainer->queryUsersWithGroup();
 
         return $this->getFactory()->createGridUserGrid(
@@ -57,13 +54,12 @@ class AclDependencyContainer extends AbstractDependencyContainer
      */
     public function createUserGridByGroupId(Request $request, $idGroup)
     {
-        $aclQueryContainer = $this->createAclQueryContainer();
+        $aclQueryContainer = $this->getQueryContainer();
         $query = $aclQueryContainer->queryGroupUsers($idGroup);
 
         return $this->getFactory()->createGridUserGrid(
             $query,
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -75,13 +71,12 @@ class AclDependencyContainer extends AbstractDependencyContainer
      */
     public function createRulesetGrid(Request $request, $idGroup)
     {
-        $aclQueryContainer = $this->createAclQueryContainer();
+        $aclQueryContainer = $this->getQueryContainer();
         $query = $aclQueryContainer->queryRulesFromGroup($idGroup);
 
         return $this->getFactory()->createGridRulesetGrid(
             $query,
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -92,13 +87,12 @@ class AclDependencyContainer extends AbstractDependencyContainer
      */
     public function createGroupsGrid(Request $request)
     {
-        $aclQueryContainer = $this->createAclQueryContainer();
+        $aclQueryContainer = $this->getQueryContainer();
         $query = $aclQueryContainer->queryGroup();
 
         return $this->getFactory()->createGridGroupGrid(
             $query,
-            $request,
-            $this->getLocator()
+            $request
         );
     }
 
@@ -112,7 +106,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createFormUserForm(
             $request,
             $this->getFactory(),
-            $this->createAclQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
@@ -126,7 +120,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createFormGroupForm(
             $request,
             $this->getFactory(),
-            $this->createAclQueryContainer()
+            $this->getQueryContainer()
         );
     }
 }

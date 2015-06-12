@@ -4,7 +4,6 @@ namespace SprykerFeature\Zed\Category\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryForm;
@@ -13,13 +12,11 @@ use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method CategoryCommunication getFactory()
+ */
 class CategoryDependencyContainer extends AbstractDependencyContainer
 {
-
-    /**
-     * @var CategoryCommunication|FactoryInterface
-     */
-    protected $factory;
 
     /**
      * @return CategoryFacade
@@ -37,8 +34,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
         return $this->getLocator()
             ->locale()
             ->facade()
-            ->getCurrentLocale()
-            ;
+            ->getCurrentLocale();
     }
 
     /**
@@ -51,7 +47,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
         $locale = $this->getCurrentLocale();
 
         return $this->getFactory()->createGridCategoryGrid(
-            $this->createQueryContainer()->queryCategory($locale->getIdLocale()),
+            $this->getQueryContainer()->queryCategory($locale->getIdLocale()),
             $request
         );
     }
@@ -69,7 +65,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
             $request,
             $this->getFactory(),
             $locale->getIdLocale(),
-            $this->createQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
@@ -83,7 +79,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
         $locale = $this->getCurrentLocale();
 
         return $this->getFactory()->createGridCategoryNodeGrid(
-            $this->createQueryContainer()->queryNodeWithDirectParent($locale->getIdLocale()),
+            $this->getQueryContainer()->queryNodeWithDirectParent($locale->getIdLocale()),
             $request
         );
     }
@@ -101,15 +97,8 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
             $request,
             $this->getFactory(),
             $locale,
-            $this->createQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
-    /**
-     * @return CategoryQueryContainer
-     */
-    protected function createQueryContainer()
-    {
-        return $this->getLocator()->category()->queryContainer();
-    }
 }

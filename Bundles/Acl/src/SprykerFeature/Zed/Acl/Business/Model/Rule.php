@@ -4,8 +4,8 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
-use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RulesTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
@@ -14,13 +14,25 @@ use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRule;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
+use SprykerFeature\Zed\User\Business\UserFacade;
 
 class Rule implements RuleInterface
 {
+
+    /**
+     * @var Group
+     */
+    private $group;
+
     /**
      * @var AclQueryContainer
      */
     protected $queryContainer;
+
+    /**
+     * @var UserFacade
+     */
+    private $facadeUser;
 
     /**
      * @var RuleValidator
@@ -33,34 +45,29 @@ class Rule implements RuleInterface
     protected $settings;
 
     /**
-     * @var AclToUserInterface
-     */
-    private $userFacade;
-
-    /**
      * @var GroupInterface
      */
     private $groupModel;
 
     /**
-     * @param AclToUserInterface $userFacade
+     * @param AclToUserInterface $facadeUser
      * @param GroupInterface $groupModel
-     * @param RuleValidator $rulesValidator
      * @param AclQueryContainer $queryContainer
+     * @param RuleValidator $rulesValidator
      * @param AclConfig $settings
      */
     public function __construct(
-        AclToUserInterface $userFacade,
+        AclToUserInterface $facadeUser,
         GroupInterface $groupModel,
-        RuleValidator $rulesValidator,
         AclQueryContainer $queryContainer,
+        RuleValidator $rulesValidator,
         AclConfig $settings
     ) {
+        $this->facadeUser = $facadeUser;
+        $this->groupModel = $groupModel;
         $this->queryContainer = $queryContainer;
         $this->rulesValidator = $rulesValidator;
         $this->settings = $settings;
-        $this->userFacade = $userFacade;
-        $this->groupModel = $groupModel;
     }
 
     /**
@@ -186,7 +193,8 @@ class Rule implements RuleInterface
 
         foreach ($results as $result) {
             $transfer = new RuleTransfer();
-            $collection->addRule(Copy::entityToTransfer($transfer, $result));
+            Copy::entityToTransfer($transfer, $result);
+            $collection->addRule($transfer);
         }
 
         return $collection;
@@ -206,7 +214,8 @@ class Rule implements RuleInterface
 
         foreach ($results as $result) {
             $transfer = new RuleTransfer();
-            $collection->addRule(Copy::entityToTransfer($transfer, $result));
+            Copy::entityToTransfer($transfer, $result);
+            $collection->addRule($transfer);
         }
 
         return $collection;
@@ -305,7 +314,7 @@ class Rule implements RuleInterface
      */
     public function isAllowed(UserTransfer $user, $bundle, $controller, $action)
     {
-        if ($this->userFacade->isSystemUser($user)) {
+        if ($this->facadeUser->isSystemUser($user)) {
             $this->registerSystemUserRules($user);
         }
 
@@ -313,12 +322,22 @@ class Rule implements RuleInterface
             return true;
         }
 
-        if ($this->userFacade->isSystemUser($user)) {
+        $group = $this->groupModel->getUserGroup($user->getIdUserUser());
+        $rules = $this->getRulesForGroupId($group->getIdAclGroup());
+
+        if ($this->facadeUser->isSystemUser($user)) {
             return false;
         }
 
-        $group = $this->groupModel->getUserGroup($user->getIdUserUser());
+        $group = $this->group->getUserGroup($user->getIdUserUser());
+        if ($group === null) {
+            return false;
+        }
+
         $rules = $this->getRulesForGroupId($group->getIdAclGroup());
+        if ($rules === null) {
+            return false;
+        }
 
         $this->rulesValidator->setRules($rules);
 

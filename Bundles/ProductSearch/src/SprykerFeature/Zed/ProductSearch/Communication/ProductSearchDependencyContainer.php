@@ -27,14 +27,6 @@ class ProductSearchDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return ProductSearchFacade
-     */
-    public function getInstallerFacade()
-    {
-        return $this->getLocator()->productSearch()->facade();
-    }
-
-    /**
      * @return ProductSearchQueryContainerInterface
      */
     public function getProductSearchQueryContainer()
