@@ -10,6 +10,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTran
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslationQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 
 interface ProductOptionQueryContainerInterface
 {
@@ -126,4 +127,25 @@ interface ProductOptionQueryContainerInterface
      * @return SpyProductOptionValueUsageConstraintQuery
      */
     public function queryProductOptionValueUsageConstraintsByFks($fkProductOptionValueUsageA, $fkProductOptionValueUsageB);
+
+    /**
+     * @param int $idProductOptionType
+     *
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAssociatedAbstractProductIdsForProductOptionType($idProductOptionType);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAssociatedAbstractProductIdsForProductOptionValue($idProductOptionValue);
+
+    /**
+     * @param int $idProductOptionTypeUsage
+     *
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage);
 }

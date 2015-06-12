@@ -76,6 +76,14 @@ class DataImportWriter implements DataImportWriterInterface
 
         $productOptionTypeEntity->save();
 
+        $associatedAbstractProductIds = $this->queryContainer
+            ->queryAssociatedAbstractProductIdsForProductOptionType($productOptionTypeEntity->getIdProductOptionType())
+            ->find();
+
+        foreach($associatedAbstractProductIds as $idAbstractProduct) {
+            $this->productFacade->touchProductActive($idAbstractProduct);
+        }
+
         return $productOptionTypeEntity->getIdProductOptionType();
     }
 
@@ -154,6 +162,14 @@ class DataImportWriter implements DataImportWriterInterface
 
         $productOptionValueEntity->save();
 
+        $associatedAbstractProductIds = $this->queryContainer
+            ->queryAssociatedAbstractProductIdsForProductOptionValue($productOptionValueEntity->getIdProductOptionValue())
+            ->find();
+
+        foreach($associatedAbstractProductIds as $idAbstractProduct) {
+            $this->productFacade->touchProductActive($idAbstractProduct);
+        }
+
         return $productOptionValueEntity->getIdProductOptionValue();
     }
 
@@ -228,6 +244,8 @@ class DataImportWriter implements DataImportWriterInterface
             ->setSequence($sequence)
             ->save();
 
+        $this->touchAbstractProduct($sku);
+
         return $productOptionTypeUsageEntity->getIdProductOptionTypeUsage();
     }
 
@@ -278,6 +296,12 @@ class DataImportWriter implements DataImportWriterInterface
         $productOptionValueUsageEntity
             ->setSequence($sequence)
             ->save();
+
+        $idAbstractProduct = $this->queryContainer
+            ->queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage)
+            ->findOne();
+
+        $this->productFacade->touchProductActive($idAbstractProduct);
 
         return $productOptionValueUsageEntity->getIdProductOptionValueUsage();
     }
@@ -346,6 +370,8 @@ class DataImportWriter implements DataImportWriterInterface
             ->setFkProductOptionTypeUsageB($idProductOptionTypeUsageB);
 
         $optionTypeExclusionEntity->save();
+
+        $this->touchAbstractProduct($sku);
     }
 
     /**
@@ -410,6 +436,8 @@ class DataImportWriter implements DataImportWriterInterface
             ->setOperator($operator);
 
         $optionValueConstraintEntity->save();
+
+        $this->touchAbstractProduct($sku);
      }
 
     /**
@@ -472,6 +500,14 @@ class DataImportWriter implements DataImportWriterInterface
 
         $presetConfig->save();
 
+        $this->touchAbstractProduct($sku);
+
         return $presetConfig->getIdProductOptionConfigurationPreset();
+    }
+
+    protected function touchAbstractProduct($concreteSku)
+    {
+        $idAbstractProduct = $this->productFacade->getAbstractProductIdBySku($concreteSku);
+        $this->productFacade->touchProductActive($idAbstractProduct);
     }
 }

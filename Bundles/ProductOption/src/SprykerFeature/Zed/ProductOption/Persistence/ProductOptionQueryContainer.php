@@ -3,8 +3,9 @@
 namespace SprykerFeature\Zed\ProductOption\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionTypeUsageExclusionQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionValueUsageConstraintQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\Base\SpyAbstractProductQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusionQuery;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraintQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTranslationQuery;
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionType
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValueTableMap;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionTypeUsageTableMap;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValueUsageTableMap;
+use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
@@ -214,5 +216,68 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         return SpyProductOptionValueUsageConstraintQuery::create()
             ->filterByFkProductOptionValueUsageA([$fkProductOptionValueUsageA, $fkProductOptionValueUsageB])
             ->filterByFkProductOptionValueUsageB([$fkProductOptionValueUsageA, $fkProductOptionValueUsageB]);
+    }
+
+    /**
+     * @param int $idProductOptionType
+     *
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAssociatedAbstractProductIdsForProductOptionType($idProductOptionType)
+    {
+        return SpyAbstractProductQuery::create()
+            ->select([
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT
+            ])
+            ->useSpyProductQuery()
+                ->useSpyProductOptionTypeUsageQuery()
+                    ->useSpyProductOptionTypeQuery()
+                        ->filterByIdProductOptionType($idProductOptionType)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->groupByIdAbstractProduct();
+    }
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAssociatedAbstractProductIdsForProductOptionValue($idProductOptionValue)
+    {
+        return SpyAbstractProductQuery::create()
+            ->select([
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT
+            ])
+            ->useSpyProductQuery()
+                ->useSpyProductOptionTypeUsageQuery()
+                    ->useSpyProductOptionValueUsageQuery()
+                        ->useSpyProductOptionValueQuery()
+                            ->filterByIdProductOptionValue($idProductOptionValue)
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->groupByIdAbstractProduct();
+    }
+
+    /**
+     * @param int $idProductOptionTypeUsage
+     *
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage)
+    {
+        return SpyAbstractProductQuery::create()
+            ->select([
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT
+            ])
+            ->useSpyProductQuery()
+                ->useSpyProductOptionTypeUsageQuery()
+                    ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage)
+                ->endUse()
+            ->endUse()
+            ->groupByIdAbstractProduct();
     }
 }
