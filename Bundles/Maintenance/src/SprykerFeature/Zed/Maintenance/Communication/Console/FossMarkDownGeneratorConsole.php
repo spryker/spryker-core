@@ -5,7 +5,6 @@ namespace SprykerFeature\Zed\Maintenance\Communication\Console;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class FossMarkDownGeneratorConsole extends Console
