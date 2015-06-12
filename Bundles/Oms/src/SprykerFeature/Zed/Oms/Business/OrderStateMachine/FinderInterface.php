@@ -9,6 +9,22 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 interface FinderInterface
 {
     /**
+     * @param int $idOrder
+     * @param string $flag
+     *
+     * @return bool
+     */
+    public function isOrderFlagged($idOrder, $flag);
+
+    /**
+     * @param int $idOrder
+     * @param string $flag
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedAll($idOrder, $flag);
+
+    /**
      * @param string $sku
      *
      * @return SpySalesOrderItem

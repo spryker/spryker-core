@@ -7,6 +7,7 @@ use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLogQuery;
@@ -119,6 +120,30 @@ class OmsQueryContainer extends AbstractQueryContainer
     {
         return SpySalesOrderItemQuery::create()
             ->filterByIdSalesOrderItem($orderItemIds)
+        ;
+    }
+
+    /**
+     * @param int $idOrder
+     *
+     * @return SpySalesOrderQuery
+     */
+    public function getOrder($idOrder)
+    {
+        return SpySalesOrderQuery::create()
+            ->filterByIdSalesOrder($idOrder)
+        ;
+    }
+
+    /**
+     * @param $idOrder
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function getOrderItemsByOrder($idOrder)
+    {
+        return SpySalesOrderItemQuery::create()
+            ->filterByFkSalesOrder($idOrder)
         ;
     }
 }

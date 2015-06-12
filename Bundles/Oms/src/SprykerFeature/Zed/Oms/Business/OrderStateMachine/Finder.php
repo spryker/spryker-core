@@ -39,6 +39,53 @@ class Finder implements FinderInterface
     }
 
     /**
+     * @param int $idOrder
+     * @param string $flag
+     *
+     * @return bool
+     */
+    public function isOrderFlagged($idOrder, $flag)
+    {
+        $order = $this->queryContainer
+            ->getOrder($idOrder)
+            ->findOne()
+        ;
+
+        $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
+
+        return (count($flaggedOrderItems) > 0);
+    }
+
+    /**
+     * @param int $idOrder
+     * @param string $flag
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedAll($idOrder, $flag)
+    {
+        $order = $this->queryContainer
+            ->getOrder($idOrder)
+            ->findOne()
+        ;
+
+        $orderItems = $this->queryContainer
+            ->getOrderItemsByOrder($idOrder)
+            ->find()
+        ;
+
+        $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
+
+        foreach ($orderItems as $orderItem) {
+            if (in_array($orderItem, $flaggedOrderItems) === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @param string $sku
      *
      * @return SpySalesOrderItemQuery
