@@ -54,7 +54,7 @@ trait InternalClassBuilderForTests
     {
         $container = new Container();
 
-        $dependencyProviderClassName = '\\' . $namespace . '\\Zed\\' . $bundle . '\\' . $bundle . 'DependencyProvider';
+        $dependencyProviderClassName = $this->getDependencyProviderClassName($namespace, $bundle);
 
         /** @var AbstractBundleDependencyProvider $dependencyProvider */
         $dependencyProvider = new $dependencyProviderClassName();
@@ -64,6 +64,30 @@ trait InternalClassBuilderForTests
         $dependencyProvider->providePersistenceLayerDependencies($container);
 
         return $container;
+    }
+
+    /**
+     * @param string $namespace
+     * @param string $bundle
+     *
+     * @return bool|string
+     */
+    private function getDependencyProviderClassName($namespace, $bundle)
+    {
+        $dependencyProviderClassName = '\\' . $namespace . '\\Zed\\' . $bundle . '\\' . $bundle . 'DependencyProvider';
+        if (class_exists($dependencyProviderClassName)) {
+            return $dependencyProviderClassName;
+        }
+        $dependencyProviderClassName = '\\SprykerFeature\\Zed\\' . $bundle . '\\' . $bundle . 'DependencyProvider';
+        if (class_exists($dependencyProviderClassName)) {
+            return $dependencyProviderClassName;
+        }
+        $dependencyProviderClassName = '\\SprykerEngine\\Zed\\' . $bundle . '\\' . $bundle . 'DependencyProvider';
+        if (class_exists($dependencyProviderClassName)) {
+            return $dependencyProviderClassName;
+        }
+
+        return false;
     }
 
     /**
