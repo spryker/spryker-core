@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\CategoryExporter\Communication\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Category\CategoryResourceSettings;
+use SprykerFeature\Zed\Category\CategoryConfig;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
 use SprykerFeature\Zed\CategoryExporter\Persistence\CategoryExporterQueryContainer;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
@@ -21,7 +21,7 @@ class NavigationQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
      */
     public function getProcessableType()
     {
-        return CategoryResourceSettings::RESOURCE_TYPE_NAVIGATION;
+        return CategoryConfig::RESOURCE_TYPE_NAVIGATION;
     }
 
     /**

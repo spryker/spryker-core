@@ -5,9 +5,9 @@ namespace SprykerFeature\Zed\Category\Business\Tree;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Propel;
-use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use SprykerFeature\Zed\Category\Business\Model\CategoryWriterInterface;
+use SprykerFeature\Zed\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 
 class CategoryTreeWriter
@@ -161,11 +161,11 @@ class CategoryTreeWriter
      */
     protected function touchCategoryActive($idCategoryNode)
     {
-        $this->touchFacade->touchActive(CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+        $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
 
     protected function touchNavigationActive()
     {
-        $this->touchFacade->touchActive(CategoryResourceSettings::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
+        $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
     }
 }

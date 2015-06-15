@@ -6,6 +6,8 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class ProductConfig extends AbstractBundleConfig
 {
+    const RESOURCE_TYPE_PRODUCT = 'product';
+    const RESOURCE_TYPE_ABSTRACT_PRODUCT = 'abstract_product';
 
     /**
      * @return string
