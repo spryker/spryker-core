@@ -141,7 +141,7 @@ class Finder implements FinderInterface
     public function getGroupedManuallyExecutableEvents(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order)
     {
         $processBuilder = clone $this->builder;
-        $processName = current($order->getItems())->getProcess()->getName();
+        $processName = $order->getItems()->getFirst()->getProcess()->getName();
         $process = $processBuilder->createProcess($processName);
         $eventsBySource = $process->getManualEventsBySource();
 
@@ -236,8 +236,10 @@ class Finder implements FinderInterface
     protected function getItemsByFlag(SpySalesOrder $order, $flag, $hasFlag)
     {
         $items = $order->getItems();
-        $item = current($items);
-        $states = $this->getStatesByFlag($item->getProcess()->getName(), $flag, $hasFlag);
+        $states = $this->getStatesByFlag(
+            $items->getFirst()->getProcess()->getName(),
+            $flag,
+            $hasFlag);
 
         $selectedItems = [];
         foreach ($items as $item) {
