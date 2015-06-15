@@ -239,7 +239,8 @@ class Finder implements FinderInterface
         $states = $this->getStatesByFlag(
             $items->getFirst()->getProcess()->getName(),
             $flag,
-            $hasFlag);
+            $hasFlag
+        );
 
         $selectedItems = [];
         foreach ($items as $item) {
