@@ -30,6 +30,18 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
+     * @return OrderDetailsManager
+     */
+    public function createOrderDetailsModel()
+    {
+        $model = $this->getDependencyContainer()
+            ->createOrderManager()
+        ;
+
+        return $model;
+    }
+
+    /**
      * @param Order $transferOrder
      * @param RequestInterface $request
      * @return ModelResult

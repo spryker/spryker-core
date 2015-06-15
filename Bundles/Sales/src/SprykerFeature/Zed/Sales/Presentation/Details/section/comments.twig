@@ -7,7 +7,7 @@
             ng-strict-di
             name="comments_grid"
             on='{ form_success: "update" }'
-            src="/sales/grid/comments?orderId={{ order_id }}"
+            src="/sales/grid/comments?orderId={{ orderId }}"
             >
             <div class="notes-item" ng-repeat="row in rows">
                 <div class="">{[{ row.created_at.date}]} by <strong>{[{ row.username }]}</strong></div>
@@ -16,7 +16,7 @@
 
         <spy-form
                 class="spy-layout sparse"
-                src="/sales/comment/add?orderId={{ order_id }}"
+                src="/sales/comment/add?orderId={{ orderId }}"
                 name="order_comment"
                 channel="sales"
                 model='{"fields":[{"name":"message","type":"field","refresh":false}],"state":"new"}'

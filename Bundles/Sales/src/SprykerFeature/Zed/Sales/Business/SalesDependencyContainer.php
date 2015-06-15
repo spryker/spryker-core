@@ -17,15 +17,22 @@ class SalesDependencyContainer extends AbstractDependencyContainer
     public function createCommentsManager()
     {
         return $this->getFactory()->createModelCommentManager(
-            $this->createCommentsQueryContainer()
+            $this->createSalesQueryContainer()
+        );
+    }
+
+    public function createOrderManager()
+    {
+        return $this->getFactory()->createModelOrderDetailsManager(
+            $this->createSalesQueryContainer()
         );
     }
 
     /**
      * @return SalesQueryContainerInterface
      */
-    public function createCommentsQueryContainer()
+    public function createSalesQueryContainer()
     {
-        return $this->getLocator()->sales()->queryContainer();
+        return $this->getQueryContainer();
     }
 }
