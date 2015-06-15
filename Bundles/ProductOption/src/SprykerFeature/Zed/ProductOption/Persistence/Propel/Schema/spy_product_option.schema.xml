@@ -7,7 +7,7 @@
           namespace="SprykerFeature\Zed\ProductOption\Persistence\Propel"
           package="vendor.spryker.spryker.Bundles.ProductOption.src.SprykerFeature.Zed.ProductOption.Persistence.Propel">
 
-    <!-- Option Type -->
+    <!-- Product Option Type -->
     <table name="spy_product_option_type" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionType">
         <column name="id_product_option_type" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="import_key" type="VARCHAR" />
@@ -21,7 +21,7 @@
         </foreign-key>
     </table>
 
-    <!-- Option Value -->
+    <!-- Product Option Value -->
     <table name="spy_product_option_value" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValue">
         <column name="id_product_option_value" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="import_key" type="VARCHAR" />
@@ -39,13 +39,13 @@
         </foreign-key>
     </table>
 
-    <!-- Option Value Price -->
+    <!-- Product Option Value Price -->
     <table name="spy_product_option_value_price" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValuePrice">
         <column name="id_product_option_value_price" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="price" required="true" type="INTEGER" />
     </table>
 
-    <!-- Option Value Translation -->
+    <!-- Product Option Value Translation -->
     <table name="spy_product_option_value_translation" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValueTranslation">
         <column name="name" required="true" type="VARCHAR" />
         <column name="fk_product_option_value" type="INTEGER" primaryKey="true" />
@@ -59,7 +59,7 @@
         </foreign-key>
     </table>
 
-    <!-- Option Type Translation -->
+    <!-- Product Option Type Translation -->
     <table name="spy_product_option_type_translation" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionTypeTranslation">
         <column name="name" required="true" type="VARCHAR" />
         <column name="fk_product_option_type" type="INTEGER" primaryKey="true" />
@@ -73,7 +73,7 @@
         </foreign-key>
     </table>
 
-    <!-- Product Option Type -->
+    <!-- Product Option Type Usage -->
     <table name="spy_product_option_type_usage" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionTypeUsage">
         <column name="id_product_option_type_usage" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="is_optional" type="INTEGER" required="true" />
@@ -89,7 +89,7 @@
         </foreign-key>
     </table>
 
-    <!-- Product Option Value -->
+    <!-- Product Option Value Usage -->
     <table name="spy_product_option_value_usage" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValueUsage">
         <column name="id_product_option_value_usage" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="sequence" type="INTEGER" required="false" />
@@ -104,34 +104,34 @@
         </foreign-key>
     </table>
 
-    <!-- Product Option Type Exclusion -->
+    <!-- Product Option Type Usage Exclusion -->
     <table name="spy_product_option_type_usage_exclusion" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionTypeUsageExclusion">
         <column name="fk_product_option_type_usage_a" type="INTEGER" primaryKey="true" />
         <column name="fk_product_option_type_usage_b" type="INTEGER" primaryKey="true" />
 
-        <foreign-key foreignTable="spy_product_option_type_usage" onDelete="CASCADE" >
+        <foreign-key foreignTable="spy_product_option_type_usage" onDelete="CASCADE" phpName="productOptionTypeUsageA">
             <reference local="fk_product_option_type_usage_a" foreign="id_product_option_type_usage" />
         </foreign-key>
-        <foreign-key foreignTable="spy_product_option_type_usage" onDelete="CASCADE">
+        <foreign-key foreignTable="spy_product_option_type_usage" onDelete="CASCADE" phpName="productOptionTypeUsageB">
             <reference local="fk_product_option_type_usage_b" foreign="id_product_option_type_usage" />
         </foreign-key>
     </table>
 
-    <!-- Product Option Value Constraint -->
+    <!-- Product Option Value Usage Constraint -->
     <table name="spy_product_option_value_usage_constraint" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValueUsageConstraint">
         <column name="fk_product_option_value_usage_a" type="INTEGER" primaryKey="true" />
         <column name="fk_product_option_value_usage_b" type="INTEGER" primaryKey="true" />
         <column name="operator" type="VARCHAR" size="255" required="true" />
 
-        <foreign-key foreignTable="spy_product_option_value_usage" onDelete="CASCADE">
+        <foreign-key foreignTable="spy_product_option_value_usage" onDelete="CASCADE" phpName="ProductOptionValueUsageA" >
             <reference local="fk_product_option_value_usage_a" foreign="id_product_option_value_usage" />
         </foreign-key>
-        <foreign-key foreignTable="spy_product_option_value_usage" onDelete="CASCADE">
+        <foreign-key foreignTable="spy_product_option_value_usage" onDelete="CASCADE" phpName="productOptionValueUsageB">
             <reference local="fk_product_option_value_usage_b" foreign="id_product_option_value_usage" />
         </foreign-key>
     </table>
 
-    <!-- Configuration Preset -->
+    <!-- Product Option Configuration Preset -->
     <table name="spy_product_option_configuration_preset" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionConfigurationPreset">
         <column name="id_product_option_configuration_preset" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="is_default" type="BOOLEAN" required="true" />
@@ -143,7 +143,7 @@
         </foreign-key>
     </table>
 
-    <!-- Configuration Preset Value -->
+    <!-- Product Option Configuration Preset Value -->
     <table name="spy_product_option_configuration_preset_value" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionConfigurationPresetValue">
         <column name="fk_product_option_configuration_preset" type="INTEGER" primaryKey="true" />
         <column name="fk_product_option_value_usage" type="INTEGER" primaryKey="true" />
