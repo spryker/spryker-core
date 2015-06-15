@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
-use SprykerFeature\Zed\Oms\Business\Util\CollectionToArrayTransformerInterface;
 use SprykerFeature\Zed\Oms\Business\Util\DrawerInterface;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Util\TransitionLogInterface;
@@ -29,15 +28,6 @@ use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
  */
 class OmsDependencyContainer extends AbstractDependencyContainer
 {
-
-    /**
-     * @return CollectionToArrayTransformerInterface
-     */
-    public function createUtilCollectionToArrayTransformer()
-    {
-        return $this->getFactory()->createUtilCollectionToArrayTransformer();
-    }
-
     /**
      * @param array $array
      *
@@ -61,7 +51,6 @@ class OmsDependencyContainer extends AbstractDependencyContainer
             $this->createOrderStateMachineBuilder(),
             $this->createUtilTransitionLog($logContext),
             $this->createOrderStateMachineTimeout(),
-            $this->createUtilCollectionToArrayTransformer(),
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
 
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
