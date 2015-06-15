@@ -23,15 +23,15 @@ class Role implements RoleInterface
     /**
      * @var GroupInterface
      */
-    private $groupModel;
+    private $group;
 
     /**
-     * @param GroupInterface $groupModel
+     * @param GroupInterface $group
      * @param AclQueryContainer $queryContainer
      */
-    public function __construct(GroupInterface $groupModel, AclQueryContainer $queryContainer)
+    public function __construct(GroupInterface $group, AclQueryContainer $queryContainer)
     {
-        $this->groupModel = $groupModel;
+        $this->group = $group;
         $this->queryContainer = $queryContainer;
     }
 
@@ -50,7 +50,7 @@ class Role implements RoleInterface
         $role = $this->save($data);
         $role->setIdGroup($idGroup);
 
-        $this->groupModel->addRoleToGroup($role->getIdAclRole(), $idGroup);
+        $this->group->addRoleToGroup($role->getIdAclRole(), $idGroup);
 
         return $role;
     }
@@ -114,7 +114,7 @@ class Role implements RoleInterface
      */
     public function getUserRoles($idUser)
     {
-        $group = $this->groupModel->getUserGroup($idUser);
+        $group = $this->group->getUserGroup($idUser);
 
         return $this->getGroupRoles($group->getIdAclGroup());
     }

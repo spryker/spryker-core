@@ -42,17 +42,16 @@ class Installer implements InstallerInterface
     protected $config;
 
     /**
-     * @param Group $group
-     * @param Role $role
-     * @param Rule $rule
-     * @param AclFacade $facadeAcl
+     * @param GroupInterface $group
+     * @param RoleInterface $role
+     * @param RuleInterface $rule
      * @param UserFacade $facadeUser
      * @param AclConfig $settings
      */
     public function __construct(
-        Group $group,
-        Role $role,
-        Rule $rule,
+        GroupInterface $group,
+        RoleInterface $role,
+        RuleInterface $rule,
         UserFacade $facadeUser,
         AclConfig $settings
     ) {

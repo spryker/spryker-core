@@ -45,12 +45,7 @@ class Rule implements RuleInterface
     protected $settings;
 
     /**
-     * @var GroupInterface
-     */
-    private $groupModel;
-
-    /**
-     * @param GroupInterface $groupModel
+     * @param GroupInterface $group
      * @param AclQueryContainer $queryContainer
      * @param AclToUserInterface $facadeUser
      * @param RuleValidator $rulesValidator
@@ -58,13 +53,13 @@ class Rule implements RuleInterface
      * @param AclConfig $settings
      */
     public function __construct(
-        GroupInterface $groupModel,
+        GroupInterface $group,
         AclQueryContainer $queryContainer,
         AclToUserInterface $facadeUser,
         RuleValidator $rulesValidator,
         AclConfig $settings
     ) {
-        $this->groupModel = $groupModel;
+        $this->group = $group;
         $this->queryContainer = $queryContainer;
         $this->facadeUser = $facadeUser;
         $this->rulesValidator = $rulesValidator;
@@ -323,7 +318,7 @@ class Rule implements RuleInterface
             return true;
         }
 
-        $group = $this->groupModel->getUserGroup($user->getIdUserUser());
+        $group = $this->group->getUserGroup($user->getIdUserUser());
         $rules = $this->getRulesForGroupId($group->getIdAclGroup());
 
         if ($this->facadeUser->isSystemUser($user)) {
