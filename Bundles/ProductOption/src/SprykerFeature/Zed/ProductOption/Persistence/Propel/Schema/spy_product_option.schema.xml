@@ -123,7 +123,7 @@
         <column name="fk_product_option_value_usage_b" type="INTEGER" primaryKey="true" />
         <column name="operator" type="VARCHAR" size="255" required="true" />
 
-        <foreign-key foreignTable="spy_product_option_value_usage" onDelete="CASCADE" phpName="ProductOptionValueUsageA" >
+        <foreign-key foreignTable="spy_product_option_value_usage" onDelete="CASCADE" phpName="productOptionValueUsageA" >
             <reference local="fk_product_option_value_usage_a" foreign="id_product_option_value_usage" />
         </foreign-key>
         <foreign-key foreignTable="spy_product_option_value_usage" onDelete="CASCADE" phpName="productOptionValueUsageB">
