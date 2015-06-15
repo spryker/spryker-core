@@ -7,11 +7,11 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Propel\Runtime\Exception\PropelException;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use SprykerFeature\Shared\Cms\CmsResourceSettings;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\PageExistsException;
 use SprykerFeature\Zed\Cms\Business\Template\TemplateManagerInterface;
+use SprykerFeature\Zed\Cms\CmsConfig;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
@@ -218,7 +218,7 @@ class PageManager implements PageManagerInterface
             $this->glossaryFacade->touchCurrentTranslationForKeyId($pageMapping->getFkGlossaryKey());
         }
 
-        $this->touchFacade->touchActive(CmsResourceSettings::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
+        $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
     }
 
     /**
@@ -232,7 +232,7 @@ class PageManager implements PageManagerInterface
     {
         $this->checkPageExists($page->getIdCmsPage());
 
-        return $this->urlFacade->createUrlForCurrentLocale($url, CmsResourceSettings::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
+        return $this->urlFacade->createUrlForCurrentLocale($url, CmsConfig::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
     }
 
     /**

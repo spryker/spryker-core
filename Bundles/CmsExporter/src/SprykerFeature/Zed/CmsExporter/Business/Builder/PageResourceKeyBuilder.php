@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\CmsExporter\Business\Builder;
 
-use SprykerFeature\Shared\Cms\CmsResourceSettings;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuilder;
+use SprykerFeature\Zed\Cms\CmsConfig;
 
 class PageResourceKeyBuilder extends SharedResourceKeyBuilder
 {
@@ -12,6 +12,6 @@ class PageResourceKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return CmsResourceSettings::RESOURCE_TYPE_PAGE;
+        return CmsConfig::RESOURCE_TYPE_PAGE;
     }
 }
