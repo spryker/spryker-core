@@ -47,7 +47,7 @@ class Finder implements FinderInterface
     public function isOrderFlagged($idOrder, $flag)
     {
         $order = $this->queryContainer
-            ->getOrder($idOrder)
+            ->queryOrder($idOrder)
             ->findOne()
         ;
 
@@ -65,12 +65,12 @@ class Finder implements FinderInterface
     public function isOrderFlaggedAll($idOrder, $flag)
     {
         $order = $this->queryContainer
-            ->getOrder($idOrder)
+            ->queryOrder($idOrder)
             ->findOne()
         ;
 
         $orderItems = $this->queryContainer
-            ->getOrderItemsByOrder($idOrder)
+            ->queryOrderItemsByOrder($idOrder)
             ->find()
         ;
 
@@ -114,7 +114,7 @@ class Finder implements FinderInterface
      */
     protected function getOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
-        $orderItems = $this->queryContainer->getOrderItemsForSku($states, $sku, $returnTest);
+        $orderItems = $this->queryContainer->queryOrderItemsForSku($states, $sku, $returnTest);
 
         return $orderItems;
     }

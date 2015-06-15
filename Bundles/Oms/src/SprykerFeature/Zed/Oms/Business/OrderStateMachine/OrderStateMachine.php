@@ -170,7 +170,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     public function triggerEventForOrderItems($eventId, array $orderItemIds, $data)
     {
         $orderItems = $this->queryContainer
-            ->getOrderItems($orderItemIds)
+            ->queryOrderItems($orderItemIds)
             ->find()
         ;
 
@@ -187,7 +187,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     public function triggerEventForOneOrderItem($eventId, $orderItemId, $data)
     {
         $orderItems = $this->queryContainer
-            ->getOrderItems([$orderItemId])
+            ->queryOrderItems([$orderItemId])
             ->find()
         ;
 
@@ -221,7 +221,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     public function triggerEventForNewOrderItem(array $orderItemIds, array $data)
     {
         $orderItems = $this->queryContainer
-            ->getOrderItems($orderItemIds)
+            ->queryOrderItems($orderItemIds)
             ->find()
         ;
 
@@ -689,7 +689,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function getOrderItemsByState(array $states, ProcessInterface $process)
     {
-        $orderItems = $this->queryContainer->getOrderItemsByState($states, $process->getName())->find();
+        $orderItems = $this->queryContainer->queryOrderItemsByState($states, $process->getName())->find();
 
         return $this->collectionToArrayTransformer->transformCollectionToArray($orderItems);
     }

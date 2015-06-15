@@ -181,7 +181,7 @@ class Timeout implements TimeoutInterface
     {
         $now = new DateTime('now');
 
-        return $this->queryContainer->findItemsWithExpiredTimeouts($now)->find();
+        return $this->queryContainer->queryItemsWithExpiredTimeouts($now)->find();
     }
 
     /**

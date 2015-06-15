@@ -22,7 +22,7 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return ModelCriteria
      */
-    public function getOrderItemsByState(array $states, $processName)
+    public function queryOrderItemsByState(array $states, $processName)
     {
         return SpySalesOrderItemQuery::create()
             ->joinProcess(null, $joinType = Criteria::INNER_JOIN)
@@ -37,7 +37,7 @@ class OmsQueryContainer extends AbstractQueryContainer
      * @return ModelCriteria
      * @throws PropelException
      */
-    public function getLogForOrder(SpySalesOrder $order)
+    public function queryLogForOrder(SpySalesOrder $order)
     {
         return SpyOmsTransitionLogQuery::create()
             ->filterByOrder($order)
@@ -49,7 +49,7 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return ModelCriteria
      */
-    public function findItemsWithExpiredTimeouts(DateTime $now)
+    public function queryItemsWithExpiredTimeouts(DateTime $now)
     {
         return SpySalesOrderItemQuery::create()
             ->joinEventTimeout()
@@ -92,7 +92,7 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return SpySalesOrderItemQuery
      */
-    public function getOrderItemsForSku(array $states, $sku, $returnTest = true)
+    public function queryOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
         $query = SpySalesOrderItemQuery::create();
 
@@ -116,7 +116,7 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return SpySalesOrderItemQuery
      */
-    public function getOrderItems(array $orderItemIds)
+    public function queryOrderItems(array $orderItemIds)
     {
         return SpySalesOrderItemQuery::create()
             ->filterByIdSalesOrderItem($orderItemIds)
@@ -128,7 +128,7 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return SpySalesOrderQuery
      */
-    public function getOrder($idOrder)
+    public function queryOrder($idOrder)
     {
         return SpySalesOrderQuery::create()
             ->filterByIdSalesOrder($idOrder)
@@ -140,7 +140,7 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return SpySalesOrderItemQuery
      */
-    public function getOrderItemsByOrder($idOrder)
+    public function queryOrderItemsByOrder($idOrder)
     {
         return SpySalesOrderItemQuery::create()
             ->filterByFkSalesOrder($idOrder)
