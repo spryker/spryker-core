@@ -290,19 +290,13 @@ class User implements UserInterface
      */
     public function isSystemUser(UserTransfer $user)
     {
-        $systemUser = $this->settings->getSystemUsers();
+        $systemUsers = $this->settings->getSystemUsers();
 
-        foreach ($systemUser as $username) {
-            if ($username === $user->getUsername()) {
-                return true;
-            }
-        }
-
-        return false;
+        return in_array($user->getUsername(), $systemUsers);
     }
 
     /**
-     * @return UserTransfer
+     * @return CollectionTransfer
      */
     public function getSystemUsers()
     {

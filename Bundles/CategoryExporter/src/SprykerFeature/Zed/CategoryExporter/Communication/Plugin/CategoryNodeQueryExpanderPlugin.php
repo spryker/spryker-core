@@ -7,10 +7,12 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
+use SprykerFeature\Zed\CategoryExporter\Persistence\CategoryExporterQueryContainer;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 
 /**
  * @method CategoryExporterDependencyContainer getDependencyContainer()
+ * @method CategoryExporterQueryContainer getQueryContainer()
  */
 class CategoryNodeQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
@@ -30,7 +32,7 @@ class CategoryNodeQueryExpanderPlugin extends AbstractPlugin implements QueryExp
      */
     public function expandQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
-        $queryContainer = $this->getDependencyContainer()->getCategoryExporterQueryContainer();
+        $queryContainer = $this->getQueryContainer();
 
         return $queryContainer->expandCategoryNodeQuery($expandableQuery, $locale);
     }

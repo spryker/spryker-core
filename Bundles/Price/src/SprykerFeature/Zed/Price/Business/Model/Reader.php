@@ -148,13 +148,13 @@ class Reader implements ReaderInterface
                 ->queryPriceEntityForConcreteProduct($sku, $priceType)
                 ->findOne()
                 ->getIdPriceProduct()
-                ;
+            ;
         } else {
             return $this->queryContainer
                 ->queryPriceEntityForConcreteProduct($sku, $priceType)
                 ->findOne()
                 ->getIdPriceProduct()
-                ;
+            ;
         }
     }
 

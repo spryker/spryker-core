@@ -2,7 +2,9 @@
 
 namespace SprykerFeature\Zed\Availability\Persistence;
 
-class AvailabilityQueryContainer
+use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+
+class AvailabilityQueryContainer extends AbstractQueryContainer
 {
 
 }

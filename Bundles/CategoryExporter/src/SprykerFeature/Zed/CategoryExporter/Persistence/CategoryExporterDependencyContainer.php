@@ -6,6 +6,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryExporterPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use SprykerFeature\Zed\CategoryExporter\CategoryExporterDependencyProvider;
 use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\CategoryNodeQueryExpander;
 use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\NavigationQueryExpander;
 
@@ -45,6 +46,6 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
      */
     protected function getCategoryQueryContainer()
     {
-        return $this->getLocator()->category()->queryContainer();
+        return $this->getProvidedDependency(CategoryExporterDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 }

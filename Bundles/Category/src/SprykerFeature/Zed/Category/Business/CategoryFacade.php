@@ -6,7 +6,6 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\Category\Transfer\CategoryNode;
 
 /**
  * @method CategoryDependencyContainer getDependencyContainer()

@@ -2,13 +2,12 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\NodeTransfer;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;
 
 class ClosureTableWriter implements ClosureTableWriterInterface
 {
@@ -19,19 +18,11 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     protected $queryContainer;
 
     /**
-     * @var LocatorLocatorInterface|AutoCompletion
-     */
-    protected $locator;
-
-    /**
-     * @param LocatorLocatorInterface $locator
      * @param CategoryQueryContainer $categoryTreeRepository
      */
     public function __construct(
-        LocatorLocatorInterface $locator,
         CategoryQueryContainer $categoryTreeRepository
     ) {
-        $this->locator = $locator;
         $this->queryContainer = $categoryTreeRepository;
     }
 
@@ -69,7 +60,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     {
         $nodeId = $categoryNode->getIdCategoryNode();
 
-        $pathEntity = $this->locator->category()->entitySpyCategoryClosureTable();
+        $pathEntity = new SpyCategoryClosureTable();
         $pathEntity->setFkCategoryNode($nodeId);
         $pathEntity->setFkCategoryNodeDescendant($nodeId);
         $pathEntity->setDepth(0);

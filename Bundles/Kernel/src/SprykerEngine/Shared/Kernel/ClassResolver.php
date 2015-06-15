@@ -18,8 +18,7 @@ class ClassResolver implements ClassResolverInterface
     private $existsMap = [];
 
     const MESSAGE_CLASS_NAME_AMBIGUOUS =
-        'It\'s not allowed to have the same bundle in two namespaces in one layer. Check: "%s"'
-    ;
+        'It\'s not allowed to have the same bundle in two namespaces in one layer. Check: "%s"';
 
     /**
      * @param string $classNamePattern
@@ -90,7 +89,7 @@ class ClassResolver implements ClassResolverInterface
     {
         $stores = [
             \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName(),
-            ''
+            '',
         ];
 
         return $stores;
@@ -232,6 +231,7 @@ class ClassResolver implements ClassResolverInterface
         if (isset($this->existsMap[$className])) {
             return $this->existsMap[$className];
         }
+
         return $this->existsMap[$className] = class_exists($className);
     }
 }

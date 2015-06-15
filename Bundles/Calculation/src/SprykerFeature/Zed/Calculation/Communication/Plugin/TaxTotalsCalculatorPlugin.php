@@ -4,12 +4,12 @@ namespace SprykerFeature\Zed\Calculation\Communication\Plugin;
 
 use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
-use SprykerFeature\Zed\Calculation\Communication\CalculationDependencyContainer;
+use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method CalculationDependencyContainer getDependencyContainer()
+ * @method CalculationFacade getFacade()
  */
 class TaxTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculatorPluginInterface
 {
@@ -24,8 +24,7 @@ class TaxTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculat
         OrderInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
-        $this->getDependencyContainer()
-            ->getCalculationFacade()
+        $this->getFacade()
             ->recalculateTaxTotals($totalsTransfer, $calculableContainer, $calculableItems)
         ;
     }

@@ -3,31 +3,36 @@
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RolesTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-
-use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Zed\Library\Copy;
 use Generated\Shared\Transfer\RoleTransfer;
-use Generated\Shared\Transfer\UserTransfer;
-use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RulesTransfer;
-
+use Generated\Shared\Transfer\RuleTransfer;
+use Generated\Shared\Transfer\UserTransfer;
+use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
+use SprykerFeature\Zed\Acl\Dependency\Facade\AclToUserInterface;
+use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
+use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRule;
+use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
+use SprykerFeature\Zed\User\Business\UserFacade;
 
 class Rule implements RuleInterface
 {
+
+    /**
+     * @var Group
+     */
+    private $group;
+
     /**
      * @var AclQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var AutoCompletion
+     * @var UserFacade
      */
-    protected $locator;
+    private $facadeUser;
 
     /**
      * @var RuleValidator
@@ -40,19 +45,23 @@ class Rule implements RuleInterface
     protected $settings;
 
     /**
+     * @param GroupInterface $group
      * @param AclQueryContainer $queryContainer
-     * @param LocatorLocatorInterface $locator
+     * @param AclToUserInterface $facadeUser
+     * @param RuleValidator $rulesValidator
      * @param RuleValidator $rulesValidator
      * @param AclConfig $settings
      */
     public function __construct(
+        GroupInterface $group,
         AclQueryContainer $queryContainer,
-        LocatorLocatorInterface $locator,
+        AclToUserInterface $facadeUser,
         RuleValidator $rulesValidator,
         AclConfig $settings
     ) {
+        $this->group = $group;
         $this->queryContainer = $queryContainer;
-        $this->locator = $locator;
+        $this->facadeUser = $facadeUser;
         $this->rulesValidator = $rulesValidator;
         $this->settings = $settings;
     }
@@ -88,7 +97,7 @@ class Rule implements RuleInterface
      */
     public function save(RuleTransfer $data)
     {
-        $entity = $this->locator->acl()->entitySpyAclRule();
+        $entity = new SpyAclRule();
 
         if ($data->getIdAclRule() !== null && $this->hasRule($data->getIdAclRule()) === true) {
             throw new RuleNotFoundException();
@@ -180,7 +189,8 @@ class Rule implements RuleInterface
 
         foreach ($results as $result) {
             $transfer = new RuleTransfer();
-            $collection->addRule(Copy::entityToTransfer($transfer, $result));
+            Copy::entityToTransfer($transfer, $result);
+            $collection->addRule($transfer);
         }
 
         return $collection;
@@ -189,9 +199,9 @@ class Rule implements RuleInterface
     /**
      * @param int $idGroup
      *
-     * @return RuleTransfer
+     * @return RulesTransfer
      */
-    public function findByGroupId($idGroup)
+    public function getRulesForGroupId($idGroup)
     {
         $relationshipCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find();
         $results = $this->queryContainer->queryGroupRules($relationshipCollection)->find();
@@ -200,7 +210,8 @@ class Rule implements RuleInterface
 
         foreach ($results as $result) {
             $transfer = new RuleTransfer();
-            $collection->addRule(Copy::entityToTransfer($transfer, $result));
+            Copy::entityToTransfer($transfer, $result);
+            $collection->addRule($transfer);
         }
 
         return $collection;
@@ -299,7 +310,7 @@ class Rule implements RuleInterface
      */
     public function isAllowed(UserTransfer $user, $bundle, $controller, $action)
     {
-        if ($this->locator->user()->facade()->isSystemUser($user)) {
+        if ($this->facadeUser->isSystemUser($user)) {
             $this->registerSystemUserRules($user);
         }
 
@@ -307,16 +318,19 @@ class Rule implements RuleInterface
             return true;
         }
 
-        if ($this->locator->user()->facade()->isSystemUser($user)) {
+        $group = $this->group->getUserGroup($user->getIdUserUser());
+        $rules = $this->getRulesForGroupId($group->getIdAclGroup());
+
+        if ($this->facadeUser->isSystemUser($user)) {
             return false;
         }
 
-        $group = $this->locator->acl()->facade()->getUserGroup($user->getIdUserUser());
+        $group = $this->group->getUserGroup($user->getIdUserUser());
         if ($group === null) {
             return false;
         }
 
-        $rules = $this->locator->acl()->facade()->getGroupRules($group->getIdAclGroup());
+        $rules = $this->getRulesForGroupId($group->getIdAclGroup());
         if ($rules === null) {
             return false;
         }

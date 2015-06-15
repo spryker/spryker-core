@@ -48,6 +48,17 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
+     * @param Container $container
+     */
+    public function setExternalDependencies(Container $container)
+    {
+        $dependencyContainer = $this->getDependencyContainer();
+        if (isset($dependencyContainer)) {
+            $this->getDependencyContainer()->setContainer($container);
+        }
+    }
+
+    /**
      * @param string $key
      * @return mixed
      *
@@ -56,7 +67,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     public function getProvidedDependency($key)
     {
         if (false === $this->container->offsetExists($key)) {
-            throw new \ErrorException("Key $key does not exist in container.");
+            throw new \ErrorException('Key ' . $key . ' does not exist in container.');
         }
 
         return $this->container[$key];

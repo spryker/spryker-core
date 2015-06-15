@@ -17,9 +17,19 @@ class Installer implements InstallerInterface
 {
 
     /**
-     * @var AclFacade
+     * @var Group
      */
-    private $facadeAcl;
+    private $group;
+
+    /**
+     * @var Role
+     */
+    private $role;
+
+    /**
+     * @var Rule
+     */
+    private $rule;
 
     /**
      * @var UserFacade
@@ -32,16 +42,22 @@ class Installer implements InstallerInterface
     protected $config;
 
     /**
-     * @param AclFacade $facadeAcl
+     * @param GroupInterface $group
+     * @param RoleInterface $role
+     * @param RuleInterface $rule
      * @param UserFacade $facadeUser
      * @param AclConfig $settings
      */
     public function __construct(
-        AclFacade $facadeAcl,
+        GroupInterface $group,
+        RoleInterface $role,
+        RuleInterface $rule,
         UserFacade $facadeUser,
         AclConfig $settings
     ) {
-        $this->facadeAcl = $facadeAcl;
+        $this->group = $group;
+        $this->role = $role;
+        $this->rule = $rule;
         $this->facadeUser = $facadeUser;
         $this->config = $settings;
     }
@@ -69,15 +85,15 @@ class Installer implements InstallerInterface
      */
     private function addGroup($name)
     {
-        if (!$this->facadeAcl->hasGroupByName($name)) {
-            $this->facadeAcl->addGroup($name);
+        if (!$this->group->hasGroupName($name)) {
+            $this->group->addGroup($name);
         }
     }
 
     private function addRoles()
     {
         foreach ($this->config->getInstallerRoles() as $role) {
-            if (!$this->facadeAcl->existsRoleByName($role['name'])) {
+            if (!$this->role->hasRoleName($role['name'])) {
                 $this->addRole($role);
             }
         }
@@ -89,12 +105,12 @@ class Installer implements InstallerInterface
      */
     private function addRole(array $role)
     {
-        $group = $this->facadeAcl->getGroupByName($role['group']);
+        $group = $this->group->getByName($role['group']);
         if (!$group) {
             throw new GroupNotFoundException();
         }
 
-        $this->facadeAcl->addRole($role['name'], $group->getIdAclGroup());
+        $this->role->addRole($role['name'], $group->getIdAclGroup());
     }
 
     /**
@@ -103,13 +119,13 @@ class Installer implements InstallerInterface
     private function addRules()
     {
         foreach ($this->config->getInstallerRules() as $rule) {
-            $role = $this->facadeAcl->getRoleByName($rule['role']);
+            $role = $this->role->getByName($rule['role']);
             if (!$role) {
                 throw new RoleNotFoundException();
             }
 
-            if (!$this->facadeAcl->existsRoleRule($role->getIdAclRole(), $rule['bundle'], $rule['controller'], $rule['action'], $rule['type'])) {
-                $this->facadeAcl->addRule(
+            if (!$this->rule->existsRoleRule($role->getIdAclRole(), $rule['bundle'], $rule['controller'], $rule['action'], $rule['type'])) {
+                $this->rule->addRule(
                     $rule['bundle'], $rule['controller'], $rule['action'], $role->getIdAclRole(), $rule['type']
                 );
             }
@@ -123,7 +139,7 @@ class Installer implements InstallerInterface
     private function addUserGroupRelations()
     {
         foreach ($this->config->getInstallerUsers() as $username => $config) {
-            $group = $this->facadeAcl->getGroupByName($config['group']);
+            $group = $this->group->getByName($config['group']);
             if (!$group) {
                 throw new GroupNotFoundException();
             }
@@ -133,9 +149,10 @@ class Installer implements InstallerInterface
                 throw new UserNotFoundException();
             }
 
-            if (!$this->facadeAcl->userHasGroupId($group->getIdAclGroup(), $user->getIdUserUser())) {
-                $this->facadeAcl->addUserToGroup($user->getIdUserUser(), $group->getIdAclGroup());
+            if (!$this->group->hasUser($group->getIdAclGroup(), $user->getIdUserUser())) {
+                $this->group->addUser($user->getIdUserUser(), $group->getIdAclGroup());
             }
         }
     }
+
 }

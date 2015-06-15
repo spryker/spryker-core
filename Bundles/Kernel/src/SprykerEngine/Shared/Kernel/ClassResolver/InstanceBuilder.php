@@ -21,4 +21,5 @@ class InstanceBuilder
             return new $className();
         }
     }
+    
 }

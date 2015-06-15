@@ -4,7 +4,10 @@
 namespace Functional\SprykerFeature\Zed\ProductCategory;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
@@ -21,7 +24,7 @@ use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
-class ProductCategoryFacadeTest extends Test
+class ProductCategoryFacadeTest extends AbstractFunctionalTest
 {
     /**
      * @var ProductCategoryFacade
@@ -60,7 +63,7 @@ class ProductCategoryFacadeTest extends Test
 
         $this->localeFacade = new LocaleFacade(new Factory('Locale'), $this->locator);
         $this->productFacade = new ProductFacade(new Factory('Product'), $this->locator);
-        $this->categoryFacade = new CategoryFacade(new Factory('Category'), $this->locator);
+        $this->categoryFacade = $this->getFacade('SprykerFeature', 'Category');
         $this->productCategoryFacade = new ProductCategoryFacade(new Factory('ProductCategory'), $this->locator);
         $this->productCategoryQueryContainer = new ProductQueryContainer(
             new PersistenceFactory('ProductCategory'),
@@ -83,11 +86,11 @@ class ProductCategoryFacadeTest extends Test
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractSku);
         $this->productFacade->createConcreteProduct($concreteSku, $idAbstractProduct);
 
-        $categoryTransfer = new \Generated\Shared\Transfer\CategoryTransfer();
+        $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setName($categoryName);
         $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $locale);
 
-        $categoryNodeTransfer = new \Generated\Shared\Transfer\NodeTransfer();
+        $categoryNodeTransfer = new NodeTransfer();
         $categoryNodeTransfer->setFkCategory($idCategory);
         $categoryNodeTransfer->setIsRoot(true);
         $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $locale);

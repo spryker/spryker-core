@@ -13,7 +13,7 @@ interface RoleInterface
      * @param string $name
      * @param int $idGroup
      *
-     * @return AclRoleTransfer
+     * @return RoleTransfer
      * @throws RoleNameExistsException
      */
     public function addRole($name, $idGroup);

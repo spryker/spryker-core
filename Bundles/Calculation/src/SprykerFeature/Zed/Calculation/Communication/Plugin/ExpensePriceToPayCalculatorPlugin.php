@@ -3,12 +3,12 @@
 namespace SprykerFeature\Zed\Calculation\Communication\Plugin;
 
 use Generated\Shared\Calculation\OrderInterface;
-use SprykerFeature\Zed\Calculation\Communication\CalculationDependencyContainer;
+use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method CalculationDependencyContainer getDependencyContainer()
+ * @method CalculationFacade getFacade()
  */
 class ExpensePriceToPayCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
@@ -18,6 +18,6 @@ class ExpensePriceToPayCalculatorPlugin extends AbstractPlugin implements Calcul
      */
     public function recalculate(OrderInterface $calculableContainer)
     {
-        $this->getDependencyContainer()->getCalculationFacade()->recalculateExpensePriceToPay($calculableContainer);
+        $this->getFacade()->recalculateExpensePriceToPay($calculableContainer);
     }
 }

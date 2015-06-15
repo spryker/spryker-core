@@ -16,14 +16,14 @@ interface ReaderInterface
     /**
      * @param string $sku
      * @param string $priceTypeName
-     * 
+     *
      * @return int
      */
     public function getPriceBySku($sku, $priceTypeName = null);
 
     /**
      * @param string $priceTypeNameName
-     * 
+     *
      * @return SpyPriceType
      */
     public function getPriceTypeByName($priceTypeNameName);
@@ -31,7 +31,7 @@ interface ReaderInterface
     /**
      * @param string $sku
      * @param string $priceTypeName
-     * 
+     *
      * @return bool
      */
     public function hasValidPrice($sku, $priceTypeName = null);
@@ -49,16 +49,16 @@ interface ReaderInterface
      * @return bool
      */
     public function hasConcreteProduct($sku);
-    
+
     /**
      * @param string $sku
-     * 
+     *
      * @return int
      * @throws MissingProductException
      */
     public function getAbstractProductIdBySku($sku);
 
-    
+
      /**
      * @param string $sku
      *
@@ -70,8 +70,8 @@ interface ReaderInterface
     /**
      * @param string $sku
      * @param string $priceTypeName
-     * 
-     * @return SpyPriceProduct
+     *
+     * @return int
      */
     public function getProductPriceIdBySku($sku, $priceTypeName);
 }

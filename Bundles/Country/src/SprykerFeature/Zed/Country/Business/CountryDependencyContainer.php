@@ -11,11 +11,13 @@ use Psr\Log\LoggerInterface;
 use SprykerFeature\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use SprykerFeature\Zed\Country\Business\Internal\Install;
 use SprykerFeature\Zed\Country\CountryConfig;
+use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
 
 /**
  * @method CountryBusiness getFactory()
  * @method CountryConfig getConfig()
+ * @method CountryQueryContainer getQueryContainer()
  */
 class CountryDependencyContainer extends AbstractDependencyContainer
 {
@@ -52,8 +54,7 @@ class CountryDependencyContainer extends AbstractDependencyContainer
     public function createCountryManager()
     {
         return $this->getFactory()->createCountryManager(
-            $this->createCountryQueryContainer(),
-            $this->getLocator()
+            $this->getQueryContainer()
         );
     }
 
@@ -63,17 +64,8 @@ class CountryDependencyContainer extends AbstractDependencyContainer
     protected function createRegionManager()
     {
         return $this->getFactory()->createRegionManager(
-            $this->createCountryQueryContainer(),
-            $this->getLocator()
+            $this->getQueryContainer()
         );
-    }
-
-    /**
-     * @return CountryQueryContainerInterface
-     */
-    protected function createCountryQueryContainer()
-    {
-        return $this->getLocator()->country()->queryContainer();
     }
 
     /**
@@ -87,4 +79,5 @@ class CountryDependencyContainer extends AbstractDependencyContainer
             $filePath
         );
     }
+
 }

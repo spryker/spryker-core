@@ -3,34 +3,25 @@
 
 namespace SprykerFeature\Zed\Country\Business;
 
-
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Country\Business\Exception\RegionExistsException;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
+use SprykerFeature\Zed\Country\Persistence\Propel\SpyRegion;
 
 class RegionManager implements RegionManagerInterface
 {
+
     /**
      * @var CountryQueryContainerInterface
      */
     protected $countryQueryContainer;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @param CountryQueryContainerInterface $countryQueryContainer
-     * @param LocatorLocatorInterface $locator
      */
     public function __construct(
-        CountryQueryContainerInterface $countryQueryContainer,
-        LocatorLocatorInterface $locator
+        CountryQueryContainerInterface $countryQueryContainer
     ) {
         $this->countryQueryContainer = $countryQueryContainer;
-        $this->locator = $locator;
     }
 
     /**
@@ -44,7 +35,7 @@ class RegionManager implements RegionManagerInterface
     {
         $this->checkRegionDoesNotExist($isoCode);
 
-        $region = $this->locator->country()->entitySpyRegion();
+        $region = new SpyRegion();
         $region
             ->setIso2Code($isoCode)
             ->setFkCountry($fkCountry)

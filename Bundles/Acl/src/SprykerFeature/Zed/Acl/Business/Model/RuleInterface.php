@@ -65,7 +65,7 @@ interface RuleInterface
      *
      * @return RuleTransfer
      */
-    public function findByGroupId($idGroup);
+    public function getRulesForGroupId($idGroup);
 
     /**
      * @param int $id
