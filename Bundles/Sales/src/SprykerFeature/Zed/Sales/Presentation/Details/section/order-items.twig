@@ -10,35 +10,29 @@
                 >
             <table class="spy-grid">
                 <tr class="text-left">
-                    {#<th>select</th>#}
                     <th>Item name</th>
                     <th>SKU</th>
-                    {#<th>EAN</th>#}
                     <th>Unit Price</th>
                     <th>QTY</th>
                     <th>Total Price</th>
                 </tr>
 
                 <tr class="ng-scope" ng-repeat="row in rows">
-                    {#<td><input type="checkbox" name="select[]"/></td>#}
                     <td>{[{ row.name }]}</td>
                     <td>{[{ row.sku }]}</td>
-                    {#<td>{[{ row.ean }]}</td>#}
                     <td>{[{ row.gross_price }]} &euro;</td>
                     <td>{[{ row.qty }]}</td>
                     <td>{[{ row.gross_price * row.qty }]} &euro;</td>
                 </tr>
 
                 {#
-                @todo add a new createCustomRowRenderer later, now this needs to be finished with less features
+                @todo check angular compatibility
                 <tr>
                     <td>Total</td>
                     <td>-</td>
                     <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>3</td>
-                    <td>&euro; 9.99</td>
+                    <td>{[{ total.qty }]}</td>
+                    <td>&euro; {[{ total.total_price_to_pay }]}</td>
                 </tr>
                 #}
             </table>

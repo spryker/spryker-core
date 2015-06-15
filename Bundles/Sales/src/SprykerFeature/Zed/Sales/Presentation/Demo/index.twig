@@ -1,0 +1,22 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block content %}
+
+    <section spy-app="spyForm">
+
+        <spy-form
+                class="spy-layout sparse"
+                src="/sales/demo/add"
+                name="demo_add"
+                channel="sales"
+                model='{"fields":[{"name": "comment", "type":"field"}], "state":"new"}'
+                >
+            <div spy-input-text="field.comment" options='{label: "Comment"}'></div>
+
+            <button>Go</button>
+
+        </spy-form>
+
+    </section>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Sales\Communication\Form;
+namespace SprykerFeature\Zed\Sales\Communication\Form;
 
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -15,7 +15,9 @@ class CommentForm extends AbstractForm
      */
     protected function getDefaultData()
     {
-        return [];
+        return [
+            'username' => 'Spryker',
+        ];
     }
 
     /**
@@ -24,18 +26,24 @@ class CommentForm extends AbstractForm
     public function addFormFields()
     {
         $fields = [];
-        $fields[] = $this->addField('comment')
+        $fields[] = $this->addField('message')
             ->setLabel('Add new comment')
             ->setRefresh(false)
-            ->setConstraints([
-                new Required([
-                    new Type([
-                        'type' => 'string'
-                    ]),
-                    new NotBlank()
-                ])
-            ]);
-
-        return $fields;
+//            ->setConstraints([
+//                new Required([
+//                    new Type([
+//                        'type' => 'string',
+//                        'message' => 'zo',
+//                    ]),
+//                    new NotBlank()
+//                ])
+//            ])
+        ;
+//        $fields[] = $this->addField('fk_sales_order')
+//            ->setRefresh(false)
+//        ;
+//        $fields[] = $this->addField('username')
+//            ->setRefresh(false)
+//        ;
     }
 }

@@ -15,6 +15,15 @@ class DetailsController extends AbstractController
     {
         $orderId = $request->get('id');
 
+//        $userDetails = $this->
+
+            $this->getDependencyContainer()
+//            ->getUserDetailsForOrder($orderId)
+            ->createDetailsPage()
+        ;
+
+
+
         return [
             'order_id' => $orderId,
         ];

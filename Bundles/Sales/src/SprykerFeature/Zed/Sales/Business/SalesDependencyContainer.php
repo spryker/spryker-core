@@ -11,4 +11,21 @@ use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 class SalesDependencyContainer extends AbstractDependencyContainer
 {
 
+    /**
+     * @return CommentManager
+     */
+    public function createCommentsManager()
+    {
+        return $this->getFactory()->createModelCommentManager(
+            $this->createCommentsQueryContainer()
+        );
+    }
+
+    /**
+     * @return SalesQueryContainerInterface
+     */
+    public function createCommentsQueryContainer()
+    {
+        return $this->getLocator()->sales()->queryContainer();
+    }
 }

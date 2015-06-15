@@ -16,11 +16,37 @@ class SalesDependencyContainer extends AbstractDependencyContainer
         return $this->getLocator()->sales()->facade();
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function getCommentForm(Request $request)
     {
         return $this->getFactory()->createFormCommentForm(
             $request,
             $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function getDemoCommentForm(Request $request)
+    {
+        return $this->getFactory()->createFormDemoCommentForm(
+            $request,
+            $this->getQueryContainer()
+        );
+    }
+
+    public function getCommentsGridByOrderId(Request $request)
+    {
+        return $this->getFactory()->createGridCommentsGrid(
+            $this->getQueryContainer()->queryCommentsByOrderId($request->get('orderId')),
+            $request
         );
     }
 
@@ -35,6 +61,18 @@ class SalesDependencyContainer extends AbstractDependencyContainer
             $this->getQueryContainer()->querySales(),
             $request
         );
+    }
+
+    public function createDetailsPage()
+    {
+
+    }
+
+
+
+    public function getUserDetailsForOrder($orderId)
+    {
+        $this->getQueryContainer();
     }
 
     /**
