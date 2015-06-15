@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\CategoryExporter\Communication\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Category\CategoryResourceSettings;
+use SprykerFeature\Zed\Category\CategoryConfig;
 use SprykerFeature\Zed\CategoryExporter\Business\CategoryExporterFacade;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
@@ -21,7 +21,7 @@ class CategoryNodeProcessorPlugin extends AbstractPlugin implements DataProcesso
      */
     public function getProcessableType()
     {
-        return CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE;
+        return CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
     }
 
     /**

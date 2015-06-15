@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder;
 
-use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuilder;
+use SprykerFeature\Zed\Category\CategoryConfig;
 
 abstract class SharedCategoryResourceKeyBuilder extends SharedResourceKeyBuilder
 {
@@ -12,6 +12,6 @@ abstract class SharedCategoryResourceKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return CategoryResourceSettings::RESOURCE_TYPE_CATEGORY_NODE;
+        return CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
     }
 }

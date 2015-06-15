@@ -3,7 +3,6 @@
 namespace SprykerFeature\Sdk\CategoryExporter\Builder;
 
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerFeature\Shared\Category\CategoryResourceSettings;
 use SprykerFeature\Shared\KvStorage\Client\ReadInterface;
 
 class CategoryTreeBuilder
