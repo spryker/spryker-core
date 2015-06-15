@@ -21,8 +21,8 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 {
 
     /**
-     * @param $idOrder
-     * @param $flag
+     * @param int $idOrder
+     * @param string $flag
      *
      * @return bool
      */
@@ -35,8 +35,8 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @param $idOrder
-     * @param $flag
+     * @param int $idOrder
+     * @param string $flag
      *
      * @return bool
      */
