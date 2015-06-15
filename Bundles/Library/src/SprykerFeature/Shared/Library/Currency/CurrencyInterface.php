@@ -1,4 +1,5 @@
 <?php
+
 namespace SprykerFeature\Shared\Library\Currency;
 
 interface CurrencyInterface
