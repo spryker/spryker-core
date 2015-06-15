@@ -80,7 +80,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->queryAssociatedAbstractProductIdsForProductOptionType($productOptionTypeEntity->getIdProductOptionType())
             ->find();
 
-        foreach($associatedAbstractProductIds as $idAbstractProduct) {
+        foreach ($associatedAbstractProductIds as $idAbstractProduct) {
             $this->productFacade->touchProductActive($idAbstractProduct);
         }
 
@@ -166,7 +166,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->queryAssociatedAbstractProductIdsForProductOptionValue($productOptionValueEntity->getIdProductOptionValue())
             ->find();
 
-        foreach($associatedAbstractProductIds as $idAbstractProduct) {
+        foreach ($associatedAbstractProductIds as $idAbstractProduct) {
             $this->productFacade->touchProductActive($idAbstractProduct);
         }
 
