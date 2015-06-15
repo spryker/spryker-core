@@ -19,6 +19,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraintQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
+use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 
 /**
  * @group Business
@@ -81,6 +82,33 @@ class DataImportWriterTest extends Test
         $this->assertEquals('Violet', $optionValues[0]->getSpyProductOptionValueTranslations()[0]->getName());
     }
 
+    public function testTouchUpdatedWhenUpdatingProductOptionType()
+    {
+        $product = $this->createConcreteProduct();
+        $optionType = $this->createOptionTypeWithValue();
+        $this->createProductOptionTypeUsage($product, $optionType);
+
+        $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
+
+        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
+    }
+
+    public function testTouchUpdatedWhenUpdatingProductOptionValue()
+    {
+        $product = $this->createConcreteProduct();
+        $optionType = $this->createOptionTypeWithValue();
+        $optionTypeUsage = $this->createProductOptionTypeUsage($product, $optionType);
+        $optionValueUsage = (new SpyProductOptionValueUsage())
+            ->setFkProductOptionTypeUsage($optionTypeUsage->getIdProductOptionTypeUsage())
+            ->setFkProductOptionValue($optionType->getSpyProductOptionValues()[0]->getIdProductOptionValue());
+
+        $optionValueUsage->save();
+
+        $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
+
+        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
+    }
+
     public function testImportProductOptionTypeUsage()
     {
         $product = $this->createConcreteProduct();
@@ -97,6 +125,8 @@ class DataImportWriterTest extends Test
             ->find();
 
         $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
+
+        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
 
     public function testImportProductOptionValueUsage()
@@ -114,6 +144,8 @@ class DataImportWriterTest extends Test
             ->find();
 
         $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
+
+        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
 
     public function testImportProductOptionTypeUsageExclusion()
@@ -134,6 +166,8 @@ class DataImportWriterTest extends Test
             ->find();
 
         $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
+
+        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
 
     public function testImportProductOptionValueUsageConstraint()
@@ -158,6 +192,8 @@ class DataImportWriterTest extends Test
             ->find();
 
         $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
+
+        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
 
     public function testImportProductOptionPresetConfiguration()
@@ -186,6 +222,8 @@ class DataImportWriterTest extends Test
         foreach($values as $value) {
             $this->assertContains($value->getFkProductOptionValueUsage(), [$productOptionValueUsageSmall->getIdProductOptionValueUsage(), $productOptionValueUsageViolet->getIdProductOptionValueUsage()]);
         }
+
+        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
 
     private function createConcreteProduct()
@@ -218,5 +256,19 @@ class DataImportWriterTest extends Test
         $productOptionTypeUsage->save();
 
         return $productOptionTypeUsage;
+    }
+
+    private function performAssertionOnTouchTable($idAbstractProduct)
+    {
+        $query = SpyTouchQuery::create()
+            ->filterByItemType('abstract_product')
+            ->limit(1)
+            ->orderByIdTouch('desc')
+            ->find();
+
+        $this->assertEquals(1, $query->count());
+        foreach($query as $touchEntity) {
+            $this->assertEquals($touchEntity->getItemId(), $idAbstractProduct);
+        }
     }
 }
