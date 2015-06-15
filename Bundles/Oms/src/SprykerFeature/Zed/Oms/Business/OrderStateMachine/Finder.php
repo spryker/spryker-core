@@ -39,6 +39,53 @@ class Finder implements FinderInterface
     }
 
     /**
+     * @param int $idOrder
+     * @param string $flag
+     *
+     * @return bool
+     */
+    public function isOrderFlagged($idOrder, $flag)
+    {
+        $order = $this->queryContainer
+            ->queryOrder($idOrder)
+            ->findOne()
+        ;
+
+        $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
+
+        return (count($flaggedOrderItems) > 0);
+    }
+
+    /**
+     * @param int $idOrder
+     * @param string $flag
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedAll($idOrder, $flag)
+    {
+        $order = $this->queryContainer
+            ->queryOrder($idOrder)
+            ->findOne()
+        ;
+
+        $orderItems = $this->queryContainer
+            ->queryOrderItemsByOrder($idOrder)
+            ->find()
+        ;
+
+        $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
+
+        foreach ($orderItems as $orderItem) {
+            if (in_array($orderItem, $flaggedOrderItems) === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @param string $sku
      *
      * @return SpySalesOrderItemQuery
@@ -67,7 +114,7 @@ class Finder implements FinderInterface
      */
     protected function getOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
-        $orderItems = $this->queryContainer->getOrderItemsForSku($states, $sku, $returnTest);
+        $orderItems = $this->queryContainer->queryOrderItemsForSku($states, $sku, $returnTest);
 
         return $orderItems;
     }
@@ -94,7 +141,7 @@ class Finder implements FinderInterface
     public function getGroupedManuallyExecutableEvents(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order)
     {
         $processBuilder = clone $this->builder;
-        $processName = current($order->getItems())->getProcess()->getName();
+        $processName = $order->getItems()->getFirst()->getProcess()->getName();
         $process = $processBuilder->createProcess($processName);
         $eventsBySource = $process->getManualEventsBySource();
 
@@ -189,8 +236,11 @@ class Finder implements FinderInterface
     protected function getItemsByFlag(SpySalesOrder $order, $flag, $hasFlag)
     {
         $items = $order->getItems();
-        $item = current($items);
-        $states = $this->getStatesByFlag($item->getProcess()->getName(), $flag, $hasFlag);
+        $states = $this->getStatesByFlag(
+            $items->getFirst()->getProcess()->getName(),
+            $flag,
+            $hasFlag
+        );
 
         $selectedItems = [];
         foreach ($items as $item) {

@@ -21,6 +21,34 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 {
 
     /**
+     * @param int $idOrder
+     * @param string $flag
+     *
+     * @return bool
+     */
+    public function isOrderFlagged($idOrder, $flag)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderStateMachineFinder()
+            ->isOrderFlagged($idOrder, $flag)
+        ;
+    }
+
+    /**
+     * @param int $idOrder
+     * @param string $flag
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedAll($idOrder, $flag)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderStateMachineFinder()
+            ->isOrderFlaggedAll($idOrder, $flag)
+        ;
+    }
+
+    /**
      * @param string $eventId
      * @param array $orderItemIds
      * @param array $data

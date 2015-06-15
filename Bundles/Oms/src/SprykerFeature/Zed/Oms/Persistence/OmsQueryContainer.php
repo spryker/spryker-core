@@ -7,6 +7,7 @@ use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLogQuery;
@@ -21,7 +22,7 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return ModelCriteria
      */
-    public function getOrderItemsByState(array $states, $processName)
+    public function queryOrderItemsByState(array $states, $processName)
     {
         return SpySalesOrderItemQuery::create()
             ->joinProcess(null, $joinType = Criteria::INNER_JOIN)
@@ -36,7 +37,7 @@ class OmsQueryContainer extends AbstractQueryContainer
      * @return ModelCriteria
      * @throws PropelException
      */
-    public function getLogForOrder(SpySalesOrder $order)
+    public function queryLogForOrder(SpySalesOrder $order)
     {
         return SpyOmsTransitionLogQuery::create()
             ->filterByOrder($order)
@@ -48,7 +49,7 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return ModelCriteria
      */
-    public function findItemsWithExpiredTimeouts(DateTime $now)
+    public function queryItemsWithExpiredTimeouts(DateTime $now)
     {
         return SpySalesOrderItemQuery::create()
             ->joinEventTimeout()
@@ -91,7 +92,7 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return SpySalesOrderItemQuery
      */
-    public function getOrderItemsForSku(array $states, $sku, $returnTest = true)
+    public function queryOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
         $query = SpySalesOrderItemQuery::create();
 
@@ -115,10 +116,34 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return SpySalesOrderItemQuery
      */
-    public function getOrderItems(array $orderItemIds)
+    public function queryOrderItems(array $orderItemIds)
     {
         return SpySalesOrderItemQuery::create()
             ->filterByIdSalesOrderItem($orderItemIds)
+        ;
+    }
+
+    /**
+     * @param int $idOrder
+     *
+     * @return SpySalesOrderQuery
+     */
+    public function queryOrder($idOrder)
+    {
+        return SpySalesOrderQuery::create()
+            ->filterByIdSalesOrder($idOrder)
+        ;
+    }
+
+    /**
+     * @param int $idOrder
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function queryOrderItemsByOrder($idOrder)
+    {
+        return SpySalesOrderItemQuery::create()
+            ->filterByFkSalesOrder($idOrder)
         ;
     }
 }

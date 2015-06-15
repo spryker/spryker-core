@@ -278,7 +278,7 @@ class TransitionLog implements TransitionLogInterface
      */
     public function getLogForOrder(SpySalesOrder $order)
     {
-        return $this->queryContainer->getLogForOrder($order)->find();
+        return $this->queryContainer->queryLogForOrder($order)->find();
     }
 
 }
