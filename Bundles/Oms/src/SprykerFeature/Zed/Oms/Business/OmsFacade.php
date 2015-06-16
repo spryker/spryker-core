@@ -327,7 +327,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = [])
     {
         assert(is_string($eventId));
-        $orderItemsArray = $orderItems->toArray();
+        $orderItemsArray = $orderItems->getData();
 
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine($logContext)
@@ -344,7 +344,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = [])
     {
-        $orderItemsArray = $orderItems->toArray();
+        $orderItemsArray = $orderItems->getData();
 
 
         return $this->getDependencyContainer()
