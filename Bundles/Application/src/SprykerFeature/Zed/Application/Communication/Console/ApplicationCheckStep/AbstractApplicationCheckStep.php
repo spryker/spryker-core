@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Console\ApplicationCheckStep;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerFeature\Zed\Application\Business\ApplicationFacade;
@@ -38,6 +38,14 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
         if ($this->logger) {
             $this->logger->log($level, $message, $context);
         }
+    }
+
+    /**
+     * @param AbstractDependencyContainer $dependencyContainer
+     */
+    public function setDependencyContainer(AbstractDependencyContainer $dependencyContainer)
+    {
+        $this->dependencyContainer = $dependencyContainer;
     }
 
     /**

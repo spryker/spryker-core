@@ -12,6 +12,7 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
@@ -52,6 +53,14 @@ class Console extends SymfonyCommand
      * @var LoggerInterface
      */
     protected $messenger;
+
+    /**
+     * @param AbstractDependencyContainer $dependencyContainer
+     */
+    public function setDependencyContainer(AbstractDependencyContainer $dependencyContainer)
+    {
+        $this->dependencyContainer = $dependencyContainer;
+    }
 
     /**
      * @param Container $container

@@ -65,8 +65,7 @@ abstract class AbstractController
             $this->locator->messenger()->pluginTwigMessengerPlugin()->setMessenger(
                 $this->messenger
             )
-        )
-        ;
+        );
 
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
