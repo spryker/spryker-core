@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
-
 use Generated\Shared\Payone\AuthorizationInterface;
 use Generated\Shared\Payone\CaptureInterface;
 use Generated\Shared\Payone\DebitInterface;
