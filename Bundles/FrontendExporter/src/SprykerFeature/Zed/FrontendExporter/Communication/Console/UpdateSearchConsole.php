@@ -2,9 +2,13 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Communication\Console;
 
+use SprykerFeature\Zed\FrontendExporter\Business\FrontendExporterFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @method FrontendExporterFacade getFacade()
+ */
 class UpdateSearchConsole extends AbstractExporterConsole
 {
     const COMMAND_NAME = 'frontend-exporter:update-search';
@@ -26,8 +30,8 @@ class UpdateSearchConsole extends AbstractExporterConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $locale = \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale();
-        $exportResults = $this->locator->frontendExporter()->facade()->updateSearchForLocale($locale);
+        $locale = $this->getFacade()->getCurrentLocale();
+        $exportResults = $this->getFacade()->updateSearchForLocale($locale);
 
         $this->info($this->buildSummary($exportResults));
     }

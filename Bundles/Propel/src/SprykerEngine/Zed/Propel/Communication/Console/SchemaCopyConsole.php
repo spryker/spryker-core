@@ -11,6 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @method PropelFacade getFacade()
+ */
 class SchemaCopyConsole extends Console
 {
 
@@ -34,13 +37,5 @@ class SchemaCopyConsole extends Console
     {
         $this->getFacade()->cleanPropelSchemaDirectory();
         $this->getFacade()->copySchemaFilesToTargetDirectory();
-    }
-
-    /**
-     * @return PropelFacade
-     */
-    private function getFacade()
-    {
-        return $this->getLocator()->propel()->facade();
     }
 }

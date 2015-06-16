@@ -2,6 +2,10 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Console\ApplicationCheckStep;
 
+use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Zed\Kernel\Container;
+use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 use SprykerFeature\Zed\Application\Communication\ApplicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -21,19 +25,6 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     protected $dependencyContainer;
 
     /**
-     * @param Factory $factory
-     * @param Locator $locator
-     */
-    public function __construct(Factory $factory, Locator $locator)
-    {
-        $this->factory = $factory;
-
-        if ($factory->exists('DependencyContainer')) {
-            $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
-        }
-    }
-
-    /**
      * Logs with an arbitrary level.
      *
      * @param mixed $level
@@ -47,6 +38,41 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
         if ($this->logger) {
             $this->logger->log($level, $message, $context);
         }
+    }
+
+    /**
+     * @param Container $container
+     */
+    public function setExternalDependencies(Container $container)
+    {
+        $dependencyContainer = $this->getDependencyContainer();
+        if (isset($dependencyContainer)) {
+            $this->getDependencyContainer()->setContainer($container);
+        }
+    }
+
+    /**
+     * @return AbstractDependencyContainer
+     */
+    protected function getDependencyContainer()
+    {
+        return $this->dependencyContainer;
+    }
+
+    /**
+     * @param AbstractFacade $facade
+     */
+    public function setFacade(AbstractFacade $facade)
+    {
+        $this->facade = $facade;
+    }
+
+    /**
+     * @return AbstractFacade
+     */
+    protected function getFacade()
+    {
+        return $this->facade;
     }
 
     abstract public function run();

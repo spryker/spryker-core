@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\FrontendExporter\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\FrontendExporterBusiness;
+use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\FrontendExporter;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Reader\KeyValue\RedisReader;
@@ -22,6 +23,7 @@ use SprykerFeature\Zed\FrontendExporter\Business\Internal\InstallElasticsearch;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\FailedResultInterface;
 use SprykerFeature\Zed\FrontendExporter\FrontendExporterConfig;
+use SprykerFeature\Zed\FrontendExporter\FrontendExporterDependencyProvider;
 use SprykerFeature\Zed\FrontendExporter\Persistence\FrontendExporterQueryContainer;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 
@@ -265,5 +267,13 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     protected function createSearchMarkerKeyBuilder()
     {
         return $this->getFactory()->createExporterKeyBuilderSearchMarkerKeyBuilder();
+    }
+
+    /**
+     * @return LocaleFacade
+     */
+    public function createLocaleFacade()
+    {
+        return $this->getProvidedDependency(FrontendExporterDependencyProvider::FACADE_LOCALE);
     }
 }

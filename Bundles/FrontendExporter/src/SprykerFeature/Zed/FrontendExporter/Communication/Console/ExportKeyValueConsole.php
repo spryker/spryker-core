@@ -2,11 +2,16 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Communication\Console;
 
+use SprykerFeature\Zed\FrontendExporter\Business\FrontendExporterFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @method FrontendExporterFacade getFacade()
+ */
 class ExportKeyValueConsole extends AbstractExporterConsole
 {
+
     const COMMAND_NAME = 'frontend-exporter:export-key-value';
     const COMMAND_DESCRIPTION = 'Export key value';
 
@@ -26,8 +31,8 @@ class ExportKeyValueConsole extends AbstractExporterConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $locale = $this->locator->locale()->facade()->getCurrentLocale();
-        $exportResults = $this->locator->frontendExporter()->facade()->exportKeyValueForLocale($locale);
+        $locale = $this->getFacade()->getCurrentLocale();
+        $exportResults = $this->getFacade()->exportKeyValueForLocale($locale);
 
         $this->info($this->buildSummary($exportResults));
     }
