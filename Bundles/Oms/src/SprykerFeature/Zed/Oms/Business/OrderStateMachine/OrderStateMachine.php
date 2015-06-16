@@ -11,7 +11,6 @@ use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Util\TransitionLogInterface;
-use SprykerFeature\Zed\Oms\Business\Util\CollectionToArrayTransformerInterface;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStateQuery;
@@ -74,11 +73,6 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $commands;
 
     /**
-     * @var CollectionToArrayTransformerInterface
-     */
-    protected $collectionToArrayTransformer;
-
-    /**
      * @var FactoryInterface
      */
     protected $factory;
@@ -88,7 +82,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param BuilderInterface $builder
      * @param TransitionLogInterface $transitionLog
      * @param TimeoutInterface $timeout
-     * @param CollectionToArrayTransformerInterface $collectionToArrayTransformer
      * @param ReadOnlyArrayObject $activeProcesses
      * @param array $conditions
      * @param array $commands
@@ -99,7 +92,6 @@ class OrderStateMachine implements OrderStateMachineInterface
         BuilderInterface $builder,
         TransitionLogInterface $transitionLog,
         TimeoutInterface $timeout,
-        CollectionToArrayTransformerInterface $collectionToArrayTransformer,
         ReadOnlyArrayObject $activeProcesses,
         array $conditions,
         array $commands,
@@ -109,7 +101,6 @@ class OrderStateMachine implements OrderStateMachineInterface
         $this->builder = $builder;
         $this->transitionLog = $transitionLog;
         $this->timeout = $timeout;
-        $this->collectionToArrayTransformer = $collectionToArrayTransformer;
         $this->activeProcesses = $activeProcesses;
         $this->conditions = $conditions;
         $this->commands = $commands;
@@ -172,7 +163,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         $orderItems = $this->queryContainer
             ->queryOrderItems($orderItemIds)
             ->find()
-        ;
+            ->getData();
 
         return $this->triggerEvent($eventId, $orderItems, $data);
     }
@@ -189,7 +180,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         $orderItems = $this->queryContainer
             ->queryOrderItems([$orderItemId])
             ->find()
-        ;
+            ->getData();
 
         return $this->triggerEvent($eventId, $orderItems, $data);
     }
@@ -223,7 +214,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         $orderItems = $this->queryContainer
             ->queryOrderItems($orderItemIds)
             ->find()
-        ;
+            ->getData();
 
         return $this->triggerEventForNewItem($orderItems, $data);
     }
@@ -689,9 +680,10 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function getOrderItemsByState(array $states, ProcessInterface $process)
     {
-        $orderItems = $this->queryContainer->queryOrderItemsByState($states, $process->getName())->find();
-
-        return $this->collectionToArrayTransformer->transformCollectionToArray($orderItems);
+        return $this->queryContainer
+            ->queryOrderItemsByState($states, $process->getName())
+            ->find()
+            ->getData();
     }
 
     /**
