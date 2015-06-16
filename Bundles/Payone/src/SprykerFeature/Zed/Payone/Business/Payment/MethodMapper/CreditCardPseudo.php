@@ -4,11 +4,12 @@ namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Payone\AuthorizationInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-//use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\CreditCardContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
 use Generated\Shared\Payone\CreditCardInterface as PayoneCreditCardInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use SprykerEngine\Shared\Kernel\Store;
@@ -84,7 +85,6 @@ class CreditCardPseudo extends AbstractMapper
         return $creditCardCheckContainer;
     }
 
-
     /**
      * @param AuthorizationInterface $authorizationData
      * @return CreditCardPseudoContainer
@@ -122,6 +122,7 @@ class CreditCardPseudo extends AbstractMapper
 
         $personalContainer->setFirstName($authorizationData->getOrder()->getFirstName());
         $personalContainer->setLastName($authorizationData->getOrder()->getLastName());
+        //@todo don't use singleton
         $personalContainer->setCountry(Store::getInstance()->getCurrentCountry());
 
         return $personalContainer;
