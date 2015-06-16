@@ -11,6 +11,20 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class CustomerFacade extends AbstractFacade
 {
+
+    /**
+     * @param string $email
+     *
+     * @return bool
+     */
+    public function hasEmail($email)
+    {
+        return $this->getDependencyContainer()
+            ->createCustomer()
+            ->hasEmail($email)
+        ;
+    }
+
     /**
      * @param CustomerTransfer $customerTransfer
      *
