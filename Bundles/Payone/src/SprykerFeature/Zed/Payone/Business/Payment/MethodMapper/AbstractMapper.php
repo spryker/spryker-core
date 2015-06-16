@@ -88,6 +88,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface, PayoneApi
         $debitContainer->setAmount($debitData->getAmount());
         $debitContainer->setSequenceNumber(
             $this->getSequenceNumberProvider()->getNextSequenceNumber($debitData->getPayment()->getTransactionId())
+        +1
         );
 //@todo fix sequence numbers
         return $debitContainer;
