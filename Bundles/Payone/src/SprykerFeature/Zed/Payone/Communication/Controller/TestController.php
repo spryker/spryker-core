@@ -7,6 +7,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\AuthorizationTransfer;
 use Generated\Shared\Transfer\CaptureTransfer;
 use Generated\Shared\Transfer\DebitTransfer;
+use Generated\Shared\Transfer\RefundTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\CreditCardTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -15,7 +16,7 @@ use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
 class TestController extends AbstractController implements PayoneApiConstants
 {
-    const TEST_TRANSACTION_ID = '164140236';
+    const TEST_TRANSACTION_ID = '164428051';
     const TEST_VISA_PAN = '4111111111111111';
     const TEST_PSEUDO_PAN = '4100000145859436';
 
@@ -47,6 +48,36 @@ class TestController extends AbstractController implements PayoneApiConstants
         $capture->setAmount($order->getTotals()->getGrandTotal());
 
         $result = $this->getLocator()->payone()->facade()->capture($capture);
+
+        echo '<pre>' . var_dump($result) . '</pre>';die;
+    }
+
+    public function vorDebitAction()
+    {
+        $payment = new PayonePaymentTransfer();
+        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setPaymentMethod(self::PAYMENT_METHOD_PREPAYMENT);
+
+        $debit = new DebitTransfer();
+        $debit->setPayment($payment);
+        $debit->setAmount(-100);
+
+        $result = $this->getLocator()->payone()->facade()->debit($debit);
+
+        echo '<pre>' . var_dump($result) . '</pre>';die;
+    }
+
+    public function vorRefundAction()
+    {
+        $payment = new PayonePaymentTransfer();
+        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setPaymentMethod(self::PAYMENT_METHOD_PREPAYMENT);
+
+        $refund = new RefundTransfer();
+        $refund->setPayment($payment);
+        $refund->setAmount(-100);
+
+        $result = $this->getLocator()->payone()->facade()->refund($refund);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -106,6 +137,39 @@ class TestController extends AbstractController implements PayoneApiConstants
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
 
+    public function ccDebitAction()
+    {
+        $payment = new PayonePaymentTransfer();
+        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setPaymentMethod(self::PAYMENT_METHOD_CREDITCARD_PSEUDO);
+
+        $debit = new DebitTransfer();
+        $debit->setPayment($payment);
+        $debit->setAmount(-100);
+
+        $result = $this->getLocator()->payone()->facade()->debit($debit);
+
+        echo '<pre>' . var_dump($result) . '</pre>';die;
+    }
+
+    public function ccRefundAction()
+    {
+        $payment = new PayonePaymentTransfer();
+        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setPaymentMethod(self::PAYMENT_METHOD_CREDITCARD_PSEUDO);
+
+        $refund = new RefundTransfer();
+        $refund->setPayment($payment);
+        $refund->setAmount(-100);
+
+        $refund->setUseCustomerdata(self::USE_CUSTOMER_DATA_YES);
+        $refund->setNarrativeText('Test narrative');
+//        echo '<pre>' . var_dump($refund) . '</pre>';die;
+
+        $result = $this->getLocator()->payone()->facade()->refund($refund);
+
+        echo '<pre>' . var_dump($result) . '</pre>';die;
+    }
 
     public function ppCheckAuthAction()
     {
@@ -149,21 +213,6 @@ class TestController extends AbstractController implements PayoneApiConstants
         $capture->setAmount($order->getTotals()->getGrandTotal());
 
         $result = $this->getLocator()->payone()->facade()->capture($capture);
-
-        echo '<pre>' . var_dump($result) . '</pre>';die;
-    }
-
-    public function debitAction()
-    {
-        $payment = new PayonePaymentTransfer();
-        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
-        $payment->setPaymentMethod(self::PAYMENT_METHOD_PREPAYMENT);
-
-        $debit = new DebitTransfer();
-        $debit->setPayment($payment);
-        $debit->setAmount(1000);
-
-        $result = $this->getLocator()->payone()->facade()->debit($debit);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
