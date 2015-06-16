@@ -240,7 +240,7 @@ class PaymentManager
     public function refund(RefundInterface $refundData)
     {
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($refundData->getPayment()->getPaymentMethod());
-        $requestContainer = $paymentMethodMapper->mapDebit($refundData);
+        $requestContainer = $paymentMethodMapper->mapRefund($refundData);
         $this->setStandardParameter($requestContainer);
 
         $paymentEntity = $this->findPaymentByTransactionId($refundData->getPayment()->getTransactionId());
@@ -362,8 +362,8 @@ class PaymentManager
      */
     protected function updateApiLogAfterRefund(SpyPaymentPayoneApiLog $apiLogEntity, RefundResponseContainer $responseContainer)
     {
-        $apiLogEntity->setStatus($responseContainer->getStatus());
         $apiLogEntity->setTransactionId($responseContainer->getTxid());
+        $apiLogEntity->setStatus($responseContainer->getStatus());
         $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
         $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
         $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
