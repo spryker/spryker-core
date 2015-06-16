@@ -8,6 +8,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 class CollectionToArrayTransformer implements CollectionToArrayTransformerInterface
 {
     /**
+     * @deprecated
      * @param ObjectCollection $orderItems
      * @return SpySalesOrderItem[] $orderItems
      */
