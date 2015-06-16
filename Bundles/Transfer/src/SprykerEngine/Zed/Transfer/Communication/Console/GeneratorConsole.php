@@ -8,6 +8,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @method TransferFacade getFacade()
+ */
 class GeneratorConsole extends Console
 {
 
@@ -37,14 +40,6 @@ class GeneratorConsole extends Console
         $facade->deleteGeneratedTransferObjects();
         $facade->generateTransferObjects($messenger);
         $facade->generateTransferInterfaces($messenger);
-    }
-
-    /**
-     * @return TransferFacade
-     */
-    private function getFacade()
-    {
-        return $this->getLocator()->transfer()->facade();
     }
 
 }

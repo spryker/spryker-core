@@ -4,9 +4,16 @@ namespace SprykerFeature\Zed\Console\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 
+use Silex\Application;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
+use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\Factory;
+use SprykerEngine\Zed\Kernel\Container;
 use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 
@@ -33,14 +40,14 @@ class Console extends SymfonyCommand
     protected $output;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var DependencyContainerInterface
      */
     private $dependencyContainer;
+
+    /**
+     * @var AbstractFacade
+     */
+    private $facade;
 
     /**
      * @var LoggerInterface
@@ -48,20 +55,46 @@ class Console extends SymfonyCommand
     protected $messenger;
 
     /**
-     * @param FactoryInterface $factory
-     * @param LocatorLocatorInterface $locator
+     * @param AbstractDependencyContainer $dependencyContainer
      */
-    public function __construct(
-        FactoryInterface $factory,
-        LocatorLocatorInterface $locator
-    ) {
-        if ($factory->exists('DependencyContainer')) {
-            $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
+    public function setDependencyContainer(AbstractDependencyContainer $dependencyContainer)
+    {
+        $this->dependencyContainer = $dependencyContainer;
+    }
+
+    /**
+     * @param Container $container
+     */
+    public function setExternalDependencies(Container $container)
+    {
+        $dependencyContainer = $this->getDependencyContainer();
+        if (isset($dependencyContainer)) {
+            $this->getDependencyContainer()->setContainer($container);
         }
+    }
 
-        $this->locator = $locator;
+    /**
+     * @return AbstractDependencyContainer
+     */
+    protected function getDependencyContainer()
+    {
+        return $this->dependencyContainer;
+    }
 
-        parent::__construct();
+    /**
+     * @param AbstractFacade $facade
+     */
+    public function setFacade(AbstractFacade $facade)
+    {
+        $this->facade = $facade;
+    }
+
+    /**
+     * @return AbstractFacade
+     */
+    protected function getFacade()
+    {
+        return $this->facade;
     }
 
     /**
@@ -74,7 +107,7 @@ class Console extends SymfonyCommand
         $this->output = $output;
 
         $propelService = new PropelServiceProvider();
-        $propelService->boot(new \Silex\Application());
+        $propelService->boot(new Application());
     }
 
     /**
@@ -91,7 +124,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return LoggerInterface
+     * @return MessengerInterface
      */
     protected function getMessenger()
     {
@@ -102,19 +135,4 @@ class Console extends SymfonyCommand
         return $this->messenger;
     }
 
-    /**
-     * @return DependencyContainerInterface
-     */
-    protected function getDependencyContainer()
-    {
-        return $this->dependencyContainer;
-    }
-
-    /**
-     * @return AutoCompletion
-     */
-    protected function getLocator()
-    {
-        return $this->locator;
-    }
 }

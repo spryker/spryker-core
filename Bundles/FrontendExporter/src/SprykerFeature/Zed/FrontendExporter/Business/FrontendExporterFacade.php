@@ -73,4 +73,5 @@ class FrontendExporterFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->getConfig()->getSearchDocumentType();
     }
+
 }

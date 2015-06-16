@@ -3,9 +3,13 @@
 namespace SprykerFeature\Zed\Oms\Communication\Console;
 
 use SprykerFeature\Zed\Console\Business\Model\Console;
+use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @method OmsFacade getFacade()
+ */
 class CheckTimeoutConsole extends Console
 {
 
@@ -28,7 +32,7 @@ class CheckTimeoutConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->locator->oms()->facade()->checkTimeouts([]);
+        $this->getFacade()->checkTimeouts([]);
     }
 
 }

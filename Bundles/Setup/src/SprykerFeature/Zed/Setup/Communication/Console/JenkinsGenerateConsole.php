@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Setup\Communication\Console;
 
 use SprykerEngine\Zed\Transfer\Communication\Console\GeneratorConsole;
 use SprykerFeature\Zed\Console\Business\Model\Console;
+use SprykerFeature\Zed\Setup\Business\SetupFacade;
 use SprykerFeature\Zed\Setup\Communication\Console\Npm\RunnerConsole;
 use SprykerFeature\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,10 +12,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Symfony\Component\Process\Process;
 
-
+/**
+ * @method SetupFacade getFacade()
+ */
 class JenkinsGenerateConsole extends Console
 {
 
@@ -43,7 +45,7 @@ class JenkinsGenerateConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $result = $this->locator->setup()->facade()->generateCronjobs(
+        $result = $this->getFacade()->generateCronjobs(
             $input->getOption('role')
         );
 

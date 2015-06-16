@@ -7,6 +7,9 @@ use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @method MaintenanceFacade getFacade()
+ */
 class FossMarkDownGeneratorConsole extends Console
 {
 
@@ -37,14 +40,6 @@ class FossMarkDownGeneratorConsole extends Console
         $facade->writeInstalledPackagesToMarkDownFile(
             $facade->getInstalledPackages()
         );
-    }
-
-    /**
-     * @return MaintenanceFacade
-     */
-    private function getFacade()
-    {
-        return $this->getLocator()->maintenance()->facade();
     }
 
 }

@@ -3,10 +3,14 @@
 namespace SprykerFeature\Zed\Installer\Communication\Console;
 
 use SprykerFeature\Zed\Console\Business\Model\Console;
+use SprykerFeature\Zed\Installer\Business\InstallerFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @method InstallerFacade getFacade()
+ */
 class DemoDataInstallConsole extends Console
 {
 
@@ -28,7 +32,7 @@ class DemoDataInstallConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $installerPlugins = $this->locator->installer()->facade()->getDemoDataInstaller();
+        $installerPlugins = $this->getFacade()->getDemoDataInstaller();
 
         $messenger = $this->getMessenger();
 

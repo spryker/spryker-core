@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Setup\Communication\Console;
 
 use SprykerEngine\Zed\Transfer\Communication\Console\GeneratorConsole;
 use SprykerFeature\Zed\Console\Business\Model\Console;
+use SprykerFeature\Zed\Setup\Business\SetupFacade;
 use SprykerFeature\Zed\Setup\Communication\Console\Npm\RunnerConsole;
 use SprykerFeature\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,6 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\Process\Process;
 
+/**
+ * @method SetupFacade getFacade()
+ */
 class RemoveGeneratedDirectoryConsole extends Console
 {
 
@@ -35,6 +39,6 @@ class RemoveGeneratedDirectoryConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getLocator()->setup()->facade()->removeGeneratedDirectory();
+        $this->getFacade()->removeGeneratedDirectory();
     }
 }
