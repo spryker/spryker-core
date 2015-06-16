@@ -31,6 +31,7 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
      */
     public function getProvidedDependency($key)
     {
+        echo $key .PHP_EOL;
         if(false === $this->container->offsetExists($key)){
             throw new \ErrorException('Key ' . $key . ' does not exist in container.');
         }

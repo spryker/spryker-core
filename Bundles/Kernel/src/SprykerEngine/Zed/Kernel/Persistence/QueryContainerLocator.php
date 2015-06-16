@@ -40,6 +40,7 @@ class QueryContainerLocator extends AbstractLocator
             $container = new Container();
             $bundleBuilder->providePersistenceLayerDependencies($container);
             $queryContainer->setContainer($container);
+            $queryContainer->setExternalDependencies($container);
 
         } catch (ClassNotFoundException $e) {
             // TODO remove try-catch when all bundles have a DependencyProvider
@@ -51,7 +52,7 @@ class QueryContainerLocator extends AbstractLocator
 
     /**
      * @param string $bundle
-     * 
+     *
      * @return bool
      */
     public function canLocate($bundle)

@@ -48,4 +48,5 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getProvidedDependency(CategoryExporterDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
+
 }

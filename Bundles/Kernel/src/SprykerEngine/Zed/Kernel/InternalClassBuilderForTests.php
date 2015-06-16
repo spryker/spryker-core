@@ -36,7 +36,8 @@ trait InternalClassBuilderForTests
 
         $queryContainer = $this->getQueryContainer($namespace, $bundle);
         if ($queryContainer) {
-            $facade->setOwnQueryContainer($this->getQueryContainer($namespace, $bundle));
+            $queryContainer->setExternalDependencies($this->getContainer($namespace, $bundle));
+            $facade->setOwnQueryContainer($queryContainer);
         }
 
         $facade->setExternalDependencies($this->getContainer($namespace, $bundle));
@@ -126,11 +127,6 @@ trait InternalClassBuilderForTests
         $plugin = new $pluginClassName($factory, Locator::getInstance());
         $plugin->setExternalDependencies($this->getContainer($namespace, $bundle));
         $plugin->setOwnFacade($this->getFacade($namespace, $bundle));
-        $queryContainer = $this->getQueryContainer($namespace, $bundle);
-        if ($queryContainer) {
-            $queryContainer->setExternalDependencies($this->getContainer($namespace, $bundle));
-            $plugin->setOwnQueryContainer($queryContainer);
-        }
 
         return $plugin;
     }

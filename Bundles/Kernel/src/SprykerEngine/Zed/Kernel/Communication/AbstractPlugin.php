@@ -82,16 +82,6 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
-     * TODO move to constructor
-     * @param AbstractQueryContainer $queryContainer
-     */
-    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
-    {
-        $this->queryContainer = $queryContainer;
-        $this->getDependencyContainer()->setQueryContainer($queryContainer);
-    }
-
-    /**
      * @param Container $container
      */
     public function setExternalDependencies(Container $container)

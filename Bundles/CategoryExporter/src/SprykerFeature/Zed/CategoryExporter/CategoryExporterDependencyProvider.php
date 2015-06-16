@@ -15,6 +15,20 @@ class CategoryExporterDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return Container
      */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->category()->queryContainer();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @var Container $container
+     *
+     * @return Container
+     */
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
