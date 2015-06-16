@@ -113,16 +113,6 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
-     * For autocompletion use typehint in class docblock like this: "@method MyQueryContainer getQueryContainer()"
-     *
-     * @return AbstractQueryContainer
-     */
-    public function getQueryContainer()
-    {
-        return $this->queryContainer;
-    }
-
-    /**
      * @return AbstractDependencyContainer
      */
     protected function getDependencyContainer()

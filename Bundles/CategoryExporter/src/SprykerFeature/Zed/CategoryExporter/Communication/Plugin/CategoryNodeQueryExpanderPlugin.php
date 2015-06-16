@@ -6,16 +6,17 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Category\CategoryConfig;
+use SprykerFeature\Zed\CategoryExporter\Business\CategoryExporterFacade;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
-use SprykerFeature\Zed\CategoryExporter\Persistence\CategoryExporterQueryContainer;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;
 
 /**
  * @method CategoryExporterDependencyContainer getDependencyContainer()
- * @method CategoryExporterQueryContainer getQueryContainer()
+ * @method CategoryExporterFacade getFacade()
  */
 class CategoryNodeQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+
     /**
      * @return string
      */
@@ -32,9 +33,7 @@ class CategoryNodeQueryExpanderPlugin extends AbstractPlugin implements QueryExp
      */
     public function expandQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
-        $queryContainer = $this->getQueryContainer();
-
-        return $queryContainer->expandCategoryNodeQuery($expandableQuery, $locale);
+        return $this->getFacade()->expandCategoryNodeQuery($expandableQuery, $locale);
     }
 
     /**
