@@ -29,7 +29,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization->setReferenceId($order->getIncrementId());
         $authorization->setOrder($order);
 
-        $result = $this->getLocator()->payone()->facade()->preAuthorize($authorization);
+        $result = $this->getFacade()->preAuthorize($authorization);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -46,7 +46,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $capture->setPayment($payment);
         $capture->setAmount($order->getTotals()->getGrandTotal());
 
-        $result = $this->getLocator()->payone()->facade()->capture($capture);
+        $result = $this->getFacade()->capture($capture);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -61,7 +61,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $debit->setPayment($payment);
         $debit->setAmount(-100);
 
-        $result = $this->getLocator()->payone()->facade()->debit($debit);
+        $result = $this->getFacade()->debit($debit);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -76,7 +76,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $refund->setPayment($payment);
         $refund->setAmount(-100);
 
-        $result = $this->getLocator()->payone()->facade()->refund($refund);
+        $result = $this->getFacade()->refund($refund);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -94,7 +94,7 @@ class TestController extends AbstractController implements PayoneApiConstants
 //        $creditCard->setCardCvc2('123');
         $creditCard->setStoreCardData('yes');
 
-        $result = $this->getLocator()->payone()->facade()->creditCardCheck($creditCard);
+        $result = $this->getFacade()->creditCardCheck($creditCard);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -114,7 +114,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization->setReferenceId($order->getIncrementId());
         $authorization->setOrder($order);
 
-        $result = $this->getLocator()->payone()->facade()->preAuthorize($authorization);
+        $result = $this->getFacade()->preAuthorize($authorization);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -131,7 +131,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $capture->setPayment($payment);
         $capture->setAmount($order->getTotals()->getGrandTotal());
 
-        $result = $this->getLocator()->payone()->facade()->capture($capture);
+        $result = $this->getFacade()->capture($capture);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -146,7 +146,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $debit->setPayment($payment);
         $debit->setAmount(-100);
 
-        $result = $this->getLocator()->payone()->facade()->debit($debit);
+        $result = $this->getFacade()->debit($debit);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -165,7 +165,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $refund->setNarrativeText('Test narrative');
 //        echo '<pre>' . var_dump($refund) . '</pre>';die;
 
-        $result = $this->getLocator()->payone()->facade()->refund($refund);
+        $result = $this->getFacade()->refund($refund);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -177,7 +177,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $payment->setPaymentMethod(self::PAYMENT_METHOD_PAYPAL);
         $payment->setAuthorizationType(PayoneApiConstants::REQUEST_TYPE_AUTHORIZATION);
 
-        $result = $this->getLocator()->payone()->facade()->getAuthorizationResponse($payment);
+        $result = $this->getFacade()->getAuthorizationResponse($payment);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -193,7 +193,7 @@ class TestController extends AbstractController implements PayoneApiConstants
 
         $authorization->setOrder($order);
 
-        $result = $this->getLocator()->payone()->facade()->preAuthorize($authorization);
+        $result = $this->getFacade()->preAuthorize($authorization);
         header('Location: ' . $result->getRedirecturl());
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
@@ -211,7 +211,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $capture->setPayment($payment);
         $capture->setAmount($order->getTotals()->getGrandTotal());
 
-        $result = $this->getLocator()->payone()->facade()->capture($capture);
+        $result = $this->getFacade()->capture($capture);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -226,7 +226,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization->setReferenceId($order->getIncrementId());
         $authorization->setOrder($order);
 
-        $result = $this->getLocator()->payone()->facade()->preAuthorize($authorization);
+        $result = $this->getFacade()->preAuthorize($authorization);
 
         echo '<pre>' . var_dump($result) . '</pre>';die;
     }
@@ -281,7 +281,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         ];
 
 
-        $r = $this->getLocator()->payone()->facade()->processTransactionStatusUpdate($params);
+        $r = $this->getFacade()->processTransactionStatusUpdate($params);
 
         echo '<pre>' . print_r($r,false) . '</pre>';die;
     }
