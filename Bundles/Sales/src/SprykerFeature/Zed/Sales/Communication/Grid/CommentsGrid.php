@@ -11,6 +11,7 @@ class CommentsGrid extends AbstractGrid
     {
         return [
             $this->createDefaultRowRenderer(),
+            $this->createPagination(),
 
             $this->createDefaultColumn()
                 ->setName('id_sales_order_comment')

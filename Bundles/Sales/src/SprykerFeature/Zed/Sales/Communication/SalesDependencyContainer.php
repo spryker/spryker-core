@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Sales\Communication;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 class SalesDependencyContainer extends AbstractDependencyContainer
@@ -63,29 +64,30 @@ class SalesDependencyContainer extends AbstractDependencyContainer
         );
     }
 
-    public function createDetailsPage()
-    {
-
-    }
-
-
-
     public function getUserDetailsForOrder($orderId)
     {
         $this->getQueryContainer();
     }
 
     /**
-     * @param Request $request
+     * @param int $orderId
      *
      * @return OrderItemsGrid
      */
-    public function getOrdersItemsGridByOrderId(Request $request)
+    public function getOrdersItemsGridByOrderId($orderId, Request $request)
     {
         return $this->getFactory()->createGridOrderItemsGrid(
-            $this->getQueryContainer()->queryOrderItems($request->get('orderId')),
+            $this->getQueryContainer()->queryOrderItems($orderId),
             $request
         );
+    }
+
+    /**
+     * @return OmsFacade
+     */
+    public function getOmsFacade()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS);
     }
 
     /**

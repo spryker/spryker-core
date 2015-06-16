@@ -28,7 +28,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     public function queryOrderItems($orderId)
     {
         $query = SpySalesOrderItemQuery::create();
-//        $query->filterByFkSalesOrder($orderId);
+        $query->filterByFkSalesOrder($orderId);
         $query->withColumn('COUNT(*)', 'qty');
         $query->groupBySku();
 

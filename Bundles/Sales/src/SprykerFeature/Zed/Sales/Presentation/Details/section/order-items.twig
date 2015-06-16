@@ -1,42 +1,56 @@
 <div class="spy-layout sparse">
     <h3>Order Items Overview</h3>
-        <section
-                class="spy-layout compact"
-                spy-app="spyGrid,spyForm"
-                ng-controller="GridController"
-                ng-strict-di
-                src="/sales/grid/orders?orderId={{ orderId }}"
-                name="orders_grid"
-                >
-            <table class="spy-grid">
-                <tr class="text-left">
-                    <th>Item name</th>
-                    <th>SKU</th>
-                    <th>Unit Price</th>
-                    <th>QTY</th>
-                    <th>Total Price</th>
-                </tr>
+    <section class="spy-layout compact" spy-app="spyForm">
+        <table class="spy-grid">
+            <tr class="text-left">
+                <th>Item name</th>
+                <th>SKU</th>
+                <th>Unit Price</th>
+                <th>QTY</th>
+                <th>Total Price</th>
+            </tr>
 
-                <tr class="ng-scope" ng-repeat="row in rows">
-                    <td>{[{ row.name }]}</td>
-                    <td>{[{ row.sku }]}</td>
-                    <td>{[{ row.gross_price }]} &euro;</td>
-                    <td>{[{ row.qty }]}</td>
-                    <td>{[{ row.gross_price * row.qty }]} &euro;</td>
-                </tr>
+            {% for row in orderItems.content.rows %}
+            <tr>
+                <td>{{ row.name }} - {{ row.id_sales_order_item }}</td>
+                <td>{{ row.sku }}</td>
+                <td>{{ row.gross_price }} &euro;</td>
+                <td>{{ row.qty }}</td>
+                <td>{{ row.price_to_pay * row.qty }} &euro;</td>
+                <td class="spy-layout n2">
+                    <spy-form
+                            class="spy-layout sparse"
+                            src="/oms/index/trigger?event=nopayment&id={{ row.id_sales_order_item }}"
+                            model='{"fields":[{"name": "", "type":"field"}], "state":"new"}'
+                            >
+                        <button class="button default">Nopayment</button>
+                    </spy-form>
+                    <spy-form
+                            class="spy-layout sparse"
+                            src="/oms/index/trigger?event=cancel&id={{ row.id_sales_order_item }}"
+                            model='{"fields":[{"name": "", "type":"field"}], "state":"new"}'
+                            >
+                        <button class="button cancel">Cancel</button>
+                    </spy-form>
+                </td>
+            </tr>
+            {% endfor %}
 
-                {#
-                @todo check angular compatibility
-                <tr>
-                    <td>Total</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>{[{ total.qty }]}</td>
-                    <td>&euro; {[{ total.total_price_to_pay }]}</td>
-                </tr>
-                #}
-            </table>
-        </section>
+            <tr>
+                <td>Total</td>
+                <td>-</td>
+                <td>-</td>
+                <td>{{ orderItems.content.total.total_qty }}</td>
+                <td>&euro; {{ orderItems.content.total.total_price_to_pay }}</td>
+            </tr>
+
+        </table>
+    </section>
     {#<button class="button accept">Add Item</button>#}
     {#<button class="button cancel">Remove Item</button>#}
 </div>
+
+
+
+
+

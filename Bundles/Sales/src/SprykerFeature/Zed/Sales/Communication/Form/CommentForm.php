@@ -15,8 +15,11 @@ class CommentForm extends AbstractForm
      */
     protected function getDefaultData()
     {
+        $salesOrderId = $this->stateContainer->getRequest()->get('orderId');
+
         return [
             'username' => 'Spryker',
+            'fk_sales_order' => $salesOrderId,
         ];
     }
 
@@ -29,21 +32,21 @@ class CommentForm extends AbstractForm
         $fields[] = $this->addField('message')
             ->setLabel('Add new comment')
             ->setRefresh(false)
-//            ->setConstraints([
-//                new Required([
-//                    new Type([
-//                        'type' => 'string',
-//                        'message' => 'zo',
-//                    ]),
-//                    new NotBlank()
-//                ])
-//            ])
+            ->setConstraints([
+                new Required([
+                    new Type([
+                        'type' => 'string',
+                        'message' => 'Please add comment',
+                    ]),
+                    new NotBlank()
+                ])
+            ])
         ;
-//        $fields[] = $this->addField('fk_sales_order')
-//            ->setRefresh(false)
-//        ;
-//        $fields[] = $this->addField('username')
-//            ->setRefresh(false)
-//        ;
+        $fields[] = $this->addField('fk_sales_order')
+            ->setRefresh(false)
+        ;
+        $fields[] = $this->addField('username')
+            ->setRefresh(false)
+        ;
     }
 }

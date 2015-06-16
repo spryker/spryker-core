@@ -1,0 +1,82 @@
+<div class="spy-layout sparse">
+    <h3>Order Items Overview</h3>
+        <section
+                class="spy-layout compact"
+                spy-app="spyLayout,spyGrid,spyForm"
+                ng-controller="GridController"
+                ng-strict-di
+                src="/sales/grid/orders?orderId={{ orderId }}"
+                name="orders_grid"
+                channel="sales"
+                >
+            <table class="spy-grid">
+                <tr class="text-left">
+                    <th>Item name</th>
+                    <th>SKU</th>
+                    <th>Unit Price</th>
+                    <th>QTY</th>
+                    <th>Total Price</th>
+                </tr>
+
+                <tr ng-repeat="row in rows" ng-click="$emitAllChannels('sales_edit', row)">
+                    <td>{[{ row.name }]} - {[{ row.id_sales_order_item }]}</td>
+                    <td>{[{ row.sku }]}</td>
+                    <td>{[{ row.gross_price }]} &euro;</td>
+                    <td>{[{ row.qty }]}</td>
+                    <td>{[{ row.gross_price * row.qty }]} &euro;</td>
+                    {#<td ng-if="$index !== $last">#}
+                    <td>
+                        {#<button spy-action="/sales/item/nopayment/{[{ row.id }]}" class="button default">Nopayment</button>#}
+                        {#<button class="button cancel">Cancel</button>#}
+                        <form action="/sales/item/nopayment/{[{ row.id_sales_order_item }]}"></form>
+                    </td>
+                    {#<td ng-if="$index === $last">#}
+                        {#asd#}
+                    {#</td>#}
+                </tr>
+                <tr ng-if="!rows.length">
+                    <td rowspan="6">No items found</td>
+                </tr>
+
+                {#
+                @todo check angular compatibility
+                <tr>
+                    <td>Total</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>{[{ total.qty }]}</td>
+                    <td>&euro; {[{ total.total_price_to_pay }]}</td>
+                </tr>
+                #}
+
+            </table>
+{#
+            <spy-listen on="sales_edit" do="openLayer(); read($argument)" scope="sales_edit" channel="sales"></spy-listen>
+            <spy-layer>
+                <spy-form
+                        class="spy-layout sparse"
+                        src="/sales/form/orderItem?orderItemId={[{ row.id }]}"
+                        name="sales_edit"
+                        channel="sales"
+                        >
+                    <h3>Edit translation</h3>
+
+                    <div spy-input-text="field.key" options="{ label : 'Key' }"></div>
+
+                    <div spy-fieldset="field.translations"></div>
+
+                    <div class="spy-layout buttons">
+                        <button class="button accept" ng-disabled="query" ng-click="update()">Update</button>
+                        <button class="button cancel" ng-disabled="query" ng-click="abort()">Cancel</button>
+                    </div>
+                </spy-form>
+            </spy-layer>
+#}
+        </section>
+    {#<button class="button accept">Add Item</button>#}
+    {#<button class="button cancel">Remove Item</button>#}
+</div>
+
+
+
+
