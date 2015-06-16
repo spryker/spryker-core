@@ -3,10 +3,12 @@
 namespace SprykerFeature\Zed\FrontendExporter\Communication\Console;
 
 use SprykerFeature\Zed\FrontendExporter\Business\FrontendExporterFacade;
+use SprykerFeature\Zed\FrontendExporter\Communication\FrontendExporterDependencyContainer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @method FrontendExporterDependencyContainer getDependencyContainer()
  * @method FrontendExporterFacade getFacade()
  */
 class ExportSearchConsole extends AbstractExporterConsole
@@ -30,7 +32,7 @@ class ExportSearchConsole extends AbstractExporterConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $locale = $this->getFacade()->getCurrentLocale();
+        $locale = $this->getDependencyContainer()->createLocaleFacade()->getCurrentLocale();
         $exportResults = $this->getFacade()->exportSearchForLocale($locale);
 
         $this->info($this->buildSummary($exportResults));

@@ -74,12 +74,4 @@ class FrontendExporterFacade extends AbstractFacade
         return $this->getDependencyContainer()->getConfig()->getSearchDocumentType();
     }
 
-    /**
-     * @return LocaleTransfer
-     */
-    public function getCurrentLocale()
-    {
-        return $this->getDependencyContainer()->createLocaleFacade()->getCurrentLocale();
-    }
-
 }

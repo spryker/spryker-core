@@ -17,6 +17,30 @@ class FrontendExporterDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = $this->provideLocaleFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @var Container $container
+     *
+     * @return Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container = $this->provideLocaleFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    private function provideLocaleFacade(Container $container)
+    {
         $container[self::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
         };
