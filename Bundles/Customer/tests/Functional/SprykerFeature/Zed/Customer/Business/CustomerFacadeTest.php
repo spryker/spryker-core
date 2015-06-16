@@ -116,6 +116,17 @@ class CustomerFacadeTest extends Test
         $this->assertNotNull($customerTransfer->getIdCustomer());
     }
 
+    public function testHasEmailReturnsFalseWithoutCustomer()
+    {
+        $this->assertFalse($this->customerFacade->hasEmail(self::TESTER_EMAIL));
+    }
+
+    public function testHasEmailReturnsTrueWithCustomer()
+    {
+        $this->createTestCustomer();
+        $this->assertTrue($this->customerFacade->hasEmail(self::TESTER_EMAIL));
+    }
+
     public function testRegisterCustomer()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
