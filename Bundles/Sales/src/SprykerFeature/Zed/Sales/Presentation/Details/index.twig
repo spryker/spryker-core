@@ -1,39 +1,5 @@
 {% extends '@Application/Layout/layout.twig' %}
 
-{% block head_css %}
-{{ parent() }}
-    <style>
-        table.spy-grid caption {
-            text-align: left;
-            border: 1px solid #d2dce7;
-            padding: 10px 5px;
-        }
-        .spy-grid tr th {
-            padding: 11px 14px;
-            text-align: left;
-        }
-        .text-left           { text-align: left; }
-        .text-right          { text-align: right; }
-        .text-center         { text-align: center; }
-        .text-justify        { text-align: justify; }
-        .text-nowrap         { white-space: nowrap; }
-
-        .text-lowercase      { text-transform: lowercase; }
-        .text-uppercase      { text-transform: uppercase; }
-        .text-capitalize     { text-transform: capitalize; }
-
-        .pull-right { float: right; }
-        .pull-left { float: left; }
-        .notes-item {
-            margin-bottom: 10px;
-        }
-
-        .spy-layout .spy-form.reset {
-            margin-bottom: 0;
-        }
-    </style>
-{% endblock %}
-
 {% block head_css_bundles -%}
     <link rel="stylesheet" type="text/css" href="{{ staticPath('Sales/styles/bundle.css') }}">
 {%- endblock %}
@@ -41,7 +7,7 @@
 {% block content %}
 
     <div class="spy-layout compact">
-        <h1>Order 324-Z34889-838 (06:33:22 PM on 05.06.2015)</h1>
+        <h1>Order <b>{{ orderId }}</b> ({{ orderDetails.CreatedAt.date }})</h1>
     </div>
 
     {% include '@Sales/Details/section/customer-details.twig' %}
