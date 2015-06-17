@@ -56,8 +56,6 @@ class Finder implements FinderInterface
         $processBuilder = clone $this->builder;
         $events = $processBuilder->createProcess($processName)->getManualEventsBySource();
 
-        file_put_contents("/tmp/debug", print_r([$processName, $events, $orderItem, $processBuilder->createProcess($processName)], true));//DBG
-
         if (!isset($events[$state])) {
             return [];
         }
