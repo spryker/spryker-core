@@ -54,6 +54,21 @@ class Customer
     }
 
     /**
+     * @param string $email
+     *
+     * @return bool
+     */
+    public function hasEmail($email)
+    {
+        $customerCount = $this->queryContainer
+            ->queryCustomerByEmail($email)
+            ->count()
+        ;
+
+        return ($customerCount > 0);
+    }
+
+    /**
      * @param PasswordRestoredConfirmationSenderPluginInterface $sender
      */
     public function addPasswordRestoredConfirmationSender(PasswordRestoredConfirmationSenderPluginInterface $sender)
