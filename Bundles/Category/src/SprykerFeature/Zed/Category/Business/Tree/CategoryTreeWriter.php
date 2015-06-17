@@ -5,9 +5,9 @@ namespace SprykerFeature\Zed\Category\Business\Tree;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Propel;
+use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use SprykerFeature\Zed\Category\Business\Model\CategoryWriterInterface;
-use SprykerFeature\Zed\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 
 class CategoryTreeWriter

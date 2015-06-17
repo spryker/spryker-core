@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\CategoryExporter\Communication\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Category\CategoryConfig;
+use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\CategoryExporter\Business\CategoryExporterFacade;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInterface;

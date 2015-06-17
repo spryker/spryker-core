@@ -8,8 +8,8 @@ use SprykerFeature\Shared\Application\Communication\ControllerServiceBuilder;
 use SprykerEngine\Yves\Kernel\Communication\BundleControllerAction;
 use SprykerEngine\Yves\Kernel\Communication\Controller\BundleControllerActionRouteNameResolver;
 use SprykerEngine\Yves\Kernel\Communication\ControllerLocator;
+use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Yves\FrontendExporter\Creator\ResourceCreatorInterface;
-use SprykerFeature\Zed\Category\CategoryConfig;
 
 class CategoryResourceCreator implements ResourceCreatorInterface
 {
