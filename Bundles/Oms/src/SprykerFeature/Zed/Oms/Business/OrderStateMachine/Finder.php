@@ -50,16 +50,19 @@ class Finder implements FinderInterface
             ->findOne()
         ;
 
+        $state = $orderItem->getState()->getName();
         $processName = $orderItem->getProcess()->getName();
 
         $processBuilder = clone $this->builder;
         $events = $processBuilder->createProcess($processName)->getManualEventsBySource();
 
-        if (!isset($events[$idOrderItem])) {
+        file_put_contents("/tmp/debug", print_r([$processName, $events, $orderItem, $processBuilder->createProcess($processName)], true));//DBG
+
+        if (!isset($events[$state])) {
             return [];
         }
 
-        return $events[$idOrderItem];
+        return $events[$state];
     }
 
     /**
