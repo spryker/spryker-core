@@ -60,12 +60,12 @@ class Customer
      */
     public function hasEmail($email)
     {
-        $customer = $this->queryContainer
+        $customerCount = $this->queryContainer
             ->queryCustomerByEmail($email)
             ->count()
         ;
 
-        return ($customer > 0);
+        return ($customerCount > 0);
     }
 
     /**
