@@ -4,9 +4,9 @@ namespace SprykerFeature\Zed\Category\Business\Manager;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
-use SprykerFeature\Zed\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 
 class NodeUrlManager implements NodeUrlManagerInterface
