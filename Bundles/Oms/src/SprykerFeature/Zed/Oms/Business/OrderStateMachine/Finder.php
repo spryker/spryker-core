@@ -39,6 +39,30 @@ class Finder implements FinderInterface
     }
 
     /**
+     * @param int $idOrderItem
+     *
+     * @return string[]
+     */
+    public function getManualEvents($idOrderItem)
+    {
+        $orderItem = $this->queryContainer
+            ->queryOrderItems([$idOrderItem])
+            ->findOne()
+        ;
+
+        $processName = $orderItem->getProcess()->getName();
+
+        $processBuilder = clone $this->builder;
+        $events = $processBuilder->createProcess($processName)->getManualEventsBySource();
+
+        if (!isset($events[$idOrderItem])) {
+            return [];
+        }
+
+        return $events[$idOrderItem];
+    }
+
+    /**
      * @param int $idOrder
      * @param string $flag
      *

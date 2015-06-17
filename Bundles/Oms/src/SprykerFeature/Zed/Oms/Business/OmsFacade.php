@@ -21,6 +21,19 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 {
 
     /**
+     * @param int $idOrderItem
+     *
+     * @return string[]
+     */
+    public function getManualEvents($idOrderItem)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderStateMachineFinder()
+            ->getManualEvents($idOrderItem)
+        ;
+    }
+
+    /**
      * @param int $idOrder
      * @param string $flag
      *
