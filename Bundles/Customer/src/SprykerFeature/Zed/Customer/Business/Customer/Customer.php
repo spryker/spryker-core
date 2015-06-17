@@ -62,10 +62,10 @@ class Customer
     {
         $customer = $this->queryContainer
             ->queryCustomerByEmail($email)
-            ->findOne()
+            ->count()
         ;
 
-        return ($customer !== null);
+        return ($customer > 0);
     }
 
     /**
