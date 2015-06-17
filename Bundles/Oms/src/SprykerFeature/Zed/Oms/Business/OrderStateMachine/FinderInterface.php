@@ -8,6 +8,14 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 interface FinderInterface
 {
+
+    /**
+     * @param int $idOrderItem
+     *
+     * @return string[]
+     */
+    public function getManualEvents($idOrderItem);
+
     /**
      * @param int $idOrder
      * @param string $flag
