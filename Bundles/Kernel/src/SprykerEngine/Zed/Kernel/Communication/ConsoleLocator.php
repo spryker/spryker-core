@@ -36,7 +36,7 @@ class ConsoleLocator extends AbstractLocator
         $bundleName = lcfirst($bundle);
 
         $bundleConfigLocator = new BundleDependencyProviderLocator(); // @todo Make singleton because of performance
-        $bundleBuilder = $bundleConfigLocator->locate($bundleName, $locator);
+        $bundleBuilder = $bundleConfigLocator->locate($bundle, $locator);
 
         $container = new Container();
         $bundleBuilder->provideCommunicationLayerDependencies($container);
