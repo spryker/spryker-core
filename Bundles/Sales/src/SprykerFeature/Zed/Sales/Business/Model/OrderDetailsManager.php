@@ -39,8 +39,16 @@ class OrderDetailsManager
 
             $manualStates = $this->omsFacade->getManualEvents($itemId);
 
+            $availableStates = [];
+            foreach ($manualStates as $stateItem) {
+                $availableStates[] = json_encode([
+                    'value' => $stateItem,
+                    'label' => $stateItem,
+                ]);
+            }
+
             $orderItemsList[$itemId] = $item->toArray();
-            $orderItemsList[$itemId]['manual_states'] = $manualStates;
+            $orderItemsList[$itemId]['accepts'] = implode(',', $availableStates);
 
             $totalItems += $item->getQty();
             $totalPrice += $item->getPriceToPay() * $item->getQty();
@@ -57,6 +65,11 @@ class OrderDetailsManager
         ];
     }
 
+    /**
+     * @param $orderId
+     *
+     * @return SpySalesOrder
+     */
     public function getOrderDetailsByOrderId($orderId)
     {
         $orderDetails = $this->queryContainer->querySalesById($orderId)->findOne();

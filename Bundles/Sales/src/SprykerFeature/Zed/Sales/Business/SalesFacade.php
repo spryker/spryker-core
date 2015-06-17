@@ -15,8 +15,11 @@ use SprykerFeature\Zed\Sales\SalesDependencyProvider;
  */
 class SalesFacade extends AbstractFacade
 {
+
     /**
-     * @throws \Exception
+     * @param CommentTransfer $commentTransfer
+     *
+     * @return CommentTransfer
      */
     public function saveComment(CommentTransfer $commentTransfer)
     {

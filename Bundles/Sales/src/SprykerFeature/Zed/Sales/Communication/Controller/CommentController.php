@@ -12,6 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CommentController extends AbstractController
 {
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function addAction(Request $request)
     {
         $form = $this->getDependencyContainer()->getCommentForm($request);

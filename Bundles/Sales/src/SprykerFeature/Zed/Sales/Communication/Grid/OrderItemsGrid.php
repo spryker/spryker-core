@@ -19,12 +19,6 @@ class OrderItemsGrid extends AbstractGrid
             $this->createDefaultColumn()
                 ->setName('fk_sales_order')
             ,
-//            $this->createDefaultColumn()
-//                ->setName('fk_oms_order_item_state')
-//            ,
-//            $this->createDefaultColumn()
-//                ->setName('fk_sales_order_item_bundle')
-//            ,
             $this->createDefaultColumn()
                 ->setName('name')
             ,
@@ -37,15 +31,6 @@ class OrderItemsGrid extends AbstractGrid
             $this->createDefaultColumn()
                 ->setName('gross_price')
             ,
-//            $this->createDefaultColumn()
-//                ->setName('tax_percentage')
-//            ,
-//            $this->createDefaultColumn()
-//                ->setName('variety')
-//            ,
-//            $this->createDefaultColumn()
-//                ->setName('qty')
-//            ,
             $this->createDefaultColumn()
                 ->setName('created_at')
             ,

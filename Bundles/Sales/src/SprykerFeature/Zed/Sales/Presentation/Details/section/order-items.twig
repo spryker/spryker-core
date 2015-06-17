@@ -21,9 +21,8 @@
                 <td>
                     <spy-form
                             class="spy-layout sparse spy-form reset"
-                            src="/oms/index/trigger?id={{ row.id_sales_order_item }}"
-                            model2='{"fields":[{"name": "", "type":"field"},{"name":"event","type":"field","label":null,"value":"","refresh":false,"accepts":[
-                            {"value":"Nopayment01","label":"Nopayment"},{"value":"Cancel","label":"Cancel"}],"messages":[],"extra":[],"constraints":{"type":"string"}}], "state":"new"}'
+                            src="/sales/order/trigger?id={{ row.id_sales_order_item }}"
+                            model='{"fields":[{"name":"event","type":"field","label":null,"value":"","refresh":false,"accepts":[{{ row.accepts }}],"messages":[],"extra":[],"constraints":{"type":"string"}}], "state":"new"}'
                             >
                         <div spy-input-select="field.event" options="{label: 'event'}"></div>
                         <button class="button default">Change</button>

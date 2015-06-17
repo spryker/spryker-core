@@ -23,18 +23,6 @@ class SalesDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return OrderManager
-     */
-//    public function createOrderManager()
-//    {
-//        return $this->getFactory()->createModelOrderManager(
-//            $this->locator,
-//            $this->getFactory()
-////            $this->createSalesQueryContainer()
-//        );
-//    }
-
-    /**
      * @return OrderDetailsManager
      */
     public function createOrderDetailsManager()

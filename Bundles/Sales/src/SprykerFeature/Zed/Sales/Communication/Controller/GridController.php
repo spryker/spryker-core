@@ -24,36 +24,6 @@ class GridController extends AbstractController
         return $this->jsonResponse($grid->renderData());
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function ordersAction(Request $request)
-    {
-        $grid = $this->getDependencyContainer()
-            ->getOrdersItemsGridByOrderId($request)
-        ;
-
-        $data = $grid->renderData();
-
-        // @todo check angularjs compatibility
-        $totalItems = 0;
-        $totalPrice = 0;
-
-        foreach ($data['content']['rows'] as $item) {
-            $totalItems += $item['qty'];
-            $totalPrice += $item['price_to_pay'] * $item['qty'];
-        }
-
-        $data['content']['total'] = [
-            'total_price_to_pay' => $totalPrice,
-            'total_qty' => $totalItems,
-        ];
-
-        return $this->jsonResponse($data);
-    }
-
     public function commentsAction(Request $request)
     {
         $grid = $this->getDependencyContainer()
