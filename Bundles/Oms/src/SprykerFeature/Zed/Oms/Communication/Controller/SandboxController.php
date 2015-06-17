@@ -30,6 +30,7 @@ class SandboxController extends AbstractController
                 'id' => $orderItem->getIdSalesOrderItem(),
                 'process' => $orderItem->getProcess()->getName(),
                 'state' => $orderItem->getState()->getName(),
+                'events' => $this->getFacade()->getManualEvents($orderItem->getIdSalesOrderItem()),
             ];
         }
 
