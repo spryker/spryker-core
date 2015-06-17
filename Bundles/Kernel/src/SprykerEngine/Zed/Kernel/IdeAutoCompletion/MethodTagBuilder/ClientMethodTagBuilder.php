@@ -13,7 +13,7 @@ class ClientMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     const METHOD_STRING_PATTERN = '@method \{{className}} {{methodName}}()';
     const PATH_PATTERN = 'Provider/';
     const METHOD_SUFFIX = 'Provider';
-    const APPLICATION_CLIENT = 'Client';
+    const APPLICATION_SDK = 'Sdk';
 
     /**
      * @param OptionsResolver $resolver
@@ -25,7 +25,7 @@ class ClientMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
         $resolver->setDefaults([
             self::OPTION_KEY_METHOD_STRING_PATTERN => self::METHOD_STRING_PATTERN,
             self::OPTION_KEY_PATH_PATTERN => self::PATH_PATTERN,
-            self::OPTION_KEY_APPLICATION => self::APPLICATION_CLIENT,
+            self::OPTION_KEY_APPLICATION => self::APPLICATION_SDK,
         ]);
     }
 

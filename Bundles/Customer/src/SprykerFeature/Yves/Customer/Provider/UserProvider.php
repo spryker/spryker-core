@@ -88,7 +88,7 @@ class UserProvider implements UserProviderInterface
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setEmail($username);
-        $customerTransfer = $this->locator->customer()->client()->getCustomer($customerTransfer);
+        $customerTransfer = $this->locator->customer()->sdk()->getCustomer($customerTransfer);
         return [
             "username" => $customerTransfer->getEmail(),
             "password" => $customerTransfer->getPassword(),

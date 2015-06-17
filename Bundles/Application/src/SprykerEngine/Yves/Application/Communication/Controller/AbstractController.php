@@ -55,7 +55,7 @@ abstract class AbstractController
         $this->locator = $locator;
         $this->factory = $factory;
 
-        $this->messenger = $this->locator->messenger()->client()->createMessenger();
+        $this->messenger = $this->locator->messenger()->sdk()->createMessenger();
 
         $messengerTwigExtension = $this->locator->messenger()
             ->pluginTwigMessenger()

@@ -7,7 +7,7 @@ namespace SprykerFeature\Yves\Cart\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use SprykerFeature\Client\Cart\Model\CartInterface;
+use SprykerFeature\Sdk\Cart\Model\CartInterface;
 
 class CartServiceProvider implements ServiceProviderInterface
 {

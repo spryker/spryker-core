@@ -13,5 +13,5 @@ class ClientLocator extends AbstractClientLocator
     /**
      * @var string
      */
-    protected $factoryClassNamePattern = '\\{{namespace}}\\Client\\Kernel\\Factory';
+    protected $factoryClassNamePattern = '\\{{namespace}}\\Sdk\\Kernel\\Factory';
 }
