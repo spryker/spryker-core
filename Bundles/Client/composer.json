@@ -1,0 +1,14 @@
+{
+  "name": "spryker/client",
+  "autoload": {
+    "psr-0": {
+      "SprykerFeature": "src/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+  }
+}

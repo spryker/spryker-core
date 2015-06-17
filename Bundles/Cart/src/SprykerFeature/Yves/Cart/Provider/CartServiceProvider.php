@@ -7,21 +7,21 @@ namespace SprykerFeature\Yves\Cart\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use SprykerFeature\Sdk\Cart\Model\CartInterface;
+use SprykerFeature\Client\Cart\Model\CartInterface;
 
 class CartServiceProvider implements ServiceProviderInterface
 {
     /**
      * @var CartInterface
      */
-    private $cartSdk;
+    private $cartClient;
 
     /**
-     * @param CartInterface $cartSdk
+     * @param CartInterface $cartClient
      */
-    public function __construct(CartInterface $cartSdk)
+    public function __construct(CartInterface $cartClient)
     {
-        $this->cartSdk = $cartSdk;
+        $this->cartClient = $cartClient;
     }
 
     /**
@@ -30,7 +30,7 @@ class CartServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['cart'] = $app->share(function () {
-            return $this->cartSdk;
+            return $this->cartClient;
         });
     }
 

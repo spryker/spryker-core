@@ -8,8 +8,8 @@ namespace SprykerFeature\Yves\FrontendExporter;
 use Generated\Yves\Ide\AutoCompletion;
 use Generated\Yves\Ide\FactoryAutoCompletion\FrontendExporter;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Sdk\Catalog\Model\FacetConfig;
-use SprykerFeature\Sdk\FrontendExporter\Matcher\UrlMatcher;
+use SprykerFeature\Client\Catalog\Model\FacetConfig;
+use SprykerFeature\Client\FrontendExporter\Matcher\UrlMatcher;
 use SprykerFeature\Yves\FrontendExporter\Mapper\UrlMapper;
 use SprykerFeature\Yves\FrontendExporter\Router\StorageRouter;
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
@@ -67,7 +67,7 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     protected function createUrlMatcher()
     {
         $urlMatcher = $this->getLocator()->frontendExporter()
-            ->sdk()
+            ->client()
             ->createUrlMatcher()
         ;
 
@@ -79,6 +79,6 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
      */
     protected function createFacetConfig()
     {
-        return $this->getLocator()->catalog()->sdk()->createFacetConfig();
+        return $this->getLocator()->catalog()->client()->createFacetConfig();
     }
 }

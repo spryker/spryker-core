@@ -22,7 +22,6 @@ class CartServicePlugin extends AbstractPlugin
      */
     public function createCartServiceProvider(SessionInterface $session)
     {
-        return $this->getDependencyContainer()->createCartSdk($session);
+        return $this->getDependencyContainer()->createCartClient($session);
     }
 }
- 

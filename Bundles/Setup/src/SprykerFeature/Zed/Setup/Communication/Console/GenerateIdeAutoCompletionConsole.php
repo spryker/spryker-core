@@ -17,7 +17,7 @@ class GenerateIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate ide auto completion files, for all applications [ Sdk, Yves, Zed ]');
+        $this->setDescription('Generate ide auto completion files, for all applications [ Client, Yves, Zed ]');
     }
 
     /**
@@ -28,7 +28,7 @@ class GenerateIdeAutoCompletionConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->runDependingCommand(GenerateClientIdeAutoCompletionConsole::COMMAND_NAME);
-        $this->info('Sdk-Files successfully created.', false);
+        $this->info('Client-Files successfully created.', false);
         $this->runDependingCommand(GenerateYvesIdeAutoCompletionConsole::COMMAND_NAME);
         $this->info('Yves-Files successfully created.', false);
         $this->runDependingCommand(GenerateZedIdeAutoCompletionConsole::COMMAND_NAME);
