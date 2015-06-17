@@ -8,6 +8,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
+use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()
@@ -30,12 +31,37 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
+     * @param int $orderId
+     *
+     * @return array
+     */
+    public function getOrderItemsArrayByOrderId($orderId)
+    {
+        $orderManager = $this->getDependencyContainer()->createOrderDetailsManager();
+
+        return $orderManager->getOrderItemsArrayByOrderId($orderId);
+    }
+
+    /**
+     * @param int $orderItemId
+     *
+     * @return array
+     */
+    public function getOrderItemManualEvents($orderItemId)
+    {
+        return $this->getDependencyContainer()
+            ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
+            ->getManualEvents($orderItemId)
+        ;
+    }
+
+    /**
      * @return OrderDetailsManager
      */
     public function createOrderDetailsModel()
     {
         $model = $this->getDependencyContainer()
-            ->createOrderManager()
+            ->createOrderDetailsManager()
         ;
 
         return $model;

@@ -1,6 +1,8 @@
 <div class="spy-layout sparse">
     <h3>Order Items Overview</h3>
     <section class="spy-layout compact" spy-app="spyForm">
+
+        {% if orderItems.content.rows|length > 0 %}
         <table class="spy-grid">
             <tr class="text-left">
                 <th>Item name</th>
@@ -9,7 +11,6 @@
                 <th>QTY</th>
                 <th>Total Price</th>
             </tr>
-
             {% for row in orderItems.content.rows %}
             <tr>
                 <td>{{ row.name }} - {{ row.id_sales_order_item }}</td>
@@ -17,25 +18,19 @@
                 <td>{{ row.gross_price }} &euro;</td>
                 <td>{{ row.qty }}</td>
                 <td>{{ row.price_to_pay * row.qty }} &euro;</td>
-                <td class="spy-layout n2">
+                <td>
                     <spy-form
-                            class="spy-layout sparse"
-                            src="/oms/index/trigger?event=nopayment&id={{ row.id_sales_order_item }}"
-                            model='{"fields":[{"name": "", "type":"field"}], "state":"new"}'
+                            class="spy-layout sparse spy-form reset"
+                            src="/oms/index/trigger?id={{ row.id_sales_order_item }}"
+                            model2='{"fields":[{"name": "", "type":"field"},{"name":"event","type":"field","label":null,"value":"","refresh":false,"accepts":[
+                            {"value":"Nopayment01","label":"Nopayment"},{"value":"Cancel","label":"Cancel"}],"messages":[],"extra":[],"constraints":{"type":"string"}}], "state":"new"}'
                             >
-                        <button class="button default">Nopayment</button>
-                    </spy-form>
-                    <spy-form
-                            class="spy-layout sparse"
-                            src="/oms/index/trigger?event=cancel&id={{ row.id_sales_order_item }}"
-                            model='{"fields":[{"name": "", "type":"field"}], "state":"new"}'
-                            >
-                        <button class="button cancel">Cancel</button>
+                        <div spy-input-select="field.event" options="{label: 'event'}"></div>
+                        <button class="button default">Change</button>
                     </spy-form>
                 </td>
             </tr>
             {% endfor %}
-
             <tr>
                 <td>Total</td>
                 <td>-</td>
@@ -43,11 +38,12 @@
                 <td>{{ orderItems.content.total.total_qty }}</td>
                 <td>&euro; {{ orderItems.content.total.total_price_to_pay }}</td>
             </tr>
-
         </table>
+        {% else %}
+            <p>There are no items for this order</p>
+        {% endif %}
+
     </section>
-    {#<button class="button accept">Add Item</button>#}
-    {#<button class="button cancel">Remove Item</button>#}
 </div>
 
 

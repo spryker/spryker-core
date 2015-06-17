@@ -15,7 +15,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container)
     {
         $container[SalesDependencyProvider::FACADE_OMS] = function (Container $container){
             return $container->getLocator()->oms()->facade();
