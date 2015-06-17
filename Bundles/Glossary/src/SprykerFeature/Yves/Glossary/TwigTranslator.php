@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Yves\Glossary;
 
-use SprykerFeature\Sdk\Glossary\Translator;
+use SprykerFeature\Client\Glossary\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class TwigTranslator implements TranslatorInterface

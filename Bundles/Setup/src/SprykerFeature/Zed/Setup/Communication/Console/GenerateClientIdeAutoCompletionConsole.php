@@ -12,22 +12,21 @@ use SprykerEngine\Zed\Kernel\BundleNameFinder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeBundleAutoCompletionGenerator;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeFactoryAutoCompletionGenerator;
+use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\SdkClientMethodTagBuilder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConstructableMethodTagBuilder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\SdkClientMethodTagBuilder;
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\YvesPluginMethodTagBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GenerateYvesIdeAutoCompletionConsole extends Console
+class GenerateClientIdeAutoCompletionConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:generate-yves-ide-auto-completion';
+    const COMMAND_NAME = 'setup:generate-client-ide-auto-completion';
 
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('This Command will generate the bundle ide auto completion interface for Yves.');
+        $this->setDescription('This Command will generate the bundle ide auto completion interface for the Client.');
     }
 
     /**
@@ -37,43 +36,43 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->generateYvesInterface();
-        $this->generateYvesBundleInterface();
-        $this->generateYvesFactoryInterface();
+        $this->generateClientInterface();
+        $this->generateClientBundleInterface();
+        $this->generateClientFactoryInterface();
     }
 
-    protected function generateYvesInterface()
+    protected function generateClientInterface()
     {
-        $options = $this->getYvesDefaultOptions();
+        $options = $this->getClientDefaultOptions();
 
         $generator = new IdeAutoCompletionGenerator($options, $this);
         $generator
             ->addMethodTagBuilder(new GeneratedInterfaceMethodTagBuilder(
                 [
                     GeneratedInterfaceMethodTagBuilder::OPTION_METHOD_STRING_PATTERN =>
-                        ' * @method \\Generated\Yves\Ide\{{bundle}} {{methodName}}()'
+                        ' * @method \\Generated\Client\Ide\{{bundle}} {{methodName}}()'
                 ]
             ))
         ;
-
         $generator->create();
 
-        $this->info('Generated Yves IdeAutoCompletion file');
+        $this->info('Generated Client IdeAutoCompletion file');
     }
 
     /**
      * @return array
      */
-    protected function getYvesDefaultOptions()
+    protected function getClientDefaultOptions()
     {
         $options = [
-            IdeAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Yves\Ide',
-            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide',
-            IdeAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
+            IdeAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Client\Ide',
+            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Client/Ide',
+            IdeAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Client',
             IdeAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
                 [
-                    IdeAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
-                    BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN => $this->getProjectNamespace() . '/',
+                    BundleNameFinder::OPTION_KEY_APPLICATION => 'Client',
+                    BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN =>
+                        $this->getProjectNamespace() . '/',
                 ]
             ),
         ];
@@ -81,39 +80,39 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         return $options;
     }
 
-    protected function generateYvesBundleInterface()
+    protected function generateClientBundleInterface()
     {
-        $options = $this->getYvesDefaultOptions();
+        $options = $this->getClientDefaultOptions();
         $options[IdeBundleAutoCompletionGenerator::OPTION_KEY_INTERFACE_NAME] = 'BundleAutoCompletion';
 
         $generator = new IdeBundleAutoCompletionGenerator($options);
         $generator
-            ->addMethodTagBuilder(new YvesPluginMethodTagBuilder())
+            ->addMethodTagBuilder(new SdkClientMethodTagBuilder())
             ->addMethodTagBuilder(new SdkClientMethodTagBuilder())
         ;
 
         $generator->create();
 
-        $this->info('Generated Yves IdeBundleAutoCompletion file');
+        $this->info('Generated Client IdeBundleAutoCompletion file');
     }
 
-    protected function generateYvesFactoryInterface()
+    protected function generateClientFactoryInterface()
     {
         $methodTagGenerator = new ConstructableMethodTagBuilder([
             ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => '',
-            ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Yves',
+            ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Sdk',
             ConstructableMethodTagBuilder::OPTION_KEY_CLASS_NAME_PART_LEVEL => 3,
         ]);
 
         $options = [
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Yves\Ide\FactoryAutoCompletion',
+            IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Client\Ide\FactoryAutoCompletion',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR =>
-                APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide',
+                APPLICATION_SOURCE_DIR . '/Generated/Client/Ide',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => false,
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
+            IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Client',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
                 [
-                    IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
+                    IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Client',
                     BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN => $this->getProjectNamespace() . '/',
                 ]
             ),
@@ -124,7 +123,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
 
         $generator->create();
 
-        $this->info('Generated Yves IdeFactoryAutoCompletion file');
+        $this->info('Generated Client IdeFactoryAutoCompletion file');
     }
 
     /**

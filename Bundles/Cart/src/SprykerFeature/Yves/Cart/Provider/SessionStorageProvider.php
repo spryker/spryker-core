@@ -10,7 +10,7 @@ use Generated\Shared\Cart\CartItemsInterface;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Sdk\Cart\StorageProvider\StorageProviderInterface;
+use SprykerFeature\Client\Cart\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 

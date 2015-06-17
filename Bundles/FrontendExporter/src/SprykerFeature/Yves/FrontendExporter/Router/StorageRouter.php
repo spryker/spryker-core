@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use SprykerFeature\Yves\FrontendExporter\Creator\ResourceCreatorInterface;
-use SprykerFeature\Sdk\FrontendExporter\Matcher\UrlMatcherInterface;
+use SprykerFeature\Client\FrontendExporter\Matcher\UrlMatcherInterface;
 use SprykerEngine\Yves\Application\Business\Routing\AbstractRouter;
 
 class StorageRouter extends AbstractRouter

@@ -27,7 +27,7 @@ class GenerateIdeAutoCompletionConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->runDependingCommand(GenerateSdkIdeAutoCompletionConsole::COMMAND_NAME);
+        $this->runDependingCommand(GenerateClientIdeAutoCompletionConsole::COMMAND_NAME);
         $this->info('Sdk-Files successfully created.', false);
         $this->runDependingCommand(GenerateYvesIdeAutoCompletionConsole::COMMAND_NAME);
         $this->info('Yves-Files successfully created.', false);

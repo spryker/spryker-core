@@ -55,6 +55,15 @@ abstract class AbstractController
         $this->locator = $locator;
         $this->factory = $factory;
 
+        $this->messenger = $this->locator->messenger()->client()->createMessenger();
+
+        $messengerTwigExtension = $this->locator->messenger()
+            ->pluginTwigMessenger()
+            ->setMessenger($this->messenger)
+        ;
+
+        $this->getTwig()->addExtension($messengerTwigExtension);
+
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
         }

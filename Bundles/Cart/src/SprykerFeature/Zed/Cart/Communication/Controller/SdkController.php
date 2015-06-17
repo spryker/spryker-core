@@ -5,14 +5,14 @@
 
 namespace SprykerFeature\Zed\Cart\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
+use SprykerFeature\Zed\Application\Communication\Controller\AbstractClientController;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\CartCartChangeInterfaceTransfer;
 use Generated\Shared\Transfer\CartCartInterfaceTransfer;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
 
-class SdkController extends AbstractSdkController
+class ClientController extends AbstractClientController
 {
     /**
      * @var CartFacade

@@ -161,7 +161,7 @@ class ZedCart implements CartInterface
     {
         $transferCartChange = $this->createCartChange($cartItemCollection);
 
-        $order = $this->zedClient->call('cart/sdk/add-items', $transferCartChange);
+        $order = $this->zedClient->call('cart/client/add-items', $transferCartChange);
         $this->setOrder($order);
 
         return $this->zedClient->getLastResponse();
@@ -179,7 +179,7 @@ class ZedCart implements CartInterface
     ) {
         $transferCartChange = $this->createCartChange($cartItemCollection);
         $transferCartChange->setDeleteReason($reason);
-        $order = $this->zedClient->call('cart/sdk/remove-items', $transferCartChange);
+        $order = $this->zedClient->call('cart/client/remove-items', $transferCartChange);
         $this->setOrder($order);
 
         return $this->zedClient->getLastResponse();
@@ -192,7 +192,7 @@ class ZedCart implements CartInterface
     public function changeQuantityOfItems($cartItemCollection)
     {
         $transferCartChange = $this->createCartChange($cartItemCollection);
-        $order = $this->zedClient->call('cart/sdk/change-quantity', $transferCartChange);
+        $order = $this->zedClient->call('cart/client/change-quantity', $transferCartChange);
         $this->setOrder($order);
 
         return $this->zedClient->getLastResponse();
@@ -207,7 +207,7 @@ class ZedCart implements CartInterface
         $transferCartChange = $this->createCartChange();
         $transferCartChange->setOrder(new \Generated\Shared\Transfer\OrderTransfer());
         $transferCartChange->setDeleteReason($reason);
-        $order = $order = $this->zedClient->call('cart/sdk/clear-cart-storage', $transferCartChange);
+        $order = $order = $this->zedClient->call('cart/client/clear-cart-storage', $transferCartChange);
         $this->setOrder($order);
 
         return $this->zedClient->getLastResponse();
@@ -248,7 +248,7 @@ class ZedCart implements CartInterface
     {
         $cartChange = $this->createCartChange();
         $cartChange->setCouponCode($couponCode);
-        $order = $this->zedClient->call('cart/sdk/add-coupon-code', $cartChange);
+        $order = $this->zedClient->call('cart/client/add-coupon-code', $cartChange);
         $this->setOrder($order);
 
         return $this->zedClient->getLastResponse();
@@ -260,7 +260,7 @@ class ZedCart implements CartInterface
     public function clearCoupons()
     {
         $cartChange = $this->createCartChange();
-        $order = $this->zedClient->call('cart/sdk/clear-coupon-code', $cartChange);
+        $order = $this->zedClient->call('cart/client/clear-coupon-code', $cartChange);
         $this->setOrder($order);
 
         return $this->zedClient->getLastResponse();
@@ -274,7 +274,7 @@ class ZedCart implements CartInterface
     {
         $cartChange = $this->createCartChange();
         $cartChange->setCouponCode($couponCode);
-        $order = $this->zedClient->call('cart/sdk/remove-coupon-code', $cartChange);
+        $order = $this->zedClient->call('cart/client/remove-coupon-code', $cartChange);
         $this->setOrder($order);
 
         return $this->zedClient->getLastResponse();
