@@ -17,7 +17,7 @@ use SprykerFeature\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
@@ -151,10 +151,10 @@ class PaymentManager
 
     /**
      * @param AuthorizationInterface $authorizationData
-     * @param AuthorizationContainer $requestContainer
+     * @param AuthorizationContainerInterface $requestContainer
      * @return AuthorizationResponseContainer
      */
-    protected function performAuthorization(AuthorizationInterface $authorizationData, AuthorizationContainer $requestContainer)
+    protected function performAuthorization(AuthorizationInterface $authorizationData, AuthorizationContainerInterface $requestContainer)
     {
         $this->setStandardParameter($requestContainer);
 
