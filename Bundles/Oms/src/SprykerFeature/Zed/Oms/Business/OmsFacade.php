@@ -329,7 +329,6 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @deprecated
      * @param string $eventId
      * @param ObjectCollection $orderItems
      * @param array $logContext
@@ -348,7 +347,6 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @deprecated
      * @param ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
@@ -366,7 +364,6 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @deprecated
      * @param string $eventId
      * @param OrderTransfer $orderItem
      * @param array $logContext
