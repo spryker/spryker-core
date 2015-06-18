@@ -7,4 +7,34 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class PayoneDependencyProvider extends AbstractBundleDependencyProvider
 {
+
+    const FACADE_LOCALE = 'locale facade';
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return $container->getLocator()->locale()->facade();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return $container->getLocator()->touch()->facade();
+        };
+
+        return $container;
+    }
 }
