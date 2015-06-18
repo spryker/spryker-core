@@ -6,5 +6,5 @@ use SprykerFeature\Shared\Library\ConfigInterface;
 
 interface AuthConfig extends ConfigInterface
 {
-    const AUTH_DEFAULT_CREDENTIALS = "AUTH_DEFAULT_CREDENTIALS";
+    const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
 }
