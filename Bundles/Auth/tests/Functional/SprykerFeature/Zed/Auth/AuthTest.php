@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Auth\Business\AuthFacade;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
 use SprykerEngine\Zed\Kernel\Business\Factory;
+use Generated\Shared\Transfer\UserTransfer;
 
 /**
  * @group AuthTest
@@ -63,7 +64,8 @@ class AuthTest extends Test
 
     /**
      * @param $data
-     * @return NULL|\SprykerFeature\Shared\User\Transfer\User
+     *
+     * @return UserTransfer
      */
     private function mockAddUser($data)
     {
@@ -71,6 +73,9 @@ class AuthTest extends Test
     }
 
     /**
+     * @group Functional
+     * @group SprykerFeature
+     * @group Zed
      * @group Auth
      */
     public function testUserToken()
@@ -97,6 +102,9 @@ class AuthTest extends Test
     }
 
     /**
+     * @group Functional
+     * @group SprykerFeature
+     * @group Zed
      * @group Auth
      */
     public function testIgnorablePath()
@@ -109,6 +117,9 @@ class AuthTest extends Test
     }
 
     /**
+     * @group Functional
+     * @group SprykerFeature
+     * @group Zed
      * @group Auth
      */
     public function testDoLogin()
@@ -124,6 +135,9 @@ class AuthTest extends Test
     }
 
     /**
+     * @group Functional
+     * @group SprykerFeature
+     * @group Zed
      * @group Auth
      */
     public function testLoginNotAllowed()
@@ -151,6 +165,9 @@ class AuthTest extends Test
     }
 
     /**
+     * @group Functional
+     * @group SprykerFeature
+     * @group Zed
      * @group Auth
      */
     public function testDoLoginWithToken()
@@ -168,6 +185,9 @@ class AuthTest extends Test
     }
 
     /**
+     * @group Functional
+     * @group SprykerFeature
+     * @group Zed
      * @group Auth
      */
     public function testDenyLoginWithWrongToken()
@@ -181,6 +201,9 @@ class AuthTest extends Test
     }
 
     /**
+     * @group Functional
+     * @group SprykerFeature
+     * @group Zed
      * @group Auth
      */
     public function testCheckDoLoginAndCurrentUserIsTheSame()
