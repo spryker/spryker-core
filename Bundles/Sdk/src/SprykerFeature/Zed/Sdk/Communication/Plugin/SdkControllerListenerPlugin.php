@@ -103,7 +103,7 @@ class SdkControllerListenerPlugin extends AbstractPlugin implements SdkControlle
     {
         $namespaceParts = explode('\\', $class->getNamespaceName());
 
-        if ((count($namespaceParts) < 3) || $namespaceParts[1] !== 'Shared' || $namespaceParts[2] !== 'Transfer') {
+        if ($namespaceParts[0] !== 'Generated' || $namespaceParts[1] !== 'Shared') {
             throw new \LogicException('Only transfer classes are allowed in yves action as parameter');
         }
     }
