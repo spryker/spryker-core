@@ -9,6 +9,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\Perso
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerEngine\Shared\Kernel\Store;
 
 class PayPal extends AbstractMapper
@@ -19,7 +20,7 @@ class PayPal extends AbstractMapper
      */
     public function getName()
     {
-        return self::PAYMENT_METHOD_PAYPAL;
+        return PayoneApiConstants::PAYMENT_METHOD_PAYPAL;
     }
 
     /**
@@ -33,7 +34,7 @@ class PayPal extends AbstractMapper
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
         $authorizationContainer->setReference($authorizationData->getReferenceId());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $authorizationContainer->setClearingType(self::CLEARING_TYPE_EWALLET);
+        $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_EWALLET);
         $authorizationContainer->setAmount($authorizationData->getAmount());
 
         $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
@@ -53,7 +54,7 @@ class PayPal extends AbstractMapper
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
         $authorizationContainer->setReference($authorizationData->getReferenceId());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $authorizationContainer->setClearingType(self::CLEARING_TYPE_EWALLET);
+        $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_EWALLET);
         $authorizationContainer->setAmount($authorizationData->getAmount());
 
         $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
@@ -70,7 +71,7 @@ class PayPal extends AbstractMapper
     {
         $paymentMethodContainer = new EWalletContainer();
 
-        $paymentMethodContainer->setWalletType(self::EWALLET_TYPE_PAYPAL);
+        $paymentMethodContainer->setWalletType(PayoneApiConstants::EWALLET_TYPE_PAYPAL);
         $paymentMethodContainer->setRedirect($this->createRedirectContainer());
 
         return $paymentMethodContainer;
