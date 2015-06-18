@@ -14,7 +14,6 @@ use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 use SprykerFeature\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
-use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
@@ -204,15 +203,13 @@ class PaymentManager
         $requestContainer = $paymentMethodMapper->mapDebit($debitData);
         $this->setStandardParameter($requestContainer);
 
-//        @todo fix this returns null
-//        $paymentEntity = $this->findPaymentByTransactionId($debitData->getPayment()->getTransactionId());
-//        var_dump($debitData->getPayment()->getTransactionId());
-//        $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
+        $paymentEntity = $this->findPaymentByTransactionId($debitData->getPayment()->getTransactionId());
+        $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new DebitResponseContainer($rawResponse);
 
-//        $this->updateApiLogAfterDebit($apiLogEntity, $responseContainer);
+        $this->updateApiLogAfterDebit($apiLogEntity, $responseContainer);
 
         return $responseContainer;
     }
