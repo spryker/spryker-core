@@ -3,12 +3,12 @@
 namespace SprykerFeature\Client\Checkout;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerEngine\Client\Kernel\AbstractClient;
+use SprykerEngine\Client\Kernel\AbstractStub;
 
 /**
  * @method CheckoutDependencyContainer getDependencyContainer()
  */
-class CheckoutClient extends AbstractClient
+class CheckoutStub extends AbstractStub
 {
     /**
      * @param Order $order

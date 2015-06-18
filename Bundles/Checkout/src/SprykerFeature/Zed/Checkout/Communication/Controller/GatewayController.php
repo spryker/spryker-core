@@ -13,7 +13,7 @@ use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
 /**
  * @method CheckoutFacade getFacade()
  */
-class ClientController extends AbstractClientController
+class GatewayController extends AbstractClientController
 {
 
     /**

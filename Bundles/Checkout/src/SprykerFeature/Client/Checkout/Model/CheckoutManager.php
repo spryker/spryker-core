@@ -27,7 +27,7 @@ class CheckoutManager implements CheckoutManagerInterface
      */
     public function saveOrder(Order $order)
     {
-        $this->zedClient->call('checkout/client/save-order', $order, 60);
+        $this->zedClient->call('checkout/gateway/save-order', $order, 60);
 
         return $this->zedClient->getLastResponse();
     }

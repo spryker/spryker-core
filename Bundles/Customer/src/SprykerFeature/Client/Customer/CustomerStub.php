@@ -4,12 +4,12 @@ namespace SprykerFeature\Client\Customer;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerEngine\Client\Kernel\AbstractClient;
+use SprykerEngine\Client\Kernel\AbstractStub;
 
 /**
  * @method CustomerDependencyContainer getDependencyContainer()
  */
-class CustomerClient extends AbstractClient
+class CustomerStub extends AbstractStub
 {
     /**
      * @param CustomerTransfer $customerTransfer

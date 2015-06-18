@@ -8,7 +8,7 @@ namespace SprykerEngine\Client\Kernel;
 use SprykerEngine\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 /**
- * Class ClientLocatorMatcher
+ * Class StubLocatorMatcher
  * @package SprykerEngine\Yves\Kernel
  */
 class ClientLocatorMatcher implements LocatorMatcherInterface

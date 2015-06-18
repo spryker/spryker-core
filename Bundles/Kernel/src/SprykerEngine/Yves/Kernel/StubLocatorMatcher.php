@@ -7,7 +7,9 @@ namespace SprykerEngine\Yves\Kernel;
 
 use SprykerEngine\Shared\Kernel\AbstractClientLocatorMatcher;
 
-class ClientLocatorMatcher extends AbstractClientLocatorMatcher
+class StubLocatorMatcher extends AbstractClientLocatorMatcher
 {
+
+    const METHOD_SUFFIX = 'Stub';
 
 }

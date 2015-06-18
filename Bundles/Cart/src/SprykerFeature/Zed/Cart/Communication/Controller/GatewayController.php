@@ -8,12 +8,11 @@ namespace SprykerFeature\Zed\Cart\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractClientController;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
-use Generated\Shared\Transfer\CartCartChangeInterfaceTransfer;
-use Generated\Shared\Transfer\CartCartInterfaceTransfer;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
 
-class ClientController extends AbstractClientController
+class GatewayController extends AbstractClientController
 {
+
     /**
      * @var CartFacade
      */

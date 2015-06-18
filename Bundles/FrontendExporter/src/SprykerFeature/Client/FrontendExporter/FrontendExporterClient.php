@@ -2,14 +2,14 @@
 
 namespace SprykerFeature\Client\FrontendExporter;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
+use SprykerEngine\Client\Kernel\AbstractStub;
 use SprykerFeature\Client\FrontendExporter\Matcher\UrlMatcherInterface;
 
 /**
  * @TODO Rename all YvesExport Bundles to PageExport or just Export.
  * @method FrontendExporterDependencyContainer getDependencyContainer()
  */
-class FrontendExporterClient extends AbstractClient
+class FrontendExporterStub extends AbstractStub
 {
     /**
      * @return UrlMatcherInterface

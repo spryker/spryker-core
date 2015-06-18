@@ -2,13 +2,13 @@
 
 namespace SprykerFeature\Client\Catalog;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
+use SprykerEngine\Client\Kernel\AbstractStub;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CatalogDependencyContainer getDependencyContainer()
  */
-class CatalogClient extends AbstractClient
+class CatalogStub extends AbstractStub
 {
     /**
      * @return \SprykerFeature\Client\Catalog\Model\Catalog

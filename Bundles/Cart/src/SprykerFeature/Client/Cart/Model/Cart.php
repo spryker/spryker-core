@@ -55,7 +55,7 @@ class Cart implements CartInterface
     {
         $addedItems = $this->createChangedItems($sku, $quantity);
         $cartChange = $this->prepareCartChange($addedItems);
-        $this->getZedClient()->call('/cart/client/add-item', $cartChange);
+        $this->getZedClient()->call('/cart/gateway/add-item', $cartChange);
 
         return $this->handleCartResponse();
     }
@@ -73,7 +73,7 @@ class Cart implements CartInterface
             $deleteItem = $cart->getItems()->offsetGet($sku);
             $deletedItems = $this->createChangedItems($sku, $deleteItem->getQuantity());
             $cartChange = $this->prepareCartChange($deletedItems);
-            $this->getZedClient()->call('/cart/client/remove-item', $cartChange);
+            $this->getZedClient()->call('/cart/gateway/remove-item', $cartChange);
 
             return $this->handleCartResponse();
         }
@@ -94,7 +94,7 @@ class Cart implements CartInterface
         if ($cart->getItems()->offsetExists($sku)) {
             $decreasedItems = $this->createChangedItems($sku, $quantity);
             $cartChange = $this->prepareCartChange($decreasedItems);
-            $this->getZedClient()->call('/cart/client/decrease-item-quantity', $cartChange);
+            $this->getZedClient()->call('/cart/gateway/decrease-item-quantity', $cartChange);
 
             return $this->handleCartResponse();
         }
@@ -112,7 +112,7 @@ class Cart implements CartInterface
     {
         $increasedItems = $this->createChangedItems($sku, $quantity);
         $cartChange = $this->prepareCartChange($increasedItems);
-        $this->getZedClient()->call('/cart/client/increase-item-quantity', $cartChange);
+        $this->getZedClient()->call('/cart/gateway/increase-item-quantity', $cartChange);
 
         return $this->handleCartResponse();
     }
@@ -123,7 +123,7 @@ class Cart implements CartInterface
     public function recalculate()
     {
         $cart = $this->storageProvider->getCart();
-        $this->getZedClient()->call('/cart/client/recalculate', $cart);
+        $this->getZedClient()->call('/cart/gateway/recalculate', $cart);
 
         return $this->handleCartResponse();
     }

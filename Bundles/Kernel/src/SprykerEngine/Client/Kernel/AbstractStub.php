@@ -9,7 +9,7 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Client\Kernel\DependencyContainer\DependencyContainerInterface;
 
-abstract class AbstractClient
+abstract class AbstractStub
 {
 
     /**

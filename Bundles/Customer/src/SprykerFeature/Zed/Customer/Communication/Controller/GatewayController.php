@@ -13,7 +13,7 @@ use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 /**
  * @method CustomerFacade getFacade()
  */
-class ClientController extends AbstractClientController
+class GatewayController extends AbstractClientController
 {
     /**
      * @param CustomerTransfer $customerTransfer

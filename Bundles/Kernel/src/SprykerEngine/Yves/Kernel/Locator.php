@@ -10,10 +10,6 @@ use SprykerEngine\Shared\Kernel\BundleProxy;
 use SprykerEngine\Shared\Kernel\TransferLocator;
 use SprykerEngine\Client\Kernel\ClientLocator;
 
-/**
- * Class Locator
- * @package SprykerEngine\Yves\Kernel
- */
 class Locator extends AbstractLocatorLocator
 {
     /**
@@ -25,7 +21,7 @@ class Locator extends AbstractLocatorLocator
         $bundleProxy
             ->addLocator(new PluginLocator())
             ->addLocator(new TransferLocator())
-            ->addLocator(new ClientLocator())
+            ->addLocator(new StubLocator())
             ->addLocator(new ClientLocator());
 
         return $bundleProxy;
