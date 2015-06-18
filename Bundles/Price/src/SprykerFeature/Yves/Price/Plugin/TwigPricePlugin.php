@@ -20,7 +20,20 @@ class TwigPricePlugin extends AbstractPlugin implements TwigFilterPluginInterfac
                 $priceValue = CurrencyManager::getInstance()->convertCentToDecimal($priceValue);
 
                 return CurrencyManager::getInstance()->format($priceValue, $withSymbol);
-            })
+            }),
+            new \Twig_SimpleFilter('priceCeil', function ($priceValue, $withSymbol = false) {
+                $priceValue = CurrencyManager::getInstance()->ceil(
+                    CurrencyManager::getInstance()->convertCentToDecimal($priceValue),
+                    0
+                );
+
+                return $priceValue;
+            }),
+            new \Twig_SimpleFilter('priceFloor', function ($priceValue, $withSymbol = false) {
+                $priceValue = floor(CurrencyManager::getInstance()->convertCentToDecimal($priceValue));
+
+                return $priceValue;
+            }),
         ];
     }
 
