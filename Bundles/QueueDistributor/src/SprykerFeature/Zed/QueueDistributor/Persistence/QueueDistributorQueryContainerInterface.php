@@ -4,20 +4,20 @@ namespace SprykerFeature\Zed\QueueDistributor\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\SpyQueueTouchQuery;
-use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\SpyQueueTypeQuery;
+use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\SpyQueueItemQuery;
+use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\SpyQueueItemTypeQuery;
 
 interface QueueDistributorQueryContainerInterface
 {
     /**
      * @return ModelCriteria
      */
-    public function queryTypeKeys();
+    public function queryItemTypes();
 
     /**
-     * @param $typeKey
+     * @param string $typeKey
      *
-     * @return SpyQueueTypeQuery
+     * @return $this|SpyQueueItemTypeQuery
      */
     public function queryTypeByKey($typeKey);
 
@@ -25,8 +25,21 @@ interface QueueDistributorQueryContainerInterface
      * @param string $typeKey
      * @param string $timestamp
      *
-     * @return SpyQueueTouchQuery
      * @throws PropelException
+     * @return SpyQueueItemQuery
      */
-    public function queryTouchedItemsByType($typeKey, $timestamp);
+    public function queryTouchedItemsByTypeKey($typeKey, $timestamp);
+
+    /**
+     * @return $this|ModelCriteria
+     */
+    public function queryReceivers();
+
+    /**
+     * @param string $itemType
+     * @param int $idItem
+     *
+     * @return SpyQueueItemQuery
+     */
+    public function queryItemByTypeAndId($itemType, $idItem);
 }

@@ -5,11 +5,13 @@ namespace SprykerFeature\Zed\QueueDistributor\Persistence;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
-use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\Map\SpyQueueTypeTableMap;
-use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\SpyQueueTouchQuery;
-use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\SpyQueueTypeQuery;
+use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\Map\SpyQueueItemTypeTableMap;
+use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\Map\SpyQueueReceiverTableMap;
+use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\SpyQueueItemTypeQuery;
+use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\SpyQueueItemQuery;
+use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\Map\SpyQueueItemTableMap;
+use SprykerFeature\Zed\QueueDistributor\Persistence\Propel\SpyQueueReceiverQuery;
 
 class QueueDistributorQueryContainer extends AbstractQueryContainer implements
     QueueDistributorQueryContainerInterface
@@ -17,10 +19,10 @@ class QueueDistributorQueryContainer extends AbstractQueryContainer implements
     /**
      * @return ModelCriteria
      */
-    public function queryTypeKeys()
+    public function queryItemTypes()
     {
-        $query = SpyQueueTypeQuery::create()
-            ->addSelectColumn(SpyQueueTypeTableMap::COL_KEY)
+        $query = SpyQueueItemTypeQuery::create()
+            ->addSelectColumn(SpyQueueItemTypeTableMap::COL_KEY)
             ->setDistinct()
             ->setFormatter(new PropelArraySetFormatter())
         ;
@@ -29,13 +31,13 @@ class QueueDistributorQueryContainer extends AbstractQueryContainer implements
     }
 
     /**
-     * @param $typeKey
+     * @param string $typeKey
      *
-     * @return SpyQueueTypeQuery
+     * @return $this|SpyQueueItemTypeQuery
      */
     public function queryTypeByKey($typeKey)
     {
-        $query = SpyQueueTypeQuery::create()
+        $query = SpyQueueItemTypeQuery::create()
             ->filterByKey($typeKey)
         ;
 
@@ -46,17 +48,61 @@ class QueueDistributorQueryContainer extends AbstractQueryContainer implements
      * @param string $typeKey
      * @param string $timestamp
      *
-     * @return SpyQueueTouchQuery
      * @throws PropelException
+     * @return SpyQueueItemQuery
      */
-    public function queryTouchedItemsByType($typeKey, $timestamp)
+    public function queryTouchedItemsByTypeKey($typeKey, $timestamp)
     {
-        return SpyQueueTouchQuery::create()
-            ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
+        return SpyQueueItemQuery::create()
+            ->filterByItemEvent(SpyQueueItemTableMap::COL_ITEM_EVENT_ACTIVE)
             ->filterByTouched(['min' => $timestamp])
-            ->useSpyQueueTypeQuery()
+            ->useSpyQueueItemTypeQuery()
             ->filterByKey($typeKey)
             ->endUse()
         ;
+    }
+
+    /**
+     * @return $this|ModelCriteria
+     */
+    public function queryReceivers()
+    {
+        $query = SpyQueueReceiverQuery::create()
+            ->addSelectColumn(SpyQueueReceiverTableMap::COL_KEY)
+            ->setDistinct()
+            ->setFormatter(new PropelArraySetFormatter())
+        ;
+
+        return $query;
+    }
+
+    /**
+     * @param string $itemType
+     * @param string $idItem
+     *
+     * @return SpyQueueItemQuery
+     */
+    public function queryItemByTypeAndId($itemType, $idItem)
+    {
+        $foreignKeyColumn = $this->getForeignKeyColumnByType($itemType);
+
+        $query = SpyQueueItemQuery::create()
+            ->filterBy($foreignKeyColumn, $idItem)
+            ->useSpyQueueItemTypeQuery()
+            ->filterByKey($itemType)
+            ->endUse()
+        ;
+
+        return $query;
+    }
+
+    /**
+     * @param $itemType
+     *
+     * @return string
+     */
+    protected function getForeignKeyColumnByType($itemType)
+    {
+        return 'fk_' . $itemType;
     }
 }

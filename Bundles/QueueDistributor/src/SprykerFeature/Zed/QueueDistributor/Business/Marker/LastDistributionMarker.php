@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\QueueDistributor\Business\Marker;
 
-use SprykerFeature\Zed\QueueDistributor\Business\Writer\TypeWriterInterface;
+use SprykerFeature\Zed\QueueDistributor\Business\Writer\ItemTypeWriterInterface;
 use SprykerFeature\Zed\QueueDistributor\Persistence\QueueDistributorQueryContainerInterface;
 
 class LastDistributionMarker implements LastDistributionMarkerInterface
@@ -14,17 +14,17 @@ class LastDistributionMarker implements LastDistributionMarkerInterface
     protected $queryContainer;
 
     /**
-     * @var TypeWriterInterface
+     * @var ItemTypeWriterInterface
      */
     protected $distributionWriter;
 
     /**
      * @param QueueDistributorQueryContainerInterface $queryContainer
-     * @param TypeWriterInterface $distributionWriter
+     * @param ItemTypeWriterInterface $distributionWriter
      */
     public function __construct(
         QueueDistributorQueryContainerInterface $queryContainer,
-        TypeWriterInterface $distributionWriter
+        ItemTypeWriterInterface $distributionWriter
     ) {
         $this->queryContainer = $queryContainer;
         $this->distributionWriter = $distributionWriter;

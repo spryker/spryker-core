@@ -7,6 +7,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class QueueDistributorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    const FACADE_QUEUE = 'facade queue';
 
     /**
      * @param Container $container
@@ -15,6 +16,11 @@ class QueueDistributorDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+
+        $container[self::FACADE_QUEUE] = function (Container $container) {
+            return $container->getLocator()->queue()->facade();
+        };
+
         return $container;
     }
 }

@@ -1,15 +1,13 @@
 <?php
 
-namespace SprykerFeature\Zed\StoreDistributor\Business\Distributor;
-
-use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
+namespace SprykerFeature\Zed\QueueDistributor\Business\Distributor;
 
 interface ItemDistributorInterface
 {
 
     /**
-     * @param string $type
-     * @param MessengerInterface $messenger
+     * @param $itemType
+     * @param BatchIteratorInterface $batchIterator
      */
-    public function distributeByType($type, MessengerInterface $messenger);
+    public function distributeByType($itemType, BatchIteratorInterface $batchIterator);
 }

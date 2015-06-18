@@ -4,12 +4,18 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="QueueMessage">
+        <property name="id" type="string" />
         <property name="type" type="string" />
         <property name="payload" type="array" />
-        <property name="channel" type="string" />
+        <property name="rawMessage" type="array" />
     </transfer>
 
-    <transfer name="QueueParameter">
+    <transfer name="AmqpParameter">
+        <property name="host" type="string"/>
+        <property name="port" type="int"/>
+        <property name="user" type="string"/>
+        <property name="password" type="string"/>
+        <property name="vhost" type="string"/>
     </transfer>
 
 </transfers>

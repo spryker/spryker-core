@@ -2,10 +2,9 @@
 
 namespace SprykerFeature\Zed\QueueDistributor\Business\Distributor;
 
-use SprykerFeature\Zed\FrontendExporter\Business\Model\CountableIteratorInterface;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
-class BatchIterator implements CountableIteratorInterface
+class BatchIterator implements \Iterator, \Countable, BatchIteratorInterface
 {
     /**
      * @var int
