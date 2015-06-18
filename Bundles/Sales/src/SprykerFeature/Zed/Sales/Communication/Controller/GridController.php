@@ -23,4 +23,20 @@ class GridController extends AbstractController
 
         return $this->jsonResponse($grid->renderData());
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function commentsAction(Request $request)
+    {
+        $grid = $this->getDependencyContainer()
+            ->getCommentsGridByOrderId($request)
+        ;
+
+        $gridData = $grid->renderData();
+
+        return $this->jsonResponse($gridData);
+    }
 }
