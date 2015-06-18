@@ -19,9 +19,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     public function getCurrentSequenceNumberQuery($transactionId)
     {
         $query = SpyPaymentPayoneTransactionStatusLogQuery::create();
-        //@todo think of doing it with MAX(sequence_number) ?
-        //$c = new Criteria();
-        //$c->add(SomeTable::CREATED_AT, '(SELECT MAX('.SomeTable::CREATED_AT.') FROM some_table)', Criteria::CUSTOM);
         $query->filterByTransactionId($transactionId)
               ->orderBySequenceNumber(Criteria::DESC);
 
