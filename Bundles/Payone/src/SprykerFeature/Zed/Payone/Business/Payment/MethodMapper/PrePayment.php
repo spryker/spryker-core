@@ -6,6 +6,7 @@ use Generated\Shared\Payone\AuthorizationInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerEngine\Shared\Kernel\Store;
 
 class PrePayment extends AbstractMapper
@@ -16,7 +17,7 @@ class PrePayment extends AbstractMapper
      */
     public function getName()
     {
-        return self::PAYMENT_METHOD_PREPAYMENT;
+        return PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT;
     }
 
     /**
@@ -30,7 +31,7 @@ class PrePayment extends AbstractMapper
         $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
 
         $authorizationContainer->setAmount($authorizationData->getAmount());
-        $authorizationContainer->setClearingType(self::CLEARING_TYPE_PREPAYMENT);
+        $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_PREPAYMENT);
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
         $authorizationContainer->setReference($authorizationData->getReferenceId());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
@@ -49,7 +50,7 @@ class PrePayment extends AbstractMapper
         $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
 
         $authorizationContainer->setAmount($authorizationData->getAmount());
-        $authorizationContainer->setClearingType(self::CLEARING_TYPE_PREPAYMENT);
+        $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_PREPAYMENT);
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
         $authorizationContainer->setReference($authorizationData->getReferenceId());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
