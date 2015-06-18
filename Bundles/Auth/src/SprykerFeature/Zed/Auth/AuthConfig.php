@@ -85,12 +85,10 @@ class AuthConfig extends AbstractBundleConfig
         $users = $this->getLocator()->user()->facade()->getSystemUsers();
         $credentials = $this->get(AuthSharedConfig::AUTH_DEFAULT_CREDENTIALS);
 
-        foreach ($users->toArray(true) as $user) {
-            foreach ($user as $transferUser) {
-                $username = $transferUser->getUsername();
-                if (isset($credentials[$username])) {
-                    $response[$username] = $credentials[$username];
-                }
+        foreach ($users->getUser() as $transferUser) {
+            $username = $transferUser->getUsername();
+            if (isset($credentials[$username])) {
+                $response[$username] = $credentials[$username];
             }
         }
 
