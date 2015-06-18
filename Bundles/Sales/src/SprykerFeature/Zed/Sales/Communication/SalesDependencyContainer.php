@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\Sales\Communication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Propel\Runtime\ActiveQuery\Criteria;
 
 class SalesDependencyContainer extends AbstractDependencyContainer
 {
@@ -43,6 +44,11 @@ class SalesDependencyContainer extends AbstractDependencyContainer
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return CommentsGrid
+     */
     public function getCommentsGridByOrderId(Request $request)
     {
         return $this->getFactory()->createGridCommentsGrid(
@@ -58,15 +64,13 @@ class SalesDependencyContainer extends AbstractDependencyContainer
      */
     public function getSalesGrid(Request $request)
     {
+        $querySales = $this->getQueryContainer()->querySales();
+        $querySales->orderByIdSalesOrder(Criteria::DESC);
+
         return $this->getFactory()->createGridSalesGrid(
-            $this->getQueryContainer()->querySales(),
+            $querySales,
             $request
         );
-    }
-
-    public function getUserDetailsForOrder($orderId)
-    {
-        $this->getQueryContainer();
     }
 
     /**

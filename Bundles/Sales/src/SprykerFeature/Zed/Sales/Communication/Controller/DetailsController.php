@@ -14,9 +14,14 @@ use SprykerFeature\Zed\Sales\Business\SalesFacade;
 class DetailsController extends AbstractController
 {
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     public function indexAction(Request $request)
     {
-        $orderId = $request->get('id');
+        $orderId = intval($request->get('id'));
 
         $orderDetails = $this->getFacade()
             ->createOrderDetailsModel()

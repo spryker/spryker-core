@@ -21,38 +21,28 @@ class OrderDetailsManager
     }
 
     /**
+     * @param int $orderItemId
+     *
+     * @return int
+     */
+    public function getOrderIdByOrderItemById($orderItemId)
+    {
+        $orderItem = $this->queryContainer->queryOrderItemById($orderItemId)->findOne();
+
+        return $orderItem->getFkSalesOrder();
+    }
+
+    /**
      * @param int $orderId
      *
      * @return array
      */
     public function getOrderItemsArrayByOrderId($orderId)
     {
+
         $orderItems = $this->queryContainer->queryOrderItems($orderId)->find();
 
-        $orderItemsList = [];
-
-        $totalItems = 0;
-        $totalPrice = 0;
-
-        foreach ($orderItems as $item) {
-            $itemId =$item->getIdSalesOrderItem();
-
-            $manualStates = $this->omsFacade->getManualEvents($itemId);
-
-            $availableStates = [];
-            foreach ($manualStates as $stateItem) {
-                $availableStates[] = json_encode([
-                    'value' => $stateItem,
-                    'label' => $stateItem,
-                ]);
-            }
-
-            $orderItemsList[$itemId] = $item->toArray();
-            $orderItemsList[$itemId]['accepts'] = implode(',', $availableStates);
-
-            $totalItems += $item->getQty();
-            $totalPrice += $item->getPriceToPay() * $item->getQty();
-        }
+        list($orderItemsList, $totalItems, $totalPrice) = $this->getOrderItemsListAndTotalDetails($orderItems);
 
         return [
             'content' => [
@@ -66,6 +56,30 @@ class OrderDetailsManager
     }
 
     /**
+     * @param int $orderItems
+     *
+     * @return array
+     */
+    protected function getOrderItemsListAndTotalDetails($orderItems)
+    {
+        $orderItemsList = [];
+
+        $totalItems = $totalPrice = 0;
+
+        foreach ($orderItems as $item) {
+            $itemId = $item->getIdSalesOrderItem();
+
+            $orderItemsList[$itemId] = $item->toArray();
+            $orderItemsList[$itemId]['accepts'] = $this->getManualStateItemsByItemId($itemId);
+
+            $totalItems += $item->getQty();
+            $totalPrice += $item->getPriceToPay() * $item->getQty();
+        }
+
+        return [$orderItemsList, $totalItems, $totalPrice];
+    }
+
+    /**
      * @param $orderId
      *
      * @return SpySalesOrder
@@ -75,5 +89,25 @@ class OrderDetailsManager
         $orderDetails = $this->queryContainer->querySalesById($orderId)->findOne();
 
         return $orderDetails;
+    }
+
+    /**
+     * @param int $itemId
+     *
+     * @return array
+     */
+    protected function getManualStateItemsByItemId($itemId)
+    {
+        $manualStates = $this->omsFacade->getManualEvents($itemId);
+
+        $availableStates = [];
+        foreach ($manualStates as $stateItem) {
+            $availableStates[] = [
+                'value' => $stateItem,
+                'label' => $stateItem,
+            ];
+        }
+
+        return $availableStates;
     }
 }

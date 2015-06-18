@@ -6,6 +6,9 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method SalesDependencyContainer getDependencyContainer()
+ */
 class OrderController extends AbstractController
 {
 
@@ -24,15 +27,11 @@ class OrderController extends AbstractController
             ->triggerEventForOrderItems($event, [$orderItemId])
         ;
 
-        $orderId = $this->getDependencyContainer()
-            ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
+        $orderId = $this->getFacade()
+            ->createOrderDetailsModel()
             ->getOrderIdByOrderItemById($orderItemId)
         ;
 
-        echo '<pre>';
-        var_dump($orderId);
-        die;
-
-        return $this->redirectResponse('/sales/details?id=' . $orderItemId);
+        return $this->redirectResponse('/sales/details?id=' . $orderId);
     }
 }

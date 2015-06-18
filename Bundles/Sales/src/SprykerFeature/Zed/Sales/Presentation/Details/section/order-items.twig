@@ -10,23 +10,31 @@
                 <th>Unit Price</th>
                 <th>QTY</th>
                 <th>Total Price</th>
+                <th>State Machine</th>
             </tr>
             {% for row in orderItems.content.rows %}
             <tr>
-                <td>{{ row.name }} - {{ row.id_sales_order_item }}</td>
+                <td>{{ row.name }}</td>
                 <td>{{ row.sku }}</td>
                 <td>{{ row.gross_price }} &euro;</td>
                 <td>{{ row.qty }}</td>
                 <td>{{ row.price_to_pay * row.qty }} &euro;</td>
                 <td>
-                    <spy-form
-                            class="spy-layout sparse spy-form reset"
-                            src="/sales/order/trigger?id={{ row.id_sales_order_item }}"
-                            model='{"fields":[{"name":"event","type":"field","label":null,"value":"","refresh":false,"accepts":[{{ row.accepts }}],"messages":[],"extra":[],"constraints":{"type":"string"}}], "state":"new"}'
-                            >
-                        <div spy-input-select="field.event" options="{label: 'event'}"></div>
-                        <button class="button default">Change</button>
-                    </spy-form>
+
+                    {% if row.accepts|length > 0 %}
+                    <form action="/sales/order/trigger" method="post">
+                        <input type="hidden" name="id" value="{{ row.id_sales_order_item }}"/>
+                        <select name="event">
+                            {% for option in row.accepts %}
+                            <option value="{{ option.value }}">{{ option.label }}</option>
+                            {% endfor %}
+                        </select>
+                        <button>Change</button>
+                    </form>
+                    {% else -%}
+                        -
+                    {%- endif %}
+
                 </td>
             </tr>
             {% endfor %}

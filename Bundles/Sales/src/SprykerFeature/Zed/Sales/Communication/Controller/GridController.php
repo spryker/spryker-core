@@ -24,6 +24,11 @@ class GridController extends AbstractController
         return $this->jsonResponse($grid->renderData());
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function commentsAction(Request $request)
     {
         $grid = $this->getDependencyContainer()
@@ -31,14 +36,6 @@ class GridController extends AbstractController
         ;
 
         $gridData = $grid->renderData();
-
-        if (count($gridData['content']['rows']) > 0) {
-            foreach ($gridData['content']['rows'] as &$row) {
-//                $row['updated_at'] = $row['created_at'];
-//                $row['created_at'] = $row['created_at']->getTimestamp();
-//                var_dump($row['created_at']);die;
-            }
-        }
 
         return $this->jsonResponse($gridData);
     }

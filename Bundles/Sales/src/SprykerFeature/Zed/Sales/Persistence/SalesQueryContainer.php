@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Sales\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderCommentQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
@@ -35,6 +36,24 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
         return $query;
     }
 
+    /**
+     * @param $orderItemId
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function queryOrderItemById($orderItemId)
+    {
+        $query = SpySalesOrderItemQuery::create();
+        $query->filterByIdSalesOrderItem($orderItemId);
+
+        return $query;
+    }
+
+    /**
+     * @param $orderId
+     *
+     * @return SpySalesOrderCommentQuery
+     */
     public function queryCommentsByOrderId($orderId)
     {
         $query = SpySalesOrderCommentQuery::create();
