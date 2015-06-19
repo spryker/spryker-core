@@ -39,22 +39,23 @@ class QueueWorkerConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $queueName = $this->input->getArgument(self::QUEUE_NAME);
+        $messenger = $this->getMessenger();
         $timeout = $this->getTimeout($input);
         $fetchSize = $this->getFetchSize($input);
 
-        $this->getFacade()->startWorker($queueName, $timeout, $fetchSize);
+        $this->getFacade()->startWorker($queueName, $messenger, $timeout, $fetchSize);
     }
 
     /**
      * @param InputInterface $input
      *
-     * @return array|null
+     * @return int
      */
     protected function getTimeout(InputInterface $input)
     {
-        $timeout = null;
+        $timeout = 10;
         if ($input->getArgument(self::TIMEOUT)) {
-            $timeout = $input->getArgument(self::TIMEOUT);
+            $timeout = (int)$input->getArgument(self::TIMEOUT);
         }
 
         return $timeout;
@@ -63,13 +64,13 @@ class QueueWorkerConsole extends Console
     /**
      * @param InputInterface $input
      *
-     * @return array|null
+     * @return int
      */
     protected function getFetchSize(InputInterface $input)
     {
-        $fetchSize = null;
+        $fetchSize = 10;
         if ($input->getArgument(self::FETCH_SIZE)) {
-            $fetchSize = $input->getArgument(self::FETCH_SIZE);
+            $fetchSize = (int)$input->getArgument(self::FETCH_SIZE);
         }
 
         return $fetchSize;

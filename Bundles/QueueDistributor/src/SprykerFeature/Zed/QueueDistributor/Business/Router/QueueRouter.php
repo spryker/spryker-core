@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\QueueDistributor\Business\Router;
 
-use Generated\Shared\Queue\QueueMessageInterface;
+use Generated\Shared\QueueDistributor\QueueMessageInterface;
 use SprykerFeature\Zed\QueueDistributor\Dependency\Facade\QueueDistributorToQueueInterface;
 
 class QueueRouter implements QueueRouterInterface

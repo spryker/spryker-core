@@ -2,8 +2,9 @@
 
 namespace SprykerFeature\Zed\Queue\Business\Provider;
 
+use SprykerFeature\Zed\Queue\Business\Exception\NoTaskConfiguredForGivenQueueException;
+use SprykerFeature\Zed\Queue\Business\Exception\TaskAlreadyDefinedForQueueException;
 use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
 class TaskProvider implements TaskProviderInterface
 {
@@ -24,25 +25,40 @@ class TaskProvider implements TaskProviderInterface
     }
 
     /**
-     * @param $queueName
+     * @param string $queueName
      *
-     * @return TaskPluginInterface
+     * @throws NoTaskConfiguredForGivenQueueException
+     * @return null|TaskPluginInterface
      */
     public function getTaskByQueueName($queueName)
     {
         if (!array_key_exists($queueName, $this->tasks)) {
-            throw new Exception;
+            throw new NoTaskConfiguredForGivenQueueException(
+                sprintf(
+                    'No Task configured for given queue "%s"',
+                    $queueName
+                )
+            );
         }
+
         return $this->tasks[$queueName];
     }
 
     /**
      * @param TaskPluginInterface $task
+     * @throws TaskAlreadyDefinedForQueueException
      */
     protected function addTask(TaskPluginInterface $task)
     {
         if (array_key_exists($task->getQueueName(), $this->tasks)) {
-            throw new Exception;
+            $definedTask = $this->tasks[$task->getQueueName()];
+            throw new TaskAlreadyDefinedForQueueException(
+                sprintf(
+                    'Already defined %s Task for given queue %s.',
+                    $definedTask->getName(),
+                    $definedTask->getQueueName()
+                )
+            );
         }
         $this->tasks[$task->getName()] = $task;
     }

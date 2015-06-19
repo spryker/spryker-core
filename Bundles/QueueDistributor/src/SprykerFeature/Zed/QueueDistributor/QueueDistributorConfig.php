@@ -12,7 +12,7 @@ class QueueDistributorConfig extends AbstractBundleConfig
     /**
      * @return ItemProcessorPluginInterface[]
      */
-    public function getProcessors()
+    public function getItemProcessors()
     {
         return [];
     }

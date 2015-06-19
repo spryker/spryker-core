@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\QueueDistributor\Business\Distributor;
 
+use Generated\Shared\QueueDistributor\QueueMessageInterface;
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use SprykerFeature\Zed\QueueDistributor\Business\Provider\ItemQueueProviderInterface;
 use SprykerFeature\Zed\QueueDistributor\Business\Router\QueueRouterInterface;
@@ -52,7 +53,7 @@ class ItemDistributor implements ItemDistributorInterface
     /**
      * @param ItemProcessorPluginInterface $processor
      */
-    public function addProcessor(ItemProcessorPluginInterface $processor)
+    public function addItemProcessor(ItemProcessorPluginInterface $processor)
     {
         $this->processorPipeline[$processor->getProcessableType()][] = $processor;
     }
@@ -63,7 +64,7 @@ class ItemDistributor implements ItemDistributorInterface
      */
     protected function distributeItemBatch($type, array $itemBatch)
     {
-        $messageTransfer = new QueueMessageTransfer();
+        $messageTransfer = $this->getMessageTransfer();
         $queueNames = $this->itemQueueProvider->getAllQueueForType($type);
 
         foreach ($itemBatch as $rawItem) {
@@ -110,5 +111,13 @@ class ItemDistributor implements ItemDistributorInterface
         }
 
         return $this->processorPipeline[$type];
+    }
+
+    /**
+     * @return QueueMessageInterface
+     */
+    protected function getMessageTransfer()
+    {
+        return new QueueMessageTransfer();
     }
 }

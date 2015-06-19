@@ -63,8 +63,8 @@ class QueueDistributorDependencyContainer extends AbstractDependencyContainer
             $this->createItemQueueProvider()
         );
 
-        foreach ($this->getConfig()->getProcessors() as $itemProcessor) {
-            $itemDistributor->addProcessor($itemProcessor);
+        foreach ($this->getConfig()->getItemProcessors() as $itemProcessor) {
+            $itemDistributor->addItemProcessor($itemProcessor);
         }
 
         return $itemDistributor;

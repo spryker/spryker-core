@@ -124,7 +124,6 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
         $this->task = $this->initializeTask();
 
         $worker = $this;
-
         $callback = function ($amqpMessage) use ($worker) {
             $queueMessage = $this->subscribedQueue->decodeMessage($amqpMessage);
             $worker->processMessage($queueMessage);

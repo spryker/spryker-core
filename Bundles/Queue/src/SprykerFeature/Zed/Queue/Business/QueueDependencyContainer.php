@@ -3,10 +3,12 @@
 namespace SprykerFeature\Zed\Queue\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\QueueBusiness;
+
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Queue\Business\Model\QueueInterface;
 use SprykerFeature\Zed\Queue\Business\Provider\TaskProviderInterface;
 use SprykerFeature\Zed\Queue\Business\Worker\TaskWorkerInterface;
+use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerFeature\Zed\Queue\QueueConfig;
 
 /**
@@ -39,16 +41,19 @@ class QueueDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @param $queueName
+     * @param string $queueName
+     * @param MessengerInterface $messenger
      *
      * @return TaskWorkerInterface
      */
-    public function createTaskWorker($queueName)
+    public function createTaskWorker($queueName, MessengerInterface $messenger)
     {
         $taskWorker = $this->getFactory()->createWorkerTaskWorker(
             $this->createQueueConnection($queueName),
             $this->createTaskProvider()
         );
+        $taskWorker->setLogger($messenger);
+
         return $taskWorker
             ->setErrorQueue($this->createErrorQueue())
             ->setMaxMessages($this->getConfig()->getMaxWorkerMessageCount())
@@ -60,9 +65,11 @@ class QueueDependencyContainer extends AbstractDependencyContainer
      */
     protected function createTaskProvider()
     {
-        return $this->getFactory()->createProviderTaskProvider(
+        $taskProvider = $this->getFactory()->createProviderTaskProvider(
             $this->getConfig()->getWorkerTasks()
         );
+
+        return $taskProvider;
     }
 
     /**
