@@ -14,7 +14,10 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use Generated\Shared\Transfer\UserTransfer;
 
 /**
- * @group AuthTest
+ * @group Functional
+ * @group SprykerFeature
+ * @group Zed
+ * @group Auth
  */
 class AuthTest extends Test
 {
@@ -51,7 +54,7 @@ class AuthTest extends Test
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     private function mockUserData()
     {
@@ -64,7 +67,7 @@ class AuthTest extends Test
     }
 
     /**
-     * @param $data
+     * @param string[] $data
      *
      * @return UserTransfer
      */
@@ -73,12 +76,6 @@ class AuthTest extends Test
         return $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
     }
 
-    /**
-     * @group Functional
-     * @group SprykerFeature
-     * @group Zed
-     * @group Auth
-     */
     public function testUserToken()
     {
         $userData = $this->mockUserData();
@@ -102,12 +99,6 @@ class AuthTest extends Test
         $this->assertTrue($isValid);
     }
 
-    /**
-     * @group Functional
-     * @group SprykerFeature
-     * @group Zed
-     * @group Auth
-     */
     public function testIgnorablePath()
     {
         $ignorable = $this->authFacade->isIgnorable('auth', 'login', 'index');
@@ -117,12 +108,6 @@ class AuthTest extends Test
         $this->assertTrue($ignorable);
     }
 
-    /**
-     * @group Functional
-     * @group SprykerFeature
-     * @group Zed
-     * @group Auth
-     */
     public function testDoLogin()
     {
         $userData = $this->mockUserData();
@@ -135,12 +120,6 @@ class AuthTest extends Test
         $this->assertTrue($login);
     }
 
-    /**
-     * @group Functional
-     * @group SprykerFeature
-     * @group Zed
-     * @group Auth
-     */
     public function testLoginNotAllowed()
     {
         $userData = $this->mockUserData();
@@ -165,12 +144,6 @@ class AuthTest extends Test
         $this->assertEquals(false, $login);
     }
 
-    /**
-     * @group Functional
-     * @group SprykerFeature
-     * @group Zed
-     * @group Auth
-     */
     public function testDoLoginWithToken()
     {
         $settings = new AuthConfig(Config::getInstance(), $this->locator);
@@ -185,12 +158,6 @@ class AuthTest extends Test
         }
     }
 
-    /**
-     * @group Functional
-     * @group SprykerFeature
-     * @group Zed
-     * @group Auth
-     */
     public function testDenyLoginWithWrongToken()
     {
         $token = new StaticToken();
@@ -201,12 +168,6 @@ class AuthTest extends Test
         $this->assertTrue(!$isAllowed);
     }
 
-    /**
-     * @group Functional
-     * @group SprykerFeature
-     * @group Zed
-     * @group Auth
-     */
     public function testCheckDoLoginAndCurrentUserIsTheSame()
     {
         $userData = $this->mockUserData();
@@ -227,13 +188,7 @@ class AuthTest extends Test
         $this->assertEquals($userDto->getLastName(), $currentUserDto->getLastName());
     }
 
-    /**
-     * @group Functional
-     * @group SprykerFeature
-     * @group Zed
-     * @group Auth
-     */
-    public function testYvesSystemUserIsConfigured()
+    public function testIsAuthorizedWithYvesCredentialsFromConfigMustReturnTrue()
     {
         $token = new StaticToken();
 

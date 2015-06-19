@@ -60,9 +60,9 @@ class AuthConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param $bundle
-     * @param $controller
-     * @param $action
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
      *
      * @return void
      */
