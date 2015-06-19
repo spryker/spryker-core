@@ -58,6 +58,11 @@
         <property name="transactionId" type="string" />
     </transfer>
 
+    <transfer name="PaymentStatus">
+        <property name="isSuccess" type="bool" />
+        <property name="redirectUrl" type="string" />
+    </transfer>
+
     <transfer name="StandardParameter">
         <property name="encoding" type="string" />
         <property name="mid" type="string" />
