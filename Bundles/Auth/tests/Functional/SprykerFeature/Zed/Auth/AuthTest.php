@@ -6,6 +6,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Auth\AuthConfig;
+use SprykerFeature\Shared\Auth\AuthConfig as AuthSharedConfig;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
@@ -224,5 +225,25 @@ class AuthTest extends Test
         $this->assertEquals($userDto->getPassword(), $currentUserDto->getPassword());
         $this->assertEquals($userDto->getFirstName(), $currentUserDto->getFirstName());
         $this->assertEquals($userDto->getLastName(), $currentUserDto->getLastName());
+    }
+
+    /**
+     * @group Functional
+     * @group SprykerFeature
+     * @group Zed
+     * @group Auth
+     */
+    public function testYvesSystemUserIsConfigured()
+    {
+        $token = new StaticToken();
+
+        $authConfig = Config::get(AuthSharedConfig::AUTH_DEFAULT_CREDENTIALS);
+        $rawToken = $authConfig['yves_system']['token'];
+
+        $token->setRawToken($rawToken);
+        $hash = $token->generate();
+
+        $isAllowed = $this->authFacade->isAuthorized($hash);
+        $this->assertTrue($isAllowed);
     }
 }
