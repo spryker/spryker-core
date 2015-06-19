@@ -3,7 +3,7 @@
 namespace SprykerFeature\Shared\ProductFrontendExporterConnector\Code\KeyBuilder;
 
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuilder;
-use SprykerFeature\Zed\Product\ProductConfig;
+use SprykerFeature\Shared\Product\ProductConfig;
 
 abstract class SharedAbstractProductResourceKeyBuilder extends SharedResourceKeyBuilder
 {

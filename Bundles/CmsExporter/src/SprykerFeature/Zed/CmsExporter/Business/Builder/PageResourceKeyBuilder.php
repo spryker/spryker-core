@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\CmsExporter\Business\Builder;
 
+use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuilder;
-use SprykerFeature\Zed\Cms\CmsConfig;
 
 class PageResourceKeyBuilder extends SharedResourceKeyBuilder
 {
