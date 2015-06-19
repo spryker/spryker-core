@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Queue\Business;
 
-use Generated\Shared\Queue\QueueMessageInterface;
+use Generated\Shared\Transfer\QueueMessageTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 
@@ -14,9 +14,9 @@ class QueueFacade extends AbstractFacade
 
     /**
      * @param string $queueName
-     * @param QueueMessageInterface $queueMessage
+     * @param QueueMessageTransfer $queueMessage
      */
-    public function publishMessage($queueName, QueueMessageInterface $queueMessage)
+    public function publishMessage($queueName, QueueMessageTransfer $queueMessage)
     {
         $this->getDependencyContainer()
             ->createQueueConnection($queueName)
