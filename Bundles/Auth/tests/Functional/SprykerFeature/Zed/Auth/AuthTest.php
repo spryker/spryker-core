@@ -14,7 +14,6 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use Generated\Shared\Transfer\UserTransfer;
 
 /**
- * @group Functional
  * @group SprykerFeature
  * @group Zed
  * @group Auth
