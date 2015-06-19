@@ -9,7 +9,7 @@ class CategoryGrid extends AbstractGrid
 
     const ID_CATEGORY = 'id_category';
     const NAME = 'name';
-    const CATEGORY_IS_ACTIVE = 'category_is_active';
+    const CATEGORY_IS_ACTIVE = 'is_active';
 
     /**
      * @return array

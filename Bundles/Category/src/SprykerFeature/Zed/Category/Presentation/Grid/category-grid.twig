@@ -23,7 +23,7 @@
         <tr>
             <th spy-grid-head="columns['id_category']" label="Category Id"></th>
             <th spy-grid-head="columns['name']" label="Name"></th>
-            <th spy-grid-head="columns['category_is_active']" label="Active"></th>
+            <th spy-grid-head="columns['is_active']" label="Active"></th>
         </tr>
         </thead>
 
@@ -31,7 +31,7 @@
         <tr ng-repeat="row in rows" ng-click="$emitAllChannels('category-update-click', row)">
             <td>{[{ row['id_category'] }]}</td>
             <td>{[{ row['name'] }]}</td>
-            <td><spy-format-boolean content="row['category_is_active']"></spy-format-boolean></td>
+            <td><spy-format-boolean content="row['is_active']"></spy-format-boolean></td>
         </tr>
         <tr ng-if="!rows.length">
             <td colspan="4">No results found</td>

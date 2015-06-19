@@ -57,6 +57,8 @@ class CategoryWriter implements CategoryWriterInterface
         $attributeEntity->setName($category->getName());
         $attributeEntity->save();
 
+        $this->saveCategory($category);
+
         return $attributeEntity->getIdCategoryAttribute();
     }
 
@@ -73,6 +75,18 @@ class CategoryWriter implements CategoryWriterInterface
         if ($categoryEntity) {
             $categoryEntity->delete();
         }
+    }
+
+    /**
+     * @param CategoryTransfer $category
+     * @param LocaleTransfer $locale
+     */
+    protected function saveCategory(CategoryTransfer $category)
+    {
+        $categoryEntity = $this->getCategoryEntity($category->getIdCategory());
+        $categoryEntity->setIsActive($category->getIsActive());
+
+        $categoryEntity->save();
     }
 
     /**
@@ -130,5 +144,18 @@ class CategoryWriter implements CategoryWriterInterface
             ->queryAttributeByCategoryIdAndLocale($idCategory, $locale->getIdLocale())
             ->findOne()
             ;
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return SpyCategory
+     */
+    protected function getCategoryEntity($idCategory)
+    {
+        return $this->queryContainer
+            ->queryCategoryById($idCategory)
+            ->findOne()
+        ;
     }
 }
