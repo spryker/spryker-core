@@ -56,7 +56,7 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createFormCategoryForm(
             $request,
             $this->getFactory(),
-            $locale->getIdLocale(),
+            $locale,
             $this->getQueryContainer()
         );
     }
