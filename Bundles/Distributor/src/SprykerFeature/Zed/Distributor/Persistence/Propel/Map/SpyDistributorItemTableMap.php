@@ -59,7 +59,7 @@ class SpyDistributorItemTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class SpyDistributorItemTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the id_distributor_item field
@@ -87,6 +87,11 @@ class SpyDistributorItemTableMap extends TableMap
     const COL_FK_ITEM_TYPE = 'spy_distributor_item.fk_item_type';
 
     /**
+     * the column name for the fk_glossary_translation field
+     */
+    const COL_FK_GLOSSARY_TRANSLATION = 'spy_distributor_item.fk_glossary_translation';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -98,11 +103,11 @@ class SpyDistributorItemTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('IdDistributorItem', 'Touched', 'FkItemType', ),
-        self::TYPE_CAMELNAME     => array('idDistributorItem', 'touched', 'fkItemType', ),
-        self::TYPE_COLNAME       => array(SpyDistributorItemTableMap::COL_ID_DISTRIBUTOR_ITEM, SpyDistributorItemTableMap::COL_TOUCHED, SpyDistributorItemTableMap::COL_FK_ITEM_TYPE, ),
-        self::TYPE_FIELDNAME     => array('id_distributor_item', 'touched', 'fk_item_type', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('IdDistributorItem', 'Touched', 'FkItemType', 'FkGlossaryTranslation', ),
+        self::TYPE_CAMELNAME     => array('idDistributorItem', 'touched', 'fkItemType', 'fkGlossaryTranslation', ),
+        self::TYPE_COLNAME       => array(SpyDistributorItemTableMap::COL_ID_DISTRIBUTOR_ITEM, SpyDistributorItemTableMap::COL_TOUCHED, SpyDistributorItemTableMap::COL_FK_ITEM_TYPE, SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION, ),
+        self::TYPE_FIELDNAME     => array('id_distributor_item', 'touched', 'fk_item_type', 'fk_glossary_translation', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -112,11 +117,11 @@ class SpyDistributorItemTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('IdDistributorItem' => 0, 'Touched' => 1, 'FkItemType' => 2, ),
-        self::TYPE_CAMELNAME     => array('idDistributorItem' => 0, 'touched' => 1, 'fkItemType' => 2, ),
-        self::TYPE_COLNAME       => array(SpyDistributorItemTableMap::COL_ID_DISTRIBUTOR_ITEM => 0, SpyDistributorItemTableMap::COL_TOUCHED => 1, SpyDistributorItemTableMap::COL_FK_ITEM_TYPE => 2, ),
-        self::TYPE_FIELDNAME     => array('id_distributor_item' => 0, 'touched' => 1, 'fk_item_type' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('IdDistributorItem' => 0, 'Touched' => 1, 'FkItemType' => 2, 'FkGlossaryTranslation' => 3, ),
+        self::TYPE_CAMELNAME     => array('idDistributorItem' => 0, 'touched' => 1, 'fkItemType' => 2, 'fkGlossaryTranslation' => 3, ),
+        self::TYPE_COLNAME       => array(SpyDistributorItemTableMap::COL_ID_DISTRIBUTOR_ITEM => 0, SpyDistributorItemTableMap::COL_TOUCHED => 1, SpyDistributorItemTableMap::COL_FK_ITEM_TYPE => 2, SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION => 3, ),
+        self::TYPE_FIELDNAME     => array('id_distributor_item' => 0, 'touched' => 1, 'fk_item_type' => 2, 'fk_glossary_translation' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -139,6 +144,7 @@ class SpyDistributorItemTableMap extends TableMap
         $this->addPrimaryKey('id_distributor_item', 'IdDistributorItem', 'INTEGER', true, null, null);
         $this->addColumn('touched', 'Touched', 'TIMESTAMP', true, null, null);
         $this->addForeignPrimaryKey('fk_item_type', 'FkItemType', 'INTEGER' , 'spy_distributor_item_type', 'id_distributor_item_type', true, null, null);
+        $this->addForeignKey('fk_glossary_translation', 'FkGlossaryTranslation', 'INTEGER', 'spy_glossary_translation', 'id_glossary_translation', false, null, null);
     } // initialize()
 
     /**
@@ -147,6 +153,7 @@ class SpyDistributorItemTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('SpyDistributorItemType', '\\SprykerFeature\\Zed\\Distributor\\Persistence\\Propel\\SpyDistributorItemType', RelationMap::MANY_TO_ONE, array('fk_item_type' => 'id_distributor_item_type', ), null, null);
+        $this->addRelation('SpyGlossaryTranslation', '\\SprykerFeature\\Zed\\Glossary\\Persistence\\Propel\\SpyGlossaryTranslation', RelationMap::MANY_TO_ONE, array('fk_glossary_translation' => 'id_glossary_translation', ), null, null);
     } // buildRelations()
 
     /**
@@ -361,10 +368,12 @@ class SpyDistributorItemTableMap extends TableMap
             $criteria->addSelectColumn(SpyDistributorItemTableMap::COL_ID_DISTRIBUTOR_ITEM);
             $criteria->addSelectColumn(SpyDistributorItemTableMap::COL_TOUCHED);
             $criteria->addSelectColumn(SpyDistributorItemTableMap::COL_FK_ITEM_TYPE);
+            $criteria->addSelectColumn(SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION);
         } else {
             $criteria->addSelectColumn($alias . '.id_distributor_item');
             $criteria->addSelectColumn($alias . '.touched');
             $criteria->addSelectColumn($alias . '.fk_item_type');
+            $criteria->addSelectColumn($alias . '.fk_glossary_translation');
         }
     }
 

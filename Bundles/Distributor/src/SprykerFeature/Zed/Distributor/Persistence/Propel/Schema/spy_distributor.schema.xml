@@ -21,10 +21,6 @@
             <index-column name="touched"/>
         </index>
 
-        <index>
-            <index-column name="item_event"/>
-        </index>
-
     </table>
 
     <table name="spy_distributor_receiver" phpName="SpyDistributorReceiver">

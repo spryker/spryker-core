@@ -13,8 +13,8 @@ interface LastDistributionMarkerInterface
     public function getLastDistributionTimestampByType($typeKey);
 
     /**
-     * @param $type
-     * @param $timestamp
+     * @param string $type
+     * @param string $timestamp
      */
     public function setLastDistributionTimestampByType($type, $timestamp);
 }

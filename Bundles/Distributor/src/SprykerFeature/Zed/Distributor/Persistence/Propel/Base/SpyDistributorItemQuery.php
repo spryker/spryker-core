@@ -14,6 +14,7 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItem as ChildSpyDistributorItem;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemQuery as ChildSpyDistributorItemQuery;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation;
 
 /**
  * Base class that represents a query for the 'spy_distributor_item' table.
@@ -23,10 +24,12 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemTabl
  * @method     ChildSpyDistributorItemQuery orderByIdDistributorItem($order = Criteria::ASC) Order by the id_distributor_item column
  * @method     ChildSpyDistributorItemQuery orderByTouched($order = Criteria::ASC) Order by the touched column
  * @method     ChildSpyDistributorItemQuery orderByFkItemType($order = Criteria::ASC) Order by the fk_item_type column
+ * @method     ChildSpyDistributorItemQuery orderByFkGlossaryTranslation($order = Criteria::ASC) Order by the fk_glossary_translation column
  *
  * @method     ChildSpyDistributorItemQuery groupByIdDistributorItem() Group by the id_distributor_item column
  * @method     ChildSpyDistributorItemQuery groupByTouched() Group by the touched column
  * @method     ChildSpyDistributorItemQuery groupByFkItemType() Group by the fk_item_type column
+ * @method     ChildSpyDistributorItemQuery groupByFkGlossaryTranslation() Group by the fk_glossary_translation column
  *
  * @method     ChildSpyDistributorItemQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildSpyDistributorItemQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -36,7 +39,11 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemTabl
  * @method     ChildSpyDistributorItemQuery rightJoinSpyDistributorItemType($relationAlias = null) Adds a RIGHT JOIN clause to the query using the SpyDistributorItemType relation
  * @method     ChildSpyDistributorItemQuery innerJoinSpyDistributorItemType($relationAlias = null) Adds a INNER JOIN clause to the query using the SpyDistributorItemType relation
  *
- * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildSpyDistributorItemQuery leftJoinSpyGlossaryTranslation($relationAlias = null) Adds a LEFT JOIN clause to the query using the SpyGlossaryTranslation relation
+ * @method     ChildSpyDistributorItemQuery rightJoinSpyGlossaryTranslation($relationAlias = null) Adds a RIGHT JOIN clause to the query using the SpyGlossaryTranslation relation
+ * @method     ChildSpyDistributorItemQuery innerJoinSpyGlossaryTranslation($relationAlias = null) Adds a INNER JOIN clause to the query using the SpyGlossaryTranslation relation
+ *
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery|\SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildSpyDistributorItem findOne(ConnectionInterface $con = null) Return the first ChildSpyDistributorItem matching the query
  * @method     ChildSpyDistributorItem findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyDistributorItem matching the query, or a new ChildSpyDistributorItem object populated from the query conditions when no match is found
@@ -44,11 +51,13 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemTabl
  * @method     ChildSpyDistributorItem findOneByIdDistributorItem(int $id_distributor_item) Return the first ChildSpyDistributorItem filtered by the id_distributor_item column
  * @method     ChildSpyDistributorItem findOneByTouched(string $touched) Return the first ChildSpyDistributorItem filtered by the touched column
  * @method     ChildSpyDistributorItem findOneByFkItemType(int $fk_item_type) Return the first ChildSpyDistributorItem filtered by the fk_item_type column
+ * @method     ChildSpyDistributorItem findOneByFkGlossaryTranslation(int $fk_glossary_translation) Return the first ChildSpyDistributorItem filtered by the fk_glossary_translation column
  *
  * @method     ChildSpyDistributorItem[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyDistributorItem objects based on current ModelCriteria
  * @method     ChildSpyDistributorItem[]|ObjectCollection findByIdDistributorItem(int $id_distributor_item) Return ChildSpyDistributorItem objects filtered by the id_distributor_item column
  * @method     ChildSpyDistributorItem[]|ObjectCollection findByTouched(string $touched) Return ChildSpyDistributorItem objects filtered by the touched column
  * @method     ChildSpyDistributorItem[]|ObjectCollection findByFkItemType(int $fk_item_type) Return ChildSpyDistributorItem objects filtered by the fk_item_type column
+ * @method     ChildSpyDistributorItem[]|ObjectCollection findByFkGlossaryTranslation(int $fk_glossary_translation) Return ChildSpyDistributorItem objects filtered by the fk_glossary_translation column
  * @method     ChildSpyDistributorItem[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -140,7 +149,7 @@ abstract class SpyDistributorItemQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id_distributor_item, touched, fk_item_type FROM spy_distributor_item WHERE id_distributor_item = :p0 AND fk_item_type = :p1';
+        $sql = 'SELECT id_distributor_item, touched, fk_item_type, fk_glossary_translation FROM spy_distributor_item WHERE id_distributor_item = :p0 AND fk_item_type = :p1';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
@@ -374,6 +383,49 @@ abstract class SpyDistributorItemQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the fk_glossary_translation column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByFkGlossaryTranslation(1234); // WHERE fk_glossary_translation = 1234
+     * $query->filterByFkGlossaryTranslation(array(12, 34)); // WHERE fk_glossary_translation IN (12, 34)
+     * $query->filterByFkGlossaryTranslation(array('min' => 12)); // WHERE fk_glossary_translation > 12
+     * </code>
+     *
+     * @see       filterBySpyGlossaryTranslation()
+     *
+     * @param     mixed $fkGlossaryTranslation The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildSpyDistributorItemQuery The current query, for fluid interface
+     */
+    public function filterByFkGlossaryTranslation($fkGlossaryTranslation = null, $comparison = null)
+    {
+        if (is_array($fkGlossaryTranslation)) {
+            $useMinMax = false;
+            if (isset($fkGlossaryTranslation['min'])) {
+                $this->addUsingAlias(SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION, $fkGlossaryTranslation['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($fkGlossaryTranslation['max'])) {
+                $this->addUsingAlias(SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION, $fkGlossaryTranslation['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION, $fkGlossaryTranslation, $comparison);
+    }
+
+    /**
      * Filter the query by a related \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType object
      *
      * @param \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType|ObjectCollection $spyDistributorItemType The related object(s) to use as filter
@@ -448,6 +500,83 @@ abstract class SpyDistributorItemQuery extends ModelCriteria
         return $this
             ->joinSpyDistributorItemType($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'SpyDistributorItemType', '\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery');
+    }
+
+    /**
+     * Filter the query by a related \SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation object
+     *
+     * @param \SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation|ObjectCollection $spyGlossaryTranslation The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildSpyDistributorItemQuery The current query, for fluid interface
+     */
+    public function filterBySpyGlossaryTranslation($spyGlossaryTranslation, $comparison = null)
+    {
+        if ($spyGlossaryTranslation instanceof \SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation) {
+            return $this
+                ->addUsingAlias(SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION, $spyGlossaryTranslation->getIdGlossaryTranslation(), $comparison);
+        } elseif ($spyGlossaryTranslation instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION, $spyGlossaryTranslation->toKeyValue('PrimaryKey', 'IdGlossaryTranslation'), $comparison);
+        } else {
+            throw new PropelException('filterBySpyGlossaryTranslation() only accepts arguments of type \SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the SpyGlossaryTranslation relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildSpyDistributorItemQuery The current query, for fluid interface
+     */
+    public function joinSpyGlossaryTranslation($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('SpyGlossaryTranslation');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'SpyGlossaryTranslation');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the SpyGlossaryTranslation relation SpyGlossaryTranslation object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery A secondary query class using the current class as primary query
+     */
+    public function useSpyGlossaryTranslationQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinSpyGlossaryTranslation($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'SpyGlossaryTranslation', '\SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery');
     }
 
     /**

@@ -66,9 +66,10 @@ class ItemDistributor implements ItemDistributorInterface
     {
         $messageTransfer = $this->getMessageTransfer();
         $queueNames = $this->itemQueueProvider->getAllQueueForType($type);
+        $processorPipeline = $this->getProcessorPipelineByType($type);
 
         foreach ($itemBatch as $rawItem) {
-            $processedItem = $this->processItem($type, $rawItem);
+            $processedItem = $this->processItem($processorPipeline, $rawItem);
 
             $messageTransfer->setType($type);
             $messageTransfer->setPayload($processedItem);
@@ -82,16 +83,21 @@ class ItemDistributor implements ItemDistributorInterface
     }
 
     /**
-     * @param string $type
+     * @param ItemProcessorPluginInterface[] $processorPipeline
      * @param array $processableItem
      *
+     * @throws \Exception
      * @return array
      */
-    protected function processItem($type, array $processableItem)
+    protected function processItem(array $processorPipeline, array $processableItem)
     {
+        if (empty($processorPipeline)) {
+            return $processableItem;
+        }
+
         $processedItem = [];
 
-        foreach ($this->getProcessorPipelineByType($type) as $processor) {
+        foreach ($processorPipeline as $processor) {
             $processedItem = $processor->processItem($processableItem);
         }
 
@@ -106,8 +112,8 @@ class ItemDistributor implements ItemDistributorInterface
      */
     protected function getProcessorPipelineByType($type)
     {
-        if (array_key_exists($type, $this->processorPipeline)) {
-            throw new \Exception;
+        if (!array_key_exists($type, $this->processorPipeline)) {
+            return [];
         }
 
         return $this->processorPipeline[$type];

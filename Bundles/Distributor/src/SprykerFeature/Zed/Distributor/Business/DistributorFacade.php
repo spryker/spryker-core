@@ -26,27 +26,6 @@ class DistributorFacade extends AbstractFacade
     }
 
     /**
-     * @param $itemType
-     * @param array $itemIds
-     *
-     * @return bool
-     */
-    public function touchItems($itemType, array $itemIds)
-    {
-
-    }
-
-    /**
-     * @param $itemType
-     *
-     * @return bool
-     */
-    public function touchAllItemsByType($itemType)
-    {
-
-    }
-
-    /**
      * @param MessengerInterface $messenger
      * @param array $itemTypes
      */

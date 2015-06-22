@@ -60,6 +60,6 @@ class TaskProvider implements TaskProviderInterface
                 )
             );
         }
-        $this->tasks[$task->getName()] = $task;
+        $this->tasks[$task->getQueueName()] = $task;
     }
 }

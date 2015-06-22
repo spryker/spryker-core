@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Distributor\Business\Exception;
 
-class QueryExpanderNotFoundException
+class QueryExpanderNotFoundException extends \Exception
 {
 
 }

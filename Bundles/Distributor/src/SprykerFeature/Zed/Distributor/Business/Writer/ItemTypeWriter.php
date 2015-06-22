@@ -53,7 +53,7 @@ class ItemTypeWriter implements ItemTypeWriterInterface
         if (empty($distribution)) {
             throw new Exception;
         }
-        $distribution->getLastDistribution($timestamp);
+        $distribution->setLastDistribution($timestamp);
         $distribution->save();
 
         return $distribution->getIdDistributorItemType();

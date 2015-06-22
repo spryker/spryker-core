@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\Distributor\Communication\Console;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerFeature\Zed\Distributor\Business\DistributorDependencyContainer;
 use SprykerFeature\Zed\Distributor\Business\DistributorFacade;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -22,7 +23,7 @@ class DistributorConsole extends Console
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::COMMAND_DESCRIPTION);
-        $this->addOption(self::TYPE);
+        $this->addArgument(self::TYPE, InputArgument::OPTIONAL);
 
         parent::configure();
     }
@@ -47,7 +48,7 @@ class DistributorConsole extends Console
     protected function getItemTypes(InputInterface $input)
     {
         $itemTypes = [];
-        $itemType = $input->getOption(self::TYPE);
+        $itemType = $input->getArgument(self::TYPE);
 
         if (false !== $itemType) {
             $itemTypes[] = $itemType;

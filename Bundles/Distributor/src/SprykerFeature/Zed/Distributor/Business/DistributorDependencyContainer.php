@@ -40,7 +40,7 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
      */
     public function createQueueDistributor()
     {
-        $queueDistributor = $this->getFactory()->createDistributorQueueDistributor(
+        $queueDistributor = $this->getFactory()->createDistributorDistributor(
             $this->getQueryContainer(),
             $this->createLatestDistributionMarker(),
             $this->createItemDistributor()
@@ -59,7 +59,7 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
     protected function createItemDistributor()
     {
         $itemDistributor =  $this->getFactory()->createDistributorItemDistributor(
-            $this->createQueueRouter(),
+            $this->createMessageRouter(),
             $this->createItemQueueProvider()
         );
 
@@ -103,9 +103,9 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
     /**
      * @return MessageRouterInterface
      */
-    protected function createQueueRouter()
+    protected function createMessageRouter()
     {
-        return $this->getFactory()->createRouterQueueRouter(
+        return $this->getFactory()->createRouterMessageRouter(
             $this->getQueueFacade()
         );
     }

@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Distributor\Business\Distributor;
 
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerFeature\Zed\Distributor\Business\Exception\QueryExpanderNotFoundException;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Distributor\Business\Marker\LastDistributionMarkerInterface;
 use SprykerFeature\Zed\Distributor\Dependency\Plugin\QueryExpanderPluginInterface;
@@ -88,7 +89,7 @@ class Distributor
      */
     protected function getCurrentTimestamp()
     {
-        return microtime();
+        return (new \DateTime())->format('Y-m-d H:i:s');
     }
 
     /**
@@ -119,8 +120,13 @@ class Distributor
      */
     protected function getQueryPipelineByType($type)
     {
-        if (array_key_exists($type, $this->queryPipeline)) {
-            throw new \Exception;
+        if (!array_key_exists($type, $this->queryPipeline)) {
+            throw new QueryExpanderNotFoundException(
+                sprintf(
+                    'No QueryExpander found for "%s"',
+                    $type
+                )
+            );
         }
 
         return $this->queryPipeline[$type];

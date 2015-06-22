@@ -21,6 +21,8 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemQuery as
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType as ChildSpyDistributorItemType;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery as ChildSpyDistributorItemTypeQuery;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
 
 /**
  * Base class that represents a row from the 'spy_distributor_item' table.
@@ -82,9 +84,20 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
     protected $fk_item_type;
 
     /**
+     * The value for the fk_glossary_translation field.
+     * @var        int
+     */
+    protected $fk_glossary_translation;
+
+    /**
      * @var        ChildSpyDistributorItemType
      */
     protected $aSpyDistributorItemType;
+
+    /**
+     * @var        SpyGlossaryTranslation
+     */
+    protected $aSpyGlossaryTranslation;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -352,6 +365,16 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
     }
 
     /**
+     * Get the [fk_glossary_translation] column value.
+     *
+     * @return int
+     */
+    public function getFkGlossaryTranslation()
+    {
+        return $this->fk_glossary_translation;
+    }
+
+    /**
      * Set the value of [id_distributor_item] column.
      *
      * @param  int $v new value
@@ -416,6 +439,30 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
     } // setFkItemType()
 
     /**
+     * Set the value of [fk_glossary_translation] column.
+     *
+     * @param  int $v new value
+     * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItem The current object (for fluent API support)
+     */
+    public function setFkGlossaryTranslation($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->fk_glossary_translation !== $v) {
+            $this->fk_glossary_translation = $v;
+            $this->modifiedColumns[SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION] = true;
+        }
+
+        if ($this->aSpyGlossaryTranslation !== null && $this->aSpyGlossaryTranslation->getIdGlossaryTranslation() !== $v) {
+            $this->aSpyGlossaryTranslation = null;
+        }
+
+        return $this;
+    } // setFkGlossaryTranslation()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -462,6 +509,9 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SpyDistributorItemTableMap::translateFieldName('FkItemType', TableMap::TYPE_PHPNAME, $indexType)];
             $this->fk_item_type = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : SpyDistributorItemTableMap::translateFieldName('FkGlossaryTranslation', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->fk_glossary_translation = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -470,7 +520,7 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = SpyDistributorItemTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = SpyDistributorItemTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\SprykerFeature\\Zed\\Distributor\\Persistence\\Propel\\SpyDistributorItem'), 0, $e);
@@ -494,6 +544,9 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
     {
         if ($this->aSpyDistributorItemType !== null && $this->fk_item_type !== $this->aSpyDistributorItemType->getIdDistributorItemType()) {
             $this->aSpyDistributorItemType = null;
+        }
+        if ($this->aSpyGlossaryTranslation !== null && $this->fk_glossary_translation !== $this->aSpyGlossaryTranslation->getIdGlossaryTranslation()) {
+            $this->aSpyGlossaryTranslation = null;
         }
     } // ensureConsistency
 
@@ -535,6 +588,7 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->aSpyDistributorItemType = null;
+            $this->aSpyGlossaryTranslation = null;
         } // if (deep)
     }
 
@@ -646,6 +700,13 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
                 $this->setSpyDistributorItemType($this->aSpyDistributorItemType);
             }
 
+            if ($this->aSpyGlossaryTranslation !== null) {
+                if ($this->aSpyGlossaryTranslation->isModified() || $this->aSpyGlossaryTranslation->isNew()) {
+                    $affectedRows += $this->aSpyGlossaryTranslation->save($con);
+                }
+                $this->setSpyGlossaryTranslation($this->aSpyGlossaryTranslation);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -692,6 +753,9 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
         if ($this->isColumnModified(SpyDistributorItemTableMap::COL_FK_ITEM_TYPE)) {
             $modifiedColumns[':p' . $index++]  = 'fk_item_type';
         }
+        if ($this->isColumnModified(SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION)) {
+            $modifiedColumns[':p' . $index++]  = 'fk_glossary_translation';
+        }
 
         $sql = sprintf(
             'INSERT INTO spy_distributor_item (%s) VALUES (%s)',
@@ -711,6 +775,9 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
                         break;
                     case 'fk_item_type':
                         $stmt->bindValue($identifier, $this->fk_item_type, PDO::PARAM_INT);
+                        break;
+                    case 'fk_glossary_translation':
+                        $stmt->bindValue($identifier, $this->fk_glossary_translation, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -783,6 +850,9 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
             case 2:
                 return $this->getFkItemType();
                 break;
+            case 3:
+                return $this->getFkGlossaryTranslation();
+                break;
             default:
                 return null;
                 break;
@@ -816,6 +886,7 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
             $keys[0] => $this->getIdDistributorItem(),
             $keys[1] => $this->getTouched(),
             $keys[2] => $this->getFkItemType(),
+            $keys[3] => $this->getFkGlossaryTranslation(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -837,6 +908,21 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aSpyDistributorItemType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aSpyGlossaryTranslation) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'spyGlossaryTranslation';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'spy_glossary_translation';
+                        break;
+                    default:
+                        $key = 'SpyGlossaryTranslation';
+                }
+
+                $result[$key] = $this->aSpyGlossaryTranslation->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -881,6 +967,9 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
             case 2:
                 $this->setFkItemType($value);
                 break;
+            case 3:
+                $this->setFkGlossaryTranslation($value);
+                break;
         } // switch()
 
         return $this;
@@ -915,6 +1004,9 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
         }
         if (array_key_exists($keys[2], $arr)) {
             $this->setFkItemType($arr[$keys[2]]);
+        }
+        if (array_key_exists($keys[3], $arr)) {
+            $this->setFkGlossaryTranslation($arr[$keys[3]]);
         }
     }
 
@@ -965,6 +1057,9 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
         }
         if ($this->isColumnModified(SpyDistributorItemTableMap::COL_FK_ITEM_TYPE)) {
             $criteria->add(SpyDistributorItemTableMap::COL_FK_ITEM_TYPE, $this->fk_item_type);
+        }
+        if ($this->isColumnModified(SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION)) {
+            $criteria->add(SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION, $this->fk_glossary_translation);
         }
 
         return $criteria;
@@ -1069,6 +1164,7 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
     {
         $copyObj->setTouched($this->getTouched());
         $copyObj->setFkItemType($this->getFkItemType());
+        $copyObj->setFkGlossaryTranslation($this->getFkGlossaryTranslation());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setIdDistributorItem(NULL); // this is a auto-increment column, so set to default value
@@ -1149,6 +1245,57 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a SpyGlossaryTranslation object.
+     *
+     * @param  SpyGlossaryTranslation $v
+     * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItem The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setSpyGlossaryTranslation(SpyGlossaryTranslation $v = null)
+    {
+        if ($v === null) {
+            $this->setFkGlossaryTranslation(NULL);
+        } else {
+            $this->setFkGlossaryTranslation($v->getIdGlossaryTranslation());
+        }
+
+        $this->aSpyGlossaryTranslation = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the SpyGlossaryTranslation object, it will not be re-added.
+        if ($v !== null) {
+            $v->addSpyDistributorItem($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated SpyGlossaryTranslation object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return SpyGlossaryTranslation The associated SpyGlossaryTranslation object.
+     * @throws PropelException
+     */
+    public function getSpyGlossaryTranslation(ConnectionInterface $con = null)
+    {
+        if ($this->aSpyGlossaryTranslation === null && ($this->fk_glossary_translation !== null)) {
+            $this->aSpyGlossaryTranslation = SpyGlossaryTranslationQuery::create()->findPk($this->fk_glossary_translation, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aSpyGlossaryTranslation->addSpyDistributorItems($this);
+             */
+        }
+
+        return $this->aSpyGlossaryTranslation;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -1158,9 +1305,13 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
         if (null !== $this->aSpyDistributorItemType) {
             $this->aSpyDistributorItemType->removeSpyDistributorItem($this);
         }
+        if (null !== $this->aSpyGlossaryTranslation) {
+            $this->aSpyGlossaryTranslation->removeSpyDistributorItem($this);
+        }
         $this->id_distributor_item = null;
         $this->touched = null;
         $this->fk_item_type = null;
+        $this->fk_glossary_translation = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1182,6 +1333,7 @@ abstract class SpyDistributorItem implements ActiveRecordInterface
         } // if ($deep)
 
         $this->aSpyDistributorItemType = null;
+        $this->aSpyGlossaryTranslation = null;
     }
 
     /**
