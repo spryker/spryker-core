@@ -30,6 +30,8 @@ class ProductOptionExpanderPlugin extends AbstractPlugin implements QueryExpande
     public function expandQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
         // ...
+
+        return $expandableQuery;
     }
 
     /**
