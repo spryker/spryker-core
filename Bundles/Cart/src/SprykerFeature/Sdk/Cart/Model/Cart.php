@@ -174,7 +174,7 @@ class Cart implements CartInterface
         $changedItem->setId($sku);
         $changedItem->setQuantity($quantity);
         $changedItems = new CartItemsTransfer();
-        $changedItems->add($changedItem);
+        $changedItems->addCartItem($changedItem);
 
         return $changedItems;
     }
