@@ -1,9 +1,5 @@
 <?php
 
-/*
- * (c) Copyright Spryker Systems GmbH 2015
- */
-
 namespace SprykerEngine\Zed\Touch\Business\Model;
 
 use Propel\Runtime\Exception\PropelException;

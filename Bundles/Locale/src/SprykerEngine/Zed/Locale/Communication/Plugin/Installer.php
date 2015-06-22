@@ -1,9 +1,5 @@
 <?php
 
-/*
- * (c) Copyright Spryker Systems GmbH 2015
- */
-
 namespace SprykerEngine\Zed\Locale\Communication\Plugin;
 
 use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;

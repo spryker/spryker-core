@@ -1,9 +1,5 @@
 <?php
 
-/*
- * (c) Copyright Spryker Systems GmbH 2015
- */
-
 namespace SprykerFeature\Zed\Url\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;

@@ -1,9 +1,5 @@
 <?php
 
-/*
- * (c) Copyright Spryker Systems GmbH 2015
- */
-
 namespace SprykerFeature\Zed\Glossary\Communication\Form;
 
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;

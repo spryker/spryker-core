@@ -1,9 +1,5 @@
 <?php
 
-/*
- * (c) Copyright Spryker Systems GmbH 2015
- */
-
 namespace SprykerFeature\Shared\Payone;
 
 use SprykerFeature\Shared\Library\ConfigInterface;

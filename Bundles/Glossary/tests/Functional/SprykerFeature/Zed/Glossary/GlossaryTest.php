@@ -1,9 +1,5 @@
 <?php
 
-/*
- * (c) Copyright Spryker Systems GmbH 2015
- */
-
 namespace Functional\SprykerFeature\Zed\Glossary;
 
 use Codeception\TestCase\Test;
