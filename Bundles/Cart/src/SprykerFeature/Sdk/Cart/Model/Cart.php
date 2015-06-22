@@ -3,6 +3,11 @@
 namespace SprykerFeature\Sdk\Cart\Model;
 
 use Generated\Sdk\Ide\AutoCompletion;
+use Generated\Shared\Cart\CartItemsInterface;
+use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\CartItemsTransfer;
+use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Yves\Kernel\Locator;
 use SprykerFeature\Sdk\Cart\StorageProvider\StorageProviderInterface;
@@ -146,12 +151,12 @@ class Cart implements CartInterface
     }
 
     /**
-     * @return CartChangeInterface
+     * @return ChangeInterface
      */
     protected function createCartChange()
     {
         $cart = $this->storageProvider->getCart();
-        $cartChange = $this->getLocator()->Cart()->transferCartChange();
+        $cartChange = new ChangeTransfer();
         $cartChange->setCart($cart);
 
         return $cartChange;
@@ -161,28 +166,30 @@ class Cart implements CartInterface
      * @param string $sku
      * @param int $quantity
      *
-     * @return AbstractTransfer|ItemCollectionInterface
+     * @return CartItemsInterface
      */
     protected function createChangedItems($sku, $quantity = 1)
     {
-        $changedItem = $this->getLocator()->Cart()->transferItem();
+        $changedItem = new CartItemTransfer();
         $changedItem->setId($sku);
         $changedItem->setQuantity($quantity);
-        $changedItems = $this->getLocator()->Cart()->transferItemCollection();
+        $changedItems = new CartItemsTransfer();
         $changedItems->add($changedItem);
 
         return $changedItems;
     }
 
     /**
-     * @param ItemCollectionInterface $changedItems
+     * @param CartItemsInterface $changedItems
      *
-     * @return CartChangeInterface
+     * @return ChangeInterface
      */
-    protected function prepareCartChange(ItemCollectionInterface $changedItems)
+    protected function prepareCartChange(CartItemsInterface $changedItems)
     {
-        $cartChange = $this->createCartChange();
-        $cartChange->setChangedItems($changedItems);
+        $cartChange = new ChangeTransfer();
+        foreach ($changedItems as $item) {
+            $cartChange->addChangedCartItems($item);
+        }
 
         return $cartChange;
     }
