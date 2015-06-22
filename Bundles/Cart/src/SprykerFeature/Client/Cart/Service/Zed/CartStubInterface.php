@@ -56,7 +56,7 @@ interface CartStubInterface
      *
      * @return ChangeInterface
      */
-    public function clearCoupon(ChangeInterface $cartChange);
+    public function clearCoupons(ChangeInterface $cartChange);
 
     /**
      * @param CartInterface|TransferInterface $cart

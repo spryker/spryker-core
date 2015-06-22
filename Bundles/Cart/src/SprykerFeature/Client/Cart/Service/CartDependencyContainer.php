@@ -4,6 +4,8 @@ namespace SprykerFeature\Client\Cart;
 
 use Generated\Client\Ide\FactoryAutoCompletion\Cart;
 use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
+use SprykerFeature\Client\Cart\Zed\CartStubInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @method Cart getFactory()
@@ -12,13 +14,46 @@ class CartDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @throws \ErrorException
-     * @return mixed
+     * @return SessionInterface
      */
     public function createSession()
     {
         return $this->getProvidedDependency(CartDependencyProvider::SESSION);
     }
+
+    /**
+     * @return CartStubInterface
+     */
+    public function createStub()
+    {
+        $zedStub = $this->getProvidedDependency(CartDependencyProvider::SERVICE_ZED);
+        $cartStub = $this->getFactory()->createServiceZedCartStub(
+            $zedStub
+        );
+
+        return $cartStub;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * @param SessionInterface $session

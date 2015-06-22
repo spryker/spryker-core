@@ -27,14 +27,14 @@ interface CartClientInterface
      *
      * @return CartInterface
      */
-    public function addToCart($sku, $quantity = 1);
+    public function addItem($sku, $quantity = 1);
 
     /**
      * @param string $sku
      *
      * @return CartInterface
      */
-    public function removeFromCart($sku);
+    public function removeItem($sku);
 
     /**
      * @param string $sku

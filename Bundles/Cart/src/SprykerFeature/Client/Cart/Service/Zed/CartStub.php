@@ -8,90 +8,100 @@ use SprykerEngine\Client\Kernel\AbstractClient;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\ZedRequest\Client\AbstractZedClient;
 
-/**
- * @method AbstractZedClient getStub()
- */
-class CartClient extends AbstractClient implements CartStubInterface
+class CartStub implements CartStubInterface
 {
 
     /**
+     * @var AbstractZedClient
+     */
+    private $stub;
+
+    /**
+     * @param AbstractZedClient $stub
+     */
+    public function __construct(AbstractZedClient $stub)
+    {
+        $this->stub = $stub;
+    }
+
+    /**
      * @param ChangeInterface|TransferInterface $cartChange
      *
-     * @return TransferInterface
+     * @return CartInterface
      */
     public function addItem(ChangeInterface $cartChange)
     {
-        return $this->getStub()->call('/cart/gateway/add-item', $cartChange);
+        return $this->stub->call('/cart/gateway/add-item', $cartChange);
     }
 
     /**
      * @param ChangeInterface|TransferInterface $cartChange
      *
-     * @return TransferInterface
+     * @return CartInterface
      */
     public function removeItem(ChangeInterface $cartChange)
     {
-        return $this->getStub()->call('/cart/gateway/remove-item', $cartChange);
+        return $this->stub->call('/cart/gateway/remove-item', $cartChange);
     }
 
     /**
      * @param ChangeInterface|TransferInterface $cartChange
      *
-     * @return TransferInterface
+     * @return CartInterface
      */
     public function increaseItemQuantity(ChangeInterface $cartChange)
     {
-        return $this->getStub()->call('/cart/gateway/increase-item-quantity', $cartChange);
+        return $this->stub->call('/cart/gateway/increase-item-quantity', $cartChange);
     }
 
     /**
      * @param ChangeInterface|TransferInterface $cartChange
      *
-     * @return TransferInterface
+     * @return CartInterface
      */
     public function decreaseItemQuantity(ChangeInterface $cartChange)
     {
-        return $this->getStub()->call('/cart/gateway/decrease-item-quantity', $cartChange);
+        return $this->stub->call('/cart/gateway/decrease-item-quantity', $cartChange);
     }
 
     /**
      * @param ChangeInterface|TransferInterface $cartChange
      *
-     * @return TransferInterface
+     * @return CartInterface
      */
     public function addCoupon(ChangeInterface $cartChange)
     {
-        return $this->getStub()->call('/cart/gateway/add-coupon-code', $cartChange);
+        return $this->stub->call('/cart/gateway/add-coupon-code', $cartChange);
     }
 
     /**
      * @param ChangeInterface|TransferInterface $cartChange
      *
-     * @return TransferInterface
+     * @return CartInterface
      */
     public function removeCoupon(ChangeInterface $cartChange)
     {
-        return $this->getStub()->call('/cart/gateway/remove-coupon-code', $cartChange);
+        return $this->stub->call('/cart/gateway/remove-coupon-code', $cartChange);
     }
 
     /**
      * @param ChangeInterface|TransferInterface $cartChange
      *
-     * @return TransferInterface
+     * @return CartInterface
      */
     public function clearCoupons(ChangeInterface $cartChange)
     {
-        return $this->getStub()->call('/cart/gateway/clear-coupon-code', $cartChange);
+        return $this->stub->call('/cart/gateway/clear-coupon-code', $cartChange);
     }
 
     /**
      * @param CartInterface|TransferInterface $cart
      *
-     * @return mixed
+     * @return CartInterface
      */
     public function recalculate(CartInterface $cart)
     {
-        return $this->getStub()->call('/cart/gateway/recalculate', $cart);
+        return $this->stub->call('/cart/gateway/recalculate', $cart);
     }
 
 }

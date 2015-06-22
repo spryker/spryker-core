@@ -14,7 +14,21 @@ interface CartStorageInterface
 
     /**
      * @param CartInterface $cart
+     *
+     * @return CartStorageInterface
      */
     public function setCart(CartInterface $cart);
+
+    /**
+     * @return int
+     */
+    public function getItemCount();
+
+    /**
+     * @param $itemCount
+     *
+     * @return CartStorageInterface
+     */
+    public function setItemCount($itemCount);
 
 }

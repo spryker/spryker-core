@@ -3,6 +3,7 @@
 namespace SprykerFeature\Client\Cart;
 
 use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Cart\CartItemInterface;
 use Generated\Shared\PriceCartConnector\CartItemsInterface;
 use Generated\Shared\Transfer\CartItemsTransfer;
 use Generated\Shared\Transfer\CartItemTransfer;
@@ -18,11 +19,6 @@ use SprykerFeature\Client\Cart\Zed\CartStubInterface;
  */
 class CartClient extends AbstractClient implements CartClientInterface
 {
-
-    /**
-     * @var CartStubInterface
-     */
-    private $cartStub;
 
     /**
      * @return CartInterface
@@ -47,7 +43,12 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $cart = new CartTransfer();
 
-        return $this->getSession()->setCart($cart);
+        $this->getSession()
+            ->setItemCount(0)
+            ->setCart($cart)
+        ;
+
+        return $cart;
     }
 
     /**
@@ -55,7 +56,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function getItemCount()
     {
-
+        return $this->getSession()->getItemCount();
     }
 
     /**
@@ -64,13 +65,21 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return CartInterface
      */
-    public function addToCart($sku, $quantity = 1)
+    public function addItem($sku, $quantity = 1)
     {
         $addedItems = $this->createChangedItems($sku, $quantity);
         $cartChange = $this->prepareCartChange($addedItems);
-        $this->cartStub->addItem($cartChange);
+        $cart = $this->getStub()->addItem($cartChange);
 
-        return $this->handleCartResponse();
+        return $this->handleCartResponse($cart);
+    }
+
+    /**
+     * @return CartStubInterface
+     */
+    private function getStub()
+    {
+        return $this->getDependencyContainer()->createStub();
     }
 
     /**
@@ -78,20 +87,33 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return CartInterface
      */
-    public function removeFromCart($sku)
+    public function removeItem($sku)
+    {
+        $item = $this->getItemBySku($sku);
+        $deletedItems = $this->createChangedItems($sku, $item->getQuantity());
+        $cartChange = $this->prepareCartChange($deletedItems);
+        $cart = $this->getStub()->removeItem($cartChange);
+
+        return $this->handleCartResponse($cart);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @throws \InvalidArgumentException
+     * @return CartItemInterface
+     */
+    private function getItemBySku($sku)
     {
         $cart = $this->getCart();
 
-        if ($this->hasItemWithSku($sku)) {
-            $deleteItem = $cart->getItems()->offsetGet($sku);
-            $deletedItems = $this->createChangedItems($sku, $deleteItem->getQuantity());
-            $cartChange = $this->prepareCartChange($deletedItems);
-            $this->cartStub->removeItem($cartChange);
-
-            return $this->handleCartResponse();
+        foreach ($cart->getItems() as $item) {
+            if ($item->getSku() === $sku) {
+                return $item;
+            }
         }
 
-        return $cart;
+        throw new \InvalidArgumentException('No item with sku "' . $sku . '" found in cart');
     }
 
     /**
@@ -102,17 +124,11 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function decreaseItemQuantity($sku, $quantity = 1)
     {
-        $cart = $this->getCart();
+        $decreasedItems = $this->createChangedItems($sku, $quantity);
+        $cartChange = $this->prepareCartChange($decreasedItems);
+        $cart = $this->getStub()->decreaseItemQuantity($cartChange);
 
-        if ($cart->getItems()->offsetExists($sku)) {
-            $decreasedItems = $this->createChangedItems($sku, $quantity);
-            $cartChange = $this->prepareCartChange($decreasedItems);
-            $this->cartStub->call('/cart/gateway/decrease-item-quantity', $cartChange);
-
-            return $this->handleCartResponse();
-        }
-
-        return $cart;
+        return $this->handleCartResponse($cart);
     }
 
     /**
@@ -125,9 +141,9 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $increasedItems = $this->createChangedItems($sku, $quantity);
         $cartChange = $this->prepareCartChange($increasedItems);
-        $this->cartStub->increaseItemQuantity($cartChange);
+        $cart = $this->getStub()->increaseItemQuantity($cartChange);
 
-        return $this->handleCartResponse();
+        return $this->handleCartResponse($cart);
     }
 
     /**
@@ -136,9 +152,9 @@ class CartClient extends AbstractClient implements CartClientInterface
     public function recalculate()
     {
         $cart = $this->getCart();
-        $this->cartStub->recalculate($cart);
+        $cart = $this->getStub()->recalculate($cart);
 
-        return $this->handleCartResponse();
+        return $this->handleCartResponse($cart);
     }
 
     /**
@@ -148,7 +164,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $cart = $this->getCart();
         $cartChange = new ChangeTransfer();
-        $cartChange->setCartHash($cart);
+        // @todo get cart hash
+//        $cartChange->setCartHash($cart);
 
         return $cartChange;
     }
@@ -162,7 +179,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     private function createChangedItems($sku, $quantity = 1)
     {
         $changedItem = new CartItemTransfer();
-        $changedItem->setId($sku);
+        $changedItem->setSku($sku);
         $changedItem->setQuantity($quantity);
 
         $changedItems = new CartItemsTransfer();
@@ -185,21 +202,13 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @param CartInterface $cart
+     *
      * @return CartInterface
      */
-    private function handleCartResponse()
+    private function handleCartResponse(CartInterface $cart)
     {
-        $cartResponse = $this->cartStub->getLastResponse();
-
-        if (!$cartResponse->isSuccess()) {
-            //@todo log errors
-
-            return $this->getCart();
-        }
-
-        /** @var CartInterface $cart */
-        $cart = $cartResponse->getTransfer();
-        $this->session->setCart($cart);
+        $this->getSession()->setCart($cart);
 
         return $cart;
     }
