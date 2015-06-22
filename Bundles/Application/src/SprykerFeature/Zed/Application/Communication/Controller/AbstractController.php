@@ -38,11 +38,6 @@ abstract class AbstractController
     private $dependencyContainer;
 
     /**
-     * @var MessengerInterface
-     */
-    private $messenger;
-
-    /**
      * @var AbstractFacade
      */
     private $facade;
@@ -62,14 +57,6 @@ abstract class AbstractController
         $this->application = $application;
         $this->locator = $locator;
 
-        $this->messenger = $this->locator->messenger()->facade();
-
-        $this->getTwig()->addExtension(
-            $this->locator->messenger()->pluginTwigMessengerPlugin()->setMessenger(
-                $this->messenger
-            )
-        );
-
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
         }
@@ -80,7 +67,7 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        return $this->messenger;
+        return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
     }
 
     /**
