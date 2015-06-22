@@ -187,9 +187,7 @@ class Cart implements CartInterface
     protected function prepareCartChange(CartItemsInterface $changedItems)
     {
         $cartChange = new ChangeTransfer();
-        foreach ($changedItems as $item) {
-            $cartChange->addChangedCartItems($item);
-        }
+        $cartChange->setChangedCartItems($changedItems);
 
         return $cartChange;
     }
