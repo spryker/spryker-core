@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdate
 use SprykerFeature\Zed\Payone\PayoneConfig;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
+use SprykerFeature\Zed\Payone\PayoneDependencyProvider;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainer;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use SprykerFeature\Zed\Payone\Business\ApiLog\ApiLogFinder;
@@ -147,10 +148,11 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
      */
     protected function getAvailablePaymentMethods()
     {
+        $storeConfig = $this->getProvidedDependency(PayoneDependencyProvider::STORE_CONFIG);
         return [
-            PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createPaymentMethodMapperPrePayment(),
-            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createPaymentMethodMapperCreditCardPseudo(),
-            PayoneApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createPaymentMethodMapperPayPal()
+            PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createPaymentMethodMapperPrePayment($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createPaymentMethodMapperCreditCardPseudo($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createPaymentMethodMapperPayPal($storeConfig)
         ];
     }
 

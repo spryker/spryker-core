@@ -8,6 +8,7 @@ use Generated\Shared\Payone\DebitInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Payone\RefundInterface;
 use Generated\Shared\Payone\StandardParameterInterface;
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
@@ -25,6 +26,15 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
      * @var SequenceNumberProviderInterface
      */
     private $sequenceNumberProvider;
+    /**
+     * @var Store
+     */
+    protected $storeConfig;
+
+    public function __construct(Store $storeConfig)
+    {
+        $this->storeConfig = $storeConfig;
+    }
 
     /**
      * @param StandardParameterInterface $standardParameter

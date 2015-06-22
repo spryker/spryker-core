@@ -68,7 +68,7 @@ class PrePayment extends AbstractMapper
 
         $personalContainer->setFirstName($authorizationData->getOrder()->getFirstName());
         $personalContainer->setLastName($authorizationData->getOrder()->getLastName());
-        $personalContainer->setCountry(Store::getInstance()->getCurrentCountry());
+        $personalContainer->setCountry($this->storeConfig->getCurrentCountry());
 
         return $personalContainer;
     }
