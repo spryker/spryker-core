@@ -101,4 +101,9 @@ class SessionServiceProvider extends SilexSessionServiceProvider
         }
         return $path;
     }
+
+    public function getSession()
+    {
+
+    }
 }

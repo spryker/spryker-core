@@ -5,10 +5,6 @@
 
 namespace SprykerFeature\Yves\Cart\CartStorage;
 
-/**
- * Interface CartStorageInterface
- * @package SprykerFeature\Yves\Cart\CartStorage
- */
 interface CartStorageInterface
 {
     /**

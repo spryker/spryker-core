@@ -2,13 +2,13 @@
 
 namespace SprykerFeature\Client\Payone;
 
-use SprykerEngine\Client\Kernel\AbstractStub;
+use SprykerEngine\Client\Kernel\AbstractClient;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class PayoneStub extends AbstractStub
+class PayoneClient extends AbstractClient
 {
 
 }

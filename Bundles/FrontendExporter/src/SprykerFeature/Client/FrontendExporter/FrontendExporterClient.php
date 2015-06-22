@@ -2,15 +2,16 @@
 
 namespace SprykerFeature\Client\FrontendExporter;
 
-use SprykerEngine\Client\Kernel\AbstractStub;
+use SprykerEngine\Client\Kernel\AbstractClient;
 use SprykerFeature\Client\FrontendExporter\Matcher\UrlMatcherInterface;
 
 /**
- * @TODO Rename all YvesExport Bundles to PageExport or just Export.
+ * @todo Rename all YvesExport Bundles to PageExport or just Export.
  * @method FrontendExporterDependencyContainer getDependencyContainer()
  */
-class FrontendExporterStub extends AbstractStub
+class FrontendExporterClient extends AbstractClient
 {
+
     /**
      * @return UrlMatcherInterface
      */
@@ -18,4 +19,10 @@ class FrontendExporterStub extends AbstractStub
     {
         return $this->getDependencyContainer()->createUrlMatcher();
     }
+
+    public function matchUrl()
+    {
+        return $this->getDependencyContainer()->createUrlMatcher()->matchUrl();
+    }
+
 }

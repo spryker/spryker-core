@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Client\CategoryExporter;
 
-use SprykerEngine\Client\Kernel\AbstractStub;
+use SprykerEngine\Client\Kernel\AbstractClient;
 
 /**
  * @method CategoryExporterDependencyContainer getDependencyContainer()
  */
-class CategoryExporterStub extends AbstractStub
+class CategoryExporterClient extends AbstractClient
 {
     /**
      * @param string $locale

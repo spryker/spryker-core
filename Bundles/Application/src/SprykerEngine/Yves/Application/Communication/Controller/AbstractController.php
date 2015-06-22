@@ -77,7 +77,6 @@ abstract class AbstractController
         \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreApdex();
         \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreTransaction();
     }
-
     /**
      * @param string $path
      * @param array $parameters

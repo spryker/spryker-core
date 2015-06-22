@@ -45,4 +45,5 @@ class SdkClientMethodTagBuilder extends AbstractSingleFileMethodTagBuilder
 
         return $methodTags;
     }
+
 }

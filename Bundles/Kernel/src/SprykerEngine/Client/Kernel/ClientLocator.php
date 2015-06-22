@@ -9,7 +9,7 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 class ClientLocator extends AbstractLocator
 {
 
-    const CLIENT_SUFFIX = 'Client';
+    const LOCATABLE_SUFFIX = 'Client';
 
     /**
      * @var string
@@ -28,7 +28,8 @@ class ClientLocator extends AbstractLocator
     {
         $factory = $this->getFactory($bundle);
 
-        return $factory->create($bundle . self::CLIENT_SUFFIX, $factory, $locator);
+
+        return $factory->create($bundle . self::LOCATABLE_SUFFIX, $factory, $locator);
     }
 
 }

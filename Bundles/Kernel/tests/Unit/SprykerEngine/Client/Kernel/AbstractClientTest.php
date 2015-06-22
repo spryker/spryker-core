@@ -2,24 +2,24 @@
 
 namespace Unit\SprykerEngine\Client\Kernel;
 
-use SprykerEngine\Client\Kernel\ClientLocator;
-use Unit\SprykerEngine\Client\Kernel\Fixtures\KernelClientLocator;
+use SprykerEngine\Zed\Kernel\Locator;
+use Unit\SprykerEngine\Client\Kernel\Fixtures\KernelFactory;
+use Unit\SprykerEngine\Client\Kernel\Fixtures\KernelClient;
 
 /**
+ * @group SprykerEngine
+ * @group Client
  * @group Kernel
- * @group Business
- * @group AbstractFacade
+ * @group AbstractClient
  */
 class AbstractClientTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testCreateInstanceShouldInjectDependencyContainerIfOneExists()
+    public function testAbstractStubMustBeConstructable()
     {
-        $locator = new ClientLocator(
-            '\\Unit\\SprykerEngine\\Client\\{{bundle}}{{store}}\\Fixtures\\KernelFactory'
-        );
-        $client = $locator->locate('Kernel', KernelClientLocator::getInstance());
+        $abstractStub = new KernelClient(new KernelFactory('Kernel'), Locator::getInstance());
 
-        $this->assertInstanceOf('Unit\SprykerEngine\Client\Kernel\Fixtures\KernelClient', $client);
+        $this->assertInstanceOf('Unit\SprykerEngine\Client\Kernel\Fixtures\KernelClient', $abstractStub);
     }
+
 }

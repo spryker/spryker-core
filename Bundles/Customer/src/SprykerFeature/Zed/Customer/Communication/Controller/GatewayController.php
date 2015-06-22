@@ -7,13 +7,13 @@ namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractClientController;
+use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 
 /**
  * @method CustomerFacade getFacade()
  */
-class GatewayController extends AbstractClientController
+class GatewayController extends AbstractGatewayController
 {
     /**
      * @param CustomerTransfer $customerTransfer

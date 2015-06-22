@@ -5,6 +5,8 @@
 
 namespace SprykerEngine\Shared\Kernel;
 
+use SprykerEngine\Shared\Kernel\Locator\LocatorException;
+
 abstract class AbstractClientLocator extends AbstractLocator
 {
 
@@ -22,7 +24,7 @@ abstract class AbstractClientLocator extends AbstractLocator
      * @param null|string $className
      *
      * @return object
-     * @throws \SprykerEngine\Shared\Kernel\Locator\LocatorException
+     * @throws LocatorException
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  * Class SessionCartCount
  * @package SprykerFeature\Yves\Cart\Model
  */
-class CartSessionCount implements CartCountInterface
+class CartSessionCount
 {
     const SESSION_CART_COUNT_KEY = 'CART_COUNT';
 

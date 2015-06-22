@@ -6,5 +6,4 @@ use Unit\SprykerEngine\Shared\Kernel\Fixtures\LocatorLocator;
 
 class KernelClientLocator extends LocatorLocator
 {
-
 }

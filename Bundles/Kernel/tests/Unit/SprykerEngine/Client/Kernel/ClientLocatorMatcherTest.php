@@ -5,24 +5,25 @@ namespace Unit\SprykerEngine\Client\Kernel;
 use SprykerEngine\Client\Kernel\ClientLocatorMatcher;
 
 /**
+ * @group SprykerEngine
+ * @group Client
  * @group Kernel
- * @group Business
- * @group Locator
+ * @group ClientLocatorMatcher
  */
 class ClientLocatorMatcherTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testMatchShouldReturnTrueIfMethodStartsWithFacade()
+    public function testMatchShouldReturnTrueIfMethodStartsWithClient()
     {
         $this->assertTrue((new ClientLocatorMatcher())->match('client'));
     }
 
-    public function testMatchShouldReturnFalseIfMethodNotStartsWithFacade()
+    public function testMatchShouldReturnFalseIfMethodNotStartsWithClient()
     {
         $this->assertFalse((new ClientLocatorMatcher())->match('locatorFoo'));
     }
 
-    public function testMatchShouldReturnFalseIfMethodNotStartsWithFacadeButFacadeInString()
+    public function testMatchShouldReturnFalseIfMethodNotStartsWithClientButClientInString()
     {
         $this->assertFalse((new ClientLocatorMatcher())->match('locatorClient'));
     }

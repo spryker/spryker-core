@@ -5,12 +5,12 @@
 
 namespace SprykerFeature\Zed\Cart\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractClientController;
+use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
 
-class GatewayController extends AbstractClientController
+class GatewayController extends AbstractGatewayController
 {
 
     /**

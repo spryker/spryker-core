@@ -23,7 +23,11 @@ class CartDependencyContainer extends AbstractDependencyContainer
      */
     protected function createStorageProvider(SessionInterface $session)
     {
+        $client = $this->getLocator()->cart()->client();
+
         return $this->getFactory()->createProviderSessionStorageProvider($this->getLocator(), $session);
+
+
     }
 
     /**
@@ -34,13 +38,10 @@ class CartDependencyContainer extends AbstractDependencyContainer
     public function createCartClient(SessionInterface $session)
     {
         return $this->getLocator()
-            ->Cart()
+            ->cart()
             ->client()
-            ->createCart($this->createStorageProvider($session));
+            ->getCart($this->createStorageProvider($session))
+        ;
     }
 
-    public function createCartServiceProvider(SessionInterface $session)
-    {
-        return $this->getFactory()->createProviderCartServiceProvider($this->createCartClient($session));
-    }
 }

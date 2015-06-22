@@ -6,21 +6,21 @@ use SprykerEngine\Client\Kernel\ClientLocator;
 use Unit\SprykerEngine\Client\Kernel\Fixtures\KernelClientLocator;
 
 /**
+ * @group SprykerEngine
+ * @group Client
  * @group Kernel
- * @group Business
- * @group Locator
- * @group FacadeLocator
+ * @group ClientLocator
  */
 class ClientLocatorTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testLocateFacadeShouldReturnFacadeOfGivenBundle()
+    public function testLocateStubShouldReturnStubOfGivenBundle()
     {
-        $facadeLocator = new ClientLocator(
+        $locator = new ClientLocator(
             '\\Unit\\SprykerEngine\\Client\\{{bundle}}{{store}}\\Fixtures\\KernelFactory'
         );
-        $facade = $facadeLocator->locate('Kernel', KernelClientLocator::getInstance());
+        $located = $locator->locate('Kernel', KernelClientLocator::getInstance());
 
-        $this->assertInstanceOf('Unit\SprykerEngine\Client\Kernel\Fixtures\KernelClient', $facade);
+        $this->assertInstanceOf('Unit\SprykerEngine\Client\Kernel\Fixtures\KernelClient', $located);
     }
 }
