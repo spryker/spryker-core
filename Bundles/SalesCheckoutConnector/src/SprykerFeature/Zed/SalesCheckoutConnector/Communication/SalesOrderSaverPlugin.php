@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\SalesCheckoutConnector\Communication\Plugin;
+namespace SprykerFeature\Zed\SalesCheckoutConnector\Communication;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;

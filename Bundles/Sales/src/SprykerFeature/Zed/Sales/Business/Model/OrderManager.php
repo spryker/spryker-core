@@ -31,7 +31,7 @@ class OrderManager
     /**
      * @var OrderReferenceGeneratorInterface
      */
-    protected$orderReferenceGenerator;
+    protected $orderReferenceGenerator;
 
     public function __construct(
         SalesToCountryInterface $countryFacade,
