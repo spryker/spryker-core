@@ -71,6 +71,7 @@ class OrderDetailsManager
 
             $orderItemsList[$itemId] = $item->toArray();
             $orderItemsList[$itemId]['accepts'] = $this->getManualStateItemsByItemId($itemId);
+            $orderItemsList[$itemId]['current_state'] = $item->getState()->getName();
 
             $totalItems += $item->getQty();
             $totalPrice += $item->getPriceToPay() * $item->getQty();
