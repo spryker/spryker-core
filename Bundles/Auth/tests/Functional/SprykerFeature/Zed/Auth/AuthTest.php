@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace Functional\SprykerFeature\Zed\Auth;
 
 use Codeception\TestCase\Test;
