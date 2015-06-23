@@ -18,24 +18,12 @@ use Generated\Shared\Calculation\TotalsInterface;
 class CalculationFacade extends AbstractFacade
 {
 
-    /**
-     * @param OrderInterface $calculableContainer
-     * @return OrderInterface
-     */
-    public function recalculate(OrderInterface $calculableContainer)
-    {
-
-        $calculatorStack = $this->getDependencyContainer()->getConfig()->getCalculatorStack();
-
-        return $this->getDependencyContainer()->getStackExecutor()->recalculate($calculatorStack, $calculableContainer);
-    }
 
     /**
-     * @ param OrderInterface $calculableContainer
      * @param CalculableInterface $calculableContainer
      * @return OrderInterface
      */
-    public function recalculate2(CalculableInterface $calculableContainer)
+    public function recalculate(CalculableInterface $calculableContainer)
     {
         $calculatorStack = $this->getDependencyContainer()->getConfig()->getCalculatorStack();
 
