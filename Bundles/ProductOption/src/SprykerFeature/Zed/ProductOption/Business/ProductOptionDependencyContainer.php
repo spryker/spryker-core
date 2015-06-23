@@ -6,11 +6,10 @@
 namespace SprykerFeature\Zed\ProductOption\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerFeature\Zed\ProductOption\ProductOptionDependencyProvider;
 use SprykerFeature\Zed\ProductOption\ProductOptionConfig;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionBusiness;
 use SprykerFeature\Zed\ProductOption\Business\Model\DataImportWriterInterface;
-use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
-use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 
 /**
  * @method ProductOptionBusiness getFactory()
@@ -25,25 +24,9 @@ class ProductOptionDependencyContainer extends AbstractDependencyContainer
     public function getDataImportWriterModel()
     {
         return $this->getFactory()->createModelDataImportWriter(
-            $this->getLocator()->productOption()->queryContainer(),
-            $this->createProductFacade(),
-            $this->createLocaleFacade()
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT),
+            $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_LOCALE)
         );
-    }
-
-    /**
-     * @return ProductOptionToProductInterface
-     */
-    protected function createProductFacade()
-    {
-        return $this->getLocator()->product()->facade();
-    }
-
-    /**
-     * @return ProductOptionToLocaleInterface
-     */
-    protected function createLocaleFacade()
-    {
-        return $this->getLocator()->locale()->facade();
     }
 }

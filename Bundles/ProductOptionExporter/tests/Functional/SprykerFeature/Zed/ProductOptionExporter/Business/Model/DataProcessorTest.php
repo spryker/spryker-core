@@ -2,10 +2,7 @@
 
 namespace Functional\SprykerFeature\Zed\ProductOptionExporter\Business\Model;
 
-use Codeception\TestCase\Test;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use Generated\Zed\Ide\AutoCompletion;
 use Functional\SprykerFeature\Zed\ProductOption\Persistence\DbFixturesLoader;
 use SprykerFeature\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
@@ -16,12 +13,14 @@ use SprykerFeature\Zed\ProductOptionExporter\Business\ProductOptionExporterFacad
  * @group Zed
  * @group ProdutOptionExporter
  * @group DataProcessorTest
+ *
+ * @method ProductOptionExporterFacade getFacade()
  */
-class DataProcessorTest extends Test
+class DataProcessorTest extends AbstractFunctionalTest
 {
 
     /**
-     * @var ProductOptionFacade
+     * @var ProductOptionExporterFacade
      */
     private $facade;
 
@@ -34,8 +33,7 @@ class DataProcessorTest extends Test
     {
         parent::setUp();
 
-        $this->locator = Locator::getInstance();
-        $this->facade = new ProductOptionExporterFacade(new Factory('ProductOptionExporter'), $this->locator);
+        $this->facade = $this->getFacade();
     }
 
     public function testFetchProductOptionDataForConcreteProduct()

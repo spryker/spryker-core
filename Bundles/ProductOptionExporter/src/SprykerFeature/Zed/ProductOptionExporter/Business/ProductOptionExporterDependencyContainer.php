@@ -4,8 +4,6 @@ namespace SprykerFeature\Zed\ProductOptionExporter\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\ProductOptionExporter\Business\Model\ExportProcessorInterface;
-use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductInterface;
-use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToLocaleInterface;
 use SprykerFeature\Zed\ProductOptionExporter\ProductOptionExporterDependencyProvider;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionExporterBusiness;
 
@@ -22,25 +20,9 @@ class ProductOptionExporterDependencyContainer extends AbstractDependencyContain
     public function getProcessorModel()
     {
         return $this->getFactory()->createModelExportProcessor(
-            $this->getLocator()->productOption()->queryContainer(),
-            $this->getProductFacade(),
-            $this->getLocaleFacade()
+            $this->getProvidedDependency(ProductOptionExporterDependencyProvider::QUERY_CONTAINER_PRODUCT_OPTION),
+            $this->getProvidedDependency(ProductOptionExporterDependencyProvider::FACADE_PRODUCT),
+            $this->getProvidedDependency(ProductOptionExporterDependencyProvider::FACADE_LOCALE)
         );
-    }
-
-    /**
-     * @return ProductOptionExporterToProductInterface
-     */
-    protected function getProductFacade()
-    {
-        return $this->getLocator()->product()->facade();
-    }
-
-    /**
-     * @return ProductOptionExporterToLocaleInterface
-     */
-    protected function getLocaleFacade()
-    {
-        return $this->getLocator()->locale()->facade();
     }
 }
