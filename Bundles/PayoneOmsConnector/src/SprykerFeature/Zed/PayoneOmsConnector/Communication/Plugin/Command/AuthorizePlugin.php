@@ -12,7 +12,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class AuthorizeGrandTotalPlugin extends AbstractPlugin implements CommandByOrderInterface
+class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
     /**
@@ -22,7 +22,6 @@ class AuthorizeGrandTotalPlugin extends AbstractPlugin implements CommandByOrder
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        //FIXME Pseudo Code Example
         $transferAuthorization = new AuthorizationTransfer();
         $transferAuthorization->setAmount($orderEntity->getGrandTotal());
         $transferAuthorization->setReferenceId($orderEntity->getIncrementId());

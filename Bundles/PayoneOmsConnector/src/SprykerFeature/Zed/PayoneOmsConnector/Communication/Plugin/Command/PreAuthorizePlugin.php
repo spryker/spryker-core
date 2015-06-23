@@ -3,8 +3,6 @@
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Command;
 
 use Generated\Shared\Transfer\AuthorizationTransfer;
-use Generated\Shared\Transfer\CaptureTransfer;
-use Generated\Shared\Transfer\PayonePaymentTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
@@ -14,7 +12,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class CaptureGrandTotalPlugin extends AbstractPlugin implements CommandByOrderInterface
+class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
     /**
@@ -24,17 +22,14 @@ class CaptureGrandTotalPlugin extends AbstractPlugin implements CommandByOrderIn
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        //FIXME Pseudo Code Example
-        $captureTransfer = new CaptureTransfer();
-        $captureTransfer->setAmount($orderEntity->getGrandTotal());
+        $transferAuthorization = new AuthorizationTransfer();
+        $transferAuthorization->setAmount($orderEntity->getGrandTotal());
+        $transferAuthorization->setReferenceId($orderEntity->getIncrementId());
 
-        $payment = $orderEntity->getPayonePayment();
+        $paymentUserDataTransfer = $data['???_SOME_KEY_TO_GET_FORM_DATA_???'];
+        $transferAuthorization->setPaymentUserData($paymentUserDataTransfer);
 
-        $paymentTransfer = new PayonePaymentTransfer();
-        $paymentTransfer->setPaymentMethod($payment->getMethod());
-        $paymentTransfer->setTransactionId($payment->getTransactionId());
-
-        $this->getDependencyContainer()->createPayoneFacade()->capture($captureTransfer);
+        $this->getDependencyContainer()->createPayoneFacade()->preAuthorize($transferAuthorization);
     }
 
 }

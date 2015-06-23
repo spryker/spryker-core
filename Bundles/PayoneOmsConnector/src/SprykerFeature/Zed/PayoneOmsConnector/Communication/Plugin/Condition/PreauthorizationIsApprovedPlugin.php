@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class IsAuthorizationSuccess extends AbstractPlugin implements ConditionInterface
+class PreauthorizationIsApprovedPlugin extends AbstractPlugin implements ConditionInterface
 {
 
     /**
@@ -26,7 +26,6 @@ class IsAuthorizationSuccess extends AbstractPlugin implements ConditionInterfac
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        //FIXME Pseudo Code Example
         $order = $orderItem->getOrder();
 
         if (isset(self::$resultCache[$order->getPrimaryKey()])) {
