@@ -11,10 +11,16 @@ class CartControllerProvider extends YvesControllerProvider
 
     const ROUTE_CART = 'cart';
     const ROUTE_CART_ADD = 'cart/add';
-    const ROUTE_CART_ADD_POST = 'POST_cart/add';
     const ROUTE_CART_REMOVE = 'cart/remove';
     const ROUTE_CART_CHANGE = 'cart/change';
     const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
+
+    const ROUTE_CART_OVERLAY = 'cart/overlay';
+    const ROUTE_CART_ADD_AJAX = 'POST_cart/add';
+    const ROUTE_CART_REMOVE_AJAX = 'POST_cart/remove';
+    const ROUTE_CART_INCREASE_AJAX = 'POST_cart/increase';
+    const ROUTE_CART_DECREASE_AJAX = 'POST_cart/decrease';
+
     const ROUTE_CART_COUPON_ADD = 'cart/coupon/add';
     const ROUTE_CART_COUPON_REMOVE = 'cart/coupon/remove';
     const ROUTE_CART_COUPON_CLEAR = 'cart/coupon/clear';
@@ -28,11 +34,6 @@ class CartControllerProvider extends YvesControllerProvider
             ->convert('quantity', [$this, 'getQuantityFromRequest'])
         ;
 
-        $this->createPostController('/cart/add/{sku}', self::ROUTE_CART_ADD_POST, 'Cart', 'Ajax', 'add', true)
-            ->assert('sku', '[a-zA-Z0-9-_]+')
-            ->convert('quantity', [$this, 'getQuantityFromRequest'])
-        ;
-
         $this->createGetController('/cart/remove/{sku}', self::ROUTE_CART_REMOVE, 'Cart', 'Cart', 'remove')
             ->assert('sku', '[a-zA-Z0-9-_]+')
         ;
@@ -40,6 +41,26 @@ class CartControllerProvider extends YvesControllerProvider
         $this->createGetController('/cart/quantity/{sku}/{absolute}', self::ROUTE_CART_CHANGE_QUANTITY, 'Cart', 'Cart', 'change')
             ->assert('sku', '[a-zA-Z0-9-_]+')
             ->assert('absolute', '[0-1-_]+')
+        ;
+
+        $this->createGetController('/cart/overlay', self::ROUTE_CART_OVERLAY, 'Cart', 'Ajax', 'index');
+
+        $this->createPostController('/cart/add/{sku}', self::ROUTE_CART_ADD_AJAX, 'Cart', 'Ajax', 'add', true)
+            ->assert('sku', '[a-zA-Z0-9-_]+')
+            ->convert('quantity', [$this, 'getQuantityFromRequest'])
+        ;
+
+        $this->createPostController('/cart/remove/{sku}', self::ROUTE_CART_ADD_AJAX, 'Cart', 'Ajax', 'remove', true)
+            ->assert('sku', '[a-zA-Z0-9-_]+')
+            ->convert('quantity', [$this, 'getQuantityFromRequest'])
+        ;
+
+        $this->createPostController('/cart/increase/{sku}', self::ROUTE_CART_INCREASE_AJAX, 'Cart', 'Ajax', 'increase')
+            ->assert('sku', '[a-zA-Z0-9-_]+')
+        ;
+
+        $this->createPostController('/cart/increase/{sku}', self::ROUTE_CART_DECREASE_AJAX, 'Cart', 'Ajax', 'decrease')
+            ->assert('sku', '[a-zA-Z0-9-_]+')
         ;
 
         $this->createGetController('/cart/coupon/add', self::ROUTE_CART_COUPON_ADD, 'Cart', 'Coupon', 'add')

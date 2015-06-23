@@ -7,7 +7,7 @@ namespace SprykerFeature\Yves\Cart;
 
 use Generated\Yves\Ide\FactoryAutoCompletion\Cart;
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Cart\CartClientInterface;
+use SprykerFeature\Client\Cart\Service\CartClientInterface;
 
 /**
  * @method Cart getFactory()
