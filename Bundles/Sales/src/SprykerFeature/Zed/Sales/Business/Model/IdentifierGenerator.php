@@ -7,9 +7,6 @@ namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 
-/**
- * @author Daniel Tschinder <daniel.tschinder@project-a.com>
- */
 class IdentifierGenerator
 {
     /**

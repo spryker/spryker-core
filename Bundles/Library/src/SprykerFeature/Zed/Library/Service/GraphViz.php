@@ -49,9 +49,6 @@
  *
  * <code>
  * <?php
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
  * require_once 'Image/GraphViz.php';
  *
  * $graph = new Image_GraphViz();
