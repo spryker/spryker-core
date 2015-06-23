@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Payone\Business\TransactionStatus;
 
 
+use Generated\Shared\Transfer\PaymentStatusTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use Generated\Shared\Payone\StandardParameterInterface;
@@ -83,6 +84,17 @@ class TransactionStatusUpdateManager
         $entity->setReceivable($request->getReceivable());
 
         $entity->save();
+    }
+
+    public function getPaymentStatus($order)
+    {
+//        @todo implement
+//        $order->getTransactionId();
+//        $this->findPaymentByTransactionId();
+//        $paymentStatus = new PaymentStatusTransfer();
+//        $paymentStatus->setIsSuccess();
+//        $paymentStatus->setRedirectUrl();
+//        return $transactionStatus;
     }
 
     /**
