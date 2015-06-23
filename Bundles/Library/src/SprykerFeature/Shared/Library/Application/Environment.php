@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Shared\Library\Application;
 
 use SprykerFeature\Shared\Library\Autoloader;
@@ -9,9 +13,6 @@ use SprykerFeature\Shared\Library\Error\ErrorHandler;
 use SprykerFeature\Shared\Library\TestAutoloader;
 use SprykerFeature\Shared\System\SystemConfig;
 
-/**
- * @author Daniel Tschinder <daniel.tschinder@project-a.com>
- */
 class Environment
 {
 
