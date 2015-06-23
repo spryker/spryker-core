@@ -118,4 +118,8 @@
         <property name="ip" type="string" />
         <property name="pseudoCardPan" type="string" />
     </transfer>
+
+    <transfer name="CheckoutRequest">
+        <property name="payonePayment" type="PayonePayment" />
+    </transfer>
 </transfers>
