@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
 use Generated\Shared\Transfer\CartCartChangeInterfaceTransfer;
