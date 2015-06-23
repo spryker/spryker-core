@@ -5,12 +5,17 @@
 
 namespace SprykerFeature\Zed\Checkout\Communication\Controller;
 
+use Generated\Shared\Checkout\CheckoutRequestInterface;
+use Generated\Shared\Checkout\CheckoutResponseInterface;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
+use SprykerFeature\Zed\Setup\Business\Exception\NotEnoughItemsInStockException;
+use SprykerFeature\Zed\Setup\Business\Exception\OrderNotNewException;
+use SprykerFeature\Zed\Setup\Business\Exception\PriceChangedException;
 
 /**
  * @method CheckoutFacade getFacade()
@@ -18,61 +23,26 @@ use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
 class SdkController extends AbstractSdkController
 {
 
-    const MESSAGE_KEY = 'message';
-    const DATA_KEY = 'data';
-
     /**
-     * @param OrderTransfer $transferOrder
+     * @param CheckoutRequestInterface $checkoutRequest
      *
-     * @return OrderTransfer
+     * @return CheckoutResponseInterface
      */
-    public function recalculateAction(OrderTransfer $transferOrder)
+    public function requestCheckoutAction(CheckoutRequestInterface $checkoutRequest)
     {
-        return $this->getCalculationFacade()->recalculate($transferOrder);
-    }
-
-    /**
-     * @param OrderTransfer $transferOrder
-     * @param RequestInterface $requestTransfer
-     *
-     * @return OrderTransfer
-     */
-    public function saveOrderAction(OrderTransfer $transferOrder, RequestInterface $requestTransfer)
-    {
-        $logContext = [];
-        $logContext["module"] = 'SprykerFeature\Zed\Checkout\Communication\Controller';// @todo FIXME
-        $logContext["controller"] = "SdkController";
-        $logContext["action"] = "saveOrderAction";
-        $logContext["params"] = ["ToBeDone"];// @todo FIXME
-
-        $componentResult = $this->getFacade()->saveOrder($transferOrder, $requestTransfer, $logContext);
-
-        if (!$componentResult->isSuccess()) {
+        try {
+            $result = $this->getFacade()->requestCheckout($checkoutRequest);
+        } catch (NotEnoughItemsInStockException $e) {
             $this->setSuccess(false);
-            foreach ($componentResult->getErrors() as $error) {
-                $this->addErrorMessage($error);
-            }
-
-            // on error recalculate to be sane
-            return $this->getCalculationFacade()->recalculate($transferOrder);
-        } else {
-            return $componentResult->getTransfer();
+            $this->addErrorMessage('error.stock.notenough');
+        } catch (OrderNotNewException $e) {
+            $this->setSuccess(false);
+            $this->addErrorMessage('error.order.notnew');
+        } catch (PriceChangedException $e) {
+            $this->setSuccess(false);
+            $this->addErrorMessage('error.price.different');
         }
-    }
 
-    /**
-     * @return CalculationFacade
-     */
-    public function getCalculationFacade()
-    {
-        return $this->getDependencyContainer()->createCalculationFacade();
-    }
-
-    /**
-     * @return CheckoutFacade
-     */
-    public function getCheckoutFacade()
-    {
-        return $this->getDependencyContainer()->createCheckoutFacade();
+        return $result;
     }
 }
