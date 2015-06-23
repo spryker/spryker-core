@@ -1,8 +1,9 @@
 <?php
-
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Mail\Business;
-
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\MailTransferTransfer;

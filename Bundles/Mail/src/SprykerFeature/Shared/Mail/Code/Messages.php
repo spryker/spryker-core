@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 interface SprykerFeature_Shared_Mail_Code_Messages
 {
