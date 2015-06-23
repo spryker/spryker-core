@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 class SprykerFeature_Zed_Sales_Business_Model_History
 {

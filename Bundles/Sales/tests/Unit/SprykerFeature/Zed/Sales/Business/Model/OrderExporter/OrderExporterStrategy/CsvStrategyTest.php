@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace Unit\SprykerFeature\Zed\Sales\Business\Model\OrderExporter\OrderExporterStrategy;
 use SprykerFeature\Zed\Sales\Business\Model\OrderExporter;
