@@ -1,4 +1,5 @@
 <?php
+
 namespace SprykerFeature\Shared\Category\Code\Storage;
 
 use SprykerFeature\Shared\Library\Storage\StorageKeyGenerator as BaseStorageKeyGenerator;
