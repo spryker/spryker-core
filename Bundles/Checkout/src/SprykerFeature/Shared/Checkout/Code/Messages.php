@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 interface SprykerFeature_Shared_Checkout_Code_Messages
 {

@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Checkout\Business\Model\Workflow\Task;
 
 use Generated\Shared\Transfer\OrderTransfer;
