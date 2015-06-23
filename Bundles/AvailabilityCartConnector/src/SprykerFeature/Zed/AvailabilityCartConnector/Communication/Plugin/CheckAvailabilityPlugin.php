@@ -7,12 +7,11 @@ namespace SprykerFeature\Zed\AvailabilityCartConnector\Communication\Plugin;
 
 use SprykerFeature\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnectorDependencyContainer as DependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckAvailabilityPluginInterface;
 
 /**
  * @method DependencyContainer getDependencyContainer()
  */
-class CheckAvailabilityPlugin extends AbstractPlugin implements CheckAvailabilityPluginInterface
+class CheckAvailabilityPlugin extends AbstractPlugin
 {
     /**
      * @param string $sku
