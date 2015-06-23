@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Client\Cart\Storage;
+namespace SprykerFeature\Client\Cart\Service\Session;
 
 use Generated\Shared\Cart\CartInterface;
 
-interface CartStorageInterface
+interface CartSessionInterface
 {
 
     /**
@@ -15,7 +15,7 @@ interface CartStorageInterface
     /**
      * @param CartInterface $cart
      *
-     * @return CartStorageInterface
+     * @return $this
      */
     public function setCart(CartInterface $cart);
 
@@ -27,7 +27,7 @@ interface CartStorageInterface
     /**
      * @param $itemCount
      *
-     * @return CartStorageInterface
+     * @return $this
      */
     public function setItemCount($itemCount);
 

@@ -8,8 +8,6 @@ use SprykerEngine\Client\Kernel\Container;
 class CartDependencyProvider extends AbstractDependencyProvider
 {
 
-    const SERVICE_STORAGE = 'storage service';
-
     const SERVICE_ZED = 'zed service';
 
     const SESSION = 'session';

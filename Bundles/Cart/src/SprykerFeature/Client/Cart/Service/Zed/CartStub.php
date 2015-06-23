@@ -1,10 +1,9 @@
 <?php
 
-namespace SprykerFeature\Client\Cart\Zed;
+namespace SprykerFeature\Client\Cart\Service\Zed;
 
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Cart\ChangeInterface;
-use SprykerEngine\Client\Kernel\AbstractClient;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\ZedRequest\Client\AbstractZedClient;
 

@@ -5,6 +5,8 @@
 
 namespace SprykerFeature\Zed\Cart\Business;
 
+use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Cart\ChangeInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Cart\ChangeInterface;
@@ -14,6 +16,7 @@ use Generated\Shared\Cart\ChangeInterface;
  */
 class CartFacade extends AbstractFacade
 {
+
     /**
      * @param ChangeInterface $cartChange
      *
@@ -67,10 +70,11 @@ class CartFacade extends AbstractFacade
      *
      * @return CartInterface
      */
-    public function recalculateCart(CartInterface  $cart)
+    public function recalculateCart(CartInterface $cart)
     {
         $calculator = $this->getDependencyContainer()->createCartCalculator();
 
         return $calculator->recalculate($cart);
     }
+
 }

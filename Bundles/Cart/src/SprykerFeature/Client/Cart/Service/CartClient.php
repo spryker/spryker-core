@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Client\Cart;
+namespace SprykerFeature\Client\Cart\Service;
 
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Cart\CartItemInterface;
@@ -10,9 +10,8 @@ use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Client\Kernel\AbstractClient;
-use SprykerFeature\Client\Cart\CartClientInterface;
-use SprykerFeature\Client\Cart\Storage\CartStorageInterface;
-use SprykerFeature\Client\Cart\Zed\CartStubInterface;
+use SprykerFeature\Client\Cart\Service\Session\CartSessionInterface;
+use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 
 /**
  * @method CartDependencyContainer getDependencyContainer()
@@ -29,7 +28,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return CartStorageInterface
+     * @return CartSessionInterface
      */
     private function getSession()
     {
@@ -45,8 +44,7 @@ class CartClient extends AbstractClient implements CartClientInterface
 
         $this->getSession()
             ->setItemCount(0)
-            ->setCart($cart)
-        ;
+            ->setCart($cart);
 
         return $cart;
     }
@@ -98,6 +96,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * 
      * @param string $sku
      *
      * @throws \InvalidArgumentException
@@ -114,6 +113,26 @@ class CartClient extends AbstractClient implements CartClientInterface
         }
 
         throw new \InvalidArgumentException('No item with sku "' . $sku . '" found in cart');
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return CartInterface
+     */
+    public function changeItemQuantity($sku, $quantity = 1)
+    {
+        if ($quantity === 0) {
+            return $this->removeItem($sku);
+        }
+
+        $currentItem = $this->getItemBySku($sku);
+        if ($currentItem->getQuantity() > $quantity) {
+            return $this->decreaseItemQuantity($sku, $quantity);
+        } else {
+            return $this->increaseItemQuantity($sku, $quantity);
+        }
     }
 
     /**
@@ -179,6 +198,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     private function createChangedItems($sku, $quantity = 1)
     {
         $changedItem = new CartItemTransfer();
+        // @todo is this needed?
+        $changedItem->setId($sku);
         $changedItem->setSku($sku);
         $changedItem->setQuantity($quantity);
 
@@ -199,6 +220,47 @@ class CartClient extends AbstractClient implements CartClientInterface
         $cartChange->setChangedCartItems($changedItems);
 
         return $cartChange;
+    }
+
+    /**
+     * @param string $coupon
+     *
+     * @return CartInterface
+     */
+    public function addCoupon($coupon)
+    {
+        $cartChange = $this->createCartChange();
+        $cartChange->setCouponCode($coupon);
+
+        $cart = $this->getStub()->addCoupon($cartChange);
+
+        return $this->handleCartResponse($cart);
+    }
+
+    /**
+     * @param string $coupon
+     *
+     * @return CartInterface
+     */
+    public function removeCoupon($coupon)
+    {
+        $cartChange = $this->createCartChange();
+        $cartChange->setCouponCode($coupon);
+
+        $cart = $this->getStub()->removeCoupon($cartChange);
+
+        return $this->handleCartResponse($cart);
+    }
+
+    /**
+     * @return CartInterface
+     */
+    public function clearCoupons()
+    {
+        $cartChange = $this->createCartChange();
+        $cart = $this->getStub()->clearCoupons($cartChange);
+
+        return $this->handleCartResponse($cart);
     }
 
     /**

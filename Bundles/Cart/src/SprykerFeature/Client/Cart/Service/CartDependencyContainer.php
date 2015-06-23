@@ -1,10 +1,11 @@
 <?php
 
-namespace SprykerFeature\Client\Cart;
+namespace SprykerFeature\Client\Cart\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\Cart;
 use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Cart\Zed\CartStubInterface;
+use SprykerFeature\Client\Cart\CartDependencyProvider;
+use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**

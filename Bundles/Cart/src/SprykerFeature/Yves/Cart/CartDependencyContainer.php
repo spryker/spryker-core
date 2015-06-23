@@ -7,41 +7,20 @@ namespace SprykerFeature\Yves\Cart;
 
 use Generated\Yves\Ide\FactoryAutoCompletion\Cart;
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Cart\Model\CartInterface;
-use SprykerFeature\Client\Cart\StorageProvider\StorageProviderInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use SprykerFeature\Client\Cart\CartClientInterface;
 
 /**
  * @method Cart getFactory()
  */
 class CartDependencyContainer extends AbstractDependencyContainer
 {
-    /**
-     * @param SessionInterface $session
-     *
-     * @return StorageProviderInterface
-     */
-    protected function createStorageProvider(SessionInterface $session)
-    {
-        $client = $this->getLocator()->cart()->client();
-
-        return $this->getFactory()->createProviderSessionStorageProvider($this->getLocator(), $session);
-
-
-    }
 
     /**
-     * @param SessionInterface $session
-     *
-     * @return CartInterface
+     * @return CartClientInterface
      */
-    public function createCartClient(SessionInterface $session)
+    public function createCartClient()
     {
-        return $this->getLocator()
-            ->cart()
-            ->client()
-            ->getCart($this->createStorageProvider($session))
-        ;
+        return $this->getLocator()->cart()->client();
     }
 
 }

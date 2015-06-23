@@ -5,68 +5,55 @@
 
 namespace SprykerFeature\Zed\Cart\Communication\Controller;
 
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
+use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Cart\ChangeInterface;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
+use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
+/**
+ * @method CartFacade getFacade()
+ */
 class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @var CartFacade
-     */
-    protected $facade;
-
-    /**
-     * @param \Pimple $application
-     * @param Factory $factory
-     * @param Locator $locator
-     */
-    public function __construct(\Pimple $application, Factory $factory, Locator $locator)
-    {
-        parent::__construct($application, $factory, $locator);
-        $this->facade = $this->getFacade();
-    }
-
-    /**
-     * @param CartChangeInterface $cartChange
+     * @param ChangeInterface $cartChange
      *
      * @return CartInterface
      */
-    public function addItemAction(CartChangeInterface $cartChange)
+    public function addItemAction(ChangeInterface $cartChange)
     {
-        return $this->facade->addToCart($cartChange);
+        return $this->getFacade()->addToCart($cartChange);
     }
 
     /**
-     * @param CartChangeInterface $cartChange
+     * @param ChangeInterface $cartChange
      *
      * @return CartInterface
      */
-    public function increaseItemQuantityAction(CartChangeInterface $cartChange)
+    public function increaseItemQuantityAction(ChangeInterface $cartChange)
     {
-        return $this->facade->increaseQuantity($cartChange);
+        return $this->getFacade()->increaseQuantity($cartChange);
     }
 
     /**
-     * @param CartChangeInterface $cartChange
+     * @param ChangeInterface $cartChange
      *
      * @return CartInterface
      */
-    public function decreaseItemQuantityAction(CartChangeInterface $cartChange)
+    public function decreaseItemQuantityAction(ChangeInterface $cartChange)
     {
-        return $this->facade->decreaseQuantity($cartChange);
+        return $this->getFacade()->decreaseQuantity($cartChange);
     }
 
     /**
-     * @param CartChangeInterface $cartChange
+     * @param ChangeInterface $cartChange
      *
      * @return CartInterface
      */
-    public function removeItemAction(CartChangeInterface $cartChange)
+    public function removeItemAction(ChangeInterface $cartChange)
     {
-        return $this->facade->removeFromCart($cartChange);
+        return $this->getFacade()->removeFromCart($cartChange);
     }
 
     /**
@@ -76,6 +63,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function recalculateCart(CartInterface $cart)
     {
-        return $this->facade->recalculateCart($cart);
+        return $this->getFacade()->recalculateCart($cart);
     }
+
 }

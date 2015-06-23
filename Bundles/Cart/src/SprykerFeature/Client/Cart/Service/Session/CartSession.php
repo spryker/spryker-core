@@ -1,12 +1,12 @@
 <?php
 
-namespace SprykerFeature\Client\Cart\Storage;
+namespace SprykerFeature\Client\Cart\Service\Session;
 
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Transfer\CartTransfer;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class CartSession implements CartStorageInterface
+class CartSession implements CartSessionInterface
 {
 
     const CART_SESSION_IDENTIFIER = 'cart session identifier';

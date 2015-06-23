@@ -1,11 +1,12 @@
 <?php
 
-namespace SprykerFeature\Client\Cart;
+namespace SprykerFeature\Client\Cart\Service;
 
 use Generated\Shared\Cart\CartInterface;
 
 interface CartClientInterface
 {
+
     /**
      * @return CartInterface
      */
@@ -42,6 +43,14 @@ interface CartClientInterface
      *
      * @return CartInterface
      */
+    public function changeItemQuantity($sku, $quantity = 1);
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return CartInterface
+     */
     public function decreaseItemQuantity($sku, $quantity = 1);
 
     /**
@@ -56,4 +65,24 @@ interface CartClientInterface
      * @return CartInterface
      */
     public function recalculate();
+
+    /**
+     * @param string $coupon
+     *
+     * @return CartInterface
+     */
+    public function addCoupon($coupon);
+
+    /**
+     * @param string $coupon
+     *
+     * @return CartInterface
+     */
+    public function removeCoupon($coupon);
+
+    /**
+     * @return CartInterface
+     */
+    public function clearCoupons();
+
 }
