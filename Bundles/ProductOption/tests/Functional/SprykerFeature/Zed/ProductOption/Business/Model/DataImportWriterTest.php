@@ -35,7 +35,7 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
  *
  * @method ProductOptionFacade getFacade()
  */
-class DataImportWriterTest extends Test
+class DataImportWriterTest extends AbstractFunctionalTest
 {
 
     /**
@@ -52,7 +52,7 @@ class DataImportWriterTest extends Test
     {
         parent::setUp();
 
-        $this->facade = $this->getProductOptionFacade();
+        $this->facade = $this->getFacade();
     }
 
     /**
@@ -60,7 +60,8 @@ class DataImportWriterTest extends Test
      */
     private function getProductOptionFacade()
     {
-        return new ProductOptionFacade(new Factory('ProductOption'), Locator::getInstance());
+        $facade = new ProductOptionFacade(new Factory('ProductOption'), Locator::getInstance());
+        return $facade;
     }
 
     public function testImportProductOptionType()

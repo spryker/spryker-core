@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\ProductOption;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
+use SprykerFeature\Zed\ProductOptionExporter\ProductOptionExporterDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 
 class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
@@ -31,6 +32,10 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->locale()->facade();
         };
 
+        $container[ProductOptionDependencyProvider::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->product()->queryContainer();
+        };
+
         return $container;
     }
 
@@ -43,6 +48,20 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[ProductOptionDependencyProvider::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[ProductOptionDependencyProvider::FACADE_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->product()->facade();
         };
 
         return $container;

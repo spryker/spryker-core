@@ -6,7 +6,6 @@
 namespace SprykerFeature\Zed\ProductOption\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionPersistence;
 use SprykerFeature\Zed\Product\Persistence\Propel\Base\SpyAbstractProductQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusionQuery;
@@ -25,9 +24,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
 
-/**
- * @method ProductOptionPersistence getFactory()
- */
+
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
     /**
@@ -48,7 +45,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionTypeByImportKey($importKeyProductOptionType)
     {
-        return $this->getFactory()->createPropelSpyProductOptionTypeQuery()
+        return SpyProductOptionTypeQuery::create()
             ->filterByImportKey($importKeyProductOptionType);
     }
 
@@ -59,7 +56,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionTypeIdByImportKey($importKeyProductOptionType)
     {
-        return $this->getFactory()->createPropelSpyProductOptionTypeQuery()
+        return SpyProductOptionTypeQuery::create()
             ->filterByImportKey($importKeyProductOptionType)
             ->select(SpyProductOptionTypeTableMap::COL_ID_PRODUCT_OPTION_TYPE);
     }
@@ -72,7 +69,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionTypeTranslationByFks($fkProductOptionType, $fkLocale)
     {
-        return $this->getFactory()->createPropelSpyProductOptionTypeTranslationQuery()
+        return SpyProductOptionTypeTranslationQuery::create()
             ->filterByFkProductOptionType($fkProductOptionType)
             ->filterByFkLocale($fkLocale);
     }
@@ -84,7 +81,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryOptionValueById($idProductOptionTypeUsage)
     {
-        return $this->getFactory()->createPropelSpyProductOptionTypeUsageQuery()
+        return SpyProductOptionTypeUsageQuery::create()
             ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage);
     }
 
@@ -96,7 +93,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyProductOptionValue, $fkProductOptionType)
     {
-        return $this->getFactory()->createPropelSpyProductOptionValueQuery()
+        return SpyProductOptionValueQuery::create()
             ->filterByImportKey($importKeyProductOptionValue)
             ->filterByFkProductOptionType($fkProductOptionType);
     }
@@ -108,7 +105,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionValueByImportKey($importKeyProductOptionValue)
     {
-        return $this->getFactory()->createPropelSpyProductOptionValueQuery()
+        return SpyProductOptionValueQuery::create()
             ->filterByImportKey($importKeyProductOptionValue);
     }
 
@@ -119,7 +116,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionValueIdByImportKey($importKeyProductOptionValue)
     {
-        return $this->getFactory()->createPropelSpyProductOptionValueQuery()
+        return SpyProductOptionValueQuery::create()
             ->filterByImportKey($importKeyProductOptionValue)
             ->select(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE);
     }
@@ -132,7 +129,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionValueTranslationByFks($fkProductOptionValue, $fkLocale)
     {
-        return $this->getFactory()->createPropelSpyProductOptionValueTranslationQuery()
+        return SpyProductOptionValueTranslationQuery::create()
             ->filterByFkProductOptionValue($fkProductOptionValue)
             ->filterByFkLocale($fkLocale);
     }
@@ -144,7 +141,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptonTypeUsageById($idProductOptionTypeUsage)
     {
-        return $this->getFactory()->createPropelSpyProductOptionTypeUsageQuery()
+        return SpyProductOptionTypeUsageQuery::create()
             ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage);
     }
 
@@ -156,7 +153,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionTypeUsageByFKs($fkProduct, $fkProductOptionType)
     {
-        return $this->getFactory()->createPropelSpyProductOptionTypeUsageQuery()
+        return SpyProductOptionTypeUsageQuery::create()
             ->filterByFkProduct($fkProduct)
             ->filterByFkProductOptionType($fkProductOptionType);
     }
@@ -169,7 +166,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionTypeUsageIdByFKs($fkProduct, $fkProductOptionType)
     {
-        return $this->getFactory()->createPropelSpyProductOptionTypeUsageQuery()
+        return SpyProductOptionTypeUsageQuery::create()
             ->filterByFkProduct($fkProduct)
             ->filterByFkProductOptionType($fkProductOptionType)
             ->select(SpyProductOptionTypeUsageTableMap::COL_ID_PRODUCT_OPTION_TYPE_USAGE);
@@ -182,7 +179,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptonValueUsageById($idProductOptionValueUsage)
     {
-        return $this->getFactory()->createPropelSpyProductOptionValueUsageQuery()
+        return SpyProductOptionValueUsageQuery::create()
             ->filterByIdProductOptionValueUsage($idProductOptionValueUsage);
     }
 
@@ -194,7 +191,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionType)
     {
-        return $this->getFactory()->createPropelSpyProductOptionValueUsageQuery()
+        return SpyProductOptionValueUsageQuery::create()
             ->filterByFkProductOptionTypeUsage($fkProductOptionTypeUsage)
             ->filterByFkProductOptionValue($fkProductOptionType);
     }
@@ -207,7 +204,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionValueUsageIdByFKs($fkProductOptionTypeUsage, $fkProductOptionType)
     {
-        return $this->getFactory()->createPropelSpyProductOptionValueUsageQuery()
+        return SpyProductOptionValueUsageQuery::create()
             ->filterByFkProductOptionTypeUsage($fkProductOptionTypeUsage)
             ->filterByFkProductOptionValue($fkProductOptionType)
             ->select(SpyProductOptionValueUsageTableMap::COL_ID_PRODUCT_OPTION_VALUE_USAGE);
@@ -221,7 +218,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionTypeUsageExclusionByFks($fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB)
     {
-        return $this->getFactory()->createPropelSpyProductOptionTypeUsageExclusionQuery()
+        return SpyProductOptionTypeUsageExclusionQuery::create()
             ->filterByFkProductOptionTypeUsageA([$fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB])
             ->filterByFkProductOptionTypeUsageB([$fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB]);
     }
@@ -234,7 +231,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionValueUsageConstraintsByFks($fkProductOptionValueUsageA, $fkProductOptionValueUsageB)
     {
-        return $this->getFactory()->createPropelSpyProductOptionValueUsageConstraintQuery()
+        return SpyProductOptionValueUsageConstraintQuery::create()
             ->filterByFkProductOptionValueUsageA([$fkProductOptionValueUsageA, $fkProductOptionValueUsageB])
             ->filterByFkProductOptionValueUsageB([$fkProductOptionValueUsageA, $fkProductOptionValueUsageB]);
     }
@@ -309,7 +306,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryPresetConfigurationsForConcreteProduct($idProduct)
     {
-        return $this->getFactory()->createPropelSpyProductOptionConfigurationPresetQuery()
+        return SpyProductOptionConfigurationPresetQuery::create()
             ->filterByFkProduct($idProduct)
             ->orderBySequence();
     }
