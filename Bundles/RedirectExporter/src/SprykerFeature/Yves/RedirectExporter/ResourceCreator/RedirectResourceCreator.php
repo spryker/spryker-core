@@ -1,8 +1,9 @@
 <?php
-
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Yves\RedirectExporter\ResourceCreator;
-
 
 use SprykerFeature\Shared\Application\Communication\ControllerServiceBuilder;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
