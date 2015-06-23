@@ -32,5 +32,4 @@ class CheckAvailabilityPlugin extends AbstractPlugin implements CheckAvailabilit
     {
         return $this->getDependencyContainer()->getAvailabilityFacade()->calculateStockForProduct($sku);
     }
-
 }
