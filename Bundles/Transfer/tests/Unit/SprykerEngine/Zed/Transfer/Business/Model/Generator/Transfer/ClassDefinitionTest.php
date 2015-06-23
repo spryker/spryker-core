@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer;
 

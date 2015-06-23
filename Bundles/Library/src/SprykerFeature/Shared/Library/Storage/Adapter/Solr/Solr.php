@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Shared\Library\Storage\Adapter\Solr;
 
 use SprykerFeature\Shared\Library\Storage\AdapterInterface;

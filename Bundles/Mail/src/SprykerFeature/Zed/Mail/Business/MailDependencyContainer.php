@@ -1,8 +1,9 @@
 <?php
-
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Mail\Business;
-
 
 use Generated\Zed\Ide\FactoryAutoCompletion\MailBusiness;
 use SprykerFeature\Shared\Library\Config;

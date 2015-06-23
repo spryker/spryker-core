@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Sdk\Setup;
 
 /** @TODO: Remove Symfony Dependency */

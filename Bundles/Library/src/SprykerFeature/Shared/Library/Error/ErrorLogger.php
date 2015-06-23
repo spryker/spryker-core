@@ -1,13 +1,14 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Shared\Library\Error;
 
 use SprykerFeature\Shared\Library\Application\Version;
 use \SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
 use \SprykerFeature\Shared\Lumberjack\Code\Log\Types;
 
-/**
- * @author Daniel Tschinder <daniel.tschinder@project-a.com>
- */
 class ErrorLogger
 {
 

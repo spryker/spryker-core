@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Yves\Library\Communication;
 
 use SprykerFeature\Shared\Library\Communication\Message;

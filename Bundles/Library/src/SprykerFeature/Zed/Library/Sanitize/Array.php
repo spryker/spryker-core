@@ -1,8 +1,8 @@
 <?php
-
 /**
- * @author Daniel Tschinder <daniel.tschinder@project-a.com>
+ * (c) Spryker Systems GmbH copyright protected
  */
+
 class SprykerFeature_Zed_Library_Sanitize_Array implements Iterator, Countable, ArrayAccess
 {
 

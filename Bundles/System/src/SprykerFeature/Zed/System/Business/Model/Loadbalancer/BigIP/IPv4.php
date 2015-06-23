@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
 {
