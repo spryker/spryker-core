@@ -18,6 +18,14 @@ use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 class SalesDependencyContainer extends AbstractDependencyContainer
 {
 
+    public function createOrderManager()
+    {
+        return $this->getFactory()->createModelOrderManager(
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_COUNTRY),
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
+        );
+    }
+
     /**
      * @return CommentManager
      */

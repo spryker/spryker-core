@@ -86,7 +86,6 @@
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr" required="false"/>
         <column name="first_name" required="false" size="100" type="VARCHAR"/>
         <column name="last_name" required="false" size="100" type="VARCHAR"/>
-        <column name="customer_session_id" required="false" size="100" type="VARCHAR"/>
         <column name="increment_id" type="VARCHAR" size="45" required="false"/>
         <column name="grand_total" type="INTEGER" required="true"/>
         <column name="subtotal" type="INTEGER" required="true"/>

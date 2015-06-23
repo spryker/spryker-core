@@ -9,10 +9,6 @@ use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
-use SprykerEngine\Zed\Kernel\Business\ModelResult;
-use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -64,6 +60,7 @@ class SalesFacade extends AbstractFacade
     /**
      * @param int $orderItemId
      * @deprecated
+     * 
      * @return OrderItemsTransfer
      */
     public function getOrderItemById($orderItemId)
@@ -75,14 +72,13 @@ class SalesFacade extends AbstractFacade
     }
     /**
      * @param OrderTransfer $transferOrder
-     * @param RequestInterface $request
-     * @deprecated
-     * @return ModelResult
+     *
+     * @return OrderTransfer
      */
-    public function saveOrder(OrderTransfer $transferOrder, RequestInterface $request)
+    public function saveOrder(OrderTransfer $transferOrder)
     {
-        return $this->factory
-            ->createModelOrderManager(Locator::getInstance(), $this->factory)
-            ->saveOrder($transferOrder, $request);
+        return $this->getDependencyContainer()
+            ->createOrderManager()
+            ->saveOrder($transferOrder);
     }
 }
