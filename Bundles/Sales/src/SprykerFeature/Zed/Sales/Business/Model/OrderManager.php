@@ -82,6 +82,7 @@ class OrderManager
             $itemEntity->setQty(!is_null($item->getQuantity()) ? $item->getQuantity() : 1);
 
             $itemEntity->save();
+            $item->setIdSalesOrderItem($itemEntity->getIdSalesOrderItem());
         }
 
         Propel::getConnection()->commit();
