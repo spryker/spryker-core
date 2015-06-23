@@ -10,6 +10,7 @@ use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Payone\CreditCardInterface;
 use Generated\Shared\Payone\ApiCallResponseCheckInterface;
 use Generated\Shared\Transfer\AuthorizationCheckResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
@@ -24,6 +25,15 @@ use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRe
  */
 class PayoneFacade extends AbstractFacade
 {
+
+    /**
+     * @param OrderTransfer $orderData
+     */
+    public function saveOrder(OrderTransfer $orderData)
+    {
+//        @todo implement
+//        $this->getDependencyContainer();
+    }
 
     /**
      * @param AuthorizationInterface $authorizationData
@@ -118,6 +128,16 @@ class PayoneFacade extends AbstractFacade
     public function isApiCallSuccessful(ApiCallResponseCheckInterface $apiCallCheck)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isApiCallSuccessful($apiCallCheck);
+    }
+
+    /**
+     * @param OrderTransfer $orderData
+     * @return PaymentStatusTransfer
+     */
+    public function getPaymentStatus(OrderTransfer $orderData)
+    {
+//        @todo implement
+//        return $this->getDependencyContainer()->createTransactionStatusManager()->getPaymentStatus($orderData);
     }
 
 }
