@@ -2,23 +2,21 @@
 
 namespace SprykerFeature\Zed\Queue\Business\Worker;
 
-use SprykerFeature\Zed\Queue\Business\Model\QueueInterface;
-
 interface TaskWorkerInterface
 {
     /**
-     * @param QueueInterface $responseQueue
+     * @param string $responseQueueName
      *
      * @return $this
      */
-    public function setResponseQueue(QueueInterface $responseQueue);
+    public function setResponseQueueName($responseQueueName);
 
     /**
-     * @param QueueInterface $errorQueue
+     * @param string $errorQueueName
      *
      * @return $this
      */
-    public function setErrorQueue(QueueInterface $errorQueue);
+    public function setErrorQueueName($errorQueueName);
 
     /**
      * @param int $maxMessages

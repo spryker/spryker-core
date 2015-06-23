@@ -3,21 +3,22 @@
 namespace SprykerFeature\Zed\Distributor\Business\Internal;
 
 use SprykerFeature\Zed\Distributor\Business\Writer\ItemTypeWriterInterface;
+use SprykerFeature\Zed\Distributor\Business\Writer\ReceiverWriterInterface;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterface;
 use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 
-class Installer extends AbstractInstaller
+class ReceiverInstaller extends AbstractInstaller
 {
 
     /**
      * @var array
      */
-    protected $configuredItemTypes;
+    protected $configuredReceiver;
 
     /**
      * @var ItemTypeWriterInterface
      */
-    protected $itemTypeWriter;
+    protected $receiverWriter;
 
     /**
      * @var DistributorQueryContainerInterface
@@ -25,17 +26,17 @@ class Installer extends AbstractInstaller
     protected $queryContainer;
 
     /**
-     * @param array $configuredItemTypes
-     * @param ItemTypeWriterInterface $itemTypeWriter
+     * @param array $configuredReceiver
+     * @param ReceiverWriterInterface $receiverWriter
      * @param DistributorQueryContainerInterface $queryContainer
      */
     public function __construct(
-        array $configuredItemTypes,
-        ItemTypeWriterInterface $itemTypeWriter,
+        array $configuredReceiver,
+        ReceiverWriterInterface $receiverWriter,
         DistributorQueryContainerInterface $queryContainer
     ) {
-        $this->configuredItemTypes = $configuredItemTypes;
-        $this->itemTypeWriter = $itemTypeWriter;
+        $this->configuredReceiver = $configuredReceiver;
+        $this->receiverWriter = $receiverWriter;
         $this->queryContainer = $queryContainer;
     }
 
@@ -44,11 +45,11 @@ class Installer extends AbstractInstaller
      */
     public function install()
     {
-        $existingItemTypes = $this->queryContainer->queryItemTypes()->find();
-        $newItemTypes = array_diff($this->configuredItemTypes, $existingItemTypes);
+        $existingReceivers = $this->queryContainer->queryReceivers()->find();
+        $newReceivers = array_diff($this->configuredReceiver, $existingReceivers);
 
-        foreach ($newItemTypes as $itemType) {
-            $this->itemTypeWriter->create($itemType);
+        foreach ($newReceivers as $receiver) {
+            $this->receiverWriter->create($receiver);
         }
     }
 }

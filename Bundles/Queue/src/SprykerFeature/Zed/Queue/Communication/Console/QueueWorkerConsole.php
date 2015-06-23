@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Queue\Communication\Console;
 
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerFeature\Zed\Queue\Business\QueueFacade;
 use Symfony\Component\Console\Input\InputArgument;
@@ -24,8 +25,8 @@ class QueueWorkerConsole extends Console
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::COMMAND_DESCRIPTION);
         $this->addArgument(self::QUEUE_NAME, InputArgument::REQUIRED);
-        $this->addArgument(self::TIMEOUT, InputArgument::OPTIONAL);
-        $this->addArgument(self::FETCH_SIZE, InputArgument::OPTIONAL);
+        $this->addArgument(self::TIMEOUT, InputArgument::OPTIONAL, '', 100);
+        $this->addArgument(self::FETCH_SIZE, InputArgument::OPTIONAL, '', 10);
 
         parent::configure();
     }
@@ -38,41 +39,31 @@ class QueueWorkerConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $queueName = $this->input->getArgument(self::QUEUE_NAME);
+        $queueName = $this->getQueueName();
         $messenger = $this->getMessenger();
-        $timeout = $this->getTimeout($input);
-        $fetchSize = $this->getFetchSize($input);
+        $timeout = $this->input->getArgument(self::TIMEOUT);
+        $fetchSize = $this->input->getArgument(self::FETCH_SIZE);
 
         $this->getFacade()->startWorker($queueName, $messenger, $timeout, $fetchSize);
     }
 
     /**
-     * @param InputInterface $input
-     *
-     * @return int
+     * @return string
      */
-    protected function getTimeout(InputInterface $input)
+    protected function getQueueName()
     {
-        $timeout = 10;
-        if ($input->getArgument(self::TIMEOUT)) {
-            $timeout = (int)$input->getArgument(self::TIMEOUT);
-        }
-
-        return $timeout;
+        return sprintf(
+            '%s.%s',
+            $this->getStoreId(),
+            $this->input->getArgument(self::QUEUE_NAME)
+        );
     }
 
     /**
-     * @param InputInterface $input
-     *
-     * @return int
+     * @return string
      */
-    protected function getFetchSize(InputInterface $input)
+    protected function getStoreId()
     {
-        $fetchSize = 10;
-        if ($input->getArgument(self::FETCH_SIZE)) {
-            $fetchSize = (int)$input->getArgument(self::FETCH_SIZE);
-        }
-
-        return $fetchSize;
+        return Store::getInstance()->getCurrentCountry();
     }
 }

@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\Queue\Business\Worker;
 use Generated\Shared\Queue\QueueMessageInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use SprykerFeature\Zed\Queue\Business\Model\QueueInterface;
+use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
 use SprykerFeature\Zed\Queue\Business\provider\TaskProviderInterface;
 use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
 use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskWarmUpPluginInterface;
@@ -16,9 +16,19 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     use LoggerAwareTrait;
 
     /**
-     * @var QueueInterface
+     * @var QueueConnectionInterface
      */
-    protected $subscribedQueue;
+    protected $queueConnection;
+
+    /**
+     * @var TaskProviderInterface
+     */
+    protected $taskProvider;
+
+    /**
+     * @var string
+     */
+    protected $queueName;
 
     /**
      * @var TaskPluginInterface|TaskWarmUpPluginInterface
@@ -36,14 +46,14 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     protected $processedMessages = 0;
 
     /**
-     * @var QueueInterface
+     * @var QueueConnectionInterface
      */
-    protected $responseQueue = null;
+    protected $responseQueueName = null;
 
     /**
-     * @var QueueInterface
+     * @var QueueConnectionInterface
      */
-    protected $errorQueue = null;
+    protected $errorQueueName = null;
 
     /**
      * @var ErrorHandlerInterface
@@ -51,42 +61,40 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     protected $errorHandler;
 
     /**
-     * @var TaskProviderInterface
-     */
-    protected $taskProvider;
-
-    /**
-     * @param QueueInterface $subscribedQueue
+     * @param QueueConnectionInterface $queueConnection
      * @param TaskProviderInterface $taskProvider
+     * @param string $subscribedQueueName
      */
     public function __construct(
-        QueueInterface $subscribedQueue,
-        TaskProviderInterface $taskProvider
+        QueueConnectionInterface $queueConnection,
+        TaskProviderInterface $taskProvider,
+        $subscribedQueueName
     ) {
-        $this->subscribedQueue = $subscribedQueue;
+        $this->queueConnection = $queueConnection;
         $this->taskProvider = $taskProvider;
+        $this->queueName = $subscribedQueueName;
     }
 
     /**
-     * @param QueueInterface $responseQueue
+     * @param string $responseQueueName
      *
      * @return $this
      */
-    public function setResponseQueue(QueueInterface $responseQueue)
+    public function setResponseQueueName($responseQueueName)
     {
-        $this->responseQueue = $responseQueue;
+        $this->responseQueueName = $responseQueueName;
 
         return $this;
     }
 
     /**
-     * @param QueueInterface $errorQueue
+     * @param string $errorQueueName
      *
      * @return $this
      */
-    public function setErrorQueue(QueueInterface $errorQueue)
+    public function setErrorQueueName($errorQueueName)
     {
-        $this->errorQueue = $errorQueue;
+        $this->errorQueueName = $errorQueueName;
 
         return $this;
     }
@@ -126,14 +134,14 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
         $worker = $this;
 
         $callback = function ($amqpMessage) use ($worker) {
-            $queueMessage = $this->subscribedQueue->decodeMessage($amqpMessage);
+            $queueMessage = $this->queueConnection->decodeMessage($amqpMessage);
             $worker->processMessage($queueMessage);
-            $this->subscribedQueue->acknowledge($amqpMessage);
+            $this->queueConnection->acknowledge($amqpMessage);
         };
 
-        $this->subscribedQueue->setTimeout($timeout);
-        $this->subscribedQueue->setFetchSize($fetchSize);
-        $this->subscribedQueue->listen($callback, $this->task->getName());
+        $this->queueConnection->setTimeout($timeout);
+        $this->queueConnection->setFetchSize($fetchSize);
+        $this->queueConnection->listen($this->queueName, $callback, $this->task->getName());
     }
 
     /**
@@ -141,8 +149,7 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
      */
     protected function initializeTask()
     {
-        $queueName = $this->subscribedQueue->getQueueName();
-        $task = $this->taskProvider->getTaskByQueueName($queueName);
+        $task = $this->taskProvider->getTaskByQueueName($this->queueName);
 
         if ($task instanceof LoggerAwareInterface) {
             $task->setLogger($this->logger);
@@ -163,26 +170,28 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     {
         try {
             $this->task->run($queueMessage);
-            $this->logger->debug(
-                sprintf(
-                    '%s: finished task %s',
-                    $queueMessage->getId(),
-                    $this->task->getName()
-                )
-            );
+            if (!is_null($this->logger)) {
+                $this->logger->info(
+                    sprintf(
+                        '%s: finished task %s',
+                        $queueMessage->getId(),
+                        $this->task->getName()
+                    )
+                );
+            }
         } catch (\Exception $exception) {
              $this->handleError($queueMessage, $exception);
 
              return false;
         }
 
-        if (!is_null($this->responseQueue)) {
-            $this->responseQueue->publish($queueMessage);
+        if (!is_null($this->responseQueueName)) {
+            $this->responseQueueName->publish($this->responseQueueName, $queueMessage);
         }
 
         $this->processedMessages++;
         if ($this->processedMessages >= $this->maxMessages) {
-            $this->subscribedQueue->stopListen();
+            $this->queueConnection->stopListen();
         }
 
         return true;
@@ -196,9 +205,6 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
      */
     protected function handleError(QueueMessageInterface $queueMessage, \Exception $exception)
     {
-        $queueMessage->setError($exception->getMessage());
-        $this->errorQueue->publish($queueMessage);
-
         $this->logger->error(
             sprintf(
                 '%s: %s%s%s',
@@ -209,6 +215,10 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
             )
         );
 
+        $queueMessage->setError($exception->getMessage());
+        if (!is_null($this->errorQueueName)) {
+            $this->errorQueueName->publish($this->errorQueueName, $queueMessage);
+        }
         if (!is_null($this->errorHandler)) {
             $this->errorHandler->handleError($exception);
         }

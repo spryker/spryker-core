@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\Queue\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\QueueBusiness;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
-use SprykerFeature\Zed\Queue\Business\Model\QueueInterface;
+use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
 use SprykerFeature\Zed\Queue\Business\Provider\TaskProviderInterface;
 use SprykerFeature\Zed\Queue\Business\Worker\TaskWorkerInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
@@ -19,25 +19,22 @@ class QueueDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @var QueueInterface[]
+     * @var QueueConnectionInterface
      */
-    protected $queues = [];
+    protected $queueConnection;
 
     /**
-     * @param string $queueName
-     *
-     * @return QueueInterface
+     * @return QueueConnectionInterface
      */
-    public function createQueueConnection($queueName)
+    public function createQueueConnection()
     {
-        if (!isset($this->queues[$queueName])) {
-            $this->queues[$queueName] = $this->getFactory()->createModelQueue(
-                $queueName,
+        if (empty($this->queueConnection)) {
+            $this->queueConnection = $this->getFactory()->createModelQueueConnection(
                 $this->getConfig()->getAmqpParameter()
             );
         }
 
-        return $this->queues[$queueName];
+        return $this->queueConnection;
     }
 
     /**
@@ -49,13 +46,14 @@ class QueueDependencyContainer extends AbstractDependencyContainer
     public function createTaskWorker($queueName, MessengerInterface $messenger)
     {
         $taskWorker = $this->getFactory()->createWorkerTaskWorker(
-            $this->createQueueConnection($queueName),
-            $this->createTaskProvider()
+            $this->createQueueConnection(),
+            $this->createTaskProvider(),
+            $queueName
         );
         $taskWorker->setLogger($messenger);
 
         return $taskWorker
-            ->setErrorQueue($this->createErrorQueue())
+            ->setErrorQueueName($this->getConfig()->getErrorChannelName())
             ->setMaxMessages($this->getConfig()->getMaxWorkerMessageCount())
         ;
     }
@@ -70,15 +68,5 @@ class QueueDependencyContainer extends AbstractDependencyContainer
         );
 
         return $taskProvider;
-    }
-
-    /**
-     * @return QueueInterface
-     */
-    protected function createErrorQueue()
-    {
-        return $this->createQueueConnection(
-            $this->getConfig()->getErrorChannelName()
-        );
     }
 }

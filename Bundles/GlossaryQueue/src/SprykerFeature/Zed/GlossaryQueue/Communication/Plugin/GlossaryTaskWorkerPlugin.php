@@ -1,23 +1,30 @@
 <?php
 
-namespace SprykerFeature\Zed\GlossaryDistributor\Communication\Plugin;
+namespace SprykerFeature\Zed\GlossaryQueue\Communication\Plugin;
 
 use Generated\Shared\Queue\QueueMessageInterface;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Zed\GlossaryQueue\Business\GlossaryQueueFacade;
+use SprykerFeature\Zed\GlossaryQueue\Communication\GlossaryQueueDependencyContainer;
 use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
 
+/**
+ * @method GlossaryQueueDependencyContainer getDependencyContainer()
+ * @method GlossaryQueueFacade getFacade()
+ */
 class GlossaryTaskWorkerPlugin extends AbstractPlugin implements
     TaskPluginInterface
 {
     const GLOSSARY_TRANSLATION = 'glossary_translation';
+    const TRANSLATION_WORKER = 'translation.worker';
 
     /**
      * @return string
      */
     public function getName()
     {
-        return 'glossary-worker';
+        return self::TRANSLATION_WORKER;
     }
 
     /**
@@ -37,7 +44,7 @@ class GlossaryTaskWorkerPlugin extends AbstractPlugin implements
      */
     public function run(QueueMessageInterface $queueMessage)
     {
-        var_dump($queueMessage);
+        $this->getFacade()->processTranslationMessage($queueMessage);
     }
 
     /**

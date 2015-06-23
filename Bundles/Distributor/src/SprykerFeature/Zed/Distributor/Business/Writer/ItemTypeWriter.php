@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Distributor\Business\Writer;
 
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Distributor\Business\Exception\ItemTypeDoesNotExistException;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -40,6 +41,7 @@ class ItemTypeWriter implements ItemTypeWriterInterface
      * @param string $typeKey
      * @param string $timestamp
      *
+     * @throws ItemTypeDoesNotExistException
      * @throws PropelException
      * @return int
      */
@@ -51,8 +53,14 @@ class ItemTypeWriter implements ItemTypeWriterInterface
         ;
 
         if (empty($distribution)) {
-            throw new Exception;
+            throw new ItemTypeDoesNotExistException(
+                sprintf(
+                    'Item type %s does not exist',
+                    $typeKey
+                )
+            );
         }
+
         $distribution->setLastDistribution($timestamp);
         $distribution->save();
 

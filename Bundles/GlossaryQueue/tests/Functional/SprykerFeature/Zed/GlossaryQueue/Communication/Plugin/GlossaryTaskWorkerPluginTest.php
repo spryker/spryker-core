@@ -1,0 +1,170 @@
+<?php
+
+namespace Functional\SprykerFeature\Zed\GlossaryQueue\Communication\Plugin;
+
+use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\QueueMessageTransfer;
+use Generated\Zed\Ide\AutoCompletion;
+use Pyz\Zed\Glossary\Business\GlossaryFacade;
+use SprykerEngine\Zed\Kernel\Communication\Factory as CommuncationFactory;
+use SprykerEngine\Zed\Kernel\Business\Factory;
+use SprykerEngine\Zed\Kernel\Container;
+use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Locale\Business\LocaleFacade;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryKeyQuery;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryTranslationQuery;
+use SprykerFeature\Zed\GlossaryQueue\Business\GlossaryQueueFacade;
+use SprykerFeature\Zed\GlossaryQueue\Communication\Plugin\GlossaryTaskWorkerPlugin;
+use SprykerFeature\Zed\GlossaryQueue\GlossaryQueueDependencyProvider;
+
+/**
+ * @group SprykerFeature
+ * @group Zed
+ * @group GlossaryQueue
+ * @group Communication
+ * @group GlossaryTaskWorkerPlugin
+ */
+class GlossaryTaskWorkerPluginTest extends Test
+{
+    /**
+     * @var GlossaryTaskWorkerPlugin
+     */
+    protected $taskPlugin;
+
+    /**
+     * @var GlossaryFacade
+     */
+    protected $glossaryFacade;
+
+    /**
+     * @var array
+     */
+    private $locales = [];
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->generateTestLocales();
+        $this->glossaryFacade = $this->createGlossaryFacade();
+        $glossaryQueueFacade = $this->createGlossaryQueueFacade();
+
+        $this->taskPlugin = new GlossaryTaskWorkerPlugin(new CommuncationFactory('GlossaryQueue'), $this->getLocator());
+        $this->taskPlugin->setOwnFacade($glossaryQueueFacade);
+    }
+
+    private function generateTestLocales()
+    {
+        $locale = $this->getLocaleFacade()->createLocale('xx_XX');
+        $this->locales[$locale->getIdLocale()] = $locale->getLocaleName();
+    }
+
+    /**
+     * @return LocaleFacade
+     */
+    private function getLocaleFacade()
+    {
+        return $this->getLocator()->locale()->facade();
+    }
+
+    /**
+     * @return GlossaryFacade
+     */
+    private function createGlossaryFacade()
+    {
+        return $this->getLocator()->glossary()->facade();
+    }
+
+    /**
+     * @return GlossaryQueueFacade
+     */
+    private function createGlossaryQueueFacade()
+    {
+        $container = new Container();
+        $container[GlossaryQueueDependencyProvider::GLOSSARY_FACADE] = function () {
+            return $this->glossaryFacade;
+        };
+
+        $glossaryQueueFacade = new GlossaryQueueFacade(new Factory('GlossaryQueue'), $this->getLocator());
+        $glossaryQueueFacade->setExternalDependencies($container);
+
+        return $glossaryQueueFacade;
+    }
+
+    /**
+     * @return AutoCompletion|Locator
+     */
+    private function getLocator()
+    {
+        return Locator::getInstance();
+    }
+
+    public function testPluginShouldCreateKeyAndTranslation()
+    {
+        $queueMessage = $this->getQueueMessage()->setPayload(
+            [
+                'translation_key' => 'test.key1',
+                'translation_value' => 'test.value1',
+                'translation_is_active' => true,
+                'translation_locale' => 'xx_XX',
+            ]
+        );
+        $this->taskPlugin->run($queueMessage);
+
+        $keyResult = SpyGlossaryKeyQuery::create()->filterByKey('test.key1')->count();
+
+        $translationResult = SpyGlossaryTranslationQuery::create()
+            ->filterByValue('test.value1')
+            ->filterByIsActive(true)
+            ->useLocaleQuery()
+            ->filterByLocaleName('xx_XX')
+            ->endUse()
+            ->count()
+        ;
+
+        $this->assertEquals(1, $keyResult);
+        $this->assertEquals(1, $translationResult);
+    }
+
+    public function testShouldUpdateTranslation()
+    {
+        $idGlossaryKey = $this->glossaryFacade->createKey('test.key2');
+        $this->glossaryFacade->createTranslation(
+            'test.key2',
+            (new LocaleTransfer())->setLocaleName('xx_XX'),
+            'test.value2',
+            true
+        );
+
+        $queueMessage = $this->getQueueMessage()->setPayload(
+            [
+                'translation_key' => 'test.key2',
+                'translation_value' => 'test.updated.value2',
+                'translation_is_active' => false,
+                'translation_locale' => 'xx_XX',
+            ]
+        );
+        $this->taskPlugin->run($queueMessage);
+
+        $translationResult = SpyGlossaryTranslationQuery::create()
+            ->filterByFkGlossaryKey($idGlossaryKey)
+            ->filterByValue('test.updated.value2')
+            ->filterByIsActive(false)
+            ->useLocaleQuery()
+            ->filterByLocaleName('xx_XX')
+            ->endUse()
+            ->count()
+        ;
+
+        $this->assertEquals(1, $translationResult);
+    }
+
+    /**
+     * @return QueueMessageTransfer
+     */
+    protected function getQueueMessage()
+    {
+        return new QueueMessageTransfer();
+    }
+}

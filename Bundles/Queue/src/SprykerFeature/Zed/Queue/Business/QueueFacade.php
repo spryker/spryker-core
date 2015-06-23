@@ -19,8 +19,8 @@ class QueueFacade extends AbstractFacade
     public function publishMessage($queueName, QueueMessageTransfer $queueMessage)
     {
         $this->getDependencyContainer()
-            ->createQueueConnection($queueName)
-            ->publish($queueMessage)
+            ->createQueueConnection()
+            ->publish($queueName, $queueMessage)
         ;
     }
 

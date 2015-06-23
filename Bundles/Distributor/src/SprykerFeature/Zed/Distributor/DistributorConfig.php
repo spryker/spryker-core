@@ -28,7 +28,15 @@ class DistributorConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getAvailableItemTypes()
+    public function getItemTypes()
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getItemReceivers()
     {
         return [];
     }

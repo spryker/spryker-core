@@ -9,17 +9,12 @@ use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Exception\AMQPTimeoutException;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class Queue implements QueueInterface
+class QueueConnection implements QueueConnectionInterface
 {
 
     const QUEUE_PERSISTENT = 'persistent';
     const QUEUE_TRANSIENT = 'transient';
     const DELIVERY_MODE = 'delivery_mode';
-
-    /**
-     * @var string
-     */
-    protected $queueName;
 
     /**
      * @var AMQPChannel
@@ -42,10 +37,14 @@ class Queue implements QueueInterface
     protected $interrupted = false;
 
     /**
-     * @param string $queueName
+     * @var array
+     */
+    protected $queues = [];
+
+    /**
      * @param AmqpParameterInterface $amqpParameter
      */
-    public function __construct($queueName, AmqpParameterInterface $amqpParameter)
+    public function __construct(AmqpParameterInterface $amqpParameter)
     {
         $connection = new AMQPConnection(
             $amqpParameter->getHost(),
@@ -56,8 +55,6 @@ class Queue implements QueueInterface
         );
 
         $this->channel = $connection->channel();
-        $this->channel->queue_declare($queueName, false, self::QUEUE_PERSISTENT, false, false);
-        $this->queueName = $queueName;
     }
 
     /**
@@ -78,15 +75,19 @@ class Queue implements QueueInterface
     }
 
     /**
+     * @param string $queueName
      * @param callable $callback
-     * @param string $consumerName
+     * @param string $workerName
      */
-    public function listen(callable $callback, $consumerName)
-    {
+    public function listen(
+        $queueName,
+        callable $callback,
+        $workerName
+    ) {
+        $this->declareQueue($queueName);
         $this->interrupted = false;
 
-        $queueName = $this->queueName;
-        $consumer_tag = $consumerName;
+        $consumer_tag = $workerName;
         $no_local = false;
         $no_ack = false;
         $exclusive = false;
@@ -117,13 +118,16 @@ class Queue implements QueueInterface
     }
 
     /**
+     * @param string $queueName
      * @param QueueMessageInterface $queueMessage
      */
-    public function publish(QueueMessageInterface $queueMessage)
+    public function publish($queueName, QueueMessageInterface $queueMessage)
     {
+        $this->declareQueue($queueName);
+
         $encodedData = $this->encodeMessage($queueMessage);
         $amqpMessage = new AMQPMessage($encodedData, [self::DELIVERY_MODE => 2]);
-        $this->channel->basic_publish($amqpMessage, '', $this->queueName);
+        $this->channel->basic_publish($amqpMessage, '', $queueName);
     }
 
     public function stopListen()
@@ -148,19 +152,11 @@ class Queue implements QueueInterface
     /**
      * @param AMQPMessage $amqpMessage
      *
-     * @return callable
+     * @return QueueMessageInterface
      */
     public function decodeMessage(AMQPMessage $amqpMessage)
     {
         return unserialize($amqpMessage->body);
-    }
-
-    /**
-     * @return string
-     */
-    public function getQueueName()
-    {
-        return $this->queueName;
     }
 
     /**
@@ -171,5 +167,22 @@ class Queue implements QueueInterface
     protected function encodeMessage(QueueMessageInterface $queueMessage)
     {
         return serialize($queueMessage);
+    }
+
+    /**
+     * @param string $queueName
+     */
+    protected function declareQueue($queueName)
+    {
+        if (!array_key_exists($queueName, $this->queues)) {
+            $this->channel->queue_declare(
+                $queueName,
+                false,
+                self::QUEUE_PERSISTENT,
+                false,
+                false
+            );
+            $this->queues[$queueName] = true;
+        }
     }
 }

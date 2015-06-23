@@ -7,11 +7,14 @@ use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Distributor\Business\Builder\QueueNameBuilderInterface;
 use SprykerFeature\Zed\Distributor\Business\Distributor\ItemDistributorInterface;
 use SprykerFeature\Zed\Distributor\Business\Distributor\Distributor;
+use SprykerFeature\Zed\Distributor\Business\Internal\ItemTypeInstaller;
+use SprykerFeature\Zed\Distributor\Business\Internal\ReceiverInstaller;
 use SprykerFeature\Zed\Distributor\Business\Marker\LastDistributionMarkerInterface;
 use SprykerFeature\Zed\Distributor\Business\Provider\ItemQueueProviderInterface;
 use SprykerFeature\Zed\Distributor\Business\Router\MessageRouterInterface;
 use SprykerFeature\Zed\Distributor\Business\Writer\ItemTypeWriterInterface;
 use SprykerFeature\Zed\Distributor\Business\Writer\ItemWriterInterface;
+use SprykerFeature\Zed\Distributor\Business\Writer\ReceiverWriterInterface;
 use SprykerFeature\Zed\Distributor\Dependency\Facade\DistributorToQueueInterface;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterface;
 use SprykerFeature\Zed\Distributor\DistributorConfig;
@@ -51,6 +54,30 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
         }
 
         return $queueDistributor;
+    }
+
+    /**
+     * @return ItemTypeInstaller
+     */
+    public function createItemTypeInstaller()
+    {
+        return $this->getFactory()->createInternalItemTypeInstaller(
+            $this->getConfig()->getItemTypes(),
+            $this->createItemTypeWriter(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return ReceiverInstaller
+     */
+    public function createReceiverInstaller()
+    {
+        return $this->getFactory()->createInternalReceiverInstaller(
+            $this->getConfig()->getItemReceivers(),
+            $this->createReceiverWriter(),
+            $this->getQueryContainer()
+        );
     }
 
     /**
@@ -96,6 +123,16 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
     protected function createItemTypeWriter()
     {
         return $this->getFactory()->createWriterItemTypeWriter(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return ReceiverWriterInterface
+     */
+    protected function createReceiverWriter()
+    {
+        return $this->getFactory()->createWriterReceiverWriter(
             $this->getQueryContainer()
         );
     }

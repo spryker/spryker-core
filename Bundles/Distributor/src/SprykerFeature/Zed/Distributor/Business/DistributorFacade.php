@@ -36,4 +36,14 @@ class DistributorFacade extends AbstractFacade
             ->distributeData($messenger, $itemTypes)
         ;
     }
+
+    public function installItemTypes()
+    {
+        $this->getDependencyContainer()->createItemTypeInstaller()->install();
+    }
+
+    public function installReceiver()
+    {
+        $this->getDependencyContainer()->createItemTypeInstaller()->install();
+    }
 }
