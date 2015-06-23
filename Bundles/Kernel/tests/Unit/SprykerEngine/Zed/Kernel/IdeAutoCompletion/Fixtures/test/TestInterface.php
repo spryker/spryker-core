@@ -1,7 +1,4 @@
 <?php
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
 
 namespace Generated\Zed\Ide\FactoryAutoCompletion;
 
