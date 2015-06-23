@@ -121,7 +121,7 @@ class CreditCardPseudo extends AbstractMapper
 
         $personalContainer->setFirstName($authorizationData->getOrder()->getFirstName());
         $personalContainer->setLastName($authorizationData->getOrder()->getLastName());
-        $personalContainer->setCountry($this->getStandardParameter()->getLanguage());
+        $personalContainer->setCountry($this->storeConfig->getCurrentCountry());
 
         return $personalContainer;
     }

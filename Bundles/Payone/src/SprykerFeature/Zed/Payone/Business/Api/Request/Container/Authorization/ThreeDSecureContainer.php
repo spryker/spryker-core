@@ -17,7 +17,6 @@ class ThreeDSecureContainer extends AbstractContainer
      * @var string
      */
     protected $cavv;
-
     /**
      * @var string
      */
