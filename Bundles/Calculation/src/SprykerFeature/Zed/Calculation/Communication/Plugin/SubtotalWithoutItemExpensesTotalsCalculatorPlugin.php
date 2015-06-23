@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Calculation\Communication\Plugin;
 use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -20,16 +21,17 @@ class SubtotalWithoutItemExpensesTotalsCalculatorPlugin extends AbstractPlugin i
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
+        CalculableInterface $calculableContainer,
         \ArrayObject $calculableItems
     ) {
         $this->getFacade()
             ->recalculateSubtotalWithoutItemExpensesTotals($totalsTransfer, $calculableContainer, $calculableItems)
         ;
     }
+
 }
