@@ -20,9 +20,9 @@
         <property name="phone" type="string" />
         <property name="comment" type="string" />
         <property name="state" type="string" />
-        <property name="isDeleted" type="string" />
-        <property name="isDefaultBilling" type="string" />
-        <property name="isDefaultShipping" type="string" />
+        <property name="isDeleted" type="bool" />
+        <property name="isDefaultBilling" type="bool" />
+        <property name="isDefaultShipping" type="bool" />
         <property name="fkCountry" type="int" />
         <property name="iso2Country" type="string" />
     </transfer>
