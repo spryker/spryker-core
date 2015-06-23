@@ -1,8 +1,9 @@
 <?php
-
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Url\Persistence\Propel;
-
 
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
