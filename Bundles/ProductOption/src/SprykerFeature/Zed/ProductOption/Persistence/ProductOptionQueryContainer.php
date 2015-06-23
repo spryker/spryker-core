@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\ProductOption\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionPersistence;
 use SprykerFeature\Zed\Product\Persistence\Propel\Base\SpyAbstractProductQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusionQuery;
@@ -24,7 +25,9 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
 
-
+/**
+ * @method ProductOptionPersistence getFactory()
+ */
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
     /**
@@ -45,7 +48,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionTypeByImportKey($importKeyProductOptionType)
     {
-        return SpyProductOptionTypeQuery::create()
+        return $this->getFactory()->createPropelSpyProductOptionTypeQuery()
             ->filterByImportKey($importKeyProductOptionType);
     }
 
