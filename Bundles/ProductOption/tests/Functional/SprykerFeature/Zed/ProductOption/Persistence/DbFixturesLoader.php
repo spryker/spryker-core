@@ -4,6 +4,9 @@ namespace Functional\SprykerFeature\Zed\ProductOption\Persistence;
 
 use Propel\Runtime\Propel;
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 class DbFixturesLoader
 {
 

@@ -15,6 +15,8 @@ use SprykerFeature\Zed\ProductOptionExporter\Business\ProductOptionExporterFacad
  * @group DataProcessorTest
  *
  * @method ProductOptionExporterFacade getFacade()
+ *
+ * (c) Spryker Systems GmbH copyright protected
  */
 class DataProcessorTest extends AbstractFunctionalTest
 {

@@ -5,6 +5,9 @@ namespace SprykerFeature\Zed\ProductOptionExporter\Communication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerFeature\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 class ProductOptionExporterDependencyContainer extends AbstractDependencyContainer
 {
     /**

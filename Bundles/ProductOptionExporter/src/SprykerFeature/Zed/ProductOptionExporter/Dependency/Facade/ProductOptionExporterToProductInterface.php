@@ -2,6 +2,9 @@
 
 namespace SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade;
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 interface ProductOptionExporterToProductInterface
 {
 

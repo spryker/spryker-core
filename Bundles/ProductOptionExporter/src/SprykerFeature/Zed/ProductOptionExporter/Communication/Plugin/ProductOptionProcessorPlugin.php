@@ -9,6 +9,8 @@ use SprykerFeature\Zed\ProductOptionExporter\Communication\ProductOptionExporter
 
 /**
  * @method ProductOptionExporterDependencyContainer getDependencyContainer()
+ *
+ * (c) Spryker Systems GmbH copyright protected
  */
 class ProductOptionProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {

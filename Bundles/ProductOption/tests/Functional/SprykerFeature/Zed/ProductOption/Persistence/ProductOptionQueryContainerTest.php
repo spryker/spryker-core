@@ -12,9 +12,12 @@ use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
  * @group Zed
  * @group ProdutOption
  * @group DataImportWriterTest
+ *
+ * (c) Spryker Systems GmbH copyright protected
  */
 class ProductOptionQueryContainerTest extends Test
 {
+
     /**
      * @var ProductOptionQueryContainer
      */

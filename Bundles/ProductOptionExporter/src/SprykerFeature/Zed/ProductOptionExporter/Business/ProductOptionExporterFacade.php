@@ -7,6 +7,8 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method ProductOptionExporterDependencyContainer getDependencyContainer()
+ *
+ * (c) Spryker Systems GmbH copyright protected
  */
 class ProductOptionExporterFacade extends AbstractFacade
 {

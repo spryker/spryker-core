@@ -10,6 +10,8 @@ use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionExporterBusiness;
 
 /**
  * @method ProductOptionExporterBusiness getFactory()
+ *
+ * (c) Spryker Systems GmbH copyright protected
  */
 class ProductOptionExporterDependencyContainer extends AbstractDependencyContainer
 {

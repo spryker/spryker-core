@@ -2,6 +2,9 @@
 
 namespace SprykerFeature\Zed\ProductOptionExporter\Business\Model;
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 interface ExportProcessorInterface
 {
     /**
