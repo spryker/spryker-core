@@ -13,7 +13,7 @@ use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
  * @group ProdutOption
  * @group ProductOptionReaderTest
  */
-class ProductOptionQReaderrTest extends AbstractFunctionalTest
+class ProductOptionReaderrTest extends AbstractFunctionalTest
 {
     /**
      * @var array

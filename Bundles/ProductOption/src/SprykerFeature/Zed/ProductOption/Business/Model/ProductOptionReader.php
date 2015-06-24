@@ -7,7 +7,6 @@ namespace SprykerFeature\Zed\ProductOption\Business\Model;
 
 use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
-
 class ProductOptionReader implements ProductOptionReaderInterface
 {
 

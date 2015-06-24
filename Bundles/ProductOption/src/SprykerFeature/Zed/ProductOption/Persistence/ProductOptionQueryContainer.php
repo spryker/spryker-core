@@ -38,7 +38,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function __construct()
     {
         $this->dbConnection = Propel::getConnection();
-
     }
 
     /**

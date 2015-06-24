@@ -10,7 +10,6 @@ use SprykerFeature\Zed\ProductOptionExporter\Business\Model\ExportProcessorInter
 use SprykerFeature\Zed\ProductOptionExporter\ProductOptionExporterDependencyProvider;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionExporterBusiness;
 
-
 /**
  * @method ProductOptionExporterBusiness getFactory()
  */

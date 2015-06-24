@@ -58,7 +58,7 @@ class ExportProcessor implements ExportProcessorInterface
     {
         foreach ($resultSet as $index => $productRawData) {
             if (isset($processedResultSet[$index], $processedResultSet[$index]['concrete_products'])) {
-                $idLocale = $this->extractLocalIdFromStorateKey($index);
+                $idLocale = $this->extractLocalIdFromStorageKey($index);
                 $this->processVariants($processedResultSet[$index]['concrete_products'], $idLocale);
             }
         }
@@ -71,7 +71,7 @@ class ExportProcessor implements ExportProcessorInterface
      *
      * @return int
      */
-    private function extractLocalIdFromStorateKey($storageKey)
+    private function extractLocalIdFromStorageKey($storageKey)
     {
         $keyParts = explode('.', $storageKey);
         $localeTransfer = $this->localeFacade->getLocale($keyParts[1]);
@@ -81,6 +81,9 @@ class ExportProcessor implements ExportProcessorInterface
 
     /**
      * @param array $concreteProducts
+     * €param int $idLocale
+     *
+     * @return array
      */
     protected function processVariants(array &$concreteProducts, $idLocale)
     {
@@ -142,6 +145,11 @@ class ExportProcessor implements ExportProcessorInterface
         return $options;
     }
 
+    /**
+     * @param int $idTypeUsage
+     *
+     * @return array
+     */
     protected function processTypeExclusions($idTypeUsage)
     {
         $excludes = $this->productOptionFacade->getTypeExclusionsForTypeUsage($idTypeUsage);
@@ -153,7 +161,7 @@ class ExportProcessor implements ExportProcessorInterface
     }
 
     /**
-     * @param int $sku
+     * @param string $sku
      * @param int $idTypeUsage
      *
      * @return float
