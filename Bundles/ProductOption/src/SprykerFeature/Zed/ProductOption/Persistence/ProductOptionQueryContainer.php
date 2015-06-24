@@ -48,7 +48,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionTypeByImportKey($importKeyProductOptionType)
     {
-        return $this->getFactory()->createPropelSpyProductOptionTypeQuery()
+        return SpyProductOptionTypeQuery::create()
             ->filterByImportKey($importKeyProductOptionType);
     }
 
