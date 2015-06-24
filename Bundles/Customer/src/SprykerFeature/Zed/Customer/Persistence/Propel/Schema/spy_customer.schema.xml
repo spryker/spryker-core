@@ -17,7 +17,7 @@
         <column name="company" size="100" type="VARCHAR"/>
         <column name="gender" type="ENUM" valueSet="Male, Female"/>
         <column name="date_of_birth" type="DATE" default="NULL"/>
-        <column name="password" required="true" size="255" type="VARCHAR"/>
+        <column name="password" default="null" size="255" type="VARCHAR" />
         <column name="restore_password_key" size="150" type="VARCHAR" default="NULL"/>
         <column name="restore_password_date" type="TIMESTAMP" default="NULL"/>
         <column name="registered" type="DATE" default="NULL" />
