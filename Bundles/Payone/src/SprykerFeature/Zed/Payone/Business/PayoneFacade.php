@@ -31,8 +31,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function saveOrder(OrderTransfer $orderData)
     {
-//        @todo implement
-//        $this->getDependencyContainer();
+        $this->getDependencyContainer()->createOrderManager()->saveOrder($orderData);
     }
 
     /**
