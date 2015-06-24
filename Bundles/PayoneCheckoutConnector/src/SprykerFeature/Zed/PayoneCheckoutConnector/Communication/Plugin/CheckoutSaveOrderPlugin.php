@@ -7,8 +7,15 @@
 namespace SprykerFeature\Zed\Payone\Communication\Plugin;
 
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 
-class CheckoutSaveOrderPlugin implements CheckoutSaveOrderInterface{
+/**
+ * @method PayoneDependencyContainer getDependencyContainer()
+ */
+class CheckoutSaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface{
 
     /**
      * @param OrderTransfer $orderTransfer
@@ -16,7 +23,7 @@ class CheckoutSaveOrderPlugin implements CheckoutSaveOrderInterface{
      */
     public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-
+        $this->getDependencyContainer()->createPayoneFacade()->saveOrder($orderTransfer);
     }
 
 }
