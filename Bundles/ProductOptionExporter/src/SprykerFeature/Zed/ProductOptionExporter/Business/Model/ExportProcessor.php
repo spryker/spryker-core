@@ -126,12 +126,12 @@ class ExportProcessor implements ExportProcessorInterface
         $options = [];
         foreach ($typeUsages as $typeUsage) {
             $optionData = [
-                'id' => (int) $typeUsage['typeUsageId'],
+                'id' => (int) $typeUsage['idTypeUsage'],
                 'label' => $typeUsage['label'],
                 'isOptional' => (bool) $typeUsage['isOptional'],
-                'taxRate' => $this->processOptionTaxRate($idProduct, $typeUsage['typeUsageId']),
-                'excludes' => $this->processTypeExclusions($typeUsage['typeUsageId']),
-                'values' => $this->processValuesForTypeUsage($typeUsage['typeUsageId'], $idLocale)
+                'taxRate' => $this->processOptionTaxRate($idProduct, $typeUsage['idTypeUsage']),
+                'excludes' => $this->processTypeExclusions($typeUsage['idTypeUsage']),
+                'values' => $this->processValuesForTypeUsage($typeUsage['idTypeUsage'], $idLocale)
             ];
             $options[] = $optionData;
         }

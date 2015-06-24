@@ -323,7 +323,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         $sql =
             "SELECT
-            typeUsage.id_product_option_type_usage AS typeUsageId,
+            typeUsage.id_product_option_type_usage AS idTypeUsage,
             typeUsage.is_optional AS isOptional,
             typeTranslation.name AS label
             FROM spy_product_option_type_usage AS typeUsage
