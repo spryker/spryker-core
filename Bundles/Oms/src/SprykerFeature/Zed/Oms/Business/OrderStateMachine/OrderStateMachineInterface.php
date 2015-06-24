@@ -32,4 +32,30 @@ interface OrderStateMachineInterface
      * @return int
      */
     public function checkConditions(array $logContext = array());
+
+    /**
+     * @param array $orderItemIds
+     * @param array $data
+     *
+     * @return array
+     */
+    public function triggerEventForNewOrderItems(array $orderItemIds, array $data);
+
+    /**
+     * @param string $eventId
+     * @param int $orderItemId
+     * @param array $data
+     *
+     * @return array
+     */
+    public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data);
+
+    /**
+     * @param string $eventId
+     * @param array $orderItemIds
+     * @param array $data
+     *
+     * @return array
+     */
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data);
 }

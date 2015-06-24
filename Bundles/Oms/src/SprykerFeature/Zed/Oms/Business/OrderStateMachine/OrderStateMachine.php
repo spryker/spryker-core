@@ -156,12 +156,12 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param string $eventId
-     * @param int[] $orderItemIds
-     * @param $data
+     * @param array $orderItemIds
+     * @param array $data
      *
      * @return array
      */
-    public function triggerEventForOrderItems($eventId, array $orderItemIds, $data)
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data)
     {
         $orderItems = $this->queryContainer
             ->queryOrderItems($orderItemIds)
@@ -174,11 +174,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $eventId
      * @param int $orderItemId
-     * @param $data
+     * @param array $data
      *
      * @return array
      */
-    public function triggerEventForOneOrderItem($eventId, $orderItemId, $data)
+    public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data)
     {
         $orderItems = $this->queryContainer
             ->queryOrderItems([$orderItemId])
@@ -212,7 +212,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @return array
      */
-    public function triggerEventForNewOrderItem(array $orderItemIds, array $data)
+    public function triggerEventForNewOrderItems(array $orderItemIds, array $data)
     {
         $orderItems = $this->queryContainer
             ->queryOrderItems($orderItemIds)
