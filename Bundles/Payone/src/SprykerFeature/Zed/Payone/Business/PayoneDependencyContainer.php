@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentManager;
+use SprykerFeature\Zed\Payone\Business\Order\OrderManager;
 use SprykerFeature\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
 use SprykerFeature\Zed\Payone\PayoneConfig;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
@@ -39,7 +40,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
      */
     public function createPayoneFacade()
     {
-        return $this->getLocator()->payone()->facade();
+        return $this->getProvidedDependency(PayoneDependencyProvider::FACADE_LOCALE);
     }
 
     /**
@@ -62,6 +63,14 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
         }
 
         return $paymentManager;
+    }
+
+    /**
+     * @return OrderManager
+     */
+    public function createOrderManager()
+    {
+        return $this->getFactory()->createOrderManager();
     }
 
     /**
