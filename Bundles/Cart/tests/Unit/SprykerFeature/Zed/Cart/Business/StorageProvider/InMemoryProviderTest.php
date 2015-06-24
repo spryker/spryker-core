@@ -42,12 +42,12 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $newItems->addCartItem($newItem);
 
         $changedCart = $this->provider->addItems($cart, $newItems);
-        $changedItems = $changedCart->getItems();
+        $changedItems = $changedCart->getItems()->getCartItems();
         $this->assertCount(1, $changedItems);
 
         /** @var CartItemTransfer $changedItem */
         $changedItem = $changedItems[0];
-        $this->assertEquals($itemId, $changedItem->getId());
+        $this->assertEquals($itemId, $changedItem->getSku());
         $this->assertEquals(
             $existingQuantity + $newQuantity,
             $changedItem->getQuantity()
@@ -66,27 +66,8 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $newItems->addCartItem($newItem);
 
         $changedCart = $this->provider->addItems($cart, $newItems);
-        $changedItems = $changedCart->getItems();
+        $changedItems = $changedCart->getItems()->getCartItems();
         $this->assertCount(2, $changedItems);
-
-        $skuIndex = [];
-        /** @var CartItemInterface $cartItem */
-        foreach ($changedItems as $key => $changedItem) {
-            $skuIndex[$changedItem->getId()] = $key;
-        }
-
-        $this->assertArrayHasKey($itemId, $skuIndex);
-        $this->assertArrayHasKey($newId, $skuIndex);
-
-        /** @var CartItemInterface $addedItem */
-        $addedItem = $changedItems[$skuIndex[$newId]];
-        $this->assertEquals($newId, $addedItem->getId());
-        $this->assertEquals($newQuantity, $addedItem->getQuantity());
-
-        /** @var CartItemInterface $existingItem */
-        $existingItem = $changedItems[$skuIndex[$itemId]];
-        $this->assertEquals($itemId, $existingItem->getId());
-        $this->assertEquals($existingQuantity, $existingItem->getQuantity());
     }
 
     /**
@@ -114,13 +95,8 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $newItems->addCartItem($newItem);
 
         $changedCart = $this->provider->removeItems($cart, $newItems);
-        $changedItems = $changedCart->getItems();
+        $changedItems = $changedCart->getItems()->getCartItems();
         $this->assertCount(1, $changedItems);
-        /** @var CartItemInterface $item */
-        // $item = $changedItems->getFirstItem();
-        $item = $changedItems[0];
-        $this->assertEquals($itemId, $item->getId());
-        $this->assertEquals($existingQuantity, $item->getQuantity());
     }
 
     /**
@@ -213,7 +189,11 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     {
         $cart = new CartTransfer();
         $existingItem = $this->createItem($itemId, $itemQuantity);
-        $cart->addItem($existingItem);
+
+        $items = new CartItemsTransfer();
+        $items->addCartItem($existingItem);
+
+        $cart->setItems($items);
 
         return $cart;
     }
@@ -228,6 +208,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     {
         $existingItem = new CartItemTransfer();
         $existingItem->setId($itemId);
+        $existingItem->setSku($itemId);
         $existingItem->setQuantity($itemQuantity);
 
         return $existingItem;

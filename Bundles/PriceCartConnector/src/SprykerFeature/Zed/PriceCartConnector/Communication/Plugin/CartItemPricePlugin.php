@@ -36,9 +36,9 @@ class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginIn
     }
 
     /**
-     * @param CartItemsInterface|CartItemTransfer[] $items
+     * @param CartItemsInterface $items
      *
-     * @return CartItemsInterface|CartItemTransfer[]
+     * @return CartItemsInterface
      */
     public function expandItems(CartItemsInterface $items)
     {

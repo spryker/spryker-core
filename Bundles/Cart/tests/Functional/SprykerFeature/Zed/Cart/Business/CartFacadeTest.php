@@ -1,10 +1,11 @@
 <?php
 
-namespace Functional\SprykerFeature\Zed\Cart;
+namespace Functional\SprykerFeature\Zed\Cart\Business;
 
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\Cart\Fixture\CartFacadeFixture;
 use Generated\Shared\Transfer\TaxItemTransfer;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\ChangeTransfer;
@@ -13,19 +14,21 @@ use Generated\Shared\Transfer\CartItemsTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
+use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProductQuery;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 
 /**
- * @group Business
+ * @group SprykerFeature
  * @group Zed
  * @group Cart
- * @group CartTest
+ * @group Business
+ * @group CartFacadeTest
  */
-class CartTest extends Test
+class CartFacadeTest extends AbstractFunctionalTest
 {
-    const DUMMY_PRICE_TYPE = 'DUMMY';
+    const PRICE_TYPE_DEFAULT = 'DEFAULT';
     const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
     const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
     const DUMMY_1_PRICE = 99;
@@ -43,19 +46,12 @@ class CartTest extends Test
      */
     private $priceFacade;
 
-    /**
-     * @var Locator
-     */
-    private $locator;
-
     public function setUp()
     {
         parent::setUp();
-        $this->locator = Locator::getInstance();
 
-        //use fixture here which wraps the original facade to override DI and Settings to not tests plugins
-        $this->cartFacade = new CartFacadeFixture(new Factory('Cart'), $this->locator);
-        $this->priceFacade = new PriceFacade(new Factory('Price'), $this->locator);
+        $this->cartFacade = $this->getFacade();
+        $this->priceFacade = $this->getFacade('SprykerFeature', 'Price');
 
         $this->setTestData();
     }
@@ -64,16 +60,19 @@ class CartTest extends Test
     {
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
-        $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
         $cartItemTax = new TaxItemTransfer();
         $cartItemTax->setPercentage(10);
         $cartItem->setTax($cartItemTax);
-        $cart->addItem($cartItem);
+
+        $items = new CartItemsTransfer();
+        $items->addCartItem($cartItem);
+        $cart->setItems($items);
 
         $newItems = new CartItemsTransfer();
         $newItem = new CartItemTransfer();
-        $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();
         $newItemTax->setPercentage(10);
@@ -86,13 +85,13 @@ class CartTest extends Test
 
         $changedCart = $this->cartFacade->addToCart($cartChange);
 
-        $this->assertCount(2, $changedCart->getItems());
+        $this->assertCount(2, $changedCart->getItems()->getCartItems());
 
         /** @var CartItemTransfer $item */
-        foreach ($cart->getItems() as $item) {
-            if ($item->getId() === $cartItem->getId()) {
+        foreach ($cart->getItems()->getCartItems() as $item) {
+            if ($item->getSku() === $cartItem->getSku()) {
                 $this->assertEquals($cartItem->getQuantity(), $item->getQuantity());
-            } elseif ($newItem->getId() === $item->getId()) {
+            } elseif ($newItem->getSku() === $item->getSku()) {
                 $this->assertEquals($newItem->getQuantity(), $item->getQuantity());
             } else {
                 $this->fail('Cart has a unknown item inside');
@@ -104,16 +103,19 @@ class CartTest extends Test
     {
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
-        $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
         $cartItemTax = new TaxItemTransfer();
         $cartItemTax->setPercentage(10);
         $cartItem->setTax($cartItemTax);
-        $cart->addItem($cartItem);
+
+        $items = new CartItemsTransfer();
+        $items->addCartItem($cartItem);
+        $cart->setItems($items);
 
         $newItems = new CartItemsTransfer();
         $newItem = new CartItemTransfer();
-        $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();
         $newItemTax->setPercentage(10);
@@ -125,10 +127,11 @@ class CartTest extends Test
         $cartChange->setChangedCartItems($newItems);
 
         $changedCart = $this->cartFacade->increaseQuantity($cartChange);
+        $cartItems = $changedCart->getItems()->getCartItems();
+        $this->assertCount(1, $cartItems);
 
-        $this->assertCount(1, $changedCart->getItems());
-        /** @var CartItemTransfer $item */
-        $changedItem = $changedCart->getItems()[0];
+        /** @var CartItemTransfer $changedItem */
+        $changedItem = $cartItems[0];
         $this->assertEquals(4, $changedItem->getQuantity());
     }
 
@@ -136,16 +139,19 @@ class CartTest extends Test
     {
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
-        $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $cartItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(1);
         $cartItemTax = new TaxItemTransfer();
         $cartItemTax->setPercentage(10);
         $cartItem->setTax($cartItemTax);
-        $cart->addItem($cartItem);
+
+        $items = new CartItemsTransfer();
+        $items->addCartItem($cartItem);
+        $cart->setItems($items);
 
         $newItems = new CartItemsTransfer();
         $newItem = new CartItemTransfer();
-        $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();
         $newItemTax->setPercentage(10);
@@ -158,23 +164,26 @@ class CartTest extends Test
 
         $changedCart = $this->cartFacade->removeFromCart($cartChange);
 
-        $this->assertCount(0, $changedCart->getItems());
+        $this->assertCount(0, $changedCart->getItems()->getCartItems());
     }
 
     public function testDecreaseCartItem()
     {
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
-        $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
         $cartItemTax = new TaxItemTransfer();
         $cartItemTax->setPercentage(10);
         $cartItem->setTax($cartItemTax);
-        $cart->addItem($cartItem);
+
+        $items = new CartItemsTransfer();
+        $items->addCartItem($cartItem);
+        $cart->setItems($items);
 
         $newItems = new CartItemsTransfer();
         $newItem = new CartItemTransfer();
-        $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();
         $newItemTax->setPercentage(10);
@@ -186,17 +195,17 @@ class CartTest extends Test
         $cartChange->setChangedCartItems($newItems);
 
         $changedCart = $this->cartFacade->decreaseQuantity($cartChange);
-
-        $this->assertCount(1, $changedCart->getItems());
-        /** @var CartItemTransfer $item */
-        $changedItem = $changedCart->getItems()[0];
+        $cartItems = $changedCart->getItems()->getCartItems();
+        $this->assertCount(1, $cartItems);
+        /** @var CartItemTransfer $changedItem */
+        $changedItem = $cartItems[0];
         $this->assertEquals(2, $changedItem->getQuantity());
     }
 
     protected function setTestData()
     {
-        $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE)->findOneOrCreate();
-        $defaultPriceType->setName(self::DUMMY_PRICE_TYPE)->save();
+        $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(self::PRICE_TYPE_DEFAULT)->findOneOrCreate();
+        $defaultPriceType->setName(self::PRICE_TYPE_DEFAULT)->save();
 
         $abstractProduct1 = SpyAbstractProductQuery::create()
             ->filterBySku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
@@ -215,5 +224,23 @@ class CartTest extends Test
 
         $concreteProduct2 = SpyProductQuery::create()->filterBySku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)->findOneOrCreate();
         $concreteProduct2->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)->setSpyAbstractProduct($abstractProduct2)->save();
+
+        $priceProductConcrete1 = SpyPriceProductQuery::create()
+            ->filterByProduct($concreteProduct1)
+            ->filterBySpyAbstractProduct($abstractProduct1)
+            ->filterByPriceType($defaultPriceType)
+            ->findOneOrCreate()
+            ->setPrice(100)
+            ->save()
+        ;
+
+        $priceProductConcrete2 = SpyPriceProductQuery::create()
+            ->filterByProduct($concreteProduct2)
+            ->filterBySpyAbstractProduct($abstractProduct2)
+            ->filterByPriceType($defaultPriceType)
+            ->findOneOrCreate()
+            ->setPrice(100)
+            ->save()
+        ;
     }
 }

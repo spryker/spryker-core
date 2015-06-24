@@ -10,9 +10,9 @@ use Generated\Shared\PriceCartConnector\CartItemsInterface;
 interface PriceManagerInterface
 {
     /**
-     * @param CartItemsInterface|CartItemsInterface[] $items
+     * @param CartItemsInterface $items
      *
-     * @return CartItemsInterface|CartItemsInterface[]
+     * @return CartItemsInterface
      */
     public function addGrossPriceToItems(CartItemsInterface $items);
 }

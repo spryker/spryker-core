@@ -77,7 +77,7 @@ abstract class AbstractOperator implements OperatorInterface
     private function recalculate(CartInterface $cart)
     {
         $calculableCart = new CalculableContainer($cart);
-        $cart = $this->cartCalculator->recalculate2($calculableCart);
+        $cart = $this->cartCalculator->recalculate($calculableCart);
 
         return $cart->getCalculableObject();
     }
@@ -96,9 +96,9 @@ abstract class AbstractOperator implements OperatorInterface
     abstract protected function createSuccessMessage();
 
     /**
-     * @param CartItemsInterface|CartItemTransfer[] $changedItems
+     * @param CartItemsInterface $changedItems
      *
-     * @return CartItemsInterface|CartItemTransfer[]
+     * @return CartItemsInterface
      */
     protected function expandChangedItems(CartItemsInterface $changedItems)
     {

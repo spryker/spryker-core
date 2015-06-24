@@ -137,7 +137,7 @@ class CalculatorTest extends AbstractFunctionalTest
     public function testCanRecalculateAnExampleOrderWithTwoItemsAndExpenseOnItems()
     {
 
-//        $order = $this->getOrderWithFixtureData();
+        $order = $this->getOrderWithFixtureData();
 //        $item = $this->getItemWithFixtureData();
 //        $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 //
@@ -174,6 +174,31 @@ class CalculatorTest extends AbstractFunctionalTest
 //        $this->assertEquals($expectedGrandTotalWithDiscounts, $totals->getGrandTotalWithDiscounts());
 //
 //        $items = $order->getItems();
+//        $expectedItemPriceToPay = self::ORDER_SHIPPING_COSTS / 2 + self::ITEM_GROSS_PRICE
+//            - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT;
+//
+//        foreach ($items as $item) {
+//            $this->assertEquals($expectedItemPriceToPay, $item->getPriceToPay());
+//        }
+
+//        $order->getCalculableObject()->addItem($item);
+//        $order->getCalculableObject()->addItem(clone $item);
+//
+//        $calculator = $this->getCalculator();
+//        $calculatorStack = $this->createCalculatorStack();
+//        $order = $calculator->recalculate($calculatorStack, $order);
+//        $calculator->recalculateTotals($calculatorStack, $order);
+//
+//        $totals = $order->getCalculableObject()->getTotals();
+//        $expectedSubTotal = 2 * self::ITEM_GROSS_PRICE + self::ORDER_SHIPPING_COSTS;
+//        $this->assertEquals($expectedSubTotal, $totals->getSubtotal());
+//
+//        $expectedGrandTotalWithDiscounts = self::ORDER_SHIPPING_COSTS + 2
+//            * (self::ITEM_GROSS_PRICE - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT);
+//
+//        $this->assertEquals($expectedGrandTotalWithDiscounts, $totals->getGrandTotalWithDiscounts());
+//
+//        $items = $order->getCalculableObject()->getItems();
 //        $expectedItemPriceToPay = self::ORDER_SHIPPING_COSTS / 2 + self::ITEM_GROSS_PRICE
 //            - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT;
 //

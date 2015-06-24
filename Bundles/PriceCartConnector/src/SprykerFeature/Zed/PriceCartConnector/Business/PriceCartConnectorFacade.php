@@ -15,9 +15,9 @@ use Generated\Shared\Cart\CartItemsInterface;
 class PriceCartConnectorFacade extends AbstractFacade
 {
     /**
-     * @param CartItemsInterface|CartItemTransfer[] $items
+     * @param CartItemsInterface $items
      *
-     * @return CartItemsInterface|CartItemTransfer[]
+     * @return CartItemsInterface
      */
     public function addGrossPriceToItems(CartItemsInterface $items)
     {
