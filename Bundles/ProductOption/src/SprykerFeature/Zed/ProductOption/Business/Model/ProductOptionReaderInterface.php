@@ -61,13 +61,6 @@ interface ProductOptionReaderInterface
     public function getValueUsagesForConfigPreset($idConfigPreset);
 
     /**
-     * @param int $idAbstractProduct
-     *
-     * @return string|null
-     */
-    public function getEffectiveTaxRateForAbstractProduct($idAbstractProduct);
-
-    /**
      * @param int $idTypeUsage
      *
      * @return string|null

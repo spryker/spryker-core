@@ -194,16 +194,6 @@ class ProductOptionFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idAbstractProduct
-     *
-     * @return string|null
-     */
-    public function getEffectiveTaxRateForAbstractProduct($idAbstractProduct)
-    {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getEffectiveTaxRateForAbstractProduct($idAbstractProduct);
-    }
-
-    /**
      * @param int $idTypeUsage
      *
      * @return string|null

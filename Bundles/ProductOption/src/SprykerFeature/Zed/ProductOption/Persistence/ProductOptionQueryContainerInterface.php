@@ -205,13 +205,6 @@ interface ProductOptionQueryContainerInterface
     public function queryValueUsagesForConfigPreset($idConfigPreset);
 
     /**
-     * @param int $idAbstractProduct
-     *
-     * @return string|null
-     */
-    public function queryEffectiveTaxRateForAbstractProduct($idAbstractProduct);
-
-    /**
      * @param int $idTypeUsage
      *
      * @return string|null

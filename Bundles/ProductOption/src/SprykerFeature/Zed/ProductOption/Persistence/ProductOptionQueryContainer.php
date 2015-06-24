@@ -530,33 +530,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $idAbstractProduct
-     *
-     * @return string|null
-     */
-    public function queryEffectiveTaxRateForAbstractProduct($idAbstractProduct)
-    {
-        $sql =
-            "SELECT SUM(spy_tax_rate.rate) AS taxRate
-            FROM spy_abstract_product
-            INNER JOIN spy_tax_set
-            ON (spy_abstract_product.fk_tax_set=spy_tax_set.id_tax_set)
-            INNER JOIN spy_tax_set_tax
-            ON (spy_tax_set_tax.fk_tax_set=spy_tax_set.id_tax_set)
-            INNER JOIN spy_tax_rate
-            ON (spy_tax_set_tax.fk_tax_rate=spy_tax_rate.id_tax_rate)
-            WHERE spy_abstract_product.id_abstract_product = :idAbstractProduct"
-        ;
-
-        $statement = $this->dbConnection
-            ->prepare($sql);
-
-        $statement->execute([':idAbstractProduct' => $idAbstractProduct]);
-
-        return $statement->fetch(\PDO::FETCH_COLUMN);
-    }
-
-    /**
      * @param int $idTypeUsage
      *
      * @return string|null

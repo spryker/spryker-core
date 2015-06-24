@@ -115,14 +115,6 @@ class ProductOptionQReaderrTest extends AbstractFunctionalTest
         $this->assertEquals($this->ids['idUsageMedium'], $result[1]);
     }
 
-    public function testQueryEffectiveTaxRateForAbstractProduct()
-    {
-        $result = $this->getFacade()
-            ->getEffectiveTaxRateForAbstractProduct($this->ids['idAbstractProduct']);
-
-        $this->assertEquals('15.00', $result);
-    }
-
     public function testQueryEffectiveTaxRateForTypeUsage()
     {
         $result = $this->getFacade()

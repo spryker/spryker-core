@@ -98,16 +98,6 @@ class ProductOptionReader implements ProductOptionReaderInterface
     }
 
     /**
-     * @param int $idAbstractProduct
-     *
-     * @return string|null
-     */
-    public function getEffectiveTaxRateForAbstractProduct($idAbstractProduct)
-    {
-        return $this->queryContainer->queryEffectiveTaxRateForAbstractProduct($idAbstractProduct);
-    }
-
-    /**
      * @param int $idTypeUsage
      *
      * @return string|null
