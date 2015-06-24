@@ -11,9 +11,7 @@
         <column name="fk_locale" required="true" type="INTEGER" />
         <column name="url" type="VARCHAR" size="255" required="true"/>
 
-        <!-- TODO this schema must not contain this. inject it as soon as the xml merging works -->
         <column name="fk_resource_redirect" type="INTEGER"/>
-        <column name="fk_resource_abstract_product" type="INTEGER"/>
 
         <foreign-key foreignTable="spy_locale" phpName="SpyLocale" onDelete="CASCADE">
             <reference foreign="id_locale" local="fk_locale"/>
@@ -23,17 +21,9 @@
             <reference foreign="id_redirect" local="fk_resource_redirect"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_abstract_product" phpName="SpyProduct" onDelete="CASCADE">
-            <reference foreign="id_abstract_product" local="fk_resource_abstract_product"/>
-        </foreign-key>
-
         <unique>
             <unique-column name="url"/>
         </unique>
-
-        <index>
-            <index-column name="url"/>
-        </index>
     </table>
 
     <table name="spy_redirect" phpName="SpyRedirect">
