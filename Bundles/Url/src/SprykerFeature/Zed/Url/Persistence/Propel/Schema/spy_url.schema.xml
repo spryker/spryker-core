@@ -14,7 +14,6 @@
         <!-- TODO this schema must not contain this. inject it as soon as the xml merging works -->
         <column name="fk_resource_redirect" type="INTEGER"/>
         <column name="fk_resource_abstract_product" type="INTEGER"/>
-        <column name="fk_resource_categorynode" type="INTEGER"/>
         <column name="fk_resource_page" type="INTEGER"/>
 
         <foreign-key foreignTable="spy_locale" phpName="SpyLocale" onDelete="CASCADE">
@@ -31,10 +30,6 @@
 
         <foreign-key foreignTable="spy_abstract_product" phpName="SpyProduct" onDelete="CASCADE">
             <reference foreign="id_abstract_product" local="fk_resource_abstract_product"/>
-        </foreign-key>
-
-        <foreign-key foreignTable="spy_category_node" phpName="SpyCategoryNode" onDelete="CASCADE">
-            <reference foreign="id_category_node" local="fk_resource_categorynode"/>
         </foreign-key>
 
         <unique>
