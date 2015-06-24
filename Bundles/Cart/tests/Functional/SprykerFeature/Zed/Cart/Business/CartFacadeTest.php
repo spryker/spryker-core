@@ -59,6 +59,7 @@ class CartFacadeTest extends AbstractFunctionalTest
     {
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
+        $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
         $cartItemTax = new TaxItemTransfer();
@@ -68,6 +69,7 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cart->addItem($cartItem);
 
         $newItem = new CartItemTransfer();
+        $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();
@@ -98,6 +100,7 @@ class CartFacadeTest extends AbstractFunctionalTest
     {
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
+        $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
         $cartItemTax = new TaxItemTransfer();
@@ -107,6 +110,7 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cart->addItem($cartItem);
 
         $newItem = new CartItemTransfer();
+        $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();
@@ -130,6 +134,7 @@ class CartFacadeTest extends AbstractFunctionalTest
     {
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
+        $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $cartItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(1);
         $cartItemTax = new TaxItemTransfer();
@@ -139,6 +144,7 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cart->addItem($cartItem);
 
         $newItem = new CartItemTransfer();
+        $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();
@@ -158,6 +164,7 @@ class CartFacadeTest extends AbstractFunctionalTest
     {
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
+        $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
         $cartItemTax = new TaxItemTransfer();
@@ -167,6 +174,7 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cart->addItem($cartItem);
 
         $newItem = new CartItemTransfer();
+        $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();

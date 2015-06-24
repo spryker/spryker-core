@@ -104,7 +104,7 @@ abstract class AbstractOperator implements OperatorInterface
     protected function expandChangedItems(ChangeInterface $change)
     {
         foreach ($this->itemExpanderPlugins as $itemExpander) {
-            $changedItems = $itemExpander->expandItems($change);
+            $change = $itemExpander->expandItems($change);
         }
 
         return $change;

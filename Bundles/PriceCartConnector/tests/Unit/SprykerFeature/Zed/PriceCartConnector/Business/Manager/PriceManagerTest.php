@@ -32,7 +32,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
 
         $itemCollection = new ChangeTransfer();
         $item = new CartItemTransfer();
-        $item->setSku(123);
+        $item->setId(123);
         $itemCollection->addItem($item);
 
         $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');
@@ -70,4 +70,5 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
     {
         return new PriceFacadeStub(null, null);
     }
+
 }
