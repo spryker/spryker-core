@@ -305,6 +305,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param int $idProduct
+     *
      * @return SpyProductOptionConfigurationPresetQuery
      */
     public function queryPresetConfigurationsForConcreteProduct($idProduct)
@@ -317,6 +318,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @param int $idProduct
      * @param int $idLocale
+     *
      * @return array
      */
     public function queryTypeUsagesForConcreteProduct($idProduct, $idLocale)
@@ -354,6 +356,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @param int $idTypeUsage
      * @param int $idLocale
+     *
      * @return array
      */
     public function queryValueUsagesForTypeUsage($idTypeUsage, $idLocale)
@@ -393,6 +396,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param int $idTypeUsage
+     *
      * @return array
      */
     public function queryTypeExclusionsForTypeUsage($idTypeUsage)
@@ -417,6 +421,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param int $idValueUsage
+     *
      * @return array
      */
     public function queryValueConstraintsForValueUsage($idValueUsage)
@@ -447,6 +452,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @param int $idValueUsage
      * @param string $operator
+     *
      * @return array
      */
     public function queryValueConstraintsForValueUsageByOperator($idValueUsage, $operator)
@@ -479,6 +485,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param int $idProduct
+     *
      * @return array
      */
     public function queryConfigPresetsForConcreteProduct($idProduct)
@@ -503,6 +510,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param int $idConfigPreset
+     *
      * @return array
      */
     public function queryValueUsagesForConfigPreset($idConfigPreset)
@@ -523,6 +531,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param int $idAbstractProduct
+     *
      * @return string|null
      */
     public function queryEffectiveTaxRateForAbstractProduct($idAbstractProduct)
@@ -549,6 +558,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param int $idTypeUsage
+     *
      * @return string|null
      */
     public function queryEffectiveTaxRateForTypeUsage($idTypeUsage)

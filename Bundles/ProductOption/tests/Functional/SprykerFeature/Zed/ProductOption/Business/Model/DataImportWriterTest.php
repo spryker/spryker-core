@@ -5,13 +5,8 @@
 
 namespace Functional\SprykerFeature\Zed\ProductOption\Business\Model;
 
-use Codeception\TestCase\Test;
-
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
-
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionConfigurationPresetQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeQuery;
@@ -53,15 +48,6 @@ class DataImportWriterTest extends AbstractFunctionalTest
         parent::setUp();
 
         $this->facade = $this->getFacade();
-    }
-
-    /**
-     * @return ProductOptionFacade
-     */
-    private function getProductOptionFacade()
-    {
-        $facade = new ProductOptionFacade(new Factory('ProductOption'), Locator::getInstance());
-        return $facade;
     }
 
     public function testImportProductOptionType()

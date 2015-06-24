@@ -155,6 +155,7 @@ interface ProductOptionQueryContainerInterface
     /**
      * @param int $idProduct
      * @param int $idLocale
+     *
      * @return array
      */
     public function queryTypeUsagesForConcreteProduct($idProduct, $idLocale);
@@ -162,18 +163,21 @@ interface ProductOptionQueryContainerInterface
     /**
      * @param int $idTypeUsage
      * @param int $idLocale
+     *
      * @return array
      */
     public function queryValueUsagesForTypeUsage($idTypeUsage, $idLocale);
 
     /**
      * @param int $idTypeUsage
+     *
      * @return array
      */
     public function queryTypeExclusionsForTypeUsage($idTypeUsage);
 
     /**
      * @param int $idValueUsage
+     *
      * @return array
      */
     public function queryValueConstraintsForValueUsage($idValueUsage);
@@ -181,30 +185,35 @@ interface ProductOptionQueryContainerInterface
     /**
      * @param int $idValueUsage
      * @param string $operator
+     *
      * @return array
      */
     public function queryValueConstraintsForValueUsageByOperator($idValueUsage, $operator);
 
     /**
      * @param int $idProduct
+     *
      * @return array
      */
     public function queryConfigPresetsForConcreteProduct($idProduct);
 
     /**
      * @param int $idConfigPreset
+     *
      * @return array
      */
     public function queryValueUsagesForConfigPreset($idConfigPreset);
 
     /**
      * @param int $idAbstractProduct
+     *
      * @return string|null
      */
     public function queryEffectiveTaxRateForAbstractProduct($idAbstractProduct);
 
     /**
      * @param int $idTypeUsage
+     *
      * @return string|null
      */
     public function queryEffectiveTaxRateForTypeUsage($idTypeUsage);

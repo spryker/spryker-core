@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\ProductOptionExporter\Business\Model;
 
-use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductOptionInterface;
 use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductInterface;
 use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToLocaleInterface;
 
@@ -19,9 +19,9 @@ class ExportProcessor implements ExportProcessorInterface
     const CONSTRAINT_ALWAYS = 'ALWAYS';
 
     /**
-     * @var ProductOptionQueryContainerInterface
+     * @var ProductOptionExporterToProductOptionInterface
      */
-    protected $queryContainer;
+    protected $productOptionFacade;
 
     /**
      * @var ProductOptionExporterToProductInterface
@@ -34,14 +34,16 @@ class ExportProcessor implements ExportProcessorInterface
     protected $localeFacade;
 
     /**
-     * @param ProductOptionQueryContainerInterface $queryContainer
+     * @param ProductOptionExporterToProductOptionInterface $productOptionFacade
+     * @param ProductOptionExporterToProductInterface $productFacade
+     * @param ProductOptionExporterToLocaleInterface $localeFacade
      */
     public function __construct(
-        ProductOptionQueryContainerInterface $queryContainer,
+        ProductOptionExporterToProductOptionInterface $productOptionFacade,
         ProductOptionExporterToProductInterface $productFacade,
         ProductOptionExporterToLocaleInterface $localeFacade
     ) {
-        $this->queryContainer = $queryContainer;
+        $this->productOptionFacade = $productOptionFacade;
         $this->productFacade = $productFacade;
         $this->localeFacade = $localeFacade;
     }
@@ -99,9 +101,9 @@ class ExportProcessor implements ExportProcessorInterface
     protected function processConfigs($idProduct)
     {
         $configs = [];
-        $configPresets = $this->queryContainer->queryConfigPresetsForConcreteProduct($idProduct);
+        $configPresets = $this->productOptionFacade->getConfigPresetsForConcreteProduct($idProduct);
         foreach ($configPresets as $configPreset) {
-            $values = $this->queryContainer->queryValueUsagesForConfigPreset($configPreset['presetId']);
+            $values = $this->productOptionFacade->getValueUsagesForConfigPreset($configPreset['presetId']);
             foreach($values as $index => $value) {
                 $values[$index] = (int) $value;
             }
@@ -121,7 +123,7 @@ class ExportProcessor implements ExportProcessorInterface
      */
     protected function processOptions($idProduct, $idLocale)
     {
-        $typeUsages = $this->queryContainer->queryTypeUsagesForConcreteProduct($idProduct, $idLocale);
+        $typeUsages = $this->productOptionFacade->getTypeUsagesForConcreteProduct($idProduct, $idLocale);
 
         $options = [];
         foreach ($typeUsages as $typeUsage) {
@@ -141,7 +143,7 @@ class ExportProcessor implements ExportProcessorInterface
 
     protected function processTypeExclusions($idTypeUsage)
     {
-        $excludes = $this->queryContainer->queryTypeExclusionsForTypeUsage($idTypeUsage);
+        $excludes = $this->productOptionFacade->getTypeExclusionsForTypeUsage($idTypeUsage);
         foreach ($excludes as $index => $exclude) {
             $excludes[$index] = (int) $exclude;
         }
@@ -157,12 +159,11 @@ class ExportProcessor implements ExportProcessorInterface
      */
     protected function processOptionTaxRate($idProduct, $idTypeUsage)
     {
-        $typeUsageTaxRate = $this->queryContainer
-            ->queryEffectiveTaxRateForTypeUsage($idTypeUsage);
+        $typeUsageTaxRate = $this->productOptionFacade->getEffectiveTaxRateForTypeUsage($idTypeUsage);
 
         if (null === $typeUsageTaxRate) {
-            $typeUsageTaxRate = $this->queryContainer
-                ->queryEffectiveTaxRateForAbstractProduct($idProduct);
+            $typeUsageTaxRate = $this->productOptionFacade
+           ->getEffectiveTaxRateForAbstractProduct($idProduct);
         }
 
         return $typeUsageTaxRate;
@@ -176,7 +177,7 @@ class ExportProcessor implements ExportProcessorInterface
      */
     protected function processValuesForTypeUsage($idTypeUsage, $idLocale)
     {
-        $valueUsages = $this->queryContainer->queryValueUsagesForTypeUsage($idTypeUsage, $idLocale);
+        $valueUsages = $this->productOptionFacade->getValueUsagesForTypeUsage($idTypeUsage, $idLocale);
 
         $valueData = [];
         foreach ($valueUsages as $valueUsage) {
@@ -200,16 +201,16 @@ class ExportProcessor implements ExportProcessorInterface
     {
         $constraints = [];
 
-        $allowValues = $this->queryContainer
-            ->queryValueConstraintsForValueUsageByOperator($idValueUsage, self::CONSTRAINT_ALLOW);
+        $allowValues = $this->productOptionFacade
+            ->getValueConstraintsForValueUsageByOperator($idValueUsage, self::CONSTRAINT_ALLOW);
         $this->processConstraintValues('allow', $allowValues, $constraints);
 
-        $alwaysValues = $this->queryContainer
-            ->queryValueConstraintsForValueUsageByOperator($idValueUsage, self::CONSTRAINT_ALWAYS);
+        $alwaysValues = $this->productOptionFacade
+            ->getValueConstraintsForValueUsageByOperator($idValueUsage, self::CONSTRAINT_ALWAYS);
         $this->processConstraintValues('always', $alwaysValues, $constraints);
 
-        $notValues = $this->queryContainer
-            ->queryValueConstraintsForValueUsageByOperator($idValueUsage, self::CONSTRAINT_NOT);
+        $notValues = $this->productOptionFacade
+            ->getValueConstraintsForValueUsageByOperator($idValueUsage, self::CONSTRAINT_NOT);
         $this->processConstraintValues('not', $notValues, $constraints);
 
         return $constraints;

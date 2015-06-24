@@ -2,32 +2,18 @@
 
 namespace Functional\SprykerFeature\Zed\ProductOption\Persistence;
 
-use Codeception\TestCase\Test;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 
 /**
  * @group Business
  * @group Zed
  * @group ProdutOption
- * @group DataImportWriterTest
+ * @group ProductOptionReaderTest
  *
  * (c) Spryker Systems GmbH copyright protected
  */
-class ProductOptionQueryContainerTest extends Test
+class ProductOptionQReaderrTest extends AbstractFunctionalTest
 {
-
-    /**
-     * @var ProductOptionQueryContainer
-     */
-    private $queryContainer;
-
-    /**
-     * @var AutoCompletion $locator
-     */
-    protected $locator;
-
     /**
      * @var array
      */
@@ -37,24 +23,22 @@ class ProductOptionQueryContainerTest extends Test
     {
         parent::setUp();
 
-        $this->locator = Locator::getInstance();
-        $this->queryContainer = $this->locator->productOption()->queryContainer();
         $this->ids = DbFixturesLoader::loadFixtures();
     }
 
     public function testQueryTypeUsagesForConcreteProduct()
     {
-        $result = $this->queryContainer
-            ->queryTypeUsagesForConcreteProduct($this->ids['idConcreteProduct'],  $this->ids['idLocale']);
+        $result = $this->getFacade()
+            ->getTypeUsagesForConcreteProduct($this->ids['idConcreteProduct'],  $this->ids['idLocale']);
 
-            $this->assertCount(2, $result);
-            $this->assertEquals('Color', $result[0]['label']);
+        $this->assertCount(2, $result);
+        $this->assertEquals('Color', $result[0]['label']);
     }
 
     public function testQueryValueUsagesForTypeUsage()
     {
-        $result = $this->queryContainer
-            ->queryValueUsagesForTypeUsage($this->ids['idUsageSize'], $this->ids['idLocale']);
+        $result = $this->getFacade()
+            ->getValueUsagesForTypeUsage($this->ids['idUsageSize'], $this->ids['idLocale']);
 
         $this->assertCount(4, $result);
         $this->assertEquals('Large', $result[0]['label']);
@@ -65,8 +49,8 @@ class ProductOptionQueryContainerTest extends Test
 
     public function testQueryTypeExclusionsForTypeUsage()
     {
-        $result = $this->queryContainer
-            ->queryTypeExclusionsForTypeUsage($this->ids['idUsageColor']);
+        $result = $this->getFacade()
+            ->getTypeExclusionsForTypeUsage($this->ids['idUsageColor']);
 
         $this->assertCount(1, $result);
         $this->assertEquals($this->ids['idUsageSize'], $result[0]);
@@ -74,8 +58,8 @@ class ProductOptionQueryContainerTest extends Test
 
     public function testQueryValueConstraintsForValueUsage()
     {
-        $result = $this->queryContainer
-            ->queryValueConstraintsForValueUsage($this->ids['idUsageGreen']);
+        $result = $this->getFacade()
+            ->getValueConstraintsForValueUsage($this->ids['idUsageGreen']);
 
         $this->assertCount(2, $result);
         $this->assertEquals('ALLOW', $result[0]['operator']);
@@ -83,15 +67,15 @@ class ProductOptionQueryContainerTest extends Test
         $this->assertEquals('ALLOW', $result[1]['operator']);
         $this->assertEquals($this->ids['idUsageSmall'], $result[1]['valueUsageId']);
 
-        $result = $this->queryContainer
-            ->queryValueConstraintsForValueUsage($this->ids['idUsageBlue']);
+        $result = $this->getFacade()
+            ->getValueConstraintsForValueUsage($this->ids['idUsageBlue']);
 
         $this->assertCount(1, $result);
         $this->assertEquals('NOT', $result[0]['operator']);
         $this->assertEquals($this->ids['idUsageSmall'], $result[0]['valueUsageId']);
 
-        $result = $this->queryContainer
-            ->queryValueConstraintsForValueUsage($this->ids['idUsageMedium']);
+        $result = $this->getFacade()
+            ->getValueConstraintsForValueUsage($this->ids['idUsageMedium']);
 
         $this->assertCount(1, $result);
         $this->assertEquals('ALWAYS', $result[0]['operator']);
@@ -100,22 +84,22 @@ class ProductOptionQueryContainerTest extends Test
 
     public function testQueryValueConstraintsForValueUsageByOperator()
     {
-        $result = $this->queryContainer
-            ->queryValueConstraintsForValueUsageByOperator($this->ids['idUsageGreen'], 'ALLOW');
+        $result = $this->getFacade()
+            ->getValueConstraintsForValueUsageByOperator($this->ids['idUsageGreen'], 'ALLOW');
 
         $this->assertCount(2, $result);
         $this->assertEquals($this->ids['idUsageLarge'], $result[0]);
         $this->assertEquals($this->ids['idUsageSmall'], $result[1]);
 
-        $result = $this->queryContainer
-            ->queryValueConstraintsForValueUsageByOperator($this->ids['idUsageGreen'], 'NOT');
+        $result = $this->getFacade()
+            ->getValueConstraintsForValueUsageByOperator($this->ids['idUsageGreen'], 'NOT');
         $this->assertEmpty($result);
     }
 
     public function testQueryConfigPresetsForConcreteProduct()
     {
-        $result = $this->queryContainer
-            ->queryConfigPresetsForConcreteProduct($this->ids['idConcreteProduct']);
+        $result = $this->getFacade()
+            ->getConfigPresetsForConcreteProduct($this->ids['idConcreteProduct']);
 
         $this->assertCount(2, $result);
         $this->assertEquals(1, $result[0]['isDefault']);
@@ -123,8 +107,8 @@ class ProductOptionQueryContainerTest extends Test
 
     public function testQueryValueUsagesForConfigPreset()
     {
-        $result = $this->queryContainer
-            ->queryValueUsagesForConfigPreset($this->ids['idConfigPresetA']);
+        $result = $this->getFacade()
+            ->getValueUsagesForConfigPreset($this->ids['idConfigPresetA']);
 
         $this->assertCount(2, $result);
         $this->assertEquals($this->ids['idUsageRed'], $result[0]);
@@ -133,21 +117,21 @@ class ProductOptionQueryContainerTest extends Test
 
     public function testQueryEffectiveTaxRateForAbstractProduct()
     {
-        $result = $this->queryContainer
-            ->queryEffectiveTaxRateForAbstractProduct($this->ids['idAbstractProduct']);
+        $result = $this->getFacade()
+            ->getEffectiveTaxRateForAbstractProduct($this->ids['idAbstractProduct']);
 
         $this->assertEquals('15.00', $result);
     }
 
     public function testQueryEffectiveTaxRateForTypeUsage()
     {
-        $result = $this->queryContainer
-            ->queryEffectiveTaxRateForTypeUsage($this->ids['idUsageSize']);
+        $result = $this->getFacade()
+            ->getEffectiveTaxRateForTypeUsage($this->ids['idUsageSize']);
 
         $this->assertEquals('15.00', $result);
 
-        $result = $this->queryContainer
-            ->queryEffectiveTaxRateForTypeUsage($this->ids['idUsageColor']);
+        $result = $this->getFacade()
+            ->getEffectiveTaxRateForTypeUsage($this->ids['idUsageColor']);
 
         $this->assertNull($result);
     }
