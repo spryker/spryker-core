@@ -12,6 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FormController extends AbstractController
 {
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function detailsAction(Request $request)
     {
         $form = $this->getDependencyContainer()->getDetailsUserForm($request);
@@ -34,14 +39,6 @@ class FormController extends AbstractController
 
             $facade->updateUser($user);
         }
-
-        return $this->jsonResponse($form->renderData());
-    }
-
-    public function passwordAction(Request $request)
-    {
-        $form = $this->getDependencyContainer()->getPasswordForm($request);
-        $form->init();
 
         return $this->jsonResponse($form->renderData());
     }

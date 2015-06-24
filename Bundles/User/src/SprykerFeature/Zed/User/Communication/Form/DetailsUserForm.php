@@ -3,6 +3,8 @@
 namespace SprykerFeature\Zed\User\Communication\Form;
 
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
+use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserUserTableMap;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DetailsUserForm extends AbstractForm
 {
@@ -25,10 +27,11 @@ class DetailsUserForm extends AbstractForm
         }
 
         return [
+            'password' => '',
             'first_name' => $userDetails->getFirstName(),
             'last_name' => $userDetails->getLastName(),
             'username' => $userDetails->getUsername(),
-            'status' => (0 == $userDetails->getStatus()),
+            'status' => (SpyUserUserTableMap::COL_STATUS_ACTIVE === $userDetails->getStatus()),
         ];
     }
 
@@ -37,6 +40,9 @@ class DetailsUserForm extends AbstractForm
         $this
             ->addField('first_name')
             ->setLabel('First Name')
+            ->setConstraints([
+                new NotBlank()
+            ])
         ;
         $this
             ->addField('last_name')
@@ -45,6 +51,13 @@ class DetailsUserForm extends AbstractForm
         $this
             ->addField('username')
             ->setLabel('Username')
+            ->setConstraints([
+                new NotBlank()
+            ])
+        ;
+        $this
+            ->addField('password')
+            ->setLabel('Password')
         ;
         $this
             ->addField('status')
