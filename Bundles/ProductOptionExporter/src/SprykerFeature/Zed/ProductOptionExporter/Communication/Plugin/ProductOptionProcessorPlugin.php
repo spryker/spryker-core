@@ -34,6 +34,6 @@ class ProductOptionProcessorPlugin extends AbstractPlugin implements DataProcess
      */
     public function processData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
-        return $this->getFacade()->processDataForExport($resultSet, $processedResultSet);
+        return $this->getFacade()->processDataForExport($resultSet, $processedResultSet, $locale);
     }
 }

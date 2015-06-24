@@ -7,7 +7,7 @@ namespace SprykerFeature\Zed\ProductOptionExporter\Business\Model;
 
 use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductOptionInterface;
 use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductInterface;
-use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToLocaleInterface;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 class ExportProcessor implements ExportProcessorInterface
 {
@@ -29,54 +29,33 @@ class ExportProcessor implements ExportProcessorInterface
     protected $productFacade;
 
     /**
-     * @var ProductOptionExporterToLocaleInterface
-     */
-    protected $localeFacade;
-
-    /**
      * @param ProductOptionExporterToProductOptionInterface $productOptionFacade
      * @param ProductOptionExporterToProductInterface $productFacade
-     * @param ProductOptionExporterToLocaleInterface $localeFacade
      */
     public function __construct(
         ProductOptionExporterToProductOptionInterface $productOptionFacade,
-        ProductOptionExporterToProductInterface $productFacade,
-        ProductOptionExporterToLocaleInterface $localeFacade
+        ProductOptionExporterToProductInterface $productFacade
     ) {
         $this->productOptionFacade = $productOptionFacade;
         $this->productFacade = $productFacade;
-        $this->localeFacade = $localeFacade;
     }
 
     /**
      * @param array $resultSet
      * @param array $processedResultSet
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function processDataForExport(array &$resultSet, array $processedResultSet)
+    public function processDataForExport(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
         foreach ($resultSet as $index => $productRawData) {
             if (isset($processedResultSet[$index], $processedResultSet[$index]['concrete_products'])) {
-                $idLocale = $this->extractLocalIdFromStorageKey($index);
-                $this->processVariants($processedResultSet[$index]['concrete_products'], $idLocale);
+                $this->processVariants($processedResultSet[$index]['concrete_products'], $locale->getIdLocale());
             }
         }
 
         return $processedResultSet;
-    }
-
-    /**
-     * @param string $storageKey
-     *
-     * @return int
-     */
-    private function extractLocalIdFromStorageKey($storageKey)
-    {
-        $keyParts = explode('.', $storageKey);
-        $localeTransfer = $this->localeFacade->getLocale($keyParts[1]);
-
-        return $localeTransfer->getIdLocale();
     }
 
     /**

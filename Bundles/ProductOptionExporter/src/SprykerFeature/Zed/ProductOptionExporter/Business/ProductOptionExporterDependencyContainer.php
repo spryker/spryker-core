@@ -23,8 +23,7 @@ class ProductOptionExporterDependencyContainer extends AbstractDependencyContain
     {
         return $this->getFactory()->createModelExportProcessor(
             $this->getProvidedDependency(ProductOptionExporterDependencyProvider::FACADE_PRODUCT_OPTION),
-            $this->getProvidedDependency(ProductOptionExporterDependencyProvider::FACADE_PRODUCT),
-            $this->getProvidedDependency(ProductOptionExporterDependencyProvider::FACADE_LOCALE)
+            $this->getProvidedDependency(ProductOptionExporterDependencyProvider::FACADE_PRODUCT)
         );
     }
 }

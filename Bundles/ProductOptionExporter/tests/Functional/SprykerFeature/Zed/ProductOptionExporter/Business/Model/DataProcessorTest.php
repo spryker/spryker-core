@@ -9,7 +9,7 @@ use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use Generated\Zed\Ide\AutoCompletion;
 use Functional\SprykerFeature\Zed\ProductOption\Persistence\DbFixturesLoader;
 use SprykerFeature\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
-
+use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
  * @group Business
@@ -57,7 +57,9 @@ class DataProcessorTest extends AbstractFunctionalTest
             ],
         ];
 
-        $processedResultSet = $this->facade->processDataForExport($resultSetFixture, $processedResultSetFixture);
+        $localeTransfer = (new LocaleTransfer)->setIdLocale($ids['idLocale']);
+
+        $processedResultSet = $this->facade->processDataForExport($resultSetFixture, $processedResultSetFixture, $localeTransfer);
 
         $this->assertCount(1, $processedResultSet);
         $product = $processedResultSet['xx.xx_xx.dummyIndex1']['concrete_products'][0];
