@@ -5,14 +5,14 @@
 
 namespace SprykerFeature\Zed\PriceCartConnector\Business\Manager;
 
-use Generated\Shared\PriceCartConnector\CartItemsInterface;
+use Generated\Shared\PriceCartConnector\ChangeInterface;
 
 interface PriceManagerInterface
 {
     /**
-     * @param CartItemsInterface $items
+     * @param ChangeInterface $change
      *
-     * @return CartItemsInterface
+     * @return ChangeInterface
      */
-    public function addGrossPriceToItems(CartItemsInterface $items);
+    public function addGrossPriceToItems(ChangeInterface $change);
 }

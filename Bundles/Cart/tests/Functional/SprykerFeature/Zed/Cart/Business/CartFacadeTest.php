@@ -10,7 +10,6 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\CartItemTransfer;
-use Generated\Shared\Transfer\CartItemsTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
@@ -66,32 +65,28 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cartItemTax->setPercentage(10);
         $cartItem->setTax($cartItemTax);
 
-        $items = new CartItemsTransfer();
-        $items->addCartItem($cartItem);
-        $cart->setItems($items);
+        $cart->addItem($cartItem);
 
-        $newItems = new CartItemsTransfer();
         $newItem = new CartItemTransfer();
         $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();
         $newItemTax->setPercentage(10);
         $newItem->setTax($newItemTax);
-        $newItems->addCartItem($newItem);
 
         $cartChange = new ChangeTransfer();
         $cartChange->setCart($cart);
-        $cartChange->setChangedCartItems($newItems);
+        $cartChange->addItem($newItem);
 
         $changedCart = $this->cartFacade->addToCart($cartChange);
 
-        $this->assertCount(2, $changedCart->getItems()->getCartItems());
+        $this->assertCount(2, $changedCart->getItems());
 
         /** @var CartItemTransfer $item */
-        foreach ($cart->getItems()->getCartItems() as $item) {
-            if ($item->getSku() === $cartItem->getSku()) {
+        foreach ($cart->getItems() as $item) {
+            if ($item->getId() === $cartItem->getId()) {
                 $this->assertEquals($cartItem->getQuantity(), $item->getQuantity());
-            } elseif ($newItem->getSku() === $item->getSku()) {
+            } elseif ($newItem->getId() === $item->getId()) {
                 $this->assertEquals($newItem->getQuantity(), $item->getQuantity());
             } else {
                 $this->fail('Cart has a unknown item inside');
@@ -109,25 +104,21 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cartItemTax->setPercentage(10);
         $cartItem->setTax($cartItemTax);
 
-        $items = new CartItemsTransfer();
-        $items->addCartItem($cartItem);
-        $cart->setItems($items);
+        $cart->addItem($cartItem);
 
-        $newItems = new CartItemsTransfer();
         $newItem = new CartItemTransfer();
         $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();
         $newItemTax->setPercentage(10);
         $newItem->setTax($newItemTax);
-        $newItems->addCartItem($newItem);
 
         $cartChange = new ChangeTransfer();
         $cartChange->setCart($cart);
-        $cartChange->setChangedCartItems($newItems);
+        $cartChange->addItem($newItem);
 
         $changedCart = $this->cartFacade->increaseQuantity($cartChange);
-        $cartItems = $changedCart->getItems()->getCartItems();
+        $cartItems = $changedCart->getItems();
         $this->assertCount(1, $cartItems);
 
         /** @var CartItemTransfer $changedItem */
@@ -145,26 +136,22 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cartItemTax->setPercentage(10);
         $cartItem->setTax($cartItemTax);
 
-        $items = new CartItemsTransfer();
-        $items->addCartItem($cartItem);
-        $cart->setItems($items);
+        $cart->addItem($cartItem);
 
-        $newItems = new CartItemsTransfer();
         $newItem = new CartItemTransfer();
         $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();
         $newItemTax->setPercentage(10);
         $newItem->setTax($newItemTax);
-        $newItems->addCartItem($newItem);
 
         $cartChange = new ChangeTransfer();
         $cartChange->setCart($cart);
-        $cartChange->setChangedCartItems($newItems);
+        $cartChange->addItem($newItem);
 
         $changedCart = $this->cartFacade->removeFromCart($cartChange);
 
-        $this->assertCount(0, $changedCart->getItems()->getCartItems());
+        $this->assertCount(0, $changedCart->getItems());
     }
 
     public function testDecreaseCartItem()
@@ -177,25 +164,21 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cartItemTax->setPercentage(10);
         $cartItem->setTax($cartItemTax);
 
-        $items = new CartItemsTransfer();
-        $items->addCartItem($cartItem);
-        $cart->setItems($items);
+        $cart->addItem($cartItem);
 
-        $newItems = new CartItemsTransfer();
         $newItem = new CartItemTransfer();
         $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItemTax = new TaxItemTransfer();
         $newItemTax->setPercentage(10);
         $newItem->setTax($newItemTax);
-        $newItems->addCartItem($newItem);
 
         $cartChange = new ChangeTransfer();
         $cartChange->setCart($cart);
-        $cartChange->setChangedCartItems($newItems);
+        $cartChange->addItem($newItem);
 
         $changedCart = $this->cartFacade->decreaseQuantity($cartChange);
-        $cartItems = $changedCart->getItems()->getCartItems();
+        $cartItems = $changedCart->getItems();
         $this->assertCount(1, $cartItems);
         /** @var CartItemTransfer $changedItem */
         $changedItem = $cartItems[0];
@@ -243,4 +226,5 @@ class CartFacadeTest extends AbstractFunctionalTest
             ->save()
         ;
     }
+
 }

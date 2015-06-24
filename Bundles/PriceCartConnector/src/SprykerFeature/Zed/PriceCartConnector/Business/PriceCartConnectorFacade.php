@@ -5,9 +5,8 @@
 
 namespace SprykerFeature\Zed\PriceCartConnector\Business;
 
+use Generated\Shared\PriceCartConnector\ChangeInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\Cart\CartItemTransfer;
-use Generated\Shared\Cart\CartItemsInterface;
 
 /**
  * @method PriceCartConnectorDependencyContainer getDependencyContainer()
@@ -15,12 +14,12 @@ use Generated\Shared\Cart\CartItemsInterface;
 class PriceCartConnectorFacade extends AbstractFacade
 {
     /**
-     * @param CartItemsInterface $items
+     * @param ChangeInterface $change
      *
-     * @return CartItemsInterface
+     * @return ChangeInterface
      */
-    public function addGrossPriceToItems(CartItemsInterface $items)
+    public function addGrossPriceToItems(ChangeInterface $change)
     {
-        return $this->getDependencyContainer()->createPriceManager()->addGrossPriceToItems($items);
+        return $this->getDependencyContainer()->createPriceManager()->addGrossPriceToItems($change);
     }
 }

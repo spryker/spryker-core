@@ -6,39 +6,39 @@
 namespace SprykerFeature\Zed\Cart\Business\StorageProvider;
 
 use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\CartItemsInterface;
+use Generated\Shared\Cart\ChangeInterface;
 
 interface StorageProviderInterface
 {
     /**
      * @param CartInterface $cart
-     * @param CartItemsInterface $addedItems
+     * @param ChangeInterface $change
      *
      * @return CartInterface
      */
-    public function addItems(CartInterface $cart, CartItemsInterface $addedItems);
+    public function addItems(CartInterface $cart, ChangeInterface $change);
 
     /**
      * @param CartInterface $cart
-     * @param CartItemsInterface $removedItems
+     * @param ChangeInterface $change
      *
      * @return CartInterface
      */
-    public function removeItems(CartInterface $cart, CartItemsInterface $removedItems);
+    public function removeItems(CartInterface $cart, ChangeInterface $change);
 
     /**
      * @param CartInterface $cart
-     * @param CartItemsInterface $increasedItems
+     * @param ChangeInterface $change
      *
      * @return CartInterface
      */
-    public function increaseItems(CartInterface $cart, CartItemsInterface $increasedItems);
+    public function increaseItems(CartInterface $cart, ChangeInterface $change);
 
     /**
      * @param CartInterface $cart
-     * @param CartItemsInterface $decreasedItems
+     * @param ChangeInterface $change
      *
      * @return CartInterface
      */
-    public function decreaseItems(CartInterface $cart, CartItemsInterface $decreasedItems);
+    public function decreaseItems(CartInterface $cart, ChangeInterface $change);
 }

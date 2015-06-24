@@ -8,8 +8,8 @@
         <property name="grossPrice" type="int" />
     </transfer>
 
-    <transfer name="CartItems">
-        <property name="cartItems" type="CartItem[]" singular="cartItem" />
+    <transfer name="Change">
+        <property name="items" type="CartItem[]" singular="item" />
     </transfer>
 
 </transfers>

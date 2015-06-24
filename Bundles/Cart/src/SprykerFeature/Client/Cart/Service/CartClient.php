@@ -4,8 +4,6 @@ namespace SprykerFeature\Client\Cart\Service;
 
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Cart\CartItemInterface;
-use Generated\Shared\PriceCartConnector\CartItemsInterface;
-use Generated\Shared\Transfer\CartItemsTransfer;
 use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
@@ -44,7 +42,8 @@ class CartClient extends AbstractClient implements CartClientInterface
 
         $this->getSession()
             ->setItemCount(0)
-            ->setCart($cart);
+            ->setCart($cart)
+        ;
 
         return $cart;
     }
@@ -65,8 +64,8 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function addItem($sku, $quantity = 1)
     {
-        $addedItems = $this->createChangedItems($sku, $quantity);
-        $cartChange = $this->prepareCartChange($addedItems);
+        $addedItem = $this->createChangedItem($sku, $quantity);
+        $cartChange = $this->prepareCartChange($addedItem);
         $cart = $this->getStub()->addItem($cartChange);
 
         return $this->handleCartResponse($cart);
@@ -88,15 +87,15 @@ class CartClient extends AbstractClient implements CartClientInterface
     public function removeItem($sku)
     {
         $item = $this->getItemBySku($sku);
-        $deletedItems = $this->createChangedItems($sku, $item->getQuantity());
-        $cartChange = $this->prepareCartChange($deletedItems);
+        $deletedItem = $this->createChangedItem($sku, $item->getQuantity());
+        $cartChange = $this->prepareCartChange($deletedItem);
         $cart = $this->getStub()->removeItem($cartChange);
 
         return $this->handleCartResponse($cart);
     }
 
     /**
-     * 
+     *
      * @param string $sku
      *
      * @throws \InvalidArgumentException
@@ -143,8 +142,8 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function decreaseItemQuantity($sku, $quantity = 1)
     {
-        $decreasedItems = $this->createChangedItems($sku, $quantity);
-        $cartChange = $this->prepareCartChange($decreasedItems);
+        $decreasedItem = $this->createChangedItem($sku, $quantity);
+        $cartChange = $this->prepareCartChange($decreasedItem);
         $cart = $this->getStub()->decreaseItemQuantity($cartChange);
 
         return $this->handleCartResponse($cart);
@@ -158,8 +157,8 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function increaseItemQuantity($sku, $quantity = 1)
     {
-        $increasedItems = $this->createChangedItems($sku, $quantity);
-        $cartChange = $this->prepareCartChange($increasedItems);
+        $increasedItem = $this->createChangedItem($sku, $quantity);
+        $cartChange = $this->prepareCartChange($increasedItem);
         $cart = $this->getStub()->increaseItemQuantity($cartChange);
 
         return $this->handleCartResponse($cart);
@@ -193,31 +192,28 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param string $sku
      * @param int $quantity
      *
-     * @return CartItemsTransfer
+     * @return CartItemTransfer
      */
-    private function createChangedItems($sku, $quantity = 1)
+    private function createChangedItem($sku, $quantity = 1)
     {
         $changedItem = new CartItemTransfer();
-        // @todo is this needed?
+
         $changedItem->setId($sku);
         $changedItem->setSku($sku);
         $changedItem->setQuantity($quantity);
 
-        $changedItems = new CartItemsTransfer();
-        $changedItems->addCartItem($changedItem);
-
-        return $changedItems;
+        return $changedItem;
     }
 
     /**
-     * @param CartItemsInterface $changedItems
+     * @param CartItemInterface $changedItem
      *
      * @return ChangeTransfer
      */
-    private function prepareCartChange(CartItemsInterface $changedItems)
+    private function prepareCartChange(CartItemInterface $changedItem)
     {
         $cartChange = $this->createCartChange();
-        $cartChange->setChangedCartItems($changedItems);
+        $cartChange->addItem($changedItem);
 
         return $cartChange;
     }

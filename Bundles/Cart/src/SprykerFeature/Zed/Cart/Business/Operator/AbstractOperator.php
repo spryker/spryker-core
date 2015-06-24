@@ -6,7 +6,6 @@
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
 use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\CartItemsInterface;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use Generated\Shared\Cart\ChangeInterface;
 use Psr\Log\LoggerInterface;
@@ -16,6 +15,7 @@ use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 abstract class AbstractOperator implements OperatorInterface
 {
+
     /**
      * @var StorageProviderInterface
      */
@@ -25,6 +25,7 @@ abstract class AbstractOperator implements OperatorInterface
      * @var LoggerInterface
      */
     protected $messenger;
+
     /**
      * @var CalculationFacade
      */
@@ -57,7 +58,7 @@ abstract class AbstractOperator implements OperatorInterface
      */
     public function executeOperation(ChangeInterface $cartChange)
     {
-        $changedItems = $this->expandChangedItems($cartChange->getChangedCartItems());
+        $changedItems = $this->expandChangedItems($cartChange);
         $cart = $this->changeCart($cartChange->getCart(), $changedItems);
 
         if ($this->messenger) {
@@ -84,11 +85,11 @@ abstract class AbstractOperator implements OperatorInterface
 
     /**
      * @param CartInterface $cart
-     * @param CartItemsInterface $changedItems
+     * @param ChangeInterface $change
      *
      * @return CartInterface
      */
-    abstract protected function changeCart(CartInterface $cart, CartItemsInterface $changedItems);
+    abstract protected function changeCart(CartInterface $cart, ChangeInterface $change);
 
     /**
      * @return string
@@ -96,17 +97,17 @@ abstract class AbstractOperator implements OperatorInterface
     abstract protected function createSuccessMessage();
 
     /**
-     * @param CartItemsInterface $changedItems
+     * @param ChangeInterface $change
      *
-     * @return CartItemsInterface
+     * @return ChangeInterface
      */
-    protected function expandChangedItems(CartItemsInterface $changedItems)
+    protected function expandChangedItems(ChangeInterface $change)
     {
         foreach ($this->itemExpanderPlugins as $itemExpander) {
-            $changedItems = $itemExpander->expandItems($changedItems);
+            $changedItems = $itemExpander->expandItems($change);
         }
 
-        return $changedItems;
+        return $change;
     }
 
     /**

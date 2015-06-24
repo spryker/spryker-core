@@ -5,21 +5,21 @@
 
 namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business;
 
-use Generated\Shared\Transfer\CartItemsTransfer;
 use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\CartItemFixture;
-use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\CollectionFixture;
 use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
 use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\PriceItemFixture;
 
 /**
+ * @group SprykerFeature
+ * @group Zed
  * @group PriceCartConnector
  * @group Business
- * @group Zed
- * @group Manager
+ * @group PriceManager
  */
 class PriceManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,10 +30,10 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $priceFacadeStub->addPriceStub('123', 1000);
         $priceFacadeStub->addValidityStub('123', true);
 
-        $itemCollection = new CartItemsTransfer();
+        $itemCollection = new ChangeTransfer();
         $item = new CartItemTransfer();
         $item->setSku(123);
-        $itemCollection->addCartItem($item);
+        $itemCollection->addItem($item);
 
         $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');
 
@@ -54,10 +54,10 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $priceFacadeStub->addPriceStub('123', 1000);
         $priceFacadeStub->addValidityStub('123', false);
 
-        $itemCollection = new CartItemsTransfer();
+        $itemCollection = new ChangeTransfer();
         $item = new CartItemTransfer();
         $item->setId(123);
-        $itemCollection->addCartItem($item);
+        $itemCollection->addItem($item);
 
         $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');
         $priceManager->addGrossPriceToItems($itemCollection);
