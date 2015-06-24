@@ -10,6 +10,7 @@ use Propel\Runtime\Propel;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use SprykerFeature\Zed\Sales\Dependency\Plugin\OrderReferenceGeneratorInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
@@ -27,10 +28,19 @@ class OrderManager
      */
     protected $omsFacade;
 
-    public function __construct(SalesToCountryInterface $countryFacade, SalesToOmsInterface $omsFacade)
-    {
+    /**
+     * @var OrderReferenceGeneratorInterface
+     */
+    protected$orderReferenceGenerator;
+
+    public function __construct(
+        SalesToCountryInterface $countryFacade,
+        SalesToOmsInterface $omsFacade,
+        OrderReferenceGeneratorInterface $orderReferenceGenerator
+    ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
+        $this->orderReferenceGenerator = $orderReferenceGenerator;
     }
 
     /**
@@ -43,6 +53,9 @@ class OrderManager
         Propel::getConnection()->beginTransaction();
 
         $orderEntity = new SpySalesOrder();
+
+        $orderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($orderTransfer));
+
         $orderEntity->setBillingAddress($this->saveAddressTransfer($orderTransfer->getBillingAddress()));
         $orderEntity->setShippingAddress($this->saveAddressTransfer($orderTransfer->getShippingAddress()));
 
