@@ -71,7 +71,7 @@ class DataProcessorTest extends AbstractFunctionalTest
         $option = $product['options'][0];
         $this->assertEquals('Color', $option['label']);
         $this->assertFalse($option['isOptional']);
-        $this->assertNull($option['taxRate']);
+        $this->assertEquals('15.0', $option['taxRate']);
         $this->assertEquals($ids['idUsageSize'], $option['excludes'][0]);
 
         $this->assertCount(4, $option['values']);
@@ -84,7 +84,6 @@ class DataProcessorTest extends AbstractFunctionalTest
         $this->assertCount(2, $allowConstraints);
         $this->assertEquals($ids['idUsageLarge'], $allowConstraints[0]);
 
-        $this->assertEquals('15.00', $product['options'][1]['taxRate']);
         $this->assertEquals('199', $product['options'][1]['values'][0]['price']);
     }
 }

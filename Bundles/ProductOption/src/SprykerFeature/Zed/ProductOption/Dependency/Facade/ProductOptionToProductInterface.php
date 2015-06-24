@@ -24,7 +24,7 @@ interface ProductOptionToProductInterface
      * @return int
      * @throws MissingProductException
      */
-    public function getAbstractProductIdBySku($sku);
+    public function getAbstractProductIdByConcreteSku($sku);
 
     /**
      * @param int $idAbstractProduct

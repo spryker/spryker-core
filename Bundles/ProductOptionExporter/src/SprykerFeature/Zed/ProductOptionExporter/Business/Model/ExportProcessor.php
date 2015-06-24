@@ -89,7 +89,7 @@ class ExportProcessor implements ExportProcessorInterface
             $idProduct = $this->productFacade->getConcreteProductIdBySku($concreteProduct['sku']);
 
             $concreteProducts[$index]['configs'] = $this->processConfigs($idProduct);
-            $concreteProducts[$index]['options'] = $this->processOptions($idProduct, $idLocale);
+            $concreteProducts[$index]['options'] = $this->processOptions($concreteProduct['sku'], $idProduct, $idLocale);
         }
     }
 
@@ -116,12 +116,13 @@ class ExportProcessor implements ExportProcessorInterface
     }
 
     /**
+     * @param string $sku
      * @param int $idProduct
      * @param int $idLocale
      *
      * @return array
      */
-    protected function processOptions($idProduct, $idLocale)
+    protected function processOptions($sku, $idProduct, $idLocale)
     {
         $typeUsages = $this->productOptionFacade->getTypeUsagesForConcreteProduct($idProduct, $idLocale);
 
@@ -131,7 +132,7 @@ class ExportProcessor implements ExportProcessorInterface
                 'id' => (int) $typeUsage['idTypeUsage'],
                 'label' => $typeUsage['label'],
                 'isOptional' => (bool) $typeUsage['isOptional'],
-                'taxRate' => $this->processOptionTaxRate($idProduct, $typeUsage['idTypeUsage']),
+                'taxRate' => $this->processOptionTaxRate($sku, $typeUsage['idTypeUsage']),
                 'excludes' => $this->processTypeExclusions($typeUsage['idTypeUsage']),
                 'values' => $this->processValuesForTypeUsage($typeUsage['idTypeUsage'], $idLocale)
             ];
@@ -152,21 +153,21 @@ class ExportProcessor implements ExportProcessorInterface
     }
 
     /**
-     * @param int $idProduct
+     * @param int $sku
      * @param int $idTypeUsage
      *
-     * @return null|string
+     * @return float
      */
-    protected function processOptionTaxRate($idProduct, $idTypeUsage)
+    protected function processOptionTaxRate($sku, $idTypeUsage)
     {
         $typeUsageTaxRate = $this->productOptionFacade->getEffectiveTaxRateForTypeUsage($idTypeUsage);
 
         if (null === $typeUsageTaxRate) {
-            $typeUsageTaxRate = $this->productOptionFacade
-           ->getEffectiveTaxRateForAbstractProduct($idProduct);
+            $typeUsageTaxRate = $this->productFacade
+               ->getEffectiveTaxRateForConcreteProduct($sku);
         }
 
-        return $typeUsageTaxRate;
+        return (float) $typeUsageTaxRate;
     }
 
     /**
