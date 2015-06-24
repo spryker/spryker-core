@@ -12,6 +12,8 @@ class ProductOptionExporterDependencyProvider extends AbstractBundleDependencyPr
 {
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
+    const FACADE_PRODUCT_OPTION_EXPORTER = 'FACADE_PRODUCT_OPTION_EXPORTER';
+
     const FACADE_LOCALE = 'FACADE_LOCALE';
 
     const QUERY_CONTAINER_PRODUCT_OPTION = 'QUERY_CONTAINER_PRODUCT_OPTION';
@@ -47,4 +49,18 @@ class ProductOptionExporterDependencyProvider extends AbstractBundleDependencyPr
 
         return $container;
     }
+
+//    /**
+//     * @param Container $container
+//     *
+//     * @return Container
+//     */
+//    public function provideCommunicationLayerDependencies(Container $container)
+//    {
+//        $container[ProductOptionExporterDependencyProvider::FACADE_PRODUCT_OPTION_EXPORTER] = function (Container $container) {
+//            return $container->getLocator()->productOptionExporter()->queryContainer();
+//        };
+//
+//        return $container;
+//    }
 }

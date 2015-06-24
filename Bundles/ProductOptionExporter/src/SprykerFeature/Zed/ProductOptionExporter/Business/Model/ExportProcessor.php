@@ -52,7 +52,7 @@ class ExportProcessor implements ExportProcessorInterface
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet)
+    public function processDataForExport(array &$resultSet, array $processedResultSet)
     {
         foreach ($resultSet as $index => $productRawData) {
             if (isset($processedResultSet[$index], $processedResultSet[$index]['concrete_products'])) {

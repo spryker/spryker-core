@@ -4,11 +4,13 @@ namespace SprykerFeature\Zed\ProductOptionExporter\Communication\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\ProductOptionExporter\Communication\ProductOptionExporterDependencyContainer;
 
 /**
  * @method ProductOptionExporterDependencyContainer getDependencyContainer()
+ * @method ProductOptionExporterFacade getFacade()
  *
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -31,9 +33,6 @@ class ProductOptionProcessorPlugin extends AbstractPlugin implements DataProcess
      */
     public function processData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
-        return $this->getDependencyContainer()
-            ->getProductOptionProcessor()
-            ->processDataForExport($resultSet, $processedResultSet)
-        ;
+        return $this->getFacade()->processDataForExport($resultSet, $processedResultSet);
     }
 }

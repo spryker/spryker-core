@@ -13,5 +13,5 @@ interface ExportProcessorInterface
      *
      * @return array
      */
-    public function processData(array &$resultSet, array $processedResultSet);
+    public function processDataForExport(array &$resultSet, array $processedResultSet);
 }

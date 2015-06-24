@@ -20,6 +20,6 @@ class ProductOptionExporterFacade extends AbstractFacade
      */
     public function processDataForExport(array &$resultSet, array $processedResultSet)
     {
-        return $this->getDependencyContainer()->getProcessorModel()->processData($resultSet, $processedResultSet);
+        return $this->getDependencyContainer()->getProcessorModel()->processDataForExport($resultSet, $processedResultSet);
     }
 }
