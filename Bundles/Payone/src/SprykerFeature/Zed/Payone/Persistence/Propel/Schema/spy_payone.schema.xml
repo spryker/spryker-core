@@ -18,6 +18,20 @@
         <behavior name="timestampable" />
     </table>
 
+    <table name="spy_payment_payone_details" phpName="SpyPaymentPayoneDetails" identifierQuoting="true">
+        <column name="id_payment_payone_details" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_payment_payone" required="true" type="INTEGER"/>
+
+        <column name="pseudocardpan" required="false" type="VARCHAR"
+                comment="Payone generated pseudocardpan instead of actual credit card data"/>
+
+        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone" refPhpName="SpyPaymentPayoneTransactionStatusLog">
+            <reference foreign="id_payment_payone" local="fk_payment_payone"/>
+        </foreign-key>
+
+        <behavior name="timestampable" />
+    </table>
+
     <table name="spy_payment_payone_api_log" phpName="SpyPaymentPayoneApiLog" identifierQuoting="true">
 
         <column name="id_payment_payone_api_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -73,6 +87,5 @@
 
         <behavior name="timestampable" />
     </table>
-
 
 </database>
