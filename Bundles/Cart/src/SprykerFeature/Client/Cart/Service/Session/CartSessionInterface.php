@@ -13,11 +13,11 @@ interface CartSessionInterface
     public function getCart();
 
     /**
-     * @param CartInterface $cart
+     * @param CartInterface $cartTransfer
      *
      * @return $this
      */
-    public function setCart(CartInterface $cart);
+    public function setCart(CartInterface $cartTransfer);
 
     /**
      * @return int

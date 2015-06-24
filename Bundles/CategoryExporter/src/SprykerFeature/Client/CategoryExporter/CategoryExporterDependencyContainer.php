@@ -2,20 +2,18 @@
 
 namespace SprykerFeature\Client\CategoryExporter;
 
-use SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerFeature\Zed\CategoryExporter\Business\KeyBuilder\SharedResourceKeyBuilder;
 use Generated\Client\Ide\FactoryAutoCompletion\CategoryExporter;
 use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
 use SprykerFeature\Client\CategoryExporter\Builder\CategoryTreeBuilder;
 use SprykerFeature\Client\CategoryExporter\Model\Navigation;
+use SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder;
+use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
+/**
+ * @method CategoryExporter getFactory()
+ */
 class CategoryExporterDependencyContainer extends AbstractDependencyContainer
 {
-    /**
-     * @var CategoryExporter
-     */
-    protected $factory;
 
     /**
      * @return Navigation
@@ -23,7 +21,7 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     public function createNavigation()
     {
         return $this->getFactory()->createModelNavigation(
-            $this->getLocator()->kvStorage()->readClient()->getInstance(),
+            $this->getLocator()->kvStorage()->client(),
             $this->createNavigationKeyBuilder()
         );
     }
@@ -34,7 +32,7 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     public function createCategoryTreeBuilder()
     {
         return $this->getFactory()->createBuilderCategoryTreeBuilder(
-            $this->getLocator()->kvStorage()->readClient()->getInstance(),
+            $this->getLocator()->kvStorage()->client(),
             $this->createResourceKeyBuilder()
         );
     }

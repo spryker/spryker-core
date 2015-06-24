@@ -8,6 +8,8 @@ namespace YvesUnit\SprykerEngine\Yves\Kernel;
 use SprykerEngine\Yves\Kernel\Locator;
 
 /**
+ * @group SprykerEngine
+ * @group Yves
  * @group Kernel
  * @group Locator
  */
@@ -20,4 +22,5 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('SprykerEngine\Shared\Kernel\BundleProxy', $locator->locateFoo());
     }
+
 }

@@ -3,24 +3,23 @@
 namespace SprykerFeature\Client\Glossary;
 
 use Generated\Client\Ide\FactoryAutoCompletion\Glossary;
+use SprykerFeature\Client\KvStorage\Service\KvStorageClientInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
 use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
 
+/**
+ * @method Glossary getFactory()
+ */
 class GlossaryDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @var Glossary
-     */
-    protected $factory;
-
-    /**
-     * @return ReadInterface
+     * @return KvStorageClientInterface
      */
     protected function getKvStorage()
     {
-        return $this->getLocator()->kvStorage()->readClient()->getInstance();
+        return $this->getLocator()->kvStorage()->client();
     }
 
     /**

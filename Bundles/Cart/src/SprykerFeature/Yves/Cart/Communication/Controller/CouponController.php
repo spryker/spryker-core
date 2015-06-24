@@ -21,7 +21,7 @@ class CouponController extends AbstractController
      */
     public function addAction($couponCode)
     {
-        $cartClient = $this->getDependencyContainer()->createCartClient();
+        $cartClient = $this->getLocator()->cart()->client();
         $cart = $cartClient->addCoupon($couponCode);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -34,7 +34,7 @@ class CouponController extends AbstractController
      */
     public function removeAction($couponCode)
     {
-        $cartClient = $this->getDependencyContainer()->createCartClient();
+        $cartClient = $this->getLocator()->cart()->client();
         $cart = $cartClient->removeCoupon($couponCode);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -45,7 +45,7 @@ class CouponController extends AbstractController
      */
     public function clearAction()
     {
-        $cartClient = $this->getDependencyContainer()->createCartClient();
+        $cartClient = $this->getLocator()->cart()->client();
         $cart = $cartClient->clearCoupons();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);

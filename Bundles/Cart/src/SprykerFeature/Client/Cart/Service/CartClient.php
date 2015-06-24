@@ -38,14 +38,14 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function clearCart()
     {
-        $cart = new CartTransfer();
+        $cartTransfer = new CartTransfer();
 
         $this->getSession()
             ->setItemCount(0)
-            ->setCart($cart)
+            ->setCart($cartTransfer)
         ;
 
-        return $cart;
+        return $cartTransfer;
     }
 
     /**
@@ -64,19 +64,19 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function addItem($sku, $quantity = 1)
     {
-        $addedItem = $this->createChangedItem($sku, $quantity);
-        $cartChange = $this->prepareCartChange($addedItem);
-        $cart = $this->getStub()->addItem($cartChange);
+        $cartItemTransfer = $this->createChangedItem($sku, $quantity);
+        $changeTransfer = $this->prepareCartChange($cartItemTransfer);
+        $cartTransfer = $this->getZedStub()->addItem($changeTransfer);
 
-        return $this->handleCartResponse($cart);
+        return $this->handleCartResponse($cartTransfer);
     }
 
     /**
      * @return CartStubInterface
      */
-    private function getStub()
+    private function getZedStub()
     {
-        return $this->getDependencyContainer()->createStub();
+        return $this->getDependencyContainer()->createZedStub();
     }
 
     /**
@@ -86,12 +86,12 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function removeItem($sku)
     {
-        $item = $this->getItemBySku($sku);
-        $deletedItem = $this->createChangedItem($sku, $item->getQuantity());
-        $cartChange = $this->prepareCartChange($deletedItem);
-        $cart = $this->getStub()->removeItem($cartChange);
+        $cartItemTransfer = $this->getItemBySku($sku);
+        $cartItemTransfer = $this->createChangedItem($sku, $cartItemTransfer->getQuantity());
+        $changeTransfer = $this->prepareCartChange($cartItemTransfer);
+        $cartTransfer = $this->getZedStub()->removeItem($changeTransfer);
 
-        return $this->handleCartResponse($cart);
+        return $this->handleCartResponse($cartTransfer);
     }
 
     /**
@@ -103,11 +103,11 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     private function getItemBySku($sku)
     {
-        $cart = $this->getCart();
+        $cartTransfer = $this->getCart();
 
-        foreach ($cart->getItems() as $item) {
-            if ($item->getSku() === $sku) {
-                return $item;
+        foreach ($cartTransfer->getItems() as $cartItemTransfer) {
+            if ($cartItemTransfer->getSku() === $sku) {
+                return $cartItemTransfer;
             }
         }
 
@@ -126,8 +126,8 @@ class CartClient extends AbstractClient implements CartClientInterface
             return $this->removeItem($sku);
         }
 
-        $currentItem = $this->getItemBySku($sku);
-        if ($currentItem->getQuantity() > $quantity) {
+        $cartItemTransfer = $this->getItemBySku($sku);
+        if ($cartItemTransfer->getQuantity() > $quantity) {
             return $this->decreaseItemQuantity($sku, $quantity);
         } else {
             return $this->increaseItemQuantity($sku, $quantity);
@@ -142,11 +142,11 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function decreaseItemQuantity($sku, $quantity = 1)
     {
-        $decreasedItem = $this->createChangedItem($sku, $quantity);
-        $cartChange = $this->prepareCartChange($decreasedItem);
-        $cart = $this->getStub()->decreaseItemQuantity($cartChange);
+        $cartItemTransfer = $this->createChangedItem($sku, $quantity);
+        $changeTransfer = $this->prepareCartChange($cartItemTransfer);
+        $cartTransfer = $this->getZedStub()->decreaseItemQuantity($changeTransfer);
 
-        return $this->handleCartResponse($cart);
+        return $this->handleCartResponse($cartTransfer);
     }
 
     /**
@@ -157,11 +157,11 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function increaseItemQuantity($sku, $quantity = 1)
     {
-        $increasedItem = $this->createChangedItem($sku, $quantity);
-        $cartChange = $this->prepareCartChange($increasedItem);
-        $cart = $this->getStub()->increaseItemQuantity($cartChange);
+        $cartItemTransfer = $this->createChangedItem($sku, $quantity);
+        $changeTransfer = $this->prepareCartChange($cartItemTransfer);
+        $cartTransfer = $this->getZedStub()->increaseItemQuantity($changeTransfer);
 
-        return $this->handleCartResponse($cart);
+        return $this->handleCartResponse($cartTransfer);
     }
 
     /**
@@ -169,10 +169,10 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function recalculate()
     {
-        $cart = $this->getCart();
-        $cart = $this->getStub()->recalculate($cart);
+        $cartTransfer = $this->getCart();
+        $cartTransfer = $this->getZedStub()->recalculate($cartTransfer);
 
-        return $this->handleCartResponse($cart);
+        return $this->handleCartResponse($cartTransfer);
     }
 
     /**
@@ -180,12 +180,12 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     private function createCartChange()
     {
-        $cart = $this->getCart();
-        $cartChange = new ChangeTransfer();
+        $cartTransfer = $this->getCart();
+        $changeTransfer = new ChangeTransfer();
         // @todo get cart hash
 //        $cartChange->setCartHash($cart);
 
-        return $cartChange;
+        return $changeTransfer;
     }
 
     /**
@@ -196,26 +196,26 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     private function createChangedItem($sku, $quantity = 1)
     {
-        $changedItem = new CartItemTransfer();
+        $cartItemTransfer = new CartItemTransfer();
 
-        $changedItem->setId($sku);
-        $changedItem->setSku($sku);
-        $changedItem->setQuantity($quantity);
+        $cartItemTransfer->setId($sku);
+        $cartItemTransfer->setSku($sku);
+        $cartItemTransfer->setQuantity($quantity);
 
-        return $changedItem;
+        return $cartItemTransfer;
     }
 
     /**
-     * @param CartItemInterface $changedItem
+     * @param CartItemInterface $cartItemTransfer
      *
      * @return ChangeTransfer
      */
-    private function prepareCartChange(CartItemInterface $changedItem)
+    private function prepareCartChange(CartItemInterface $cartItemTransfer)
     {
-        $cartChange = $this->createCartChange();
-        $cartChange->addItem($changedItem);
+        $changeTransfer = $this->createCartChange();
+        $changeTransfer->addItem($cartItemTransfer);
 
-        return $cartChange;
+        return $changeTransfer;
     }
 
     /**
@@ -225,12 +225,12 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function addCoupon($coupon)
     {
-        $cartChange = $this->createCartChange();
-        $cartChange->setCouponCode($coupon);
+        $changeTransfer = $this->createCartChange();
+        $changeTransfer->setCouponCode($coupon);
 
-        $cart = $this->getStub()->addCoupon($cartChange);
+        $cartTransfer = $this->getZedStub()->addCoupon($changeTransfer);
 
-        return $this->handleCartResponse($cart);
+        return $this->handleCartResponse($cartTransfer);
     }
 
     /**
@@ -240,12 +240,12 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function removeCoupon($coupon)
     {
-        $cartChange = $this->createCartChange();
-        $cartChange->setCouponCode($coupon);
+        $changeTransfer = $this->createCartChange();
+        $changeTransfer->setCouponCode($coupon);
 
-        $cart = $this->getStub()->removeCoupon($cartChange);
+        $cartTransfer = $this->getZedStub()->removeCoupon($changeTransfer);
 
-        return $this->handleCartResponse($cart);
+        return $this->handleCartResponse($cartTransfer);
     }
 
     /**
@@ -253,22 +253,22 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function clearCoupons()
     {
-        $cartChange = $this->createCartChange();
-        $cart = $this->getStub()->clearCoupons($cartChange);
+        $changeTransfer = $this->createCartChange();
+        $cartTransfer = $this->getZedStub()->clearCoupons($changeTransfer);
 
-        return $this->handleCartResponse($cart);
+        return $this->handleCartResponse($cartTransfer);
     }
 
     /**
-     * @param CartInterface $cart
+     * @param CartInterface $cartTransfer
      *
      * @return CartInterface
      */
-    private function handleCartResponse(CartInterface $cart)
+    private function handleCartResponse(CartInterface $cartTransfer)
     {
-        $this->getSession()->setCart($cart);
+        $this->getSession()->setCart($cartTransfer);
 
-        return $cart;
+        return $cartTransfer;
     }
 
 }

@@ -2,14 +2,10 @@
 namespace SprykerFeature\Client\Setup;
 
 /** @TODO: Remove Symfony Dependency */
+use SprykerFeature\Client\KvStorage\Service\KvStorageClientInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Elastica\Index;
-use SprykerFeature\Shared\KvStorage\Client\ReadInterface;
 
-/**
- * Class Heartbeat
- * @package SprykerFeature\Client\Setup
- */
 class Heartbeat
 {
 
@@ -23,15 +19,15 @@ class Heartbeat
     protected $searchIndex;
 
     /**
-     * @var ReadInterface
+     * @var KvStorageClientInterface
      */
     protected $kvReader;
 
     /**
-     * @param ReadInterface $kvReader
+     * @param KvStorageClientInterface $kvReader
      * @param Index $searchIndex
      */
-    public function __construct(ReadInterface $kvReader, Index $searchIndex)
+    public function __construct(KvStorageClientInterface $kvReader, Index $searchIndex)
     {
         $this->kvReader = $kvReader;
         $this->searchIndex = $searchIndex;

@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Yves\FrontendExporter\Mapper;
 
-use SprykerFeature\Client\Catalog\Model\FacetConfig;
+use SprykerFeature\Client\Catalog\Service\Model\FacetConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

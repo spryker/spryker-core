@@ -28,7 +28,6 @@ class ClientLocator extends AbstractLocator
     {
         $factory = $this->getFactory($bundle);
 
-
         return $factory->create($bundle . self::LOCATABLE_SUFFIX, $factory, $locator);
     }
 

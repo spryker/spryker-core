@@ -91,7 +91,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
 
         $generator->create();
 
-        $this->info('Generated Sdk IdeBundleAutoCompletion file');
+        $this->info('Generated Client IdeBundleAutoCompletion file');
     }
 
     protected function generateClientFactoryInterface()

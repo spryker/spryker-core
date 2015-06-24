@@ -25,7 +25,7 @@ class CartDependencyContainer extends AbstractDependencyContainer
     /**
      * @return CartStubInterface
      */
-    public function createStub()
+    public function createZedStub()
     {
         $zedStub = $this->getProvidedDependency(CartDependencyProvider::SERVICE_ZED);
         $cartStub = $this->getFactory()->createServiceZedCartStub(
@@ -33,55 +33,6 @@ class CartDependencyContainer extends AbstractDependencyContainer
         );
 
         return $cartStub;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * @param SessionInterface $session
-     *
-     * @return StorageProviderInterface
-     */
-    protected function createStorageProvider(SessionInterface $session)
-    {
-        $client = $this->getLocator()->cart()->client();
-
-        return $this->getFactory()->createProviderSessionStorageProvider($this->getLocator(), $session);
-
-
-    }
-
-    /**
-     * @param SessionInterface $session
-     *
-     * @return CartInterface
-     */
-    public function createCartClient(SessionInterface $session)
-    {
-        return $this->getLocator()
-            ->cart()
-            ->client()
-            ->getCart($this->createStorageProvider($session))
-        ;
     }
 
 }

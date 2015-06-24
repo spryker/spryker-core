@@ -18,7 +18,7 @@ class CartController extends AbstractController
      */
     public function indexAction()
     {
-        $cartClient = $this->getDependencyContainer()->createCartClient();
+        $cartClient = $this->getLocator()->cart()->client();
         $cartItems = $cartClient->getCart()->getItems();
 
         return $this->viewResponse([
@@ -35,7 +35,7 @@ class CartController extends AbstractController
      */
     public function addAction($sku, $quantity)
     {
-        $cartClient = $this->getDependencyContainer()->createCartClient();
+        $cartClient = $this->getLocator()->cart()->client();
         $cartClient->addItem($sku, $quantity);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -48,7 +48,7 @@ class CartController extends AbstractController
      */
     public function removeAction($sku)
     {
-        $cartClient = $this->getDependencyContainer()->createCartClient();
+        $cartClient = $this->getLocator()->cart()->client();
         $cartClient->removeItem($sku);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -62,7 +62,7 @@ class CartController extends AbstractController
      */
     public function changeAction($sku, $quantity)
     {
-        $cartClient = $this->getDependencyContainer()->createCartClient();
+        $cartClient = $this->getLocator()->cart()->client();
         $cartClient->changeItemQuantity($sku, $quantity);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);

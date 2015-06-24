@@ -9,6 +9,8 @@ use SprykerFeature\Shared\Library\Autoloader;
 use SprykerEngine\Yves\Kernel\Communication\BundleControllerAction;
 
 /**
+ * @group SprykerEngine
+ * @group Yves
  * @group Kernel
  * @group Communication
  * @group BundleControllerAction
@@ -36,4 +38,5 @@ class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('baz', $bundleControllerLocator->getAction());
     }
+
 }

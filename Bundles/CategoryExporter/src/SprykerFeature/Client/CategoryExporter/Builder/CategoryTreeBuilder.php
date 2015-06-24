@@ -2,15 +2,16 @@
 
 namespace SprykerFeature\Client\CategoryExporter\Builder;
 
+use SprykerFeature\Client\KvStorage\Service\KvStorageClientInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerFeature\Shared\KvStorage\Client\ReadInterface;
 
 class CategoryTreeBuilder
 {
+
     const SUBTREE_DEPTH = 3;
 
     /**
-     * @var ReadInterface
+     * @var KvStorageClientInterface
      */
     protected $kvReader;
 
@@ -20,10 +21,10 @@ class CategoryTreeBuilder
     protected $keyBuilder;
 
     /**
-     * @param ReadInterface $kvReader
+     * @param KvStorageClientInterface $kvReader
      * @param KeyBuilderInterface $keyBuilder
      */
-    public function __construct(ReadInterface $kvReader, KeyBuilderInterface $keyBuilder)
+    public function __construct(KvStorageClientInterface $kvReader, KeyBuilderInterface $keyBuilder)
     {
         $this->kvReader = $kvReader;
         $this->keyBuilder = $keyBuilder;

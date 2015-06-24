@@ -13,7 +13,7 @@ class SdkClientMethodTagBuilder extends AbstractSingleFileMethodTagBuilder
     const METHOD_STRING_PATTERN = '@method {{className}} client()';
     const APPLICATION_CLIENT = 'Client';
     const FILE_NAME_SUFFIX = 'Client.php';
-    const PATH_PATTERN = '';
+    const PATH_PATTERN = 'Service/';
 
     /**
      * @param OptionsResolver $resolver

@@ -6,15 +6,10 @@ use Generated\Client\Ide\FactoryAutoCompletion\Setup;
 use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
 
 /**
- * Class SetupDependencyContainer
- * @package SprykerFeature\Client\Setup
+ * @method Setup getFactory()
  */
 class SetupDependencyContainer extends AbstractDependencyContainer
 {
-    /**
-     * @var Setup
-     */
-    protected $factory;
 
     /**
      * @return array
@@ -22,7 +17,7 @@ class SetupDependencyContainer extends AbstractDependencyContainer
     public function getHeartbeatResponse()
     {
         return $this->getFactory()->createHeartbeat(
-            $this->getLocator()->kvStorage()->readClient()->getInstance(),
+            $this->getLocator()->kvStorage()->client(),
             $this->getLocator()->search()->indexClient()->getInstance()
         );
     }

@@ -2,15 +2,11 @@
 
 namespace SprykerFeature\Yves\Cart\Communication\Controller;
 
-use SprykerEngine\Yves\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Yves\Cart\CartDependencyContainer;
 use SprykerFeature\Yves\Cart\Communication\Plugin\CartControllerProvider;
+use SprykerEngine\Yves\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-/**
- * @method CartDependencyContainer getDependencyContainer()
- */
 class AjaxController extends AbstractController
 {
 
@@ -22,7 +18,7 @@ class AjaxController extends AbstractController
      */
     public function addAction($sku, $quantity)
     {
-        $cartClient = $this->getDependencyContainer()->createCartClient();
+        $cartClient = $this->getLocator()->cart()->client();
         $cartClient->addItem($sku, $quantity);
 
         return $this->jsonResponse([
@@ -37,7 +33,7 @@ class AjaxController extends AbstractController
      */
     public function removeAction($sku)
     {
-        $cartClient = $this->getDependencyContainer()->createCartClient();
+        $cartClient = $this->getLocator()->cart()->client();
         $cartClient->removeItem($sku);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART_OVERLAY);
@@ -50,7 +46,7 @@ class AjaxController extends AbstractController
      */
     public function increaseAction($sku)
     {
-        $cartClient = $this->getDependencyContainer()->createCartClient();
+        $cartClient = $this->getLocator()->cart()->client();
         $cartClient->increaseItemQuantity($sku);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART_OVERLAY);
@@ -63,7 +59,7 @@ class AjaxController extends AbstractController
      */
     public function decreaseAction($sku)
     {
-        $cartClient = $this->getDependencyContainer()->createCartClient();
+        $cartClient = $this->getLocator()->cart()->client();
         $cartClient->decreaseItemQuantity($sku);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART_OVERLAY);

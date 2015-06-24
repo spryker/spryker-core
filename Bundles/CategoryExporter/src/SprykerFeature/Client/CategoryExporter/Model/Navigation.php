@@ -2,14 +2,14 @@
 
 namespace SprykerFeature\Client\CategoryExporter\Model;
 
+use SprykerFeature\Client\KvStorage\Service\KvStorageClientInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerFeature\Shared\KvStorage\Client\ReadInterface;
 
 class Navigation
 {
 
     /**
-     * @var ReadInterface
+     * @var KvStorageClientInterface
      */
     private $keyValueReader;
 
@@ -19,10 +19,10 @@ class Navigation
     private $urlBuilder;
 
     /**
-     * @param ReadInterface $keyValueReader
+     * @param KvStorageClientInterface $keyValueReader
      * @param KeyBuilderInterface $urlBuilder
      */
-    public function __construct(ReadInterface $keyValueReader, KeyBuilderInterface $urlBuilder)
+    public function __construct(KvStorageClientInterface $keyValueReader, KeyBuilderInterface $urlBuilder)
     {
         $this->keyValueReader = $keyValueReader;
         $this->urlBuilder = $urlBuilder;
@@ -40,6 +40,7 @@ class Navigation
         if ($categories) {
             return $categories;
         }
+
         return [];
     }
 }

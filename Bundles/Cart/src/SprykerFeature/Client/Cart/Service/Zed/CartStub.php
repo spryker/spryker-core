@@ -13,94 +13,94 @@ class CartStub implements CartStubInterface
     /**
      * @var AbstractZedClient
      */
-    private $stub;
+    private $zedStub;
 
     /**
-     * @param AbstractZedClient $stub
+     * @param AbstractZedClient $zedStub
      */
-    public function __construct(AbstractZedClient $stub)
+    public function __construct(AbstractZedClient $zedStub)
     {
-        $this->stub = $stub;
+        $this->zedStub = $zedStub;
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function addItem(ChangeInterface $cartChange)
+    public function addItem(ChangeInterface $changeTransfer)
     {
-        return $this->stub->call('/cart/gateway/add-item', $cartChange);
+        return $this->zedStub->call('/cart/gateway/add-item', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function removeItem(ChangeInterface $cartChange)
+    public function removeItem(ChangeInterface $changeTransfer)
     {
-        return $this->stub->call('/cart/gateway/remove-item', $cartChange);
+        return $this->zedStub->call('/cart/gateway/remove-item', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function increaseItemQuantity(ChangeInterface $cartChange)
+    public function increaseItemQuantity(ChangeInterface $changeTransfer)
     {
-        return $this->stub->call('/cart/gateway/increase-item-quantity', $cartChange);
+        return $this->zedStub->call('/cart/gateway/increase-item-quantity', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function decreaseItemQuantity(ChangeInterface $cartChange)
+    public function decreaseItemQuantity(ChangeInterface $changeTransfer)
     {
-        return $this->stub->call('/cart/gateway/decrease-item-quantity', $cartChange);
+        return $this->zedStub->call('/cart/gateway/decrease-item-quantity', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function addCoupon(ChangeInterface $cartChange)
+    public function addCoupon(ChangeInterface $changeTransfer)
     {
-        return $this->stub->call('/cart/gateway/add-coupon-code', $cartChange);
+        return $this->zedStub->call('/cart/gateway/add-coupon-code', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function removeCoupon(ChangeInterface $cartChange)
+    public function removeCoupon(ChangeInterface $changeTransfer)
     {
-        return $this->stub->call('/cart/gateway/remove-coupon-code', $cartChange);
+        return $this->zedStub->call('/cart/gateway/remove-coupon-code', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function clearCoupons(ChangeInterface $cartChange)
+    public function clearCoupons(ChangeInterface $changeTransfer)
     {
-        return $this->stub->call('/cart/gateway/clear-coupon-code', $cartChange);
+        return $this->zedStub->call('/cart/gateway/clear-coupon-code', $changeTransfer);
     }
 
     /**
-     * @param CartInterface|TransferInterface $cart
+     * @param CartInterface|TransferInterface $cartTransfer
      *
      * @return CartInterface
      */
-    public function recalculate(CartInterface $cart)
+    public function recalculate(CartInterface $cartTransfer)
     {
-        return $this->stub->call('/cart/gateway/recalculate', $cart);
+        return $this->zedStub->call('/cart/gateway/recalculate', $cartTransfer);
     }
 
 }

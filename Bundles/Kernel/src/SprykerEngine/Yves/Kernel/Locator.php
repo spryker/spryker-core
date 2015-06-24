@@ -9,8 +9,6 @@ use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Shared\Kernel\BundleProxy;
 use SprykerEngine\Shared\Kernel\TransferLocator;
 use SprykerEngine\Client\Kernel\ClientLocator;
-use SprykerEngine\Yves\Kernel\ClientLocator as YvesClientLocator;
-use SprykerFeature\Client\KvStorage\StorageLocator;
 
 class Locator extends AbstractLocatorLocator
 {
@@ -26,10 +24,7 @@ class Locator extends AbstractLocatorLocator
             ->addLocator(new PluginLocator())
             ->addLocator(new TransferLocator())
             ->addLocator(new ClientLocator())
-
-            ->addLocator(new StorageLocator())
-
-            ->addLocator(new YvesClientLocator());
+        ;
 
         return $bundleProxy;
     }

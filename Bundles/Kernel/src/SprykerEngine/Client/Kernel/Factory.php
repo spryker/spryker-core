@@ -10,6 +10,6 @@ class Factory extends AbstractFactory
     /**
      * @var string
      */
-    protected $classNamePattern = '\\{{namespace}}\\Client\\{{bundle}}{{store}}\\';
+    protected $classNamePattern = '\\{{namespace}}\\Client\\{{bundle}}{{store}}\\Service';
 
 }

@@ -10,59 +10,59 @@ interface CartStubInterface
 {
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function addItem(ChangeInterface $cartChange);
+    public function addItem(ChangeInterface $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function removeItem(ChangeInterface $cartChange);
+    public function removeItem(ChangeInterface $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function increaseItemQuantity(ChangeInterface $cartChange);
+    public function increaseItemQuantity(ChangeInterface $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function decreaseItemQuantity(ChangeInterface $cartChange);
+    public function decreaseItemQuantity(ChangeInterface $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function addCoupon(ChangeInterface $cartChange);
+    public function addCoupon(ChangeInterface $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function removeCoupon(ChangeInterface $cartChange);
+    public function removeCoupon(ChangeInterface $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $cartChange
+     * @param ChangeInterface|TransferInterface $changeTransfer
      *
      * @return CartInterface
      */
-    public function clearCoupons(ChangeInterface $cartChange);
+    public function clearCoupons(ChangeInterface $changeTransfer);
 
     /**
-     * @param CartInterface|TransferInterface $cart
+     * @param CartInterface|TransferInterface $cartTransfer
      *
      * @return CartInterface
      */
-    public function recalculate(CartInterface $cart);
+    public function recalculate(CartInterface $cartTransfer);
 
 }
