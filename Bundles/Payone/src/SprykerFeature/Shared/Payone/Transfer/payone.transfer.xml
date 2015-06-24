@@ -33,30 +33,6 @@
         <property name="payment" type="PayonePayment" />
     </transfer>
 
-    <transfer name="CreditCard">
-        <property name="aid" type="string" />
-        <property name="cardPan" type="string" />
-        <property name="cardType" type="string" />
-        <property name="cardExpireDate" type="string" />
-        <property name="cardCvc2" type="string" />
-        <property name="cardIssueNumber" type="string" />
-        <property name="storeCardData" type="string" />
-        <property name="language" type="string" />
-        <property name="payment" type="PayonePayment" />
-    </transfer>
-
-    <transfer name="CreditCard">
-        <property name="aid" type="string" />
-        <property name="cardPan" type="string" />
-        <property name="cardType" type="string" />
-        <property name="cardExpireDate" type="string" />
-        <property name="cardCvc2" type="string" />
-        <property name="cardIssueNumber" type="string" />
-        <property name="storeCardData" type="string" />
-        <property name="language" type="string" />
-        <property name="payment" type="PayonePayment" />
-    </transfer>
-
     <transfer name="Refund">
         <property name="amount" type="int" />
         <property name="payment" type="PayonePayment" />
@@ -67,6 +43,13 @@
     <transfer name="PayonePayment">
         <property name="paymentMethod" type="string" />
         <property name="authorizationType" type="string" />
+        <property name="transactionId" type="string" />
+        <property name="paymentDetails" type="PayonePaymentDetails" />
+    </transfer>
+
+    <transfer name="PayonePaymentDetails">
+        <property name="pseudocardpan" type="string" />
+        <property name="name" type="string" />
         <property name="transactionId" type="string" />
     </transfer>
 
@@ -129,6 +112,10 @@
         <property name="personalid" type="string" />
         <property name="ip" type="string" />
         <property name="pseudoCardPan" type="string" />
+    </transfer>
+
+    <transfer name="Order">
+        <property name="payonePayment" type="PayonePayment" />
     </transfer>
 
     <transfer name="CheckoutRequest">
