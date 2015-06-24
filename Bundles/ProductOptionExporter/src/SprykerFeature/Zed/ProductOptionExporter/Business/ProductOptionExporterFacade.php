@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\ProductOptionExporter\Business;
 
@@ -7,8 +9,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method ProductOptionExporterDependencyContainer getDependencyContainer()
- *
- * (c) Spryker Systems GmbH copyright protected
  */
 class ProductOptionExporterFacade extends AbstractFacade
 {

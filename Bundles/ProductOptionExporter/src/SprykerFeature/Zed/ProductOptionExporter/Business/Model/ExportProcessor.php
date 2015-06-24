@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\ProductOptionExporter\Business\Model;
 
@@ -6,9 +9,6 @@ use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExpo
 use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductInterface;
 use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToLocaleInterface;
 
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
 class ExportProcessor implements ExportProcessorInterface
 {
 

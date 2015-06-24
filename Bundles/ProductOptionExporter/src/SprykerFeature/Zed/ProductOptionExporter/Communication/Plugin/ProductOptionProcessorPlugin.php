@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\ProductOptionExporter\Communication\Plugin;
 
@@ -11,8 +14,6 @@ use SprykerFeature\Zed\ProductOptionExporter\Communication\ProductOptionExporter
 /**
  * @method ProductOptionExporterDependencyContainer getDependencyContainer()
  * @method ProductOptionExporterFacade getFacade()
- *
- * (c) Spryker Systems GmbH copyright protected
  */
 class ProductOptionProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {

@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace Functional\SprykerFeature\Zed\ProductOption\Persistence;
 
@@ -9,8 +12,6 @@ use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
  * @group Zed
  * @group ProdutOption
  * @group ProductOptionReaderTest
- *
- * (c) Spryker Systems GmbH copyright protected
  */
 class ProductOptionQReaderrTest extends AbstractFunctionalTest
 {

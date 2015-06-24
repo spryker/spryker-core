@@ -1,10 +1,10 @@
 <?php
-
-namespace SprykerFeature\Zed\ProductOptionExporter\Business\Model;
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
+namespace SprykerFeature\Zed\ProductOptionExporter\Business\Model;
+
 interface ExportProcessorInterface
 {
     /**

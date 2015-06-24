@@ -1,12 +1,13 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\ProductOption\Business\Model;
 
 use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
+
 class ProductOptionReader implements ProductOptionReaderInterface
 {
 

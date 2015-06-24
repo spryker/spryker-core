@@ -1,13 +1,13 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\ProductOptionExporter;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
 class ProductOptionExporterDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';

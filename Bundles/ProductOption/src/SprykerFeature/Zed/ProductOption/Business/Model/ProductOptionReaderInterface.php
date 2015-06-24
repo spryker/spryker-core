@@ -1,10 +1,10 @@
 <?php
-
-namespace SprykerFeature\Zed\ProductOption\Business\Model;
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
+namespace SprykerFeature\Zed\ProductOption\Business\Model;
+
 interface ProductOptionReaderInterface
 {
 

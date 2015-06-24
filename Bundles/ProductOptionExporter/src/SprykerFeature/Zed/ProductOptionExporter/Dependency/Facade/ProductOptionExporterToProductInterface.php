@@ -1,10 +1,10 @@
 <?php
-
-namespace SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade;
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
+namespace SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade;
+
 interface ProductOptionExporterToProductInterface
 {
 

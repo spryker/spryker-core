@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\ProductOptionExporter\Business;
 
@@ -10,8 +13,6 @@ use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionExporterBusiness;
 
 /**
  * @method ProductOptionExporterBusiness getFactory()
- *
- * (c) Spryker Systems GmbH copyright protected
  */
 class ProductOptionExporterDependencyContainer extends AbstractDependencyContainer
 {
