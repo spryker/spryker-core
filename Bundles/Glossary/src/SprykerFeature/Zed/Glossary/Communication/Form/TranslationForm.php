@@ -8,11 +8,11 @@ namespace SprykerFeature\Zed\Glossary\Communication\Form;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints;
 
 class TranslationForm extends AbstractForm
 {
@@ -39,12 +39,12 @@ class TranslationForm extends AbstractForm
     public function addFormFields()
     {
         $keyChoices = $this->getNotFullyTranslatedGlossaryKeys();
-        $localeChoices = $this->getLocales();
+        $localeChoices = $this->localeFacade->getAvailableLocales();
 
         $fields[] = $this->addField('id_glossary_translation')
             ->setConstraints([
-                new Assert\Optional([
-                    new Assert\Type([
+                new Constraints\Optional([
+                    new Constraints\Type([
                         'type' => 'integer'
                     ])
                 ])
@@ -54,13 +54,13 @@ class TranslationForm extends AbstractForm
             ->setAccepts($keyChoices)
             ->setRefresh(true)
             ->setConstraints([
-                new Assert\Type([
+                new Constraints\Type([
                     'type' => 'integer'
                 ]),
-                new Assert\Choice([
-                    'choices' => array_column($keyChoices, 'value'),
-                    'message' => 'Please choose one of the given Glossary Keys'
-                ])
+//                new Constraints\Choice([
+//                    'choices' => array_column($keyChoices, 'value'),
+//                    'message' => 'Please choose one of the given Glossary Keys'
+//                ])
             ])
             ->setValueHook(function ($value) {
                 return $value ? (int)$value : null;
@@ -69,13 +69,13 @@ class TranslationForm extends AbstractForm
         $fields[] = $this->addField('fk_locale')
             ->setAccepts($localeChoices)
             ->setConstraints([
-                new Assert\Type([
+                new Constraints\Type([
                     'type' => 'integer'
                 ]),
-                new Assert\Choice([
-                    'choices' => array_column($localeChoices, 'value'),
-                    'message' => 'Please choose one of the given Locales Keys'
-                ])
+//                new Constraints\Choice([
+//                    'choices' => array_column($localeChoices, 'value'),
+//                    'message' => 'Please choose one of the given Locales Keys'
+//                ])
             ])
             ->setValueHook(function ($value) {
                 return $value ? (int)$value : null;
@@ -86,7 +86,7 @@ class TranslationForm extends AbstractForm
 
         $fields[] = $this->addField('is_active')
             ->setConstraints([
-                new Assert\Type([
+                new Constraints\Type([
                     'type' => 'bool'
                 ]),
             ]);

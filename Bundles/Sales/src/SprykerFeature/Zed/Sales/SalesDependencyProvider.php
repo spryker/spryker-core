@@ -13,6 +13,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_OMS = 'oms facade';
 
+    const FACADE_LOCALE = 'locale facade';
+
     /**
      * @param Container $container
      *
@@ -22,6 +24,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[SalesDependencyProvider::FACADE_OMS] = function (Container $container){
             return $container->getLocator()->oms()->facade();
+        };
+
+        $container[SalesDependencyProvider::FACADE_LOCALE] = function (Container $container){
+            return $container->getLocator()->locale()->facade();
         };
 
         return $container;

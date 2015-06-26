@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method GlossaryDependencyContainer getDependencyContainer()
@@ -22,13 +23,11 @@ class FormController extends AbstractController
     /**
      * @return JsonResponse
      */
-    public function translationAction()
+    public function translationAction(Request $request)
     {
         $form = $this->getDependencyContainer()
-            ->createKeyForm()
+            ->createTranslationForm($request)
         ;
-
-        $form = $this->getDependencyContainer()->createTranslationForm();
         $form->init();
 
         if ($form->isValid()) {
