@@ -29,6 +29,32 @@ class UserDependencyContainer extends AbstractDependencyContainer
     /**
      * @param Request $request
      *
+     * @return DetailsUserForm
+     */
+    public function getDetailsUserForm(Request $request)
+    {
+        return $this->getFactory()->createFormDetailsUserForm(
+            $request,
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return PasswordForm
+     */
+    public function getPasswordForm(Request $request)
+    {
+        return $this->getFactory()->createFormPasswordForm(
+            $request,
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
      * @return mixed
      */
     public function getUserGrid(Request $request)

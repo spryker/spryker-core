@@ -22,4 +22,18 @@ class IndexController extends AbstractController
     {
 
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function detailsAction(Request $request)
+    {
+        $userId = $request->query->get('id');
+
+        return [
+            'user_id' => $userId,
+        ];
+    }
 }
