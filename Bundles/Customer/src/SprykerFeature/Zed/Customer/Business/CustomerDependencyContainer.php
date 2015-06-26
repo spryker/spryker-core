@@ -11,9 +11,11 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Customer\Business\Customer\Customer;
 use SprykerFeature\Zed\Customer\Business\Customer\Address;
 use SprykerFeature\Zed\Customer\CustomerConfig;
+use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin\RegistrationTokenSender;
 
 /**
  * @method CustomerConfig getConfig()
@@ -41,19 +43,29 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
 
         $config = $this->getConfig();
 
-        foreach ($config->getPasswordRestoredConfirmationSenders() as $sender) {
-            $customer->addPasswordRestoredConfirmationSender($sender);
+        foreach ($config->getPasswordRestoredConfirmationSenders() as $senderClassName) {
+            $customer->addPasswordRestoredConfirmationSender($this->createSender($senderClassName));
         }
 
-        foreach ($config->getPasswordRestoreTokenSenders() as $sender) {
-            $customer->addPasswordRestoreTokenSender($sender);
+        foreach ($config->getPasswordRestoreTokenSenders() as $senderClassName) {
+            $customer->addPasswordRestoreTokenSender($this->createSender($senderClassName));
         }
 
-        foreach ($config->getRegistrationTokenSenders() as $sender) {
-            $customer->addRegistrationTokenSender($sender);
+        foreach ($config->getRegistrationTokenSenders() as $senderClassName) {
+            $customer->addRegistrationTokenSender($this->createSender($senderClassName));
         }
 
         return $customer;
+    }
+
+    /**
+     * @param $senderClassName
+     *
+     * @throws \ErrorException
+     * @return mixed
+     */
+    public function createSender($senderClassName) {
+        return $this->getProvidedDependency($senderClassName);
     }
 
     /**

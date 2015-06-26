@@ -330,6 +330,7 @@ class Customer
      */
     protected function getCustomer(CustomerTransfer $customerTransfer)
     {
+        //var_dump($customerTransfer); die;
         if ($customerTransfer->getIdCustomer()) {
             $customer = $this->queryContainer
                 ->queryCustomerById($customerTransfer->getIdCustomer())

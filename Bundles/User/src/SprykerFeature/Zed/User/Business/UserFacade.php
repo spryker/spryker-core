@@ -9,11 +9,13 @@ namespace SprykerFeature\Zed\User\Business;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\UserTransfer;
 use Generated\Shared\Transfer\CollectionTransfer;
+use SprykerFeature\Zed\Acl\Dependency\Facade\AclToUserInterface;
+
 
 /**
  * @method UserDependencyContainer getDependencyContainer()
  */
-class UserFacade extends AbstractFacade
+class UserFacade extends AbstractFacade implements AclToUserInterface
 {
 
     public function install()

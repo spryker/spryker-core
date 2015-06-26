@@ -6,36 +6,39 @@
 
 namespace SprykerFeature\Zed\Customer;
 
-use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
-use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
-use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class CustomerConfig extends AbstractBundleConfig
 {
 
     /**
-     * @return PasswordRestoredConfirmationSenderPluginInterface[]
+     * @return array
      */
     public function getPasswordRestoredConfirmationSenders()
     {
-        return [];
+        return [
+            CustomerDependencyProvider::PASSWORD_RESTORED_CONFIRMATION_SENDER
+        ];
     }
 
     /**
-     * @return PasswordRestoreTokenSenderPluginInterface[]
+     * @return array
      */
     public function getPasswordRestoreTokenSenders()
     {
-        return [];
+        return [
+            CustomerDependencyProvider::PASSWORD_RESTORE_TOKEN_SENDER
+        ];
     }
 
     /**
-     * @return RegistrationTokenSenderPluginInterface[]
+     * @return array
      */
     public function getRegistrationTokenSenders()
     {
-        return [];
+        return [
+            CustomerDependencyProvider::REGISTRATION_TOKEN_SENDER
+        ];
     }
 
 }

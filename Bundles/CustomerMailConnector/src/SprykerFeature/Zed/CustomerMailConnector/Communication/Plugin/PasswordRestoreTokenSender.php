@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,11 +6,11 @@
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin
+use Generated\Shared\Transfer\MailMail as MailTransferTransfer;
 
-class PasswordRestoreTokenSender extends AbstractPlugin implements PasswordRestoreTokenSenderPluginInterface
+class PasswordRestoreTokenSender extends AbstractSender implements PasswordRestoreTokenSenderPluginInterface
 {
-
     const SUBJECT = 'password.restore.sender.subject';
     const TEMPLATE = 'password.restore';
 
@@ -35,32 +34,4 @@ class PasswordRestoreTokenSender extends AbstractPlugin implements PasswordResto
 
         return $this->isMailSent($result);
     }
-
-    /**
-     * @return MailTransfer
-     */
-    protected function getMailTransfer()
-    {
-        return $this->getDependencyContainer()->createMailTransfer();
-    }
-
-    /**
-     * @param array $results
-     *
-     * @return bool
-     */
-    protected function isMailSent(array $results)
-    {
-        foreach ($results as $result) {
-            if (!isset($result['status'])) {
-                return false;
-            }
-            if ($result['status'] !== 'sent') {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
 }

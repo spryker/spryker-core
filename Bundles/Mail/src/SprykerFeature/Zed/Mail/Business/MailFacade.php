@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Mail\Business;
 
+use Generated\Shared\Transfer\MailTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
