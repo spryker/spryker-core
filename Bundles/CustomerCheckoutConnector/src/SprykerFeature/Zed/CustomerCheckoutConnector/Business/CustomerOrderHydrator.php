@@ -83,7 +83,7 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
             ->setEmail($address->getEmail())
             ->setFirstName($address->getFirstName())
             ->setLastName($address->getLastName())
-            ->setIso2Country($address->getIso2Country())
+            ->setIso2Code($address->getIso2Code())
             ->setZipCode($address->getZipCode())
         ;
 

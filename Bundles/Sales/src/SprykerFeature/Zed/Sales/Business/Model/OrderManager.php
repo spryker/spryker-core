@@ -104,7 +104,7 @@ class OrderManager
 
         $addressEntity = new SpySalesOrderAddress();
         $addressEntity
-            ->setFkCountry($this->countryFacade->getIdCountryByIso2Code($address->getIso2Country()))
+            ->setFkCountry($this->countryFacade->getIdCountryByIso2Code($address->getIso2Code()))
             ->setFirstName($address->getFirstName())
             ->setLastName($address->getLastName())
             ->setAddress1($address->getAddress1())

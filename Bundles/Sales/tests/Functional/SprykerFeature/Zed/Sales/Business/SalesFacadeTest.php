@@ -80,7 +80,7 @@ class SalesFacadeTest extends Test
         $billingAddress = new SalesAddressTransfer();
 
         $billingAddress
-            ->setIso2Country('ix')
+            ->setIso2Code('ix')
             ->setAddress1('address-1-1-test')
             ->setFirstName('Max')
             ->setLastName('Mustermann')
@@ -90,7 +90,7 @@ class SalesFacadeTest extends Test
 
         $shippingAddress = new SalesAddressTransfer();
         $shippingAddress
-            ->setIso2Country('ix')
+            ->setIso2Code('ix')
             ->setAddress1('address-1-2-test')
             ->setFirstName('Max')
             ->setLastName('Mustermann')

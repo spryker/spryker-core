@@ -28,7 +28,7 @@
     <transfer name="SalesAddress">
         <property name="idSalesOrderAddress" type="int" />
         <property name="idCustomerAddress" type="int" />
-        <property name="iso2Country" type="string" />
+        <property name="iso2Code" type="string" />
         <property name="region" type="string" />
         <property name="fkMiscCountry" type="int" />
         <property name="salutation" type="string" />

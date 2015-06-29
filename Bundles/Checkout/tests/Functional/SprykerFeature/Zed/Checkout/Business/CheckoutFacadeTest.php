@@ -336,7 +336,7 @@ class CheckoutFacadeTest extends Test
         $shippingAddress = new CustomerAddressTransfer();
 
         $billingAddress
-            ->setIso2Country('xi')
+            ->setIso2Code('xi')
             ->setEmail('max@mustermann.de')
             ->setFirstName('Max')
             ->setLastName('Mustermann')
@@ -346,7 +346,7 @@ class CheckoutFacadeTest extends Test
             ->setCity('Entenhausen')
         ;
         $shippingAddress
-            ->setIso2Country('xi')
+            ->setIso2Code('xi')
             ->setFirstName('Max')
             ->setLastName('Mustermann')
             ->setEmail('max@mustermann.de')

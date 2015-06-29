@@ -104,7 +104,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setAddress2('A2')
             ->setAddress3('A3')
             ->setCity('City1')
-            ->setIso2Country('de')
+            ->setIso2Code('de')
             ->setZipCode('11111')
         ;
 
@@ -114,7 +114,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setAddress2('B1')
             ->setAddress3('B1')
             ->setCity('City2')
-            ->setIso2Country('cz')
+            ->setIso2Code('cz')
             ->setZipCode('11111')
         ;
 
@@ -132,14 +132,14 @@ class CustomerCheckoutConnectorFacadeTest extends Test
         $this->assertSame($orderTransfer->getBillingAddress()->getAddress2(), $billingAddress->getAddress2());
         $this->assertSame($orderTransfer->getBillingAddress()->getAddress3(), $billingAddress->getAddress3());
         $this->assertSame($orderTransfer->getBillingAddress()->getCity(), $billingAddress->getCity());
-        $this->assertSame($orderTransfer->getBillingAddress()->getIso2Country(), $billingAddress->getIso2Country());
+        $this->assertSame($orderTransfer->getBillingAddress()->getIso2Code(), $billingAddress->getIso2Code());
         $this->assertSame($orderTransfer->getBillingAddress()->getZipCode(), $billingAddress->getZipCode());
 
         $this->assertSame($orderTransfer->getShippingAddress()->getAddress1(), $shippingAddress->getAddress1());
         $this->assertSame($orderTransfer->getShippingAddress()->getAddress2(), $shippingAddress->getAddress2());
         $this->assertSame($orderTransfer->getShippingAddress()->getAddress3(), $shippingAddress->getAddress3());
         $this->assertSame($orderTransfer->getShippingAddress()->getCity(), $shippingAddress->getCity());
-        $this->assertSame($orderTransfer->getBillingAddress()->getIso2Country(), $shippingAddress->getIso2Country());
+        $this->assertSame($orderTransfer->getBillingAddress()->getIso2Code(), $shippingAddress->getIso2Code());
         $this->assertSame($orderTransfer->getShippingAddress()->getZipCode(), $shippingAddress->getZipCode());
     }
 }
