@@ -39,7 +39,7 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
      */
     protected $bic;
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
+     * @var RedirectContainer
      */
     protected $redirect;
 
@@ -125,7 +125,7 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @param \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
+     * @param RedirectContainer $redirect
      */
     public function setRedirect(RedirectContainer $redirect)
     {
@@ -133,7 +133,7 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @return \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
+     * @return RedirectContainer
      */
     public function getRedirect()
     {
