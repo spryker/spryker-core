@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
@@ -26,21 +29,7 @@ class RefundIsApprovedPlugin extends AbstractPlugin implements ConditionInterfac
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        $order = $orderItem->getOrder();
-
-        if (isset(self::$resultCache[$order->getPrimaryKey()])) {
-            return self::$resultCache[$order->getPrimaryKey()];
-        }
-
-        $payment = $orderItem->getOrder()->getPayonePayment();
-        $paymentTransfer = new PayonePaymentTransfer();
-        $paymentTransfer->setPaymentMethod($payment->getMethod());
-        $paymentTransfer->setTransactionId($payment->getTransactionId());
-
-        $isSuccess = $this->getDependencyContainer()->createPayoneFacade()->isAuthorizationSuccess($paymentTransfer);
-        self::$resultCache[$order->getPrimaryKey()] = $isSuccess;
-
-        return $isSuccess;
+        //@todo
     }
 
 }

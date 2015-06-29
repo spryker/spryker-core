@@ -3,14 +3,15 @@
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Command;
 
 use Generated\Shared\Transfer\AuthorizationTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
+use SprykerFeature\Zed\Payone\Communication\PayoneOmsConnectorDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 /**
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneOmsConnectorDependencyContainer getDependencyContainer()
  */
 class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
@@ -22,14 +23,20 @@ class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $transferAuthorization = new AuthorizationTransfer();
-        $transferAuthorization->setAmount($orderEntity->getGrandTotal());
-        $transferAuthorization->setReferenceId($orderEntity->getIncrementId());
+        $payoneFacade = $this->getDependencyContainer()->createPayoneFacade();
 
-        $paymentUserDataTransfer = $data['???_SOME_KEY_TO_GET_FORM_DATA_???'];
-        $transferAuthorization->setPaymentUserData($paymentUserDataTransfer);
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->fromArray($orderEntity->toArray());
 
-        $this->getDependencyContainer()->createPayoneFacade()->authorize($transferAuthorization);
+        $paymentTransfer = $payoneFacade->getPayment($orderTransfer);
+
+        $authorizationTransfer = new AuthorizationTransfer();
+        $authorizationTransfer->setPaymentMethod($paymentTransfer->getPaymentMethod());
+        $authorizationTransfer->setAmount($orderEntity->getGrandTotal());
+        $authorizationTransfer->setReferenceId($orderEntity->getIncrementId());
+        $authorizationTransfer->setOrder($orderEntity);
+
+        $this->getDependencyContainer()->createPayoneFacade()->authorize($authorizationTransfer);
     }
 
 }
