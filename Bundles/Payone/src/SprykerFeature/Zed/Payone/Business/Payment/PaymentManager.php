@@ -8,6 +8,8 @@ use Generated\Shared\Payone\DebitInterface;
 use Generated\Shared\Payone\RefundInterface;
 use Generated\Shared\Payone\CreditCardInterface;
 use Generated\Shared\Payone\StandardParameterInterface;
+use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
@@ -248,6 +250,20 @@ class PaymentManager
         $this->updateApiLogAfterRefund($apiLogEntity, $responseContainer);
 
         return $responseContainer;
+    }
+
+    /**
+     * @param PayoneOrderInterface $orderTransfer
+     * @return PayonePaymentTransfer
+     */
+    public function getPayment(PayoneOrderInterface $orderTransfer)
+    {
+        $payment = $this->queryContainer->getPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
+
+        $paymentTransfer = new PayonePaymentTransfer();
+        $paymentTransfer->fromArray($payment->toArray());
+
+        return $paymentTransfer;
     }
 
     /**
