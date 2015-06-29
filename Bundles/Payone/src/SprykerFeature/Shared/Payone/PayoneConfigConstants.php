@@ -10,6 +10,7 @@ use SprykerFeature\Shared\Library\ConfigInterface;
 interface PayoneConfigConstants extends ConfigInterface
 {
 
+    const PAYONE = 'PAYONE';
     const PAYONE_CREDENTIALS = 'PAYONE_CREDENTIALS';
     const PAYONE_CREDENTIALS_ENCODING = 'PAYONE_CREDENTIALS_ENCODING';
     const PAYONE_PAYMENT_GATEWAY_URL = 'PAYONE_PAYMENT_GATEWAY_URL';
