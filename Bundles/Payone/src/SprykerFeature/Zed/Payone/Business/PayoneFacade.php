@@ -39,6 +39,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return AuthorizationResponseContainer
      */
     public function authorize(AuthorizationInterface $authorizationData)
@@ -48,6 +49,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return AuthorizationResponseContainer
      */
     public function preAuthorize(AuthorizationInterface $authorizationData)
@@ -57,6 +59,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param CaptureInterface $captureData
+     *
      * @return CaptureResponseContainer
      */
     public function capture(CaptureInterface $captureData)
@@ -66,6 +69,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param DebitInterface $debitData
+     *
      * @return DebitResponseContainer
      */
     public function debit(DebitInterface $debitData)
@@ -75,6 +79,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param RefundInterface $refundData
+     *
      * @return RefundResponseContainer
      */
     public function refund(RefundInterface $refundData)
@@ -95,6 +100,7 @@ class PayoneFacade extends AbstractFacade
     //@todo type hint right container interface
     /**
      * @param array $requestParams
+     *
      * @return TransactionStatusResponse
      */
     public function processTransactionStatusUpdate(array $requestParams)
@@ -107,6 +113,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param PayonePaymentInterface $paymentTransfer
+     *
      * @return bool
      * @deprecated use is approved & is redirect
      */
@@ -117,6 +124,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param OrderInterface $orderTransfer
+     *
      * @return bool
      */
     public function isAuthorizationApproved(OrderInterface $orderTransfer)
@@ -126,6 +134,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param OrderInterface $orderTransfer
+     *
      * @return bool
      */
     public function isAuthorizationRedirect(OrderInterface $orderTransfer)
@@ -135,6 +144,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param OrderInterface $orderTransfer
+     *
      * @return bool
      */
     public function isAuthorizationError(OrderInterface $orderTransfer)
@@ -143,7 +153,26 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isCaptureApproved(OrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationApproved($orderTransfer);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     */
+    public function isCaptureError(OrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isCaptureError($orderTransfer);
+    }
+
+    /**
      * @param PayonePaymentInterface $payment
+     *
      * @return AuthorizationCheckResponseTransfer
      */
     public function getAuthorizationResponse(PayonePaymentInterface $payment)
@@ -153,6 +182,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param ApiCallResponseCheckInterface $apiCallCheck
+     *
      * @return bool
      */
     public function isApiCallSuccessful(ApiCallResponseCheckInterface $apiCallCheck)
@@ -162,6 +192,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param PayoneOrderInterface $orderData
+     *
      * @return PaymentStatusTransfer
      */
     public function getPaymentStatus(PayoneOrderInterface $orderTransfer)

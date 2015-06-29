@@ -103,6 +103,15 @@ class ApiLogFinder
 
     /**
      * @param OrderInterface $orderTransfer
+     * @return bool
+     */
+    public function isCaptureError(OrderInterface $orderTransfer)
+    {
+        return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_ERROR);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
      * @param $status
      *
      * @return bool

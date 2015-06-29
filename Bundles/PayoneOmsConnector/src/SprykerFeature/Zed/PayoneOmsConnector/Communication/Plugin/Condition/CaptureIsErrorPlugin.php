@@ -5,24 +5,11 @@
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
-use Generated\Shared\Transfer\PayonePaymentTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Generated\Shared\Transfer\OrderTransfer;
 
-/**
- * @method PayoneDependencyContainer getDependencyContainer()
- */
-class CaptureIsErrorPlugin extends AbstractPlugin implements ConditionInterface
+class CaptureIsErrorPlugin extends AbstractPlugin
 {
-
-    /**
-     * @var array
-     */
-    protected static $resultCache = [];
-
-
     /**
      * @param SpySalesOrderItem $orderItem
      * @return bool
@@ -35,12 +22,10 @@ class CaptureIsErrorPlugin extends AbstractPlugin implements ConditionInterface
             return self::$resultCache[$order->getPrimaryKey()];
         }
 
-        $payment = $orderItem->getOrder()->getPayonePayment();
-        $paymentTransfer = new PayonePaymentTransfer();
-        $paymentTransfer->setPaymentMethod($payment->getMethod());
-        $paymentTransfer->setTransactionId($payment->getTransactionId());
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->fromArray($order->toArray());
 
-        $isSuccess = $this->getDependencyContainer()->createPayoneFacade()->isAuthorizationSuccess($paymentTransfer);
+        $isSuccess = $this->getDependencyContainer()->createPayoneFacade()->isCaptureError($orderTransfer);
         self::$resultCache[$order->getPrimaryKey()] = $isSuccess;
 
         return $isSuccess;

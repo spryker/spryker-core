@@ -5,31 +5,31 @@
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
-use Generated\Shared\Transfer\PayonePaymentTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Generated\Shared\Transfer\OrderTransfer;
 
-/**
- * @method PayoneDependencyContainer getDependencyContainer()
- */
-class CaptureIsApprovedPlugin extends AbstractPlugin implements ConditionInterface
+class CaptureIsApprovedPlugin extends AbstractPlugin
 {
-
-    /**
-     * @var array
-     */
-    protected static $resultCache = [];
-
-
     /**
      * @param SpySalesOrderItem $orderItem
      * @return bool
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        //@todo
+        $order = $orderItem->getOrder();
+
+        if (isset(self::$resultCache[$order->getPrimaryKey()])) {
+            return self::$resultCache[$order->getPrimaryKey()];
+        }
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->fromArray($order->toArray());
+
+        $isSuccess = $this->getDependencyContainer()->createPayoneFacade()->isCaptureApproved($orderTransfer);
+        self::$resultCache[$order->getPrimaryKey()] = $isSuccess;
+
+        return $isSuccess;
     }
 
 }
+
