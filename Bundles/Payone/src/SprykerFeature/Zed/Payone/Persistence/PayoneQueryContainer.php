@@ -51,4 +51,18 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
         return $query;
     }
 
+
+    /**
+     * @param int $orderId
+     * @return SpyPaymentPayoneQuery
+     */
+    public function getPaymentByOrderId($orderId)
+    {
+        $query = SpyPaymentPayoneQuery::create();
+        $query->findByFkSalesOrder($orderId);
+
+        return $query;
+    }
+
+
 }
