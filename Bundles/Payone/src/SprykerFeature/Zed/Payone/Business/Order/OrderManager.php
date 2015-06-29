@@ -10,7 +10,8 @@ use Generated\Shared\Payone\PayonePaymentInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetails;
 
-class OrderManager {
+class OrderManager implements OrderManagerInterface
+{
     /**
      * @param PayoneOrderInterface $orderTransfer
      */

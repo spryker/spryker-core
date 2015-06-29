@@ -14,7 +14,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentManager;
-use SprykerFeature\Zed\Payone\Business\Order\OrderManager;
+use SprykerFeature\Zed\Payone\Business\Order\OrderManagerInterface;
 use SprykerFeature\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
 use SprykerFeature\Zed\Payone\PayoneConfig;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
@@ -69,7 +69,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return OrderManager
+     * @return OrderManagerInterface
      */
     public function createOrderManager()
     {
