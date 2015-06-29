@@ -7,12 +7,10 @@ namespace SprykerFeature\Zed\Sales\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
-use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Sales\Communication\Grid\CommentsGrid;
 use SprykerFeature\Zed\Sales\Communication\Grid\OrderItemsGrid;
 use SprykerFeature\Zed\Sales\Communication\Grid\SalesGrid;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -75,12 +73,5 @@ class SalesDependencyContainer extends AbstractDependencyContainer
             $this->getQueryContainer()->queryOrderItems($idOrder));
     }
 
-    /**
-     * @return OmsFacade
-     */
-    public function getOmsFacade()
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS);
-    }
 
 }
