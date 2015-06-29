@@ -37,6 +37,7 @@ class ApiLogFinder
      * @todo R E F A C T O R - Horrorcode - Only thougts of what could happen - Used by oms conditions
      *
      * @param PayonePaymentInterface $payment
+     *
      * @return bool
      */
     public function isAuthorizationSuccessful(PayonePaymentInterface $payment)
@@ -76,6 +77,7 @@ class ApiLogFinder
 
     /**
      * @param OrderInterface $orderTransfer
+     *
      * @return bool
      */
     public function isAuthorizationApproved(OrderInterface $orderTransfer)
@@ -85,6 +87,7 @@ class ApiLogFinder
 
     /**
      * @param OrderInterface $orderTransfer
+     *
      * @return bool
      */
     public function isAuthorizationRedirect(OrderInterface $orderTransfer)
@@ -94,6 +97,7 @@ class ApiLogFinder
 
     /**
      * @param OrderInterface $orderTransfer
+     *
      * @return bool
      */
     public function isAuthorizationError(OrderInterface $orderTransfer)
@@ -103,6 +107,7 @@ class ApiLogFinder
 
     /**
      * @param OrderInterface $orderTransfer
+     *
      * @return bool
      */
     public function isCaptureError(OrderInterface $orderTransfer)
@@ -135,6 +140,7 @@ class ApiLogFinder
     /**
      * @todo R E F A C T O R - Horrorcode
      * @param PayonePaymentInterface $payment
+     *
      * @return AuthorizationCheckResponseTransfer
      */
     public function getAuthorizationResponse(PayonePaymentInterface $payment)
@@ -204,6 +210,7 @@ class ApiLogFinder
 
     /**
      * @param int $transactionId
+     *
      * @return SpyPaymentPayone|null
      */
     protected function findPaymentByTransactionId($transactionId)
@@ -213,6 +220,7 @@ class ApiLogFinder
 
     /**
      * @param int $transactionId
+     *
      * @return SpyPaymentPayone|null
      */
     protected function findPaymentByOrder(OrderInterface $orderTransfer)
@@ -223,6 +231,7 @@ class ApiLogFinder
     /**
      * @param SpyPaymentPayone $payment
      * @param string $authorizationType
+     *
      * @return SpyPaymentPayoneApiLog
      */
     protected function findApiLog(SpyPaymentPayone $payment, $authorizationType)
@@ -235,6 +244,7 @@ class ApiLogFinder
 
     /**
      * @param ApiCallResponseCheckInterface $apiCallCheck
+     *
      * @return bool
      */
     public function isApiCallSuccessful(ApiCallResponseCheckInterface $apiCallCheck)
