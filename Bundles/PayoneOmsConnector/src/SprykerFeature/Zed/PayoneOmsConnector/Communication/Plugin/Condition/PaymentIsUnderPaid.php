@@ -14,15 +14,8 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class PaymentIsUnderPaid extends AbstractPlugin implements ConditionInterface
+class PaymentIsUnderPaid extends AbstractPlugin
 {
-
-    /**
-     * @var array
-     */
-    protected static $resultCache = [];
-
-
     /**
      * @param SpySalesOrderItem $orderItem
      * @return bool

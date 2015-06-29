@@ -5,30 +5,17 @@
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class AuthorizationIsRedirectPlugin extends AbstractPlugin
 {
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param OrderTransfer $orderTransfer
+     *
      * @return bool
      */
-    public function check(SpySalesOrderItem $orderItem)
+    protected function callFacade(OrderTransfer $orderTransfer)
     {
-        $order = $orderItem->getOrder();
-
-        if (isset(self::$resultCache[$order->getPrimaryKey()])) {
-            return self::$resultCache[$order->getPrimaryKey()];
-        }
-
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($order->toArray());
-
-        $isSuccess = $this->getDependencyContainer()->createPayoneFacade()->isAuthorizationRedirect($orderTransfer);
-        self::$resultCache[$order->getPrimaryKey()] = $isSuccess;
-
-        return $isSuccess;
+        return $this->getDependencyContainer()->createPayoneFacade()->isAuthorizationRedirect($orderTransfer);
     }
-
 }
