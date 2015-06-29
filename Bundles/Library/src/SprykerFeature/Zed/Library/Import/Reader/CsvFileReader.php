@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Library\Import\Reader;
 
 use SprykerFeature\Zed\Library\Import\Input;

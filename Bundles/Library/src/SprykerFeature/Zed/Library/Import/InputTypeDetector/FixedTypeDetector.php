@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Library\Import\InputTypeDetector;
 
 use SprykerFeature\Zed\Library\Import\Exception;

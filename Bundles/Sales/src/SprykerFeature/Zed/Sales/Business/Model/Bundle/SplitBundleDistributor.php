@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Sales\Business\Model\Bundle;
 
 use Generated\Shared\Transfer\OrderTransfer;

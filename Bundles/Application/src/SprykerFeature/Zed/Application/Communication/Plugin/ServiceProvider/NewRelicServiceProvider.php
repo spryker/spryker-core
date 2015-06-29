@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use SprykerFeature\Shared\Library\System;

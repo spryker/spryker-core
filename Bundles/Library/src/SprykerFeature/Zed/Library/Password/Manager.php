@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 class SprykerFeature_Zed_Library_Password_Manager
 {

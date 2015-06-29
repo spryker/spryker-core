@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 use Codeception\TestCase\Test;
 use SprykerEngine\Zed\Kernel\Locator;

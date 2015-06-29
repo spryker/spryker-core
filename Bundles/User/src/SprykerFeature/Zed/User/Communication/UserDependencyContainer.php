@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\User\Communication;
 
@@ -21,6 +24,32 @@ class UserDependencyContainer extends AbstractDependencyContainer
     public function getFacade()
     {
         return $this->getLocator()->user()->facade();
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return DetailsUserForm
+     */
+    public function getDetailsUserForm(Request $request)
+    {
+        return $this->getFactory()->createFormDetailsUserForm(
+            $request,
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return PasswordForm
+     */
+    public function getPasswordForm(Request $request)
+    {
+        return $this->getFactory()->createFormPasswordForm(
+            $request,
+            $this->getQueryContainer()
+        );
     }
 
     /**

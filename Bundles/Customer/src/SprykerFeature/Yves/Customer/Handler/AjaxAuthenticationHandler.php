@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Yves\Customer\Handler;
 
@@ -13,11 +16,9 @@ class AjaxAuthenticationHandler implements AuthenticationSuccessHandlerInterface
 {
 
     /**
-     * onAuthenticationSuccess
-     *
-     * @author    Joe Sexton <joe@webtipblog.com>
      * @param    Request $request
      * @param    TokenInterface $token
+     *
      * @return    Response
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
@@ -30,11 +31,9 @@ class AjaxAuthenticationHandler implements AuthenticationSuccessHandlerInterface
     }
 
     /**
-     * onAuthenticationFailure
-     *
-     * @author    Joe Sexton <joe@webtipblog.com>
      * @param    Request $request
      * @param    AuthenticationException $exception
+     *
      * @return    Response
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)

@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Yves\Library\Session;
 
 use SprykerEngine\Shared\Transfer\TransferInterface;

@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Yves\Cart\Model;
 
 use SprykerFeature\Shared\Cart\Code\DeleteReasonConstant;

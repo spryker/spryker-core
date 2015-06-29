@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Shared\Catalog\Code\Storage;
 
 use SprykerFeature\Shared\Library\Storage\StorageKeyGenerator as BaseStorageKeyGenerator;

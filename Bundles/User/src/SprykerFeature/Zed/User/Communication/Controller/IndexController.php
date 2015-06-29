@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\User\Communication\Controller;
 
@@ -18,5 +21,19 @@ class IndexController extends AbstractController
     public function indexAction()
     {
 
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function detailsAction(Request $request)
+    {
+        $userId = $request->query->get('id');
+
+        return [
+            'user_id' => $userId,
+        ];
     }
 }

@@ -1,5 +1,9 @@
 <?php
 /**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+/**
  * @link http://code.google.com/intl/de-DE/apis/chart/image/docs/data_formats.html
  *
  * @link https://developers.google.com/chart/image/docs/chart_params

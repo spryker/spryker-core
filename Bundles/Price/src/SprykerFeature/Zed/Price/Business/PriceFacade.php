@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Price\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;

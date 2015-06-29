@@ -10,15 +10,17 @@
                 <th>Unit Price</th>
                 <th>QTY</th>
                 <th>Total Price</th>
-                <th>State Machine</th>
+                <th>Current State</th>
+                <th>Trigger State Machine</th>
             </tr>
             {% for row in orderItems.content.rows %}
             <tr>
                 <td>{{ row.name }}</td>
                 <td>{{ row.sku }}</td>
-                <td>{{ row.gross_price }} &euro;</td>
+                <td>{{ row.gross_price|number_format(2) }} &euro;</td>
                 <td>{{ row.qty }}</td>
-                <td>{{ row.price_to_pay * row.qty }} &euro;</td>
+                <td>{{ (row.price_to_pay * row.qty)|number_format(2) }} &euro;</td>
+                <td>{{ row.current_state }}</td>
                 <td>
 
                     {% if row.accepts|length > 0 %}
@@ -29,7 +31,7 @@
                             <option value="{{ option.value }}">{{ option.label }}</option>
                             {% endfor %}
                         </select>
-                        <button>Change</button>
+                        <button>Submit</button>
                     </form>
                     {% else -%}
                         -
@@ -43,7 +45,7 @@
                 <td>-</td>
                 <td>-</td>
                 <td>{{ orderItems.content.total.total_qty }}</td>
-                <td>&euro; {{ orderItems.content.total.total_price_to_pay }}</td>
+                <td>{{ orderItems.content.total.total_price_to_pay|number_format(2) }} &euro;</td>
             </tr>
         </table>
         {% else %}

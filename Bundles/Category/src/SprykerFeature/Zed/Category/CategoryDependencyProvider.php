@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Category;
 
@@ -29,6 +32,20 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_URL] = function (Container $container) {
             return $container->getLocator()->url()->facade();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return $container->getLocator()->locale()->facade();
         };
 
         return $container;

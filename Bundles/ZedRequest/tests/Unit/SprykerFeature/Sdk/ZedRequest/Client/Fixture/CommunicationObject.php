@@ -1,12 +1,12 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace Unit\SprykerFeature\Sdk\ZedRequest\Client\Fixture;
 
 use SprykerFeature\Shared\ZedRequest\Client\AbstractObject;
 
-/**
- * Class CommunicationObject
- * @package Unit\SprykerFeature\Shared\ZedRequest\Client\Fixture
- */
 class CommunicationObject extends AbstractObject
 {
     protected $values = [

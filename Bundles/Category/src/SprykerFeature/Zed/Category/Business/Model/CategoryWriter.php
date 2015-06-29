@@ -1,9 +1,12 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Category\Business\Model;
 
 use Generated\Shared\Transfer\CategoryCategory as CategoryTransferTransfer;
-use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Category\CategoryInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
@@ -29,13 +32,13 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
+     * @param CategoryInterface $category
      * @param LocaleTransfer $locale
      *
      * @return SpyCategory
      * @throws \ErrorException
      */
-    public function create(CategoryTransfer $category, LocaleTransfer $locale)
+    public function create(CategoryInterface $category, LocaleTransfer $locale)
     {
         $idCategory = $this->persistCategory();
         $category->setIdCategory($idCategory);
@@ -45,17 +48,19 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
+     * @param CategoryInterface $category
      * @param LocaleTransfer $locale
      * @return int
      *
      * @throws PropelException
      */
-    public function update(CategoryTransfer $category, LocaleTransfer $locale)
+    public function update(CategoryInterface $category, LocaleTransfer $locale)
     {
         $attributeEntity = $this->getAttributeEntity($category->getIdCategory(), $locale);
         $attributeEntity->setName($category->getName());
         $attributeEntity->save();
+
+        $this->saveCategory($category);
 
         return $attributeEntity->getIdCategoryAttribute();
     }
@@ -76,6 +81,18 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
+     * @param CategoryInterface $category
+     * @param LocaleTransfer $locale
+     */
+    protected function saveCategory(CategoryInterface $category)
+    {
+        $categoryEntity = $this->getCategoryEntity($category->getIdCategory());
+        $categoryEntity->setIsActive($category->getIsActive());
+
+        $categoryEntity->save();
+    }
+
+    /**
      * @return int
      * @throws PropelException
      */
@@ -90,12 +107,12 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
+     * @param CategoryInterface $category
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
      */
-    protected function persistCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale)
+    protected function persistCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale)
     {
         $categoryAttributeEntity = new SpyCategoryAttribute();
 
@@ -130,5 +147,18 @@ class CategoryWriter implements CategoryWriterInterface
             ->queryAttributeByCategoryIdAndLocale($idCategory, $locale->getIdLocale())
             ->findOne()
             ;
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return SpyCategory
+     */
+    protected function getCategoryEntity($idCategory)
+    {
+        return $this->queryContainer
+            ->queryCategoryById($idCategory)
+            ->findOne()
+        ;
     }
 }

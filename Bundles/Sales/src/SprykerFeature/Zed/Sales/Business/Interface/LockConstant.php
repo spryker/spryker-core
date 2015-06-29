@@ -1,8 +1,8 @@
 <?php
 /**
- * @author Marco Roßdeutscher <marco.rossdeutscher@project-a.com>
- * @version 15.06.12 15:09
+ * (c) Spryker Systems GmbH copyright protected
  */
+
 interface SprykerFeature_Zed_Sales_Business_Interface_LockConstant
 {
     const LOCK_RESOURCE_NAME = 'OrderStateMachine';
