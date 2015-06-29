@@ -115,6 +115,7 @@
     </transfer>
 
     <transfer name="Order">
+        <property name="idSalesOrder" type="int" />
         <property name="payonePayment" type="PayonePayment" />
     </transfer>
 
