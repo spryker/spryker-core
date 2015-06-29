@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UserTransfer;
 use Generated\Shared\Transfer\CollectionTransfer;
 use SprykerFeature\Zed\Acl\Dependency\Facade\AclToUserInterface;
 
-
 /**
  * @method UserDependencyContainer getDependencyContainer()
  */

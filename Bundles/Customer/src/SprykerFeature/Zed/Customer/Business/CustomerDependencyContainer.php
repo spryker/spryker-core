@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,7 +22,6 @@ use SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin\RegistrationTo
  */
 class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
 {
-
     /**
      * @return CustomerQueryContainerInterface
      */
@@ -54,6 +52,7 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
         foreach ($config->getRegistrationTokenSenders() as $senderClassName) {
             $customer->addRegistrationTokenSender($this->createSender($senderClassName));
         }
+        $customer->setHostYves($config->getHostYves());
 
         return $customer;
     }
@@ -96,4 +95,7 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getLocator()->locale()->facade();
     }
 
+    private function getHostYves() {
+        return $this->getProvidedDependency('HOST_YVES');
+    }
 }

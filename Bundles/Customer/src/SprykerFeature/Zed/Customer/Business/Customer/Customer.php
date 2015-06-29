@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -48,6 +47,11 @@ class Customer
     protected $registrationTokenSender = [];
 
     /**
+     * @var string
+     */
+    protected $hostYves = '';
+
+    /**
      * @param QueryContainerInterface $queryContainer
      */
     public function __construct(QueryContainerInterface $queryContainer)
@@ -92,6 +96,11 @@ class Customer
     public function addRegistrationTokenSender(RegistrationTokenSenderPluginInterface $sender)
     {
         $this->registrationTokenSender[] = $sender;
+    }
+
+    public function setHostYves($hostName)
+    {
+        $this->hostYves = $hostName;
     }
 
     /**
@@ -158,7 +167,7 @@ class Customer
     protected function sendPasswordRestoreToken(CustomerTransfer $customerTransfer)
     {
         $customerTransfer = $this->get($customerTransfer);
-        $link = SystemConfig::HOST_YVES . '/password/restore?token=' . $customerTransfer->getRestorePasswordKey();
+        $link = $this->hostYves . "/password/restore?token=" . $customerTransfer->getRestorePasswordKey();
         foreach ($this->passwordRestoreTokenSender as $sender) {
             $sender->send($customerTransfer->getEmail(), $link);
         }
@@ -169,7 +178,7 @@ class Customer
      */
     protected function sendRegistrationToken(CustomerTransfer $customerTransfer)
     {
-        $link = SystemConfig::HOST_YVES . '/register/confirm?token=' . $customerTransfer->getRegistrationKey();
+        $link = $this->hostYves . "/register/confirm?token=" . $customerTransfer->getRegistrationKey();
         foreach ($this->registrationTokenSender as $sender) {
             $sender->send($customerTransfer->getEmail(), $link);
         }
@@ -213,10 +222,9 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
+     * @return bool
      * @throws CustomerNotFoundException
      * @throws PropelException
-     *
-     * @return bool
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
@@ -233,10 +241,9 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
+     * @return bool
      * @throws PropelException
      * @throws CustomerNotFoundException
-     *
-     * @return bool
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
@@ -253,10 +260,9 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
+     * @return bool
      * @throws PropelException
      * @throws CustomerNotFoundException
-     *
-     * @return bool
      */
     public function delete(CustomerTransfer $customerTransfer)
     {
@@ -269,11 +275,10 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
+     * @return bool
      * @throws PropelException
      * @throws CustomerNotFoundException
      * @throws CustomerNotUpdatedException
-     *
-     * @return bool
      */
     public function update(CustomerTransfer $customerTransfer)
     {
@@ -296,10 +301,10 @@ class Customer
     protected function entityToTransfer(SpyCustomerAddress $customer)
     {
         $data = $customer->toArray();
-        unset($data['fk_misc_region']);
-        unset($data['deleted_at']);
-        unset($data['created_at']);
-        unset($data['updated_at']);
+        unset($data["fk_misc_region"]);
+        unset($data["deleted_at"]);
+        unset($data["created_at"]);
+        unset($data["updated_at"]);
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->fromArray($data);
 
@@ -324,13 +329,11 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @throws CustomerNotFoundException
-     *
      * @return SpyCustomer
+     * @throws CustomerNotFoundException
      */
     protected function getCustomer(CustomerTransfer $customerTransfer)
     {
-        //var_dump($customerTransfer); die;
         if ($customerTransfer->getIdCustomer()) {
             $customer = $this->queryContainer
                 ->queryCustomerById($customerTransfer->getIdCustomer())
@@ -347,5 +350,4 @@ class Customer
 
         throw new CustomerNotFoundException();
     }
-
 }

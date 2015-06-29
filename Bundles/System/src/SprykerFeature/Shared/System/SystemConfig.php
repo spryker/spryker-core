@@ -108,7 +108,7 @@ interface SystemConfig extends ConfigInterface
     const CLOUD_CDN_DELETE_LOCAL_PROCESSED_IMAGES = 'CLOUD_CDN_DELETE_LOCAL_PROCESSED_IMAGES';
     const CLOUD_CDN_DELETE_LOCAL_ORIGINAL_IMAGES = 'CLOUD_CDN_DELETE_LOCAL_ORIGINAL_IMAGES';
 
-    const HOST_YVES = 'http://www.de.spryker.dev';
+    const HOST_YVES = 'HOST_YVES';
     const HOST_ZED_GUI = 'HOST_ZED_GUI';
     const HOST_ZED_API = 'HOST_ZED_API';
     const HOST_STATIC_ASSETS = 'HOST_STATIC_ASSETS';
