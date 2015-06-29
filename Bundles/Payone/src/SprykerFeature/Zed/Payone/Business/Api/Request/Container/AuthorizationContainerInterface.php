@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: anusch
- * Date: 6/16/15
- * Time: 5:43 PM
+ * (c) Spryker Systems GmbH copyright protected
  */
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
