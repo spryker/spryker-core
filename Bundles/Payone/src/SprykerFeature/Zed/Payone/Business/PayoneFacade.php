@@ -10,7 +10,7 @@ use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Payone\CreditCardInterface;
 use Generated\Shared\Payone\ApiCallResponseCheckInterface;
 use Generated\Shared\Transfer\AuthorizationCheckResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Payone\OrderInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
@@ -27,9 +27,9 @@ class PayoneFacade extends AbstractFacade
 {
 
     /**
-     * @param OrderTransfer $orderData
+     * @param OrderInterface $orderData
      */
-    public function saveOrder(OrderTransfer $orderData)
+    public function saveOrder(OrderInterface $orderData)
     {
         $this->getDependencyContainer()->createOrderManager()->saveOrder($orderData);
     }
@@ -103,12 +103,40 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param PayonePaymentInterface $payment
+     * @param PayonePaymentInterface $paymentTransfer
+     * @return bool
+     * @deprecated use is approved & is redirect
+     */
+    public function isAuthorizationSuccessful(PayonePaymentInterface $paymentTransfer)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationSuccessful($paymentTransfer);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
      * @return bool
      */
-    public function isAuthorizationSuccessful(PayonePaymentInterface $payment)
+    public function isAuthorizationApproved(OrderInterface $orderTransfer)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationSuccessful($payment);
+        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationApproved($orderTransfer);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     * @return bool
+     */
+    public function isAuthorizationRedirect(OrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationRedirect($orderTransfer);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     * @return bool
+     */
+    public function isAuthorizationError(OrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationError($orderTransfer);
     }
 
     /**
@@ -130,13 +158,22 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderData
+     * @param PayoneOrderInterface $orderData
      * @return PaymentStatusTransfer
      */
-    public function getPaymentStatus(OrderTransfer $orderData)
+    public function getPaymentStatus(PayoneOrderInterface $orderTransfer)
     {
 //        @todo implement
 //        return $this->getDependencyContainer()->createTransactionStatusManager()->getPaymentStatus($orderData);
+    }
+
+    /**
+     * @param PayoneOrderInterface $orderTransfer
+     *
+     */
+    public function getPayment(PayoneOrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createPaymentManager()->getPayment($orderTransfer);
     }
 
 }
