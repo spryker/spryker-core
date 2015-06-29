@@ -1,5 +1,5 @@
 <?php
-namespace Codeception\Module;
+namespace PayoneOmsConnector\Codeception\Module;
 
 // here you can define custom functions for TestGuy 
 

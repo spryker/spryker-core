@@ -3,7 +3,7 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-
+namespace PayoneCheckoutConnector;
 use \Codeception\Maybe;
 use Codeception\Module\Filesystem;
 use Codeception\Module\TestHelper;
