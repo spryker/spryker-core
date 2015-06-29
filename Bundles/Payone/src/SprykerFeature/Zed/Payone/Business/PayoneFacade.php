@@ -159,7 +159,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isCaptureApproved(OrderInterface $orderTransfer)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationApproved($orderTransfer);
+        return $this->getDependencyContainer()->createApiLogFinder()->isCaptureApproved($orderTransfer);
     }
 
     /**
