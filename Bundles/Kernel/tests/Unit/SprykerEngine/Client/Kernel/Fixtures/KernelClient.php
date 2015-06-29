@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerEngine\Client\Kernel\Fixtures;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
+use SprykerEngine\Client\Kernel\Service\AbstractClient;
 
 class KernelClient extends AbstractClient
 {

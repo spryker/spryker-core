@@ -8,12 +8,11 @@ namespace SprykerFeature\Yves\Glossary;
 use Generated\Yves\Ide\FactoryAutoCompletion\Glossary;
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
 
+/**
+ * @method Glossary getFactory()
+ */
 class GlossaryDependencyContainer extends AbstractDependencyContainer
 {
-    /**
-     * @var Glossary
-     */
-    protected $factory;
 
     /**
      * @return TranslationServiceProvider
@@ -22,4 +21,5 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createTranslationServiceProvider($this->getFactory(), $this->getLocator());
     }
+
 }

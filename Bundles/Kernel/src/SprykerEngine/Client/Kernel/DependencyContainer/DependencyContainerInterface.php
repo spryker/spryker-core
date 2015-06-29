@@ -2,10 +2,16 @@
 
 namespace SprykerEngine\Client\Kernel\DependencyContainer;
 
-/**
- * Interface DependencyContainerInterface
- * @package SprykerEngine\Client\Kernel\Business\DependencyContainer
- */
+use SprykerEngine\Client\Kernel\Container;
+
 interface DependencyContainerInterface
 {
+
+    /**
+     * @param Container $container
+     *
+     * @return $this
+     */
+    public function setContainer(Container $container);
+
 }

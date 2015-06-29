@@ -5,7 +5,7 @@ namespace SprykerFeature\Client\Catalog\Service;
 use Elastica\Index;
 use Generated\Client\Ide\FactoryAutoCompletion\Catalog;
 use SprykerFeature\Client\Catalog\Service\Model\FacetConfig;
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 

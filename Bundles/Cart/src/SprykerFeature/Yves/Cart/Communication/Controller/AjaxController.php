@@ -65,9 +65,6 @@ class AjaxController extends AbstractController
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART_OVERLAY);
     }
 
-
-
-
     /**
      * @param \ArrayObject $cartItems
      * @return array

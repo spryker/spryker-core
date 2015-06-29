@@ -8,7 +8,7 @@ namespace SprykerEngine\Yves\Kernel;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Shared\Kernel\BundleProxy;
 use SprykerEngine\Shared\Kernel\TransferLocator;
-use SprykerEngine\Client\Kernel\ClientLocator;
+use SprykerEngine\Client\Kernel\Service\ClientLocator;
 
 class Locator extends AbstractLocatorLocator
 {

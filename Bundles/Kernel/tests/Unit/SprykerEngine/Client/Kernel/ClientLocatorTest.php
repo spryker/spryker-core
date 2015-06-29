@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerEngine\Client\Kernel;
 
-use SprykerEngine\Client\Kernel\ClientLocator;
+use SprykerEngine\Client\Kernel\Service\ClientLocator;
 use Unit\SprykerEngine\Client\Kernel\Fixtures\KernelClientLocator;
 
 /**

@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Client\Cart\Service;
 
@@ -7,7 +10,7 @@ use Generated\Shared\Cart\CartItemInterface;
 use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerEngine\Client\Kernel\AbstractClient;
+use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerFeature\Client\Cart\Service\Session\CartSessionInterface;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 

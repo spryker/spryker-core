@@ -5,10 +5,21 @@
 
 namespace SprykerFeature\Client\KvStorage\Service;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
+use SprykerEngine\Client\Kernel\Service\AbstractClient;
 
+/**
+ * @method KvStorageDependencyContainer getDependencyContainer()
+ */
 class KvStorageClient extends AbstractClient implements KvStorageClientInterface
 {
+
+    /**
+     * @return KvStorageClientInterface $service
+     */
+    public function getService()
+    {
+        return $this->getDependencyContainer()->createService();
+    }
 
     /**
      * @param string $key
@@ -16,7 +27,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function set($key, $value)
     {
-
+        $this->getService()->set($key, $value);
     }
 
     /**
@@ -24,7 +35,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function setMulti(array $items)
     {
-
+        $this->getService()->setMulti($items);
     }
 
     /**
@@ -32,7 +43,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function delete($key)
     {
-
+        $this->getService()->delete($key);
     }
 
     /**
@@ -40,7 +51,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function deleteMulti(array $keys)
     {
-
+        $this->getService()->deleteMulti($keys);
     }
 
     /**
@@ -48,7 +59,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function deleteAll()
     {
-
+        return $this->getService()->deleteAll();
     }
 
     /**
@@ -58,7 +69,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function get($key)
     {
-
+        return $this->getService()->get($key);
     }
 
     /**
@@ -68,7 +79,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function getMulti(array $keys)
     {
-
+        return $this->getService()->getMulti($keys);
     }
 
     /**
@@ -76,7 +87,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function getStats()
     {
-
+        return $this->getService()->getStats();
     }
 
     /**
@@ -84,7 +95,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function getAllKeys()
     {
-
+        return $this->getService()->getAllKeys();
     }
 
     /**
@@ -92,7 +103,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function resetAccessStats()
     {
-
+        $this->getService()->resetAccessStats();
     }
 
     /**
@@ -100,7 +111,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function getAccessStats()
     {
-
+        return $this->getService()->getAccessStats();
     }
 
     /**
@@ -108,7 +119,7 @@ class KvStorageClient extends AbstractClient implements KvStorageClientInterface
      */
     public function getCountItems()
     {
-
+        return $this->getService()->getCountItems();
     }
 
 }

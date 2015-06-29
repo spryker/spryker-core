@@ -50,7 +50,7 @@ class CartControllerProvider extends YvesControllerProvider
             ->convert('quantity', [$this, 'getQuantityFromRequest'])
         ;
 
-        $this->createPostController('/cart/remove/{sku}', self::ROUTE_CART_ADD_AJAX, 'Cart', 'Ajax', 'remove', true)
+        $this->createPostController('/cart/remove/{sku}', self::ROUTE_CART_REMOVE_AJAX, 'Cart', 'Ajax', 'remove', true)
             ->assert('sku', '[a-zA-Z0-9-_]+')
             ->convert('quantity', [$this, 'getQuantityFromRequest'])
         ;

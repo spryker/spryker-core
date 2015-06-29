@@ -68,7 +68,6 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     {
         $urlMatcher = $this->getLocator()->frontendExporter()
             ->client()
-            ->createUrlMatcher()
         ;
 
         return $urlMatcher;

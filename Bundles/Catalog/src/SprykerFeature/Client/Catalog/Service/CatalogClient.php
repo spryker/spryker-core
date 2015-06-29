@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Client\Catalog\Service;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
+use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

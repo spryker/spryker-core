@@ -1,9 +1,12 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Client\Cart\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\Cart;
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
 use SprykerFeature\Client\Cart\CartDependencyProvider;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
