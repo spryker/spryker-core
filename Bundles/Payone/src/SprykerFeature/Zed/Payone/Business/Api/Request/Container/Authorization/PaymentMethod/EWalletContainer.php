@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
 
+
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 
 class EWalletContainer extends AbstractPaymentMethodContainer
@@ -15,13 +16,13 @@ class EWalletContainer extends AbstractPaymentMethodContainer
      */
     protected $wallettype;
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
+     * @var RedirectContainer
      */
     protected $redirect;
 
 
     /**
-     * @param $wallettype
+     * @param string $wallettype
      */
     public function setWalletType($wallettype)
     {
@@ -37,7 +38,7 @@ class EWalletContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @param \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
+     * @param RedirectContainer $redirect
      */
     public function setRedirect(RedirectContainer $redirect)
     {
@@ -45,7 +46,7 @@ class EWalletContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @return \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
+     * @return RedirectContainer
      */
     public function getRedirect()
     {
