@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class CaptureIsApprovedPlugin extends AbstractPlugin

@@ -5,30 +5,19 @@
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Generated\Shared\Transfer\OrderTransfer;
 
-/**
- * @method PayoneDependencyContainer getDependencyContainer()
- */
-class RefundIserrorPlugin extends AbstractPlugin implements ConditionInterface
+class RefundIsErrorPlugin extends AbstractPlugin
 {
-
     /**
-     * @var array
-     */
-    protected static $resultCache = [];
-
-
-    /**
-     * @param SpySalesOrderItem $orderItem
+     * @param OrderTransfer $orderTransfer
+     *
      * @return bool
      */
-    public function check(SpySalesOrderItem $orderItem)
+    protected function callFacade(OrderTransfer $orderTransfer)
     {
-        //@todo
+        return $this->getDependencyContainer()->createPayoneFacade()->isRefundError($orderTransfer);
     }
-
 }
+
+
