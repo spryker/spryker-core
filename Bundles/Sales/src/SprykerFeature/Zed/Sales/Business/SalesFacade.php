@@ -22,6 +22,7 @@ class SalesFacade extends AbstractFacade
 {
 
     /**
+     * @deprecated
      * @param CommentTransfer $commentTransfer
      *
      * @return CommentTransfer
@@ -47,6 +48,7 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
+     * @deprecated
      * @param int $orderItemId
      *
      * @return array
@@ -61,7 +63,7 @@ class SalesFacade extends AbstractFacade
 
     /**
      * @param int $orderItemId
-     *
+     * @deprecated
      * @return OrderItemsTransfer
      */
     public function getOrderItemById($orderItemId)
@@ -74,7 +76,7 @@ class SalesFacade extends AbstractFacade
     /**
      * @param OrderTransfer $transferOrder
      * @param RequestInterface $request
-     *
+     * @deprecated
      * @return ModelResult
      */
     public function saveOrder(OrderTransfer $transferOrder, RequestInterface $request)
