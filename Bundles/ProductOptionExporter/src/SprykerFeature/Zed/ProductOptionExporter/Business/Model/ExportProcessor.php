@@ -60,7 +60,7 @@ class ExportProcessor implements ExportProcessorInterface
 
     /**
      * @param array $concreteProducts
-     * €param int $idLocale
+     * @param int $idLocale
      *
      * @return array
      */
@@ -85,16 +85,28 @@ class ExportProcessor implements ExportProcessorInterface
         $configs = [];
         $configPresets = $this->productOptionFacade->getConfigPresetsForConcreteProduct($idProduct);
         foreach ($configPresets as $configPreset) {
-            $values = $this->productOptionFacade->getValueUsagesForConfigPreset($configPreset['presetId']);
-            foreach($values as $index => $value) {
-                $values[$index] = (int) $value;
-            }
             $configs[] = [
-                'values' => $values
+                'values' => $this->processConfigValues($configPreset['presetId']),
             ];
         }
 
         return $configs;
+    }
+
+
+    /**
+     * @param int $idConfigPreset
+     *
+     * @return array
+     */
+    protected function processConfigValues($idConfigPreset)
+    {
+        $values = $this->productOptionFacade->getValueUsagesForConfigPreset($idConfigPreset);
+        foreach($values as $index => $value) {
+            $values[$index] = (int) $value;
+        }
+
+        return $values;
     }
 
     /**
@@ -191,15 +203,15 @@ class ExportProcessor implements ExportProcessorInterface
 
         $allowValues = $this->productOptionFacade
             ->getValueConstraintsForValueUsageByOperator($idValueUsage, self::CONSTRAINT_ALLOW);
-        $this->processConstraintValues('allow', $allowValues, $constraints);
+        $this->processConstraintValues(strtolower(self::CONSTRAINT_ALLOW), $allowValues, $constraints);
 
         $alwaysValues = $this->productOptionFacade
             ->getValueConstraintsForValueUsageByOperator($idValueUsage, self::CONSTRAINT_ALWAYS);
-        $this->processConstraintValues('always', $alwaysValues, $constraints);
+        $this->processConstraintValues(strtolower(self::CONSTRAINT_ALWAYS), $alwaysValues, $constraints);
 
         $notValues = $this->productOptionFacade
             ->getValueConstraintsForValueUsageByOperator($idValueUsage, self::CONSTRAINT_NOT);
-        $this->processConstraintValues('not', $notValues, $constraints);
+        $this->processConstraintValues(strtolower(self::CONSTRAINT_NOT), $notValues, $constraints);
 
         return $constraints;
     }

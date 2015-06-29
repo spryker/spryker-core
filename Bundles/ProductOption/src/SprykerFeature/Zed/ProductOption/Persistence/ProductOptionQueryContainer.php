@@ -30,15 +30,6 @@ use Propel\Runtime\Propel;
  */
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
-    /**
-     * @var ConnectionInterface
-     */
-    protected $dbConnection;
-
-    public function __construct()
-    {
-        $this->dbConnection = Propel::getConnection();
-    }
 
     /**
      * @param string $importKeyProductOptionType
@@ -339,7 +330,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ORDER BY typeUsage.sequence"
         ;
 
-        $statement = $this->dbConnection
+        $statement = $this->getConnection()
             ->prepare($sql);
 
         $statement->execute(
@@ -380,7 +371,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             AND spy_locale.id_locale = :idLocale"
         ;
 
-        $statement = $this->dbConnection
+        $statement = $this->getConnection()
             ->prepare($sql);
 
         $statement->execute(
@@ -410,7 +401,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             WHERE exclusionB.fk_product_option_type_usage_b = :idTypeUsage"
         ;
 
-        $statement = $this->dbConnection
+        $statement = $this->getConnection()
             ->prepare($sql);
 
         $statement->execute([':idTypeUsage' => $idTypeUsage]);
@@ -440,7 +431,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ORDER BY operator ASC"
         ;
 
-        $statement = $this->dbConnection
+        $statement = $this->getConnection()
             ->prepare($sql);
 
         $statement->execute([':idValueUsage' => $idValueUsage]);
@@ -470,7 +461,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             AND operator = :operator"
         ;
 
-        $statement = $this->dbConnection
+        $statement = $this->getConnection()
             ->prepare($sql);
 
         $statement->execute(
@@ -499,7 +490,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ORDER BY configPreset.sequence"
         ;
 
-        $statement = $this->dbConnection
+        $statement = $this->getConnection()
             ->prepare($sql);
 
         $statement->execute([':idProduct' => $idProduct]);
@@ -520,7 +511,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             WHERE presetValue.fk_product_option_configuration_preset = :idConfigPreset"
         ;
 
-        $statement = $this->dbConnection
+        $statement = $this->getConnection()
             ->prepare($sql);
 
         $statement->execute([':idConfigPreset' => $idConfigPreset]);
@@ -549,11 +540,19 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             WHERE optionTypeUsage.id_product_option_type_usage = :idTypeUsage"
         ;
 
-        $statement = $this->dbConnection
+        $statement = $this->getConnection()
             ->prepare($sql);
 
         $statement->execute([':idTypeUsage' => $idTypeUsage]);
 
         return $statement->fetch(\PDO::FETCH_COLUMN);
+    }
+
+    /**
+     * @return ConnectionInterface
+     */
+    private function getConnection()
+    {
+        return Propel::getConnection();
     }
 }
