@@ -25,7 +25,7 @@ class ThreeDSecureContainer extends AbstractContainer
      */
     protected $eci;
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
+     * @varb RedirectContainer
      */
     protected $redirect;
 
@@ -78,7 +78,7 @@ class ThreeDSecureContainer extends AbstractContainer
     }
 
     /**
-     * @param \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
+     * @param RedirectContainer $redirect
      */
     public function setRedirect(RedirectContainer $redirect)
     {
@@ -86,7 +86,7 @@ class ThreeDSecureContainer extends AbstractContainer
     }
 
     /**
-     * @return \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
+     * @return RedirectContainer
      */
     public function getRedirect()
     {
