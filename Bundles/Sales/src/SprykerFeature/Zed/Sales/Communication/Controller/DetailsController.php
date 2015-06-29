@@ -26,7 +26,7 @@ class DetailsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idOrder = $request->get('id');
+        $idOrder = $request->get('id-sales-order');
 
         $orderEntity = $this->getQueryContainer()->querySalesById($idOrder)->findOne();
         $orderItems = $this->getQueryContainer()->queryOrderItemsWithState($idOrder)->find();

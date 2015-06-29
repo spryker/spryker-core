@@ -49,8 +49,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     {
         $query = $this->queryOrderItems($idOrder);
         $query->joinWith('State');
-
-
+        $query->joinWith('Process');
         return $query;
     }
 
