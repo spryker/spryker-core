@@ -164,11 +164,54 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param OrderInterface $orderTransfer
+     *
+     * @return bool
      */
     public function isCaptureError(OrderInterface $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isCaptureError($orderTransfer);
     }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPaymentPaid(OrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isPaymentPaid($orderTransfer);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPaymentUnderPaid(OrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isPaymentUnderPaid($orderTransfer);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isRefundApproved(OrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isRefundApproved($orderTransfer);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isRefundError(OrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isRefundError($orderTransfer);
+    }
+
 
     /**
      * @param PayonePaymentInterface $payment
