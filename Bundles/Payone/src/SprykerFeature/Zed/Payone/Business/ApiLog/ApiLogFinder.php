@@ -117,7 +117,7 @@ class ApiLogFinder
 
     /**
      * @param OrderInterface $orderTransfer
-     * @param $status
+     * @param string $status
      *
      * @return bool
      */
