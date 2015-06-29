@@ -8,20 +8,20 @@ namespace SprykerFeature\Client\Cart\Service\Zed;
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Cart\ChangeInterface;
 use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Shared\ZedRequest\Client\AbstractZedClient;
+use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
 
 class CartStub implements CartStubInterface
 {
 
     /**
-     * @var AbstractZedClient
+     * @var ZedClient
      */
     private $zedStub;
 
     /**
-     * @param AbstractZedClient $zedStub
+     * @param ZedRequestClient $zedStub
      */
-    public function __construct(AbstractZedClient $zedStub)
+    public function __construct(ZedRequestClient $zedStub)
     {
         $this->zedStub = $zedStub;
     }

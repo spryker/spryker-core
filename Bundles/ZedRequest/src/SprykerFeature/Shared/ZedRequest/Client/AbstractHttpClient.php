@@ -201,15 +201,11 @@ abstract class AbstractHttpClient implements HttpClientInterface
             }
             $request->addMetaTransfer($name, $metaTransfer);
         }
-        if (!empty($this->username)) {
-            $request->setUsername($this->username);
-        }
-        if (!empty($this->password)) {
-            $request->setPassword($this->password);
-        }
+        
         if (!empty($transferObject)) {
             $request->setTransfer($transferObject);
         }
+
         return $request;
     }
 

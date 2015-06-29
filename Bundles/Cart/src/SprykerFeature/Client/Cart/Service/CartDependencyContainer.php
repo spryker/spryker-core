@@ -22,7 +22,11 @@ class CartDependencyContainer extends AbstractDependencyContainer
      */
     public function createSession()
     {
-        return $this->getProvidedDependency(CartDependencyProvider::SESSION);
+        $session = $this->getFactory()->createSessionCartSession(
+            $this->getProvidedDependency(CartDependencyProvider::SESSION)
+        );
+
+        return $session;
     }
 
     /**
@@ -31,7 +35,7 @@ class CartDependencyContainer extends AbstractDependencyContainer
     public function createZedStub()
     {
         $zedStub = $this->getProvidedDependency(CartDependencyProvider::SERVICE_ZED);
-        $cartStub = $this->getFactory()->createServiceZedCartStub(
+        $cartStub = $this->getFactory()->createZedCartStub(
             $zedStub
         );
 

@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Yves\Cart\Communication\Controller;
 
@@ -9,6 +12,20 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AjaxController extends AbstractController
 {
+
+    /**
+     * @return array
+     */
+    public function indexAction()
+    {
+        $cartClient = $this->getLocator()->cart()->client();
+
+        return $this->viewResponse([
+            'cart' => $cartClient->getCart(),
+            'products' => []
+//            'products' => $this->getProductsForCartItems($cartClient->getCart()->getItems()),
+        ]);
+    }
 
     /**
      * @param string $sku
