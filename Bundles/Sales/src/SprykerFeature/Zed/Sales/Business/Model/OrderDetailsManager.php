@@ -10,6 +10,9 @@ use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderDetailsManager
 {
+    /**
+     * @var SalesQueryContainerInterface
+     */
     protected $queryContainer;
 
     protected $omsFacade;
@@ -36,26 +39,18 @@ class OrderDetailsManager
     }
 
     /**
-     * @param int $orderId
-     *
+     * @param $idOrder
      * @return array
      */
-    public function getOrderItemsArrayByOrderId($orderId)
+    public function getArrayWithManualEvents($idOrder)
     {
+        $orderItems = $this->queryContainer->queryOrderItems($idOrder)->find();
 
-        $orderItems = $this->queryContainer->queryOrderItems($orderId)->find();
-
-        list($orderItemsList, $totalItems, $totalPrice) = $this->getOrderItemsListAndTotalDetails($orderItems);
-
-        return [
-            'content' => [
-                'rows' => $orderItemsList,
-                'total' => [
-                    'total_price_to_pay' => $totalPrice,
-                    'total_qty' => $totalItems,
-                ]
-            ]
-        ];
+        $events = [];
+        foreach($orderItems as $i => $orderItem) {
+            $events[$orderItem->getIdSalesOrderItem()] = $this->omsFacade->getManualEvents($orderItem->getIdSalesOrderItem());
+        }
+        return $events;
     }
 
     /**

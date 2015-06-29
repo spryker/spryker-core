@@ -5,12 +5,16 @@
 
 namespace SprykerFeature\Zed\Sales\Persistence;
 
-use Propel\Runtime\ActiveQuery\Criteria;
+use Generated\Zed\Ide\FactoryAutoCompletion\SalesPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderCommentQuery;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 
+/**
+ * @method SalesPersistence getFactory()
+ */
 class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryContainerInterface
 {
 
@@ -25,29 +29,42 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @var int $orderId
+     * @var int $idOrder
      *
-     * @return SpySalesOrderItem
+     * @return SpySalesOrderItemQuery
      */
-    public function queryOrderItems($orderId)
+    public function queryOrderItems($idOrder)
     {
-        $query = SpySalesOrderItemQuery::create();
-        $query->filterByFkSalesOrder($orderId);
-        $query->withColumn('COUNT(*)', 'qty');
-        $query->groupBySku();
+        $query = $this->getFactory()->createPropelSpySalesOrderItemQuery();
+        return $query->filterByFkSalesOrder($idOrder);
+    }
+
+
+    /**
+     * @var int $idOrder
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function queryOrderItemsWithState($idOrder)
+    {
+        $query = $this->queryOrderItems($idOrder);
+        $query->joinWith('State');
+
 
         return $query;
     }
 
+
+
     /**
-     * @param $orderItemId
+     * @param $idOrderItem
      *
      * @return SpySalesOrderItemQuery
      */
-    public function queryOrderItemById($orderItemId)
+    public function queryOrderItemById($idOrderItem)
     {
         $query = SpySalesOrderItemQuery::create();
-        $query->filterByIdSalesOrderItem($orderItemId);
+        $query->filterByIdSalesOrderItem($idOrderItem);
 
         return $query;
     }

@@ -7,12 +7,14 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()
  * @method SalesFacade getFacade()
+ * @method SalesQueryContainerInterface getQueryContainer()
  */
 class DetailsController extends AbstractController
 {
@@ -24,19 +26,17 @@ class DetailsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $orderId = intval($request->get('id'));
+        $idOrder = $request->get('id');
 
-        $orderDetails = $this->getFacade()
-            ->createOrderDetailsModel()
-            ->getOrderDetailsByOrderId($orderId)
-        ;
-
-        $orderItems = $this->getFacade()->getOrderItemsArrayByOrderId($orderId);
+        $orderEntity = $this->getQueryContainer()->querySalesById($idOrder)->findOne();
+        $orderItems = $this->getQueryContainer()->queryOrderItemsWithState($idOrder)->find();
+        $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
 
         return [
-            'orderId' => $orderId,
-            'orderDetails' => $orderDetails,
+            'idOrder' => $idOrder,
+            'orderDetails' => $orderEntity,
             'orderItems' => $orderItems,
+            'events' => $events
         ];
     }
 }

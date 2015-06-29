@@ -5,21 +5,23 @@
 
 namespace SprykerFeature\Zed\Sales\Communication;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\SalesCommunication;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerFeature\Zed\Oms\Business\OmsFacade;
+use SprykerFeature\Zed\Sales\Communication\Grid\CommentsGrid;
+use SprykerFeature\Zed\Sales\Communication\Grid\OrderItemsGrid;
+use SprykerFeature\Zed\Sales\Communication\Grid\SalesGrid;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Propel\Runtime\ActiveQuery\Criteria;
 
+/**
+ * @method SalesCommunication getFactory()
+ * @method SalesQueryContainerInterface getQueryContainer()
+ */
 class SalesDependencyContainer extends AbstractDependencyContainer
 {
-
-    /**
-     * @return SalesFacade
-     */
-    public function getInstallerFacade()
-    {
-        return $this->getLocator()->sales()->facade();
-    }
 
     /**
      * @param Request $request
@@ -68,7 +70,6 @@ class SalesDependencyContainer extends AbstractDependencyContainer
     public function getSalesGrid(Request $request)
     {
         $querySales = $this->getQueryContainer()->querySales();
-        $querySales->orderByIdSalesOrder(Criteria::DESC);
 
         return $this->getFactory()->createGridSalesGrid(
             $querySales,
@@ -97,11 +98,4 @@ class SalesDependencyContainer extends AbstractDependencyContainer
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS);
     }
 
-    /**
-     * @return SalesQueryContainerInterface
-     */
-    public function getQueryContainer()
-    {
-        return $this->getLocator()->sales()->queryContainer();
-    }
 }

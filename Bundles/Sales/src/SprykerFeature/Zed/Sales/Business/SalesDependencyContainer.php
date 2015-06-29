@@ -7,6 +7,9 @@ namespace SprykerFeature\Zed\Sales\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerFeature\Zed\Sales\Business\Model\CommentManager;
+use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 
 /**

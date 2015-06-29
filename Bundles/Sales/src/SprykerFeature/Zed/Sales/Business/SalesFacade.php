@@ -12,6 +12,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
+use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -34,15 +35,15 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param int $orderId
+     * @param int $idOrder
      *
      * @return array
      */
-    public function getOrderItemsArrayByOrderId($orderId)
+    public function getArrayWithManualEvents($idOrder)
     {
         $orderManager = $this->getDependencyContainer()->createOrderDetailsManager();
 
-        return $orderManager->getOrderItemsArrayByOrderId($orderId);
+        return $orderManager->getArrayWithManualEvents($idOrder);
     }
 
     /**
@@ -70,19 +71,6 @@ class SalesFacade extends AbstractFacade
             ->getOrderItemById($orderItemId)
         ;
     }
-
-    /**
-     * @return OrderDetailsManager
-     */
-    public function createOrderDetailsModel()
-    {
-        $model = $this->getDependencyContainer()
-            ->createOrderDetailsManager()
-        ;
-
-        return $model;
-    }
-
     /**
      * @param OrderTransfer $transferOrder
      * @param RequestInterface $request

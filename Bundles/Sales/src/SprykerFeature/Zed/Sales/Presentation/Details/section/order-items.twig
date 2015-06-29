@@ -2,37 +2,38 @@
     <h3>Order Items Overview</h3>
     <section class="spy-layout compact" spy-app="spyForm">
 
-        {% if orderItems.content.rows|length > 0 %}
+        {% if orderItems|length > 0 %}
         <table class="spy-grid">
             <tr class="text-left">
-                <th>Item name</th>
-                <th>SKU</th>
-                <th>Unit Price</th>
-                <th>QTY</th>
-                <th>Total Price</th>
-                <th>Current State</th>
-                <th>Trigger State Machine</th>
+                <th>{{ "Item name" | trans }}</th>
+                <th>{{ "SKU" | trans }}</th>
+                <th>{{ "Unit Price" | trans }}</th>
+                <th>{{ "QTY" | trans}}</th>
+                <th>{{ "Total Price" | trans }}</th>
+                <th>{{ "Current State" | trans }}</th>
+                <th>{{ "Trigger State Machine" | trans }}</th>
             </tr>
-            {% for row in orderItems.content.rows %}
+            {% for orderItem in orderItems %}
             <tr>
-                <td>{{ row.name }}</td>
-                <td>{{ row.sku }}</td>
-                <td>{{ row.gross_price|number_format(2) }} &euro;</td>
-                <td>{{ row.qty }}</td>
-                <td>{{ (row.price_to_pay * row.qty)|number_format(2) }} &euro;</td>
-                <td>{{ row.current_state }}</td>
+                <td>{{ orderItem.name }}</td>
+                <td>{{ orderItem.sku }}</td>
+                <td>{{ orderItem.gross_price|number_format(2) }} &euro;</td>
+                <td>{{ orderItem.qty }}</td>
+                <td>{{ orderItem.price_to_pay |number_format(2) }} &euro;</td>
+                <td>{{ orderItem.state.name }}</td>
                 <td>
+                    {% if events[orderItem.IdSalesOrderItem] |length > 0 %}
+                        <form action="/sales/order/trigger" method="post">
+                            <input type="hidden" name="id" value="{{ orderItem.IdSalesOrderItem }}"/>
 
-                    {% if row.accepts|length > 0 %}
-                    <form action="/sales/order/trigger" method="post">
-                        <input type="hidden" name="id" value="{{ row.id_sales_order_item }}"/>
-                        <select name="event">
-                            {% for option in row.accepts %}
-                            <option value="{{ option.value }}">{{ option.label }}</option>
-                            {% endfor %}
-                        </select>
-                        <button>Submit</button>
-                    </form>
+
+                            <select name="event">
+                                {% for event in events[orderItem.IdSalesOrderItem] %}
+                                    <option value="{{ event }}">{{ event }}</option>
+                                {% endfor %}
+                            </select>
+                            <button>Submit</button>
+                        </form>
                     {% else -%}
                         -
                     {%- endif %}
@@ -40,13 +41,6 @@
                 </td>
             </tr>
             {% endfor %}
-            <tr>
-                <td>Total</td>
-                <td>-</td>
-                <td>-</td>
-                <td>{{ orderItems.content.total.total_qty }}</td>
-                <td>{{ orderItems.content.total.total_price_to_pay|number_format(2) }} &euro;</td>
-            </tr>
         </table>
         {% else %}
             <p>There are no items for this order</p>
