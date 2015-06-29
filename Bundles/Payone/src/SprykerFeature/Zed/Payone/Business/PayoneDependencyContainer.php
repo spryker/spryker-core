@@ -12,8 +12,7 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayoneBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
-use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
-use SprykerFeature\Zed\Payone\Business\Payment\PaymentManager;
+use SprykerFeature\Zed\Payone\Business\Payment\PaymentManagerInterface;
 use SprykerFeature\Zed\Payone\Business\Order\OrderManagerInterface;
 use SprykerFeature\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
 use SprykerFeature\Zed\Payone\PayoneConfig;
@@ -47,7 +46,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return PaymentManager
+     * @return PaymentManagerInterface
      */
     public function createPaymentManager()
     {
