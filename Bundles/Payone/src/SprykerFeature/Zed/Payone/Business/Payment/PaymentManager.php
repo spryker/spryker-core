@@ -13,7 +13,6 @@ use Generated\Shared\Payone\CreditCardInterface;
 use Generated\Shared\Payone\StandardParameterInterface;
 use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
