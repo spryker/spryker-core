@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 
 class CouchbaseReadWrite extends CouchbaseRead implements ReadWriteInterface

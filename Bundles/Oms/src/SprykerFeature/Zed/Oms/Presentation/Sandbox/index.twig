@@ -20,16 +20,13 @@
             <td>{{ orderItem['process'] }}</td>
             <td>{{ orderItem['state'] }}</td>
             <td>
+                {% for event in orderItem['events'] %}
                 <form action="/oms/sandbox/trigger">
-                    <input type="hidden" name="event" value="nopayment">
+                    <input type="hidden" name="event" value="{{ event }}">
                     <input type="hidden" name="id" value="{{ orderItem['id'] }}">
-                    <button>Event 'nopayment' triggern</button>
+                    <button>Event '{{ event }}' triggern</button>
                 </form>
-                <form action="/oms/sandbox/trigger">
-                    <input type="hidden" name="event" value="cancel">
-                    <input type="hidden" name="id" value="{{ orderItem['id'] }}">
-                    <button>Event 'cancel' triggern</button>
-                </form>
+                {%  endfor %}
             </td>
         </tr>
         {% endfor %}

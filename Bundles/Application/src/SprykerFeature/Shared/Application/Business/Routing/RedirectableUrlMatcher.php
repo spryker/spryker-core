@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Shared\Library\Silex\Routing;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;

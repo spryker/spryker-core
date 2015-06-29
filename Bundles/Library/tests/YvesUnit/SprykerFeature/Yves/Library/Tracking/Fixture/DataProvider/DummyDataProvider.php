@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace YvesUnit\SprykerFeature\Yves\Library\Tracking\Fixture\DataProvider;
 

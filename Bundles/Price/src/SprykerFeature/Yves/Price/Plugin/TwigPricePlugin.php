@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Yves\Price\Plugin;
 
@@ -16,11 +19,8 @@ class TwigPricePlugin extends AbstractPlugin implements TwigFilterPluginInterfac
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('price', function ($priceValue, $withSymbol = true) {
-                $priceValue = CurrencyManager::getInstance()->convertCentToDecimal($priceValue);
-
-                return CurrencyManager::getInstance()->format($priceValue, $withSymbol);
-            })
+            $this->getPriceFilter(),
+            $this->getPriceRawFilter(),
         ];
     }
 
@@ -37,4 +37,29 @@ class TwigPricePlugin extends AbstractPlugin implements TwigFilterPluginInterfac
             })
         ];
     }
+
+    /**
+     * @return \Twig_SimpleFilter
+     */
+    private function getPriceFilter()
+    {
+        return new \Twig_SimpleFilter('price', function ($priceValue, $withSymbol = true) {
+            $priceValue = CurrencyManager::getInstance()->convertCentToDecimal($priceValue);
+
+            return CurrencyManager::getInstance()->format($priceValue, $withSymbol);
+        });
+    }
+
+    /**
+     * @return \Twig_SimpleFilter
+     */
+    private function getPriceRawFilter()
+    {
+        return new \Twig_SimpleFilter('priceRaw', function ($priceValue) {
+            $priceValue = CurrencyManager::getInstance()->convertCentToDecimal($priceValue);
+
+            return $priceValue;
+        });
+    }
+
 }

@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 interface SprykerFeature_Zed_Sales_Business_Interface_OrderprocessConstant
 {

@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 use SprykerFeature\Zed\Auth\Business\Model\Auth;
 

@@ -1,5 +1,9 @@
 <?php
 /**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+/**
  * Flash-Messenger
  *
  * Usage in Controller (or somewhere else):

@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 namespace SprykerFeature\Zed\Acl\Persistence;
 
 use Generated\Shared\Transfer\RoleTransfer;

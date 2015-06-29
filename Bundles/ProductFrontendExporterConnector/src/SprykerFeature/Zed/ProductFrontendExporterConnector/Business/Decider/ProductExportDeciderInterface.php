@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Decider;
 
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;

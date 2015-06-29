@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 namespace Unit\SprykerFeature\Zed\ProductImage\Business\Model;
 
 use SprykerFeature\Zed\ProductImage\Business\Model\Filesystem;

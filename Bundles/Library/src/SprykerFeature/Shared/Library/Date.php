@@ -1,9 +1,8 @@
 <?php
-
 /**
- * \SprykerFeature_Shared_Library_Date
- *
+ * (c) Spryker Systems GmbH copyright protected
  */
+
 class SprykerFeature_Shared_Library_Date extends \SprykerEngine\Shared\Kernel\Store
 {
     const DATE_FORMAT_SHORT = 'short';

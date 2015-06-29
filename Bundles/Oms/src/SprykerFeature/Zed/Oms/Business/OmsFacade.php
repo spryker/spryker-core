@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Oms\Business;
 
@@ -19,6 +22,19 @@ use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInt
  */
 class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterface
 {
+
+    /**
+     * @param int $idOrderItem
+     *
+     * @return string[]
+     */
+    public function getManualEvents($idOrderItem)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderStateMachineFinder()
+            ->getManualEvents($idOrderItem)
+        ;
+    }
 
     /**
      * @param int $idOrder
@@ -316,7 +332,6 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @deprecated
      * @param string $eventId
      * @param ObjectCollection $orderItems
      * @param array $logContext
@@ -335,7 +350,6 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @deprecated
      * @param ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
@@ -353,7 +367,6 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @deprecated
      * @param string $eventId
      * @param OrderTransfer $orderItem
      * @param array $logContext

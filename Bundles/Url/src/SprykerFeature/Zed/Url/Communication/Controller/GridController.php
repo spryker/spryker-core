@@ -1,7 +1,6 @@
 <?php
-
-/*
- * (c) Copyright Spryker Systems GmbH 2015
+/**
+ * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Url\Communication\Controller;

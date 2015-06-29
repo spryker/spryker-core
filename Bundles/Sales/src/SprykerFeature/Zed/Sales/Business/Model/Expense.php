@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
 
 class SprykerFeature_Zed_Sales_Business_Model_Expense

@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
@@ -36,6 +39,31 @@ class Finder implements FinderInterface
         $this->queryContainer = $queryContainer;
         $this->builder = $builder;
         $this->activeProcesses = $activeProcesses;
+    }
+
+    /**
+     * @param int $idOrderItem
+     *
+     * @return string[]
+     */
+    public function getManualEvents($idOrderItem)
+    {
+        $orderItem = $this->queryContainer
+            ->queryOrderItems([$idOrderItem])
+            ->findOne()
+        ;
+
+        $state = $orderItem->getState()->getName();
+        $processName = $orderItem->getProcess()->getName();
+
+        $processBuilder = clone $this->builder;
+        $events = $processBuilder->createProcess($processName)->getManualEventsBySource();
+
+        if (!isset($events[$state])) {
+            return [];
+        }
+
+        return $events[$state];
     }
 
     /**

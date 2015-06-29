@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
@@ -22,5 +25,21 @@ class GridController extends AbstractController
         $grid = $this->getDependencyContainer()->getSalesGrid($request);
 
         return $this->jsonResponse($grid->renderData());
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function commentsAction(Request $request)
+    {
+        $grid = $this->getDependencyContainer()
+            ->getCommentsGridByOrderId($request)
+        ;
+
+        $gridData = $grid->renderData();
+
+        return $this->jsonResponse($gridData);
     }
 }
