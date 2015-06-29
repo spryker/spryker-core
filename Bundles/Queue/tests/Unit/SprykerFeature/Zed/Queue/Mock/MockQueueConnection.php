@@ -4,7 +4,7 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace Functional\SprykerFeature\Zed\Queue\Mock;
+namespace Unit\SprykerFeature\Zed\Queue\Mock;
 
 use Generated\Shared\Queue\QueueMessageInterface;
 use Generated\Shared\Transfer\QueueMessageTransfer;

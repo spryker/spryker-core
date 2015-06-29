@@ -29,10 +29,10 @@ class DistributorFacade extends AbstractFacade
      * @param MessengerInterface $messenger
      * @param array $itemTypes
      */
-    public function distributeItems(MessengerInterface $messenger, $itemTypes = [])
+    public function distributeItems(MessengerInterface $messenger = null, $itemTypes = [])
     {
         $this->getDependencyContainer()
-            ->createQueueDistributor()
+            ->createDistributor()
             ->distributeData($messenger, $itemTypes)
         ;
     }

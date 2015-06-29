@@ -9,7 +9,7 @@ use SprykerFeature\Zed\Distributor\Business\Marker\LastDistributionMarkerInterfa
 use SprykerFeature\Zed\Distributor\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterface;
 
-class Distributor
+class TypeDistributor
 {
 
     /**
@@ -51,7 +51,7 @@ class Distributor
      * @param MessengerInterface $messenger
      * @param array $itemTypes
      */
-    public function distributeData(MessengerInterface $messenger, $itemTypes = [])
+    public function distributeData(MessengerInterface $messenger = null, $itemTypes = [])
     {
         if (empty($itemTypes)) {
             $itemTypes = $this->queryContainer->queryItemTypes()->find();
@@ -64,13 +64,17 @@ class Distributor
 
             $this->itemDistributor->distributeByType($itemType, $batchIterator);
 
-            $messenger->info(
-                sprintf(
-                    '%s Items of type %s successfully distributed',
-                    $batchIterator->count(),
-                    $itemType
-                )
-            );
+            $batchCount = $batchIterator->count();
+
+            if ($messenger) {
+                $messenger->info(
+                    sprintf(
+                        '%s Items of type %s successfully distributed',
+                        $batchCount,
+                        $itemType
+                    )
+                );
+            }
 
             $this->distributionMarker->setLastDistributionTimestampByType($itemType, $currentTimestamp);
         }

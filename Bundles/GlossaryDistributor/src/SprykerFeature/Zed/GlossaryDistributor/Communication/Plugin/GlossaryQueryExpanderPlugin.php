@@ -5,10 +5,10 @@ namespace SprykerFeature\Zed\GlossaryDistributor\Communication\Plugin;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Distributor\Dependency\Plugin\QueryExpanderPluginInterface;
-use SprykerFeature\Zed\GlossaryDistributor\Persistence\GlossaryDistributorQueryContainer;
+use SprykerFeature\Zed\GlossaryDistributor\Communication\GlossaryDistributorDependencyContainer;
 
 /**
- * @method GlossaryDistributorQueryContainer getQueryContainer()
+ * @method GlossaryDistributorDependencyContainer getDependencyContainer()
  */
 class GlossaryQueryExpanderPlugin extends AbstractPlugin implements
     QueryExpanderPluginInterface
@@ -29,7 +29,9 @@ class GlossaryQueryExpanderPlugin extends AbstractPlugin implements
      */
     public function expandQuery(ModelCriteria $expandableQuery)
     {
-        return $this->getQueryContainer()->queryTranslationsToDistribute($expandableQuery);
+        return $this->getFacade()
+            ->queryTranslationsToDistribute($expandableQuery)
+        ;
     }
 
     /**

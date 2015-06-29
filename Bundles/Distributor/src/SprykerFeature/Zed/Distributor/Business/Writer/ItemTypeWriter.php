@@ -24,17 +24,18 @@ class ItemTypeWriter implements ItemTypeWriterInterface
     }
 
     /**
-     * @param $queueName
+     * @param $typeKey
      *
      * @return int
      */
-    public function create($queueName)
+    public function create($typeKey)
     {
-        $distribution = new SpyDistributorItemType();
-        $distribution->setKey($queueName);
-        $distribution->save();
+        $itemType = new SpyDistributorItemType();
+        $itemType->setTypeKey($typeKey);
+        $itemType->setLastDistribution(\DateTime::createFromFormat('Y-m-d H:i:s', '2000-01-01 00:00:00'));
+        $itemType->save();
 
-        return $distribution->getIdDistributorItemType();
+        return $itemType->getIdDistributorItemType();
     }
 
     /**
@@ -47,12 +48,12 @@ class ItemTypeWriter implements ItemTypeWriterInterface
      */
     public function update($typeKey, $timestamp)
     {
-        $distribution = $this->queryContainer
+        $itemType = $this->queryContainer
             ->queryTypeByKey($typeKey)
             ->findOne()
         ;
 
-        if (empty($distribution)) {
+        if (empty($itemType)) {
             throw new ItemTypeDoesNotExistException(
                 sprintf(
                     'Item type %s does not exist',
@@ -61,9 +62,9 @@ class ItemTypeWriter implements ItemTypeWriterInterface
             );
         }
 
-        $distribution->setLastDistribution($timestamp);
-        $distribution->save();
+        $itemType->setLastDistribution($timestamp);
+        $itemType->save();
 
-        return $distribution->getIdDistributorItemType();
+        return $itemType->getIdDistributorItemType();
     }
 }

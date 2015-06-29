@@ -6,7 +6,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\DistributorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use SprykerFeature\Zed\Distributor\Business\Builder\QueueNameBuilderInterface;
 use SprykerFeature\Zed\Distributor\Business\Distributor\ItemDistributorInterface;
-use SprykerFeature\Zed\Distributor\Business\Distributor\Distributor;
+use SprykerFeature\Zed\Distributor\Business\Distributor\TypeDistributor;
 use SprykerFeature\Zed\Distributor\Business\Internal\ItemTypeInstaller;
 use SprykerFeature\Zed\Distributor\Business\Internal\ReceiverInstaller;
 use SprykerFeature\Zed\Distributor\Business\Marker\LastDistributionMarkerInterface;
@@ -39,11 +39,11 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return Distributor
+     * @return TypeDistributor
      */
-    public function createQueueDistributor()
+    public function createDistributor()
     {
-        $queueDistributor = $this->getFactory()->createDistributorDistributor(
+        $queueDistributor = $this->getFactory()->createDistributorTypeDistributor(
             $this->getQueryContainer(),
             $this->createLatestDistributionMarker(),
             $this->createItemDistributor()

@@ -21,11 +21,11 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemType
  *
  *
  * @method     ChildSpyDistributorItemTypeQuery orderByIdDistributorItemType($order = Criteria::ASC) Order by the id_distributor_item_type column
- * @method     ChildSpyDistributorItemTypeQuery orderByKey($order = Criteria::ASC) Order by the key column
+ * @method     ChildSpyDistributorItemTypeQuery orderByTypeKey($order = Criteria::ASC) Order by the type_key column
  * @method     ChildSpyDistributorItemTypeQuery orderByLastDistribution($order = Criteria::ASC) Order by the last_distribution column
  *
  * @method     ChildSpyDistributorItemTypeQuery groupByIdDistributorItemType() Group by the id_distributor_item_type column
- * @method     ChildSpyDistributorItemTypeQuery groupByKey() Group by the key column
+ * @method     ChildSpyDistributorItemTypeQuery groupByTypeKey() Group by the type_key column
  * @method     ChildSpyDistributorItemTypeQuery groupByLastDistribution() Group by the last_distribution column
  *
  * @method     ChildSpyDistributorItemTypeQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
@@ -42,12 +42,12 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemType
  * @method     ChildSpyDistributorItemType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyDistributorItemType matching the query, or a new ChildSpyDistributorItemType object populated from the query conditions when no match is found
  *
  * @method     ChildSpyDistributorItemType findOneByIdDistributorItemType(int $id_distributor_item_type) Return the first ChildSpyDistributorItemType filtered by the id_distributor_item_type column
- * @method     ChildSpyDistributorItemType findOneByKey(string $key) Return the first ChildSpyDistributorItemType filtered by the key column
+ * @method     ChildSpyDistributorItemType findOneByTypeKey(string $type_key) Return the first ChildSpyDistributorItemType filtered by the type_key column
  * @method     ChildSpyDistributorItemType findOneByLastDistribution(string $last_distribution) Return the first ChildSpyDistributorItemType filtered by the last_distribution column
  *
  * @method     ChildSpyDistributorItemType[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyDistributorItemType objects based on current ModelCriteria
  * @method     ChildSpyDistributorItemType[]|ObjectCollection findByIdDistributorItemType(int $id_distributor_item_type) Return ChildSpyDistributorItemType objects filtered by the id_distributor_item_type column
- * @method     ChildSpyDistributorItemType[]|ObjectCollection findByKey(string $key) Return ChildSpyDistributorItemType objects filtered by the key column
+ * @method     ChildSpyDistributorItemType[]|ObjectCollection findByTypeKey(string $type_key) Return ChildSpyDistributorItemType objects filtered by the type_key column
  * @method     ChildSpyDistributorItemType[]|ObjectCollection findByLastDistribution(string $last_distribution) Return ChildSpyDistributorItemType objects filtered by the last_distribution column
  * @method     ChildSpyDistributorItemType[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
@@ -140,7 +140,7 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id_distributor_item_type, key, last_distribution FROM spy_distributor_item_type WHERE id_distributor_item_type = :p0';
+        $sql = 'SELECT id_distributor_item_type, type_key, last_distribution FROM spy_distributor_item_type WHERE id_distributor_item_type = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -276,32 +276,32 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the key column
+     * Filter the query on the type_key column
      *
      * Example usage:
      * <code>
-     * $query->filterByKey('fooValue');   // WHERE key = 'fooValue'
-     * $query->filterByKey('%fooValue%'); // WHERE key LIKE '%fooValue%'
+     * $query->filterByTypeKey('fooValue');   // WHERE type_key = 'fooValue'
+     * $query->filterByTypeKey('%fooValue%'); // WHERE type_key LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $key The value to use as filter.
+     * @param     string $typeKey The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildSpyDistributorItemTypeQuery The current query, for fluid interface
      */
-    public function filterByKey($key = null, $comparison = null)
+    public function filterByTypeKey($typeKey = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($key)) {
+            if (is_array($typeKey)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $key)) {
-                $key = str_replace('*', '%', $key);
+            } elseif (preg_match('/[\%\*]/', $typeKey)) {
+                $typeKey = str_replace('*', '%', $typeKey);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(SpyDistributorItemTypeTableMap::COL_KEY, $key, $comparison);
+        return $this->addUsingAlias(SpyDistributorItemTypeTableMap::COL_TYPE_KEY, $typeKey, $comparison);
     }
 
     /**

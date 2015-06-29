@@ -1,9 +1,9 @@
 <?php
 
-namespace Functional\SprykerFeature\Zed\Queue\Business\Worker;
+namespace Unit\SprykerFeature\Zed\Queue\Business\Worker;
 
 use Codeception\TestCase\Test;
-use Functional\SprykerFeature\Zed\Queue\Mock\MockQueueConnection;
+use Unit\SprykerFeature\Zed\Queue\Mock\MockQueueConnection;
 use SprykerFeature\Zed\Queue\Business\Provider\TaskProvider;
 use SprykerFeature\Zed\Queue\Business\Worker\TaskWorker;
 

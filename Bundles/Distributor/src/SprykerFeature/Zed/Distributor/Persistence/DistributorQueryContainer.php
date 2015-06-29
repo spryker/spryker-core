@@ -21,7 +21,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
     public function queryItemTypes()
     {
         $query = SpyDistributorItemTypeQuery::create()
-            ->addSelectColumn(SpyDistributorItemTypeTableMap::COL_KEY)
+            ->addSelectColumn(SpyDistributorItemTypeTableMap::COL_TYPE_KEY)
             ->setDistinct()
             ->setFormatter(new PropelArraySetFormatter())
         ;
@@ -37,7 +37,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
     public function queryTypeByKey($typeKey)
     {
         $query = SpyDistributorItemTypeQuery::create()
-            ->filterByKey($typeKey)
+            ->filterByTypeKey($typeKey)
         ;
 
         return $query;
@@ -55,7 +55,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
         return SpyDistributorItemQuery::create()
             ->filterByTouched(['min' => $timestamp])
             ->useSpyDistributorItemTypeQuery()
-            ->filterByKey($typeKey)
+            ->filterByTypeKey($typeKey)
             ->endUse()
         ;
     }
@@ -66,7 +66,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
     public function queryReceivers()
     {
         $query = SpyDistributorReceiverQuery::create()
-            ->addSelectColumn(SpyDistributorReceiverTableMap::COL_KEY)
+            ->addSelectColumn(SpyDistributorReceiverTableMap::COL_RECEIVER_KEY)
             ->setDistinct()
             ->setFormatter(new PropelArraySetFormatter())
         ;
@@ -85,9 +85,9 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
         $foreignKeyColumn = $this->getForeignKeyColumnByType($itemType);
 
         $query = SpyDistributorItemQuery::create()
-            ->filterBy($foreignKeyColumn, $idItem)
+            ->addAnd($foreignKeyColumn, $idItem)
             ->useSpyDistributorItemTypeQuery()
-            ->filterByKey($itemType)
+            ->filterByTypeKey($itemType)
             ->endUse()
         ;
 

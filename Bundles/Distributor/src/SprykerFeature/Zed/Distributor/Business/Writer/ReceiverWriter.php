@@ -17,7 +17,7 @@ class ReceiverWriter implements ReceiverWriterInterface
     public function create($receiverKey)
     {
         $distribution = new SpyDistributorReceiver();
-        $distribution->setKey($receiverKey);
+        $distribution->setReceiverKey($receiverKey);
         $distribution->save();
 
         return $distribution->getIdDistributorReceiver();

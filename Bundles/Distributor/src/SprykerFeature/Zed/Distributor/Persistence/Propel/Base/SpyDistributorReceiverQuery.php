@@ -20,10 +20,10 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorReceiver
  *
  *
  * @method     ChildSpyDistributorReceiverQuery orderByIdDistributorReceiver($order = Criteria::ASC) Order by the id_distributor_receiver column
- * @method     ChildSpyDistributorReceiverQuery orderByKey($order = Criteria::ASC) Order by the key column
+ * @method     ChildSpyDistributorReceiverQuery orderByReceiverKey($order = Criteria::ASC) Order by the receiver_key column
  *
  * @method     ChildSpyDistributorReceiverQuery groupByIdDistributorReceiver() Group by the id_distributor_receiver column
- * @method     ChildSpyDistributorReceiverQuery groupByKey() Group by the key column
+ * @method     ChildSpyDistributorReceiverQuery groupByReceiverKey() Group by the receiver_key column
  *
  * @method     ChildSpyDistributorReceiverQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildSpyDistributorReceiverQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -33,11 +33,11 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorReceiver
  * @method     ChildSpyDistributorReceiver findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyDistributorReceiver matching the query, or a new ChildSpyDistributorReceiver object populated from the query conditions when no match is found
  *
  * @method     ChildSpyDistributorReceiver findOneByIdDistributorReceiver(int $id_distributor_receiver) Return the first ChildSpyDistributorReceiver filtered by the id_distributor_receiver column
- * @method     ChildSpyDistributorReceiver findOneByKey(string $key) Return the first ChildSpyDistributorReceiver filtered by the key column
+ * @method     ChildSpyDistributorReceiver findOneByReceiverKey(string $receiver_key) Return the first ChildSpyDistributorReceiver filtered by the receiver_key column
  *
  * @method     ChildSpyDistributorReceiver[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyDistributorReceiver objects based on current ModelCriteria
  * @method     ChildSpyDistributorReceiver[]|ObjectCollection findByIdDistributorReceiver(int $id_distributor_receiver) Return ChildSpyDistributorReceiver objects filtered by the id_distributor_receiver column
- * @method     ChildSpyDistributorReceiver[]|ObjectCollection findByKey(string $key) Return ChildSpyDistributorReceiver objects filtered by the key column
+ * @method     ChildSpyDistributorReceiver[]|ObjectCollection findByReceiverKey(string $receiver_key) Return ChildSpyDistributorReceiver objects filtered by the receiver_key column
  * @method     ChildSpyDistributorReceiver[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -129,7 +129,7 @@ abstract class SpyDistributorReceiverQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id_distributor_receiver, key FROM spy_distributor_receiver WHERE id_distributor_receiver = :p0';
+        $sql = 'SELECT id_distributor_receiver, receiver_key FROM spy_distributor_receiver WHERE id_distributor_receiver = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -265,32 +265,32 @@ abstract class SpyDistributorReceiverQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the key column
+     * Filter the query on the receiver_key column
      *
      * Example usage:
      * <code>
-     * $query->filterByKey('fooValue');   // WHERE key = 'fooValue'
-     * $query->filterByKey('%fooValue%'); // WHERE key LIKE '%fooValue%'
+     * $query->filterByReceiverKey('fooValue');   // WHERE receiver_key = 'fooValue'
+     * $query->filterByReceiverKey('%fooValue%'); // WHERE receiver_key LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $key The value to use as filter.
+     * @param     string $receiverKey The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildSpyDistributorReceiverQuery The current query, for fluid interface
      */
-    public function filterByKey($key = null, $comparison = null)
+    public function filterByReceiverKey($receiverKey = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($key)) {
+            if (is_array($receiverKey)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $key)) {
-                $key = str_replace('*', '%', $key);
+            } elseif (preg_match('/[\%\*]/', $receiverKey)) {
+                $receiverKey = str_replace('*', '%', $receiverKey);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(SpyDistributorReceiverTableMap::COL_KEY, $key, $comparison);
+        return $this->addUsingAlias(SpyDistributorReceiverTableMap::COL_RECEIVER_KEY, $receiverKey, $comparison);
     }
 
     /**

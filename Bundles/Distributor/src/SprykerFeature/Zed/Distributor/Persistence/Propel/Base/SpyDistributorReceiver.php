@@ -66,10 +66,10 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
     protected $id_distributor_receiver;
 
     /**
-     * The value for the key field.
+     * The value for the receiver_key field.
      * @var        string
      */
-    protected $key;
+    protected $receiver_key;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -307,13 +307,13 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
     }
 
     /**
-     * Get the [key] column value.
+     * Get the [receiver_key] column value.
      *
      * @return string
      */
-    public function getKey()
+    public function getReceiverKey()
     {
-        return $this->key;
+        return $this->receiver_key;
     }
 
     /**
@@ -337,24 +337,24 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
     } // setIdDistributorReceiver()
 
     /**
-     * Set the value of [key] column.
+     * Set the value of [receiver_key] column.
      *
      * @param  string $v new value
      * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorReceiver The current object (for fluent API support)
      */
-    public function setKey($v)
+    public function setReceiverKey($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->key !== $v) {
-            $this->key = $v;
-            $this->modifiedColumns[SpyDistributorReceiverTableMap::COL_KEY] = true;
+        if ($this->receiver_key !== $v) {
+            $this->receiver_key = $v;
+            $this->modifiedColumns[SpyDistributorReceiverTableMap::COL_RECEIVER_KEY] = true;
         }
 
         return $this;
-    } // setKey()
+    } // setReceiverKey()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -395,8 +395,8 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : SpyDistributorReceiverTableMap::translateFieldName('IdDistributorReceiver', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id_distributor_receiver = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpyDistributorReceiverTableMap::translateFieldName('Key', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->key = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpyDistributorReceiverTableMap::translateFieldName('ReceiverKey', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->receiver_key = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -605,8 +605,8 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
         if ($this->isColumnModified(SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER)) {
             $modifiedColumns[':p' . $index++]  = 'id_distributor_receiver';
         }
-        if ($this->isColumnModified(SpyDistributorReceiverTableMap::COL_KEY)) {
-            $modifiedColumns[':p' . $index++]  = 'key';
+        if ($this->isColumnModified(SpyDistributorReceiverTableMap::COL_RECEIVER_KEY)) {
+            $modifiedColumns[':p' . $index++]  = 'receiver_key';
         }
 
         $sql = sprintf(
@@ -622,8 +622,8 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
                     case 'id_distributor_receiver':
                         $stmt->bindValue($identifier, $this->id_distributor_receiver, PDO::PARAM_INT);
                         break;
-                    case 'key':
-                        $stmt->bindValue($identifier, $this->key, PDO::PARAM_STR);
+                    case 'receiver_key':
+                        $stmt->bindValue($identifier, $this->receiver_key, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -691,7 +691,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
                 return $this->getIdDistributorReceiver();
                 break;
             case 1:
-                return $this->getKey();
+                return $this->getReceiverKey();
                 break;
             default:
                 return null;
@@ -723,7 +723,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
         $keys = SpyDistributorReceiverTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getIdDistributorReceiver(),
-            $keys[1] => $this->getKey(),
+            $keys[1] => $this->getReceiverKey(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -767,7 +767,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
                 $this->setIdDistributorReceiver($value);
                 break;
             case 1:
-                $this->setKey($value);
+                $this->setReceiverKey($value);
                 break;
         } // switch()
 
@@ -799,7 +799,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
             $this->setIdDistributorReceiver($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setKey($arr[$keys[1]]);
+            $this->setReceiverKey($arr[$keys[1]]);
         }
     }
 
@@ -845,8 +845,8 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
         if ($this->isColumnModified(SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER)) {
             $criteria->add(SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER, $this->id_distributor_receiver);
         }
-        if ($this->isColumnModified(SpyDistributorReceiverTableMap::COL_KEY)) {
-            $criteria->add(SpyDistributorReceiverTableMap::COL_KEY, $this->key);
+        if ($this->isColumnModified(SpyDistributorReceiverTableMap::COL_RECEIVER_KEY)) {
+            $criteria->add(SpyDistributorReceiverTableMap::COL_RECEIVER_KEY, $this->receiver_key);
         }
 
         return $criteria;
@@ -934,7 +934,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setKey($this->getKey());
+        $copyObj->setReceiverKey($this->getReceiverKey());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setIdDistributorReceiver(NULL); // this is a auto-increment column, so set to default value
@@ -971,7 +971,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
     public function clear()
     {
         $this->id_distributor_receiver = null;
-        $this->key = null;
+        $this->receiver_key = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

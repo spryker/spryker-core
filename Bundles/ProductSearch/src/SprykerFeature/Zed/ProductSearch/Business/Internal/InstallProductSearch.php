@@ -161,5 +161,4 @@ class InstallProductSearch extends AbstractInstaller
             $mapping->send();
         }
     }
-
 }

@@ -4,12 +4,13 @@ namespace SprykerFeature\Zed\GlossaryDistributor\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 
-class GlossaryDistributorQueryContainer
+class GlossaryDistributorQueryContainer extends AbstractQueryContainer
 {
     /**
      * @param ModelCriteria $expandableQuery
@@ -18,6 +19,7 @@ class GlossaryDistributorQueryContainer
      */
     public function queryTranslationsToDistribute(ModelCriteria $expandableQuery)
     {
+        $expandableQuery->clearSelectColumns();
         $expandableQuery->addJoin(
             SpyDistributorItemTableMap::COL_FK_GLOSSARY_TRANSLATION,
             SpyGlossaryTranslationTableMap::COL_ID_GLOSSARY_TRANSLATION,
@@ -34,7 +36,6 @@ class GlossaryDistributorQueryContainer
             Criteria::INNER_JOIN
         );
 
-        $expandableQuery->clearSelectColumns();
 
         $expandableQuery->withColumn(SpyGlossaryKeyTableMap::COL_KEY, 'translation_key');
         $expandableQuery->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, 'translation_value');

@@ -72,10 +72,10 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
     protected $id_distributor_item_type;
 
     /**
-     * The value for the key field.
+     * The value for the type_key field.
      * @var        string
      */
-    protected $key;
+    protected $type_key;
 
     /**
      * The value for the last_distribution field.
@@ -331,13 +331,13 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
     }
 
     /**
-     * Get the [key] column value.
+     * Get the [type_key] column value.
      *
      * @return string
      */
-    public function getKey()
+    public function getTypeKey()
     {
-        return $this->key;
+        return $this->type_key;
     }
 
     /**
@@ -381,24 +381,24 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
     } // setIdDistributorItemType()
 
     /**
-     * Set the value of [key] column.
+     * Set the value of [type_key] column.
      *
      * @param  string $v new value
      * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType The current object (for fluent API support)
      */
-    public function setKey($v)
+    public function setTypeKey($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->key !== $v) {
-            $this->key = $v;
-            $this->modifiedColumns[SpyDistributorItemTypeTableMap::COL_KEY] = true;
+        if ($this->type_key !== $v) {
+            $this->type_key = $v;
+            $this->modifiedColumns[SpyDistributorItemTypeTableMap::COL_TYPE_KEY] = true;
         }
 
         return $this;
-    } // setKey()
+    } // setTypeKey()
 
     /**
      * Sets the value of [last_distribution] column to a normalized version of the date/time value specified.
@@ -459,8 +459,8 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : SpyDistributorItemTypeTableMap::translateFieldName('IdDistributorItemType', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id_distributor_item_type = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpyDistributorItemTypeTableMap::translateFieldName('Key', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->key = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpyDistributorItemTypeTableMap::translateFieldName('TypeKey', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->type_key = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SpyDistributorItemTypeTableMap::translateFieldName('LastDistribution', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
@@ -694,8 +694,8 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
         if ($this->isColumnModified(SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE)) {
             $modifiedColumns[':p' . $index++]  = 'id_distributor_item_type';
         }
-        if ($this->isColumnModified(SpyDistributorItemTypeTableMap::COL_KEY)) {
-            $modifiedColumns[':p' . $index++]  = 'key';
+        if ($this->isColumnModified(SpyDistributorItemTypeTableMap::COL_TYPE_KEY)) {
+            $modifiedColumns[':p' . $index++]  = 'type_key';
         }
         if ($this->isColumnModified(SpyDistributorItemTypeTableMap::COL_LAST_DISTRIBUTION)) {
             $modifiedColumns[':p' . $index++]  = 'last_distribution';
@@ -714,8 +714,8 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
                     case 'id_distributor_item_type':
                         $stmt->bindValue($identifier, $this->id_distributor_item_type, PDO::PARAM_INT);
                         break;
-                    case 'key':
-                        $stmt->bindValue($identifier, $this->key, PDO::PARAM_STR);
+                    case 'type_key':
+                        $stmt->bindValue($identifier, $this->type_key, PDO::PARAM_STR);
                         break;
                     case 'last_distribution':
                         $stmt->bindValue($identifier, $this->last_distribution ? $this->last_distribution->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -786,7 +786,7 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
                 return $this->getIdDistributorItemType();
                 break;
             case 1:
-                return $this->getKey();
+                return $this->getTypeKey();
                 break;
             case 2:
                 return $this->getLastDistribution();
@@ -822,7 +822,7 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
         $keys = SpyDistributorItemTypeTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getIdDistributorItemType(),
-            $keys[1] => $this->getKey(),
+            $keys[1] => $this->getTypeKey(),
             $keys[2] => $this->getLastDistribution(),
         );
         $virtualColumns = $this->virtualColumns;
@@ -884,7 +884,7 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
                 $this->setIdDistributorItemType($value);
                 break;
             case 1:
-                $this->setKey($value);
+                $this->setTypeKey($value);
                 break;
             case 2:
                 $this->setLastDistribution($value);
@@ -919,7 +919,7 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
             $this->setIdDistributorItemType($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setKey($arr[$keys[1]]);
+            $this->setTypeKey($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
             $this->setLastDistribution($arr[$keys[2]]);
@@ -968,8 +968,8 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
         if ($this->isColumnModified(SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE)) {
             $criteria->add(SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE, $this->id_distributor_item_type);
         }
-        if ($this->isColumnModified(SpyDistributorItemTypeTableMap::COL_KEY)) {
-            $criteria->add(SpyDistributorItemTypeTableMap::COL_KEY, $this->key);
+        if ($this->isColumnModified(SpyDistributorItemTypeTableMap::COL_TYPE_KEY)) {
+            $criteria->add(SpyDistributorItemTypeTableMap::COL_TYPE_KEY, $this->type_key);
         }
         if ($this->isColumnModified(SpyDistributorItemTypeTableMap::COL_LAST_DISTRIBUTION)) {
             $criteria->add(SpyDistributorItemTypeTableMap::COL_LAST_DISTRIBUTION, $this->last_distribution);
@@ -1060,7 +1060,7 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setKey($this->getKey());
+        $copyObj->setTypeKey($this->getTypeKey());
         $copyObj->setLastDistribution($this->getLastDistribution());
 
         if ($deepCopy) {
@@ -1374,7 +1374,7 @@ abstract class SpyDistributorItemType implements ActiveRecordInterface
     public function clear()
     {
         $this->id_distributor_item_type = null;
-        $this->key = null;
+        $this->type_key = null;
         $this->last_distribution = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();

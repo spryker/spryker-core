@@ -25,21 +25,21 @@
 
     <table name="spy_distributor_receiver" phpName="SpyDistributorReceiver">
         <column name="id_distributor_receiver" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="key" type="VARCHAR" size="255" required="true"/>
+        <column name="receiver_key" type="VARCHAR" size="255" required="true"/>
 
         <unique>
-            <unique-column name="key"/>
+            <unique-column name="receiver_key"/>
         </unique>
 
     </table>
 
     <table name="spy_distributor_item_type" phpName="SpyDistributorItemType">
         <column name="id_distributor_item_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="key" type="VARCHAR" size="255" required="true" />
+        <column name="type_key" type="VARCHAR" size="255" required="true" />
         <column name="last_distribution" required="true" type="TIMESTAMP"/>
 
         <unique>
-            <unique-column name="key"/>
+            <unique-column name="type_key"/>
         </unique>
 
     </table>
