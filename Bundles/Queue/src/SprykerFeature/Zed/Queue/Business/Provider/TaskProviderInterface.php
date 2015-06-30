@@ -8,7 +8,7 @@ interface TaskProviderInterface
 {
 
     /**
-     * @param $taskName
+     * @param string $taskName
      *
      * @return TaskPluginInterface
      */

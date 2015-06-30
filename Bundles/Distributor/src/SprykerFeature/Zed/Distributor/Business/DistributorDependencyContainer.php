@@ -16,6 +16,8 @@ use SprykerFeature\Zed\Distributor\Business\Writer\ItemTypeWriterInterface;
 use SprykerFeature\Zed\Distributor\Business\Writer\ItemWriterInterface;
 use SprykerFeature\Zed\Distributor\Business\Writer\ReceiverWriterInterface;
 use SprykerFeature\Zed\Distributor\Dependency\Facade\DistributorToQueueInterface;
+use SprykerFeature\Zed\Distributor\Dependency\Plugin\ItemProcessorPluginInterface;
+use SprykerFeature\Zed\Distributor\Dependency\Plugin\DistributorQueryExpanderPluginInterface;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterface;
 use SprykerFeature\Zed\Distributor\DistributorConfig;
 use SprykerFeature\Zed\Distributor\DistributorDependencyProvider;
@@ -49,7 +51,7 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
             $this->createItemDistributor()
         );
 
-        foreach ($this->getConfig()->getQueryExpander() as $queryExpander) {
+        foreach ($this->getQueryExpanders() as $queryExpander) {
             $queueDistributor->addQueryExpander($queryExpander);
         }
 
@@ -90,7 +92,7 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
             $this->createItemQueueProvider()
         );
 
-        foreach ($this->getConfig()->getItemProcessors() as $itemProcessor) {
+        foreach ($this->getItemProcessors() as $itemProcessor) {
             $itemDistributor->addItemProcessor($itemProcessor);
         }
 
@@ -162,5 +164,21 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
     protected function createQueueNameBuilder()
     {
         return $this->getFactory()->createBuilderQueueNameBuilder();
+    }
+
+    /**
+     * @return ItemProcessorPluginInterface[]
+     */
+    protected function getItemProcessors()
+    {
+        return $this->getProvidedDependency(DistributorDependencyProvider::ITEM_PROCESSORS);
+    }
+
+    /**
+     * @return DistributorQueryExpanderPluginInterface[]
+     */
+    protected function getQueryExpanders()
+    {
+        return $this->getProvidedDependency(DistributorDependencyProvider::QUERY_EXPANDERS);
     }
 }

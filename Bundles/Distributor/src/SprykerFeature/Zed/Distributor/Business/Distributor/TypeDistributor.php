@@ -6,7 +6,7 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerFeature\Zed\Distributor\Business\Exception\QueryExpanderNotFoundException;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Distributor\Business\Marker\LastDistributionMarkerInterface;
-use SprykerFeature\Zed\Distributor\Dependency\Plugin\QueryExpanderPluginInterface;
+use SprykerFeature\Zed\Distributor\Dependency\Plugin\DistributorQueryExpanderPluginInterface;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterface;
 
 class TypeDistributor
@@ -81,9 +81,9 @@ class TypeDistributor
     }
 
     /**
-     * @param QueryExpanderPluginInterface $queryExpander
+     * @param DistributorQueryExpanderPluginInterface $queryExpander
      */
-    public function addQueryExpander(QueryExpanderPluginInterface $queryExpander)
+    public function addQueryExpander(DistributorQueryExpanderPluginInterface $queryExpander)
     {
         $this->queryPipeline[$queryExpander->getType()][] = $queryExpander;
     }
@@ -119,7 +119,7 @@ class TypeDistributor
     /**
      * @param string $type
      *
-     * @return QueryExpanderPluginInterface[]
+     * @return DistributorQueryExpanderPluginInterface[]
      * @throws \Exception
      */
     protected function getQueryPipelineByType($type)

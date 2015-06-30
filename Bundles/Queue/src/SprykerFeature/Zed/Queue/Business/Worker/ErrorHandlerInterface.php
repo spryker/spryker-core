@@ -7,9 +7,6 @@ interface ErrorHandlerInterface
 
     /**
      * @param \Exception $exception
-     *
-     * @return mixed
      */
     public function handleError(\Exception $exception);
-
 }

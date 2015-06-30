@@ -9,7 +9,9 @@ use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
 use SprykerFeature\Zed\Queue\Business\Provider\TaskProviderInterface;
 use SprykerFeature\Zed\Queue\Business\Worker\TaskWorkerInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
 use SprykerFeature\Zed\Queue\QueueConfig;
+use SprykerFeature\Zed\Queue\QueueDependencyProvider;
 
 /**
  * @method QueueBusiness getFactory()
@@ -64,9 +66,18 @@ class QueueDependencyContainer extends AbstractDependencyContainer
     protected function createTaskProvider()
     {
         $taskProvider = $this->getFactory()->createProviderTaskProvider(
-            $this->getConfig()->getWorkerTasks()
+            $this->getWorkerTasks()
         );
 
         return $taskProvider;
+    }
+
+    /**
+     * @throws \ErrorException
+     * @return TaskPluginInterface[]
+     */
+    protected function getWorkerTasks()
+    {
+        return $this->getProvidedDependency(QueueDependencyProvider::WORKER_TASKS);
     }
 }

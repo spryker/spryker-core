@@ -32,6 +32,7 @@ class GlossaryTaskWorkerPlugin extends AbstractPlugin implements
      */
     public function getQueueName()
     {
+
         return sprintf(
             '%s.%s',
             $this->getStoreId(),
@@ -52,6 +53,9 @@ class GlossaryTaskWorkerPlugin extends AbstractPlugin implements
      */
     protected function getStoreId()
     {
-        return Store::getInstance()->getCurrentCountry();
+        return $this->getDependencyContainer()
+            ->getCurrentStore()
+            ->getCurrentCountry()
+        ;
     }
 }

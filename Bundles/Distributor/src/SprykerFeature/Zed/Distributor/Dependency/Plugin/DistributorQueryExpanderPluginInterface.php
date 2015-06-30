@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Distributor\Dependency\Plugin;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
-interface QueryExpanderPluginInterface
+interface DistributorQueryExpanderPluginInterface
 {
     /**
      * @return string

@@ -26,8 +26,8 @@ class ItemWriter implements ItemWriterInterface
     /**
      * @param string $itemType
      * @param int $idItem
-     *
-     * @return int
+     * @throws ItemTypeDoesNotExistException
+     * @throws PropelException
      */
     public function touchItem($itemType, $idItem)
     {
@@ -39,13 +39,11 @@ class ItemWriter implements ItemWriterInterface
         $foreignKeyColumn = $this->getForeignKeyByType($itemType);
 
         if (!$item) {
-            return $this->createItem($itemType, $idItem, $foreignKeyColumn);
+             $this->createItem($itemType, $idItem, $foreignKeyColumn);
         }
 
         $item->setTouched(new \DateTime());
         $item->save();
-
-        return $item->getIdDistributorItem();
     }
 
     /**
@@ -65,7 +63,6 @@ class ItemWriter implements ItemWriterInterface
      *
      * @throws PropelException
      * @throws ItemTypeDoesNotExistException
-     * @return int
      */
     protected function createItem($itemType, $idItem, $foreignKeyColumn)
     {
@@ -81,6 +78,6 @@ class ItemWriter implements ItemWriterInterface
         $item->setFkItemType($itemType->getIdDistributorItemType());
         $item->save();
 
-        return $item->getIdDistributorItem();
+        $item->getIdDistributorItem();
     }
 }

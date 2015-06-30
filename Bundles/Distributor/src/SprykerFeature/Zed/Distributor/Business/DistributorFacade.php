@@ -14,12 +14,10 @@ class DistributorFacade extends AbstractFacade
     /**
      * @param string $itemType
      * @param int $idItem
-     *
-     * @return int
      */
     public function touchItem($itemType, $idItem)
     {
-        return $this->getDependencyContainer()
+        $this->getDependencyContainer()
             ->createItemWriter()
             ->touchItem($itemType, $idItem)
         ;

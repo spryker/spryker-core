@@ -4,14 +4,14 @@ namespace SprykerFeature\Zed\GlossaryDistributor\Communication\Plugin;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Distributor\Dependency\Plugin\QueryExpanderPluginInterface;
+use SprykerFeature\Zed\Distributor\Dependency\Plugin\DistributorQueryExpanderPluginInterface;
 use SprykerFeature\Zed\GlossaryDistributor\Communication\GlossaryDistributorDependencyContainer;
 
 /**
  * @method GlossaryDistributorDependencyContainer getDependencyContainer()
  */
 class GlossaryQueryExpanderPlugin extends AbstractPlugin implements
-    QueryExpanderPluginInterface
+    DistributorQueryExpanderPluginInterface
 {
 
     /**

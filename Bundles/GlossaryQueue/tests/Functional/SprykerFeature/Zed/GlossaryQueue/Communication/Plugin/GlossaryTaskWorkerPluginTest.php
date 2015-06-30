@@ -147,7 +147,7 @@ class GlossaryTaskWorkerPluginTest extends Test
         );
         $this->taskPlugin->run($queueMessage);
 
-        $translationResult = SpyGlossaryTranslationQuery::create()
+        $updatedTranslationCount = SpyGlossaryTranslationQuery::create()
             ->filterByFkGlossaryKey($idGlossaryKey)
             ->filterByValue('test.updated.value2')
             ->filterByIsActive(false)
@@ -157,7 +157,7 @@ class GlossaryTaskWorkerPluginTest extends Test
             ->count()
         ;
 
-        $this->assertEquals(1, $translationResult);
+        $this->assertEquals(1, $updatedTranslationCount);
     }
 
     /**

@@ -27,14 +27,6 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return TaskPluginInterface[]
-     */
-    public function getWorkerTasks()
-    {
-        return [];
-    }
-
-    /**
      * @return string
      */
     public function getErrorChannelName()

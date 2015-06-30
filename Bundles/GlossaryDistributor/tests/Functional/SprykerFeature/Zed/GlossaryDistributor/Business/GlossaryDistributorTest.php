@@ -191,14 +191,22 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
     }
 
     /**
-     * @return MockDistributorFacade
+     * @return DistributorFacade
      */
     private function getMockDistributorFacade()
     {
-        $distributorFacade = new MockDistributorFacade(new Factory('Distributor'), $this->getLocator());
+        $distributorFacade = new DistributorFacade(new Factory('Distributor'), $this->getLocator());
         $container = new Container();
         $container[DistributorDependencyProvider::FACADE_QUEUE] = function () {
             return $this->queueFacade;
+        };
+        $container[DistributorDependencyProvider::QUERY_EXPANDERS] = function () {
+            return [
+                $this->getLocator()->glossaryDistributor()->pluginGlossaryQueryExpanderPlugin()
+            ];
+        };
+        $container[DistributorDependencyProvider::ITEM_PROCESSORS] = function () {
+            return [];
         };
         $distributorFacade->setExternalDependencies($container);
 
