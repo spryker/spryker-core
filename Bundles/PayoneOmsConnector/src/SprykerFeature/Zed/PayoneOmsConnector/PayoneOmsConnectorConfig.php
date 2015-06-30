@@ -7,6 +7,6 @@ namespace SprykerFeature\Zed\PayoneOmsConnector;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
-class PayoneOmsConnector extends AbstractBundleConfig
+class PayoneOmsConnectorConfig extends AbstractBundleConfig
 {
 }
