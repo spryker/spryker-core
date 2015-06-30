@@ -22,6 +22,7 @@ use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Shared\Yves\YvesConfig;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
+use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
@@ -190,7 +191,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
-        $request = $this->factory->createClientRequest($this->locator);
+        $request = $this->getClientRequest();
         $request->setSessionId(session_id());
         $request->setTime(time());
         $request->setHost(System::getHostname()?: 'n/a');
@@ -201,9 +202,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
             }
             $request->addMetaTransfer($name, $metaTransfer);
         }
-        
+
         if (!empty($transferObject)) {
-            $request->setTransfer($transferObject);
+//            $request->setTransfer($transferObject);
         }
 
         return $request;
@@ -307,5 +308,15 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
             $request->addSubscriber(new CookiePlugin($cookieArray));
         }
+    }
+
+    /**
+     * @return Request
+     */
+    private function getClientRequest()
+    {
+        $request = $this->factory->createClientRequest($this->locator);
+
+        return $request;
     }
 }
