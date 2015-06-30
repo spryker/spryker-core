@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Setup\Communication\Console;
 
+use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeBundleAutoCompletionGenerator;
@@ -81,6 +82,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
             ->addMethodTagBuilder(new QueryContainerMethodTagBuilder())
             ->addMethodTagBuilder(new EntityMethodTagBuilder())
             ->addMethodTagBuilder(new ConsoleMethodTagBuilder())
+            ->addMethodTagBuilder(new ClientMethodTagBuilder())
             ->addMethodTagBuilder(new PluginMethodTagBuilder([PluginMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed']))
         ;
 

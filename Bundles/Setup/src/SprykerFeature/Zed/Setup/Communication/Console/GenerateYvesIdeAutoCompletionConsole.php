@@ -14,7 +14,7 @@ use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeBundleAutoCompletionGenerator;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeFactoryAutoCompletionGenerator;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConstructableMethodTagBuilder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\SdkClientMethodTagBuilder;
+use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\YvesPluginMethodTagBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -68,11 +68,11 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
     {
         $options = [
             IdeAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Yves\Ide',
-            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide',
+            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide/',
             IdeAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
             IdeAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
                 [
-                    IdeAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
+                    IdeAutoCompletionGenerator::OPTION_KEY_APPLICATION => '*',
                     BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN => $this->getProjectNamespace() . '/',
                 ]
             ),
@@ -89,7 +89,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         $generator = new IdeBundleAutoCompletionGenerator($options);
         $generator
             ->addMethodTagBuilder(new YvesPluginMethodTagBuilder())
-            ->addMethodTagBuilder(new SdkClientMethodTagBuilder())
+            ->addMethodTagBuilder(new ClientMethodTagBuilder())
         ;
 
         $generator->create();
@@ -108,12 +108,12 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         $options = [
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Yves\Ide\FactoryAutoCompletion',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR =>
-                APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide',
+                APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide/',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => false,
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
                 [
-                    IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
+                    BundleNameFinder::OPTION_KEY_APPLICATION => '*',
                     BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN => $this->getProjectNamespace() . '/',
                 ]
             ),

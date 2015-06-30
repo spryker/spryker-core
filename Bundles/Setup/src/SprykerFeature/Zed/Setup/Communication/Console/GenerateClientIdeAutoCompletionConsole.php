@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Setup\Communication\Console;
 
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\SdkClientMethodTagBuilder;
+use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Console\Business\Model\Console;
@@ -10,7 +10,6 @@ use SprykerEngine\Zed\Kernel\BundleNameFinder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeBundleAutoCompletionGenerator;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeFactoryAutoCompletionGenerator;
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConstructableMethodTagBuilder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
 use Symfony\Component\Console\Input\InputInterface;
@@ -64,7 +63,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
     {
         $options = [
             IdeAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Client\Ide',
-            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Client/Ide',
+            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Client/Ide/',
             IdeAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Client',
             IdeAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
                 [
@@ -85,7 +84,6 @@ class GenerateClientIdeAutoCompletionConsole extends Console
 
         $generator = new IdeBundleAutoCompletionGenerator($options);
         $generator
-            ->addMethodTagBuilder(new SdkClientMethodTagBuilder())
             ->addMethodTagBuilder(new ClientMethodTagBuilder())
         ;
 
@@ -105,7 +103,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
         $options = [
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Client\Ide\FactoryAutoCompletion',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR =>
-                APPLICATION_SOURCE_DIR . '/Generated/Client/Ide',
+                APPLICATION_SOURCE_DIR . '/Generated/Client/Ide/',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => true,
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Client',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
