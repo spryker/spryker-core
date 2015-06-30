@@ -73,6 +73,28 @@ class ProductFacade extends AbstractFacade
     }
 
     /**
+     * @param string $sku
+     *
+     * @return int
+     * @throws MissingProductException
+     */
+    public function getAbstractProductIdByConcreteSku($sku)
+    {
+        return $this->getDependencyContainer()->createProductManager()->getAbstractProductIdByConcreteSku($sku);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return float
+     * @throws MissingProductException
+     */
+    public function getEffectiveTaxRateForConcreteProduct($sku)
+    {
+        return $this->getDependencyContainer()->createProductManager()->getEffectiveTaxRateForConcreteProduct($sku);
+    }
+
+    /**
      * @param string $attributeName
      *
      * @return bool

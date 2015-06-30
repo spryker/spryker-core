@@ -5,29 +5,33 @@
 
 namespace SprykerFeature\Zed\Oms\Persistence;
 
+use DateTime;
+use Generated\Zed\Ide\FactoryAutoCompletion\OmsPersistence;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\ActiveQuery\Criteria;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
-use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLogQuery;
+use SprykerFeature\Zed\Oms\OmsDependencyProvider;
 use SprykerFeature\Zed\Oms\Persistence\Propel\Map\SpyOmsTransitionLogTableMap;
-use DateTime;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLogQuery;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-class OmsQueryContainer extends AbstractQueryContainer
+/**
+ * @method OmsPersistence getFactory()
+ */
+class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContainerInterface
 {
     /**
      * @param array $states
      * @param string $processName
      *
-     * @return ModelCriteria
+     * @return SpySalesOrderItemQuery
      */
-    public function queryOrderItemsByState(array $states, $processName)
+    public function querySalesOrderItemsByState(array $states, $processName)
     {
-        return SpySalesOrderItemQuery::create()
+        return $this->getSalesQueryContainer()->querySalesOrderItem()
             ->joinProcess(null, $joinType = Criteria::INNER_JOIN)
             ->joinState(null, $joinType = Criteria::INNER_JOIN)
             ->where("Process.name = ?", $processName)
@@ -35,14 +39,31 @@ class OmsQueryContainer extends AbstractQueryContainer
     }
 
     /**
+     * @return SalesQueryContainerInterface
+     */
+    protected function getSalesQueryContainer()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::QUERY_CONTAINER_SALES);
+    }
+
+    /**
+     * @param $idOrder
+     * @return SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsByIdOrder($idOrder)
+    {
+        return $this->getSalesQueryContainer()->querySalesOrderItem()
+            ->filterByFkSalesOrder($idOrder);
+    }
+
+    /**
      * @param SpySalesOrder $order
      *
-     * @return ModelCriteria
-     * @throws PropelException
+     * @return SpyOmsTransitionLogQuery
      */
     public function queryLogForOrder(SpySalesOrder $order)
     {
-        return SpyOmsTransitionLogQuery::create()
+        return $this->getFactory()->createPropelSpyOmsTransitionLogQuery()
             ->filterByOrder($order)
             ->orderBy(SpyOmsTransitionLogTableMap::COL_ID_OMS_TRANSITION_LOG, Criteria::DESC);
     }
@@ -50,11 +71,11 @@ class OmsQueryContainer extends AbstractQueryContainer
     /**
      * @param DateTime $now
      *
-     * @return ModelCriteria
+     * @return SpySalesOrderItemQuery
      */
-    public function queryItemsWithExpiredTimeouts(DateTime $now)
+    public function querySalesOrderItemsWithExpiredTimeouts(DateTime $now)
     {
-        return SpySalesOrderItemQuery::create()
+        return $this->getSalesQueryContainer()->querySalesOrderItem()
             ->joinEventTimeout()
             ->where('EventTimeout.timeout < ?', $now)
             ->withColumn('EventTimeout.event', 'event');
@@ -66,11 +87,10 @@ class OmsQueryContainer extends AbstractQueryContainer
      * @param bool $returnTest
      *
      * @return SpySalesOrderItemQuery
-     * @throws PropelException
      */
-    public function countOrderItemsForSku(array $states, $sku, $returnTest = true)
+    public function countSalesOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
-        $query = SpySalesOrderItemQuery::create();
+        $query = $this->getSalesQueryContainer()->querySalesOrderItem();
         $query->withColumn('COUNT(*)', 'Count')->select(['Count']);
 
         if ($returnTest === false) {
@@ -95,9 +115,9 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return SpySalesOrderItemQuery
      */
-    public function queryOrderItemsForSku(array $states, $sku, $returnTest = true)
+    public function querySalesOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
-        $query = SpySalesOrderItemQuery::create();
+        $query = $this->getSalesQueryContainer()->querySalesOrderItem();
 
         if ($returnTest === false) {
             $query->useOrderQuery()->filterByIsTest(false)->endUse();
@@ -119,11 +139,10 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return SpySalesOrderItemQuery
      */
-    public function queryOrderItems(array $orderItemIds)
+    public function querySalesOrderItems(array $orderItemIds)
     {
-        return SpySalesOrderItemQuery::create()
-            ->filterByIdSalesOrderItem($orderItemIds)
-        ;
+        return $this->getSalesQueryContainer()->querySalesOrderItem()
+            ->filterByIdSalesOrderItem($orderItemIds);
     }
 
     /**
@@ -131,22 +150,10 @@ class OmsQueryContainer extends AbstractQueryContainer
      *
      * @return SpySalesOrderQuery
      */
-    public function queryOrder($idOrder)
+    public function querySalesOrderById($idOrder)
     {
-        return SpySalesOrderQuery::create()
-            ->filterByIdSalesOrder($idOrder)
-        ;
+        return $this->getSalesQueryContainer()->querySalesOrder()
+            ->filterByIdSalesOrder($idOrder);
     }
 
-    /**
-     * @param int $idOrder
-     *
-     * @return SpySalesOrderItemQuery
-     */
-    public function queryOrderItemsByOrder($idOrder)
-    {
-        return SpySalesOrderItemQuery::create()
-            ->filterByFkSalesOrder($idOrder)
-        ;
-    }
 }

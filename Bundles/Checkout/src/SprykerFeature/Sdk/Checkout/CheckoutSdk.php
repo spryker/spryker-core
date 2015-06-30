@@ -5,7 +5,8 @@
 
 namespace SprykerFeature\Sdk\Checkout;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Checkout\CheckoutRequestInterface;
+use Guzzle\Http\Message\Response;
 use SprykerEngine\Sdk\Kernel\AbstractSdk;
 
 /**
@@ -14,29 +15,12 @@ use SprykerEngine\Sdk\Kernel\AbstractSdk;
 class CheckoutSdk extends AbstractSdk
 {
     /**
-     * @param Order $order
-     * @return \SprykerFeature\Shared\Library\Communication\Response
+     * @param CheckoutRequestInterface $checkoutRequest
+     * @return Response
      */
-    public function saveOrder(Order $order)
+    public function requestCheckout(CheckoutRequestInterface $checkoutRequest)
     {
-        return $this->getDependencyContainer()->createCheckoutManager()->saveOrder($order);
+        return $this->getDependencyContainer()->createCheckoutManager()->requestCheckout($checkoutRequest);
     }
 
-    /**
-     * @param Order $order
-     * @return Order
-     */
-    public function clearReferences(Order $order)
-    {
-        return $this->getDependencyContainer()->createCheckoutManager()->clearReferences($order);
-    }
-
-    /**
-     * @param Order $order
-     * @return mixed
-     */
-    public function setOrderInvalid(Order $order)
-    {
-        return $this->getDependencyContainer()->createCheckoutManager()->setOrderInvalid($order);
-    }
 }

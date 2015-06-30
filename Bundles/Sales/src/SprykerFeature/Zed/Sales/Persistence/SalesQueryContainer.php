@@ -5,49 +5,71 @@
 
 namespace SprykerFeature\Zed\Sales\Persistence;
 
-use Propel\Runtime\ActiveQuery\Criteria;
+use Generated\Zed\Ide\FactoryAutoCompletion\SalesPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderCommentQuery;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 
+/**
+ * @method SalesPersistence getFactory()
+ */
 class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryContainerInterface
 {
 
     /**
      * @return SpySalesOrderQuery
      */
-    public function querySales()
+    public function querySalesOrder()
     {
-        $query = SpySalesOrderQuery::create();
-
-        return $query;
+        return $this->getFactory()->createPropelSpySalesOrderQuery();
     }
 
     /**
-     * @var int $orderId
-     *
-     * @return SpySalesOrderItem
+     * @return SpySalesOrderItemQuery
      */
-    public function queryOrderItems($orderId)
+    public function querySalesOrderItem()
     {
-        $query = SpySalesOrderItemQuery::create();
-        $query->filterByFkSalesOrder($orderId);
-        $query->withColumn('COUNT(*)', 'qty');
-        $query->groupBySku();
-
-        return $query;
+        return $this->getFactory()->createPropelSpySalesOrderItemQuery();
     }
 
     /**
-     * @param $orderItemId
+     * @var int $idOrder
      *
      * @return SpySalesOrderItemQuery
      */
-    public function queryOrderItemById($orderItemId)
+    public function querySalesOrderItemsByIdSalesOrder($idOrder)
+    {
+        $query = $this->getFactory()->createPropelSpySalesOrderItemQuery();
+        return $query->filterByFkSalesOrder($idOrder);
+    }
+
+
+    /**
+     * @var int $idOrder
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsWithState($idOrder)
+    {
+        $query = $this->querySalesOrderItemsByIdSalesOrder($idOrder);
+        $query->joinWith('State');
+        $query->joinWith('Process');
+        return $query;
+    }
+
+
+
+    /**
+     * @param $idOrderItem
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function queryOrderItemById($idOrderItem)
     {
         $query = SpySalesOrderItemQuery::create();
-        $query->filterByIdSalesOrderItem($orderItemId);
+        $query->filterByIdSalesOrderItem($idOrderItem);
 
         return $query;
     }
@@ -57,7 +79,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @return SpySalesOrderCommentQuery
      */
-    public function queryCommentsByOrderId($orderId)
+    public function queryComments($orderId)
     {
         $query = SpySalesOrderCommentQuery::create();
 
@@ -69,7 +91,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @return SpySalesOrderQuery
      */
-    public function querySalesById($idSalesOrder)
+    public function querySalesOrderById($idSalesOrder)
     {
         $query = SpySalesOrderQuery::create();
         $query->filterByIdSalesOrder($idSalesOrder);

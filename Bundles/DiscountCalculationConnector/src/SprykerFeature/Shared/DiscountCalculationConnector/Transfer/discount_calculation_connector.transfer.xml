@@ -15,7 +15,7 @@
     <transfer name="Order">
         <property name="items" type="OrderItem[]"  singular="item" />
         <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="discounts" type="Discount[]" />
+        <property name="discounts" type="Discount[]" singular="discount" />
     </transfer>
 
     <transfer name="OrderItemOption">

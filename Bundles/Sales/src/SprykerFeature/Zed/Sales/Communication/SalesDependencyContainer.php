@@ -5,103 +5,73 @@
 
 namespace SprykerFeature\Zed\Sales\Communication;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\SalesCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
-use SprykerFeature\Zed\Sales\SalesDependencyProvider;
+use SprykerFeature\Zed\Sales\Communication\Grid\CommentsGrid;
+use SprykerFeature\Zed\Sales\Communication\Grid\OrderItemsGrid;
+use SprykerFeature\Zed\Sales\Communication\Grid\SalesGrid;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Propel\Runtime\ActiveQuery\Criteria;
 
+/**
+ * @method SalesCommunication getFactory()
+ * @method SalesQueryContainerInterface getQueryContainer()
+ */
 class SalesDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @return SalesFacade
-     */
-    public function getInstallerFacade()
-    {
-        return $this->getLocator()->sales()->facade();
-    }
-
-    /**
-     * @param Request $request
-     *
      * @return mixed
      */
-    public function getCommentForm(Request $request)
+    public function getCommentForm()
     {
         return $this->getFactory()->createFormCommentForm(
-            $request,
+            null,
             $this->getQueryContainer()
         );
     }
 
     /**
-     * @param Request $request
-     *
      * @return mixed
      */
-    public function getDemoCommentForm(Request $request)
+    public function getDemoCommentForm()
     {
         return $this->getFactory()->createFormDemoCommentForm(
-            $request,
+            null,
             $this->getQueryContainer()
         );
     }
 
     /**
      * @param Request $request
-     *
      * @return CommentsGrid
      */
     public function getCommentsGridByOrderId(Request $request)
     {
         return $this->getFactory()->createGridCommentsGrid(
-            $this->getQueryContainer()->queryCommentsByOrderId($request->get('orderId')),
-            $request
+            $this->getQueryContainer()->queryCommentsByOrderId($request->get('orderId'))
         );
     }
 
     /**
-     * @param Request $request
-     *
      * @return SalesGrid
      */
-    public function getSalesGrid(Request $request)
+    public function getSalesGrid()
     {
-        $querySales = $this->getQueryContainer()->querySales();
-        $querySales->orderByIdSalesOrder(Criteria::DESC);
-
-        return $this->getFactory()->createGridSalesGrid(
-            $querySales,
-            $request
-        );
+        $salesQuery = $this->getQueryContainer()->querySalesOrder();
+        return $this->getFactory()->createGridSalesGrid($salesQuery);
     }
 
     /**
-     * @param int $orderId
+     * @param int $idOrder
      *
      * @return OrderItemsGrid
      */
-    public function getOrdersItemsGridByOrderId($orderId, Request $request)
+    public function getOrdersItemsGridByOrderId($idOrder)
     {
         return $this->getFactory()->createGridOrderItemsGrid(
-            $this->getQueryContainer()->queryOrderItems($orderId),
-            $request
-        );
+            $this->getQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder));
     }
 
-    /**
-     * @return OmsFacade
-     */
-    public function getOmsFacade()
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS);
-    }
 
-    /**
-     * @return SalesQueryContainerInterface
-     */
-    public function getQueryContainer()
-    {
-        return $this->getLocator()->sales()->queryContainer();
-    }
 }

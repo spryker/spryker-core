@@ -1,0 +1,9 @@
+<?php
+
+namespace CustomerCheckoutConnector\Codeception\Module;
+
+use Codeception\Module;
+
+class WebHelper extends Module
+{
+}

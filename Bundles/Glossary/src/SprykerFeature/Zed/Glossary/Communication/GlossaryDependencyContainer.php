@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Glossary\Communication\Grid\TranslationGrid;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator;
 
 /**
@@ -31,12 +32,29 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
     /**
      * @return TranslationForm
      */
-    public function createTranslationForm()
+    public function createTranslationForm(Request $request)
     {
-        return $this->getFactory()->createFormTranslationForm(
+        return $this->getFactory()->createFormKeyForm(
+            $request,
             $this->createQueryContainer(),
             $this->createLocaleFacade()
         );
+    }
+
+    /**
+     * @return GlossaryQueryContainerInterface
+     */
+    public function createQueryContainer()
+    {
+        return $this->getQueryContainer();
+    }
+
+    /**
+     * @return LocaleFacade
+     */
+    public function createLocaleFacade()
+    {
+        return $this->getProvidedDependency(GlossaryDependencyProvider::FACADE_LOCALE);
     }
 
     /**

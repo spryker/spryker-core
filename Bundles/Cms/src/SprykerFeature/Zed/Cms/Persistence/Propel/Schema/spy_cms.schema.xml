@@ -49,13 +49,4 @@
             <index-column name="placeholder"/>
         </index>
     </table>
-
-    <!--<table name="spy_url" phpName="SpyUrl">
-        <column name="fk_resource_cmspage_id" type="INTEGER"/>
-
-        <foreign-key foreignTable="spy_cms_page" phpName="CmsPage" onDelete="CASCADE">
-            <reference foreign="id_cms_page" local="fk_cmspage_id"/>
-        </foreign-key>
-    </table> -->
-
 </database>

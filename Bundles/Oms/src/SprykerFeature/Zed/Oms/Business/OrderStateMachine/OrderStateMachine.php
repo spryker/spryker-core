@@ -14,7 +14,7 @@ use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Util\TransitionLogInterface;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
+use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStateQuery;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
@@ -41,7 +41,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $states = array();
 
     /**
-     * @var OmsQueryContainer
+     * @var OmsQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -81,7 +81,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $factory;
 
     /**
-     * @param OmsQueryContainer $queryContainer
+     * @param OmsQueryContainerInterface $queryContainer
      * @param BuilderInterface $builder
      * @param TransitionLogInterface $transitionLog
      * @param TimeoutInterface $timeout
@@ -91,7 +91,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param FactoryInterface $factory
      */
     public function __construct(
-        OmsQueryContainer $queryContainer,
+        OmsQueryContainerInterface $queryContainer,
         BuilderInterface $builder,
         TransitionLogInterface $transitionLog,
         TimeoutInterface $timeout,
@@ -164,7 +164,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data)
     {
         $orderItems = $this->queryContainer
-            ->queryOrderItems($orderItemIds)
+            ->querySalesOrderItems($orderItemIds)
             ->find()
             ->getData();
 
@@ -181,7 +181,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data)
     {
         $orderItems = $this->queryContainer
-            ->queryOrderItems([$orderItemId])
+            ->querySalesOrderItems([$orderItemId])
             ->find()
             ->getData();
 
@@ -215,7 +215,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     public function triggerEventForNewOrderItems(array $orderItemIds, array $data)
     {
         $orderItems = $this->queryContainer
-            ->queryOrderItems($orderItemIds)
+            ->querySalesOrderItems($orderItemIds)
             ->find()
             ->getData();
 
@@ -684,7 +684,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected function getOrderItemsByState(array $states, ProcessInterface $process)
     {
         return $this->queryContainer
-            ->queryOrderItemsByState($states, $process->getName())
+            ->querySalesOrderItemsByState($states, $process->getName())
             ->find()
             ->getData();
     }

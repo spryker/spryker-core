@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use DateInterval;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
+use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
@@ -24,7 +24,7 @@ class Timeout implements TimeoutInterface
 {
 
     /**
-     * @var OmsQueryContainer
+     * @var OmsQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -39,9 +39,9 @@ class Timeout implements TimeoutInterface
     protected $stateIdToModelBuffer = array();
 
     /**
-     * @param OmsQueryContainer $queryContainer
+     * @param OmsQueryContainerInterface $queryContainer
      */
-    public function __construct(OmsQueryContainer $queryContainer)
+    public function __construct(OmsQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }
@@ -184,7 +184,7 @@ class Timeout implements TimeoutInterface
     {
         $now = new DateTime('now');
 
-        return $this->queryContainer->queryItemsWithExpiredTimeouts($now)->find();
+        return $this->queryContainer->querySalesOrderItemsWithExpiredTimeouts($now)->find();
     }
 
     /**
