@@ -175,10 +175,11 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $request->addHeader($header, $value);
         }
 
-        $rawRequestBody = json_encode($requestTransfer->toArray(false));
-
+        $data = $requestTransfer->toArray(true);
+//        unset($data['transfer']);
+        $rawRequestBody = json_encode($data);
         $request->setBody($rawRequestBody, 'application/json');
-        //$request->setHeader('Host', System::getHostname());
+//        $request->setHeader('Host', System::getHostname());
 
         return $request;
     }
@@ -204,7 +205,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         }
 
         if (!empty($transferObject)) {
-//            $request->setTransfer($transferObject);
+            $request->setTransfer($transferObject);
         }
 
         return $request;

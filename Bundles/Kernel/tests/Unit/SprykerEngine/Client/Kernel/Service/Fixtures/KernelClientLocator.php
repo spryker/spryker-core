@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerEngine\Client\Kernel\Fixtures;
+namespace Unit\SprykerEngine\Client\Kernel\Service\Fixtures;
 
 use Unit\SprykerEngine\Shared\Kernel\Fixtures\LocatorLocator;
 

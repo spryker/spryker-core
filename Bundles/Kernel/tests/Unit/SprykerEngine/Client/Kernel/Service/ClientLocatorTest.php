@@ -1,9 +1,9 @@
 <?php
 
-namespace Unit\SprykerEngine\Client\Kernel;
+namespace Unit\SprykerEngine\Client\Kernel\Service;
 
 use SprykerEngine\Client\Kernel\Service\ClientLocator;
-use Unit\SprykerEngine\Client\Kernel\Fixtures\KernelClientLocator;
+use Unit\SprykerEngine\Client\Kernel\Service\Fixtures\KernelClientLocator;
 
 /**
  * @group SprykerEngine
@@ -17,10 +17,10 @@ class ClientLocatorTest extends \PHPUnit_Framework_TestCase
     public function testLocateStubShouldReturnStubOfGivenBundle()
     {
         $locator = new ClientLocator(
-            '\\Unit\\SprykerEngine\\Client\\{{bundle}}{{store}}\\Fixtures\\KernelFactory'
+            '\\Unit\\SprykerEngine\\Client\\{{bundle}}{{store}}\\Service\\Fixtures\\KernelFactory'
         );
         $located = $locator->locate('Kernel', KernelClientLocator::getInstance());
 
-        $this->assertInstanceOf('Unit\SprykerEngine\Client\Kernel\Fixtures\KernelClient', $located);
+        $this->assertInstanceOf('Unit\SprykerEngine\Client\Kernel\Service\Fixtures\KernelClient', $located);
     }
 }
