@@ -19,5 +19,4 @@ class AvailabilityCheckoutConnectorDependencyContainer extends AbstractDependenc
     {
         return $this->getProvidedDependency(AvailabilityCheckoutConnectorDependencyProvider::FACADE_AVAILABILITY);
     }
-
 }

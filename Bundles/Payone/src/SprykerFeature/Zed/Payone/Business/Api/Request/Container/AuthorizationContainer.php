@@ -4,9 +4,9 @@
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
+
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer;
-
 
 class AuthorizationContainer extends AbstractAuthorizationContainer
 {

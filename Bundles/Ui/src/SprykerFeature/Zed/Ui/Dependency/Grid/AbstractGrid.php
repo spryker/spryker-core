@@ -54,6 +54,13 @@ abstract class AbstractGrid
         }
 
         $this->request = $request;
+
+        $this->init();
+    }
+
+
+    public function init(){
+
     }
 
     /**
@@ -74,6 +81,11 @@ abstract class AbstractGrid
             $this->request->query->all(),
             $this->query
         );
+    }
+
+    protected function runQuery()
+    {
+
     }
 
     /**

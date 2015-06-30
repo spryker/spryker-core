@@ -116,6 +116,23 @@ class ProductFacadeTest extends Test
     /**
      * @group Product
      */
+    public function testGetEffectiveTaxRateReturnsFloat()
+    {
+        $concreteProductQuery = $this->productQueryContainer->queryConcreteProductBySku('AConcreteProductSku');
+
+        $this->assertEquals(0, $concreteProductQuery->count());
+
+        $idAbstractProduct = $this->productFacade->createAbstractProduct('AnAbstractProductSku');
+        $this->productFacade->createConcreteProduct('AConcreteProductSku', $idAbstractProduct);
+
+        $effectiveTaxRate = $this->productFacade->getEffectiveTaxRateForConcreteProduct('AConcreteProductSku');
+
+        $this->assertInternalType('float', $effectiveTaxRate);
+    }
+
+    /**
+     * @group Product
+     */
     public function testHasAbstractProductReturnsRightValue()
     {
         $this->assertFalse($this->productFacade->hasAbstractProduct('AProductSku'));

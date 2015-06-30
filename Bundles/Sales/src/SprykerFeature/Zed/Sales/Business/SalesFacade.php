@@ -9,9 +9,6 @@ use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
-use SprykerEngine\Zed\Kernel\Business\ModelResult;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -21,6 +18,7 @@ class SalesFacade extends AbstractFacade
 {
 
     /**
+     * @deprecated
      * @param CommentTransfer $commentTransfer
      *
      * @return CommentTransfer
@@ -34,18 +32,19 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param int $orderId
+     * @param int $idOrder
      *
      * @return array
      */
-    public function getOrderItemsArrayByOrderId($orderId)
+    public function getArrayWithManualEvents($idOrder)
     {
         $orderManager = $this->getDependencyContainer()->createOrderDetailsManager();
 
-        return $orderManager->getOrderItemsArrayByOrderId($orderId);
+        return $orderManager->getArrayWithManualEvents($idOrder);
     }
 
     /**
+     * @deprecated
      * @param int $orderItemId
      *
      * @return array
@@ -60,7 +59,8 @@ class SalesFacade extends AbstractFacade
 
     /**
      * @param int $orderItemId
-     *
+     * @deprecated
+     * 
      * @return OrderItemsTransfer
      */
     public function getOrderItemById($orderItemId)
@@ -70,29 +70,15 @@ class SalesFacade extends AbstractFacade
             ->getOrderItemById($orderItemId)
         ;
     }
-
-    /**
-     * @return OrderDetailsManager
-     */
-    public function createOrderDetailsModel()
-    {
-        $model = $this->getDependencyContainer()
-            ->createOrderDetailsManager()
-        ;
-
-        return $model;
-    }
-
     /**
      * @param OrderTransfer $transferOrder
-     * @param RequestInterface $request
      *
-     * @return ModelResult
+     * @return OrderTransfer
      */
-    public function saveOrder(OrderTransfer $transferOrder, RequestInterface $request)
+    public function saveOrder(OrderTransfer $transferOrder)
     {
-        return $this->factory
-            ->createModelOrderManager(Locator::getInstance(), $this->factory)
-            ->saveOrder($transferOrder, $request);
+        return $this->getDependencyContainer()
+            ->createOrderManager()
+            ->saveOrder($transferOrder);
     }
 }

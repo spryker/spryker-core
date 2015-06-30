@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
+use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -15,7 +15,7 @@ class Finder implements FinderInterface
 {
 
     /**
-     * @var OmsQueryContainer
+     * @var OmsQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -30,11 +30,11 @@ class Finder implements FinderInterface
     protected $activeProcesses;
 
     /**
-     * @param OmsQueryContainer $queryContainer
+     * @param OmsQueryContainerInterface $queryContainer
      * @param BuilderInterface $builder
      * @param array $activeProcesses
      */
-    public function __construct(OmsQueryContainer $queryContainer, BuilderInterface $builder, array $activeProcesses)
+    public function __construct(OmsQueryContainerInterface $queryContainer, BuilderInterface $builder, array $activeProcesses)
     {
         $this->queryContainer = $queryContainer;
         $this->builder = $builder;
@@ -49,7 +49,7 @@ class Finder implements FinderInterface
     public function getManualEvents($idOrderItem)
     {
         $orderItem = $this->queryContainer
-            ->queryOrderItems([$idOrderItem])
+            ->querySalesOrderItems([$idOrderItem])
             ->findOne()
         ;
 
@@ -75,7 +75,7 @@ class Finder implements FinderInterface
     public function isOrderFlagged($idOrder, $flag)
     {
         $order = $this->queryContainer
-            ->queryOrder($idOrder)
+            ->querySalesOrderById($idOrder)
             ->findOne()
         ;
 
@@ -93,12 +93,12 @@ class Finder implements FinderInterface
     public function isOrderFlaggedAll($idOrder, $flag)
     {
         $order = $this->queryContainer
-            ->queryOrder($idOrder)
+            ->querySalesOrderById($idOrder)
             ->findOne()
         ;
 
         $orderItems = $this->queryContainer
-            ->queryOrderItemsByOrder($idOrder)
+            ->querySalesOrderItemsByIdOrder($idOrder)
             ->find()
         ;
 
@@ -142,7 +142,7 @@ class Finder implements FinderInterface
      */
     protected function getOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
-        $orderItems = $this->queryContainer->queryOrderItemsForSku($states, $sku, $returnTest);
+        $orderItems = $this->queryContainer->querySalesOrderItemsForSku($states, $sku, $returnTest);
 
         return $orderItems;
     }
@@ -156,7 +156,7 @@ class Finder implements FinderInterface
      */
     protected function countOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
-        return $this->queryContainer->countOrderItemsForSku($states, $sku, $returnTest)->findOne();
+        return $this->queryContainer->countSalesOrderItemsForSku($states, $sku, $returnTest)->findOne();
     }
 
     /**

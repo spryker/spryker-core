@@ -5,19 +5,18 @@
 
 namespace SprykerEngine\Yves\Messenger\Plugin;
 
-use SprykerEngine\Shared\Messenger\Communication\Plugin\AbstractTwigMessengerPlugin;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
+use SprykerEngine\Yves\Kernel\AbstractPlugin;
+use SprykerEngine\Yves\Messenger\Plugin\TwigMessengerExtension;
 
-class TwigMessengerPlugin extends AbstractTwigMessengerPlugin
+class TwigMessengerPlugin extends AbstractPlugin
 {
 
     /**
-     * @param FactoryInterface $factory
-     * @param LocatorLocatorInterface $locator
+     * @return TwigMessengerExtension
      */
-    public function __construct(FactoryInterface $factory, LocatorLocatorInterface $locator)
+    public function getTwigMessengerExtension()
     {
+        return $this->getDependencyContainer()->createTwigMessengerExtension();
     }
 
 }

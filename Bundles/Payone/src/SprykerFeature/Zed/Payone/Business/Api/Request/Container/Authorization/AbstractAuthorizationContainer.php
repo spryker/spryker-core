@@ -4,15 +4,13 @@
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization;
+
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;
 
-
-abstract class AbstractAuthorizationContainer extends AbstractRequestContainer
+abstract class AbstractAuthorizationContainer extends AbstractRequestContainer implements AuthorizationContainerInterface
 {
 
     /**

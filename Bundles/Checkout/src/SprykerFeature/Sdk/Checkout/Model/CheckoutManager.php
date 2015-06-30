@@ -5,6 +5,8 @@
 
 namespace SprykerFeature\Sdk\Checkout\Model;
 
+use Generated\Shared\Checkout\CheckoutRequestInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Shared\Library\Communication\Response;
 use SprykerFeature\Shared\ZedRequest\Client\AbstractZedClient;
@@ -25,25 +27,13 @@ class CheckoutManager implements CheckoutManagerInterface
     }
 
     /**
-     * @param Order $order
+     * @param CheckoutRequestInterface $checkoutRequest
      * @return Response
      */
-    public function saveOrder(Order $order)
+    public function requestCheckout(CheckoutRequestInterface $checkoutRequest)
     {
-        $this->zedClient->call('checkout/sdk/save-order', $order, 60);
+        $this->zedClient->call('/checkout/sdk/request-checkout', $checkoutRequest, 60);
 
         return $this->zedClient->getLastResponse();
-    }
-
-    /**
-     * @param Order $order
-     * @return Order
-     */
-    public function clearReferences(Order $order)
-    {
-        $order->setIdSalesOrder(null);
-        $order->setIncrementId(null);
-
-        return $order;
     }
 }

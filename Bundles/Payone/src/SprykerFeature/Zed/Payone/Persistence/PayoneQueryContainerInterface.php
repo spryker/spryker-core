@@ -32,4 +32,10 @@ interface PayoneQueryContainerInterface
      */
     public function getApiLogByPaymentAndRequestTypeQuery($fkPayment, $requestType);
 
+    /**
+     * @param int $orderId
+     * @return SpyPaymentPayoneQuery
+     */
+    public function getPaymentByOrderId($orderId);
+
 }

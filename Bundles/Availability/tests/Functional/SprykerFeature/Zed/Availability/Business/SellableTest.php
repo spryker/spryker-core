@@ -10,13 +10,21 @@ use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Availability\Business\AvailabilityFacade;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
+use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStock;
+use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;
 use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProductQuery;
 use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockQuery;
 
 /**
- * @group AvailabilityTest
+ * @group SprykerFeature
+ * @group Zed
+ * @group Business
+ * @group Availability
+ * @group SellableTest
  */
 class SellableTest extends AbstractFunctionalTest
 {
@@ -55,6 +63,37 @@ class SellableTest extends AbstractFunctionalTest
         $isSellable = $this->availabilityFacade->isProductSellable($productEntity->getSku(), 1);
 
         $this->assertTrue($isSellable);
+    }
+
+    public function testProductIsNotSellableIfStockNotSufficient()
+    {
+        $this->setTestData();
+
+        $abstractProduct = new SpyAbstractProduct();
+        $abstractProduct
+            ->setSku('AP1337')
+        ;
+
+        $concreteProduct = new SpyProduct();
+        $concreteProduct
+            ->setSku('P1337')
+            ->setSpyAbstractProduct($abstractProduct)
+        ;
+
+        $stock = new SpyStock();
+        $stock
+            ->setName('TestStock1')
+        ;
+
+        $stockProduct = new SpyStockProduct();
+        $stockProduct
+            ->setStock($stock)
+            ->setSpyProduct($concreteProduct)
+            ->setQuantity(5)
+            ->save()
+        ;
+
+        $this->assertFalse($this->availabilityFacade->isProductSellable('P1337', 6));
     }
 
     protected function setTestData()

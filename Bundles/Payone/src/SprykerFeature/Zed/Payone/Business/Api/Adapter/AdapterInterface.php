@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Adapter;
 
-
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 
 interface AdapterInterface

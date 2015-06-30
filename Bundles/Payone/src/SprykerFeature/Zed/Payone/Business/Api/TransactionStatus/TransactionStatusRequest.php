@@ -5,8 +5,6 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\TransactionStatus;
 use SprykerFeature\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
-use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\AbstractRequest;
-
 
 class TransactionStatusRequest extends AbstractRequest implements TransactionStatusUpdateInterface
 {

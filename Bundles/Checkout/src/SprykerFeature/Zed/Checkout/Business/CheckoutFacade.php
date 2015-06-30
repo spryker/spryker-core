@@ -1,27 +1,33 @@
 <?php
 /**
- * (c) Spryker Systems GmbH copyright protected
- */
+* (c) Spryker Systems GmbH copyright protected
+*/
 
 namespace SprykerFeature\Zed\Checkout\Business;
 
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
 
+/**
+ * @method CheckoutDependencyContainer getDependencyContainer()
+ */
 class CheckoutFacade extends AbstractFacade
 {
 
     /**
-     * @param Order   $orderTransfer
-     * @param RequestInterface $transferRequest
-     * @param array   $logContext
-     * @return \SprykerEngine\Zed\Kernel\Business\ModelResult
+     * @param CheckoutRequestTransfer $checkoutRequest
+     *
+     * @return CheckoutResponseTransfer
      */
-    public function saveOrder(Order $orderTransfer, RequestInterface $transferRequest, array $logContext)
+    public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
     {
-        return $this->factory
-            ->createModelWorkflowDefinitionSaveOrder($orderTransfer, $transferRequest, $this->factory)
-            ->run($logContext);
+        return $this
+            ->getDependencyContainer()
+            ->createCheckoutWorkflow()
+            ->requestCheckout($checkoutRequest)
+            ;
     }
 }

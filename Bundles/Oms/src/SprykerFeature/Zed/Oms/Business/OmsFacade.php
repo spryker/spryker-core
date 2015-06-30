@@ -382,5 +382,4 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
             ->createOrderStateMachineOrderStateMachine($logContext)
             ->triggerEvent($eventId, $orderItemsArray, $data);
     }
-
 }

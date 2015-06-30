@@ -5,6 +5,8 @@
 
 namespace SprykerEngine\Shared\Transfer;
 
+use Zend\Code\Generator\DocBlock\Tag\ReturnTag;
+use Zend\Code\Reflection\MethodReflection;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -15,16 +17,6 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      * @var array
      */
     private $modifiedProperties = [];
-
-    /**
-     * @param string $property
-     */
-    protected function addModifiedProperty($property)
-    {
-        if (!in_array($property, $this->modifiedProperties)) {
-            $this->modifiedProperties[] = $property;
-        }
-    }
 
     /**
      * @param bool $recursive
@@ -46,6 +38,10 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
             if (is_object($value)) {
                 if ($recursive && $value instanceof TransferInterface) {
                     $values[$key] = $value->toArray($recursive);
+                } elseif ($recursive && $value instanceof \ArrayObject && count($value) >= 1) {
+                    foreach ($value as $elementKey => $arrayElement) {
+                        $values[$key][$elementKey] = $arrayElement->toArray($recursive);
+                    }
                 } else {
                     $values[$key] = $value;
                 }
@@ -56,6 +52,17 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
         }
 
         return $values;
+    }
+
+    /**
+     * @return array
+     */
+    private function getPropertyNames()
+    {
+        $classVars = get_class_vars(get_class($this));
+        unset($classVars['modifiedProperties']);
+
+        return array_keys($classVars);
     }
 
     /**
@@ -93,19 +100,58 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     public function fromArray(array $data, $ignoreMissingProperty = false)
     {
         $filter = new UnderscoreToCamelCase();
+        $properties = $this->getPropertyNames();
         foreach ($data as $key => $value) {
             $property = lcfirst($filter->filter($key));
-            $getter = 'get' . ucfirst($property);
-            $setter = 'set' . ucfirst($property);
 
-            if (method_exists($this, $setter)) {
-                if ($this->canSetValue($setter, $value)) {
-                    $this->$setter($value);
+            if (!in_array($property, $properties)) {
+                if ($ignoreMissingProperty) {
+                    continue;
+                } else {
+                    throw new \InvalidArgumentException(
+                        sprintf('Missing property "%s" in "%s"', $property, get_class($this))
+                    );
                 }
-            } elseif (!$ignoreMissingProperty) {
-                throw new \InvalidArgumentException(
-                    sprintf('Missing property "%s" in "%s"', $property, get_class($this))
-                );
+            }
+
+            $getter = 'get' . ucfirst($property);
+            $getterReturn = $this->getGetterReturn($getter);
+            $setter = 'set' . ucfirst($property);
+            $type = $this->getSetterType($setter);
+
+            // Process Array
+            if (is_array($value) && $this->isArray($getterReturn) && $type === 'ArrayObject') {
+                /** @var TransferInterface $transferObject */
+                $elementType = $this->getArrayTypeWithNamespace($getterReturn);
+                $transferObjectsArray = new \ArrayObject();
+                foreach ($value as $arrayElement) {
+                    $transferObject = new $elementType;
+                    if (is_array($arrayElement)) {
+                        $transferObject->fromArray($arrayElement);
+                    }
+                    $transferObjectsArray->append($transferObject);
+                }
+                $value = $transferObjectsArray;
+            }
+
+            // Process nested Transfer Objects
+            if ($this->isTransferClass($type)) {
+                /** @var TransferInterface $transferObject */
+                $transferObject = new $type;
+                if (is_array($value)) {
+                    $transferObject->fromArray($value);
+                    $value = $transferObject;
+                }
+            }
+
+            try {
+                $this->$setter($value);
+            } catch (\Exception $e) {
+                if ($ignoreMissingProperty) {
+                    throw new \InvalidArgumentException(
+                        sprintf('Missing property "%s" in "%s"', $property, get_class($this))
+                    );
+                }
             }
         }
 
@@ -113,36 +159,80 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     }
 
     /**
-     * @return array
+     * @param string $getterMethod
+     *
+     * @return string
      */
-    private function getPropertyNames()
+    private function getGetterReturn($getterMethod)
     {
-        $classVars = get_class_vars(get_class($this));
-        unset($classVars['modifiedProperties']);
+        $reflection = new MethodReflection(get_class($this), $getterMethod);
 
-        return array_keys($classVars);
+        /** @var ReturnTag $return */
+        $return = $reflection->getDocBlock()->getTag('return');
+
+        return $return->getTypes()[0];
     }
 
     /**
-     * If fromArray() tries to set a transfer object to something else than its allowed, an exception is thrown.
+     * @param string $setter
      *
-     * To prevent that en error is thrown when calling e.g.
-     * setTransfer(TransferInterface $transferInterface) with null or string etc
-     * This code is wrapped in a try catch block
-     *
-     * @param $setter
-     * @param $value
+     * @return string
+     */
+    private function getSetterType($setter)
+    {
+        $reflection = new MethodReflection(get_class($this), $setter);
+
+        return $reflection->getParameters()[0]->getType();
+    }
+
+    /**
+     * @param string $returnType
      *
      * @return bool
      */
-    private function canSetValue($setter, $value)
+    private function isArray($returnType)
     {
-        try {
-            $this->$setter($value);
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
+        return strpos($returnType, '[]') > -1;
     }
 
+    /**
+     * @param string $returnType
+     *
+     * @return string
+     */
+    private function getArrayTypeWithNamespace($returnType)
+    {
+        return 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $returnType);
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    private function isTransferClass($type)
+    {
+        if (!is_string($type)) {
+            return false;
+        }
+
+        $name = explode('\\', $type);
+
+        return (
+            count($name) > 3 &&
+            $name[0] === 'Generated' &&
+            $name[1] === 'Shared' &&
+            $name[2] === 'Transfer'
+        );
+    }
+
+    /**
+     * @param string $property
+     */
+    protected function addModifiedProperty($property)
+    {
+        if (!in_array($property, $this->modifiedProperties)) {
+            $this->modifiedProperties[] = $property;
+        }
+    }
 }

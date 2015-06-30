@@ -4,7 +4,9 @@
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization;
+
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 
 
 class ThreeDSecureContainer extends AbstractContainer
@@ -22,7 +24,10 @@ class ThreeDSecureContainer extends AbstractContainer
      * @var string
      */
     protected $eci;
-
+    /**
+     * @varb RedirectContainer
+     */
+    protected $redirect;
 
     /**
      * @param string $cavv
@@ -70,6 +75,22 @@ class ThreeDSecureContainer extends AbstractContainer
     public function getXid()
     {
         return $this->xid;
+    }
+
+    /**
+     * @param RedirectContainer $redirect
+     */
+    public function setRedirect(RedirectContainer $redirect)
+    {
+        $this->redirect = $redirect;
+    }
+
+    /**
+     * @return RedirectContainer
+     */
+    public function getRedirect()
+    {
+        return $this->redirect;
     }
 
 }

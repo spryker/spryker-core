@@ -4,8 +4,6 @@
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
-
 
 class DirectDebitContainer extends AbstractPaymentMethodContainer
 {
@@ -25,10 +23,6 @@ class DirectDebitContainer extends AbstractPaymentMethodContainer
     /**
      * @var string
      */
-    protected $bankaccountholder;
-    /**
-     * @var string
-     */
     protected $iban;
     /**
      * @var string
@@ -37,10 +31,13 @@ class DirectDebitContainer extends AbstractPaymentMethodContainer
     /**
      * @var string
      */
+    protected $bankaccountholder;
+    /**
+     * @var string
+     */
     protected $mandate_identification;
 
-    
-    
+
     /**
      * @param string $bankaccount
      */

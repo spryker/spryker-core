@@ -20,4 +20,6 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\Base\SpyPaymentPayoneTransactio
 class SpyPaymentPayoneTransactionStatusLogQuery extends BaseSpyPaymentPayoneTransactionStatusLogQuery
 {
 
+    const SEQUENCE_NUMBER = 'sequence_number';
+
 } // SpyPaymentPayoneTransactionStatusLogQuery

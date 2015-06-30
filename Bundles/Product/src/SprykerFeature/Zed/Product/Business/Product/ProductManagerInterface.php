@@ -139,4 +139,20 @@ interface ProductManagerInterface
      * @throws MissingProductException
      */
     public function createAndTouchProductUrlByIdProduct($idAbstractProduct, $url, LocaleTransfer $locale);
+
+    /**
+     * @param string $sku
+     *
+     * @return float
+     * @throws MissingProductException
+     */
+    public function getEffectiveTaxRateForConcreteProduct($sku);
+
+    /**
+     * @param string $sku
+     *
+     * @return int
+     * @throws MissingProductException
+     */
+    public function getAbstractProductIdByConcreteSku($sku);
 }

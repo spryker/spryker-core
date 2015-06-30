@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Oms\Business\Util;
 
 use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
+use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
@@ -64,7 +64,7 @@ class TransitionLog implements TransitionLogInterface
     protected $errorMessage;
 
     /**
-     * @var OmsQueryContainer
+     * @var OmsQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -74,10 +74,10 @@ class TransitionLog implements TransitionLogInterface
     protected $logContext;
 
     /**
-     * @param OmsQueryContainer $queryContainer
+     * @param OmsQueryContainerInterface $queryContainer
      * @param array $logContext
      */
-    public function __construct(OmsQueryContainer $queryContainer, array $logContext)
+    public function __construct(OmsQueryContainerInterface $queryContainer, array $logContext)
     {
         $this->queryContainer = $queryContainer;
         $this->logContext = $logContext;

@@ -7,6 +7,7 @@ namespace SprykerFeature\Zed\ProductOption\Communication;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
+use SprykerFeature\Zed\ProductOption\ProductOptionDependencyProvider;
 
 class ProductOptionDependencyContainer extends AbstractDependencyContainer
 {
@@ -16,6 +17,6 @@ class ProductOptionDependencyContainer extends AbstractDependencyContainer
      */
     public function getInstallerFacade()
     {
-        return $this->getLocator()->productOption()->facade();
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT);
     }
 }
