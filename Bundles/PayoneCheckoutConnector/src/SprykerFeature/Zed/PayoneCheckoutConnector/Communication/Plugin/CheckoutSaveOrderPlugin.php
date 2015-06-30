@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Communication\Plugin;
+namespace SprykerFeature\Zed\PayoneCheckoutConnector\Communication\Plugin;
 
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
