@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\TransactionStatus;
 
-
 class TransactionStatusResponse
 {
 

@@ -4,8 +4,8 @@
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Response\Container;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
 abstract class AbstractResponseContainer implements PayoneApiConstants
 {
@@ -133,6 +133,18 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
     public function getErrorcode()
     {
         return $this->errorcode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isError()
+    {
+        if($this->errorcode === null){
+            return false;
+        }
+
+        return true;
     }
 
     /**

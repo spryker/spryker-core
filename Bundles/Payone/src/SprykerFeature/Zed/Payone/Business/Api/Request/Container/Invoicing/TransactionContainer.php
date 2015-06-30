@@ -4,9 +4,8 @@
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer;
 
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
 class TransactionContainer extends AbstractContainer
 {
@@ -44,7 +43,7 @@ class TransactionContainer extends AbstractContainer
     {
         $data = parent::toArray();
         $i = 1;
-        foreach ($this->items as $key => $item) {
+        foreach ($this->items as $item) {
             /* @var $item ItemContainer */
             $data = array_merge($data, $item->toArrayByKey($i));
             $i++;

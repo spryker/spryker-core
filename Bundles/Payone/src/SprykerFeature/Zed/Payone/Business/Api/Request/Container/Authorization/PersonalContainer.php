@@ -4,8 +4,8 @@
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
 class PersonalContainer extends AbstractContainer
 {
@@ -88,6 +88,17 @@ class PersonalContainer extends AbstractContainer
      * @var string
      */
     protected $vatid;
+
+    /**
+     * @var string
+     */
+    protected $gender;
+
+    /**
+     * @var string
+     */
+    protected $personalid;
+
     /**
      * @var string
      */
@@ -380,6 +391,38 @@ class PersonalContainer extends AbstractContainer
     public function getVatId()
     {
         return $this->vatid;
+    }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param string $personalid
+     */
+    public function setPersonalid($personalid)
+    {
+        $this->personalid = $personalid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPersonalid()
+    {
+        return $this->personalid;
     }
 
     /**

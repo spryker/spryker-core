@@ -1,20 +1,20 @@
 <?php
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
+  /**
+  * (c) Spryker Systems GmbH copyright protected
+  */
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
-use Generated\Shared\Transfer\PayonePaymentTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Generated\Shared\Transfer\OrderTransfer;
 
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class IsAuthorizationSuccess extends AbstractPlugin implements ConditionInterface
+abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInterface
 {
 
     /**
@@ -22,29 +22,32 @@ class IsAuthorizationSuccess extends AbstractPlugin implements ConditionInterfac
      */
     protected static $resultCache = [];
 
-
     /**
      * @param SpySalesOrderItem $orderItem
+     *
      * @return bool
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        //FIXME Pseudo Code Example
         $order = $orderItem->getOrder();
 
         if (isset(self::$resultCache[$order->getPrimaryKey()])) {
             return self::$resultCache[$order->getPrimaryKey()];
         }
 
-        $payment = $orderItem->getOrder()->getPayonePayment();
-        $paymentTransfer = new PayonePaymentTransfer();
-        $paymentTransfer->setPaymentMethod($payment->getMethod());
-        $paymentTransfer->setTransactionId($payment->getTransactionId());
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->fromArray($order->toArray());
 
-        $isSuccess = $this->getDependencyContainer()->createPayoneFacade()->isAuthorizationSuccess($paymentTransfer);
+        $isSuccess = $this->callFacade($orderTransfer);
         self::$resultCache[$order->getPrimaryKey()] = $isSuccess;
 
         return $isSuccess;
     }
 
-}
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    abstract protected function callFacade(OrderTransfer $orderTransfer);
+} 

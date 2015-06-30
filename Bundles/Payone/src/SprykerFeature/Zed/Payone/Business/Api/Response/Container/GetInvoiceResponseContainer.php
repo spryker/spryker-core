@@ -4,8 +4,6 @@
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Response\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
-
 
 class GetInvoiceResponseContainer extends AbstractResponseContainer
 {

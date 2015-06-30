@@ -17,7 +17,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class CaptureGrandTotalPlugin extends AbstractPlugin implements CommandByOrderInterface
+class CapturePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
     /**
@@ -27,7 +27,6 @@ class CaptureGrandTotalPlugin extends AbstractPlugin implements CommandByOrderIn
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        //FIXME Pseudo Code Example
         $captureTransfer = new CaptureTransfer();
         $captureTransfer->setAmount($orderEntity->getGrandTotal());
 

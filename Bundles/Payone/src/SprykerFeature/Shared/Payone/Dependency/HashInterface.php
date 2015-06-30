@@ -5,8 +5,6 @@
 
 namespace SprykerFeature\Shared\Payone\Dependency;
 
-
-
 interface HashInterface
 {
 

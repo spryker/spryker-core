@@ -4,8 +4,6 @@
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-
 
 class CreditCardCheckContainer extends AbstractRequestContainer
 {

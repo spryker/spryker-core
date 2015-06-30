@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Shared\Payone;
 
-
 interface PayoneTransactionStatusConstants
 {
 
