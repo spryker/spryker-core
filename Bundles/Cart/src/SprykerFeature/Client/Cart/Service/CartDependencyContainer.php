@@ -5,14 +5,14 @@
 
 namespace SprykerFeature\Client\Cart\Service;
 
-use Generated\Client\Ide\FactoryAutoCompletion\Cart;
+use Generated\Client\Ide\FactoryAutoCompletion\CartService;
 use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
 use SprykerFeature\Client\Cart\CartDependencyProvider;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * @method Cart getFactory()
+ * @method CartService getFactory()
  */
 class CartDependencyContainer extends AbstractDependencyContainer
 {

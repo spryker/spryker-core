@@ -97,16 +97,16 @@ class GenerateClientIdeAutoCompletionConsole extends Console
     protected function generateClientFactoryInterface()
     {
         $methodTagGenerator = new ConstructableMethodTagBuilder([
-            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => '',
+            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Service/',
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Client',
-            ConstructableMethodTagBuilder::OPTION_KEY_CLASS_NAME_PART_LEVEL => 3,
+            ConstructableMethodTagBuilder::OPTION_KEY_CLASS_NAME_PART_LEVEL => 4,
         ]);
 
         $options = [
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Client\Ide\FactoryAutoCompletion',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR =>
                 APPLICATION_SOURCE_DIR . '/Generated/Client/Ide',
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => false,
+            IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => true,
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Client',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
                 [
