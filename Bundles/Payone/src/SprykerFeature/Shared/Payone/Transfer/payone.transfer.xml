@@ -41,6 +41,10 @@
     </transfer>
 
     <transfer name="PayonePayment">
+        <property name="idPaymentPayone" type="int" />
+        <property name="fkSalesOrder" type="int" />
+        <property name="createdAt" type="string" />
+        <property name="updatedAt" type="string" />
         <property name="paymentMethod" type="string" />
         <property name="authorizationType" type="string" />
         <property name="transactionId" type="string" />
