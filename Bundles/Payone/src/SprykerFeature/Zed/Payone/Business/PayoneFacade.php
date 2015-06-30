@@ -13,6 +13,7 @@ use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Payone\CreditCardInterface;
 use Generated\Shared\Payone\ApiCallResponseCheckInterface;
 use Generated\Shared\Transfer\AuthorizationCheckResponseTransfer;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Payone\OrderInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
@@ -21,7 +22,6 @@ use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseCont
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
-
 
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
@@ -247,6 +247,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param PayoneOrderInterface $orderTransfer
      *
+     * @return PayonePaymentTransfer
      */
     public function getPayment(PayoneOrderInterface $orderTransfer)
     {

@@ -146,6 +146,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param array $requestParams
+     *
      * @return TransactionStatusRequest
      */
     public function createTransactionStatusUpdateRequest(array $requestParams)
