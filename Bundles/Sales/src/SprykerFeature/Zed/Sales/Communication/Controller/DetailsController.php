@@ -52,6 +52,7 @@ class DetailsController extends AbstractController
         foreach ($events as $eventList) {
             $allEvents = array_merge($allEvents, $eventList);
         }
-        return $allEvents;
+
+        return array_unique($allEvents);
     }
 }
