@@ -23,7 +23,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container[self::SESSION] = function (Container $container) {
-            return $container->getLocator()->application()->pluginSession();
+            return $container->getLocator()->session()->client();
         };
 
         $container[self::SERVICE_ZED] = function (Container $container) {
