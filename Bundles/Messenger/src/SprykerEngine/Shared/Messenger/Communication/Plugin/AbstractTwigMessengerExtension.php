@@ -8,7 +8,7 @@ namespace SprykerEngine\Shared\Messenger\Communication\Plugin;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Container;
 
-abstract class AbstractTwigMessengerPlugin extends \Twig_Extension
+abstract class AbstractTwigMessengerExtension extends \Twig_Extension
 {
 
     /**
@@ -26,6 +26,14 @@ abstract class AbstractTwigMessengerPlugin extends \Twig_Extension
         $this->messenger = $messenger;
 
         return $this;
+    }
+
+    /**
+     * @return MessengerInterface
+     */
+    public function getMessenger()
+    {
+        return $this->messenger;
     }
 
     /**
