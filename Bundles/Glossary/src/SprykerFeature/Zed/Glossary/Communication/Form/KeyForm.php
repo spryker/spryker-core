@@ -9,6 +9,9 @@ use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Constraints\Type;
 
 class KeyForm extends AbstractForm
 {
@@ -46,6 +49,15 @@ class KeyForm extends AbstractForm
         $fields = [];
         $fields[] = $this->addField('key')
             ->setRefresh(false)
+            ->setConstraints([
+                new Required([
+                    new Type([
+                        'type' => 'string',
+                        'message' => 'Please add glossary key'
+                    ]),
+                    new NotBlank(),
+                ]),
+            ])
         ;
 
         $locales = $this->localeFacade->getAvailableLocales();
