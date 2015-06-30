@@ -1,12 +1,10 @@
 <?php
-
 /*
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerFeature\Zed\Payone\Communication;
+namespace SprykerFeature\Zed\PayoneOmsConnector\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\PayoneCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerFeature\Zed\PayoneOmsConnector\PayoneOmsConnectorDependencyProvider;
 use Symfony\Component\Validator\Validator;

@@ -99,6 +99,7 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param string $name
+     *
      * @return null|PaymentMethodMapperInterface
      */
     protected function findPaymentMethodMapperByName($name)
@@ -112,7 +113,10 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param string $paymentMethodName
+     *
      * @return PaymentMethodMapperInterface
+     *
+     * @throws InvalidPaymentMethodException
      */
     protected function getRegisteredPaymentMethodMapper($paymentMethodName)
     {
@@ -127,6 +131,7 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return AuthorizationResponseContainer
      */
     public function authorize(AuthorizationInterface $authorizationData)
@@ -140,6 +145,7 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return AuthorizationResponseContainer
      */
     public function preAuthorize(AuthorizationInterface $authorizationData)
@@ -154,6 +160,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param AuthorizationInterface $authorizationData
      * @param AuthorizationContainerInterface $requestContainer
+     *
      * @return AuthorizationResponseContainer
      */
     protected function performAuthorization(AuthorizationInterface $authorizationData, AuthorizationContainerInterface $requestContainer)
@@ -177,6 +184,7 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param CaptureInterface $captureData
+     *
      * @return CaptureResponseContainer
      */
     public function capture(CaptureInterface $captureData)
@@ -198,6 +206,7 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param DebitInterface $debitData
+     *
      * @return DebitResponseContainer
      */
     public function debit(DebitInterface $debitData)
@@ -219,6 +228,7 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param CreditCardInterface $creditCardData
+     *
      * @return CreditCardCheckResponseContainer
      */
     public function creditCardCheck(CreditCardInterface $creditCardData)
@@ -235,6 +245,7 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param RefundInterface $refundData
+     *
      * @return RefundResponseContainer
      */
     public function refund(RefundInterface $refundData)
@@ -256,6 +267,7 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param PayoneOrderInterface $orderTransfer
+     *
      * @return PayonePaymentTransfer
      */
     public function getPayment(PayoneOrderInterface $orderTransfer)
@@ -269,9 +281,10 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param string $paymentMethodName
+     * @param $paymentMethodName
+     * @param $authorizationType
+     *
      * @return SpyPaymentPayone
-     * @throws PropelException
      */
     protected function initializePayment($paymentMethodName, $authorizationType)
     {
@@ -285,7 +298,9 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param SpyPaymentPayone $paymentEntity
+     *
      * @param AuthorizationResponseContainer $responseContainer
+     *
      * @throws PropelException
      */
     protected function updatePaymentAfterAuthorization(SpyPaymentPayone $paymentEntity, AuthorizationResponseContainer $responseContainer)
@@ -296,6 +311,7 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param string $transactionId
+     *
      * @return SpyPaymentPayone
      */
     protected function findPaymentByTransactionId($transactionId)
@@ -306,7 +322,9 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param SpyPaymentPayone $paymentEntity
      * @param AbstractRequestContainer $container
+     *
      * @return SpyPaymentPayoneApiLog
+     *
      * @throws PropelException
      */
     protected function initializeApiLog(SpyPaymentPayone $paymentEntity, AbstractRequestContainer $container)
@@ -325,6 +343,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param SpyPaymentPayoneApiLog $apiLogEntity
      * @param AuthorizationResponseContainer $responseContainer
+     *
      * @throws PropelException
      */
     protected function updateApiLogAfterAuthorization(SpyPaymentPayoneApiLog $apiLogEntity, AuthorizationResponseContainer $responseContainer)
@@ -342,6 +361,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param SpyPaymentPayoneApiLog $apiLogEntity
      * @param CaptureResponseContainer $responseContainer
+     *
      * @throws PropelException
      */
     protected function updateApiLogAfterCapture(SpyPaymentPayoneApiLog $apiLogEntity, CaptureResponseContainer $responseContainer)
@@ -357,6 +377,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param SpyPaymentPayoneApiLog $apiLogEntity
      * @param DebitResponseContainer $responseContainer
+     *
      * @throws PropelException
      */
     protected function updateApiLogAfterDebit(SpyPaymentPayoneApiLog $apiLogEntity, DebitResponseContainer $responseContainer)
@@ -372,6 +393,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param SpyPaymentPayoneApiLog $apiLogEntity
      * @param RefundResponseContainer $responseContainer
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      */
     protected function updateApiLogAfterRefund(SpyPaymentPayoneApiLog $apiLogEntity, RefundResponseContainer $responseContainer)
