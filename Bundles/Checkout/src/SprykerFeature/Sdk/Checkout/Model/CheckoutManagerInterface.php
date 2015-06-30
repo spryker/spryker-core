@@ -5,20 +5,16 @@
 
 namespace SprykerFeature\Sdk\Checkout\Model;
 
+use Generated\Shared\Checkout\CheckoutRequestInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use SprykerFeature\Shared\Library\Communication\Response;
 use Generated\Shared\Transfer\OrderTransfer;
 
 interface CheckoutManagerInterface
 {
     /**
-     * @param Order $order
+     * @param CheckoutRequestInterface $checkoutRequest
      * @return Response
      */
-    public function saveOrder(Order $order);
-
-    /**
-     * @param Order $order
-     * @return Order
-     */
-    public function clearReferences(Order $order);
+    public function requestCheckout(CheckoutRequestInterface $checkoutRequest);
 }

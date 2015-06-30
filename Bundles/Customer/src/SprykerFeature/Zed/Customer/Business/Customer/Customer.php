@@ -125,6 +125,8 @@ class Customer
     public function register(CustomerTransfer $customerTransfer)
     {
         try {
+
+            //TODO clean this up. is misusing the exception
             $this->getCustomer($customerTransfer);
         } catch (CustomerNotFoundException $e) {
             $customerTransfer->setRegistrationKey($this->generateKey());

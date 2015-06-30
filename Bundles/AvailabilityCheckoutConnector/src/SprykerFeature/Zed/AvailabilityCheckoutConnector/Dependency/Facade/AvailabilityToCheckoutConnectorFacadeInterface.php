@@ -7,6 +7,7 @@ namespace SprykerFeature\Zed\AvailabilityCheckoutConnector\Dependency\Facade;
 
 interface AvailabilityToCheckoutConnectorFacadeInterface
 {
+
     /**
      * @param string $sku
      * @param int $quantity
