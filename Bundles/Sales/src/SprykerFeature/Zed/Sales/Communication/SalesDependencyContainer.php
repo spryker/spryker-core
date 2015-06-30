@@ -58,7 +58,7 @@ class SalesDependencyContainer extends AbstractDependencyContainer
      */
     public function getSalesGrid()
     {
-        $salesQuery = $this->getQueryContainer()->querySales();
+        $salesQuery = $this->getQueryContainer()->querySalesOrder();
         return $this->getFactory()->createGridSalesGrid($salesQuery);
     }
 
@@ -70,7 +70,7 @@ class SalesDependencyContainer extends AbstractDependencyContainer
     public function getOrdersItemsGridByOrderId($idOrder)
     {
         return $this->getFactory()->createGridOrderItemsGrid(
-            $this->getQueryContainer()->queryOrderItems($idOrder));
+            $this->getQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder));
     }
 
 

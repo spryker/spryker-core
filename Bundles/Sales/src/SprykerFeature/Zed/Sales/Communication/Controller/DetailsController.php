@@ -28,15 +28,30 @@ class DetailsController extends AbstractController
     {
         $idOrder = $request->get('id-sales-order');
 
-        $orderEntity = $this->getQueryContainer()->querySalesById($idOrder)->findOne();
-        $orderItems = $this->getQueryContainer()->queryOrderItemsWithState($idOrder)->find();
+        $orderEntity = $this->getQueryContainer()->querySalesOrderById($idOrder)->findOne();
+        $orderItems = $this->getQueryContainer()->querySalesOrderItemsWithState($idOrder)->find();
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
+        $allEvents = $this->groupEvents($events);
 
         return [
             'idOrder' => $idOrder,
             'orderDetails' => $orderEntity,
             'orderItems' => $orderItems,
-            'events' => $events
+            'events' => $events,
+            'all_events' => $allEvents
         ];
+    }
+
+    /**
+     * @param $events
+     * @return array
+     */
+    protected function groupEvents($events)
+    {
+        $allEvents = [];
+        foreach ($events as $eventList) {
+            $allEvents = array_merge($allEvents, $eventList);
+        }
+        return $allEvents;
     }
 }

@@ -22,12 +22,12 @@ use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Util\TransitionLogInterface;
 use SprykerFeature\Zed\Oms\OmsConfig;
 use SprykerFeature\Zed\Oms\OmsDependencyProvider;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
+use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 /**
  * @method OmsBusiness getFactory()
  * @method OmsConfig getConfig()
- * @method OmsQueryContainer getQueryContainer()
+ * @method OmsQueryContainerInterface getQueryContainer()
  */
 class OmsDependencyContainer extends AbstractDependencyContainer
 {

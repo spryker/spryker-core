@@ -21,11 +21,17 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @return SpySalesOrderQuery
      */
-    public function querySales()
+    public function querySalesOrder()
     {
-        $query = SpySalesOrderQuery::create();
+        return $this->getFactory()->createPropelSpySalesOrderQuery();
+    }
 
-        return $query;
+    /**
+     * @return SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItem()
+    {
+        return $this->getFactory()->createPropelSpySalesOrderItemQuery();
     }
 
     /**
@@ -33,7 +39,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @return SpySalesOrderItemQuery
      */
-    public function queryOrderItems($idOrder)
+    public function querySalesOrderItemsByIdSalesOrder($idOrder)
     {
         $query = $this->getFactory()->createPropelSpySalesOrderItemQuery();
         return $query->filterByFkSalesOrder($idOrder);
@@ -45,9 +51,9 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @return SpySalesOrderItemQuery
      */
-    public function queryOrderItemsWithState($idOrder)
+    public function querySalesOrderItemsWithState($idOrder)
     {
-        $query = $this->queryOrderItems($idOrder);
+        $query = $this->querySalesOrderItemsByIdSalesOrder($idOrder);
         $query->joinWith('State');
         $query->joinWith('Process');
         return $query;
@@ -73,7 +79,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @return SpySalesOrderCommentQuery
      */
-    public function queryCommentsByOrderId($orderId)
+    public function queryComments($orderId)
     {
         $query = SpySalesOrderCommentQuery::create();
 
@@ -85,7 +91,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @return SpySalesOrderQuery
      */
-    public function querySalesById($idSalesOrder)
+    public function querySalesOrderById($idSalesOrder)
     {
         $query = SpySalesOrderQuery::create();
         $query->filterByIdSalesOrder($idSalesOrder);

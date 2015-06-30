@@ -16,25 +16,30 @@ interface SalesQueryContainerInterface
      *
      * @return SpySalesOrderQuery
      */
-    public function querySalesById($idSalesOrder);
+    public function querySalesOrderById($idSalesOrder);
 
     /**
      * @return SpySalesOrderQuery
      */
-    public function querySales();
+    public function querySalesOrder();
 
     /**
      * @var int $idOrder
      *
      * @return SpySalesOrderItemQuery
      */
-    public function queryOrderItems($idOrder);
+    public function querySalesOrderItemsByIdSalesOrder($idOrder);
 
     /**
      * @var int $idOrder
      *
      * @return SpySalesOrderItemQuery
      */
-    public function queryOrderItemsWithState($idOrder);
+    public function querySalesOrderItemsWithState($idOrder);
+
+    /**
+     * @return SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItem();
 
 }

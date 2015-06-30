@@ -32,7 +32,7 @@ class OrderDetailsManager
      */
     public function getArrayWithManualEvents($idOrder)
     {
-        $orderItems = $this->queryContainer->queryOrderItems($idOrder)->find();
+        $orderItems = $this->queryContainer->querySalesOrderItemsByIdSalesOrder($idOrder)->find();
 
         $events = [];
         foreach($orderItems as $i => $orderItem) {

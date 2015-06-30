@@ -3,6 +3,7 @@
     <section class="spy-layout compact" spy-app="spyForm">
 
         {% if orderItems|length > 0 %}
+
             <table class="spy-grid">
                 <tr class="text-left">
                     <th>{{ "Item name" | trans }}</th>
@@ -26,7 +27,7 @@
                             {% if events[orderItem.IdSalesOrderItem] |length > 0 %}
                                 {% for event in events[orderItem.IdSalesOrderItem] %}
                                     <a class="button"
-                                       href="/oms/trigger/trigger-event-for-order-items?id-sales-order-item={{ orderItem.IdSalesOrderItem }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ orderItem.FkSalesOrder }}">
+                                       href="/oms/trigger/trigger-event-for-order-items?id-sales-order-item={{ orderItem.IdSalesOrderItem }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
                                         {{ event }}</a>
                                 {% endfor %}
                             {% else -%}
@@ -40,6 +41,13 @@
                     </tr>
                 {% endfor %}
             </table>
+
+            {% for event in all_events %}
+                <a class="button"
+                   href="/oms/trigger/trigger-event-for-order?id-sales-order={{ idOrder }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
+                    {{ event }}</a>
+            {% endfor %}
+
         {% else %}
             <p>There are no items for this order</p>
         {% endif %}

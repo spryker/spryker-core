@@ -17,6 +17,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
     const COMMAND_PLUGINS = 'COMMAND_PLUGINS';
 
+    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+
     /**
      * @param Container $container
      *
@@ -57,5 +59,12 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         return [
             // $container->getLocator()->oms()->pluginOmsConditionAlwaysFalse()
         ];
+    }
+
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
+            return $container->getLocator()->sales()->queryContainer();
+        };
     }
 }
