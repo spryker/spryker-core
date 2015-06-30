@@ -9,5 +9,5 @@ interface ItemQueueProviderInterface
      *
      * @return array
      */
-    public function getAllQueueForType($itemType);
+    public function getAllQueuesForType($itemType);
 }

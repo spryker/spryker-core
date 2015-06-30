@@ -111,7 +111,6 @@ class QueueConnection implements QueueConnectionInterface
             try {
                 $this->channel->wait(null, false, $this->timeout);
             } catch (AMQPTimeoutException $timeoutException) {
-                // todo: is this the "correct" way of exiting?
                 break;
             }
         }
@@ -145,7 +144,6 @@ class QueueConnection implements QueueConnectionInterface
      */
     public function acknowledge(AMQPMessage $message)
     {
-        //$channel = $message->delivery_info['channel'];
         $this->channel->basic_ack($message->delivery_info['delivery_tag']);
     }
 

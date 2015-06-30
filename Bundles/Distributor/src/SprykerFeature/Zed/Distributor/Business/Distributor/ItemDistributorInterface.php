@@ -6,7 +6,7 @@ interface ItemDistributorInterface
 {
 
     /**
-     * @param $itemType
+     * @param string $itemType
      * @param BatchIteratorInterface $batchIterator
      */
     public function distributeByType($itemType, BatchIteratorInterface $batchIterator);

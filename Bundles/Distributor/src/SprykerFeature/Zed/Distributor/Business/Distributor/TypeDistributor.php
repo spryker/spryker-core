@@ -66,7 +66,7 @@ class TypeDistributor
 
             $batchCount = $batchIterator->count();
 
-            if ($messenger) {
+            if (!is_null($messenger)) {
                 $messenger->info(
                     sprintf(
                         '%s Items of type %s successfully distributed',

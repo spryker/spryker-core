@@ -11,7 +11,7 @@ class QueueNameBuilder implements QueueNameBuilderInterface
      *
      * @return string
      */
-    public function createQueueName($itemType, $receiver)
+    public function createQueueName($receiver, $itemType)
     {
         return $receiver . '.' . $itemType;
     }

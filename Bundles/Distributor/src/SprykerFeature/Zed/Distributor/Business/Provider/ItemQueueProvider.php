@@ -34,13 +34,13 @@ class ItemQueueProvider implements ItemQueueProviderInterface
      *
      * @return array
      */
-    public function getAllQueueForType($itemType)
+    public function getAllQueuesForType($itemType)
     {
         $receivers = $this->queryContainer->queryReceivers()->find();
         $queues = [];
 
         foreach ($receivers as $receiver) {
-            $queues[] = $this->queueNameBuilder->createQueueName($itemType, $receiver);
+            $queues[] = $this->queueNameBuilder->createQueueName($receiver, $itemType);
         }
 
         return $queues;

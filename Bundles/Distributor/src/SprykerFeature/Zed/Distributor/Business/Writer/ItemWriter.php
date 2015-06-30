@@ -58,15 +58,6 @@ class ItemWriter implements ItemWriterInterface
     }
 
     /**
-     * @param $itemType
-     *
-     * @return bool
-     */
-    public function touchAllItemsByType($itemType)
-    {
-    }
-
-    /**
      * @param string $itemType
      * @param int $idItem
      * @param string $foreignKeyColumn

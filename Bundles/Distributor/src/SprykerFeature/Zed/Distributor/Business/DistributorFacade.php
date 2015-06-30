@@ -44,6 +44,6 @@ class DistributorFacade extends AbstractFacade
 
     public function installReceiver()
     {
-        $this->getDependencyContainer()->createItemTypeInstaller()->install();
+        $this->getDependencyContainer()->createReceiverInstaller()->install();
     }
 }

@@ -21,7 +21,6 @@ class GlossaryQueueDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createModelQueueTranslationManager(
             $this->getGlossaryFacade()
         );
-
     }
 
     /**

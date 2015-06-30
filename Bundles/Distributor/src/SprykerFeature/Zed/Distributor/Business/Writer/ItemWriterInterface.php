@@ -11,11 +11,4 @@ interface ItemWriterInterface
      * @return int
      */
     public function touchItem($itemType, $idItem);
-
-    /**
-     * @param $itemType
-     *
-     * @return bool
-     */
-    public function touchAllItemsByType($itemType);
 }

@@ -132,9 +132,7 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
      */
     protected function createReceiverWriter()
     {
-        return $this->getFactory()->createWriterReceiverWriter(
-            $this->getQueryContainer()
-        );
+        return $this->getFactory()->createWriterReceiverWriter();
     }
 
     /**

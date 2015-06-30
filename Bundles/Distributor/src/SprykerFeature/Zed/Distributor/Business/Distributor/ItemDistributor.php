@@ -65,7 +65,7 @@ class ItemDistributor implements ItemDistributorInterface
     protected function distributeItemBatch($type, array $itemBatch)
     {
         $messageTransfer = $this->getMessageTransfer();
-        $queueNames = $this->itemQueueProvider->getAllQueueForType($type);
+        $queueNames = $this->itemQueueProvider->getAllQueuesForType($type);
         $processorPipeline = $this->getProcessorPipelineByType($type);
 
         foreach ($itemBatch as $rawItem) {

@@ -6,7 +6,6 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Distributor\Business\Exception\ItemTypeDoesNotExistException;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterface;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
 class ItemTypeWriter implements ItemTypeWriterInterface
 {
