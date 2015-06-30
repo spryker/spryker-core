@@ -68,6 +68,11 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         $groupedPrices = [];
         /* @var $item OrderItemTransfer */
         foreach ($calculableItems as $item) {
+
+            $taxItem = $item->getTax();
+            if (is_null($taxItem)) {
+                $item->setTax(new TaxItemTransfer());
+            }
             $this->addTaxInfo($item->getTax(), $groupedPrices);
             $this->addExpensesTaxInfo($item->getExpenses(), $groupedPrices);
             $this->addOptionsTaxInfo($item->getOptions(), $groupedPrices);

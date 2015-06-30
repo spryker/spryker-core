@@ -21,7 +21,7 @@ class CartClient extends AbstractClient implements CartClientInterface
 {
 
     /**
-     * @return CartInterface
+     * @return CartInterface|CartTransfer
      */
     public function getCart()
     {
@@ -185,8 +185,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $cartTransfer = $this->getCart();
         $changeTransfer = new ChangeTransfer();
-        // @todo get cart hash
-//        $cartChange->setCartHash($cart);
+        $changeTransfer->setCart($cartTransfer);
 
         return $changeTransfer;
     }
