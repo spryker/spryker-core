@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Distributor\Business\Writer;
 
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Distributor\Business\Exception\ItemTypeDoesNotExistException;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterface;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItem;
 
@@ -63,13 +64,14 @@ class ItemWriter implements ItemWriterInterface
      * @param string $foreignKeyColumn
      *
      * @throws PropelException
+     * @throws ItemTypeDoesNotExistException
      * @return int
      */
     protected function createItem($itemType, $idItem, $foreignKeyColumn)
     {
         $itemType = $this->queryContainer->queryTypeByKey($itemType)->findOne();
         if (!$itemType) {
-
+            throw new ItemTypeDoesNotExistException();
         }
 
         $item = new SpyDistributorItem();

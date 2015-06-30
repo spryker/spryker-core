@@ -51,7 +51,6 @@ class LastDistributionMarker implements LastDistributionMarkerInterface
             $lastDistributionTimestamp = \DateTime::createFromFormat('Y-m-d H:i:s', '2000-01-01 00:00:00');
         }
 
-
         return $lastDistributionTimestamp;
     }
 
