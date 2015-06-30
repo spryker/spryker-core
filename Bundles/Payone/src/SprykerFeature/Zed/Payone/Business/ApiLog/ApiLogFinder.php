@@ -129,6 +129,26 @@ class ApiLogFinder
 
     /**
      * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isRefundApproved(OrderInterface $orderTransfer)
+    {
+        return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_APPROVED);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isRefundError(OrderInterface $orderTransfer)
+    {
+        return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_ERROR);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
      * @param string $status
      *
      * @return bool
@@ -231,9 +251,9 @@ class ApiLogFinder
     }
 
     /**
-     * @param int $transactionId
+     * @param OrderInterface $orderTransfer
      *
-     * @return SpyPaymentPayone|null
+     * @return SpyPaymentPayone
      */
     protected function findPaymentByOrder(OrderInterface $orderTransfer)
     {
@@ -242,7 +262,7 @@ class ApiLogFinder
 
     /**
      * @param SpyPaymentPayone $payment
-     * @param string $authorizationType
+     * @param $authorizationType
      *
      * @return SpyPaymentPayoneApiLog
      */
