@@ -17,7 +17,7 @@ class GlossaryDistributorQueryContainer extends AbstractQueryContainer
      *
      * @return ModelCriteria
      */
-    public function queryTranslationsToDistribute(ModelCriteria $expandableQuery)
+    public function expandTranslationQueryToDistribute(ModelCriteria $expandableQuery)
     {
         $expandableQuery->clearSelectColumns();
         $expandableQuery->addJoin(

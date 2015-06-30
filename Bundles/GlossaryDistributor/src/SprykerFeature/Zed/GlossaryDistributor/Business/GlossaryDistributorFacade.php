@@ -16,11 +16,11 @@ class GlossaryDistributorFacade extends AbstractFacade
      *
      * @return ModelCriteria
      */
-    public function queryTranslationsToDistribute(ModelCriteria $expandQuery)
+    public function expandTranslationQueryToDistribute(ModelCriteria $expandQuery)
     {
         return $this->getDependencyContainer()
             ->getGlossaryDistributorQueryContainer()
-            ->queryTranslationsToDistribute($expandQuery)
+            ->expandTranslationQueryToDistribute($expandQuery)
             ;
     }
 }
