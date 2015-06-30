@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 namespace SprykerFeature\Sdk\Cart\Model;
 
 use Generated\Shared\Transfer\CartCartInterface as CartTransferInterfaceTransfer;

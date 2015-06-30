@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 use SprykerFeature\Shared\Library\Cloud;
 use SprykerFeature\Shared\Library\Config;

@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
@@ -11,6 +14,8 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContai
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\CreditCardContainer;
+use Generated\Shared\Payone\CreditCardInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 
 

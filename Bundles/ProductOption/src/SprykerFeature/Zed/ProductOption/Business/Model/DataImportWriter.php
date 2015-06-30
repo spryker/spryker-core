@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\ProductOption\Business\Model;
 
@@ -507,7 +510,7 @@ class DataImportWriter implements DataImportWriterInterface
 
     protected function touchAbstractProduct($concreteSku)
     {
-        $idAbstractProduct = $this->productFacade->getAbstractProductIdBySku($concreteSku);
+        $idAbstractProduct = $this->productFacade->getAbstractProductIdByConcreteSku($concreteSku);
         $this->productFacade->touchProductActive($idAbstractProduct);
     }
 }

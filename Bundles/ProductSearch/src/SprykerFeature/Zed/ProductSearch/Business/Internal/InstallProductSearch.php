@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\ProductSearch\Business\Internal;
 
@@ -161,5 +164,4 @@ class InstallProductSearch extends AbstractInstaller
             $mapping->send();
         }
     }
-
 }

@@ -1,7 +1,9 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Shared\Payone;
-
 
 interface PayoneApiConstants
 {
@@ -16,12 +18,16 @@ interface PayoneApiConstants
     const MODE_TEST = 'test';
     const MODE_LIVE = 'live';
 
+    // VERSIONS
+
+    const API_VERSION_3_8 = '3.8';
+    const API_VERSION_3_9 = '3.9';
 
     // PAYMENT METHODS
 
     // credit/debit card methods
     const PAYMENT_METHOD_CREDITCARD = 'payment.payone.creditcard';
-    const PAYMENT_METHOD_CREDITCARD_PSEUDO = 'payment.payone.creditcard_pseudo';
+    const PAYMENT_METHOD_CREDITCARD_PSEUDO = 'payment.payone.creditcardpseudo';
 
     // e-wallet methods
     const PAYMENT_METHOD_PAYPAL = 'payment.payone.paypal';
@@ -186,6 +192,10 @@ interface PayoneApiConstants
     const DEBIT_TRANSACTION_TYPE_CREDIT = 'GT'; //GT: Gutschrift (default bei amount <0)
     const DEBIT_TRANSACTION_TYPE_RETURNS = 'RT'; //RT: Retoure
 
+    // PERSONAL DATA
+
+    const PERSONAL_GENDER_MALE = 'm';
+    const PERSONAL_GENDER_FEMALE = 'f';
 
     // CREDITCARD TYPE
 

@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\AvailabilityCheckoutConnector\Communication;
 
@@ -16,5 +19,4 @@ class AvailabilityCheckoutConnectorDependencyContainer extends AbstractDependenc
     {
         return $this->getProvidedDependency(AvailabilityCheckoutConnectorDependencyProvider::FACADE_AVAILABILITY);
     }
-
 }

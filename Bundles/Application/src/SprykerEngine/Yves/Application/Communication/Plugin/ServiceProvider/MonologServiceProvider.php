@@ -1,12 +1,6 @@
 <?php
-
-/*
- * This file is part of the Silex framework.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+/**
+ * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider;

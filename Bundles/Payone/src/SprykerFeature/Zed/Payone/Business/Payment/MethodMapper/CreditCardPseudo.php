@@ -1,14 +1,20 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Payone\AuthorizationInterface;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
+use Generated\Shared\Payone\CreditCardInterface as PayoneCreditCardInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
+use SprykerEngine\Shared\Kernel\Store;
 
 class CreditCardPseudo extends AbstractMapper
 {
@@ -18,12 +24,12 @@ class CreditCardPseudo extends AbstractMapper
      */
     public function getName()
     {
-        return self::PAYMENT_METHOD_CREDITCARD_PSEUDO;
+        return PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO;
     }
 
     /**
      * @param AuthorizationInterface $authorizationData
-     * @return CreditCardContainer
+     * @return AuthorizationContainer
      */
     public function mapAuthorization(AuthorizationInterface $authorizationData)
     {
@@ -32,7 +38,7 @@ class CreditCardPseudo extends AbstractMapper
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
         $authorizationContainer->setReference($authorizationData->getReferenceId());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $authorizationContainer->setClearingType(self::CLEARING_TYPE_CREDITCARD);
+        $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_CREDITCARD);
         $authorizationContainer->setAmount($authorizationData->getAmount());
 
         $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
@@ -43,7 +49,7 @@ class CreditCardPseudo extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
-     * @return AbstractRequestContainer
+     * @return PreAuthorizationContainer
      */
     public function mapPreAuthorization(AuthorizationInterface $authorizationData)
     {
@@ -52,7 +58,7 @@ class CreditCardPseudo extends AbstractMapper
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
         $authorizationContainer->setReference($authorizationData->getReferenceId());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $authorizationContainer->setClearingType(self::CLEARING_TYPE_CREDITCARD);
+        $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_CREDITCARD);
         $authorizationContainer->setAmount($authorizationData->getAmount());
 
         $authorizationContainer->setPersonalData($this->createAuthorizationPersonalData($authorizationData));
@@ -62,14 +68,36 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
+     * @param PayoneCreditCardInterface $creditCardData
+     * @return CreditCardCheckContainer
+     */
+    public function mapCreditCardCheck(PayoneCreditCardInterface $creditCardData)
+    {
+        $creditCardCheckContainer = new CreditCardCheckContainer();
+
+        $creditCardCheckContainer->setAid($this->getStandardParameter()->getAid());
+        $creditCardCheckContainer->setCardPan($creditCardData->getCardPan());
+        $creditCardCheckContainer->setCardType($creditCardData->getCardType());
+        $creditCardCheckContainer->setCardExpireDate($creditCardData->getCardExpireDate());
+        $creditCardCheckContainer->setCardCvc2($creditCardData->getCardCvc2());
+        $creditCardCheckContainer->setCardIssueNumber($creditCardData->getCardIssueNumber());
+        $creditCardCheckContainer->setStoreCardData($creditCardData->getStoreCardData());
+        $creditCardCheckContainer->setLanguage($this->getStandardParameter()->getLanguage());
+
+        return $creditCardCheckContainer;
+    }
+
+    /**
      * @param AuthorizationInterface $authorizationData
-     * @return CreditCardContainer
+     * @return CreditCardPseudoContainer
      */
     protected function createPaymentMethodContainer(AuthorizationInterface $authorizationData)
     {
-        $paymentMethodContainer = new CreditCardContainer();
-        $paymentMethodContainer->setPseudoCardPan($authorizationData->getPaymentUserData()->getCreditCardPseudoCardPan());
-        $paymentMethodContainer->setRedirect($this->createRedirectContainer());
+        $paymentMethodContainer = new CreditCardPseudoContainer();
+
+        $paymentMethodContainer->setPseudoCardPan(
+            $authorizationData->getOrder()->getPayonePayment()->getPaymentDetails()->getPseudocardpan()
+        );
 
         return $paymentMethodContainer;
     }
@@ -96,10 +124,9 @@ class CreditCardPseudo extends AbstractMapper
     {
         $personalContainer = new PersonalContainer();
 
-        // @todo fix country and order transfer interface (sales refactoring?)
         $personalContainer->setFirstName($authorizationData->getOrder()->getFirstName());
         $personalContainer->setLastName($authorizationData->getOrder()->getLastName());
-        $personalContainer->setCountry(strtoupper($this->getStandardParameter()->getLanguage()));
+        $personalContainer->setCountry($this->storeConfig->getCurrentCountry());
 
         return $personalContainer;
     }

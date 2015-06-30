@@ -11,9 +11,29 @@
 
     <table name="spy_payment_payone" phpName="SpyPaymentPayone" identifierQuoting="true">
         <column name="id_payment_payone" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_sales_order" required="true" type="INTEGER"/>
         <column name="payment_method" required="true" type="VARCHAR"/>
         <column name="authorization_type" required="true" type="VARCHAR"/>
         <column name="transaction_id" required="false" type="INTEGER" comment="payone txid"/>
+
+
+        <foreign-key foreignTable="spy_sales_order" phpName="SpySalesOrder" refPhpName="SpyPaymentPayone">
+            <reference foreign="id_sales_order" local="fk_sales_order"/>
+        </foreign-key>
+
+        <behavior name="timestampable" />
+    </table>
+
+    <table name="spy_payment_payone_details" phpName="SpyPaymentPayoneDetails" identifierQuoting="true">
+        <column name="id_payment_payone_details" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_payment_payone" required="true" type="INTEGER"/>
+
+        <column name="pseudocardpan" required="false" type="VARCHAR"
+                comment="Payone generated pseudocardpan instead of actual credit card data"/>
+
+        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone" refPhpName="SpyPaymentPayoneDetails">
+            <reference foreign="id_payment_payone" local="fk_payment_payone"/>
+        </foreign-key>
 
         <behavior name="timestampable" />
     </table>
@@ -73,6 +93,5 @@
 
         <behavior name="timestampable" />
     </table>
-
 
 </database>

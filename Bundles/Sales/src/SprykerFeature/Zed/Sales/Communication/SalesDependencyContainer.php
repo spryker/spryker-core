@@ -1,39 +1,77 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Sales\Communication;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\SalesCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerFeature\Zed\Sales\Communication\Grid\CommentsGrid;
+use SprykerFeature\Zed\Sales\Communication\Grid\OrderItemsGrid;
+use SprykerFeature\Zed\Sales\Communication\Grid\SalesGrid;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method SalesCommunication getFactory()
+ * @method SalesQueryContainerInterface getQueryContainer()
+ */
 class SalesDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @return SalesFacade
-     */
-    public function getInstallerFacade()
-    {
-        return $this->getLocator()->sales()->facade();
-    }
-
-    /**
-     * @param Request $request
-     *
      * @return mixed
      */
-    public function getSalesGrid(Request $request)
+    public function getCommentForm()
     {
-        return $this->getFactory()->createGridSalesGrid(
-            $this->getQueryContainer()->querySales(),
-            $request
+        return $this->getFactory()->createFormCommentForm(
+            null,
+            $this->getQueryContainer()
         );
     }
 
     /**
-     * @return SalesQueryContainerInterface
+     * @return mixed
      */
-    public function getQueryContainer()
+    public function getDemoCommentForm()
     {
-        return $this->getLocator()->sales()->queryContainer();
+        return $this->getFactory()->createFormDemoCommentForm(
+            null,
+            $this->getQueryContainer()
+        );
     }
+
+    /**
+     * @param Request $request
+     * @return CommentsGrid
+     */
+    public function getCommentsGridByOrderId(Request $request)
+    {
+        return $this->getFactory()->createGridCommentsGrid(
+            $this->getQueryContainer()->queryCommentsByOrderId($request->get('orderId'))
+        );
+    }
+
+    /**
+     * @return SalesGrid
+     */
+    public function getSalesGrid()
+    {
+        $salesQuery = $this->getQueryContainer()->querySalesOrder();
+        return $this->getFactory()->createGridSalesGrid($salesQuery);
+    }
+
+    /**
+     * @param int $idOrder
+     *
+     * @return OrderItemsGrid
+     */
+    public function getOrdersItemsGridByOrderId($idOrder)
+    {
+        return $this->getFactory()->createGridOrderItemsGrid(
+            $this->getQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder));
+    }
+
+
 }

@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Ui\Business\Grid\Processor;
 
@@ -7,6 +10,7 @@ use SprykerFeature\Zed\Ui\Business\Grid\StateContainer\Bean\StateContainerBeanIn
 use SprykerFeature\Zed\Ui\Business\Grid\StateContainer\Bean\StateContainerBeanTrait;
 use SprykerFeature\Zed\Ui\Business\Grid\StateContainer\StateContainerInterface;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerFeature\Zed\Ui\Dependency\Plugin\GridPluginInterface;
 
 class GridProcessor implements GridProcessorInterface, StateContainerBeanInterface
 {

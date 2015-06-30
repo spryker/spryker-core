@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Shared\Library\Currency\Config;
 
 use SprykerFeature\Shared\Library\Currency\CurrencyInterface;

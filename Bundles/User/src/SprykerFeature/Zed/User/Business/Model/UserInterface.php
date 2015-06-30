@@ -1,7 +1,11 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\User\Business\Model;
 
+use Generated\Shared\Transfer\CollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use SprykerFeature\Zed\User\Business\Exception\UsernameExistsException;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
@@ -92,7 +96,7 @@ interface UserInterface
     public function isSystemUser(UserTransfer $user);
 
     /**
-     * @return UserTransfer
+     * @return CollectionTransfer
      */
     public function getSystemUsers();
 

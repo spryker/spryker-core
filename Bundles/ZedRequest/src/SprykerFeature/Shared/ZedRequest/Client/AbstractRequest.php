@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Shared\ZedRequest\Client;
 
@@ -164,7 +167,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
      */
     public function setTransfer(TransferInterface $transferObject)
     {
-        $this->values['transfer'] = $transferObject->toArray(false);
+        $this->values['transfer'] = $transferObject->toArray(true);
         $this->values['transferClassName'] = get_class($transferObject);
 
         return $this;

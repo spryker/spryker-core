@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace Functional\SprykerFeature\Zed\Auth;
 
 use Codeception\TestCase\Test;
@@ -6,13 +10,17 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Auth\AuthConfig;
+use SprykerFeature\Shared\Auth\AuthConfig as AuthSharedConfig;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
 use SprykerEngine\Zed\Kernel\Business\Factory;
+use Generated\Shared\Transfer\UserTransfer;
 
 /**
- * @group AuthTest
+ * @group SprykerFeature
+ * @group Zed
+ * @group Auth
  */
 class AuthTest extends Test
 {
@@ -49,7 +57,7 @@ class AuthTest extends Test
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     private function mockUserData()
     {
@@ -62,17 +70,15 @@ class AuthTest extends Test
     }
 
     /**
-     * @param $data
-     * @return NULL|\SprykerFeature\Shared\User\Transfer\User
+     * @param string[] $data
+     *
+     * @return UserTransfer
      */
     private function mockAddUser($data)
     {
         return $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
     }
 
-    /**
-     * @group Auth
-     */
     public function testUserToken()
     {
         $userData = $this->mockUserData();
@@ -96,9 +102,6 @@ class AuthTest extends Test
         $this->assertTrue($isValid);
     }
 
-    /**
-     * @group Auth
-     */
     public function testIgnorablePath()
     {
         $ignorable = $this->authFacade->isIgnorable('auth', 'login', 'index');
@@ -108,9 +111,6 @@ class AuthTest extends Test
         $this->assertTrue($ignorable);
     }
 
-    /**
-     * @group Auth
-     */
     public function testDoLogin()
     {
         $userData = $this->mockUserData();
@@ -123,9 +123,6 @@ class AuthTest extends Test
         $this->assertTrue($login);
     }
 
-    /**
-     * @group Auth
-     */
     public function testLoginNotAllowed()
     {
         $userData = $this->mockUserData();
@@ -150,9 +147,6 @@ class AuthTest extends Test
         $this->assertEquals(false, $login);
     }
 
-    /**
-     * @group Auth
-     */
     public function testDoLoginWithToken()
     {
         $settings = new AuthConfig(Config::getInstance(), $this->locator);
@@ -167,9 +161,6 @@ class AuthTest extends Test
         }
     }
 
-    /**
-     * @group Auth
-     */
     public function testDenyLoginWithWrongToken()
     {
         $token = new StaticToken();
@@ -180,9 +171,6 @@ class AuthTest extends Test
         $this->assertTrue(!$isAllowed);
     }
 
-    /**
-     * @group Auth
-     */
     public function testCheckDoLoginAndCurrentUserIsTheSame()
     {
         $userData = $this->mockUserData();
@@ -201,5 +189,19 @@ class AuthTest extends Test
         $this->assertEquals($userDto->getPassword(), $currentUserDto->getPassword());
         $this->assertEquals($userDto->getFirstName(), $currentUserDto->getFirstName());
         $this->assertEquals($userDto->getLastName(), $currentUserDto->getLastName());
+    }
+
+    public function testIsAuthorizedWithYvesCredentialsFromConfigMustReturnTrue()
+    {
+        $token = new StaticToken();
+
+        $authConfig = Config::get(AuthSharedConfig::AUTH_DEFAULT_CREDENTIALS);
+        $rawToken = $authConfig['yves_system']['token'];
+
+        $token->setRawToken($rawToken);
+        $hash = $token->generate();
+
+        $isAllowed = $this->authFacade->isAuthorized($hash);
+        $this->assertTrue($isAllowed);
     }
 }

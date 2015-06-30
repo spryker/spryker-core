@@ -1,9 +1,11 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Shared\Payone\Model;
 
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
-
 
 abstract class AbstractHashProvider implements HashInterface
 {

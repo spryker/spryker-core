@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Product\Business;
 
@@ -67,6 +70,28 @@ class ProductFacade extends AbstractFacade
     public function getConcreteProductIdBySku($sku)
     {
         return $this->getDependencyContainer()->createProductManager()->getConcreteProductIdBySku($sku);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return int
+     * @throws MissingProductException
+     */
+    public function getAbstractProductIdByConcreteSku($sku)
+    {
+        return $this->getDependencyContainer()->createProductManager()->getAbstractProductIdByConcreteSku($sku);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return float
+     * @throws MissingProductException
+     */
+    public function getEffectiveTaxRateForConcreteProduct($sku)
+    {
+        return $this->getDependencyContainer()->createProductManager()->getEffectiveTaxRateForConcreteProduct($sku);
     }
 
     /**

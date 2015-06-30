@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\ProductOption\Business;
 
@@ -115,5 +118,88 @@ class ProductOptionFacade extends AbstractFacade
     public function importPresetConfiguration($sku, array $importKeysOptionValues, $isDefault = false, $sequence = null)
     {
         return $this->getDependencyContainer()->getDataImportWriterModel()->importPresetConfiguration($sku, $importKeysOptionValues, $isDefault, $sequence);
+    }
+
+    /**
+     * @param int $idProduct
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    public function getTypeUsagesForConcreteProduct($idProduct, $idLocale)
+    {
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getTypeUsagesForConcreteProduct($idProduct, $idLocale);
+    }
+
+    /**
+     * @param int $idTypeUsage
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    public function getValueUsagesForTypeUsage($idTypeUsage, $idLocale)
+    {
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getValueUsagesForTypeUsage($idTypeUsage, $idLocale);
+    }
+
+    /**
+     * @param int $idTypeUsage
+     *
+     * @return array
+     */
+    public function getTypeExclusionsForTypeUsage($idTypeUsage)
+    {
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getTypeExclusionsForTypeUsage($idTypeUsage);
+    }
+
+    /**
+     * @param int $idValueUsage
+     *
+     * @return array
+     */
+    public function getValueConstraintsForValueUsage($idValueUsage)
+    {
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getValueConstraintsForValueUsage($idValueUsage);
+    }
+
+    /**
+     * @param int $idValueUsage
+     * @param string $operator
+     *
+     * @return array
+     */
+    public function getValueConstraintsForValueUsageByOperator($idValueUsage, $operator)
+    {
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getValueConstraintsForValueUsageByOperator($idValueUsage, $operator);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getConfigPresetsForConcreteProduct($idProduct)
+    {
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getConfigPresetsForConcreteProduct($idProduct);
+    }
+
+    /**
+     * @param int $idConfigPreset
+     *
+     * @return array
+     */
+    public function getValueUsagesForConfigPreset($idConfigPreset)
+    {
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getValueUsagesForConfigPreset($idConfigPreset);
+    }
+
+    /**
+     * @param int $idTypeUsage
+     *
+     * @return string|null
+     */
+    public function getEffectiveTaxRateForTypeUsage($idTypeUsage)
+    {
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getEffectiveTaxRateForTypeUsage($idTypeUsage);
     }
 }

@@ -1,10 +1,14 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Ui\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\UiBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerFeature\Zed\Ui\Business\Grid\Processor\GridProcessor;
 
 /**
  * @method UiBusiness getFactory()
@@ -16,7 +20,7 @@ class UiDependencyContainer extends AbstractDependencyContainer
      * @param array $plugins
      * @param array $requestData
      * @param ModelCriteria $query
-     * @return object
+     * @return GridProcessor
      */
     public function getGridProcessor(array $plugins, array $requestData, ModelCriteria $query)
     {

@@ -1,16 +1,22 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerEngine\Zed\Messenger\Communication\Plugin;
 
-use SprykerEngine\Shared\Messenger\Communication\Plugin\AbstractTwigMessengerPlugin;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerEngine\Zed\Messenger\Communication\Plugin\TwigMessengerExtension;
 
-class TwigMessengerPlugin extends AbstractTwigMessengerPlugin
+class TwigMessengerPlugin extends AbstractPlugin
 {
 
-    public function __construct(Factory $factory, Locator $locator)
+    /**
+     * @return TwigMessengerExtension
+     */
+    public function getTwigMessengerExtension()
     {
+        return $this->getDependencyContainer()->createTwigMessengerExtension();
     }
 
 }

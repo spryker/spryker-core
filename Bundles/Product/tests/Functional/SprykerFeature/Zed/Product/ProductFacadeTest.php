@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace Functional\SprykerFeature\Zed\Product;
 
@@ -109,6 +111,23 @@ class ProductFacadeTest extends Test
 
         $this->assertEquals(1, $abstractProductQuery->count());
         $this->assertEquals($idAbstractProduct, $abstractProductQuery->findOne()->getIdAbstractProduct());
+    }
+
+    /**
+     * @group Product
+     */
+    public function testGetEffectiveTaxRateReturnsFloat()
+    {
+        $concreteProductQuery = $this->productQueryContainer->queryConcreteProductBySku('AConcreteProductSku');
+
+        $this->assertEquals(0, $concreteProductQuery->count());
+
+        $idAbstractProduct = $this->productFacade->createAbstractProduct('AnAbstractProductSku');
+        $this->productFacade->createConcreteProduct('AConcreteProductSku', $idAbstractProduct);
+
+        $effectiveTaxRate = $this->productFacade->getEffectiveTaxRateForConcreteProduct('AConcreteProductSku');
+
+        $this->assertInternalType('float', $effectiveTaxRate);
     }
 
     /**

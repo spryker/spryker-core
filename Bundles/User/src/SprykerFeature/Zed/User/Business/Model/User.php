@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\User\Business\Model;
 
@@ -100,14 +103,9 @@ class User implements UserInterface
      * @param UserTransfer $user
      *
      * @return UserTransfer
-     * @throws UserNotFoundException
      */
     public function save(UserTransfer $user)
     {
-        if ($user->getIdUserUser() !== null && $this->getUserById($user->getIdUserUser()) === null) {
-            throw new UserNotFoundException();
-        }
-
         if ($user->getIdUserUser() !== null) {
             $entity = $this->getEntityUserById($user->getIdUserUser());
         } else {

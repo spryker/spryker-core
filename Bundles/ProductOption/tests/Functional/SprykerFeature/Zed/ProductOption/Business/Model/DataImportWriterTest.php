@@ -1,10 +1,11 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace Functional\SprykerFeature\Zed\ProductOption\Business\Model;
 
-use Codeception\TestCase\Test;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionConfigurationPresetQuery;
@@ -26,8 +27,10 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
  * @group Zed
  * @group ProdutOption
  * @group DataImportWriterTest
+ *
+ * @method ProductOptionFacade getFacade()
  */
-class DataImportWriterTest extends Test
+class DataImportWriterTest extends AbstractFunctionalTest
 {
 
     /**
@@ -44,8 +47,7 @@ class DataImportWriterTest extends Test
     {
         parent::setUp();
 
-        $this->locator = Locator::getInstance();
-        $this->facade = new ProductOptionFacade(new Factory('ProductOption'), $this->locator);
+        $this->facade = $this->getFacade();
     }
 
     public function testImportProductOptionType()

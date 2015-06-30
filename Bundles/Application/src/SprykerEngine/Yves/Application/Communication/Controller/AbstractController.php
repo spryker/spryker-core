@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerEngine\Yves\Application\Communication\Controller;
 
@@ -42,11 +45,6 @@ abstract class AbstractController
     private $dependencyContainer;
 
     /**
-     * @var MessengerInterface
-     */
-    private $messenger;
-
-    /**
      * @param Application $app
      * @param Factory $factory
      * @param LocatorLocatorInterface $locator
@@ -56,15 +54,6 @@ abstract class AbstractController
         $this->app = $app;
         $this->locator = $locator;
         $this->factory = $factory;
-
-        $this->messenger = $this->locator->messenger()->sdk()->createMessenger();
-
-        $messengerTwigExtension = $this->locator->messenger()
-            ->pluginTwigMessenger()
-            ->setMessenger($this->messenger)
-        ;
-
-        $this->getTwig()->addExtension($messengerTwigExtension);
 
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
@@ -176,7 +165,7 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        return $this->messenger;
+        return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
     }
 
     /**

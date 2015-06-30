@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Payone\Persistence;
 
@@ -28,5 +31,11 @@ interface PayoneQueryContainerInterface
      * @return SpyPaymentPayoneApiLogQuery
      */
     public function getApiLogByPaymentAndRequestTypeQuery($fkPayment, $requestType);
+
+    /**
+     * @param int $orderId
+     * @return SpyPaymentPayoneQuery
+     */
+    public function getPaymentByOrderId($orderId);
 
 }

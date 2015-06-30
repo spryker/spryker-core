@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Payone\Persistence;
 
@@ -12,7 +15,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 {
 
     /**
-     * @todo think of doing it with MAX(sequence_number) ?
      * @param int $transactionId
      * @return SpyPaymentPayoneTransactionStatusLogQuery
      */
@@ -27,7 +29,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 
     /**
      * @param int $transactionId
-     * @return SpyPaymentPayoneQuery
+     * @return Propel\SpyPaymentPayoneQuery
      */
     public function getPaymentByTransactionIdQuery($transactionId)
     {
@@ -50,5 +52,19 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 
         return $query;
     }
+
+
+    /**
+     * @param int $orderId
+     * @return SpyPaymentPayoneQuery
+     */
+    public function getPaymentByOrderId($orderId)
+    {
+        $query = SpyPaymentPayoneQuery::create();
+        $query->findByFkSalesOrder($orderId);
+
+        return $query;
+    }
+
 
 }

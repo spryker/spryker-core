@@ -5,7 +5,7 @@
             <ui-example>
                 <label>Styleguide</label>
                 <title>Styleguide</title>
-                <bundle>uiexample</bundle>
+                <bundle>uiExample</bundle>
                 <controller>index</controller>
                 <action>index</action>
                 <visible>1</visible>

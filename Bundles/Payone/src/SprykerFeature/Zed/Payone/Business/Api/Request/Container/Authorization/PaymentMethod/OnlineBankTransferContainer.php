@@ -1,9 +1,11 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 
 class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
 {
@@ -29,10 +31,6 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
      */
     protected $bankgrouptype;
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
-     */
-    protected $redirect;
-    /**
      * @var string
      */
     protected $iban;
@@ -40,6 +38,10 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
      * @var string
      */
     protected $bic;
+    /**
+     * @var RedirectContainer
+     */
+    protected $redirect;
 
 
     /**
@@ -123,7 +125,7 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @param \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
+     * @param RedirectContainer $redirect
      */
     public function setRedirect(RedirectContainer $redirect)
     {
@@ -131,7 +133,7 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @return \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
+     * @return RedirectContainer
      */
     public function getRedirect()
     {

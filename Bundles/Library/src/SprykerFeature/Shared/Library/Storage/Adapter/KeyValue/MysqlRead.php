@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 
 class MysqlRead extends Mysql implements ReadInterface

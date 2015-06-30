@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Payone\Business\SequenceNumber;
 
@@ -40,6 +43,7 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
             ->getCurrentSequenceNumberQuery($transactionId)
             ->findOne();
 
+        //@todo if we have a transactionId but no status log we probably shouldn't continue
         if (!$transactionEntity || !$transactionEntity->getSequenceNumber()) {
             return 0;
         }

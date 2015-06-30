@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Product\Business\Product;
 
@@ -393,5 +396,62 @@ class ProductManager implements ProductManagerInterface
         $this->urlFacade->touchUrlActive($url->getIdUrl());
 
         return $url;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return float
+     * @throws MissingProductException
+     */
+    public function getEffectiveTaxRateForConcreteProduct($sku)
+    {
+        $concreteProduct = $this->productQueryContainer->queryConcreteProductBySku($sku)->findOne();
+
+        if (!$concreteProduct) {
+            throw new MissingProductException(
+                sprintf(
+                    'Tried to retrieve a concrete product with sku %s, but it does not exist.',
+                    $sku
+                )
+            );
+        }
+
+        $abstractProduct = $concreteProduct->getSpyAbstractProduct();
+
+        $effectiveTaxRate = 0.0;
+
+        $taxSetEntity = $abstractProduct->getSpyTaxSet();
+        if (null === $taxSetEntity) {
+            return $effectiveTaxRate;
+        }
+
+        foreach ($taxSetEntity->getSpyTaxRates() as $taxRateEntity) {
+            $effectiveTaxRate += $taxRateEntity->getRate();
+        }
+
+        return $effectiveTaxRate;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return int
+     * @throws MissingProductException
+     */
+    public function getAbstractProductIdByConcreteSku($sku)
+    {
+        $concreteProduct = $this->productQueryContainer->queryConcreteProductBySku($sku)->findOne();
+
+        if (!$concreteProduct) {
+            throw new MissingProductException(
+                sprintf(
+                    'Tried to retrieve a concrete product with sku %s, but it does not exist.',
+                    $sku
+                )
+            );
+        }
+
+        return $concreteProduct->getFkAbstractProduct();
     }
 }

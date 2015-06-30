@@ -1,8 +1,9 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Oms\Business\Process;
-
-use SprykerFeature\Zed\Oms\Business\Process;
 
 class Event implements EventInterface
 {

@@ -1,8 +1,11 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace Unit\SprykerFeature\Zed\Payone\Business\Key;
 
-use SprykerFeature\Zed\Payone\Business\Key\KeyHashProvider;
+use SprykerFeature\Zed\Payone\Business\Key\HashProvider;
 
 /**
  * @group KeyHash
@@ -15,8 +18,8 @@ class KeyHashProviderTest extends \PHPUnit_Framework_TestCase
         $key = 'abcd1efgh2ijklm3nopq4';
         $expectedHashedKey = hash('md5', $key);
 
-        $keyHashProvider = new KeyHashProvider();
-        $systemHashedKey = $keyHashProvider->hashKey($key);
+        $keyHashProvider = new HashProvider();
+        $systemHashedKey = $keyHashProvider->hash($key);
 
         $this->assertEquals($expectedHashedKey, $systemHashedKey);
     }

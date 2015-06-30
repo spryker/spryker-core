@@ -1,12 +1,13 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Checkout\Communication\Controller;
 
-use Generated\Shared\Transfer\OrderItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
+use Generated\Shared\Checkout\CheckoutRequestInterface;
+use Generated\Shared\Checkout\CheckoutResponseInterface;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
-use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
 
 /**
@@ -15,61 +16,15 @@ use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
 class SdkController extends AbstractSdkController
 {
 
-    const MESSAGE_KEY = 'message';
-    const DATA_KEY = 'data';
-
     /**
-     * @param OrderTransfer $transferOrder
+     * @param CheckoutRequestInterface $checkoutRequest
      *
-     * @return OrderTransfer
+     * @return CheckoutResponseInterface
      */
-    public function recalculateAction(OrderTransfer $transferOrder)
+    public function requestCheckoutAction(CheckoutRequestInterface $checkoutRequest)
     {
-        return $this->getCalculationFacade()->recalculate($transferOrder);
-    }
+        $result = $this->getFacade()->requestCheckout($checkoutRequest);
 
-    /**
-     * @param OrderTransfer $transferOrder
-     * @param RequestInterface $requestTransfer
-     *
-     * @return OrderTransfer
-     */
-    public function saveOrderAction(OrderTransfer $transferOrder, RequestInterface $requestTransfer)
-    {
-        $logContext = [];
-        $logContext["module"] = 'SprykerFeature\Zed\Checkout\Communication\Controller';// @todo FIXME
-        $logContext["controller"] = "SdkController";
-        $logContext["action"] = "saveOrderAction";
-        $logContext["params"] = ["ToBeDone"];// @todo FIXME
-
-        $componentResult = $this->getFacade()->saveOrder($transferOrder, $requestTransfer, $logContext);
-
-        if (!$componentResult->isSuccess()) {
-            $this->setSuccess(false);
-            foreach ($componentResult->getErrors() as $error) {
-                $this->addErrorMessage($error);
-            }
-
-            // on error recalculate to be sane
-            return $this->getCalculationFacade()->recalculate($transferOrder);
-        } else {
-            return $componentResult->getTransfer();
-        }
-    }
-
-    /**
-     * @return CalculationFacade
-     */
-    public function getCalculationFacade()
-    {
-        return $this->getDependencyContainer()->createCalculationFacade();
-    }
-
-    /**
-     * @return CheckoutFacade
-     */
-    public function getCheckoutFacade()
-    {
-        return $this->getDependencyContainer()->createCheckoutFacade();
+        return $result;
     }
 }

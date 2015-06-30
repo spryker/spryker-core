@@ -1,9 +1,13 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\User\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\UserTransfer;
+use Generated\Shared\Transfer\CollectionTransfer;
 
 /**
  * @method UserDependencyContainer getDependencyContainer()
@@ -140,7 +144,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @return UserTransfer
+     * @return CollectionTransfer
      */
     public function getSystemUsers()
     {

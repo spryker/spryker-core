@@ -1,10 +1,14 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Payone\Business\ApiLog;
 
 use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Transfer\AuthorizationCheckResponseTransfer;
 use Generated\Shared\Payone\ApiCallResponseCheckInterface;
+use Generated\Shared\Payone\OrderInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
@@ -33,6 +37,7 @@ class ApiLogFinder
      * @todo R E F A C T O R - Horrorcode - Only thougts of what could happen - Used by oms conditions
      *
      * @param PayonePaymentInterface $payment
+     *
      * @return bool
      */
     public function isAuthorizationSuccessful(PayonePaymentInterface $payment)
@@ -40,7 +45,7 @@ class ApiLogFinder
         // no payment - no success - but: what if auth call was successfull but
         // exception occurred....?
         // @todo We should get order id it to load via fk_order in payment instead of transaction
-        $paymentEntity = $this->findPayment($payment->getTransactionId());
+        $paymentEntity = $this->findPaymentByTransactionId($payment->getTransactionId());
         if (!$paymentEntity) {
             return false;
         }
@@ -71,15 +76,110 @@ class ApiLogFinder
     }
 
     /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isAuthorizationApproved(OrderInterface $orderTransfer)
+    {
+        return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_APPROVED);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isAuthorizationRedirect(OrderInterface $orderTransfer)
+    {
+        return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_REDIRECT);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isAuthorizationError(OrderInterface $orderTransfer)
+    {
+        return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_ERROR);
+    }
+
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isCaptureApproved(OrderInterface $orderTransfer)
+    {
+        return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_APPROVED);
+    }
+
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isCaptureError(OrderInterface $orderTransfer)
+    {
+        return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_ERROR);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isRefundApproved(OrderInterface $orderTransfer)
+    {
+        return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_APPROVED);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isRefundError(OrderInterface $orderTransfer)
+    {
+        return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_ERROR);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     * @param string $status
+     *
+     * @return bool
+     */
+    protected function hasApiLogStatus(OrderInterface $orderTransfer, $status)
+    {
+        $paymentEntity = $this->findPaymentByOrder($orderTransfer);
+        $apiLogs = $paymentEntity->getSpyPaymentPayoneApiLogs();
+
+        foreach($apiLogs as $apiLog)
+        {
+            if($apiLog->getStatus() === $status)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @todo R E F A C T O R - Horrorcode
      * @param PayonePaymentInterface $payment
+     *
      * @return AuthorizationCheckResponseTransfer
      */
     public function getAuthorizationResponse(PayonePaymentInterface $payment)
     {
         $response = new AuthorizationCheckResponseTransfer();
 
-        $paymentEntity = $this->findPayment($payment->getTransactionId());
+        $paymentEntity = $this->findPaymentByTransactionId($payment->getTransactionId());
         // no payment - no success - but: what if auth call was successfull but
         // exception occurred....?
         if (!$paymentEntity) {
@@ -142,16 +242,28 @@ class ApiLogFinder
 
     /**
      * @param int $transactionId
+     *
      * @return SpyPaymentPayone|null
      */
-    protected function findPayment($transactionId)
+    protected function findPaymentByTransactionId($transactionId)
     {
         return $this->queryContainer->getPaymentByTransactionIdQuery($transactionId)->findOne();
     }
 
     /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return SpyPaymentPayone
+     */
+    protected function findPaymentByOrder(OrderInterface $orderTransfer)
+    {
+        return $this->queryContainer->getPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
+    }
+
+    /**
      * @param SpyPaymentPayone $payment
-     * @param string $authorizationType
+     * @param $authorizationType
+     *
      * @return SpyPaymentPayoneApiLog
      */
     protected function findApiLog(SpyPaymentPayone $payment, $authorizationType)
@@ -164,6 +276,7 @@ class ApiLogFinder
 
     /**
      * @param ApiCallResponseCheckInterface $apiCallCheck
+     *
      * @return bool
      */
     public function isApiCallSuccessful(ApiCallResponseCheckInterface $apiCallCheck)
