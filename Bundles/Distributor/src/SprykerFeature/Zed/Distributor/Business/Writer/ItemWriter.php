@@ -53,7 +53,7 @@ class ItemWriter implements ItemWriterInterface
      *
      * @return string
      */
-    public function getForeignKeyByType($itemType)
+    protected function getForeignKeyByType($itemType)
     {
         return 'fk_' . $itemType;
     }

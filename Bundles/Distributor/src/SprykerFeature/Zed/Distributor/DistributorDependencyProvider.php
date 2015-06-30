@@ -16,7 +16,6 @@ class DistributorDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-
         $container[self::FACADE_QUEUE] = function (Container $container) {
             return $container->getLocator()->queue()->facade();
         };

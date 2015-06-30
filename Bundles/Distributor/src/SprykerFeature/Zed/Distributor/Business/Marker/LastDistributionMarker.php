@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Distributor\Business\Marker;
 
+use SprykerFeature\Zed\Distributor\Business\Exception\ItemTypeDoesNotExistException;
 use SprykerFeature\Zed\Distributor\Business\Writer\ItemTypeWriterInterface;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterface;
 
@@ -34,19 +35,19 @@ class LastDistributionMarker implements LastDistributionMarkerInterface
      * @param string $typeKey
      *
      * @return \DateTime|string
-     * @throws \Exception
+     * @throws ItemTypeDoesNotExistException
      */
     public function getLastDistributionTimestampByType($typeKey)
     {
-        $lastDistribution = $this->queryContainer
+        $itemType = $this->queryContainer
             ->queryTypeByKey($typeKey)
             ->findOne()
         ;
 
-        if (empty($lastDistribution)) {
-            throw new \Exception;
+        if (empty($itemType)) {
+            throw new ItemTypeDoesNotExistException();
         }
-        $lastDistributionTimestamp = $lastDistribution->getLastDistribution();
+        $lastDistributionTimestamp = $itemType->getLastDistribution();
         if (!$lastDistributionTimestamp) {
             $lastDistributionTimestamp = \DateTime::createFromFormat('Y-m-d H:i:s', '2000-01-01 00:00:00');
         }
@@ -55,8 +56,8 @@ class LastDistributionMarker implements LastDistributionMarkerInterface
     }
 
     /**
-     * @param $type
-     * @param $timestamp
+     * @param string $type
+     * @param string $timestamp
      */
     public function setLastDistributionTimestampByType($type, $timestamp)
     {

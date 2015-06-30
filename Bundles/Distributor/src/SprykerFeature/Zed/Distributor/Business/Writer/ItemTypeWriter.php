@@ -23,7 +23,7 @@ class ItemTypeWriter implements ItemTypeWriterInterface
     }
 
     /**
-     * @param $typeKey
+     * @param string $typeKey
      *
      * @return int
      */

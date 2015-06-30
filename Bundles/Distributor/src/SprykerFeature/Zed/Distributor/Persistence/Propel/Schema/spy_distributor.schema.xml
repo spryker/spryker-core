@@ -42,6 +42,10 @@
             <unique-column name="type_key"/>
         </unique>
 
+        <index>
+            <index-column name="last_distribution"/>
+        </index>
+
     </table>
 
 </database>

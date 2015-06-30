@@ -36,7 +36,6 @@ class GlossaryDistributorQueryContainer extends AbstractQueryContainer
             Criteria::INNER_JOIN
         );
 
-
         $expandableQuery->withColumn(SpyGlossaryKeyTableMap::COL_KEY, 'translation_key');
         $expandableQuery->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, 'translation_value');
         $expandableQuery->withColumn(SpyGlossaryTranslationTableMap::COL_IS_ACTIVE, 'translation_is_active');
