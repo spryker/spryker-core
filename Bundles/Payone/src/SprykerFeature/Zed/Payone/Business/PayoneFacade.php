@@ -234,22 +234,22 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param PayoneOrderInterface $orderData
+     * @param OrderInterface $orderData
      *
      * @return PaymentStatusTransfer
      */
-    public function getPaymentStatus(PayoneOrderInterface $orderTransfer)
+    public function getPaymentStatus(OrderInterface $orderTransfer)
     {
 //        @todo implement
 //        return $this->getDependencyContainer()->createTransactionStatusManager()->getPaymentStatus($orderData);
     }
 
     /**
-     * @param PayoneOrderInterface $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return PayonePaymentTransfer
      */
-    public function getPayment(PayoneOrderInterface $orderTransfer)
+    public function getPayment(OrderInterface $orderTransfer)
     {
         return $this->getDependencyContainer()->createPaymentManager()->getPayment($orderTransfer);
     }
