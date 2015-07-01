@@ -39,6 +39,8 @@ class Environment
         self::ENV_QUALITY04,
     ];
 
+    private static $fatalErrors = array(E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR);
+
     /**
      * @return array
      */
@@ -185,7 +187,8 @@ class Environment
 
         register_shutdown_function(
             function () use ($initErrorHandler) {
-                if (error_get_last()) {
+                $lastError = error_get_last();
+                if ($lastError && in_array($lastError['type'], self::$fatalErrors)) {
                     $initErrorHandler()->handleFatal();
                 }
             }
