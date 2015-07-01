@@ -29,5 +29,28 @@ class MaintenanceFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->createMarkDownWriter($installedPackages)->write();
     }
+
+    /**
+     * @param $bundleName
+     * @return array
+     */
+    public function showOutgoingDependenciesForBundle($bundleName)
+    {
+        return $this->getDependencyContainer()->createDependencyBundleParser()->parseOutgoingDependencies($bundleName);
+    }
+
+    /**
+     * @param $bundleName
+     * @return array
+     */
+    public function showIncomingDependenciesForBundle($bundleName)
+    {
+        return $this->getDependencyContainer()->createDependencyManager()->parseIncomingDependencies($bundleName);
+    }
+
+    public function drawDependencyGraph($bundleName)
+    {
+        return $this->getDependencyContainer()->createDependencyGraph()->draw($bundleName);
+    }
     
 }
