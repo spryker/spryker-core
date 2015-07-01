@@ -18,7 +18,6 @@ class StackExecutor
 
     /**
      * @param array $calculatorStack
-     * @ param OrderInterface $calculableContainer
      * @param CalculableInterface $calculableContainer
      * @return CalculableInterface
      */
@@ -42,7 +41,6 @@ class StackExecutor
 
     /**
      * @param array $calculatorStack
-     * @ param OrderInterface $calculableContainer
      * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
