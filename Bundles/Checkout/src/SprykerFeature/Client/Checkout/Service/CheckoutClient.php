@@ -1,14 +1,18 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Client\Checkout\Service;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
+use SprykerFeature\Client\Checkout\Service\Zed\CheckoutStub;
 
 /**
  * @method CheckoutDependencyContainer getDependencyContainer()
  */
-class CheckoutClient extends AbstractClient
+class CheckoutClient extends AbstractClient implements CheckoutClientInterface
 {
     /**
      * @param Order $order
@@ -16,24 +20,15 @@ class CheckoutClient extends AbstractClient
      */
     public function saveOrder(Order $order)
     {
-        return $this->getDependencyContainer()->createCheckoutManager()->saveOrder($order);
+        return $this->getZedStub()->requestCheckout($checkoutRequest);
     }
 
-    /**
-     * @param Order $order
-     * @return Order
-     */
-    public function clearReferences(Order $order)
-    {
-        return $this->getDependencyContainer()->createCheckoutManager()->clearReferences($order);
-    }
 
     /**
-     * @param Order $order
-     * @return mixed
+     * @return CheckoutStub
      */
-    public function setOrderInvalid(Order $order)
+    protected function getZedStub()
     {
-        return $this->getDependencyContainer()->createCheckoutManager()->setOrderInvalid($order);
+        return $this->getDependencyContainer()->createZedStub();
     }
 }

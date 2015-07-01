@@ -7,8 +7,8 @@ namespace SprykerFeature\Zed\Checkout\Communication\Controller;
 
 use Generated\Shared\Checkout\CheckoutRequestInterface;
 use Generated\Shared\Checkout\CheckoutResponseInterface;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractSdkController;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
+use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method CheckoutFacade getFacade()
