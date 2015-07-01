@@ -55,14 +55,13 @@ class CartControllerProvider extends YvesControllerProvider
 
         $this->createPostController('/cart/remove/{sku}', self::ROUTE_CART_REMOVE_AJAX, 'Cart', 'Ajax', 'remove', true)
             ->assert('sku', '[a-zA-Z0-9-_]+')
-            ->convert('quantity', [$this, 'getQuantityFromRequest'])
         ;
 
         $this->createPostController('/cart/increase/{sku}', self::ROUTE_CART_INCREASE_AJAX, 'Cart', 'Ajax', 'increase')
             ->assert('sku', '[a-zA-Z0-9-_]+')
         ;
 
-        $this->createPostController('/cart/increase/{sku}', self::ROUTE_CART_DECREASE_AJAX, 'Cart', 'Ajax', 'decrease')
+        $this->createPostController('/cart/decrease/{sku}', self::ROUTE_CART_DECREASE_AJAX, 'Cart', 'Ajax', 'decrease')
             ->assert('sku', '[a-zA-Z0-9-_]+')
         ;
 
