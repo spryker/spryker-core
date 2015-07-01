@@ -6,7 +6,7 @@ use Generated\Shared\Queue\QueueMessageInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
-use SprykerFeature\Zed\Queue\Business\provider\TaskProviderInterface;
+use SprykerFeature\Zed\Queue\Business\Provider\TaskProviderInterface;
 use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
 use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskWarmUpPluginInterface;
 
