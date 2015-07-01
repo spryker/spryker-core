@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Business;
 
+use Generated\Shared\Calculation\TotalsInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\CalculationConfig;
