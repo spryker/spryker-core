@@ -88,7 +88,11 @@ class CartControllerProvider extends YvesControllerProvider
      */
     public function getQuantityFromRequest($unusedParameter, Request $request)
     {
-        return (int) $request->query->get('quantity', 1);
+        if ($request->isMethod('POST')) {
+            return (int)$request->request->get('quantity', 1);
+        }
+
+        return (int)$request->query->get('quantity', 1);
     }
 
 }
