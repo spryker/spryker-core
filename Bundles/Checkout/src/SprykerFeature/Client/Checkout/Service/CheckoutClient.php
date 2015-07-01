@@ -5,7 +5,8 @@
 
 namespace SprykerFeature\Client\Checkout\Service;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Checkout\CheckoutRequestInterface;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerFeature\Client\Checkout\Service\Zed\CheckoutStub;
 
@@ -15,10 +16,10 @@ use SprykerFeature\Client\Checkout\Service\Zed\CheckoutStub;
 class CheckoutClient extends AbstractClient implements CheckoutClientInterface
 {
     /**
-     * @param Order $order
-     * @return \SprykerFeature\Shared\Library\Communication\Response
+     * @param CheckoutRequestInterface $checkoutRequest
+     * @return TransferInterface
      */
-    public function saveOrder(Order $order)
+    public function requestCheckout(CheckoutRequestInterface $checkoutRequest)
     {
         return $this->getZedStub()->requestCheckout($checkoutRequest);
     }
