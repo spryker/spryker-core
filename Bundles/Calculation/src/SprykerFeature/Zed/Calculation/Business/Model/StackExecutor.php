@@ -20,10 +20,9 @@ class StackExecutor
      * @param array $calculatorStack
      * @ param OrderInterface $calculableContainer
      * @param CalculableInterface $calculableContainer
-     * @return OrderInterface
+     * @return CalculableInterface
      */
     public function recalculate(array $calculatorStack, CalculableInterface $calculableContainer)
-    //public function recalculate(array $calculatorStack, OrderInterface $calculableContainer)
     {
         foreach ($calculatorStack as $calculator) {
             if ($calculator instanceof CalculatorPluginInterface) {
