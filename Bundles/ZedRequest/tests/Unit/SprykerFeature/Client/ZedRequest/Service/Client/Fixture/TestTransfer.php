@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace Unit\SprykerFeature\Client\ZedRequest\Service\Client\Fixture;
 

@@ -16,8 +16,12 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 class ItemPriceToPayCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
 
+    /**
+     * @param CalculableInterface $calculableContainer
+     */
     public function recalculate(CalculableInterface $calculableContainer)
     {
         $this->getFacade()->recalculateItemPriceToPay($calculableContainer);
     }
+
 }

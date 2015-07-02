@@ -7,6 +7,7 @@ namespace SprykerFeature\Client\Glossary\Service\Exception;
 
 class TranslationNotFoundException extends \RuntimeException
 {
+
     /**
      * @param string $key
      */

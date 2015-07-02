@@ -6,7 +6,6 @@
     <transfer name="Cart">
         <property name="items" type="CartItem[]" singular="item" />
         <property name="totals" type="Totals" />
-        <!--<property name="totals" type="Totals[]" />-->
         <property name="expenses" type="Expense[]" />
         <property name="discounts" type="Discount[]" singular="discount" />
         <property name="couponCodes" type="array" singular="couponCode" />
@@ -17,7 +16,6 @@
         <property name="couponCode" type="string" />
         <property name="cart" type="Cart" />
         <property name="order" type="Order" />
-        <!--<property name="order" type="SalesOrder" />-->
         <property name="userId" type="string" />
         <property name="cartHash" type="string" />
         <property name="deleteReason" type="string" />

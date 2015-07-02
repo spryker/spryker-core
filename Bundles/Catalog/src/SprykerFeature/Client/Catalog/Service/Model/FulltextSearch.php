@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Client\Catalog\Service\Model;
 
@@ -20,6 +23,7 @@ class FulltextSearch extends AbstractSearch
 
         $this->addFacetAggregationToQuery($searchQuery);
         $this->addFacetFiltersToQuery($searchQuery, $request);
+
         $this->addSortingToQuery($searchQuery);
         $this->addFacetAggregationToQuery($searchQuery);
         $this->addFacetFiltersToQuery($searchQuery, $request);
