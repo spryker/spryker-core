@@ -423,7 +423,7 @@ abstract class SpyProductOptionTypeUsage implements ActiveRecordInterface
     /**
      * Set the value of [id_product_option_type_usage] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage The current object (for fluent API support)
      */
     public function setIdProductOptionTypeUsage($v)
@@ -443,7 +443,7 @@ abstract class SpyProductOptionTypeUsage implements ActiveRecordInterface
     /**
      * Set the value of [is_optional] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage The current object (for fluent API support)
      */
     public function setIsOptional($v)
@@ -463,7 +463,7 @@ abstract class SpyProductOptionTypeUsage implements ActiveRecordInterface
     /**
      * Set the value of [sequence] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage The current object (for fluent API support)
      */
     public function setSequence($v)
@@ -483,7 +483,7 @@ abstract class SpyProductOptionTypeUsage implements ActiveRecordInterface
     /**
      * Set the value of [fk_product] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage The current object (for fluent API support)
      */
     public function setFkProduct($v)
@@ -507,7 +507,7 @@ abstract class SpyProductOptionTypeUsage implements ActiveRecordInterface
     /**
      * Set the value of [fk_product_option_type] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage The current object (for fluent API support)
      */
     public function setFkProductOptionType($v)
@@ -783,10 +783,10 @@ abstract class SpyProductOptionTypeUsage implements ActiveRecordInterface
                 // persist changes
                 if ($this->isNew()) {
                     $this->doInsert($con);
+                    $affectedRows += 1;
                 } else {
-                    $this->doUpdate($con);
+                    $affectedRows += $this->doUpdate($con);
                 }
-                $affectedRows += 1;
                 $this->resetModified();
             }
 

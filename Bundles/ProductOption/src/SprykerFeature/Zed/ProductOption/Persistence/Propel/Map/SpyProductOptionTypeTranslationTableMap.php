@@ -146,8 +146,20 @@ class SpyProductOptionTypeTranslationTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('SpyProductOptionType', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionType', RelationMap::MANY_TO_ONE, array('fk_product_option_type' => 'id_product_option_type', ), 'CASCADE', null);
-        $this->addRelation('SpyLocale', '\\SprykerEngine\\Zed\\Locale\\Persistence\\Propel\\SpyLocale', RelationMap::MANY_TO_ONE, array('fk_locale' => 'id_locale', ), 'CASCADE', null);
+        $this->addRelation('SpyProductOptionType', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionType', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_type',
+    1 => ':id_product_option_type',
+  ),
+), 'CASCADE', null, null, false);
+        $this->addRelation('SpyLocale', '\\SprykerEngine\\Zed\\Locale\\Persistence\\Propel\\SpyLocale', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':fk_locale',
+    1 => ':id_locale',
+  ),
+), 'CASCADE', null, null, false);
     } // buildRelations()
 
     /**

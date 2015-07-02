@@ -48,7 +48,14 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionType
  *
  * @method     ChildSpyProductOptionTypeTranslation findOneByName(string $name) Return the first ChildSpyProductOptionTypeTranslation filtered by the name column
  * @method     ChildSpyProductOptionTypeTranslation findOneByFkProductOptionType(int $fk_product_option_type) Return the first ChildSpyProductOptionTypeTranslation filtered by the fk_product_option_type column
- * @method     ChildSpyProductOptionTypeTranslation findOneByFkLocale(int $fk_locale) Return the first ChildSpyProductOptionTypeTranslation filtered by the fk_locale column
+ * @method     ChildSpyProductOptionTypeTranslation findOneByFkLocale(int $fk_locale) Return the first ChildSpyProductOptionTypeTranslation filtered by the fk_locale column *
+
+ * @method     ChildSpyProductOptionTypeTranslation requirePk($key, ConnectionInterface $con = null) Return the ChildSpyProductOptionTypeTranslation by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionTypeTranslation requireOne(ConnectionInterface $con = null) Return the first ChildSpyProductOptionTypeTranslation matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ *
+ * @method     ChildSpyProductOptionTypeTranslation requireOneByName(string $name) Return the first ChildSpyProductOptionTypeTranslation filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionTypeTranslation requireOneByFkProductOptionType(int $fk_product_option_type) Return the first ChildSpyProductOptionTypeTranslation filtered by the fk_product_option_type column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionTypeTranslation requireOneByFkLocale(int $fk_locale) Return the first ChildSpyProductOptionTypeTranslation filtered by the fk_locale column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyProductOptionTypeTranslation[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyProductOptionTypeTranslation objects based on current ModelCriteria
  * @method     ChildSpyProductOptionTypeTranslation[]|ObjectCollection findByName(string $name) Return ChildSpyProductOptionTypeTranslation objects filtered by the name column
@@ -59,6 +66,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionType
  */
 abstract class SpyProductOptionTypeTranslationQuery extends ModelCriteria
 {
+    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
      * Initializes internal state of \SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionTypeTranslationQuery object.

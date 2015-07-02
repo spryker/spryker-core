@@ -335,7 +335,7 @@ abstract class SpyProductOptionValuePrice implements ActiveRecordInterface
     /**
      * Set the value of [id_product_option_value_price] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValuePrice The current object (for fluent API support)
      */
     public function setIdProductOptionValuePrice($v)
@@ -355,7 +355,7 @@ abstract class SpyProductOptionValuePrice implements ActiveRecordInterface
     /**
      * Set the value of [price] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValuePrice The current object (for fluent API support)
      */
     public function setPrice($v)
@@ -587,10 +587,10 @@ abstract class SpyProductOptionValuePrice implements ActiveRecordInterface
                 // persist changes
                 if ($this->isNew()) {
                     $this->doInsert($con);
+                    $affectedRows += 1;
                 } else {
-                    $this->doUpdate($con);
+                    $affectedRows += $this->doUpdate($con);
                 }
-                $affectedRows += 1;
                 $this->resetModified();
             }
 

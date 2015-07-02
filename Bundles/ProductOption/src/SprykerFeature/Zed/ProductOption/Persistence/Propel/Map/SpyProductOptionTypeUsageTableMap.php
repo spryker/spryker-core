@@ -158,11 +158,41 @@ class SpyProductOptionTypeUsageTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('SpyProduct', '\\SprykerFeature\\Zed\\Product\\Persistence\\Propel\\SpyProduct', RelationMap::MANY_TO_ONE, array('fk_product' => 'id_product', ), 'CASCADE', null);
-        $this->addRelation('SpyProductOptionType', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionType', RelationMap::MANY_TO_ONE, array('fk_product_option_type' => 'id_product_option_type', ), null, null);
-        $this->addRelation('SpyProductOptionValueUsage', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValueUsage', RelationMap::ONE_TO_MANY, array('id_product_option_type_usage' => 'fk_product_option_type_usage', ), 'CASCADE', null, 'SpyProductOptionValueUsages');
-        $this->addRelation('SpyProductOptionTypeUsageExclusionRelatedByFkProductOptionTypeUsageA', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionTypeUsageExclusion', RelationMap::ONE_TO_MANY, array('id_product_option_type_usage' => 'fk_product_option_type_usage_a', ), 'CASCADE', null, 'SpyProductOptionTypeUsageExclusionsRelatedByFkProductOptionTypeUsageA');
-        $this->addRelation('SpyProductOptionTypeUsageExclusionRelatedByFkProductOptionTypeUsageB', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionTypeUsageExclusion', RelationMap::ONE_TO_MANY, array('id_product_option_type_usage' => 'fk_product_option_type_usage_b', ), 'CASCADE', null, 'SpyProductOptionTypeUsageExclusionsRelatedByFkProductOptionTypeUsageB');
+        $this->addRelation('SpyProduct', '\\SprykerFeature\\Zed\\Product\\Persistence\\Propel\\SpyProduct', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':fk_product',
+    1 => ':id_product',
+  ),
+), 'CASCADE', null, null, false);
+        $this->addRelation('SpyProductOptionType', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionType', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_type',
+    1 => ':id_product_option_type',
+  ),
+), null, null, null, false);
+        $this->addRelation('SpyProductOptionValueUsage', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValueUsage', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_type_usage',
+    1 => ':id_product_option_type_usage',
+  ),
+), 'CASCADE', null, 'SpyProductOptionValueUsages', false);
+        $this->addRelation('SpyProductOptionTypeUsageExclusionRelatedByFkProductOptionTypeUsageA', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionTypeUsageExclusion', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_type_usage_a',
+    1 => ':id_product_option_type_usage',
+  ),
+), 'CASCADE', null, 'SpyProductOptionTypeUsageExclusionsRelatedByFkProductOptionTypeUsageA', false);
+        $this->addRelation('SpyProductOptionTypeUsageExclusionRelatedByFkProductOptionTypeUsageB', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionTypeUsageExclusion', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_type_usage_b',
+    1 => ':id_product_option_type_usage',
+  ),
+), 'CASCADE', null, 'SpyProductOptionTypeUsageExclusionsRelatedByFkProductOptionTypeUsageB', false);
     } // buildRelations()
     /**
      * Method to invalidate the instance pool of all tables related to spy_product_option_type_usage     * by a foreign key with ON DELETE CASCADE

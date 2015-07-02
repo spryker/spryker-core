@@ -331,7 +331,7 @@ abstract class SpyProductOptionTypeUsageExclusion implements ActiveRecordInterfa
     /**
      * Set the value of [fk_product_option_type_usage_a] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusion The current object (for fluent API support)
      */
     public function setFkProductOptionTypeUsageA($v)
@@ -355,7 +355,7 @@ abstract class SpyProductOptionTypeUsageExclusion implements ActiveRecordInterfa
     /**
      * Set the value of [fk_product_option_type_usage_b] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusion The current object (for fluent API support)
      */
     public function setFkProductOptionTypeUsageB($v)
@@ -616,10 +616,10 @@ abstract class SpyProductOptionTypeUsageExclusion implements ActiveRecordInterfa
                 // persist changes
                 if ($this->isNew()) {
                     $this->doInsert($con);
+                    $affectedRows += 1;
                 } else {
-                    $this->doUpdate($con);
+                    $affectedRows += $this->doUpdate($con);
                 }
-                $affectedRows += 1;
                 $this->resetModified();
             }
 

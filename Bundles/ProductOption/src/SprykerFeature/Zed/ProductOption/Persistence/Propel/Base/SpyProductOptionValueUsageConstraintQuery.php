@@ -47,7 +47,14 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValu
  *
  * @method     ChildSpyProductOptionValueUsageConstraint findOneByFkProductOptionValueUsageA(int $fk_product_option_value_usage_a) Return the first ChildSpyProductOptionValueUsageConstraint filtered by the fk_product_option_value_usage_a column
  * @method     ChildSpyProductOptionValueUsageConstraint findOneByFkProductOptionValueUsageB(int $fk_product_option_value_usage_b) Return the first ChildSpyProductOptionValueUsageConstraint filtered by the fk_product_option_value_usage_b column
- * @method     ChildSpyProductOptionValueUsageConstraint findOneByOperator(string $operator) Return the first ChildSpyProductOptionValueUsageConstraint filtered by the operator column
+ * @method     ChildSpyProductOptionValueUsageConstraint findOneByOperator(string $operator) Return the first ChildSpyProductOptionValueUsageConstraint filtered by the operator column *
+
+ * @method     ChildSpyProductOptionValueUsageConstraint requirePk($key, ConnectionInterface $con = null) Return the ChildSpyProductOptionValueUsageConstraint by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionValueUsageConstraint requireOne(ConnectionInterface $con = null) Return the first ChildSpyProductOptionValueUsageConstraint matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ *
+ * @method     ChildSpyProductOptionValueUsageConstraint requireOneByFkProductOptionValueUsageA(int $fk_product_option_value_usage_a) Return the first ChildSpyProductOptionValueUsageConstraint filtered by the fk_product_option_value_usage_a column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionValueUsageConstraint requireOneByFkProductOptionValueUsageB(int $fk_product_option_value_usage_b) Return the first ChildSpyProductOptionValueUsageConstraint filtered by the fk_product_option_value_usage_b column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionValueUsageConstraint requireOneByOperator(string $operator) Return the first ChildSpyProductOptionValueUsageConstraint filtered by the operator column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyProductOptionValueUsageConstraint[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyProductOptionValueUsageConstraint objects based on current ModelCriteria
  * @method     ChildSpyProductOptionValueUsageConstraint[]|ObjectCollection findByFkProductOptionValueUsageA(int $fk_product_option_value_usage_a) Return ChildSpyProductOptionValueUsageConstraint objects filtered by the fk_product_option_value_usage_a column
@@ -58,6 +65,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValu
  */
 abstract class SpyProductOptionValueUsageConstraintQuery extends ModelCriteria
 {
+    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
      * Initializes internal state of \SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionValueUsageConstraintQuery object.

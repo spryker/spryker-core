@@ -44,7 +44,13 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionConf
  * @method     ChildSpyProductOptionConfigurationPresetValue findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyProductOptionConfigurationPresetValue matching the query, or a new ChildSpyProductOptionConfigurationPresetValue object populated from the query conditions when no match is found
  *
  * @method     ChildSpyProductOptionConfigurationPresetValue findOneByFkProductOptionConfigurationPreset(int $fk_product_option_configuration_preset) Return the first ChildSpyProductOptionConfigurationPresetValue filtered by the fk_product_option_configuration_preset column
- * @method     ChildSpyProductOptionConfigurationPresetValue findOneByFkProductOptionValueUsage(int $fk_product_option_value_usage) Return the first ChildSpyProductOptionConfigurationPresetValue filtered by the fk_product_option_value_usage column
+ * @method     ChildSpyProductOptionConfigurationPresetValue findOneByFkProductOptionValueUsage(int $fk_product_option_value_usage) Return the first ChildSpyProductOptionConfigurationPresetValue filtered by the fk_product_option_value_usage column *
+
+ * @method     ChildSpyProductOptionConfigurationPresetValue requirePk($key, ConnectionInterface $con = null) Return the ChildSpyProductOptionConfigurationPresetValue by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionConfigurationPresetValue requireOne(ConnectionInterface $con = null) Return the first ChildSpyProductOptionConfigurationPresetValue matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ *
+ * @method     ChildSpyProductOptionConfigurationPresetValue requireOneByFkProductOptionConfigurationPreset(int $fk_product_option_configuration_preset) Return the first ChildSpyProductOptionConfigurationPresetValue filtered by the fk_product_option_configuration_preset column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionConfigurationPresetValue requireOneByFkProductOptionValueUsage(int $fk_product_option_value_usage) Return the first ChildSpyProductOptionConfigurationPresetValue filtered by the fk_product_option_value_usage column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyProductOptionConfigurationPresetValue[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyProductOptionConfigurationPresetValue objects based on current ModelCriteria
  * @method     ChildSpyProductOptionConfigurationPresetValue[]|ObjectCollection findByFkProductOptionConfigurationPreset(int $fk_product_option_configuration_preset) Return ChildSpyProductOptionConfigurationPresetValue objects filtered by the fk_product_option_configuration_preset column
@@ -54,6 +60,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionConf
  */
 abstract class SpyProductOptionConfigurationPresetValueQuery extends ModelCriteria
 {
+    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
      * Initializes internal state of \SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionConfigurationPresetValueQuery object.

@@ -395,7 +395,7 @@ abstract class SpyProductOptionValue implements ActiveRecordInterface
     /**
      * Set the value of [id_product_option_value] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue The current object (for fluent API support)
      */
     public function setIdProductOptionValue($v)
@@ -415,7 +415,7 @@ abstract class SpyProductOptionValue implements ActiveRecordInterface
     /**
      * Set the value of [import_key] column.
      *
-     * @param  string $v new value
+     * @param string $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue The current object (for fluent API support)
      */
     public function setImportKey($v)
@@ -435,7 +435,7 @@ abstract class SpyProductOptionValue implements ActiveRecordInterface
     /**
      * Set the value of [fk_product_option_type] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue The current object (for fluent API support)
      */
     public function setFkProductOptionType($v)
@@ -459,7 +459,7 @@ abstract class SpyProductOptionValue implements ActiveRecordInterface
     /**
      * Set the value of [fk_product_option_value_price] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue The current object (for fluent API support)
      */
     public function setFkProductOptionValuePrice($v)
@@ -730,10 +730,10 @@ abstract class SpyProductOptionValue implements ActiveRecordInterface
                 // persist changes
                 if ($this->isNew()) {
                     $this->doInsert($con);
+                    $affectedRows += 1;
                 } else {
-                    $this->doUpdate($con);
+                    $affectedRows += $this->doUpdate($con);
                 }
-                $affectedRows += 1;
                 $this->resetModified();
             }
 

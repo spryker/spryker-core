@@ -8,8 +8,6 @@ namespace SprykerFeature\Zed\Cart\Business;
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Cart\ChangeInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\ChangeInterface;
 
 /**
  * @method CartDependencyContainer getDependencyContainer()

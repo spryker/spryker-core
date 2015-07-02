@@ -51,7 +51,15 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
  * @method     ChildSpyProductOptionConfigurationPreset findOneByIdProductOptionConfigurationPreset(int $id_product_option_configuration_preset) Return the first ChildSpyProductOptionConfigurationPreset filtered by the id_product_option_configuration_preset column
  * @method     ChildSpyProductOptionConfigurationPreset findOneByIsDefault(boolean $is_default) Return the first ChildSpyProductOptionConfigurationPreset filtered by the is_default column
  * @method     ChildSpyProductOptionConfigurationPreset findOneBySequence(int $sequence) Return the first ChildSpyProductOptionConfigurationPreset filtered by the sequence column
- * @method     ChildSpyProductOptionConfigurationPreset findOneByFkProduct(int $fk_product) Return the first ChildSpyProductOptionConfigurationPreset filtered by the fk_product column
+ * @method     ChildSpyProductOptionConfigurationPreset findOneByFkProduct(int $fk_product) Return the first ChildSpyProductOptionConfigurationPreset filtered by the fk_product column *
+
+ * @method     ChildSpyProductOptionConfigurationPreset requirePk($key, ConnectionInterface $con = null) Return the ChildSpyProductOptionConfigurationPreset by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionConfigurationPreset requireOne(ConnectionInterface $con = null) Return the first ChildSpyProductOptionConfigurationPreset matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ *
+ * @method     ChildSpyProductOptionConfigurationPreset requireOneByIdProductOptionConfigurationPreset(int $id_product_option_configuration_preset) Return the first ChildSpyProductOptionConfigurationPreset filtered by the id_product_option_configuration_preset column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionConfigurationPreset requireOneByIsDefault(boolean $is_default) Return the first ChildSpyProductOptionConfigurationPreset filtered by the is_default column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionConfigurationPreset requireOneBySequence(int $sequence) Return the first ChildSpyProductOptionConfigurationPreset filtered by the sequence column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionConfigurationPreset requireOneByFkProduct(int $fk_product) Return the first ChildSpyProductOptionConfigurationPreset filtered by the fk_product column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyProductOptionConfigurationPreset[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyProductOptionConfigurationPreset objects based on current ModelCriteria
  * @method     ChildSpyProductOptionConfigurationPreset[]|ObjectCollection findByIdProductOptionConfigurationPreset(int $id_product_option_configuration_preset) Return ChildSpyProductOptionConfigurationPreset objects filtered by the id_product_option_configuration_preset column
@@ -63,6 +71,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
  */
 abstract class SpyProductOptionConfigurationPresetQuery extends ModelCriteria
 {
+    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
      * Initializes internal state of \SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionConfigurationPresetQuery object.
@@ -475,7 +484,7 @@ abstract class SpyProductOptionConfigurationPresetQuery extends ModelCriteria
     /**
      * Filter the query by a related \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue object
      *
-     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue|ObjectCollection $spyProductOptionConfigurationPresetValue  the related object to use as filter
+     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue|ObjectCollection $spyProductOptionConfigurationPresetValue the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildSpyProductOptionConfigurationPresetQuery The current query, for fluid interface

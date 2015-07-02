@@ -56,7 +56,14 @@ use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
  *
  * @method     ChildSpyProductOptionType findOneByIdProductOptionType(int $id_product_option_type) Return the first ChildSpyProductOptionType filtered by the id_product_option_type column
  * @method     ChildSpyProductOptionType findOneByImportKey(string $import_key) Return the first ChildSpyProductOptionType filtered by the import_key column
- * @method     ChildSpyProductOptionType findOneByFkTaxSet(int $fk_tax_set) Return the first ChildSpyProductOptionType filtered by the fk_tax_set column
+ * @method     ChildSpyProductOptionType findOneByFkTaxSet(int $fk_tax_set) Return the first ChildSpyProductOptionType filtered by the fk_tax_set column *
+
+ * @method     ChildSpyProductOptionType requirePk($key, ConnectionInterface $con = null) Return the ChildSpyProductOptionType by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionType requireOne(ConnectionInterface $con = null) Return the first ChildSpyProductOptionType matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ *
+ * @method     ChildSpyProductOptionType requireOneByIdProductOptionType(int $id_product_option_type) Return the first ChildSpyProductOptionType filtered by the id_product_option_type column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionType requireOneByImportKey(string $import_key) Return the first ChildSpyProductOptionType filtered by the import_key column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionType requireOneByFkTaxSet(int $fk_tax_set) Return the first ChildSpyProductOptionType filtered by the fk_tax_set column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyProductOptionType[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyProductOptionType objects based on current ModelCriteria
  * @method     ChildSpyProductOptionType[]|ObjectCollection findByIdProductOptionType(int $id_product_option_type) Return ChildSpyProductOptionType objects filtered by the id_product_option_type column
@@ -67,6 +74,7 @@ use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
  */
 abstract class SpyProductOptionTypeQuery extends ModelCriteria
 {
+    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
      * Initializes internal state of \SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionTypeQuery object.
@@ -440,7 +448,7 @@ abstract class SpyProductOptionTypeQuery extends ModelCriteria
     /**
      * Filter the query by a related \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue object
      *
-     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue|ObjectCollection $spyProductOptionValue  the related object to use as filter
+     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue|ObjectCollection $spyProductOptionValue the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildSpyProductOptionTypeQuery The current query, for fluid interface
@@ -513,7 +521,7 @@ abstract class SpyProductOptionTypeQuery extends ModelCriteria
     /**
      * Filter the query by a related \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTranslation object
      *
-     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTranslation|ObjectCollection $spyProductOptionTypeTranslation  the related object to use as filter
+     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTranslation|ObjectCollection $spyProductOptionTypeTranslation the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildSpyProductOptionTypeQuery The current query, for fluid interface
@@ -586,7 +594,7 @@ abstract class SpyProductOptionTypeQuery extends ModelCriteria
     /**
      * Filter the query by a related \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage object
      *
-     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage|ObjectCollection $spyProductOptionTypeUsage  the related object to use as filter
+     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage|ObjectCollection $spyProductOptionTypeUsage the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildSpyProductOptionTypeQuery The current query, for fluid interface

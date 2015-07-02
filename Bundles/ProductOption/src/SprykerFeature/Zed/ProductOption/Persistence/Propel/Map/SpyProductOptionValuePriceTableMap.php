@@ -140,7 +140,13 @@ class SpyProductOptionValuePriceTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('SpyProductOptionValue', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValue', RelationMap::ONE_TO_MANY, array('id_product_option_value_price' => 'fk_product_option_value_price', ), 'SET NULL', null, 'SpyProductOptionValues');
+        $this->addRelation('SpyProductOptionValue', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValue', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_value_price',
+    1 => ':id_product_option_value_price',
+  ),
+), 'SET NULL', null, 'SpyProductOptionValues', false);
     } // buildRelations()
     /**
      * Method to invalidate the instance pool of all tables related to spy_product_option_value_price     * by a foreign key with ON DELETE CASCADE

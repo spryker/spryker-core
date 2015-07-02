@@ -44,7 +44,13 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionType
  * @method     ChildSpyProductOptionTypeUsageExclusion findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyProductOptionTypeUsageExclusion matching the query, or a new ChildSpyProductOptionTypeUsageExclusion object populated from the query conditions when no match is found
  *
  * @method     ChildSpyProductOptionTypeUsageExclusion findOneByFkProductOptionTypeUsageA(int $fk_product_option_type_usage_a) Return the first ChildSpyProductOptionTypeUsageExclusion filtered by the fk_product_option_type_usage_a column
- * @method     ChildSpyProductOptionTypeUsageExclusion findOneByFkProductOptionTypeUsageB(int $fk_product_option_type_usage_b) Return the first ChildSpyProductOptionTypeUsageExclusion filtered by the fk_product_option_type_usage_b column
+ * @method     ChildSpyProductOptionTypeUsageExclusion findOneByFkProductOptionTypeUsageB(int $fk_product_option_type_usage_b) Return the first ChildSpyProductOptionTypeUsageExclusion filtered by the fk_product_option_type_usage_b column *
+
+ * @method     ChildSpyProductOptionTypeUsageExclusion requirePk($key, ConnectionInterface $con = null) Return the ChildSpyProductOptionTypeUsageExclusion by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionTypeUsageExclusion requireOne(ConnectionInterface $con = null) Return the first ChildSpyProductOptionTypeUsageExclusion matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ *
+ * @method     ChildSpyProductOptionTypeUsageExclusion requireOneByFkProductOptionTypeUsageA(int $fk_product_option_type_usage_a) Return the first ChildSpyProductOptionTypeUsageExclusion filtered by the fk_product_option_type_usage_a column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionTypeUsageExclusion requireOneByFkProductOptionTypeUsageB(int $fk_product_option_type_usage_b) Return the first ChildSpyProductOptionTypeUsageExclusion filtered by the fk_product_option_type_usage_b column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyProductOptionTypeUsageExclusion[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyProductOptionTypeUsageExclusion objects based on current ModelCriteria
  * @method     ChildSpyProductOptionTypeUsageExclusion[]|ObjectCollection findByFkProductOptionTypeUsageA(int $fk_product_option_type_usage_a) Return ChildSpyProductOptionTypeUsageExclusion objects filtered by the fk_product_option_type_usage_a column
@@ -54,6 +60,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionType
  */
 abstract class SpyProductOptionTypeUsageExclusionQuery extends ModelCriteria
 {
+    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
      * Initializes internal state of \SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionTypeUsageExclusionQuery object.

@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Calculation\Communication\Plugin;
 
-use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;

@@ -146,10 +146,34 @@ class SpyProductOptionTypeTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('SpyTaxSet', '\\SprykerFeature\\Zed\\Tax\\Persistence\\Propel\\SpyTaxSet', RelationMap::MANY_TO_ONE, array('fk_tax_set' => 'id_tax_set', ), 'SET NULL', null);
-        $this->addRelation('SpyProductOptionValue', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValue', RelationMap::ONE_TO_MANY, array('id_product_option_type' => 'fk_product_option_type', ), 'CASCADE', null, 'SpyProductOptionValues');
-        $this->addRelation('SpyProductOptionTypeTranslation', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionTypeTranslation', RelationMap::ONE_TO_MANY, array('id_product_option_type' => 'fk_product_option_type', ), 'CASCADE', null, 'SpyProductOptionTypeTranslations');
-        $this->addRelation('SpyProductOptionTypeUsage', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionTypeUsage', RelationMap::ONE_TO_MANY, array('id_product_option_type' => 'fk_product_option_type', ), null, null, 'SpyProductOptionTypeUsages');
+        $this->addRelation('SpyTaxSet', '\\SprykerFeature\\Zed\\Tax\\Persistence\\Propel\\SpyTaxSet', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':fk_tax_set',
+    1 => ':id_tax_set',
+  ),
+), 'SET NULL', null, null, false);
+        $this->addRelation('SpyProductOptionValue', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValue', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_type',
+    1 => ':id_product_option_type',
+  ),
+), 'CASCADE', null, 'SpyProductOptionValues', false);
+        $this->addRelation('SpyProductOptionTypeTranslation', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionTypeTranslation', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_type',
+    1 => ':id_product_option_type',
+  ),
+), 'CASCADE', null, 'SpyProductOptionTypeTranslations', false);
+        $this->addRelation('SpyProductOptionTypeUsage', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionTypeUsage', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_type',
+    1 => ':id_product_option_type',
+  ),
+), null, null, 'SpyProductOptionTypeUsages', false);
     } // buildRelations()
     /**
      * Method to invalidate the instance pool of all tables related to spy_product_option_type     * by a foreign key with ON DELETE CASCADE

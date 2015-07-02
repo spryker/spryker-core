@@ -40,7 +40,13 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValu
  * @method     ChildSpyProductOptionValuePrice findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyProductOptionValuePrice matching the query, or a new ChildSpyProductOptionValuePrice object populated from the query conditions when no match is found
  *
  * @method     ChildSpyProductOptionValuePrice findOneByIdProductOptionValuePrice(int $id_product_option_value_price) Return the first ChildSpyProductOptionValuePrice filtered by the id_product_option_value_price column
- * @method     ChildSpyProductOptionValuePrice findOneByPrice(int $price) Return the first ChildSpyProductOptionValuePrice filtered by the price column
+ * @method     ChildSpyProductOptionValuePrice findOneByPrice(int $price) Return the first ChildSpyProductOptionValuePrice filtered by the price column *
+
+ * @method     ChildSpyProductOptionValuePrice requirePk($key, ConnectionInterface $con = null) Return the ChildSpyProductOptionValuePrice by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionValuePrice requireOne(ConnectionInterface $con = null) Return the first ChildSpyProductOptionValuePrice matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ *
+ * @method     ChildSpyProductOptionValuePrice requireOneByIdProductOptionValuePrice(int $id_product_option_value_price) Return the first ChildSpyProductOptionValuePrice filtered by the id_product_option_value_price column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionValuePrice requireOneByPrice(int $price) Return the first ChildSpyProductOptionValuePrice filtered by the price column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyProductOptionValuePrice[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyProductOptionValuePrice objects based on current ModelCriteria
  * @method     ChildSpyProductOptionValuePrice[]|ObjectCollection findByIdProductOptionValuePrice(int $id_product_option_value_price) Return ChildSpyProductOptionValuePrice objects filtered by the id_product_option_value_price column
@@ -50,6 +56,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValu
  */
 abstract class SpyProductOptionValuePriceQuery extends ModelCriteria
 {
+    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
      * Initializes internal state of \SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionValuePriceQuery object.
@@ -315,7 +322,7 @@ abstract class SpyProductOptionValuePriceQuery extends ModelCriteria
     /**
      * Filter the query by a related \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue object
      *
-     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue|ObjectCollection $spyProductOptionValue  the related object to use as filter
+     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue|ObjectCollection $spyProductOptionValue the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildSpyProductOptionValuePriceQuery The current query, for fluid interface

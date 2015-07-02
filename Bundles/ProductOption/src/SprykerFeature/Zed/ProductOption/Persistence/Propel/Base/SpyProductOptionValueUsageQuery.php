@@ -62,7 +62,15 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValu
  * @method     ChildSpyProductOptionValueUsage findOneByIdProductOptionValueUsage(int $id_product_option_value_usage) Return the first ChildSpyProductOptionValueUsage filtered by the id_product_option_value_usage column
  * @method     ChildSpyProductOptionValueUsage findOneBySequence(int $sequence) Return the first ChildSpyProductOptionValueUsage filtered by the sequence column
  * @method     ChildSpyProductOptionValueUsage findOneByFkProductOptionTypeUsage(int $fk_product_option_type_usage) Return the first ChildSpyProductOptionValueUsage filtered by the fk_product_option_type_usage column
- * @method     ChildSpyProductOptionValueUsage findOneByFkProductOptionValue(int $fk_product_option_value) Return the first ChildSpyProductOptionValueUsage filtered by the fk_product_option_value column
+ * @method     ChildSpyProductOptionValueUsage findOneByFkProductOptionValue(int $fk_product_option_value) Return the first ChildSpyProductOptionValueUsage filtered by the fk_product_option_value column *
+
+ * @method     ChildSpyProductOptionValueUsage requirePk($key, ConnectionInterface $con = null) Return the ChildSpyProductOptionValueUsage by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionValueUsage requireOne(ConnectionInterface $con = null) Return the first ChildSpyProductOptionValueUsage matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ *
+ * @method     ChildSpyProductOptionValueUsage requireOneByIdProductOptionValueUsage(int $id_product_option_value_usage) Return the first ChildSpyProductOptionValueUsage filtered by the id_product_option_value_usage column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionValueUsage requireOneBySequence(int $sequence) Return the first ChildSpyProductOptionValueUsage filtered by the sequence column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionValueUsage requireOneByFkProductOptionTypeUsage(int $fk_product_option_type_usage) Return the first ChildSpyProductOptionValueUsage filtered by the fk_product_option_type_usage column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyProductOptionValueUsage requireOneByFkProductOptionValue(int $fk_product_option_value) Return the first ChildSpyProductOptionValueUsage filtered by the fk_product_option_value column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyProductOptionValueUsage[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyProductOptionValueUsage objects based on current ModelCriteria
  * @method     ChildSpyProductOptionValueUsage[]|ObjectCollection findByIdProductOptionValueUsage(int $id_product_option_value_usage) Return ChildSpyProductOptionValueUsage objects filtered by the id_product_option_value_usage column
@@ -74,6 +82,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValu
  */
 abstract class SpyProductOptionValueUsageQuery extends ModelCriteria
 {
+    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
      * Initializes internal state of \SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionValueUsageQuery object.
@@ -579,7 +588,7 @@ abstract class SpyProductOptionValueUsageQuery extends ModelCriteria
     /**
      * Filter the query by a related \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraint object
      *
-     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraint|ObjectCollection $spyProductOptionValueUsageConstraint  the related object to use as filter
+     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraint|ObjectCollection $spyProductOptionValueUsageConstraint the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildSpyProductOptionValueUsageQuery The current query, for fluid interface
@@ -652,7 +661,7 @@ abstract class SpyProductOptionValueUsageQuery extends ModelCriteria
     /**
      * Filter the query by a related \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraint object
      *
-     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraint|ObjectCollection $spyProductOptionValueUsageConstraint  the related object to use as filter
+     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraint|ObjectCollection $spyProductOptionValueUsageConstraint the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildSpyProductOptionValueUsageQuery The current query, for fluid interface
@@ -725,7 +734,7 @@ abstract class SpyProductOptionValueUsageQuery extends ModelCriteria
     /**
      * Filter the query by a related \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue object
      *
-     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue|ObjectCollection $spyProductOptionConfigurationPresetValue  the related object to use as filter
+     * @param \SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue|ObjectCollection $spyProductOptionConfigurationPresetValue the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildSpyProductOptionValueUsageQuery The current query, for fluid interface

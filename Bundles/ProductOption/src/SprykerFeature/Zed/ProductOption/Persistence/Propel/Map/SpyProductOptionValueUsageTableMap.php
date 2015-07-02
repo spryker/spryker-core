@@ -152,11 +152,41 @@ class SpyProductOptionValueUsageTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('SpyProductOptionTypeUsage', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionTypeUsage', RelationMap::MANY_TO_ONE, array('fk_product_option_type_usage' => 'id_product_option_type_usage', ), 'CASCADE', null);
-        $this->addRelation('SpyProductOptionValue', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValue', RelationMap::MANY_TO_ONE, array('fk_product_option_value' => 'id_product_option_value', ), null, null);
-        $this->addRelation('SpyProductOptionValueUsageConstraintRelatedByFkProductOptionValueUsageA', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValueUsageConstraint', RelationMap::ONE_TO_MANY, array('id_product_option_value_usage' => 'fk_product_option_value_usage_a', ), 'CASCADE', null, 'SpyProductOptionValueUsageConstraintsRelatedByFkProductOptionValueUsageA');
-        $this->addRelation('SpyProductOptionValueUsageConstraintRelatedByFkProductOptionValueUsageB', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValueUsageConstraint', RelationMap::ONE_TO_MANY, array('id_product_option_value_usage' => 'fk_product_option_value_usage_b', ), 'CASCADE', null, 'SpyProductOptionValueUsageConstraintsRelatedByFkProductOptionValueUsageB');
-        $this->addRelation('SpyProductOptionConfigurationPresetValue', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionConfigurationPresetValue', RelationMap::ONE_TO_MANY, array('id_product_option_value_usage' => 'fk_product_option_value_usage', ), 'CASCADE', null, 'SpyProductOptionConfigurationPresetValues');
+        $this->addRelation('SpyProductOptionTypeUsage', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionTypeUsage', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_type_usage',
+    1 => ':id_product_option_type_usage',
+  ),
+), 'CASCADE', null, null, false);
+        $this->addRelation('SpyProductOptionValue', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValue', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_value',
+    1 => ':id_product_option_value',
+  ),
+), null, null, null, false);
+        $this->addRelation('SpyProductOptionValueUsageConstraintRelatedByFkProductOptionValueUsageA', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValueUsageConstraint', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_value_usage_a',
+    1 => ':id_product_option_value_usage',
+  ),
+), 'CASCADE', null, 'SpyProductOptionValueUsageConstraintsRelatedByFkProductOptionValueUsageA', false);
+        $this->addRelation('SpyProductOptionValueUsageConstraintRelatedByFkProductOptionValueUsageB', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValueUsageConstraint', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_value_usage_b',
+    1 => ':id_product_option_value_usage',
+  ),
+), 'CASCADE', null, 'SpyProductOptionValueUsageConstraintsRelatedByFkProductOptionValueUsageB', false);
+        $this->addRelation('SpyProductOptionConfigurationPresetValue', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionConfigurationPresetValue', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_value_usage',
+    1 => ':id_product_option_value_usage',
+  ),
+), 'CASCADE', null, 'SpyProductOptionConfigurationPresetValues', false);
     } // buildRelations()
     /**
      * Method to invalidate the instance pool of all tables related to spy_product_option_value_usage     * by a foreign key with ON DELETE CASCADE

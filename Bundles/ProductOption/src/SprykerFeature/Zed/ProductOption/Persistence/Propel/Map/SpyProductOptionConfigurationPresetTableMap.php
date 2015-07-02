@@ -152,8 +152,20 @@ class SpyProductOptionConfigurationPresetTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('SpyProduct', '\\SprykerFeature\\Zed\\Product\\Persistence\\Propel\\SpyProduct', RelationMap::MANY_TO_ONE, array('fk_product' => 'id_product', ), 'CASCADE', null);
-        $this->addRelation('SpyProductOptionConfigurationPresetValue', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionConfigurationPresetValue', RelationMap::ONE_TO_MANY, array('id_product_option_configuration_preset' => 'fk_product_option_configuration_preset', ), 'CASCADE', null, 'SpyProductOptionConfigurationPresetValues');
+        $this->addRelation('SpyProduct', '\\SprykerFeature\\Zed\\Product\\Persistence\\Propel\\SpyProduct', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':fk_product',
+    1 => ':id_product',
+  ),
+), 'CASCADE', null, null, false);
+        $this->addRelation('SpyProductOptionConfigurationPresetValue', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionConfigurationPresetValue', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_configuration_preset',
+    1 => ':id_product_option_configuration_preset',
+  ),
+), 'CASCADE', null, 'SpyProductOptionConfigurationPresetValues', false);
     } // buildRelations()
     /**
      * Method to invalidate the instance pool of all tables related to spy_product_option_configuration_preset     * by a foreign key with ON DELETE CASCADE

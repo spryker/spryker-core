@@ -140,8 +140,20 @@ class SpyProductOptionConfigurationPresetValueTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('SpyProductOptionConfigurationPreset', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionConfigurationPreset', RelationMap::MANY_TO_ONE, array('fk_product_option_configuration_preset' => 'id_product_option_configuration_preset', ), 'CASCADE', null);
-        $this->addRelation('SpyProductOptionValueUsage', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValueUsage', RelationMap::MANY_TO_ONE, array('fk_product_option_value_usage' => 'id_product_option_value_usage', ), 'CASCADE', null);
+        $this->addRelation('SpyProductOptionConfigurationPreset', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionConfigurationPreset', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_configuration_preset',
+    1 => ':id_product_option_configuration_preset',
+  ),
+), 'CASCADE', null, null, false);
+        $this->addRelation('SpyProductOptionValueUsage', '\\SprykerFeature\\Zed\\ProductOption\\Persistence\\Propel\\SpyProductOptionValueUsage', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':fk_product_option_value_usage',
+    1 => ':id_product_option_value_usage',
+  ),
+), 'CASCADE', null, null, false);
     } // buildRelations()
 
     /**

@@ -333,7 +333,7 @@ abstract class SpyProductOptionConfigurationPresetValue implements ActiveRecordI
     /**
      * Set the value of [fk_product_option_configuration_preset] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue The current object (for fluent API support)
      */
     public function setFkProductOptionConfigurationPreset($v)
@@ -357,7 +357,7 @@ abstract class SpyProductOptionConfigurationPresetValue implements ActiveRecordI
     /**
      * Set the value of [fk_product_option_value_usage] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue The current object (for fluent API support)
      */
     public function setFkProductOptionValueUsage($v)
@@ -618,10 +618,10 @@ abstract class SpyProductOptionConfigurationPresetValue implements ActiveRecordI
                 // persist changes
                 if ($this->isNew()) {
                     $this->doInsert($con);
+                    $affectedRows += 1;
                 } else {
-                    $this->doUpdate($con);
+                    $affectedRows += $this->doUpdate($con);
                 }
-                $affectedRows += 1;
                 $this->resetModified();
             }
 

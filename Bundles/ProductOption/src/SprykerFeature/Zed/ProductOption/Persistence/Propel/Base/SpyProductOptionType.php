@@ -386,7 +386,7 @@ abstract class SpyProductOptionType implements ActiveRecordInterface
     /**
      * Set the value of [id_product_option_type] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType The current object (for fluent API support)
      */
     public function setIdProductOptionType($v)
@@ -406,7 +406,7 @@ abstract class SpyProductOptionType implements ActiveRecordInterface
     /**
      * Set the value of [import_key] column.
      *
-     * @param  string $v new value
+     * @param string $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType The current object (for fluent API support)
      */
     public function setImportKey($v)
@@ -426,7 +426,7 @@ abstract class SpyProductOptionType implements ActiveRecordInterface
     /**
      * Set the value of [fk_tax_set] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType The current object (for fluent API support)
      */
     public function setFkTaxSet($v)
@@ -685,10 +685,10 @@ abstract class SpyProductOptionType implements ActiveRecordInterface
                 // persist changes
                 if ($this->isNew()) {
                     $this->doInsert($con);
+                    $affectedRows += 1;
                 } else {
-                    $this->doUpdate($con);
+                    $affectedRows += $this->doUpdate($con);
                 }
-                $affectedRows += 1;
                 $this->resetModified();
             }
 

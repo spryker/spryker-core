@@ -349,7 +349,7 @@ abstract class SpyProductOptionValueTranslation implements ActiveRecordInterface
     /**
      * Set the value of [name] column.
      *
-     * @param  string $v new value
+     * @param string $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslation The current object (for fluent API support)
      */
     public function setName($v)
@@ -369,7 +369,7 @@ abstract class SpyProductOptionValueTranslation implements ActiveRecordInterface
     /**
      * Set the value of [fk_product_option_value] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslation The current object (for fluent API support)
      */
     public function setFkProductOptionValue($v)
@@ -393,7 +393,7 @@ abstract class SpyProductOptionValueTranslation implements ActiveRecordInterface
     /**
      * Set the value of [fk_locale] column.
      *
-     * @param  int $v new value
+     * @param int $v new value
      * @return $this|\SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslation The current object (for fluent API support)
      */
     public function setFkLocale($v)
@@ -657,10 +657,10 @@ abstract class SpyProductOptionValueTranslation implements ActiveRecordInterface
                 // persist changes
                 if ($this->isNew()) {
                     $this->doInsert($con);
+                    $affectedRows += 1;
                 } else {
-                    $this->doUpdate($con);
+                    $affectedRows += $this->doUpdate($con);
                 }
-                $affectedRows += 1;
                 $this->resetModified();
             }
 
