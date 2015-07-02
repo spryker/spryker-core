@@ -4,6 +4,7 @@ namespace SprykerFeature\Client\Catalog\Service;
 
 use Elastica\Index;
 use Generated\Client\Ide\FactoryAutoCompletion\Catalog;
+use SprykerFeature\Client\Catalog\CatalogDependencyProvider;
 use SprykerFeature\Client\Catalog\Service\Model\FacetConfig;
 use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
@@ -23,10 +24,18 @@ class CatalogDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelCatalog(
             $this->getProductKeyBuilder(),
-            '',
-//            $this->getLocator()->kvStorage()->readClient()->getInstance(), @todo move, rename
+            $this->createKvStorage(),
             \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale()
         );
+    }
+
+    /**
+     * @return mixed
+     * @throws \ErrorException
+     */
+    public function createKvStorage()
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::KVSTORAGE);
     }
 
     /**
@@ -98,7 +107,7 @@ class CatalogDependencyContainer extends AbstractDependencyContainer
      */
     protected function getSearchIndex()
     {
-        return $this->getLocator()->search()->indexClient()->getInstance();
+        return $this->getProvidedDependency(CatalogDependencyProvider::INDEX);
     }
 
     /**

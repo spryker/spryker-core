@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Client\Search\Provider;
+namespace SprykerFeature\Client\Search\Service\Provider;
 
 use SprykerFeature\Shared\Search\Provider\AbstractSearchClientProvider;
 
