@@ -7,7 +7,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use SprykerFeature\Zed\Payone\Communication\PayoneOmsConnectorDependencyContainer;
+use SprykerFeature\Zed\PayoneOmsConnector\Communication\PayoneOmsConnectorDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 /**
@@ -33,7 +33,7 @@ class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
         $authorizationTransfer = new AuthorizationTransfer();
         $authorizationTransfer->setPaymentMethod($paymentTransfer->getPaymentMethod());
         $authorizationTransfer->setAmount($orderEntity->getGrandTotal());
-        $authorizationTransfer->setReferenceId($orderEntity->getIncrementId());
+        $authorizationTransfer->setReferenceId($orderEntity->getOrderReference());
         $authorizationTransfer->setOrder($orderEntity);
 
         $this->getDependencyContainer()->createPayoneFacade()->authorize($authorizationTransfer);
