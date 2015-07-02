@@ -259,6 +259,17 @@ abstract class AbstractController
     }
 
     /**
+     * @return bool
+     */
+    protected function hasUser()
+    {
+        $securityContext = $this->getSecurityContext();
+        $token = $securityContext->getToken();
+
+        return is_null($token);
+    }
+
+    /**
      * @return mixed
      */
     protected function getUser()
