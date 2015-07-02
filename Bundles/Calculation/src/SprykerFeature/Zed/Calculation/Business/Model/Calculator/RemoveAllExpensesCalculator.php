@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
@@ -14,18 +13,15 @@ class RemoveAllExpensesCalculator implements
     CalculatorPluginInterface
 {
     /**
-     * @ param OrderInterface $calculableContainer
      * @param CalculableInterface $calculableContainer
      */
     public function recalculate(CalculableInterface $calculableContainer)
-    //public function recalculate(OrderInterface $calculableContainer)
     {
         foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
-        //foreach ($calculableContainer->getItems() as $item) {
             $item->setExpenses(new \ArrayObject());
         }
 
         $calculableContainer->getCalculableObject()->setExpenses(new \ArrayObject());
-        //$calculableContainer->setExpenses(new ExpenseTransfer());
+        $calculableContainer->setExpenses(new ExpenseTransfer());
     }
 }

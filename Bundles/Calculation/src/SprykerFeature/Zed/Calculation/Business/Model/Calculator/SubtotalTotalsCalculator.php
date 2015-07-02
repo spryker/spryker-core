@@ -6,8 +6,6 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\ExpenseInterface;
-use Generated\Shared\Calculation\ExpensesInterface;
-use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\Calculation\OrderItemOptionInterface;
 use Generated\Shared\Sales\OrderItemsInterface;
@@ -19,28 +17,27 @@ class SubtotalTotalsCalculator implements
     SubtotalTotalsCalculatorInterface
 {
 
+
     /**
      * @param TotalsInterface $totalsTransfer
-     * @ param OrderInterface $calculableContainer
      * @param CalculableInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        //OrderInterface $calculableContainer,
         CalculableInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        $calculableItems
     ) {
         $subtotal = $this->calculateSubtotal($calculableItems);
         $totalsTransfer->setSubtotal($subtotal);
     }
 
     /**
-     * @param \ArrayObject $calculableItems
+     * @param $calculableItems
      *
      * @return int
      */
-    public function calculateSubtotal(\ArrayObject $calculableItems)
+    public function calculateSubtotal($calculableItems)
     {
         $subtotal = 0;
 

@@ -6,12 +6,9 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\ExpenseInterface;
-use Generated\Shared\Calculation\ExpensesInterface;
-use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TaxItemInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\Sales\OrderItemOptionInterface;
-use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\TaxItemTransfer;
 use Generated\Shared\Transfer\TaxTransfer;
@@ -37,15 +34,13 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @ param OrderInterface $calculableContainer
      * @param CalculableInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        //OrderInterface $calculableContainer,
         CalculableInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        $calculableItems
     ) {
         $groupedPrices = $this->sumPriceToPayGroupedByTaxRate($calculableContainer, $calculableItems);
         $taxTransfer = $this->createTaxTransfer($groupedPrices);
@@ -54,16 +49,14 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @ param OrderInterface $calculableContainer
      * @param CalculableInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param $calculableItems
      *
      * @return array
      */
     protected function sumPriceToPayGroupedByTaxRate(
-        //OrderInterface $calculableContainer,
         CalculableInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        $calculableItems
     ) {
         $groupedPrices = [];
         /* @var $item OrderItemTransfer */
@@ -84,7 +77,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param TaxItemInterface $tax
-     * @param array $groupedPrices
+     * @param $groupedPrices
      */
     protected function addTaxInfo(TaxItemInterface $tax, array &$groupedPrices)
     {
