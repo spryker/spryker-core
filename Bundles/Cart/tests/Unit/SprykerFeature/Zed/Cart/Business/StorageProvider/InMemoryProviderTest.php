@@ -212,6 +212,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     {
         $existingItem = new CartItemTransfer();
         $existingItem->setId($itemId);
+        $existingItem->setSku($itemId);
         $existingItem->setQuantity($itemQuantity);
 
         return $existingItem;

@@ -26,12 +26,12 @@ class InMemoryProvider implements StorageProviderInterface
         foreach ($change->getItems() as $item) {
             if ($item->getQuantity() < 1) {
                 throw new InvalidArgumentException(
-                    sprintf('Could not increase cart item %d with %d as value', $item->getId(), $item->getQuantity())
+                    sprintf('Could not increase cart item %d with %d as value', $item->getSku(), $item->getQuantity())
                 );
             }
 
-            if (isset($skuIndex[$item->getId()])) {
-                $existingItem = $existingItems->offsetGet($skuIndex[$item->getId()]);
+            if (isset($skuIndex[$item->getSku()])) {
+                $existingItem = $existingItems->offsetGet($skuIndex[$item->getSku()]);
                 $existingItem->setQuantity($existingItem->getQuantity() + $item->getQuantity());
             } else {
                 $existingItems->append($item);
@@ -55,12 +55,12 @@ class InMemoryProvider implements StorageProviderInterface
         foreach ($change->getItems() as $item) {
             if ($item->getQuantity() < 1) {
                 throw new InvalidArgumentException(
-                    sprintf('Could not decrease cart item %d with %d as value', $item->getId(), $item->getQuantity())
+                    sprintf('Could not decrease cart item %d with %d as value', $item->getSku(), $item->getQuantity())
                 );
             }
 
-            if (isset($skuIndex[$item->getId()])) {
-                $this->decreaseExistingItem($existingItems, $skuIndex[$item->getId()], $item);
+            if (isset($skuIndex[$item->getSku()])) {
+                $this->decreaseExistingItem($existingItems, $skuIndex[$item->getSku()], $item);
             }
         }
 
@@ -116,7 +116,7 @@ class InMemoryProvider implements StorageProviderInterface
         $skuIndex = [];
 
         foreach ($cartItems as $key => $cartItem) {
-            $skuIndex[$cartItem->getId()] = $key;
+            $skuIndex[$cartItem->getSku()] = $key;
         }
 
         return $skuIndex;
