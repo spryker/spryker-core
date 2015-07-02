@@ -33,9 +33,13 @@ class BundleParser
     protected function parseDependencies($bundle)
     {
         $files = (new Finder())->files()->in(APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $bundle . '/src/*/Zed/');
+            //->exclude(['Base','Map']);
 
         $dependencies = [];
         foreach ($files as $file) {
+
+            echo('<pre><b>'.print_r($file->getPath(), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
+
             /* @var $file \Symfony\Component\Finder\SplFileInfo */
             $content = $file->getContents();
 
