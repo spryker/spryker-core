@@ -84,7 +84,7 @@ abstract class AbstractController
     /**
      * @return Application
      */
-    private function getApplication()
+    protected function getApplication()
     {
         return $this->app;
     }
