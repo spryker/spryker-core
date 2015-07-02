@@ -54,9 +54,7 @@ class PropelServiceProvider implements ServiceProviderInterface
         $propelConfig = Config::get(SystemConfig::PROPEL)['database']['connections']['default'];
         $propelConfig['user'] = Config::get(SystemConfig::ZED_PGSQL_USERNAME);
         $propelConfig['password'] = Config::get(SystemConfig::ZED_PGSQL_PASSWORD);
-        $propelConfig['dsn'] = 'mysql:host=' . Config::get(SystemConfig::ZED_PGSQL_HOST)
-            . ';dbname=' . Config::get(SystemConfig::ZED_PGSQL_DATABASE)
-        ;
+        $propelConfig['dsn'] = Config::get(SystemConfig::PROPEL)['database']['connections']['default']['dsn'];
 
         return $propelConfig;
     }
