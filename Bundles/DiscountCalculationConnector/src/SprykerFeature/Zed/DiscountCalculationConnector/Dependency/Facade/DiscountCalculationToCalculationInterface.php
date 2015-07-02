@@ -14,11 +14,11 @@ interface DiscountCalculationToCalculationInterface
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param $calculableItems
      */
     public function recalculateGrandTotalTotals(
         TotalsInterface $totalsTransfer,
         CalculableInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        $calculableItems
     );
 }

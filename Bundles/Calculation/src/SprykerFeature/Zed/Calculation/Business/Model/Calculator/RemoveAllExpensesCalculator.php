@@ -20,8 +20,5 @@ class RemoveAllExpensesCalculator implements
         foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
             $item->setExpenses(new \ArrayObject());
         }
-
-        $calculableContainer->getCalculableObject()->setExpenses(new \ArrayObject());
-        $calculableContainer->setExpenses(new ExpenseTransfer());
     }
 }

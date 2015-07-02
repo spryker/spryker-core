@@ -20,12 +20,12 @@ class TaxTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculat
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
         CalculableInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        $calculableItems
     ) {
         $this->getFacade()
             ->recalculateTaxTotals($totalsTransfer, $calculableContainer, $calculableItems)

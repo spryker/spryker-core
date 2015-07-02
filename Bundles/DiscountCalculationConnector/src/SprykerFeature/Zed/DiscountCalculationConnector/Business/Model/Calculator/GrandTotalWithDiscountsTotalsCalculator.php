@@ -38,15 +38,13 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @ param OrderInterface $container
      * @param CalculableInterface $container
-     * @param \ArrayObject $items
+     * @param $items
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        //OrderInterface $container,
         CalculableInterface $container,
-        \ArrayObject $items
+        $items
     ) {
         $grandTotal = $this->calculateGrandTotal($totalsTransfer, $container, $items);
         $grandTotal -= $this->getDiscount($totalsTransfer, $container, $items);
@@ -55,17 +53,15 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @ param OrderInterface $calculableContainer
      * @param CalculableInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param $calculableItems
      *
      * @return int
      */
     protected function calculateGrandTotal(
         TotalsInterface $totalsTransfer,
-        //OrderInterface $calculableContainer,
         CalculableInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        $calculableItems
     ) {
         $this->grandTotalsCalculator->recalculateGrandTotalTotals(
             $totalsTransfer,
@@ -78,17 +74,15 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @ param OrderInterface $calculableContainer
      * @param CalculableInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param $calculableItems
      *
      * @return int
      */
     protected function getDiscount(
         TotalsInterface $totalsTransfer,
-        //OrderInterface $calculableContainer,
         CalculableInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        $calculableItems
     ) {
         if (!is_null($totalsTransfer->getDiscount()->getTotalAmount())) {
             return $totalsTransfer->getDiscount()->getTotalAmount();

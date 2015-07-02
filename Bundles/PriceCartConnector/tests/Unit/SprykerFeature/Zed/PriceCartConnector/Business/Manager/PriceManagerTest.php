@@ -7,12 +7,9 @@ namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business;
 
 use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManager;
-use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\CartItemFixture;
 use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
-use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\PriceItemFixture;
 
 /**
  * @group SprykerFeature
@@ -32,6 +29,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
 
         $itemCollection = new ChangeTransfer();
         $item = new CartItemTransfer();
+        $item->setSku(123);
         $item->setId(123);
         $itemCollection->addItem($item);
 
@@ -57,6 +55,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $itemCollection = new ChangeTransfer();
         $item = new CartItemTransfer();
         $item->setId(123);
+        $item->setSku(123);
         $itemCollection->addItem($item);
 
         $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');

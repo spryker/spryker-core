@@ -42,7 +42,7 @@ class PriceManager implements PriceManagerInterface
     {
         foreach ($change->getItems() as $cartItem) {
             if (!$this->priceFacade->hasValidPrice($cartItem->getSku(), $this->grossPriceType)) {
-                throw new PriceMissingException(sprintf('Cart item with sku %s can not be priced', $cartItem->getSku()));
+                throw new PriceMissingException(sprintf('Cart item %s can not be priced', $cartItem->getSku()));
             }
 
             $cartItem->setGrossPrice($this->priceFacade->getPriceBySku($cartItem->getSku(), $this->grossPriceType));

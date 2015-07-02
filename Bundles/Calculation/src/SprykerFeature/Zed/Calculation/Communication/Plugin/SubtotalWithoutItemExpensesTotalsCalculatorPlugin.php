@@ -21,12 +21,12 @@ class SubtotalWithoutItemExpensesTotalsCalculatorPlugin extends AbstractPlugin i
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
         CalculableInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        $calculableItems
     ) {
         $this->getFacade()
             ->recalculateSubtotalWithoutItemExpensesTotals($totalsTransfer, $calculableContainer, $calculableItems)
