@@ -83,6 +83,7 @@ class CalculatorTest extends AbstractFunctionalTest
         $items = $this->getItemCollection();
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
+        $item->setQuantity(1);
 
         $discounts = $this->getPriceDiscountCollection();
 

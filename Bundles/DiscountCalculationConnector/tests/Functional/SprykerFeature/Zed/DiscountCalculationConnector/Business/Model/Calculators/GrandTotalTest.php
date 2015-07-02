@@ -63,6 +63,7 @@ class GrandTotalTest extends Test
 
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
+        $item->setQuantity(1);
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
@@ -83,6 +84,7 @@ class GrandTotalTest extends Test
 
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
+        $item->setQuantity(1);
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);

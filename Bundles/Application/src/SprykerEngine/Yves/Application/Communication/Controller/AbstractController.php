@@ -154,7 +154,7 @@ abstract class AbstractController
      */
     protected function addMessagesFromZedResponse(TransferResponse $transferResponse)
     {
-        $this->getMessenger()->addMessagesFromResponse($transferResponse);
+        //$this->getMessenger()->addMessagesFromResponse($transferResponse);
     }
 
     /**
@@ -162,7 +162,8 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
+        return null;
+        //return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
     }
 
     /**
@@ -172,7 +173,7 @@ abstract class AbstractController
      */
     protected function addMessageSuccess($message)
     {
-        $this->getMessenger()->success($message);
+        //$this->getMessenger()->success($message);
 
         return $this;
     }
@@ -185,7 +186,7 @@ abstract class AbstractController
      */
     protected function addMessageWarning($message)
     {
-        $this->getMessenger()->warning($message);
+        //$this->getMessenger()->warning($message);
 
         return $this;
     }
@@ -198,7 +199,7 @@ abstract class AbstractController
      */
     protected function addMessageError($message)
     {
-        $this->getMessenger()->error($message);
+        //$this->getMessenger()->error($message);
 
         return $this;
     }

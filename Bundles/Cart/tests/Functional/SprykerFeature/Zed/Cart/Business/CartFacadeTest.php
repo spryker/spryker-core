@@ -98,8 +98,6 @@ class CartFacadeTest extends AbstractFunctionalTest
 
     public function testIncreaseCartQuantity()
     {
-        $this->markTestSkipped();
-
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
         $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
@@ -125,7 +123,7 @@ class CartFacadeTest extends AbstractFunctionalTest
 
         $changedCart = $this->cartFacade->increaseQuantity($cartChange);
         $cartItems = $changedCart->getItems();
-        $this->assertCount(1, $cartItems->count());
+        $this->assertCount(1, $cartItems);
 
         /** @var CartItemTransfer $changedItem */
         $changedItem = $cartItems[0];
@@ -134,7 +132,6 @@ class CartFacadeTest extends AbstractFunctionalTest
 
     public function testRemoveFromCart()
     {
-        $this->markTestSkipped();
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
         $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
@@ -165,7 +162,6 @@ class CartFacadeTest extends AbstractFunctionalTest
 
     public function testDecreaseCartItem()
     {
-        $this->markTestSkipped();
         $cart = new CartTransfer();
         $cartItem = new CartItemTransfer();
         $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
