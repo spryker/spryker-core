@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerFeature\Client\Cart\Service\Session\CartSessionInterface;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
+use SprykerFeature\Client\Cart\Service\KvStorage\CartKvStorageInterface;
 
 /**
  * @method CartDependencyContainer getDependencyContainer()
@@ -25,7 +26,12 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function getCart()
     {
-        return $this->getSession()->getCart();
+        $cart = $this->getSession()->getCart();
+        foreach ($cart->getItems() as $cartItem) {
+            $product = $this->getKvStorage()->getProduct($cartItem->getId());
+            $cartItem->setName($product['abstract_name']);
+        }
+        return $cart;
     }
 
     /**
@@ -34,6 +40,14 @@ class CartClient extends AbstractClient implements CartClientInterface
     private function getSession()
     {
         return $this->getDependencyContainer()->createSession();
+    }
+
+    /**
+     * @return CartKvStorageInterface
+     */
+    private function getKvStorage()
+    {
+        return $this->getDependencyContainer()->createKvStorage();
     }
 
     /**

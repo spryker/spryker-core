@@ -4,6 +4,7 @@ namespace SprykerFeature\Client\Catalog\Service;
 
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Client\Catalog\Service\Model\Catalog;
 
 /**
  * @method CatalogDependencyContainer getDependencyContainer()
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CatalogClient extends AbstractClient
 {
     /**
-     * @return \SprykerFeature\Client\Catalog\Model\Catalog
+     * @return Catalog
      */
     public function createCatalogModel()
     {

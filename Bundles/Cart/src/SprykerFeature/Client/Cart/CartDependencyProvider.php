@@ -15,6 +15,8 @@ class CartDependencyProvider extends AbstractDependencyProvider
 
     const SESSION = 'session';
 
+    const KV_STORAGE = 'kv storage';
+
     /**
      * @param Container $container
      *
@@ -28,6 +30,10 @@ class CartDependencyProvider extends AbstractDependencyProvider
 
         $container[self::SERVICE_ZED] = function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
+        };
+
+        $container[self::KV_STORAGE] = function (Container $container) {
+            return $container->getLocator()->kvStorage()->client();
         };
 
         return $container;
