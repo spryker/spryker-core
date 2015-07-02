@@ -57,6 +57,7 @@ abstract class AbstractController
 
         $messengerTwigExtension = $this->locator->messenger()
             ->pluginTwigMessenger()
+            ->getTwigMessengerExtension()
             ->setMessenger($this->messenger)
         ;
 
