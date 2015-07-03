@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Product\Business\Product;
 
+use Generated\Shared\Product\AbstractProductInterface;
+use Generated\Shared\Product\ConcreteProductInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -27,14 +29,13 @@ interface ProductManagerInterface
     public function hasAbstractProduct($sku);
 
     /**
-     * @param string $sku
-
+     * @param AbstractProductInterface $abstractProductTransfer
      *
      * @throws AbstractProductExistsException
      *
      * @return int
      */
-    public function createAbstractProduct($sku);
+    public function createAbstractProduct(AbstractProductInterface $abstractProductTransfer);
 
     /**
      * @param string $sku
@@ -46,27 +47,28 @@ interface ProductManagerInterface
     public function getAbstractProductIdBySku($sku);
 
     /**
-     * @param int $idAbstractProduct
+     * @param AbstractProductInterface $abstractProductTransfer
      * @param LocaleTransfer $locale
-     * @param string $name
-     * @param string $attributes
      *
      * @throws AbstractProductAttributesExistException
-     *
+     * @throws PropelException
+     * 
      * @return int
      */
-    public function createAbstractProductAttributes($idAbstractProduct, LocaleTransfer $locale, $name, $attributes);
+    public function createAbstractProductAttributes(
+        AbstractProductInterface $abstractProductTransfer,
+        LocaleTransfer $locale
+    );
 
     /**
-     * @param string $sku
+     * @param ConcreteProductInterface $concreteProductTransfer
      * @param int $idAbstractProduct
-     * @param bool $isActive
      *
      * @throws ConcreteProductExistsException
      *
      * @return int
      */
-    public function createConcreteProduct($sku, $idAbstractProduct, $isActive = true);
+    public function createConcreteProduct(ConcreteProductInterface $concreteProductTransfer, $idAbstractProduct);
 
     /**
      * @param string $sku
@@ -85,16 +87,17 @@ interface ProductManagerInterface
     public function getConcreteProductIdBySku($sku);
 
     /**
-     * @param int $idConcreteProduct
+     * @param ConcreteProductInterface $concreteProductTransfer
      * @param LocaleTransfer $locale
-     * @param string $name
-     * @param string $attributes
      *
      * @throws ConcreteProductAttributesExistException
      *
      * @return int
      */
-    public function createConcreteProductAttributes($idConcreteProduct, LocaleTransfer $locale, $name, $attributes);
+    public function createConcreteProductAttributes(
+        ConcreteProductInterface $concreteProductTransfer,
+        LocaleTransfer $locale
+    );
 
     /**
      * @param int $idAbstractProduct

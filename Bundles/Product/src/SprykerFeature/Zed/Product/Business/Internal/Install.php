@@ -18,6 +18,9 @@ class Install extends AbstractInstaller
      */
     protected $attributeManager;
 
+    /**
+     * @param AttributeManagerInterface $attributeManager
+     */
     public function __construct(AttributeManagerInterface $attributeManager)
     {
         $this->attributeManager = $attributeManager;
