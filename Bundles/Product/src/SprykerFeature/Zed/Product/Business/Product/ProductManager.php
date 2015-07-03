@@ -210,7 +210,6 @@ class ProductManager implements ProductManagerInterface
      * @throws PropelException
      *
      * @return int
-     * @return int
      */
     public function createConcreteProduct(ConcreteProductInterface $concreteProductTransfer, $idAbstractProduct)
     {
@@ -486,6 +485,16 @@ class ProductManager implements ProductManagerInterface
         }
 
         return $concreteProduct->getFkAbstractProduct();
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return string
+     */
+    protected function encodeAttributes(array $attributes)
+    {
+        return json_encode($attributes);
     }
 
     /**
