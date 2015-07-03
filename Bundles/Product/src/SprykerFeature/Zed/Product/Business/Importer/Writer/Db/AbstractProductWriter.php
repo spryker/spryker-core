@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Product\Business\Importer\Writer\Db;
 
+use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\AbstractProductTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Product\Business\Importer\Writer\AbstractProductWriterInterface;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
@@ -32,9 +32,9 @@ class AbstractProductWriter implements AbstractProductWriterInterface
     protected $localeTransfer;
 
     /**
-     * @param LocaleTransfer $localeTransfer
+     * @param LocaleInterface $localeTransfer
      */
-    public function __construct(LocaleTransfer $localeTransfer)
+    public function __construct(LocaleInterface $localeTransfer)
     {
         $this->localeTransfer = $localeTransfer;
         $this->createProductStatement();

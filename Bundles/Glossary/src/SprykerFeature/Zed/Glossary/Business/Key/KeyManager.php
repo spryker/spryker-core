@@ -91,8 +91,11 @@ class KeyManager implements KeyManagerInterface
      */
     public function getKey($keyName)
     {
-        $key = $this->queryContainer->queryKey($keyName)
-            ->findOne();
+        $key = $this->queryContainer
+            ->queryKey($keyName)
+            ->findOne()
+        ;
+
         if (!$key) {
             throw new MissingKeyException('Tried to retrieve a missing glossary key');
         }
@@ -133,7 +136,6 @@ class KeyManager implements KeyManagerInterface
      * @param string $keyName
      *
      * @throws KeyExistsException
-     * @throws \Exception
      * @throws PropelException
      *
      * @return int

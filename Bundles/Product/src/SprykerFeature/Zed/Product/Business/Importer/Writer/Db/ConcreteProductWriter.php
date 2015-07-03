@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Product\Business\Importer\Writer\Db;
 
+use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Propel;
@@ -33,9 +34,9 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
     protected $localeTransfer;
 
     /**
-     * @param LocaleTransfer $localeTransfer
+     * @param LocaleInterface $localeTransfer
      */
-    public function __construct(LocaleTransfer $localeTransfer)
+    public function __construct(LocaleInterface $localeTransfer)
     {
         $this->localeTransfer = $localeTransfer;
         $this->createProductStatement();

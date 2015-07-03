@@ -11,6 +11,7 @@
     <table name="spy_abstract_product" idMethod="native" allowPkInsert="true" phpName="SpyAbstractProduct">
         <column name="id_abstract_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="sku" required="true" type="VARCHAR" size="255"/>
+        <column name="attributes" required="true" type="LONGVARCHAR"/>
         <column name="fk_tax_set" type="INTEGER" required="false" />
         <foreign-key foreignTable="spy_tax_set">
             <reference local="fk_tax_set" foreign="id_tax_set" />
@@ -42,6 +43,7 @@
         <column name="id_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="sku" required="true" type="VARCHAR" size="255"/>
         <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
+        <column name="attributes" required="true" type="LONGVARCHAR"/>
         <column name="fk_abstract_product" required="true" type="INTEGER"/>
         <unique>
             <unique-column name="sku"/>
