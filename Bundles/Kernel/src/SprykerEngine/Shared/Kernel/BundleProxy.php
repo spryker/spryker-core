@@ -76,7 +76,7 @@ class BundleProxy
         if (!class_exists($matcherClass)) {
             throw new \LogicException(sprintf('Could not find a "%s"!', $matcherClass));
         }
-        $matcher= new $matcherClass();
+        $matcher = new $matcherClass();
 
         $this->locator[] = $locator;
         $this->locatorMatcher[$locatorClass] = $matcher;

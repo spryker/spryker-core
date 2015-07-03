@@ -5,10 +5,6 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model;
 
-/**
- * Interface CatalogFeatureInterface
- * @package SprykerFeature\Zed\Calculation\Business\Model
- */
 interface CatalogFeatureInterface
 {
     /**

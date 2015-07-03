@@ -9,8 +9,6 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 
 /**
- * Class ItemGrouper
- * @package SprykerFeature\Shared\Sales\Code
  * @TODO Validate cross-bundle Dependencies
  */
 abstract class AbstractItemGrouper

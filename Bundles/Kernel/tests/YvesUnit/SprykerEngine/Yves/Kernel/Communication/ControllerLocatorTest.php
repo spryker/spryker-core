@@ -10,6 +10,8 @@ use SprykerEngine\Yves\Kernel\Communication\ControllerLocator;
 use SprykerEngine\Yves\Kernel\Locator;
 
 /**
+ * @group SprykerEngine
+ * @group Yves
  * @group Kernel
  * @group Communication
  * @group Locator
@@ -28,8 +30,8 @@ class ControllerLocatorTest extends \PHPUnit_Framework_TestCase
 
     public function testCanLocateShouldReturnTrueWhenControllerCanBeLocated()
     {
-        $bundleControllerAction = new \SprykerEngine\Yves\Kernel\Communication\BundleControllerAction('Kernel', 'Foo', 'index');
-        $locator = new \SprykerEngine\Yves\Kernel\Communication\ControllerLocator(
+        $bundleControllerAction = new BundleControllerAction('Kernel', 'Foo', 'index');
+        $locator = new ControllerLocator(
             $bundleControllerAction,
             '\\YvesUnit\\SprykerEngine\\Yves\\{{bundle}}{{store}}\\Communication\\Fixtures\\{{controller}}Controller'
         );
@@ -41,16 +43,16 @@ class ControllerLocatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\Exception');
 
-        $bundleControllerAction = new \SprykerEngine\Yves\Kernel\Communication\BundleControllerAction('Kernel', 'Foo', 'index');
-        $locator = new \SprykerEngine\Yves\Kernel\Communication\ControllerLocator($bundleControllerAction);
+        $bundleControllerAction = new BundleControllerAction('Kernel', 'Foo', 'index');
+        $locator = new ControllerLocator($bundleControllerAction);
 
         $locator->locate(new \Pimple(), Locator::getInstance());
     }
 
     public function testLocateShouldReturnClassWhenControllerCanBeLocated()
     {
-        $bundleControllerAction = new \SprykerEngine\Yves\Kernel\Communication\BundleControllerAction('Kernel', 'Foo', 'index');
-        $locator = new \SprykerEngine\Yves\Kernel\Communication\ControllerLocator(
+        $bundleControllerAction = new BundleControllerAction('Kernel', 'Foo', 'index');
+        $locator = new ControllerLocator(
             $bundleControllerAction,
             '\\YvesUnit\\SprykerEngine\\Yves\\{{bundle}}{{store}}\\Communication\\Fixtures\\{{controller}}Controller'
         );
@@ -60,4 +62,5 @@ class ControllerLocatorTest extends \PHPUnit_Framework_TestCase
             $locator->locate(new \Pimple(), Locator::getInstance())
         );
     }
+
 }

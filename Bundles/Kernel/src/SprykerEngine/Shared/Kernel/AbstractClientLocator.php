@@ -5,11 +5,11 @@
 
 namespace SprykerEngine\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\AbstractLocator;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 
 abstract class AbstractClientLocator extends AbstractLocator
 {
+
     const PREFIX = 'Provider';
     const SUFFIX = 'ClientProvider';
 
@@ -19,12 +19,12 @@ abstract class AbstractClientLocator extends AbstractLocator
     protected $cachedClients = [];
 
     /**
-     * @param string                 $bundle
+     * @param string $bundle
      * @param LocatorLocatorInterface $locator
-     * @param null|string            $className
+     * @param null|string $className
      *
      * @return object
-     * @throws \SprykerEngine\Shared\Kernel\Locator\LocatorException
+     * @throws LocatorException
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {

@@ -24,6 +24,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
+use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group SprykerFeature
@@ -119,8 +120,8 @@ class DiscountFacadeTest extends Test
 
     public function testCalculateDiscounts()
     {
-        $orderTransfer = $this->getOrderWithFixtureData();
-        $this->discountFacade->calculateDiscounts($orderTransfer);
+        $order = $this->getOrderWithFixtureData();
+        $this->discountFacade->calculateDiscounts($order);
     }
 
     public function testCalculateDiscountsWithOneActiveDiscountAndPercentageDiscount()
@@ -138,7 +139,7 @@ class DiscountFacadeTest extends Test
         $discount->save();
 
         $order = $this->getOrderWithFixtureData();
-        $order->setCouponCodes([self::VOUCHER_CODE_TEST_6]);
+        $order->getCalculableObject()->setCouponCodes([self::VOUCHER_CODE_TEST_6]);
 
         $result = $this->discountFacade->calculateDiscounts($order);
         $this->assertGreaterThan(0, count($result));
@@ -163,16 +164,16 @@ class DiscountFacadeTest extends Test
             ->save();
 
         $order = $this->getOrderWithFixtureData();
-        $order->setTotals(new TotalsTransfer());
+        $order->getCalculableObject()->setTotals(new TotalsTransfer());
 
         $result = $this->discountFacade->isMinimumCartSubtotalReached($order, $decisionRule);
         $this->assertFalse($result->isSuccess());
 
-        $order->getTotals()->setSubtotalWithoutItemExpenses(self::MINIMUM_CART_AMOUNT_1000);
+        $order->getCalculableObject()->getTotals()->setSubtotalWithoutItemExpenses(self::MINIMUM_CART_AMOUNT_1000);
         $result = $this->discountFacade->isMinimumCartSubtotalReached($order, $decisionRule);
         $this->assertTrue($result->isSuccess());
 
-        $order->getTotals()->setSubtotalWithoutItemExpenses(self::MINIMUM_CART_AMOUNT_1000 - 1);
+        $order->getCalculableObject()->getTotals()->setSubtotalWithoutItemExpenses(self::MINIMUM_CART_AMOUNT_1000 - 1);
         $result = $this->discountFacade->isMinimumCartSubtotalReached($order, $decisionRule);
         $this->assertFalse($result->isSuccess());
     }
@@ -329,14 +330,13 @@ class DiscountFacadeTest extends Test
         $this->assertEquals($plugin->getMaxValue(), Percentage::MAX_VALUE);
     }
 
-    public function testGetDiscountableItems() {
+    public function testGetDiscountableItems()
+    {
         $order = $this->getOrderWithFixtureData();
-        $itemCollection = new OrderItemsTransfer();
 
         $item = new OrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-        $itemCollection->addOrderItem($item);
-        $order->setItems($itemCollection);
+        $order->getCalculableObject()->addItem($item);
 
         $result = $this->discountFacade->getDiscountableItems($order);
         $this->assertEquals(1, count($result));
@@ -346,7 +346,6 @@ class DiscountFacadeTest extends Test
     {
         $order = $this->getOrderWithFixtureData();
 
-        $itemCollection = new OrderItemsTransfer();
         $item = new OrderItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
@@ -354,8 +353,7 @@ class DiscountFacadeTest extends Test
         $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
 
         $item->addExpense($expense);
-        $itemCollection->addOrderItem($item);
-        $order->setItems($itemCollection);
+        $order->getCalculableObject()->addItem($item);
 
         $result = $this->discountFacade->getDiscountableItemExpenses($order);
         $this->assertEquals(1, count($result));
@@ -367,7 +365,7 @@ class DiscountFacadeTest extends Test
 
         $expense = new ExpenseTransfer();
         $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
-        $order->addExpense($expense);
+        $order->getCalculableObject()->addExpense($expense);
 
         $itemCollection = new OrderItemsTransfer();
         $item = new OrderItemTransfer();
@@ -378,7 +376,7 @@ class DiscountFacadeTest extends Test
 
         $item->addExpense($expense);
         $itemCollection->addOrderItem($item);
-        $order->setItems($itemCollection);
+        $order->getCalculableObject()->setItems($itemCollection);
 
         $result = $this->discountFacade->getDiscountableOrderExpenses($order);
         $this->assertEquals(1, count($result));
@@ -435,13 +433,13 @@ class DiscountFacadeTest extends Test
     }
 
     /**
-     * @return OrderTransfer
+     * @return CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
         $order = new OrderTransfer();
 
-        return $order;
+        return new CalculableContainer($order);
     }
 
 

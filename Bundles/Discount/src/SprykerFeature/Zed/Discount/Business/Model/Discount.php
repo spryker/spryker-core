@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Discount\OrderInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
@@ -31,7 +32,8 @@ class Discount
     protected $decisionRule;
 
     /**
-     * @var OrderInterface
+     * @ var OrderInterface
+     * @var CalculableInterface
      */
     protected $discountContainer;
 
@@ -61,7 +63,8 @@ class Discount
     protected $distributor;
 
     /**
-     * @param OrderInterface $discountContainer
+     * @ param OrderInterface $discountContainer
+     * @param CalculableInterface $discountContainer
      * @param DiscountQueryContainer $queryContainer
      * @param DecisionRuleInterface $decisionRule
      * @param DiscountConfig $discountSettings
@@ -69,7 +72,8 @@ class Discount
      * @param DistributorInterface $distributor
      */
     public function __construct(
-        OrderInterface $discountContainer,
+        //OrderInterface $discountContainer,
+        CalculableInterface $discountContainer,
         DiscountQueryContainer $queryContainer,
         DecisionRuleInterface $decisionRule,
         DiscountConfig $discountSettings,
@@ -189,7 +193,7 @@ class Discount
      */
     protected function getDefaultVoucherDecisionRulePluginIfNeeded($idDiscount)
     {
-        if (count($this->discountContainer->getCouponCodes()) == 0) {
+        if (count($this->discountContainer->getCalculableObject()->getCouponCodes()) == 0) {
             return null;
         }
 

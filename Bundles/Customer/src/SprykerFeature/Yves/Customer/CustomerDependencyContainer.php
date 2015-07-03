@@ -12,6 +12,9 @@ use SprykerFeature\Yves\Customer\Provider\UserProvider;
 use Silex\Application;
 use SprykerFeature\Yves\Customer\Model\Customer;
 
+/**
+ * @method \Generated\Yves\Ide\FactoryAutoCompletion\Customer getFactory()
+ */
 class CustomerDependencyContainer extends AbstractDependencyContainer
 {
     /**

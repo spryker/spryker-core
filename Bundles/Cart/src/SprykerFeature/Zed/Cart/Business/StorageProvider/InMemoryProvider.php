@@ -5,37 +5,36 @@
 
 namespace SprykerFeature\Zed\Cart\Business\StorageProvider;
 
-use Generated\Shared\Cart\CartInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
+use Generated\Shared\Cart\ChangeInterface;
 use SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException;
-use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
+use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Cart\CartItemInterface;
 
 class InMemoryProvider implements StorageProviderInterface
 {
     /**
      * @param CartInterface $cart
-     * @param ItemCollectionInterface $addedItems
+     * @param ChangeInterface $change
      *
      * @return CartInterface
      */
-    public function addItems(CartInterface $cart, ItemCollectionInterface $addedItems)
+    public function addItems(CartInterface $cart, ChangeInterface $change)
     {
         $existingItems = $cart->getItems();
+        $skuIndex = $this->createSkuIndex($existingItems);
 
-        /** @var ItemExpanderPluginInterface $item */
-        foreach ($addedItems as $item) {
+        foreach ($change->getItems() as $item) {
             if ($item->getQuantity() < 1) {
                 throw new InvalidArgumentException(
-                    sprintf('Could not increase cart item %d with %d as value', $item->getId(), $item->getQuantity())
+                    sprintf('Could not increase cart item %d with %d as value', $item->getSku(), $item->getQuantity())
                 );
             }
 
-            if ($existingItems->offsetExists($item->getId())) {
-                /** @var ItemInterface $existingItem */
-                $existingItem = $existingItems->offsetGet($item->getId());
+            if (isset($skuIndex[$item->getSku()])) {
+                $existingItem = $existingItems->offsetGet($skuIndex[$item->getSku()]);
                 $existingItem->setQuantity($existingItem->getQuantity() + $item->getQuantity());
             } else {
-                $existingItems->add($item);
+                $existingItems->append($item);
             }
         }
 
@@ -44,24 +43,24 @@ class InMemoryProvider implements StorageProviderInterface
 
     /**
      * @param CartInterface $cart
-     * @param ItemCollectionInterface $removedItems
+     * @param ChangeInterface $change
      *
      * @return CartInterface
      */
-    public function removeItems(CartInterface $cart, ItemCollectionInterface $removedItems)
+    public function removeItems(CartInterface $cart, ChangeInterface $change)
     {
         $existingItems = $cart->getItems();
+        $skuIndex = $this->createSkuIndex($existingItems);
 
-        /** @var AbstractTransfer|ItemInterface $item */
-        foreach ($removedItems as $item) {
+        foreach ($change->getItems() as $item) {
             if ($item->getQuantity() < 1) {
                 throw new InvalidArgumentException(
-                    sprintf('Could not decrease cart item %d with %d as value', $item->getId(), $item->getQuantity())
+                    sprintf('Could not decrease cart item %d with %d as value', $item->getSku(), $item->getQuantity())
                 );
             }
 
-            if ($existingItems->offsetExists($item->getId())) {
-                $this->decreaseExistingItem($existingItems, $item);
+            if (isset($skuIndex[$item->getSku()])) {
+                $this->decreaseExistingItem($existingItems, $skuIndex[$item->getSku()], $item);
             }
         }
 
@@ -70,42 +69,57 @@ class InMemoryProvider implements StorageProviderInterface
 
     /**
      * @param CartInterface $cart
-     * @param ItemCollectionInterface $increasedItems
+     * @param ChangeInterface $increasedItems
      *
      * @return CartInterface
      */
-    public function increaseItems(CartInterface $cart, ItemCollectionInterface $increasedItems)
+    public function increaseItems(CartInterface $cart, ChangeInterface $increasedItems)
     {
         return $this->addItems($cart, $increasedItems);
     }
 
     /**
      * @param CartInterface $cart
-     * @param ItemCollectionInterface $decreasedItems
+     * @param ChangeInterface $decreasedItems
      *
      * @return CartInterface
      */
-    public function decreaseItems(CartInterface $cart, ItemCollectionInterface $decreasedItems)
+    public function decreaseItems(CartInterface $cart, ChangeInterface $decreasedItems)
     {
         return $this->removeItems($cart, $decreasedItems);
     }
 
-
     /**
-     * @param ItemInterface[]|ItemCollectionInterface $existingItems
-     * @param ItemInterface $item
-     *
+     * @param CartItemInterface[] $existingItems
+     * @param int $index
+     * @param CartItemInterface $item
      */
-    private function decreaseExistingItem($existingItems, $item)
+    private function decreaseExistingItem($existingItems, $index, $item)
     {
-        /** @var ItemInterface $existingItem */
-        $existingItem = $existingItems->offsetGet($item->getId());
+        $existingItem = $existingItems[$index];
         $newQuantity = $existingItem->getQuantity() - $item->getQuantity();
 
         if ($newQuantity > 0) {
             $existingItem->setQuantity($newQuantity);
         } else {
-            $existingItems->offsetUnset($item->getId());
+            unset($existingItems[$index]);
         }
     }
+
+    /**
+     * @param \ArrayObject|CartItemInterface[] $cartItems
+     *
+     * @return array
+     */
+    protected function createSkuIndex(\ArrayObject $cartItems)
+    {
+        $skuIndex = [];
+
+        foreach ($cartItems as $key => $cartItem) {
+            $skuIndex[$cartItem->getSku()] = $key;
+        }
+
+        return $skuIndex;
+    }
+
 }

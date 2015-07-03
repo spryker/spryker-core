@@ -5,18 +5,17 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Generated\Shared\DiscountCalculationConnector\OrderInterface;
-use Generated\Shared\Transfer\DiscountTransfer;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 class RemoveAllCalculatedDiscountsCalculator
 {
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      */
-    public function recalculate(OrderInterface $calculableContainer)
+    public function recalculate(CalculableInterface $calculableContainer)
     {
-        foreach ($calculableContainer->getItems() as $item) {
+        foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
             $item->setDiscounts(new \ArrayObject());
 
             foreach ($item->getOptions() as $option) {
@@ -27,10 +26,10 @@ class RemoveAllCalculatedDiscountsCalculator
             }
         }
 
-        foreach ($calculableContainer->getExpenses() as $expense) {
+        foreach ($calculableContainer->getCalculableObject()->getExpenses() as $expense) {
             $expense->setDiscounts(new \ArrayObject());
         }
 
-        $calculableContainer->setDiscounts(new \ArrayObject());
+        $calculableContainer->getCalculableObject()->setDiscounts(new \ArrayObject());
     }
 }

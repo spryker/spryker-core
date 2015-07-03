@@ -28,6 +28,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
         $values = [];
         $propertyNames = $this->getPropertyNames();
 
+        $recursive = true;
         $filter = new CamelCaseToUnderscore();
         foreach ($propertyNames as $property) {
             $getter = 'get' . ucfirst($property);

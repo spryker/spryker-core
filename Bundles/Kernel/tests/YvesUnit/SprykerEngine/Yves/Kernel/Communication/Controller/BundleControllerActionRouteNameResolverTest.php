@@ -9,10 +9,11 @@ use SprykerEngine\Yves\Kernel\Communication\BundleControllerAction;
 use SprykerEngine\Yves\Kernel\Communication\Controller\BundleControllerActionRouteNameResolver;
 
 /**
+ * @group SprykerEngine
+ * @group Yves
  * @group Kernel
  * @group Communication
- * @group Controller
- * @group RouteNameResolver
+ * @group BundleControllerActionRouteNameResolver
  */
 class BundleControllerActionRouteNameResolverTest extends \PHPUnit_Framework_TestCase
 {

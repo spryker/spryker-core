@@ -15,11 +15,12 @@ use SprykerFeature\Zed\Cart\CartConfig;
 use SprykerFeature\Zed\Cart\CartDependencyProvider;
 
 /**
- * @method Factory|CartBusiness getFactory()
+ * @method CartBusiness getFactory()
  * @method CartConfig getConfig()
  */
 class CartDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @return OperatorInterface
      */
@@ -27,9 +28,9 @@ class CartDependencyContainer extends AbstractDependencyContainer
     {
         return $this->configureCartOperator(
             $this->getFactory()
-            ->createOperatorAddOperator(
-                $this->createStorageProvider(),
-                $this->createCartCalculator()
+                ->createOperatorAddOperator(
+                    $this->createStorageProvider(),
+                    $this->createCartCalculator()
                 //@todo messenger
             )
         );
@@ -42,9 +43,9 @@ class CartDependencyContainer extends AbstractDependencyContainer
     {
         return $this->configureCartOperator(
             $this->getFactory()
-            ->createOperatorIncreaseOperator(
-                $this->createStorageProvider(),
-                $this->createCartCalculator()
+                ->createOperatorIncreaseOperator(
+                    $this->createStorageProvider(),
+                    $this->createCartCalculator()
                 //@todo messenger
             )
         );
@@ -57,9 +58,9 @@ class CartDependencyContainer extends AbstractDependencyContainer
     {
         return $this->configureCartOperator(
             $this->getFactory()
-            ->createOperatorRemoveOperator(
-                $this->createStorageProvider(),
-                $this->createCartCalculator()
+                ->createOperatorRemoveOperator(
+                    $this->createStorageProvider(),
+                    $this->createCartCalculator()
                 //@todo messenger
             )
         );
@@ -72,9 +73,9 @@ class CartDependencyContainer extends AbstractDependencyContainer
     {
         return $this->configureCartOperator(
             $this->getFactory()
-            ->createOperatorDecreaseOperator(
-                $this->createStorageProvider(),
-                $this->createCartCalculator()
+                ->createOperatorDecreaseOperator(
+                    $this->createStorageProvider(),
+                    $this->createCartCalculator()
                 //@todo messenger
             )
         );

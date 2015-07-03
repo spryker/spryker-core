@@ -168,7 +168,7 @@ class Reader implements ReaderInterface
      * @return SpyPriceProduct
      * @throws \Exception
      */
-    protected function getPriceEntity($sku, $priceType)
+    protected function getPriceEntity($sku, SpyPriceType $priceType)
     {
         if ($this->hasPriceForConcreteProduct($sku, $priceType)) {
             return $this->getPriceEntityForConcreteProduct($sku, $priceType);
@@ -187,11 +187,11 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param string $priceType
+     * @param SpyPriceType $priceType
      *
      * @return bool
      */
-    protected function hasPriceForConcreteProduct($sku, $priceType)
+    protected function hasPriceForConcreteProduct($sku, SpyPriceType $priceType)
     {
         $priceProductCount = $this->queryContainer
             ->queryPriceEntityForConcreteProduct($sku, $priceType)
