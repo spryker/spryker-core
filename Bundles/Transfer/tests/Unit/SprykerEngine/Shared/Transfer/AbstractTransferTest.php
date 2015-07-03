@@ -170,7 +170,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'integer' => 2,
             'bool' => null,
             'array' => null,
-            'transfer' => $innerTransfer,
+            'transfer' => $innerTransfer->toArray(false),
             'transfer_collection' => new \ArrayObject(),
         ];
 
@@ -197,7 +197,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
         $transfer->setInteger(2);
-        $transfer->setArray(new \ArrayObject());
+        $transfer->setArray([]);
 
         $innerTransfer = new AbstractTransfer();
         $innerTransfer->setString('bar');
@@ -209,7 +209,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $expected = [
             'string' => 'foo',
             'integer' => 2,
-            'array' => new \ArrayObject(),
+            'array' => [],
             'transfer' => [
                 'string' => 'bar',
                 'integer' => 3

@@ -8,11 +8,9 @@ namespace SprykerEngine\Yves\Application\Communication\Controller;
 use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
-use SprykerEngine\Shared\Messenger\Communication\Presenter\TwigPresenter;
 use SprykerEngine\Yves\Application\Business\Application;
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
 use SprykerEngine\Yves\Kernel\Communication\Factory;
-use SprykerEngine\Yves\Messenger\Communication\Presenter\YvesPresenter;
 use SprykerFeature\Shared\ZedRequest\Client\Response as TransferResponse;
 use SprykerFeature\Yves\Library\Session\TransferSession;
 use Symfony\Component\Form\FormInterface;
@@ -68,7 +66,6 @@ abstract class AbstractController
         \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreApdex();
         \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreTransaction();
     }
-
     /**
      * @param string $path
      * @param array $parameters
@@ -84,7 +81,7 @@ abstract class AbstractController
     /**
      * @return Application
      */
-    private function getApplication()
+    protected function getApplication()
     {
         return $this->app;
     }
@@ -157,7 +154,7 @@ abstract class AbstractController
      */
     protected function addMessagesFromZedResponse(TransferResponse $transferResponse)
     {
-        $this->getMessenger()->addMessagesFromResponse($transferResponse);
+        //$this->getMessenger()->addMessagesFromResponse($transferResponse);
     }
 
     /**
@@ -165,7 +162,8 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
+        return null;
+        //return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
     }
 
     /**
@@ -175,7 +173,7 @@ abstract class AbstractController
      */
     protected function addMessageSuccess($message)
     {
-        $this->getMessenger()->success($message);
+        //$this->getMessenger()->success($message);
 
         return $this;
     }
@@ -188,7 +186,7 @@ abstract class AbstractController
      */
     protected function addMessageWarning($message)
     {
-        $this->getMessenger()->warning($message);
+        //$this->getMessenger()->warning($message);
 
         return $this;
     }
@@ -201,7 +199,7 @@ abstract class AbstractController
      */
     protected function addMessageError($message)
     {
-        $this->getMessenger()->error($message);
+        //$this->getMessenger()->error($message);
 
         return $this;
     }

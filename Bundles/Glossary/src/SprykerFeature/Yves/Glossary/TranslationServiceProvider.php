@@ -41,7 +41,7 @@ class TranslationServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['translator'] = $app->share(function ($app) {
-            $translator = $this->locator->glossary()->sdk()->createTranslator($app['locale']);
+            $translator = $this->locator->glossary()->client()->createTranslator($app['locale']);
             $returned = $this->factory->createTwigTranslator($translator);
 
             return $returned;

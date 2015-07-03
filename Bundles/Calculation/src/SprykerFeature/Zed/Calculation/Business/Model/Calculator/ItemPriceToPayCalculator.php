@@ -7,19 +7,19 @@ namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\DiscountInterface;
 use Generated\Shared\Calculation\ExpenseInterface;
-use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Sales\OrderItemOptionInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class ItemPriceToPayCalculator implements
     CalculatorPluginInterface
 {
     /**
-     * @param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      */
-    public function recalculate(OrderInterface $calculableContainer)
+    public function recalculate(CalculableInterface $calculableContainer)
     {
-        foreach ($calculableContainer->getItems() as $item) {
+        foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
             $priceToPay = $item->getGrossPrice();
             $priceToPay -= $this->sumDiscounts($item->getDiscounts());
 

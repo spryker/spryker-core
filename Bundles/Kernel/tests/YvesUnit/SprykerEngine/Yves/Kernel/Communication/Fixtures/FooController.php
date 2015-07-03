@@ -14,4 +14,5 @@ class FooController
     public function __construct(\Pimple $app)
     {
     }
+
 }

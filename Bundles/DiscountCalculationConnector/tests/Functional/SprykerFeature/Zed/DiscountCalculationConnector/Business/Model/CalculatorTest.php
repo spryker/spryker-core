@@ -29,6 +29,7 @@ use SprykerFeature\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculator
 use SprykerFeature\Zed\DiscountCalculationConnector\Communication\Plugin\DiscountCalculatorPlugin;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
+use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group CalculatorTest
@@ -73,7 +74,7 @@ class CalculatorTest extends AbstractFunctionalTest
         $calculator = $this->getCalculator();
         $calculatorStack = $this->createCalculatorStack();
         $calculator->recalculate($calculatorStack, $order);
-        $this->assertEmpty($order->getTotals()->getGrandTotalWithDiscounts());
+        $this->assertEmpty($order->getCalculableObject()->getTotals()->getGrandTotalWithDiscounts());
     }
 
     public function testCanRecalculateAnExampleOrderWithOneItemAndExpenseOnOrder()
@@ -82,6 +83,7 @@ class CalculatorTest extends AbstractFunctionalTest
         $items = $this->getItemCollection();
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
+        $item->setQuantity(1);
 
         $discounts = $this->getPriceDiscountCollection();
 
@@ -102,11 +104,11 @@ class CalculatorTest extends AbstractFunctionalTest
 
         $expensesCollection = $this->getExpenseCollection();
         $expensesCollection->addCalculationExpense($expense);
-        $order->setExpenses($expensesCollection);
+        $order->getCalculableObject()->setExpenses($expensesCollection);
 
         $item->setDiscounts($discounts);
         $items->addOrderItem($item);
-        $order->setItems($items);
+        $order->getCalculableObject()->setItems($items);
 
         $calculator = $this->getCalculator();
 
@@ -118,14 +120,14 @@ class CalculatorTest extends AbstractFunctionalTest
         $calculatorStack = $this->createCalculatorStack();
 
         $calculator->recalculate($calculatorStack, $order);
-        $totals = $order->getTotals();
+        $totals = $order->getCalculableObject()->getTotals();
         $this->assertEquals($expected, $totals->getGrandTotalWithDiscounts());
 
         $calculator->recalculateTotals($calculatorStack, $order);
-        $totals = $order->getTotals();
+        $totals = $order->getCalculableObject()->getTotals();
         $this->assertEquals($expected, $totals->getGrandTotalWithDiscounts());
 
-        $items = $order->getItems();
+        $items = $order->getCalculableObject()->getItems();
         $expectedItemPriceToPay = self::ITEM_GROSS_PRICE - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT;
 
         foreach ($items as $item) {
@@ -136,7 +138,7 @@ class CalculatorTest extends AbstractFunctionalTest
     public function testCanRecalculateAnExampleOrderWithTwoItemsAndExpenseOnItems()
     {
 
-//        $order = $this->getOrderWithFixtureData();
+        $order = $this->getOrderWithFixtureData();
 //        $item = $this->getItemWithFixtureData();
 //        $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 //
@@ -173,6 +175,31 @@ class CalculatorTest extends AbstractFunctionalTest
 //        $this->assertEquals($expectedGrandTotalWithDiscounts, $totals->getGrandTotalWithDiscounts());
 //
 //        $items = $order->getItems();
+//        $expectedItemPriceToPay = self::ORDER_SHIPPING_COSTS / 2 + self::ITEM_GROSS_PRICE
+//            - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT;
+//
+//        foreach ($items as $item) {
+//            $this->assertEquals($expectedItemPriceToPay, $item->getPriceToPay());
+//        }
+
+//        $order->getCalculableObject()->addItem($item);
+//        $order->getCalculableObject()->addItem(clone $item);
+//
+//        $calculator = $this->getCalculator();
+//        $calculatorStack = $this->createCalculatorStack();
+//        $order = $calculator->recalculate($calculatorStack, $order);
+//        $calculator->recalculateTotals($calculatorStack, $order);
+//
+//        $totals = $order->getCalculableObject()->getTotals();
+//        $expectedSubTotal = 2 * self::ITEM_GROSS_PRICE + self::ORDER_SHIPPING_COSTS;
+//        $this->assertEquals($expectedSubTotal, $totals->getSubtotal());
+//
+//        $expectedGrandTotalWithDiscounts = self::ORDER_SHIPPING_COSTS + 2
+//            * (self::ITEM_GROSS_PRICE - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT);
+//
+//        $this->assertEquals($expectedGrandTotalWithDiscounts, $totals->getGrandTotalWithDiscounts());
+//
+//        $items = $order->getCalculableObject()->getItems();
 //        $expectedItemPriceToPay = self::ORDER_SHIPPING_COSTS / 2 + self::ITEM_GROSS_PRICE
 //            - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_DISCOUNT_AMOUNT;
 //
@@ -222,7 +249,7 @@ class CalculatorTest extends AbstractFunctionalTest
     }
 
     /**
-     * @return OrderTransfer
+     * @return CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
@@ -233,7 +260,7 @@ class CalculatorTest extends AbstractFunctionalTest
 
         $order->setDiscounts(new DiscountTransfer());
 
-        return $order;
+        return new CalculableContainer($order);
     }
 
     /**

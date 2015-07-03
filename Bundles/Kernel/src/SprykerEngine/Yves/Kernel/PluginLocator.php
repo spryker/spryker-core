@@ -23,9 +23,9 @@ class PluginLocator extends AbstractLocator
     protected $factoryClassNamePattern = '\\{{namespace}}\\Yves\\Kernel\\Factory';
 
     /**
-     * @param string                 $bundle
+     * @param string $bundle
      * @param LocatorLocatorInterface $locator
-     * @param null|string            $className
+     * @param null|string $className
      *
      * @return object
      * @throws \SprykerEngine\Shared\Kernel\Locator\LocatorException

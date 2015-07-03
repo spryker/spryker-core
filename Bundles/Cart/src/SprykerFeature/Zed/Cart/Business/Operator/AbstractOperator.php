@@ -5,17 +5,17 @@
 
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
-use Generated\Shared\Transfer\CartItemInterfaceTransfer;
+use Generated\Shared\Cart\CartInterface;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
-use Generated\Shared\Transfer\CartCartChangeInterfaceTransfer;
-use Generated\Shared\Transfer\CartCartInterfaceTransfer;
+use Generated\Shared\Cart\ChangeInterface;
 use Psr\Log\LoggerInterface;
-use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
+use SprykerFeature\Zed\Cart\Business\Model\CalculableContainer;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 abstract class AbstractOperator implements OperatorInterface
 {
+
     /**
      * @var StorageProviderInterface
      */
@@ -25,6 +25,7 @@ abstract class AbstractOperator implements OperatorInterface
      * @var LoggerInterface
      */
     protected $messenger;
+
     /**
      * @var CalculationFacade
      */
@@ -51,13 +52,13 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param CartChangeInterface $cartChange
+     * @param ChangeInterface $cartChange
      *
      * @return CartInterface
      */
-    public function executeOperation(CartChangeInterface $cartChange)
+    public function executeOperation(ChangeInterface $cartChange)
     {
-        $changedItems = $this->expandChangedItems($cartChange->getChangedItems());
+        $changedItems = $this->expandChangedItems($cartChange);
         $cart = $this->changeCart($cartChange->getCart(), $changedItems);
 
         if ($this->messenger) {
@@ -76,18 +77,19 @@ abstract class AbstractOperator implements OperatorInterface
      */
     private function recalculate(CartInterface $cart)
     {
-        $cart = $this->cartCalculator->recalculate($cart);
+        $calculableCart = new CalculableContainer($cart);
+        $cart = $this->cartCalculator->recalculate($calculableCart);
 
-        return $cart;
+        return $cart->getCalculableObject();
     }
 
     /**
      * @param CartInterface $cart
-     * @param ItemCollectionInterface $changedItems
+     * @param ChangeInterface $change
      *
      * @return CartInterface
      */
-    abstract protected function changeCart(CartInterface $cart, ItemCollectionInterface $changedItems);
+    abstract protected function changeCart(CartInterface $cart, ChangeInterface $change);
 
     /**
      * @return string
@@ -95,17 +97,17 @@ abstract class AbstractOperator implements OperatorInterface
     abstract protected function createSuccessMessage();
 
     /**
-     * @param ItemCollectionInterface|ItemInterface[] $changedItems
+     * @param ChangeInterface $change
      *
-     * @return ItemCollectionInterface|ItemInterface[]
+     * @return ChangeInterface
      */
-    protected function expandChangedItems(ItemCollectionInterface $changedItems)
+    protected function expandChangedItems(ChangeInterface $change)
     {
         foreach ($this->itemExpanderPlugins as $itemExpander) {
-            $changedItems = $itemExpander->expandItems($changedItems);
+            $change = $itemExpander->expandItems($change);
         }
 
-        return $changedItems;
+        return $change;
     }
 
     /**

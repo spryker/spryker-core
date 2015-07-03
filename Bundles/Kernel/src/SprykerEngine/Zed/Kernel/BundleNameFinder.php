@@ -28,6 +28,7 @@ class BundleNameFinder extends AbstractBundle
         }
 
         $bundles = array_unique($bundles);
+
         sort($bundles);
 
         return $bundles;

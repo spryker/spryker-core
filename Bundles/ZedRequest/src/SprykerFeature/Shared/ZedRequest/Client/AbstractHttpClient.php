@@ -22,6 +22,7 @@ use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Shared\Yves\YvesConfig;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
+use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
@@ -174,10 +175,11 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $request->addHeader($header, $value);
         }
 
-        $rawRequestBody = json_encode($requestTransfer->toArray(false));
-
+        $data = $requestTransfer->toArray(true);
+//        unset($data['transfer']);
+        $rawRequestBody = json_encode($data);
         $request->setBody($rawRequestBody, 'application/json');
-        //$request->setHeader('Host', System::getHostname());
+//        $request->setHeader('Host', System::getHostname());
 
         return $request;
     }
@@ -190,7 +192,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
-        $request = $this->factory->createClientRequest($this->locator);
+        $request = $this->getClientRequest();
         $request->setSessionId(session_id());
         $request->setTime(time());
         $request->setHost(System::getHostname()?: 'n/a');
@@ -201,15 +203,11 @@ abstract class AbstractHttpClient implements HttpClientInterface
             }
             $request->addMetaTransfer($name, $metaTransfer);
         }
-        if (!empty($this->username)) {
-            $request->setUsername($this->username);
-        }
-        if (!empty($this->password)) {
-            $request->setPassword($this->password);
-        }
+
         if (!empty($transferObject)) {
             $request->setTransfer($transferObject);
         }
+
         return $request;
     }
 
@@ -311,5 +309,15 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
             $request->addSubscriber(new CookiePlugin($cookieArray));
         }
+    }
+
+    /**
+     * @return Request
+     */
+    private function getClientRequest()
+    {
+        $request = $this->factory->createClientRequest($this->locator);
+
+        return $request;
     }
 }

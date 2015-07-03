@@ -25,6 +25,9 @@ class PriceFacadeStub extends PriceFacade
 
     public function hasValidPrice($sku, $priceType = null)
     {
+        if (!isset($this->validities[$sku])) {
+            return false;
+        }
         return $this->validities[$sku];
     }
 

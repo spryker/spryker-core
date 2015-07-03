@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Discount\OrderInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount as DiscountEntity;
@@ -19,26 +20,33 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
 {
     /**
      * @param DiscountEntity $discountEntity
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     * @param CalculableInterface $container
      * @param DecisionRuleEntity $decisionRuleEntity
      * @return ModelResult
      */
     public function check(
         DiscountEntity $discountEntity,
-        OrderInterface $container,
+        //OrderInterface $container,
+        CalculableInterface $container,
         DecisionRuleEntity $decisionRuleEntity = null
     ) {
         $componentResult = new ModelResult();
 
-        if (count($container->getCouponCodes()) < 1) {
+        if (count($container->getCalculableObject()->getCouponCodes()) < 1) {
             return $componentResult;
         }
+
         $errors = [];
         $result = true;
-        foreach ($container->getCouponCodes() as $code) {
+
+        foreach ($container->getCalculableObject()->getCouponCodes() as $code) {
             $idVoucherCodePool = $this->getContext()[self::KEY_DATA];
-            $response = $this->getDependencyContainer()->getDiscountFacade()
-                ->isVoucherUsable($code, $idVoucherCodePool);
+            $response = $this
+                ->getDependencyContainer()
+                ->getDiscountFacade()
+                ->isVoucherUsable($code, $idVoucherCodePool)
+            ;
 
             $result &= $response->isSuccess();
             $errors = array_merge($errors, $response->getErrors());

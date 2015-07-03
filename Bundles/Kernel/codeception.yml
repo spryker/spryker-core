@@ -23,3 +23,9 @@ modules:
 
 coverage:
     enabled: true
+    whitelist:
+        include:
+            - src/*
+    blacklist:
+        include:
+            - tests/*

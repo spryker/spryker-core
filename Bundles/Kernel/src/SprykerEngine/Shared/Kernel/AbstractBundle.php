@@ -16,7 +16,7 @@ class AbstractBundle
     const OPTION_KEY_BUNDLE_PATH_PATTERN = 'bundle path pattern';
     const OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN = 'bundle project path pattern';
 
-    const APPLICATION = 'Zed';
+    const APPLICATION = '*';
     const BUNDLE_PATH_PATTERN = '*/';
 
     /**

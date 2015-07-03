@@ -214,7 +214,7 @@ class CheckoutFacadeTest extends Test
             ->setGrossPrice(3000)
         ;
 
-        $checkoutRequest->getCart()->addItems($item);
+        $checkoutRequest->getCart()->addItem($item);
 
         $result = $this->checkoutFacade->requestCheckout($checkoutRequest);
 
@@ -320,8 +320,8 @@ class CheckoutFacadeTest extends Test
         ;
 
         $cart = new CartTransfer();
-        $cart->addItems($item1);
-        $cart->addItems($item2);
+        $cart->addItem($item1);
+        $cart->addItem($item2);
 
         $totals = new TotalsTransfer();
         $totals
