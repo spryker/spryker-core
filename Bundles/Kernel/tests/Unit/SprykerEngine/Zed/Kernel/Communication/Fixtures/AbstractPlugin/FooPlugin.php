@@ -6,15 +6,24 @@
 namespace Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 
 class FooPlugin extends AbstractPlugin
 {
 
     /**
-     * @return \SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface
+     * @return DependencyContainerInterface
      */
-    public function getDepCon()
+    public function getDependencyContainerForTests()
     {
-        return $this->dependencyContainer;
+        return $this->getDependencyContainer();
+    }
+
+    /**
+     * @return DependencyContainerInterface
+     */
+    public function getQueryContainerForTests()
+    {
+        return $this->getQueryContainer();
     }
 }

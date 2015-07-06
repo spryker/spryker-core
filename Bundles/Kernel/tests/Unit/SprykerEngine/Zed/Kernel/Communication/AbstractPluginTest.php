@@ -5,17 +5,25 @@
 
 namespace Unit\SprykerEngine\Zed\Kernel\Communication;
 
+use SprykerEngine\Zed\Kernel\AbstractUnitTest;
+use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Communication\PluginLocator;
 use SprykerEngine\Zed\Kernel\Locator;
 use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\FooPlugin;
 use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\FooMessenger;
+use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\PluginLocator\Facade;
+use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\PluginLocator\LocatorMock;
+use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\PluginLocator\Plugin\Foo;
+use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\PluginLocator\QueryContainer;
 
 /**
+ * @group SprykerEngine
+ * @group Zed
  * @group Kernel
- * @group Business
+ * @group Communication
  * @group AbstractPlugin
  */
-class AbstractPluginTest extends \PHPUnit_Framework_TestCase
+class AbstractPluginTest extends AbstractUnitTest
 {
 
     public function testCreateInstanceShouldInjectDependencyContainerIfOneExists()
@@ -29,6 +37,41 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
             'Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\PluginLocator\Plugin\Foo',
             $locatedClass
         );
+    }
+
+    public function testGetQueryContainerShouldReturnNullIfNoQueryContainerIsSet()
+    {
+        $locator = new PluginLocator(
+            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\PluginLocator\\Factory'
+        );
+        $plugin = $locator->locate('Kernel', Locator::getInstance(), 'Foo');
+        $queryContainer = $plugin->getQueryContainerForTests();
+
+        $this->assertNull($queryContainer);
+    }
+
+    public function testGetQueryContainerShouldReturnInstanceIfQueryContainerIsSet()
+    {
+        $plugin = new Foo(new Factory('Kernel'), Locator::getInstance());
+        $plugin->setOwnQueryContainer(
+            new QueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Kernel'), Locator::getInstance())
+        );
+
+        $queryContainer = $plugin->getQueryContainerForTests();
+
+        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer', $queryContainer);
+    }
+
+    public function testGetFacadeShouldReturnInstanceIfFacadeIsSet()
+    {
+        $plugin = new Foo(new Factory('Kernel'), Locator::getInstance());
+        $plugin->setOwnFacade(
+            new Facade(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Kernel'), Locator::getInstance())
+        );
+
+        $facade = $plugin->getFacadeForTests();
+
+        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Business\AbstractFacade', $facade);
     }
 
     public function testSetMessenger()

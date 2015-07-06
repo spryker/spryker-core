@@ -10,6 +10,7 @@ use SprykerEngine\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class BundleProxy
 {
+
     const LOCATOR_MATCHER_SUFFIX = 'Matcher';
 
     /**
@@ -131,9 +132,12 @@ class BundleProxy
         foreach ($this->locator as $locator) {
             $matcher = $this->locatorMatcher[get_class($locator)];
             if ($matcher->match($method)) {
+                // @todo method call uses 3 params but 1 expected
                 return $locator->canLocate($this->bundle, $this->locatorLocator, $matcher->filter($method));
             }
         }
+
         return false;
     }
+
 }

@@ -5,11 +5,11 @@
 
 namespace SprykerEngine\Zed\Kernel\Communication;
 
+use Psr\Log\AbstractLogger;
+use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
-use Psr\Log\AbstractLogger;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractPlugin extends AbstractLogger implements MessengerInterface
@@ -18,8 +18,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     /**
      * @var MessengerInterface
      */
-
-    protected $messenger;
+    private $messenger;
 
     /**
      * @var AbstractDependencyContainer
@@ -68,7 +67,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      * @param array $context
      * @return null
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         if ($this->messenger) {
             $this->messenger->log($level, $message, $context);
@@ -100,7 +99,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      *
      * @return AbstractFacade
      */
-    public function getFacade()
+    protected function getFacade()
     {
         return $this->facade;
     }
@@ -111,5 +110,23 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     protected function getDependencyContainer()
     {
         return $this->dependencyContainer;
+    }
+
+    /**
+     * @return AbstractDependencyContainer
+     */
+    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
+    {
+        $this->queryContainer = $queryContainer;
+
+        return $this;
+    }
+
+    /**
+     * @return AbstractDependencyContainer
+     */
+    protected function getQueryContainer()
+    {
+        return $this->queryContainer;
     }
 }
