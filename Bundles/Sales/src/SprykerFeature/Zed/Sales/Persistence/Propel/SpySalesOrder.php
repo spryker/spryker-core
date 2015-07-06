@@ -30,16 +30,7 @@ class SpySalesOrder extends BaseSpySalesOrder
      */
     public function setIncrementId($v)
     {
-        if ($v !== null) {
-            $v = (string)$v;
-        }
-
-        if ($this->order_reference !== $v) {
-            $this->order_reference = $v;
-            $this->modifiedColumns[SpySalesOrderTableMap::COL_ORDER_REFERENCE] = true;
-        }
-
-        return $this;
+        $this->setOrderReference($v);
     }
 
     /**
@@ -50,6 +41,6 @@ class SpySalesOrder extends BaseSpySalesOrder
      */
     public function getIncrementId()
     {
-        return $this->order_reference;
+        return $this->getOrderReference();
     }
 }

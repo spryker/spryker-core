@@ -70,7 +70,7 @@ class SandboxController extends AbstractController
         $order->setLastName($customerTransfer->getLastName());
         $order->setEmail($customerTransfer->getEmail());
         $order->setSalutation($customerTransfer->getSalutation());
-        $order->setIncrementId(uniqid('testorder_'));
+        $order->setOrderReference(uniqid('testorder_'));
         $order->save();
 
         $process = SpyOmsOrderProcessQuery::create()->findOneByName('Nopayment01');
