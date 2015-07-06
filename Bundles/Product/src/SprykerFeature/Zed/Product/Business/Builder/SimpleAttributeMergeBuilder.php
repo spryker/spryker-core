@@ -92,4 +92,18 @@ class SimpleAttributeMergeBuilder
          return $this->normalizeAttributes($abstractAttributes);
     }
 
+    /**
+     * @param array $productData
+     *
+     * @return array
+     */
+    protected function extractAbstractAttributes(array $productData)
+    {
+        $decodedAttributes = json_decode($productData['abstract_attributes'], true);
+        $decodedLocalizedAttributes = json_decode($productData['abstract_localized_attributes'], true);
+        $abstractAttributes = array_merge($decodedAttributes, $decodedLocalizedAttributes);
+
+         return $this->normalizeAttributes($abstractAttributes);
+    }
+
 }
