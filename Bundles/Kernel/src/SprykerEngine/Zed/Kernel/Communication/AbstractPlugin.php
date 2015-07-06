@@ -18,7 +18,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     /**
      * @var MessengerInterface
      */
-    private $messenger;
+    protected $messenger;
 
     /**
      * @var AbstractDependencyContainer
