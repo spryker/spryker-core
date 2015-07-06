@@ -19,9 +19,9 @@
                     <tr>
                         <td>{{ orderItem.Name }}</td>
                         <td>{{ orderItem.Sku }}</td>
-                        <td>{{ orderItem.GrossPrice|number_format(2) }} &euro;</td>
+                        <td>{{ orderItem.GrossPrice | currency }}</td>
                         {#<td>{{ orderItem.Qty }}</td>#}
-                        <td>{{ orderItem.PriceToPay |number_format(2) }} &euro;</td>
+                        <td>{{ orderItem.PriceToPay | currency }}</td>
                         <td>{{ orderItem.State.Name }}</td>
                         <td>
                             {% if events[orderItem.IdSalesOrderItem] |length > 0 %}
