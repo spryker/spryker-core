@@ -14,6 +14,7 @@ use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -225,7 +226,7 @@ abstract class AbstractController
      */
     protected function createForm($type = 'form', $data = null, array $options = [])
     {
-        /** @var \Symfony\Component\Form\FormFactory $formFactory */
+        /** @var FormFactory $formFactory */
         $formFactory = $this->application['form.factory'];
 
         return $formFactory->create($type, $data, $options);
