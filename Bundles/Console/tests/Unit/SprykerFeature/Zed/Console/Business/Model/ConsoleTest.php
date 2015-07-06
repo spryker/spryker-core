@@ -19,14 +19,14 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDependencyContainerShouldReturnNullIfNotSet()
     {
-        $console = new ConsoleMock('TestCommand');
+        $console = $this->getConsole();
 
         $this->assertNull($console->getDependencyContainer());
     }
 
     public function testGetDependencyContainerShouldReturnInstanceIfSet()
     {
-        $console = new ConsoleMock('TestCommand');
+        $console = $this->getConsole();
         $console->setDependencyContainer($this->getDependencyContainerMock());
 
         $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer', $console->getDependencyContainer());
@@ -34,14 +34,14 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
 
     public function testGetFacadeShouldReturnNullIfNotSet()
     {
-        $console = new ConsoleMock('TestCommand');
+        $console = $this->getConsole();
 
         $this->assertNull($console->getFacade());
     }
 
     public function testGetFacadeShouldReturnInstanceIfSet()
     {
-        $console = new ConsoleMock('TestCommand');
+        $console = $this->getConsole();
         $console->setFacade($this->getFacadeMock());
 
         $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Business\AbstractFacade', $console->getFacade());
@@ -49,14 +49,14 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
 
     public function testGetQueryContainerShouldReturnNullIfNotSet()
     {
-        $console = new ConsoleMock('TestCommand');
+        $console = $this->getConsole();
 
         $this->assertNull($console->getQueryContainer());
     }
 
     public function testGetQueryContainerShouldReturnInstanceIfSet()
     {
-        $console = new ConsoleMock('TestCommand');
+        $console = $this->getConsole();
         $console->setQueryContainer($this->getQueryContainerMock());
 
         $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer', $console->getQueryContainer());
@@ -84,5 +84,13 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     private function getQueryContainerMock()
     {
         return $this->getMock('SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer', [], [], '', false);
+    }
+
+    /**
+     * @return ConsoleMock
+     */
+    private function getConsole()
+    {
+        return new ConsoleMock('TestCommand');
     }
 }

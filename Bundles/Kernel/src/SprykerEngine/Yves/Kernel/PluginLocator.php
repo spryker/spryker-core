@@ -8,10 +8,6 @@ namespace SprykerEngine\Yves\Kernel;
 use SprykerEngine\Shared\Kernel\AbstractLocator;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
-/**
- * Class YvesLocator
- * @package SprykerEngine\Yves\Kernel
- */
 class PluginLocator extends AbstractLocator
 {
 

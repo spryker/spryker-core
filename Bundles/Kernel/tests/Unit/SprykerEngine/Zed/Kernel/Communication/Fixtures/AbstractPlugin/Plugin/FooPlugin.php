@@ -3,13 +3,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\PluginLocator\Plugin;
+namespace Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin;
 
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-class Foo extends AbstractPlugin
+class FooPlugin extends AbstractPlugin
 {
 
     /**
@@ -21,19 +22,19 @@ class Foo extends AbstractPlugin
     }
 
     /**
-     * @return QueryContainerInterface
+     * @return AbstractFacade
      */
-    public function getQueryContainer()
+    public function getFacade()
     {
-        return parent::getQueryContainer();
+        return parent::getFacade();
     }
 
     /**
      * @return QueryContainerInterface
      */
-    public function getFacade()
+    public function getQueryContainer()
     {
-        return parent::getFacade();
+        return parent::getQueryContainer();
     }
 
 }

@@ -75,15 +75,6 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
-     * TODO move to constructor
-     * @param $facade
-     */
-    public function setOwnFacade($facade)
-    {
-        $this->facade = $facade;
-    }
-
-    /**
      * @param Container $container
      */
     public function setExternalDependencies(Container $container)
@@ -92,6 +83,15 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
         if (isset($dependencyContainer)) {
             $this->getDependencyContainer()->setContainer($container);
         }
+    }
+
+    /**
+     * TODO move to constructor
+     * @param AbstractFacade $facade
+     */
+    public function setOwnFacade(AbstractFacade $facade)
+    {
+        $this->facade = $facade;
     }
 
     /**
@@ -105,6 +105,18 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
+     * @param AbstractDependencyContainer $dependencyContainer
+     *
+     * @return $this
+     */
+    public function setDependencyContainer(AbstractDependencyContainer $dependencyContainer)
+    {
+        $this->dependencyContainer = $dependencyContainer;
+
+        return $this;
+    }
+
+    /**
      * @return AbstractDependencyContainer
      */
     protected function getDependencyContainer()
@@ -115,7 +127,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     /**
      * @return AbstractDependencyContainer
      */
-    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
+    public function setQueryContainer(AbstractQueryContainer $queryContainer)
     {
         $this->queryContainer = $queryContainer;
 
@@ -129,4 +141,5 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     {
         return $this->queryContainer;
     }
+
 }

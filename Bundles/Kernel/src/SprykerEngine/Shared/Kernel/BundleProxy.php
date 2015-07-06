@@ -132,8 +132,7 @@ class BundleProxy
         foreach ($this->locator as $locator) {
             $matcher = $this->locatorMatcher[get_class($locator)];
             if ($matcher->match($method)) {
-                // @todo method call uses 3 params but 1 expected
-                return $locator->canLocate($this->bundle, $this->locatorLocator, $matcher->filter($method));
+                return $locator->canLocate($this->bundle);
             }
         }
 
