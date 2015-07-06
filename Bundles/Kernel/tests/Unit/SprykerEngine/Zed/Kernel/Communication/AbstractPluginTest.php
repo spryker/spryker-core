@@ -14,7 +14,6 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin;
 use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\FooMessenger;
-use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\PluginLocator\Facade;
 use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\PluginLocator\QueryContainer;
 
 /**
@@ -130,4 +129,5 @@ class AbstractPluginTest extends AbstractUnitTest
 
         return $plugin;
     }
+
 }
