@@ -49,10 +49,15 @@ class AbstractProductWriter implements AbstractProductWriterInterface
     public function writeAbstractProduct(AbstractProductTransfer $product)
     {
          return (
-            $this->productStatement->execute([':sku' => $product->getSku()]) &&
+            $this->productStatement->execute(
+                [
+                    ':sku' => $product->getSku(),
+                    ':attributes' => json_encode($product->getAttributes()),
+                ]
+            ) &&
             $this->attributesStatement->execute(
                 [
-                    ':attributes' => json_encode($product->getAttributes()),
+                    ':attributes' => json_encode($product->getLocalizedAttributes()),
                     ':name' => $product->getName(),
                     ':abstractProductSku' => $product->getSku(),
                     ':fkLocale' => $this->localeTransfer->getIdLocale(),
@@ -66,10 +71,13 @@ class AbstractProductWriter implements AbstractProductWriterInterface
         $connection = Propel::getConnection();
         $this->productStatement = $connection->prepare(
             sprintf(
-                'INSERT INTO %1$s (%2$s) VALUES (:sku)
-                ON DUPLICATE KEY UPDATE %2$s=VALUES(%2$s);',
+                'INSERT INTO %1$s (%2$s, %3$s) VALUES (:sku, :attributes)
+                ON DUPLICATE KEY UPDATE
+                 %2$s=VALUES(%2$s),
+                 %3$s=VALUES(%3$s);',
                 SpyAbstractProductTableMap::TABLE_NAME,
-                SpyAbstractProductTableMap::COL_SKU
+                SpyAbstractProductTableMap::COL_SKU,
+                SpyAbstractProductTableMap::COL_ATTRIBUTES
             )
         );
     }

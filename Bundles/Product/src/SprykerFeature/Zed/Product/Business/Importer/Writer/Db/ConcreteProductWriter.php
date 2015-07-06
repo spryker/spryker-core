@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Product\Business\Importer\Writer\Db;
 
 use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Product\Business\Importer\Writer\ConcreteProductWriterInterface;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
@@ -55,6 +54,7 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
                 [
                     ':sku' => $product->getSku(),
                     ':isActive' => (int) $product->getIsActive(),
+                    ':attributes' => json_encode($product->getAttributes()),
                     ':abstractProductSku' => $product->getAbstractProductSku(),
                 ]
             ) &&
@@ -62,7 +62,7 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
                 [
                     ':productSku' => $product->getSku(),
                     ':name' => $product->getName(),
-                    ':attributes' => json_encode($product->getAttributes()),
+                    ':attributes' => json_encode($product->getLocalizedAttributes()),
                     ':fkLocale' => $this->localeTransfer->getIdLocale(),
                 ]
             )
@@ -79,16 +79,18 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
         $this->productStatement = $connection->prepare(
             sprintf(
                 'INSERT INTO %1$s
-                  (%2$s, %3$s, %4$s) VALUES
-                  (:sku, :isActive, (SELECT %5$s FROM %6$s WHERE %7$s = :abstractProductSku))
+                  (%2$s, %3$s, %4$s , %5$s) VALUES
+                  (:sku, :isActive, (SELECT %6$s FROM %7$s WHERE %8$s = :abstractProductSku), :attributes)
                   ON DUPLICATE KEY UPDATE
                       %2$s=VALUES(%2$s),
                       %3$s=VALUES(%3$s),
-                      %4$s=VALUES(%4$s);',
+                      %4$s=VALUES(%4$s),
+                      %5$s=VALUES(%5$s);',
                 SpyProductTableMap::TABLE_NAME,
                 SpyProductTableMap::COL_SKU,
                 SpyProductTableMap::COL_IS_ACTIVE,
                 SpyProductTableMap::COL_FK_ABSTRACT_PRODUCT,
+                SpyProductTableMap::COL_ATTRIBUTES,
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
                 SpyAbstractProductTableMap::TABLE_NAME,
                 SpyAbstractProductTableMap::COL_SKU

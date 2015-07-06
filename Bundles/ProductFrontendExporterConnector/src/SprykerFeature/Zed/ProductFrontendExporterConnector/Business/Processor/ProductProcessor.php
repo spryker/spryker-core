@@ -47,7 +47,10 @@ class ProductProcessor implements ProductProcessorInterface
         $exportChunk = [];
 
         foreach ($products as $index => $productData) {
-            $productKey = $this->productKeyGenerator->generateKey($productData['id_abstract_product'], $locale->getLocaleName());
+            $productKey = $this->productKeyGenerator->generateKey(
+                $productData['id_abstract_product'],
+                $locale->getLocaleName()
+            );
             $exportChunk[$productKey] = $this->filterProductData($productData);
         }
 
