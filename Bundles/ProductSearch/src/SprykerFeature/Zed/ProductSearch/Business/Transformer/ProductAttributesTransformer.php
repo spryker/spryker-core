@@ -63,8 +63,11 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                 $productData['url'] = $productUrls[0];
 
                 $abstractAttributes = json_decode($productData['abstract_attributes'], true);
+                $abstractLocalizedAttributes = json_decode($productData['abstract_localized_attributes'], true);
+                $abstractAttributes = array_merge($abstractAttributes, $abstractLocalizedAttributes);
 
                 $concreteAttributes = explode('$%', $productData['concrete_attributes']);
+                $concreteLocalizedAttributes = explode('$%', $productData['concrete_localized_attributes']);
                 $concreteSkus = explode(',', $productData['concrete_skus']);
                 $concreteNames = explode(',', $productData['concrete_names']);
                 $productData['concrete_products'] = [];
@@ -74,11 +77,14 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                     if ($lastSku === $concreteSkus[$i]) {
                         continue;
                     }
+                    $encodedAttributes = json_decode($concreteAttributes[$i], true);
+                    $encodedLocalizedAttributes = json_decode($concreteLocalizedAttributes[$i], true);
+                    $mergedAttributes = array_merge($encodedAttributes, $encodedLocalizedAttributes);
 
                     $lastSku = $concreteSkus[$i];
                     $productData['concrete_products'][] = [
                         'sku' => $concreteSkus[$i],
-                        'attributes' => json_decode($concreteAttributes[$i], true),
+                        'attributes' => $mergedAttributes,
                         'name' => $concreteNames[$i],
                     ];
                 }
@@ -139,8 +145,6 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
         return (!empty($this->fieldOperations));
     }
 
-    /**
-     */
     protected function initFieldToOperationMapping()
     {
         foreach ($this->getFieldOperations() as $fieldOperation) {
@@ -172,9 +176,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
             return str_replace(' ', '', lcfirst(ucwords($name)));
         }, array_keys($attributes));
 
-        $attributes = array_combine($newKeys, $attributes);
-
-        return $attributes;
+        return array_combine($newKeys, $attributes);
     }
 
     /**
@@ -182,9 +184,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
      */
     protected function getFieldOperations()
     {
-        $fieldOperations = $this->queryContainer->queryFieldOperations()->find();
-
-        return $fieldOperations;
+        return $this->queryContainer->queryFieldOperations()->find();
     }
 
 }

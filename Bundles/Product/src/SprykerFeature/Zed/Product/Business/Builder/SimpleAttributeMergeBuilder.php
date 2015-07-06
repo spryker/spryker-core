@@ -20,10 +20,11 @@ class SimpleAttributeMergeBuilder
             $productUrls = explode(',', $productData['product_urls']);
             $productData['url'] = $productUrls[0];
 
-            $abstractAttributes = json_decode($productData['abstract_attributes'], true);
-            $productData['abstract_attributes'] = $this->normalizeAttributes($abstractAttributes);
+            $productData['abstract_attributes'] = $this->extractAbstractAttributes($productData);
 
             $concreteAttributes = explode('$%', $productData['concrete_attributes']);
+            $concreteLocalizedAttributes = explode('$%', $productData['concrete_localized_attributes']);
+
             $concreteSkus = explode(',', $productData['concrete_skus']);
             $concreteNames = explode(',', $productData['concrete_names']);
             $productData['concrete_products'] = [];
@@ -33,12 +34,15 @@ class SimpleAttributeMergeBuilder
                 if (isset($processedConcreteSkus[$concreteSkus[$i]])) {
                     continue;
                 }
+                $decodedAttributes = json_decode($concreteAttributes[$i], true);
+                $decodedLocalizedAttributes = json_decode($concreteLocalizedAttributes[$i], true);
+                $mergedAttributes = array_merge($decodedAttributes, $decodedLocalizedAttributes);
 
                 $processedConcreteSkus[$concreteSkus[$i]] = true;
                 $productData['concrete_products'][] = [
                     'name' => $concreteNames[$i],
                     'sku' => $concreteSkus[$i],
-                    'attributes' => json_decode($concreteAttributes[$i], true),
+                    'attributes' => $mergedAttributes,
                 ];
             }
         }
@@ -58,6 +62,20 @@ class SimpleAttributeMergeBuilder
         }, array_keys($attributes));
 
         return array_combine($newKeys, $attributes);
+    }
+
+    /**
+     * @param array $productData
+     *
+     * @return array
+     */
+    protected function extractAbstractAttributes(array $productData)
+    {
+        $decodedAttributes = json_decode($productData['abstract_attributes'], true);
+        $decodedLocalizedAttributes = json_decode($productData['abstract_localized_attributes'], true);
+        $abstractAttributes = array_merge($decodedAttributes, $decodedLocalizedAttributes);
+
+         return $this->normalizeAttributes($abstractAttributes);
     }
 
 }
