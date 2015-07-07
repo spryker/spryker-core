@@ -5,11 +5,11 @@
 
 namespace SprykerFeature\Client\Glossary\Service;
 
-use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use Generated\Client\Ide\FactoryAutoCompletion\GlossaryService;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
+use SprykerFeature\Client\Glossary\GlossaryDependencyProvider;
+use SprykerFeature\Client\Storage\Service\StorageClientInterface;
+use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 /**
  * @method GlossaryService getFactory()
@@ -18,33 +18,33 @@ class GlossaryDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**
+     * @param string $locale
+     *
+     * @return GlossaryStorageInterface
+     */
+    public function createTranslator($locale)
+    {
+        return $this->getFactory()->createStorageGlossaryStorage(
+            $this->getStorage(),
+            $this->getKeyBuilder(),
+            $locale
+        );
+    }
+
+    /**
      * @return StorageClientInterface
      */
-    protected function getStorage()
+    private function getStorage()
     {
-        return $this->getLocator()->storage()->client();
+        return $this->getProvidedDependency(GlossaryDependencyProvider::KV_STORAGE);
     }
 
     /**
      * @return KeyBuilderInterface
      */
-    protected function getKeyBuilder()
+    private function getKeyBuilder()
     {
         return $this->getFactory()->createKeyBuilderGlossaryKeyBuilder();
-    }
-
-    /**
-     * @param string $locale
-     *
-     * @return Translator
-     */
-    public function createTranslator($locale)
-    {
-        return $this->getFactory()->createTranslator(
-            $this->getStorage(),
-            $this->getKeyBuilder(),
-            $locale
-        );
     }
 
 }

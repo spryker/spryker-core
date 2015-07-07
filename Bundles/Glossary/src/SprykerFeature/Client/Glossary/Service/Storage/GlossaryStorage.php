@@ -3,36 +3,36 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Glossary\Service;
+namespace SprykerFeature\Client\Glossary\Service\Storage;
 
-use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
+use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
-class Translator
+class GlossaryStorage implements GlossaryStorageInterface
 {
 
     /**
-     * @var ReadInterface
+     * @var StorageClientInterface
      */
-    protected $storage;
+    private $storage;
 
     /**
      * @var KeyBuilderInterface
      */
-    protected $keyBuilder;
+    private $keyBuilder;
 
     /**
      * @var string
      */
-    protected $locale;
+    private $locale;
 
     /**
      * @var array
      */
-    protected $translations = [];
+    private $translations = [];
 
     /**
-     * @param ReadInterface $storage
+     * @param StorageClientInterface $storage
      * @param KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
@@ -43,6 +43,12 @@ class Translator
         $this->locale = $localeName;
     }
 
+    /**
+     * @param $keyName
+     * @param array $parameters
+     *
+     * @return string
+     */
     public function translate($keyName, array $parameters = [])
     {
         if (!isset($this->translations[$keyName])) {
@@ -59,15 +65,10 @@ class Translator
     /**
      * @param string $keyName
      */
-    protected function loadTranslation($keyName)
+    private function loadTranslation($keyName)
     {
         $key = $this->keyBuilder->generateKey($keyName, $this->locale);
         $this->translations[$keyName] = $this->storage->get($key);
     }
 
-    public function getLocale()
-    {
-        return $this->locale;
-    }
 }
-

@@ -5,8 +5,6 @@
 
 namespace SprykerFeature\Shared\Glossary\Code\KeyBuilder;
 
-
-
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderTrait;
 
 trait GlossaryKeyBuilder
@@ -30,4 +28,5 @@ trait GlossaryKeyBuilder
     {
         return 'glossary';
     }
+
 }

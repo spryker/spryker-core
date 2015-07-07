@@ -10,5 +10,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class GlossaryKeyBuilder implements KeyBuilderInterface
 {
+
     use GlossaryKeyBuilderTrait;
+
 }
