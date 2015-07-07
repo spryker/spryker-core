@@ -6,7 +6,6 @@
 
 namespace Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion;
 
-use SprykerFeature\Shared\Library\Autoloader;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConstructableMethodTagBuilder;
 
 /**
@@ -18,7 +17,6 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testBuildMethodTagsShouldReturnVendorMethodTagIfProjectDoesNotOverrideIt()
     {
-        Autoloader::allowNamespace('VendorNamespace');
         $options = [
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',
@@ -46,7 +44,6 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testBuildMethodTagsShouldReturnProjectMethodTagIfProjectOverrideIt()
     {
-        Autoloader::allowNamespace('ProjectNamespace');
         $options = [
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',
@@ -68,7 +65,6 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testBuildMethodTagsShouldReturnMethodNameWithParamsIfClassConstructorHasParams()
     {
-        Autoloader::allowNamespace('ProjectNamespace');
         $options = [
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Persistence/',
