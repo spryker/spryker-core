@@ -65,13 +65,16 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      * @param mixed $level
      * @param string $message
      * @param array $context
-     * @return null
+     *
+     * @return $this
      */
     public function log($level, $message, array $context = [])
     {
         if ($this->messenger) {
             $this->messenger->log($level, $message, $context);
         }
+
+        return $this;
     }
 
     /**

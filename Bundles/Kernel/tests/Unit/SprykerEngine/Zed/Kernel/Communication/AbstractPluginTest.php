@@ -77,7 +77,7 @@ class AbstractPluginTest extends AbstractUnitTest
         $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer', $queryContainer);
     }
 
-    public function testSetMessenger()
+    public function testSetMessengerMustReturnPlugin()
     {
         $locator = new PluginLocator(
             '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\AbstractPlugin\\Factory'
@@ -85,15 +85,44 @@ class AbstractPluginTest extends AbstractUnitTest
         /** @var FooPlugin $plugin */
         $plugin = $locator->locate('Kernel', Locator::getInstance(), 'FooPlugin');
 
-        $messengerMock = new FooMessenger();
+        $messengerMock = $this->getMock('SprykerEngine\Shared\Kernel\Messenger\MessengerInterface');
+        $plugin = $plugin->setMessenger($messengerMock);
+
+        $this->assertInstanceOf('Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin', $plugin);
+    }
+
+    public function testCallLogShouldOnlyReturnPluginIfNoMessengerIsSet()
+    {
+        $locator = new PluginLocator(
+            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\AbstractPlugin\\Factory'
+        );
+        /** @var FooPlugin $plugin */
+        $plugin = $locator->locate('Kernel', Locator::getInstance(), 'FooPlugin');
+
+        $this->assertInstanceOf(
+            'Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin',
+            $plugin->log('foo', 'bar')
+        );
+    }
+
+    public function testCallLogMustDelegateToInjectedMessengerAndReturnPlugin()
+    {
+        $locator = new PluginLocator(
+            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\AbstractPlugin\\Factory'
+        );
+        /** @var FooPlugin $plugin */
+        $plugin = $locator->locate('Kernel', Locator::getInstance(), 'FooPlugin');
+
+        $messengerMock = $this->getMock('Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\FooMessenger', ['log']);
+        $messengerMock->expects($this->once())
+            ->method('log');
+
         $plugin->setMessenger($messengerMock);
-        $plugin->log('warning', 'foo', ['key' => 'value']);
-        $return = $messengerMock->getLogMock();
-        $this->assertEquals('warning', $return['level']);
-        $this->assertEquals('foo', $return['message']);
-        $this->assertTrue(is_array($return['context']));
-        $this->arrayHasKey('key', $return['context']);
-        $this->assertEquals('value', $return['context']['key']);
+
+        $this->assertInstanceOf(
+            'Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin',
+            $plugin->log('foo', 'bar')
+        );
     }
 
     /**
