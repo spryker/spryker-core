@@ -6,14 +6,14 @@
 namespace SprykerFeature\Zed\Cms\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CmsCommunication;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 
 /**
  * @method CmsCommunication getFactory()
  */
-class CmsDependencyContainer extends AbstractDependencyContainer
+class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

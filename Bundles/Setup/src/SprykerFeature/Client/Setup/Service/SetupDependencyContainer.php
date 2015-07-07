@@ -6,12 +6,12 @@
 namespace SprykerFeature\Client\Setup\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\Setup;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 
 /**
  * @method Setup getFactory()
  */
-class SetupDependencyContainer extends AbstractDependencyContainer
+class SetupDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**

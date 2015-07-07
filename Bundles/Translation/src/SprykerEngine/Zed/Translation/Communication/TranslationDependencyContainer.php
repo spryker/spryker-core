@@ -5,9 +5,9 @@
 
 namespace SprykerEngine\Zed\Translation\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
-class TranslationDependencyContainer extends AbstractDependencyContainer
+class TranslationDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     public function getFacade()
     {

@@ -9,7 +9,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use Silex\Application;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -34,7 +34,7 @@ abstract class AbstractController
     private $locator;
 
     /**
-     * @var AbstractDependencyContainer
+     * @var AbstractCommunicationDependencyContainer
      */
     private $dependencyContainer;
 
@@ -83,7 +83,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return AbstractDependencyContainer
+     * @return AbstractCommunicationDependencyContainer
      */
     public function getDependencyContainer()
     {

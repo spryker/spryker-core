@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Oms\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\OmsBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\DummyInterface;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\FinderInterface;
@@ -29,7 +29,7 @@ use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
  * @method OmsConfig getConfig()
  * @method OmsQueryContainerInterface getQueryContainer()
  */
-class OmsDependencyContainer extends AbstractDependencyContainer
+class OmsDependencyContainer extends AbstractBusinessDependencyContainer
 {
     /**
      * @param array $array

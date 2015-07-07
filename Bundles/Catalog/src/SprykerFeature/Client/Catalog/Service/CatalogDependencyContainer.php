@@ -9,11 +9,11 @@ use Elastica\Index;
 use Generated\Client\Ide\FactoryAutoCompletion\Catalog;
 use SprykerFeature\Client\Catalog\CatalogDependencyProvider;
 use SprykerFeature\Client\Catalog\Service\Model\FacetConfig;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class CatalogDependencyContainer extends AbstractDependencyContainer
+class CatalogDependencyContainer extends AbstractServiceDependencyContainer
 {
     /**
      * @var Catalog

@@ -5,11 +5,11 @@
 
 namespace SprykerFeature\CalculationCheckoutConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\CalculationCheckoutConnector\CalculationCheckoutConnectorDependencyProvider;
 use SprykerFeature\CalculationCheckoutConnector\Dependency\Facade\CalculationCheckoutConnectorToCalculationInterface;
 
-class CalculationCheckoutConnectorDependencyContainer extends AbstractDependencyContainer
+class CalculationCheckoutConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

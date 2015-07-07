@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Console\ApplicationCheckStep;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerFeature\Zed\Application\Business\ApplicationFacade;
@@ -44,9 +44,9 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     /**
-     * @param AbstractDependencyContainer $dependencyContainer
+     * @param AbstractCommunicationDependencyContainer $dependencyContainer
      */
-    public function setDependencyContainer(AbstractDependencyContainer $dependencyContainer)
+    public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
     {
         $this->dependencyContainer = $dependencyContainer;
     }
@@ -63,7 +63,7 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     /**
-     * @return AbstractDependencyContainer
+     * @return AbstractCommunicationDependencyContainer
      */
     protected function getDependencyContainer()
     {

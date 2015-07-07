@@ -7,12 +7,12 @@ namespace SprykerFeature\Client\FrontendExporter\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\FrontendExporter;
 use SprykerFeature\Yves\FrontendExporter\Business\Matcher\UrlMatcherInterface;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 
 /**
  * @method FrontendExporter getFactory()
  */
-class FrontendExporterDependencyContainer extends AbstractDependencyContainer
+class FrontendExporterDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**

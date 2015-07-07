@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Distributor\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\DistributorBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Distributor\Business\Builder\QueueNameBuilderInterface;
 use SprykerFeature\Zed\Distributor\Business\Distributor\ItemDistributorInterface;
 use SprykerFeature\Zed\Distributor\Business\Distributor\TypeDistributor;
@@ -27,7 +27,7 @@ use SprykerFeature\Zed\Distributor\DistributorDependencyProvider;
  * @method DistributorBusiness getFactory()
  * @method DistributorQueryContainerInterface getQueryContainer()
  */
-class DistributorDependencyContainer extends AbstractDependencyContainer
+class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

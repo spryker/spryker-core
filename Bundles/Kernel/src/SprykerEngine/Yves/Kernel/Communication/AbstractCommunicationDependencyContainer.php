@@ -9,7 +9,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Yves\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 
-abstract class AbstractDependencyContainer implements DependencyContainerInterface
+abstract class AbstractCommunicationDependencyContainer implements DependencyContainerInterface
 {
 
     /**

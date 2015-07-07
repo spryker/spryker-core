@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Price\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\PriceBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
 use SprykerFeature\Zed\Price\Business\Model\WriterInterface;
 use SprykerFeature\Zed\Price\Business\Model\ReaderInterface;
@@ -21,7 +21,7 @@ use SprykerFeature\Zed\Price\PriceConfig;
  * @method PriceBusiness getFactory()
  * @method PriceConfig getConfig()
  */
-class PriceDependencyContainer extends AbstractDependencyContainer
+class PriceDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

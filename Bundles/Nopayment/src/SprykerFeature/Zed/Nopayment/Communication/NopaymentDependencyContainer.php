@@ -6,14 +6,14 @@
 namespace SprykerFeature\Zed\Nopayment\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\NopaymentCommunication;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Nopayment\Persistence\NopaymentQueryContainer;
 use SprykerFeature\Zed\Nopayment\Business\NopaymentFacade;
 
 /**
 * @method NopaymentCommunication getFactory()
 */
-class NopaymentDependencyContainer extends AbstractDependencyContainer
+class NopaymentDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @return NopaymentQueryContainer

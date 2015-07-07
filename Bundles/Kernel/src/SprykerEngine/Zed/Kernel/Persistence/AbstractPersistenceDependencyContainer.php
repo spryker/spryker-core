@@ -9,11 +9,10 @@ use SprykerEngine\Zed\Kernel\AbstractDependencyContainer as BaseDependencyContai
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Persistence\DependencyContainer\DependencyContainerInterface;
 
-abstract class AbstractDependencyContainer extends BaseDependencyContainer implements DependencyContainerInterface
+abstract class AbstractPersistenceDependencyContainer extends BaseDependencyContainer implements DependencyContainerInterface
 {
 
     /**
-     * External dependencies
      * @var Container
      */
     private $container;
@@ -27,15 +26,15 @@ abstract class AbstractDependencyContainer extends BaseDependencyContainer imple
     }
 
     /**
-     * TODO remove from here. This should go to QueryContainer directly
+     * @todo remove from here. This should go to QueryContainer directly
+     *
      * @param string $key
      * @return mixed
      * @throws \ErrorException
      */
     public function getProvidedDependency($key)
     {
-        echo $key .PHP_EOL;
-        if(false === $this->container->offsetExists($key)){
+        if (false === $this->container->offsetExists($key)) {
             throw new \ErrorException('Key ' . $key . ' does not exist in container.');
         }
 

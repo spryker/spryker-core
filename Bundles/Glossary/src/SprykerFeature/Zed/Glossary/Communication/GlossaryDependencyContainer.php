@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Glossary\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Glossary\Communication\Form\TranslationForm;
 use SprykerFeature\Zed\Glossary\Communication\Grid\TranslationGrid;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Validator;
  * @method GlossaryCommunication getFactory()
  * @method GlossaryQueryContainerInterface getQueryContainer()
  */
-class GlossaryDependencyContainer extends AbstractDependencyContainer
+class GlossaryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @return GlossaryFacade

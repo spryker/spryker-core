@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Setup\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SetupBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use SprykerFeature\Zed\Setup\Business\Model\Cronjobs;
 use SprykerFeature\Zed\Setup\Business\Model\DirectoryRemoverInterface;
@@ -17,7 +17,7 @@ use SprykerFeature\Zed\Setup\SetupDependencyProvider;
  * @method SetupConfig getConfig()
  * @method SetupBusiness getFactory()
  */
-class SetupDependencyContainer extends AbstractDependencyContainer
+class SetupDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

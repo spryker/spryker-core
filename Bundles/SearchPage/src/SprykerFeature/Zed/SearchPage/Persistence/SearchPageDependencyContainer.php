@@ -6,12 +6,12 @@
 namespace SprykerFeature\Zed\SearchPage\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SearchPagePersistence;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 
 /**
  * @method SearchPagePersistence getFactory()
  */
-class SearchPageDependencyContainer extends AbstractDependencyContainer
+class SearchPageDependencyContainer extends AbstractPersistenceDependencyContainer
 {
 
     public function createSearchPageConfigQueryExpander()

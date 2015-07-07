@@ -6,13 +6,13 @@
 namespace SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductFrontendExporterPriceConnectorPersistence;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 /**
  * @method ProductFrontendExporterPriceConnectorPersistence getFactory()
  */
-class ProductFrontendExporterPriceConnectorDependencyContainer extends AbstractDependencyContainer
+class ProductFrontendExporterPriceConnectorDependencyContainer extends AbstractPersistenceDependencyContainer
 {
     /**
      * @return ProductPriceExpanderInterface

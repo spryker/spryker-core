@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Business\Model\ExportProcessor;
 use SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Business\Model\HelperInterface;
@@ -14,7 +14,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\ProductFrontendExporterPriceConnecto
 /**
  * @method ProductFrontendExporterPriceConnectorBusiness getFactory()
  */
-class ProductFrontendExporterPriceConnectorDependencyContainer extends AbstractDependencyContainer
+class ProductFrontendExporterPriceConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

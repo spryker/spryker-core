@@ -21,7 +21,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     protected $messenger;
 
     /**
-     * @var AbstractDependencyContainer
+     * @var AbstractCommunicationDependencyContainer
      */
 
     private $dependencyContainer;
@@ -108,11 +108,11 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
-     * @param AbstractDependencyContainer $dependencyContainer
+     * @param AbstractCommunicationDependencyContainer $dependencyContainer
      *
      * @return $this
      */
-    public function setDependencyContainer(AbstractDependencyContainer $dependencyContainer)
+    public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
     {
         $this->dependencyContainer = $dependencyContainer;
 
@@ -120,7 +120,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
-     * @return AbstractDependencyContainer
+     * @return AbstractCommunicationDependencyContainer
      */
     protected function getDependencyContainer()
     {
@@ -128,7 +128,9 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
-     * @return AbstractDependencyContainer
+     * @param AbstractQueryContainer $queryContainer
+     *
+     * @return $this
      */
     public function setQueryContainer(AbstractQueryContainer $queryContainer)
     {
@@ -138,7 +140,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
-     * @return AbstractDependencyContainer
+     * @return AbstractQueryContainer
      */
     protected function getQueryContainer()
     {

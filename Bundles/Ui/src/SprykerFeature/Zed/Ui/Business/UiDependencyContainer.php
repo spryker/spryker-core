@@ -6,14 +6,14 @@
 namespace SprykerFeature\Zed\Ui\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\UiBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerFeature\Zed\Ui\Business\Grid\Processor\GridProcessor;
 
 /**
  * @method UiBusiness getFactory()
  */
-class UiDependencyContainer extends AbstractDependencyContainer
+class UiDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

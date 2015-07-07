@@ -23,14 +23,14 @@ use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\Naviga
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidator;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidator;
 use SprykerFeature\Zed\Application\Business\Model\Url\UrlBuilder;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Psr\Log\LoggerInterface;
 
 /**
  * @method ApplicationBusiness getFactory()
  * @method ApplicationConfig getConfig()
  */
-class ApplicationDependencyContainer extends AbstractDependencyContainer
+class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

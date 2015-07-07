@@ -9,9 +9,9 @@ use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 
-class DiscountCalculationConnectorDependencyContainer extends AbstractDependencyContainer
+class DiscountCalculationConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

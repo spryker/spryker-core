@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\CartCheckoutConnector\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CartCheckoutConnectorBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\CartCheckoutConnector\CartCheckoutConnectorConfig;
 use SprykerFeature\Zed\CartCheckoutConnector\CartCheckoutConnectorDependencyProvider;
 
@@ -14,7 +14,7 @@ use SprykerFeature\Zed\CartCheckoutConnector\CartCheckoutConnectorDependencyProv
  * @method CartCheckoutConnectorBusiness getFactory()
  * @method CartCheckoutConnectorConfig getConfig()
  */
-class CartCheckoutConnectorDependencyContainer extends AbstractDependencyContainer
+class CartCheckoutConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     public function createCartOrderHydrator()

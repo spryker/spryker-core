@@ -12,7 +12,7 @@ use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
 use SprykerFeature\Zed\Acl\Communication\Form\UserForm;
 use SprykerFeature\Zed\Acl\Communication\Grid\RulesetGrid;
 use SprykerFeature\Zed\Acl\Communication\Grid\UserGrid;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\User\Business\UserFacade;
@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method AclCommunication getFactory()
  * @method AclQueryContainer getQueryContainer()
  */
-class AclDependencyContainer extends AbstractDependencyContainer
+class AclDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

@@ -7,7 +7,7 @@ namespace SprykerFeature\Zed\Product\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use SprykerFeature\Zed\Product\Business\Builder\ProductBuilderInterface;
 use SprykerFeature\Zed\Product\Business\Importer\FileImporter;
@@ -31,7 +31,7 @@ use SprykerFeature\Zed\Product\ProductConfig;
  * @method ProductBusiness getFactory()
  * @method ProductConfig getConfig()
  */
-class ProductDependencyContainer extends AbstractDependencyContainer
+class ProductDependencyContainer extends AbstractBusinessDependencyContainer
 {
     /**
      * @return UploadedFileImporter

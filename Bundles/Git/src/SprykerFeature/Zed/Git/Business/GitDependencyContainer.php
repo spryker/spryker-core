@@ -6,14 +6,14 @@
 namespace SprykerFeature\Zed\Git\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\GitBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Symfony\Component\Console\Command\Command;
 
 /**
  * @method GitBusiness getFactory()
  * @method GitConfig getConfig()
  */
-class GitDependencyContainer extends AbstractDependencyContainer
+class GitDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

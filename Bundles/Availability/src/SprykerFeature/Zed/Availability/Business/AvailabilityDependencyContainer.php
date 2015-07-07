@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\Availability\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Availability\AvailabilityDependencyProvider;
 use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
@@ -15,7 +15,7 @@ use SprykerFeature\Zed\Availability\Business\Model\SellableInterface;
  * Class AvailabilityDependencyContainer
  * @package SprykerFeature\Zed\Availability\Business
  */
-class AvailabilityDependencyContainer extends AbstractDependencyContainer
+class AvailabilityDependencyContainer extends AbstractBusinessDependencyContainer
 {
     /**
      * @return SellableInterface

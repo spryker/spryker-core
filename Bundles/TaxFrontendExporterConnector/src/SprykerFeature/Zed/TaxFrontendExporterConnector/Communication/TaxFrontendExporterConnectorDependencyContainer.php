@@ -5,12 +5,12 @@
 
 namespace SprykerFeature\Zed\TaxFrontendExporterConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\TaxFrontendExporterConnector\Business\TaxFrontendExporterConnectorFacade;
 use SprykerFeature\Zed\TaxFrontendExporterConnector\Persistence\TaxFrontendExporterConnectorQueryContainer
     as QueryContainer;
 
-class TaxFrontendExporterConnectorDependencyContainer extends AbstractDependencyContainer
+class TaxFrontendExporterConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @return TaxFrontendExporterConnectorFacade

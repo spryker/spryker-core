@@ -7,7 +7,7 @@ namespace SprykerFeature\Zed\Auth\Business;
 
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\AuthBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
 use SprykerFeature\Zed\Auth\Business\Model\Auth;
 use SprykerFeature\Zed\User\Business\UserFacade;
@@ -15,7 +15,7 @@ use SprykerFeature\Zed\User\Business\UserFacade;
 /**
  * @method AuthBusiness getFactory()
  */
-class AuthDependencyContainer extends AbstractDependencyContainer
+class AuthDependencyContainer extends AbstractBusinessDependencyContainer
 {
     /**
      * @return AuthFacade

@@ -14,12 +14,12 @@ use SprykerFeature\Zed\Price\Communication\Grid\PriceTypeGrid;
 use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
 /**
  * @method PriceCommunication getFactory()
  */
-class PriceDependencyContainer extends AbstractDependencyContainer
+class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @param Request $request
