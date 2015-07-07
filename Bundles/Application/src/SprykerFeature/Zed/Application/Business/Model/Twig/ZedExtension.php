@@ -37,6 +37,7 @@ class ZedExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
+
         $locator = $this->getLocator();
         $functions = [
             $locator->ui()->pluginTwigButton(),
