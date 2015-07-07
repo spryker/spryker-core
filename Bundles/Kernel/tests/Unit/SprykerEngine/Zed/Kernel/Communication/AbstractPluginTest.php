@@ -164,4 +164,18 @@ class AbstractPluginTest extends AbstractUnitTest
         return $plugin;
     }
 
+    /**
+     * @return FooPlugin
+     */
+    private function locatePlugin()
+    {
+        $locator = new PluginLocator(
+            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\AbstractPlugin\\Factory'
+        );
+
+        $plugin = $locator->locate('Kernel', Locator::getInstance(), 'FooPlugin');
+
+        return $plugin;
+    }
+
 }
