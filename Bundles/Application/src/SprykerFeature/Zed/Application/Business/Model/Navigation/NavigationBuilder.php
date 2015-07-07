@@ -56,9 +56,16 @@ class NavigationBuilder
      */
     public function build($pathInfo)
     {
-        $navigationPages = $this->navigationCollector->mergeNavigationFiles(
-            $this->navigationSchemaFinder
-        );
+
+        // TODO
+
+        if(file_exists(APPLICATION_ROOT_DIR.'/src/Generated/navigation.cache')){
+            $navigationPages = unserialize(file_get_contents(APPLICATION_ROOT_DIR.'/src/Generated/navigation.cache'));
+        }else{
+            $navigationPages = $this->navigationCollector->mergeNavigationFiles(
+                $this->navigationSchemaFinder
+            );
+        }
 
         $menu = $this->menuFormatter->formatMenu($navigationPages, $pathInfo);
         $path = $this->pathExtractor->extractPathFromMenu($menu);
@@ -67,6 +74,17 @@ class NavigationBuilder
             self::MENU => $menu,
             self::PATH => $path
         ];
+    }
+
+
+    public function prepare()
+    {
+        $navigationPages = $this->navigationCollector->mergeNavigationFiles(
+            $this->navigationSchemaFinder
+        );
+
+        // TODO
+        file_put_contents(APPLICATION_ROOT_DIR.'/src/Generated/navigation.cache', serialize($navigationPages));
     }
 
 }

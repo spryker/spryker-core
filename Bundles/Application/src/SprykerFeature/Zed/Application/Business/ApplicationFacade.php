@@ -88,4 +88,9 @@ class ApplicationFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createNavigationBuilder()->build($pathInfo);
     }
+
+    public function prepareNavigation()
+    {
+        return $this->getDependencyContainer()->createNavigationBuilder()->prepare();
+    }
 }
