@@ -1,58 +1,40 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
 
 {% block head_title 'sales.index'|trans %}
 
 {% block content %}
 
-    <section
-            class="spy-layout compact"
-            spy-app="spyGrid,spyForm"
-            ng-controller="GridController"
-            ng-strict-di
-            src="/sales/grid"
-            name="grid"
-            on="{ form_success : 'update' }"
-            ng-class="{ query : queryActive }"
-            >
+    {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Order List' } %}
 
-        <h3>{{ 'sales.index' | trans }}</h3>
+    <table class="footable table table-stripped toggle-arrow-tiny">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ "Name" | trans }}</th>
+            <th>{{ "Data" | trans }}</th>
+            <th>{{ "Total value" | trans }}</th>
+        </tr>
+        </thead>
 
-        <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
-        <spy-listen on="row_edit" do="openLayer(); read($argument)" scope="key_edit" channel="glossary"></spy-listen>
-
-        <table class="spy-grid">
-            <thead>
-            <tr>
-                <th spy-grid-head="columns['id_sales_order']" label="#"></th>
-                <th spy-grid-head="columns['customer']" label="{{ "Data" | trans }}"></th>
-                <th spy-grid-head="columns['customer']" label="{{ "Increment ID" | trans }}"></th>
-                <th spy-grid-head="columns['customer']" label="{{ "Name" | trans }}"></th>
-                <th spy-grid-head="columns['customer']" label="{{ "Customer ID" | trans }}"></th>
-                {#<th spy-grid-head="columns['nr_of_items']" label="{{ "# of items" | trans }}"></th>#}
-                <th spy-grid-head="columns['cart_value']" label="{{ "Total value" | trans }}"></th>
-            </tr>
-            </thead>
-
-            <tbody>
+        <tbody>
+        {% for row in content.rows %}
             <tr ng-repeat="row in rows">
-                <td><a href="/sales/details?id-sales-order={[{ row.id_sales_order }]}">{[{ row.id_sales_order }]}</a></td>
-                <td>{[{ row.created_at.date }]}</td>
-                <td>{[{ row.order_reference }]}</td>
-
-                <td>{[{ row.first_name }]} {[{ row.last_name }]}</td>
-
-                <td>todo</td>
-                {#<td>{[{ row.nr_of_items }]}</td>#}
-                <td>{[{ row.grand_total | currency:"€" }]}</td>
+                <td><a href="/sales/details?id-sales-order={{ row.id_sales_order }}">{{ row.id_sales_order }}</a></td>
+                <td><a href="/sales/details?id-sales-order={{ row.id_sales_order }}">{{ row.first_name }} {{ row.last_name }}</a></td>
+                <td>{{ row.created_at }}</td>
+                <td>{{ row.grand_total | currency }}</td>
             </tr>
-            <tr ng-if="!rows.length">
-                <td colspan="3">{{ "grid.no.results" | trans }}</td>
-            </tr>
-            </tbody>
-        </table>
+        {% endfor %}
 
-        <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+        </tbody>
+    </table>
 
-    </section>
+    {% include '@Gui/Partials/pagination.twig' with {
+        'url': '/sales/',
+        'totalPages': content.pages,
+        'currentPage': content.page
+    } %}
+
+    {% include '@Gui/Partials/Table/footer.twig' %}
 
 {% endblock %}
