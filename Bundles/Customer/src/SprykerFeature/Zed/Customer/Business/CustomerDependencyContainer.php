@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin\RegistrationTokenSender;
 
 /**
  * @method CustomerConfig getConfig()
@@ -35,36 +34,23 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCustomer()
     {
-        $customer = $this->getFactory()->createCustomerCustomer(
-            $this->createQueryContainer()
-        );
-
         $config = $this->getConfig();
-
-        foreach ($config->getPasswordRestoredConfirmationSenders() as $senderClassName) {
-            $customer->addPasswordRestoredConfirmationSender($this->createSender($senderClassName));
+        $senderPlugins = $this->getProvidedDependency(CustomerDependencyProvider::SENDER_PLUGINS);
+        $customer = $this->getFactory()->createCustomerCustomer(
+            $this->createQueryContainer(),
+            $config->getHostYves()
+        );
+        foreach ($senderPlugins[CustomerDependencyProvider::REGISTRATION_TOKEN_SENDERS] as $sender) {
+            $customer->addRegistrationTokenSender($sender);
         }
-
-        foreach ($config->getPasswordRestoreTokenSenders() as $senderClassName) {
-            $customer->addPasswordRestoreTokenSender($this->createSender($senderClassName));
+        foreach ($senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORE_TOKEN_SENDERS] as $sender) {
+            $customer->addPasswordRestoreTokenSender($sender);
         }
-
-        foreach ($config->getRegistrationTokenSenders() as $senderClassName) {
-            $customer->addRegistrationTokenSender($this->createSender($senderClassName));
+        foreach ($senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORED_CONFIRMATION_SENDERS] as $sender) {
+            $customer->addPasswordRestoredConfirmationSender($sender);
         }
-        $customer->setHostYves($config->getHostYves());
 
         return $customer;
-    }
-
-    /**
-     * @param $senderClassName
-     *
-     * @throws \ErrorException
-     * @return mixed
-     */
-    public function createSender($senderClassName) {
-        return $this->getProvidedDependency($senderClassName);
     }
 
     /**
@@ -95,7 +81,4 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getLocator()->locale()->facade();
     }
 
-    private function getHostYves() {
-        return $this->getProvidedDependency('HOST_YVES');
-    }
 }

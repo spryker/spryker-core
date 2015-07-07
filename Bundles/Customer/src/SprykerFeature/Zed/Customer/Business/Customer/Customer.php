@@ -53,10 +53,12 @@ class Customer
 
     /**
      * @param QueryContainerInterface $queryContainer
+     * @param string $hostYves
      */
-    public function __construct(QueryContainerInterface $queryContainer)
+    public function __construct(QueryContainerInterface $queryContainer, $hostYves)
     {
         $this->queryContainer = $queryContainer;
+        $this->hostYves = $hostYves;
     }
 
     /**
@@ -98,11 +100,6 @@ class Customer
         $this->registrationTokenSender[] = $sender;
     }
 
-    public function setHostYves($hostName)
-    {
-        $this->hostYves = $hostName;
-    }
-
     /**
      * @param CustomerTransfer $customerTransfer
      *
@@ -111,7 +108,6 @@ class Customer
     public function get(CustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomer($customerTransfer);
-
         $customerTransfer->fromArray($customer->toArray());
         $addresses = $customer->getAddresses();
         if ($addresses) {

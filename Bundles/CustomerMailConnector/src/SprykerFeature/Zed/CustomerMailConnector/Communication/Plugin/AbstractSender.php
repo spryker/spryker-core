@@ -1,15 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: danielsveller
- * Date: 24/06/15
- * Time: 11:34
+ * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
 
 
 class AbstractSender extends AbstractPlugin
@@ -26,7 +22,7 @@ class AbstractSender extends AbstractPlugin
             if (!isset($result['status'])) {
                 return false;
             }
-            if ($result['status'] !== 'sent') {
+            if ($result['status'] !== 'sent' || $result['status'] !== 'queued') {
                 return false;
             }
         }
@@ -34,11 +30,4 @@ class AbstractSender extends AbstractPlugin
         return true;
     }
 
-    /**
-     * @return CustomerMailConnectorDependencyContainer
-     */
-    protected function getDependencyContainer()
-    {
-        return parent::getDependencyContainer();
-    }
 }

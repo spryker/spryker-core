@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: danielsveller
- * Date: 24/06/15
- * Time: 09:02
+ * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\CustomerMailConnector;

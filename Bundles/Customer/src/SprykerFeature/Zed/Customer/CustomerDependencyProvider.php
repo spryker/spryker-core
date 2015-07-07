@@ -10,22 +10,32 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const REGISTRATION_TOKEN_SENDER = 'RegistrationTokenSender';
-    const PASSWORD_RESTORE_TOKEN_SENDER = 'PasswordRestoreTokenSender';
-    const PASSWORD_RESTORED_CONFIRMATION_SENDER = 'PasswordRestoredConfirmationSender';
+    const REGISTRATION_TOKEN_SENDERS = 'Registration Token Senders';
+    const PASSWORD_RESTORE_TOKEN_SENDERS = 'Password Restore TokenSenders';
+    const PASSWORD_RESTORED_CONFIRMATION_SENDERS = 'Password RestoredConfirmation Senders';
+    const SENDER_PLUGINS = 'sender plugins';
 
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::REGISTRATION_TOKEN_SENDER] = function (Container $container) {
-            return $container->getLocator()->customerMailConnector()->pluginRegistrationTokenSender();
-        };
-        $container[self::PASSWORD_RESTORE_TOKEN_SENDER] = function (Container $container) {
-            return $container->getLocator()->customerMailConnector()->pluginPasswordRestoreTokenSender();
-        };
-        $container[self::PASSWORD_RESTORED_CONFIRMATION_SENDER] = function (Container $container) {
-            return $container->getLocator()->customerMailConnector()->pluginPasswordRestoredConfirmationSender();
+        $container[self::SENDER_PLUGINS] = function (Container $container) {
+            return $this->getSenderPlugins($container);
         };
 
         return $container;
+    }
+
+    /**
+     * Overwrite in project
+     * @param Container $container
+     *
+     * @return mixed[]
+     */
+    protected function getSenderPlugins(Container $container)
+    {
+        return [
+            self::REGISTRATION_TOKEN_SENDERS => [],
+            self::PASSWORD_RESTORE_TOKEN_SENDERS => [],
+            self::PASSWORD_RESTORED_CONFIRMATION_SENDERS => [],
+        ];
     }
 }

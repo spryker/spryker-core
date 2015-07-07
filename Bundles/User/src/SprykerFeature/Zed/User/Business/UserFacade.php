@@ -14,7 +14,7 @@ use SprykerFeature\Zed\Acl\Dependency\Facade\AclToUserInterface;
 /**
  * @method UserDependencyContainer getDependencyContainer()
  */
-class UserFacade extends AbstractFacade implements AclToUserInterface
+class UserFacade extends AbstractFacade
 {
 
     public function install()
