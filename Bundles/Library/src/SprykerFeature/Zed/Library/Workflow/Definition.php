@@ -40,7 +40,7 @@ abstract class Definition implements DefinitionInterface
     {
         $context = $this->buildContext();
         $invoker = $this->getTaskInvoker();
-        /* @var TaskInterface $task */
+        /** @var TaskInterface $task */
         foreach ($this->getTasks() as $task) {
             $invoker->invokeTask($task, $context, $logContext);
             if (!$task->isSuccess()) {

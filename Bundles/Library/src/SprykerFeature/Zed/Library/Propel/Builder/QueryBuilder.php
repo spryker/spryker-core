@@ -13,6 +13,7 @@ class QueryBuilder extends \Propel\Generator\Builder\Om\QueryBuilder
      *
      * @param string $objName
      * @param string $clsName
+     *
      * @return string
      */
     public function buildObjectInstanceCreationCode($objName, $clsName)
@@ -20,7 +21,7 @@ class QueryBuilder extends \Propel\Generator\Builder\Om\QueryBuilder
         $bundle = $this->getBundleName();
 
         return "
-            /* @var \$locator \\Generated\\Zed\\Ide\\AutoCompletion */
+            /** @var \\Generated\\Zed\\Ide\\AutoCompletion \$locator */
             \$locator = \\SprykerEngine\\Zed\\Kernel\\Locator::getInstance();
             $objName = \$locator->"
         . lcfirst($bundle)
@@ -86,12 +87,11 @@ class QueryBuilder extends \Propel\Generator\Builder\Om\QueryBuilder
      * Find object by primary key using raw SQL to go fast.
      * Bypass doSelect() and the object formatter by using generated code.
      *
-     * @param     mixed \$key Primary key to use for the query
-     * @param     ConnectionInterface \$con A connection object
-     *
-     * @throws \\Propel\\Runtime\\Exception\\PropelException
+     * @param mixed \$key Primary key to use for the query
+     * @param ConnectionInterface \$con A connection object
      *
      * @return $ARClassName A model object, or null if the key is not found
+     * @throws \\Propel\\Runtime\\Exception\\PropelException
      */
     protected function findPkSimple(\$key, ConnectionInterface \$con)
     {

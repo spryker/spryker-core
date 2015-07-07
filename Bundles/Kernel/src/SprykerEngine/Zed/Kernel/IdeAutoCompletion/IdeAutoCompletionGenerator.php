@@ -5,15 +5,11 @@
 
 namespace SprykerEngine\Zed\Kernel\IdeAutoCompletion;
 
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-
 class IdeAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerator
 {
 
     /**
      * @param null $output
-     * @return mixed
      */
     public function create($output = null)
     {

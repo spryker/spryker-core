@@ -147,7 +147,7 @@ class Tracking
      */
     public function buildTracking()
     {
-        /* @var $provider ProviderInterface */
+        /** @var ProviderInterface $provider */
         foreach ($this->provider as $provider) {
             $tracking = $this->createTrackingOutput(
                 $provider->getTrackingOutput($this->dataProvider, $this->getPageType())

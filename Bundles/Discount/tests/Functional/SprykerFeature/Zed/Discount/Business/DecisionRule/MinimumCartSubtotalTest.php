@@ -8,18 +8,16 @@ namespace Functional\SprykerFeature\Zed\Discount\Business\DecisionRule;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\OrderTransfer;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
- * Class MinimumCartSubtotalTest
  * @group DiscountDecisionRuleMinimumCartSubtotalTest
  * @group Discount
- * @package Unit\SprykerFeature\Zed\Discount\Business\DecisionRule
  */
 class MinimumCartSubtotalTest extends Test
 {
@@ -75,11 +73,11 @@ class MinimumCartSubtotalTest extends Test
 
     /**
      * @param int $value
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule
+     * @return SpyDiscountDecisionRule
      */
     protected function getDecisionRuleEntity($value)
     {
-        $decisionRule = new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule();
+        $decisionRule = new SpyDiscountDecisionRule();
         $decisionRule->setValue($value);
 
         return $decisionRule;
@@ -90,6 +88,6 @@ class MinimumCartSubtotalTest extends Test
      */
     protected function getLocator()
     {
-        return  Locator::getInstance();
+        return Locator::getInstance();
     }
 }

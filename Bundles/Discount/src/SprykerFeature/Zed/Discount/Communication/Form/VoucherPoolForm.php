@@ -138,7 +138,7 @@ class VoucherPoolForm extends AbstractForm
         }
 
         $data = [];
-        /* @var SpyDiscountVoucherPoolCategory $voucherPoolCategory */
+        /** @var SpyDiscountVoucherPoolCategory $voucherPoolCategory */
         foreach ($voucherPoolCategories as $voucherPoolCategory) {
             $data[] = [
                 'value' => $voucherPoolCategory->getPrimaryKey(),

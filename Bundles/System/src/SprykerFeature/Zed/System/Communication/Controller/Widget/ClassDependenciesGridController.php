@@ -13,17 +13,19 @@ class ClassDependenciesGridController extends AbstractGridController
 
     /**
      * @param Request $request
+     *
      * @return array
      */
     public function indexAction(Request $request)
     {
         return $this->viewResponse([
-           'grid' => $this->initializeGrid($request)
+            'grid' => $this->initializeGrid($request)
         ]);
     }
 
     /**
      * @param Request $request
+     *
      * @return mixed|\SprykerFeature_Zed_System_Communication_Grid_ClassDependencies
      */
     protected function initializeGrid(Request $request)

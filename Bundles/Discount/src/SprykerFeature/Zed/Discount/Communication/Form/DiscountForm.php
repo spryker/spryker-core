@@ -10,6 +10,8 @@ use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
+use SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -42,7 +44,7 @@ class DiscountForm extends AbstractForm
     }
 
     /**
-     * @return array|\SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field[]
+     * @return array|Field[]
      */
     public function addFormFields()
     {
@@ -189,7 +191,7 @@ class DiscountForm extends AbstractForm
 
         $data = [];
 
-        /* @var \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool $voucherPool */
+        /** @var SpyDiscountVoucherPool $voucherPool */
         foreach ($voucherPools as $voucherPool) {
             $data[] = [
                 'value' => $voucherPool->getPrimaryKey(),

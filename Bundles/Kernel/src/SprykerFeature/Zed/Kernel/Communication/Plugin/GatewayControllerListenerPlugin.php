@@ -64,7 +64,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             throw new \LogicException('Only one transfer object can be received in yves-action');
         }
 
-        /* @var $parameter \ReflectionParameter */
+        /** @var \ReflectionParameter $parameter */
         $parameter = array_shift($parameters);
         if ($parameter) {
             $class = $parameter->getClass();

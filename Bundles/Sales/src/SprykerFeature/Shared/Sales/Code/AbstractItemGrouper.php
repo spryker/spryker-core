@@ -61,7 +61,7 @@ abstract class AbstractItemGrouper
         $index = [];
         $methodName = 'get' . ucfirst($key);
 
-        /* @var $item \SprykerFeature\Shared\Sales\Transfer\OrderItem */
+        /** @var \SprykerFeature\Shared\Sales\Transfer\OrderItem $item */
         foreach ($items as $item) {
             $groupKey = $item->$methodName();
             if (isset($index[$groupKey])) {

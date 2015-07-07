@@ -16,7 +16,7 @@ class SprykerFeature_Zed_Library_Translate extends Zend_Translate
 function __($string)
 {
     $registry = Zend_Registry::getInstance();
-    /* @var $instance \SprykerFeature_Zed_Library_Translate */
+    /* @var \SprykerFeature_Zed_Library_Translate $instance */
     if ($registry->isRegistered('Zend_Translate')) {
         $instance = $registry->get('Zend_Translate');
         return $instance->_($string);

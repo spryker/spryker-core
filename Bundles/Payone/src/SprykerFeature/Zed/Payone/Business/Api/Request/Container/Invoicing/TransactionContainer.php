@@ -44,7 +44,7 @@ class TransactionContainer extends AbstractContainer
         $data = parent::toArray();
         $i = 1;
         foreach ($this->items as $item) {
-            /* @var $item ItemContainer */
+            /* @var ItemContainer $item */
             $data = array_merge($data, $item->toArrayByKey($i));
             $i++;
         }

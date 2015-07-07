@@ -131,7 +131,7 @@ class IndexController extends AbstractController
             $process = $this->getFacade()->getProcess($orderItem->getProcess()->getName());
             $events = $process->getStateFromAllProcesses($orderItem->getState()->getName())->getEvents();
 
-            /* @var $orderItem SpySalesOrderItem */
+            /** @var SpySalesOrderItem $orderItem */
             echo '<tr>';
             echo '<td><a href="/sales/order-details/activity-log?id_sales_order=' . $orderItem->getOrder()->getIdSalesOrder() . '">' . $orderItem->getOrder()->getIdSalesOrder() . '</a></td>';
             echo '<td>' . $orderItem->getIdSalesOrderItem() . '</td>';

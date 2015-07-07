@@ -21,7 +21,7 @@ class BundleNameFinder extends AbstractBundle
 
         $finder = new Finder();
         $dirs = $this->getBundleDirectories();
-        /* @var SplFileInfo $bundleDirectory */
+        /** @var SplFileInfo $bundleDirectory */
         foreach ($finder->directories()->in($dirs)->depth(0) as $bundleDirectory) {
             $bundleName = $bundleDirectory->getRelativePathname();
             $bundles[] = $bundleName;

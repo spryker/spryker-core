@@ -10,6 +10,8 @@ use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
+use SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -42,7 +44,7 @@ class DecisionRuleForm extends AbstractForm
     }
 
     /**
-     * @return array|\SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field[]
+     * @return array|Field[]
      */
     public function addFormFields()
     {
@@ -127,7 +129,7 @@ class DecisionRuleForm extends AbstractForm
         $discounts = $this->queryContainer->queryDiscount()->find();
 
         $data = [];
-        /* @var \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount $discount */
+        /** @var SpyDiscount $discount */
         foreach ($discounts as $discount) {
             $data[] = [
                 'value' => $discount->getPrimaryKey(),

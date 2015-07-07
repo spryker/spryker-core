@@ -56,7 +56,7 @@ class Response extends AbstractObject implements
     public function hasErrorMessage($messageString)
     {
         $errorMessages = $this->getErrorMessages();
-        /* @var Message $errorMessage */
+        /** @var Message $errorMessage */
         foreach ($errorMessages as $errorMessage) {
             if ($errorMessage->getMessage() === $messageString) {
                 return true;
