@@ -37,11 +37,18 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     private $queryContainer;
 
     /**
+     * @var Factory
+     */
+    private $factory;
+
+    /**
      * @param Factory $factory
      * @param Locator $locator
      */
     public function __construct(Factory $factory, Locator $locator)
     {
+        $this->factory = $factory;
+
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
         }
@@ -75,6 +82,14 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
         }
 
         return $this;
+    }
+
+    /**
+     * @return Factory
+     */
+    protected function getFactory()
+    {
+        return $this->factory;
     }
 
     /**

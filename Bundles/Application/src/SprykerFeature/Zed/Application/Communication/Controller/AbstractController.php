@@ -49,6 +49,11 @@ abstract class AbstractController
     private $queryContainer;
 
     /**
+     * @var Factory
+     */
+    private $factory;
+
+    /**
      * @param Application $application
      * @param Factory $factory
      * @param Locator $locator
@@ -56,6 +61,7 @@ abstract class AbstractController
     public function __construct(Application $application, Factory $factory, Locator $locator)
     {
         $this->application = $application;
+        $this->factory = $factory;
         $this->locator = $locator;
 
         if ($factory->exists('DependencyContainer')) {
@@ -80,6 +86,14 @@ abstract class AbstractController
         if (isset($dependencyContainer)) {
             $this->getDependencyContainer()->setContainer($container);
         }
+    }
+
+    /**
+     * @return Factory
+     */
+    protected function getFactory()
+    {
+        return $this->factory;
     }
 
     /**

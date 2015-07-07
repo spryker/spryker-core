@@ -50,8 +50,8 @@ abstract class AbstractController
     public function __construct(Application $app, Factory $factory, LocatorLocatorInterface $locator)
     {
         $this->app = $app;
-        $this->locator = $locator;
         $this->factory = $factory;
+        $this->locator = $locator;
 
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
@@ -59,13 +59,13 @@ abstract class AbstractController
     }
 
     /**
-     * TODO Wrong place! Needs to be in Newrelic
+     * @return Factory
      */
-    public function disableLoggingToNewRelic()
+    protected function getFactory()
     {
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreApdex();
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreTransaction();
+        return $this->factory;
     }
+
     /**
      * @param string $path
      * @param array $parameters
