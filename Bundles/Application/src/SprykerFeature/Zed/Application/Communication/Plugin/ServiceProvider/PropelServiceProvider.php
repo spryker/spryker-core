@@ -52,8 +52,8 @@ class PropelServiceProvider implements ServiceProviderInterface
     private function getConfig()
     {
         $propelConfig = Config::get(SystemConfig::PROPEL)['database']['connections']['default'];
-        $propelConfig['user'] = Config::get(SystemConfig::ZED_PGSQL_USERNAME);
-        $propelConfig['password'] = Config::get(SystemConfig::ZED_PGSQL_PASSWORD);
+        $propelConfig['user'] = Config::get(SystemConfig::ZED_DB_USERNAME);
+        $propelConfig['password'] = Config::get(SystemConfig::ZED_DB_PASSWORD);
         $propelConfig['dsn'] = Config::get(SystemConfig::PROPEL)['database']['connections']['default']['dsn'];
 
         return $propelConfig;

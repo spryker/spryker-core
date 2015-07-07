@@ -37,13 +37,13 @@ class ConvertConfigConsole extends Console
             'propel' => Config::get(SystemConfig::PROPEL)
         ];
 
-        $dsn = 'pgsql:host=' . Config::get(SystemConfig::ZED_PGSQL_HOST)
-            . ';dbname=' . Config::get(SystemConfig::ZED_PGSQL_DATABASE)
+        $dsn =  Config::get(SystemConfig::ZED_DB_ENGINE).':host=' . Config::get(SystemConfig::ZED_DB_HOST)
+            . ';dbname=' . Config::get(SystemConfig::ZED_DB_DATABASE)
         ;
 
         $config['propel']['database']['connections']['default']['dsn'] = $dsn;
-        $config['propel']['database']['connections']['default']['user'] = Config::get(SystemConfig::ZED_PGSQL_USERNAME);
-        $config['propel']['database']['connections']['default']['password'] = Config::get(SystemConfig::ZED_PGSQL_PASSWORD);
+        $config['propel']['database']['connections']['default']['user'] = Config::get(SystemConfig::ZED_DB_USERNAME);
+        $config['propel']['database']['connections']['default']['password'] = Config::get(SystemConfig::ZED_DB_PASSWORD);
 
         $config['propel']['database']['connections']['zed'] = $config['propel']['database']['connections']['default'];
 

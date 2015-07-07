@@ -50,22 +50,40 @@ interface SystemConfig extends ConfigInterface
     const ZED_SSL_EXCLUDED = 'ZED_SSL_EXCLUDED';
 
     /**
-     * Database - MySQL
+     * Database - DB
      */
-    //const ZED_MYSQL_USERNAME = 'ZED_MYSQL_USERNAME';
-    //const ZED_MYSQL_PASSWORD = 'ZED_MYSQL_PASSWORD';
-    //const ZED_MYSQL_DATABASE = 'ZED_MYSQL_DATABASE';
-    //const ZED_MYSQL_HOST = 'ZED_MYSQL_HOST';
-    //const ZED_MYSQL_PORT = 'ZED_MYSQL_PORT';
 
     /**
-     * Database - PostgreSQL
+     * @deprecated
      */
-    const ZED_PGSQL_USERNAME = 'ZED_PGSQL_USERNAME';
-    const ZED_PGSQL_PASSWORD = 'ZED_PGSQL_PASSWORD';
-    const ZED_PGSQL_DATABASE = 'ZED_PGSQL_DATABASE';
-    const ZED_PGSQL_HOST = 'ZED_PGSQL_HOST';
-    const ZED_PGSQL_PORT = 'ZED_PGSQL_PORT';
+    const ZED_MYSQL_USERNAME = 'ZED_MYSQL_USERNAME';
+
+    /**
+     * @deprecated
+     */
+    const ZED_MYSQL_PASSWORD = 'ZED_MYSQL_PASSWORD';
+
+    /**
+     * @deprecated
+     */
+    const ZED_MYSQL_DATABASE = 'ZED_MYSQL_DATABASE';
+
+    /**
+     * @deprecated
+     */
+    const ZED_MYSQL_HOST = 'ZED_MYSQL_HOST';
+
+    /**
+     * @deprecated
+     */
+    const ZED_MYSQL_PORT = 'ZED_MYSQL_PORT';
+    
+    const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
+    const ZED_DB_USERNAME = 'ZED_DB_USERNAME';
+    const ZED_DB_PASSWORD = 'ZED_DB_PASSWORD';
+    const ZED_DB_DATABASE = 'ZED_DB_DATABASE';
+    const ZED_DB_HOST = 'ZED_DB_HOST';
+    const ZED_DB_PORT = 'ZED_DB_PORT';
 
 
     /**
