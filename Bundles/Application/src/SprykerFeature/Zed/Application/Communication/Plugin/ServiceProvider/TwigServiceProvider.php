@@ -38,7 +38,6 @@ class TwigServiceProvider extends SilexTwigServiceProvider
             $namespace = Config::get(SystemConfig::PROJECT_NAMESPACE);
 
             $storeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
-
             return new Filesystem(
                 [
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/',
@@ -68,6 +67,8 @@ class TwigServiceProvider extends SilexTwigServiceProvider
         $app['twig.global.variables'] = $app->share(function () {
              return [];
         });
+
+
         $app['twig'] = $app->share(
             $app->extend(
                 'twig',

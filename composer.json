@@ -104,7 +104,7 @@
     "symfony/serializer": "~2.6.9",
     "symfony/translation": "~2.6.9",
     "symfony/twig-bridge": "~2.6.9",
-    "symfony/validator": "2.5.*",
+    "symfony/validator": "~2.6.9",
     "symfony/var-dumper": "~2.6.9",
     "symfony/yaml": ">=2.3",
     "symfony-cmf/routing": "~1.0",

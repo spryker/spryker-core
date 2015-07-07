@@ -16,10 +16,13 @@ use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Symfony\Component\Form\FormFactory;
+use SprykerFeature\Zed\Product\Communication\Form\BuildFormFactoryHelper;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+
+
 
 abstract class AbstractController
 {
@@ -252,7 +255,14 @@ abstract class AbstractController
         return $formFactory->create($type, $data, $options);
     }
 
+    protected  function getFormFactory()
+    {
+        return $this->application['form.factory'];
+    }
+
+
     /**
+     * @return void
      */
     protected function clearBreadcrumbs()
     {
