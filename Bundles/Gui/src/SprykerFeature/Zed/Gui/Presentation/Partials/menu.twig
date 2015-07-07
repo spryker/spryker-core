@@ -13,9 +13,7 @@
                 href="{{ node.uri }}"
                 {% if node.shortcut is defined %}data-hotkey="{{ node.shortcut }}"{% endif %}
                 >
-            {% if depth == 0 %}
-            <i class="{% if node.icon is defined and node.icon != '' %}{{ node.icon }}{% else %}fa font-spryker menu-icon{% endif %}"></i>
-            {% endif %}
+            <i class="fa fa-flask"></i>
             <span class="nav-label">{{ node.label }}</span>
         </a>
         </li>
@@ -28,9 +26,7 @@
     {%- if node is defined %}
         <li class="{{ node.is_active is defined and node.is_active ? " active" : "" }}">
             <a href="javascript:void(0)">
-                {% if depth == 0 %}
-                <i class="{% if node.icon is defined and node.icon != '' %}{{ node.icon }}{% else %}fa font-spryker menu-icon{% endif %}"></i>
-                {% endif %}
+                <i class="fa fa-flask"></i>
                 <span class="nav-label">{{ node.label }}</span>
                 <span class="fa arrow"></span>
             </a>
@@ -84,34 +80,3 @@
         </ul>
     </div>
 </nav>
-
-<style>
-/* this will be moved in spryker.less file in a new PR
-/* Spryker Font .. * /
-@font-face {
-    font-family: 'Spryker';
-    src: url('/bundles/Gui/fonts/Spryker.ttf') format('truetype');
-}
-
-.font-spryker {
-    font-family: "Spryker";
-}
-.menu-icon {
-    font-size: 20px;
-}
-.font-spryker.menu-icon {
-    width: 17px;
-}
-.font-spryker:before {
-    content: "s";
-    margin-left: -25px;
-}
-.spryker-logo {
-    font-size: 140px;
-    font-size: 30px;
-    text-align: center;
-    float: left;
-}
-*/
-/* .. Spryker font */
-</style>
