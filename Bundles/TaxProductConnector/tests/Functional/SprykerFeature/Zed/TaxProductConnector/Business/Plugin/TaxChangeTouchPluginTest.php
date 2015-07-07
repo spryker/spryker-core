@@ -44,7 +44,10 @@ class TaxChangeTouchPluginTest extends Test
         parent::setUp();
 
         $this->locator = Locator::getInstance();
-        $this->taxProductConnectorFacade = new TaxProductConnectorFacade(new Factory('TaxProductConnector'), $this->locator);
+        $this->taxProductConnectorFacade = new TaxProductConnectorFacade(
+            new Factory('TaxProductConnector'),
+            $this->locator
+        );
     }
 
     public function testTouchUpdatedOnTaxRateChange()
@@ -70,6 +73,7 @@ class TaxChangeTouchPluginTest extends Test
             ->find();
 
         $this->assertEquals(2, $query->count());
+
         foreach($query as $touchEntity) {
             $this->assertContains($touchEntity->getItemId(), $this->abstractProductIds);
         }
@@ -78,23 +82,40 @@ class TaxChangeTouchPluginTest extends Test
     private function loadFixtures()
     {
         $rate1 = new SpyTaxRate();
-        $rate1->setName('Rate1')->setRate(10)->save();
+        $rate1->setName('Rate1')
+            ->setRate(10)
+            ->save()
+        ;
         $this->taxRateIds[] = $rate1->getIdTaxRate();
 
         $rate2 = new SpyTaxRate();
-        $rate2->setName('Rate2')->setRate(5)->save();
+        $rate2->setName('Rate2')
+            ->setRate(5)
+            ->save()
+        ;
         $this->taxRateIds[] = $rate2->getIdTaxRate();
 
         $taxSet = new SpyTaxSet();
-        $taxSet->setName('Set1')->addSpyTaxRate($rate1)->addSpyTaxRate($rate2)->save();
+        $taxSet->setName('Set1')
+            ->addSpyTaxRate($rate1)
+            ->addSpyTaxRate($rate2)
+            ->save()
+        ;
         $this->taxSetId = $taxSet->getIdTaxSet();
 
         $product1 = new SpyAbstractProduct();
-        $product1->setSku('Product1')->setSpyTaxSet($taxSet)->save();
+        $product1->setSku('Product1')
+            ->setSpyTaxSet($taxSet)
+            ->save()
+        ;
         $this->abstractProductIds[] = $product1->getIdAbstractProduct();
 
         $product2 = new SpyAbstractProduct();
-        $product2->setSku('Product2')->setSpyTaxSet($taxSet)->save();
+        $product2->setSku('Product2')
+            ->setSpyTaxSet($taxSet)
+            ->setAttributes('{}')
+            ->save()
+        ;
         $this->abstractProductIds[] = $product2->getIdAbstractProduct();
     }
 
