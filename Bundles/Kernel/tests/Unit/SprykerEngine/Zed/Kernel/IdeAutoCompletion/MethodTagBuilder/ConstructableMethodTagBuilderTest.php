@@ -63,6 +63,26 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    public function testMethodTagsForYvesShouldContainCommunicationIfClassNamePartLevelIsSet()
+    {
+        $options = [
+            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => '',
+            ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
+            ConstructableMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
+            ConstructableMethodTagBuilder::OPTION_KEY_CLASS_NAME_PART_LEVEL => 3,
+        ];
+
+        require_once(__DIR__ . '/Fixtures/src/ProjectNamespace/Application/Bundle/Communication/Form/FooForm.php');
+
+        $methodTagBuilder = new ConstructableMethodTagBuilder($options);
+        $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
+
+        $expectedMethodTag =
+            ' * @method \ProjectNamespace\Application\Bundle\Communication\Form\FooForm createCommunicationFormFooForm()'
+        ;
+        $this->assertContains($expectedMethodTag, $methodTags);
+    }
+
     public function testBuildMethodTagsShouldReturnMethodNameWithParamsIfClassConstructorHasParams()
     {
         $options = [
