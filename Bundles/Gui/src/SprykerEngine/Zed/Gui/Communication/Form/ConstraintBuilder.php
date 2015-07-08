@@ -7,31 +7,16 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ConstraintBuilder
 {
-    protected $constraints = null;
 
-    public static function getInstance()
-    {
-        return new static();
-    }
 
     public function addNotBlank()
     {
-        return $this->add(new NotBlank());
-    }
-
-    public function add(Constraint $constraint)
-    {
-        $this->constraints[] = $constraint;
-        return $this;
+        return new NotBlank();
     }
 
     public function addLength($options)
     {
-        return $this->add(new Length($options));
+        return new Length($options);
     }
 
-    public function getConstraints()
-    {
-        return $this->constraints;
-    }
 }
