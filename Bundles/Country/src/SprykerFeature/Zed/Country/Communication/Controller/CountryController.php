@@ -20,6 +20,15 @@ class CountryController extends AbstractController
 
         $form = $this->getFactory()->createFormCountryForm($countryQuery)->init();
 
+        if ($request->isMethod('POST')) {
+            if (false === $data = $form->processRequest($request)) {
+                $errors = $this->getErrors();
+                // show errors
+            } else {
+                // save
+            }
+        }
+
         return $this->viewResponse([
             'form' => $form->render(),
         ]);

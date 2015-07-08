@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
  */
 class CountryForm extends AbstractForm
 {
-
     /**
      * @var SpyCountryQuery
      */
@@ -26,48 +25,9 @@ class CountryForm extends AbstractForm
         $this->countryQuery = $countryQuery;
     }
 
-
-    public function process()
-    {
-        $idCountry = $this->request->get('id_country');
-
-        $countryDetailEntity = $this
-            ->countryQuery
-            ->findOneByIdCountry($idCountry);
-
-        $data = $countryDetailEntity->toArray();
-
-        // TODO this should not be here
-        if ($this->request->isMethod('POST')) {
-            if (false === $data = $this->processRequest($this->request)) {
-                $errors = $this->getErrors();
-            }else{
-                // all ok
-            }
-        }
-
-//        return false === empty($data) ?
-//            $this->updateCountry($data) :
-//            $this->createCountry();
-    }
-
-//    public function updateCountry($data)
-//    {
-//        return $this->buildForm($data);
-//    }
-
-    protected function populateFormFields()
-    {
-        $idCountry = $this->request->get('id_country');
-
-        $countryDetailEntity = $this
-            ->countryQuery
-            ->findOneByIdCountry($idCountry);
-
-        $data = $countryDetailEntity->toArray();
-        return $data;
-    }
-
+    /**
+     * @return $this
+     */
     protected function buildFormFields()
     {
         return $this->addText(
@@ -111,13 +71,20 @@ class CountryForm extends AbstractForm
             ->addText('postal_code_regex', ['label' => 'Postal code (regex)'])
             ->addHidden('id_country')
             ->addSubmit();
-//            ->setData($data);
     }
 
-    public function createCountry()
+    /**
+     * @return array
+     */
+    protected function populateFormFields()
     {
-        $data = [];
+        $idCountry = $this->request->get('id_country');
 
-        return $this->buildForm($data);
+        $countryDetailEntity = $this
+            ->countryQuery
+            ->findOneByIdCountry($idCountry);
+
+        $data = $countryDetailEntity->toArray();
+        return $data;
     }
 }

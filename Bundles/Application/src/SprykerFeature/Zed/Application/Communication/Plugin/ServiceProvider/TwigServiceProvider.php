@@ -34,6 +34,12 @@ class TwigServiceProvider extends SilexTwigServiceProvider
 
         parent::register($app);
 
+
+        $templates = glob('*.html.twig')
+        $app['twig.form.templates'] = array_merge(
+            $templates, $app['twig.form.templates']
+        );
+
         $app['twig.loader.zed'] = $app->share(function () {
             $namespace = Config::get(SystemConfig::PROJECT_NAMESPACE);
 
