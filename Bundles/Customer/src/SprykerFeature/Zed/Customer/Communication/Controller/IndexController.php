@@ -19,14 +19,15 @@ class IndexController extends AbstractController
 
     const DATE_FORMAT = 'Y-m-d G:i:s';
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        return $this->gridAction($request);
     }
 
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return array
      */
     public function gridAction(Request $request)
     {
@@ -39,7 +40,7 @@ class IndexController extends AbstractController
             $value['created_at'] = $this->getFormatedRowDate($value['created_at']);
         }
 
-        return $this->jsonResponse($data);
+        return $data;
     }
 
     /**
