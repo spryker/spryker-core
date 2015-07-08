@@ -1,25 +1,24 @@
 <?php
 
 namespace SprykerFeature\Zed\Country\Communication\Controller;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\CountryCommunication;
+use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Country\Communication\Form\CountryForm;
 
 /**
  * @method CountryQueryContainer getQueryContainer()
+ * @method CountryCommunication getFactory()
  */
-class CountryController extends  AbstractController
+class CountryController extends AbstractController
 {
 
     public function indexAction(Request $request)
     {
-        $countryId = intval($request->get('id_country', false));
+        $countryQuery = $this->getQueryContainer()->queryCountries();
 
-        $countryDetailsEntity = $this->getQueryContainer()->queryCountries()->findOneByIdCountry($countryId);
-        $countryDetails = $countryDetailsEntity->toArray();
-
-        $form = CountryForm::getInstance()->process($request, $countryDetails);
+        $form = $this->getFactory()->createFormCountryForm($countryQuery)->init();
 
         return $this->viewResponse([
             'form' => $form->render(),

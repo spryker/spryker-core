@@ -2,24 +2,78 @@
 
 namespace SprykerFeature\Zed\Country\Communication\Form;
 
-use SprykerEngine\Zed\Gui\Business\AbstractFormManager;
-use SprykerEngine\Zed\Gui\Business\ConstraintBuilder;
-
-use SprykerFeature\Zed\Library\Propel\Builder\QueryBuilder;
+use SprykerEngine\Zed\Gui\Communication\Form\AbstractForm;
+use SprykerEngine\Zed\Gui\Communication\Form\ConstraintBuilder;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
-use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 
 /**
  * @method CountryQueryContainer getQueryContainer()
  */
-class CountryForm extends AbstractFormManager
+class CountryForm extends AbstractForm
 {
-    protected function buildForm($data)
+
+    /**
+     * @var SpyCountryQuery
+     */
+    protected $countryQuery;
+
+    /**
+     * @param SpyCountryQuery $countryQuery
+     */
+    public function __construct(SpyCountryQuery $countryQuery)
+    {
+        $this->countryQuery = $countryQuery;
+    }
+
+
+    public function process()
+    {
+        $idCountry = $this->request->get('id_country');
+
+        $countryDetailEntity = $this
+            ->countryQuery
+            ->findOneByIdCountry($idCountry);
+
+        $data = $countryDetailEntity->toArray();
+
+        // TODO this should not be here
+        if ($this->request->isMethod('POST')) {
+            if (false === $data = $this->processRequest($this->request)) {
+                $errors = $this->getErrors();
+            }else{
+                // all ok
+            }
+        }
+
+//        return false === empty($data) ?
+//            $this->updateCountry($data) :
+//            $this->createCountry();
+    }
+
+//    public function updateCountry($data)
+//    {
+//        return $this->buildForm($data);
+//    }
+
+    protected function populateFormFields()
+    {
+        $idCountry = $this->request->get('id_country');
+
+        $countryDetailEntity = $this
+            ->countryQuery
+            ->findOneByIdCountry($idCountry);
+
+        $data = $countryDetailEntity->toArray();
+        return $data;
+    }
+
+    protected function buildFormFields()
     {
         return $this->addText(
             'iso2_code',
             [
-                'label'=>'ISO2 Code',
+                'label' => 'ISO2 Code',
                 'constraints' => ConstraintBuilder::getInstance()
                     ->addNotBlank()
                     ->addLength([
@@ -31,7 +85,7 @@ class CountryForm extends AbstractFormManager
         )
             ->addText('iso3_code',
                 [
-                    'label'=>'ISO3 Code',
+                    'label' => 'ISO3 Code',
                     'constraints' => ConstraintBuilder::getInstance()
                         ->addNotBlank()
                         ->addLength([
@@ -42,47 +96,28 @@ class CountryForm extends AbstractFormManager
                 ])
             ->addText('name',
                 [
-                    'label'=>'Country Name',
+                    'label' => 'Country Name',
                     'constraints' => ConstraintBuilder::getInstance()
                         ->addNotBlank()
                         ->getConstraints()
                 ])
             ->addText('postal_code_mandatory',
                 [
-                    'label'=>'Postal Code',
+                    'label' => 'Postal Code',
                     'constraints' => ConstraintBuilder::getInstance()
                         ->addNotBlank()
                         ->getConstraints()
                 ])
-            ->addText('postal_code_regex', ['label'=>'Postal code (regex)'])
+            ->addText('postal_code_regex', ['label' => 'Postal code (regex)'])
             ->addHidden('id_country')
-            ->addSubmit()
-            ->setData($data);
+            ->addSubmit();
+//            ->setData($data);
     }
 
     public function createCountry()
     {
         $data = [];
 
-        return $this->buildForm($data);
-    }
-
-    public function process(Request $request, $data)
-    {
-
-        if ($request->isMethod('POST')) {
-            if(false === $data = $this->processRequest($request)){
-                $errors = $this->getErrors();
-            }
-        }
-
-        return !empty($data) ?
-            $this->updateCountry($data) :
-            $this->createCountry();
-    }
-
-    public function updateCountry($data)
-    {
         return $this->buildForm($data);
     }
 }
