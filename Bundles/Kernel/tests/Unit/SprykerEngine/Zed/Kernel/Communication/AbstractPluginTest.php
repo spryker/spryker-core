@@ -7,14 +7,12 @@ namespace Unit\SprykerEngine\Zed\Kernel\Communication;
 
 use SprykerEngine\Zed\Kernel\AbstractUnitTest;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Communication\PluginLocator;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin;
-use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\FooMessenger;
-use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\PluginLocator\QueryContainer;
 
 /**
  * @group SprykerEngine
@@ -40,7 +38,10 @@ class AbstractPluginTest extends AbstractUnitTest
         $plugin->setDependencyContainer($this->getDependencyContainerMock());
         $dependencyContainer = $plugin->getDependencyContainer();
 
-        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer', $dependencyContainer);
+        $this->assertInstanceOf(
+            'SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer',
+            $dependencyContainer
+        );
     }
 
     public function testGetFacadeShouldReturnNullIfNotSet()
@@ -88,7 +89,10 @@ class AbstractPluginTest extends AbstractUnitTest
         $messengerMock = $this->getMock('SprykerEngine\Shared\Kernel\Messenger\MessengerInterface');
         $plugin = $plugin->setMessenger($messengerMock);
 
-        $this->assertInstanceOf('Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin', $plugin);
+        $this->assertInstanceOf(
+            'Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin',
+            $plugin
+        );
     }
 
     public function testCallLogShouldOnlyReturnPluginIfNoMessengerIsSet()
@@ -126,11 +130,12 @@ class AbstractPluginTest extends AbstractUnitTest
     }
 
     /**
-     * @return AbstractDependencyContainer
+     * @return AbstractCommunicationDependencyContainer
      */
     private function getDependencyContainerMock()
     {
-        return $this->getMock('SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer', [], [], '', false);
+        return $this->getMock('SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer', [], [],
+            '', false);
     }
 
     /**
