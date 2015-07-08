@@ -24,6 +24,14 @@ use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\F
 class AbstractPluginTest extends AbstractUnitTest
 {
 
+    public function testGetFactoryMustReturnInstance()
+    {
+        $plugin = $this->locatePlugin();
+        $factory = $plugin->getFactory();
+
+        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Communication\Factory', $factory);
+    }
+
     public function testGetDependencyContainerShouldReturnNullIfNotSet()
     {
         $plugin = $this->getPlugin();

@@ -21,10 +21,9 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     protected $messenger;
 
     /**
-     * @var AbstractCommunicationDependencyContainer
+     * @var Factory
      */
-
-    private $dependencyContainer;
+    private $factory;
 
     /**
      * @var AbstractFacade
@@ -32,14 +31,14 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     private $facade;
 
     /**
+     * @var AbstractCommunicationDependencyContainer
+     */
+    private $dependencyContainer;
+
+    /**
      * @var AbstractQueryContainer
      */
     private $queryContainer;
-
-    /**
-     * @var Factory
-     */
-    private $factory;
 
     /**
      * @param Factory $factory
