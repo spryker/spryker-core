@@ -60,9 +60,9 @@ class StorageInstanceBuilder
      * @return KeyValueReadWriteInterface
      * @throws \Exception
      */
-    public static function getKvStorageReadWriteInstance($debug = false)
+    public static function getStorageReadWriteInstance($debug = false)
     {
-        return self::getKvStorageInstance(self::ADAPTER_READ_WRITE, $debug);
+        return self::getStorageInstance(self::ADAPTER_READ_WRITE, $debug);
     }
 
     /**
@@ -71,9 +71,9 @@ class StorageInstanceBuilder
      * @return KeyValueReadInterface
      * @throws \Exception
      */
-    public static function getKvStorageReadInstance($debug = false)
+    public static function getStorageReadInstance($debug = false)
     {
-        return self::getKvStorageInstance(self::ADAPTER_READ, $debug);
+        return self::getStorageInstance(self::ADAPTER_READ, $debug);
     }
 
     /**
@@ -83,7 +83,7 @@ class StorageInstanceBuilder
      * @return AdapterInterface
      * @throws \Exception
      */
-    private static function getKvStorageInstance($type, $debug = false)
+    private static function getStorageInstance($type, $debug = false)
     {
 
         $kvAdapter = Config::get(SystemConfig::STORAGE_KV_SOURCE);

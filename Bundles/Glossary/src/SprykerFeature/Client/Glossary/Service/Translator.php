@@ -14,7 +14,7 @@ class Translator
     /**
      * @var ReadInterface
      */
-    protected $kvStorage;
+    protected $storage;
 
     /**
      * @var KeyBuilderInterface
@@ -32,13 +32,13 @@ class Translator
     protected $translations = [];
 
     /**
-     * @param ReadInterface $kvStorage
+     * @param ReadInterface $storage
      * @param KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
-    public function __construct($kvStorage, $keyBuilder, $localeName)
+    public function __construct($storage, $keyBuilder, $localeName)
     {
-        $this->kvStorage = $kvStorage;
+        $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
         $this->locale = $localeName;
     }
@@ -62,7 +62,7 @@ class Translator
     protected function loadTranslation($keyName)
     {
         $key = $this->keyBuilder->generateKey($keyName, $this->locale);
-        $this->translations[$keyName] = $this->kvStorage->get($key);
+        $this->translations[$keyName] = $this->storage->get($key);
     }
 
     public function getLocale()

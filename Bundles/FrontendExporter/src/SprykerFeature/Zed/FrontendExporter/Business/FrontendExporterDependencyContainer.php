@@ -91,7 +91,7 @@ class FrontendExporterDependencyContainer extends AbstractBusinessDependencyCont
     protected function createKeyValueWriter()
     {
         return $this->getFactory()->createExporterWriterKeyValueRedisWriter(
-            StorageInstanceBuilder::getKvStorageReadWriteInstance()
+            StorageInstanceBuilder::getStorageReadWriteInstance()
         );
     }
 
@@ -113,7 +113,7 @@ class FrontendExporterDependencyContainer extends AbstractBusinessDependencyCont
     protected function createRedisReader()
     {
         return $this->getFactory()->createExporterReaderKeyValueRedisReader(
-            StorageInstanceBuilder::getKvStorageReadWriteInstance()
+            StorageInstanceBuilder::getStorageReadWriteInstance()
         );
     }
 

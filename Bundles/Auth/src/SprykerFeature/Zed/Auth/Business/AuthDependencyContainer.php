@@ -40,7 +40,7 @@ class AuthDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelAuth(
             $this->getLocator(),
-            $this->getLocator()->application()->pluginSession(),
+            $this->getLocator()->session()->client(),
             $this->getLocator()->user()->facade(),
             $this->getConfig(),
             $this->createStaticTokenClient()

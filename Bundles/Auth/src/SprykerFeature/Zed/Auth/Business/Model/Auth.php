@@ -7,6 +7,7 @@ namespace SprykerFeature\Zed\Auth\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerFeature\Client\Session\Service\SessionClientInterface;
 use SprykerFeature\Zed\Application\Communication\Plugin\Session;
 use SprykerFeature\Zed\Auth\AuthConfig;
 use SprykerFeature\Zed\Auth\Business\AuthDependencyContainer;
@@ -25,7 +26,7 @@ class Auth implements AuthInterface
     protected $locator;
 
     /**
-     * @var Session
+     * @var SessionClientInterface
      */
     protected $session;
 
@@ -41,14 +42,14 @@ class Auth implements AuthInterface
 
     /**
      * @param LocatorLocatorInterface $locator
-     * @param Session $session
+     * @param SessionClientInterface $session
      * @param UserFacade $userFacade
      * @param AuthConfig $settings
      * @param StaticToken $staticToken
      */
     public function __construct(
         LocatorLocatorInterface $locator,
-        Session $session,
+        SessionClientInterface $session,
         UserFacade $userFacade,
         AuthConfig $settings,
         StaticToken $staticToken

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 
-class SessionClient extends AbstractClient implements SessionClientInterface, ServiceProviderInterface
+class SessionClient extends AbstractClient implements SessionClientInterface
 {
 
     /**
@@ -21,18 +21,13 @@ class SessionClient extends AbstractClient implements SessionClientInterface, Se
     protected static $container = null;
 
     /**
-     * @param Application $app
+     * @param SessionInterface $container
+     *
+     * @return void
      */
-    public function register(Application $app)
+    public function setContainer(SessionInterface $container)
     {
-        self::$container = $app['session'];
-    }
-
-    /**
-     * @param Application $app
-     */
-    public function boot(Application $app)
-    {
+        self::$container = $container;
     }
 
     /**

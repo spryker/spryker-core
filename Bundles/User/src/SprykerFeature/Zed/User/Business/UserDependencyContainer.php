@@ -26,7 +26,7 @@ class UserDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelUser(
             $this->getQueryContainer(),
-            $this->getLocator()->application()->pluginSession(),
+            $this->getLocator()->session()->client(),
             $this->getConfig()
         );
     }

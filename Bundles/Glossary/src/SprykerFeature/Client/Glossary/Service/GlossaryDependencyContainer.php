@@ -20,9 +20,9 @@ class GlossaryDependencyContainer extends AbstractServiceDependencyContainer
     /**
      * @return StorageClientInterface
      */
-    protected function getKvStorage()
+    protected function getStorage()
     {
-        return $this->getLocator()->kvStorage()->client();
+        return $this->getLocator()->storage()->client();
     }
 
     /**
@@ -41,7 +41,7 @@ class GlossaryDependencyContainer extends AbstractServiceDependencyContainer
     public function createTranslator($locale)
     {
         return $this->getFactory()->createTranslator(
-            $this->getKvStorage(),
+            $this->getStorage(),
             $this->getKeyBuilder(),
             $locale
         );

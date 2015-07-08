@@ -27,7 +27,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
     {
         return $this->getFactory()->createModelCatalog(
             $this->getProductKeyBuilder(),
-            $this->createKvStorage(),
+            $this->createStorage(),
             \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale()
         );
     }
@@ -36,7 +36,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
      * @return mixed
      * @throws \ErrorException
      */
-    public function createKvStorage()
+    public function createStorage()
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::KVSTORAGE);
     }

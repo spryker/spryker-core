@@ -27,7 +27,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
         };
 
         $container[self::KVSTORAGE] = function (Container $container) {
-            return $container->getLocator()->kvStorage()->client();
+            return $container->getLocator()->storage()->client();
         };
 
         return $container;
