@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Propel;
+use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\Sales\Dependency\Plugin\OrderReferenceGeneratorInterface;
 use SprykerFeature\Shared\Library\Application\Environment;
 use SprykerFeature\Zed\Sales\Persistence\Propel\Map\SpySalesOrderNumberSequenceTableMap;
@@ -43,12 +44,18 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
      */
     public function generateOrderReference(OrderTransfer $orderTransfer)
     {
-        return sprintf('%s-%s-%s-%s',
+        $orderReferenceParts = [
             $this->getEnvironment(),
             $this->getStore(),
-            $this->getOrderNumber(),
-            $this->getTimestamp()
-        );
+        ];
+
+        if ($this->isDevelopment()) {
+            $orderReferenceParts[] = $this->getTimestamp();
+        } else {
+            $orderReferenceParts[] = $this->getOrderNumber();
+        }
+
+        return implode('-', $orderReferenceParts);
     }
 
     /**
@@ -56,37 +63,62 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
      */
     protected function getOrderNumber()
     {
-        $transaction = Propel::getWriteConnection(SpySalesOrderNumberSequenceTableMap::DATABASE_NAME);
+        $idCurrent = null;
         $gotNoOrderNumber = true;
 
         while ($gotNoOrderNumber) {
-            try {
-                $transaction->beginTransaction();
-
-                $sequence = SpySalesOrderNumberSequenceQuery::create()
-                    ->findOneByName(self::SEQUENCE_NAME, $transaction);
-
-                if ($sequence === null) {
-                    $sequence = new SpySalesOrderNumberSequence();
-                    $sequence->setName(self::SEQUENCE_NAME);
-                    $idCurrent = $this->minimumOrderNumber;
-                } else {
-                    $idCurrent = $sequence->getCurrentId();
-                }
-
-                $idCurrent += rand($this->orderNumberIncrementMin, $this->orderNumberIncrementMax);
-
-                $sequence->setCurrentId($idCurrent);
-                $sequence->save($transaction);
-
-                $transaction->commit();
+            $idCurrent = $this->createOrderNumber();
+            if($idCurrent !== null) {
                 $gotNoOrderNumber = false;
-            } catch (\Exception $e) {
-                $transaction->rollback();
             }
         }
 
         return sprintf('%s', $idCurrent);
+    }
+
+    /**
+     * @return string
+     */
+    protected function createOrderNumber()
+    {
+        $idCurrent = null;
+        $transaction = Propel::getWriteConnection(SpySalesOrderNumberSequenceTableMap::DATABASE_NAME);
+
+        try {
+            $transaction->beginTransaction();
+
+            $sequence = $this->getSequence($transaction);
+            $idCurrent = $sequence->getCurrentId() + rand($this->orderNumberIncrementMin, $this->orderNumberIncrementMax);
+
+            $sequence->setCurrentId($idCurrent);
+            $sequence->save($transaction);
+
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollback();
+            $idCurrent = null;
+        }
+
+        return $idCurrent;
+    }
+
+    /**
+     * @param ConnectionInterface $transaction
+     *
+     * @return SpySalesOrderNumberSequence
+     */
+    protected function getSequence($transaction)
+    {
+        $sequence = SpySalesOrderNumberSequenceQuery::create()
+            ->findOneByName(self::SEQUENCE_NAME, $transaction);
+
+        if ($sequence === null) {
+            $sequence = new SpySalesOrderNumberSequence();
+            $sequence->setName(self::SEQUENCE_NAME);
+            $sequence->setCurrentId($this->minimumOrderNumber);
+        }
+
+        return $sequence;
     }
 
     /**
@@ -109,6 +141,14 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
         }
 
         return 'U';
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDevelopment()
+    {
+        return (constant('APPLICATION_ENV') === Environment::ENV_DEVELOPMENT);
     }
 
     /**
