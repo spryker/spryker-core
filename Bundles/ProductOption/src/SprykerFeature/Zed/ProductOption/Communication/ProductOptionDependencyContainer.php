@@ -5,11 +5,11 @@
 
 namespace SprykerFeature\Zed\ProductOption\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
 use SprykerFeature\Zed\ProductOption\ProductOptionDependencyProvider;
 
-class ProductOptionDependencyContainer extends AbstractDependencyContainer
+class ProductOptionDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

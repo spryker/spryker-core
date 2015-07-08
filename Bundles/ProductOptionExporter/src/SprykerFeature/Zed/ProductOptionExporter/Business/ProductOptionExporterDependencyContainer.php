@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\ProductOptionExporter\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ProductOptionExporter\Business\Model\ExportProcessorInterface;
 use SprykerFeature\Zed\ProductOptionExporter\ProductOptionExporterDependencyProvider;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionExporterBusiness;
@@ -13,7 +13,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionExporterBusiness;
 /**
  * @method ProductOptionExporterBusiness getFactory()
  */
-class ProductOptionExporterDependencyContainer extends AbstractDependencyContainer
+class ProductOptionExporterDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

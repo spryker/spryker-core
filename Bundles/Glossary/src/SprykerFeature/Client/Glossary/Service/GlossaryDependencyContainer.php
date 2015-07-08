@@ -5,16 +5,16 @@
 
 namespace SprykerFeature\Client\Glossary\Service;
 
-use Generated\Client\Ide\FactoryAutoCompletion\Glossary;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
+use Generated\Client\Ide\FactoryAutoCompletion\GlossaryService;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 
 /**
- * @method Glossary getFactory()
+ * @method GlossaryService getFactory()
  */
-class GlossaryDependencyContainer extends AbstractDependencyContainer
+class GlossaryDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**
@@ -46,4 +46,5 @@ class GlossaryDependencyContainer extends AbstractDependencyContainer
             $locale
         );
     }
+
 }

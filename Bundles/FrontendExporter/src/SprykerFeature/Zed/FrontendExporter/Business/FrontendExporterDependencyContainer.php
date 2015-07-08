@@ -11,7 +11,7 @@ use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\FrontendExporter;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Reader\KeyValue\RedisReader;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\SearchExporter;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\ExporterInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
@@ -34,7 +34,7 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
  * @method FrontendExporterBusiness getFactory()
  * @method FrontendExporterConfig getConfig()
  */
-class FrontendExporterDependencyContainer extends AbstractDependencyContainer
+class FrontendExporterDependencyContainer extends AbstractBusinessDependencyContainer
 {
     /**
      * @return FrontendExporter

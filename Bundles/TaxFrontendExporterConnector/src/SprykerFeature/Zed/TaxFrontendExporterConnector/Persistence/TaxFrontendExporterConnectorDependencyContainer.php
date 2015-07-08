@@ -6,14 +6,14 @@
 namespace SprykerFeature\Zed\TaxFrontendExporterConnector\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\TaxFrontendExporterConnectorPersistence;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 /**
  * @method TaxFrontendExporterConnectorPersistence getFactory()
  */
-class TaxFrontendExporterConnectorDependencyContainer extends AbstractDependencyContainer
+class TaxFrontendExporterConnectorDependencyContainer extends AbstractPersistenceDependencyContainer
 {
     /**
      * @return ProductPriceExpanderInterface

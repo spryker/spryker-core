@@ -6,7 +6,7 @@
 namespace SprykerEngine\Zed\Propel\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\PropelBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemoverInterface;
 use SprykerEngine\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaFinderInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @method PropelBusiness getFactory()
  * @method PropelConfig getConfig()
  */
-class PropelDependencyContainer extends AbstractDependencyContainer
+class PropelDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

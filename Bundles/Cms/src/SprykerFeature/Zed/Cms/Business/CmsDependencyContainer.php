@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Cms\Business;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\CmsBusiness;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Page\PageManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Template\TemplateManagerInterface;
@@ -20,7 +20,7 @@ use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
 /**
  * @method CmsBusiness getFactory()
  */
-class CmsDependencyContainer extends AbstractDependencyContainer
+class CmsDependencyContainer extends AbstractBusinessDependencyContainer
 {
     /**
      * @return CmsQueryContainerInterface

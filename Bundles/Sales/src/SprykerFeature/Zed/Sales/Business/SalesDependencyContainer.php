@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Sales\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Sales\Business\Model\CommentManager;
 use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;
 use SprykerFeature\Zed\Sales\Dependency\Plugin\OrderReferenceGeneratorInterface;
@@ -16,7 +16,7 @@ use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 /**
  * @method SalesBusiness getFactory()
  */
-class SalesDependencyContainer extends AbstractDependencyContainer
+class SalesDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     public function createOrderManager()

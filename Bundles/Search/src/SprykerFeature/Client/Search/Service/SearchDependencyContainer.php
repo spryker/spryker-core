@@ -5,10 +5,10 @@
 
 namespace SprykerFeature\Client\Search\Service;
 
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\ZedRequest\Service\Client\ZedClient;
 
-class SearchDependencyContainer extends AbstractDependencyContainer
+class SearchDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**

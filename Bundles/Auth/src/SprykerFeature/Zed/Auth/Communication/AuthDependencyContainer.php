@@ -7,7 +7,7 @@ namespace SprykerFeature\Zed\Auth\Communication;
 
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\AuthCommunication;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
 use SprykerFeature\Zed\Auth\Communication\Form\LoginForm;
 use SprykerFeature\Zed\Auth\Communication\Form\ResetPasswordForm;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method AuthCommunication getFactory()
  */
-class AuthDependencyContainer extends AbstractDependencyContainer
+class AuthDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @return AuthFacade

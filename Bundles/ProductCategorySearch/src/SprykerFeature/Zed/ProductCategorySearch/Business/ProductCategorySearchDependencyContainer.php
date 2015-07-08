@@ -5,13 +5,13 @@
 
 namespace SprykerFeature\Zed\ProductCategorySearch\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 
 /**
  * Class ProductCategorySearchDependencyContainer
  * @package SprykerFeature\Zed\ProductCategory\Business
  */
-class ProductCategorySearchDependencyContainer extends AbstractDependencyContainer
+class ProductCategorySearchDependencyContainer extends AbstractBusinessDependencyContainer
 {
     /**
      * @return Processor\ProductCategorySearchProcessor

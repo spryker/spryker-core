@@ -6,14 +6,14 @@
 namespace SprykerFeature\Client\Storage\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\StorageService;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 
 /**
  * @method StorageService getFactory()
  */
-class StorageDependencyContainer extends AbstractDependencyContainer
+class StorageDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**

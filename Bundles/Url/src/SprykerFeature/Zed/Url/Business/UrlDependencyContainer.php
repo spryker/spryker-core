@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\UrlBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Url\Dependency\UrlToLocaleInterface;
 use SprykerFeature\Zed\Url\Dependency\UrlToTouchInterface;
 use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
@@ -14,7 +14,7 @@ use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
 /**
  * @method UrlBusiness getFactory()
  */
-class UrlDependencyContainer extends AbstractDependencyContainer
+class UrlDependencyContainer extends AbstractBusinessDependencyContainer
 {
     /**
      * @return UrlManagerInterface

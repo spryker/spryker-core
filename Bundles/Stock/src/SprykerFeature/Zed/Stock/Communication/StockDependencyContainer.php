@@ -12,14 +12,14 @@ use SprykerFeature\Zed\Stock\Communication\Form\StockProductForm;
 use SprykerFeature\Zed\Stock\Communication\Grid\StockGrid;
 use SprykerFeature\Zed\Stock\Communication\Grid\StockProductGrid;
 use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator;
 
 /**
  * @method StockCommunication getFactory()
  */
-class StockDependencyContainer extends AbstractDependencyContainer
+class StockDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

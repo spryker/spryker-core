@@ -6,14 +6,14 @@
 namespace SprykerFeature\Zed\OmsCheckoutConnector\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\OmsCheckoutConnectorBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\OmsCheckoutConnector\OmsCheckoutConnectorConfig;
 
 /**
  * @method OmsCheckoutConnectorBusiness getFactory()
  * @method OmsCheckoutConnectorConfig getConfig()
  */
-class OmsCheckoutConnectorDependencyContainer extends AbstractDependencyContainer
+class OmsCheckoutConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

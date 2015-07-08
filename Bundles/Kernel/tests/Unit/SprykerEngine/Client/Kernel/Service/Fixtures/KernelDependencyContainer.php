@@ -2,8 +2,8 @@
 
 namespace Unit\SprykerEngine\Client\Kernel\Service\Fixtures;
 
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 
-class KernelDependencyContainer extends AbstractDependencyContainer
+class KernelDependencyContainer extends AbstractServiceDependencyContainer
 {
 }

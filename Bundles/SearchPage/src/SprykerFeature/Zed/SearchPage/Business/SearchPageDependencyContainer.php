@@ -7,7 +7,7 @@ namespace SprykerFeature\Zed\SearchPage\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SearchPageBusiness;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\SearchPage\Business\Installer\DocumentAttributeInstaller;
 use SprykerFeature\Zed\SearchPage\Business\Installer\TemplateInstaller;
 use SprykerFeature\Zed\SearchPage\Business\KeyBuilder\SearchPageConfigKeyBuilder;
@@ -24,7 +24,7 @@ use SprykerFeature\Zed\SearchPage\Persistence\SearchPageQueryContainer;
 /**
  * @method SearchPageBusiness getFactory()
  */
-class SearchPageDependencyContainer extends AbstractDependencyContainer
+class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

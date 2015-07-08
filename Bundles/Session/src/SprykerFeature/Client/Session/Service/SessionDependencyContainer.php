@@ -5,8 +5,8 @@
 
 namespace SprykerFeature\Client\Session\Service;
 
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 
-class SessionDependencyContainer extends AbstractDependencyContainer
+class SessionDependencyContainer extends AbstractServiceDependencyContainer
 {
 }

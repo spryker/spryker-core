@@ -10,14 +10,14 @@ use SprykerFeature\Zed\UiExample\Communication\Form\CarForm;
 use SprykerFeature\Zed\UiExample\Communication\Form\CopterForm;
 use SprykerFeature\Zed\UiExample\Communication\Form\UiExampleForm;
 use SprykerFeature\Zed\UiExample\Persistence\UiExampleQueryContainer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator;
 
 /**
  * @method UiExampleCommunication getFactory()
  */
-class UiExampleDependencyContainer extends AbstractDependencyContainer
+class UiExampleDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

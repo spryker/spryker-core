@@ -7,7 +7,7 @@ namespace SprykerFeature\Zed\TaxProductConnector\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\TaxProductConnectorBusiness;
 use SprykerFeature\Zed\TaxProductConnector\TaxProductConnectorConfig;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
 use SprykerFeature\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface;
 use SprykerFeature\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
@@ -16,7 +16,7 @@ use SprykerFeature\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
  * @method TaxProductConnectorBusiness getFactory()
  * @method TaxProductConnectorConfig getConfig()
  */
-class TaxProductConnectorDependencyContainer extends AbstractDependencyContainer
+class TaxProductConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

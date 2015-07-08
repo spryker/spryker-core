@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Cart\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CartBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Cart\Business\Operator\OperatorInterface;
@@ -18,7 +18,7 @@ use SprykerFeature\Zed\Cart\CartDependencyProvider;
  * @method CartBusiness getFactory()
  * @method CartConfig getConfig()
  */
-class CartDependencyContainer extends AbstractDependencyContainer
+class CartDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

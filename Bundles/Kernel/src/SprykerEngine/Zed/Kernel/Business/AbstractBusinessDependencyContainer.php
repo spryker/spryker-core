@@ -10,7 +10,7 @@ use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInt
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
-abstract class AbstractDependencyContainer extends BaseDependencyContainer implements DependencyContainerInterface
+abstract class AbstractBusinessDependencyContainer extends BaseDependencyContainer implements DependencyContainerInterface
 {
 
     /**

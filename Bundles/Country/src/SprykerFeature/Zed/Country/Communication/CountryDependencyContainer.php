@@ -6,10 +6,10 @@
 namespace SprykerFeature\Zed\Country\Communication;
 
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Country\Business\CountryFacade;
 
-class CountryDependencyContainer extends AbstractDependencyContainer
+class CountryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @return CountryFacade

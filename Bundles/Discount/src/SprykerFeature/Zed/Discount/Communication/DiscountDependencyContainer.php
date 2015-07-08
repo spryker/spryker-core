@@ -18,13 +18,13 @@ use SprykerFeature\Zed\Discount\Communication\Grid\VoucherGrid;
 use SprykerFeature\Zed\Discount\Communication\Grid\VoucherPoolCategoryGrid;
 use SprykerFeature\Zed\Discount\Communication\Grid\VoucherPoolGrid;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method DiscountCommunication getFactory()
  */
-class DiscountDependencyContainer extends AbstractDependencyContainer
+class DiscountDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

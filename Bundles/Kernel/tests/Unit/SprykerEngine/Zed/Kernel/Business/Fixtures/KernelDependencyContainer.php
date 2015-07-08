@@ -5,8 +5,8 @@
 
 namespace Unit\SprykerEngine\Zed\Kernel\Business\Fixtures;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 
-class KernelDependencyContainer extends AbstractDependencyContainer
+class KernelDependencyContainer extends AbstractBusinessDependencyContainer
 {
 }

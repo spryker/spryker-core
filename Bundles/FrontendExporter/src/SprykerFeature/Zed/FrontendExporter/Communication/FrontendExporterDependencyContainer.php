@@ -8,9 +8,9 @@ namespace SprykerFeature\Zed\FrontendExporter\Communication;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\FrontendExporter\FrontendExporterDependencyProvider;
 use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
-class FrontendExporterDependencyContainer extends AbstractDependencyContainer
+class FrontendExporterDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @return AbstractInstaller

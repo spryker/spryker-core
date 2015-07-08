@@ -6,7 +6,7 @@
 namespace SprykerFeature\Client\ZedRequest\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\ZedRequest;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\ZedRequest\Service\Client\ZedClient;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
@@ -15,7 +15,7 @@ use SprykerFeature\Shared\Yves\YvesConfig;
 /**
  * @method ZedRequest getFactory()
  */
-class ZedRequestDependencyContainer extends AbstractDependencyContainer
+class ZedRequestDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**

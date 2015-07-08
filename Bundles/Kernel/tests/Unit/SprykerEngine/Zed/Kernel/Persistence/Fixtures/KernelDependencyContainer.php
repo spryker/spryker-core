@@ -5,8 +5,8 @@
 
 namespace Unit\SprykerEngine\Zed\Kernel\Persistence\Fixtures;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 
-class KernelDependencyContainer extends AbstractDependencyContainer
+class KernelDependencyContainer extends AbstractPersistenceDependencyContainer
 {
 }

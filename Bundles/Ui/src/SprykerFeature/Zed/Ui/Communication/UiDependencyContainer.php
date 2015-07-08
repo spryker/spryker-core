@@ -5,10 +5,10 @@
 
 namespace SprykerFeature\Zed\Ui\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\Validator\Validator;
 
-class UiDependencyContainer extends AbstractDependencyContainer
+class UiDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

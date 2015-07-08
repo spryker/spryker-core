@@ -5,10 +5,10 @@
 
 namespace SprykerFeature\Zed\PriceCartConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\PriceCartConnector\Business\PriceCartConnectorFacade;
 
-class PriceCartConnectorDependencyContainer extends AbstractDependencyContainer
+class PriceCartConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @return PriceCartConnectorFacade
@@ -18,4 +18,3 @@ class PriceCartConnectorDependencyContainer extends AbstractDependencyContainer
         return $this->getLocator()->priceCartConnector()->facade();
     }
 }
- 

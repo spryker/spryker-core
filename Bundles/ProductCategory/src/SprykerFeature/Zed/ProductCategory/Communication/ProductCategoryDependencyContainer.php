@@ -5,14 +5,14 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 
 /**
  * Class ProductCategoryDependencyContainer
  * @package SprykerFeature\Zed\ProductCategory\Communication
  */
-class ProductCategoryDependencyContainer extends AbstractDependencyContainer
+class ProductCategoryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @return ProductCategoryQueryContainerInterface

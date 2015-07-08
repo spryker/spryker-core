@@ -7,7 +7,7 @@ use SprykerEngine\Client\Kernel\Container;
 use SprykerEngine\Client\Kernel\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
-abstract class AbstractDependencyContainer implements DependencyContainerInterface
+abstract class AbstractServiceDependencyContainer implements DependencyContainerInterface
 {
 
     /**

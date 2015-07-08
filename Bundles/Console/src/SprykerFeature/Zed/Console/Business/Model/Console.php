@@ -9,7 +9,7 @@ use Psr\Log\LoggerInterface;
 use Silex\Application;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -70,15 +70,15 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param AbstractDependencyContainer $dependencyContainer
+     * @param AbstractCommunicationDependencyContainer $dependencyContainer
      */
-    public function setDependencyContainer(AbstractDependencyContainer $dependencyContainer)
+    public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
     {
         $this->dependencyContainer = $dependencyContainer;
     }
 
     /**
-     * @return AbstractDependencyContainer
+     * @return AbstractCommunicationDependencyContainer
      */
     protected function getDependencyContainer()
     {

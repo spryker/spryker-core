@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business\ProductCategoryFrontendExporterConnectorFacade;
 
@@ -13,7 +13,7 @@ use SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business\Product
  * Class ProductCategoryFrontendExporterConnectorDependencyContainer
  * @package SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Communication
  */
-class ProductCategoryFrontendExporterConnectorDependencyContainer extends AbstractDependencyContainer
+class ProductCategoryFrontendExporterConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @return ProductCategoryQueryContainerInterface

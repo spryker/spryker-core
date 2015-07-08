@@ -16,7 +16,7 @@ use SprykerFeature\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalcula
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Calculation\CalculationConfig;
 use Generated\Zed\Ide\FactoryAutoCompletion\CalculationBusiness;
 
@@ -24,7 +24,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\CalculationBusiness;
  * @method CalculationBusiness getFactory()
  * @method CalculationConfig getConfig()
  */
-class CalculationDependencyContainer extends AbstractDependencyContainer
+class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

@@ -5,7 +5,7 @@
 
 namespace SprykerEngine\Zed\Translation\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Translation\Business\TranslatorInterface;
 use SprykerEngine\Zed\Translation\Business\Model\TranslationFileInterface;
@@ -13,7 +13,7 @@ use SprykerEngine\Zed\Translation\Business\Model\TranslationFileInterface;
 /**
  * @method Factory getFactory()
  */
-class TranslationDependencyContainer extends AbstractDependencyContainer
+class TranslationDependencyContainer extends AbstractBusinessDependencyContainer
 {
     /**
      * @param string $locale

@@ -9,9 +9,9 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\GlossaryExporter\Communication\Plugin\KeyBuilderPlugin;
 use SprykerFeature\Zed\GlossaryExporter\Persistence\GlossaryExporterQueryContainerInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
-class GlossaryExporterDependencyContainer extends AbstractDependencyContainer
+class GlossaryExporterDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @return KeyBuilderPlugin

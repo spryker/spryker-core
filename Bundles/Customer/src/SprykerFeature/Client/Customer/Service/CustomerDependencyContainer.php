@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Client\Customer\Service;
 
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Customer\Service\Model\Customer;
 use Generated\Yves\Ide\FactoryAutoCompletion\Customer as CustomerFactory;
 use SprykerFeature\Client\ZedRequest\Service\Provider\ZedClientProvider;
@@ -13,7 +13,7 @@ use SprykerFeature\Client\ZedRequest\Service\Provider\ZedClientProvider;
 /**
  * @method CustomerFactory getFactory()
  */
-class CustomerDependencyContainer extends AbstractDependencyContainer
+class CustomerDependencyContainer extends AbstractServiceDependencyContainer
 {
     /**
      * @return ZedClientProvider

@@ -3,9 +3,9 @@
 namespace SprykerFeature\Zed\GlossaryQueue\Communication;
 
 use SprykerEngine\Shared\Kernel\Store;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
-class GlossaryQueueDependencyContainer extends AbstractDependencyContainer
+class GlossaryQueueDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
      * @return Store

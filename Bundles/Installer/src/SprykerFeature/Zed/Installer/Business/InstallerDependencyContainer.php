@@ -7,14 +7,14 @@ namespace SprykerFeature\Zed\Installer\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\InstallerBusiness;
 use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Installer\InstallerConfig;
 
 /**
  * @method InstallerBusiness getFactory()
  * @method InstallerConfig getConfig()
  */
-class InstallerDependencyContainer extends AbstractDependencyContainer
+class InstallerDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

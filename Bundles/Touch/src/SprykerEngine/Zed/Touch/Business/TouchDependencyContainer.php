@@ -6,14 +6,14 @@
 namespace SprykerEngine\Zed\Touch\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\TouchBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Touch\Business\Model\TouchRecordInterface;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 /**
  * @method TouchBusiness getFactory()
  */
-class TouchDependencyContainer extends AbstractDependencyContainer
+class TouchDependencyContainer extends AbstractBusinessDependencyContainer
 {
     /**
      * @return TouchRecordInterface

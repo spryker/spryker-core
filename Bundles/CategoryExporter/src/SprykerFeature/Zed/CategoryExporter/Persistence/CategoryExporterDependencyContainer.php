@@ -7,7 +7,7 @@ namespace SprykerFeature\Zed\CategoryExporter\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryExporterPersistence;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\CategoryExporter\CategoryExporterDependencyProvider;
 use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\CategoryNodeQueryExpander;
@@ -16,7 +16,7 @@ use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\NavigationQuer
 /**
  * @method CategoryExporterPersistence getFactory()
  */
-class CategoryExporterDependencyContainer extends AbstractDependencyContainer
+class CategoryExporterDependencyContainer extends AbstractPersistenceDependencyContainer
 {
     /**
      * @param LocaleTransfer $locale
