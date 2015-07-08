@@ -13,9 +13,11 @@ use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;
 use SprykerFeature\Zed\Sales\Dependency\Plugin\OrderReferenceGeneratorInterface;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
+use SprykerFeature\Zed\Sales\SalesConfig;
 
 /**
  * @method SalesBusiness getFactory()
+ * @method SalesConfig getConfig()
  */
 class SalesDependencyContainer extends AbstractBusinessDependencyContainer
 {
@@ -58,13 +60,16 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getQueryContainer();
     }
 
-    //TODO put the order generator here
     /**
      * @return OrderReferenceGeneratorInterface
      */
     protected function createReferenceGenerator()
     {
-        return $this->getFactory()->createModelMockOrderReferenceGenerator();
+        return $this->getFactory()->createModelOrderReferenceGenerator(
+            $this->getConfig()->getMinimumOrderNumber(),
+            $this->getConfig()->getOrderNumberIncrementMin(),
+            $this->getConfig()->getOrderNumberIncrementMax()
+        );
     }
 
 }

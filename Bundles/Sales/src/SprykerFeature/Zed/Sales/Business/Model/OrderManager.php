@@ -67,6 +67,8 @@ class OrderManager
         $orderEntity->setFirstName($orderTransfer->getFirstName());
         $orderEntity->setLastName($orderTransfer->getLastName());
 
+        $orderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($orderTransfer));
+
         $orderEntity->save();
 
         $fkOrderProcess = $this->omsFacade->getProcessEntity($orderTransfer->getProcess())->getIdOmsOrderProcess();
@@ -89,7 +91,8 @@ class OrderManager
         Propel::getConnection()->commit();
 
         $orderTransfer->setIdSalesOrder($orderEntity->getIdSalesOrder());
-
+        $orderTransfer->setOrderReference($orderEntity->getOrderReference());
+        
         return $orderTransfer;
     }
 
