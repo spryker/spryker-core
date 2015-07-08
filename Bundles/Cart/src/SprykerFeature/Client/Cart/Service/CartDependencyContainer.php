@@ -10,7 +10,7 @@ use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
 use SprykerFeature\Client\Cart\CartDependencyProvider;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use SprykerFeature\Client\Cart\Service\KvStorage\CartKvStorageInterface;
+use SprykerFeature\Client\Cart\Service\Storage\CartKvStorageInterface;
 
 /**
  * @method CartService getFactory()

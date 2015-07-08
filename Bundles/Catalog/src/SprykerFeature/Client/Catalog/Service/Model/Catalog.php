@@ -6,7 +6,7 @@
 namespace SprykerFeature\Client\Catalog\Service\Model;
 
 use SprykerFeature\Client\Catalog\Service\Model\Exception\ProductNotFoundException;
-use SprykerFeature\Client\KvStorage\Service\KvStorageClientInterface;
+use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class Catalog implements CatalogInterface
@@ -29,7 +29,7 @@ class Catalog implements CatalogInterface
     protected $productKeyBuilder;
 
     /**
-     * @var KvStorageClientInterface
+     * @var StorageClientInterface
      */
     protected $storageReader;
 
@@ -40,12 +40,12 @@ class Catalog implements CatalogInterface
 
     /**
      * @param KeyBuilderInterface $productKeyBuilder
-     * @param KvStorageClientInterface $storageReader
+     * @param StorageClientInterface $storageReader
      * @param string $locale
      */
     public function __construct(
         KeyBuilderInterface $productKeyBuilder,
-        KvStorageClientInterface $storageReader,
+        StorageClientInterface $storageReader,
         $locale
     ) {
         $this->productKeyBuilder = $productKeyBuilder;

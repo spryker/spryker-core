@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerFeature\Client\Cart\Service\Session\CartSessionInterface;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
-use SprykerFeature\Client\Cart\Service\KvStorage\CartKvStorageInterface;
+use SprykerFeature\Client\Cart\Service\Storage\CartKvStorageInterface;
 
 /**
  * @method CartDependencyContainer getDependencyContainer()
