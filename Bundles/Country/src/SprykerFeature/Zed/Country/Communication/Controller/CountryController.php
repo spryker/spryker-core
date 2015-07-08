@@ -2,36 +2,54 @@
 
 namespace SprykerFeature\Zed\Country\Communication\Controller;
 
+use Generated\Shared\Country\CountryInterface;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CountryCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Country\Business\CountryFacade;
+use SprykerFeature\Zed\Country\Communication\CountryDependencyContainer;
+use SprykerFeature\Zed\Country\CountryDependencyProvider;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CountryQueryContainer getQueryContainer()
- * @method CountryCommunication getFactory()
+ * @method CountryFacade getFacade()
+ * @method CountryDependencyContainer getDependencyContainer()
  */
 class CountryController extends AbstractController
 {
 
     public function indexAction(Request $request)
     {
-        $countryQuery = $this->getQueryContainer()->queryCountries();
+        $form = $this->getDependencyContainer()->createCountryForm()->init();
 
-        $form = $this->getFactory()->createFormCountryForm($countryQuery)->init();
+        $form->handleRequest();
 
-        if ($request->isMethod('POST')) {
-            if (false === $data = $form->processRequest($request)) {
-                $errors = $this->getErrors();
-                // show errors
-            } else {
-                // save
-            }
+        if($form->isValid()){
+            $data = $form->getData();
+
+            $country = $this->createCountryTransfer();
+            $country->fromArray($data, true);
+
+            $int = $this->getFacade()->saveCountry($country);
+
+            // ...saved
         }
+
 
         return $this->viewResponse([
             'form' => $form->render(),
         ]);
+    }
+
+    /**
+     * @return CountryTransfer
+     */
+    protected function createCountryTransfer()
+    {
+        return new CountryTransfer();
     }
 
 }

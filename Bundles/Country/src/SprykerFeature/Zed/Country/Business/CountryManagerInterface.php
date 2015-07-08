@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Country\Business;
 
+use Generated\Shared\Country\CountryInterface;
 use SprykerFeature\Zed\Country\Business\Exception\MissingCountryException;
 
 interface CountryManagerInterface
@@ -25,6 +26,12 @@ interface CountryManagerInterface
      * @return int
      */
     public function createCountry($iso2code, array $countryData);
+
+    /**
+     * @param CountryInterface $countryTransfer
+     * @return int
+     */
+    public function saveCountry(CountryInterface $countryTransfer);
 
     /**
      * @param string $iso2code

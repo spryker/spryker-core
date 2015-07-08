@@ -3,9 +3,11 @@
 namespace SprykerFeature\Zed\Country\Communication\Form;
 
 use SprykerEngine\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerEngine\Zed\Gui\Communication\Form\ConstraintBuilder;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
+use SprykerFeature\Zed\User\Persistence\Propel\Base\SpyUserUserQuery;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method CountryQueryContainer getQueryContainer()
@@ -18,11 +20,17 @@ class CountryForm extends AbstractForm
     protected $countryQuery;
 
     /**
+     * @var SpyUserUserQuery
+     */
+    protected $userQuery;
+
+    /**
      * @param SpyCountryQuery $countryQuery
      */
-    public function __construct(SpyCountryQuery $countryQuery)
+    public function __construct(SpyCountryQuery $countryQuery, SpyUserUserQuery $userQuery)
     {
         $this->countryQuery = $countryQuery;
+        $this->userQuery = $userQuery;
     }
 
     /**
@@ -30,47 +38,71 @@ class CountryForm extends AbstractForm
      */
     protected function buildFormFields()
     {
+        $userChoice = $this->prepareUserChoice();
+
         return $this->addText(
             'iso2_code',
             [
                 'label' => 'ISO2 Code',
-                'constraints' => ConstraintBuilder::getInstance()
-                    ->addNotBlank()
-                    ->addLength([
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
                         'min' => 2,
                         'max' => 2
                     ])
-                    ->getConstraints()
+                ]
             ]
         )
             ->addText('iso3_code',
                 [
                     'label' => 'ISO3 Code',
-                    'constraints' => ConstraintBuilder::getInstance()
-                        ->addNotBlank()
-                        ->addLength([
+                    'constraints' => [
+                        new NotBlank(),
+                        new Length([
                             'min' => 3,
                             'max' => 3
                         ])
-                        ->getConstraints()
-                ])
+                    ]
+                ]
+            )
             ->addText('name',
                 [
                     'label' => 'Country Name',
-                    'constraints' => ConstraintBuilder::getInstance()
-                        ->addNotBlank()
-                        ->getConstraints()
-                ])
+                    'constraints' => [
+                        new NotBlank(),
+                    ]
+                ]
+            )
             ->addText('postal_code_mandatory',
                 [
                     'label' => 'Postal Code',
-                    'constraints' => ConstraintBuilder::getInstance()
-                        ->addNotBlank()
-                        ->getConstraints()
+                    'constraints' => [
+                        new NotBlank(),
+                    ]
+                ]
+            )
+            ->addChoice('myChoice',
+                [
+                    'label' => 'Username',
+                    'choices' => $userChoice,
                 ])
             ->addText('postal_code_regex', ['label' => 'Postal code (regex)'])
             ->addHidden('id_country')
             ->addSubmit();
+
+    }
+
+    /**
+     * @return array
+     */
+    protected function prepareUserChoice()
+    {
+        $users = $this->userQuery->find();
+        $userChoice = [];
+        foreach ($users as $user) {
+            $userChoice[$user->getIdUserUser()] = $user->getUsername();
+        }
+        return $userChoice;
     }
 
     /**
@@ -79,6 +111,10 @@ class CountryForm extends AbstractForm
     protected function populateFormFields()
     {
         $idCountry = $this->request->get('id_country');
+
+        if(is_null($idCountry)){
+            return [];
+        }
 
         $countryDetailEntity = $this
             ->countryQuery

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Country\Business;
 
+use Generated\Shared\Country\CountryInterface;
 use SprykerFeature\Zed\Country\Business\Exception\CountryExistsException;
 use SprykerFeature\Zed\Country\Business\Exception\MissingCountryException;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
@@ -43,6 +44,7 @@ class CountryManager implements CountryManagerInterface
     /**
      * @param string $iso2code
      * @param array $countryData
+     * @deprecated
      *
      * @throws CountryExistsException
      *
@@ -64,6 +66,16 @@ class CountryManager implements CountryManagerInterface
         $country->save();
 
         return $country->getIdCountry();
+    }
+
+    /**
+     * @param CountryInterface $countryTransfer
+     * @return int
+     */
+    public function saveCountry(CountryInterface $countryTransfer)
+    {
+        return $this->createCountry($countryTransfer->getIso2Code(), $countryTransfer->toArray());
+
     }
 
     /**
