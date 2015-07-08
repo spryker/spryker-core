@@ -69,14 +69,14 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
                 if ($sequence === null) {
                     $sequence = new SpySalesOrderNumberSequence();
                     $sequence->setName(self::SEQUENCE_NAME);
-                    $current_id = $this->minimumOrderNumber;
+                    $idCurrent = $this->minimumOrderNumber;
                 } else {
-                    $current_id = $sequence->getCurrentId();
+                    $idCurrent = $sequence->getCurrentId();
                 }
 
-                $current_id += rand($this->orderNumberIncrementMin, $this->orderNumberIncrementMax);
+                $idCurrent += rand($this->orderNumberIncrementMin, $this->orderNumberIncrementMax);
 
-                $sequence->setCurrentId($current_id);
+                $sequence->setCurrentId($idCurrent);
                 $sequence->save($transaction);
 
                 $transaction->commit();
@@ -86,7 +86,7 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
             }
         }
 
-        return sprintf('%s', $current_id);
+        return sprintf('%s', $idCurrent);
     }
 
     /**
