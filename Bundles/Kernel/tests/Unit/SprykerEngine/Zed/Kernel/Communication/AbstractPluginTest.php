@@ -111,11 +111,7 @@ class AbstractPluginTest extends AbstractUnitTest
 
     public function testCallLogMustDelegateToInjectedMessengerAndReturnPlugin()
     {
-        $locator = new PluginLocator(
-            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\AbstractPlugin\\Factory'
-        );
-        /** @var FooPlugin $plugin */
-        $plugin = $locator->locate('Kernel', Locator::getInstance(), 'FooPlugin');
+        $plugin = $this->locatePlugin();
 
         $messengerMock = $this->getMock('Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\FooMessenger', ['log']);
         $messengerMock->expects($this->once())
