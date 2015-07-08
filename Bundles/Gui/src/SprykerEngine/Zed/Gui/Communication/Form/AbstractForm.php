@@ -4,8 +4,10 @@ namespace SprykerEngine\Zed\Gui\Communication\Form;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Product\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Acl\Tests\Domain\AuditLoggerTest;
 
 abstract class AbstractForm
 {
@@ -29,21 +31,22 @@ abstract class AbstractForm
      */
     public function init()
     {
-        $this->injectFrameworkDependencies();
+        $this->injectDependencies();
         $this->buildFormFields();
         $data = $this->populateFormFields();
         $this->setData($data);
         return $this;
     }
 
-    protected function injectFrameworkDependencies()
+    protected function injectDependencies()
     {
-        $this->request = $this->getLocator()->application()->pluginPimple()->getApplication()['request'];
-
-        $this->formFactory = $this->getLocator()
+        $app = $this->getLocator()
             ->application()
             ->pluginPimple()
-            ->getApplication()['form.factory'];
+            ->getApplication();
+
+        $this->request = $app['request'];
+        $this->formFactory = $app['form.factory'];
 
         $this->form = $this->formFactory->create();
     }
@@ -72,7 +75,6 @@ abstract class AbstractForm
      */
     public function render()
     {
-
         return $this->form->createView();
     }
 
@@ -91,12 +93,6 @@ abstract class AbstractForm
         return $this->form->getErrors(true, false);
     }
 
-    public function addText($name, $options = array())
-    {
-
-        $this->add($name, 'text', $options);
-        return $this;
-    }
 
     public function add($name, $type, $options = array())
     {
@@ -104,24 +100,99 @@ abstract class AbstractForm
             $options = ['constraints' => $options->getConstraints()];
         }
 
-
         return $this->form->add($name, $type, $options);
-
     }
 
+    /**
+     * @param $name
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function addText($name, $options = array())
+    {
+        $this->add($name, 'text', $options);
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function addTextarea($name, $options = array())
+    {
+        $this->add($name, 'textarea', $options);
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function addEmail($name, $options = array())
+    {
+        $this->add($name, 'email', $options);
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function addInteger($name, $options = array())
+    {
+        $this->add($name, 'integer', $options);
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function addAutosugest($name, $options = array())
+    {
+        $this->add($name, new AutosuggestType(), $options);
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param array $options
+     *
+     * @return $this
+     */
     public function addChoice($name, $options = array())
     {
-
         $this->add($name, 'choice', $options);
         return $this;
     }
 
+    /**
+     * @param $name
+     * @param array $options
+     *
+     * @return $this
+     */
     public function addHidden($name, $options = array())
     {
         $this->add($name, 'hidden', $options);
         return $this;
     }
 
+    /**
+     * @param string $name
+     * @param array $options
+     *
+     * @return $this
+     */
     public function addSubmit($name = 'submit', $options = array())
     {
         $this->add($name, 'submit', $options);
