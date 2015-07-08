@@ -21,7 +21,7 @@ class FrontendExporterDependencyContainer extends AbstractServiceDependencyConta
     public function createUrlMatcher()
     {
         $urlKeyBuilder = $this->getFactory()->createKeyBuilderUrlKeyBuilder();
-        $kvReader = $this->getLocator()->kvStorage()->client();
+        $kvReader = $this->getLocator()->storage()->client();
 
 
         return $this->getFactory()->createMatcherUrlMatcher(

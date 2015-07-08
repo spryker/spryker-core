@@ -3,32 +3,33 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider;
+namespace SprykerFeature\Shared\Session\Communcation\Plugin\ServiceProvider;
 
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Shared\Yves\YvesConfig;
 use Silex\Application;
 use Silex\Provider\SessionServiceProvider as SilexSessionServiceProvider;
+use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\Session as SessionHelper;
+use SprykerFeature\Shared\Session\SessionConfig;
+use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Yves\YvesConfig;
 
-class SessionServiceProvider extends SilexSessionServiceProvider
+trait SessionServiceProviderPluginTrait
 {
-    const SESSION_HANDLER_COUCHBASE = 'couchbase';
 
-    const SESSION_HANDLER_REDIS = 'redis';
-
-    const SESSION_HANDLER_MYSQL = 'mysql';
-
+    /**
+     * @param Application $app
+     * @throws \Exception
+     */
     public function register(Application $app)
     {
         SilexSessionServiceProvider::register($app);
 
         $saveHandler = Config::get(YvesConfig::YVES_SESSION_SAVE_HANDLER);
 
-        if ($saveHandler != self::SESSION_HANDLER_COUCHBASE
-            && $saveHandler != self::SESSION_HANDLER_MYSQL
-            && $saveHandler != self::SESSION_HANDLER_REDIS) {
+        if ($saveHandler != SessionConfig::SESSION_HANDLER_COUCHBASE
+            && $saveHandler != SessionConfig::SESSION_HANDLER_MYSQL
+            && $saveHandler != SessionConfig::SESSION_HANDLER_REDIS
+        ) {
 
             if (Config::get(YvesConfig::YVES_SESSION_SAVE_HANDLER) && $this->getSavePath($saveHandler)) {
                 ini_set('session.save_handler', Config::get(YvesConfig::YVES_SESSION_SAVE_HANDLER));
@@ -53,22 +54,21 @@ class SessionServiceProvider extends SilexSessionServiceProvider
          * We manually register our own couchbase session handler, for all other handlers we use the generic one
          */
         switch ($saveHandler) {
-            case self::SESSION_HANDLER_COUCHBASE:
+            case SessionConfig::SESSION_HANDLER_COUCHBASE:
                 $couchbaseSessionHandler = SessionHelper::registerCouchbaseSessionHandler($this->getSavePath($saveHandler));
                 $app['session.storage.handler'] = $app->share(function () use ($couchbaseSessionHandler) {
                     return $couchbaseSessionHandler;
                 });
                 break;
 
-
-            case self::SESSION_HANDLER_MYSQL:
+            case SessionConfig::SESSION_HANDLER_MYSQL:
                 $mysqlSessionHandler = SessionHelper::registerMysqlSessionHandler($this->getSavePath($saveHandler));
                 $app['session.storage.handler'] = $app->share(function () use ($mysqlSessionHandler) {
                     return $mysqlSessionHandler;
                 });
                 break;
 
-            case self::SESSION_HANDLER_REDIS:
+            case SessionConfig::SESSION_HANDLER_REDIS:
                 $redisSessionHandler = SessionHelper::registerRedisSessionHandler($this->getSavePath($saveHandler));
                 $app['session.storage.handler'] = $app->share(function () use ($redisSessionHandler) {
                     return $redisSessionHandler;
@@ -91,14 +91,16 @@ class SessionServiceProvider extends SilexSessionServiceProvider
     protected function getSavePath($saveHandler)
     {
         $path = null;
-        switch($saveHandler){
-            case self::SESSION_HANDLER_REDIS:
+        switch ($saveHandler) {
+            case SessionConfig::SESSION_HANDLER_REDIS:
                 $path = Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_PROTOCOL)
                     . '://' . Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_HOST)
                     . ':' . Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_PORT);
                 break;
-            default: throw new \Exception('Needs implementation for mysql and couchbase!');
+            default:
+                throw new \Exception('Needs implementation for mysql and couchbase!');
         }
+
         return $path;
     }
 

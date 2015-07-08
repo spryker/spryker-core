@@ -24,7 +24,7 @@ class CategoryExporterDependencyContainer extends AbstractServiceDependencyConta
     public function createNavigation()
     {
         return $this->getFactory()->createModelNavigation(
-            $this->getLocator()->kvStorage()->client(),
+            $this->getLocator()->storage()->client(),
             $this->createNavigationKeyBuilder()
         );
     }
@@ -35,7 +35,7 @@ class CategoryExporterDependencyContainer extends AbstractServiceDependencyConta
     public function createCategoryTreeBuilder()
     {
         return $this->getFactory()->createBuilderCategoryTreeBuilder(
-            $this->getLocator()->kvStorage()->client(),
+            $this->getLocator()->storage()->client(),
             $this->createResourceKeyBuilder()
         );
     }

@@ -20,7 +20,7 @@ class SetupDependencyContainer extends AbstractServiceDependencyContainer
     public function getHeartbeatResponse()
     {
         return $this->getFactory()->createHeartbeat(
-            $this->getLocator()->kvStorage()->client(),
+            $this->getLocator()->storage()->client(),
             $this->getLocator()->search()->indexClient()->getInstance()
         );
     }
