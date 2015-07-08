@@ -67,9 +67,8 @@ class CountryForm extends AbstractFormManager
         return $this->buildForm($data);
     }
 
-    public function process(Request $request, &$errors)
+    public function process(Request $request, $data)
     {
-        $countryId = $request->get('id_country', false);
 
         if ($request->isMethod('POST')) {
             if(false === $data = $this->processRequest($request)){
@@ -77,17 +76,13 @@ class CountryForm extends AbstractFormManager
             }
         }
 
-        return !empty($countryId) ?
-            $this->updateCountry($countryId) :
+        return !empty($data) ?
+            $this->updateCountry($data) :
             $this->createCountry();
     }
 
-    public function updateCountry($countryId)
+    public function updateCountry($data)
     {
-
-        $countryDetailsEntity = $this->getQueryContainer()->queryCountries()->findOneByIdCountry($countryId);
-        $countryDetails = $countryDetailsEntity->toArray();
-
-        return $this->buildForm($countryDetails);
+        return $this->buildForm($data);
     }
 }
