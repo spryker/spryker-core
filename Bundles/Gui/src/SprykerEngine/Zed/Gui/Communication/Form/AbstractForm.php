@@ -30,7 +30,7 @@ abstract class AbstractForm
     public function init()
     {
         $this->injectFrameworkDependencies();
-        $this->define();
+        $this->buildFormFields();
         $data = $this->populateFormFields();
         $this->setData($data);
         return $this;
