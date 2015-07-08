@@ -50,6 +50,10 @@ class ConsoleLocator extends AbstractLocator
             $resolvedConsole->setFacade($locator->$bundleName()->facade());
         }
 
+        if ($locator->$bundleName()->hasQueryContainer()) {
+            $resolvedConsole->setQueryContainer($locator->$bundleName()->queryContainer());
+        }
+
         return $resolvedConsole;
     }
 

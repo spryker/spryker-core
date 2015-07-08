@@ -54,6 +54,10 @@ class PluginLocator extends AbstractLocator
             }
         }
 
+        if ($locator->$bundleName()->hasQueryContainer()) {
+            $plugin->setQueryContainer($locator->$bundleName()->queryContainer());
+        }
+
         return $plugin;
     }
 
