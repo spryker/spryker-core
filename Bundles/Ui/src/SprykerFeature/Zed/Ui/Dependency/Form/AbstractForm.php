@@ -155,7 +155,22 @@ abstract class AbstractForm
      */
     public function renderData()
     {
-        return [self::OUTPUT_PAYLOAD => $this->toArray()];
+        return $this->renderDataForTwig();
+    }
+
+    /**
+     * @return array
+     */
+    public function renderDataForTwig()
+    {
+        $data = $this->toArray();
+
+        foreach ($data['fields'] as $k => $v) {
+            $data['fields'][$v['name']] = $v;
+            unset($data['fields'][$k]);
+        }
+
+        return $data['fields'];
     }
 
     /**
