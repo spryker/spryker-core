@@ -8,9 +8,8 @@
 
 namespace SprykerEngine\Zed\Gui\Business;
 
-use SprykerFeature\Zed\Product\Communication\Form\Type\AutosuggestType;
+use SprykerEngine\Client\Kernel\Locator;
 use Symfony\Component\Form\FormFactory;
-
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
 use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
@@ -20,7 +19,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\Extension\Core\CoreExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraint;
 
@@ -66,12 +64,20 @@ abstract class AbstractFormManager
 
     protected $validation_rules = [];
 
-
-    public function __construct(FormFactory $formFactory)
+    public static function getInstance()
     {
+        return (new static())->init();
+    }
 
-        $this->formFactory = $formFactory;
-        $this->form = $formFactory->create();
+    public function init()
+    {
+        $this->formFactory = Locator::getInstance()
+            ->application()
+            ->pluginPimple()
+            ->getApplication()['form.factory'];
+        $this->form = $this->formFactory->create();
+
+        return $this;
     }
 
     public function add($name, $type, $options = array())
@@ -79,8 +85,10 @@ abstract class AbstractFormManager
         if ($options instanceof ConstraintBuilder) {
             $options = ['constraints' => $options->getConstraints()];
         }
-        $this->form->add($name, $type, $options);
-        return $this;
+
+
+        return $this->form->add($name, $type, $options);
+
     }
 
     /**
@@ -88,10 +96,11 @@ abstract class AbstractFormManager
      */
     public function render()
     {
+
         return $this->form->createView();
     }
 
-    public function handleRequestAndData($request)
+    public function processRequest($request)
     {
         $this->form->handleRequest($request);
         if ($this->form->isSubmitted() && $this->form->isValid()) {
@@ -115,7 +124,14 @@ abstract class AbstractFormManager
 
     public function addChoice($name, $options = array())
     {
+
         $this->add($name, 'choice', $options);
+        return $this;
+    }
+
+    public function addHidden($name, $options = array())
+    {
+        $this->add($name, 'hidden', $options);
         return $this;
     }
 
@@ -128,6 +144,7 @@ abstract class AbstractFormManager
     public function setData($data)
     {
         $this->form->setData($data);
+
         return $this;
     }
 }
