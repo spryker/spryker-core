@@ -18,34 +18,7 @@ class ProductController extends AbstractController
 
     public function indexAction(Request $request)
     {
-        $error = false;
 
-        $form =['product_form'];
-
-
-
-//      if ($request->isXmlHttpRequest()) {
-//            return $this->jsonResponse([
-//                'results' => [
-//                    ['id' => 1, 'text' => 'asd'],
-//                    ['id' => 2, 'text' => 'asdasd'],
-//                ],
-//                'more' => false
-//            ]);
-//        }
-
-        if ($request->isMethod('POST')) {
-            if(false === $data = $form->handleRequestAndData($request)){
-                $error = $form->getErrors();
-            }
-
-        }
-
-
-        return $this->viewResponse([
-            'form' => $form->render(),
-            'error' => $error,
-        ]);
     }
 
 
