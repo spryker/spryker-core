@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,12 +22,12 @@ class CopterForm extends AbstractForm
             ->setLabel('Amount of motors')
             ->setConstraints([
                 new SerializeAssert\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ])
             ->setValueHook(function ($value) {
-                return (int)$value;
+                return (int) $value;
             });
     }
 
@@ -36,9 +37,10 @@ class CopterForm extends AbstractForm
     protected function getDefaultData()
     {
         $data = [
-            'motor_amount' => 5
+            'motor_amount' => 5,
         ];
 
         return $data;
     }
+
 }

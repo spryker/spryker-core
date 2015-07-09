@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\UiExample\Communication\Form;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use SprykerFeature\Zed\Ui\Library\Constraints\Type;
@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class UiExampleForm extends AbstractForm
 {
+
     /**
      * @var UiExampleDependencyContainer
      */
@@ -35,26 +36,26 @@ class UiExampleForm extends AbstractForm
         $this->addField('id_ui_example')
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'integer'
-                ])
+                    'type' => 'integer',
+                ]),
             ]);
 
         $this->addField('column_for_string')
             ->setConstraints([
                 new Assert\Required([
                     new Assert\Type([
-                        'type' => 'string'
+                        'type' => 'string',
                     ]),
-                    new Assert\NotBlank()
-                ])
+                    new Assert\NotBlank(),
+                ]),
             ]);
 
         $this->addField('column_for_boolean')
             ->setConstraints([
                 new Type([
-                    'type' => 'boolean'
+                    'type' => 'boolean',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
 
         $this->addField('vehicle')
@@ -62,25 +63,25 @@ class UiExampleForm extends AbstractForm
             ->setAccepts([
                 [
                     'value' => 'Car',
-                    'label' => 'Car'
+                    'label' => 'Car',
                 ],
                 [
                     'value' => 'Copter',
-                    'label' => 'Copter'
-                ]
+                    'label' => 'Copter',
+                ],
             ])
             ->setConstraints([
                 new Type([
-                    'type' => 'string'
-                ])
+                    'type' => 'string',
+                ]),
             ]);
 
         $this->addField('column_for_datetime')
             ->setConstraints([
                 new Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
 
         $this->addSubForm('vehicle_specs')
@@ -94,7 +95,7 @@ class UiExampleForm extends AbstractForm
     {
         return [
             'column_for_datetime' => $this->stateContainer->getRequestValue('column_for_string'),
-            'vehicle' => 'Copter'
+            'vehicle' => 'Copter',
         ];
     }
 
@@ -103,7 +104,7 @@ class UiExampleForm extends AbstractForm
      */
     protected function getSubForm()
     {
-        if ($this->stateContainer->getLatestValue('vehicle') == 'Car') {
+        if ($this->stateContainer->getLatestValue('vehicle') === 'Car') {
             $form = $this->dependencyContainer->getCarForm($this->stateContainer->getRequest());
         } else {
             $form = $this->dependencyContainer->getCopterForm($this->stateContainer->getRequest());
@@ -111,4 +112,5 @@ class UiExampleForm extends AbstractForm
 
         return $form;
     }
+
 }

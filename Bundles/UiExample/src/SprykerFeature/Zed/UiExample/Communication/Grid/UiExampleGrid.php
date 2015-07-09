@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -33,9 +34,10 @@ class UiExampleGrid extends AbstractGrid
             $this->createDefaultColumn()
                 ->setName(self::COLUMN_FOR_TIMESTAMP)
                 ->filterable()
-                ->sortable()
+                ->sortable(),
         ];
 
         return $plugins;
     }
+
 }

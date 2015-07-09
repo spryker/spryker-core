@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,7 +13,6 @@ use SprykerFeature\Zed\UiExample\Communication\Form\UiExampleForm;
 use SprykerFeature\Zed\UiExample\Persistence\UiExampleQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validator;
 
 /**
  * @method UiExampleCommunication getFactory()
@@ -22,6 +22,7 @@ class UiExampleDependencyContainer extends AbstractCommunicationDependencyContai
 
     /**
      * @param Request $request
+     *
      * @return UiExampleForm
      */
     public function getUiExampleForm(Request $request)
@@ -34,6 +35,7 @@ class UiExampleDependencyContainer extends AbstractCommunicationDependencyContai
 
     /**
      * @param Request $request
+     *
      * @return CarForm
      */
     public function getCarForm(Request $request)
@@ -45,6 +47,7 @@ class UiExampleDependencyContainer extends AbstractCommunicationDependencyContai
 
     /**
      * @param Request $request
+     *
      * @return CopterForm
      */
     public function getCopterForm(Request $request)
@@ -56,6 +59,7 @@ class UiExampleDependencyContainer extends AbstractCommunicationDependencyContai
 
     /**
      * @param Request $request
+     *
      * @return object
      */
     public function getUiExampleGrid(Request $request)
@@ -73,4 +77,5 @@ class UiExampleDependencyContainer extends AbstractCommunicationDependencyContai
     {
         return $this->getLocator()->uiExample()->queryContainer();
     }
+
 }
