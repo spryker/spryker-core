@@ -1,4 +1,6 @@
 <?php
+
+
   /**
   * (c) Spryker Systems GmbH copyright protected
   */
@@ -50,4 +52,5 @@ abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInt
      * @return bool
      */
     abstract protected function callFacade(OrderTransfer $orderTransfer);
-} 
+
+}

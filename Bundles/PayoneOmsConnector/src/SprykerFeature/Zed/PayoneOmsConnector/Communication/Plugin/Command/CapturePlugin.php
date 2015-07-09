@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Command;
 
-use Generated\Shared\Transfer\AuthorizationTransfer;
 use Generated\Shared\Transfer\CaptureTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
