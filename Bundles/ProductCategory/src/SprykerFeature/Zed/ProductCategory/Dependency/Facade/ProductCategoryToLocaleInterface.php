@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,8 +10,10 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductCategoryToLocaleInterface
 {
+
     /**
      * @return LocaleTransfer
      */
     public function getCurrentLocale();
+
 }

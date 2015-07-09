@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ use SprykerFeature\Zed\ProductCategory\Persistence\QueryExpander\ProductCategory
  */
 class ProductCategoryDependencyContainer extends AbstractPersistenceDependencyContainer
 {
+
     /**
      * @param LocaleTransfer $locale
      *
@@ -45,4 +47,5 @@ class ProductCategoryDependencyContainer extends AbstractPersistenceDependencyCo
     {
         return SpyProductCategoryQuery::create();
     }
+
 }

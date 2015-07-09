@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,12 +23,13 @@ class ProductCategoryFacade extends AbstractFacade
      * @param string $sku
      * @param string $categoryName
      * @param LocaleTransfer $locale
-     * @return int
      *
      * @throws ProductCategoryMappingExistsException
      * @throws MissingProductException
      * @throws MissingCategoryNodeException
      * @throws PropelException
+     *
+     * @return int
      */
     public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale)
     {
@@ -51,4 +53,5 @@ class ProductCategoryFacade extends AbstractFacade
             ->hasProductCategoryMapping($sku, $categoryName, $locale)
             ;
     }
+
 }
