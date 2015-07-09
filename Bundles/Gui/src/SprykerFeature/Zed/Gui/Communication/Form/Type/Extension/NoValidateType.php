@@ -1,17 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vsevoloddolgopolov
- * Date: 03/07/15
- * Time: 17:25
- */
 
-namespace SprykerEngine\Zed\Gui\Business;
+namespace SprykerFeature\Zed\Gui\Communication\Form\Type\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * Class NoValidateType
+ * @package SprykerFeature\Zed\Gui\Communication\Form\Type\Extension
+ */
 class NoValidateType extends AbstractTypeExtension
 {
     /**
