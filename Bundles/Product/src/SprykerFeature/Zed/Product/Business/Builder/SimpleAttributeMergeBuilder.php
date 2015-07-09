@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -37,7 +38,7 @@ class SimpleAttributeMergeBuilder
                 $productData['concrete_products'][] = [
                     'name' => $concreteNames[$i],
                     'sku' => $concreteSkus[$i],
-                    'attributes' => json_decode($concreteAttributes[$i], true)
+                    'attributes' => json_decode($concreteAttributes[$i], true),
                 ];
             }
         }
@@ -58,4 +59,5 @@ class SimpleAttributeMergeBuilder
 
         return array_combine($newKeys, $attributes);
     }
+
 }

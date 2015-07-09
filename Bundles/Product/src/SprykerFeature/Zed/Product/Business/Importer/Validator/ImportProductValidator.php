@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\Product\Business\Validator\DataValidatorInterface;
 
 class ImportProductValidator implements DataValidatorInterface
 {
+
     /**
      * @param array $data
      *
@@ -41,5 +43,5 @@ class ImportProductValidator implements DataValidatorInterface
     {
         return (isset($data['sku']));
     }
+
 }
- 

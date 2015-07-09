@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Shared\Product\Model\AbstractProductInterface;
 
 class ProductWriter implements ProductWriterInterface
 {
+
     /**
      * @var AbstractProductWriterInterface
      */
@@ -48,4 +50,5 @@ class ProductWriter implements ProductWriterInterface
 
         return false;
     }
+
 }

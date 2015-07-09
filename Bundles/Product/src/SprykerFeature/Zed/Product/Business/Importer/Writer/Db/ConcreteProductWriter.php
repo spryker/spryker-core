@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
 
 class ConcreteProductWriter implements ConcreteProductWriterInterface
 {
+
     /**
      * @var \PDOStatement
      */
@@ -40,7 +42,6 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
         $this->createAttributesStatement();
     }
 
-
     /**
      * @param ConcreteProductTransfer $product
      *
@@ -53,7 +54,7 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
                 [
                     ':sku' => $product->getSku(),
                     ':isActive' => (int) $product->getIsActive(),
-                    ':abstractProductSku' => $product->getAbstractProductSku()
+                    ':abstractProductSku' => $product->getAbstractProductSku(),
                 ]
             ) &&
             $this->attributesStatement->execute(
@@ -61,7 +62,7 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
                     ':productSku' => $product->getSku(),
                     ':name' => $product->getName(),
                     ':attributes' => json_encode($product->getAttributes()),
-                    ':fkLocale' => $this->localeTransfer->getIdLocale()
+                    ':fkLocale' => $this->localeTransfer->getIdLocale(),
                 ]
             )
         );
@@ -124,4 +125,5 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
             )
         );
     }
+
 }

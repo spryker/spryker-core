@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -33,6 +34,7 @@ use SprykerFeature\Zed\Product\ProductConfig;
  */
 class ProductDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return UploadedFileImporter
      */
@@ -122,7 +124,6 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getFactory()->createModelProductBatchResult();
     }
 
-
     /**
      * @return ProductQueryContainerInterface
      */
@@ -201,4 +202,5 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getLocator()->locale()->facade()->getCurrentLocale();
     }
+
 }

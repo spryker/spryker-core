@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProduc
 
 class AbstractProductWriter implements AbstractProductWriterInterface
 {
+
     /**
      * @var \PDOStatement
      */
@@ -53,7 +55,7 @@ class AbstractProductWriter implements AbstractProductWriterInterface
                     ':attributes' => json_encode($product->getAttributes()),
                     ':name' => $product->getName(),
                     ':abstractProductSku' => $product->getSku(),
-                    ':fkLocale' => $this->localeTransfer->getIdLocale()
+                    ':fkLocale' => $this->localeTransfer->getIdLocale(),
                 ]
             )
          );
@@ -98,4 +100,5 @@ class AbstractProductWriter implements AbstractProductWriterInterface
             )
         );
     }
+
 }

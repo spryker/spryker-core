@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,10 +11,12 @@ use Generated\Shared\Transfer\ConcreteProductTransfer;
 
 interface ProductBuilderInterface
 {
+
     /**
      * @param array $data
      *
      * @return AbstractProductTransfer|ConcreteProductTransfer
      */
     public function buildProduct(array $data);
+
 }

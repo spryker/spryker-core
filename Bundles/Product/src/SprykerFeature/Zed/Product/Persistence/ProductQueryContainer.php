@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,10 +27,11 @@ use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {
+
     /**
      * @param string $skus
      * @param LocaleTransfer $locale
-     * 
+     *
      * @return SpyProductQuery
      */
     public function getProductWithAttributeQuery($skus, LocaleTransfer $locale)
@@ -74,7 +76,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
     /**
      * @param int $idAbstractProduct
-     * 
+     *
      * @return SpyAbstractProductQuery
      */
     public function querySkuFromAbstractProductById($idAbstractProduct)
@@ -84,15 +86,16 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     public function queryAbstractSkuForm()
     {
         return SpyAbstractProductQuery::create()
             ->select([
                 SpyAbstractProductTableMap::COL_SKU => 'value',
-                SpyAbstractProductTableMap::COL_SKU => 'label'
+                SpyAbstractProductTableMap::COL_SKU => 'label',
             ])
             ->withColumn(SpyAbstractProductTableMap::COL_SKU, 'value')
             ->withColumn(SpyAbstractProductTableMap::COL_SKU, 'label')
@@ -100,20 +103,21 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     public function queryConcreteSkuForm()
     {
         return $query = SpyProductQuery::create()
             ->select([
                 SpyProductTableMap::COL_SKU => 'value',
-                SpyProductTableMap::COL_SKU => 'label'
+                SpyProductTableMap::COL_SKU => 'label',
             ])
             ->withColumn(SpyProductTableMap::COL_SKU, 'value')
             ->withColumn(SpyProductTableMap::COL_SKU, 'label');
     }
-    
+
     /**
      * @param string $attributeName
      *
@@ -296,4 +300,5 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
         return $this;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Url\Business\UrlFacade;
 
 class ProductFacadeTest extends Test
 {
+
     /**
      * @var ProductFacade
      */
@@ -189,4 +191,5 @@ class ProductFacadeTest extends Test
         $this->assertEquals('abstract_product', $url->getResourceType());
         $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
     }
+
 }

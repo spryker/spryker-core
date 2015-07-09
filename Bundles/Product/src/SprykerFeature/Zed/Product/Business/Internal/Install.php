@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use Propel\Runtime\Exception\PropelException;
 
 class Install extends AbstractInstaller
 {
+
     /**
      * @var AttributeManagerInterface
      */
@@ -35,12 +37,11 @@ class Install extends AbstractInstaller
             'float' => 'input',
             'boolean' => 'checkbox',
             'enum' => 'select',
-            'list' => 'multi'
+            'list' => 'multi',
         ];
     }
 
     /**
-     * @return void
      */
     public function install()
     {
@@ -58,4 +59,5 @@ class Install extends AbstractInstaller
             }
         }
     }
+
 }
