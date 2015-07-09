@@ -122,6 +122,19 @@
 {#<script src="/bundles/Gui/scripts/plugins/pace/pace.min.js"></script>#}
 {% endblock %}
 
+{% if gui is defined %}
+    {% for guiElement in gui %}
+        {% for js in guiElement.getJS %}
+<script src="/spy/js/{{ js }}"></script>
+        {% endfor %}
+    {% endfor %}
+<script>
+    $(document).ready(function() {
+        $('.gui-table-data').DataTable();
+    } );
+</script>
+{% endif %}
+
 </body>
 
 </html>
