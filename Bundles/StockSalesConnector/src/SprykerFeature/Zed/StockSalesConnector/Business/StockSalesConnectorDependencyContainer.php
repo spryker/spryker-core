@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeI
 
 class StockSalesConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return StockToSalesFacadeInterface
      */
