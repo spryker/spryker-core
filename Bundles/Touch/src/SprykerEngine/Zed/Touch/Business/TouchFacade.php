@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
  */
 class TouchFacade extends AbstractFacade
 {
+
     /**
      * @param string $itemType
      * @param int $idItem
@@ -63,4 +65,5 @@ class TouchFacade extends AbstractFacade
             $idItem
         );
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
  */
 class TouchDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return TouchRecordInterface
      */
@@ -32,4 +34,5 @@ class TouchDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getLocator()->touch()->queryContainer();
     }
+
 }

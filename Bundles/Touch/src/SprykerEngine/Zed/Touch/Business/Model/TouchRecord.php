@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchRecord implements TouchRecordInterface
 {
+
     /**
      * @var TouchQueryContainerInterface
      */
@@ -28,9 +30,10 @@ class TouchRecord implements TouchRecordInterface
      * @param string $itemEvent
      * @param int $idItem
      *
-     * @return bool
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return bool
      */
     public function saveTouchRecord($itemType, $itemEvent, $idItem)
     {
@@ -47,4 +50,5 @@ class TouchRecord implements TouchRecordInterface
 
         return true;
     }
+
 }
