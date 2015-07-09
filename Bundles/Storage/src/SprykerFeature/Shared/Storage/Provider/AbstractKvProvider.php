@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,6 +35,7 @@ abstract class AbstractKvProvider extends AbstractClientProvider
 
     /**
      * @param string $kvName
+     *
      * @return string
      */
     protected function createMethodName($kvName)
@@ -43,9 +45,11 @@ abstract class AbstractKvProvider extends AbstractClientProvider
 
     /**
      * @param string $kvName
-     * @return array
+     *
      * @throws \ErrorException
      * @throws \Exception
+     *
+     * @return array
      */
     public function getConfigByKvName($kvName)
     {
@@ -54,9 +58,10 @@ abstract class AbstractKvProvider extends AbstractClientProvider
                 return [
                     'protocol' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
                     'port' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_PORT),
-                    'host' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_HOST)
+                    'host' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_HOST),
                 ];
         }
         throw new \ErrorException('Missing implementation for adapter ' . $kvName);
     }
+
 }

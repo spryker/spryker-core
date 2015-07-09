@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -78,6 +79,7 @@ class Service implements ServiceInterface
 
     /**
      * @param array $config
+     *
      * @return $this
      */
     public function setConfig(array $config)
@@ -97,6 +99,7 @@ class Service implements ServiceInterface
 
     /**
      * @param $resource
+     *
      * @return $this
      */
     private function setResource($resource)
@@ -107,8 +110,9 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @return Client
      * @throws \Exception
+     *
+     * @return Client
      */
     private function getResource()
     {
@@ -120,7 +124,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     private function getDebug()
     {
@@ -129,6 +133,7 @@ class Service implements ServiceInterface
 
     /**
      * @param $debug
+     *
      * @return $this
      */
     public function setDebug($debug)
@@ -244,7 +249,7 @@ class Service implements ServiceInterface
 
         $result = json_decode($value, true);
 
-        if (json_last_error() == \JSON_ERROR_SYNTAX) {
+        if (json_last_error() === \JSON_ERROR_SYNTAX) {
             return $value;
         }
 
@@ -271,6 +276,7 @@ class Service implements ServiceInterface
 
     /**
      * @param null|string $section
+     *
      * @return array
      */
     public function getStats($section = null)
@@ -317,6 +323,7 @@ class Service implements ServiceInterface
      * @param mixed $value
      *
      * @throws \Exception
+     *
      * @return mixed
      */
     public function set($key, $value)
@@ -337,6 +344,7 @@ class Service implements ServiceInterface
      * @param array $items
      *
      * @throws \Exception
+     *
      * @return bool
      */
     public function setMulti(array $items)
@@ -353,7 +361,7 @@ class Service implements ServiceInterface
             $data[$dataKey] = $value;
         }
 
-        if (count($data) == 0) {
+        if (count($data) === 0) {
             return false;
         }
 

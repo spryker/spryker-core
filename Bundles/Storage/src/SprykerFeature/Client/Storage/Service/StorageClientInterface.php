@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -59,7 +60,6 @@ interface StorageClientInterface
     public function getAllKeys();
 
     /**
-     * @return void
      */
     public function resetAccessStats();
 
@@ -72,4 +72,5 @@ interface StorageClientInterface
      * @return int
      */
     public function getCountItems();
+
 }
