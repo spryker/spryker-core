@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormInterface;
  * Class NoValidateType
  * @package SprykerFeature\Zed\Gui\Communication\Form\Type\Extension
  */
-class NoValidateType extends AbstractTypeExtension
+class NoValidateTypeExtension extends AbstractTypeExtension
 {
     /**
      * {@inheritdoc}

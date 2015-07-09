@@ -1,10 +1,53 @@
 {% block autosuggest_widget %}
     {{ form_widget(form,  { 'attr': {'class': 'type_asw'} }) }}
-    <link href="//raw.githubusercontent.com/devbridge/jQuery-Autocomplete/master/content/styles.css" rel="stylesheet"/>
+    <style type="text/css">
+        .container {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        .autocomplete-suggestions {
+            border: 1px solid #999;
+            background: #FFF;
+            cursor: default;
+            overflow: auto;
+        }
+
+        .autocomplete-suggestion {
+            padding: 2px 5px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .autocomplete-no-suggestion {
+            padding: 2px 5px;
+        }
+
+        .autocomplete-selected {
+            background: #F0F0F0;
+        }
+
+        .autocomplete-suggestions strong {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .autocomplete-group {
+            padding: 2px 5px;
+        }
+
+        .autocomplete-group strong {
+            font-weight: bold;
+            font-size: 16px;
+            color: #000;
+            display: block;
+            border-bottom: 1px solid #000;
+        }
+    </style>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.21/jquery.autocomplete.min.js"></script>
     <script type="text/javascript">
-        (function($) {
+        (function ($) {
             jQuery(window).load(function () {
                 $('.type_asw').autocomplete({
                     serviceUrl: '{{ url }}',
