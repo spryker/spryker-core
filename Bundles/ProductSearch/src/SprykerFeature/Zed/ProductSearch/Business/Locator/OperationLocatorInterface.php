@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,11 +10,10 @@ use SprykerFeature\Zed\ProductSearch\Business\Operation\OperationInterface;
 
 /**
  * Class OperationLocator
- *
- * @package SprykerFeature\Zed\ProductSearch\Business\Locator
  */
 interface OperationLocatorInterface
 {
+
     /**
      * @param OperationInterface $operation
      */
@@ -25,4 +25,5 @@ interface OperationLocatorInterface
      * @return OperationInterface
      */
     public function findOperationByName($name = 'CopyToField');
+
 }

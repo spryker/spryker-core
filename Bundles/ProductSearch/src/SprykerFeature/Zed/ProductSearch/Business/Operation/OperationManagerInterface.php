@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business\Operation;
 
 interface OperationManagerInterface
 {
+
     /**
      * @param int $idAttribute
      * @param string $copyTarget
@@ -24,4 +26,5 @@ interface OperationManagerInterface
      * @return array
      */
     public function createAttributeOperation($idAttribute, $copyTarget, $operation, $weight);
+
 }

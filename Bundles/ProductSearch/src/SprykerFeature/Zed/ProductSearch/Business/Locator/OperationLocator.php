@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,11 +10,10 @@ use SprykerFeature\Zed\ProductSearch\Business\Operation\OperationInterface;
 
 /**
  * Class OperationLocator
- *
- * @package SprykerFeature\Zed\ProductSearch\Business\Locator
  */
 class OperationLocator implements OperationLocatorInterface
 {
+
     protected $registeredOperations = [];
 
     /**
@@ -35,7 +35,7 @@ class OperationLocator implements OperationLocatorInterface
             return $this->registeredOperations[$name];
         }
 
-        return null;
+        return;
     }
+
 }
- 

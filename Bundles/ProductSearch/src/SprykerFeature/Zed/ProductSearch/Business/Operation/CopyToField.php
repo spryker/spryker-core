@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business\Operation;
 
 class CopyToField implements OperationInterface
 {
+
     /**
      * @param array     $sourceDocument
      * @param array     $targetDocument
@@ -31,4 +33,5 @@ class CopyToField implements OperationInterface
     {
         return 'CopyToField';
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ use SprykerFeature\Zed\ProductSearch\Communication\ProductSearchDependencyContai
  */
 class ProductAttributesProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
+
     /**
      * @var ProductSearchFacade
      */
@@ -32,7 +34,6 @@ class ProductAttributesProcessorPlugin extends AbstractPlugin implements DataPro
         parent::__construct($factory, $locator);
         $this->transformer = $this->getDependencyContainer()->getAttributesTransformer();
     }
-
 
     /**
      * @return string
@@ -58,4 +59,5 @@ class ProductAttributesProcessorPlugin extends AbstractPlugin implements DataPro
 
         return $processedResultSet;
     }
+
 }
