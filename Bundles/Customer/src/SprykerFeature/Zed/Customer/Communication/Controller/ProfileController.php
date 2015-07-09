@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProfileController extends AbstractController
 {
+
     /**
      * @param Request $request
      *
@@ -75,8 +77,8 @@ class ProfileController extends AbstractController
                 'company' => $address->getCompany(),
                 'zipCode' => $address->getZipCode(),
                 'city' => $address->getCity(),
-                'isDefaultBilling' => ($address->getIdCustomerAddress() == $idBillingAddress),
-                'isDefaultShipping' => ($address->getIdCustomerAddress() == $idShippingAddress),
+                'isDefaultBilling' => ($address->getIdCustomerAddress() === $idBillingAddress),
+                'isDefaultShipping' => ($address->getIdCustomerAddress() === $idShippingAddress),
             ];
         }
 
@@ -187,4 +189,5 @@ class ProfileController extends AbstractController
 
         return $this->redirectResponse('/customer/profile?id=' . $request->query->get('customer_id'));
     }
+
 }

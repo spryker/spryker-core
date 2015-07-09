@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 
 class CustomerDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return InstallerInterface
      */
@@ -17,4 +19,5 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getLocator()->customer()->facade();
     }
+
 }

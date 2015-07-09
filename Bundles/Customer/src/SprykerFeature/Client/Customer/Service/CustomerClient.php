@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerEngine\Client\Kernel\Service\AbstractClient;
  */
 class CustomerClient extends AbstractClient
 {
+
     /**
      * @param CustomerTransfer $customerTransfer
      *
@@ -113,4 +115,5 @@ class CustomerClient extends AbstractClient
     {
         return $this->getDependencyContainer()->createModelCustomer()->createAddress($addressTransfer);
     }
+
 }

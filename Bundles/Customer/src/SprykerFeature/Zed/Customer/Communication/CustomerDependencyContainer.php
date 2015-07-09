@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CustomerDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @param Request $request
      *
@@ -78,4 +80,5 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getLocator()->customer()->queryContainer();
     }
+
 }

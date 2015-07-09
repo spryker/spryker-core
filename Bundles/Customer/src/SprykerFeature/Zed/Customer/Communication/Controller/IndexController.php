@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -52,7 +53,7 @@ class IndexController extends AbstractController
             return $date->format(self::DATE_FORMAT);
         }
 
-        return null;
+        return;
     }
 
 }

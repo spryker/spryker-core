@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,7 +24,7 @@ class AjaxAuthenticationHandler implements AuthenticationSuccessHandlerInterface
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        $array = array('success' => true); // data to return via JSON
+        $array = ['success' => true]; // data to return via JSON
         $response = new Response(json_encode($array));
         $response->headers->set('Content-Type', 'application/json');
 
@@ -38,10 +39,11 @@ class AjaxAuthenticationHandler implements AuthenticationSuccessHandlerInterface
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $array = array('success' => false, 'message' => $exception->getMessage()); // data to return via JSON
+        $array = ['success' => false, 'message' => $exception->getMessage()]; // data to return via JSON
         $response = new Response(json_encode($array));
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
     }
+
 }

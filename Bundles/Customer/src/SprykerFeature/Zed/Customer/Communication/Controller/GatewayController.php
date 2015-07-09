@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Customer\Business\CustomerFacade;
  */
 class GatewayController extends AbstractGatewayController
 {
+
     /**
      * @param CustomerTransfer $customerTransfer
      *
@@ -100,7 +102,7 @@ class GatewayController extends AbstractGatewayController
         if (!$addressTransfer) {
             $this->setSuccess(false);
 
-            return null;
+            return;
         }
 
         return $addressTransfer;
@@ -131,4 +133,5 @@ class GatewayController extends AbstractGatewayController
 
         return $addressTransfer;
     }
+
 }

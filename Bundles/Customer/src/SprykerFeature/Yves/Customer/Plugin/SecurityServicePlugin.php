@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Yves\Customer\CustomerDependencyContainer;
  */
 class SecurityServicePlugin extends AbstractPlugin
 {
+
     /**
      * @return SecurityServiceProvider
      */
@@ -33,4 +35,5 @@ class SecurityServicePlugin extends AbstractPlugin
     {
         return $this->getDependencyContainer()->createUserProvider($session);
     }
+
 }

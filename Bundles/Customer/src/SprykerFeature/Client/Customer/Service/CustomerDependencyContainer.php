@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Client\ZedRequest\Service\Provider\ZedClientProvider;
  */
 class CustomerDependencyContainer extends AbstractServiceDependencyContainer
 {
+
     /**
      * @return ZedClientProvider
      */
@@ -30,4 +32,5 @@ class CustomerDependencyContainer extends AbstractServiceDependencyContainer
     {
         return $this->getFactory()->createModelCustomer($this->createZedClient());
     }
+
 }
