@@ -13,4 +13,5 @@ interface OrderReferenceGeneratorInterface
      * @return string
      */
     public function generateOrderReference(OrderTransfer $orderTransfer);
+
 }

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
-use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
@@ -58,7 +58,7 @@ class SandboxController extends AbstractController
         $address->setCountry($country);
         $address->save();
 
-        $total = rand(10,1000);
+        $total = rand(10, 1000);
 
         $order = new SpySalesOrder();
         $order->setIsTest(true);
@@ -84,25 +84,25 @@ class SandboxController extends AbstractController
         $orderItem->setOrder($order);
         $orderItem->setState($state);
         $orderItem->setProcess($process);
-        $orderItem->setGrossPrice($total/2);
-        $orderItem->setPriceToPay($total/2);
+        $orderItem->setGrossPrice($total / 2);
+        $orderItem->setPriceToPay($total / 2);
         $orderItem->setSku('42');
         $orderItem->setName('1. item');
         $orderItem->save();
-
 
         $orderItem = new SpySalesOrderItem();
         $orderItem->setOrder($order);
         $orderItem->setState($state);
         $orderItem->setProcess($process);
-        $orderItem->setGrossPrice($total/2);
-        $orderItem->setPriceToPay($total/2);
+        $orderItem->setGrossPrice($total / 2);
+        $orderItem->setPriceToPay($total / 2);
         $orderItem->setSku('43');
         $orderItem->setName('2. item');
         $orderItem->save();
 
         Propel::getConnection()->commit();
 
-        die('<pre><b>'.print_r('!!!', true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
+        die('<pre><b>' . print_r('!!!', true) . '</b>' . PHP_EOL . __CLASS__ . ' ' . __LINE__);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 
 class DemoCommentForm extends AbstractForm
 {
+
     /**
      * @return array
      */
@@ -24,4 +26,5 @@ class DemoCommentForm extends AbstractForm
             ->setRefresh(false)
         ;
     }
+
 }

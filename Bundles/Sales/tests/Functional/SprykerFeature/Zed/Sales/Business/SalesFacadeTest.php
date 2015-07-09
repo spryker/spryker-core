@@ -32,6 +32,7 @@ use SprykerFeature\Zed\Sales\SalesDependencyProvider;
  */
 class SalesFacadeTest extends Test
 {
+
     /**
      * @var SalesFacade
      */
@@ -112,7 +113,6 @@ class SalesFacadeTest extends Test
             ->setFirstName('Max')
             ->setLastName('Mustermann')
             ->setProcess('process-test-1');
-        ;
 
         return $orderTransfer;
     }
@@ -281,4 +281,5 @@ class SalesFacadeTest extends Test
         $item1Entity = $item1Query->findOne();
         $this->assertSame($process->getIdOmsOrderProcess(), $item1Entity->getFkOmsOrderProcess());
     }
+
 }

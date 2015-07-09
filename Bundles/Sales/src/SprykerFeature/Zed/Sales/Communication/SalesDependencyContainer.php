@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -44,6 +45,7 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
 
     /**
      * @param Request $request
+     *
      * @return CommentsGrid
      */
     public function getCommentsGridByOrderId(Request $request)
@@ -59,6 +61,7 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
     public function getSalesGrid()
     {
         $salesQuery = $this->getQueryContainer()->querySalesOrder();
+
         return $this->getFactory()->createGridSalesGrid($salesQuery);
     }
 
@@ -72,6 +75,5 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
         return $this->getFactory()->createGridOrderItemsGrid(
             $this->getQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder));
     }
-
 
 }

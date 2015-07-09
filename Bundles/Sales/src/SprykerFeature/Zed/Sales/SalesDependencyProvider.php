@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -44,10 +45,11 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->oms()->facade();
         };
 
-        $container[SalesDependencyProvider::FACADE_LOCALE] = function (Container $container) {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
         };
 
         return $container;
     }
+
 }

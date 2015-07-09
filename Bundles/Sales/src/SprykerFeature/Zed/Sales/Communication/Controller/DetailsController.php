@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -38,12 +39,13 @@ class DetailsController extends AbstractController
             'orderDetails' => $orderEntity,
             'orderItems' => $orderItems,
             'events' => $events,
-            'all_events' => $allEvents
+            'all_events' => $allEvents,
         ];
     }
 
     /**
      * @param $events
+     *
      * @return array
      */
     protected function groupEvents($events)
@@ -55,4 +57,5 @@ class DetailsController extends AbstractController
 
         return array_unique($allEvents);
     }
+
 }

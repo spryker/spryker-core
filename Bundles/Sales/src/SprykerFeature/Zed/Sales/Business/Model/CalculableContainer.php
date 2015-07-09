@@ -8,6 +8,7 @@ use Generated\Shared\Sales\OrderInterface;
 
 class CalculableContainer implements CalculableInterface
 {
+
     /**
      * @var OrderInterface
      */
@@ -28,4 +29,5 @@ class CalculableContainer implements CalculableInterface
     {
         return $this->order;
     }
+
 }

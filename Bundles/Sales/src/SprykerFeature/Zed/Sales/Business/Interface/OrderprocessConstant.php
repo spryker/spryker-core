@@ -1,10 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 interface SprykerFeature_Zed_Sales_Business_Interface_OrderprocessConstant
 {
+
     // STATE
     const STATE_NEW = 'new';
 
@@ -37,4 +38,5 @@ interface SprykerFeature_Zed_Sales_Business_Interface_OrderprocessConstant
     const RULE_AT_LEAST_ONE_CODE_IS_REFUNDABLE = 'at least one code is refundable';
 
     const ALL_CODES_ARE_REFUNDABLE = 'all codes are refundable';
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -57,7 +58,6 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getQueryContainer();
     }
 
-
     //TODO put the order generator here
     /**
      * @return OrderReferenceGeneratorInterface
@@ -66,4 +66,5 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelMockOrderReferenceGenerator();
     }
+
 }
