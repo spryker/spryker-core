@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ use SprykerFeature\Zed\PriceCartConnector\PriceCartConnectorConfig;
  */
 class PriceCartConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return PriceManagerInterface
      */
@@ -35,4 +37,5 @@ class PriceCartConnectorDependencyContainer extends AbstractBusinessDependencyCo
     {
         return $this->getLocator()->price()->facade();
     }
+
 }

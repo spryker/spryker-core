@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\PriceCartConnector\Business\Exception\PriceMissingExcepti
 
 class PriceManager implements PriceManagerInterface
 {
+
     /**
      * @var PriceFacade
      */
@@ -36,6 +38,7 @@ class PriceManager implements PriceManagerInterface
      * @param ChangeInterface $change
      *
      * @throws PriceMissingException
+     *
      * @return CartItemInterface[]
      */
     public function addGrossPriceToItems(ChangeInterface $change)

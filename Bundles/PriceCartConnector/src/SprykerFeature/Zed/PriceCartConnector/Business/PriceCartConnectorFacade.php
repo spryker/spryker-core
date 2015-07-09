@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class PriceCartConnectorFacade extends AbstractFacade
 {
+
     /**
      * @param ChangeInterface $change
      *
@@ -22,4 +24,5 @@ class PriceCartConnectorFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createPriceManager()->addGrossPriceToItems($change);
     }
+
 }

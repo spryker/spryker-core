@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 class CartItemFixture extends AbstractTransfer implements ItemInterface
 {
+
     private $id;
 
     public function __construct(LocatorLocatorInterface $locator = null)
@@ -33,6 +35,7 @@ class CartItemFixture extends AbstractTransfer implements ItemInterface
     public function setId($identifier)
     {
         $this->id = $identifier;
+
         return $this;
     }
 
@@ -53,4 +56,5 @@ class CartItemFixture extends AbstractTransfer implements ItemInterface
     {
         // TODO: Implement setQuantity() method.
     }
+
 }
