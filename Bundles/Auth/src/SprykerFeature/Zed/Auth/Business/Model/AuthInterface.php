@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 
 interface AuthInterface
 {
+
     /**
      * @param string $username
      * @param string $password
@@ -51,16 +53,18 @@ interface AuthInterface
     /**
      * @param string $hash
      *
-     * @return UserTransfer
      * @throws UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function getSystemUserByHash($hash);
 
     /**
      * @param string $token
      *
-     * @return mixed
      * @throws UserNotLoggedException
+     *
+     * @return mixed
      */
     public function getCurrentUser($token);
 
@@ -79,4 +83,5 @@ interface AuthInterface
      * @return bool
      */
     public function isIgnorablePath($bundle, $controller, $action);
+
 }

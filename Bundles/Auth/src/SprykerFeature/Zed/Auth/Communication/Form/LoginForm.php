@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,25 +11,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class LoginForm extends AbstractForm
 {
+
     /**
      * @return array
      */
     public function addFormFields()
     {
-        $fields[] =  $this->addField('username')
+        $fields[] = $this->addField('username')
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
 
         $fields[] = $this->addField('password')
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
 
 //        $fields[] = $this->addField('url')
@@ -49,4 +51,5 @@ class LoginForm extends AbstractForm
     {
         return [];
     }
+
 }

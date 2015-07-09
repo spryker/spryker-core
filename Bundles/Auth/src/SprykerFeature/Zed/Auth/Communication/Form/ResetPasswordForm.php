@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,18 +11,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ResetPasswordForm extends AbstractForm
 {
+
     /**
      * @return array
      */
     public function addFormFields()
     {
-        $fields[] =  $this->addField('username')
+        $fields[] = $this->addField('username')
             ->setConstraints([
                 new Assert\Required([
                     new Assert\Type([
-                        'type' => 'string'
-                    ])
-                ])
+                        'type' => 'string',
+                    ]),
+                ]),
             ]);
 
         return $fields;
@@ -34,4 +36,5 @@ class ResetPasswordForm extends AbstractForm
     {
         return [];
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Generated\Shared\Transfer\UserTransfer;
  */
 class AuthFacade extends AbstractFacade
 {
+
     /**
      * @param string $username
      * @param string $password
@@ -105,4 +107,5 @@ class AuthFacade extends AbstractFacade
             ->createAuthModel()
             ->getCurrentUserToken();
     }
+
 }

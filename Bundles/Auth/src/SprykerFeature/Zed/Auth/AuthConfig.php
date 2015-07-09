@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class AuthConfig extends AbstractBundleConfig
 {
+
     const AUTH_SESSION_KEY = 'auth';
     const AUTH_CURRENT_USER_KEY = '%s:currentUser:%s';
 
@@ -30,23 +32,23 @@ class AuthConfig extends AbstractBundleConfig
         [
             'bundle' => 'auth',
             'controller' => 'login',
-            'action' => 'index'
+            'action' => 'index',
         ],
         [
             'bundle' => 'auth',
             'controller' => 'login',
-            'action' => 'check'
+            'action' => 'check',
         ],
         [
             'bundle' => 'auth',
             'controller' => 'login',
-            'action' => 'exit'
+            'action' => 'exit',
         ],
         [
             'bundle' => 'auth',
             'controller' => 'password',
-            'action' => 'reset'
-        ]
+            'action' => 'reset',
+        ],
     ];
 
     /**
@@ -66,15 +68,13 @@ class AuthConfig extends AbstractBundleConfig
      * @param string $bundle
      * @param string $controller
      * @param string $action
-     *
-     * @return void
      */
     public function setIgnorable($bundle, $controller, $action)
     {
         $this->ignorable[] = [
             'bundle' => $bundle,
             'controller' => $controller,
-            'action' => $action
+            'action' => $action,
         ];
     }
 
@@ -97,4 +97,5 @@ class AuthConfig extends AbstractBundleConfig
 
         return $response;
     }
+
 }
