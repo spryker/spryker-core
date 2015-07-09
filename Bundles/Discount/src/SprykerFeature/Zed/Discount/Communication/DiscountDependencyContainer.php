@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -37,6 +38,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param Request $request
+     *
      * @return DecisionRuleForm
      */
     public function getDecisionRuleForm(Request $request)
@@ -50,6 +52,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param Request $request
+     *
      * @return DiscountForm
      */
     public function getDiscountForm(Request $request)
@@ -63,6 +66,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param Request $request
+     *
      * @return VoucherForm
      */
     public function getVoucherForm(Request $request)
@@ -77,6 +81,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param Request $request
+     *
      * @return VoucherPoolCategoryForm
      */
     public function getVoucherPoolCategoryForm(Request $request)
@@ -104,6 +109,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param Request $request
+     *
      * @return DiscountGrid
      */
     public function getDiscountGrid(Request $request)
@@ -116,6 +122,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param Request $request
+     *
      * @return DecisionRuleGrid
      */
     public function getDecisionRuleGrid(Request $request)
@@ -128,6 +135,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param Request $request
+     *
      * @return VoucherGrid
      */
     public function getVoucherGrid(Request $request)
@@ -140,6 +148,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param Request $request
+     *
      * @return VoucherPoolGrid
      */
     public function getVoucherPoolGrid(Request $request)
@@ -152,6 +161,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param Request $request
+     *
      * @return VoucherPoolCategoryGrid
      */
     public function getVoucherPoolCategoryGrid(Request $request)
@@ -169,4 +179,5 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getLocator()->discount()->queryContainer();
     }
+
 }

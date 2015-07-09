@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface
 class Distributor implements
     DistributorInterface
 {
+
     /**
      * @var float
      */
@@ -40,7 +42,7 @@ class Distributor implements
         foreach ($discountableObjects as $discountableObject) {
             $totalGrossPrice = $this->getGrossPriceOfDiscountableObjects($discountableObjects);
 
-            if ($totalGrossPrice == 0) {
+            if ($totalGrossPrice === 0) {
                 continue;
             }
 
@@ -48,7 +50,7 @@ class Distributor implements
                 continue;
             }
 
-            /**
+            /*
              * There should not be a discount that is higher than the total gross price of all discountable objects
              */
             if ($amount > $totalGrossPrice) {
@@ -76,6 +78,7 @@ class Distributor implements
 
     /**
      * @param DiscountableInterface[] $discountableObjects
+     *
      * @return int
      */
     protected function getGrossPriceOfDiscountableObjects($discountableObjects)
@@ -96,4 +99,5 @@ class Distributor implements
     {
         return $this->locator;
     }
+
 }

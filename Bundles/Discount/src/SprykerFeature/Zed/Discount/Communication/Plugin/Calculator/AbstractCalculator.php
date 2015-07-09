@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,9 +13,11 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 abstract class AbstractCalculator extends AbstractPlugin implements
     DiscountCalculatorPluginInterface
 {
+
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $number
+     *
      * @return
      */
     abstract public function calculate(array $discountableObjects, $number);
@@ -29,4 +32,5 @@ abstract class AbstractCalculator extends AbstractPlugin implements
             ->getDiscountFacade()
             ->distributeAmount($discountableObjects, $number);
     }
+
 }

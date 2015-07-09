@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -17,7 +17,6 @@ use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
-use SprykerFeature\Zed\Discount\Business\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -34,6 +33,7 @@ use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
  */
 class DiscountFacadeTest extends Test
 {
+
     const VOUCHER_CODE_TEST_1 = 'TEST-CODE-1';
     const VOUCHER_CODE_TEST_2 = 'TEST-CODE-2';
     const VOUCHER_CODE_TEST_3 = 'TEST-CODE-3';
@@ -190,7 +190,7 @@ class DiscountFacadeTest extends Test
 
         $discountAmount = $this->discountFacade->calculatePercentage($items, self::DISCOUNT_AMOUNT_PERCENTAGE_50);
 
-        $this->assertEquals((self::ITEM_GROSS_PRICE * 3)/2, $discountAmount);
+        $this->assertEquals((self::ITEM_GROSS_PRICE * 3) / 2, $discountAmount);
     }
 
     public function testCalculateFixed()
@@ -388,6 +388,7 @@ class DiscountFacadeTest extends Test
      * @param int $amount
      * @param bool $isActive
      * @param string $collectorPlugin
+     *
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount
      */
     protected function initializeDiscount($displayName, $type, $amount, $isActive, $collectorPlugin)
@@ -408,6 +409,7 @@ class DiscountFacadeTest extends Test
      * @param bool $voucherIsActive
      * @param bool $voucherPoolIsActive
      * @param bool $createVoucher
+     *
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool
      */
     protected function initializeDatabaseWithTestVoucher(
@@ -442,7 +444,6 @@ class DiscountFacadeTest extends Test
         return new CalculableContainer($order);
     }
 
-
     /**
      * @param array $grossPrices
      *
@@ -468,4 +469,5 @@ class DiscountFacadeTest extends Test
     {
         return Locator::getInstance();
     }
+
 }

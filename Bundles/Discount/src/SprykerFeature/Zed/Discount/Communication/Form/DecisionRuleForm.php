@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
@@ -15,10 +15,10 @@ use SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validator;
 
 class DecisionRuleForm extends AbstractForm
 {
+
     /**
      * @var DiscountQueryContainer
      */
@@ -52,9 +52,9 @@ class DecisionRuleForm extends AbstractForm
             ->setConstraints([
                 new Assert\Optional([
                     new Assert\Type([
-                        'type' => 'integer'
-                    ])
-                ])
+                        'type' => 'integer',
+                    ]),
+                ]),
             ]);
 
         $this->addField('fk_discount')
@@ -62,22 +62,22 @@ class DecisionRuleForm extends AbstractForm
             ->setRefresh(false)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
                 new Assert\Choice([
                     'choices' => array_column($this->getDiscounts(), 'value'),
-                    'message' => 'Please choose one of the given Discounts'
+                    'message' => 'Please choose one of the given Discounts',
                 ]),
-                new Assert\NotNull()
+                new Assert\NotNull(),
             ]);
 
         $this->addField('name')
             ->setRefresh(false)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
 
         $this->addField('decision_rule_plugin')
@@ -85,22 +85,22 @@ class DecisionRuleForm extends AbstractForm
             ->setAccepts($this->getDecisionRulePlugins())
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
                 new Assert\Choice([
                     'choices' => array_column($this->getDecisionRulePlugins(), 'value'),
-                    'message' => 'Please choose one of the given Plugins'
+                    'message' => 'Please choose one of the given Plugins',
                 ]),
-                new Assert\NotNull()
+                new Assert\NotNull(),
             ]);
 
         $this->addField('value')
             ->setRefresh(false)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
     }
 
@@ -133,14 +133,14 @@ class DecisionRuleForm extends AbstractForm
         foreach ($discounts as $discount) {
             $data[] = [
                 'value' => $discount->getPrimaryKey(),
-                'label' => $discount->getDisplayName()
+                'label' => $discount->getDisplayName(),
             ];
         }
 
         if (empty($data)) {
             $data[] = [
                 'value' => '',
-                'label' => ''
+                'label' => '',
             ];
         }
 
@@ -158,10 +158,11 @@ class DecisionRuleForm extends AbstractForm
         foreach ($decisionRulePluginNames as $name) {
             $data[] = [
                 'value' => $name,
-                'label' => $name
+                'label' => $name,
             ];
         }
 
         return $data;
     }
+
 }

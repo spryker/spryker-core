@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,12 +12,16 @@ use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 interface DiscountCollectorPluginInterface
 {
+
     /**
      * @ param OrderInterface $container
+     *
      * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
      */
     public function collect(CalculableInterface $container);
     //public function collect(OrderInterface $container);
+
+
 }

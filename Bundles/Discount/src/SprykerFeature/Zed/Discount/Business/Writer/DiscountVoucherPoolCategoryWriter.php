@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\Base\SpyDiscountVoucherPoolCa
 
 class DiscountVoucherPoolCategoryWriter extends AbstractWriter
 {
+
     /**
      * @var AutoCompletion
      */
@@ -20,8 +22,9 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
     /**
      * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      *
-     * @return SpyDiscountVoucherPoolCategory
      * @throws PropelException
+     *
+     * @return SpyDiscountVoucherPoolCategory
      */
     public function create(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
@@ -34,8 +37,10 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
 
     /**
      * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
-     * @return array|mixed|SpyDiscountVoucherPoolCategory
+     *
      * @throws PropelException
+     *
+     * @return array|mixed|SpyDiscountVoucherPoolCategory
      */
     public function update(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
@@ -48,4 +53,5 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
 
         return $discountVoucherPoolCategoryEntity;
     }
+
 }

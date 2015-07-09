@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
@@ -15,10 +15,10 @@ use SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validator;
 
 class DiscountForm extends AbstractForm
 {
+
     /**
      * @var DiscountQueryContainer
      */
@@ -52,9 +52,9 @@ class DiscountForm extends AbstractForm
             ->setConstraints([
                 new Assert\Optional([
                     new Assert\Type([
-                        'type' => 'integer'
-                    ])
-                ])
+                        'type' => 'integer',
+                    ]),
+                ]),
             ]);
 
         $this->addField('fk_discount_voucher_pool')
@@ -62,53 +62,53 @@ class DiscountForm extends AbstractForm
             ->setRefresh(false)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
                 new Assert\Choice([
                     'choices' => array_column($this->getVoucherPools(), 'value'),
-                    'message' => 'Please choose one of the given Voucher Pools'
+                    'message' => 'Please choose one of the given Voucher Pools',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             });
 
         $this->addField('display_name')
             ->setRefresh(false)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
 
         $this->addField('description')
             ->setRefresh(false)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
 
         $this->addField('amount')
             ->setRefresh(false)
             ->setConstraints([
-                $this->getAmountConstraints()
+                $this->getAmountConstraints(),
             ]);
 
         $this->addField('is_active')
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'bool'
+                    'type' => 'bool',
                 ]),
             ]);
 
         $this->addField('is_privileged')
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'bool'
+                    'type' => 'bool',
                 ]),
             ]);
 
@@ -133,16 +133,16 @@ class DiscountForm extends AbstractForm
             ->setRefresh(false)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
                 new Assert\Choice([
                     'choices' => array_column($this->getCalculatorPlugins(), 'value'),
-                    'message' => 'Please choose one of the given Calculators'
+                    'message' => 'Please choose one of the given Calculators',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (string)$value : null;
+                return $value ? (string) $value : null;
             });
 
         $this->addField('collector_plugin')
@@ -150,16 +150,16 @@ class DiscountForm extends AbstractForm
             ->setRefresh(false)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
                 new Assert\Choice([
                     'choices' => array_column($this->getCollectorPlugins(), 'value'),
-                    'message' => 'Please choose one of the given Collectors'
+                    'message' => 'Please choose one of the given Collectors',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (string)$value : null;
+                return $value ? (string) $value : null;
             });
     }
 
@@ -169,7 +169,7 @@ class DiscountForm extends AbstractForm
     protected function getDefaultData()
     {
         $data = [
-            'calculator_plugin' => $this->getCalculatorPlugins()[0]['value']
+            'calculator_plugin' => $this->getCalculatorPlugins()[0]['value'],
         ];
 
         $idDiscount = $this->stateContainer->getRequestValue('id_discount');
@@ -195,14 +195,14 @@ class DiscountForm extends AbstractForm
         foreach ($voucherPools as $voucherPool) {
             $data[] = [
                 'value' => $voucherPool->getPrimaryKey(),
-                'label' => $voucherPool->getName()
+                'label' => $voucherPool->getName(),
             ];
         }
 
         if (empty($data)) {
             $data[] = [
                 'value' => '',
-                'label' => ''
+                'label' => '',
             ];
         }
 
@@ -252,8 +252,8 @@ class DiscountForm extends AbstractForm
     {
         $constraints = [
             new Assert\Type([
-                'type' => 'numeric'
-            ])
+                'type' => 'numeric',
+            ]),
         ];
 
         $calculatorPluginName = $this->stateContainer->getLatestValue('calculator_plugin');
@@ -269,4 +269,5 @@ class DiscountForm extends AbstractForm
 
         return $constraints;
     }
+
 }

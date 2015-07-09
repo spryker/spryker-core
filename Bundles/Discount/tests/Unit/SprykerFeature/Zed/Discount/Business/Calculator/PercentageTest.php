@@ -1,23 +1,22 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerFeature\Zed\Discount\Business\Calculator;
 
-use Codeception\TestCase\Test;
 use SprykerFeature\Zed\Discount\Business\Calculator\Percentage;
-use SprykerEngine\Zed\Kernel\Locator;
-use Generated\Shared\Transfer\OrderItemTransfer;
 
 /**
  * Class PercentageTest
+ *
  * @group DiscountCalculatorPercentageTest
  * @group Discount
- * @package Unit\SprykerFeature\Zed\Discount\Business\Calculator
  */
 class PercentageTest extends \PHPUnit_Framework_TestCase
 {
+
     const ITEM_GROSS_PRICE_1000 = 1000;
     const DISCOUNT_PERCENTAGE_10 = 10;
     const DISCOUNT_PERCENTAGE_100 = 100;
@@ -88,6 +87,7 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array $grossPrices
+     *
      * @return OrderItem[]
      */
     protected function getItems(array $grossPrices)
@@ -102,4 +102,5 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
 
         return $items;
     }
+
 }

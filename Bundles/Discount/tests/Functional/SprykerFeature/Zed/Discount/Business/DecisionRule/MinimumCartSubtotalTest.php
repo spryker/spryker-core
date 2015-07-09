@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,6 +22,7 @@ use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
  */
 class MinimumCartSubtotalTest extends Test
 {
+
     const MINIMUM_CART_SUBTOTAL_TEST_500 = 500;
     const CART_SUBTOTAL_400 = 400;
     const CART_SUBTOTAL_500 = 500;
@@ -73,6 +75,7 @@ class MinimumCartSubtotalTest extends Test
 
     /**
      * @param int $value
+     *
      * @return SpyDiscountDecisionRule
      */
     protected function getDecisionRuleEntity($value)
@@ -90,4 +93,5 @@ class MinimumCartSubtotalTest extends Test
     {
         return Locator::getInstance();
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,10 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerEngine\Shared\Config;
 use SprykerFeature\Zed\Discount\Business\Model\Calculator;
-use SprykerFeature\Zed\Discount\Business\DecisionRule;
-use SprykerFeature\Zed\Discount\Business\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Business\Model\Distributor;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
@@ -26,6 +24,7 @@ use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
  */
 class VoucherEngineTest extends Test
 {
+
     const ITEM_GROSS_PRICE_500 = 500;
 
     protected function setUp()
@@ -260,6 +259,7 @@ class VoucherEngineTest extends Test
      * @param $isActive
      * @param $collectorPlugin
      * @param bool $isPrivileged
+     *
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount
      */
     protected function initializeDiscount(
@@ -299,4 +299,5 @@ class VoucherEngineTest extends Test
 
         return new CalculableContainer($order);
     }
+
 }

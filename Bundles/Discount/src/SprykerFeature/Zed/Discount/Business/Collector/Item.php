@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,13 +7,14 @@
 namespace SprykerFeature\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Discount\OrderInterface;
-use Generated\Shared\Discount\OrderItemsInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 class Item implements CollectorInterface
 {
+
     /**
      * @ param OrderInterface $container
+     *
      * @param CalculableInterface $container
      *
      * @return array
@@ -28,4 +30,5 @@ class Item implements CollectorInterface
 
         return $discountableItems;
     }
+
 }

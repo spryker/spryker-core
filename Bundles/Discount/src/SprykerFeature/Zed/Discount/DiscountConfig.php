@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -44,7 +45,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
     public function getAvailableDecisionRulePlugins()
     {
         return [
-            self::PLUGIN_DECISION_RULE_VOUCHER => $this->getLocator()->discount()->pluginDecisionRuleVoucher()
+            self::PLUGIN_DECISION_RULE_VOUCHER => $this->getLocator()->discount()->pluginDecisionRuleVoucher(),
         ];
     }
 
@@ -72,8 +73,9 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
     }
 
     /**
-     * @return DiscountDecisionRulePluginInterface
      * @throws \ErrorException
+     *
+     * @return DiscountDecisionRulePluginInterface
      */
     public function getDefaultVoucherDecisionRulePlugin()
     {
@@ -86,6 +88,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
 
     /**
      * @param string $pluginName
+     *
      * @return DiscountDecisionRulePluginInterface
      */
     public function getDecisionRulePluginByName($pluginName)
@@ -103,6 +106,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
 
     /**
      * @param string $pluginName
+     *
      * @return DiscountCalculatorPluginInterface
      */
     public function getCalculatorPluginByName($pluginName)
@@ -112,6 +116,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
 
     /**
      * @param string $pluginName
+     *
      * @return DiscountCollectorPluginInterface
      */
     public function getCollectorPluginByName($pluginName)
@@ -134,17 +139,17 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
     {
         return [
             self::KEY_VOUCHER_CODE_CONSONANTS => [
-                'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'
+                'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z',
             ],
             self::KEY_VOUCHER_CODE_VOWELS => [
-                'a', 'e', 'u'
+                'a', 'e', 'u',
             ],
             self::KEY_VOUCHER_CODE_NUMBERS => [
-                1, 2, 3, 4, 5, 6, 7, 8, 9
+                1, 2, 3, 4, 5, 6, 7, 8, 9,
             ],
             self::KEY_VOUCHER_CODE_SPECIAL_CHARACTERS => [
-                '-'
-            ]
+                '-',
+            ],
         ];
     }
 
@@ -155,4 +160,5 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountSettingsInt
     {
         return '[code]';
     }
+
 }

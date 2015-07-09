@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,11 +19,14 @@ use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
  */
 class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisionRulePluginInterface
 {
+
     /**
      * @param DiscountEntity $discountEntity
      * @ param OrderInterface $container
+     *
      * @param CalculableInterface $container
      * @param DecisionRuleEntity $decisionRuleEntity
+     *
      * @return $this|ModelResult
      */
     public function check(
@@ -35,4 +39,5 @@ class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisi
             ->getDiscountFacade()
             ->isMinimumCartSubtotalReached($container, $decisionRuleEntity);
     }
+
 }
