@@ -6,6 +6,7 @@
 namespace SprykerEngine\Yves\Kernel;
 
 use SprykerEngine\Shared\Kernel\AbstractLocator;
+use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
 class PluginLocator extends AbstractLocator
@@ -24,7 +25,7 @@ class PluginLocator extends AbstractLocator
      * @param null|string $className
      *
      * @return object
-     * @throws \SprykerEngine\Shared\Kernel\Locator\LocatorException
+     * @throws LocatorException
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
@@ -32,4 +33,5 @@ class PluginLocator extends AbstractLocator
 
         return $factory->create(ucfirst($className) . self::SUFFIX, $factory, $locator);
     }
+
 }

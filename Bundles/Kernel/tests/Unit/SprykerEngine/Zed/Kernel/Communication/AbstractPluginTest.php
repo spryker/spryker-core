@@ -24,6 +24,14 @@ use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\F
 class AbstractPluginTest extends AbstractUnitTest
 {
 
+    public function testGetFactoryMustReturnInstance()
+    {
+        $plugin = $this->locatePlugin();
+        $factory = $plugin->getFactory();
+
+        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Communication\Factory', $factory);
+    }
+
     public function testGetDependencyContainerShouldReturnNullIfNotSet()
     {
         $plugin = $this->getPlugin();
@@ -111,11 +119,7 @@ class AbstractPluginTest extends AbstractUnitTest
 
     public function testCallLogMustDelegateToInjectedMessengerAndReturnPlugin()
     {
-        $locator = new PluginLocator(
-            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\AbstractPlugin\\Factory'
-        );
-        /** @var FooPlugin $plugin */
-        $plugin = $locator->locate('Kernel', Locator::getInstance(), 'FooPlugin');
+        $plugin = $this->locatePlugin();
 
         $messengerMock = $this->getMock('Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\FooMessenger', ['log']);
         $messengerMock->expects($this->once())
@@ -160,6 +164,20 @@ class AbstractPluginTest extends AbstractUnitTest
     private function getPlugin()
     {
         $plugin = new FooPlugin(new Factory('Kernel'), Locator::getInstance());
+
+        return $plugin;
+    }
+
+    /**
+     * @return FooPlugin
+     */
+    private function locatePlugin()
+    {
+        $locator = new PluginLocator(
+            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\AbstractPlugin\\Factory'
+        );
+
+        $plugin = $locator->locate('Kernel', Locator::getInstance(), 'FooPlugin');
 
         return $plugin;
     }
