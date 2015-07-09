@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Yves\CategoryExporter\ResourceCreator\CategoryResourceCreator
 
 class CategoryExporterDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @var CategoryExporter
      */
@@ -23,4 +25,5 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createResourceCreatorCategoryResourceCreator($this->getLocator());
     }
+
 }

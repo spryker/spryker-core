@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,4 +18,5 @@ interface NavigationProcessorInterface
      * @return array
      */
     public function process(array $categoryNodes, LocaleTransfer $locale);
+
 }

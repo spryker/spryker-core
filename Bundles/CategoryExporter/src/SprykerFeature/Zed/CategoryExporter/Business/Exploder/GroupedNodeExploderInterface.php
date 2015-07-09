@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\CategoryExporter\Business\Exploder;
 
 interface GroupedNodeExploderInterface
 {
+
     /**
      * @param array $data
      * @param string $idsField
@@ -16,4 +18,5 @@ interface GroupedNodeExploderInterface
      * @return array
      */
     public function explodeGroupedNodes(array $data, $idsField, $namesField, $urlField);
+
 }

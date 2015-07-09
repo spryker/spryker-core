@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInt
  */
 class NavigationQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+
     /**
      * @return string
      */
@@ -45,4 +47,5 @@ class NavigationQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
     {
         return 100;
     }
+
 }

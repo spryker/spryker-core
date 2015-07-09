@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\CategoryExporter\Business\Exploder;
 
 class GroupedNodeExploder implements GroupedNodeExploderInterface
 {
+
     /**
      * @param array $data
      * @param string $idsField
@@ -21,9 +23,9 @@ class GroupedNodeExploder implements GroupedNodeExploderInterface
             return [];
         }
 
-        $ids   = explode(',', $data[$idsField]);
+        $ids = explode(',', $data[$idsField]);
         $names = explode(',', $data[$namesField]);
-        $urls  = explode(',', $data[$urlsField]);
+        $urls = explode(',', $data[$urlsField]);
         $nodes = [];
         foreach ($ids as $key => $id) {
             $nodes[$id]['node_id'] = $id;
@@ -33,4 +35,5 @@ class GroupedNodeExploder implements GroupedNodeExploderInterface
 
         return $nodes;
     }
+
 }

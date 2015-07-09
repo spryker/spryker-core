@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\CategoryExporter\Business\Formatter\CategoryNodeFormatter
 
 class NavigationProcessor implements NavigationProcessorInterface
 {
+
     /**
      * @var KeyBuilderInterface
      */
@@ -49,4 +51,5 @@ class NavigationProcessor implements NavigationProcessorInterface
 
         return [$navigationKey => $formattedCategoryNodes];
     }
+
 }

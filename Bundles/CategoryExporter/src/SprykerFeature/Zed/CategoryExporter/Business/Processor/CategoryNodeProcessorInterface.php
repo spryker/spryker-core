@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryNodeProcessorInterface
 {
+
     /**
      * @param array $categoryNodes
      * @param LocaleTransfer $locale
@@ -16,4 +18,5 @@ interface CategoryNodeProcessorInterface
      * @return mixed
      */
     public function process(array $categoryNodes, LocaleTransfer $locale);
+
 }

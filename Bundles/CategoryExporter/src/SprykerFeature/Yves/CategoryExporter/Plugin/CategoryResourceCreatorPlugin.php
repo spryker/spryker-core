@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Yves\CategoryExporter\Plugin;
 
-use Silex\Application;
 use SprykerEngine\Yves\Kernel\AbstractPlugin;
 use SprykerFeature\Yves\CategoryExporter\CategoryExporterDependencyContainer;
 use SprykerFeature\Yves\CategoryExporter\ResourceCreator\CategoryResourceCreator;
@@ -15,6 +15,7 @@ use SprykerFeature\Yves\CategoryExporter\ResourceCreator\CategoryResourceCreator
  */
 class CategoryResourceCreatorPlugin extends AbstractPlugin
 {
+
     /**
      * @return CategoryResourceCreator
      */
@@ -22,4 +23,5 @@ class CategoryResourceCreatorPlugin extends AbstractPlugin
     {
         return $this->getDependencyContainer()->createCategoryResourceCreator();
     }
+
 }

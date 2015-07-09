@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -39,6 +40,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
  */
 class CategoryExporterPluginTest extends AbstractFunctionalTest
 {
+
     /**
      * @var AutoCompletion
      */
@@ -155,56 +157,56 @@ class CategoryExporterPluginTest extends AbstractFunctionalTest
         $expectedResult = [
             'de.abcde.category.navigation' => [
                 [
-                    "node_id" => (string)$idRobotCategoryNode,
-                    "name" => "Robot1",
-                    "url" => "/robot1",
-                    "children" => [
+                    'node_id' => (string) $idRobotCategoryNode,
+                    'name' => 'Robot1',
+                    'url' => '/robot1',
+                    'children' => [
                         $idWindupCategoryNode => [
-                            "node_id" => (string)$idWindupCategoryNode,
-                            "url" => "/robot1/wind-up1",
-                            "name" => "Wind-Up1"
+                            'node_id' => (string) $idWindupCategoryNode,
+                            'url' => '/robot1/wind-up1',
+                            'name' => 'Wind-Up1',
                         ],
                         $idNoWindupCategoryNode => [
-                            "node_id" => (string)$idNoWindupCategoryNode,
-                            "url" => "/robot1/no-wind-up1",
-                            "name" => "No Wind-up1"
-                        ]
+                            'node_id' => (string) $idNoWindupCategoryNode,
+                            'url' => '/robot1/no-wind-up1',
+                            'name' => 'No Wind-up1',
+                        ],
                     ],
-                    "parents" => [
+                    'parents' => [
                         $idToysCategoryNode => [
-                            "node_id" => (string)$idToysCategoryNode,
-                            "url" => "/",
-                            "name" => "Toys1"
-                        ]
+                            'node_id' => (string) $idToysCategoryNode,
+                            'url' => '/',
+                            'name' => 'Toys1',
+                        ],
                     ],
-                    "image" => null
+                    'image' => null,
                 ],
                 [
-                    "node_id" => (string)$idSoftToyCategoryNode,
-                    "name" => "Soft Toy1",
-                    "url" => "/soft-toy1",
-                    "children" => [
+                    'node_id' => (string) $idSoftToyCategoryNode,
+                    'name' => 'Soft Toy1',
+                    'url' => '/soft-toy1',
+                    'children' => [
                         $idExoticCategoryNode => [
-                            "node_id" => (string)$idExoticCategoryNode,
-                            "url" => "/soft-toy1/exotic1",
-                            "name" => "Exotic1"
+                            'node_id' => (string) $idExoticCategoryNode,
+                            'url' => '/soft-toy1/exotic1',
+                            'name' => 'Exotic1',
                         ],
                         $idLocalCategoryNode => [
-                            "node_id" => (string)$idLocalCategoryNode,
-                            "url" => "/soft-toy1/local1",
-                            "name" => "Local1"
-                        ]
+                            'node_id' => (string) $idLocalCategoryNode,
+                            'url' => '/soft-toy1/local1',
+                            'name' => 'Local1',
+                        ],
                     ],
-                    "parents" => [
+                    'parents' => [
                         $idToysCategoryNode => [
-                            "node_id" => (string)$idToysCategoryNode,
-                            "url" => "/",
-                            "name" => "Toys1"
-                        ]
+                            'node_id' => (string) $idToysCategoryNode,
+                            'url' => '/',
+                            'name' => 'Toys1',
+                        ],
                     ],
-                    "image" => null
-                ]
-            ]
+                    'image' => null,
+                ],
+            ],
         ];
 
         $navigationQueryExpanderPlugin = $this->getPluginByClassName('SprykerFeature\Zed\CategoryExporter\Communication\Plugin\NavigationQueryExpanderPlugin');
@@ -253,56 +255,54 @@ class CategoryExporterPluginTest extends AbstractFunctionalTest
         $this->touchFacade->touchActive('test', $idChildCategoryNode);
 
         $this->doExporterTest(
-            [   //expanders
-                $this->getPluginByClassName('SprykerFeature\Zed\CategoryExporter\Communication\Plugin\CategoryNodeQueryExpanderPlugin')
+            [//expanders
+                $this->getPluginByClassName('SprykerFeature\Zed\CategoryExporter\Communication\Plugin\CategoryNodeQueryExpanderPlugin'),
             ],
-            [   //processors
-                $this->getPluginByClassName('SprykerFeature\Zed\CategoryExporter\Communication\Plugin\CategoryNodeProcessorPlugin')
+            [//processors
+                $this->getPluginByClassName('SprykerFeature\Zed\CategoryExporter\Communication\Plugin\CategoryNodeProcessorPlugin'),
             ],
             [
-                'de.abcde.resource.categorynode.' . $idCategoryNode =>
-                    [
-                        'node_id' => (string)$idCategoryNode,
+                'de.abcde.resource.categorynode.' . $idCategoryNode => [
+                        'node_id' => (string) $idCategoryNode,
                         'children' => [
                             $idChildCategoryNode => [
-                                'node_id' => (string)$idChildCategoryNode,
+                                'node_id' => (string) $idChildCategoryNode,
                                 'name' => 'ChildCategory',
-                                'url' => '/testcategory/childcategory'
-                            ]
+                                'url' => '/testcategory/childcategory',
+                            ],
                         ],
                         'parents' => [
                             $idRootCategoryNode => [
-                                'node_id' => (string)$idRootCategoryNode,
+                                'node_id' => (string) $idRootCategoryNode,
                                 'name' => 'RootCategory',
-                                'url' => '/'
-                            ]
+                                'url' => '/',
+                            ],
                         ],
                         'name' => 'TestCategory',
                         'url' => '/testcategory',
-                        'image' => null
+                        'image' => null,
                     ],
-                'de.abcde.resource.categorynode.' . $idChildCategoryNode =>
-                    [
-                        'node_id' => (string)$idChildCategoryNode,
+                'de.abcde.resource.categorynode.' . $idChildCategoryNode => [
+                        'node_id' => (string) $idChildCategoryNode,
                         'children' => [
 
                         ],
                         'parents' => [
                             $idCategoryNode => [
-                                'node_id' => (string)$idCategoryNode,
+                                'node_id' => (string) $idCategoryNode,
                                 'name' => 'TestCategory',
-                                'url' => '/testcategory'
+                                'url' => '/testcategory',
                             ],
                             $idRootCategoryNode => [
-                                'node_id' => (string)$idRootCategoryNode,
+                                'node_id' => (string) $idRootCategoryNode,
                                 'name' => 'RootCategory',
-                                'url' => '/'
-                            ]
+                                'url' => '/',
+                            ],
                         ],
                         'name' => 'ChildCategory',
                         'url' => '/testcategory/childcategory',
-                        'image' => null
-                    ]
+                        'image' => null,
+                    ],
             ]
         );
     }
@@ -372,8 +372,9 @@ class CategoryExporterPluginTest extends AbstractFunctionalTest
     }
 
     /**
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     protected function prepareQuery()
     {
@@ -384,4 +385,5 @@ class CategoryExporterPluginTest extends AbstractFunctionalTest
 
         return $query;
     }
+
 }

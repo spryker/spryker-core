@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,9 +15,11 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CategoryExporterQueryContainer extends AbstractQueryContainer
 {
+
     /**
      * @param ModelCriteria $query
      * @param LocaleTransfer $locale
+     *
      * @return ModelCriteria
      */
     public function expandCategoryNodeQuery(ModelCriteria $query, LocaleTransfer $locale)
@@ -27,10 +30,12 @@ class CategoryExporterQueryContainer extends AbstractQueryContainer
     /**
      * @param ModelCriteria $query
      * @param LocaleTransfer $locale
+     *
      * @return ModelCriteria
      */
     public function expandNavigationQuery(ModelCriteria $query, LocaleTransfer $locale)
     {
         return $this->getDependencyContainer()->createNavigationQueryExpander($locale)->expandQuery($query);
     }
+
 }

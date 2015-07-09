@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInt
  */
 class CategoryNodeProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
+
     /**
      * @return string
      */
@@ -50,4 +52,5 @@ class CategoryNodeProcessorPlugin extends AbstractPlugin implements DataProcesso
 
         return $facade->processCategoryNodes($resultSet, $locale);
     }
+
 }

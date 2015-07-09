@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -76,11 +77,12 @@ class CategoryTreeBuilder
     protected function addCurrentSubtree(array $parentCategory, array $subtree)
     {
         foreach ($parentCategory['children'] as $key => $child) {
-            if ($child['url'] == $subtree['url']) {
+            if ($child['url'] === $subtree['url']) {
                 $parentCategory['children'][$key]['children'] = $subtree['children'];
             }
         }
 
         return $parentCategory;
     }
+
 }
