@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
+
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
