@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnector
  */
 class PasswordRestoreTokenSender extends AbstractSender implements PasswordRestoreTokenSenderPluginInterface
 {
+
     const SUBJECT = 'password.restore.sender.subject';
     const TEMPLATE = 'password.restore';
 
@@ -46,4 +48,5 @@ class PasswordRestoreTokenSender extends AbstractSender implements PasswordResto
 
         return $this->isMailSent($result);
     }
+
 }

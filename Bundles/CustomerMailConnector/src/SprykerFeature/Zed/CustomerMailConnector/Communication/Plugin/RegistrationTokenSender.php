@@ -1,10 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
-
 
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
@@ -16,6 +16,7 @@ use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnector
  */
 class RegistrationTokenSender extends AbstractSender implements RegistrationTokenSenderPluginInterface
 {
+
     const SUBJECT = 'registration.token.sender.subject';
     const TEMPLATE = 'registration.token';
 
@@ -47,4 +48,5 @@ class RegistrationTokenSender extends AbstractSender implements RegistrationToke
 
         return $this->isMailSent($result);
     }
+
 }

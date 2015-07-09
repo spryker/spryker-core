@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnector
  */
 class PasswordRestoredConfirmationSender extends AbstractSender implements PasswordRestoredConfirmationSenderPluginInterface
 {
+
     const SUBJECT = 'password.restored.sender.subject';
     const TEMPLATE = 'password.change.confirmation';
 
@@ -41,4 +43,5 @@ class PasswordRestoredConfirmationSender extends AbstractSender implements Passw
 
         return $this->isMailSent($result);
     }
+
 }
