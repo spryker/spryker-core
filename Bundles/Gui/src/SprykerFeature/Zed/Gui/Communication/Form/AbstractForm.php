@@ -8,15 +8,8 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Tests\Domain\AuditLoggerTest;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
-use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Validator\Constraint;
 
-/**
- * Class AbstractForm
- * @package SprykerFeature\Zed\Gui\Communication\Form
- */
 abstract class AbstractForm
 {
     /**
@@ -36,15 +29,11 @@ abstract class AbstractForm
 
 
     /**
-     * Prepares form
-     *
      * @return $this
      */
     abstract protected function buildFormFields();
 
     /**
-     * Set the values for fields
-     *
      * @return $this
      */
     abstract protected function populateFormFields();
@@ -81,7 +70,7 @@ abstract class AbstractForm
     public function init()
     {
         $this->injectDependencies()
-            ->buildFormFields();
+                ->buildFormFields();
 
         $data = $this->populateFormFields();
         $this->setData($data);
@@ -90,7 +79,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param array $data
+     * @param $data
      *
      * @return $this
      */
@@ -142,7 +131,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @return FormErrorIterator
+     * @return \Symfony\Component\Form\FormErrorIterator
      */
     public function getErrors()
     {
@@ -150,19 +139,23 @@ abstract class AbstractForm
     }
 
     /**
-     * @param string $name
-     * @param string|Constraint $type
+     * @param $name
+     * @param $type
      * @param array $options
      *
      * @return $this
      */
     public function add($name, $type, $options = array())
     {
+        if ($options instanceof ConstraintBuilder) {
+            $options = ['constraints' => $options->getConstraints()];
+        }
+
         return $this->form->add($name, $type, $options);
     }
 
     /**
-     * @param string $name 
+     * @param $name
      * @param array $options
      *
      * @return $this
@@ -170,12 +163,11 @@ abstract class AbstractForm
     public function addText($name, $options = array())
     {
         $this->add($name, 'text', $options);
-
         return $this;
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $options
      *
      * @return $this
@@ -183,12 +175,11 @@ abstract class AbstractForm
     public function addTextarea($name, $options = array())
     {
         $this->add($name, 'textarea', $options);
-
         return $this;
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $options
      *
      * @return $this
@@ -196,12 +187,11 @@ abstract class AbstractForm
     public function addEmail($name, $options = array())
     {
         $this->add($name, 'email', $options);
-
         return $this;
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $options
      *
      * @return $this
@@ -209,90 +199,23 @@ abstract class AbstractForm
     public function addInteger($name, $options = array())
     {
         $this->add($name, 'integer', $options);
-
         return $this;
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $options
      *
      * @return $this
      */
-    public function addMoney($name, $options = array())
+    public function addSelect($name, $options = array())
     {
-        $this->add($name, 'money', $options);
-
+        $this->add($name, new SelectType(), $options);
         return $this;
     }
 
     /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addNumber($name, $options = array())
-    {
-        $this->add($name, 'number', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addPassword($name, $options = array())
-    {
-        $this->add($name, 'password', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addPercent($name, $options = array())
-    {
-        $this->add($name, 'percent', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addSearch($name, $options = array())
-    {
-        $this->add($name, 'search', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addUrl($name, $options = array())
-    {
-        $this->add($name, 'url', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
+     * @param $name
      * @param array $options
      *
      * @return $this
@@ -300,209 +223,11 @@ abstract class AbstractForm
     public function addChoice($name, $options = array())
     {
         $this->add($name, 'choice', $options);
-
         return $this;
     }
 
     /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addEntity($name, $options = array())
-    {
-        $this->add($name, 'entity', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addCountry($name, $options = array())
-    {
-        $this->add($name, 'country', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addLanguage($name, $options = array())
-    {
-        $this->add($name, 'language', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addLocale($name, $options = array())
-    {
-        $this->add($name, 'locale', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addTimezone($name, $options = array())
-    {
-        $this->add($name, 'timezone', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addCurrency($name, $options = array())
-    {
-        $this->add($name, 'currency', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addDate($name, $options = array())
-    {
-        $this->add($name, 'date', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addDatetime($name, $options = array())
-    {
-        $this->add($name, 'datetime', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addTime($name, $options = array())
-    {
-        $this->add($name, 'time', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addBirthday($name, $options = array())
-    {
-        $this->add($name, 'birthday', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addCheckbox($name, $options = array())
-    {
-        $this->add($name, 'checkbox', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addFile($name, $options = array())
-    {
-        $this->add($name, 'file', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addRadio($name, $options = array())
-    {
-        $this->add($name, 'radio', $options);
-
-        return $this;
-    }
-
-    /* == Field Groups == */
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addCollection($name, $options = array())
-    {
-        $this->add($name, 'collection', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addRepeated($name, $options = array())
-    {
-        $this->add($name, 'repeated', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
+     * @param $name
      * @param array $options
      *
      * @return $this
@@ -510,33 +235,6 @@ abstract class AbstractForm
     public function addHidden($name, $options = array())
     {
         $this->add($name, 'hidden', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addButton($name, $options = array())
-    {
-        $this->add($name, 'button', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addReset($name, $options = array())
-    {
-        $this->add($name, 'reset', $options);
-
         return $this;
     }
 
@@ -549,48 +247,8 @@ abstract class AbstractForm
     public function addSubmit($name = 'submit', $options = array())
     {
         $this->add($name, 'submit', $options);
-
         return $this;
     }
 
-    /* == Base fields == */
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addForm($name, $options = array())
-    {
-        $this->add($name, 'form', $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addSelect($name, $options = array())
-    {
-        $this->add($name, new SelectType(), $options);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addAutosuggest($name, $options = array())
-    {
-        $this->add($name, new AutosuggestType(), $options);
-
-        return $this;
-    }
+    // TODO add all internal
 }
