@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,10 +12,10 @@ use SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business\Product
 
 /**
  * Class ProductCategoryFrontendExporterConnectorDependencyContainer
- * @package SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Communication
  */
 class ProductCategoryFrontendExporterConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return ProductCategoryQueryContainerInterface
      */
@@ -30,4 +31,5 @@ class ProductCategoryFrontendExporterConnectorDependencyContainer extends Abstra
     {
         return $this->getLocator()->productCategoryFrontendExporterConnector()->facade();
     }
+
 }

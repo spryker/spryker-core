@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Dependency\Facad
 
 class ProductCategoryBreadcrumbProcessor implements ProductCategoryBreadcrumbProcessorInterface
 {
+
     /**
      * @var ProductCategoryFrontendExporterToCategoryExporterInterface
      */
@@ -43,4 +45,5 @@ class ProductCategoryBreadcrumbProcessor implements ProductCategoryBreadcrumbPro
 
         return $processedResultSet;
     }
+
 }

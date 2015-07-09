@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyCo
  */
 class ProductCategoryBreadcrumbQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+
     /**
      * @return string
      */
@@ -44,4 +46,5 @@ class ProductCategoryBreadcrumbQueryExpanderPlugin extends AbstractPlugin implem
     {
         return 100;
     }
+
 }

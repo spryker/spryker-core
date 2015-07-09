@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -42,6 +43,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
  */
 class ProductCategoryFrontendExporterPluginTest extends Test
 {
+
     /**
      * @var AutoCompletion
      */
@@ -136,14 +138,13 @@ class ProductCategoryFrontendExporterPluginTest extends Test
         $this->doExporterTest(
             [
                 $this->locator->productFrontendExporterConnector()->pluginProductQueryExpanderPlugin(),
-                $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbQueryExpanderPlugin()
+                $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbQueryExpanderPlugin(),
             ],
             [
                 $this->locator->productFrontendExporterConnector()->pluginProductProcessorPlugin(),
-                $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbProcessorPlugin()
+                $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbProcessorPlugin(),
             ],
-            ['de.abcde.resource.abstract_product.' . $idAbstractProduct =>
-                [
+            ['de.abcde.resource.abstract_product.' . $idAbstractProduct => [
                     'abstract_attributes' => [
                         'thumbnail_url' => '/images/product/default.png',
                         'price' => 1395,
@@ -169,17 +170,17 @@ class ProductCategoryFrontendExporterPluginTest extends Test
                                 'gender' => 'b',
                                 'age' => 8,
                                 'available' => true,
-                            ]
-                        ]
+                            ],
+                        ],
                     ],
                     'category' => [
                         $idCategoryNode => [
-                            'node_id' => (string)$idCategoryNode,
+                            'node_id' => (string) $idCategoryNode,
                             'name' => 'ACategory',
-                            'url' => '/acategory'
-                        ]
-                    ]
-                ]
+                            'url' => '/acategory',
+                        ],
+                    ],
+                ],
             ]
         );
     }
@@ -335,8 +336,9 @@ class ProductCategoryFrontendExporterPluginTest extends Test
     }
 
     /**
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     protected function prepareQuery()
     {
@@ -347,4 +349,5 @@ class ProductCategoryFrontendExporterPluginTest extends Test
 
         return $query;
     }
+
 }

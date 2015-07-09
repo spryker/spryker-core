@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Communication\Pr
 class ProductCategoryBreadcrumbProcessorPlugin extends AbstractPlugin implements
     DataProcessorPluginInterface
 {
+
     /**
      * @return string
      */
@@ -37,4 +39,5 @@ class ProductCategoryBreadcrumbProcessorPlugin extends AbstractPlugin implements
 
         return $facade->processProductCategoryBreadcrumbs($resultSet, $processedResultSet, $locale);
     }
+
 }
