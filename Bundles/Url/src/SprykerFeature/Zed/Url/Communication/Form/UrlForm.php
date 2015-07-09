@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\Constraints;
 
 class UrlForm extends AbstractForm
 {
+
     /**
      * @return array
      */
@@ -32,10 +34,10 @@ class UrlForm extends AbstractForm
             ->setConstraints([
                 new Constraints\Required([
                     new Constraints\Type([
-                        'type' => 'string'
+                        'type' => 'string',
                     ]),
-                    new Constraints\NotBlank()
-                ])
+                    new Constraints\NotBlank(),
+                ]),
             ])
         ;
         $fields[] = $this->addField('fk_locale')
@@ -57,13 +59,13 @@ class UrlForm extends AbstractForm
         $data = $this->getRequestData();
 
         if (isset($data['resource'])) {
-            if ($data["resource"][0] == "A")
+            if ($data['resource'][0] === 'A')
                 return [
                     'value' => 3,
                     'label' => 'Alalal',
                 ];
 
-            if ($data["resource"][0] == "B")
+            if ($data['resource'][0] === 'B')
                 return [
                     'value' => 3,
                     'label' => 'Bobobo',
@@ -111,6 +113,7 @@ class UrlForm extends AbstractForm
 
     /**
      * @param $locales
+     *
      * @return array
      */
     protected function formatLocalesArray($locales)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,6 +26,7 @@ use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
  */
 class UrlFacadeTest extends Test
 {
+
     /**
      * @var UrlFacade
      */
@@ -221,4 +223,5 @@ class UrlFacadeTest extends Test
 
         $this->assertEquals('/redirectingToUrl', $redirectQuery->findOne()->getToUrl());
     }
+
 }

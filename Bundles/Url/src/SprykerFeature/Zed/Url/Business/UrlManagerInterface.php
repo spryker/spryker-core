@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,27 +17,30 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrl;
 
 interface UrlManagerInterface
 {
+
     /**
      * @param string $url
      * @param LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return SpyUrl
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingLocaleException
+     *
+     * @return SpyUrl
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource);
 
     /**
      * @param UrlTransfer $url
      *
-     * @return UrlTransfer
      * @throws UrlExistsException
      * @throws MissingUrlException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return UrlTransfer
      */
     public function saveUrl(UrlTransfer $url);
 
@@ -57,16 +61,18 @@ interface UrlManagerInterface
     /**
      * @param string $url
      *
-     * @return SpyUrl
      * @throws MissingUrlException
+     *
+     * @return SpyUrl
      */
     public function getUrlByPath($url);
 
     /**
      * @param int $idUrl
      *
-     * @return SpyUrl
      * @throws MissingUrlException
+     *
+     * @return SpyUrl
      */
     public function getUrlById($idUrl);
 
@@ -78,8 +84,9 @@ interface UrlManagerInterface
     /**
      * @param SpyUrl $urlEntity
      *
-     * @return UrlTransfer
      * @throws MissingResourceException
+     *
+     * @return UrlTransfer
      */
     public function convertUrlEntityToTransfer(SpyUrl $urlEntity);
 
@@ -88,9 +95,11 @@ interface UrlManagerInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return SpyUrl
      * @throws PropelException
      * @throws UrlExistsException
+     *
+     * @return SpyUrl
      */
     public function createUrlForCurrentLocale($url, $resourceType, $idResource);
+
 }

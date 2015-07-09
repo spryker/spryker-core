@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,6 +23,7 @@ use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlManager implements UrlManagerInterface
 {
+
     const ITEM_TYPE_URL = 'url';
     /**
      * @var UrlQueryContainerInterface
@@ -67,10 +69,11 @@ class UrlManager implements UrlManagerInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return SpyUrl
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingLocaleException
+     *
+     * @return SpyUrl
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
     {
@@ -125,8 +128,9 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param SpyUrl $urlEntity
      *
-     * @return UrlTransfer
      * @throws MissingResourceException
+     *
+     * @return UrlTransfer
      */
     public function convertUrlEntityToTransfer(SpyUrl $urlEntity)
     {
@@ -151,8 +155,9 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param string $url
      *
-     * @return SpyUrl
      * @throws MissingUrlException
+     *
+     * @return SpyUrl
      */
     public function getUrlByPath($url)
     {
@@ -173,8 +178,9 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param int $idUrl
      *
-     * @return SpyUrl
      * @throws MissingUrlException
+     *
+     * @return SpyUrl
      */
     public function getUrlById($idUrl)
     {
@@ -215,11 +221,12 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param UrlTransfer $url
      *
-     * @return UrlTransfer
      * @throws UrlExistsException
      * @throws MissingUrlException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return UrlTransfer
      */
     public function saveUrl(UrlTransfer $url)
     {
@@ -233,10 +240,11 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param UrlTransfer $url
      *
-     * @return UrlTransfer
      * @throws UrlExistsException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return UrlTransfer
      */
     protected function createUrlFromTransfer(UrlTransfer $url)
     {
@@ -255,11 +263,12 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param UrlTransfer $url
      *
-     * @return UrlTransfer
      * @throws MissingUrlException
      * @throws UrlExistsException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return UrlTransfer
      */
     protected function updateUrlFromTransfer(UrlTransfer $url)
     {
@@ -276,6 +285,7 @@ class UrlManager implements UrlManagerInterface
         }
 
         $urlEntity->save();
+
         return $url;
     }
 
@@ -299,9 +309,10 @@ class UrlManager implements UrlManagerInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return SpyUrl
      * @throws PropelException
      * @throws UrlExistsException
+     *
+     * @return SpyUrl
      */
     public function createUrlForCurrentLocale($url, $resourceType, $idResource)
     {
@@ -319,4 +330,5 @@ class UrlManager implements UrlManagerInterface
 
         return $urlEntity;
     }
+
 }

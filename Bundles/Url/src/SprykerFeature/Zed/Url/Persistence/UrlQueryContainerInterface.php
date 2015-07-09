@@ -1,16 +1,17 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Url\Persistence;
 
-
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyRedirectQuery;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 interface UrlQueryContainerInterface
 {
+
     /**
      * @param string $url
      *
@@ -41,4 +42,5 @@ interface UrlQueryContainerInterface
      * @return SpyRedirectQuery
      */
     public function queryRedirectById($idRedirect);
+
 }

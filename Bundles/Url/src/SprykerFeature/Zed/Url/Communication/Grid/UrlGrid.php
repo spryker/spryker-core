@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
 
 class UrlGrid extends AbstractGrid
 {
+
     const ID_URL = 'id_url';
     const FK_LOCALE = 'fk_locale';
     const URL = 'url';
@@ -16,7 +18,6 @@ class UrlGrid extends AbstractGrid
     const FK_RESOURCE_PRODUCT = 'fk_resource_product';
     const FK_RESOURCE_CATEGORYNODE = 'fk_resource_categoryname';
     const FK_RESOURCE_PAGE = 'fk_resource_page';
-
 
     public function definePlugins()
     {
@@ -61,4 +62,5 @@ class UrlGrid extends AbstractGrid
 
         ];
     }
+
 }
