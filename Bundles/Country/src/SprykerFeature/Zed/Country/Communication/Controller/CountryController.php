@@ -27,7 +27,43 @@ class CountryController extends AbstractController
 
         $form->handleRequest();
 
-        if($form->isValid()){
+        if($request->isXmlHttpRequest())
+        {
+            $type = $request->get('type', '');
+            switch($type)
+            {
+                case 'autosuggest':
+                    $data = [
+                        'query' => 'asd',
+                        'suggestions' => ['Az', 'Buki', 'Vedi'],
+                    ];
+                    break;
+
+                case 'select':
+                    $data = [
+                        'results' => [
+                            [
+                                'id' => 1,
+                                'text' => 'Blablacar',
+                            ],
+                            [
+                                'íd' => 2,
+                                'text' => 'Uber',
+                            ],
+                        ],
+                        'more' => false
+                    ];
+                    break;
+
+                default:
+                    $data = [42];
+                    break;
+            }
+
+            return $this->jsonResponse($data);
+        }
+
+        if ($form->isValid()) {
             $data = $form->getData();
 //
 //            $country = $this->createCountryTransfer();

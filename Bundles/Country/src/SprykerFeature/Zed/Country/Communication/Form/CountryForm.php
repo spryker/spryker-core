@@ -87,9 +87,9 @@ class CountryForm extends AbstractForm
             ->addSelect('blabla', [
                 'label' => 'Select',
                 'placeholder' => 'asdasdasdasdasda2',
-                'url' => '/asdasd/'
+                'url' => '/country/country?type=select'
             ])
-            ->addText('postal_code_regex', ['label' => 'Postal code (regex)'])
+            ->addAutosuggest('postal_code_regex', ['label' => 'Postal code (regex)', 'url' => '/country/country?type=autosuggest'])
             ->addHidden('id_country')
             ->addSubmit();
 
