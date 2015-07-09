@@ -43,4 +43,5 @@ class GlossaryQueryExpanderPlugin extends AbstractPlugin implements
     {
         return 100;
     }
+
 }

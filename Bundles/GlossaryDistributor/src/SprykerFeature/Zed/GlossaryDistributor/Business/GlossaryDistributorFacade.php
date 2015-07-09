@@ -23,4 +23,5 @@ class GlossaryDistributorFacade extends AbstractFacade
             ->expandTranslationQueryToDistribute($expandQuery)
             ;
     }
+
 }

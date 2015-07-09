@@ -12,7 +12,6 @@ use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Distributor\Business\DistributorFacade;
-use Functional\SprykerFeature\Zed\GlossaryDistributor\Mock\MockDistributorFacade;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItem;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemQuery;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType;
@@ -142,6 +141,7 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
      * @param string $timestamp
      *
      * @throws PropelException
+     *
      * @return int
      */
     private function createDistributorItemType($typeKey, $timestamp)
@@ -161,8 +161,9 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
      * @param int $idGlossaryTranslation
      * @param string $timestamp
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     private function createDistributorItem($idItemType, $idGlossaryTranslation, $timestamp)
     {
@@ -179,6 +180,7 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
 
     /**
      * @param $receiverKey
+     *
      * @throws PropelException
      */
     private function createReceiver($receiverKey)
@@ -202,7 +204,7 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
         };
         $container[DistributorDependencyProvider::QUERY_EXPANDERS] = function () {
             return [
-                $this->getLocator()->glossaryDistributor()->pluginGlossaryQueryExpanderPlugin()
+                $this->getLocator()->glossaryDistributor()->pluginGlossaryQueryExpanderPlugin(),
             ];
         };
         $container[DistributorDependencyProvider::ITEM_PROCESSORS] = function () {
@@ -215,4 +217,5 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
 
         return $distributorFacade;
     }
+
 }
