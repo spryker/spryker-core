@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -29,4 +30,5 @@ class Environment
 
         SprykerEnvironment::initialize(APPLICATION, true);
     }
+
 }
