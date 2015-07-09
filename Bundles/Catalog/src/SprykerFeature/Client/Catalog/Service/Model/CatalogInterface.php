@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,11 +10,13 @@ use SprykerFeature\Client\Catalog\Service\Model\Exception\ProductNotFoundExcepti
 
 interface CatalogInterface
 {
+
     /**
      * @param int $id
      *
-     * @return array
      * @throws ProductNotFoundException
+     *
+     * @return array
      */
     public function getProductDataById($id);
 
@@ -21,14 +24,17 @@ interface CatalogInterface
      * @param array       $ids
      * @param string|null $indexByKey
      *
-     * @return array[]
      * @throws ProductNotFoundException
+     *
+     * @return array[]
      */
     public function getProductDataByIds(array $ids, $indexByKey = null);
 
     /**
      * @param array $product
+     *
      * @return array
      */
     public function getSubProducts(array $product);
+
 }

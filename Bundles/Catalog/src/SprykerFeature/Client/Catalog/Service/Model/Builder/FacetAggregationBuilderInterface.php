@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Elastica\Aggregation\AbstractAggregation;
 
 interface FacetAggregationBuilderInterface
 {
+
     /**
      * @param string $fieldName
      *
@@ -22,4 +24,5 @@ interface FacetAggregationBuilderInterface
      * @return AbstractAggregation
      */
     public function createStringFacetAggregation($fieldName);
+
 }
