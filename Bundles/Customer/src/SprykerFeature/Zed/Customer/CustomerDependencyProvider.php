@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    
     const REGISTRATION_TOKEN_SENDERS = 'Registration Token Senders';
     const PASSWORD_RESTORE_TOKEN_SENDERS = 'Password Restore TokenSenders';
     const PASSWORD_RESTORED_CONFIRMATION_SENDERS = 'Password RestoredConfirmation Senders';
@@ -38,4 +40,5 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
             self::PASSWORD_RESTORED_CONFIRMATION_SENDERS => [],
         ];
     }
+    
 }
