@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Customer;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\System\SystemConfig;
 
 class CustomerConfig extends AbstractBundleConfig
 {
@@ -14,6 +15,6 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->get('HOST_YVES');
+        return $this->get(SystemConfig::HOST_YVES);
     }
 }

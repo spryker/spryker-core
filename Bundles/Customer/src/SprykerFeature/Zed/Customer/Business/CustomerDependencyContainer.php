@@ -40,12 +40,15 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createQueryContainer(),
             $config->getHostYves()
         );
+
         foreach ($senderPlugins[CustomerDependencyProvider::REGISTRATION_TOKEN_SENDERS] as $sender) {
             $customer->addRegistrationTokenSender($sender);
         }
+
         foreach ($senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORE_TOKEN_SENDERS] as $sender) {
             $customer->addPasswordRestoreTokenSender($sender);
         }
+
         foreach ($senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORED_CONFIRMATION_SENDERS] as $sender) {
             $customer->addPasswordRestoredConfirmationSender($sender);
         }
@@ -80,5 +83,4 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getLocator()->locale()->facade();
     }
-
 }
