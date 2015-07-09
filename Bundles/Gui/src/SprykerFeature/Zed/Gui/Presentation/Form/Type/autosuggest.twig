@@ -1,0 +1,20 @@
+{% block autosuggest_widget %}
+    {{ form_widget(form,  { 'attr': {'class': 'type_asw'} }) }}
+    {% block stylesheets %}
+        <link href="//raw.githubusercontent.com/devbridge/jQuery-Autocomplete/master/content/styles.css" rel="stylesheet"/>
+    {% endblock stylesheets %}
+    {% block javascripts %}
+        <script type="text/javascript" src="//raw.githubusercontent.com/devbridge/jQuery-Autocomplete/master/src/jquery.autocomplete.js" />
+    {% endblock javascripts %}
+    <script type="text/javascript">
+        (function($) {
+          $(window).load(function() {
+              $('.type_asw').autocomplete({
+                  serviceUrl: '{{ url }}',
+                  minChars: 1,
+                  type: 'GET'
+              });
+          })
+        })(jQuery);
+    </script>
+{% endblock autosuggest_widget %}
