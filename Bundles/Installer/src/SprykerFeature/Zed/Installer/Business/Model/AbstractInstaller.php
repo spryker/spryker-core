@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,8 +7,6 @@
 namespace SprykerFeature\Zed\Installer\Business\Model;
 
 use Psr\Log\AbstractLogger;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 
 abstract class AbstractInstaller extends AbstractLogger implements MessengerInterface
@@ -31,7 +30,6 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
     }
 
     /**
-     * @return void
      */
     abstract public function install();
 
@@ -41,8 +39,6 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
      * @param mixed $level
      * @param string $message
      * @param array $context
-     *
-     * @return void
      */
     public function log($level, $message, array $context = [])
     {
