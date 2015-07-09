@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,7 +9,6 @@ namespace SprykerFeature\Zed\Git\Communication\Console;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class PrepareTagConsole extends Console
@@ -29,6 +29,7 @@ class PrepareTagConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -71,6 +72,7 @@ class PrepareTagConsole extends Console
         $ticketText = $this->ask('Ticket number(s) or name <fg=green>[' . self::DEFAULT_TICKET_TEXT . '</fg=green>]: ', self::DEFAULT_TICKET_TEXT);
         $ticketText = str_replace(['_', ' '], '-', $ticketText);
         $ticketText = str_replace('"', '\'', $ticketText);
+
         return $ticketText;
     }
 
@@ -96,6 +98,8 @@ class PrepareTagConsole extends Console
     {
         $message = $this->ask('Message <fg=green>[' . $tagName . '</fg=green>]: ', $tagName);
         $message = str_replace('"', '\'', $message);
+
         return $message;
     }
+
 }

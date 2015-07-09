@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,17 +7,14 @@
 namespace SprykerFeature\Zed\Git\Communication\Console;
 
 use SprykerFeature\Zed\Console\Business\Model\Console;
-
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
 /**
  * Class BaseCommand
- * @package SprykerFeature\Zed\Console\Communication\Console\Git
  */
 abstract class BaseCommand extends Console
 {
@@ -50,7 +48,7 @@ abstract class BaseCommand extends Console
     /**
      * @var array
      */
-    protected $packages = array('all');
+    protected $packages = ['all'];
 
     protected function configure()
     {
@@ -95,6 +93,7 @@ abstract class BaseCommand extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -103,7 +102,6 @@ abstract class BaseCommand extends Console
         $this->sendCommandMessage();
         $this->loopAllDirectories();
     }
-
 
     /**
      * @param string $dir
@@ -130,6 +128,7 @@ abstract class BaseCommand extends Console
                 $this->info($data, false);
             }
         );
+
         return true;
     }
 
@@ -175,6 +174,7 @@ abstract class BaseCommand extends Console
             };
             $this->packages = array_map($callback, $packages);
         }
+
         return $this->packages;
     }
 
@@ -188,6 +188,7 @@ abstract class BaseCommand extends Console
         if (!in_array('all', $this->getPackages())) {
             $finder->filter($this->getCallback());
         }
+
         return $finder;
     }
 
@@ -220,4 +221,5 @@ abstract class BaseCommand extends Console
             }
         }
     }
+
 }

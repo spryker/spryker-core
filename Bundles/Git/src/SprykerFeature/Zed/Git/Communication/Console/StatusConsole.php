@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -52,6 +53,7 @@ class StatusConsole extends BaseCommand
         if ($this->input->getOption(self::OPTION_BRANCH)) {
             $command .= ' -b';
         }
+
         return $command;
     }
 
