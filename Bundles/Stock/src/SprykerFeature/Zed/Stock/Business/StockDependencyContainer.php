@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -79,4 +80,5 @@ class StockDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getLocator()->touch()->facade();
     }
+
 }

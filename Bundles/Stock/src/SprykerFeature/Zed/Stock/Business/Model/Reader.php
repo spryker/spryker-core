@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
 
 class Reader implements ReaderInterface
 {
+
     const MESSAGE_NO_RESULT = 'no stock set for this sku';
     const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
@@ -45,7 +47,7 @@ class Reader implements ReaderInterface
      */
     public function getStockTypes()
     {
-        $types = array();
+        $types = [];
         $stockTypes = $this->queryContainer->queryAllStockTypes()->find();
         foreach ($stockTypes as $stockType) {
             $types[] = $stockType->getName();
@@ -64,14 +66,15 @@ class Reader implements ReaderInterface
         $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
         $stock = $this->queryContainer->queryStockByNeverOutOfStockAllTypes($idProduct)->findOne();
 
-        return ($stock != null);
+        return ($stock !== null);
     }
 
     /**
      * @param string $sku
      *
-     * @return SpyStockProduct[]
      * @throws InvalidArgumentException
+     *
+     * @return SpyStockProduct[]
      */
     public function getStocksProduct($sku)
     {
@@ -90,8 +93,9 @@ class Reader implements ReaderInterface
     /**
      * @param string $stockType
      *
-     * @return int
      * @throws InvalidArgumentException
+     *
+     * @return int
      */
     public function getStockTypeIdByName($stockType)
     {
@@ -120,8 +124,9 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param string $stockType
      *
-     * @return int
      * @throws StockProductNotFoundException
+     *
+     * @return int
      */
     public function getIdStockProduct($sku, $stockType)
     {
@@ -166,8 +171,9 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getAbstractProductIdBySku($sku)
     {
@@ -177,8 +183,9 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getConcreteProductIdBySku($sku)
     {
@@ -188,8 +195,9 @@ class Reader implements ReaderInterface
     /**
      * @param int $idStockProduct
      *
-     * @return SpyStockProduct
      * @throws StockProductNotFoundException
+     *
+     * @return SpyStockProduct
      */
     public function getStockProductById($idStockProduct)
     {
@@ -201,6 +209,7 @@ class Reader implements ReaderInterface
         if (is_null($stockProductEntity)) {
             throw new StockProductNotFoundException();
         }
+
         return $stockProductEntity;
     }
 
@@ -215,4 +224,5 @@ class Reader implements ReaderInterface
 
         return $stockTypeCount > 0;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,6 +21,7 @@ use SprykerEngine\Zed\Kernel\Persistence\Factory;
  */
 class ReaderTest extends Test
 {
+
     /**
      * @var StockFacade
      */
