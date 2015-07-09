@@ -28,6 +28,12 @@ use Propel\Runtime\Propel;
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
 
+    const VIRTUAL_COL_TYPE = 'typeName';
+
+    const VIRTUAL_COL_VALUE = 'valueName';
+
+    const VIRTUAL_COL_PRICE = 'price';
+
     /**
      * @param string $importKeyProductOptionType
      *
@@ -259,6 +265,52 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         return SpyProductOptionConfigurationPresetQuery::create()
             ->filterByFkProduct($idProduct)
             ->orderBySequence();
+    }
+
+
+    /**
+     * @param int $idProductOptionValueUsage
+     * @param int $idLocale
+     *
+     * @return SpyProductOptionValueUsageQuery
+     */
+    public function queryProductOptionValueUsageWithAssociatedAttributes($idProductOptionValueUsage, $idLocale)
+    {
+        return SpyProductOptionValueUsageQuery::create()
+            ->useSpyProductOptionValueQuery()
+                ->useSpyProductOptionValuePriceQuery()
+                ->endUse()
+                ->useSpyProductOptionTypeQuery()
+                    ->useSpyProductOptionTypeTranslationQuery()
+                        ->filterByFkLocale($idLocale)
+                    ->endUse()
+                ->endUse()
+                ->useSpyProductOptionValueTranslationQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
+            ->endUse()
+            ->filterByIdProductOptionValueUsage($idProductOptionValueUsage)
+            ->addAsColumn(self::VIRTUAL_COL_VALUE, SpyProductOptionValueTranslationTableMap::COL_NAME)
+            ->addAsColumn(self::VIRTUAL_COL_TYPE, SpyProductOptionTypeTranslationTableMap::COL_NAME)
+            ->addAsColumn(self::VIRTUAL_COL_PRICE, SpyProductOptionValuePriceTableMap::COL_PRICE);
+    }
+
+
+    /**
+     * @param int $idProductOptionValueUsage
+     *
+     * @return SpyTaxSetQuery
+     */
+    public function queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage)
+    {
+        return SpyTaxSetQuery::create()
+            ->useSpyProductOptionTypeQuery()
+                ->useSpyProductOptionValueQuery()
+                    ->useSpyProductOptionValueUsageQuery()
+                        ->filterByIdProductOptionValueUsage($idProductOptionValueUsage)
+                    ->endUse()
+                ->endUse()
+            ->endUse();
     }
 
     /**

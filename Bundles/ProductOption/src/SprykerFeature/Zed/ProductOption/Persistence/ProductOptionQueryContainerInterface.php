@@ -15,6 +15,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTra
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
+use SprykerFeature\Zed\Tax\Persistence\Propel\Base\SpyTaxSetQuery;
 
 interface ProductOptionQueryContainerInterface
 {
@@ -138,6 +139,21 @@ interface ProductOptionQueryContainerInterface
      * @return SpyAbstractProductQuery
      */
     public function queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage);
+
+    /**
+     * @param int $idProductOptionValueUsage
+     * @param int $idLocale
+     *
+     * @return SpyProductOptionValueUsageQuery
+     */
+    public function queryProductOptionValueUsageWithAssociatedAttributes($idProductOptionValueUsage, $idLocale);
+
+    /**
+     * @param int $idProductOptionValueUsage
+     *
+     * @return SpyTaxSetQuery
+     */
+    public function queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage);
 
     /**
      * @param int $idProduct

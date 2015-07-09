@@ -5,11 +5,13 @@
 
     <transfer name="ProductOption">
         <property name="idOptionValueUsage" type="int" />
+        <property name="fkLocale" type="int" />
         <property name="labelOptionType" type="string" />
         <property name="labelOptionValue" type="string" />
+        <property name="price" type="int" />
+        <property name="taxSet" type="TaxSet" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
-        <property name="tax" type="TaxItem" />
     </transfer>
 
 </transfers>

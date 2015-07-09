@@ -6,8 +6,18 @@
 
 namespace SprykerFeature\Zed\ProductOption\Business\Model;
 
+use Generated\Shared\Transfer\ProductOptionTransfer;
+
 interface ProductOptionReaderInterface
 {
+
+    /**
+     * @param int $idProductOptionValueUsage
+     * @param int $idLocale
+     *
+     * @return ProductOptionTransfer
+     */
+    public function getProductOption($idProductOptionValueUsage, $idLocale);
 
     /**
      * @param int $idProduct

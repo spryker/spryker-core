@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\ProductOptionCartConnector\Business\Manager;
 
-use Generated\Shared\PriceCartConnector\ChangeInterface;
+use Generated\Shared\Cart\ChangeInterface;
 
 interface ProductOptionManagerInterface
 {

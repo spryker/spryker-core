@@ -29,6 +29,12 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->ids = DbFixturesLoader::loadFixtures();
     }
 
+    public function testGetProductOption()
+    {
+        // TODO: Finsihing implementing test, with fixtures and asertions
+        $productOptionTransfer = $this->getFacade()->getProductOption(2, 58);
+    }
+
     public function testQueryTypeUsagesForConcreteProduct()
     {
         $result = $this->getFacade()

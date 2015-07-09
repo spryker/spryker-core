@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\ProductOptionCartConnector\Business;
 
-use Generated\Shared\ProductOptionCartConnector\ChangeInterface;
+use Generated\Shared\Cart\ChangeInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
