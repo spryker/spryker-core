@@ -8,8 +8,6 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Tests\Domain\AuditLoggerTest;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
-
 use Symfony\Component\Form\Form;
 
 abstract class AbstractForm
