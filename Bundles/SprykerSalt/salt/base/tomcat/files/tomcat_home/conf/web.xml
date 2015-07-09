@@ -163,7 +163,7 @@
   <!--                                                                      -->
   <!--   compilerSourceVM    Compiler source VM. [1.5]                      -->
   <!--                                                                      -->
-  <!--   compilerTargetVM    Compiler target VM. [1.5]                      -->  
+  <!--   compilerTargetVM    Compiler target VM. [1.5]                      -->
   <!--                                                                      -->
   <!--   development         Is Jasper used in development mode? If true,   -->
   <!--                       the frequency at which JSPs are checked for    -->
@@ -749,7 +749,7 @@
     </mime-mapping>
     <mime-mapping>
         <extension>mathml</extension>
-        <mime-type>application/mathml+xml</mime-type> 
+        <mime-type>application/mathml+xml</mime-type>
     </mime-mapping>
     <mime-mapping>
         <extension>me</extension>

@@ -3,8 +3,6 @@
 namespace ProjectA\OpenStack\LoadBalancer;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -56,6 +54,7 @@ class ListCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -73,10 +72,11 @@ class ListCommand extends Command
             foreach ($loadBalancers as $loadBalancer) {
                 $data[] = [
                     'name' => $loadBalancer->name(),
-                    'addresses' => $helper->getVirtualIps($loadBalancer)
+                    'addresses' => $helper->getVirtualIps($loadBalancer),
                 ];
             }
             $output->writeln(json_encode($data));
         }
     }
+
 }
