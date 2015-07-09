@@ -29,18 +29,17 @@ class CountryController extends AbstractController
 
         if($form->isValid()){
             $data = $form->getData();
+//
+//            $country = $this->createCountryTransfer();
+//            $country->fromArray($data, true);
+//
+//            $int = $this->getFacade()->saveCountry($country);
 
-            $country = $this->createCountryTransfer();
-            $country->fromArray($data, true);
-
-            $int = $this->getFacade()->saveCountry($country);
-
-            // ...saved
+            $this->addMessageSuccess('Wow, so much success');
         }
 
-
         return $this->viewResponse([
-            'form' => $form->render(),
+            'form' => $form->createView(),
         ]);
     }
 

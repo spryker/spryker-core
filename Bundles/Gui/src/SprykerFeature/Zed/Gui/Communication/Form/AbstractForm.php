@@ -1,23 +1,21 @@
 <?php
 
-namespace SprykerEngine\Zed\Gui\Communication\Form;
+namespace SprykerFeature\Zed\Gui\Communication\Form;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Product\Communication\Form\Type\AutosuggestType;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Acl\Tests\Domain\AuditLoggerTest;
+use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
+use Symfony\Component\Form\Form;
 
 abstract class AbstractForm
 {
-
     /**
      * @var Form
      */
     protected $form = null;
-
-    protected $validation_rules = [];
 
     /**
      * @var Request
@@ -27,25 +25,22 @@ abstract class AbstractForm
     /**
      * @var FormFactory
      */
-    protected $formFactory;
+    private $formFactory;
 
-    /**
-     * @var ConstraintBuilder
-     */
-    protected $constraintBuilder;
 
     /**
      * @return $this
      */
-    public function init()
-    {
-        $this->injectDependencies();
-        $this->buildFormFields();
-        $data = $this->populateFormFields();
-        $this->setData($data);
-        return $this;
-    }
+    abstract protected function buildFormFields();
 
+    /**
+     * @return $this
+     */
+    abstract protected function populateFormFields();
+
+    /**
+     * @return $this
+     */
     protected function injectDependencies()
     {
         $app = $this->getLocator()
@@ -56,9 +51,9 @@ abstract class AbstractForm
         $this->request = $app['request'];
         $this->formFactory = $app['form.factory'];
 
-        $this->constraintBuilder = new ConstraintBuilder(); // TODO Hard Dependency to a class
-
         $this->form = $this->formFactory->create();
+
+        return $this;
     }
 
     /**
@@ -69,10 +64,25 @@ abstract class AbstractForm
         return Locator::getInstance();
     }
 
-    abstract protected function buildFormFields();
+    /**
+     * @return $this
+     */
+    public function init()
+    {
+        $this->injectDependencies()
+                ->buildFormFields();
 
-    abstract protected function populateFormFields();
+        $data = $this->populateFormFields();
+        $this->setData($data);
 
+        return $this;
+    }
+
+    /**
+     * @param $data
+     *
+     * @return $this
+     */
     public function setData($data)
     {
         $this->form->setData($data);
@@ -83,41 +93,65 @@ abstract class AbstractForm
     /**
      * @return mixed
      */
-    public function render()
+    public function createView()
     {
         return $this->form->createView();
     }
 
-    public function processRequest($request)
+    /**
+     * @return $this
+     */
+    public function handleRequest()
     {
-
+        return $this->form->handleRequest($this->request);
     }
 
+    /**
+     * @return bool
+     */
+    public function isSubmitted()
+    {
+        return $this->form->isSubmitted();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid()
+    {
+        return $this->form->isSubmitted() && $this->form->isValid();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->form->getData();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormErrorIterator
+     */
     public function getErrors()
     {
         return $this->form->getErrors(true, false);
     }
 
     /**
-     * @return bool
+     * @param $name
+     * @param $type
+     * @param array $options
+     *
+     * @return $this
      */
-    public function isSubmitted(){
-        return $this->form->isSubmitted();
-    }
-
-    public function handleRequest()
+    public function add($name, $type, $options = array())
     {
-        $this->form->handleRequest($this->request);
-    }
+        if ($options instanceof ConstraintBuilder) {
+            $options = ['constraints' => $options->getConstraints()];
+        }
 
-    public function isValid()
-    {
-        return $this->form->isSubmitted() && $this->form->isValid();
-    }
-
-    public function getData()
-    {
-        return $this->form->getData();
+        return $this->form->add($name, $type, $options);
     }
 
     /**
@@ -130,15 +164,6 @@ abstract class AbstractForm
     {
         $this->add($name, 'text', $options);
         return $this;
-    }
-
-    public function add($name, $type, $options = array())
-    {
-        if ($options instanceof ConstraintBuilder) {
-            $options = ['constraints' => $options->getConstraints()];
-        }
-
-        return $this->form->add($name, $type, $options);
     }
 
     /**
@@ -183,9 +208,9 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addAutosugest($name, $options = array())
+    public function addSelect($name, $options = array())
     {
-        $this->add($name, new AutosuggestType(), $options);
+        $this->add($name, new SelectType(), $options);
         return $this;
     }
 
@@ -225,11 +250,5 @@ abstract class AbstractForm
         return $this;
     }
 
-    /**
-     * @return ConstraintBuilder
-     */
-    protected function getConstraintBuilder()
-    {
-        return $this->constraintBuilder;
-    }
+    // TODO add all internal
 }

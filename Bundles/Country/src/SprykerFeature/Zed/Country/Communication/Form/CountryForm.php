@@ -2,16 +2,12 @@
 
 namespace SprykerFeature\Zed\Country\Communication\Form;
 
-use SprykerEngine\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use SprykerFeature\Zed\User\Persistence\Propel\Base\SpyUserUserQuery;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
 
-/**
- * @method CountryQueryContainer getQueryContainer()
- */
 class CountryForm extends AbstractForm
 {
     /**
@@ -45,7 +41,9 @@ class CountryForm extends AbstractForm
             [
                 'label' => 'ISO2 Code',
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank([
+                            'message' => 'woooohoooo'
+                    ]),
                     new Length([
                         'min' => 2,
                         'max' => 2
@@ -86,6 +84,11 @@ class CountryForm extends AbstractForm
                     'label' => 'Username',
                     'choices' => $userChoice,
                 ])
+            ->addSelect('blabla', [
+                'label' => 'Select',
+                'placeholder' => 'asdasdasdasdasda2',
+                'url' => '/asdasd/'
+            ])
             ->addText('postal_code_regex', ['label' => 'Postal code (regex)'])
             ->addHidden('id_country')
             ->addSubmit();
@@ -112,7 +115,7 @@ class CountryForm extends AbstractForm
     {
         $idCountry = $this->request->get('id_country');
 
-        if(is_null($idCountry)){
+        if (is_null($idCountry)) {
             return [];
         }
 
