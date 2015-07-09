@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,13 +7,13 @@
 namespace SprykerFeature\Zed\Mail\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\Transfer\MailTransferTransfer;
 
 /**
  * @method MailDependencyContainer getDependencyContainer()
  */
 class MailFacade extends AbstractFacade
 {
+
     /**
      * @param MailTransfer $mailTransfer
      *
@@ -22,4 +23,5 @@ class MailFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->getMailSender()->sendMail($mailTransfer);
     }
+
 }

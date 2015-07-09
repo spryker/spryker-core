@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,5 +10,7 @@ use SprykerFeature\Shared\Library\ConfigInterface;
 
 interface MailConfig extends ConfigInterface
 {
+
     const MAILCATCHER_GUI = 'MAILCATCHER_GUI';
+
 }

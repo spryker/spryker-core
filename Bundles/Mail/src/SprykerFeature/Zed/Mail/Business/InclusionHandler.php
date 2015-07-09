@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -41,4 +42,5 @@ class InclusionHandler implements InclusionHandlerInterface
     {
         return base64_encode(file_get_contents($path));
     }
+
 }
