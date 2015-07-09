@@ -1,16 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Zed\Translation\Business;
 
-use SprykerEngine\Zed\Translation\Business\Model\TranslationFile;
-use SprykerEngine\Zed\Translation\Business\Model\TranslationFileInterface;
-use SprykerEngine\Zed\Translation\TranslationConfig;
-
 class TranslationFileFinder
 {
+
     /**
      * @var
      */
@@ -39,4 +37,5 @@ class TranslationFileFinder
 
         return $translationFilePaths;
     }
+
 }

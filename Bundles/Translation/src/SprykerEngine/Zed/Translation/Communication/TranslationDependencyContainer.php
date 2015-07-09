@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,8 +10,10 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 
 class TranslationDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     public function getFacade()
     {
         return $this->getLocator()->translation()->facade();
     }
+
 }
