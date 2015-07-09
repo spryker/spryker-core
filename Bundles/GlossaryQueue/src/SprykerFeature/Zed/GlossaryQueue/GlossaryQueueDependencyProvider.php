@@ -7,6 +7,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class GlossaryQueueDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const GLOSSARY_FACADE = 'glossary facade';
 
     /**
@@ -22,4 +23,5 @@ class GlossaryQueueDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
 }

@@ -7,6 +7,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 
 class GlossaryQueueDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return Store
      */
@@ -14,4 +15,5 @@ class GlossaryQueueDependencyContainer extends AbstractCommunicationDependencyCo
     {
         return Store::getInstance();
     }
+
 }

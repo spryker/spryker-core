@@ -13,6 +13,7 @@ use SprykerFeature\Zed\GlossaryQueue\GlossaryQueueDependencyProvider;
  */
 class GlossaryQueueDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return QueueTranslationManagerInterface
      */
@@ -25,10 +26,12 @@ class GlossaryQueueDependencyContainer extends AbstractBusinessDependencyContain
 
     /**
      * @throws \ErrorException
+     *
      * @return GlossaryQueueToGlossaryInterface
      */
     protected function getGlossaryFacade()
     {
         return $this->getProvidedDependency(GlossaryQueueDependencyProvider::GLOSSARY_FACADE);
     }
+
 }
