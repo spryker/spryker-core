@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -54,4 +55,5 @@ class LocaleDependencyContainer extends AbstractBusinessDependencyContainer
 
         return $installer;
     }
+
 }

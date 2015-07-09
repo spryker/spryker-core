@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocale;
 
 class LocaleManager
 {
+
     /**
      * @var LocaleQueryContainerInterface
      */
@@ -35,8 +37,9 @@ class LocaleManager
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
      * @throws MissingLocaleException
+     *
+     * @return LocaleTransfer
      */
     public function getLocale($localeName)
     {
@@ -57,10 +60,11 @@ class LocaleManager
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
      * @throws LocaleExistsException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return LocaleTransfer
      */
     public function createLocale($localeName)
     {
@@ -89,15 +93,16 @@ class LocaleManager
     public function hasLocale($localeName)
     {
         $localeQuery = $this->localeQueryContainer->queryLocaleByName($localeName);
-        
+
         return $localeQuery->count() > 0;
     }
 
     /**
      * @param string $localeName
      *
-     * @return bool
      * @throws PropelException
+     *
+     * @return bool
      */
     public function deleteLocale($localeName)
     {
@@ -132,4 +137,5 @@ class LocaleManager
 
         return $dto;
     }
+
 }

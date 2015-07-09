@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocale;
 
 class LocaleInstaller extends AbstractInstaller
 {
+
     /**
      * @var string
      */
@@ -33,7 +35,6 @@ class LocaleInstaller extends AbstractInstaller
     }
 
     /**
-     * @return void
      */
     public function install()
     {
@@ -60,4 +61,5 @@ class LocaleInstaller extends AbstractInstaller
             }
         }
     }
+
 }

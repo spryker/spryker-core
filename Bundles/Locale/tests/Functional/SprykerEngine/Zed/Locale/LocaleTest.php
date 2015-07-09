@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 class LocaleTest extends Test
 {
+
     /**
      * @var \SprykerEngine\Zed\Locale\Business\LocaleFacade
      */
@@ -57,4 +59,5 @@ class LocaleTest extends Test
         $this->localeFacade->deleteLocale('ab_xy');
         $this->assertFalse($localeQuery->findOne()->getIsActive());
     }
+
 }

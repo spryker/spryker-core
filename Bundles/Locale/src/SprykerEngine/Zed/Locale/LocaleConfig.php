@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class LocaleConfig extends AbstractBundleConfig
 {
+
     /**
      * @return string
      */
@@ -16,4 +18,5 @@ class LocaleConfig extends AbstractBundleConfig
     {
         return realpath(__DIR__ . '/Business/Internal/Install/locales.txt');
     }
+
 }

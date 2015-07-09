@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
  */
 class LocaleFacade extends AbstractFacade
 {
+
     /**
      * @param string $localeName
      *
@@ -32,8 +34,9 @@ class LocaleFacade extends AbstractFacade
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
      * @throws MissingLocaleException
+     *
+     * @return LocaleTransfer
      */
     public function getLocale($localeName)
     {
@@ -78,8 +81,9 @@ class LocaleFacade extends AbstractFacade
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
      * @throws LocaleExistsException
+     *
+     * @return LocaleTransfer
      */
     public function createLocale($localeName)
     {
@@ -104,4 +108,5 @@ class LocaleFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->getInstaller($messenger)->install();
     }
+
 }
