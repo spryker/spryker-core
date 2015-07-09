@@ -1,9 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Shared\Lumberjack\Code\Log;
+
 /**
  * @group lumberjack
  */
@@ -56,22 +58,22 @@ class DataTest extends \PHPUnit_Framework_TestCase
     public function testMaximumMessageSizeShouldNotBeExceededForMessagesThatAreVerySmall()
     {
         $data = new Data();
-        for ($i=0; $i < 100; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $data->addField('data' . $i, self::CONTENT_CHARACTER);
         }
 
         $this->assertEquals(100, count($data->getData()));
     }
 
-
     /**
      * @param int $sizeInKiloBytes
+     *
      * @return string
      */
     public function getTestData($sizeInKiloBytes)
     {
         $data = '';
-        for ($i=0; $i < ($sizeInKiloBytes * 1024); $i++) {
+        for ($i = 0; $i < ($sizeInKiloBytes * 1024); $i++) {
             $data .= self::CONTENT_CHARACTER;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ class Csv
      * @param string $json
      * @param string $fieldDelimiter
      * @param string $stringDelimiter
+     *
      * @return string
      */
     public function getCsvFromElasticSearchJsonResponse($json, $fieldDelimiter = ';', $stringDelimiter = '"')
@@ -40,7 +42,7 @@ class Csv
                 if (array_key_exists($key, $entry)) {
                     $data = substr($entry[$key], 0, self::MAX_COLUMN_LENGTH);
                     $data = str_replace('"', "'", $data);
-                    $data = str_replace(array("\n", "\r", "\t", PHP_EOL), '', $data);
+                    $data = str_replace(["\n", "\r", "\t", PHP_EOL], '', $data);
                     $line[$key] = str_replace('"', "'", $data);
                 } else {
                     $line[$key] = '';
@@ -63,6 +65,7 @@ class Csv
      * @param array $data
      * @param string $fieldDelimiter
      * @param string $stringDelimiter
+     *
      * @return string
      */
     protected function getDelimitedLineFromArray(array $data, $fieldDelimiter, $stringDelimiter)
@@ -74,4 +77,5 @@ class Csv
 
         return mb_substr($content, 0, -1);
     }
+
 }

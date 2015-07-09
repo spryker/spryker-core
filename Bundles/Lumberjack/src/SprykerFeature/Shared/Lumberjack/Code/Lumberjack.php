@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -65,6 +66,7 @@ class Lumberjack
         }
 
         self::$instance->init();
+
         return self::$instance;
     }
 
@@ -182,6 +184,7 @@ class Lumberjack
 
     /**
      * @param mixed $data
+     *
      * @return array|string
      */
     protected function sanitizeData($data)
@@ -190,6 +193,7 @@ class Lumberjack
             if (is_string($data)) {
                 return $this->sanitizeString('');
             }
+
             return $data;
         }
 
@@ -211,6 +215,7 @@ class Lumberjack
      * @param string $string
      * @param int $length
      * @param string $character
+     *
      * @return string
      */
     protected function sanitizeString($string, $length = 5, $character = '*')
@@ -224,12 +229,9 @@ class Lumberjack
     protected function getDataKeysToSanitize()
     {
         // TODO Re-Code this
-        return array();
-
+        return [];
 
         $lumberjackConfig = Config::get(LumberjackConfig::LUMBERJACK);
-
-
 
         if ($lumberjackConfig->offsetExists('keys_to_sanitize')) {
             return $lumberjackConfig->keys_to_sanitize;

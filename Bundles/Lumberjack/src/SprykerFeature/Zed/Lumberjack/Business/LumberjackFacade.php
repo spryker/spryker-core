@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ class LumberjackFacade extends AbstractFacade
      * @param array $getParams
      * @param array $postData
      * @param string $type
+     *
      * @return string
      */
     public function getSearch(array $getParams, array $postData, $type = Proxy::SEARCH_TYPE_SINGLE)
@@ -26,6 +28,7 @@ class LumberjackFacade extends AbstractFacade
      * @param string $json
      * @param string $fieldDelimiter
      * @param string $stringDelimiter
+     *
      * @return string
      */
     public function getCsvFromElasticSearchJsonResponse($json, $fieldDelimiter = ';', $stringDelimiter = '"')
@@ -33,4 +36,5 @@ class LumberjackFacade extends AbstractFacade
         return $this->factory->createModelElasticSearchExportCsv()
             ->getCsvFromElasticSearchJsonResponse($json, $fieldDelimiter, $stringDelimiter);
     }
+
 }
