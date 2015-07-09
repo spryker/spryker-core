@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -30,6 +31,7 @@ class Paid
 
     /**
      * @param SpySalesOrderItem $orderItem
+     *
      * @throws PropelException
      */
     protected function setOrderItemAsPaid(SpySalesOrderItem $orderItem)
@@ -62,4 +64,5 @@ class Paid
     {
         return ($this->queryContainer->queryOrderItem($orderItem)->count() > 0);
     }
+
 }

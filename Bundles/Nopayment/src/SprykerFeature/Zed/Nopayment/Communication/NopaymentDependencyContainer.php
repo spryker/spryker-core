@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Nopayment\Business\NopaymentFacade;
 */
 class NopaymentDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return NopaymentQueryContainer
      */
@@ -30,4 +32,5 @@ class NopaymentDependencyContainer extends AbstractCommunicationDependencyContai
     {
         return $this->getLocator()->nopayment()->facade();
     }
+
 }
