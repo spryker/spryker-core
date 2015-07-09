@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -35,6 +36,7 @@ class Config
 
     /**
      * @param string $key
+     *
      * @throws \Exception
      *
      * @return string
@@ -54,6 +56,7 @@ class Config
 
     /**
      * @param string $key
+     *
      * @return bool
      */
     public static function hasValue($key)
@@ -74,32 +77,32 @@ class Config
 
         $config = new \ArrayObject();
 
-        /**
+        /*
          * e.g. config_default.php
          */
         self::buildConfig('default', $config);
 
-        /**
+        /*
          * e.g. config_default-production.php
          */
         self::buildConfig('default-' . $environment, $config);
 
-        /**
+        /*
          * e.g. config_default_DE.php
          */
         self::buildConfig('default_' . $storeName, $config);
 
-        /**
+        /*
          * e.g. config_default-production_DE.php
          */
         self::buildConfig('default-' . $environment . '_' . $storeName, $config);
 
-        /**
+        /*
          * e.g. config_local.php
          */
         self::buildConfig('local', $config);
 
-        /**
+        /*
          * e.g. config_local_DE.php
          */
         self::buildConfig('local_' . $storeName, $config);
