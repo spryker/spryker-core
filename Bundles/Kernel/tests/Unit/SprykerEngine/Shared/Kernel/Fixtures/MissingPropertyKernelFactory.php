@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,10 +14,12 @@ class MissingPropertyKernelFactory extends AbstractFactory
     /**
      * @param string $class
      *
-     * @return object
      * @throws \Exception
+     *
+     * @return object
      */
     public function create($class)
     {
     }
+
 }

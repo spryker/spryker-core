@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -38,4 +39,5 @@ class AbstractFacadeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Unit\SprykerEngine\Zed\Kernel\Business\Fixtures\KernelFacade', $facade);
     }
+
 }

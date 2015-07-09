@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerEngine\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\TransferLocator;
 use SprykerEngine\Shared\Kernel\TransferLocatorMatcher;
 use SprykerEngine\Zed\Kernel\Locator;
 

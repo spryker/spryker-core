@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -39,6 +40,7 @@ class RouteNameResolver implements RouteNameResolverInterface
 
     /**
      * @param $dashedWord
+     *
      * @return array|string
      */
     private function dashToCamelCase($dashedWord)

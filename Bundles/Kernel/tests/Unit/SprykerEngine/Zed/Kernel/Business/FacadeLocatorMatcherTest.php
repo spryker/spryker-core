@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -36,4 +37,5 @@ class FacadeLocatorMatcherTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame('Foo', (new FacadeLocatorMatcher())->filter('facadeFoo'));
     }
+
 }

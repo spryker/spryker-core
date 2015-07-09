@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -63,4 +64,5 @@ class GeneratedInterfaceMethodTagBuilder implements MethodTagBuilderInterface
             $this->options[self::OPTION_METHOD_STRING_PATTERN]
         );
     }
+
 }

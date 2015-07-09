@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace Unit\SprykerEngine\Zed\Kernel\Business;
 
 use SprykerEngine\Zed\Kernel\Locator;
-use Unit\SprykerEngine\Zed\Kernel\Business\Fixtures\FooModel;
 use SprykerEngine\Zed\Kernel\Business\FacadeLocator;
 
 /**
@@ -27,4 +27,5 @@ class FacadeLocatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Unit\SprykerEngine\Zed\Kernel\Business\Fixtures\KernelFacade', $facade);
     }
+
 }

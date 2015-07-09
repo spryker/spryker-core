@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -40,4 +41,5 @@ class DependencyContainerLocatorTest extends \PHPUnit_Framework_TestCase
         );
         $queryContainer = $queryContainerLocator->locate(self::WRONG_TEST_BUNDLE_NAME, Locator::getInstance());
     }
+
 }

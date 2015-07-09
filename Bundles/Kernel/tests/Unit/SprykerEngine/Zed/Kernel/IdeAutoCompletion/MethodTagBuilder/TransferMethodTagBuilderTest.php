@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,7 +20,7 @@ class TransferMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $options = [
             TransferMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             TransferMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            TransferMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            TransferMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
         $methodTagBuilder = new TransferMethodTagBuilder($options);
@@ -37,7 +38,7 @@ class TransferMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $options = [
             TransferMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             TransferMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            TransferMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            TransferMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
         $methodTagBuilder = new TransferMethodTagBuilder($options);

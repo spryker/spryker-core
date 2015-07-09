@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -83,6 +84,7 @@ class ModelResult
      * @deprecated
      *
      * @param TransferInterface $transfer
+     *
      * @return $this
      */
     public function setTransfer(TransferInterface $transfer)
@@ -132,6 +134,7 @@ class ModelResult
     public function setEntity(ActiveRecordInterface $entity)
     {
         $this->entity = $entity;
+
         return $this;
     }
 
@@ -159,6 +162,7 @@ class ModelResult
      * @deprecated
      *
      * @param string $error
+     *
      * @return $this
      */
     public function addError($error)
@@ -179,4 +183,5 @@ class ModelResult
             $this->addError($error);
         }
     }
+
 }

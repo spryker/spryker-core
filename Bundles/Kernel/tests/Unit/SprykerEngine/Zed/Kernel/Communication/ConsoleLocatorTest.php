@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace Unit\SprykerEngine\Zed\Kernel\Communication;
 
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Communication\DependencyContainerLocator;
 use SprykerEngine\Zed\Kernel\Communication\ConsoleLocator;
 
 /**
@@ -56,4 +56,5 @@ class ConsoleLocatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf($fullyQualifiedClassName, $locatedPlugin);
     }
+
 }

@@ -1,12 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerEngine\Zed\Kernel\Persistence;
 
-use SprykerEngine\Shared\Kernel\ClassResolver;
-use SprykerEngine\Shared\Kernel\IdentityMapClassResolver;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainerLocator;
 
@@ -43,4 +42,5 @@ class QueryContainerLocatorTest extends \PHPUnit_Framework_TestCase
         );
         $queryContainer = $queryContainerLocator->locate(self::WRONG_BUNDLE_NAME, Locator::getInstance());
     }
+
 }

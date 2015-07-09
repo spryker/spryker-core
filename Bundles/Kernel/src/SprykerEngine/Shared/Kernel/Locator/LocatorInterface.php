@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,7 +23,8 @@ interface LocatorInterface
     /**
      * @param string $bundle
      *
-     * @return boolean
+     * @return bool
      */
     public function canLocate($bundle);
+
 }

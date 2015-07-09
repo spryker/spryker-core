@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -55,6 +56,7 @@ class BundleProxy
 
     /**
      * @param array $locator
+     *
      * @return $this
      */
     public function setLocator(array $locator = [])
@@ -68,6 +70,7 @@ class BundleProxy
 
     /**
      * @param LocatorInterface $locator
+     *
      * @return $this
      */
     public function addLocator(LocatorInterface $locator)
@@ -106,7 +109,7 @@ class BundleProxy
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function hasFacade()
     {
@@ -125,6 +128,7 @@ class BundleProxy
      * TODO Check if performance is good enough here!?
      *
      * @param $method
+     *
      * @return bool
      */
     protected function hasItem($method)

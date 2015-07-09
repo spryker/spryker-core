@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,4 +11,5 @@ use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContain
 
 class KernelDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
 }

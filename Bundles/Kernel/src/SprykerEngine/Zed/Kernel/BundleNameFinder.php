@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -53,9 +54,10 @@ class BundleNameFinder extends AbstractBundle
 
         $dirs = [
             $projectBundlePathPattern,
-            $vendorBundlePathPattern
+            $vendorBundlePathPattern,
         ];
 
         return $dirs;
     }
+
 }

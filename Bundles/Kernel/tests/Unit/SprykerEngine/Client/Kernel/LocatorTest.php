@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,7 +27,7 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
     public function testGetInstanceWithLocatorAsArgumentShouldReturnLocator()
     {
         $locator = Locator::getInstance([
-            new \Unit\SprykerEngine\Shared\Kernel\Fixtures\Locator('Foo')
+            new \Unit\SprykerEngine\Shared\Kernel\Fixtures\Locator('Foo'),
         ]);
 
         $this->assertInstanceOf('SprykerEngine\Client\Kernel\Locator', $locator);

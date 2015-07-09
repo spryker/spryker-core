@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -47,4 +48,5 @@ abstract class AbstractCommunicationDependencyContainer implements DependencyCon
     {
         return $this->locator;
     }
+
 }

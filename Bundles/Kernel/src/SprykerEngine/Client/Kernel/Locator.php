@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -82,7 +83,7 @@ class Locator implements LocatorLocatorInterface
         $bundleProxy = new BundleProxy($this);
         if (is_null($this->locator)) {
             $this->locator = [
-                new ClientLocator()
+                new ClientLocator(),
             ];
         }
         $bundleProxy->setLocator($this->locator);

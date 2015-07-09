@@ -23,4 +23,5 @@ class ClientLocatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Unit\SprykerEngine\Client\Kernel\Service\Fixtures\KernelClient', $located);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -116,4 +117,5 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
         throw new \LogicException('Only transfer classes are allowed in yves action as parameter');
     }
+
 }
