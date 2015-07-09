@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,4 +29,5 @@ class DirectoryRemover implements DirectoryRemoverInterface
         $filesystem = new Filesystem();
         $filesystem->remove($this->directoryToRemove);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -35,6 +36,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -122,4 +124,5 @@ class GenerateZedIdeAutoCompletionConsole extends Console
 
         $this->info('Generate Zed IdeFactoryAutoCompletion file');
     }
+
 }

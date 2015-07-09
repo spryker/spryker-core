@@ -1,15 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Setup\Communication\Controller;
 
-use Predis;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Setup\SetupConfig;
 use SprykerFeature\Shared\System\SystemConfig;
-
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
 class IndexController extends AbstractController
@@ -19,22 +18,22 @@ class IndexController extends AbstractController
     {
         $developmentLinks = [];
 
-        if (APPLICATION_ENV != 'production') {
+        if (APPLICATION_ENV !== 'production') {
             $developmentLinks[] = [
                 'href' => '/setup/transfer/repeat',
                 'target' => '_blank',
-                'label' => __('Repeat last Yves-request')
+                'label' => __('Repeat last Yves-request'),
             ];
             $developmentLinks[] = [
                 'href' => '/glossary/dump',
                 'target' => '_blank',
-                'label' => __('Dump glossary data to file')
+                'label' => __('Dump glossary data to file'),
             ];
         }
         $developmentLinks[] = [
             'href' => '/setup/phpinfo',
             'target' => '_blank',
-            'label' => __('Show PHP-Info')
+            'label' => __('Show PHP-Info'),
         ];
         if (\SprykerFeature_Shared_Library_Environment::isNotDevelopment()) {
             $developmentLinks[] = [
@@ -42,14 +41,14 @@ class IndexController extends AbstractController
                 'label' => __('Show Elasticsearch' . ' <span class="icon-info"></span>'),
                 'extras' => [
                     'data-toggle' => 'modal',
-                    'data-target' => '#elastic'
+                    'data-target' => '#elastic',
                 ],
             ];
         } else {
             $developmentLinks[] = [
                 'href' => 'http://' . Config::get(SystemConfig::HOST_ZED_GUI) . ':9200',
                 'target' => '_blank',
-                'label' => __('Show Elasticsearch')
+                'label' => __('Show Elasticsearch'),
             ];
         }
         if (\SprykerFeature_Shared_Library_Environment::isNotDevelopment()) {
@@ -58,14 +57,14 @@ class IndexController extends AbstractController
                 'label' => __('Show Elasticsearch Head (9200/_plugin/head)' . ' <span class="icon-info"></span>'),
                 'extras' => [
                     'data-toggle' => 'modal',
-                    'data-target' => '#elasticHead'
+                    'data-target' => '#elasticHead',
                 ],
             ];
         } else {
             $developmentLinks[] = [
                 'href' => 'http://' . Config::get(SystemConfig::HOST_ZED_GUI) . ':9200/_plugin/head',
                 'target' => '_blank',
-                'label' => __('Show Elasticsearch Head')
+                'label' => __('Show Elasticsearch Head'),
             ];
         }
 
@@ -75,14 +74,14 @@ class IndexController extends AbstractController
                 'label' => __('Show Elasticsearch Bigdesk (9200/_plugin/bigdesk)' . ' <span class="icon-info"></span>'),
                 'extras' => [
                     'data-toggle' => 'modal',
-                    'data-target' => '#elasticBigdeskModal'
+                    'data-target' => '#elasticBigdeskModal',
                 ],
             ];
         } else {
             $developmentLinks[] = [
                 'href' => 'http://' . Config::get(SystemConfig::HOST_ZED_GUI) . ':9200/_plugin/bigdesk',
                 'target' => '_blank',
-                'label' => __('Show Elasticsearch Bigdesk')
+                'label' => __('Show Elasticsearch Bigdesk'),
             ];
         }
         if (\SprykerFeature_Shared_Library_Environment::isNotDevelopment()) {
@@ -91,14 +90,14 @@ class IndexController extends AbstractController
                 'label' => __('Show Couchbase' . ' <span class="icon-info"></span>'),
                 'extras' => [
                     'data-toggle' => 'modal',
-                    'data-target' => '#couchbaseModal'
+                    'data-target' => '#couchbaseModal',
                 ],
             ];
         } else {
             $developmentLinks[] = [
                 'href' => 'http://' . Config::get(SystemConfig::HOST_ZED_GUI) . ':8091',
                 'target' => '_blank',
-                'label' => __('Show Couchbase')
+                'label' => __('Show Couchbase'),
             ];
         }
 
@@ -108,7 +107,7 @@ class IndexController extends AbstractController
                 'label' => __('Show Jenkins' . ' <span class="icon-info"></span>'),
                 'extras' => [
                     'data-toggle' => 'modal',
-                    'data-target' => '#jenkinsModal'
+                    'data-target' => '#jenkinsModal',
                 ],
             ];
         } else {
@@ -122,24 +121,25 @@ class IndexController extends AbstractController
         $developmentLinks[] = [
             'href' => 'URL IS MISSING',
             'target' => '_blank',
-            'label' => __('Install / Update Cronjobs')
+            'label' => __('Install / Update Cronjobs'),
         ];
 
         return $this->viewResponse([
-            'developmentLinks' => $developmentLinks
+            'developmentLinks' => $developmentLinks,
         ]);
     }
 
     public function showCronjobsAction()
     {
         return $this->viewResponse([
-            'jobs' => $this->facadeSetup->getAllCronjobs()
+            'jobs' => $this->facadeSetup->getAllCronjobs(),
         ]);
     }
 
     protected function getClient()
     {
         $redis = Redis::getInstance();
+
         return $redis->connect();
     }
 
@@ -147,11 +147,9 @@ class IndexController extends AbstractController
     {
         $redis = $this->getClient();
 
-
         for ($i = 0; $i < 100; $i++) {
             $redis->set(md5($i), microtime(true));
         }
-
 
         echo '<pre>';
         var_dump($i);
@@ -159,6 +157,5 @@ class IndexController extends AbstractController
         echo __FILE__ . ' ' . __LINE__;
         die;
     }
-
 
 }

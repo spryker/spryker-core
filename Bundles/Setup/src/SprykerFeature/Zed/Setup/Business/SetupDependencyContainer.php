@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -51,8 +52,9 @@ class SetupDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return Repeater
      * @throws \ErrorException
+     *
+     * @return Repeater
      */
     public function createTransferObjectRepeater()
     {

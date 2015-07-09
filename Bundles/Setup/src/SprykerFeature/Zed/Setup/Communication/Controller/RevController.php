@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,9 +7,7 @@
 namespace SprykerFeature\Zed\Setup\Communication\Controller;
 
 use SprykerFeature\Shared\Library\Application\Version;
-
-
-/**
+/*
  * Class Rev
  * @package SprykerFeature\Zed\Setup\Communication\Controller
  */
@@ -22,6 +21,5 @@ class RevController extends AbstractController{
         $content = Version::getRevTxt();
         echo '<pre>' . $content . '</pre>';
     }
-
 
 }

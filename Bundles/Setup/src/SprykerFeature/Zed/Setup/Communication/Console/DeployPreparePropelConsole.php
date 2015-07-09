@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,7 +20,6 @@ class DeployPreparePropelConsole extends Console
     const COMMAND_NAME = 'setup:deploy:prepare_propel';
     const DESCRIPTION = 'This command prepares propel configuration on appserver';
 
-
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -31,6 +31,7 @@ class DeployPreparePropelConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -51,4 +52,5 @@ class DeployPreparePropelConsole extends Console
         $input = new ArrayInput($arguments);
         $command->run($input, $this->output);
     }
+
 }
