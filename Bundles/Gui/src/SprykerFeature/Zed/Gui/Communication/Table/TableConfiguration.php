@@ -18,15 +18,7 @@ class TableConfiguration
      */
     private $sortable;
 
-    /**
-     * @var
-     */
     private $pageLength;
-
-    /**
-     * @var
-     */
-    protected $url;
 
     /**
      * @return array
@@ -38,8 +30,7 @@ class TableConfiguration
 
     /**
      * @todo Zed Translation in Template
-     * @param array $headers Provide php names for table columns
-     * if you are goin to user Propel Query as data population
+     * @param array $headers
      */
     public function setHeaders(array $headers)
     {
@@ -77,35 +68,15 @@ class TableConfiguration
         );
     }
 
-    /**
-     * @return mixed
-     */
     public function getPageLength()
     {
         return $this->pageLength;
     }
 
-    /**
-     * @param $length
-     */
     public function setPageLength($length)
     {
         $this->pageLength = $length;
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
 
-    /**
-     * @param string $url
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
 }
