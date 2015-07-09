@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 
 class TaxConfig extends AbstractBundleConfig
 {
+
     /**
      * @return TaxChangePluginInterface[]
      */
@@ -17,4 +19,5 @@ class TaxConfig extends AbstractBundleConfig
     {
         return [];
     }
+
 }

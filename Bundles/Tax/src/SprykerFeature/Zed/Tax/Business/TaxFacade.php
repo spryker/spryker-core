@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,8 +22,9 @@ class TaxFacade extends AbstractFacade
 {
 
     /**
-     * @return TaxRateCollectionTransfer
      * @throws PropelException
+     *
+     * @return TaxRateCollectionTransfer
      */
     public function getTaxRates()
     {
@@ -32,9 +34,10 @@ class TaxFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return TaxRateTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return TaxRateTransfer
      */
     public function getTaxRate($id)
     {
@@ -44,8 +47,9 @@ class TaxFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return bool
      * @throws PropelException
+     *
+     * @return bool
      */
     public function taxRateExists($id)
     {
@@ -53,8 +57,9 @@ class TaxFacade extends AbstractFacade
     }
 
     /**
-     * @return TaxSetCollectionTransfer
      * @throws PropelException
+     *
+     * @return TaxSetCollectionTransfer
      */
     public function getTaxSets()
     {
@@ -64,9 +69,10 @@ class TaxFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return TaxSetTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return TaxSetTransfer
      */
     public function getTaxSet($id)
     {
@@ -76,8 +82,9 @@ class TaxFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return bool
      * @throws PropelException
+     *
+     * @return bool
      */
     public function taxSetExists($id)
     {
@@ -87,8 +94,9 @@ class TaxFacade extends AbstractFacade
     /**
      * @param TaxRateTransfer $taxRate
      *
-     * @return TaxRateTransfer
      * @throws PropelException
+     *
+     * @return TaxRateTransfer
      */
     public function createTaxRate(TaxRateTransfer $taxRate)
     {
@@ -98,9 +106,10 @@ class TaxFacade extends AbstractFacade
     /**
      * @param TaxRateTransfer $taxRateTransfer
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return int
      */
     public function updateTaxRate(TaxRateTransfer $taxRateTransfer)
     {
@@ -110,10 +119,11 @@ class TaxFacade extends AbstractFacade
     /**
      * @param TaxSetTransfer $taxSet
      *
-     * @return TaxSetTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException
+     *
+     * @return TaxSetTransfer
      */
     public function createTaxSet(TaxSetTransfer $taxSet)
     {
@@ -123,10 +133,11 @@ class TaxFacade extends AbstractFacade
     /**
      * @param TaxSetTransfer $taxSetTransfer
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException
+     *
+     * @return int
      */
     public function updateTaxSet(TaxSetTransfer $taxSetTransfer)
     {
@@ -137,9 +148,10 @@ class TaxFacade extends AbstractFacade
      * @param int $taxSetId
      * @param TaxRateTransfer $taxRateTransfer
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return int
      */
     public function addTaxRateToTaxSet($taxSetId, TaxRateTransfer $taxRateTransfer)
     {
@@ -150,10 +162,11 @@ class TaxFacade extends AbstractFacade
      * @param int $taxSetId
      * @param int $taxRateId
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException
+     *
+     * @return int
      */
     public function removeTaxRateFromTaxSet($taxSetId, $taxRateId)
     {
@@ -179,4 +192,5 @@ class TaxFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->getWriterModel()->deleteTaxSet($id);
     }
+
 }

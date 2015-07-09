@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,49 +15,57 @@ use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 
 interface TaxReaderInterface
 {
+
     /**
-     * @return TaxRateCollectionTransfer
      * @throws PropelException
+     *
+     * @return TaxRateCollectionTransfer
      */
     public function getTaxRates();
 
     /**
      * @param int $id
      *
-     * @return TaxRateTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return TaxRateTransfer
      */
     public function getTaxRate($id);
 
     /**
      * @param int $id
      *
-     * @return bool
      * @throws PropelException
+     *
+     * @return bool
      */
     public function taxRateExists($id);
 
     /**
-     * @return TaxSetCollectionTransfer
      * @throws PropelException
+     *
+     * @return TaxSetCollectionTransfer
      */
     public function getTaxSets();
 
     /**
      * @param int $id
      *
-     * @return TaxSetTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return TaxSetTransfer
      */
     public function getTaxSet($id);
 
     /**
      * @param int $id
      *
-     * @return bool
      * @throws PropelException
+     *
+     * @return bool
      */
     public function taxSetExists($id);
+
 }

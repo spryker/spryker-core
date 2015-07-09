@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -36,7 +37,7 @@ class WriterTest extends Test
     private $taxFacade;
 
     /**
-     * @var AutoCompletion $locator
+     * @var AutoCompletion
      */
     protected $locator;
 
@@ -274,4 +275,5 @@ class WriterTest extends Test
         $taxSetEntity = $taxSetQuery->findOne();
         $this->assertEmpty($taxSetEntity);
     }
+
 }

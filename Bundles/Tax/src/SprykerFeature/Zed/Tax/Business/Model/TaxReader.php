@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,13 +11,12 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateCollectionTransfer;
 use Generated\Shared\Transfer\TaxSetCollectionTransfer;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
-use SprykerFeature\Zed\Tax\TaxConfig;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 
-
 class TaxReader implements TaxReaderInterface
 {
+
     /**
      * @var TaxQueryContainerInterface
      */
@@ -32,8 +32,9 @@ class TaxReader implements TaxReaderInterface
     }
 
     /**
-     * @return TaxRateCollectionTransfer
      * @throws PropelException
+     *
+     * @return TaxRateCollectionTransfer
      */
     public function getTaxRates()
     {
@@ -41,7 +42,7 @@ class TaxReader implements TaxReaderInterface
 
         $transferCollection = new TaxRateCollectionTransfer();
         foreach ($propelCollection as $taxRateEntity) {
-            $taxRateTransfer = (new TaxRateTransfer)->fromArray($taxRateEntity->toArray());
+            $taxRateTransfer = (new TaxRateTransfer())->fromArray($taxRateEntity->toArray());
             $transferCollection->addTaxRate($taxRateTransfer);
         }
 
@@ -51,15 +52,16 @@ class TaxReader implements TaxReaderInterface
     /**
      * @param int $id
      *
-     * @return TaxRateTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return TaxRateTransfer
      */
     public function getTaxRate($id)
     {
         $taxRateEntity = $this->queryContainer->queryTaxRate($id)->findOne();
 
-        if (null == $taxRateEntity) {
+        if (null === $taxRateEntity) {
             throw new ResourceNotFoundException();
         }
 
@@ -69,8 +71,9 @@ class TaxReader implements TaxReaderInterface
     /**
      * @param int $id
      *
-     * @return bool
      * @throws PropelException
+     *
+     * @return bool
      */
     public function taxRateExists($id)
     {
@@ -80,8 +83,9 @@ class TaxReader implements TaxReaderInterface
     }
 
     /**
-     * @return TaxSetCollectionTransfer
      * @throws PropelException
+     *
+     * @return TaxSetCollectionTransfer
      */
     public function getTaxSets()
     {
@@ -99,15 +103,16 @@ class TaxReader implements TaxReaderInterface
     /**
      * @param int $id
      *
-     * @return TaxSetTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return TaxSetTransfer
      */
     public function getTaxSet($id)
     {
         $taxSetEntity = $this->queryContainer->queryTaxSet($id)->findOne();
 
-        if (null == $taxSetEntity) {
+        if (null === $taxSetEntity) {
             throw new ResourceNotFoundException();
         }
 
@@ -123,8 +128,9 @@ class TaxReader implements TaxReaderInterface
     /**
      * @param int $id
      *
-     * @return bool
      * @throws PropelException
+     *
+     * @return bool
      */
     public function taxSetExists($id)
     {
@@ -132,4 +138,5 @@ class TaxReader implements TaxReaderInterface
 
         return $taxSetQuery->count() > 0;
     }
+
 }
