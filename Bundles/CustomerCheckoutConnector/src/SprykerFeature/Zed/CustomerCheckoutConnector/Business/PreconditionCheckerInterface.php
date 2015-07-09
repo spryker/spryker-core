@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,4 +17,5 @@ interface PreconditionCheckerInterface
      * @param CheckoutResponseTransfer $response
      */
     public function checkPreconditions(CheckoutRequestInterface $request, CheckoutResponseTransfer $response);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -38,4 +39,5 @@ class CustomerCheckoutConnectorFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->createPreconditionChecker()->checkPreconditions($checkoutRequest, $checkoutResponse);
     }
+
 }

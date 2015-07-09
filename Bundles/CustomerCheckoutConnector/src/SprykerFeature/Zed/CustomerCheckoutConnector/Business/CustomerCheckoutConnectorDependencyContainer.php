@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -46,4 +47,5 @@ class CustomerCheckoutConnectorDependencyContainer extends AbstractBusinessDepen
             $this->getProvidedDependency(CustomerCheckoutConnectorDependencyProvider::FACADE_CUSTOMER)
         );
     }
+
 }

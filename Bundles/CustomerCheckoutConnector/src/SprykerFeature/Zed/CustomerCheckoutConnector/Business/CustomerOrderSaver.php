@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,9 +9,7 @@ namespace SprykerFeature\Zed\CustomerCheckoutConnector\Business;
 use Generated\Shared\CustomerCheckoutConnector\OrderInterface;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\SalesAddressTransfer;
 use SprykerFeature\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 
 class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
@@ -75,4 +74,5 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
             }
         }
     }
+
 }
