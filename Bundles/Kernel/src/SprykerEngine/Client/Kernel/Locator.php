@@ -5,6 +5,7 @@
 
 namespace SprykerEngine\Client\Kernel;
 
+use SprykerEngine\Client\Kernel\Service\ClientLocator;
 use SprykerEngine\Shared\Kernel\BundleProxy;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
@@ -80,7 +81,9 @@ class Locator implements LocatorLocatorInterface
     {
         $bundleProxy = new BundleProxy($this);
         if (is_null($this->locator)) {
-            $this->locator = [];
+            $this->locator = [
+                new ClientLocator()
+            ];
         }
         $bundleProxy->setLocator($this->locator);
 
