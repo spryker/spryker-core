@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
+use SprykerFeature\Zed\Sales\Communication\Table\DetailsTable;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
@@ -33,6 +34,8 @@ class DetailsController extends AbstractController
         $orderItems = $this->getQueryContainer()->querySalesOrderItemsWithState($idOrder)->find();
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
         $allEvents = $this->groupEvents($events);
+        $gui['orderItemsTable'] = new DetailsTable();
+        $gui['orderItemsTable']->prepareDate($orderItems);
 
         return [
             'idOrder' => $idOrder,
@@ -40,6 +43,8 @@ class DetailsController extends AbstractController
             'orderItems' => $orderItems,
             'events' => $events,
             'all_events' => $allEvents,
+            'gui' => $gui
+
         ];
     }
 
