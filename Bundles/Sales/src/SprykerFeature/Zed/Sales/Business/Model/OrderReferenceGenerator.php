@@ -25,6 +25,12 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
     /** @var string */
     protected $storeName;
 
+    /**
+     * @param OrderSequenceInterface $orderSequence
+     * @param bool $isDevelopment
+     * @param bool $isStaging
+     * @param string $storeName
+     */
     public function __construct(
         OrderSequenceInterface $orderSequence,
         $isDevelopment,
