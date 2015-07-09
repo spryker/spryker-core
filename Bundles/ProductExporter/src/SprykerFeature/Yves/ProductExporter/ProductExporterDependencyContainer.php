@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,10 +11,10 @@ use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
 
 /**
  * Class ProductExportDependencyContainer
- * @package SprykerFeature\Yves\ProductExport
  */
 class ProductExporterDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @var ProductExporter
      */
@@ -37,4 +38,5 @@ class ProductExporterDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createBuilderFrontendProductBuilder($this->getFactory());
     }
+
 }
