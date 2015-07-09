@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,4 +20,5 @@ class CartCheckoutConnectorFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->createCartOrderHydrator()->hydrateOrderTransfer($order, $request);
     }
+
 }
