@@ -259,7 +259,6 @@ class ProductCategoryFrontendExporterPluginTest extends Test
         return $idAbstractProduct;
     }
 
-
     /**
      * @param int $idAbstractProduct
      * @param string $sku
@@ -289,6 +288,9 @@ class ProductCategoryFrontendExporterPluginTest extends Test
             ]
         );
         $idConcreteProduct = $this->productFacade->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
+
+        $concreteProductTransfer->setIdConcreteProduct($idConcreteProduct);
+        $this->productFacade->createConcreteProductAttributes($concreteProductTransfer, $locale);
 
         $concreteProductTransfer->setIdConcreteProduct($idConcreteProduct);
         $this->productFacade->createConcreteProductAttributes($concreteProductTransfer, $locale);

@@ -112,6 +112,21 @@ class WriterTest extends Test
             ->save()
         ;
 
+        $product = SpyProductQuery::create()
+            ->filterBySku('test2')
+            ->findOne()
+        ;
+
+        if (null === $product) {
+            $product = new SpyProduct();
+            $product->setSku('test2');
+        }
+
+        $product->setFkAbstractProduct($abstractProduct->getIdAbstractProduct())
+            ->setAttributes('{}')
+            ->save()
+        ;
+
         $stockType1 = SpyStockQuery::create()
             ->filterByName('warehouse1')
             ->findOneOrCreate()
