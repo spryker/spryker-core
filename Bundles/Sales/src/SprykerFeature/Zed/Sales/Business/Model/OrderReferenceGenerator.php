@@ -1,40 +1,41 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Propel\Runtime\Propel;
-use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\Sales\Dependency\Plugin\OrderReferenceGeneratorInterface;
-use SprykerFeature\Shared\Library\Application\Environment;
-use SprykerFeature\Zed\Sales\Persistence\Propel\Map\SpySalesOrderNumberSequenceTableMap;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderNumberSequence;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderNumberSequenceQuery;
 
 class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
 {
 
     const SEQUENCE_NAME = 'OrderReferenceGenerator';
 
-    /** @var int */
-    protected $minimumOrderNumber;
+    /** @var OrderSequenceInterface */
+    protected $orderSequence;
 
-    /** @var int */
-    protected $orderNumberIncrementMin;
+    /** @var bool */
+    protected $isDevelopment;
 
-    /** @var int */
-    protected $orderNumberIncrementMax;
+    /** @var bool */
+    protected $isStaging;
 
-    /**
-     * @param int $minimumOrderNumber
-     * @param int $orderNumberIncrementMin
-     * @param int $orderNumberIncrementMax
-     */
-    public function __construct($minimumOrderNumber, $orderNumberIncrementMin, $orderNumberIncrementMax)
+    /** @var string */
+    protected $storeName;
+
+    public function __construct(
+        OrderSequenceInterface $orderSequence,
+        $isDevelopment,
+        $isStaging,
+        $storeName
+    )
     {
-        $this->minimumOrderNumber = $minimumOrderNumber;
-        $this->orderNumberIncrementMin = $orderNumberIncrementMin;
-        $this->orderNumberIncrementMax = $orderNumberIncrementMax;
+        $this->orderSequence = $orderSequence;
+        $this->isDevelopment = $isDevelopment;
+        $this->isStaging = $isStaging;
+        $this->storeName = $storeName;
     }
 
     /**
@@ -45,14 +46,14 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
     public function generateOrderReference(OrderTransfer $orderTransfer)
     {
         $orderReferenceParts = [
-            $this->getEnvironment(),
-            $this->getStore(),
+            $this->getEnvironmentPrefix(),
+            $this->storeName,
         ];
 
-        if ($this->isDevelopment()) {
+        if ($this->isDevelopment) {
             $orderReferenceParts[] = $this->getTimestamp();
         } else {
-            $orderReferenceParts[] = $this->getOrderNumber();
+            $orderReferenceParts[] = $this->orderSequence->generate();
         }
 
         return implode('-', $orderReferenceParts);
@@ -61,102 +62,17 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
     /**
      * @return string
      */
-    protected function getOrderNumber()
+    protected function getEnvironmentPrefix()
     {
-        $idCurrent = null;
-        $gotNoOrderNumber = true;
-
-        while ($gotNoOrderNumber) {
-            $idCurrent = $this->createOrderNumber();
-            if($idCurrent !== null) {
-                $gotNoOrderNumber = false;
-            }
-        }
-
-        return sprintf('%s', $idCurrent);
-    }
-
-    /**
-     * @return string
-     */
-    protected function createOrderNumber()
-    {
-        $idCurrent = null;
-        $transaction = Propel::getWriteConnection(SpySalesOrderNumberSequenceTableMap::DATABASE_NAME);
-
-        try {
-            $transaction->beginTransaction();
-
-            $sequence = $this->getSequence($transaction);
-            $idCurrent = $sequence->getCurrentId() + rand($this->orderNumberIncrementMin, $this->orderNumberIncrementMax);
-
-            $sequence->setCurrentId($idCurrent);
-            $sequence->save($transaction);
-
-            $transaction->commit();
-        } catch (\Exception $e) {
-            $transaction->rollback();
-            $idCurrent = null;
-        }
-
-        return $idCurrent;
-    }
-
-    /**
-     * @param ConnectionInterface $transaction
-     *
-     * @return SpySalesOrderNumberSequence
-     */
-    protected function getSequence($transaction)
-    {
-        $sequence = SpySalesOrderNumberSequenceQuery::create()
-            ->findOneByName(self::SEQUENCE_NAME, $transaction);
-
-        if ($sequence === null) {
-            $sequence = new SpySalesOrderNumberSequence();
-            $sequence->setName(self::SEQUENCE_NAME);
-            $sequence->setCurrentId($this->minimumOrderNumber);
-        }
-
-        return $sequence;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getEnvironment()
-    {
-        $env = constant('APPLICATION_ENV');
-
-        if ($env === Environment::ENV_PRODUCTION) {
-            return 'P';
-        }
-
-        if ($env === Environment::ENV_STAGING) {
+        if ($this->isStaging) {
             return 'S';
         }
 
-        if ($env === Environment::ENV_DEVELOPMENT) {
+        if ($this->isDevelopment) {
             return 'D';
         }
 
-        return 'U';
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isDevelopment()
-    {
-        return (constant('APPLICATION_ENV') === Environment::ENV_DEVELOPMENT);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStore()
-    {
-        return constant('APPLICATION_STORE');
+        return 'P';
     }
 
     /**
@@ -164,9 +80,10 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
      */
     protected function getTimestamp()
     {
-        $ts = microtime();
-        $ts = str_replace('.', '', $ts);
-        $ts = str_replace(' ', '', $ts);
+        $ts = strtr(microtime(), [
+            '.' => '',
+            ' ' => '',
+        ]);
 
         return $ts;
     }
