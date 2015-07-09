@@ -19,6 +19,7 @@ class DetailsTable extends BaseTable
             'header1' => 'First header'
         ]);
         $config->setSortable(['header1']);
+        $config->setPageLength(2);
         $this->setConfiguration($config);
 
     }

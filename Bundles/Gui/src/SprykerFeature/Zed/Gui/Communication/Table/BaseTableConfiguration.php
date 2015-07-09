@@ -17,6 +17,7 @@ class BaseTableConfiguration {
      */
     private $sortable;
 
+    private $pageLength;
     /**
      * @param array $headers
      */
@@ -55,9 +56,19 @@ class BaseTableConfiguration {
      *
      * @return bool
      */
-    function isAssoc(array $array)
+    private function isAssoc(array $array)
     {
         return array_keys($array) !== range(0, count($array) - 1);
+    }
+
+    public function setPageLength($length)
+    {
+        $this->pageLength = $length;
+    }
+
+    public function getPageLength()
+    {
+        return $this->pageLength;
     }
 
 

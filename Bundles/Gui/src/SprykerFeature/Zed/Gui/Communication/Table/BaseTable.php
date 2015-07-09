@@ -107,10 +107,11 @@ class BaseTable
             ];
         if ($this->getConfiguration() instanceof BaseTableConfiguration) {
             $configArray += [
-                'headers' => $this->getConfiguration()->getHeaders(),
-                'sortable' => $this->getConfiguration()->getSortable(),
+                'headers' => $this->config->getHeaders(),
+                'sortable' => $this->config->getSortable(),
                 'emptyHeaders' => $configArray['columnCount']
-                    - count($this->getConfiguration()->getHeaders())
+                    - count($this->config->getHeaders()),
+                'pageLength' => $this->config->getPageLength()
             ];
         }
 

@@ -1,4 +1,11 @@
-<table border="1" class="table table-striped table-bordered table-hover gui-table-data" id="{{ config.tableId }}">
+<table
+        border="1"
+        class="table table-striped table-bordered table-hover gui-table-data"
+        id="{{ config.tableId }}"
+        {% if config.pageLength is defined %}
+            data-page-length="{{ config.pageLength }}"
+        {%  endif %}
+        >
     {% include '@Gui/Table/thead.twig' %}
     {% include '@Gui/Table/tbody.twig' %}
     {% include '@Gui/Table/tfoot.twig' %}
