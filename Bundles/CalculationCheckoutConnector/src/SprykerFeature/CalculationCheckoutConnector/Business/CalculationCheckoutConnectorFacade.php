@@ -13,6 +13,7 @@ use SprykerFeature\Shared\Checkout\CheckoutConfig;
  */
 class CalculationCheckoutConnectorFacade extends AbstractFacade
 {
+
     /**
      * @param CheckoutRequestTransfer $request
      * @param CheckoutResponseTransfer $response
@@ -36,4 +37,5 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade
             $response->addError($error);
         }
     }
+
 }
