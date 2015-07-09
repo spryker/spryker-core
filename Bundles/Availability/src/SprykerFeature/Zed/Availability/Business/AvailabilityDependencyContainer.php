@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,10 +14,10 @@ use SprykerFeature\Zed\Availability\Business\Model\SellableInterface;
 
 /**
  * Class AvailabilityDependencyContainer
- * @package SprykerFeature\Zed\Availability\Business
  */
 class AvailabilityDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return SellableInterface
      */
