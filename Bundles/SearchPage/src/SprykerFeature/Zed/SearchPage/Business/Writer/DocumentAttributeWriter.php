@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -45,9 +46,10 @@ class DocumentAttributeWriter implements DocumentAttributeWriterInterface
     /**
      * @param DocumentAttributeInterface $documentAttribute
      *
-     * @return int
      * @throws DocumentAttributeDoesNotExistException
      * @throws PropelException
+     *
+     * @return int
      */
     public function updateDocumentAttribute(DocumentAttributeInterface $documentAttribute)
     {
@@ -65,4 +67,5 @@ class DocumentAttributeWriter implements DocumentAttributeWriterInterface
 
         return $idDocumentAttribute;
     }
+
 }

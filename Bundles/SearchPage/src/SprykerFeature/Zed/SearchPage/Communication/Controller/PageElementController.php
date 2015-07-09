@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,7 +27,7 @@ class PageElementController extends AbstractController
         $contentData = json_decode($request->getContent(), 1);
 
         if ($request->isMethod('POST')) {
-            $idPageElement = (int)$request->get('id');
+            $idPageElement = (int) $request->get('id');
             $isElementActive = $contentData['value'];
 
             $this->getDependencyContainer()
@@ -37,4 +38,5 @@ class PageElementController extends AbstractController
 
         return $this->jsonResponse(['content' => $contentData], 200);
     }
+
 }

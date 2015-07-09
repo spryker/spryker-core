@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Shared\SearchPage\Dependency\TemplateInterface;
 
 interface TemplateWriterInterface
 {
+
     /**
      * @param TemplateInterface $template
      *
@@ -22,4 +24,5 @@ interface TemplateWriterInterface
      * @return int
      */
     public function updateTemplate(TemplateInterface $template);
+
 }

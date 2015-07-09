@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -61,4 +62,5 @@ class TemplateReader implements TemplateReaderInterface
 
         return $documentAttributeQuery->count() > 0;
     }
+
 }

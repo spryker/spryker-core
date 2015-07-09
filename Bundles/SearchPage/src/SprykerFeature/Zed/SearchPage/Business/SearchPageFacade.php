@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -104,4 +105,5 @@ class SearchPageFacade extends AbstractFacade
             ->processSearchPageConfig($configRaw, $localeDto)
         ;
     }
+
 }

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\SearchPage\Business\Installer;
 
-use Generated\Shared\Transfer\SearchPageTemplateTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\SearchPage\Business\Exception\TemplateAlreadyExistsException;
@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 
 class TemplateInstaller extends AbstractInstaller
 {
+
     const RANGE_SLIDER = 'range_slider';
     const DROP_DOWN = 'drop_down';
 
@@ -49,12 +50,12 @@ class TemplateInstaller extends AbstractInstaller
     }
 
     /**
-     * @return void
      */
     public function install()
     {
         if ($this->templateReader->hasTemplates()) {
             $this->info('Skipping SearchPageTemplateInstaller, cause templates are already in DB.');
+
             return;
         }
         $templates = $this->getTemplates();
@@ -68,7 +69,7 @@ class TemplateInstaller extends AbstractInstaller
     {
         return [
             self::RANGE_SLIDER,
-            self::DROP_DOWN
+            self::DROP_DOWN,
         ];
     }
 
@@ -97,4 +98,5 @@ class TemplateInstaller extends AbstractInstaller
             $this->templateWriter->createTemplate($templateTransfer);
         }
     }
+
 }
