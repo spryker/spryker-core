@@ -26,6 +26,7 @@ class EmptyEnclosingLinesFixerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideFixCases
+     *
      * @param string $expected
      * @param string $input
      */

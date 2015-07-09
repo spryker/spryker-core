@@ -4,6 +4,7 @@ namespace Unit\SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\Fixtures\I
 
 class TestClass1Input
 {
+
     public function aFunction()
     {
 
@@ -13,4 +14,5 @@ class TestClass1Input
     {
 
     }
+
 }

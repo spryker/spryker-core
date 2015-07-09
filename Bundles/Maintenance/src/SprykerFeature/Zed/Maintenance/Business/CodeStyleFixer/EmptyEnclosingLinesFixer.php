@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer;
 
 use Symfony\CS\AbstractFixer;
@@ -22,12 +26,12 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
     {
         $tokens = Tokens::fromCode($content);
 
-        /**
-         * @var int $index
-         * @var Token $token
+        /*
+         * @var int
+         * @var Token
          */
         foreach ($tokens as $index => $token) {
-            /** @var Token $openingBrace */
+            /* @var Token $openingBrace */
             if ($token->isGivenKind([T_CLASS, T_INTERFACE, T_TRAIT])) {
 
                 $openingBraceIndex = $tokens->getNextTokenOfKind($index, ['{']);
@@ -61,16 +65,17 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
      */
     public function getDescription()
     {
-        // TODO: Implement getDescription() method.
+        return 'There should be exactly one blank line after class start and before class end';
     }
-
-
 
     public function getPriority()
     {
         return -100;
     }
 
+    /**
+     * @return int
+     */
     public function getLevel()
     {
         return FixerInterface::CONTRIB_LEVEL;
