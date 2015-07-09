@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface;
@@ -14,6 +14,7 @@ use SprykerFeature\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCa
 
 class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginInterface
 {
+
     /**
      * @var SubtotalTotalsCalculatorInterface
      */
@@ -90,4 +91,5 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
             return $this->discountTotalsCalculator->calculateDiscount($calculableContainer, $calculableItems);
         }
     }
+
 }

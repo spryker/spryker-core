@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,12 +26,13 @@ use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * Class GrandTotalWithoutDiscountsTest
+ *
  * @group GrandTotalWithoutDiscountsTest
  * @group Calculation
- * @package PhpUnit\SprykerFeature\Zed\Calculation\Business\Model\Calculator
  */
 class GrandTotalTest extends Test
 {
+
     const ITEM_GROSS_PRICE = 10000;
     const ITEM_COUPON_DISCOUNT_AMOUNT = 1000;
     const ITEM_SALESRULE_DISCOUNT_AMOUNT = 1000;
@@ -182,4 +184,5 @@ class GrandTotalTest extends Test
 
         return $expense;
     }
+
 }
