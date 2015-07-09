@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,9 +12,9 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerEngine\Shared\Kernel\Store;
 use Generated\Shared\Payone\StandardParameterInterface;
 
-
 class PayoneConfig extends AbstractBundleConfig
 {
+
     /**
      * @return StandardParameterInterface
      */

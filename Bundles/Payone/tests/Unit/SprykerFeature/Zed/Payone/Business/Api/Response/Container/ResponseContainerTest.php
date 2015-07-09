@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerFeature\Zed\Payone\Business\Api\Response\Container;
 
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
@@ -65,10 +65,9 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
             'creditoridentifier' => 'creditoridentifier',
             'creditorname' => 'creditorname',
             'creditorstreet' => 'creditorstreet',
-            'creditorzip' => 'creditorzip'
+            'creditorzip' => 'creditorzip',
         ];
     }
-
 
     public function testCaptureResponseContainer()
     {
@@ -136,7 +135,7 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
 
             'mandateidentification' => 'mandateidentification',
             'settleaccount' => 'settleaccount',
-            'txid' => 'txid'
+            'txid' => 'txid',
         ];
     }
 
@@ -159,7 +158,7 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
     {
         return [
             'settleaccount' => 'settleaccount',
-            'txid' => 'txid'
+            'txid' => 'txid',
         ];
     }
 
@@ -182,7 +181,7 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
     {
         return [
             'protectresultavs' => 'protectresultavs',
-            'txid' => 'txid'
+            'txid' => 'txid',
         ];
     }
 
@@ -196,7 +195,7 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
             'errorcode' => 'errorcode',
             'errormessage' => 'errormessage',
             'rawResponse' => 'rawresponse',
-            'status' => 'status'
+            'status' => 'status',
         ];
 
         return $params;

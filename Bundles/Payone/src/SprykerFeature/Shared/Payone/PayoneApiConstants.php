@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,7 +12,6 @@ interface PayoneApiConstants
     // GENERAL
 
     const PROVIDER_NAME = 'payone';
-
 
     // MODE
 
@@ -52,7 +52,6 @@ interface PayoneApiConstants
     // gesicherter rechnunskauf
     const PAYMENT_METHOD_BILLSAVE = 'payment.payone.billsave';
 
-
     // CLEARING TYPE
 
     const CLEARING_TYPE_DIRECT_DEBIT = 'elv';
@@ -64,7 +63,6 @@ interface PayoneApiConstants
     const CLEARING_TYPE_EWALLET = 'wlt';
     const CLEARING_TYPE_FINANCING = 'fnc';
 
-
     // TXACTION
 
     // Defined in TransactionStatusConstants
@@ -74,31 +72,26 @@ interface PayoneApiConstants
 
     const EWALLET_TYPE_PAYPAL = 'PPE';
 
-
     // USE CUSTOMER DATA
 
     const USE_CUSTOMER_DATA_YES = 'yes';
     const USE_CUSTOMER_DATA_NO = 'no';
-
 
     // STORE CARD DATA
 
     const STORE_CARD_DATA_YES = 'yes';
     const STORE_CARD_DATA_NO = 'no';
 
-
     // SHIPPING PROVIDER
 
     const SHIPPING_PROVIDER_DHL = 'DHL';
     const SHIPPING_PROVIDER_BARTOLINI = 'BRT';
-
 
     // FINANCING SETTLE ACCOUNT
 
     const SETTLE_ACCOUNT_YES = 'yes';
     const SETTLE_ACCOUNT_NO = 'no';
     const SETTLE_ACCOUNT_AUTO = 'auto';
-
 
     // RESPONSE TYPE
 
@@ -114,7 +107,6 @@ interface PayoneApiConstants
 
     const REQUEST_ENCODING = 'UTF-8';
 
-
     // REQUEST TYPE
 
     const REQUEST_TYPE_PREAUTHORIZATION = 'preauthorization';
@@ -129,16 +121,14 @@ interface PayoneApiConstants
     const REQUEST_TYPE_CREDITCARDCHECK = 'creditcardcheck';
     const REQUEST_TYPE_GETINVOICE = 'getinvoice';
 
-
     // ONLINE BANK TRANSFER TYPE
 
     const ONLINE_BANK_TRANSFER_TYPE_INSTANT_MONEY_TRANSFER = 'PNT';
     const ONLINE_BANK_TRANSFER_TYPE_GIROPAY = 'GPY';
     const ONLINE_BANK_TRANSFER_TYPE_EPS_ONLINE_BANK_TRANSFER = 'EPS';
     const ONLINE_BANK_TRANSFER_TYPE_POSTFINANCE_EFINANCE = 'PFF';
-    const ONLINE_BANK_TRANSFER_TYPE_POSTFINANCE_CARD  = 'PFC';
+    const ONLINE_BANK_TRANSFER_TYPE_POSTFINANCE_CARD = 'PFC';
     const ONLINE_BANK_TRANSFER_TYPE_IDEAL = 'IDL';
-
 
     // FAILED CAUSE
 
@@ -161,13 +151,11 @@ interface PayoneApiConstants
     const INVOICING_ITEM_TYPE_HANDLING = 'handling';
     const INVOICING_ITEM_TYPE_VOUCHER = 'voucher';
 
-
     // DELIVERY MODE
 
     const DELIVERY_MODE_POST = 'M';
     const DELIVERY_MODE_PDF = 'P';
     const DELIVERY_MODE_NONE = 'N';
-
 
     // FINANCING TYPE
 
@@ -180,7 +168,6 @@ interface PayoneApiConstants
     const ECOMMERCE_MODE_INTERNET = 'internet';
     const ECOMMERCE_MODE_SECURE3D = '3dsecure';
     const ECOMMERCE_MODE_MOTO = 'moto';
-
 
     // DEBIT TRANSACTION TYPE
 
@@ -209,13 +196,11 @@ interface PayoneApiConstants
     const CREDITCARD_TYPE_DISCOVER = 'C';
     const CREDITCARD_TYPE_CARTE_BLEUE = 'B';
 
-
     // CONSUMER SCORE
 
     const CONSUMER_SCORE_GREEN = 'G';
     const CONSUMER_SCORE_YELLOW = 'Y';
     const CONSUMER_SCORE_RED = 'R';
-
 
     // CONSUMER SCORE TYPE
 
@@ -223,12 +208,10 @@ interface PayoneApiConstants
     const CONSUMER_SCORE_TYPE_INFOSCORE_ALL = 'IA';
     const CONSUMER_SCORE_TYPE_INFOSCORE_ALL_BONI = 'IB';
 
-
     // CAPTURE MODE
 
     const CAPTURE_MODE_COMPLETED = 'completed';
     const CAPTURE_MODE_NOTCOMPLETED = 'notcompleted';
-
 
     // AVS RESULT
 
@@ -238,12 +221,10 @@ interface PayoneApiConstants
     const AVS_RESULT_U = 'U';
     const AVS_RESULT_Z = 'Z';
 
-
     // BANK ACCOUNT CHECK TYPE
 
     const BANK_ACCOUNT_CHECK_TYPE_REGULAR = '0';
     const BANK_ACCOUNT_CHECK_TYPE_POS_BLACKLIST = '1';
-
 
     // REMINDER LEVEL
 
@@ -257,14 +238,12 @@ interface PayoneApiConstants
     const REMINDER_LEVEL_LVL_M = 'M';
     const REMINDER_LEVEL_LVL_I = 'I';
 
-
     // ADDRESS CHECK DIVERGENCE
 
     const ADDRESS_CHECK_DIVERGENCE_DEVIANT_SURNAME = 'L';
     const ADDRESS_CHECK_DIVERGENCE_DEVIANT_FIRSTNAME = 'F';
-    const ADDRESS_CHECK_DIVERGENCE_DEVIANT_ADDRESS= 'A';
+    const ADDRESS_CHECK_DIVERGENCE_DEVIANT_ADDRESS = 'A';
     const ADDRESS_CHECK_DIVERGENCE_DEVIANT_DATE_OF_BIRTH = 'B';
-
 
     // ADDRESS CHECK PERSONSTATUS
 
@@ -284,13 +263,11 @@ interface PayoneApiConstants
     const ADDRESS_CHECK_SCORE_YELLOW = 'Y';
     const ADDRESS_CHECK_SCORE_RED = 'R';
 
-
     // ADDRESS CHECK SECSTATUS
 
     const ADDRESS_CHECK_SECSTATUS_CORRECT = '10';
     const ADDRESS_CHECK_SECSTATUS_CORRECTABLE = '20';
     const ADDRESS_CHECK_SECSTATUS_NONE_CORRECTABLE = '30';
-
 
     // ADDRESS CHECK TYPE
 

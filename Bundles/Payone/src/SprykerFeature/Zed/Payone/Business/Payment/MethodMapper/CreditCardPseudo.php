@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,7 +15,6 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CreditCardCheckCont
 use Generated\Shared\Payone\CreditCardInterface as PayoneCreditCardInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerEngine\Shared\Kernel\Store;
 
 class CreditCardPseudo extends AbstractMapper
 {
@@ -29,6 +29,7 @@ class CreditCardPseudo extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return AuthorizationContainer
      */
     public function mapAuthorization(AuthorizationInterface $authorizationData)
@@ -49,6 +50,7 @@ class CreditCardPseudo extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return PreAuthorizationContainer
      */
     public function mapPreAuthorization(AuthorizationInterface $authorizationData)
@@ -69,6 +71,7 @@ class CreditCardPseudo extends AbstractMapper
 
     /**
      * @param PayoneCreditCardInterface $creditCardData
+     *
      * @return CreditCardCheckContainer
      */
     public function mapCreditCardCheck(PayoneCreditCardInterface $creditCardData)
@@ -89,6 +92,7 @@ class CreditCardPseudo extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return CreditCardPseudoContainer
      */
     protected function createPaymentMethodContainer(AuthorizationInterface $authorizationData)
@@ -118,6 +122,7 @@ class CreditCardPseudo extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return PersonalContainer
      */
     protected function createAuthorizationPersonalData(AuthorizationInterface $authorizationData)

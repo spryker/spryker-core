@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -29,7 +30,7 @@ use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInte
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
-use \Propel\Runtime\Exception\PropelException;
+use Propel\Runtime\Exception\PropelException;
 
 class PaymentManager implements PaymentManagerInterface
 {
@@ -108,15 +109,15 @@ class PaymentManager implements PaymentManagerInterface
             return $this->registeredMethodMappers[$name];
         }
 
-        return null;
+        return;
     }
 
     /**
      * @param string $paymentMethodName
      *
-     * @return PaymentMethodMapperInterface
-     *
      * @throws InvalidPaymentMethodException
+     *
+     * @return PaymentMethodMapperInterface
      */
     protected function getRegisteredPaymentMethodMapper($paymentMethodName)
     {
@@ -126,6 +127,7 @@ class PaymentManager implements PaymentManagerInterface
                 sprintf('No registered payment method mapper found for given method name %s', $paymentMethodName)
             );
         }
+
         return $paymentMethodMapper;
     }
 
@@ -298,7 +300,6 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param SpyPaymentPayone $paymentEntity
-     *
      * @param AuthorizationResponseContainer $responseContainer
      *
      * @throws PropelException
@@ -323,9 +324,9 @@ class PaymentManager implements PaymentManagerInterface
      * @param SpyPaymentPayone $paymentEntity
      * @param AbstractRequestContainer $container
      *
-     * @return SpyPaymentPayoneApiLog
-     *
      * @throws PropelException
+     *
+     * @return SpyPaymentPayoneApiLog
      */
     protected function initializeApiLog(SpyPaymentPayone $paymentEntity, AbstractRequestContainer $container)
     {

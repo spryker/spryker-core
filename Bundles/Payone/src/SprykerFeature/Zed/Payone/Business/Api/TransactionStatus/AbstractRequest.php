@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,7 +12,7 @@ class AbstractRequest
     /**
      * @param array $params
      */
-    function __construct(array $params = [])
+    public function __construct(array $params = [])
     {
         if (count($params) > 0) {
             $this->init($params);
@@ -38,6 +39,7 @@ class AbstractRequest
             $stringArray[] = $key . ' = ' . $value;
         }
         $result = implode(' = ', $stringArray);
+
         return $result;
     }
 
@@ -55,11 +57,13 @@ class AbstractRequest
             }
         }
         ksort($result);
+
         return $result;
     }
 
     /**
      * @param string $key
+     *
      * @return null|mixed
      */
     public function getValue($key)
@@ -70,7 +74,8 @@ class AbstractRequest
     /**
      * @param string $key
      * @param string $name
-     * @return boolean|null
+     *
+     * @return bool|null
      */
     public function setValue($key, $name)
     {
@@ -87,21 +92,25 @@ class AbstractRequest
         if (property_exists($this, $name)) {
             return $this->$name;
         }
-        return null;
+
+        return;
     }
 
     /**
      * @param string $name
      * @param mixed $value
-     * @return boolean|null
+     *
+     * @return bool|null
      */
     public function set($name, $value)
     {
         if (property_exists($this, $name)) {
             $this->$name = $value;
+
             return true;
         }
-        return null;
+
+        return;
     }
 
 }

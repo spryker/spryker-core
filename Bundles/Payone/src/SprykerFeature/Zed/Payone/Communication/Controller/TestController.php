@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -27,6 +28,7 @@ use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
  */
 class TestController extends AbstractController implements PayoneApiConstants
 {
+
     const TEST_TRANSACTION_ID = '165145481';
     const TEST_VISA_PAN = '4111111111111111';
     const TEST_PSEUDO_PAN = '4100000145859436';
@@ -369,13 +371,12 @@ class TestController extends AbstractController implements PayoneApiConstants
             'userid' => '67518130',
             'txtime' => '1354187955',
             'clearingtype' => 'wlt',
-            'reference' => $order->getOrderReference()
+            'reference' => $order->getOrderReference(),
         ];
-
 
         $r = $this->getFacade()->processTransactionStatusUpdate($params);
 
-        echo '<pre>' . print_r($r,false) . '</pre>';die;
+        echo '<pre>' . print_r($r, false) . '</pre>';die;
     }
 
     public function getPaymentStatus()
@@ -403,6 +404,5 @@ class TestController extends AbstractController implements PayoneApiConstants
 
         return $rawResponse;
     }
-
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,6 +29,7 @@ class ItemContainer extends AbstractContainer
     protected $de;
     /**
      * Artikeltyp (Enum)
+     *
      * @var string
      */
     protected $it;
@@ -37,18 +39,20 @@ class ItemContainer extends AbstractContainer
     protected $va;
     /**
      * DeliveryDate (YYYYMMDD)
+     *
      * @var string
      */
     protected $sd;
     /**
      * Lieferzeitraums-Ende (YYYYMMDD)
+     *
      * @var string
      */
     protected $ed;
 
-
     /**
      * @param int $key
+     *
      * @return array
      */
     public function toArrayByKey($key)
@@ -62,7 +66,7 @@ class ItemContainer extends AbstractContainer
         if (isset($this->va)) $data['va[' . $key . ']'] = $this->getVa();
         if (isset($this->sd)) $data['sd[' . $key . ']'] = $this->getSd();
         if (isset($this->ed)) $data['ed[' . $key . ']'] = $this->getEd();
-        
+
         return $data;
     }
 

@@ -1,12 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Adapter\Http;
+
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-
 
 abstract class AbstractHttpAdapter implements AdapterInterface
 {
@@ -24,7 +25,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     /**
      * @var array
      */
-    protected $params = array();
+    protected $params = [];
     /**
      * @var string
      */
@@ -56,6 +57,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
 
     /**
      * @param array $params
+     *
      * @return array
      */
     public function sendRawRequest(array $params)
@@ -68,6 +70,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
 
     /**
      * @param AbstractRequestContainer $container
+     *
      * @return array
      */
     public function sendRequest(AbstractRequestContainer $container)
@@ -77,12 +80,14 @@ abstract class AbstractHttpAdapter implements AdapterInterface
 
     /**
      * @param array $params
+     *
      * @return array
      */
     abstract protected function performRequest(array $params);
 
     /**
      * @param array $params
+     *
      * @return mixed
      */
     protected function generateUrlArray(array $params)
@@ -95,18 +100,19 @@ abstract class AbstractHttpAdapter implements AdapterInterface
 
     /**
      * @param array $responseRaw
+     *
      * @return array
      */
     protected function parseResponse(array $responseRaw = [])
     {
         $result = [];
 
-        if (count($responseRaw) == 0) {
+        if (count($responseRaw) === 0) {
             return $result;
         }
 
         foreach ($responseRaw as $key => $line) {
-            $pos = strpos($line, "=");
+            $pos = strpos($line, '=');
 
             if ($pos === false) {
                 if (strlen($line) > 0) {

@@ -1,13 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\Payone\ClientApi\Request;
 
-
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
-
 
 class CreditCardCheck extends AbstractRequest implements PayoneApiConstants
 {
@@ -26,8 +25,6 @@ class CreditCardCheck extends AbstractRequest implements PayoneApiConstants
      * @var string
      */
     protected $errorurl;
-
-
 
     /**
      * @param string $storecarddata

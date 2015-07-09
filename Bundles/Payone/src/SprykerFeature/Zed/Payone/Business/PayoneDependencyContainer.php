@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,8 +35,6 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      * @var StandardParameterInterface
      */
     private $standardParameter;
-
-
 
     /**
      * @return PayoneFacade
@@ -156,15 +155,17 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
 
     /**
      * @todo move implementation to PayoneConfig
+     *
      * @return array
      */
     protected function getAvailablePaymentMethods()
     {
         $storeConfig = $this->getProvidedDependency(PayoneDependencyProvider::STORE_CONFIG);
+
         return [
             PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createPaymentMethodMapperPrePayment($storeConfig),
             PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createPaymentMethodMapperCreditCardPseudo($storeConfig),
-            PayoneApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createPaymentMethodMapperPayPal($storeConfig)
+            PayoneApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createPaymentMethodMapperPayPal($storeConfig),
         ];
     }
 

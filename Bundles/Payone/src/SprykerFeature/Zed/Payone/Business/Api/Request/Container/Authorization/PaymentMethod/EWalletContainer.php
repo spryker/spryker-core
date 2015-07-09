@@ -1,10 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
-
 
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 
@@ -19,7 +19,6 @@ class EWalletContainer extends AbstractPaymentMethodContainer
      * @var RedirectContainer
      */
     protected $redirect;
-
 
     /**
      * @param string $wallettype

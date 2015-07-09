@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -35,7 +36,6 @@ class TransactionContainer extends AbstractContainer
      */
     protected $items = [];
 
-
     /**
      * @return array
      */
@@ -48,6 +48,7 @@ class TransactionContainer extends AbstractContainer
             $data = array_merge($data, $item->toArrayByKey($i));
             $i++;
         }
+
         return $data;
     }
 

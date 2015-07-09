@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -46,7 +47,6 @@ class CreditCardCheckContainer extends AbstractRequestContainer
      */
     protected $language;
 
-    
     /**
      * @param int $aid
      */

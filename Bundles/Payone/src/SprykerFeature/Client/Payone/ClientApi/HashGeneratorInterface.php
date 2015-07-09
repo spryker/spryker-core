@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\Payone\ClientApi;
-use SprykerFeature\Client\Payone\ClientApi\Request\AbstractRequest;
 
+use SprykerFeature\Client\Payone\ClientApi\Request\AbstractRequest;
 
 interface HashGeneratorInterface
 {

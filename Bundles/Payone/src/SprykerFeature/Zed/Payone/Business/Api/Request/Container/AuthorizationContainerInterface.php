@@ -1,7 +1,9 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
@@ -13,6 +15,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\Transacti
 
 interface AuthorizationContainerInterface
 {
+
     /**
      * @param string $narrative_text
      */
@@ -60,6 +63,7 @@ interface AuthorizationContainerInterface
 
     /**
      * set the system-Name
+     *
      * @param string $integrator_name
      */
     public function setIntegratorName($integrator_name);
@@ -76,6 +80,7 @@ interface AuthorizationContainerInterface
 
     /**
      * set the version of the solution-partner's app / extension / plugin / etc..
+     *
      * @param string $solution_version
      */
     public function setSolutionVersion($solution_version);
@@ -197,6 +202,7 @@ interface AuthorizationContainerInterface
 
     /**
      * set the name of the solution-partner (company)
+     *
      * @param string $solution_name
      */
     public function setSolutionName($solution_name);
@@ -245,4 +251,5 @@ interface AuthorizationContainerInterface
      * @param int $amount
      */
     public function setAmount($amount);
+
 }

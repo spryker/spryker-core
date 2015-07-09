@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,7 +27,6 @@ class BusinessContainer extends AbstractContainer
      * @var string
      */
     protected $document_date;
-
 
     /**
      * @param string $booking_date

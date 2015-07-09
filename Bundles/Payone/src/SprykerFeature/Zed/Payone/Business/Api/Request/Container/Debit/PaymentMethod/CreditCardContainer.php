@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -37,7 +38,6 @@ class CreditCardContainer extends AbstractPaymentMethodContainer
      */
     protected $pseudocardpan;
 
-    
     /**
      * @param int $cardcvc2
      */

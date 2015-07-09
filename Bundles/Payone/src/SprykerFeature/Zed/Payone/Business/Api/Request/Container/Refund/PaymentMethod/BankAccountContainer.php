@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\Paymen
 
 class BankAccountContainer extends AbstractPaymentMethodContainer
 {
+
     /**
      * @var string
      */
@@ -147,4 +149,5 @@ class BankAccountContainer extends AbstractPaymentMethodContainer
     {
         return $this->bic;
     }
+
 }

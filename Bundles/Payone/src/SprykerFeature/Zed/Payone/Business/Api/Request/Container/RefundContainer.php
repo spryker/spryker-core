@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
-
 
 class RefundContainer extends AbstractRequestContainer
 {
@@ -57,7 +57,6 @@ class RefundContainer extends AbstractRequestContainer
      */
     protected $invoicing;
 
-
     /**
      * @param int $amount
      * Amount of refund (in smallest currency unit! e.g.
@@ -93,7 +92,6 @@ class RefundContainer extends AbstractRequestContainer
     {
         return $this->currency;
     }
-
 
     /**
      * @param string $narrative_text

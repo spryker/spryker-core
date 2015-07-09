@@ -1,12 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\Payone\ClientApi;
+
 use SprykerFeature\Client\Payone\ClientApi\Request\AbstractRequest;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
-
 
 class HashGenerator implements HashGeneratorInterface
 {
@@ -64,7 +65,6 @@ class HashGenerator implements HashGeneratorInterface
         'encoding',
     ];
 
-
     /**
      * @param HashInterface $hashProvider
      */
@@ -76,6 +76,7 @@ class HashGenerator implements HashGeneratorInterface
     /**
      * @param Request\AbstractRequest $request
      * @param string $securityKey
+     *
      * @return string
      */
     public function generateHash(AbstractRequest $request, $securityKey)
@@ -90,6 +91,7 @@ class HashGenerator implements HashGeneratorInterface
             $hashString .= $requestData[$key];
         }
         $hashString .= $securityKey;
+
         return $this->hashProvider->hash($hashString);
     }
 

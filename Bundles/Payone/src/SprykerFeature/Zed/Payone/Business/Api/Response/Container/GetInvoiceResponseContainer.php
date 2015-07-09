@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,7 +13,6 @@ class GetInvoiceResponseContainer extends AbstractResponseContainer
      * @var string
      */
     protected $response;
-
 
     /**
      * @param string $response
@@ -39,9 +39,10 @@ class GetInvoiceResponseContainer extends AbstractResponseContainer
             $result = parent::__toString();
         }
         else {
-            $stringArray = array('status=' . $this->getStatus(), 'data=PDF-Content');
+            $stringArray = ['status=' . $this->getStatus(), 'data=PDF-Content'];
             $result = implode('|', $stringArray);
         }
+
         return $result;
     }
 

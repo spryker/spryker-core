@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,7 +19,7 @@ interface PayoneTransactionStatusConstants
     const TXACTION_REMINDER = 'reminder';
     const TXACTION_VAUTHORIZATION = 'vauthorization';
     const TXACTION_VSETTLEMENT = 'vsettlement';
-    const TXACTION_TRANSFER= 'transfer';
-    const TXACTION_INVOICE= 'invoice';
+    const TXACTION_TRANSFER = 'transfer';
+    const TXACTION_INVOICE = 'invoice';
 
 }

@@ -1,13 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\Payone\ClientApi\Call;
 
-use \SprykerFeature\Client\Payone\ClientApi\Request\CreditCardCheck as CreditCardCheckContainer;
+use SprykerFeature\Client\Payone\ClientApi\Request\CreditCardCheck as CreditCardCheckContainer;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
-
 
 class CreditCardCheck extends AbstractCall
 {
@@ -16,7 +16,6 @@ class CreditCardCheck extends AbstractCall
      * @var string
      */
     private $storeCardData = PayoneApiConstants::STORE_CARD_DATA_YES;
-
 
     /**
      * @void

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ abstract class AbstractHashProvider implements HashInterface
 
     /**
      * @param string $value
+     *
      * @return string
      */
     public function hash($value)
