@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Generated\Shared\Transfer\OrderItemTransfer;
  */
 interface CatFaceInterface
 {
+
     /**
      * @param string $name
      *
@@ -55,6 +57,5 @@ interface CatFaceInterface
      * @return $this
      */
     public function addItem(OrderItemTransfer $item);
-
 
 }

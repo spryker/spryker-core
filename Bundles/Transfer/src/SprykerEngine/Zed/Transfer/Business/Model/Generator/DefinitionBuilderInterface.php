@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,4 +13,5 @@ interface DefinitionBuilderInterface
      * @return array
      */
     public function getDefinitions();
+
 }

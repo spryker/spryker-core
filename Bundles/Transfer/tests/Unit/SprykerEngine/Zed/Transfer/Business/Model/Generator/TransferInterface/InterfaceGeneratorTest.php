@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -55,4 +56,5 @@ class InterfaceGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_dir($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Bundle'));
     }
+
 }

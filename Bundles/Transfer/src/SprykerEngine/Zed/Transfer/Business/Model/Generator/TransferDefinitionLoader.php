@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -82,6 +83,7 @@ class TransferDefinitionLoader
 
     /**
      * @param $fileName
+     *
      * @return string
      */
     private function getBundleFromPathName($fileName)
@@ -108,4 +110,5 @@ class TransferDefinitionLoader
             $this->transferDefinitions[] = $transfer;
         }
     }
+
 }

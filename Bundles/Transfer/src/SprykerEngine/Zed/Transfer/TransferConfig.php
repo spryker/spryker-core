@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -42,4 +43,5 @@ class TransferConfig extends AbstractBundleConfig
 
         return $directories;
     }
+
 }

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 
 /**
@@ -23,7 +23,7 @@ class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
         $helper = new TransferDefinitionMergerHelper();
         $transferDefinitions = [
             $helper->getTransferDefinition1(),
-            $helper->getTransferDefinition2()
+            $helper->getTransferDefinition2(),
         ];
 
         $expected = [];
@@ -42,13 +42,13 @@ class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
         $property1['property'] = [
             [
                 'name' => 'propertyA',
-                'type' => 'int'
-            ]
+                'type' => 'int',
+            ],
         ];
 
         $transferDefinitions = [
             $property1,
-            $helper->getTransferDefinition2()
+            $helper->getTransferDefinition2(),
         ];
 
         $expected = [];
@@ -57,4 +57,5 @@ class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
         $merger = new TransferDefinitionMerger();
         $merger->merge($transferDefinitions);
     }
+
 }

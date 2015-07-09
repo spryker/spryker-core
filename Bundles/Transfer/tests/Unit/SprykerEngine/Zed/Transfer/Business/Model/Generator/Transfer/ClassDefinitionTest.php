@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer;
 
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
 
 /**
  * @group SprykerEngine
@@ -21,7 +21,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     public function testGetNameShouldReturnNormalizedTransferName()
     {
         $transferDefinition = [
-            'name' => 'name'
+            'name' => 'name',
         ];
 
         $classDefinition = new ClassDefinition();
@@ -34,8 +34,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = [
             'name' => 'name',
             'interface' => [
-                ['name' => 'Used\Interface', 'bundle' => 'Test']
-            ]
+                ['name' => 'Used\Interface', 'bundle' => 'Test'],
+            ],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -51,7 +51,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $property = $this->getProperty('property1', 'string');
         $transferDefinition = [
             'name' => 'name',
-            'property' => [$property]
+            'property' => [$property],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -76,7 +76,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $property = [
             'name' => $name,
-            'type' => (is_null($return)) ? $type : $return
+            'type' => (is_null($return)) ? $type : $return,
         ];
 
         if (!is_null($singular)) {
@@ -92,8 +92,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'name' => 'name',
             'property' => [
                 $this->getProperty('property1', 'string'),
-                $this->getProperty('property2', 'string')
-            ]
+                $this->getProperty('property2', 'string'),
+            ],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -115,7 +115,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => [$this->getProperty('property1', 'array')]
+            'property' => [$this->getProperty('property1', 'array')],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -131,7 +131,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => [$this->getProperty('property1', 'Collection[]')]
+            'property' => [$this->getProperty('property1', 'Collection[]')],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -148,8 +148,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'name' => 'name',
             'property' => [
                 $this->getProperty('property1', 'Collection[]'),
-                $this->getProperty('property2', 'Collection[]')
-            ]
+                $this->getProperty('property2', 'Collection[]'),
+            ],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -163,7 +163,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => [$this->getProperty('property1', 'Type[]')]
+            'property' => [$this->getProperty('property1', 'Type[]')],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -179,7 +179,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => [$this->getProperty('property1', 'string')]
+            'property' => [$this->getProperty('property1', 'string')],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -197,7 +197,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => [$this->getProperty('property1', 'string')]
+            'property' => [$this->getProperty('property1', 'string')],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -212,7 +212,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => [$this->getProperty('property1', 'Type[]')]
+            'property' => [$this->getProperty('property1', 'Type[]')],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -227,7 +227,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => [$this->getProperty('property1', 'Type[]')]
+            'property' => [$this->getProperty('property1', 'Type[]')],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -253,7 +253,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $transferDefinition = [
             'name' => 'name',
-            'property' => [$property]
+            'property' => [$property],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -286,7 +286,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $method = [
             'name' => $method,
-            'property' => $property
+            'property' => $property,
         ];
 
         if (!is_null($var)) {
@@ -321,4 +321,5 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         return $method;
     }
+
 }

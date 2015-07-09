@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Functional\SprykerEngine\Zed\Transfer\Business\Model;
 
-use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\Factory;
@@ -90,4 +90,5 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
     {
         return new TransferConfig(Config::getInstance(), $this->getLocator());
     }
+
 }
