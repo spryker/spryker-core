@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\TaxFrontendExporterConnector\Persistence\TaxFrontendExpor
 
 class TaxFrontendExporterConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return TaxFrontendExporterConnectorFacade
      */
@@ -35,4 +37,5 @@ class TaxFrontendExporterConnectorDependencyContainer extends AbstractCommunicat
     {
         return $this->getLocator()->taxFrontendExporterConnector()->queryContainer();
     }
+
 }

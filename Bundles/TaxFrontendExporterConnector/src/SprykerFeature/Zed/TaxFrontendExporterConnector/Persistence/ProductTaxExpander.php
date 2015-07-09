@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ProductTaxExpander implements ProductTaxExpanderInterface
 {
+
     /**
      * @var TaxQueryContainerInterface
      */
@@ -50,4 +52,5 @@ class ProductTaxExpander implements ProductTaxExpanderInterface
 
         return $expandableQuery;
     }
+
 }
