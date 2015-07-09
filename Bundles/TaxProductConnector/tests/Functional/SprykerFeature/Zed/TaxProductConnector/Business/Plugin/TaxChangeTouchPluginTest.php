@@ -106,6 +106,7 @@ class TaxChangeTouchPluginTest extends Test
         $product1 = new SpyAbstractProduct();
         $product1->setSku('Product1')
             ->setSpyTaxSet($taxSet)
+            ->setAttributes('{}')
             ->save()
         ;
         $this->abstractProductIds[] = $product1->getIdAbstractProduct();

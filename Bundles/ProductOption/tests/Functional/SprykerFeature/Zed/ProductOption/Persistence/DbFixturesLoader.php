@@ -38,12 +38,12 @@ class DbFixturesLoader
             ->execute();
 
         $dbConnection
-            ->prepare("INSERT INTO spy_abstract_product (sku, fk_tax_set) VALUES ('ABC123', {$ids['idTaxSet']})")
+            ->prepare("INSERT INTO spy_abstract_product (sku, fk_tax_set, attributes) VALUES ('ABC123', {$ids['idTaxSet']}, '{}')")
             ->execute();
         $ids['idAbstractProduct'] = $dbConnection->lastInsertId();
 
         $dbConnection
-            ->prepare("INSERT INTO spy_product (sku, fk_abstract_product) VALUES ('DEF456', {$ids['idAbstractProduct']})")
+            ->prepare("INSERT INTO spy_product (sku, fk_abstract_product, attributes) VALUES ('DEF456', {$ids['idAbstractProduct']}, '{}')")
             ->execute();
         $ids['idConcreteProduct'] = $dbConnection->lastInsertId();
 
