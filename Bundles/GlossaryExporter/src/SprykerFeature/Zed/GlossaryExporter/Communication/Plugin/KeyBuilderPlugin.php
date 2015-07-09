@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,5 +12,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 class KeyBuilderPlugin extends AbstractPlugin implements KeyBuilderInterface
 {
+
     use GlossaryKeyBuilder;
+
 }
