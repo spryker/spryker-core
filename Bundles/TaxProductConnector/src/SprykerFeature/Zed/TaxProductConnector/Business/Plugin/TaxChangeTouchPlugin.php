@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,18 +14,18 @@ class TaxChangeTouchPlugin implements TaxChangePluginInterface
 {
 
     /**
-     * @var TaxProductConnectorToProductInterface $productFacade
+     * @var TaxProductConnectorToProductInterface
      */
     private $productFacade;
 
     /**
-     * @var TaxProductConnectorQueryContainerInterface $queryContainer
+     * @var TaxProductConnectorQueryContainerInterface
      */
     private $queryContainer;
 
     /**
-     * @var TaxProductConnectorToProductInterface $productFacade
-     * @var TaxProductConnectorQueryContainerInterface $queryContainer
+     * @var TaxProductConnectorToProductInterface
+     * @var TaxProductConnectorQueryContainerInterface
      */
     public function __construct(
         TaxProductConnectorToProductInterface $productFacade,
@@ -55,4 +56,5 @@ class TaxChangeTouchPlugin implements TaxChangePluginInterface
             $this->productFacade->touchProductActive((int) $id);
         }
     }
+
 }

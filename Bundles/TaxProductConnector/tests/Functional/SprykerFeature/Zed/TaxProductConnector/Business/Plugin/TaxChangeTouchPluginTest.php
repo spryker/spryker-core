@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,6 +24,7 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
  */
 class TaxChangeTouchPluginTest extends Test
 {
+
     private $taxRateIds = [];
     private $taxSetId = null;
     private $abstractProductIds = [];
@@ -33,7 +35,7 @@ class TaxChangeTouchPluginTest extends Test
     private $taxProductConnectorFacade;
 
     /**
-     * @var AutoCompletion $locator
+     * @var AutoCompletion
      */
     protected $locator;
 
@@ -95,4 +97,5 @@ class TaxChangeTouchPluginTest extends Test
         $product2->setSku('Product2')->setSpyTaxSet($taxSet)->save();
         $this->abstractProductIds[] = $product2->getIdAbstractProduct();
     }
+
 }
