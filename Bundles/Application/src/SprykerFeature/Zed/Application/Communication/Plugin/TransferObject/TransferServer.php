@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,7 +12,6 @@ use SprykerFeature\Shared\Library\Communication\Response;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 use SprykerFeature\Shared\ZedRequest\Client\ResponseInterface;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
-
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -128,6 +128,7 @@ class TransferServer
 
     /**
      * @param HttpRequest $httpRequest
+     *
      * @return $this
      */
     public function setRequest(HttpRequest $httpRequest)
@@ -139,6 +140,7 @@ class TransferServer
 
     /**
      * @param ResponseInterface $response
+     *
      * @return $this
      */
     public function setResponse(ResponseInterface $response)
@@ -155,4 +157,5 @@ class TransferServer
     {
         return new JsonResponse($this->response->toArray(false));
     }
+
 }

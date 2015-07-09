@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,10 +9,7 @@ namespace SprykerFeature\Zed\Application\Communication\Console\ApplicationCheckS
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 use SprykerFeature\Zed\Application\Communication\ApplicationDependencyContainer;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -33,10 +31,8 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
      * @param mixed $level
      * @param string $message
      * @param array $context
-     *
-     * @return null
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         if ($this->logger) {
             $this->logger->log($level, $message, $context);
@@ -87,4 +83,5 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     abstract public function run();
+
 }

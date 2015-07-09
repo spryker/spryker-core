@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use Symfony\Cmf\Component\Routing\ChainRouter;
 
 class RoutingServiceProvider implements ServiceProviderInterface
 {
+
     /**
      * {@inheritdoc}
      */
@@ -35,4 +37,5 @@ class RoutingServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
+
 }

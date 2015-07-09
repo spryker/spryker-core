@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -65,7 +66,7 @@ class NavigationBuilder
 
         return [
             self::MENU => $menu,
-            self::PATH => $path
+            self::PATH => $path,
         ];
     }
 

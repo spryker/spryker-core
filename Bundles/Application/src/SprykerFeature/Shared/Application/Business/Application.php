@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class Application extends \Silex\Application
 {
+
     use UrlGeneratorTrait;
     use TwigTrait;
     use TranslationTrait;
@@ -28,11 +30,11 @@ class Application extends \Silex\Application
      * @param mixed                    $data    The initial data
      * @param array                    $options The options
      *
-     * @return FormInterface The form named after the type
-     *
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
+     *
+     * @return FormInterface The form named after the type
      */
-    public function createForm($type = 'form', $data = null, array $options = array())
+    public function createForm($type = 'form', $data = null, array $options = [])
     {
         /** @var FormInterface $form */
         $form = $this['form.factory']->create($type, $data, $options);
@@ -58,11 +60,12 @@ class Application extends \Silex\Application
      */
     public function addRouter(RouterInterface $router, $priority = 0)
     {
-        /** @var \Pimple $this */
+        /* @var \Pimple $this */
         $this['routers'] = $this->share($this->extend('routers', function (ChainRouter $chainRouter) use ($router, $priority) {
             $chainRouter->add($router, $priority);
 
             return $chainRouter;
         }));
     }
+
 }

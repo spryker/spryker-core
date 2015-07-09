@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Silex\ServiceProviderInterface;
 
 class MonologServiceProvider implements ServiceProviderInterface
 {
+
     public function register(Application $app)
     {
         $app['logger'] = function () use ($app) {
@@ -59,4 +61,5 @@ class MonologServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
+
 }

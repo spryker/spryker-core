@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -88,4 +89,5 @@ class ApplicationFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createNavigationBuilder()->build($pathInfo);
     }
+
 }

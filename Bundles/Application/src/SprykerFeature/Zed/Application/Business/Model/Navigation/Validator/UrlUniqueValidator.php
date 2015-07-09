@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -32,4 +33,5 @@ class UrlUniqueValidator implements UrlUniqueValidatorInterface
     {
         $this->urls[] = $url;
     }
+
 }

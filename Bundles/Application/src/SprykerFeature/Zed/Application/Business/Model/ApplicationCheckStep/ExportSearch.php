@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,8 +10,8 @@ use Symfony\Component\Process\Process;
 
 class ExportSearch extends AbstractApplicationCheckStep
 {
+
     /**
-     * @return void
      */
     public function run()
     {
@@ -25,4 +26,5 @@ class ExportSearch extends AbstractApplicationCheckStep
             $this->info($buffer);
         });
     }
+
 }

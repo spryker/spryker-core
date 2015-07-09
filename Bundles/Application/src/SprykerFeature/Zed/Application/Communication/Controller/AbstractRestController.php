@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,10 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 abstract class AbstractRestController
 {
 
-    const GET     = 'GET';
-    const POST    = 'POST';
-    const PUT     = 'PUT';
-    const DELETE  = 'DELETE';
+    const GET = 'GET';
+    const POST = 'POST';
+    const PUT = 'PUT';
+    const DELETE = 'DELETE';
 
     /**
      * @var Request
@@ -23,6 +24,7 @@ abstract class AbstractRestController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function indexAction(Request $request) {

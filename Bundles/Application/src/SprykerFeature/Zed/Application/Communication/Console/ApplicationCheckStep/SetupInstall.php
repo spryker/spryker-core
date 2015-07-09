@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,8 +13,10 @@ use SprykerFeature\Zed\Application\Business\ApplicationFacade;
  */
 class SetupInstall extends AbstractApplicationCheckStep
 {
+
     public function run()
     {
         $this->getFacade()->runCheckStepSetupInstall($this->logger);
     }
+
 }

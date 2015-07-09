@@ -1,9 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder;
+
 use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
 use Symfony\Component\Filesystem\Filesystem;
 
