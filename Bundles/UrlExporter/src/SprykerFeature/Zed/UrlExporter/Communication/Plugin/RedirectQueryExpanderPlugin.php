@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\UrlExporter\Communication\UrlExporterDependencyContainer;
  */
 class RedirectQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+
     /**
      * @return string
      */
@@ -44,4 +46,5 @@ class RedirectQueryExpanderPlugin extends AbstractPlugin implements QueryExpande
     {
         return 500;
     }
+
 }

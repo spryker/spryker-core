@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\UrlExporter\Business\Builder\UrlBuilderInterface;
  */
 class UrlExporterDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return UrlBuilderInterface
      */
@@ -52,4 +54,5 @@ class UrlExporterDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getResourceKeyBuilder()
         );
     }
+
 }
