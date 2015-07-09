@@ -6,11 +6,13 @@ use SprykerFeature\Zed\Distributor\Business\Exception\ItemTypeDoesNotExistExcept
 
 interface LastDistributionMarkerInterface
 {
+
     /**
      * @param string $typeKey
      *
-     * @return \DateTime|string
      * @throws ItemTypeDoesNotExistException
+     *
+     * @return \DateTime|string
      */
     public function getLastDistributionTimestampByType($typeKey);
 
@@ -19,4 +21,5 @@ interface LastDistributionMarkerInterface
      * @param string $timestamp
      */
     public function setLastDistributionTimestampByType($type, $timestamp);
+
 }

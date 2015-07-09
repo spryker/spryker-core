@@ -12,6 +12,7 @@ class ReceiverWriter implements ReceiverWriterInterface
      * @param string $receiverKey
      *
      * @throws PropelException
+     *
      * @return int
      */
     public function create($receiverKey)
@@ -22,4 +23,5 @@ class ReceiverWriter implements ReceiverWriterInterface
 
         return $distribution->getIdDistributorReceiver();
     }
+
 }

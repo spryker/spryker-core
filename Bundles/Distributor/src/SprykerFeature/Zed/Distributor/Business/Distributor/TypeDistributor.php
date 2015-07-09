@@ -119,8 +119,9 @@ class TypeDistributor
     /**
      * @param string $type
      *
-     * @return DistributorQueryExpanderPluginInterface[]
      * @throws \Exception
+     *
+     * @return DistributorQueryExpanderPluginInterface[]
      */
     protected function getQueryPipelineByType($type)
     {
@@ -135,4 +136,5 @@ class TypeDistributor
 
         return $this->queryPipeline[$type];
     }
+
 }

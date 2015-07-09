@@ -15,4 +15,5 @@ class QueueNameBuilder implements QueueNameBuilderInterface
     {
         return $receiver . '.' . $itemType;
     }
+
 }

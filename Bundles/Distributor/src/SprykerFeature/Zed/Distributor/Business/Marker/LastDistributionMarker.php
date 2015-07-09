@@ -34,8 +34,9 @@ class LastDistributionMarker implements LastDistributionMarkerInterface
     /**
      * @param string $typeKey
      *
-     * @return \DateTime|string
      * @throws ItemTypeDoesNotExistException
+     *
+     * @return \DateTime|string
      */
     public function getLastDistributionTimestampByType($typeKey)
     {
@@ -63,4 +64,5 @@ class LastDistributionMarker implements LastDistributionMarkerInterface
     {
         $this->distributionWriter->update($type, $timestamp);
     }
+
 }

@@ -26,6 +26,7 @@ class ItemWriter implements ItemWriterInterface
     /**
      * @param string $itemType
      * @param int $idItem
+     *
      * @throws ItemTypeDoesNotExistException
      * @throws PropelException
      */
@@ -80,4 +81,5 @@ class ItemWriter implements ItemWriterInterface
 
         $item->getIdDistributorItem();
     }
+
 }
