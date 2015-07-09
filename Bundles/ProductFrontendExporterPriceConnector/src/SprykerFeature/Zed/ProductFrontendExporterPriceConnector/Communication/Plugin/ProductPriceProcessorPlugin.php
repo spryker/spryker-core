@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Communication\Produ
  */
 class ProductPriceProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
+
     /**
      * @return string
      */
@@ -37,4 +39,5 @@ class ProductPriceProcessorPlugin extends AbstractPlugin implements DataProcesso
             ->processDataForExport($resultSet, $processedResultSet)
             ;
     }
+
 }

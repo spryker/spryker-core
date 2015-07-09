@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ class ProductFrontendExporterPriceConnectorFacade extends AbstractFacade
     /**
      * @param array $resultSet
      * @param array $processedResultSet
+     *
      * @return array
      */
     public function processDataForExport(array &$resultSet, array $processedResultSet)
@@ -30,4 +32,5 @@ class ProductFrontendExporterPriceConnectorFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->getHelperModel()->getDefaultPriceType();
     }
+
 }
