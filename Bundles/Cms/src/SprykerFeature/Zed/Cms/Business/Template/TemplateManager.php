@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplate;
 
 class TemplateManager implements TemplateManagerInterface
 {
+
     /**
      * @var CmsQueryContainerInterface
      */
@@ -43,8 +45,9 @@ class TemplateManager implements TemplateManagerInterface
      * @param string $name
      * @param string $path
      *
-     * @return CmsTemplateTransfer
      * @throws TemplateExistsException
+     *
+     * @return CmsTemplateTransfer
      */
     public function createTemplate($name, $path)
     {
@@ -116,6 +119,7 @@ class TemplateManager implements TemplateManagerInterface
 
     /**
      * @param CmsTemplateTransfer $cmsTemplate
+     *
      * @return CmsTemplateTransfer
      */
     public function saveTemplate(CmsTemplateTransfer $cmsTemplate)
@@ -148,11 +152,12 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param CmsTemplateTransfer $cmsTemplate
      *
-     * @return CmsTemplateTransfer
      * @throws MissingTemplateException
      * @throws TemplateExistsException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return CmsTemplateTransfer
      */
     protected function updateTemplateFromTransfer(CmsTemplateTransfer $cmsTemplate)
     {
@@ -175,8 +180,9 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param int $idTemplate
      *
-     * @return CmsTemplateTransfer
      * @throws MissingTemplateException
+     *
+     * @return CmsTemplateTransfer
      */
     public function getTemplateById($idTemplate)
     {
@@ -188,8 +194,9 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param string $path
      *
-     * @return CmsTemplateTransfer
      * @throws MissingTemplateException
+     *
+     * @return CmsTemplateTransfer
      */
     public function getTemplateByPath($path)
     {
@@ -209,8 +216,9 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param int $idTemplate
      *
-     * @return SpyCmsTemplate
      * @throws MissingTemplateException
+     *
+     * @return SpyCmsTemplate
      */
     protected function getTemplateEntityById($idTemplate)
     {
@@ -223,6 +231,8 @@ class TemplateManager implements TemplateManagerInterface
                 )
             );
         }
+
         return $templateEntity;
     }
+
 }

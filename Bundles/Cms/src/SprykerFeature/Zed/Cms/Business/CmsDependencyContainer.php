@@ -1,13 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Cms\Business;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\CmsBusiness;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Page\PageManagerInterface;
@@ -22,6 +21,7 @@ use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
  */
 class CmsDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return CmsQueryContainerInterface
      */
@@ -92,4 +92,5 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getLocator()->url()->facade();
     }
+
 }
