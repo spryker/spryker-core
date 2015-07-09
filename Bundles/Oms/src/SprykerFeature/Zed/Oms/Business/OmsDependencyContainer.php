@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -31,6 +32,7 @@ use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
  */
 class OmsDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @param array $array
      *
@@ -181,4 +183,5 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
             )
         ; // @TODO do not inject the whole config, just inject what is needed
     }
+
 }

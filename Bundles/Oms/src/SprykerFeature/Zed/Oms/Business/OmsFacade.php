@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -176,6 +177,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @deprecated
+     *
      * @param string $processName
      *
      * @return Process
@@ -360,7 +362,6 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         $orderItemsArray = $orderItems->getData();
 
-
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine($logContext)
             ->triggerEventForNewItem($orderItemsArray, $data);
@@ -376,10 +377,11 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = [])
     {
-        $orderItemsArray = array($orderItem);
+        $orderItemsArray = [$orderItem];
 
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine($logContext)
             ->triggerEvent($eventId, $orderItemsArray, $data);
     }
+
 }

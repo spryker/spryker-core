@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,6 +24,7 @@ use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
  */
 class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContainerInterface
 {
+
     /**
      * @param array $states
      * @param string $processName
@@ -34,7 +36,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $this->getSalesQueryContainer()->querySalesOrderItem()
             ->joinProcess(null, $joinType = Criteria::INNER_JOIN)
             ->joinState(null, $joinType = Criteria::INNER_JOIN)
-            ->where("Process.name = ?", $processName)
+            ->where('Process.name = ?', $processName)
             ->where("State.name IN ('" . implode("', '", $states) . "')");
     }
 
@@ -48,6 +50,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
 
     /**
      * @param $idOrder
+     *
      * @return SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByIdOrder($idOrder)

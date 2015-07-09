@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -173,11 +174,11 @@ class Finder implements FinderInterface
         $process = $processBuilder->createProcess($processName);
         $eventsBySource = $process->getManualEventsBySource();
 
-        $eventsByItem = array();
+        $eventsByItem = [];
         foreach ($order->getItems() as $item) {
             $itemId = $item->getIdSalesOrderItem();
             $stateName = $item->getState()->getName();
-            $eventsByItem[$itemId] = array();
+            $eventsByItem[$itemId] = [];
 
             if (!isset($eventsBySource[$stateName])) {
                 continue;
@@ -186,7 +187,7 @@ class Finder implements FinderInterface
             $eventsByItem[$itemId] = $manualEvents;
         }
 
-        $allEvents = array();
+        $allEvents = [];
         foreach ($order->getItems() as $item) {
             $stateName = $item->getState()->getName();
             $events = $process->getStateFromAllProcesses($stateName)->getEvents();
@@ -197,7 +198,7 @@ class Finder implements FinderInterface
             }
         }
 
-        $allEventsByItem = array();
+        $allEventsByItem = [];
         foreach ($order->getItems() as $item) {
             $stateName = $item->getState()->getName();
             if (isset($eventsBySource[$stateName])) {
@@ -206,13 +207,13 @@ class Finder implements FinderInterface
             }
         }
 
-        $uniqueItemEvents = array();
+        $uniqueItemEvents = [];
         $orderEvents = array_unique($allEvents);
 
         $result = [
             'order_events' => $orderEvents,
             'unique_item_events' => $uniqueItemEvents,
-            'item_events' => $eventsByItem
+            'item_events' => $eventsByItem,
         ];
 
         return $result;
@@ -283,7 +284,7 @@ class Finder implements FinderInterface
     /**
      * @param string $processName
      * @param string $flag
-     * @param boolean $hasFlag
+     * @param bool $hasFlag
      *
      * @return StateInterface[]
      */

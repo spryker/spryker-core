@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,13 +24,13 @@ class State implements StateInterface
     protected $process;
 
     /** @var array */
-    protected $flags = array();
+    protected $flags = [];
 
     /** @var TransitionInterface[] */
-    protected $outgoingTransitions = array();
+    protected $outgoingTransitions = [];
 
     /** @var TransitionInterface[] */
-    protected $incomingTransitions = array();
+    protected $incomingTransitions = [];
 
     /**
      * @param TransitionInterface[] $incomingTransitions
@@ -86,7 +87,7 @@ class State implements StateInterface
      */
     public function getOutgoingTransitionsByEvent(EventInterface $event)
     {
-        $transitions = array();
+        $transitions = [];
         foreach ($this->outgoingTransitions as $transition) {
             if ($transition->hasEvent()) {
                 if ($transition->getEvent()->getName() === $event->getName()) {
@@ -103,7 +104,7 @@ class State implements StateInterface
      */
     public function getEvents()
     {
-        $events = array();
+        $events = [];
         foreach ($this->outgoingTransitions as $transition) {
             if ($transition->hasEvent()) {
                 $events[$transition->getEvent()->getName()] = $transition->getEvent();
@@ -116,8 +117,9 @@ class State implements StateInterface
     /**
      * @param string $id
      *
-     * @return EventInterface
      * @throws Exception
+     *
+     * @return EventInterface
      */
     public function getEvent($id)
     {
@@ -129,7 +131,7 @@ class State implements StateInterface
                 }
             }
         }
-        throw new Exception('Event '.$id.' not found.');
+        throw new Exception('Event ' . $id . ' not found.');
     }
 
     /**
@@ -247,9 +249,9 @@ class State implements StateInterface
     }
 
     /**
-     * @return EventInterface
-     *
      * @throws Exception
+     *
+     * @return EventInterface
      */
     public function getOnEnterEvent()
     {
@@ -261,7 +263,7 @@ class State implements StateInterface
                 }
             }
         }
-        throw new Exception('There is no onEnter event for state '.$this->getName());
+        throw new Exception('There is no onEnter event for state ' . $this->getName());
     }
 
     /**
@@ -282,12 +284,13 @@ class State implements StateInterface
     }
 
     /**
-     * @return EventInterface[]
      * @throws Exception
+     *
+     * @return EventInterface[]
      */
     public function getTimeoutEvents()
     {
-        $events = array();
+        $events = [];
 
         $transitions = $this->getOutgoingTransitions();
         foreach ($transitions as $transition) {

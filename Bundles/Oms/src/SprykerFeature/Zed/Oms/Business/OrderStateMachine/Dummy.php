@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,17 +35,18 @@ class Dummy implements DummyInterface
     /**
      * @param string $processName
      *
-     * @return array
      * @throws Exception
      * @throws PropelException
+     *
+     * @return array
      */
     public function prepareItems($processName)
     {
         $orderItemsArray = $this->getOrderItems($processName);
 
-        $orders = array();
+        $orders = [];
 
-        $txtArray = array();
+        $txtArray = [];
         foreach ($orderItemsArray as $orderItemArray) {
             if (!isset($orders[$orderItemArray['orderId']])) {
                 $order = new SpySalesOrder();
@@ -70,9 +72,9 @@ class Dummy implements DummyInterface
             }
         }
 
-        $states = array();
+        $states = [];
 
-        $orderItems = array();
+        $orderItems = [];
         foreach ($orderItemsArray as $orderItemArray) {
             if (isset($states[$orderItemArray['state']])) {
                 $state = $states[$orderItemArray['state']];
@@ -120,17 +122,17 @@ class Dummy implements DummyInterface
      */
     public function getOrderItems($processName)
     {
-        $orderItemsArray = array();
+        $orderItemsArray = [];
         $c = 0;
         $process = $this->builder->createProcess($processName);
         for ($i = 0; $i < 2; $i++) {
             foreach ($process->getAllStates() as $state) {
-                $orderItemsArray[] = array(
+                $orderItemsArray[] = [
                     'id' => $c,
                     'process' => $processName,
                     'state' => $state->getName(),
-                    'orderId' => $i
-                );
+                    'orderId' => $i,
+                ];
                 $c++;
 break 2;
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -39,6 +40,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * Overwrite in project
+     *
      * @param Container $container
      *
      * @return ConditionInterface[]
@@ -50,6 +52,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * Overwrite in project
+     *
      * @param Container $container
      *
      * @return CommandInterface[]
@@ -67,4 +70,5 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->sales()->queryContainer();
         };
     }
+
 }

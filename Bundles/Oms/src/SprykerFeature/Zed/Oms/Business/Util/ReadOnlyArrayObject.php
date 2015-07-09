@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use LogicException;
 
 class ReadOnlyArrayObject extends \ArrayObject
 {
+
     /**
      * @param mixed $value
      *
@@ -22,7 +24,6 @@ class ReadOnlyArrayObject extends \ArrayObject
     /**
      * @param mixed $input
      *
-     * @return void
      * @throws LogicException
      */
     public function exchangeArray($input)
@@ -50,4 +51,5 @@ class ReadOnlyArrayObject extends \ArrayObject
     {
         throw new LogicException('Attempting to write to an immutable array');
     }
+
 }

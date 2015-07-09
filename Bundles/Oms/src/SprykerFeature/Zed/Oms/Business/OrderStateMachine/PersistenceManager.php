@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,14 +16,15 @@ use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStateQuery;
 class PersistenceManager implements PersistenceManagerInterface
 {
 
-    protected static $stateEntityBuffer = array();
-    protected static $processEntityBuffer = array();
+    protected static $stateEntityBuffer = [];
+    protected static $processEntityBuffer = [];
 
     /**
      * @param string $stateName
-     * @return SpyOmsOrderItemState
      *
      * @throws PropelException
+     *
+     * @return SpyOmsOrderItemState
      */
     public function getStateEntity($stateName)
     {
@@ -46,8 +48,9 @@ class PersistenceManager implements PersistenceManagerInterface
     /**
      * @param string $processName
      *
-     * @return SpyOmsOrderProcess
      * @throws PropelException
+     *
+     * @return SpyOmsOrderProcess
      */
     public function getProcessEntity($processName)
     {

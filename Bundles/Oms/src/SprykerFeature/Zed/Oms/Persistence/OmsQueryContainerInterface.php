@@ -1,11 +1,14 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: wesner
  * Date: 30.06.15
  * Time: 10:52
  */
+
 namespace SprykerFeature\Zed\Oms\Persistence;
+
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLogQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -16,10 +19,11 @@ use Generated\Zed\Ide\FactoryAutoCompletion\OmsPersistence;
 
 interface OmsQueryContainerInterface
 {
+
     /**
      * @method OmsPersistence getFactory()
      */
-    function getFactory();
+    public function getFactory();
 
     /**
      * @param array $states
@@ -31,6 +35,7 @@ interface OmsQueryContainerInterface
 
     /**
      * @param $idOrder
+     *
      * @return SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByIdOrder($idOrder);
@@ -80,4 +85,5 @@ interface OmsQueryContainerInterface
      * @return SpySalesOrderQuery
      */
     public function querySalesOrderById($idOrder);
+
 }

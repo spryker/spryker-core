@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
 
 interface PersistenceManagerInterface
 {
+
     /**
      * @param string $stateName
      *
@@ -28,4 +30,5 @@ interface PersistenceManagerInterface
      * @return SpyOmsOrderItemState
      */
     public function getInitialStateEntity();
+
 }
