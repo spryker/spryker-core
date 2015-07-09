@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 
 class Reader implements ReaderInterface
 {
+
     const PRICE_TYPE_UNKNOWN = 'price type unknown: ';
     const NO_RESULT = 'no result';
     const SKU_UNKNOWN = 'sku unknown';
@@ -53,7 +55,7 @@ class Reader implements ReaderInterface
      */
     public function getPriceTypes()
     {
-        $priceTypes = array();
+        $priceTypes = [];
         $priceTypeEntities = $this->queryContainer->queryAllPriceTypes()->find();
 
         /** @var SpyPriceType $priceType */
@@ -68,8 +70,9 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param string|null $priceTypeName
      *
-     * @return int
      * @throws \Exception
+     *
+     * @return int
      */
     public function getPriceBySku($sku, $priceTypeName = null)
     {
@@ -82,13 +85,14 @@ class Reader implements ReaderInterface
     /**
      * @param string $priceTypeName
      *
-     * @return SpyPriceType
      * @throws \Exception
+     *
+     * @return SpyPriceType
      */
     public function getPriceTypeByName($priceTypeName)
     {
         $priceTypeEntity = $this->queryContainer->queryPriceType($priceTypeName)->findOne();
-        if (null == $priceTypeEntity) {
+        if (null === $priceTypeEntity) {
             throw new \Exception(self::PRICE_TYPE_UNKNOWN . $priceTypeName);
         }
 
@@ -99,8 +103,9 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param string|null $priceTypeName
      *
-     * @return bool
      * @throws \Exception
+     *
+     * @return bool
      */
     public function hasValidPrice($sku, $priceTypeName = null)
     {
@@ -139,8 +144,9 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param string $priceTypeName
      *
-     * @return int
      * @throws \Exception
+     *
+     * @return int
      */
     public function getProductPriceIdBySku($sku, $priceTypeName)
     {
@@ -165,8 +171,9 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param SpyPriceType $priceType
      *
-     * @return SpyPriceProduct
      * @throws \Exception
+     *
+     * @return SpyPriceProduct
      */
     protected function getPriceEntity($sku, SpyPriceType $priceType)
     {
@@ -252,7 +259,7 @@ class Reader implements ReaderInterface
      */
     protected function handleDefaultPriceType($priceType = null)
     {
-        if (null == $priceType) {
+        if (null === $priceType) {
             $priceType = $this->priceSettings->getPriceTypeDefaultName();
         }
 
@@ -261,8 +268,9 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getAbstractProductIdBySku($sku)
     {
@@ -272,11 +280,13 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getConcreteProductIdBySku($sku)
     {
         return $this->productFacade->getConcreteProductIdBySku($sku);
     }
+
 }

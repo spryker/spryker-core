@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,7 +24,7 @@ class PriceTypeGrid extends AbstractGrid
             $this->createDefaultColumn()
                 ->setName(self::NAME)
                 ->filterable()
-                ->sortable()
+                ->sortable(),
         ];
 
         return $plugins;

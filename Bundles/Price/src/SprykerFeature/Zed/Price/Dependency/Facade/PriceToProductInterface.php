@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,19 +10,22 @@ use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 
 interface PriceToProductInterface
 {
+
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getAbstractProductIdBySku($sku);
 
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getConcreteProductIdBySku($sku);
 
@@ -38,4 +42,5 @@ interface PriceToProductInterface
      * @return bool
      */
     public function hasConcreteProduct($sku);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -33,7 +34,7 @@ class WriterTest extends Test
      */
     private $priceFacade;
     /**
-     * @var AutoCompletion $locator
+     * @var AutoCompletion
      */
     protected $locator;
 
@@ -53,7 +54,6 @@ class WriterTest extends Test
 
         $this->assertNotEmpty($priceTypeQuery);
     }
-
 
     public function testCreatePriceForAbstractProduct()
     {
@@ -179,4 +179,5 @@ class WriterTest extends Test
 
         $this->deletePriceEntitiesAbstract($abstractProduct);
     }
+
 }

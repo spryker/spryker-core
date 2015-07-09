@@ -14,7 +14,7 @@ class PriceTwigExtensions extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('currency', function ($price){
+            new \Twig_SimpleFilter('currency', function ($price) {
                 $currencyManager = CurrencyManager::getInstance();
                 $priceFilter = new PriceFilter($currencyManager);
 
@@ -33,7 +33,6 @@ class PriceTwigExtensions extends \Twig_Extension
         return [];
     }
 
-
     /**
      * @return string
      */
@@ -41,4 +40,5 @@ class PriceTwigExtensions extends \Twig_Extension
     {
         return 'PriceTwigExtensions';
     }
+
 }

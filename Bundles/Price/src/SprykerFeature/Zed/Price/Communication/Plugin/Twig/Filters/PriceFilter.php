@@ -6,6 +6,7 @@ use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 
 class PriceFilter
 {
+
     const DECIMALS = 2;
 
     const DIVIDER = 100;
@@ -31,4 +32,5 @@ class PriceFilter
             $this->currencyManager->convertCentToDecimal($price)
         );
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,7 +13,6 @@ use SprykerFeature\Zed\Price\Business\Model\WriterInterface;
 use SprykerFeature\Zed\Price\Business\Model\ReaderInterface;
 use SprykerFeature\Zed\Price\Dependency\Facade\PriceToProductInterface;
 use SprykerFeature\Zed\Price\Dependency\Facade\PriceToTouchInterface;
-use SprykerFeature\Zed\Price\Business\PriceSettings;
 use SprykerFeature\Zed\Price\Business\Internal\Install;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerFeature\Zed\Price\PriceConfig;
@@ -90,7 +90,7 @@ class PriceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function getTouchFacade()
     {
-        if (empty ($this->touchFacade)) {
+        if (empty($this->touchFacade)) {
             $this->touchFacade = $this->getLocator()->touch()->facade();
         }
 
