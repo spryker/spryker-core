@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,7 +29,7 @@ class DataProcessorTest extends AbstractFunctionalTest
     private $facade;
 
     /**
-     * @var AutoCompletion $locator
+     * @var AutoCompletion
      */
     protected $locator;
 
@@ -51,13 +52,13 @@ class DataProcessorTest extends AbstractFunctionalTest
             'xx.xx_xx.dummyIndex1' => [
                 'concrete_products' => [
                     [
-                        'sku' => 'DEF456'
+                        'sku' => 'DEF456',
                     ],
                 ],
             ],
         ];
 
-        $localeTransfer = (new LocaleTransfer)->setIdLocale($ids['idLocale']);
+        $localeTransfer = (new LocaleTransfer())->setIdLocale($ids['idLocale']);
 
         $processedResultSet = $this->facade->processDataForExport($resultSetFixture, $processedResultSetFixture, $localeTransfer);
 
@@ -89,4 +90,5 @@ class DataProcessorTest extends AbstractFunctionalTest
 
         $this->assertEquals('199', $product['options'][1]['values'][0]['price']);
     }
+
 }

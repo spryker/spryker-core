@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ use SprykerFeature\Zed\ProductOptionExporter\Communication\ProductOptionExporter
  */
 class ProductOptionProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
+
     /**
      * @return string
      */
@@ -36,4 +38,5 @@ class ProductOptionProcessorPlugin extends AbstractPlugin implements DataProcess
     {
         return $this->getFacade()->processDataForExport($resultSet, $processedResultSet, $locale);
     }
+
 }
