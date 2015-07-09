@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
 
 class MockQueueConnection implements QueueConnectionInterface
 {
+
     /**
      * @param int $fetchSize
      */
@@ -69,4 +70,5 @@ class MockQueueConnection implements QueueConnectionInterface
     {
         return new QueueMessageTransfer();
     }
+
 }

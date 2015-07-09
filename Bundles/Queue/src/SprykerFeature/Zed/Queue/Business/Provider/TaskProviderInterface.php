@@ -13,4 +13,5 @@ interface TaskProviderInterface
      * @return TaskPluginInterface
      */
     public function getTaskByQueueName($taskName);
+
 }
