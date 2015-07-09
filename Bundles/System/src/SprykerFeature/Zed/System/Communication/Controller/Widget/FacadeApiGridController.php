@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,4 +35,5 @@ class FacadeApiGridController extends AbstractGridController
 
         return new \SprykerFeature_Zed_System_Communication_Grid_FacadeApi($dataSource);
     }
+
 }

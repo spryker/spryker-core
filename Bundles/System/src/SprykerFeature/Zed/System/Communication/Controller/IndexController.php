@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,10 +26,10 @@ class IndexController extends AbstractController
     {
         $environment = \SprykerFeature_Shared_Library_Environment::isProduction() ? 'production' : 'staging';
         $hosts = $this->facadeSystem->getHosts($environment);
-        $mappings = array();
+        $mappings = [];
 
         foreach ($hosts as $host) {
-            $mappings[$host[SystemSettings::KEY_HOST]] = array(
+            $mappings[$host[SystemSettings::KEY_HOST]] = [
                 self::KEY_ZED_COOKIE_NAME => $this->facadeSystem->getCookieName($environment, 'zed'),
                 self::KEY_ZED_COOKIE_VALUE => $this->facadeSystem->getCookieValueByHost($environment,
                     $host[SystemSettings::KEY_HOST],
@@ -42,17 +43,18 @@ class IndexController extends AbstractController
                     \SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4::APPLICATION_NAME_YVES),
 
                 self::KEY_YVES_PORT => $host[SystemSettings::KEY_YVES_PORT],
-            );
+            ];
         }
 
         return $this->viewResponse([
             'mappings' => $mappings,
-            'yvesUrl' => Config::get(SystemConfig::HOST_YVES)
+            'yvesUrl' => Config::get(SystemConfig::HOST_YVES),
         ]);
     }
 
     /**
      * @param Request $request
+     *
      * @return RedirectResponse
      */
     public function setCookieAction(Request $request)
@@ -64,6 +66,5 @@ class IndexController extends AbstractController
 
         return $this->redirectResponse('/system/index');
     }
-
 
 }
