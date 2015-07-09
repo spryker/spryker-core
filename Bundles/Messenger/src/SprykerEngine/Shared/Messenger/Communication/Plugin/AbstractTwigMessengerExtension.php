@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerEngine\Shared\Messenger\Communication\Plugin;
 
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
-use SprykerEngine\Zed\Kernel\Container;
 
 abstract class AbstractTwigMessengerExtension extends \Twig_Extension
 {
