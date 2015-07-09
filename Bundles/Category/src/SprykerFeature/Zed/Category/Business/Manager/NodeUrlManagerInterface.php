@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,9 +11,11 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface NodeUrlManagerInterface
 {
+
     /**
      * @param NodeTransfer $categoryNode
      * @param LocaleTransfer $locale
      */
     public function createUrl(NodeTransfer $categoryNode, LocaleTransfer $locale);
+
 }

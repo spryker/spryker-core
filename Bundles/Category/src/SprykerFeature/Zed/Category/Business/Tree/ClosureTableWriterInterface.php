@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,8 +18,7 @@ interface ClosureTableWriterInterface
 
     /**
      * @param int $nodeId
-     *
-     * @return void
      */
     public function delete($nodeId);
+
 }

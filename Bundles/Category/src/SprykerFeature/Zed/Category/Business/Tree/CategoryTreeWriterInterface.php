@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,11 +10,10 @@ use SprykerEngine\Zed\Kernel\Business\ModelResult;
 
 /**
  * Interface CategoryTreeWriterInterface
- *
- * @package SprykerFeature\Zed\CategoryTree\Business\Tree
  */
 interface CategoryTreeWriterInterface
 {
+
     /**
      * @param int       $categoryId
      * @param string    $locale
@@ -57,4 +57,5 @@ interface CategoryTreeWriterInterface
      * @return bool|int
      */
     public function deleteNode($nodeId, $locale, $deleteChildren = false);
+
 }

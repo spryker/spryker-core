@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -41,4 +42,5 @@ class CategoryNodeGrid extends AbstractGrid
                 ->sortable(),
         ];
     }
+
 }

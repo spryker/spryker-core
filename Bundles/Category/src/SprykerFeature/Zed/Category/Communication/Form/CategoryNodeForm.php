@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -79,8 +80,8 @@ class CategoryNodeForm extends AbstractForm
             ->setRefresh(true)
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'bool'
-                ])
+                    'type' => 'bool',
+                ]),
             ])
         ;
         $this->addField(self::FK_CATEGORY)
@@ -88,15 +89,15 @@ class CategoryNodeForm extends AbstractForm
             ->setRefresh(false)
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
                 new Constraints\Choice([
                     'choices' => array_column($this->getCategories(), 'value'),
-                    'message' => 'Please choose one of the given Categories'
+                    'message' => 'Please choose one of the given Categories',
                 ]),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             })
         ;
 
@@ -105,16 +106,16 @@ class CategoryNodeForm extends AbstractForm
             ->setRefresh(false)
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
                 new Constraints\Choice([
                     'choices' => array_column($this->getParentCategories(), 'value'),
-                    'message' => 'Please choose one of the given Parent Categories'
+                    'message' => 'Please choose one of the given Parent Categories',
                 ]),
-                new Constraints\NotBlank()
+                new Constraints\NotBlank(),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             })
         ;
     }
@@ -133,7 +134,7 @@ class CategoryNodeForm extends AbstractForm
         $data = [];
         foreach ($categories as $category) {
             $data[] = $this->formatOption(
-                (int)$category['id_category'],
+                (int) $category['id_category'],
                 $category['name']
             );
         }
@@ -159,7 +160,7 @@ class CategoryNodeForm extends AbstractForm
         $data = [];
         foreach ($categoryNodes as $categoryNode) {
             $data[] = $this->formatOption(
-                (int)$categoryNode[self::ID_CATEGORY_NODE],
+                (int) $categoryNode[self::ID_CATEGORY_NODE],
                 $categoryNode[self::CATEGORY_NAME]
             );
         }
@@ -174,6 +175,7 @@ class CategoryNodeForm extends AbstractForm
     /**
      * @param string $option
      * @param string $label
+     *
      * @return array
      */
     protected function formatOption($option, $label)
@@ -191,4 +193,5 @@ class CategoryNodeForm extends AbstractForm
     {
         return $this->stateContainer->getRequestValue(self::ID_CATEGORY_NODE);
     }
+
 }

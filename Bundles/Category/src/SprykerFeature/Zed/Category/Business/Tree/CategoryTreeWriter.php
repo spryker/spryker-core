@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 
 class CategoryTreeWriter
 {
+
     const ID_NAVIGATION = 1;
 
     /**
@@ -171,4 +173,5 @@ class CategoryTreeWriter
     {
         $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
     }
+
 }

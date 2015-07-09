@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 
 class CategoryTreeRenderer
 {
+
     const UNKNOWN_CATEGORY = 'Unknown Category';
 
     /**
@@ -69,7 +71,8 @@ class CategoryTreeRenderer
     }
 
     /**
-     * @var SpyCategoryNode $child
+     * @var SpyCategoryNode
+     *
      * @param SpyCategoryNode $node
      */
     protected function renderChildren(SpyCategoryNode $node)
@@ -87,7 +90,7 @@ class CategoryTreeRenderer
             [
                 'URL' => $deleteLink . $node->getPrimaryKey(),
                 'label' => $this->getNodeName($node) . $deleteString,
-                'fontsize' => $this->fontSize
+                'fontsize' => $this->fontSize,
             ]
         );
         foreach ($children as $child) {
@@ -96,11 +99,11 @@ class CategoryTreeRenderer
                 [
                     'URL' => $deleteLink . $child->getPrimaryKey(),
                     'label' => $this->getNodeName($child) . $deleteString,
-                    'fontsize' => $this->fontSize
+                    'fontsize' => $this->fontSize,
                 ]
             );
             $this->graph->addEdge([$this->getNodeHash($node) => $this->getNodeHash($child)]);
-            /**
+            /*
              * Recursive call
              */
             $this->renderChildren($child);
@@ -128,7 +131,8 @@ class CategoryTreeRenderer
     }
 
     /**
-     * @var SpyCategoryClosureTable $path
+     * @var SpyCategoryClosureTable
+     *
      * @param SpyCategoryNode $node
      */
     protected function addClosureConnections(SpyCategoryNode $node)
@@ -136,9 +140,9 @@ class CategoryTreeRenderer
         $descendantPaths = $this->queryContainer->queryDescendant($node->getPrimaryKey())->find();
 
         foreach ($descendantPaths as $path) {
-            $attributes = ['color' => '#ff0000',];
+            $attributes = ['color' => '#ff0000'];
             $edge = [
-                $this->getNodeHash($node) => $this->getNodeHash($path->getDescendantNode())
+                $this->getNodeHash($node) => $this->getNodeHash($path->getDescendantNode()),
             ];
             $this->graph->addEdge($edge, $attributes);
         }
@@ -157,4 +161,5 @@ class CategoryTreeRenderer
 
         return self::UNKNOWN_CATEGORY;
     }
+
 }
