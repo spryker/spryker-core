@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
  */
 class ProductFrontendExporterConnectorDependencyContainer extends AbstractPersistenceDependencyContainer
 {
+
     /**
      * @return ProductQueryExpanderInterface
      */
@@ -31,4 +33,5 @@ class ProductFrontendExporterConnectorDependencyContainer extends AbstractPersis
     {
         return $this->getLocator()->product()->queryContainer();
     }
+
 }

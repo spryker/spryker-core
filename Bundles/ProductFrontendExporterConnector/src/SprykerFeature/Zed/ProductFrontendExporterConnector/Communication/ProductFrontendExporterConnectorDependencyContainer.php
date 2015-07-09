@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\ProductFrontendExporterConnector\Persistence\ProductFront
  */
 class ProductFrontendExporterConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return ProductFrontendExporterConnectorFacade
      */
@@ -46,4 +48,5 @@ class ProductFrontendExporterConnectorDependencyContainer extends AbstractCommun
     {
         return $this->getLocator()->productFrontendExporterConnector()->queryContainer();
     }
+
 }

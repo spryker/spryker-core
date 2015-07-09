@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap
 
 class ProductQueryExpander implements ProductQueryExpanderInterface
 {
+
     /**
      * @var ProductQueryContainerInterface
      */
@@ -54,4 +56,5 @@ class ProductQueryExpander implements ProductQueryExpanderInterface
 
         return $expandableQuery;
     }
+
 }
