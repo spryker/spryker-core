@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\CmsExporter\Business\Builder\PageBuilderInterface;
  */
 class CmsExporterDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return PageBuilderInterface
      */
@@ -32,5 +34,5 @@ class CmsExporterDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createBuilderPageResourceKeyBuilder();
     }
-}
 
+}

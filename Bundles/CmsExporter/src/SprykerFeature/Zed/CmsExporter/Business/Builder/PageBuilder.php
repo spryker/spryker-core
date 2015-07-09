@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class PageBuilder implements PageBuilderInterface
 {
+
     /**
      * @var KeyBuilderInterface
      */
@@ -44,4 +46,5 @@ class PageBuilder implements PageBuilderInterface
 
         return $returnedResultSet;
     }
+
 }
