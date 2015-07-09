@@ -15,15 +15,15 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
 {
 
     /**
-     * @param string $id
+     * @param string $keyName
      * @param array $parameters
      * @param string $localeName
      *
      * @return string
      */
-    public function translate($id, array $parameters = [], $localeName)
+    public function translate($keyName, array $parameters = [], $localeName)
     {
-        return $this->createTranslator($localeName)->translate($id, $parameters);
+        return $this->createTranslator($localeName)->translate($keyName, $parameters);
     }
 
     /**

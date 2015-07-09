@@ -44,7 +44,7 @@ class GlossaryStorage implements GlossaryStorageInterface
     }
 
     /**
-     * @param $keyName
+     * @param string $keyName
      * @param array $parameters
      *
      * @return string
