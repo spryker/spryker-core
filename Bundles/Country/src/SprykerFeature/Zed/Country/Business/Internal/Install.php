@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\Country\Business\RegionManagerInterface;
 
 class Install extends AbstractInstaller
 {
+
     /**
      * @var CountryConfig
      */
@@ -90,7 +92,6 @@ class Install extends AbstractInstaller
     }
 
     /**
-     * @return void
      */
     public function install()
     {
@@ -151,7 +152,7 @@ class Install extends AbstractInstaller
     {
         $json = $this->codeMappings;
 
-        if ($this->version != $json['supplemental']['version']['_cldrVersion']) {
+        if ($this->version !== $json['supplemental']['version']['_cldrVersion']) {
             throw new \SprykerFeature_Zed_Library_Exception('CLDR version mismatch in country install');
         }
 
@@ -172,7 +173,7 @@ class Install extends AbstractInstaller
     {
         $json = $this->postalCodes;
 
-        if ($this->version != $json['supplemental']['version']['_cldrVersion']) {
+        if ($this->version !== $json['supplemental']['version']['_cldrVersion']) {
             throw new \SprykerFeature_Zed_Library_Exception('CLDR version mismatch in country install');
         }
 
@@ -215,4 +216,5 @@ class Install extends AbstractInstaller
     {
         return [];
     }
+
 }

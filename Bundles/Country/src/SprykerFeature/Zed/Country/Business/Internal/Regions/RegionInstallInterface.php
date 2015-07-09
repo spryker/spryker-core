@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Country\Business\Internal\Regions;
 
 interface RegionInstallInterface
 {
+
     /**
      * key: iso3661-2 code
      * value: name
@@ -21,7 +23,9 @@ interface RegionInstallInterface
 
     /**
      * iso3661 alpha 2 code for country
+     *
      * @return string
      */
     public function getCountryIso();
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\Country\Business\Exception\MissingCountryException;
 
 interface CountryManagerInterface
 {
+
     /**
      * @param string $iso2code
      *
@@ -27,8 +29,10 @@ interface CountryManagerInterface
     /**
      * @param string $iso2code
      *
-     * @return int
      * @throws MissingCountryException
+     *
+     * @return int
      */
     public function getIdCountryByIso2Code($iso2code);
+
 }

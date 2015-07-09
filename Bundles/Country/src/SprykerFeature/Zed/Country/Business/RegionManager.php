@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -72,4 +73,5 @@ class RegionManager implements RegionManagerInterface
 
         return $query->count() > 0;
     }
+
 }

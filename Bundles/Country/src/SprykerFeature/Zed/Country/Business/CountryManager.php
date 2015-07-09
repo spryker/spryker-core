@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
 
 class CountryManager implements CountryManagerInterface
 {
+
     /**
      * @var CountryQueryContainerInterface
      */
@@ -42,8 +44,9 @@ class CountryManager implements CountryManagerInterface
      * @param string $iso2code
      * @param array $countryData
      *
-     * @return int
      * @throws CountryExistsException
+     *
+     * @return int
      */
     public function createCountry($iso2code, array $countryData)
     {
@@ -66,8 +69,9 @@ class CountryManager implements CountryManagerInterface
     /**
      * @param string $iso2code
      *
-     * @return int
      * @throws MissingCountryException
+     *
+     * @return int
      */
     public function getIdCountryByIso2Code($iso2code)
     {
@@ -92,4 +96,5 @@ class CountryManager implements CountryManagerInterface
             throw new CountryExistsException();
         }
     }
+
 }
