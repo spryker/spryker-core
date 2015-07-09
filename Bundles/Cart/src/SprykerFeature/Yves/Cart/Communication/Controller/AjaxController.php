@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerFeature\Yves\Cart\Communication\Controller;
 
 use SprykerFeature\Yves\Cart\Communication\Plugin\CartControllerProvider;
 use SprykerEngine\Yves\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AjaxController extends AbstractController
@@ -22,7 +22,7 @@ class AjaxController extends AbstractController
         $cart = $cartClient->getCart();
         foreach ($cart->getItems() as $item) {
             if (empty($item->getName())) {
-                $item->setName('Product '.mt_rand(1,99));
+                $item->setName('Product ' . mt_rand(1, 99));
             }
         }
 

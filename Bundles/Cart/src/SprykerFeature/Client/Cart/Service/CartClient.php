@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -112,10 +113,10 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     *
      * @param string $sku
      *
      * @throws \InvalidArgumentException
+     *
      * @return CartItemInterface
      */
     private function getItemBySku($sku)

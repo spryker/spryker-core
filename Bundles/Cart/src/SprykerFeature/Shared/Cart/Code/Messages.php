@@ -1,8 +1,8 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 interface SprykerFeature_Shared_Cart_Code_Messages
 {
 
@@ -25,4 +25,5 @@ interface SprykerFeature_Shared_Cart_Code_Messages
     const ERROR_LOAD_PRODUCT = 'cart.error.load.product';
     const ERROR_MAX_ITEMS_EXCEEDED = 'cart.error.max.items.exceeded';
     const ERROR_INVALID_OPTION_SPECIFIED = 'cart.error.invalid.option.specified';
+
 }

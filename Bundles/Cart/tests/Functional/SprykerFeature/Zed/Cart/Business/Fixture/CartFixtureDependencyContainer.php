@@ -8,8 +8,10 @@ use SprykerFeature\Zed\Cart\CartConfig;
 
 class CartFixtureDependencyContainer extends CartDependencyContainer
 {
+
     public function getConfig()
     {
         return new CartConfig(Config::getInstance(), $this->getLocator());
     }
+
 }

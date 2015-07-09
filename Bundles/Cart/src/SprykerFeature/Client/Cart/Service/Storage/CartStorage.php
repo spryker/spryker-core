@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Shared\ProductFrontendExporterConnector\Code\KeyBuilder\Share
 
 class CartStorage extends SharedAbstractProductResourceKeyBuilder implements CartStorageInterface
 {
+
     /**
      * @var StorageClientInterface
      */

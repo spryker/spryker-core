@@ -19,4 +19,5 @@ class ProductIdPlugin extends AbstractPlugin implements ItemExpanderPluginInterf
 
         return $change;
     }
+
 }

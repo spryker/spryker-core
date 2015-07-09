@@ -2,12 +2,8 @@
 
 namespace Functional\SprykerFeature\Zed\Cart\Business;
 
-use Codeception\TestCase\Test;
-use Functional\SprykerFeature\Zed\Cart\Fixture\CartFacadeFixture;
 use Generated\Shared\Transfer\TaxItemTransfer;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
@@ -27,6 +23,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
  */
 class CartFacadeTest extends AbstractFunctionalTest
 {
+
     const PRICE_TYPE_DEFAULT = 'DEFAULT';
     const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
     const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';

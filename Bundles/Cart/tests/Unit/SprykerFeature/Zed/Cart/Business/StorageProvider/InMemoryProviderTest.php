@@ -68,7 +68,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $changedItems);
 
         $skuIndex = [];
-        /** @var CartItemInterface $cartItem */
+        /* @var CartItemInterface $cartItem */
         foreach ($changedItems as $key => $changedItem) {
             $skuIndex[$changedItem->getId()] = $key;
         }
@@ -185,9 +185,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->provider->removeItems($cart, $change);
     }
 
-
     /**
-     *
      * @param string $itemId
      * @param int $itemQuantity
      *

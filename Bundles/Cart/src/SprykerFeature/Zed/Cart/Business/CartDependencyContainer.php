@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerFeature\Zed\Cart\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CartBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Cart\Business\Operator\OperatorInterface;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
@@ -112,4 +112,5 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
 
         return $operator;
     }
+
 }

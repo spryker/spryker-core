@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use SprykerEngine\Yves\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Yves\Cart\CartDependencyContainer;
 use SprykerFeature\Yves\Cart\Communication\Plugin\CartControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CartDependencyContainer getDependencyContainer()
