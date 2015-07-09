@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Yves\Assets\Model\UrlParameterCacheBuster;
 
 class UrlParameterCacheBusterTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @group Asset
      */
@@ -30,4 +32,5 @@ class UrlParameterCacheBusterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('bar.css?v=' . (string) $cacheBust, $provider->addCacheBust('bar.css'));
     }
+
 }
