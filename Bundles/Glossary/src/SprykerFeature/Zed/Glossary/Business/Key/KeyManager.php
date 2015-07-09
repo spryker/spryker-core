@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKey;
 
 class KeyManager implements KeyManagerInterface
 {
+
     /**
      * @var GlossaryQueryContainerInterface
      */
@@ -37,8 +39,9 @@ class KeyManager implements KeyManagerInterface
      * @param string $currentKeyName
      * @param string $newKeyName
      *
-     * @return bool
      * @throws MissingKeyException
+     *
+     * @return bool
      */
     public function updateKey($currentKeyName, $newKeyName)
     {
@@ -82,8 +85,9 @@ class KeyManager implements KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @return SpyGlossaryKey
      * @throws MissingKeyException
+     *
+     * @return SpyGlossaryKey
      */
     public function getKey($keyName)
     {
@@ -128,10 +132,11 @@ class KeyManager implements KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @return int
      * @throws KeyExistsException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return int
      */
     public function createKey($keyName)
     {
@@ -160,4 +165,5 @@ class KeyManager implements KeyManagerInterface
             );
         }
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderTrait;
 
 trait GlossaryKeyBuilder
 {
+
     use KeyBuilderTrait;
 
     /**

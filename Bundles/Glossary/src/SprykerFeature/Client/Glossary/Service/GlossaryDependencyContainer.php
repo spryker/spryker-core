@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,7 +9,6 @@ namespace SprykerFeature\Client\Glossary\Service;
 use Generated\Client\Ide\FactoryAutoCompletion\GlossaryService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Glossary\GlossaryDependencyProvider;
-use SprykerFeature\Client\Glossary\Service\Storage\GlossaryStorage;
 use SprykerFeature\Client\Glossary\Service\Storage\GlossaryStorageInterface;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;

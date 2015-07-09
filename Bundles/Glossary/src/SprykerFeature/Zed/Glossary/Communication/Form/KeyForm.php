@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -53,7 +54,7 @@ class KeyForm extends AbstractForm
                 new Required([
                     new Type([
                         'type' => 'string',
-                        'message' => 'Please add glossary key'
+                        'message' => 'Please add glossary key',
                     ]),
                     new NotBlank(),
                 ]),
@@ -73,4 +74,5 @@ class KeyForm extends AbstractForm
             ;
         }
     }
+
 }

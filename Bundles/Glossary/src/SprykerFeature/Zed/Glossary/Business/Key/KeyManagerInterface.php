@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,13 +13,15 @@ use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKey;
 
 interface KeyManagerInterface
 {
+
     /**
      * @param string $keyName
      *
-     * @return int
      * @throws KeyExistsException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return int
      */
     public function createKey($keyName);
 
@@ -32,8 +35,9 @@ interface KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @return SpyGlossaryKey
      * @throws MissingKeyException
+     *
+     * @return SpyGlossaryKey
      */
     public function getKey($keyName);
 
@@ -41,8 +45,9 @@ interface KeyManagerInterface
      * @param string $currentKeyName
      * @param string $newKeyName
      *
-     * @return bool
      * @throws MissingKeyException
+     *
+     * @return bool
      */
     public function updateKey($currentKeyName, $newKeyName);
 
@@ -54,4 +59,5 @@ interface KeyManagerInterface
     public function deleteKey($keyName);
 
     public function synchronizeKeys();
+
 }
