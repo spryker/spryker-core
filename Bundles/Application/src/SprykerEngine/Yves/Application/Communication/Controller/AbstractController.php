@@ -24,11 +24,6 @@ abstract class AbstractController
 {
 
     /**
-     * @var Factory
-     */
-    private $factory;
-
-    /**
      * @var Application
      */
     private $app;
@@ -51,20 +46,11 @@ abstract class AbstractController
     public function __construct(Application $app, Factory $factory, LocatorLocatorInterface $locator)
     {
         $this->app = $app;
-        $this->factory = $factory;
         $this->locator = $locator;
 
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
         }
-    }
-
-    /**
-     * @return Factory
-     */
-    protected function getFactory()
-    {
-        return $this->factory;
     }
 
     /**
