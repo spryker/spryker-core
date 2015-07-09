@@ -35,6 +35,8 @@ class DetailsController extends AbstractController
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
 
         $allEvents = $this->groupEvents($events);
+        $gui['orderItemsTable'] = new DetailsTable();
+        $gui['orderItemsTable']->prepareDate($orderItems);
 
         $gui['orderItemsTable'] = new DetailsTable();
 
