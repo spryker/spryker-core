@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,15 +16,16 @@ use SprykerFeature\Client\Checkout\Service\Zed\CheckoutStub;
  */
 class CheckoutClient extends AbstractClient implements CheckoutClientInterface
 {
+
     /**
      * @param CheckoutRequestInterface $checkoutRequest
+     *
      * @return TransferInterface
      */
     public function requestCheckout(CheckoutRequestInterface $checkoutRequest)
     {
         return $this->getZedStub()->requestCheckout($checkoutRequest);
     }
-
 
     /**
      * @return CheckoutStub
@@ -32,4 +34,5 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
     {
         return $this->getDependencyContainer()->createZedStub();
     }
+
 }

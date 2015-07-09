@@ -44,7 +44,7 @@
         <property name="priceToPay" type="int" />
         <property name="quantity" type="int" />
     </transfer>
-    
+
     <transfer name="CustomerAddress">
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />

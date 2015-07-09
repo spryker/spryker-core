@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -33,4 +34,5 @@ class ResponseManipulatorPrecondition implements CheckoutPreconditionInterface
     {
         $checkoutResponse->fromArray($this->checkoutResponse->toArray(true));
     }
+
 }

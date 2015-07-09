@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -29,4 +30,5 @@ class CheckoutDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS)
         );
     }
+
 }

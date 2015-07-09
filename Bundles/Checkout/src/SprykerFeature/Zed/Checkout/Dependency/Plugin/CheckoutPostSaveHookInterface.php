@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Checkout\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
@@ -17,4 +17,5 @@ interface CheckoutPostSaveHookInterface
      * @param CheckoutResponseTransfer $checkoutResponse
      */
     public function executeHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
+
 }

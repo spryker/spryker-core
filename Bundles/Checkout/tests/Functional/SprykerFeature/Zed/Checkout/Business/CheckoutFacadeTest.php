@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,7 +12,6 @@ use Functional\SprykerFeature\Zed\Checkout\Dependency\OmsFacade;
 use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
@@ -369,4 +369,5 @@ class CheckoutFacadeTest extends Test
 
         return $checkoutRequest;
     }
+
 }

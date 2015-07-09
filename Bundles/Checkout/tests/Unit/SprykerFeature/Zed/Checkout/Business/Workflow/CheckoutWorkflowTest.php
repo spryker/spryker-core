@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -240,4 +241,5 @@ class CheckoutWorkflowTest extends Test
 
         $this->assertEquals($checkoutResponse, $result);
     }
+
 }

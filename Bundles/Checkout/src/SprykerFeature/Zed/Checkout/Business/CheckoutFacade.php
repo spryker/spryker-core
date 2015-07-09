@@ -1,14 +1,13 @@
 <?php
+
 /**
 * (c) Spryker Systems GmbH copyright protected
 */
 
 namespace SprykerFeature\Zed\Checkout\Business;
 
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -30,4 +29,5 @@ class CheckoutFacade extends AbstractFacade
             ->requestCheckout($checkoutRequest)
             ;
     }
+
 }
