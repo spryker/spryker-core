@@ -1,10 +1,10 @@
 <?php
 namespace SprykerFeature\Zed\Sales\Communication\Table;
 
-use SprykerFeature\Zed\Gui\Communication\Table\BaseTable;
-use SprykerFeature\Zed\Gui\Communication\Table\BaseTableConfiguration;
+use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
+use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-class DetailsTable extends BaseTable
+class DetailsTable extends AbstractTable
 {
 
     /**
@@ -14,12 +14,16 @@ class DetailsTable extends BaseTable
     {
 
         $this->loadObjectCollection($data);
-        $config = new BaseTableConfiguration();
+
+        $config = new TableConfiguration();
         $config->setHeaders([
             'header1' => 'First header'
         ]);
+
         $config->setSortable(['header1']);
+
         $config->setPageLength(2);
+
         $this->setConfiguration($config);
 
     }

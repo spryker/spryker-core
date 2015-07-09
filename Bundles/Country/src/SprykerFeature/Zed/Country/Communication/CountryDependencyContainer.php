@@ -6,8 +6,11 @@
 
 namespace SprykerFeature\Zed\Country\Communication;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\CountryCommunication;
+use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Country\Business\CountryFacade;
+use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
 
 class CountryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
@@ -20,4 +23,10 @@ class CountryDependencyContainer extends AbstractCommunicationDependencyContaine
         return $this->getLocator()->country()->facade();
     }
 
+
+    public function createDetailsTable()
+    {
+        $countryQuery = $this->getQueryContainer()->queryCountries();
+        return $this->getFactory()->createTableDetailsTable($countryQuery);
+    }
 }
