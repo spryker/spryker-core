@@ -1,26 +1,29 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Shared\ZedRequest\Provider;
 
-use \SprykerFeature\Shared\Library\Config;
-use \SprykerFeature\Shared\System\SystemConfig;
-use \SprykerFeature\Shared\Yves\YvesConfig;
+use SprykerFeature\Shared\Library\Config;
+use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Yves\YvesConfig;
 use SprykerEngine\Shared\Kernel\AbstractClientProvider;
 use SprykerFeature\Shared\ZedRequest\Client\AbstractZedClient;
 
 /**
  * Class ZedRequestClientProvider
- * @package SprykerFeature\Shared\ZedRequest
+ *
  * @method AbstractZedClient getInstance()
  */
 abstract class AbstractZedClientProvider extends AbstractClientProvider
 {
+
     /**
-     * @return AbstractZedClient
      * @throws \Exception
+     *
+     * @return AbstractZedClient
      */
     protected function createClient()
     {
@@ -34,4 +37,5 @@ abstract class AbstractZedClientProvider extends AbstractClientProvider
 
         return $this->factory->createClientZedClient($httpClient);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -102,8 +103,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param array $metaTransfers
      * @param null $timeoutInSeconds
      * @param bool $isBackgroundRequest
-     * @return \SprykerFeature\Shared\Library\Communication\Response
+     *
      * @throws \LogicException
+     *
+     * @return \SprykerFeature\Shared\Library\Communication\Response
      */
     public function request(
         $pathInfo,
@@ -141,6 +144,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param bool $isBackgroundRequest
+     *
      * @return bool
      */
     protected function isRequestAllowed($isBackgroundRequest)
@@ -151,6 +155,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
             }
             self::$alreadyRequested = true;
         }
+
         return true;
     }
 
@@ -167,14 +172,14 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $this->baseUrl,
             [
                 Client::REQUEST_OPTIONS => [
-                    'timeout' => ($timeoutInSeconds ? : self::$timeoutInSeconds),
-                    'connect_timeout' => 1.5
-                ]
+                    'timeout' => ($timeoutInSeconds ?: self::$timeoutInSeconds),
+                    'connect_timeout' => 1.5,
+                ],
             ]
         );
 
-        $char = (strpos($pathInfo, '?') === false) ? '?' :' &';
-        $pathInfo .= $char.'yvesRequestId='.Lumberjack::getInstance()->getRequestId();
+        $char = (strpos($pathInfo, '?') === false) ? '?' : ' &';
+        $pathInfo .= $char . 'yvesRequestId=' . Lumberjack::getInstance()->getRequestId();
 
         $client->setUserAgent('Yves 2.0');
         /** @var EntityEnclosingRequest $request */
@@ -196,15 +201,17 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param TransferInterface $transferObject
      * @param array $metaTransfers
-     * @return AbstractRequest
+     *
      * @throws \LogicException
+     *
+     * @return AbstractRequest
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
         $request = $this->getClientRequest();
         $request->setSessionId(session_id());
         $request->setTime(time());
-        $request->setHost(System::getHostname()?: 'n/a');
+        $request->setHost(System::getHostname() ?: 'n/a');
 
         foreach ($metaTransfers as $name => $metaTransfer) {
             if (!is_string($name) || is_numeric($name) || !$metaTransfer instanceof TransferInterface) {
@@ -222,8 +229,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param EntityEnclosingRequest $request
-     * @return Response
+     *
      * @throws InvalidZedResponseException
+     *
+     * @return Response
      */
     protected function sendRequest(EntityEnclosingRequest $request)
     {
@@ -237,8 +246,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param Response $response
-     * @return ZedResponse
+     *
      * @throws InvalidZedResponseException
+     *
+     * @return ZedResponse
      */
     protected function getTransferFromResponse(Response $response)
     {
@@ -296,6 +307,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * Used for debug output
+     *
      * @return int
      */
     public static function getRequestCounter()
@@ -329,4 +341,5 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
         return $request;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\ZedRequest\Client;
 
 abstract class AbstractObject implements ObjectInterface
 {
+
     /**
      * @var array
      */
@@ -43,7 +45,7 @@ abstract class AbstractObject implements ObjectInterface
                     }
 
                     if (is_object($subValue) && method_exists($subValue, 'toArray')) {
-                        /** @var ObjectInterface $subValue */
+                        /* @var ObjectInterface $subValue */
                         $value[$subKey] = $subValue->toArray(false);
                     }
                 }
@@ -55,6 +57,7 @@ abstract class AbstractObject implements ObjectInterface
                 continue;
             }
         }
+
         return $values;
     }
 
@@ -66,4 +69,5 @@ abstract class AbstractObject implements ObjectInterface
         $values = array_intersect_key($values, $this->values);
         $this->values = array_merge($this->values, $values);
     }
+
 }

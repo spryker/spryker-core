@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,11 +7,11 @@
 namespace SprykerFeature\Shared\ZedRequest\Client;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Kernel\TransferLocatorHelper;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
 abstract class AbstractRequest extends AbstractObject implements EmbeddedTransferInterface, RequestInterface
 {
+
     /**
      * @var array
      */
@@ -43,16 +44,19 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
 
     /**
      * @param string $host
+     *
      * @return $this
      */
     public function setHost($host)
     {
         $this->values['host'] = $host;
+
         return $this;
     }
 
     /**
      * @param string $name
+     *
      * @return TransferInterface
      */
     public function getMetaTransfer($name)
@@ -65,19 +69,21 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
 
             return $transfer;
         }
-        return null;
+
+        return;
     }
 
     /**
      * @param string $name
      * @param TransferInterface $transferObject
+     *
      * @return $this
      */
     public function addMetaTransfer($name, TransferInterface $transferObject)
     {
         $this->values['metaTransfers'][$name] = [
             'data' => $transferObject->toArray(false),
-            'className' => get_class($transferObject)
+            'className' => get_class($transferObject),
         ];
 
         return $this;
@@ -93,11 +99,13 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
 
     /**
      * @param string $password
+     *
      * @return $this
      */
     public function setPassword($password)
     {
         $this->values['password'] = $password;
+
         return $this;
     }
 
@@ -111,11 +119,13 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
 
     /**
      * @param string $sessionId
+     *
      * @return $this
      */
     public function setSessionId($sessionId)
     {
         $this->values['sessionId'] = $sessionId;
+
         return $this;
     }
 
@@ -129,11 +139,13 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
 
     /**
      * @param string $time
+     *
      * @return $this
      */
     public function setTime($time)
     {
         $this->values['time'] = $time;
+
         return $this;
     }
 
@@ -151,11 +163,12 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
             return $transfer;
         }
 
-        return null;
+        return;
     }
 
     /**
      * @param TransferInterface $transferObject
+     *
      * @return $this
      */
     public function setTransfer(TransferInterface $transferObject)
@@ -176,11 +189,13 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
 
     /**
      * @param string $username
+     *
      * @return $this
      */
     public function setUsername($username)
     {
         $this->values['username'] = $username;
+
         return $this;
     }
 
@@ -195,4 +210,5 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
 
         return $transfer;
     }
+
 }

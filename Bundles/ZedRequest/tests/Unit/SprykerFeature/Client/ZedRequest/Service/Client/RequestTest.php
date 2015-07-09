@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,6 +25,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      * @param TransferInterface $transfer
      * @param TransferInterface $metaTransfer1
      * @param TransferInterface $metaTransfer2
+     *
      * @return Request
      */
     protected function createFullRequest(
@@ -119,4 +121,5 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($request, $newRequest);
         $this->assertNotSame($request, $newRequest);
     }
+
 }

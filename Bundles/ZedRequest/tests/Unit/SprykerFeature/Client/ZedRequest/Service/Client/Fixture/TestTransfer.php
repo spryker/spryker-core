@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,6 +26,7 @@ class TestTransfer extends AbstractTransfer
 
     /**
      * @param string $foo
+     *
      * @return TestTransfer
      */
     public function setFoo($foo)
@@ -33,6 +35,5 @@ class TestTransfer extends AbstractTransfer
 
         return $this;
     }
-
 
 }

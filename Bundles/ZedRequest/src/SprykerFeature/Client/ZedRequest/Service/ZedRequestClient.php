@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,4 +35,5 @@ class ZedRequestClient extends AbstractClient
     {
         return $this->getClient()->call($url, $object, $timeoutInSeconds, $isBackgroundRequest);
     }
+
 }

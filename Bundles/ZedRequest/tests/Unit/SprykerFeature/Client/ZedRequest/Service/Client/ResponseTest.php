@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,6 +22,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param TransferInterface $transfer
+     *
      * @return Response
      */
     protected function createFullResponse(TransferInterface $transfer)
@@ -28,8 +30,8 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $response = new Response();
 
         $response->setSuccess(false);
-        $response->addErrorMessages([new Message(['message'=>'error'])]);
-        $response->addMessages([new Message(['message'=>'test'])]);
+        $response->addErrorMessages([new Message(['message' => 'error'])]);
+        $response->addMessages([new Message(['message' => 'test'])]);
         $response->setTransfer($transfer);
 
         return $response;
@@ -57,8 +59,8 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $response = $this->createFullResponse($transfer);
 
         $this->assertEquals(false, $response->isSuccess());
-        $this->assertEquals([new Message(['message'=>'error'])], $response->getErrorMessages());
-        $this->assertEquals([new Message(['message'=>'test'])], $response->getMessages());
+        $this->assertEquals([new Message(['message' => 'error'])], $response->getErrorMessages());
+        $this->assertEquals([new Message(['message' => 'test'])], $response->getMessages());
         $this->assertEquals($transfer, $response->getTransfer());
         $this->assertNotSame($transfer, $response->getTransfer());
         $this->assertNotSame($response->getTransfer(), $response->getTransfer());
@@ -86,12 +88,13 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response();
 
-        $response->addErrorMessage(new Message(['message'=>'error']));
-        $response->addMessage(new Message(['message'=>'test']));
+        $response->addErrorMessage(new Message(['message' => 'error']));
+        $response->addMessage(new Message(['message' => 'test']));
 
         $this->assertEquals(true, $response->hasErrorMessage('error'));
         $this->assertEquals(false, $response->hasErrorMessage('test'));
         $this->assertEquals(false, $response->hasMessage('error'));
         $this->assertEquals(true, $response->hasMessage('test'));
     }
+
 }
