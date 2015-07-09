@@ -185,10 +185,12 @@ class CheckoutFacadeTest extends Test
         $abstractProduct1 = new SpyAbstractProduct();
         $abstractProduct1
             ->setSku('AOSB1339')
+            ->setAttributes('{}')
         ;
         $concreteProduct1 = new SpyProduct();
         $concreteProduct1
             ->setSku('OSB1339')
+            ->setAttributes('{}')
             ->setSpyAbstractProduct($abstractProduct1)
             ->save()
         ;
@@ -261,10 +263,12 @@ class CheckoutFacadeTest extends Test
         $abstractProduct1 = new SpyAbstractProduct();
         $abstractProduct1
             ->setSku('AOSB1337')
+            ->setAttributes('{}')
         ;
         $concreteProduct1 = new SpyProduct();
         $concreteProduct1
             ->setSku('OSB1337')
+            ->setAttributes('{}')
             ->setSpyAbstractProduct($abstractProduct1)
             ->save()
         ;
@@ -272,11 +276,13 @@ class CheckoutFacadeTest extends Test
         $abstractProduct2 = new SpyAbstractProduct();
         $abstractProduct2
             ->setSku('AOSB1338')
+            ->setAttributes('{}')
         ;
         $concreteProduct2 = new SpyProduct();
         $concreteProduct2
             ->setSku('OSB1338')
             ->setSpyAbstractProduct($abstractProduct2)
+            ->setAttributes('{}')
             ->save()
         ;
 
