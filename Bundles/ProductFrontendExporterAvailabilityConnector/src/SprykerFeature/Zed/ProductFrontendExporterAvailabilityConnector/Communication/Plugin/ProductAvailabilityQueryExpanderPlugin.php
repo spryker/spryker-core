@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\Stock\Persistence\Propel\Map\SpyStockProductTableMap;
 
 class ProductAvailabilityQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+
     /**
      * @return string
      */
@@ -51,4 +53,5 @@ class ProductAvailabilityQueryExpanderPlugin extends AbstractPlugin implements Q
     {
         return 100;
     }
+
 }
