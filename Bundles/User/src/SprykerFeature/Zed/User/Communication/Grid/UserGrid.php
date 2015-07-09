@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,10 +7,10 @@
 namespace SprykerFeature\Zed\User\Communication\Grid;
 
 use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
-use SprykerFeature\Zed\Ui\Dependency\Plugin\GridPluginInterface;
 
 class UserGrid extends AbstractGrid
 {
+
     const ID = 'id_user_user';
     const FIRST_NAME = 'first_name';
     const LAST_NAME = 'last_name';
@@ -67,4 +68,5 @@ class UserGrid extends AbstractGrid
 
         ];
     }
+
 }

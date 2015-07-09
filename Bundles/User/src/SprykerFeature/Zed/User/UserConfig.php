@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\User;
 
-use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\User\UserConfig as UserSharedConfig;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
@@ -33,11 +33,11 @@ class UserConfig extends AbstractBundleConfig
     {
         return [
             [
-                "firstName" => "Admin",
-                "lastName" => "Spryker",
-                "username" => "admin@spryker.com",
-                "password" => "change123"
-            ]
+                'firstName' => 'Admin',
+                'lastName' => 'Spryker',
+                'username' => 'admin@spryker.com',
+                'password' => 'change123',
+            ],
         ];
     }
 
@@ -50,4 +50,5 @@ class UserConfig extends AbstractBundleConfig
 
         return $users;
     }
+
 }

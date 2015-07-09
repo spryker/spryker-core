@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\User\Business;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\UserBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\User\Business\Model\Installer;
@@ -19,6 +19,7 @@ use SprykerFeature\Zed\User\UserConfig;
  */
 class UserDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return UserInterface
      */
@@ -50,4 +51,5 @@ class UserDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getConfig()
         );
     }
+
 }

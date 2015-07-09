@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\User\Persistence;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\UserPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
@@ -40,4 +40,5 @@ class UserDependencyContainer extends AbstractPersistenceDependencyContainer
     {
         return $this->getFactory()->createPropelSpyUserUserQuery();
     }
+
 }

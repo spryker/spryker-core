@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\User\Communication;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\UserCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
@@ -83,4 +83,5 @@ class UserDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getLocator()->user()->facade();
     }
+
 }

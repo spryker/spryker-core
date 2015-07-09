@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,14 +13,16 @@ use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 
 interface UserInterface
 {
+
     /**
      * @param string $firstName
      * @param string $lastName
      * @param string $username
      * @param string $password
      *
-     * @return UserTransfer
      * @throws UsernameExistsException
+     *
+     * @return UserTransfer
      */
     public function addUser($firstName, $lastName, $username, $password);
 
@@ -41,8 +44,9 @@ interface UserInterface
     /**
      * @param UserTransfer $user
      *
-     * @return UserTransfer
      * @throws UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function save(UserTransfer $user);
 
@@ -63,16 +67,18 @@ interface UserInterface
     /**
      * @param string $username
      *
-     * @return UserTransfer
      * @throws UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function getUserByUsername($username);
 
     /**
      * @param int $id
      *
-     * @return UserTransfer
      * @throws UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function getUserById($id);
 
@@ -101,8 +107,10 @@ interface UserInterface
     public function getSystemUsers();
 
     /**
-     * @return UserTransfer
      * @throws UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function getCurrentUser();
+
 }
