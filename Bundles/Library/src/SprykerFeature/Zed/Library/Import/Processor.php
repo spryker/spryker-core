@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use Psr\Log\LoggerInterface;
  */
 class Processor implements ProcessorInterface
 {
+
     /**
      * @var ReaderInterface
      */
@@ -246,9 +248,9 @@ class Processor implements ProcessorInterface
      * @param array $data
      * @param ProcessInterface $process
      *
-     * @return array
-     *
      * @throws Exception\ProcessorFailedException
+     *
+     * @return array
      */
     protected function filter(array $data, ProcessInterface $process)
     {
@@ -274,4 +276,5 @@ class Processor implements ProcessorInterface
     {
         $this->deleteNullValues = $deleteNullValues;
     }
+
 }

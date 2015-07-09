@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -30,4 +31,5 @@ abstract class TwigFilter extends \Twig_SimpleFilter
     {
         return ['is_safe' => ['html']];
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class TransferSession
 {
+
     /**
      * @var Session
      */
@@ -67,4 +69,5 @@ class TransferSession
     {
         return $this->session->remove($name);
     }
+
 }

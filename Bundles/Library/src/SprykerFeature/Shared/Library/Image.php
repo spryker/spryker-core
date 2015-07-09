@@ -1,8 +1,8 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 use SprykerFeature\Shared\Library\Cloud;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\ProductImage\ProductImageConfig;
@@ -46,10 +46,9 @@ class SprykerFeature_Shared_Library_Image
     public static function getAbsoluteProductImageUrl($filename)
     {
 
-
         $urlDomain = self::getStaticMediaUrl();
 
-        if ($filename == '') {
+        if ($filename === '') {
             $applicationName = APPLICATION;
 
             switch ($applicationName) {
@@ -75,20 +74,20 @@ class SprykerFeature_Shared_Library_Image
             [
                 $urlDomain,
                 \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName(),
-                Config::get(ProductImageConfig::PRODUCT_IMAGE_IMAGE_URL_PREFIX), $urlKey
+                Config::get(ProductImageConfig::PRODUCT_IMAGE_IMAGE_URL_PREFIX), $urlKey,
             ]
-
 
         );
     }
 
     /**
      * @param string $objectName
+     *
      * @return string
      */
     protected static function getAbsoluteProductImageUrlForCloudUsage($objectName)
     {
-        if (static::getProtocol() == self::HTTP) {
+        if (static::getProtocol() === self::HTTP) {
             $host = Config::get(SystemConfig::CLOUD_CDN_STATIC_MEDIA_HTTP);
         } else {
             $host = Config::get(SystemConfig::CLOUD_CDN_STATIC_MEDIA_HTTPS);
@@ -101,8 +100,10 @@ class SprykerFeature_Shared_Library_Image
     /**
      * @param array $images
      * @param string $order
-     * @return array
+     *
      * @throws \ErrorException
+     *
+     * @return array
      */
     public static function getGroupedImagesBySize(array $images, $order = self::ORDER_WEIGHT_ASC)
     {
@@ -115,7 +116,7 @@ class SprykerFeature_Shared_Library_Image
             if (null === $virtualDirectory) {
                 $virtualDirectory = $parts[self::POSITION_DIRECTORY];
             } else {
-                if ($virtualDirectory != $parts[self::POSITION_DIRECTORY]) {
+                if ($virtualDirectory !== $parts[self::POSITION_DIRECTORY]) {
                     throw new \ErrorException('You cannot mix product images from different products');
                 }
             }
@@ -129,7 +130,7 @@ class SprykerFeature_Shared_Library_Image
 
         foreach ($groupedImages as &$images) {
             ksort($images);
-            if ($order == self::ORDER_WEIGHT_DESC) {
+            if ($order === self::ORDER_WEIGHT_DESC) {
                 $images = array_reverse($images, true);
             }
         }
@@ -140,6 +141,7 @@ class SprykerFeature_Shared_Library_Image
     /**
      * @param array $groupedImageFileNames
      * @param string $size
+     *
      * @return mixed|string
      */
     public static function getFirstProductImageFilenameBySize(array $groupedImageFileNames, $size = self::SIZE_L)
@@ -154,6 +156,7 @@ class SprykerFeature_Shared_Library_Image
     /**
      * @param array $groupedImageFileNames
      * @param string $size
+     *
      * @return array
      */
     public static function getAllProductImagesBySize(array $groupedImageFileNames, $size = self::SIZE_L)
@@ -173,6 +176,7 @@ class SprykerFeature_Shared_Library_Image
         if (self::HTTPS === self::getProtocol()) {
             return Config::get(SystemConfig::HOST_SSL_STATIC_MEDIA);
         }
+
         return Config::get(SystemConfig::HOST_STATIC_MEDIA);
     }
 
@@ -181,11 +185,12 @@ class SprykerFeature_Shared_Library_Image
      */
     protected static function getProtocol()
     {
-        if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1)
-            || isset($_SERVER['X-Forwarded-Proto']) && $_SERVER['X-Forwarded-Proto'] == 'https'
+        if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] === 1)
+            || isset($_SERVER['X-Forwarded-Proto']) && $_SERVER['X-Forwarded-Proto'] === 'https'
         ) {
             return self::HTTPS;
         }
+
         return self::HTTP;
     }
 
@@ -195,6 +200,8 @@ class SprykerFeature_Shared_Library_Image
     protected static function getSchema()
     {
         $protocol = self::getProtocol();
+
         return $protocol . '://';
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ abstract class AbstractFormController extends AbstractWidgetController
 
     /**
      * @param Request $request
+     *
      * @return array
      */
     public function indexAction(Request $request)
@@ -29,6 +31,7 @@ abstract class AbstractFormController extends AbstractWidgetController
 
     /**
      * @param Request $request
+     *
      * @return mixed|void
      */
     protected function initialize(Request $request)
@@ -38,6 +41,7 @@ abstract class AbstractFormController extends AbstractWidgetController
 
     /**
      * @param Request $request
+     *
      * @return mixed
      */
     abstract protected function initializeForm(Request $request);
@@ -49,4 +53,5 @@ abstract class AbstractFormController extends AbstractWidgetController
     {
         return $this->renderWidget('form', $this->form);
     }
+
 }

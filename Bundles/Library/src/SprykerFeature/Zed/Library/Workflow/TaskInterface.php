@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Library\Workflow;
 
 interface TaskInterface
 {
+
     /**
      * @return bool
      */
@@ -16,4 +18,5 @@ interface TaskInterface
      * @return array
      */
     public function getErrors();
+
 }

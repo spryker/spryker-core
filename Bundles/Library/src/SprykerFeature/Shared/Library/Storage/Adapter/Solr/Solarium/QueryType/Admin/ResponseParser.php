@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,15 +11,18 @@ use Solarium\Core\Query\ResponseParserInterface as ResponseParserInterface;
 
 /**
  * Class ResponseParser
- * @package SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin
  */
 class ResponseParser extends ResponseParserAbstract implements ResponseParserInterface
 {
+
     /**
      * Get result data for the response
      *
-     * @throws \RuntimeException
+     *
      * @param \Solarium\Core\Client\Request $result
+     *
+     * @throws \RuntimeException
+     *
      * @return array
      */
     public function parse($result)
@@ -27,4 +31,5 @@ class ResponseParser extends ResponseParserAbstract implements ResponseParserInt
         //result before returning
         return $result;
     }
+
 }

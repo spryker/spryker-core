@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,7 +14,7 @@ class Autoloader
      */
     private static $allowedNamespaces = [
         'SprykerFeature',
-        'SprykerEngine'
+        'SprykerEngine',
     ];
 
     /**
@@ -35,7 +36,7 @@ class Autoloader
      * @var array
      */
     private $classMap = [];
-    
+
     /**
      * @param string $rootDirectory
      * @param string $vendorDirectory
@@ -127,8 +128,9 @@ class Autoloader
     /**
      * @param string $resourceName
      *
-     * @return bool|string
      * @throws \Exception
+     *
+     * @return bool|string
      */
     protected function findFile($resourceName)
     {
@@ -177,6 +179,7 @@ class Autoloader
                 return true;
             }
         }
+
         return false;
     }
 
@@ -208,4 +211,5 @@ class Autoloader
             throw new \Exception('You are not allowed to load this class in your app. (' . implode('\\', $resourceParts) . ')');
         }
     }
+
 }

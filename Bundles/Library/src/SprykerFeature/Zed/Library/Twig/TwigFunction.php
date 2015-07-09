@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -30,4 +31,5 @@ abstract class TwigFunction extends \Twig_SimpleFunction
     {
         return ['is_safe' => ['html']];
     }
+
 }

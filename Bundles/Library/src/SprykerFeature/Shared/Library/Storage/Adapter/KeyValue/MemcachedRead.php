@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 
 class MemcachedRead extends Memcached implements ReadInterface
 {
+
     /**
      * @param string $key
      *
@@ -64,4 +66,5 @@ class MemcachedRead extends Memcached implements ReadInterface
 
         return (int) $currentStats['curr_items'];
     }
+
 }

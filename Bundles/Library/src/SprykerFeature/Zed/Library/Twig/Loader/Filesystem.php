@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,7 +17,7 @@ class Filesystem extends \Twig_Loader_Filesystem
      */
     public function setPaths($paths, $namespace = self::MAIN_NAMESPACE)
     {
-        $this->paths = array();
+        $this->paths = [];
         foreach ($paths as $path) {
             $this->addPath($path);
         }
@@ -29,7 +30,7 @@ class Filesystem extends \Twig_Loader_Filesystem
     public function addPath($path, $namespace = self::MAIN_NAMESPACE)
     {
         // invalidate the cache
-        $this->cache = array();
+        $this->cache = [];
         $this->paths[] = rtrim($path, '/\\');
     }
 
@@ -40,7 +41,7 @@ class Filesystem extends \Twig_Loader_Filesystem
     public function prependPath($path, $namespace = self::MAIN_NAMESPACE)
     {
         // invalidate the cache
-        $this->cache = array();
+        $this->cache = [];
 
         $path = rtrim($path, '/\\');
 
@@ -82,7 +83,7 @@ class Filesystem extends \Twig_Loader_Filesystem
         $name = (string) $name;
 
         // normalize name
-        $name = str_replace(array('///','//','\\'), '/', $name);
+        $name = str_replace(['///', '//', '\\'], '/', $name);
 
         $nameParts = explode('/', $name);
         $templateName = array_pop($nameParts);
@@ -101,7 +102,7 @@ class Filesystem extends \Twig_Loader_Filesystem
 
         $this->validateName($name);
 
-        if (isset($name[0]) && '@' == $name[0]) {
+        if (isset($name[0]) && '@' === $name[0]) {
             if (false === $pos = strpos($name, '/')) {
                 $this->cache[$name] = false;
                 throw new \Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
@@ -119,6 +120,7 @@ class Filesystem extends \Twig_Loader_Filesystem
         }
         $bundle = ucfirst(substr($name, 1, $pos));
         $templateName = substr($name, $pos + 2);
+
         return $this->load($name, $bundle, $templateName);
     }
 
@@ -126,8 +128,10 @@ class Filesystem extends \Twig_Loader_Filesystem
      * @param $name
      * @param $bundle
      * @param $templateName
-     * @return string
+     *
      * @throws \Twig_Error_Loader
+     *
+     * @return string
      */
     protected function load($name, $bundle, $templateName)
     {
@@ -141,4 +145,5 @@ class Filesystem extends \Twig_Loader_Filesystem
         $this->cache[$name] = false;
         throw new \Twig_Error_Loader(sprintf('Unable to find template "%s" (looked into: %s).', $templateName, implode(', ', $paths)));
     }
+
 }

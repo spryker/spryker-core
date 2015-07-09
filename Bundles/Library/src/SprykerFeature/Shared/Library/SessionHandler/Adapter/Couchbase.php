@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ class Couchbase implements \SessionHandlerInterface
 
     /**
      * e.g. ['127.0.0.1:8091']
+     *
      * @var array
      */
     protected $hosts = [];
@@ -69,10 +71,12 @@ class Couchbase implements \SessionHandlerInterface
     /**
      * @param string $savePath
      * @param string $sessionName
+     *
      * @return bool
      */
     public function open($savePath, $sessionName) {
         $this->connection = new \Couchbase($this->hosts, $this->user, $this->password, $this->bucketName, $this->persistent);
+
         return $this->connection ? true : false;
     }
 
@@ -81,11 +85,13 @@ class Couchbase implements \SessionHandlerInterface
      */
     public function close() {
         unset($this->connection);
+
         return true;
     }
 
     /**
      * @param string $sessionId
+     *
      * @return null|string
      */
     public function read($sessionId) {
@@ -101,6 +107,7 @@ class Couchbase implements \SessionHandlerInterface
     /**
      * @param string $sessionId
      * @param string $sessionData
+     *
      * @return bool
      */
     public function write($sessionId, $sessionData) {
@@ -119,6 +126,7 @@ class Couchbase implements \SessionHandlerInterface
 
     /**
      * @param int|string $sessionId
+     *
      * @return bool
      */
     public function destroy($sessionId) {
@@ -133,9 +141,11 @@ class Couchbase implements \SessionHandlerInterface
 
     /**
      * @param int $maxLifetime
+     *
      * @return bool
      */
     public function gc($maxLifetime) {
         return true;
     }
+
 }

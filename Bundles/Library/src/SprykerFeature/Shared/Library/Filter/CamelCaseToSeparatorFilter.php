@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Library\Filter;
 
 class CamelCaseToSeparatorFilter implements FilterInterface
 {
+
     /**
      * @var string
      */
@@ -22,10 +24,12 @@ class CamelCaseToSeparatorFilter implements FilterInterface
 
     /**
      * @param string $string
+     *
      * @return string
      */
     public function filter($string)
     {
         return strtolower(preg_replace('/([a-z])([A-Z])/', '$1' . addcslashes($this->separator, '$') . '$2', $string));
     }
+
 }

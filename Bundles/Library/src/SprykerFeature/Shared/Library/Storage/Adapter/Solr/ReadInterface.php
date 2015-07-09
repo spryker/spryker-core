@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,10 +10,10 @@ use Solarium\Core\Query\QueryInterface;
 
 /**
  * Class ReadInterface
- * @package SprykerFeature\Shared\Library\DataSource\Adapter\Solr
  */
 interface ReadInterface
 {
+
     /**
      * @return \Solarium\QueryType\Select\Query\Query
      */
@@ -20,6 +21,7 @@ interface ReadInterface
 
     /**
      * @param QueryInterface $query
+     *
      * @return \Solarium\QueryType\Select\Result\Result
      */
     public function select(QueryInterface $query);
@@ -28,4 +30,5 @@ interface ReadInterface
      * @return int
      */
     public function getNumDocs();
+
 }

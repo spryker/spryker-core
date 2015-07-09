@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Library\Import;
 
 interface ProcessInterface
 {
+
     /**
      * @return string
      */
@@ -21,4 +23,5 @@ interface ProcessInterface
      * @return WriterInterface
      */
     public function getWriter();
+
 }

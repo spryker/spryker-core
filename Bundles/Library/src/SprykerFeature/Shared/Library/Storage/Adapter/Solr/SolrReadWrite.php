@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use Solarium\Core\Query\QueryInterface;
 
 /**
  * Class SolrReadWrite
- * @package SprykerFeature\Shared\Library\Storage\Adapter\Solr
  */
 class SolrReadWrite extends SolrRead implements ReadWriteInterface
 {
@@ -25,6 +25,7 @@ class SolrReadWrite extends SolrRead implements ReadWriteInterface
     /**
      * @param string $type
      * @param array $options
+     *
      * @return \Solarium\Core\Query\Query
      */
     public function createQuery($type, $options = null)
@@ -34,6 +35,7 @@ class SolrReadWrite extends SolrRead implements ReadWriteInterface
 
     /**
      * @param QueryInterface $query
+     *
      * @return \Solarium\QueryType\Update\Result
      */
     public function update(QueryInterface $query)
@@ -43,6 +45,7 @@ class SolrReadWrite extends SolrRead implements ReadWriteInterface
 
     /**
      * @param QueryInterface $query
+     *
      * @return \Solarium\Core\Query\Result\ResultInterface
      */
     public function execute(QueryInterface $query)
@@ -52,6 +55,7 @@ class SolrReadWrite extends SolrRead implements ReadWriteInterface
 
     /**
      * @param bool $commit
+     *
      * @return mixed|\Solarium\QueryType\Update\Result
      */
     public function deleteAll($commit = true)
@@ -65,4 +69,5 @@ class SolrReadWrite extends SolrRead implements ReadWriteInterface
 
         return $result;
     }
+
 }

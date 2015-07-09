@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,4 +21,5 @@ interface ProviderInterface
      * @return string
      */
     public function getPosition();
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ class FooProvider implements ProviderInterface, PageTypeInterface
     /**
      * @param array $dataProvider
      * @param $pageType
+     *
      * @return string
      */
     public function getTrackingOutput(array $dataProvider, $pageType)
@@ -31,4 +33,5 @@ class FooProvider implements ProviderInterface, PageTypeInterface
     {
         return Tracking::POSITION_AFTER_OPENING_BODY;
     }
+
 }

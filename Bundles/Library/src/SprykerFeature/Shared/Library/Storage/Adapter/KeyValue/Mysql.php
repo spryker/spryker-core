@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 
 /**
  * @property \PDO $resource
+ *
  * @method \PDO getResource()
  */
 abstract class Mysql extends AbstractKeyValue
@@ -16,7 +18,7 @@ abstract class Mysql extends AbstractKeyValue
     const FIELD_KEY = 'key';
     const FIELD_VALUE = 'value';
 
-    const FIELD_STATS_VARIABLE_NAME =  'Variable_name';
+    const FIELD_STATS_VARIABLE_NAME = 'Variable_name';
     const FIELD_STATS_VALUE = 'Value';
 
     /**
@@ -41,8 +43,9 @@ abstract class Mysql extends AbstractKeyValue
     }
 
     /**
-     * @return bool|\mysqli_result
      * @throws \RuntimeException
+     *
+     * @return bool|\mysqli_result
      */
     protected function initDb()
     {
@@ -50,7 +53,7 @@ abstract class Mysql extends AbstractKeyValue
             throw new \RuntimeException('Database is not defined in config');
         }
 
-        $query = "CREATE TABLE IF NOT EXISTS  " . $this->getTableName() . " (
+        $query = 'CREATE TABLE IF NOT EXISTS  ' . $this->getTableName() . " (
   `key` varchar(255) NOT NULL DEFAULT '',
   `value` text,
   PRIMARY KEY (`key`)

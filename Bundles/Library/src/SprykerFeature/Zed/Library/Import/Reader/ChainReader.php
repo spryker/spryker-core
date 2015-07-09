@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use Psr\Log\LoggerInterface;
 
 class ChainReader implements ReaderInterface
 {
+
     /**
      * @var array
      */
@@ -69,7 +71,7 @@ class ChainReader implements ReaderInterface
      */
     protected function sortReaders()
     {
-        $sortedReaders = array();
+        $sortedReaders = [];
         krsort($this->readers);
 
         foreach ($this->readers as $reader) {
@@ -81,8 +83,10 @@ class ChainReader implements ReaderInterface
 
     /**
      * @param mixed $inputData
-     * @return Input
+     *
      * @throws Exception\SourceNotReadableException
+     *
+     * @return Input
      */
     public function read($inputData)
     {
@@ -96,6 +100,7 @@ class ChainReader implements ReaderInterface
             }
         }
 
-        throw new Exception\SourceNotReadableException("None of the readers in the chain matched");
+        throw new Exception\SourceNotReadableException('None of the readers in the chain matched');
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,8 +12,9 @@ use SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\
 
 /**
  * Class Solr
- * @package SprykerFeature\Shared\Library\DataSource\Adapter\Solr
+ *
  * @property \Solarium\Client $resource
+ *
  * @method \Solarium\Client getResource()
  */
 abstract class Solr implements AdapterInterface
@@ -81,4 +83,5 @@ abstract class Solr implements AdapterInterface
     {
         $this->endpoint = $endpoint;
     }
+
 }

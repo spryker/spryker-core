@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,8 +13,10 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
      * @param string $key
      * @param mixed $value
      * @param string $prefix
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function set($key, $value, $prefix = self::KV_PREFIX)
     {
@@ -22,7 +25,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
         $this->addWriteAccessStats($key);
         if (!$result) {
             throw new \Exception(
-                'could not set redisKey: "' . $key.'" with value: "' . json_encode($value) . '"'
+                'could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"'
             );
         }
 
@@ -32,8 +35,10 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
     /**
      * @param array $items
      * @param string $prefix
-     * @return bool|mixed
+     *
      * @throws \Exception
+     *
+     * @return bool|mixed
      */
     public function setMulti(array $items, $prefix = self::KV_PREFIX)
     {
@@ -49,7 +54,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
             $data[$dataKey] = $value;
         }
 
-        if (count($data) == 0) {
+        if (count($data) === 0) {
             return false;
         }
 
@@ -58,7 +63,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
 
         if (!$result) {
             throw new \Exception(
-                'could not set redisKeys for items: "[' . implode(',', array_keys($items)).']" with values: "[' . implode(',', array_values($items)).']"'
+                'could not set redisKeys for items: "[' . implode(',', array_keys($items)) . ']" with values: "[' . implode(',', array_values($items)) . ']"'
             );
         }
 
@@ -68,6 +73,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
     /**
      * @param string $key
      * @param null|string $prefix
+     *
      * @return int
      */
     public function delete($key, $prefix = self::KV_PREFIX)
@@ -81,7 +87,6 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
 
     /**
      * @param array $keys
-     * @return void
      */
     public function deleteMulti(array $keys)
     {
