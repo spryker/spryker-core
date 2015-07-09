@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,4 +17,5 @@ interface OmsOrderHydratorInterface
      * @param CheckoutRequestInterface $request
      */
     public function hydrateOrderTransfer(OrderInterface $order, CheckoutRequestInterface $request);
+
 }
