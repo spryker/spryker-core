@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use Symfony\Component\Validator\Constraint;
 
 class UsernameExistsConstraint extends Constraint
 {
+
     public $message = Messages::USER_EXISTS_ERROR;
 
     /**
@@ -67,4 +69,5 @@ class UsernameExistsConstraint extends Constraint
     {
         return $this->locator;
     }
+
 }

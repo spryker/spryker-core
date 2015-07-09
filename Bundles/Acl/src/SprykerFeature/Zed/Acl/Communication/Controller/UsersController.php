@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -36,7 +37,7 @@ class UsersController extends AbstractController
         $idUser = $request->get('id');
 
         if (!empty($idUser)) {
-            $data['query'] = sprintf("?id=%s", $idUser);
+            $data['query'] = sprintf('?id=%s', $idUser);
         }
 
         return $this->viewResponse($data);
@@ -117,4 +118,5 @@ class UsersController extends AbstractController
 
         return $this->jsonResponse($form->renderData());
     }
+
 }

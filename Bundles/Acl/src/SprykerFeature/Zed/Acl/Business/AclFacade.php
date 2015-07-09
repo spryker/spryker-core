@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ use Generated\Shared\Transfer\UserTransfer;
  */
 class AclFacade extends AbstractFacade
 {
+
     /**
      * Main Installer Method
      */
@@ -350,4 +352,5 @@ class AclFacade extends AbstractFacade
             ->createRuleModel()
             ->isIgnorable($bundle, $controller, $action);
     }
+
 }

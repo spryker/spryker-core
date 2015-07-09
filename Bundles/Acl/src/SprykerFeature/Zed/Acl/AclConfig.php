@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -55,7 +56,7 @@ class AclConfig extends AbstractBundleConfig
             'bundle' => $bundle,
             'controller' => $controller,
             'action' => $action,
-            'type' => $type
+            'type' => $type,
         ];
     }
 
@@ -86,9 +87,9 @@ class AclConfig extends AbstractBundleConfig
                 'controller' => self::VALIDATOR_WILDCARD,
                 'action' => self::VALIDATOR_WILDCARD,
                 'type' => self::ALLOW,
-                'role' => self::ROOT_ROLE
+                'role' => self::ROOT_ROLE,
                 //this is related to the installer_data only and will not interact with existing data if any
-            ]
+            ],
         ];
     }
 
@@ -100,9 +101,9 @@ class AclConfig extends AbstractBundleConfig
         return [
             [
                 'name' => self::ROOT_ROLE,
-                'group' => self::ROOT_GROUP
+                'group' => self::ROOT_GROUP,
                 //this is related to the installer_data only and will not interact with existing data if any
-            ]
+            ],
         ];
     }
 
@@ -114,7 +115,7 @@ class AclConfig extends AbstractBundleConfig
         return [
             [
                 'name' => self::ROOT_GROUP,
-            ]
+            ],
         ];
     }
 
@@ -122,9 +123,10 @@ class AclConfig extends AbstractBundleConfig
     {
         return [
             'admin@spryker.com' => [
-                'group' => self::ROOT_GROUP
-            ]
+                'group' => self::ROOT_GROUP,
+            ],
             //this is related to existent username and will be searched into the database
         ];
     }
+
 }

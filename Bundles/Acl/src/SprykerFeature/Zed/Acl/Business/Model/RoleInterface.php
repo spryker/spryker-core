@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,22 +13,25 @@ use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
 
 interface RoleInterface
 {
+
     /**
      * @param string $name
      * @param int $idGroup
      *
-     * @return RoleTransfer
      * @throws RoleNameExistsException
+     *
+     * @return RoleTransfer
      */
     public function addRole($name, $idGroup);
 
     /**
      * @param RoleTransfer $data
      *
-     * @return RoleTransfer
      * @throws RoleNameExistsException
      * @throws RoleNotFoundException
-    d     */
+     *
+     * @return RoleTransfer
+     */
     public function save(RoleTransfer $data);
 
     /**
@@ -54,8 +58,9 @@ interface RoleInterface
     /**
      * @param int $idGroup
      *
-     * @return RoleTransfer
      * @throws GroupNotFoundException
+     *
+     * @return RoleTransfer
      */
     public function getGroupRoles($idGroup);
 
@@ -69,8 +74,9 @@ interface RoleInterface
     /**
      * @param int $id
      *
-     * @return bool
      * @throws RoleNotFoundException
+     *
+     * @return bool
      */
     public function removeRoleById($id);
 
@@ -80,4 +86,5 @@ interface RoleInterface
      * @return RoleTransfer
      */
     public function getByName($name);
+
 }

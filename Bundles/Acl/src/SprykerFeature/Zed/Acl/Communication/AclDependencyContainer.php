@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Acl\Communication;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\AclCommunication;
 use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
@@ -13,7 +13,6 @@ use SprykerFeature\Zed\Acl\Communication\Form\UserForm;
 use SprykerFeature\Zed\Acl\Communication\Grid\RulesetGrid;
 use SprykerFeature\Zed\Acl\Communication\Grid\UserGrid;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -126,4 +125,5 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
             $this->getQueryContainer()
         );
     }
+
 }

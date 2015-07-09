@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Acl\AclConfig;
 
 class RuleValidator implements RuleValidatorInterface
 {
+
     /**
      * @var array
      */
@@ -136,6 +138,7 @@ class RuleValidator implements RuleValidatorInterface
      * @param string $bundle
      * @param string $controller
      * @param string $action
+     *
      * @return bool
      */
     public function assert(RuleTransfer $rule, $bundle, $controller, $action)
@@ -173,4 +176,5 @@ class RuleValidator implements RuleValidatorInterface
 
         return false;
     }
+
 }
