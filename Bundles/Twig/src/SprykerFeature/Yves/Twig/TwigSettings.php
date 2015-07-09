@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,12 +8,12 @@ namespace SprykerFeature\Yves\Twig;
 
 use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use Silex\Application;
 use SprykerFeature\Yves\Twig\Dependency\Plugin\TwigFilterPluginInterface;
 use SprykerFeature\Yves\Twig\Dependency\Plugin\TwigFunctionPluginInterface;
 
 class TwigSettings
 {
+
     /**
      * @var AutoCompletion
      */
@@ -43,7 +44,7 @@ class TwigSettings
     {
         return [
             $this->getLocator()->price()->pluginTwigPrice(),
-            $this->getLocator()->cms()->pluginTwigCms()
+            $this->getLocator()->cms()->pluginTwigCms(),
         ];
     }
 
@@ -54,4 +55,5 @@ class TwigSettings
     {
         return $this->locator;
     }
+
 }
