@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Zed\Ui\Communication\Plugin\Twig;
 
 use SprykerFeature\Zed\Library\Twig\TwigFunction;
-use SprykerFeature\Zed\Library\View\Helper\WidgetHelper;
 
 class Widget extends TwigFunction
 {
@@ -24,7 +24,7 @@ class Widget extends TwigFunction
      */
     protected function getFunction()
     {
-        return function($path, array $params = array(), $id = null) {
+        return function ($path, array $params = [], $id = null) {
             if (is_null($id)) {
                 $id = $this->createId($path);
             }
@@ -37,6 +37,7 @@ class Widget extends TwigFunction
     /**
      * @param $url
      * @param $id
+     *
      * @return string
      */
     protected function render($url, $id)
@@ -52,6 +53,7 @@ HTML;
 
     /**
      * @param $path
+     *
      * @return string
      */
     protected function createId($path)
@@ -65,9 +67,10 @@ HTML;
     /**
      * @param $path
      * @param array $params
+     *
      * @return string
      */
-    protected function buildUrl($path, array $params = array())
+    protected function buildUrl($path, array $params = [])
     {
         if (strpos($path, '/') === 0) {
             $path = ltrim($path, '/');

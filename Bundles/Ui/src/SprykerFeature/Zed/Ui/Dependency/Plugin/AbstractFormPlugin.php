@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Ui\Communication\UiDependencyContainer;
 
 abstract class AbstractFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
+
     const OUTPUT_TYPE = 'type';
     const OUTPUT_NAME = 'name';
 
@@ -39,4 +41,5 @@ abstract class AbstractFormPlugin extends AbstractPlugin implements FormPluginIn
     {
         $this->stateContainer = $stateContainer;
     }
+
 }

@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Ui\Communication\Grid\DateTimeColumn;
 
-use \Carbon\Carbon;
+use Carbon\Carbon;
 use SprykerFeature\Zed\Ui\Business\Grid\DateTimeColumn\TimeRangeFormat\DayFormat;
 use SprykerFeature\Zed\Ui\Business\Grid\DateTimeColumn\TimeRangeFormat\MonthFormat;
 use SprykerFeature\Zed\Ui\Business\Grid\DateTimeColumn\TimeRangeFormat\WeekFormat;
@@ -15,14 +16,13 @@ class HumanDate extends FilterFormatAbstract
 {
 
     /**
-     * @return null
      */
     public function getTimeRangeGenerator()
     {
         $format = $this->getUnambiguousFormat();
 
         if (!$format) {
-            return null;
+            return;
         }
 
         $carbonDate = new Carbon($format->getFormat());
@@ -37,23 +37,23 @@ class HumanDate extends FilterFormatAbstract
     {
         $yearFormats = YearFormat::getInstancesFromArray([
             'Last year',
-            'This year'
+            'This year',
         ]);
 
         $monthFormats = MonthFormat::getInstancesFromArray([
             'Last month',
-            'This month'
+            'This month',
         ]);
 
         $weekFormats = WeekFormat::getInstancesFromArray([
             'Last week',
-            'This week'
+            'This week',
         ]);
 
         $dayFormats = DayFormat::getInstancesFromArray([
             'Today',
             'Yesterday',
-            'Tomorrow'
+            'Tomorrow',
         ]);
 
         return array_merge($yearFormats, $monthFormats, $weekFormats, $dayFormats);

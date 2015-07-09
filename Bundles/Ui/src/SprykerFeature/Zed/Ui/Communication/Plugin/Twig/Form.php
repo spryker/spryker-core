@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,7 +24,7 @@ class Form extends TwigFunction
      */
     protected function getFunction()
     {
-        return function($form) {
+        return function ($form) {
             return $form;
         };
     }

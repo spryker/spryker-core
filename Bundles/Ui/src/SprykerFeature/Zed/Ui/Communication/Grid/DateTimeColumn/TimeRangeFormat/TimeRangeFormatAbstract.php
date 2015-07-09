@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,6 +27,7 @@ abstract class TimeRangeFormatAbstract
 
     /**
      * @param array $formats
+     *
      * @return array|TimeRangeFormatAbstract[]
      */
     public static function getInstancesFromArray(array $formats)
@@ -47,8 +49,9 @@ abstract class TimeRangeFormatAbstract
     }
 
     /**
-     * @return string
      * @throws \ErrorException
+     *
+     * @return string
      */
     public function getTranslation()
     {
@@ -57,6 +60,7 @@ abstract class TimeRangeFormatAbstract
 
     /**
      * @param $string
+     *
      * @return bool
      */
     public function translationStartsWith($string)
@@ -66,6 +70,7 @@ abstract class TimeRangeFormatAbstract
 
     /**
      * @param $string
+     *
      * @return bool
      */
     public function translationEquals($string)
@@ -75,6 +80,7 @@ abstract class TimeRangeFormatAbstract
 
     /**
      * @param Carbon $carbonData
+     *
      * @return TimeRangeGeneratorInterface
      */
     abstract public function getTimeRangeGenerator(Carbon $carbonData);

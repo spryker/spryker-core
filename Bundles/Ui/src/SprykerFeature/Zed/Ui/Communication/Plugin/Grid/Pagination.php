@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -42,12 +43,13 @@ class Pagination extends AbstractGridPlugin
 
     /**
      * @param array $data
+     *
      * @return array
      */
     public function getData(array $data)
     {
-        $data[Pagination::DATA_DEFINITION_PAGES] = $this->calculatePagesCount();
-        $data[Pagination::DATA_DEFINITION_PAGE] = $this->getPageNumber();
+        $data[self::DATA_DEFINITION_PAGES] = $this->calculatePagesCount();
+        $data[self::DATA_DEFINITION_PAGE] = $this->getPageNumber();
 
         return $data;
     }
@@ -73,7 +75,7 @@ class Pagination extends AbstractGridPlugin
      */
     protected function calculateOffset()
     {
-        return (int)($this->getPageNumber() * $this->getLimit()) - $this->getLimit();
+        return (int) ($this->getPageNumber() * $this->getLimit()) - $this->getLimit();
     }
 
     /**
@@ -99,11 +101,11 @@ class Pagination extends AbstractGridPlugin
     {
         $requestData = $this->getStateContainer()->getRequestData();
 
-        if (isset($requestData[Pagination::PARAM_PAGE])) {
-            return (int)$requestData[Pagination::PARAM_PAGE];
+        if (isset($requestData[self::PARAM_PAGE])) {
+            return (int) $requestData[self::PARAM_PAGE];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -113,11 +115,11 @@ class Pagination extends AbstractGridPlugin
     {
         $requestData = $this->getStateContainer()->getRequestData();
 
-        if (isset($requestData[Pagination::PARAM_LIMIT])) {
-            return (int)$requestData[Pagination::PARAM_LIMIT];
+        if (isset($requestData[self::PARAM_LIMIT])) {
+            return (int) $requestData[self::PARAM_LIMIT];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -127,6 +129,7 @@ class Pagination extends AbstractGridPlugin
     {
         $specifiedQuery = $this->getStateContainer()->getSpecifiedQuery();
 
-        return (int)ceil($specifiedQuery->count() / $this->getLimit());
+        return (int) ceil($specifiedQuery->count() / $this->getLimit());
     }
+
 }

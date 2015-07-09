@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ class DateTimeColumn extends DefaultColumn
 
     /**
      * @param ModelCriteria $query
+     *
      * @return mixed|ModelCriteria
      */
     public function applyFilter(ModelCriteria $query)
@@ -53,7 +55,7 @@ class DateTimeColumn extends DefaultColumn
             return $timeRangeGenerators[0];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -72,6 +74,7 @@ class DateTimeColumn extends DefaultColumn
 
     /**
      * @param array $data
+     *
      * @return array|void
      */
     public function getData(array $data)
@@ -96,4 +99,5 @@ class DateTimeColumn extends DefaultColumn
 
         return $suggestions;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -56,6 +57,7 @@ class GridProcessor implements GridProcessorInterface, StateContainerBeanInterfa
 
     /**
      * @param ModelCriteria $query
+     *
      * @return mixed|ModelCriteria
      */
     protected function specifyQuery(ModelCriteria $query)
@@ -78,6 +80,7 @@ class GridProcessor implements GridProcessorInterface, StateContainerBeanInterfa
 
     /**
      * @param ModelCriteria $query
+     *
      * @return mixed|ModelCriteria
      */
     protected function terminateQuery(ModelCriteria $query)
@@ -110,4 +113,5 @@ class GridProcessor implements GridProcessorInterface, StateContainerBeanInterfa
 
         return $data;
     }
+
 }

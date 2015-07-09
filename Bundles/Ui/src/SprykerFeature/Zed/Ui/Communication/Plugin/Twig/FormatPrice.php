@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Zed\Ui\Communication\Plugin\Twig;
 
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
-use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 use SprykerFeature\Zed\Library\Twig\TwigFunction;
 
 class FormatPrice extends TwigFunction
@@ -28,6 +28,7 @@ class FormatPrice extends TwigFunction
         return function ($value, $includeSymbol = true) {
             $currencyManager = CurrencyManager::getInstance();
             $value = $currencyManager->convertCentToDecimal($value);
+
             return $currencyManager->format($value, $includeSymbol);
         };
     }

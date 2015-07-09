@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Ui\Communication\Grid\DateTimeColumn;
 
-use \Carbon\Carbon;
+use Carbon\Carbon;
 use SprykerFeature\Zed\Ui\Business\Grid\DateTimeColumn\TimeRangeFormat\DayFormat;
 use SprykerFeature\Zed\Ui\Business\Grid\DateTimeColumn\TimeRangeFormat\MonthFormat;
 
@@ -20,7 +21,7 @@ class CalendarWord extends FilterFormatAbstract
         $format = $this->getUnambiguousFormat();
 
         if (!$format) {
-            return null;
+            return;
         }
 
         $timeString = $format->getFormat();
@@ -55,7 +56,7 @@ class CalendarWord extends FilterFormatAbstract
             'September',
             'October',
             'November',
-            'December'
+            'December',
         ]);
 
         $dayFormats = DayFormat::getInstancesFromArray([
