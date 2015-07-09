@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,11 +7,11 @@
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use Generated\Shared\Transfer\MailTransferTransfer;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 
 class RegistrationTokenSender extends AbstractPlugin implements RegistrationTokenSenderPluginInterface
 {
+
     const SUBJECT = 'registration.token.sender.subject';
     const TEMPLATE = 'registration.token';
 
@@ -61,4 +62,5 @@ class RegistrationTokenSender extends AbstractPlugin implements RegistrationToke
 
         return true;
     }
+
 }
