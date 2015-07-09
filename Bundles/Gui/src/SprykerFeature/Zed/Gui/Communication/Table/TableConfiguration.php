@@ -5,8 +5,7 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
-class TableConfiguration
-{
+class BaseTableConfiguration {
 
     /**
      * @var array
@@ -19,24 +18,37 @@ class TableConfiguration
     private $sortable;
 
     private $pageLength;
+    /**
+     * @param array $headers
+     */
+    public function setHeaders(array $headers){
+        if ($this->isAssoc($headers) === true){
+            $this->headers = $headers;
+        }
+    }
 
     /**
      * @return array
      */
-    public function getHeaders()
-    {
+    public function getHeaders(){
         return $this->headers;
     }
 
     /**
-     * @todo Zed Translation in Template
-     * @param array $headers
+     * @return array
      */
-    public function setHeaders(array $headers)
-    {
-        if ($this->isAssoc($headers) === true) {
-            $this->headers = $headers;
-        }
+    public function getSortable(){
+        return $this->sortable;
+    }
+
+    /**
+     * @param array $sortable
+     */
+    public function setSortable(array $sortable){
+        $this->sortable = array_intersect(
+            $sortable,
+            array_keys($this->headers)
+        );
     }
 
     /**
@@ -49,33 +61,14 @@ class TableConfiguration
         return array_keys($array) !== range(0, count($array) - 1);
     }
 
-    /**
-     * @return array
-     */
-    public function getSortable()
+    public function setPageLength($length)
     {
-        return $this->sortable;
-    }
-
-    /**
-     * @param array $sortable
-     */
-    public function setSortable(array $sortable)
-    {
-        $this->sortable = array_intersect(
-            $sortable,
-            array_keys($this->headers)
-        );
+        $this->pageLength = $length;
     }
 
     public function getPageLength()
     {
         return $this->pageLength;
-    }
-
-    public function setPageLength($length)
-    {
-        $this->pageLength = $length;
     }
 
 
