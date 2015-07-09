@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Calculation\Business\Model;
 
 interface PriceCalculationHelperInterface
 {
+
     /**
      * Get the tax value from a given gross price and given tax percentage
      * in rounded integer representation.
@@ -36,4 +37,5 @@ interface PriceCalculationHelperInterface
      * @return float
      */
     public function getTaxRateFromPrice($price, $taxAmount);
+
 }

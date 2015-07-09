@@ -1,17 +1,18 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class RemoveAllExpensesCalculator implements
     CalculatorPluginInterface
 {
+
     /**
      * @param CalculableInterface $calculableContainer
      */
@@ -21,4 +22,5 @@ class RemoveAllExpensesCalculator implements
             $item->setExpenses(new \ArrayObject());
         }
     }
+
 }

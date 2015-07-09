@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class ExpensePriceToPayCalculator implements CalculatorPluginInterface
 {
+
     /**
      * @param CalculableInterface $calculableContainer
      */
@@ -29,6 +31,7 @@ class ExpensePriceToPayCalculator implements CalculatorPluginInterface
 
     /**
      * @param ExpenseInterface $expense
+     *
      * @return int
      */
     protected function getExpenseDiscountAmount(ExpenseInterface $expense)
@@ -40,4 +43,5 @@ class ExpensePriceToPayCalculator implements CalculatorPluginInterface
 
         return $discountAmount;
     }
+
 }

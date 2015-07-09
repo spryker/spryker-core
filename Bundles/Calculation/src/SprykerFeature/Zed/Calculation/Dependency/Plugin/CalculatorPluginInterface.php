@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,8 +10,10 @@ use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 interface CalculatorPluginInterface
 {
+
     /**
      * @param CalculableInterface $calculableContainer
      */
     public function recalculate(CalculableInterface $calculableContainer);
+
 }

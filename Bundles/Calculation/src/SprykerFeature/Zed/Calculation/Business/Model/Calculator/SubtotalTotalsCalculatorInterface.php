@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,4 +29,5 @@ interface SubtotalTotalsCalculatorInterface
      * @return int
      */
     public function calculateSubtotal($calculableItems);
+
 }

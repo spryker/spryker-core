@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,4 +24,5 @@ class RemoveAllExpensesCalculatorPlugin extends AbstractPlugin implements Calcul
     {
         $this->getFacade()->recalculateRemoveAllExpenses($calculableContainer);
     }
+
 }

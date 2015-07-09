@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ class OptionPriceToPayCalculator implements
 
     /**
      * @ param OrderInterface $calculableContainer
+     *
      * @param CalculableInterface $calculableContainer
      */
     public function recalculate(CalculableInterface $calculableContainer)
@@ -44,4 +46,5 @@ class OptionPriceToPayCalculator implements
 
         return $discountAmount;
     }
+
 }

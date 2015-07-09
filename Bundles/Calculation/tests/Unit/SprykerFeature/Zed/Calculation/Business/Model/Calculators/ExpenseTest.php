@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -90,7 +91,7 @@ class ExpenseTest extends AbstractUnitTest
         $item->addExpense($expense);
 
         $discount = $this->getPriceDiscount();
-        $discount->setAmount($expense->getGrossPrice()/4);
+        $discount->setAmount($expense->getGrossPrice() / 4);
 
         $expense->addDiscountItem($discount);
         $expense->addDiscountItem(clone $discount);
@@ -103,7 +104,7 @@ class ExpenseTest extends AbstractUnitTest
 
         foreach ($order->getCalculableObject()->getItems() as $item) {
             foreach ($item->getExpenses() as $expense) {
-                $this->assertEquals($expense->getGrossPrice()/2, $expense->getPriceToPay());
+                $this->assertEquals($expense->getGrossPrice() / 2, $expense->getPriceToPay());
             }
         }
     }
@@ -153,4 +154,5 @@ class ExpenseTest extends AbstractUnitTest
     {
         return Locator::getInstance();
     }
+
 }

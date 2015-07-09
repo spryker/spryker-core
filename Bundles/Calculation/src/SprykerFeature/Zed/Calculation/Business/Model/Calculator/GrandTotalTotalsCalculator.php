@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInter
 
 class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
 {
+
     /**
      * @var SubtotalTotalsCalculatorInterface
      */
@@ -97,4 +99,5 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
             return $this->expenseTotalsCalculator->calculateExpenseTotal($calculableContainer);
         }
     }
+
 }
