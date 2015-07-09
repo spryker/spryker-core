@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,11 +14,12 @@ use SprykerFeature\Shared\Session\SessionConfig;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Shared\Yves\YvesConfig;
 
-trait SessionServiceProviderPluginTrait
+trait SessionServiceProviderPlugin
 {
 
     /**
      * @param Application $app
+     *
      * @throws \Exception
      */
     public function register(Application $app)
@@ -26,9 +28,9 @@ trait SessionServiceProviderPluginTrait
 
         $saveHandler = Config::get(YvesConfig::YVES_SESSION_SAVE_HANDLER);
 
-        if ($saveHandler != SessionConfig::SESSION_HANDLER_COUCHBASE
-            && $saveHandler != SessionConfig::SESSION_HANDLER_MYSQL
-            && $saveHandler != SessionConfig::SESSION_HANDLER_REDIS
+        if ($saveHandler !== SessionConfig::SESSION_HANDLER_COUCHBASE
+            && $saveHandler !== SessionConfig::SESSION_HANDLER_MYSQL
+            && $saveHandler !== SessionConfig::SESSION_HANDLER_REDIS
         ) {
 
             if (Config::get(YvesConfig::YVES_SESSION_SAVE_HANDLER) && $this->getSavePath($saveHandler)) {
@@ -50,7 +52,7 @@ trait SessionServiceProviderPluginTrait
         }
         $app['session.storage.options'] = $options;
 
-        /**
+        /*
          * We manually register our own couchbase session handler, for all other handlers we use the generic one
          */
         switch ($saveHandler) {
@@ -85,8 +87,9 @@ trait SessionServiceProviderPluginTrait
     /**
      * @param string $saveHandler
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     protected function getSavePath($saveHandler)
     {

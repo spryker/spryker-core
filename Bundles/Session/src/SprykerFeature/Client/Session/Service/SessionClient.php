@@ -1,12 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\Session\Service;
 
-use Silex\Application;
-use Silex\ServiceProviderInterface;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -22,8 +21,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
 
     /**
      * @param SessionInterface $container
-     *
-     * @return void
      */
     public function setContainer(SessionInterface $container)
     {
@@ -83,9 +80,9 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Starts the session storage.
      *
-     * @return bool True if session started.
-     *
      * @throws \RuntimeException If session fails to start.
+     *
+     * @return bool True if session started.
      *
      * @api
      */

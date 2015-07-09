@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -83,9 +84,10 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
     /**
      * @param string $saveHandler
-     * @return string
      *
      * @throws \Exception
+     *
+     * @return string
      */
     protected function getSavePath($saveHandler)
     {

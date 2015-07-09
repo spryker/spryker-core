@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,4 +10,5 @@ use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
 
 class SessionDependencyProvider extends AbstractDependencyProvider
 {
+
 }
