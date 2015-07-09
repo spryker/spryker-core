@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ class ProductCategorySearchFacade extends AbstractFacade
      * @param array $resultSet
      * @param array $processedResultSet
      * @param LocaleTransfer $locale
+     *
      * @return array
      */
     public function processProductCategorySearchData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
@@ -26,4 +28,5 @@ class ProductCategorySearchFacade extends AbstractFacade
             ->createProductCategorySearchProcessor()
             ->process($resultSet, $processedResultSet, $locale);
     }
+
 }
