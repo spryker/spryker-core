@@ -52,7 +52,7 @@ class OrderSequence implements OrderSequenceInterface
     protected function createOrderNumber()
     {
         $idCurrent = null;
-        $transaction = Propel::getWriteConnection(SpySalesOrderNumberSequenceTableMap::DATABASE_NAME);
+        $transaction = Propel::getConnection(SpySalesOrderNumberSequenceTableMap::DATABASE_NAME);
 
         try {
             $transaction->beginTransaction();
