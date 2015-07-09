@@ -42,7 +42,7 @@ class CountryForm extends AbstractForm
                 'label' => 'ISO2 Code',
                 'constraints' => [
                     new NotBlank([
-                            'message' => 'woooohoooo'
+                            'message' => 'Please provide correct ISO2 Code'
                     ]),
                     new Length([
                         'min' => 2,
