@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerFeature\Shared\FrontendExporter\Code\Reader\KeyValue;
 
 use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
 use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
-use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Shared\FrontendExporter\Code\Reader\ReaderInterface;
 
 /**
@@ -15,6 +15,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\Reader\ReaderInterface;
  */
 class RedisReader implements ReaderInterface
 {
+
     /**
      * @var ReadInterface
      */
@@ -47,5 +48,5 @@ class RedisReader implements ReaderInterface
     {
         return 'redis-reader';
     }
+
 }
- 

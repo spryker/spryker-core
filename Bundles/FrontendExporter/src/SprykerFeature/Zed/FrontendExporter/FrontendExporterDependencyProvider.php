@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,7 +15,7 @@ class FrontendExporterDependencyProvider extends AbstractBundleDependencyProvide
     const FACADE_LOCALE = 'locale facade';
 
     /**
-     * @var Container $container
+     * @var Container
      *
      * @return Container
      */
@@ -26,7 +27,7 @@ class FrontendExporterDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @var Container $container
+     * @var Container
      *
      * @return Container
      */

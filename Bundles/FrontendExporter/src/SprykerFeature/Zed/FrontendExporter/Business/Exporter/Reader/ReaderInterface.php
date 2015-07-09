@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter\Reader;
 
 interface ReaderInterface
 {
+
     /**
      * @param string $key
      *
@@ -18,4 +20,5 @@ interface ReaderInterface
      * @return string
      */
     public function getName();
+
 }

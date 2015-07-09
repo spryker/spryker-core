@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\FrontendExporter\Persistence\FrontendExporterQueryContain
 
 class FrontendExporter
 {
+
     /**
      * @var ExporterInterface
      */
@@ -21,7 +23,6 @@ class FrontendExporter
      * @var FrontendExporterQueryContainer
      */
     protected $queryContainer;
-
 
     /**
      * @param FrontendExporterQueryContainer  $queryContainer
@@ -76,4 +77,5 @@ class FrontendExporter
             );
         }
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,20 +13,22 @@ use SprykerFeature\Yves\FrontendExporter\Router\StorageRouter;
 
 /**
  * Class StorageRouterPlugin
- * @package SprykerFeature\Yves\YvesExport
  */
 /**
  * @method FrontendExporterDependencyContainer getDependencyContainer()
  */
 class StorageRouterPlugin extends AbstractPlugin
 {
+
     /**
      * @param Application $application
      * @param null        $sslEnabled
+     *
      * @return StorageRouter
      */
     public function createStorageRouter(Application $application, $sslEnabled = null)
     {
         return $this->getDependencyContainer()->createStorageRouter($application, $sslEnabled);
     }
+
 }

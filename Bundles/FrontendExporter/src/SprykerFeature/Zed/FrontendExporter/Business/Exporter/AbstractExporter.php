@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
-use Criteria;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\ProcessException;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\WriteException;
@@ -20,6 +20,7 @@ use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 
 abstract class AbstractExporter implements ExporterInterface
 {
+
     /**
      * @var DataProcessorPluginInterface[]
      */
@@ -254,4 +255,5 @@ abstract class AbstractExporter implements ExporterInterface
 
         return $processedResultSet;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -56,4 +57,5 @@ trait KeyBuilderTrait
      * @return string
      */
     abstract public function getBundleName();
+
 }

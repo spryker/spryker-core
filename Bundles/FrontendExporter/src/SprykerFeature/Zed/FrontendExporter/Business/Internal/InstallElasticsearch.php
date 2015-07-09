@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 
 class InstallElasticsearch extends AbstractInstaller
 {
+
     /**
      * @var Client
      */
@@ -31,7 +33,6 @@ class InstallElasticsearch extends AbstractInstaller
     }
 
     /**
-     * @return void
      */
     public function install()
     {
@@ -39,7 +40,6 @@ class InstallElasticsearch extends AbstractInstaller
     }
 
     /**
-     * @return void
      */
     protected function createIndex()
     {
@@ -49,9 +49,10 @@ class InstallElasticsearch extends AbstractInstaller
             $index->create(
                 [
                     'number_of_shards' => 4,
-                    'number_of_replicas' => 1
+                    'number_of_replicas' => 1,
                 ]
             );
         }
     }
+
 }

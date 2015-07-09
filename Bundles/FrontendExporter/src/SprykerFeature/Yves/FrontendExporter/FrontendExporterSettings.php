@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use Generated\Yves\Ide\AutoCompletion;
 
 class FrontendExporterSettings
 {
+
     /**
      * @var AutoCompletion
      */
@@ -40,4 +42,5 @@ class FrontendExporterSettings
                 ->createPageResourceCreator(),
         ];
     }
+
 }

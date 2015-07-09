@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\WriterInterface
 
 class RedisWriter implements WriterInterface
 {
+
     /**
      * @var ReadWriteInterface|RedisReadWrite
      */
@@ -42,4 +44,5 @@ class RedisWriter implements WriterInterface
     {
         return 'redis-writer';
     }
+
 }

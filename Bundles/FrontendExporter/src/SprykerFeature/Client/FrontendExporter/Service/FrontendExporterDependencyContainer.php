@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,10 +24,10 @@ class FrontendExporterDependencyContainer extends AbstractServiceDependencyConta
         $urlKeyBuilder = $this->getFactory()->createKeyBuilderUrlKeyBuilder();
         $kvReader = $this->getLocator()->storage()->client();
 
-
         return $this->getFactory()->createMatcherUrlMatcher(
             $urlKeyBuilder,
             $kvReader
         );
     }
+
 }

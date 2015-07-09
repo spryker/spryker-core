@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use Elastica\Document;
 
 class ElasticsearchUpdateWriter implements WriterInterface
 {
+
     /**
      * @var Client
      */
@@ -56,6 +58,7 @@ class ElasticsearchUpdateWriter implements WriterInterface
 
     /**
      * @param array $dataSet
+     *
      * @return Document[]
      */
     protected function createDocuments(array $dataSet)
@@ -80,4 +83,5 @@ class ElasticsearchUpdateWriter implements WriterInterface
     {
         return 'elasticsearch-update-writer';
     }
+
 }
