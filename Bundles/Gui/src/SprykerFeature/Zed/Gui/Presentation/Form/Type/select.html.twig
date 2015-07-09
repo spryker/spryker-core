@@ -1,4 +1,4 @@
-{% block autosuggest_widget %}
+{% block select_widget %}
     {{ form_widget(form,  { 'attr': {'class': 's2'} }) }}
     {% block stylesheets %}
         <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet"/>
@@ -21,4 +21,4 @@
             width: '200px'
         });
     </script>
-{% endblock autosuggest_widget %}
+{% endblock select_widget %}
