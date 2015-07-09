@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
  */
 class ProductOptionReaderTest extends AbstractFunctionalTest
 {
+
     /**
      * @var array
      */
@@ -128,4 +130,5 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
 
         $this->assertNull($result);
     }
+
 }

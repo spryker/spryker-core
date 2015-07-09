@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -106,4 +107,5 @@ class ProductOptionReader implements ProductOptionReaderInterface
     {
         return $this->queryContainer->queryEffectiveTaxRateForTypeUsage($idTypeUsage);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,4 +20,5 @@ class ProductOptionDependencyContainer extends AbstractCommunicationDependencyCo
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT);
     }
+
 }

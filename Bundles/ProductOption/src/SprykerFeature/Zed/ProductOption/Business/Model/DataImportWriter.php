@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -125,9 +126,9 @@ class DataImportWriter implements DataImportWriterInterface
      * @param array $localizedNames
      * @param float $price
      *
-     * @return int
-     *
      * @throws MissingProductOptionTypeException
+     *
+     * @return int
      */
     public function importProductOptionValue($importKeyProductOptionValue, $importKeyProductOptionType, array $localizedNames = [], $price = null)
     {
@@ -211,11 +212,11 @@ class DataImportWriter implements DataImportWriterInterface
      * @param bool $isOptional
      * @param int $sequence
      *
-     * @return int
-     *
      * @throws MissingProductOptionTypeException
+     *
+     * @return int
      */
-    public function importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional = false, $sequence  = null)
+    public function importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional = false, $sequence = null)
     {
         $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
@@ -237,7 +238,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->findOne();
 
         if (null === $productOptionTypeUsageEntity) {
-            $productOptionTypeUsageEntity = (new SpyProductOptionTypeUsage)
+            $productOptionTypeUsageEntity = (new SpyProductOptionTypeUsage())
                 ->setFkProduct($idProduct)
                 ->setFkProductOptionType($idProductOptionType);
         }
@@ -257,10 +258,10 @@ class DataImportWriter implements DataImportWriterInterface
      * @param string $importKeyProductOptionValue
      * @param int $sequence
      *
-     * @return int
-     *
      * @throws MissingProductOptionTypeUsageException
      * @throws MissingProductOptionValueException
+     *
+     * @return int
      */
     public function importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyProductOptionValue, $sequence = null)
     {
@@ -291,7 +292,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->findOne();
 
         if (null === $productOptionValueUsageEntity) {
-            $productOptionValueUsageEntity = (new SpyProductOptionValueUsage)
+            $productOptionValueUsageEntity = (new SpyProductOptionValueUsage())
                 ->setFkProductOptionValue($optionValueId)
                 ->setFkProductOptionTypeUsage($idProductOptionTypeUsage);
         }
@@ -351,7 +352,6 @@ class DataImportWriter implements DataImportWriterInterface
             ->queryProductOptionTypeUsageIdByFKs($idProduct, $idProductOptionTypeA)
             ->findOne();
 
-
         if (null === $idProductOptionTypeUsageA) {
             throw new MissingProductOptionTypeUsageException('Tried to retrieve a product option type usage, but it does not exist.');
         }
@@ -368,7 +368,7 @@ class DataImportWriter implements DataImportWriterInterface
             return;
         }
 
-        $optionTypeExclusionEntity = (new SpyProductOptionTypeUsageExclusion)
+        $optionTypeExclusionEntity = (new SpyProductOptionTypeUsageExclusion())
             ->setFkProductOptionTypeUsageA($idProductOptionTypeUsageA)
             ->setFkProductOptionTypeUsageB($idProductOptionTypeUsageB);
 
@@ -449,17 +449,17 @@ class DataImportWriter implements DataImportWriterInterface
      * @param bool $isDefault
      * @param int $sequence
      *
-     * @return int
-     *
      * @throws MissingProductOptionValueUsageException
      * @throws MissingProductOptionValueException
      * @throws MissingProductOptionValueUsageException
+     *
+     * @return int
      */
     public function importPresetConfiguration($sku, array $importKeysProductOptionValues, $isDefault = false, $sequence = null)
     {
         $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
 
-        $presetConfig = (new SpyProductOptionConfigurationPreset)
+        $presetConfig = (new SpyProductOptionConfigurationPreset())
             ->setFkProduct($idProduct)
             ->setIsDefault($isDefault)
             ->setSequence($sequence);
@@ -513,4 +513,5 @@ class DataImportWriter implements DataImportWriterInterface
         $idAbstractProduct = $this->productFacade->getAbstractProductIdByConcreteSku($concreteSku);
         $this->productFacade->touchProductActive($idAbstractProduct);
     }
+
 }
