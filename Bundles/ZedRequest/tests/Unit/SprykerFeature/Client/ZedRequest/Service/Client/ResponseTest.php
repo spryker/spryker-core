@@ -25,7 +25,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     protected function createFullResponse(TransferInterface $transfer)
     {
-        $response = new Response(Locator::getInstance());
+        $response = new Response();
 
         $response->setSuccess(false);
         $response->addErrorMessages([new Message(['message'=>'error'])]);
@@ -37,13 +37,13 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultSuccessIsTrue()
     {
-        $response = new Response(Locator::getInstance());
+        $response = new Response();
         $this->assertEquals(true, $response->isSuccess());
     }
 
     public function testDefaultTransferIsNull()
     {
-        $response = new Response(Locator::getInstance());
+        $response = new Response();
         $this->assertEquals(null, $response->getTransfer());
     }
 
@@ -76,7 +76,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $array = $response->toArray();
         $this->assertTrue(is_array($array), 'toArray does not return array');
 
-        $newResponse = new Response($locator, $array);
+        $newResponse = new Response($array);
 
         $this->assertEquals($response, $newResponse);
         $this->assertNotSame($response, $newResponse);
@@ -84,7 +84,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testHasMethods()
     {
-        $response = new Response(Locator::getInstance());
+        $response = new Response();
 
         $response->addErrorMessage(new Message(['message'=>'error']));
         $response->addMessage(new Message(['message'=>'test']));
