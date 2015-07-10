@@ -7,6 +7,10 @@ namespace SprykerFeature\Shared\Auth\Client;
 
 abstract class StaticToken
 {
+
+    /**
+     * @var string
+     */
     protected $rawToken = null;
 
     /**
@@ -42,4 +46,5 @@ abstract class StaticToken
     {
         return password_verify($this->rawToken, base64_decode($hash));
     }
+
 }

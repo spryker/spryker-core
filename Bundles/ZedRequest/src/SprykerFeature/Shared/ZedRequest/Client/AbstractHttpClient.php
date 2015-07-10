@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Shared\ZedRequest\Client;
 
+use Generated\Client\Ide\AutoCompletion;
 use Guzzle\Http\Client;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\Message\Response;
@@ -13,6 +14,7 @@ use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerFeature\Client\Auth\Service\AuthClientInterface;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
@@ -26,8 +28,10 @@ use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
+
     const META_TRANSFER_ERROR =
-        'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
+        'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.'
+    ;
 
     /**
      * @var bool
@@ -50,7 +54,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected static $timeoutInSeconds = 10;
 
     /**
-     * @var LocatorLocatorInterface
+     * @var AutoCompletion
      */
     protected $locator;
 
@@ -60,17 +64,22 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected $factory;
 
     /**
+     * @var AuthClientInterface
+     */
+    protected $authClient;
+
+    /**
      * @param FactoryInterface $factory
-     * @param LocatorLocatorInterface $locator
+     * @param AuthClientInterface $authClient
      * @param string $baseUrl
      */
     public function __construct(
         FactoryInterface $factory,
-        LocatorLocatorInterface $locator,
+        AuthClientInterface $authClient,
         $baseUrl
     ) {
         $this->factory = $factory;
-        $this->locator = $locator;
+        $this->authClient = $authClient;
         $this->baseUrl = $baseUrl;
     }
 
@@ -237,7 +246,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         if (empty($data) || !is_array($data)) {
             throw new InvalidZedResponseException('no valid JSON', $response);
         }
-        $responseTransfer = $this->factory->createClientResponse($this->locator);
+        $responseTransfer = $this->factory->createClientResponse();
         $responseTransfer->fromArray($data);
 
         return $responseTransfer;
@@ -316,7 +325,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     private function getClientRequest()
     {
-        $request = $this->factory->createClientRequest($this->locator);
+        $request = $this->factory->createClientRequest();
 
         return $request;
     }

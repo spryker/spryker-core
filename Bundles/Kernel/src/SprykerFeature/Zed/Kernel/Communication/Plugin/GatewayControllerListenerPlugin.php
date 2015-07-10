@@ -86,7 +86,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      */
     private function getResponse(AbstractGatewayController $controller, $result)
     {
-        $response = new Response(Locator::getInstance());
+        $response = new Response();
 
         if ($result instanceof TransferInterface) {
             $response->setTransfer($result);

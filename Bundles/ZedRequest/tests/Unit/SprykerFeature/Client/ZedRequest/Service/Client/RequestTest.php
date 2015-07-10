@@ -32,7 +32,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         TransferInterface $metaTransfer1 = null,
         TransferInterface $metaTransfer2 = null
     ) {
-        $request = new Request($locator);
+        $request = new Request();
 
         $request->setPassword('password');
         $request->setHost('host');
@@ -54,7 +54,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultTransferIsNull()
     {
-        $response = new Request(Locator::getInstance());
+        $response = new Request();
         $this->assertEquals(null, $response->getTransfer());
         $this->assertEquals(null, $response->getMetaTransfer('asd'));
     }
@@ -114,7 +114,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_array($array), 'toArray does not return array');
 
-        $newRequest = new Request($locator, $array);
+        $newRequest = new Request($array);
 
         $this->assertEquals($request, $newRequest);
         $this->assertNotSame($request, $newRequest);
