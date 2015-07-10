@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Kernel\Communication\Plugin;
 
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use SprykerFeature\Zed\Kernel\Communication\GatewayControllerListenerInterface;

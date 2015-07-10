@@ -48,8 +48,8 @@ class MailDependencyContainer extends AbstractBusinessDependencyContainer
 
     /**
      * @throws \Exception
-     * @return string
      *
+     * @return string
      */
     protected function getAPIKey()
     {

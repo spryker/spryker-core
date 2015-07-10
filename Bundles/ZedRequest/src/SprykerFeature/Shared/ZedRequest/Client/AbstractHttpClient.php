@@ -14,7 +14,6 @@ use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Client\Auth\Service\AuthClientInterface;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\System;

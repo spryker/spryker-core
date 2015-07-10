@@ -38,8 +38,8 @@ class MandrillMailSender implements MailSenderInterface
      * @param MailTransfer $mailTransfer
      *
      * @throws \Mandrill_Error
-     * @return array
      *
+     * @return array
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
