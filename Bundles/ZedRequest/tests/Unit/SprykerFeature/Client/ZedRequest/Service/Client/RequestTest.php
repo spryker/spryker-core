@@ -117,7 +117,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($array), 'toArray does not return array');
 
         $newRequest = new Request($array);
-
+        
         $this->assertEquals($request, $newRequest);
         $this->assertNotSame($request, $newRequest);
     }
