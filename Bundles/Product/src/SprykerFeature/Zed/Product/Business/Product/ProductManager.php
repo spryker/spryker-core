@@ -497,24 +497,4 @@ class ProductManager implements ProductManagerInterface
         return json_encode($attributes);
     }
 
-    /**
-     * @param array $attributes
-     *
-     * @return string
-     */
-    protected function encodeAttributes(array $attributes)
-    {
-        return json_encode($attributes);
-    }
-
-    /**
-     * @param array $attributes
-     *
-     * @return string
-     */
-    protected function encodeAttributes(array $attributes)
-    {
-        return json_encode($attributes);
-    }
-
 }

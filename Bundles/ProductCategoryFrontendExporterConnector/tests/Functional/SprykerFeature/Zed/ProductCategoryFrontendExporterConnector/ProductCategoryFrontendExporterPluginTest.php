@@ -292,9 +292,6 @@ class ProductCategoryFrontendExporterPluginTest extends Test
         $concreteProductTransfer->setIdConcreteProduct($idConcreteProduct);
         $this->productFacade->createConcreteProductAttributes($concreteProductTransfer, $locale);
 
-        $concreteProductTransfer->setIdConcreteProduct($idConcreteProduct);
-        $this->productFacade->createConcreteProductAttributes($concreteProductTransfer, $locale);
-
         return $idConcreteProduct;
     }
 
