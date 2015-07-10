@@ -6,7 +6,6 @@
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Sales\Dependency\Plugin\OrderReferenceGeneratorInterface;
 
 class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
 {
