@@ -13,13 +13,9 @@ use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
  */
 class IndexController extends AbstractController
 {
-
-    /**
-     *
-     */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createDetailsTable();
+        $table = $this->getDependencyContainer()->createCountryTable();
         $table->init();
 
         return $this->viewResponse(
@@ -27,14 +23,13 @@ class IndexController extends AbstractController
         );
     }
 
-//    public function ajaxAction()
-//    {
-//        $table = $this->getDependencyContainer()->createDetailsTable();
-//        $table->init();
-//
-//        return $this->jsonResponse(
-//            $table->getData()
-//        );
-//    }
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()->createCountryTable();
+        $table->init();
 
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
 }
