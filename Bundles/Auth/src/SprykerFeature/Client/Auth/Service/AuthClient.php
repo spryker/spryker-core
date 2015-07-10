@@ -15,7 +15,7 @@ class AuthClient extends AbstractClient implements AuthClientInterface
 {
 
     /**
-     * @param $rawToken
+     * @param string $rawToken
      *
      * @return string
      */
@@ -25,8 +25,8 @@ class AuthClient extends AbstractClient implements AuthClientInterface
     }
 
     /**
-     * @param $rawToken
-     * @param $hash
+     * @param string $rawToken
+     * @param string $hash
      *
      * @return bool
      */
