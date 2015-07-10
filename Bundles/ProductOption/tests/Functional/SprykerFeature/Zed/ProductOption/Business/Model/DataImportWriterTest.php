@@ -22,6 +22,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraintQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
+use Pyz\Zed\ProductOption\Business\Internal\DemoData\Importer\Decorator\InMemoryProductOptionQueryContainer;
 
 /**
  * @group Business
@@ -49,6 +50,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
         parent::setUp();
 
         $this->facade = $this->getFacade();
+        InMemoryProductOptionQueryContainer::disable();
     }
 
     public function testImportProductOptionType()
