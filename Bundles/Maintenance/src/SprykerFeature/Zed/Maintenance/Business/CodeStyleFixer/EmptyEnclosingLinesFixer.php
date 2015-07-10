@@ -26,7 +26,7 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
     {
         $tokens = Tokens::fromCode($content);
 
-        /*
+        /**
          * @var int
          * @var Token
          */
