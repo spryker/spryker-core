@@ -1,6 +1,7 @@
 <?php
 
 namespace SprykerFeature\Zed\Country\Communication\Controller;
+use Generated\Shared\Transfer\CountryTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -40,4 +41,11 @@ class CountryController extends  AbstractController
         ]);
     }
 
+    /**
+     * @return CountryTransfer
+     */
+    protected function createCountryTransfer()
+    {
+        return new CountryTransfer();
+    }
 }
