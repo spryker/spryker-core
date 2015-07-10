@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
 
 class ProductOptionReader implements ProductOptionReaderInterface
 {
@@ -37,26 +38,44 @@ class ProductOptionReader implements ProductOptionReaderInterface
      */
     public function getProductOption($idProductOptionValueUsage, $idLocale)
     {
-        $productOptionTransfer = new ProductOptionTransfer;
+        $productOptionTransfer = (new ProductOptionTransfer)
+            ->setIdOptionValueUsage($idProductOptionValueUsage)
+            ->setFkLocale($idLocale);
 
         $result =  $this->queryContainer->queryProductOptionValueUsageWithAssociatedAttributes(
             $idProductOptionValueUsage, $idLocale
         )->findOne();
 
-        $productOptionTransfer->setLabelOptionType($result->getVirtualColumn(ProductOptionQueryContainer::VIRTUAL_COL_TYPE));
-        $productOptionTransfer->setLabelOptionValue($result->getVirtualColumn(ProductOptionQueryContainer::VIRTUAL_COL_TYPE));
+        $productOptionTransfer->setLabelOptionType(
+            $result->getVirtualColumn(ProductOptionQueryContainer::VIRTUAL_COL_TYPE)
+        );
+
+        $productOptionTransfer->setLabelOptionValue(
+            $result->getVirtualColumn(ProductOptionQueryContainer::VIRTUAL_COL_VALUE)
+        );
 
         $price = $result->getVirtualColumn(ProductOptionQueryContainer::VIRTUAL_COL_PRICE);
-
         if (null === $price) {
             $productOptionTransfer->setPrice(0);
         } else {
-            $productOptionTransfer->setPrice($result->getVirtualColumn('price'));
+            $productOptionTransfer->setPrice((int) $price);
         }
 
         $taxSetEntity = $this->queryContainer->queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage)
             ->findOne();
+        if (null !== $taxSetEntity) {
+            $this->addTaxesToProductOptionTransfer($productOptionTransfer, $taxSetEntity);
+        }
 
+        return $productOptionTransfer;
+    }
+
+    /**
+     * @param ProductOptionTransfer $productOptionTransfer
+     * @param SpyTaxSet $taxSetEntity
+     */
+    private function addTaxesToProductOptionTransfer(ProductOptionTransfer $productOptionTransfer, SpyTaxSet $taxSetEntity)
+    {
         $taxTransfer = (new TaxSetTransfer)
             ->setIdTaxSet($taxSetEntity->getIdTaxSet())
             ->setName($taxSetEntity->getName());
@@ -72,8 +91,6 @@ class ProductOptionReader implements ProductOptionReaderInterface
         }
 
         $productOptionTransfer->setTaxSet($taxTransfer);
-
-        return $productOptionTransfer;
     }
 
     /**

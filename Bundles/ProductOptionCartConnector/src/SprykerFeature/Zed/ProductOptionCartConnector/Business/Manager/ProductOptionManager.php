@@ -51,6 +51,7 @@ class ProductOptionManager implements ProductOptionManagerInterface
                 $productOption->getIdOptionValueUsage(),
                 $productOption->getFkLocale()
             );
+
         }
     }
 }

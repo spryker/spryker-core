@@ -10,6 +10,7 @@ use SprykerFeature\Zed\ProductOptionCartConnector\Business\ProductOptionCartConn
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Functional\SprykerFeature\Zed\ProductOption\Persistence\DbFixturesLoader;
 
 /**
  * @group Business
@@ -25,18 +26,24 @@ class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
      */
     private $facade;
 
+    /**
+     * @var array
+     */
+    protected $ids = [];
+
     public function setUp()
     {
         parent::setUp();
 
         $this->facade = $this->getFacade();
+        $this->ids = DbFixturesLoader::loadFixtures();
     }
 
-    public function testIteWorks()
+    public function testExpandProductOption()
     {
         $productOptionTransfer = (new ProductOptionTransfer)
-            ->setIdOptionValueUsage(2)
-            ->setFkLocale(58);
+            ->setIdOptionValueUsage($this->ids['idUsageLarge'])
+            ->setFkLocale($this->ids['idLocale']);
 
         $cartItemTransfer = (new CartItemTransfer())
             ->addProductOption($productOptionTransfer);
@@ -44,13 +51,22 @@ class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
         $changeTransfer = (new ChangeTransfer())
             ->addItem($cartItemTransfer);
 
-
         $this->facade->expandProductOptions($changeTransfer);
 
-        $result = $changeTransfer->getItems()[0]->getProductOptions()[0];
-        $taxSet = $result->getTaxSet();
-        $taxRate = $taxSet->getTaxRates()[0];
+        $productOptionTransfer = $changeTransfer->getItems()[0]->getProductOptions()[0];
 
-        // @TODO: Load fixtures and perform asertions
+        $this->assertEquals($this->ids['idUsageLarge'], $productOptionTransfer->getIdOptionValueUsage());
+        $this->assertEquals($this->ids['idLocale'], $productOptionTransfer->getFkLocale());
+        $this->assertEquals('Size', $productOptionTransfer->getLabelOptionType());
+        $this->assertEquals('Large', $productOptionTransfer->getLabelOptionValue());
+        $this->assertEquals(199, $productOptionTransfer->getPrice());
+
+        $taxSetTransfer = $productOptionTransfer->getTaxSet();
+
+        $this->assertEquals('Baz', $taxSetTransfer->getName());
+
+        $taxRateTransfer = $taxSetTransfer->getTaxRates()[0];
+        $this->assertEquals('Foo', $taxRateTransfer->getName());
+        $this->assertEquals('10', $taxRateTransfer->getRate());
     }
 }
