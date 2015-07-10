@@ -5,14 +5,18 @@
 
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use Generated\Shared\Transfer\MailTransferTransfer;
+use Generated\Shared\Transfer\MailRecipientTransfer;
+use Generated\Shared\Transfer\MailTransfer;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
+use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
 
+/**
+ * @method CustomerMailConnectorDependencyContainer getDependencyContainer()
+ */
 class PasswordRestoredConfirmationSender extends AbstractSender implements PasswordRestoredConfirmationSenderPluginInterface
 {
     const SUBJECT = 'password.restored.sender.subject';
-    const TEMPLATE = 'password.restored';
+    const TEMPLATE = 'password.change.confirmation';
 
     /**
      * @param string $email
@@ -21,11 +25,15 @@ class PasswordRestoredConfirmationSender extends AbstractSender implements Passw
      */
     public function send($email)
     {
-        $mailTransfer = $this->getMailTransfer();
+        $mailTransfer = new MailTransfer();
+        $mailRecipientTransfer = new MailRecipientTransfer();
+        $mailRecipientTransfer->setEmail($email);
 
-        $mailTransfer->addRecipient($email);
+        $mailTransfer->addRecipient($mailRecipientTransfer);
         $mailTransfer->setSubject(self::SUBJECT);
         $mailTransfer->setTemplateName(self::TEMPLATE);
+        $mailTransfer->setMerge(TRUE);
+        $mailTransfer->setMergeLanguage('handlebars');
 
         $result = $this->getDependencyContainer()
             ->createMailFacade()

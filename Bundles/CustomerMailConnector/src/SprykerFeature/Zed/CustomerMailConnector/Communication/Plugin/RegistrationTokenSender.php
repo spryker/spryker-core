@@ -9,8 +9,11 @@ namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 use Generated\Shared\Transfer\MailTransfer;
-use Symfony\Component\Validator\Constraints\True;
+use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
 
+/**
+ * @method CustomerMailConnectorDependencyContainer getDependencyContainer()
+ */
 class RegistrationTokenSender extends AbstractSender implements RegistrationTokenSenderPluginInterface
 {
     const SUBJECT = 'registration.token.sender.subject';
