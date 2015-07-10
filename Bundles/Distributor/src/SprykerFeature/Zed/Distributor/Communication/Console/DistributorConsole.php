@@ -49,7 +49,7 @@ class DistributorConsole extends Console
         $itemTypes = [];
         $itemType = $input->getArgument(self::TYPE);
 
-        if (false !== $itemType) {
+        if (null !== $itemType) {
             $itemTypes[] = $itemType;
         }
 
