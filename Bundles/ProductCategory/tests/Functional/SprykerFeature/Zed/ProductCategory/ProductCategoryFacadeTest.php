@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Functional\SprykerFeature\Zed\ProductCategory;
 
-use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
@@ -28,6 +28,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 class ProductCategoryFacadeTest extends AbstractFunctionalTest
 {
+
     /**
      * @var ProductCategoryFacade
      */
@@ -117,4 +118,5 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         SpyCategoryQuery::create()->deleteAll();
         Propel::getConnection()->query('SET foreign_key_checks = 1;');
     }
+
 }

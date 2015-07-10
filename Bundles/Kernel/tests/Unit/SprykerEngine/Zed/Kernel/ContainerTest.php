@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace Unit\SprykerEngine\Zed\Kernel;
 
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
 
 /**
  * @group SprykerEngine
@@ -23,4 +23,5 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Locator', $container->getLocator());
     }
+
 }

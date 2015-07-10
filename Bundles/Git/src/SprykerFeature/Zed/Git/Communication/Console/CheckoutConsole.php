@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -58,6 +59,7 @@ class CheckoutConsole extends BaseCommand
             $command .= ' -t';
         }
         $branchName = $this->input->getArgument(self::ARGUMENT_BRANCH_NAME);
+
         return $command . ' ' . $branchName;
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -60,4 +61,5 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
 
         $bundleProxy->notMatchingTest();
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 class ProductSearchFailedDeciderPlugin extends AbstractPlugin implements ExportFailedDeciderPluginInterface
 {
+
     /**
      * @param BatchResultInterface $result
      *
@@ -28,4 +30,5 @@ class ProductSearchFailedDeciderPlugin extends AbstractPlugin implements ExportF
     {
         return 'abstract_product';
     }
+
 }

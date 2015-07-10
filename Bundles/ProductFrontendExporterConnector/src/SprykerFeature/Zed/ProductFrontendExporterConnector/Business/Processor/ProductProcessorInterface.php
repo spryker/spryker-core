@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductProcessorInterface
 {
+
     /**
      * @param array $products
      * @param LocaleTransfer $locale
@@ -16,4 +18,5 @@ interface ProductProcessorInterface
      * @return array
      */
     public function buildProducts(array $products, LocaleTransfer $locale);
+
 }

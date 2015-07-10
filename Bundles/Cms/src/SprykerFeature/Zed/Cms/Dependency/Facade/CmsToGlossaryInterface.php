@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,12 +15,14 @@ use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
 
 interface CmsToGlossaryInterface
 {
+
     /**
      * @param int $idKey
      * @param array $data
      *
-     * @return string
      * @throws MissingTranslationException
+     *
+     * @return string
      */
     public function translateByKeyId($idKey, array $data = []);
 
@@ -28,18 +31,20 @@ interface CmsToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
+     *
+     * @return TranslationTransfer
      */
     public function createTranslationForCurrentLocale($keyName, $value, $isActive = true);
 
     /**
      * @param string $keyName
      *
-     * @return int
      * @throws KeyExistsException
+     *
+     * @return int
      */
     public function createKey($keyName);
 
@@ -54,4 +59,5 @@ interface CmsToGlossaryInterface
      * @param int $idKey
      */
     public function touchCurrentTranslationForKeyId($idKey);
+
 }

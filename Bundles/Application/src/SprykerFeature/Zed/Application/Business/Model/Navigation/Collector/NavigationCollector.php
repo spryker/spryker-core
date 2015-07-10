@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ class NavigationCollector implements NavigationCollectorInterface
      * @param NavigationSchemaFinderInterface $navigationSchemaFinder
      *
      * @throws \ErrorException
+     *
      * @return array
      */
     public function mergeNavigationFiles(NavigationSchemaFinderInterface $navigationSchemaFinder)

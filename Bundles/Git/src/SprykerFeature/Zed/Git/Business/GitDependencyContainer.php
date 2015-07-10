@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,4 +24,5 @@ class GitDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getConfig()->getConsoleCommands();
     }
+
 }

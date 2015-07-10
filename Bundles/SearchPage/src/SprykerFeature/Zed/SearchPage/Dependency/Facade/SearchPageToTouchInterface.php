@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,4 +16,5 @@ interface SearchPageToTouchInterface
      * @return bool
      */
     public function touchActive($itemType, $itemId);
+
 }

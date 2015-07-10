@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerEngine\Shared\Kernel;
 
 /**
  * Class AbstractLocatorLocator
- * @package SprykerEngine\Shared\Kernel
  */
 abstract class AbstractLocatorLocator implements LocatorLocatorInterface
 {
@@ -29,6 +29,7 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
 
     /**
      * @param array $locator
+     *
      * @return AbstractLocatorLocator|static
      */
     public static function getInstance(array $locator = null)
@@ -77,4 +78,5 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
      * @return BundleProxy
      */
     abstract protected function getBundleProxy();
+
 }

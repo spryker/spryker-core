@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,6 +24,7 @@ class LumberjackConfig extends AbstractBundleConfig
     /**
      * @param bool $includeWildcard
      * @param bool $includeDate
+     *
      * @return string
      */
     public function getIndexName($includeWildcard = false, $includeDate = false)
@@ -55,4 +57,5 @@ class LumberjackConfig extends AbstractBundleConfig
     {
         return [];
     }
+
 }

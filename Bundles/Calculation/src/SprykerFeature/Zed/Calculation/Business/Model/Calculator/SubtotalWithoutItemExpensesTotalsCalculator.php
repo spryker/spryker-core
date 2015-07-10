@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -58,4 +59,5 @@ class SubtotalWithoutItemExpensesTotalsCalculator implements
 
         return $optionsPrice;
     }
+
 }

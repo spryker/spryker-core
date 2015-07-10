@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement;
 
 class PageElementWriter implements PageElementWriterInterface
 {
+
     const RESOURCE_TYPE_SEARCH_PAGE_CONFIG = 'search_page_config';
     const SEARCH_PAGE_CONFIG_ITEM_ID = 1;
 
@@ -41,8 +43,9 @@ class PageElementWriter implements PageElementWriterInterface
     /**
      * @param PageElementInterface $pageElement
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     public function createPageElement(PageElementInterface $pageElement)
     {
@@ -61,8 +64,9 @@ class PageElementWriter implements PageElementWriterInterface
     /**
      * @param PageElementInterface $pageElement
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     public function updatePageElement(PageElementInterface $pageElement)
     {
@@ -80,8 +84,9 @@ class PageElementWriter implements PageElementWriterInterface
     /**
      * @param PageElementInterface $pageElement
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     public function deletePageElement(PageElementInterface $pageElement)
     {
@@ -99,8 +104,9 @@ class PageElementWriter implements PageElementWriterInterface
      * @param int $idPageElement
      * @param bool $isElementActive
      *
-     * @return bool
      * @throws PropelException
+     *
+     * @return bool
      */
     public function switchActiveState($idPageElement, $isElementActive)
     {
@@ -117,4 +123,5 @@ class PageElementWriter implements PageElementWriterInterface
     {
         $this->touchFacade->touchActive(self::RESOURCE_TYPE_SEARCH_PAGE_CONFIG, self::SEARCH_PAGE_CONFIG_ITEM_ID);
     }
+
 }

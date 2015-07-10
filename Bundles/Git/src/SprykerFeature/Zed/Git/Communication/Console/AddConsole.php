@@ -1,12 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Git\Communication\Console;
-
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 
 class AddConsole extends BaseCommand
 {
@@ -39,6 +37,7 @@ class AddConsole extends BaseCommand
     protected function computeCommand()
     {
         $command = str_replace(':', ' ', self::COMMAND_NAME);
+
         return $command . ' .';
     }
 

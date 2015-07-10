@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -109,6 +110,7 @@ class SearchPageQueryContainer extends AbstractQueryContainer
 
     /**
      * @param int $idPageElement
+     *
      * @return SpySearchPageElementQuery
      */
     public function queryPageElementById($idPageElement)
@@ -144,4 +146,5 @@ class SearchPageQueryContainer extends AbstractQueryContainer
             ->expandQuery($expandableQuery)
         ;
     }
+
 }

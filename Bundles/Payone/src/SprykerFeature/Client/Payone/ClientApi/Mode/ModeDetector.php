@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Client\Payone\ClientApi\Mode;
 
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
-
 
 class ModeDetector implements ModeDetectorInterface
 {

@@ -41,4 +41,5 @@ class QueueFacade extends AbstractFacade
             ->work($timeout, $fetchSize)
         ;
     }
+
 }

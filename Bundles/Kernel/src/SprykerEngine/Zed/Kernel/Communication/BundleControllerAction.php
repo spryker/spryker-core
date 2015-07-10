@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -32,6 +33,7 @@ class BundleControllerAction implements BundleControllerActionInterface
 
     /**
      * @param string $value
+     *
      * @return string
      */
     private function filter($value)
@@ -74,6 +76,5 @@ class BundleControllerAction implements BundleControllerActionInterface
     {
         return $this->filter($this->request->attributes->get('action'));
     }
-
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,12 +24,14 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
  */
 class CmsFacade extends AbstractFacade
 {
+
     /**
      * @param string $name
      * @param string $path
      *
-     * @return CmsTemplateTransfer
      * @throws TemplateExistsException
+     *
+     * @return CmsTemplateTransfer
      */
     public function createTemplate($name, $path)
     {
@@ -40,8 +43,9 @@ class CmsFacade extends AbstractFacade
     /**
      * @param string $path
      *
-     * @return CmsTemplateTransfer
      * @throws MissingTemplateException
+     *
+     * @return CmsTemplateTransfer
      */
     public function getTemplate($path)
     {
@@ -65,8 +69,9 @@ class CmsFacade extends AbstractFacade
     /**
      * @param PageTransfer $page
      *
-     * @return PageTransfer
      * @throws MissingPageException
+     *
+     * @return PageTransfer
      */
     public function savePage(PageTransfer $page)
     {
@@ -104,8 +109,9 @@ class CmsFacade extends AbstractFacade
      * @param int $idPage
      * @param string $placeholder
      *
-     * @return PageKeyMappingTransfer
      * @throws MissingGlossaryKeyMappingException
+     *
+     * @return PageKeyMappingTransfer
      */
     public function getPagePlaceholderMapping($idPage, $placeholder)
     {
@@ -131,9 +137,10 @@ class CmsFacade extends AbstractFacade
      * @param string $placeholder
      * @param array $data
      *
-     * @return string
      * @throws MissingGlossaryKeyMappingException
      * @throws MissingTranslationException
+     *
+     * @return string
      */
     public function translatePlaceholder($idPage, $placeholder, array $data = [])
     {
@@ -160,10 +167,11 @@ class CmsFacade extends AbstractFacade
      * @param PageTransfer $page
      * @param string $placeholder
      *
-     * @return bool
      * @throws MissingGlossaryKeyMappingException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return bool
      */
     public function deletePageKeyMapping(PageTransfer $page, $placeholder)
     {
@@ -176,8 +184,9 @@ class CmsFacade extends AbstractFacade
      * @param PageTransfer $page
      * @param string $url
      *
-     * @return UrlTransfer
      * @throws UrlExistsException
+     *
+     * @return UrlTransfer
      */
     public function createPageUrl(PageTransfer $page, $url)
     {
@@ -194,4 +203,5 @@ class CmsFacade extends AbstractFacade
         $pageManager = $this->getDependencyContainer()->getPageManager();
         $pageManager->touchPageActive($page);
     }
+
 }

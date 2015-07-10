@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -71,4 +72,5 @@ class ProductProcessor implements ProductProcessorInterface
 
         return array_intersect_key($productData, $allowedFields);
     }
+
 }

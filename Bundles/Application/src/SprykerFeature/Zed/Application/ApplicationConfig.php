@@ -1,13 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Application;
 
-use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class ApplicationConfig extends AbstractBundleConfig
@@ -45,7 +44,7 @@ class ApplicationConfig extends AbstractBundleConfig
     public function getNavigationSchemaPathPattern()
     {
         return [
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Zed/*/Communication'
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Zed/*/Communication',
         ];
     }
 
@@ -56,4 +55,5 @@ class ApplicationConfig extends AbstractBundleConfig
     {
         return 'navigation.xml';
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer;
 
 interface WriterInterface
 {
+
     /**
      * @param array  $dataSet
      * @param string $type
@@ -19,4 +21,5 @@ interface WriterInterface
      * @return string
      */
     public function getName();
+
 }

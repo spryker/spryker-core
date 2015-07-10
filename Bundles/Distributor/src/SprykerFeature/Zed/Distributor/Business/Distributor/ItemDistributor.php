@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Distributor\Dependency\Plugin\ItemProcessorPluginInterfac
 
 class ItemDistributor implements ItemDistributorInterface
 {
+
     const QUEUE_NAMES = 'queue_names';
 
     /**
@@ -87,6 +88,7 @@ class ItemDistributor implements ItemDistributorInterface
      * @param array $processableItem
      *
      * @throws \Exception
+     *
      * @return array
      */
     protected function processItem(array $processorPipeline, array $processableItem)
@@ -107,8 +109,9 @@ class ItemDistributor implements ItemDistributorInterface
     /**
      * @param string $type
      *
-     * @return ItemProcessorPluginInterface[]
      * @throws \Exception
+     *
+     * @return ItemProcessorPluginInterface[]
      */
     protected function getProcessorPipelineByType($type)
     {
@@ -126,4 +129,5 @@ class ItemDistributor implements ItemDistributorInterface
     {
         return new QueueMessageTransfer();
     }
+
 }

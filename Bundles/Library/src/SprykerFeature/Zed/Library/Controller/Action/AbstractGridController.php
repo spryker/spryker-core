@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -107,8 +108,9 @@ abstract class AbstractGridController extends AbstractWidgetController
     /**
      * @param Request $request
      *
-     * @return array
      * @throws \ErrorException
+     *
+     * @return array
      */
     protected function handleCreateOrUpdateRequest(Request $request)
     {
@@ -217,8 +219,9 @@ abstract class AbstractGridController extends AbstractWidgetController
     /**
      * @param Request $request
      *
-     * @return array
      * @throws \ErrorException
+     *
+     * @return array
      */
     protected function handleDestroyRequest(Request $request)
     {
@@ -277,7 +280,7 @@ abstract class AbstractGridController extends AbstractWidgetController
     protected function fetchReturnData($ids)
     {
         if (!is_array($ids)) {
-            $ids = (array)$ids;
+            $ids = (array) $ids;
         }
         $dataSource = $this->grid->getDataSource();
         $data = $dataSource->getDataByField($this->grid->getIdFieldName(), $ids);

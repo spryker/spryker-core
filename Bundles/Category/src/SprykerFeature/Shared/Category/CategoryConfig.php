@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,8 @@ use SprykerFeature\Shared\Library\ConfigInterface;
 
 interface CategoryConfig extends ConfigInterface
 {
+
     const RESOURCE_TYPE_CATEGORY_NODE = 'categorynode';
     const RESOURCE_TYPE_NAVIGATION = 'navigation';
+
 }

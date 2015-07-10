@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
-
 use Generated\Shared\Test\CatFaceInterface as TestCatFaceInterface;
 use Generated\Shared\Transfer\OrderItemTransfer;
 
@@ -18,17 +18,17 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
 {
 
     /**
-     * @var string $name
+     * @var string
      */
     protected $name;
 
     /**
-     * @var OrderItemTransfer $item
+     * @var OrderItemTransfer
      */
     protected $item;
 
     /**
-     * @var \ArrayObject $items
+     * @var \ArrayObject
      */
     protected $items;
 
@@ -112,6 +112,5 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
 
         return $this;
     }
-
 
 }

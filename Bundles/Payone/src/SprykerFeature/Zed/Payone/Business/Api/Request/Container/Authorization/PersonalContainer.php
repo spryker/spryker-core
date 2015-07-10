@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,11 +13,13 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * Merchant's customer ID (Permitted symbols: 0-9, a-z, A-Z, .,-,_,/)
+     *
      * @var string
      */
     protected $customerid;
     /**
      * PAYONE debtor ID
+     *
      * @var int
      */
     protected $userid;
@@ -58,6 +61,7 @@ class PersonalContainer extends AbstractContainer
     protected $city;
     /**
      * Country (ISO-3166)
+     *
      * @var string
      */
     protected $country;
@@ -75,6 +79,7 @@ class PersonalContainer extends AbstractContainer
     protected $telephonenumber;
     /**
      * Date of birth (YYYYMMDD)
+     *
      * @var int
      */
     protected $birthday;
@@ -103,7 +108,6 @@ class PersonalContainer extends AbstractContainer
      * @var string
      */
     protected $ip;
-
 
     /**
      * @param string $addressaddition

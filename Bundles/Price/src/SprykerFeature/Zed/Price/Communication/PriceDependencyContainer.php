@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,7 +14,6 @@ use SprykerFeature\Zed\Price\Communication\Grid\PriceGrid;
 use SprykerFeature\Zed\Price\Communication\Grid\PriceTypeGrid;
 use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validator;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
 /**
@@ -21,8 +21,10 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
  */
 class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @param Request $request
+     *
      * @return PriceForm
      */
     public function getPriceForm(Request $request)
@@ -35,6 +37,7 @@ class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
 
     /**
      * @param Request $request
+     *
      * @return PriceTypeForm
      */
     public function getPriceTypeForm(Request $request)
@@ -47,6 +50,7 @@ class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
 
     /**
      * @param Request $request
+     *
      * @return PriceGrid
      */
     public function getPriceGrid(Request $request)
@@ -59,6 +63,7 @@ class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
 
     /**
      * @param Request $request
+     *
      * @return PriceTypeGrid
      */
     public function getPriceTypeGrid(Request $request)
@@ -84,4 +89,5 @@ class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getLocator()->price()->facade();
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -58,8 +59,9 @@ class User implements UserInterface
      * @param string $username
      * @param string $password
      *
-     * @return UserTransfer
      * @throws UsernameExistsException
+     *
+     * @return UserTransfer
      */
     public function addUser($firstName, $lastName, $username, $password)
     {
@@ -145,8 +147,9 @@ class User implements UserInterface
     }
 
     /**
-     * @return UserTransfer
      * @throws UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function getUsers()
     {
@@ -157,7 +160,6 @@ class User implements UserInterface
         }
 
         $collection = new TransferArrayObject();
-
 
         foreach ($results as $result) {
             $transfer = new UserTransfer();
@@ -206,8 +208,9 @@ class User implements UserInterface
     /**
      * @param string $username
      *
-     * @return UserTransfer
      * @throws UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function getUserByUsername($username)
     {
@@ -223,8 +226,9 @@ class User implements UserInterface
     /**
      * @param int $id
      *
-     * @return UserTransfer
      * @throws UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function getUserById($id)
     {
@@ -244,8 +248,9 @@ class User implements UserInterface
     /**
      * @param int $id
      *
-     * @return UserTransfer
      * @throws UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function getEntityUserById($id)
     {
@@ -320,8 +325,9 @@ class User implements UserInterface
     }
 
     /**
-     * @return UserTransfer
      * @throws UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function getCurrentUser()
     {
@@ -347,4 +353,5 @@ class User implements UserInterface
 
         return $transfer;
     }
+
 }

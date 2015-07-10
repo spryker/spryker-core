@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -45,7 +46,7 @@ abstract class AbstractOperator implements OperatorInterface
         StorageProviderInterface $storageProvider,
         CalculationFacade $cartCalculator,
         LoggerInterface $messenger = null //@todo to be discussed
-    ) {
+) {
         $this->storageProvider = $storageProvider;
         $this->messenger = $messenger;
         $this->cartCalculator = $cartCalculator;
@@ -112,10 +113,10 @@ abstract class AbstractOperator implements OperatorInterface
 
     /**
      * @param ItemExpanderPluginInterface $itemExpander
-     *
      */
     public function addItemExpanderPlugin(ItemExpanderPluginInterface $itemExpander)
     {
         $this->itemExpanderPlugins[] = $itemExpander;
     }
+
 }

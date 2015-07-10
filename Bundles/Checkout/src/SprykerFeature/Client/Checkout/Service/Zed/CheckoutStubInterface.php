@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,10 +11,12 @@ use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface CheckoutStubInterface
 {
+
     /**
      * @param CheckoutRequestInterface $transferCheckout
      *
      * @return TransferInterface
      */
     public function requestCheckout(CheckoutRequestInterface $transferCheckout);
+
 }

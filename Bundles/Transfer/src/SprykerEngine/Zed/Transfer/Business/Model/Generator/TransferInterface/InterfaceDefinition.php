@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -137,7 +138,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     {
         $propertyInfo = [
             'name' => $property['name'],
-            'type' => $this->getPropertyType($property)
+            'type' => $this->getPropertyType($property),
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
@@ -173,6 +174,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
 
     /**
      * @param array $property
+     *
      * @return int
      */
     private function isTransfer(array $property)
@@ -370,7 +372,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
         $method = [
             'name' => $methodName,
             'property' => $propertyName,
-            'return' => $this->getReturnType($property)
+            'return' => $this->getReturnType($property),
         ];
         $this->methods[$methodName] = $method;
     }
@@ -433,4 +435,5 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
 
         return $method;
     }
+
 }

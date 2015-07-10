@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 
 interface TouchQueryContainerInterface
 {
+
     /**
      * @param string $itemType
      *
@@ -23,4 +25,5 @@ interface TouchQueryContainerInterface
      * @return SpyTouchQuery
      */
     public function queryTouchEntry($itemType, $itemId);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Category\Dependency\Facade;
 
 interface CategoryToTouchInterface
 {
+
     /**
      * @param string $itemType
      * @param int $itemId
@@ -14,4 +16,5 @@ interface CategoryToTouchInterface
      * @return bool
      */
     public function touchActive($itemType, $itemId);
+
 }

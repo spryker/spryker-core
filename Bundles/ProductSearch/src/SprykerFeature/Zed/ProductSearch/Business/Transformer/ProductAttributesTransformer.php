@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductAttributesTransformer implements ProductAttributesTransformerInterface
 {
+
     protected $fieldOperations = [];
 
     /**
@@ -77,7 +79,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                     $productData['concrete_products'][] = [
                         'sku' => $concreteSkus[$i],
                         'attributes' => json_decode($concreteAttributes[$i], true),
-                        'name' => $concreteNames[$i]
+                        'name' => $concreteNames[$i],
                     ];
                 }
 
@@ -88,7 +90,6 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
 
         return array_filter($searchableProducts);
     }
-
 
     /**
      * @param array  $attributes
@@ -139,7 +140,6 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
     }
 
     /**
-     * @return void
      */
     protected function initFieldToOperationMapping()
     {
@@ -173,6 +173,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
         }, array_keys($attributes));
 
         $attributes = array_combine($newKeys, $attributes);
+
         return $attributes;
     }
 
@@ -182,6 +183,8 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
     protected function getFieldOperations()
     {
         $fieldOperations = $this->queryContainer->queryFieldOperations()->find();
+
         return $fieldOperations;
     }
+
 }

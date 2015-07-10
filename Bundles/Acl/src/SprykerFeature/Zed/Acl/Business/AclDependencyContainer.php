@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,7 +15,6 @@ use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Business\Model\RuleValidator;
 use SprykerFeature\Zed\Acl\Business\Model\Installer;
 use SprykerFeature\Zed\Acl\Business\Model\Rule;
-use SprykerFeature\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 
 /**
@@ -81,4 +81,5 @@ class AclDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getConfig()
         );
     }
+
 }

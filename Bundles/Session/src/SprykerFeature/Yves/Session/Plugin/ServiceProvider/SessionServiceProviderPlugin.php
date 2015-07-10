@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -38,9 +39,9 @@ class SessionServiceProviderPlugin extends AbstractPlugin implements ServiceProv
     {
         $saveHandler = Config::get(YvesConfig::YVES_SESSION_SAVE_HANDLER);
 
-        if ($saveHandler != SessionConfig::SESSION_HANDLER_COUCHBASE
-            && $saveHandler != SessionConfig::SESSION_HANDLER_MYSQL
-            && $saveHandler != SessionConfig::SESSION_HANDLER_REDIS
+        if ($saveHandler !== SessionConfig::SESSION_HANDLER_COUCHBASE
+            && $saveHandler !== SessionConfig::SESSION_HANDLER_MYSQL
+            && $saveHandler !== SessionConfig::SESSION_HANDLER_REDIS
         ) {
 
             if (Config::get(YvesConfig::YVES_SESSION_SAVE_HANDLER) && $this->getSavePath($saveHandler)) {
@@ -62,7 +63,7 @@ class SessionServiceProviderPlugin extends AbstractPlugin implements ServiceProv
         }
         $app['session.storage.options'] = $options;
 
-        /**
+        /*
          * We manually register our own couchbase session handler, for all other handlers we use the generic one
          */
         switch ($saveHandler) {
@@ -106,8 +107,9 @@ class SessionServiceProviderPlugin extends AbstractPlugin implements ServiceProv
     /**
      * @param string $saveHandler
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     protected function getSavePath($saveHandler)
     {

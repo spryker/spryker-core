@@ -9,6 +9,7 @@ use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterfac
 
 class ItemTypeWriter implements ItemTypeWriterInterface
 {
+
     /**
      * @var DistributorQueryContainerInterface
      */
@@ -43,6 +44,7 @@ class ItemTypeWriter implements ItemTypeWriterInterface
      *
      * @throws ItemTypeDoesNotExistException
      * @throws PropelException
+     *
      * @return int
      */
     public function update($typeKey, $timestamp)
@@ -66,4 +68,5 @@ class ItemTypeWriter implements ItemTypeWriterInterface
 
         return $itemType->getIdDistributorItemType();
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -64,6 +65,7 @@ interface StateContainerInterface
 
     /**
      * @param Collection $queryResult
+     *
      * @return mixed
      */
     public function setQueryResult(Collection $queryResult);

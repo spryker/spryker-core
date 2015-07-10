@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\ClassResolver;
 use SprykerEngine\Shared\Kernel\Factory\FactoryException;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 
@@ -48,7 +48,7 @@ abstract class AbstractFactory implements FactoryInterface
      * @var array
      */
     protected $baseClasses = [
-        'DependencyContainer'
+        'DependencyContainer',
     ];
 
     /**
@@ -95,8 +95,9 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * @param string $class
      *
-     * @return object
      * @throws \Exception
+     *
+     * @return object
      */
     public function create($class)
     {
@@ -150,9 +151,9 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @return string
-     *
      * @throws FactoryException
+     *
+     * @return string
      */
     protected function getClassNamePattern()
     {
@@ -162,4 +163,5 @@ abstract class AbstractFactory implements FactoryInterface
 
         return $this->classNamePattern;
     }
+
 }

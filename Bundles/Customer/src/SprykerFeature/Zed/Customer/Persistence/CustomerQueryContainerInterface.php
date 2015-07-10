@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -45,16 +46,18 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      * @param int $idAddress
      * @param string $email
      *
-     * @return SpyCustomerAddressQuery
      * @throws PropelException
+     *
+     * @return SpyCustomerAddressQuery
      */
     public function queryAddressForCustomer($idAddress, $email);
 
     /**
      * @param int $idAddress
      *
-     * @return SpyCustomerAddressQuery
      * @throws PropelException
+     *
+     * @return SpyCustomerAddressQuery
      */
     public function queryAddress($idAddress);
 
@@ -74,4 +77,5 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      * @return SpyCustomerQuery
      */
     public function queryCustomers();
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,7 +11,6 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 /**
  * Class CodeExistsValidator
- * @package SprykerFeature\Zed\Discount\Communication\Constraint
  */
 class CodeExistsValidator extends ConstraintValidator
 {
@@ -33,7 +33,7 @@ class CodeExistsValidator extends ConstraintValidator
             if (is_null($voucherId)) {
                 $this->addValidation($value, $constraint);
             }
-            if ($voucherId != $voucherEntity->getIdDiscountVoucher()) {
+            if ($voucherId !== $voucherEntity->getIdDiscountVoucher()) {
                 $this->addValidation($value, $constraint);
             }
         }
@@ -49,4 +49,5 @@ class CodeExistsValidator extends ConstraintValidator
             ->setParameter('{{ value }}', $value)
             ->addViolation();
     }
+
 }

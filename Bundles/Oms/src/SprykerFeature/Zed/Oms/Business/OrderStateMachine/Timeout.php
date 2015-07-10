@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -31,12 +32,12 @@ class Timeout implements TimeoutInterface
     /**
      * @var DateTime[]
      */
-    protected $eventToTimeoutBuffer = array();
+    protected $eventToTimeoutBuffer = [];
 
     /**
      * @var StateInterface[]
      */
-    protected $stateIdToModelBuffer = array();
+    protected $stateIdToModelBuffer = [];
 
     /**
      * @param OmsQueryContainerInterface $queryContainer
@@ -60,7 +61,7 @@ class Timeout implements TimeoutInterface
         $groupedOrderItems = $this->groupItemsByEvent($orderItems);
 
         foreach ($groupedOrderItems as $event => $orderItems) {
-            $orderStateMachine->triggerEvent($event, $orderItems, array());
+            $orderStateMachine->triggerEvent($event, $orderItems, []);
         }
 
         return $countAffectedItems;
@@ -165,11 +166,11 @@ class Timeout implements TimeoutInterface
      */
     protected function groupItemsByEvent(ObjectCollection $orderItems)
     {
-        $groupedOrderItems = array();
+        $groupedOrderItems = [];
         foreach ($orderItems as $orderItem) {
             $eventName = $orderItem->getEvent();
             if (!isset($groupedOrderItems[$eventName])) {
-                $groupedOrderItems[$eventName] = array();
+                $groupedOrderItems[$eventName] = [];
             }
             $groupedOrderItems[$eventName][] = $orderItem;
         }
@@ -191,8 +192,9 @@ class Timeout implements TimeoutInterface
      * @param \DateInterval $interval
      * @param mixed $timeout
      *
-     * @return int
      * @throws ErrorException
+     *
+     * @return int
      */
     protected function validateTimeout($interval, $timeout)
     {

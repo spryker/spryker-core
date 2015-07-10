@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,4 +35,5 @@ class OmsOrderHydrator implements OmsOrderHydratorInterface
                 throw new NoStatemachineProcessException();
         }
     }
+
 }

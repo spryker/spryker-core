@@ -1,12 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep;
 
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\System\SystemConfig;
 use Symfony\Component\Process\Process;
 
 class SetupInstall extends AbstractApplicationCheckStep

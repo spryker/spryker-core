@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ namespace SprykerFeature\Zed\Library\Workflow;
  */
 abstract class Task implements TaskInterface
 {
+
     /**
      * @var array
      */
@@ -54,4 +56,5 @@ abstract class Task implements TaskInterface
     {
         return $this->errors;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CatalogDependencyContainer extends AbstractServiceDependencyContainer
 {
+
     /**
      * @var Catalog
      */
@@ -33,8 +35,9 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
     }
 
     /**
-     * @return mixed
      * @throws \ErrorException
+     *
+     * @return mixed
      */
     public function createStorage()
     {
@@ -44,6 +47,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
     /**
      * @param Request $request
      * @param array $category
+     *
      * @return Model\FacetSearch
      */
     public function createFacetSearch(Request $request, array $category)
@@ -65,6 +69,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
 
     /**
      * @param Request $request
+     *
      * @return Model\FulltextSearch
      */
     public function createFulltextSearch(Request $request)
@@ -93,6 +98,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
 
     /**
      * @param FacetConfig $facetConfig
+     *
      * @return Model\FacetFilterHandler
      */
     protected function createFacetFilterHandler(FacetConfig $facetConfig)
@@ -144,4 +150,5 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
     {
         return $this->getFactory()->createKeyBuilderProductResourceKeyBuilder();
     }
+
 }

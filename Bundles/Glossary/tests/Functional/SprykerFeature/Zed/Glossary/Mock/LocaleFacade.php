@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,4 +11,5 @@ use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 
 class LocaleFacade extends SprykerLocaleFacade implements GlossaryToLocaleInterface
 {
+
 }

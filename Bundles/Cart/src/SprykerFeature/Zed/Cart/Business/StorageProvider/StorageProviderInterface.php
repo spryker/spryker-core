@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Generated\Shared\Cart\ChangeInterface;
 
 interface StorageProviderInterface
 {
+
     /**
      * @param CartInterface $cart
      * @param ChangeInterface $change
@@ -41,4 +43,5 @@ interface StorageProviderInterface
      * @return CartInterface
      */
     public function decreaseItems(CartInterface $cart, ChangeInterface $change);
+
 }

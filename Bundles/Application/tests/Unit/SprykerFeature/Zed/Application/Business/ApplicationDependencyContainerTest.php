@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Functional\SprykerEngine\Zed\Transfer\Business\Model;
 
-use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -19,7 +19,7 @@ use SprykerFeature\Zed\Application\Business\ApplicationDependencyContainer;
  * @group Business
  * @group ApplicationFacadeDependencyContainer
  */
-class ApplicationFacadeDependencyContainerTest extends \PHPUnit_Framework_TestCase
+class ApplicationDependencyContainerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -39,4 +39,5 @@ class ApplicationFacadeDependencyContainerTest extends \PHPUnit_Framework_TestCa
 
         $this->assertInstanceOf('SprykerFeature\Zed\Application\Business\Model\Navigation\NavigationBuilder', $instance);
     }
+
 }

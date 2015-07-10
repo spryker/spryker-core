@@ -7,6 +7,7 @@ use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterfac
 
 class ItemQueueProvider implements ItemQueueProviderInterface
 {
+
     /**
      * @var DistributorQueryContainerInterface
      */
@@ -45,4 +46,5 @@ class ItemQueueProvider implements ItemQueueProviderInterface
 
         return $queues;
     }
+
 }

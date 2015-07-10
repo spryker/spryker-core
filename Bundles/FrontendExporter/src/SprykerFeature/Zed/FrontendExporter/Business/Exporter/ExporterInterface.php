@@ -1,7 +1,9 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -11,6 +13,7 @@ use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\QueryExpanderPluginInt
 
 interface ExporterInterface
 {
+
     /**
      * @param DataProcessorPluginInterface $processor
      */
@@ -28,4 +31,5 @@ interface ExporterInterface
      * @return BatchResult
      */
     public function exportByType($type, LocaleTransfer $locale);
+
 }

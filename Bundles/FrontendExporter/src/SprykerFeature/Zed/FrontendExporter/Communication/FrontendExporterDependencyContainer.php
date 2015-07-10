@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 
 class FrontendExporterDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return AbstractInstaller
      */
@@ -27,4 +29,5 @@ class FrontendExporterDependencyContainer extends AbstractCommunicationDependenc
     {
         return $this->getProvidedDependency(FrontendExporterDependencyProvider::FACADE_LOCALE);
     }
+
 }

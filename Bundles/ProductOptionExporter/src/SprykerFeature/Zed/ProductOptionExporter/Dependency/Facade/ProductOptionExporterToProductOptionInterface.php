@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -66,4 +67,5 @@ interface ProductOptionExporterToProductOptionInterface
      * @return string|null
      */
     public function getEffectiveTaxRateForTypeUsage($idTypeUsage);
+
 }

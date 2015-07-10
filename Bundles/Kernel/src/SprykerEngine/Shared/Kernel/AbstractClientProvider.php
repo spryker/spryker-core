@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,10 +7,10 @@
 namespace SprykerEngine\Shared\Kernel;
 
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
 abstract class AbstractClientProvider
 {
+
     /**
      * @var FactoryInterface
      */
@@ -26,8 +27,9 @@ abstract class AbstractClientProvider
     protected $client;
 
     /**
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getInstance()
     {
@@ -52,4 +54,5 @@ abstract class AbstractClientProvider
      * @return mixed
      */
     abstract protected function createClient();
+
 }

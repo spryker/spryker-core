@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Setup\Business\Model;
-
-use Symfony\Component\Filesystem\Filesystem;
 
 interface DirectoryRemoverInterface
 {

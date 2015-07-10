@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -42,4 +43,5 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInternalType('string', $this->getConfig()->getNavigationSchemaFileNamePattern());
     }
+
 }

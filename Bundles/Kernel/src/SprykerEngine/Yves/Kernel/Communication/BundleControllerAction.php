@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -60,6 +61,5 @@ class BundleControllerAction implements BundleControllerActionInterface
     {
         return $this->action;
     }
-
 
 }

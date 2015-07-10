@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,12 +13,14 @@ interface AdapterInterface
 
     /**
      * @param array $params
+     *
      * @return array
      */
     public function sendRawRequest(array $params);
 
     /**
      * @param AbstractRequestContainer $container
+     *
      * @return mixed
      */
     public function sendRequest(AbstractRequestContainer $container);

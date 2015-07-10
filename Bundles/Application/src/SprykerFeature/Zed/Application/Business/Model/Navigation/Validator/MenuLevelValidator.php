@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Application\Business\Model\Navigation\Validator;
 
 class MenuLevelValidator implements MenuLevelValidatorInterface
 {
+
     /**
      * @var int
      */
@@ -23,6 +25,7 @@ class MenuLevelValidator implements MenuLevelValidatorInterface
     /**
      * @param int $currentLevel
      * @param string $pageTitle
+     *
      * @throws \Exception
      */
     public function validate($currentLevel, $pageTitle)
@@ -31,4 +34,5 @@ class MenuLevelValidator implements MenuLevelValidatorInterface
             throw new MenuLevelException($this->maxLevelCount, $pageTitle);
         }
     }
+
 }

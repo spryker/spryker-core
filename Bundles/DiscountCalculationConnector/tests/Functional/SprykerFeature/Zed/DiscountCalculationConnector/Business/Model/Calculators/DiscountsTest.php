@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,12 +20,13 @@ use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * Class DiscountsTest
+ *
  * @group DiscountTest
  * @group Calculation
- * @package PhpUnit\SprykerFeature\Zed\Calculation\Communication\Plugin
  */
 class DiscountsTest extends Test
 {
+
     const EXPENSE_1000 = 1000;
     const SALES_DISCOUNT_100 = 100;
     const SALES_DISCOUNT_50 = 50;
@@ -166,4 +168,5 @@ class DiscountsTest extends Test
     {
         return Locator::getInstance();
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,10 +12,10 @@ use SprykerFeature\Zed\ProductCategorySearch\Business\ProductCategorySearchFacad
 
 /**
  * Class ProductCategorySearchDependencyContainer
- * @package SprykerFeature\Zed\ProductCategorySearch\Communication
  */
 class ProductCategorySearchDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return ProductCategorySearchFacade
      */
@@ -30,4 +31,5 @@ class ProductCategorySearchDependencyContainer extends AbstractCommunicationDepe
     {
         return $this->getLocator()->productCategory()->queryContainer();
     }
+
 }

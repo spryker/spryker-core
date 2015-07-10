@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,4 +10,5 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 abstract class AbstractInstallerPlugin extends AbstractPlugin
 {
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Yves\Catalog\Router;
 
 use Silex\Application;
-
 use SprykerFeature\Shared\Application\Communication\ControllerServiceBuilder;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Yves\Application\Business\Routing\AbstractRouter;
@@ -18,7 +18,6 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 /**
- * @package Pyz\Yves\Catalog\Business\Model\Router
  */
 class SearchRouter extends AbstractRouter
 {
@@ -53,10 +52,10 @@ class SearchRouter extends AbstractRouter
     /**
      * {@inheritdoc}
      */
-    public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         if ('/search' === $name) {
-            $request = ($this->app['request_stack'])? $this->app['request_stack']->getCurrentRequest():$this->app['request'];
+            $request = ($this->app['request_stack']) ? $this->app['request_stack']->getCurrentRequest() : $this->app['request'];
             $requestParameters = $request->query->all();
             //if no page is provided we generate a url to change the filter and therefore want to reset the page
             //TODO @see SprykerFeature\Yves\Catalog\Business\Model\AbstractSearch Line 77
@@ -71,7 +70,7 @@ class SearchRouter extends AbstractRouter
 
             return $this->getUrlOrPathForType($pathInfo, $referenceType);
         }
-        throw new RouteNotFoundException;
+        throw new RouteNotFoundException();
     }
 
     /**
@@ -80,7 +79,7 @@ class SearchRouter extends AbstractRouter
     public function match($pathinfo)
     {
         if ('/search' === $pathinfo) {
-            $request = ($this->app['request_stack'])? $this->app['request_stack']->getCurrentRequest():$this->app['request'];
+            $request = ($this->app['request_stack']) ? $this->app['request_stack']->getCurrentRequest() : $this->app['request'];
             $this->urlMapper->injectParametersFromUrlIntoRequest($pathinfo, $request);
 
             $bundleControllerAction = new BundleControllerAction('Catalog', 'Catalog', 'fulltextSearch');
@@ -102,4 +101,5 @@ class SearchRouter extends AbstractRouter
         }
         throw new ResourceNotFoundException();
     }
+
 }

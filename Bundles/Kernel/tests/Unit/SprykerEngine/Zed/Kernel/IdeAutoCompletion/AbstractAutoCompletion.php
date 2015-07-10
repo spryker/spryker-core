@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -27,4 +28,5 @@ abstract class AbstractAutoCompletion extends \PHPUnit_Framework_TestCase
             rmdir($this->baseDir . 'test/');
         }
     }
+
 }

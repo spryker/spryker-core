@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Ui\Communication\Plugin\Twig;
 
-use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 use SprykerFeature\Zed\Library\Twig\TwigFunction;
 
 class GridConfirmDialog extends TwigFunction
@@ -29,7 +29,7 @@ class GridConfirmDialog extends TwigFunction
      */
     protected function getFunction()
     {
-        return function($gridId, $buttonName, array $options = []) {
+        return function ($gridId, $buttonName, array $options = []) {
             $options = $this->addMessageHtml($options);
 
             return $this->getOutput($gridId, $buttonName, $options);
@@ -38,6 +38,7 @@ class GridConfirmDialog extends TwigFunction
 
     /**
      * @param array $options
+     *
      * @return array
      */
     protected function addMessageHtml(array $options)
@@ -64,6 +65,7 @@ class GridConfirmDialog extends TwigFunction
      * @param $gridId
      * @param $buttonName
      * @param array $options
+     *
      * @return string
      */
     public function getOutput($gridId, $buttonName, array $options)

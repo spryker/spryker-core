@@ -1,13 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 
 class SprykerFeature_Zed_Library_Password_Config
 {
+
     /**
      * @return int
      * @static
@@ -19,6 +20,7 @@ class SprykerFeature_Zed_Library_Password_Config
         if(empty($algorithm)){
             $algorithm = PASSWORD_DEFAULT;
         }
+
         return $algorithm;
     }
 
@@ -34,6 +36,8 @@ class SprykerFeature_Zed_Library_Password_Config
             $options = [];
 
         }
+
         return $options;
     }
+
 }

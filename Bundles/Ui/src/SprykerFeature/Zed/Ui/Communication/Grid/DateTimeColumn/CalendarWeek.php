@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Ui\Communication\Grid\DateTimeColumn;
 
-use \Carbon\Carbon;
+use Carbon\Carbon;
 use SprykerFeature\Zed\Ui\Business\Grid\DateTimeColumn\TimeRangeFormat\WeekFormat;
 
 class CalendarWeek extends FilterFormatAbstract
@@ -19,7 +20,7 @@ class CalendarWeek extends FilterFormatAbstract
         $format = $this->getUnambiguousFormat();
 
         if (!$format) {
-            return null;
+            return;
         }
 
         $carbonDate = Carbon::now();

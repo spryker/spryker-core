@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Yves\Factory;
 
 trait FactoryTrait
 {
+
     /**
      * @var Factory
      */
@@ -21,4 +23,5 @@ trait FactoryTrait
     {
         $this->factory = $factory;
     }
+
 }

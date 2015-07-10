@@ -223,4 +223,5 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
             $this->errorHandler->handleError($exception);
         }
     }
+
 }

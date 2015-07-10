@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -61,6 +62,7 @@ class MenuFormatter implements MenuFormatterInterface
     /**
      * @param array $pages
      * @param string $pathInfo
+     *
      * @return array
      */
     public function formatMenu(array $pages, $pathInfo)
@@ -75,6 +77,7 @@ class MenuFormatter implements MenuFormatterInterface
      * @param array $pages
      * @param string $pathInfo
      * @param int $currentLevel
+     *
      * @return array
      */
     protected function formatPages(array $pages, $pathInfo, $currentLevel = 1)
@@ -109,6 +112,7 @@ class MenuFormatter implements MenuFormatterInterface
 
     /**
      * @param array $page
+     *
      * @return string
      */
     protected function getUri(array $page)
@@ -126,6 +130,7 @@ class MenuFormatter implements MenuFormatterInterface
 
     /**
      * @param array $page
+     *
      * @return array
      */
     protected function formatPage(array $page)
@@ -133,7 +138,7 @@ class MenuFormatter implements MenuFormatterInterface
         $formattedPage = [];
 
         $url = $this->getUri($page);
-        if ('#' ==! $url) {
+        if ('#' === !$url) {
             $this->urlUniqueValidator->validate($url);
             $this->urlUniqueValidator->addUrl($url);
         }
@@ -151,9 +156,11 @@ class MenuFormatter implements MenuFormatterInterface
         }
         if (count($attributes)) {
             $formattedPage[self::ATTRIBUTES] = $attributes;
-            return array($formattedPage, $page);
+
+            return [$formattedPage, $page];
         }
 
         return $formattedPage;
     }
+
 }

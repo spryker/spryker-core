@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace Unit\SprykerEngine\Shared\Kernel;
 
 use Unit\SprykerEngine\Shared\Kernel\ClassResolver\Fixtures\Foo;
 use SprykerEngine\Shared\Kernel\ClassResolver\InstanceBuilder;
-use SprykerEngine\Shared\Kernel\TransferLocator;
 
 /**
  * @group Kernel
@@ -37,4 +37,5 @@ class InstanceBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Unit\SprykerEngine\Shared\Kernel\ClassResolver\Fixtures\Foo', $instance);
         $this->assertSame($data, $instance->getData());
     }
+
 }

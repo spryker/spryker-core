@@ -1,7 +1,9 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Payone\AuthorizationInterface;
@@ -19,14 +21,17 @@ use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseCont
 
 interface PaymentManagerInterface
 {
+
     /**
      * @param DebitInterface $debitData
+     *
      * @return DebitResponseContainer
      */
     public function debit(DebitInterface $debitData);
 
     /**
      * @param CaptureInterface $captureData
+     *
      * @return CaptureResponseContainer
      */
     public function capture(CaptureInterface $captureData);
@@ -38,31 +43,37 @@ interface PaymentManagerInterface
 
     /**
      * @param RefundInterface $refundData
+     *
      * @return RefundResponseContainer
      */
     public function refund(RefundInterface $refundData);
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return AuthorizationResponseContainer
      */
     public function preAuthorize(AuthorizationInterface $authorizationData);
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return AuthorizationResponseContainer
      */
     public function authorize(AuthorizationInterface $authorizationData);
 
     /**
      * @param PayoneOrderInterface $orderTransfer
+     *
      * @return PayonePaymentTransfer
      */
     public function getPayment(PayoneOrderInterface $orderTransfer);
 
     /**
      * @param CreditCardInterface $creditCardData
+     *
      * @return CreditCardCheckResponseContainer
      */
     public function creditCardCheck(CreditCardInterface $creditCardData);
+
 }

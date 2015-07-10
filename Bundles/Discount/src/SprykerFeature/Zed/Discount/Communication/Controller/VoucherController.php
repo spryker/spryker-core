@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
 class VoucherController extends AbstractController
 {
+
     public function indexAction()
     {
     }
@@ -20,4 +22,5 @@ class VoucherController extends AbstractController
     public function poolAction()
     {
     }
+
 }

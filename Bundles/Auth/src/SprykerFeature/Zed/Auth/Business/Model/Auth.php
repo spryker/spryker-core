@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ use Generated\Shared\Transfer\UserTransfer;
 
 class Auth implements AuthInterface
 {
+
     /**
      * @var AutoCompletion
      * @var LocatorLocatorInterface
@@ -150,6 +152,7 @@ class Auth implements AuthInterface
 
     /**
      * This is based on sessions so the token will only be valid during a session lifetime
+     *
      * @param string $token
      *
      * @return bool
@@ -195,6 +198,7 @@ class Auth implements AuthInterface
         try {
             $user = $this->getSystemUserByHash($hash);
             $this->registerAuthorizedUser($hash, $user);
+
             return true;
         } catch (UserNotFoundException $e) {
             return false;
@@ -223,8 +227,9 @@ class Auth implements AuthInterface
     /**
      * @param string $hash
      *
-     * @return UserTransfer
      * @throws UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function getSystemUserByHash($hash)
     {
@@ -239,6 +244,7 @@ class Auth implements AuthInterface
                 $user->setLastName($username);
                 $user->setUsername($username);
                 $user->setPassword($username);
+
                 return $user;
             }
         }
@@ -261,8 +267,9 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      *
-     * @return UserTransfer
      * @throws UserNotLoggedException
+     *
+     * @return UserTransfer
      */
     public function unserializeUserFromSession($token)
     {
@@ -310,4 +317,5 @@ class Auth implements AuthInterface
 
         return false;
     }
+
 }

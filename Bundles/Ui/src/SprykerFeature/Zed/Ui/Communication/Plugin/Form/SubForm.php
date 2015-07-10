@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerFeature\Zed\Ui\Communication\Plugin\Form;
 
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use SprykerFeature\Zed\Ui\Dependency\Plugin\AbstractFormPlugin;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class SubForm extends AbstractFormPlugin
 {
@@ -26,6 +26,7 @@ class SubForm extends AbstractFormPlugin
 
     /**
      * @param array $output
+     *
      * @return mixed
      */
     public function extendOutput(array $output)
@@ -43,7 +44,7 @@ class SubForm extends AbstractFormPlugin
         return [
             AbstractFormPlugin::OUTPUT_NAME => $this->getName(),
             AbstractFormPlugin::OUTPUT_TYPE => self::OUTPUT_TYPE_GROUP,
-            AbstractForm::OUTPUT_FIELDS => $this->form->toArray()[AbstractForm::OUTPUT_FIELDS]
+            AbstractForm::OUTPUT_FIELDS => $this->form->toArray()[AbstractForm::OUTPUT_FIELDS],
         ];
     }
 
@@ -65,6 +66,7 @@ class SubForm extends AbstractFormPlugin
 
     /**
      * @param $name
+     *
      * @return $this
      */
     public function setName($name)
@@ -84,6 +86,7 @@ class SubForm extends AbstractFormPlugin
 
     /**
      * @param AbstractForm $form
+     *
      * @return $this
      */
     public function setForm(AbstractForm $form)
@@ -94,4 +97,5 @@ class SubForm extends AbstractFormPlugin
 
         return $this;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,6 +29,7 @@ class StorageDependencyContainer extends AbstractServiceDependencyContainer
 
     /**
      * @throws \Exception
+     *
      * @return array
      */
     private function getConfig()
@@ -35,7 +37,7 @@ class StorageDependencyContainer extends AbstractServiceDependencyContainer
         return [
             'protocol' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
             'port' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_PORT),
-            'host' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_HOST)
+            'host' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_HOST),
         ];
     }
 

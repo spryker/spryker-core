@@ -1,4 +1,5 @@
 <?php
+
   /**
   * (c) Spryker Systems GmbH copyright protected
   */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetails;
 
 class OrderManager implements OrderManagerInterface
 {
+
     /**
      * @param PayoneOrderInterface $orderTransfer
      */
@@ -38,4 +40,5 @@ class OrderManager implements OrderManagerInterface
         $paymentDetails->setPseudocardpan($paymentDetailsTransfer->getPseudocardpan());
         $paymentDetails->save();
     }
-} 
+
+}

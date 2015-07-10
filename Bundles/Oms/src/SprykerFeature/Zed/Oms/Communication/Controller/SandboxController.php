@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -29,6 +30,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class SandboxController extends AbstractController
 {
+
     const PROCESS_NAME = 'Nopayment01';
 
     const STATE_NAME = 'new';
@@ -61,6 +63,7 @@ class SandboxController extends AbstractController
 
     /**
      * @deprecated
+     *
      * @param Request $request
      *
      * @return RedirectResponse
@@ -156,7 +159,7 @@ class SandboxController extends AbstractController
      *
      * @return string
      */
-    protected function generateCustomer($isLast=false)
+    protected function generateCustomer($isLast = false)
     {
         $firstNames = [
             'Adam', 'Alexia', 'Astrid', 'Bruno', 'Denis', 'Mathias',
@@ -251,4 +254,5 @@ class SandboxController extends AbstractController
         $order->setGrandTotal($total);
         $order->save();
     }
+
 }

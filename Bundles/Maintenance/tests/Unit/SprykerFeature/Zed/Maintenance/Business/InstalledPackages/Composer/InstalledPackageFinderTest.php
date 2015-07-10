@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace Unit\SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Compose
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
 
 /**
  * @group SprykerFeature

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,10 +8,10 @@ namespace SprykerFeature\Shared\Library\Storage;
 
 /**
  * Class AdapterTrait
- * @package SprykerFeature\Shared\Library\DataSource
  */
 trait AdapterTrait
 {
+
     /**
      * @var array
      */
@@ -28,11 +29,13 @@ trait AdapterTrait
 
     /**
      * @param array $config
+     *
      * @return $this
      */
     public function setConfig(array $config)
     {
         $this->config = $config;
+
         return $this;
     }
 
@@ -46,6 +49,7 @@ trait AdapterTrait
 
     /**
      * @param $resource
+     *
      * @return $this
      */
     protected function setResource($resource)
@@ -56,8 +60,9 @@ trait AdapterTrait
     }
 
     /**
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     protected function getResource()
     {
@@ -69,7 +74,7 @@ trait AdapterTrait
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getDebug()
     {
@@ -78,6 +83,7 @@ trait AdapterTrait
 
     /**
      * @param $debug
+     *
      * @return $this
      */
     public function setDebug($debug)
@@ -88,7 +94,7 @@ trait AdapterTrait
     }
 
     /**
-     * @return void
      */
     abstract public function connect();
+
 }

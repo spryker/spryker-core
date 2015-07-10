@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,7 +12,6 @@ use SprykerFeature\Client\ZedRequest\Service\Client\ZedClient;
 use SprykerFeature\Client\ZedRequest\ZedRequestDependencyProvider;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Shared\Yves\YvesConfig;
 
 /**
  * @method ZedRequestService getFactory()

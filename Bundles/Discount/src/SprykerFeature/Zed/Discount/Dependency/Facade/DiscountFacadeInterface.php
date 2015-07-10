@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,6 +27,7 @@ interface DiscountFacadeInterface
 
     /**
      * @ param OrderInterface $container
+     *
      * @param CalculableInterface $container
      *
      * @return array
@@ -43,6 +45,7 @@ interface DiscountFacadeInterface
 
     /**
      * @ param OrderInterface $container
+     *
      * @param CalculableInterface $container
      * @param DecisionRule $decisionRule
      *
@@ -54,6 +57,7 @@ interface DiscountFacadeInterface
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $percentage
+     *
      * @return float
      */
     public function calculatePercentage(array $discountableObjects, $percentage);
@@ -61,6 +65,7 @@ interface DiscountFacadeInterface
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $amount
+     *
      * @return float
      */
     public function calculateFixed(array $discountableObjects, $amount);
@@ -81,6 +86,7 @@ interface DiscountFacadeInterface
     /**
      * @param string $code
      * @param int $idVoucherPool
+     *
      * @return SpyDiscountVoucher
      */
     public function createVoucherCode($code, $idVoucherPool);
@@ -169,6 +175,7 @@ interface DiscountFacadeInterface
 
     /**
      * @ param OrderInterface $container
+     *
      * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
@@ -178,6 +185,7 @@ interface DiscountFacadeInterface
 
     /**
      * @ param OrderInterface $container
+     *
      * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
@@ -187,6 +195,7 @@ interface DiscountFacadeInterface
 
     /**
      * @ param OrderInterface $container
+     *
      * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]

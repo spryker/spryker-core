@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Cart\Transfer;
 
 interface ItemInterface
 {
+
     /**
      * @return string
      */
@@ -30,4 +32,5 @@ interface ItemInterface
      * @return $this
      */
     public function setQuantity($quantity);
+
 }

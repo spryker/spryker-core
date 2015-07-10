@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class TwigCmsPlugin extends AbstractPlugin implements TwigFunctionPluginInterface
 {
+
     /**
      * @param Application $application
      *
@@ -30,7 +32,7 @@ class TwigCmsPlugin extends AbstractPlugin implements TwigFunctionPluginInterfac
                 }
 
                 return $translation;
-            }, ['needs_context' => true])
+            }, ['needs_context' => true]),
         ];
     }
 
@@ -52,7 +54,7 @@ class TwigCmsPlugin extends AbstractPlugin implements TwigFunctionPluginInterfac
      */
     protected function getEditableOutput($glossaryKeyName, $translation)
     {
-        return '<data class="spy-cms-editable" value="' . $glossaryKeyName .'">' . $translation . '</data>';
+        return '<data class="spy-cms-editable" value="' . $glossaryKeyName . '">' . $translation . '</data>';
     }
 
     /**
@@ -64,4 +66,5 @@ class TwigCmsPlugin extends AbstractPlugin implements TwigFunctionPluginInterfac
     {
         return $application['translator'];
     }
+
 }

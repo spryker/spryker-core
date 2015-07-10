@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FormController extends AbstractController
 {
+
     /**
      * @param Request $request
      *
@@ -42,4 +43,5 @@ class FormController extends AbstractController
 
         return $this->jsonResponse($form->renderData());
     }
+
 }

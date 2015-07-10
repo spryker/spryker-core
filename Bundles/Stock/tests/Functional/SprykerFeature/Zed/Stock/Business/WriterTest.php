@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,11 +15,13 @@ use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProductQuery;
 use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockQuery;
 use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
 use SprykerEngine\Zed\Kernel\Persistence\Factory;
+
 /**
  * @group StockTest
  */
 class WriterTest extends Test
 {
+
     /**
      * @var StockFacade
      */
@@ -54,7 +57,7 @@ class WriterTest extends Test
         $stockEntity = SpyStockProductQuery::create()->findOneByIdStockProduct($stockProductEntity->getIdStockProduct());
         $newQuantity = $stockEntity->getQuantity();
 
-        $this->assertEquals($oldQuantity-1, $newQuantity);
+        $this->assertEquals($oldQuantity - 1, $newQuantity);
 
     }
 
@@ -72,7 +75,7 @@ class WriterTest extends Test
         $stockEntity = SpyStockProductQuery::create()->findOneByIdStockProduct($stockProductEntity->getIdStockProduct());
         $newQuantity = $stockEntity->getQuantity();
 
-        $this->assertEquals($oldQuantity+1, $newQuantity);
+        $this->assertEquals($oldQuantity + 1, $newQuantity);
 
     }
 
@@ -127,4 +130,5 @@ class WriterTest extends Test
             ->save()
         ;
     }
+
 }

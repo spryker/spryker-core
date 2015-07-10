@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 
 interface StockToSalesFacadeInterface
 {
+
     /**
      * @param StockProductTransfer $transferStockProduct
      *
@@ -29,4 +31,5 @@ interface StockToSalesFacadeInterface
      * @param int $incrementBy
      */
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1);
+
 }

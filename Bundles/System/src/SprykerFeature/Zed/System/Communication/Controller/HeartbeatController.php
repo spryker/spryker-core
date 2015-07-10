@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,9 +7,7 @@
 namespace SprykerFeature\Zed\System\Communication\Controller;
 
 use SprykerFeature\Shared\Library\Error\ErrorLogger;
-
-
-/**
+/*
  * Class Heartbeat
  * @package SprykerFeature\Zed\System\Communication\Controller
  */
@@ -64,6 +63,5 @@ class HeartbeatController extends AbstractController
         }
         echo '</ul>';
     }
-
 
 }

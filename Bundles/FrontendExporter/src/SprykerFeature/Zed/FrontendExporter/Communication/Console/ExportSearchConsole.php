@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ExportSearchConsole extends AbstractExporterConsole
 {
+
     const COMMAND_NAME = 'frontend-exporter:export-search';
     const COMMAND_DESCRIPTION = 'Export search';
 
@@ -30,8 +32,6 @@ class ExportSearchConsole extends AbstractExporterConsole
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     *
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -40,4 +40,5 @@ class ExportSearchConsole extends AbstractExporterConsole
 
         $this->info($this->buildSummary($exportResults));
     }
+
 }

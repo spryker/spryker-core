@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,6 +27,7 @@ class Foo extends AbstractTransfer
 
     /**
      * @param Bar $bar
+     *
      * @return $this
      */
     public function setBar(Bar $bar)

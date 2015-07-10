@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,7 +24,7 @@ class InstalledPackageCollectorTest extends \PHPUnit_Framework_TestCase
 
         $collection = new InstalledPackagesTransfer();
         $finder = [
-            $this->getMock('SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface', ['findInstalledPackages'])
+            $this->getMock('SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface', ['findInstalledPackages']),
         ];
         $collector = new InstalledPackageCollector($collection, $finder);
 

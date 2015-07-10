@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class ProductSearchProcessor implements ProductSearchProcessorInterface
 {
+
     /**
      * @var string
      */
@@ -66,22 +68,23 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
                 'url' => $productUrls[0],
             ],
             'full-text-boosted' => [
-                $productData['abstract_name']
+                $productData['abstract_name'],
             ],
             'full-text' => [
-                $productData['abstract_name']
+                $productData['abstract_name'],
             ],
             'suggestion-terms' => [
-                $productData['abstract_name']
+                $productData['abstract_name'],
             ],
             'completion-terms' => [
-                $productData['abstract_name']
+                $productData['abstract_name'],
             ],
             'string-sort' => [
-                'name' => $productData['abstract_name']
+                'name' => $productData['abstract_name'],
             ],
             'store' => $this->storeName,
-            'locale' => $locale->getLocaleName()
+            'locale' => $locale->getLocaleName(),
         ];
     }
+
 }

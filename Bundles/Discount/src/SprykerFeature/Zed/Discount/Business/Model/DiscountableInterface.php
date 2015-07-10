@@ -1,14 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
-
 interface DiscountableInterface
 {
+
     /**
      * @return float
      */
@@ -25,4 +25,5 @@ interface DiscountableInterface
      * @return $this
      */
     public function setDiscounts(\ArrayObject $discountCollection);
+
 }

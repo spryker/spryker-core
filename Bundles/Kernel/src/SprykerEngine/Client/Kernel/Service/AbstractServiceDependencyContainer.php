@@ -62,8 +62,9 @@ abstract class AbstractServiceDependencyContainer implements DependencyContainer
     /**
      * @param $key
      *
-     * @return mixed
      * @throws \ErrorException
+     *
+     * @return mixed
      */
     public function getProvidedDependency($key)
     {
@@ -79,4 +80,3 @@ abstract class AbstractServiceDependencyContainer implements DependencyContainer
     }
 
 }
-

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
 
     /**
      * External dependencies
+     *
      * @var Container
      */
     private $container;
@@ -35,13 +37,14 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
     /**
      * @param $key
      *
-     * @return mixed
      * @throws \ErrorException
+     *
+     * @return mixed
      */
     public function getProvidedDependency($key)
     {
         if (is_null($this->container)) {
-            throw new \ErrorException("Container does not exist in " . get_class($this));
+            throw new \ErrorException('Container does not exist in ' . get_class($this));
         }
 
         if (false === $this->container->offsetExists($key)) {
@@ -66,4 +69,5 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
     {
         $this->queryContainer = $queryContainer;
     }
+
 }

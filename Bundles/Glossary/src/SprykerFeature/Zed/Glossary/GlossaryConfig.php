@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class GlossaryConfig extends AbstractBundleConfig
 {
+
     /**
      * @return string
      */
@@ -16,4 +18,5 @@ class GlossaryConfig extends AbstractBundleConfig
     {
         return APPLICATION_ROOT_DIR . '/config/Shared/glossary_keys.php';
     }
+
 }

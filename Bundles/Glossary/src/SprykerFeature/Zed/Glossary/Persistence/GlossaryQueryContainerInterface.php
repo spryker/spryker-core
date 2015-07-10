@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
 
 interface GlossaryQueryContainerInterface
 {
+
     /**
      * @param string $keyName
      *
@@ -76,8 +78,9 @@ interface GlossaryQueryContainerInterface
     /**
      * @param array $relevantLocales
      *
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     public function queryAllPossibleTranslations(array $relevantLocales);
 
@@ -109,4 +112,5 @@ interface GlossaryQueryContainerInterface
      * @return ModelCriteria
      */
     public function queryDistinctLocalesFromQuery(ModelCriteria $query);
+
 }

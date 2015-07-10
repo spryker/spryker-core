@@ -27,6 +27,7 @@ use SprykerFeature\Zed\GlossaryQueue\GlossaryQueueDependencyProvider;
  */
 class GlossaryTaskWorkerPluginTest extends Test
 {
+
     /**
      * @var GlossaryTaskWorkerPlugin
      */
@@ -167,4 +168,5 @@ class GlossaryTaskWorkerPluginTest extends Test
     {
         return new QueueMessageTransfer();
     }
+
 }

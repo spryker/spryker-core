@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerFeature\Zed\TaxFrontendExporterConnector\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\TaxFrontendExporterConnectorPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
-use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainer;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 /**
@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
  */
 class TaxFrontendExporterConnectorDependencyContainer extends AbstractPersistenceDependencyContainer
 {
+
     /**
      * @return ProductPriceExpanderInterface
      */
@@ -32,4 +33,5 @@ class TaxFrontendExporterConnectorDependencyContainer extends AbstractPersistenc
     {
         return $this->getLocator()->tax()->queryContainer();
     }
+
 }

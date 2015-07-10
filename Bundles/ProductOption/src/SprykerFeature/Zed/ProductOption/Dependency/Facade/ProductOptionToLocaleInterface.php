@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,8 +22,10 @@ interface ProductOptionToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
      * @throws MissingLocaleException
+     *
+     * @return LocaleTransfer
      */
     public function getLocale($localeName);
+
 }

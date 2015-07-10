@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 
 class Customer
 {
+
     /**
      * @var ZedClientProvider
      */
@@ -68,6 +70,7 @@ class Customer
     {
         $encoder = new MessageDigestPasswordEncoder();
         $customerTransfer->setPassword($encoder->encodePassword($customerTransfer->getPassword(), ''));
+
         return $this->zedClient->createClient()->call('/customer/gateway/restore-password', $customerTransfer);
     }
 
@@ -130,4 +133,5 @@ class Customer
     {
         return $this->zedClient->createClient()->call('/customer/gateway/new-address', $addressTransfer);
     }
+
 }

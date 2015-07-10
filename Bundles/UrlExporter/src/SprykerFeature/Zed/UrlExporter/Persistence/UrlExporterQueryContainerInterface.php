@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface UrlExporterQueryContainerInterface
 {
+
     /**
      * @param ModelCriteria $expandableQuery
      *
@@ -22,4 +24,5 @@ interface UrlExporterQueryContainerInterface
      * @return ModelCriteria
      */
     public function expandUrlQuery(ModelCriteria $expandableQuery);
+
 }

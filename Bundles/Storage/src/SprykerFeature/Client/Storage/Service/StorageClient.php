@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -99,7 +100,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * @return void
      */
     public function resetAccessStats()
     {

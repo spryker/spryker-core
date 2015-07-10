@@ -6,4 +6,5 @@ use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 
 class KernelDependencyContainer extends AbstractServiceDependencyContainer
 {
+
 }

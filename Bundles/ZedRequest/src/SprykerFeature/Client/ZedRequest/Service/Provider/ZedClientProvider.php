@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,8 +10,10 @@ use SprykerFeature\Shared\ZedRequest\Provider\AbstractZedClientProvider;
 
 class ZedClientProvider extends AbstractZedClientProvider
 {
+
     public function createClient()
     {
         return parent::createClient();
     }
+
 }

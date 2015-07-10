@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -31,8 +32,10 @@ class NodeWriter implements NodeWriterInterface
 
     /**
      * @param NodeTransfer $categoryNode
-     * @return int
+     *
      * @throws PropelException
+     *
+     * @return int
      */
     public function create(NodeTransfer $categoryNode)
     {
@@ -48,9 +51,11 @@ class NodeWriter implements NodeWriterInterface
 
     /**
      * @param int $nodeId
-     * @return int
+     *
      * @throws NodeNotFoundException
      * @throws PropelException
+     *
+     * @return int
      */
     public function delete($nodeId)
     {
@@ -68,6 +73,7 @@ class NodeWriter implements NodeWriterInterface
 
     /**
      * @param NodeTransfer $categoryNode
+     *
      * @throws PropelException
      */
     public function update(NodeTransfer $categoryNode)
@@ -80,4 +86,5 @@ class NodeWriter implements NodeWriterInterface
             $nodeEntity->save();
         }
     }
+
 }

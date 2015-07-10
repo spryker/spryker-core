@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -43,7 +44,6 @@ class PreconditionChecker implements PreconditionCheckerInterface
                 ->setErrorCode(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED)
                 ->setMessage('Email already taken')
                 ->setStep('email');
-            ;
 
             $response
                 ->setIsSuccess(false)
@@ -51,4 +51,5 @@ class PreconditionChecker implements PreconditionCheckerInterface
             ;
         }
     }
+
 }

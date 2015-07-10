@@ -183,4 +183,5 @@ class QueueConnection implements QueueConnectionInterface
             $this->queues[$queueName] = true;
         }
     }
+
 }

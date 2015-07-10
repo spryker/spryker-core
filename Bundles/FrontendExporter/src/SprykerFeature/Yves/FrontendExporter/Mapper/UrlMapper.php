@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UrlMapper implements UrlMapperInterface
 {
+
     const OFFSET_RECOGNITION_VALUE_DIVIDER = '+';
     const URL_VALUE_DIVIDER = '-';
     const KEY_VALUE = 'value';
@@ -34,6 +36,7 @@ class UrlMapper implements UrlMapperInterface
     /**
      * @param array $mergedParameters
      * @param bool $addTrailingSlash
+     *
      * @return string
      */
     public function generateUrlFromParameters(array $mergedParameters, $addTrailingSlash = false)
@@ -61,7 +64,7 @@ class UrlMapper implements UrlMapperInterface
             }
         }
 
-        if ($segmentsOffsetHash != '') {
+        if ($segmentsOffsetHash !== '') {
             $segmentsOffsetHash = self::OFFSET_RECOGNITION_VALUE_DIVIDER . $segmentsOffsetHash;
         }
 
@@ -81,9 +84,9 @@ class UrlMapper implements UrlMapperInterface
             $url = '/' . $urlSegments;
         }
         if ($addTrailingSlash) {
-            $url .= ($urlParameters != '' ? '/?' . $urlParameters : '/');
+            $url .= ($urlParameters !== '' ? '/?' . $urlParameters : '/');
         } else {
-            $url .= ($urlParameters != '' ? '?' . $urlParameters : '');
+            $url .= ($urlParameters !== '' ? '?' . $urlParameters : '');
         }
 
         return $url;
@@ -129,7 +132,7 @@ class UrlMapper implements UrlMapperInterface
                     $value,
                     $value,
                     $active,
-                    $active ? : $defaultActive,
+                    $active ?: $defaultActive,
                     $this->facetConfig
                 );
             }
@@ -145,6 +148,7 @@ class UrlMapper implements UrlMapperInterface
      * @param $inValue
      * @param $active
      * @param $inActive
+     *
      * @return mixed
      */
     protected function checkAndAssignParameters(
@@ -167,7 +171,7 @@ class UrlMapper implements UrlMapperInterface
         if (!isset($mergedParameters[$generationParameterName]) && $currentActive === true) {
             $mergedParameters[$generationParameterName] = $currentValue;
         } else {
-            if (isset($mergedParameters[$generationParameterName]) && !is_array($mergedParameters[$generationParameterName]) && $mergedParameters[$generationParameterName] == $currentValue && $currentActive === false) {
+            if (isset($mergedParameters[$generationParameterName]) && !is_array($mergedParameters[$generationParameterName]) && $mergedParameters[$generationParameterName] === $currentValue && $currentActive === false) {
                 unset($mergedParameters[$generationParameterName]);
             } elseif (isset($mergedParameters[$generationParameterName]) && !is_array($mergedParameters[$generationParameterName]) && $currentActive === true) {
                 if (isset($currentFacetConfig[FacetConfig::KEY_MULTI_VALUED]) && $currentFacetConfig[FacetConfig::KEY_MULTI_VALUED] === true) {
@@ -187,7 +191,7 @@ class UrlMapper implements UrlMapperInterface
                         unset($mergedParameters[$generationParameterName][$key]);
                         if (empty($mergedParameters[$generationParameterName])) {
                             unset($mergedParameters[$generationParameterName]);
-                        } elseif (count($mergedParameters[$generationParameterName]) == 1) {
+                        } elseif (count($mergedParameters[$generationParameterName]) === 1) {
                             $mergedParameters[$generationParameterName] = array_pop($mergedParameters[$generationParameterName]);
                         }
                     }
@@ -215,7 +219,7 @@ class UrlMapper implements UrlMapperInterface
         //first prepare url parameters and split if multivalued
         foreach ($request->query as $requestParamKey => $requestParamValue) {
             $currentFacetSetup = $this->facetConfig->getFacetSetupFromParameter($requestParamKey);
-            if (isset($currentFacetSetup[FacetConfig::KEY_MULTI_VALUED]) && $currentFacetSetup[FacetConfig::KEY_MULTI_VALUED] == true) {
+            if (isset($currentFacetSetup[FacetConfig::KEY_MULTI_VALUED]) && $currentFacetSetup[FacetConfig::KEY_MULTI_VALUED] === true) {
                 $request->query->set($requestParamKey, explode(self::URL_VALUE_DIVIDER, $requestParamValue));
             }
         }
@@ -240,7 +244,7 @@ class UrlMapper implements UrlMapperInterface
                 } elseif (isset($parameters[$parameterNameForShortParameter])) {
                     $parameters[$parameterNameForShortParameter] = [
                         $parameters[$parameterNameForShortParameter],
-                        $value
+                        $value,
                     ];
                 } else {
                     $parameters[$parameterNameForShortParameter] = $value;
@@ -258,7 +262,7 @@ class UrlMapper implements UrlMapperInterface
             } elseif (isset($parameters[$parameterNameForShortParameter])) {
                 $parameters[$parameterNameForShortParameter] = [
                     $parameters[$parameterNameForShortParameter],
-                    $value
+                    $value,
                 ];
             } else {
                 $parameters[$parameterNameForShortParameter] = $value;
@@ -275,4 +279,5 @@ class UrlMapper implements UrlMapperInterface
             $request->query->add($parameters);
         }
     }
+
 }

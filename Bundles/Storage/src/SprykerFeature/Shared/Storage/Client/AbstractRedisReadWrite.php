@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,8 +13,10 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
      * @param string $key
      * @param mixed $value
      * @param string $prefix
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function set($key, $value, $prefix = self::KV_PREFIX)
     {
@@ -22,7 +25,7 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
         $this->addWriteAccessStats($key);
         if (!$result) {
             throw new \Exception(
-                'could not set redisKey: "' . $key.'" with value: "' . json_encode($value) . '"'
+                'could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"'
             );
         }
 
@@ -32,8 +35,10 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
     /**
      * @param array $items
      * @param string $prefix
-     * @return bool|mixed
+     *
      * @throws \Exception
+     *
+     * @return bool|mixed
      */
     public function setMulti(array $items, $prefix = self::KV_PREFIX)
     {
@@ -49,7 +54,7 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
             $data[$dataKey] = $value;
         }
 
-        if (count($data) == 0) {
+        if (count($data) === 0) {
             return false;
         }
 
@@ -58,7 +63,7 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
 
         if (!$result) {
             throw new \Exception(
-                'could not set redisKeys for items: "[' . implode(',', array_keys($items)).']" with values: "[' . implode(',', array_values($items)).']"'
+                'could not set redisKeys for items: "[' . implode(',', array_keys($items)) . ']" with values: "[' . implode(',', array_values($items)) . ']"'
             );
         }
 
@@ -68,6 +73,7 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
     /**
      * @param string $key
      * @param null|string $prefix
+     *
      * @return int
      */
     public function delete($key, $prefix = self::KV_PREFIX)
@@ -81,7 +87,6 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
 
     /**
      * @param array $keys
-     * @return void
      */
     public function deleteMulti(array $keys)
     {
@@ -100,4 +105,5 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
 
         return $deleteCount;
     }
+
 }

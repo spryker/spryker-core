@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,8 +25,8 @@ interface TransferInterface
 
     /**
      * @param array $values
-     *
      * @param bool $fuzzyMatch
      */
     public function fromArray(array $values, $fuzzyMatch = false);
+
 }

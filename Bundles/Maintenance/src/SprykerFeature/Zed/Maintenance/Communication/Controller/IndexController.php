@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,7 +23,7 @@ class IndexController extends AbstractController
         $installedPackages = $this->getFacade()->getInstalledPackages();
 
         return $this->viewResponse([
-            'installedPackages' => $installedPackages
+            'installedPackages' => $installedPackages,
         ]);
     }
 

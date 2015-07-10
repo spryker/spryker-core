@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,25 +15,28 @@ use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 interface GlossaryKeyMappingManagerInterface
 {
+
     /**
      * @param int $idPage
      * @param string $placeholder
      * @param array $data
      *
-     * @return string
      * @throws MissingGlossaryKeyMappingException
      * @throws MissingTranslationException
+     *
+     * @return string
      */
     public function translatePlaceholder($idPage, $placeholder, array $data = []);
 
     /**
      * @param PageKeyMappingTransfer $pageKeyMapping
      *
-     * @return PageKeyMappingTransfer
      * @throws MappingAmbiguousException
      * @throws MissingGlossaryKeyMappingException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return PageKeyMappingTransfer
      */
     public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping);
 
@@ -49,10 +53,11 @@ interface GlossaryKeyMappingManagerInterface
      * @param PageTransfer $page
      * @param string $placeholder
      *
-     * @return bool
      * @throws MissingGlossaryKeyMappingException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return bool
      */
     public function deletePageKeyMapping(PageTransfer $page, $placeholder);
 
@@ -60,8 +65,9 @@ interface GlossaryKeyMappingManagerInterface
      * @param int $idPage
      * @param string $placeholder
      *
-     * @return PageKeyMappingTransfer
      * @throws MissingGlossaryKeyMappingException
+     *
+     * @return PageKeyMappingTransfer
      */
     public function getPagePlaceholderMapping($idPage, $placeholder);
 
@@ -72,4 +78,5 @@ interface GlossaryKeyMappingManagerInterface
      * @return bool
      */
     public function hasPagePlaceholderMapping($idPage, $placeholder);
+
 }

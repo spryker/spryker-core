@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business\Operation;
 
 interface OperationInterface
 {
+
     /**
      * @param array     $sourceDocument
      * @param array     $targetDocument
@@ -21,4 +23,5 @@ interface OperationInterface
      * @return string
      */
     public function getName();
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\CmsExporter\Persistence\CmsExporterQueryContainerInterfac
 
 class CmsExporterDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return CmsExporterQueryContainerInterface
      */
@@ -26,4 +28,5 @@ class CmsExporterDependencyContainer extends AbstractCommunicationDependencyCont
     {
         return $this->getLocator()->cmsExporter()->facade();
     }
+
 }

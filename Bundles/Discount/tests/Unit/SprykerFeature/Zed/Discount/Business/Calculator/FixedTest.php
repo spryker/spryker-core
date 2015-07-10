@@ -1,23 +1,22 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerFeature\Zed\Discount\Business\Calculator;
 
-use Codeception\TestCase\Test;
 use SprykerFeature\Zed\Discount\Business\Calculator\Fixed;
-use SprykerEngine\Zed\Kernel\Locator;
-use Generated\Shared\Transfer\OrderItemTransfer;
 
 /**
  * Class FixedTest
+ *
  * @group DiscountCalculatorFixedTest
  * @group Discount
- * @package Unit\SprykerFeature\Zed\Discount\Business\Calculator
  */
 class FixedTest extends \PHPUnit_Framework_TestCase
 {
+
     const ITEM_GROSS_PRICE_1000 = 1000;
     const DISCOUNT_AMOUNT_FIXED_100 = 100;
     const DISCOUNT_AMOUNT_FIXED_MINUS_100 = -100;
@@ -56,6 +55,7 @@ class FixedTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array $grossPrices
+     *
      * @return OrderItem[]
      */
     protected function getItems(array $grossPrices)
@@ -70,4 +70,5 @@ class FixedTest extends \PHPUnit_Framework_TestCase
 
         return $items;
     }
+
 }

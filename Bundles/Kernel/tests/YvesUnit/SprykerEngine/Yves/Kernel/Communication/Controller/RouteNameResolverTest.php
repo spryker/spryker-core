@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,4 +24,5 @@ class RouteNameResolverTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('foo/bar/baz', $resolver->resolve());
     }
+
 }

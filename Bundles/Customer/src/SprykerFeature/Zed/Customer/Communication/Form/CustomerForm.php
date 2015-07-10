@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,16 +12,16 @@ use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 
 class CustomerForm extends AbstractForm
 {
+
     /**
-     * @return void
      */
     public function addFormFields()
     {
         $this->addField('id_customer')
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'integer'
-                ])
+                    'type' => 'integer',
+                ]),
             ])
         ;
 
@@ -28,25 +29,25 @@ class CustomerForm extends AbstractForm
             ->setConstraints([
                 new Constraints\Required([
                     new Constraints\Type([
-                        'type' => 'string'
+                        'type' => 'string',
                     ]),
-                    new Constraints\NotBlank()
-                ])
+                    new Constraints\NotBlank(),
+                ]),
             ])
         ;
 
         $this->addField('salutation')
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'string'
-                ])
+                    'type' => 'string',
+                ]),
             ])
         ;
 
         $this->addField('first_name')
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
             ])
         ;
@@ -54,7 +55,7 @@ class CustomerForm extends AbstractForm
         $this->addField('last_name')
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
             ])
         ;
@@ -63,14 +64,14 @@ class CustomerForm extends AbstractForm
             ->setAccepts($this->getGenderOptions())
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
                 new Constraints\Choice([
                     'choices' => array_column($this->getGenderOptions(), 'value'),
-                ])
+                ]),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             })
         ;
     }
@@ -98,4 +99,5 @@ class CustomerForm extends AbstractForm
             ['value' => 2, 'label' => 'customer.profile.gender.female'],
         ];
     }
+
 }

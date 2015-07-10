@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 
 interface ProductOptionQueryContainerInterface
 {
+
     /**
      * @param string $importKeyProductOptionType
      *
@@ -210,4 +212,5 @@ interface ProductOptionQueryContainerInterface
      * @return string|null
      */
     public function queryEffectiveTaxRateForTypeUsage($idTypeUsage);
+
 }

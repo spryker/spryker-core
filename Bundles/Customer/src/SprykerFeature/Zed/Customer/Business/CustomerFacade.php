@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -186,6 +187,7 @@ class CustomerFacade extends AbstractFacade
 
     /**
      * @param CustomerTransfer $customerTransfer
+     *
      * @return CustomerAddressTransfer
      */
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
@@ -206,4 +208,5 @@ class CustomerFacade extends AbstractFacade
             ->getDefaultBillingAddress($customerTransfer)
         ;
     }
+
 }

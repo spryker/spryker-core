@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -31,4 +32,5 @@ class GitConfig extends AbstractBundleConfig
             $this->getLocator()->git()->consoleStatusConsole(),
         ];
     }
+
 }

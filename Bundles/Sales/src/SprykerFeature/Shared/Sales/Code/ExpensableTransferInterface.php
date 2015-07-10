@@ -1,12 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Shared\Sales\Code;
-
-use Generated\Shared\Transfer\Calculation\DependencyExpenseItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\Calculation\DependencyExpenseItemInterfaceTransfer;
 
 //@deprecated is not used
 interface ExpensableTransferInterface

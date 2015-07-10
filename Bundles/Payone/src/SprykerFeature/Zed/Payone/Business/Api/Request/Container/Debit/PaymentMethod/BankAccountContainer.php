@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -45,8 +46,6 @@ class BankAccountContainer extends AbstractPaymentMethodContainer
      */
     protected $mandate_identification;
 
-
-    
     /**
      * @param string $bankaccount
      */

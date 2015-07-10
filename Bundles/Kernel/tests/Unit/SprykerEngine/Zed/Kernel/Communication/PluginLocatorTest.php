@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace Unit\SprykerEngine\Zed\Kernel\Communication;
 
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Communication\DependencyContainerLocator;
 use SprykerEngine\Zed\Kernel\Communication\PluginLocator;
 
 /**
@@ -69,4 +69,5 @@ class PluginLocatorTest extends \PHPUnit_Framework_TestCase
             $locatedClass
         );
     }
+
 }

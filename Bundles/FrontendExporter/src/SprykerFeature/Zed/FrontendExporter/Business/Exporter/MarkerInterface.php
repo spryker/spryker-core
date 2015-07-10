@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface MarkerInterface
 {
+
     /**
      * @param string $exportType
      * @param LocaleTransfer $locale
@@ -22,4 +24,5 @@ interface MarkerInterface
      * @param LocaleTransfer $locale
      */
     public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale);
+
 }

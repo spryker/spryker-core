@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Business\Mode
 
 class ExportProcessor implements ExportProcessorInterface
 {
+
     /**
      * @var HelperInterface
      */
@@ -23,13 +25,14 @@ class ExportProcessor implements ExportProcessorInterface
     /**
      * @param array $resultSet
      * @param array $processedResultSet
+     *
      * @return array
      */
     public function processData(array &$resultSet, array $processedResultSet)
     {
         foreach ($resultSet as $index => $productRawData) {
             if (isset($processedResultSet[$index])) {
-                if ($productRawData['concrete_prices'] != null) {
+                if ($productRawData['concrete_prices'] !== null) {
                     $processedResultSet = $this->preparePriceForResult($processedResultSet, $productRawData, $index);
                 } else {
                     unset($processedResultSet[$index]);
@@ -60,4 +63,5 @@ class ExportProcessor implements ExportProcessorInterface
 
         return $processedResultSet;
     }
+
 }

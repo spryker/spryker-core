@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,6 +24,7 @@ use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
  */
 class TaxTest extends \PHPUnit_Framework_TestCase
 {
+
     const EXPENSE_1000 = 1000;
     const ITEM_GROSS_PRICE_1000 = 1000;
     const TAX_PERCENTAGE_10 = 10;
@@ -196,4 +198,5 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     {
         return Locator::getInstance();
     }
+
 }

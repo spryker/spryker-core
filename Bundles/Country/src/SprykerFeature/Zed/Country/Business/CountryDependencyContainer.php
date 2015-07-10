@@ -1,21 +1,18 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Country\Business;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\CountryBusiness;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use Psr\Log\LoggerInterface;
 use SprykerFeature\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use SprykerFeature\Zed\Country\Business\Internal\Install;
 use SprykerFeature\Zed\Country\CountryConfig;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
-use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
 
 /**
  * @method CountryBusiness getFactory()
@@ -24,6 +21,7 @@ use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
  */
 class CountryDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @param MessengerInterface $messenger
      *

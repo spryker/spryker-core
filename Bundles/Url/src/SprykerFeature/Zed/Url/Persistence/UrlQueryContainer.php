@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface
 {
+
     /**
      * @param string $url
      *
@@ -23,7 +25,6 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         $query = SpyUrlQuery::create();
         $query
             ->filterByUrl($url);
-
 
         return $query;
     }
@@ -38,6 +39,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
 
     /**
      * @param int $id
+     *
      * @return SpyUrlQuery
      */
     public function queryUrlById($id)
@@ -96,4 +98,5 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
             ->withColumn('locale_name')
         ;
     }
+
 }

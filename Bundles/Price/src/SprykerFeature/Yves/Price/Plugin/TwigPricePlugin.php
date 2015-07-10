@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerFeature\Yves\Twig\Dependency\Plugin\TwigFunctionPluginInterface;
 
 class TwigPricePlugin extends AbstractPlugin implements TwigFilterPluginInterface, TwigFunctionPluginInterface
 {
+
     /**
      * @return \Twig_SimpleFilter[]
      */
@@ -34,7 +36,7 @@ class TwigPricePlugin extends AbstractPlugin implements TwigFilterPluginInterfac
         return [
             new \Twig_SimpleFunction('getItemTotalPrice', function ($grossPrice, $quantity = 1) {
                return $grossPrice * $quantity;
-            })
+            }),
         ];
     }
 

@@ -1,13 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\ProductSearch\Business;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductSearchBusiness;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
@@ -31,6 +30,7 @@ use SprykerFeature\Zed\ProductSearch\ProductSearchConfig;
  */
 class ProductSearchDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return ProductAttributesTransformerInterface
      */
@@ -154,4 +154,5 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
     {
         return Store::getInstance()->getStoreName();
     }
+
 }

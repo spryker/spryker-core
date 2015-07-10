@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ class StackExecutor
     /**
      * @param array $calculatorStack
      * @param CalculableInterface $calculableContainer
+     *
      * @return CalculableInterface
      */
     public function recalculate(array $calculatorStack, CalculableInterface $calculableContainer)
@@ -67,4 +69,5 @@ class StackExecutor
 
         return $totalsTransfer;
     }
+
 }

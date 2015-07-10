@@ -87,7 +87,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createItemDistributor()
     {
-        $itemDistributor =  $this->getFactory()->createDistributorItemDistributor(
+        $itemDistributor = $this->getFactory()->createDistributorItemDistributor(
             $this->createMessageRouter(),
             $this->createItemQueueProvider()
         );
@@ -101,6 +101,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
 
     /**
      * @throws \ErrorException
+     *
      * @return DistributorToQueueInterface
      */
     protected function getQueueFacade()
@@ -181,4 +182,5 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getProvidedDependency(DistributorDependencyProvider::QUERY_EXPANDERS);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,9 +15,11 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class CategoryExporterFacade extends AbstractFacade
 {
+
     /**
      * @param array $resultSet
      * @param LocaleTransfer $locale
+     *
      * @return array
      */
     public function processCategoryNodes(array $resultSet, LocaleTransfer $locale)
@@ -28,6 +31,7 @@ class CategoryExporterFacade extends AbstractFacade
     /**
      * @param array $resultSet
      * @param LocaleTransfer $locale
+     *
      * @return array
      */
     public function processNavigation(array $resultSet, LocaleTransfer $locale)

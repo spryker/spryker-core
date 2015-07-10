@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace YvesUnit\SprykerEngine\Yves\Kernel\Communication;
 
-use SprykerFeature\Shared\Library\Autoloader;
 use SprykerEngine\Yves\Kernel\Communication\BundleControllerAction;
 
 /**

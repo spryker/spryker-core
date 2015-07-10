@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,4 +24,5 @@ class SearchDependencyContainer extends AbstractServiceDependencyContainer
     {
         return $this->getFactory()->createProviderIndexClientProvider($this->getFactory(), $this->getLocator());
     }
+
 }

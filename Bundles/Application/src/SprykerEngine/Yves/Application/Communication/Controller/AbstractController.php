@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -133,6 +134,7 @@ abstract class AbstractController
      * @param null $data
      * @param int $status
      * @param array $headers
+     *
      * @return JsonResponse
      */
     protected function jsonResponse($data = null, $status = 200, $headers = [])
@@ -142,6 +144,7 @@ abstract class AbstractController
 
     /**
      * @param array $data
+     *
      * @return array
      */
     protected function viewResponse(array $data = [])
@@ -162,14 +165,16 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        return null;
+        return;
         //return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
     }
 
     /**
      * @param $message
-     * @return $this
+     *
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageSuccess($message)
     {
@@ -181,8 +186,9 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageWarning($message)
     {
@@ -194,8 +200,9 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageError($message)
     {
@@ -237,6 +244,7 @@ abstract class AbstractController
 
     /**
      * @param Request $request
+     *
      * @return string
      */
     protected function getSecurityError(Request $request)
@@ -245,8 +253,9 @@ abstract class AbstractController
     }
 
     /**
-     * @return mixed
      * @throws \LogicException
+     *
+     * @return mixed
      */
     protected function getSecurityContext()
     {
@@ -277,7 +286,7 @@ abstract class AbstractController
         $securityContext = $this->getSecurityContext();
         $token = $securityContext->getToken();
         if (is_null($token)) {
-            throw new \LogicException("No logged in user found.");
+            throw new \LogicException('No logged in user found.');
         }
 
         return $token->getUser();
@@ -324,8 +333,9 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Twig_Environment
      * @throws \LogicException
+     *
+     * @return \Twig_Environment
      */
     private function getTwig()
     {

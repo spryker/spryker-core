@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,12 +10,13 @@ use Elastica\Query;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @package SprykerFeature\Client\Catalog\Service\Model
  */
 class FulltextSearch extends AbstractSearch
 {
+
     /**
      * @param Request $request
+     *
      * @return Query
      */
     protected function createSearchQuery(Request $request)

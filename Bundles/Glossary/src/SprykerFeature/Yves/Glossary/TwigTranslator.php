@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Yves\Glossary;
 
 use SprykerFeature\Client\Glossary\Service\GlossaryClientInterface;
-use SprykerFeature\Client\Glossary\Service\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class TwigTranslator implements TranslatorInterface

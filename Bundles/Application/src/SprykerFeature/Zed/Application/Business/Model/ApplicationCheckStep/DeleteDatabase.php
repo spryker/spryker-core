@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,7 +22,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
         $con = new \PDO(
             'mysql:host='
             . Config::get(SystemConfig::ZED_MYSQL_HOST)
-            .';port=' . Config::get(SystemConfig::ZED_MYSQL_PORT),
+            . ';port=' . Config::get(SystemConfig::ZED_MYSQL_PORT),
             Config::get(SystemConfig::ZED_MYSQL_USERNAME),
             Config::get(SystemConfig::ZED_MYSQL_PASSWORD)
         );

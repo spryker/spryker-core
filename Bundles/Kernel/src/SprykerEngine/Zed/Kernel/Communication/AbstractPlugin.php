@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -104,6 +105,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
 
     /**
      * TODO move to constructor
+     *
      * @param AbstractFacade $facade
      */
     public function setOwnFacade(AbstractFacade $facade)

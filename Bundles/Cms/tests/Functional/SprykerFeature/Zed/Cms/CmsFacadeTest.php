@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,6 +23,7 @@ use SprykerFeature\Zed\Url\Business\UrlFacade;
 
 class CmsFacadeTest extends Test
 {
+
     /**
      * @var CmsFacade
      */
@@ -289,4 +291,5 @@ class CmsFacadeTest extends Test
 
         $this->glossaryFacade->setOwnQueryContainer($this->glossaryQueryContainer);
     }
+
 }

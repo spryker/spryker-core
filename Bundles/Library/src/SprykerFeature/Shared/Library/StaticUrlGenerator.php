@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,12 +10,14 @@ use SprykerFeature\Shared\System\SystemConfig;
 
 class StaticUrlGenerator
 {
+
     const STATIC_ASSETS = 'static_assets';
     const STATIC_MEDIA = 'static_media';
 
     /**
      * @param string $path
      * @param bool $ssl
+     *
      * @return string
      * @static
      */
@@ -26,6 +29,7 @@ class StaticUrlGenerator
     /**
      * @param string $path
      * @param bool $ssl
+     *
      * @return string
      * @static
      */
@@ -38,6 +42,7 @@ class StaticUrlGenerator
      * @param string $type
      * @param string $path
      * @param bool $ssl
+     *
      * @return string
      * @static
      */
@@ -57,7 +62,7 @@ class StaticUrlGenerator
                 $urlPart = Config::get(SystemConfig::HOST_STATIC_MEDIA);
             }
 
-            return '//' . $urlPart . (($path[0] === '/')? '' : '/') . $path;
+            return '//' . $urlPart . (($path[0] === '/') ? '' : '/') . $path;
         }
     }
 
@@ -65,6 +70,7 @@ class StaticUrlGenerator
      * @param string $type
      * @param string $path
      * @param bool $ssl
+     *
      * @return string
      * @static
      */
@@ -86,6 +92,7 @@ class StaticUrlGenerator
             $urlPart = Config::get(SystemConfig::CLOUD_CDN_STATIC_MEDIA_HTTP);
         }
 
-        return $host . '/' . $urlPart . (($path[0] === '/')? '' : '/') . $path;
+        return $host . '/' . $urlPart . (($path[0] === '/') ? '' : '/') . $path;
     }
+
 }

@@ -1,16 +1,17 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Price\Business\Model;
 
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 
 interface ReaderInterface
 {
+
     /**
      * @return array
      */
@@ -56,17 +57,18 @@ interface ReaderInterface
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getAbstractProductIdBySku($sku);
-
 
      /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getConcreteProductIdBySku($sku);
 
@@ -77,4 +79,5 @@ interface ReaderInterface
      * @return int
      */
     public function getProductPriceIdBySku($sku, $priceTypeName);
+
 }

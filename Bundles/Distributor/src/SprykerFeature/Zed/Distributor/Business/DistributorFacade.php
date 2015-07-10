@@ -44,4 +44,5 @@ class DistributorFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->createReceiverInstaller()->install();
     }
+
 }

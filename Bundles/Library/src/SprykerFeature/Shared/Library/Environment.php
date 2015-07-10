@@ -1,8 +1,8 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 class SprykerFeature_Shared_Library_Environment
 {
 
@@ -31,6 +31,7 @@ class SprykerFeature_Shared_Library_Environment
         if (!self::$instance) {
             self::$instance = new self();
         }
+
         return self::$instance;
     }
 
@@ -115,4 +116,5 @@ class SprykerFeature_Shared_Library_Environment
     {
         self::$environment = $environment;
     }
+
 }

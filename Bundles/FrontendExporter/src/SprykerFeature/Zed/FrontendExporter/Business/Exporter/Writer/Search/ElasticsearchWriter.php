@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\WriterInterface
 
 class ElasticsearchWriter implements WriterInterface
 {
+
     /**
      * @var Client
      */
@@ -82,4 +84,5 @@ class ElasticsearchWriter implements WriterInterface
 
         return $documents;
     }
+
 }

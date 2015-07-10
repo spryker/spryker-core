@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeExc
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
+
     /**
      * @var CategoryQueryContainer
      */
@@ -103,7 +105,9 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
+     *
      * @TODO Move getGroupedPathIds and getGroupedPaths to another class, duplicated Code!
+     *
      * @return array
      */
     public function getGroupedPathIds($idNode, LocaleTransfer $locale, $excludeRootNode = true, $onlyParents = false)
@@ -170,8 +174,9 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @return int
      * @throws MissingCategoryNodeException
+     *
+     * @return int
      */
     public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $locale)
     {
@@ -216,4 +221,5 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
             ->find()
             ;
     }
+
 }

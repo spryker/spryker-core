@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Distributor\Dependency\Plugin;
 
 interface ItemProcessorPluginInterface
 {
+
     /**
      * @return string
      */
@@ -15,4 +16,5 @@ interface ItemProcessorPluginInterface
      * @return array
      */
     public function processItem(array $processableItem);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,7 +12,7 @@ use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConsoleMethodTag
  * @group Kernel
  * @group MethodTagBuilder
  */
-class ConsoleMethodMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
+class ConsoleMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testBuildMethodTagsShouldReturnVendorMethodTagIfProjectDoesNotOverrideIt()
@@ -19,7 +20,7 @@ class ConsoleMethodMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $options = [
             ConsoleMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             ConsoleMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            ConsoleMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            ConsoleMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
         $methodTagBuilder = new ConsoleMethodTagBuilder($options);
@@ -36,7 +37,7 @@ class ConsoleMethodMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $options = [
             ConsoleMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             ConsoleMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            ConsoleMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            ConsoleMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
         $methodTagBuilder = new ConsoleMethodTagBuilder($options);

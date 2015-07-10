@@ -1,10 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\Payone;
-
 
 use Generated\Client\Ide\FactoryAutoCompletion\Payone;
 use Generated\Shared\Transfer\StandardParameterTransfer;

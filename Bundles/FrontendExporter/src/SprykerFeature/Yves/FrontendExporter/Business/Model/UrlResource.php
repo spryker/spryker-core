@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Yves\FrontendExporter\Business\Model;
 
 class UrlResource
 {
+
     /**
      * @var string
      */
@@ -66,4 +68,5 @@ class UrlResource
             'reference_key' => $this->referenceKey,
         ];
     }
+
 }

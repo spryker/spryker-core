@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Elastica\Filter\Terms;
 
 interface FilterBuilderInterface
 {
+
     /**
      * @param string $fieldName
      * @param float $minValue
@@ -42,6 +44,7 @@ interface FilterBuilderInterface
     /**
      * @param string $field
      * @param array $values
+     *
      * @return Terms
      */
     public function createTermsFilter($field, array $values);
@@ -50,4 +53,5 @@ interface FilterBuilderInterface
      * @return BoolAnd
      */
     public function createBoolAndFilter();
+
 }

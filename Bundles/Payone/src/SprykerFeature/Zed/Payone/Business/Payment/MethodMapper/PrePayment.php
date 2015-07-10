@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,7 +11,6 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\Perso
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerEngine\Shared\Kernel\Store;
 
 class PrePayment extends AbstractMapper
 {
@@ -25,6 +25,7 @@ class PrePayment extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return AuthorizationContainer
      */
     public function mapAuthorization(AuthorizationInterface $authorizationData)
@@ -44,6 +45,7 @@ class PrePayment extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return AuthorizationContainer
      */
     public function mapPreAuthorization(AuthorizationInterface $authorizationData)
@@ -63,6 +65,7 @@ class PrePayment extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return PersonalContainer
      */
     protected function createAuthorizationPersonalData(AuthorizationInterface $authorizationData)

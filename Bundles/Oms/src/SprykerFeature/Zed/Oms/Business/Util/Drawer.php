@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -263,7 +264,7 @@ class Drawer implements DrawerInterface
             $conditionLabel = $transition->getCondition();
 
             if (!isset($this->conditionModels[$transition->getCondition()])) {
-                $conditionLabel .= ' '.$this->notImplemented;
+                $conditionLabel .= ' ' . $this->notImplemented;
             }
 
             $label[] = $conditionLabel;
@@ -305,7 +306,7 @@ class Drawer implements DrawerInterface
                         $commandLabel .= ' (by item)';
                     }
                 } else {
-                    $commandLabel .= ' '.$this->notImplemented;
+                    $commandLabel .= ' ' . $this->notImplemented;
                 }
                 $label[] = $commandLabel;
             }
@@ -389,6 +390,7 @@ class Drawer implements DrawerInterface
     /**
      * @param TransitionInterface $transition
      * @param string $toName
+     *
      * @return mixed
      */
     protected function addEdgeToState(TransitionInterface $transition, $toName)
@@ -416,4 +418,5 @@ class Drawer implements DrawerInterface
             $this->fontsizeSmall = $fontsize - 2;
         }
     }
+
 }

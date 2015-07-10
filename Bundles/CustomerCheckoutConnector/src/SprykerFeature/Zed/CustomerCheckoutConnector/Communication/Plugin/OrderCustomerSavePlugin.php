@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,4 +26,5 @@ class OrderCustomerSavePlugin extends AbstractPlugin implements CheckoutSaveOrde
     {
         $this->getFacade()->saveOrder($orderTransfer, $checkoutResponse);
     }
+
 }

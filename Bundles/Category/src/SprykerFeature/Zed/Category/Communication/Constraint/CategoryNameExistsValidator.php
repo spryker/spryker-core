@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -30,7 +31,7 @@ class CategoryNameExistsValidator extends ConstraintValidator
 
         if (!is_null($categoryEntity)) {
             if (is_null($idCategory)
-                || $idCategory != $categoryEntity->getIdCategory()) {
+                || $idCategory !== $categoryEntity->getIdCategory()) {
                 $this->addViolation($value, $constraint);
             }
         }
@@ -46,4 +47,5 @@ class CategoryNameExistsValidator extends ConstraintValidator
             ->setParameter('{{ value }}', $value)
             ->addViolation();
     }
+
 }

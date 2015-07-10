@@ -7,6 +7,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class DistributorDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_QUEUE = 'facade queue';
     const ITEM_PROCESSORS = 'item processors';
     const QUERY_EXPANDERS = 'query expanders';
@@ -30,4 +31,5 @@ class DistributorDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
 }

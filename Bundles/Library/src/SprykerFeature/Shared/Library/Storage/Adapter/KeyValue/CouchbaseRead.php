@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 
 class CouchbaseRead extends Couchbase implements ReadInterface
 {
+
     /**
      * @param string $key
      *
@@ -62,7 +64,7 @@ class CouchbaseRead extends Couchbase implements ReadInterface
             }
         }
 
-        return array_map(function($item) { return $item['key']; }, $result['rows']);
+        return array_map(function ($item) { return $item['key']; }, $result['rows']);
     }
 
     /**
@@ -81,4 +83,5 @@ class CouchbaseRead extends Couchbase implements ReadInterface
         $map = '{"views":{"keys":{"map":"function (doc, meta) { emit(meta.id, null); }"}}}';
         $this->getResource()->setDesignDoc('all', $map);
     }
+
 }

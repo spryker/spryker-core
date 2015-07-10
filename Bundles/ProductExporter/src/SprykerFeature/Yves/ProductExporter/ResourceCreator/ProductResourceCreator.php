@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Yves\FrontendExporter\Creator\ResourceCreatorInterface;
 
 class ProductResourceCreator implements ResourceCreatorInterface
 {
+
     /**
      * @var FrontendProductBuilderInterface
      */
@@ -49,6 +51,7 @@ class ProductResourceCreator implements ResourceCreatorInterface
     /**
      * @param Application $app
      * @param array $data
+     *
      * @return array
      */
     public function createResource(Application $app, array $data)
@@ -70,7 +73,8 @@ class ProductResourceCreator implements ResourceCreatorInterface
         return [
             '_controller' => $service,
             '_route' => $routeResolver->resolve(),
-            'product' => $product
+            'product' => $product,
         ];
     }
+
 }

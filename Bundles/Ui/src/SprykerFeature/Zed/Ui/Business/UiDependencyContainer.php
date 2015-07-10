@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,6 +21,7 @@ class UiDependencyContainer extends AbstractBusinessDependencyContainer
      * @param array $plugins
      * @param array $requestData
      * @param ModelCriteria $query
+     *
      * @return GridProcessor
      */
     public function getGridProcessor(array $plugins, array $requestData, ModelCriteria $query)
@@ -35,6 +37,7 @@ class UiDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @param array $requestData
      * @param ModelCriteria $query
+     *
      * @return Grid\StateContainer\StateContainer
      */
     public function getStateContainer(array $requestData, ModelCriteria $query)
@@ -46,4 +49,5 @@ class UiDependencyContainer extends AbstractBusinessDependencyContainer
 
         return $stateContainer;
     }
+
 }

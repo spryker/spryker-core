@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -56,8 +57,9 @@ class Catalog implements CatalogInterface
     /**
      * @param int $id
      *
-     * @return array
      * @throws ProductNotFoundException
+     *
+     * @return array
      */
     public function getProductDataById($id)
     {
@@ -146,4 +148,5 @@ class Catalog implements CatalogInterface
 
         return $product;
     }
+
 }

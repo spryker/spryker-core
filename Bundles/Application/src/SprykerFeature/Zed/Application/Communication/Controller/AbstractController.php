@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -106,6 +107,7 @@ abstract class AbstractController
 
     /**
      * TODO move to constructor
+     *
      * @param AbstractFacade $facade
      */
     public function setOwnFacade(AbstractFacade $facade)
@@ -115,6 +117,7 @@ abstract class AbstractController
 
     /**
      * TODO move to constructor
+     *
      * @param AbstractQueryContainer $queryContainer
      */
     public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
@@ -195,8 +198,9 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageSuccess($message)
     {
@@ -208,8 +212,9 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \Exception
+     *
+     * @return $this
      */
     protected function addMessageWarning($message)
     {
@@ -221,8 +226,9 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageError($message)
     {
@@ -247,7 +253,6 @@ abstract class AbstractController
     }
 
     /**
-     * @return void
      */
     protected function clearBreadcrumbs()
     {
@@ -255,8 +260,9 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Twig_Environment
      * @throws \LogicException
+     *
+     * @return \Twig_Environment
      */
     private function getTwig()
     {

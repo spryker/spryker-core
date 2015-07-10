@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
-use Generated\Sdk\Ide\FactoryAutoCompletion\Payone;
 use Generated\Shared\Payone\CaptureInterface;
 use Generated\Shared\Payone\DebitInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
@@ -78,7 +78,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
      */
     protected function getNextSequenceNumber(PayonePaymentInterface $payment)
     {
-        $transactionId =  $payment->getTransactionId();
+        $transactionId = $payment->getTransactionId();
         $nextSequenceNumber = $this->getSequenceNumberProvider()->getNextSequenceNumber($transactionId);
 
         return $nextSequenceNumber;
@@ -86,6 +86,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
 
     /**
      * @param CaptureInterface $captureData
+     *
      * @return CaptureContainer
      */
     public function mapCapture(CaptureInterface $captureData)
@@ -102,6 +103,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
 
     /**
      * @param DebitInterface $debitData
+     *
      * @return DebitContainer
      */
     public function mapDebit(DebitInterface $debitData)
@@ -119,6 +121,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
 
     /**
      * @param RefundInterface $refundData
+     *
      * @return RefundContainer
      */
     public function mapRefund(RefundInterface $refundData)

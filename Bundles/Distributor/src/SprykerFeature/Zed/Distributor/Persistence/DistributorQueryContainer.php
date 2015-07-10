@@ -18,6 +18,7 @@ use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 class DistributorQueryContainer extends AbstractQueryContainer implements
     DistributorQueryContainerInterface
 {
+
     /**
      * @return ModelCriteria
      */
@@ -51,6 +52,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
      * @param string $timestamp
      *
      * @throws PropelException
+     *
      * @return SpyDistributorItemQuery
      */
     public function queryTouchedItemsByTypeKey($typeKey, $timestamp)
@@ -106,4 +108,5 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
     {
         return 'fk_' . $itemType;
     }
+
 }

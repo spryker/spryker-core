@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,8 +24,9 @@ class ImportController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
      * @throws \Zend_Form_Exception
+     *
+     * @return RedirectResponse
      */
     public function saveAction(Request $request)
     {
@@ -49,4 +51,5 @@ class ImportController extends AbstractController
 
         return $this->redirectResponse('/product/import');
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,10 +13,10 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool as Vou
 
 /**
  * Class VoucherEngine
- * @package SprykerFeature\Zed\Discount\Business\Model
  */
 class VoucherEngine
 {
+
     /**
      * @var DiscountSettingsInterface
      */
@@ -69,6 +70,7 @@ class VoucherEngine
     /**
      * @param string $code
      * @param int $idVoucherPool
+     *
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher
      */
     public function createVoucherCode($code, $idVoucherPool)
@@ -86,6 +88,7 @@ class VoucherEngine
     /**
      * @param int $length
      * @param bool $asMd5
+     *
      * @return string
      */
     protected function getRandomVoucherCode($length, $asMd5 = false)
@@ -128,6 +131,7 @@ class VoucherEngine
     /**
      * @param VoucherPoolEntity $voucherPoolEntity
      * @param string $code
+     *
      * @return string
      */
     protected function getCodeWithTemplate(VoucherPoolEntity $voucherPoolEntity, $code)
@@ -145,4 +149,5 @@ class VoucherEngine
 
         return str_replace($this->settings->getVoucherPoolTemplateReplacementString(), $code, $template);
     }
+
 }

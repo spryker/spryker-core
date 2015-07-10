@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Auth\Communication;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\AuthCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AuthDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return AuthFacade
      */
@@ -49,6 +50,7 @@ class AuthDependencyContainer extends AbstractCommunicationDependencyContainer
 
     /**
      * @param Request $request
+     *
      * @return ResetPasswordForm
      */
     public function createResetPasswordForm(Request $request)
@@ -57,4 +59,5 @@ class AuthDependencyContainer extends AbstractCommunicationDependencyContainer
             $request
         );
     }
+
 }

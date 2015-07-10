@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,10 +10,12 @@ use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 interface DiscountFacadeInterface
 {
+
     /**
      * @param CalculableInterface $calculableContainer
      *
      * @return mixed
      */
     public function calculateDiscounts(CalculableInterface $calculableContainer);
+
 }

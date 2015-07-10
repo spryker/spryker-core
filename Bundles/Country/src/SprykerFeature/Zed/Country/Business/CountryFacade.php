@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Psr\Log\LoggerInterface;
  */
 class CountryFacade extends AbstractFacade
 {
+
     /**
      * @param LoggerInterface $messenger
      */
@@ -30,4 +32,5 @@ class CountryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createCountryManager()->getIdCountryByIso2Code($iso2Code);
     }
+
 }

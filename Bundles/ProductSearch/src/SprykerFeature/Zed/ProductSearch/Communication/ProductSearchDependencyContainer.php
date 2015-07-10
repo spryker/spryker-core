@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\ProductSearch\Communication;
 
-use SprykerFeature\Zed\Installer\Business\Model\InstallerInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\ProductSearch\Business\ProductSearchFacade;
 use SprykerFeature\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
@@ -36,4 +36,5 @@ class ProductSearchDependencyContainer extends AbstractCommunicationDependencyCo
     {
         return $this->getLocator()->productSearch()->queryContainer();
     }
+
 }

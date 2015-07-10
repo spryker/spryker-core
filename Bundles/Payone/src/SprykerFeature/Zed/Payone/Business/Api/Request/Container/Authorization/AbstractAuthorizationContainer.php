@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * Sub account ID
+     *
      * @var int
      */
     protected $aid;
@@ -24,30 +26,34 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     protected $clearingtype;
     /**
      * Merchant reference number for the payment process. (Permitted symbols: 0-9, a-z, A-Z, .,-,_,/)
+     *
      * @var string
      */
     protected $reference;
     /**
      * Total amount (in smallest currency unit! e.g. cent)
+     *
      * @var int
      */
     protected $amount;
     /**
      * Currency (ISO-4217)
+     *
      * @var string
      */
     protected $currency;
     /**
      * Individual parameter
+     *
      * @var string
      */
     protected $param;
     /**
      * dynamic text for debit and creditcard payments
+     *
      * @var string
      */
     protected $narrative_text;
-    
 
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
@@ -69,7 +75,6 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     protected $invoicing;
-
 
     /**
      * @param int $aid

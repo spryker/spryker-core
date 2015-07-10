@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,11 +8,7 @@ namespace SprykerEngine\Zed\Kernel;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\Kernel\ClassResolver;
-use SprykerEngine\Shared\Kernel\IdentityMapClassResolver;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\Factory\FactoryException;
-use SprykerEngine\Zed\Kernel\Factory\FactoryInterface;
 
 abstract class AbstractBundleConfig
 {
@@ -40,6 +37,7 @@ abstract class AbstractBundleConfig
      * @param string $key
      *
      * @throws \Exception
+     *
      * @return string
      */
     protected function get($key)
@@ -54,4 +52,5 @@ abstract class AbstractBundleConfig
     {
         return $this->locator;
     }
+
 }

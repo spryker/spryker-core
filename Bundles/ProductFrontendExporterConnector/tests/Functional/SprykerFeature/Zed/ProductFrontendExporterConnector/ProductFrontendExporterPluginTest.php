@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -31,6 +32,7 @@ use SprykerFeature\Zed\Url\Business\UrlFacade;
  */
 class ProductFrontendExporterPluginTest extends Test
 {
+
     /**
      * @var AutoCompletion
      */
@@ -77,17 +79,15 @@ class ProductFrontendExporterPluginTest extends Test
         $this->touchFacade->touchActive('test', $idAbstractProduct);
 
         $this->doExporterTest(
-            [   //expanders
-                $this->locator->productFrontendExporterConnector()->pluginProductQueryExpanderPlugin()
+            [//expanders
+                $this->locator->productFrontendExporterConnector()->pluginProductQueryExpanderPlugin(),
             ],
-            [   //processors
-                $this->locator->productFrontendExporterConnector()->pluginProductProcessorPlugin()
+            [//processors
+                $this->locator->productFrontendExporterConnector()->pluginProductProcessorPlugin(),
             ],
             [
-                'de.abcde.resource.abstract_product.' . $idAbstractProduct =>
-                    [
-                        'abstract_attributes' =>
-                            [
+                'de.abcde.resource.abstract_product.' . $idAbstractProduct => [
+                        'abstract_attributes' => [
                                 'thumbnail_url' => '/images/product/default.png',
                                 'price' => 1395,
                                 'width' => 12,
@@ -112,10 +112,10 @@ class ProductFrontendExporterPluginTest extends Test
                                     'gender' => 'b',
                                     'age' => 8,
                                     'available' => true,
-                                ]
-                            ]
-                        ]
-                    ]
+                                ],
+                            ],
+                        ],
+                    ],
             ]
         );
     }
@@ -230,8 +230,9 @@ class ProductFrontendExporterPluginTest extends Test
     }
 
     /**
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     protected function prepareQuery()
     {
@@ -254,4 +255,5 @@ class ProductFrontendExporterPluginTest extends Test
         $this->urlFacade = $this->locator->url()->facade();
         $this->locale = $this->localeFacade->createLocale('ABCDE');
     }
+
 }

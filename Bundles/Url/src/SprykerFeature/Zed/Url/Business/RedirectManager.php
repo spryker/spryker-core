@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,6 +23,7 @@ use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class RedirectManager implements RedirectManagerInterface
 {
+
     const ITEM_TYPE_REDIRECT = 'redirect';
 
     /**
@@ -66,10 +68,11 @@ class RedirectManager implements RedirectManagerInterface
      * @param string $toUrl
      * @param int $status
      *
-     * @return SpyRedirect
      * @throws RedirectExistsException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return SpyRedirect
      */
     public function createRedirect($toUrl, $status = 301)
     {
@@ -105,8 +108,9 @@ class RedirectManager implements RedirectManagerInterface
     /**
      * @param RedirectTransfer $redirect
      *
-     * @return RedirectTransfer
      * @throws RedirectExistsException
+     *
+     * @return RedirectTransfer
      */
     public function saveRedirect(RedirectTransfer $redirect)
     {
@@ -120,10 +124,11 @@ class RedirectManager implements RedirectManagerInterface
     /**
      * @param RedirectTransfer $redirectTransfer
      *
-     * @return RedirectTransfer
      * @throws RedirectExistsException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return RedirectTransfer
      */
     protected function createRedirectFromTransfer(RedirectTransfer $redirectTransfer)
     {
@@ -144,10 +149,11 @@ class RedirectManager implements RedirectManagerInterface
     /**
      * @param RedirectTransfer $redirectTransfer
      *
-     * @return RedirectTransfer
      * @throws MissingRedirectException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return RedirectTransfer
      */
     protected function updateRedirectFromTransfer(RedirectTransfer $redirectTransfer)
     {
@@ -166,8 +172,9 @@ class RedirectManager implements RedirectManagerInterface
     /**
      * @param int $idRedirect
      *
-     * @return SpyRedirect
      * @throws MissingRedirectException
+     *
+     * @return SpyRedirect
      */
     protected function getRedirectById($idRedirect)
     {
@@ -197,10 +204,11 @@ class RedirectManager implements RedirectManagerInterface
      * @param LocaleTransfer $locale
      * @param int $idRedirect
      *
-     * @return UrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
      * @throws MissingRedirectException
+     *
+     * @return UrlTransfer
      */
     public function createRedirectUrl($url, LocaleTransfer $locale, $idRedirect)
     {
@@ -233,4 +241,5 @@ class RedirectManager implements RedirectManagerInterface
 
         return $query->count() > 0;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\ZedRequest\Client;
 
 interface ObjectInterface
 {
+
     /**
      * @param array $values
      */
@@ -16,4 +18,5 @@ interface ObjectInterface
      * @return array
      */
     public function toArray();
+
 }

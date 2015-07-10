@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,15 +12,16 @@ use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 
 class AddressForm extends AbstractForm
 {
+
     public function addFormFields()
     {
         $this->addField('id_customer_address')
             ->setConstraints([
                 new Constraints\Required([
                     new Constraints\Type([
-                        'type' => 'int'
+                        'type' => 'int',
                     ]),
-                ])
+                ]),
             ])
         ;
 
@@ -27,9 +29,9 @@ class AddressForm extends AbstractForm
             ->setConstraints([
                 new Constraints\Required([
                     new Constraints\Type([
-                        'type' => 'int'
+                        'type' => 'int',
                     ]),
-                ])
+                ]),
             ])
         ;
 
@@ -37,10 +39,10 @@ class AddressForm extends AbstractForm
             ->setConstraints([
                 new Constraints\Required([
                     new Constraints\Type([
-                        'type' => 'string'
+                        'type' => 'string',
                     ]),
-                    new Constraints\NotBlank()
-                ])
+                    new Constraints\NotBlank(),
+                ]),
             ])
         ;
 
@@ -48,25 +50,25 @@ class AddressForm extends AbstractForm
             ->setConstraints([
                 new Constraints\Required([
                     new Constraints\Type([
-                        'type' => 'string'
+                        'type' => 'string',
                     ]),
-                    new Constraints\NotBlank()
-                ])
+                    new Constraints\NotBlank(),
+                ]),
             ])
         ;
 
         $this->addField('company')
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'string'
-                ])
+                    'type' => 'string',
+                ]),
             ])
         ;
 
         $this->addField('address1')
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
             ])
         ;
@@ -74,7 +76,7 @@ class AddressForm extends AbstractForm
         $this->addField('address2')
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
             ])
         ;
@@ -82,7 +84,7 @@ class AddressForm extends AbstractForm
         $this->addField('zip_code')
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
             ])
         ;
@@ -90,9 +92,9 @@ class AddressForm extends AbstractForm
         $this->addField('city')
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Constraints\NotBlank()
+                new Constraints\NotBlank(),
             ])
         ;
 
@@ -100,22 +102,22 @@ class AddressForm extends AbstractForm
             ->setAccepts($this->getCountryOptions())
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
                 new Constraints\Choice([
                     'choices' => array_column($this->getCountryOptions(), 'value'),
                 ]),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             })
         ;
 
         $this->addField('state')
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'string'
-                ])
+                    'type' => 'string',
+                ]),
             ])
         ;
     }
@@ -146,7 +148,8 @@ class AddressForm extends AbstractForm
     public function getCountryOptions()
     {
         return [
-            ["value" => "1", "label" => "Germany"],
+            ['value' => '1', 'label' => 'Germany'],
         ];
     }
+
 }

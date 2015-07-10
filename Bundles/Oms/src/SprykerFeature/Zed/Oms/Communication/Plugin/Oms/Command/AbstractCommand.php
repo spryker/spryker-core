@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,4 +21,5 @@ abstract class AbstractCommand extends AbstractPlugin
     {
         $this->facadeSales->addNote($message, $orderEntity, $isSuccess, get_class($this));
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,27 +11,32 @@ use SprykerFeature\Shared\SearchPage\Dependency\PageElementInterface;
 
 interface PageElementWriterInterface
 {
+
     /**
      * @param PageElementInterface $pageElement
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     public function createPageElement(PageElementInterface $pageElement);
 
     /**
      * @param PageElementInterface $pageElement
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     public function updatePageElement(PageElementInterface $pageElement);
 
     /**
      * @param PageElementInterface $pageElement
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     public function deletePageElement(PageElementInterface $pageElement);
+
 }

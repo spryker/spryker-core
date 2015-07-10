@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FacetFilterHandler implements FacetFilterHandlerInterface
 {
+
     /**
      * @var NestedFilterBuilderInterface
      */
@@ -35,7 +37,6 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
         $this->facetConfig = $facetConfig;
     }
 
-
     /**
      * @param Query $query
      * @param Request $request
@@ -53,7 +54,7 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
                 $filterFacetName = $this->facetConfig->getFacetNameFromParameter($filter);
                 $filterValue = $request->query->get($filter);
 
-                if (trim($filterValue) == '') {
+                if (trim($filterValue) === '') {
                     continue;
                 }
                 $filterObject = $this->createFilterObject($facetConfig, $filterValue, $filterFacetName);
@@ -67,13 +68,14 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
      * @param array $facetConfig
      * @param string $filterValue
      * @param string $filterFacetName
+     *
      * @return Filter\Range|null
      */
     protected function createFilterObject($facetConfig, $filterValue, $filterFacetName)
     {
         $fieldName = $facetConfig[FacetConfig::KEY_FACET_FIELD_NAME];
         //sliders will be range queries, lets get min/max values
-        if ($facetConfig[FacetConfig::KEY_TYPE] == FacetConfig::TYPE_SLIDER) {
+        if ($facetConfig[FacetConfig::KEY_TYPE] === FacetConfig::TYPE_SLIDER) {
             list($minValue, $maxValue) = $this->getMinMaxValue($facetConfig, $filterValue);
 
             return $this->nestedFilterBuilder->createNestedRangeFilter($fieldName, $filterFacetName, $minValue, $maxValue);
@@ -88,6 +90,7 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
     /**
      * @param array $facetConfig
      * @param string $filterValue
+     *
      * @return array
      */
     protected function getMinMaxValue(array $facetConfig, $filterValue)
@@ -108,4 +111,5 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
 
         return [$minValue, $maxValue];
     }
+
 }

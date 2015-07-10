@@ -6,11 +6,13 @@ use Propel\Runtime\Exception\PropelException;
 
 interface ItemTypeWriterInterface
 {
+
     /**
      * @param string $typeKey
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     public function create($typeKey);
 
@@ -18,8 +20,10 @@ interface ItemTypeWriterInterface
      * @param string $typeKey
      * @param string $timestamp
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     public function update($typeKey, $timestamp);
+
 }

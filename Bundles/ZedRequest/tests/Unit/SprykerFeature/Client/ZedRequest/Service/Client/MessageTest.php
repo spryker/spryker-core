@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Shared\ZedRequest\Client\Message;
  */
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testGetterAndSetters()
     {
         $message = new Message();
@@ -24,4 +26,5 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(['message' => 'message', 'data' => ['test' => 'test']], $message->toArray());
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,14 +12,17 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface CmsToUrlInterface
 {
+
     /**
      * @param string $url
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
+     *
+     * @return UrlTransfer
      */
     public function createUrlForCurrentLocale($url, $resourceType, $idResource);
+
 }

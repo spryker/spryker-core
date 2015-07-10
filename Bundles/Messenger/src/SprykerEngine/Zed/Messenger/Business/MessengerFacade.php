@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,9 +11,6 @@ use SprykerEngine\Shared\Messenger\Business\Model\Message\MessageInterface;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Zed\Kernel\Locator;
-use Generated\Shared\Transfer\LocaleTransfer;
-use Twig_Environment;
-use Symfony\Component\Console\Output\ConsoleOutput;
 
 class MessengerFacade extends AbstractFacade implements MessengerInterface
 {
@@ -206,6 +204,5 @@ class MessengerFacade extends AbstractFacade implements MessengerInterface
     {
         return $this->messenger->getByType($type);
     }
-
 
 }

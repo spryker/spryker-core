@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 
     /**
      * @param int $transactionId
+     *
      * @return SpyPaymentPayoneTransactionStatusLogQuery
      */
     public function getCurrentSequenceNumberQuery($transactionId)
@@ -29,6 +31,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 
     /**
      * @param int $transactionId
+     *
      * @return Propel\SpyPaymentPayoneQuery
      */
     public function getPaymentByTransactionIdQuery($transactionId)
@@ -42,6 +45,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @param int $fkPayment
      * @param string $requestName
+     *
      * @return SpyPaymentPayoneApiLogQuery
      */
     public function getApiLogByPaymentAndRequestTypeQuery($fkPayment, $requestName)
@@ -53,9 +57,9 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
         return $query;
     }
 
-
     /**
      * @param int $orderId
+     *
      * @return SpyPaymentPayoneQuery
      */
     public function getPaymentByOrderId($orderId)
@@ -65,6 +69,5 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 
         return $query;
     }
-
 
 }

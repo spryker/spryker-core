@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class CountryConfig extends AbstractBundleConfig
 {
+
     /**
      * @return array
      */
@@ -34,4 +36,5 @@ class CountryConfig extends AbstractBundleConfig
     {
         return __DIR__ . '/Business/File/cldr';
     }
+
 }

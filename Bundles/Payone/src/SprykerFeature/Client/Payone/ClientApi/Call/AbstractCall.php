@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,7 +11,6 @@ use SprykerFeature\Client\Payone\ClientApi\Request\AbstractRequest;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 use Generated\Shared\Payone\StandardParameterInterface;
-
 
 abstract class AbstractCall
 {
@@ -32,15 +32,13 @@ abstract class AbstractCall
      */
     protected $modeDetector;
 
-
     /**
      * @param StandardParameterInterface $standardParameter
      * @param HashInterface $hashProvider
      * @param HashGeneratorInterface $hashGenerator
      * @param ModeDetectorInterface $modeDetector
      */
-    public function __construct
-    (
+    public function __construct(
         StandardParameterInterface $standardParameter,
         HashInterface $hashProvider,
         HashGeneratorInterface $hashGenerator,
@@ -65,7 +63,6 @@ abstract class AbstractCall
         $container->setMode($this->modeDetector->getMode());
         $container->setLanguage($this->standardParameter->getLanguage());
     }
-
 
     /**
      * @return HashInterface

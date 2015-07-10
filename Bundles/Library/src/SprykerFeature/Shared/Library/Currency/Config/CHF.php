@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Shared\Library\Currency\CurrencyInterface;
 
 class CHF implements CurrencyInterface
 {
+
     public function getIsoCode()
     {
         return 'CHF';
@@ -38,4 +40,5 @@ class CHF implements CurrencyInterface
     {
         return '{s} {v}';
     }
+
 }

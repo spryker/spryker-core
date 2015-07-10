@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -184,6 +185,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
                 }
             }
         }
+
         return $discountAmount;
     }
 
@@ -224,4 +226,5 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
         return $discountAmount;
     }
+
 }

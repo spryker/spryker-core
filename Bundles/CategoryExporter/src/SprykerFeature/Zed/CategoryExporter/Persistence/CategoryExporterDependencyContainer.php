@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ use SprykerFeature\Zed\CategoryExporter\Persistence\QueryExpander\NavigationQuer
  */
 class CategoryExporterDependencyContainer extends AbstractPersistenceDependencyContainer
 {
+
     /**
      * @param LocaleTransfer $locale
      *

@@ -6,6 +6,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface DistributorQueryExpanderPluginInterface
 {
+
     /**
      * @return string
      */
@@ -22,4 +23,5 @@ interface DistributorQueryExpanderPluginInterface
      * @return int
      */
     public function getChunkSize();
+
 }

@@ -1,17 +1,15 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\CalculationCheckoutConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
-use Generated\Shared\Transfer\CheckoutPreconditionResultTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerFeature\CalculationCheckoutConnector\Business\CalculationCheckoutConnectorFacade;
 use SprykerFeature\CalculationCheckoutConnector\CalculationCheckoutConnectorConfig;
-use SprykerFeature\CalculationCheckoutConnector\Communication\CalculationCheckoutConnectorDependencyContainer;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreconditionInterface;
 
 /**
@@ -29,4 +27,5 @@ class CartAmountCorrectPrecondition implements CheckoutPreconditionInterface
     {
         $this->getFacade()->checkCartAmountCorrect($checkoutRequest, $checkoutResponse);
     }
+
 }

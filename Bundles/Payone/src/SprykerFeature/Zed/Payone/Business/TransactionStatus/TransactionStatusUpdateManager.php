@@ -1,13 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\TransactionStatus;
 
-
 use Generated\Shared\Transfer\PaymentStatusTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use Generated\Shared\Payone\StandardParameterInterface;
 use SprykerFeature\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
@@ -16,7 +15,6 @@ use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRe
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
-
 
 class TransactionStatusUpdateManager
 {
@@ -33,7 +31,6 @@ class TransactionStatusUpdateManager
      * @var HashInterface
      */
     protected $hashProvider;
-
 
     /**
      * @param PayoneQueryContainerInterface $queryContainer
@@ -52,6 +49,7 @@ class TransactionStatusUpdateManager
 
     /**
      * @param TransactionStatusUpdateInterface $request
+     *
      * @return TransactionStatusResponse
      */
     public function processTransactionStatusUpdate(TransactionStatusUpdateInterface $request)
@@ -68,7 +66,6 @@ class TransactionStatusUpdateManager
 
     /**
      * @param TransactionStatusRequest $request
-     * @return void
      */
     protected function persistRequest(TransactionStatusRequest $request)
     {
@@ -102,35 +99,35 @@ class TransactionStatusUpdateManager
 
     /**
      * @param TransactionStatusRequest $request
-     * @return void
      */
     protected function transformCurrency(TransactionStatusUpdateInterface $request)
     {
         $balance = $request->getBalance();
-        $newBalance = (int)(round($balance * 100));
+        $newBalance = (int) (round($balance * 100));
         $request->setBalance($newBalance);
 
         $receivable = $request->getReceivable();
-        $newReceivable = (int)(round($receivable * 100));
+        $newReceivable = (int) (round($receivable * 100));
         $request->setReceivable($newReceivable);
     }
 
     /**
      * @param TransactionStatusRequest $request
+     *
      * @return bool|TransactionStatusResponse
      */
     protected function validate(TransactionStatusUpdateInterface $request)
     {
         $systemHashedKey = $this->hashProvider->hash($this->standardParameter->getKey());
-        if ($request->getKey() != $systemHashedKey) {
+        if ($request->getKey() !== $systemHashedKey) {
             return $this->createErrorResponse(false, 'Payone transaction status update: Given and internal key do not match!');
         }
 
-        if ($request->getAid() != $this->standardParameter->getAid()) {
+        if ($request->getAid() !== $this->standardParameter->getAid()) {
             return $this->createErrorResponse(false, 'Payone transaction status update: Invalid Aid! System: ' . $this->standardParameter->getAid() . ' Request: ' . $request->getAid());
         }
 
-        if ($request->getPortalid() != $this->standardParameter->getPortalId()) {
+        if ($request->getPortalid() !== $this->standardParameter->getPortalId()) {
             return $this->createErrorResponse(false, 'Payone transaction status update: Invalid Portalid! System: ' . $this->standardParameter->getPortalId() . ' Request: ' . $request->getPortalid());
         }
 
@@ -162,6 +159,7 @@ class TransactionStatusUpdateManager
 
     /**
      * @param string $transactionId
+     *
      * @return SpyPaymentPayone
      */
     protected function findPaymentByTransactionId($transactionId)

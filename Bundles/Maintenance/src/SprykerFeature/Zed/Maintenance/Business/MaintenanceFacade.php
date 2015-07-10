@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -29,5 +30,5 @@ class MaintenanceFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->createMarkDownWriter($installedPackages)->write();
     }
-    
+
 }

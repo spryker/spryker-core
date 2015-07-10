@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,6 +22,7 @@ use Propel\Runtime\Propel;
 
 class Writer implements WriterInterface
 {
+
     const TOUCH_STOCK_TYPE = 'stock-type';
     const TOUCH_STOCK_PRODUCT = 'stock-product';
     const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
@@ -66,8 +68,9 @@ class Writer implements WriterInterface
     /**
      * @param TypeTransfer $stockTypeTransfer
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     public function createStockType(TypeTransfer $stockTypeTransfer)
     {
@@ -86,9 +89,10 @@ class Writer implements WriterInterface
     /**
      * @param TypeTransfer $stockTypeTransfer
      *
-     * @return int
      * @throws PropelException
      * @throws StockTypeNotFoundException
+     *
+     * @return int
      */
     public function updateStockType(TypeTransfer $stockTypeTransfer)
     {
@@ -111,8 +115,9 @@ class Writer implements WriterInterface
     /**
      * @param StockProductTransfer $transferStockProduct
      *
-     * @return int
      * @throws StockProductAlreadyExistsException
+     *
+     * @return int
      */
     public function createStockProduct(StockProductTransfer $transferStockProduct)
     {
@@ -131,9 +136,10 @@ class Writer implements WriterInterface
     /**
      * @param StockProductTransfer $transferStockProduct
      *
-     * @return int
      * @throws PropelException
      * @throws StockProductNotFoundException
+     *
+     * @return int
      */
     public function updateStockProduct(StockProductTransfer $transferStockProduct)
     {
@@ -223,8 +229,9 @@ class Writer implements WriterInterface
      * @param int $idStockType
      * @param int $idProduct
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     protected function saveStockProduct(StockProductTransfer $transferStockProduct, $idStockType, $idProduct)
     {
@@ -239,4 +246,5 @@ class Writer implements WriterInterface
 
         return $stockProduct->getPrimaryKey();
     }
+
 }

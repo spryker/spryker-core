@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use Pyz\Shared\Mail\MailConfig;
  */
 class MailDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return MailSenderInterface
      */
@@ -45,12 +47,13 @@ class MailDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return string
-     *
      * @throws \Exception
+     *
+     * @return string
      */
     protected function getAPIKey()
     {
         return Config::get(MailConfig::MAIL_PROVIDER_MANDRILL)['api-key'];
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class UrlBuilder implements UrlBuilderInterface
 {
+
     /**
      * @var KeyBuilderInterface
      */
@@ -50,7 +52,7 @@ class UrlBuilder implements UrlBuilderInterface
             $referenceKey = $this->resourceKeyBuilder->generateKey($resourceArguments, $locale->getLocaleName());
             $returnedResultSet[$indexKey] = [
                 'reference_key' => $referenceKey,
-                'type' => $resourceArguments['resourceType']
+                'type' => $resourceArguments['resourceType'],
             ];
         }
 
@@ -74,10 +76,12 @@ class UrlBuilder implements UrlBuilderInterface
 
                 return [
                     'resourceType' => $resourceType,
-                    'value' => $value
+                    'value' => $value,
                 ];
             }
         }
+
         return false;
     }
+
 }

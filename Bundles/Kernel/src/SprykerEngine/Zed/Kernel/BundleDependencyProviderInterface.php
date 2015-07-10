@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,10 +23,9 @@ interface BundleDependencyProviderInterface
      */
     public function provideBusinessLayerDependencies(Container $container);
 
-
     /**
      * @param Container $container
-     * 
+     *
      * @return Container
      */
     public function providePersistenceLayerDependencies(Container $container);

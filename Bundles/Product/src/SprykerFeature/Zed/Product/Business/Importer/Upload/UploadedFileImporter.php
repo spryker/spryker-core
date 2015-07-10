@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ namespace SprykerFeature\Zed\Product\Business\Importer\Upload;
  */
 class UploadedFileImporter
 {
+
     /**
      * @var string
      */
@@ -26,8 +28,9 @@ class UploadedFileImporter
     /**
      * @param string $uploadedFilename
      *
-     * @return \SplFileInfo
      * @throws \Zend_File_Transfer_Exception
+     *
+     * @return \SplFileInfo
      */
     public function receiveUploadedFile($uploadedFilename)
     {
@@ -52,5 +55,5 @@ class UploadedFileImporter
     {
         return sprintf('%s_%s.%s', date('YmdHis'), $pathInfo['filename'], $pathInfo['extension']);
     }
+
 }
- 

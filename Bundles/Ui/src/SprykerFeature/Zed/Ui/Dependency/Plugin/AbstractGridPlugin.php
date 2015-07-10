@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,6 +23,7 @@ abstract class AbstractGridPlugin extends AbstractPlugin implements GridPluginIn
 
     /**
      * @param array $data
+     *
      * @return array
      */
     public function getData(array $data)
@@ -31,6 +33,7 @@ abstract class AbstractGridPlugin extends AbstractPlugin implements GridPluginIn
 
     /**
      * @param ModelCriteria $query
+     *
      * @return mixed|ModelCriteria
      */
     public function terminateQuery(ModelCriteria $query)
@@ -40,10 +43,12 @@ abstract class AbstractGridPlugin extends AbstractPlugin implements GridPluginIn
 
     /**
      * @param ModelCriteria $query
+     *
      * @return mixed|ModelCriteria
      */
     public function specifyQuery(ModelCriteria $query)
     {
         return $query;
     }
+
 }

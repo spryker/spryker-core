@@ -1,16 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
-use Generated\Shared\Transfer\GroupTransfer;
-use Generated\Shared\Transfer\RoleTransfer;
-use Generated\Shared\Transfer\RuleTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
 use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
@@ -104,6 +100,7 @@ class Installer implements InstallerInterface
 
     /**
      * @param array $role
+     *
      * @throws GroupNotFoundException
      */
     private function addRole(array $role)

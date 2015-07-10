@@ -10,6 +10,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class GlossaryQueueFacade extends AbstractFacade
 {
+
     /**
      * @param QueueMessageInterface $queueMessage
      */
@@ -20,4 +21,5 @@ class GlossaryQueueFacade extends AbstractFacade
             ->processTranslationMessage($queueMessage)
         ;
     }
+
 }

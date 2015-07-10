@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,10 +10,8 @@ use DateTime;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
@@ -118,9 +117,10 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
      * @throws EmailAlreadyRegisteredException
      * @throws PropelException
+     *
+     * @return CustomerTransfer
      */
     public function register(CustomerTransfer $customerTransfer)
     {
@@ -141,7 +141,7 @@ class Customer
             return $customerTransfer;
         }
 
-        throw new EmailAlreadyRegisteredException;
+        throw new EmailAlreadyRegisteredException();
     }
 
     /**
@@ -158,7 +158,7 @@ class Customer
     protected function sendPasswordRestoreToken(CustomerTransfer $customerTransfer)
     {
         $customerTransfer = $this->get($customerTransfer);
-        $link = SystemConfig::HOST_YVES."/password/restore?token=".$customerTransfer->getRestorePasswordKey();
+        $link = SystemConfig::HOST_YVES . '/password/restore?token=' . $customerTransfer->getRestorePasswordKey();
         foreach ($this->passwordRestoreTokenSender as $sender) {
             $sender->send($customerTransfer->getEmail(), $link);
         }
@@ -169,7 +169,7 @@ class Customer
      */
     protected function sendRegistrationToken(CustomerTransfer $customerTransfer)
     {
-        $link = SystemConfig::HOST_YVES."/register/confirm?token=".$customerTransfer->getRegistrationKey();
+        $link = SystemConfig::HOST_YVES . '/register/confirm?token=' . $customerTransfer->getRegistrationKey();
         foreach ($this->registrationTokenSender as $sender) {
             $sender->send($customerTransfer->getEmail(), $link);
         }
@@ -188,9 +188,10 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
      * @throws CustomerNotFoundException
      * @throws PropelException
+     *
+     * @return CustomerTransfer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
@@ -212,9 +213,10 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
      * @throws CustomerNotFoundException
      * @throws PropelException
+     *
+     * @return bool
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
@@ -231,9 +233,10 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
      * @throws PropelException
      * @throws CustomerNotFoundException
+     *
+     * @return bool
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
@@ -250,9 +253,10 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
      * @throws PropelException
      * @throws CustomerNotFoundException
+     *
+     * @return bool
      */
     public function delete(CustomerTransfer $customerTransfer)
     {
@@ -265,10 +269,11 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
      * @throws PropelException
      * @throws CustomerNotFoundException
      * @throws CustomerNotUpdatedException
+     *
+     * @return bool
      */
     public function update(CustomerTransfer $customerTransfer)
     {
@@ -291,10 +296,10 @@ class Customer
     protected function entityToTransfer(SpyCustomerAddress $customer)
     {
         $data = $customer->toArray();
-        unset($data["fk_misc_region"]);
-        unset($data["deleted_at"]);
-        unset($data["created_at"]);
-        unset($data["updated_at"]);
+        unset($data['fk_misc_region']);
+        unset($data['deleted_at']);
+        unset($data['created_at']);
+        unset($data['updated_at']);
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->fromArray($data);
 
@@ -319,8 +324,9 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return SpyCustomer
      * @throws CustomerNotFoundException
+     *
+     * @return SpyCustomer
      */
     protected function getCustomer(CustomerTransfer $customerTransfer)
     {
@@ -338,6 +344,7 @@ class Customer
             return $customer;
         }
 
-        throw new CustomerNotFoundException;
+        throw new CustomerNotFoundException();
     }
+
 }

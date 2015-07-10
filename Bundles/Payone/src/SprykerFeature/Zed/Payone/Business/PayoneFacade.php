@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -89,13 +90,13 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param CreditCardInterface $creditCardData
+     *
      * @return CreditCardCheckResponseContainer
      */
     public function creditCardCheck(CreditCardInterface $creditCardData)
     {
         return $this->getDependencyContainer()->createPaymentManager()->creditCardCheck($creditCardData);
     }
-
 
     //@todo type hint right container interface
     /**
@@ -115,6 +116,7 @@ class PayoneFacade extends AbstractFacade
      * @param PayonePaymentInterface $paymentTransfer
      *
      * @return bool
+     *
      * @deprecated use is approved & is redirect
      */
     public function isAuthorizationSuccessful(PayonePaymentInterface $paymentTransfer)
@@ -211,7 +213,6 @@ class PayoneFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isRefundError($orderTransfer);
     }
-
 
     /**
      * @param PayonePaymentInterface $payment

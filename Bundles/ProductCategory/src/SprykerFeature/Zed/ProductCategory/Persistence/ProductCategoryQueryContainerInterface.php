@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuer
 
 interface ProductCategoryQueryContainerInterface
 {
+
     /**
      * @param ModelCriteria $query
      * @param LocaleTransfer $locale
@@ -37,4 +39,5 @@ interface ProductCategoryQueryContainerInterface
      * @return SpyProductCategoryQuery
      */
     public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale);
+
 }

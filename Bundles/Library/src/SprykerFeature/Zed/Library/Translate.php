@@ -1,8 +1,8 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 class SprykerFeature_Zed_Library_Translate extends Zend_Translate
 {
 
@@ -10,8 +10,10 @@ class SprykerFeature_Zed_Library_Translate extends Zend_Translate
 
 /**
  * @param $string
- * @return mixed
+ *
  * @throws ErrorException
+ *
+ * @return mixed
  */
 function __($string)
 {
@@ -19,6 +21,7 @@ function __($string)
     /* @var \SprykerFeature_Zed_Library_Translate $instance */
     if ($registry->isRegistered('Zend_Translate')) {
         $instance = $registry->get('Zend_Translate');
+
         return $instance->_($string);
     } else {
         throw new ErrorException('No instance of Zend_Translate initiated.');

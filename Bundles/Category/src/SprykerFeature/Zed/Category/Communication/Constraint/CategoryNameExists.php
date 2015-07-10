@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -42,7 +43,7 @@ class CategoryNameExists extends Constraint
         $options = null
     ) {
         parent::__construct($options);
-        $this->queryContainer= $queryContainer;
+        $this->queryContainer = $queryContainer;
         $this->idCategory = $idCategory;
         $this->locale = $locale;
     }
@@ -70,4 +71,5 @@ class CategoryNameExists extends Constraint
     {
         return $this->idCategory;
     }
+
 }

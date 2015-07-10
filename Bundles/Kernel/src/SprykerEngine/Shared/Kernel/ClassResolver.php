@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -27,8 +28,9 @@ class ClassResolver implements ClassResolverInterface
      * @param string $classNamePattern
      * @param string $bundle
      *
-     * @return bool
      * @throws ClassNameAmbiguousException
+     *
+     * @return bool
      */
     public function canResolve($classNamePattern, $bundle)
     {
@@ -59,8 +61,9 @@ class ClassResolver implements ClassResolverInterface
      * @param array $namespaces
      * @param string $class
      *
-     * @return array
      * @throws ClassNameAmbiguousException
+     *
+     * @return array
      */
     private function canBeResolvedIn(array $namespaces, $class)
     {
@@ -113,8 +116,9 @@ class ClassResolver implements ClassResolverInterface
     }
 
     /**
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     private function getProjectNamespaces()
     {
@@ -122,8 +126,9 @@ class ClassResolver implements ClassResolverInterface
     }
 
     /**
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     private function getCoreNamespaces()
     {
@@ -135,8 +140,9 @@ class ClassResolver implements ClassResolverInterface
      * @param string $bundle
      * @param array $arguments
      *
-     * @return object
      * @throws \Exception
+     *
+     * @return object
      */
     public function resolve($classNamePattern, $bundle, array $arguments = [])
     {
@@ -162,9 +168,10 @@ class ClassResolver implements ClassResolverInterface
      * @param array $namespaces
      * @param string $class
      * @param array $arguments
-     * @return bool|object
      *
      * @throws ClassNameAmbiguousException
+     *
+     * @return bool|object
      */
     private function resolveIn(array $namespaces, $class, array $arguments = [])
     {
@@ -237,4 +244,5 @@ class ClassResolver implements ClassResolverInterface
 
         return $this->existsMap[$className] = class_exists($className);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,16 +24,16 @@ class Panel extends TwigFunction
      */
     protected function getFunction()
     {
-        return function($title, $content, array $options = null, $footer = null) {
+        return function ($title, $content, array $options = null, $footer = null) {
             $defaultOptions = [
-                'class'       => 'default',
-                'id'          => false,
-                'noWrap'      => false,
+                'class' => 'default',
+                'id' => false,
+                'noWrap' => false,
                 'collapsable' => false,
-                'collapsed'   => false
+                'collapsed' => false,
             ];
 
-            $options = array_merge($defaultOptions, (array)$options);
+            $options = array_merge($defaultOptions, (array) $options);
 
             $collapsable = '';
             $id = '';
@@ -49,7 +50,7 @@ class Panel extends TwigFunction
                 $id = ' id="' . $options['id'] . '"';
             }
 
-            $html = '<section class="panel panel-' . $options['class'] . '"' . $id . $collapsable .'>';
+            $html = '<section class="panel panel-' . $options['class'] . '"' . $id . $collapsable . '>';
 
             if ($title) {
                 $html .= '<header class="panel-heading" data-collapse-trigger>';

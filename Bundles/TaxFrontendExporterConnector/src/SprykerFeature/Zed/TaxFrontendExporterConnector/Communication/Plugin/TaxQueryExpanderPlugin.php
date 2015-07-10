@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\TaxFrontendExporterConnector\Communication\TaxFrontendExp
  */
 class TaxQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+
     /**
      * @return string
      */

@@ -6,6 +6,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface GlossaryQueueToGlossaryInterface
 {
+
     /**
      * @param string $keyName
      *
@@ -47,4 +48,5 @@ interface GlossaryQueueToGlossaryInterface
      * @return mixed
      */
     public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+
 }

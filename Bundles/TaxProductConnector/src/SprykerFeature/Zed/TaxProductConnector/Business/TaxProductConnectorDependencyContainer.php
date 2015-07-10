@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -45,4 +46,5 @@ class TaxProductConnectorDependencyContainer extends AbstractBusinessDependencyC
     {
         return $this->getLocator()->product()->facade();
     }
+
 }

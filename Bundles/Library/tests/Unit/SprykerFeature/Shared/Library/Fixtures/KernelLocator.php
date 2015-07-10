@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use Unit\SprykerEngine\Shared\Kernel\Fixtures\LocatorLocator;
 
 class KernelLocator extends LocatorLocator
 {
+
     /**
      * @return BundleProxy
      */
@@ -21,4 +23,5 @@ class KernelLocator extends LocatorLocator
 
         return $bundleProxy;
     }
+
 }

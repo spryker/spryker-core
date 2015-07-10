@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Library\Import;
 
 class Input
 {
+
     /**
      * @var string
      */
@@ -42,4 +44,5 @@ class Input
     {
         return $this->data;
     }
+
 }

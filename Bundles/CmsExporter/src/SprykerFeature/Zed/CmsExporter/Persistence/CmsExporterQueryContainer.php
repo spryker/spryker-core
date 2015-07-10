@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
 class CmsExporterQueryContainer extends AbstractQueryContainer implements CmsExporterQueryContainerInterface
 {
+
     /**
      * @param ModelCriteria $expandableQuery
      *
@@ -63,4 +65,5 @@ class CmsExporterQueryContainer extends AbstractQueryContainer implements CmsExp
 
         return $expandableQuery;
     }
+
 }

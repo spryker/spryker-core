@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ class ErrorRenderer
 
     /**
      * @param \Exception $e
+     *
      * @return string
      */
     protected static function renderForWeb(\Exception $e)
@@ -42,6 +44,7 @@ class ErrorRenderer
 
     /**
      * @param \Exception $e
+     *
      * @return string
      */
     protected static function renderForCli(\Exception $e)
@@ -68,14 +71,16 @@ class ErrorRenderer
 
     /**
      * @param \Exception $e
+     *
      * @return string
      */
     public static function renderException(\Exception $e)
     {
-        if (defined('IS_CLI') && IS_CLI == true) {
+        if (defined('IS_CLI') && IS_CLI === true) {
             return self::renderForCli($e);
         }
 
         return self::renderForWeb($e);
     }
+
 }

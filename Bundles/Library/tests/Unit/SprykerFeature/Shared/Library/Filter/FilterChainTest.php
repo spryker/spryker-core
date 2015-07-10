@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerFeature\Shared\Library\Filter\FilterChain;
  */
 class FilterChainTest extends \PHPUnit_Framework_TestCase
 {
+
     public function dataProvider()
     {
         return [
@@ -88,4 +90,5 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
         $filterChain->addFilter(new \stdClass());
         $filterChain->filter('something');
     }
+
 }

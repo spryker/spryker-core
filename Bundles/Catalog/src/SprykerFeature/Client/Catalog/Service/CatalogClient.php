@@ -11,6 +11,7 @@ use SprykerFeature\Client\Catalog\Service\Model\Catalog;
  */
 class CatalogClient extends AbstractClient
 {
+
     /**
      * @return Catalog
      */
@@ -22,6 +23,7 @@ class CatalogClient extends AbstractClient
     /**
      * @param Request $request
      * @param array $category
+     *
      * @return Model\FacetSearch
      */
     public function createFacetSearch(Request $request, array $category)
@@ -31,6 +33,7 @@ class CatalogClient extends AbstractClient
 
     /**
      * @param Request $request
+     *
      * @return Model\FulltextSearch
      */
     public function createFulltextSearch(Request $request)
@@ -45,4 +48,5 @@ class CatalogClient extends AbstractClient
     {
         return $this->getDependencyContainer()->createFacetConfig();
     }
+
 }

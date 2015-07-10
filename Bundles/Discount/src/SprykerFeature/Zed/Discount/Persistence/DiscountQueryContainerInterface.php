@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,18 +10,20 @@ use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 /**
  * Class DiscountQueryContainer
- * @package SprykerFeature\Zed\Discount\Persistence
  */
 interface DiscountQueryContainerInterface extends QueryContainerInterface
 {
+
     /**
      * @param string $code
+     *
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery
      */
     public function queryVoucher($code);
 
     /**
      * @param int $idDiscount
+     *
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRuleQuery
      */
     public function queryDecisionRules($idDiscount);
@@ -64,4 +67,5 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategoryQuery
      */
     public function queryDiscountVoucherPoolCategory();
+
 }

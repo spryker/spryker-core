@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,7 +20,7 @@ class ClassDependenciesGridController extends AbstractGridController
     public function indexAction(Request $request)
     {
         return $this->viewResponse([
-            'grid' => $this->initializeGrid($request)
+            'grid' => $this->initializeGrid($request),
         ]);
     }
 
@@ -35,4 +36,5 @@ class ClassDependenciesGridController extends AbstractGridController
 
         return new \SprykerFeature_Zed_System_Communication_Grid_ClassDependencies($dataSource);
     }
+
 }

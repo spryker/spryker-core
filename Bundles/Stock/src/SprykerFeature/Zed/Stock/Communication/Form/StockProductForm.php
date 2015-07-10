@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class StockProductForm extends AbstractForm
 {
+
     const ID_STOCK_PRODUCT = 'id_stock_product';
     const FK_PRODUCT = 'fk_product';
     const FK_STOCK = 'fk_stock';
@@ -33,60 +35,60 @@ class StockProductForm extends AbstractForm
             ->setValue($this->getIdStockProduct())
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'integer'
-                ])
+                    'type' => 'integer',
+                ]),
             ]);
 
         $this->addField(self::FK_PRODUCT)
             ->setAccepts([[
                 'value' => $this->getFkProduct(),
-                'label' => $this->getSku()
+                'label' => $this->getSku(),
             ]])
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
                 new Assert\Choice([
-                    'choices' => [$this->getSku()]
+                    'choices' => [$this->getSku()],
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             });
 
         $this->addField(self::FK_STOCK)
             ->setAccepts($this->getStockTypes())
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
                 new Assert\Choice([
-                    'choices' => array_column($this->getStockTypes(), 'value')
+                    'choices' => array_column($this->getStockTypes(), 'value'),
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             });
 
         $this->addField(self::QUANTITY)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             });
 
         $this->addField(self::IS_NEVER_OUT_OF_STOCK)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'boolean'
+                    'type' => 'boolean',
                 ]),
-                new Assert\NotNull()
+                new Assert\NotNull(),
             ])
             ->setValueHook(function ($value) {
                 return $value === 1 ? true : false;
@@ -101,7 +103,7 @@ class StockProductForm extends AbstractForm
         $idStockProduct = $this->getIdStockProduct();
         if (!is_null($idStockProduct)) {
             $stockProduct = $this->queryContainer
-                ->queryStockProductByIdStockProduct((int)$idStockProduct)
+                ->queryStockProductByIdStockProduct((int) $idStockProduct)
                 ->findOne()
             ;
 
@@ -180,4 +182,5 @@ class StockProductForm extends AbstractForm
             'label' => $label,
         ];
     }
+
 }

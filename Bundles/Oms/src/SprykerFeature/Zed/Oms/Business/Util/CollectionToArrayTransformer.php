@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,18 +11,22 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
 class CollectionToArrayTransformer implements CollectionToArrayTransformerInterface
 {
+
     /**
      * @deprecated
+     *
      * @param ObjectCollection $orderItems
+     *
      * @return SpySalesOrderItem[] $orderItems
      */
     public function transformCollectionToArray(ObjectCollection $orderItems)
     {
-        $orderItemsArray = array();
+        $orderItemsArray = [];
         foreach ($orderItems as $orderItem) {
             $orderItemsArray[] = $orderItem;
         }
 
         return $orderItemsArray;
     }
+
 }

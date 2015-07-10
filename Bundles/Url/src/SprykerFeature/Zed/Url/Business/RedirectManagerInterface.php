@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,14 +18,16 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyRedirect;
 
 interface RedirectManagerInterface
 {
+
     /**
      * @param string $toUrl
      * @param int $status
      *
-     * @return SpyRedirect
      * @throws MissingUrlException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return SpyRedirect
      */
     public function createRedirect($toUrl, $status = 301);
 
@@ -38,9 +41,10 @@ interface RedirectManagerInterface
     /**
      * @param RedirectTransfer $redirect
      *
-     * @return RedirectTransfer
      * @throws MissingUrlException
      * @throws RedirectExistsException
+     *
+     * @return RedirectTransfer
      */
     public function saveRedirect(RedirectTransfer $redirect);
 
@@ -54,9 +58,11 @@ interface RedirectManagerInterface
      * @param LocaleTransfer $locale
      * @param int $idRedirect
      *
-     * @return UrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
+     *
+     * @return UrlTransfer
      */
     public function createRedirectUrl($url, LocaleTransfer $locale, $idRedirect);
+
 }

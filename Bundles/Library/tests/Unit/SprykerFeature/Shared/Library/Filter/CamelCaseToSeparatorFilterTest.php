@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
  */
 class CamelCaseToSeparatorFilterTest extends \PHPUnit_Framework_TestCase
 {
+
     public function dataProvider()
     {
         return [
@@ -32,4 +34,5 @@ class CamelCaseToSeparatorFilterTest extends \PHPUnit_Framework_TestCase
         $filter = new CamelCaseToSeparatorFilter($seperator);
         $this->assertEquals($expected, $filter->filter($camelCase));
     }
+
 }

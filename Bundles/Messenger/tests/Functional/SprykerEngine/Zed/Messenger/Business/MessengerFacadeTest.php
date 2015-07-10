@@ -1,8 +1,8 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 use Codeception\TestCase\Test;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
@@ -10,6 +10,7 @@ use SprykerEngine\Shared\Messenger\Business\Model\Message\Message;
 
 class MessengerFacadeTest extends Test
 {
+
     protected $testMessages = [
         [
             'type' => 'success',
@@ -94,4 +95,5 @@ class MessengerFacadeTest extends Test
             );
         }
     }
+
 }

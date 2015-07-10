@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -70,7 +71,7 @@ abstract class AbstractRouter implements RouterInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isSslEnabled()
     {
@@ -79,6 +80,7 @@ abstract class AbstractRouter implements RouterInterface
 
     /**
      * @param string $pathInfo
+     *
      * @return array|null
      */
     protected function checkScheme($pathInfo)
@@ -86,6 +88,7 @@ abstract class AbstractRouter implements RouterInterface
         $wantedScheme = $this->isSslEnabled() ? 'https' : 'http';
         if ($this->getContext()->getScheme() !== $wantedScheme) {
             $url = $wantedScheme . '://' . $this->context->getHost() . $pathInfo;
+
             return [
                 '_controller' => function ($url) {
                     return new RedirectResponse($url, 301);
@@ -95,7 +98,7 @@ abstract class AbstractRouter implements RouterInterface
             ];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -154,9 +157,9 @@ abstract class AbstractRouter implements RouterInterface
     private function getPortPart($scheme)
     {
         $port = '';
-        if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
+        if ('http' === $scheme && 80 !== $this->context->getHttpPort()) {
             $port = ':' . $this->context->getHttpPort();
-        } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
+        } elseif ('https' === $scheme && 443 !== $this->context->getHttpsPort()) {
             $port = ':' . $this->context->getHttpsPort();
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -86,9 +87,10 @@ class IdeFactoryAutoCompletionGeneratorTest extends AbstractAutoCompletion
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(),
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Zed\Ide\FactoryAutoCompletion',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_INTERFACE_NAME => 'TestInterface',
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => $this->baseDir . 'test/'
+            IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => $this->baseDir . 'test/',
         ];
 
         return $options;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,9 +7,7 @@
 namespace SprykerFeature\Shared\Library\Application;
 
 use SprykerFeature\Shared\Library\Autoloader;
-
 use SprykerFeature\Shared\Library\Config;
-
 use SprykerFeature\Shared\Library\Error\ErrorHandler;
 use SprykerFeature\Shared\Library\TestAutoloader;
 use SprykerFeature\Shared\System\SystemConfig;
@@ -39,7 +38,7 @@ class Environment
         self::ENV_QUALITY04,
     ];
 
-    private static $fatalErrors = array(E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR);
+    private static $fatalErrors = [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR];
 
     /**
      * @return array
@@ -62,7 +61,6 @@ class Environment
 
         date_default_timezone_set('UTC');
         ini_set('display_errors', APPLICATION_ENV !== self::ENV_PRODUCTION);
-
 
         if (!defined('APPLICATION_SOURCE_DIR')) {
             if (!getenv('APPLICATION_SOURCE_DIR')) {
@@ -98,7 +96,7 @@ class Environment
 
         self::initializeErrorHandler();
 
-        require_once(APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Library/src/SprykerFeature/Shared/Library/Autoloader.php');
+        require_once APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Library/src/SprykerFeature/Shared/Library/Autoloader.php';
 
         Autoloader::unregister();
         Autoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
@@ -170,6 +168,7 @@ class Environment
     {
         $initErrorHandler = function () {
             require_once __DIR__ . '/../Error/ErrorHandler.php';
+
             return ErrorHandler::initialize();
         };
 
@@ -198,9 +197,10 @@ class Environment
             ASSERT_CALLBACK,
             function ($script, $line, $message) {
                 $parsedMessage = trim(preg_replace('~^.*/\*(.*)\*/~i', '$1', $message));
-                $message = $parsedMessage?: 'Assertion failed: ' . $message;
+                $message = $parsedMessage ?: 'Assertion failed: ' . $message;
                 throw new \ErrorException($message, 0, 0, $script, $line);
             }
         );
     }
+
 }

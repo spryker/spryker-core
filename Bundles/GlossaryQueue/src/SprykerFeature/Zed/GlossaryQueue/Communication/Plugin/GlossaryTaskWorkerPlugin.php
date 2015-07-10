@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\GlossaryQueue\Communication\Plugin;
 
 use Generated\Shared\Queue\QueueMessageInterface;
-use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\GlossaryQueue\Business\GlossaryQueueFacade;
 use SprykerFeature\Zed\GlossaryQueue\Communication\GlossaryQueueDependencyContainer;
@@ -16,6 +15,7 @@ use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
 class GlossaryTaskWorkerPlugin extends AbstractPlugin implements
     TaskPluginInterface
 {
+
     const GLOSSARY_TRANSLATION = 'glossary_translation';
     const TRANSLATION_WORKER = 'translation.worker';
 
@@ -58,4 +58,5 @@ class GlossaryTaskWorkerPlugin extends AbstractPlugin implements
             ->getCurrentCountry()
         ;
     }
+
 }

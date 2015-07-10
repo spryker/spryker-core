@@ -13,6 +13,7 @@ class Factory
     /**
      * @param null|string $username
      * @param null|string $apiKey
+     *
      * @return \OpenCloud\LoadBalancer\Service
      */
     public static function getLoadBalancerService($username = null, $apiKey = null)
@@ -23,6 +24,7 @@ class Factory
     /**
      * @param null|string $username
      * @param null|string $apiKey
+     *
      * @return Rackspace
      */
     protected static function getClient($username = null, $apiKey = null)
@@ -33,9 +35,10 @@ class Factory
             $apiKey = $config['apiKey'];
         }
 
-        return new Rackspace(Rackspace::US_IDENTITY_ENDPOINT, array(
+        return new Rackspace(Rackspace::US_IDENTITY_ENDPOINT, [
             'username' => $username,
-            'apiKey'   => $apiKey
-        ));
+            'apiKey' => $apiKey,
+        ]);
     }
-} 
+
+}

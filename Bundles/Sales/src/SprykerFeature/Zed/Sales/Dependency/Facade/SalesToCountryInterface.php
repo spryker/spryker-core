@@ -11,4 +11,5 @@ interface SalesToCountryInterface
      * @return int
      */
     public function getIdCountryByIso2Code($iso2Code);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -46,7 +47,6 @@ class BankAccountCheckContainer extends AbstractRequestContainer
      */
     protected $bic;
 
-    
     /**
      * @param int $aid
      */

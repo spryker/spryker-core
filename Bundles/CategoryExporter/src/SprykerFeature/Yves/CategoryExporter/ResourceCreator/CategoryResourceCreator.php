@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Yves\FrontendExporter\Creator\ResourceCreatorInterface;
 
 class CategoryResourceCreator implements ResourceCreatorInterface
 {
+
     /**
      * @var LocatorLocatorInterface
      */
@@ -63,4 +65,5 @@ class CategoryResourceCreator implements ResourceCreatorInterface
             'categoryNode' => $data,
         ];
     }
+
 }

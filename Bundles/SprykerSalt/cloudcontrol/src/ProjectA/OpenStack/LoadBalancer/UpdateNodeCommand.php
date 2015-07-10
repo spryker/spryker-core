@@ -5,7 +5,6 @@ namespace ProjectA\OpenStack\LoadBalancer;
 use OpenCloud\Common\Exceptions\InstanceNotFound;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -91,9 +90,11 @@ class UpdateNodeCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
+     *
      * @throws \OpenCloud\Common\Exceptions\InstanceNotFound
      * @throws \InvalidArgumentException
+     *
+     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -107,7 +108,7 @@ class UpdateNodeCommand extends Command
                 throw new \InvalidArgumentException($ipAndPort . ' does not contain a port number!');
             }
 
-            if (substr_count($ipAndPort, '.') != 3) {
+            if (substr_count($ipAndPort, '.') !== 3) {
                 throw new \InvalidArgumentException($ipAndPort . ' does not look like a valid IPv4 address!');
             }
 
@@ -115,7 +116,7 @@ class UpdateNodeCommand extends Command
 
             $config[] = [
                 self::KEY_ADDRESS => $parts[0],
-                self::KEY_PORT => $parts[1]
+                self::KEY_PORT => $parts[1],
             ];
         }
 
@@ -137,21 +138,21 @@ class UpdateNodeCommand extends Command
 
             $nodeData[] = [
                 self::KEY_ADDRESS => $address,
-                self::KEY_PORT => $port
+                self::KEY_PORT => $port,
             ];
 
-            if (! $this->isInConfig($config, $address, $port)) {
+            if (!$this->isInConfig($config, $address, $port)) {
                 $nodesToDelete[] = $node;
             }
         }
 
         foreach ($config as $pair) {
-            if (! $this->isInConfig($nodeData, $pair[self::KEY_ADDRESS], $pair[self::KEY_PORT])) {
+            if (!$this->isInConfig($nodeData, $pair[self::KEY_ADDRESS], $pair[self::KEY_PORT])) {
                 $nodesToCreate[] = $pair;
             }
         }
 
-        /**
+        /*
          * Check command line options (create, delete, dry-run)
          */
         if ($input->getOption(self::CLI_OPTION_DRY_RUN)) {
@@ -177,7 +178,7 @@ class UpdateNodeCommand extends Command
                 }
                 $result['created']['nodes'] = [
                     'address' => $node[self::KEY_ADDRESS],
-                    'port' => $node[self::KEY_PORT]
+                    'port' => $node[self::KEY_PORT],
                 ];
                 $result['created']['count'] += 1;
             }
@@ -191,7 +192,7 @@ class UpdateNodeCommand extends Command
 
                 $result['deleted']['nodes'] = [
                     'address' => $nodeToDelete->address,
-                    'port' => $nodeToDelete->port
+                    'port' => $nodeToDelete->port,
                 ];
                 $result['deleted']['count'] += 1;
             }
@@ -204,13 +205,14 @@ class UpdateNodeCommand extends Command
      * @param array $config
      * @param string $address
      * @param string $port
+     *
      * @return bool
      */
     protected function isInConfig($config, $address, $port)
     {
         foreach ($config as $pair) {
 
-            if (($pair[self::KEY_ADDRESS] == $address) && ($pair[self::KEY_PORT] == $port)) {
+            if (($pair[self::KEY_ADDRESS] === $address) && ($pair[self::KEY_PORT] === $port)) {
                 return true;
             }
         }
@@ -231,7 +233,7 @@ class UpdateNodeCommand extends Command
             $data[] = [
                 $nodeToCreate[self::KEY_ADDRESS],
                 $nodeToCreate[self::KEY_PORT],
-                self::ACTION_CREATE
+                self::ACTION_CREATE,
             ];
         }
 
@@ -239,19 +241,21 @@ class UpdateNodeCommand extends Command
             $data[] = [
                 $nodeToDelete->address,
                 $nodeToDelete->port,
-                self::ACTION_DELETE
+                self::ACTION_DELETE,
             ];
         }
 
-        if (count($data) == 0) {
+        if (count($data) === 0) {
             $output->writeln('Nothing to do');
+
             return;
         }
 
         $table = $this->application->getHelperSet()->get('table');
         $table
-            ->setHeaders(array('Address', 'Port', 'Action'))
+            ->setHeaders(['Address', 'Port', 'Action'])
             ->setRows($data);
         $table->render($output);
     }
+
 }

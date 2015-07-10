@@ -1,13 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Oms\Business\Process;
 
-
 interface StateInterface
 {
+
     /**
      * @param TransitionInterface[] $incomingTransitions
      */
@@ -53,8 +54,9 @@ interface StateInterface
     /**
      * @param string $id
      *
-     * @return EventInterface
      * @throws \Exception
+     *
+     * @return EventInterface
      */
     public function getEvent($id);
 
@@ -116,8 +118,9 @@ interface StateInterface
     public function hasOnEnterEvent();
 
     /**
-     * @return EventInterface
      * @throws \Exception
+     *
+     * @return EventInterface
      */
     public function getOnEnterEvent();
 
@@ -127,8 +130,9 @@ interface StateInterface
     public function hasTimeoutEvent();
 
     /**
-     * @return EventInterface[]
      * @throws \Exception
+     *
+     * @return EventInterface[]
      */
     public function getTimeoutEvents();
 
@@ -163,4 +167,5 @@ interface StateInterface
      * @param string $display
      */
     public function setDisplay($display);
+
 }

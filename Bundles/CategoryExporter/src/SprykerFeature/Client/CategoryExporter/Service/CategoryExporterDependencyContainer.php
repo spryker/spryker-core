@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -55,4 +56,5 @@ class CategoryExporterDependencyContainer extends AbstractServiceDependencyConta
     {
         return $this->getFactory()->createKeyBuilderCategoryResourceKeyBuilder();
     }
+
 }

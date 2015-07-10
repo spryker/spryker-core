@@ -1,16 +1,17 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Country\Communication;
 
-
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Country\Business\CountryFacade;
 
 class CountryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return CountryFacade
      */
@@ -18,4 +19,5 @@ class CountryDependencyContainer extends AbstractCommunicationDependencyContaine
     {
         return $this->getLocator()->country()->facade();
     }
+
 }

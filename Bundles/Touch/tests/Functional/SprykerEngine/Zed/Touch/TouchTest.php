@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchTest extends Test
 {
+
     /**
      * @var \SprykerEngine\Zed\Touch\Business\TouchFacade
      */
@@ -23,7 +25,6 @@ class TouchTest extends Test
      * @var TouchQueryContainerInterface
      */
     protected $touchQueryContainer;
-
 
     protected function setUp()
     {
@@ -75,4 +76,5 @@ class TouchTest extends Test
 
         $this->assertTrue($touchCountAfterTouch > $touchCountBeforeTouch);
     }
+
 }

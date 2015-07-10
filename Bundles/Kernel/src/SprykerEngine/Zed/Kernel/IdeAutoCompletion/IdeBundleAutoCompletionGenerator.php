@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,7 +19,7 @@ class IdeBundleAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerato
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            self::OPTION_KEY_INTERFACE_NAME => 'BundleAutoCompletion'
+            self::OPTION_KEY_INTERFACE_NAME => 'BundleAutoCompletion',
         ]);
     }
 

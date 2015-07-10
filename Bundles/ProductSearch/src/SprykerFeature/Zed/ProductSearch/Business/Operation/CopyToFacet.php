@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business\Operation;
 
 class CopyToFacet implements OperationInterface
 {
+
     const FACET_NAME_FIELD = 'facet-name';
     const FACET_VALUE_FIELD = 'facet-value';
 
@@ -23,7 +25,7 @@ class CopyToFacet implements OperationInterface
         if (isset($sourceDocument[$sourceField]) && !empty($sourceDocument[$sourceField])) {
             $facet = [
                 self::FACET_NAME_FIELD => $sourceField,
-                self::FACET_VALUE_FIELD => $sourceDocument[$sourceField]
+                self::FACET_VALUE_FIELD => $sourceDocument[$sourceField],
             ];
             $targetDocument[$targetField][] = $facet;
         }
@@ -38,4 +40,5 @@ class CopyToFacet implements OperationInterface
     {
         return 'CopyToFacet';
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -55,4 +56,5 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
             TransferServer::getInstance()->setRequest($request);
         });
     }
+
 }

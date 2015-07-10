@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,7 +12,7 @@ use Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\Fixtures\Si
  * @group Kernel
  * @group MethodTagBuilder
  */
-class AbstractMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
+class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testBuildMethodTagsShouldReturnMethodTagWithVendorFileIfProjectDoesNotOverrideIt()
@@ -78,4 +79,5 @@ class AbstractMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle', $givenMethodTags);
         $this->assertSame($givenMethodTags, $methodTags);
     }
+
 }

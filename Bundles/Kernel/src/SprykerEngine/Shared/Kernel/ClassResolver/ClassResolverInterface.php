@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,4 +25,5 @@ interface ClassResolverInterface
      * @return object
      */
     public function resolve($classNamePattern, $bundle, array $arguments = []);
+
 }

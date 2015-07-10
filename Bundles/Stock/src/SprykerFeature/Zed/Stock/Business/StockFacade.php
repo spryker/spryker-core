@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,8 +10,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStock;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;
 use SprykerFeature\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeInterface;
 
 /**
@@ -120,4 +119,5 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
     {
         return $this->getDependencyContainer()->getReaderModel()->getIdStockProduct($sku, $stockType);
     }
+
 }

@@ -7,6 +7,7 @@ use SprykerFeature\Zed\GlossaryDistributor\Persistence\GlossaryDistributorQueryC
 
 class GlossaryDistributorDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return GlossaryDistributorQueryContainer
      */
@@ -14,4 +15,5 @@ class GlossaryDistributorDependencyContainer extends AbstractBusinessDependencyC
     {
         return $this->getQueryContainer();
     }
+
 }

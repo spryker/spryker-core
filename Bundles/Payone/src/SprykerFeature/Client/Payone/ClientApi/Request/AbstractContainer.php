@@ -1,10 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\Payone\ClientApi\Request;
-
 
 abstract class AbstractContainer implements ContainerInterface
 {
@@ -14,7 +14,7 @@ abstract class AbstractContainer implements ContainerInterface
      */
     public function toArray()
     {
-        $result = array();
+        $result = [];
         foreach ($this as $key => $value) {
             if ($value === null) {
                 continue;
@@ -27,6 +27,7 @@ abstract class AbstractContainer implements ContainerInterface
             }
         }
         ksort($result);
+
         return $result;
     }
 
@@ -35,11 +36,12 @@ abstract class AbstractContainer implements ContainerInterface
      */
     public function __toString()
     {
-        $stringArray = array();
+        $stringArray = [];
         foreach ($this->toArray() as $key => $value) {
             $stringArray[] = $key . '=' . $value;
         }
         $result = implode('|', $stringArray);
+
         return $result;
     }
 

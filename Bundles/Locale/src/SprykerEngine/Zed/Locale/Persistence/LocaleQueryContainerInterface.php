@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocaleQuery;
 
 interface LocaleQueryContainerInterface
 {
+
     /**
      * @param string $localeName
      *
@@ -20,4 +22,5 @@ interface LocaleQueryContainerInterface
      * @return SpyLocaleQuery
      */
     public function queryLocales();
+
 }

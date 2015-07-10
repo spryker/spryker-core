@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
  */
 class UrlDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return UrlManagerInterface
      */
@@ -65,4 +67,5 @@ class UrlDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getLocator()
         );
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,8 +10,10 @@ use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface EmbeddedTransferInterface
 {
+
     /**
      * @param TransferInterface $transferObject
+     *
      * @return $this
      */
     public function setTransfer(TransferInterface $transferObject);
@@ -19,4 +22,5 @@ interface EmbeddedTransferInterface
      * @return TransferInterface
      */
     public function getTransfer();
+
 }

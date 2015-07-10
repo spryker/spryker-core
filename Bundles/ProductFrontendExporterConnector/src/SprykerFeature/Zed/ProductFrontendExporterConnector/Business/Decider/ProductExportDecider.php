@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 
 class ProductExportDecider implements ProductExportDeciderInterface
 {
+
     /**
      * @var float
      */
@@ -39,4 +41,5 @@ class ProductExportDecider implements ProductExportDeciderInterface
 
         return ($failureRatio >= $this->failingThreshhold);
     }
+
 }

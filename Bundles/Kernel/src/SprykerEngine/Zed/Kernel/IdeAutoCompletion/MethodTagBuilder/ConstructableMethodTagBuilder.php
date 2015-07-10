@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 
-use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
@@ -77,8 +77,9 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     /**
      * @param string $className
      *
-     * @return array
      * @throws \ErrorException
+     *
+     * @return array
      */
     protected function createConstructor($className)
     {

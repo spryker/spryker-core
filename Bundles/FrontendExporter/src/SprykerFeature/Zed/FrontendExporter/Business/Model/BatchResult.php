@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class BatchResult implements BatchResultInterface
 {
+
     /**
      * @var int
      */
@@ -169,4 +171,5 @@ class BatchResult implements BatchResultInterface
     {
         $this->processedCount += $amount;
     }
+
 }

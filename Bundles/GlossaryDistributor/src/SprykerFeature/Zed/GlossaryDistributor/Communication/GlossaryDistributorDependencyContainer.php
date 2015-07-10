@@ -15,4 +15,5 @@ class GlossaryDistributorDependencyContainer extends AbstractCommunicationDepend
     {
         return $this->getQueryContainer();
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityT
 
 class AvailabilityCartConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return AvailabilityFacade
      */

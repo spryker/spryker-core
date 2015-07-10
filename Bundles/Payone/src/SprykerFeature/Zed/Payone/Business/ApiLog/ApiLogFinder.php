@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -105,7 +106,6 @@ class ApiLogFinder
         return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_ERROR);
     }
 
-
     /**
      * @param OrderInterface $orderTransfer
      *
@@ -115,7 +115,6 @@ class ApiLogFinder
     {
         return $this->hasApiLogStatus($orderTransfer, PayoneApiConstants::RESPONSE_TYPE_APPROVED);
     }
-
 
     /**
      * @param OrderInterface $orderTransfer
@@ -171,6 +170,7 @@ class ApiLogFinder
 
     /**
      * @todo R E F A C T O R - Horrorcode
+     *
      * @param PayonePaymentInterface $payment
      *
      * @return AuthorizationCheckResponseTransfer

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,5 +25,5 @@ class InstanceBuilder
             return new $className();
         }
     }
-    
+
 }

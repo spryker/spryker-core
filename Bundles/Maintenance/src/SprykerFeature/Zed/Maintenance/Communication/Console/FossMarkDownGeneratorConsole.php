@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -30,9 +31,8 @@ class FossMarkDownGeneratorConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @throws \Exception
      *
-     * @return void
+     * @throws \Exception
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {

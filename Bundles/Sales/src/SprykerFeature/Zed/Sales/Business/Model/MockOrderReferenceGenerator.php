@@ -19,4 +19,5 @@ class MockOrderReferenceGenerator implements OrderReferenceGeneratorInterface
     {
         return uniqid();
     }
+
 }

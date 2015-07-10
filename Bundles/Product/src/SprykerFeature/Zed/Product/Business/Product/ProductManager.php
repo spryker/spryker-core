@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -76,8 +77,9 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @return int
      * @throws AbstractProductExistsException
+     *
+     * @return int
      */
     public function createAbstractProduct($sku)
     {
@@ -94,9 +96,10 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param string $sku
-     * @return int
      *
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getAbstractProductIdBySku($sku)
     {
@@ -137,8 +140,9 @@ class ProductManager implements ProductManagerInterface
      * @param string $name
      * @param string $attributes
      *
-     * @return int
      * @throws AbstractProductAttributesExistException
+     *
+     * @return int
      */
     public function createAbstractProductAttributes($idAbstractProduct, LocaleTransfer $locale, $name, $attributes)
     {
@@ -194,8 +198,9 @@ class ProductManager implements ProductManagerInterface
      * @param int $idAbstractProduct
      * @param bool $isActive
      *
-     * @return int
      * @throws ConcreteProductExistsException
+     *
+     * @return int
      */
     public function createConcreteProduct($sku, $idAbstractProduct, $isActive = true)
     {
@@ -245,8 +250,9 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getConcreteProductIdBySku($sku)
     {
@@ -270,8 +276,9 @@ class ProductManager implements ProductManagerInterface
      * @param string $name
      * @param string $attributes
      *
-     * @return int
      * @throws ConcreteProductAttributesExistException
+     *
+     * @return int
      */
     public function createConcreteProductAttributes($idConcreteProduct, LocaleTransfer $locale, $name, $attributes)
     {
@@ -335,10 +342,11 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
+     *
+     * @return UrlTransfer
      */
     public function createProductUrl($sku, $url, LocaleTransfer $locale)
     {
@@ -352,10 +360,11 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
+     *
+     * @return UrlTransfer
      */
     public function createProductUrlByIdProduct($idAbstractProduct, $url, LocaleTransfer $locale)
     {
@@ -367,10 +376,11 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
+     *
+     * @return UrlTransfer
      */
     public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale)
     {
@@ -385,10 +395,11 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
+     *
+     * @return UrlTransfer
      */
     public function createAndTouchProductUrlByIdProduct($idAbstractProduct, $url, LocaleTransfer $locale)
     {
@@ -401,8 +412,9 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @return float
      * @throws MissingProductException
+     *
+     * @return float
      */
     public function getEffectiveTaxRateForConcreteProduct($sku)
     {
@@ -436,8 +448,9 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getAbstractProductIdByConcreteSku($sku)
     {
@@ -454,4 +467,5 @@ class ProductManager implements ProductManagerInterface
 
         return $concreteProduct->getFkAbstractProduct();
     }
+
 }

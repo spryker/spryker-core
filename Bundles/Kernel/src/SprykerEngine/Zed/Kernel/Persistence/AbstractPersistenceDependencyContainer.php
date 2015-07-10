@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -29,8 +30,10 @@ abstract class AbstractPersistenceDependencyContainer extends BaseDependencyCont
      * @todo remove from here. This should go to QueryContainer directly
      *
      * @param string $key
-     * @return mixed
+     *
      * @throws \ErrorException
+     *
+     * @return mixed
      */
     public function getProvidedDependency($key)
     {
@@ -42,4 +45,3 @@ abstract class AbstractPersistenceDependencyContainer extends BaseDependencyCont
     }
 
 }
-

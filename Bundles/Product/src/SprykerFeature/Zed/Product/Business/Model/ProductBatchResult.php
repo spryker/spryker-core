@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Product\Business\Model;
 
 class ProductBatchResult implements ProductBatchResultInterface
 {
+
     /**
      * @var int
      */
@@ -89,5 +91,5 @@ class ProductBatchResult implements ProductBatchResultInterface
     {
         $this->isFailed = $failed;
     }
+
 }
- 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 interface UrlMapperInterface
 {
+
     /**
      * @param array $mergedParameters
      * @param bool $addTrailingSlash
@@ -33,4 +35,5 @@ interface UrlMapperInterface
      * @param Request $request
      */
     public function injectParametersFromUrlIntoRequest($pathInfo, Request $request);
+
 }

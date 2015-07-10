@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class CaptureIsApprovedPlugin extends AbstractPlugin
 {
+
     /**
      * @param OrderTransfer $orderTransfer
      *
@@ -18,5 +20,5 @@ class CaptureIsApprovedPlugin extends AbstractPlugin
     {
         return $this->getDependencyContainer()->createPayoneFacade()->isCaptureApproved($orderTransfer);
     }
-}
 
+}

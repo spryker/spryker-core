@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -37,15 +38,16 @@ class ShippingContainer extends AbstractContainer
     /**
      * ISO-3166-2 Subdivisions
      * only necessary for country US, CA, CN, JP, MX, BR, AR, ID, TH, IN
+     *
      * @var string
      */
     protected $shipping_state;
     /**
      * Country (ISO-3166)
+     *
      * @var string
      */
     protected $shipping_country;
-
 
     /**
      * @param string $shipping_city

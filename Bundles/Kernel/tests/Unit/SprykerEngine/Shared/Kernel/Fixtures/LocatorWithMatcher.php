@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,6 +23,5 @@ class LocatorWithMatcher extends AbstractLocator
     {
         return $this;
     }
-
 
 }

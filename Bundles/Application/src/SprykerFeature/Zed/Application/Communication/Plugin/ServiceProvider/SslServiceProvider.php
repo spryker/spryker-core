@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,6 +25,7 @@ class SslServiceProvider implements ServiceProviderInterface
 
     /**
      * @param Application $app
+     *
      * @throws \Exception
      */
     public function boot(Application $app)
@@ -39,8 +41,10 @@ class SslServiceProvider implements ServiceProviderInterface
 
     /**
      * @param Request $request
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     protected function shouldBeSsl(Request $request)
     {
@@ -52,6 +56,7 @@ class SslServiceProvider implements ServiceProviderInterface
 
     /**
      * @param Request $request
+     *
      * @return bool
      */
     protected function isYvesRequest(Request $request)
@@ -61,6 +66,7 @@ class SslServiceProvider implements ServiceProviderInterface
 
     /**
      * @param Request $request
+     *
      * @return bool
      */
     protected function isSecure(Request $request)
@@ -68,12 +74,13 @@ class SslServiceProvider implements ServiceProviderInterface
         $https = $request->server->get('HTTPS', false);
         $xForwardedProto = $request->server->get('X-Forwarded-Proto', false);
 
-        return ($https && ($https == 'on' || $https == 1) || $xForwardedProto && $xForwardedProto == 'https');
+        return ($https && ($https === 'on' || $https === 1) || $xForwardedProto && $xForwardedProto === 'https');
     }
 
     /**
      * @param Request $request
      * @param array $excluded
+     *
      * @return bool
      */
     protected function isExcludedFromRedirection(Request $request, array $excluded)

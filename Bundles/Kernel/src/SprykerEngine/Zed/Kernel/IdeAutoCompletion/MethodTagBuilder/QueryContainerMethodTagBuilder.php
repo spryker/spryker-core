@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -43,6 +44,5 @@ class QueryContainerMethodTagBuilder extends AbstractSingleFileMethodTagBuilder
 
         return $methodTags;
     }
-
 
 }

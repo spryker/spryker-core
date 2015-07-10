@@ -1,8 +1,8 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
@@ -24,4 +24,5 @@ class GridController extends AbstractController
 
         return $this->jsonResponse($grid->renderData());
     }
+
 }

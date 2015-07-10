@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,15 +12,17 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface ProductToUrlInterface
 {
+
     /**
      * @param string $url
      * @param LocaleTransfer $locale
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @return Url
      * @throws PropelException
      * @throws UrlExistsException
+     *
+     * @return Url
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId);
 
@@ -27,4 +30,5 @@ interface ProductToUrlInterface
      * @param int $idUrl
      */
     public function touchUrlActive($idUrl);
+
 }

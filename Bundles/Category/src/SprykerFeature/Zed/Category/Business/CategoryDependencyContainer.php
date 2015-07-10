@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -139,4 +140,5 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_URL);
     }
+
 }

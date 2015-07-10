@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Ui\Communication\Grid\DateTimeColumn\TimeRangeGenerator;
 
-use \Carbon\Carbon;
+use Carbon\Carbon;
 
 class YearRangeGenerator extends TimeRangeGeneratorAbstract
 {

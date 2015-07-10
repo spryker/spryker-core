@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributeType;
 
 class AttributeManager implements AttributeManagerInterface
 {
+
     /**
      * @var ProductQueryContainerInterface
      */
@@ -62,8 +64,9 @@ class AttributeManager implements AttributeManagerInterface
     /**
      * @param string $attributeType
      *
-     * @return SpyProductAttributeType
      * @throws MissingAttributeTypeException
+     *
+     * @return SpyProductAttributeType
      */
     protected function getAttributeType($attributeType)
     {
@@ -87,9 +90,10 @@ class AttributeManager implements AttributeManagerInterface
      * @param string $attributeType
      * @param bool $isEditable
      *
-     * @return int
      * @throws AttributeExistsException
      * @throws MissingAttributeTypeException
+     *
+     * @return int
      */
     public function createAttribute($attributeName, $attributeType, $isEditable = true)
     {
@@ -130,8 +134,9 @@ class AttributeManager implements AttributeManagerInterface
      * @param string $inputType
      * @param int|null $fkParentAttributeType
      *
-     * @return int
      * @throws AttributeTypeExistsException
+     *
+     * @return int
      */
     public function createAttributeType($name, $inputType, $fkParentAttributeType = null)
     {
@@ -165,4 +170,5 @@ class AttributeManager implements AttributeManagerInterface
             );
         }
     }
+
 }

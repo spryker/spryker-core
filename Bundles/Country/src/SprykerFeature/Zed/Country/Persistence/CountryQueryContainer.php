@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyRegionQuery;
 
 class CountryQueryContainer extends AbstractQueryContainer implements CountryQueryContainerInterface
 {
+
     /**
      * @return SpyCountryQuery
      */
@@ -56,4 +58,5 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
 
         return $query;
     }
+
 }

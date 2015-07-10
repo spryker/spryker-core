@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -153,4 +154,5 @@ class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createKeyBuilderSearchPageConfigKeyBuilder();
     }
+
 }

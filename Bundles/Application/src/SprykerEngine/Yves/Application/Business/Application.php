@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class Application extends SharedApplication
 {
+
     /**
      * @return Session
      */
@@ -44,4 +46,5 @@ class Application extends SharedApplication
     {
         return $this['storage.elasticsearch'];
     }
+
 }

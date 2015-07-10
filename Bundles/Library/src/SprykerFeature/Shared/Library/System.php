@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Library;
 
 class System
 {
+
     /**
      * @var string
      */
@@ -19,9 +21,10 @@ class System
     public static function getHostname()
     {
         if (!isset(self::$hostname)) {
-            self::$hostname =  (gethostname())?: php_uname('n');
+            self::$hostname = (gethostname()) ?: php_uname('n');
         }
 
         return self::$hostname;
     }
+
 }

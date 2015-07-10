@@ -40,7 +40,6 @@ class ItemTypeInstaller extends AbstractInstaller
     }
 
     /**
-     * @return void
      */
     public function install()
     {
@@ -51,4 +50,5 @@ class ItemTypeInstaller extends AbstractInstaller
             $this->itemTypeWriter->create($itemType);
         }
     }
+
 }

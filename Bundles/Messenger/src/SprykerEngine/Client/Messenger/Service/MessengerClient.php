@@ -7,6 +7,7 @@ use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 
 class MessengerClient extends AbstractClient
 {
+
     /**
      * @return MessengerInterface
      */

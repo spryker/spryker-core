@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DetailsUserForm extends AbstractForm
 {
+
     /**
      * @return array
      */
@@ -41,7 +42,7 @@ class DetailsUserForm extends AbstractForm
             ->addField('first_name')
             ->setLabel('First Name')
             ->setConstraints([
-                new NotBlank()
+                new NotBlank(),
             ])
         ;
         $this
@@ -52,7 +53,7 @@ class DetailsUserForm extends AbstractForm
             ->addField('username')
             ->setLabel('Username')
             ->setConstraints([
-                new NotBlank()
+                new NotBlank(),
             ])
         ;
         $this
@@ -64,4 +65,5 @@ class DetailsUserForm extends AbstractForm
             ->setLabel('Status')
         ;
     }
+
 }

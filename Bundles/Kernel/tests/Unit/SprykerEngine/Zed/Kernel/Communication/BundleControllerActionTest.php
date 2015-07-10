@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -56,4 +57,5 @@ class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(ucfirst(self::ACTION), $bundleControllerAction->getAction());
     }
+
 }

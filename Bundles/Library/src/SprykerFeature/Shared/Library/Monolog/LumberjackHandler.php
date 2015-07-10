@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,10 +7,11 @@
 namespace SprykerFeature\Shared\Library\Monolog;
 
 use Monolog\Handler\AbstractHandler;
-use \SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
+use SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
 
 class LumberjackHandler extends AbstractHandler
 {
+
     const MESSAGE_LOG_MONOLOG = 'monolog';
 
     /**
@@ -24,4 +26,5 @@ class LumberjackHandler extends AbstractHandler
         $lumberjack->addField('context', $record['context']);
         $lumberjack->send(self::MESSAGE_LOG_MONOLOG, $record['message'], $record['level_name']);
     }
+
 }

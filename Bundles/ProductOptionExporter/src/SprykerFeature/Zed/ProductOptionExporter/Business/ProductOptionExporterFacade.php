@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
  */
 class ProductOptionExporterFacade extends AbstractFacade
 {
+
     /**
      * @param array $resultSet
      * @param array $processedResultSet
@@ -24,4 +26,5 @@ class ProductOptionExporterFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->getProcessorModel()->processDataForExport($resultSet, $processedResultSet, $locale);
     }
+
 }

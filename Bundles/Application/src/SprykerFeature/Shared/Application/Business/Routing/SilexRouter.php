@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -72,7 +73,7 @@ class SilexRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         $generator = new UrlGenerator($this->getRouteCollection(), $this->getContext(), $this->logger);
 
@@ -87,10 +88,10 @@ class SilexRouter implements RouterInterface
      *
      * @param string $pathinfo The path info to be parsed (raw format, i.e. not urldecoded)
      *
-     * @return array An array of parameters
-     *
      * @throws ResourceNotFoundException If the resource could not be found
      * @throws MethodNotAllowedException If the resource was found but the request method is not allowed
+     *
+     * @return array An array of parameters
      *
      * @api
      */
@@ -100,4 +101,5 @@ class SilexRouter implements RouterInterface
 
         return $matcher->match($pathinfo);
     }
+
 }

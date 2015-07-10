@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTab
 
 class GlossaryDistributorQueryContainer extends AbstractQueryContainer
 {
+
     /**
      * @param ModelCriteria $expandableQuery
      *
@@ -43,4 +44,5 @@ class GlossaryDistributorQueryContainer extends AbstractQueryContainer
 
         return $expandableQuery;
     }
+
 }

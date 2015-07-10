@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -32,17 +33,19 @@ interface GroupInterface
     /**
      * @param GroupTransfer $group
      *
-     * @return GroupTransfer
      * @throws GroupNameExistsException
      * @throws GroupNotFoundException
+     *
+     * @return GroupTransfer
      */
     public function save(GroupTransfer $group);
 
     /**
      * @param int $id
      *
-     * @return SpyAclGroup
      * @throws GroupNotFoundException
+     *
+     * @return SpyAclGroup
      */
     public function getEntityGroupById($id);
 
@@ -112,8 +115,9 @@ interface GroupInterface
      * @param int $idRole
      * @param int $idGroup
      *
-     * @return int
      * @throws GroupAlreadyHasRoleException
+     *
+     * @return int
      */
     public function addRoleToGroup($idRole, $idGroup);
 
@@ -121,8 +125,9 @@ interface GroupInterface
      * @param int $idGroup
      * @param int $idUser
      *
-     * @return int
      * @throws GroupAlreadyHasRoleException
+     *
+     * @return int
      */
     public function addUser($idGroup, $idUser);
 
@@ -136,24 +141,28 @@ interface GroupInterface
     /**
      * @param int $id
      *
-     * @return GroupTransfer
      * @throws GroupNotFoundException
+     *
+     * @return GroupTransfer
      */
     public function getGroupById($id);
 
     /**
      * @param int $id
      *
-     * @return bool
      * @throws GroupNotFoundException
+     *
+     * @return bool
      */
     public function removeGroupById($id);
 
     /**
      * @param int $idGroup
      *
-     * @return RoleTransfer
      * @throws GroupNotFoundException
+     *
+     * @return RoleTransfer
      */
     public function getRoles($idGroup);
+
 }

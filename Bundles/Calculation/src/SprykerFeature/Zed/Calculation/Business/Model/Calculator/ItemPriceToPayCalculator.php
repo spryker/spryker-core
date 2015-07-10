@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 class ItemPriceToPayCalculator implements
     CalculatorPluginInterface
 {
+
     /**
      * @param CalculableInterface $calculableContainer
      */
@@ -24,7 +26,7 @@ class ItemPriceToPayCalculator implements
             $priceToPay -= $this->sumDiscounts($item->getDiscounts());
 
             $priceToPay = max(0, $priceToPay);
-            if ($priceToPay == 0) {
+            if ($priceToPay === 0) {
                 $priceToPay = $item->getGrossPrice();
             }
 
@@ -79,4 +81,5 @@ class ItemPriceToPayCalculator implements
 
         return $optionsAmount;
     }
+
 }

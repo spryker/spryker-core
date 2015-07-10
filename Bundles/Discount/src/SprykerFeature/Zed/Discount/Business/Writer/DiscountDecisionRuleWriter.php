@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 
 class DiscountDecisionRuleWriter extends AbstractWriter
 {
+
     /**
      * @var AutoCompletion
      */
@@ -19,11 +21,12 @@ class DiscountDecisionRuleWriter extends AbstractWriter
 
     /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     *
      * @return mixed
      */
     public function create(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
-        $discountDecisionRuleEntity =$this->locator->discount()->entitySpyDiscountDecisionRule();
+        $discountDecisionRuleEntity = $this->locator->discount()->entitySpyDiscountDecisionRule();
         $discountDecisionRuleEntity->fromArray($discountDecisionRuleTransfer->toArray());
         $discountDecisionRuleEntity->save();
 
@@ -32,8 +35,10 @@ class DiscountDecisionRuleWriter extends AbstractWriter
 
     /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
-     * @return array|mixed|SpyDiscountDecisionRule
+     *
      * @throws PropelException
+     *
+     * @return array|mixed|SpyDiscountDecisionRule
      */
     public function update(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
@@ -47,4 +52,5 @@ class DiscountDecisionRuleWriter extends AbstractWriter
 
         return $discountDecisionRuleEntity;
     }
+
 }

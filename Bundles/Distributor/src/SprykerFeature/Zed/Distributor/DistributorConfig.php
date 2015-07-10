@@ -22,4 +22,5 @@ class DistributorConfig extends AbstractBundleConfig
     {
         return [];
     }
+
 }

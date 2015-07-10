@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PasswordController extends AbstractController
 {
+
     /**
      * @param Request $request
      *
@@ -32,11 +34,12 @@ class PasswordController extends AbstractController
         if ($form->isValid()) {
 //            if ($facade->resetPassword($formData['username'])) {
                 return $this->jsonResponse([], 200, [
-                    'Spy-Location' => '/'
+                    'Spy-Location' => '/',
                 ]);
 //            }
         }
 
         return $this->jsonResponse($form->toArray(), 400);
     }
+
 }

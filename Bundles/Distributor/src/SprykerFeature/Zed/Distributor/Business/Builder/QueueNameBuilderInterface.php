@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Distributor\Business\Builder;
 
 interface QueueNameBuilderInterface
 {
+
     /**
      * @param string $itemType
      * @param string $receiver
@@ -11,4 +12,5 @@ interface QueueNameBuilderInterface
      * @return string
      */
     public function createQueueName($receiver, $itemType);
+
 }

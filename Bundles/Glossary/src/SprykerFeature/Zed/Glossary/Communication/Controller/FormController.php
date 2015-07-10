@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Glossary\Communication\Controller;
 
-use Generated\Shared\Transfer\TranslationTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FormController extends AbstractController
 {
+
     /**
      * @return JsonResponse
      */

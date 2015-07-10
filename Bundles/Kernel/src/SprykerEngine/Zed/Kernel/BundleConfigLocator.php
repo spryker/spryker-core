@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,8 +26,9 @@ class BundleConfigLocator extends AbstractLocator
      * @param LocatorLocatorInterface $locator
      * @param string|null $className
      *
-     * @return object
      * @throws LocatorException
+     *
+     * @return object
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {

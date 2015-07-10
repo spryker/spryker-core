@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class AuthorizationIsApprovedPlugin extends AbstractPlugin
 {
+
     /**
      * @param OrderTransfer $orderTransfer
      *
@@ -18,4 +20,5 @@ class AuthorizationIsApprovedPlugin extends AbstractPlugin
     {
         return $this->getDependencyContainer()->createPayoneFacade()->isAuthorizationApproved($orderTransfer);
     }
+
 }

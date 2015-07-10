@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 
 class FooMessenger implements MessengerInterface
 {
+
     private $log;
 
     /**
@@ -16,9 +18,8 @@ class FooMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * @return null
      */
-    public function emergency($message, array $context = array())
+    public function emergency($message, array $context = [])
     {
     }
 
@@ -30,9 +31,8 @@ class FooMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * @return null
      */
-    public function alert($message, array $context = array())
+    public function alert($message, array $context = [])
     {
     }
 
@@ -43,9 +43,8 @@ class FooMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * @return null
      */
-    public function critical($message, array $context = array())
+    public function critical($message, array $context = [])
     {
     }
 
@@ -55,9 +54,8 @@ class FooMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * @return null
      */
-    public function error($message, array $context = array())
+    public function error($message, array $context = [])
     {
     }
 
@@ -69,9 +67,8 @@ class FooMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * @return null
      */
-    public function warning($message, array $context = array())
+    public function warning($message, array $context = [])
     {
     }
 
@@ -80,9 +77,8 @@ class FooMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * @return null
      */
-    public function notice($message, array $context = array())
+    public function notice($message, array $context = [])
     {
     }
 
@@ -93,9 +89,8 @@ class FooMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * @return null
      */
-    public function info($message, array $context = array())
+    public function info($message, array $context = [])
     {
     }
 
@@ -104,9 +99,8 @@ class FooMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * @return null
      */
-    public function debug($message, array $context = array())
+    public function debug($message, array $context = [])
     {
     }
 
@@ -116,14 +110,13 @@ class FooMessenger implements MessengerInterface
      * @param mixed $level
      * @param string $message
      * @param array $context
-     * @return null
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         $this->log = [
             'level' => $level,
             'message' => $message,
-            'context' => $context
+            'context' => $context,
         ];
     }
 
@@ -131,5 +124,5 @@ class FooMessenger implements MessengerInterface
     {
         return $this->log;
     }
+
 }
- 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
 
 class TranslationGrid extends AbstractGrid
 {
+
     const ID_LOCALE = 'id_locale';
     const IS_ACTIVE = 'is_active';
     const LOCALE_NAME = 'locale_name';
@@ -35,4 +37,5 @@ class TranslationGrid extends AbstractGrid
                 ->sortable(),
         ];
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -74,7 +75,7 @@ class CartControllerProvider extends YvesControllerProvider
             )
         ;
 
-        $this->createGetController('/cart/coupon/remove/{couponCode}', self::ROUTE_CART_COUPON_REMOVE, 'Cart', 'Coupon', 'remove' );
+        $this->createGetController('/cart/coupon/remove/{couponCode}', self::ROUTE_CART_COUPON_REMOVE, 'Cart', 'Coupon', 'remove');
 
         $this->createGetController('/cart/coupon/clear', self::ROUTE_CART_COUPON_CLEAR, 'Cart', 'Coupon', 'clear');
     }
@@ -88,10 +89,10 @@ class CartControllerProvider extends YvesControllerProvider
     public function getQuantityFromRequest($unusedParameter, Request $request)
     {
         if ($request->isMethod('POST')) {
-            return (int)$request->request->get('quantity', 1);
+            return (int) $request->request->get('quantity', 1);
         }
 
-        return (int)$request->query->get('quantity', 1);
+        return (int) $request->query->get('quantity', 1);
     }
 
 }

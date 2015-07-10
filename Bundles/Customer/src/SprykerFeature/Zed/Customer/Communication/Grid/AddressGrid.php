@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
 
 class AddressGrid extends AbstractGrid
 {
+
     public function definePlugins()
     {
         return [
@@ -52,4 +54,5 @@ class AddressGrid extends AbstractGrid
                 ->sortable(),
         ];
     }
+
 }

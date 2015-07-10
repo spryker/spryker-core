@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ class FinancingContainer extends AbstractPaymentMethodContainer
 
     /**
      * Enum FinancingType
+     *
      * @var string
      */
     protected $financingtype;
@@ -19,7 +21,6 @@ class FinancingContainer extends AbstractPaymentMethodContainer
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     protected $redirect;
-
 
     /**
      * @param string $financingtype

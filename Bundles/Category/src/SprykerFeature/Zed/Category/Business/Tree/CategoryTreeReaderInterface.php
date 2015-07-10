@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -32,6 +33,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
+     *
      * @return bool
      */
     public function hasChildren($idNode);
@@ -69,4 +71,5 @@ interface CategoryTreeReaderInterface
      * @return SpyCategoryNode[]
      */
     public function getNodesByIdCategory($idCategory);
+
 }

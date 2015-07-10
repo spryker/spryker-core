@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerFeature\Zed\Kernel\Communication\Plugin;
 
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use SprykerFeature\Zed\Kernel\Communication\GatewayControllerListenerInterface;
@@ -116,4 +116,5 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
         throw new \LogicException('Only transfer classes are allowed in yves action as parameter');
     }
+
 }

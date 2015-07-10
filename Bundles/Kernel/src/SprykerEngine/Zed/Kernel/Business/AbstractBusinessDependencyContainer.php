@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,8 +35,9 @@ abstract class AbstractBusinessDependencyContainer extends BaseDependencyContain
     /**
      * @param $key
      *
-     * @return mixed
      * @throws \ErrorException
+     *
+     * @return mixed
      */
     public function getProvidedDependency($key)
     {

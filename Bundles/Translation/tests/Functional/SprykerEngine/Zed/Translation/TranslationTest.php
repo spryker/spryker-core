@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerEngine\Zed\Translation\Business\TranslationFacade;
 
 class TranslationTest extends Test
 {
+
     protected $translationFacade;
 
     protected function setUp()
@@ -35,4 +37,5 @@ class TranslationTest extends Test
             $translator
         );
     }
+
 }

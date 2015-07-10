@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use SprykerEngine\Shared\Kernel\AbstractFactory;
 
 /**
  * Class Factory
- * @package SprykerEngine\Yves\Kernel\Business
  */
 class Factory extends AbstractFactory
 {
@@ -18,4 +18,5 @@ class Factory extends AbstractFactory
      * @var string
      */
     protected $classNamePattern = '\\{{namespace}}\\Yves\\{{bundle}}{{store}}\\';
+
 }

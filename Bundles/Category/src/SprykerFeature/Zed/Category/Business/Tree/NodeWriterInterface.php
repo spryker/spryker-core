@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,4 +29,5 @@ interface NodeWriterInterface
      * @return int
      */
     public function delete($nodeId);
+
 }

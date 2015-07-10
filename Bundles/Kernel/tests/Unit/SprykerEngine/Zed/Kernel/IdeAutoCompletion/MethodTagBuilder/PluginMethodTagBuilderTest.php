@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,7 +13,7 @@ use SprykerFeature\Shared\Library\Autoloader;
  * @group Kernel
  * @group MethodTagBuilder
  */
-class PluginMethodMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
+class PluginMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testBuildMethodTagsShouldReturnVendorMethodTagIfProjectDoesNotOverrideIt()
@@ -20,7 +21,7 @@ class PluginMethodMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $options = [
             PluginMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             PluginMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            PluginMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            PluginMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
         $methodTagBuilder = new PluginMethodTagBuilder($options);
@@ -37,7 +38,7 @@ class PluginMethodMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $options = [
             PluginMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             PluginMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            PluginMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            PluginMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
         $methodTagBuilder = new PluginMethodTagBuilder($options);
@@ -54,7 +55,7 @@ class PluginMethodMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $options = [
             PluginMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             PluginMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            PluginMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            PluginMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
         $methodTagBuilder = new PluginMethodTagBuilder($options);

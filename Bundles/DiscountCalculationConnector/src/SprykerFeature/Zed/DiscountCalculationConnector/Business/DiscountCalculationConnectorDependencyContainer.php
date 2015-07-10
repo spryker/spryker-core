@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -44,7 +45,6 @@ class DiscountCalculationConnectorDependencyContainer extends AbstractBusinessDe
         return $this->getFactory()->createModelCalculatorRemoveAllCalculatedDiscountsCalculator();
     }
 
-
     /**
      * @return CalculationFacade
      */
@@ -52,4 +52,5 @@ class DiscountCalculationConnectorDependencyContainer extends AbstractBusinessDe
     {
         return $this->getLocator()->calculation()->facade();
     }
+
 }

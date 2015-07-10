@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FormController extends AbstractController
 {
+
     /**
      * @param Request $request
      *

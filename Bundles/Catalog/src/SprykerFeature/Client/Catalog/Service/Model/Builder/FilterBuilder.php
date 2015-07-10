@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,10 +14,10 @@ use Elastica\Filter\Range;
 
 /**
  * Class FilterBuilder
- * @package SprykerFeature\Client\Catalog\Service\Model\Builder
  */
 class FilterBuilder implements FilterBuilderInterface
 {
+
     /**
      * @param string $fieldName
      * @param float $minValue
@@ -33,7 +34,7 @@ class FilterBuilder implements FilterBuilderInterface
             $fieldName,
             [
                 $greaterParam => $minValue,
-                $lessParam    => $maxValue,
+                $lessParam => $maxValue,
             ]
         );
 
@@ -42,6 +43,7 @@ class FilterBuilder implements FilterBuilderInterface
 
     /**
      * @param string $fieldName
+     *
      * @return Nested
      */
     public function createNestedFilter($fieldName)
@@ -54,6 +56,7 @@ class FilterBuilder implements FilterBuilderInterface
     /**
      * @param string $field
      * @param string $value
+     *
      * @return Term
      */
     public function createTermFilter($field, $value)
@@ -66,6 +69,7 @@ class FilterBuilder implements FilterBuilderInterface
     /**
      * @param string $field
      * @param array  $values
+     *
      * @return Terms
      */
     public function createTermsFilter($field, array $values)
@@ -82,4 +86,5 @@ class FilterBuilder implements FilterBuilderInterface
     {
         return new BoolAnd();
     }
+
 }

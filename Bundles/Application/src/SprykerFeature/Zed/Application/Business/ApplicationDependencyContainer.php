@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -213,4 +214,5 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
 
         return $this->getFactory()->createModelNavigationValidatorMenuLevelValidator($maxMenuCount);
     }
+
 }

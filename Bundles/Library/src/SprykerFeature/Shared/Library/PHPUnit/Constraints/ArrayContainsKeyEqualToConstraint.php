@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Library\PHPUnit\Constraints;
 
 class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
 {
+
     /**
      * @var string
      */
@@ -82,7 +84,6 @@ class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
         return true;
     }
 
-
     /**
      * Returns a string representation of the object.
      *
@@ -100,4 +101,5 @@ class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
             );
         }
     }
+
 }

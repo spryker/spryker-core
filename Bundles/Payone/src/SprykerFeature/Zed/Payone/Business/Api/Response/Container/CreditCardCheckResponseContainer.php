@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,7 +17,6 @@ class CreditCardCheckResponseContainer extends AbstractResponseContainer
      * @var string
      */
     protected $truncatedcardpan;
-
 
     /**
      * @param string $truncatedcardpan

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,10 +24,11 @@ class StaticPath extends TwigFunction
      */
     protected function getFunction()
     {
-        return function($path) {
+        return function ($path) {
             ltrim($path, '/');
 
             return '/bundles/' . $path;
         };
     }
+
 }

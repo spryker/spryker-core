@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 
 /**
  * @property \CouchBase $resource
+ *
  * @method \Couchbase getResource()
  */
 abstract class Couchbase extends AbstractKeyValue
@@ -23,7 +25,7 @@ abstract class Couchbase extends AbstractKeyValue
 
             $hosts = $this->getCouchebaseHosts();
 
-            if (! is_array($hosts)) {
+            if (!is_array($hosts)) {
                 throw new \Exception('Please configure the couchbase cluster properly!');
             }
 
@@ -63,6 +65,8 @@ abstract class Couchbase extends AbstractKeyValue
     {
         $storeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
         $environment = \SprykerFeature_Shared_Library_Environment::getInstance()->getEnvironment();
+
         return $storeName . '_' . $environment . '_' . self::BUCKET_NAME_POSTFIX;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -49,4 +50,5 @@ class ProductFrontendExporterPriceConnectorDependencyContainer extends AbstractB
     {
         return $this->getLocator()->price()->facade();
     }
+
 }

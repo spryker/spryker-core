@@ -31,4 +31,5 @@ class MessageRouter implements MessageRouterInterface
             $this->queueFacade->publishMessage($queueName, $message);
         }
     }
+
 }

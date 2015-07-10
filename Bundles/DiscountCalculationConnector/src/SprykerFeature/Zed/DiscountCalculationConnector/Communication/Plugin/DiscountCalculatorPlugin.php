@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,10 +19,12 @@ class DiscountCalculatorPlugin extends AbstractPlugin implements CalculatorPlugi
 
     /**
      * @param CalculableInterface $calculableContainer
+     *
      * @return array
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {
         return $this->getDependencyContainer()->getDiscountFacade()->calculateDiscounts($calculableContainer);
     }
+
 }

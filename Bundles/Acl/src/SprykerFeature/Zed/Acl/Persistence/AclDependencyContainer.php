@@ -1,10 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\Acl\Persistence;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\AclPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Acl\AclDependencyProvider;
@@ -72,6 +73,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
 
     /**
      * @throws \ErrorException
+     *
      * @return UserQueryContainer
      */
     private function createUserQueryContainer()

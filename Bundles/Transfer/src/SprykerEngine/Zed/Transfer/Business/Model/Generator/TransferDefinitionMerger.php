@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ class TransferDefinitionMerger
 
     /**
      * @param array $transferDefinitions
+     *
      * @return array
      */
     public function merge(array $transferDefinitions)
@@ -51,6 +53,7 @@ class TransferDefinitionMerger
     /**
      * @param array $existingProperties
      * @param array $propertiesToMerge
+     *
      * @throws \Exception
      *
      * @return array
@@ -118,4 +121,5 @@ class TransferDefinitionMerger
 
         return $mergedInterfaces;
     }
+
 }

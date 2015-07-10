@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 
 interface CmsQueryContainerInterface
 {
+
     /**
      * @return SpyCmsTemplateQuery
      */
@@ -68,4 +70,5 @@ interface CmsQueryContainerInterface
      * @return SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsByPageId($idCmsPage);
+
 }

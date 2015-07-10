@@ -1,13 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Yves\FrontendExporter;
 
-use Generated\Yves\Ide\AutoCompletion;
 use Generated\Yves\Ide\FactoryAutoCompletion\FrontendExporter;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Client\Catalog\Service\Model\FacetConfig;
 use SprykerFeature\Client\FrontendExporter\Service\Matcher\UrlMatcher;
 use SprykerFeature\Yves\FrontendExporter\Mapper\UrlMapper;
@@ -80,4 +79,5 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getLocator()->catalog()->client()->createFacetConfig();
     }
+
 }

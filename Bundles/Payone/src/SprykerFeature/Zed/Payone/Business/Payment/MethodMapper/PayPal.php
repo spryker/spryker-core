@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,7 +14,6 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\Redir
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerEngine\Shared\Kernel\Store;
 
 class PayPal extends AbstractMapper
 {
@@ -28,6 +28,7 @@ class PayPal extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return AbstractRequestContainer
      */
     public function mapAuthorization(AuthorizationInterface $authorizationData)
@@ -48,6 +49,7 @@ class PayPal extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return AbstractRequestContainer
      */
     public function mapPreAuthorization(AuthorizationInterface $authorizationData)
@@ -68,6 +70,7 @@ class PayPal extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return EWalletContainer
      */
     protected function createPaymentMethodContainer(AuthorizationInterface $authorizationData)
@@ -96,6 +99,7 @@ class PayPal extends AbstractMapper
 
     /**
      * @param AuthorizationInterface $authorizationData
+     *
      * @return PersonalContainer
      */
     protected function createAuthorizationPersonalData(AuthorizationInterface $authorizationData)

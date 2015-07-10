@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 
 interface DrawerInterface
 {
+
     /**
      * @param ProcessInterface $process
      * @param string $highlightState
@@ -45,4 +47,5 @@ interface DrawerInterface
      * @param ProcessInterface $process
      */
     public function drawClusters(ProcessInterface $process);
+
 }

@@ -23,4 +23,5 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
 }

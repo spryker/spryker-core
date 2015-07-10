@@ -1,18 +1,18 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\GlossaryExporter\Communication;
 
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\GlossaryExporter\Communication\Plugin\KeyBuilderPlugin;
 use SprykerFeature\Zed\GlossaryExporter\Persistence\GlossaryExporterQueryContainerInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
 class GlossaryExporterDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return KeyBuilderPlugin
      */
@@ -28,4 +28,5 @@ class GlossaryExporterDependencyContainer extends AbstractCommunicationDependenc
     {
         return $this->getLocator()->glossaryExporter()->queryContainer();
     }
+
 }

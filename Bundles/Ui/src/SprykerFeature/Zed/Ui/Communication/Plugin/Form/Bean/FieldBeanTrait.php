@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -44,7 +45,7 @@ trait FieldBeanTrait
     protected $acceptsHook = null;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $refresh = false;
 
@@ -78,6 +79,7 @@ trait FieldBeanTrait
 
     /**
      * @param $accepts
+     *
      * @return $this
      *
      * The spy-form frontend elements expect an array like this:
@@ -101,6 +103,7 @@ trait FieldBeanTrait
 
     /**
      * @param $acceptsHook
+     *
      * @return $this
      */
     public function setAcceptsHook($acceptsHook)
@@ -124,6 +127,7 @@ trait FieldBeanTrait
 
     /**
      * @param $label
+     *
      * @return $this
      */
     public function setLabel($label)
@@ -135,6 +139,7 @@ trait FieldBeanTrait
 
     /**
      * @param $labelHook
+     *
      * @return $this
      */
     public function setLabelHook($labelHook)
@@ -158,6 +163,7 @@ trait FieldBeanTrait
 
     /**
      * @param $messages
+     *
      * @return $this
      */
     public function setMessages($messages)
@@ -169,6 +175,7 @@ trait FieldBeanTrait
 
     /**
      * @param $messagesHook
+     *
      * @return $this
      */
     public function setMessagesHook($messagesHook)
@@ -192,6 +199,7 @@ trait FieldBeanTrait
 
     /**
      * @param $extra
+     *
      * @return $this
      */
     public function setExtra($extra)
@@ -203,6 +211,7 @@ trait FieldBeanTrait
 
     /**
      * @param $extraHook
+     *
      * @return $this
      */
     public function setExtraHook($extraHook)
@@ -226,6 +235,7 @@ trait FieldBeanTrait
 
     /**
      * @param $name
+     *
      * @return $this
      */
     public function setName($name)
@@ -237,6 +247,7 @@ trait FieldBeanTrait
 
     /**
      * @param $nameHook
+     *
      * @return $this
      */
     public function setNameHook($nameHook)
@@ -247,7 +258,6 @@ trait FieldBeanTrait
     }
 
     /**
-     * @return null
      */
     public function getValue()
     {
@@ -260,6 +270,7 @@ trait FieldBeanTrait
 
     /**
      * @param $value
+     *
      * @return $this
      */
     public function setValue($value)
@@ -271,6 +282,7 @@ trait FieldBeanTrait
 
     /**
      * @param $valueHook
+     *
      * @return $this
      */
     public function setValueHook($valueHook)
@@ -294,6 +306,7 @@ trait FieldBeanTrait
 
     /**
      * @param $constraints
+     *
      * @return $this
      */
     public function setConstraints(array $constraints)
@@ -311,7 +324,7 @@ trait FieldBeanTrait
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getRefresh()
     {
@@ -324,6 +337,7 @@ trait FieldBeanTrait
 
     /**
      * @param $refresh
+     *
      * @return $this
      */
     public function setRefresh($refresh)
@@ -339,4 +353,5 @@ trait FieldBeanTrait
 
         return $this;
     }
+
 }

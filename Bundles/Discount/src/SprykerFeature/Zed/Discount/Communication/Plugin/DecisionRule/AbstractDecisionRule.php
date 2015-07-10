@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,10 +10,10 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * Class AbstractDecisionRule
- * @package SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule
  */
 abstract class AbstractDecisionRule extends AbstractPlugin
 {
+
     const KEY_ENTITY = 'entity';
     const KEY_DATA = 'data';
 
@@ -36,4 +37,5 @@ abstract class AbstractDecisionRule extends AbstractPlugin
     {
         return $this->context;
     }
+
 }

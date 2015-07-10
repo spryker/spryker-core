@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use Generated\Shared\Cart\CartInterface;
 
 class CalculableContainer implements CalculableInterface
 {
+
     /**
      * @var CartInterface
      */
@@ -31,4 +33,5 @@ class CalculableContainer implements CalculableInterface
     {
         return $this->cart;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Application\Business\Model\Navigation\Validator;
 
 class UrlUniqueException extends \Exception
 {
+
     const ERROR_MESSAGE = 'The Url "%s" is already used in the Menu!';
 
     /**
@@ -17,4 +19,5 @@ class UrlUniqueException extends \Exception
         $errorMessage = sprintf(self::ERROR_MESSAGE, $url);
         parent::__construct($errorMessage);
     }
+
 }
