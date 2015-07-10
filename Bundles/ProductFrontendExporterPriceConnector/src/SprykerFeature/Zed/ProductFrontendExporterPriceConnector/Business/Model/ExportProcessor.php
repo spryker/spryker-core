@@ -7,8 +7,6 @@ namespace SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Business\Mode
 
 class ExportProcessor implements ExportProcessorInterface
 {
-    const UNIT_PRICE = 100;
-
     /**
      * @var HelperInterface
      */
@@ -53,7 +51,7 @@ class ExportProcessor implements ExportProcessorInterface
     {
         if ($this->helper->hasDefaultPrice($productRawData)) {
             $defaultPrice = $this->helper->getDefaultPrice($productRawData);
-            $processedResultSet[$index]['valid_price'] = $defaultPrice / $this->getUnitPrice();
+            $processedResultSet[$index]['valid_price'] = $defaultPrice;
             $processedResultSet[$index]['prices'] = $this->helper->organizeData($productRawData);
 
             return $processedResultSet;
@@ -61,13 +59,5 @@ class ExportProcessor implements ExportProcessorInterface
         unset($processedResultSet[$index]);
 
         return $processedResultSet;
-    }
-
-    /**
-     * @return int
-     */
-    protected function getUnitPrice()
-    {
-        return self::UNIT_PRICE;
     }
 }
