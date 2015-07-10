@@ -23,6 +23,7 @@ class HttpClient extends AbstractHttpClient
      */
     protected function getSettings()
     {
-        return $this->factory->createZedRequestSettings($this->locator);
+        return $this->factory->createZedRequestSettings($this->authClient);
     }
+
 }

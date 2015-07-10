@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Auth\Business\Model;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Client\Session\Service\SessionClientInterface;
-use SprykerFeature\Zed\Application\Communication\Plugin\Session;
 use SprykerFeature\Zed\Auth\AuthConfig;
 use SprykerFeature\Zed\Auth\Business\AuthDependencyContainer;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
@@ -163,7 +162,7 @@ class Auth implements AuthInterface
 
         $currentUser = $this->getCurrentUser($token);
 
-        $realUser = $this->userFacade->getUserById($currentUser->getidUserUser());
+        $realUser = $this->userFacade->getUserById($currentUser->getIdUserUser());
 
         return $realUser->getPassword() === $currentUser->getPassword();
     }

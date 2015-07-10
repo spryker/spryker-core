@@ -20,6 +20,7 @@ class SystemUnderTestBootstrap
     const APPLICATION_ZED = 'Zed';
     const APPLICATION_YVES = 'Yves';
     const APPLICATION_SHARED = 'Shared';
+    const APPLICATION_CLIENT = 'Client';
 
     /**
      * @var SystemUnderTestBootstrap
@@ -33,6 +34,7 @@ class SystemUnderTestBootstrap
         self::APPLICATION_ZED,
         self::APPLICATION_YVES,
         self::APPLICATION_SHARED,
+        self::APPLICATION_CLIENT,
     ];
 
     /**s

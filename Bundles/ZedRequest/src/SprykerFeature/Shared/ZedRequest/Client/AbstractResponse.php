@@ -23,17 +23,10 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     ];
 
     /**
-     * @var LocatorLocatorInterface
-     */
-    protected $locator;
-
-    /**
-     * @param LocatorLocatorInterface $locator
      * @param array $values
      */
-    public function __construct(LocatorLocatorInterface $locator, array $values = null)
+    public function __construct(array $values = null)
     {
-        $this->locator = $locator;
         parent::__construct($values);
     }
 

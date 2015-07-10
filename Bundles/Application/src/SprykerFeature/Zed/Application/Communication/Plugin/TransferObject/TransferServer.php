@@ -106,7 +106,7 @@ class TransferServer
                 );
             } else {
                 $transferValues = json_decode($this->getHttpRequest()->getContent(), true);
-                $this->request = new Request(Locator::getInstance(), $transferValues);
+                $this->request = new Request($transferValues);
                 $this->repeater->setRepeatData($this->request, $this->httpRequest);
             }
         }

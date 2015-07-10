@@ -32,7 +32,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         TransferInterface $metaTransfer1 = null,
         TransferInterface $metaTransfer2 = null
     ) {
-        $request = new Request($locator);
+        $request = new Request();
 
         $request->setPassword('password');
         $request->setHost('host');
