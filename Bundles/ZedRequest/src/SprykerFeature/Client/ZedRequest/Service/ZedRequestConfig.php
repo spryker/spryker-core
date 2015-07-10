@@ -5,14 +5,11 @@
 
 namespace SprykerFeature\Client\ZedRequest\Service;
 
-use Generated\Client\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Client\Auth\Service\AuthClientInterface;
 use SprykerFeature\Shared\Auth\AuthConfig;
-use SprykerFeature\Shared\Auth\Client\StaticToken;
 use SprykerFeature\Shared\Library\Config;
 
-class ZedRequestSettings
+class ZedRequestConfig
 {
 
     /**
