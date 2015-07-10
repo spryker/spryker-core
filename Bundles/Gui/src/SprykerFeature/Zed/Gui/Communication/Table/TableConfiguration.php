@@ -5,6 +5,10 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
+/**
+ * Class TableConfiguration
+ * @package SprykerFeature\Zed\Gui\Communication\Table
+ */
 class TableConfiguration
 {
 
@@ -18,7 +22,15 @@ class TableConfiguration
      */
     private $sortable;
 
+    /**
+     * @var
+     */
     private $pageLength;
+
+    /**
+     * @var
+     */
+    protected $url;
 
     /**
      * @return array
@@ -68,14 +80,36 @@ class TableConfiguration
         );
     }
 
+    /**
+     * @return mixed
+     */
     public function getPageLength()
     {
         return $this->pageLength;
     }
 
+    /**
+     * @param $length
+     */
     public function setPageLength($length)
     {
         $this->pageLength = $length;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 
 
