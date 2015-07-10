@@ -7,7 +7,6 @@ namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use Propel\Runtime\Propel;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\Map\SpySalesOrderNumberSequenceTableMap;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderNumberSequence;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderNumberSequenceQuery;
 
@@ -38,7 +37,7 @@ class OrderSequence implements OrderSequenceInterface
 
         while ($gotNoOrderNumber) {
             $idCurrent = $this->createOrderNumber();
-            if($idCurrent !== null) {
+            if ($idCurrent !== null) {
                 $gotNoOrderNumber = false;
             }
         }
@@ -52,7 +51,7 @@ class OrderSequence implements OrderSequenceInterface
     protected function createOrderNumber()
     {
         $idCurrent = null;
-        $transaction = Propel::getConnection(SpySalesOrderNumberSequenceTableMap::DATABASE_NAME);
+        $transaction = Propel::getConnection();
 
         try {
             $transaction->beginTransaction();

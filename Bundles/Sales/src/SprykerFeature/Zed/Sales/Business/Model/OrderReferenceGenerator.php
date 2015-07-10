@@ -36,8 +36,7 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
         $isDevelopment,
         $isStaging,
         $storeName
-    )
-    {
+    ) {
         $this->orderSequence = $orderSequence;
         $this->isDevelopment = $isDevelopment;
         $this->isStaging = $isStaging;
