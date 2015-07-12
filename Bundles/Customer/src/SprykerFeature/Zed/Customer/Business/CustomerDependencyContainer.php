@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +10,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Customer\Business\Customer\Customer;
 use SprykerFeature\Zed\Customer\Business\Customer\Address;
 use SprykerFeature\Zed\Customer\CustomerConfig;
+use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
@@ -21,7 +21,6 @@ use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
  */
 class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
 {
-
     /**
      * @return CustomerQueryContainerInterface
      */
@@ -35,22 +34,23 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCustomer()
     {
+        $config = $this->getConfig();
+        $senderPlugins = $this->getProvidedDependency(CustomerDependencyProvider::SENDER_PLUGINS);
         $customer = $this->getFactory()->createCustomerCustomer(
-            $this->createQueryContainer()
+            $this->createQueryContainer(),
+            $config->getHostYves()
         );
 
-        $config = $this->getConfig();
-
-        foreach ($config->getPasswordRestoredConfirmationSenders() as $sender) {
-            $customer->addPasswordRestoredConfirmationSender($sender);
+        foreach ($senderPlugins[CustomerDependencyProvider::REGISTRATION_TOKEN_SENDERS] as $sender) {
+            $customer->addRegistrationTokenSender($sender);
         }
 
-        foreach ($config->getPasswordRestoreTokenSenders() as $sender) {
+        foreach ($senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORE_TOKEN_SENDERS] as $sender) {
             $customer->addPasswordRestoreTokenSender($sender);
         }
 
-        foreach ($config->getRegistrationTokenSenders() as $sender) {
-            $customer->addRegistrationTokenSender($sender);
+        foreach ($senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORED_CONFIRMATION_SENDERS] as $sender) {
+            $customer->addPasswordRestoredConfirmationSender($sender);
         }
 
         return $customer;
@@ -83,5 +83,4 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getLocator()->locale()->facade();
     }
-
 }

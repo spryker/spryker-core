@@ -1,17 +1,20 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
+use Generated\Shared\Transfer\MailRecipientTransfer;
+use Generated\Shared\Transfer\MailTransfer;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
 
-class PasswordRestoreTokenSender extends AbstractPlugin implements PasswordRestoreTokenSenderPluginInterface
+/**
+ * @method CustomerMailConnectorDependencyContainer getDependencyContainer()
+ */
+class PasswordRestoreTokenSender extends AbstractSender implements PasswordRestoreTokenSenderPluginInterface
 {
-
     const SUBJECT = 'password.restore.sender.subject';
     const TEMPLATE = 'password.restore';
 
@@ -23,11 +26,19 @@ class PasswordRestoreTokenSender extends AbstractPlugin implements PasswordResto
      */
     public function send($email, $token)
     {
-        $mailTransfer = $this->getMailTransfer();
+        $mailTransfer = new MailTransfer();
+        $mailRecipientTransfer = new MailRecipientTransfer();
+        $mailRecipientTransfer->setEmail($email);
 
-        $mailTransfer->addRecipient($email);
+        $mailTransfer->addRecipient($mailRecipientTransfer);
         $mailTransfer->setSubject(self::SUBJECT);
         $mailTransfer->setTemplateName(self::TEMPLATE);
+        $mailTransfer->setMerge(TRUE);
+        $mailTransfer->setMergeLanguage('handlebars');
+        $globalMergeVars = [
+            'reset_password_token_url' => $token
+        ];
+        $mailTransfer->setGlobalMergeVars($globalMergeVars);
 
         $result = $this->getDependencyContainer()
             ->createMailFacade()
@@ -35,32 +46,4 @@ class PasswordRestoreTokenSender extends AbstractPlugin implements PasswordResto
 
         return $this->isMailSent($result);
     }
-
-    /**
-     * @return MailTransfer
-     */
-    protected function getMailTransfer()
-    {
-        return $this->getDependencyContainer()->createMailTransfer();
-    }
-
-    /**
-     * @param array $results
-     *
-     * @return bool
-     */
-    protected function isMailSent(array $results)
-    {
-        foreach ($results as $result) {
-            if (!isset($result['status'])) {
-                return false;
-            }
-            if ($result['status'] !== 'sent') {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
 }
