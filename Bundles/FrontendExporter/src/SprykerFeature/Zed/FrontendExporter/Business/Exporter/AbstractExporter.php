@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\Formatter\AbstractFormatter;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\ProcessException;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\WriteException;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\WriterInterface;
@@ -216,7 +217,7 @@ abstract class AbstractExporter implements ExporterInterface
     protected function buildResultIteratorForType($locale, $type, \DateTime $lastRunTimestamp)
     {
         $query = $this->queryContainer->createBasicExportableQuery($type, $lastRunTimestamp);
-        $query->setFormatter(new PropelArraySetFormatter());
+        $query->setFormatter($this->getFormatter());
 
         /** @var QueryExpanderPluginInterface $queryExpander */
         foreach ($this->queryPipeline[$type] as $queryExpander) {
@@ -268,6 +269,14 @@ abstract class AbstractExporter implements ExporterInterface
         }
 
         return $processedResultSet;
+    }
+
+    /**
+     * @return AbstractFormatter
+     */
+    protected function getFormatter()
+    {
+        return new PropelArraySetFormatter();
     }
 
     /**
