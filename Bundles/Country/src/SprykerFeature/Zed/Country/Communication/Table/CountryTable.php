@@ -54,6 +54,5 @@ class CountryTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         return $this->runQuery($this->countryQuery, $config);
-
     }
 }
