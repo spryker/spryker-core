@@ -34,14 +34,14 @@ class CountryTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeaders(
-            [
-                'Iso2Code' => 'ISO2 code',
-                'Iso3Code' => 'ISO3 Code',
-                'Name'  => 'Country name'
-            ]
-        );
-        $config->setSortable(['Iso3Code']);
+        $config->setHeaders([
+            'Iso2Code' => 'ISO2 code',
+            'Iso3Code' => 'ISO3 Code',
+            'Name'  => 'Country name'
+        ]);
+        $config->setSortable([
+            'Iso3Code'
+        ]);
 
         return $config;
     }

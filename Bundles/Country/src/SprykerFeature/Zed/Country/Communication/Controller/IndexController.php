@@ -22,9 +22,9 @@ class IndexController extends AbstractController
         $table = $this->getDependencyContainer()->createCountryTable();
         $table->init();
 
-        return $this->viewResponse(
-            ['countryTable' => $table]
-        );
+        return $this->viewResponse([
+            'countryTable' => $table
+        ]);
     }
 
     /**
