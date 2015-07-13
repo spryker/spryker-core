@@ -26,10 +26,12 @@ abstract class AbstractExporter implements ExporterInterface
      * @var DataProcessorPluginInterface[]
      */
     protected $dataProcessorPipeline = [];
+
     /**
      * @var FailedResultInterface
      */
     protected $failedResultPrototype;
+
     /**
      * @var BatchResultInterface
      */
@@ -44,6 +46,7 @@ abstract class AbstractExporter implements ExporterInterface
      * @var MarkerInterface
      */
     protected $marker;
+
     /**
      * @var FrontendExporterQueryContainer
      */
@@ -57,8 +60,8 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * @var ExportFailedDeciderPluginInterface[]
      */
-
     protected $decider = [];
+
     /**
      * @var int
      */
@@ -82,8 +85,7 @@ abstract class AbstractExporter implements ExporterInterface
         MarkerInterface $marker,
         FailedResultInterface $failedResultPrototype,
         BatchResultInterface $batchResultPrototype
-    )
-    {
+    ) {
         $this->writer = $writer;
         $this->failedResultPrototype = $failedResultPrototype;
         $this->batchResultPrototype = $batchResultPrototype;
@@ -208,7 +210,7 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
-     * @param string $locale
+     * @param LocaleTransfer $locale
      * @param string $type
      * @param \DateTime $lastRunTimestamp
      *
