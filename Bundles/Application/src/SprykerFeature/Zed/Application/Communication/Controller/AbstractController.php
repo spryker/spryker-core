@@ -22,8 +22,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-
-
 abstract class AbstractController
 {
 
@@ -255,11 +253,15 @@ abstract class AbstractController
         return $formFactory->create($type, $data, $options);
     }
 
-    protected  function getFormFactory()
+    /**
+     * Returns an instance of form factory
+     *
+     * @return FormFactory
+     */
+    protected function getFormFactory()
     {
         return $this->application['form.factory'];
     }
-
 
     /**
      * @return void

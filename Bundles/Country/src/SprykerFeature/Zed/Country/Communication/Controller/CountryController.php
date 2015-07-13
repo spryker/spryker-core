@@ -1,6 +1,7 @@
 <?php
 
 namespace SprykerFeature\Zed\Country\Communication\Controller;
+
 use Generated\Shared\Transfer\CountryTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
@@ -10,7 +11,7 @@ use SprykerFeature\Zed\Country\Communication\Form\CountryForm;
 /**
  * @method CountryQueryContainer getQueryContainer()
  */
-class CountryController extends  AbstractController
+class CountryController extends AbstractController
 {
 
     public function indexAction()
