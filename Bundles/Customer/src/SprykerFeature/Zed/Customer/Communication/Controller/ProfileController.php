@@ -83,17 +83,12 @@ class ProfileController extends AbstractController
             ];
         }
 
-//        echo '<pre>';
-//        print_r($form->renderDataForTwig());
-//        die;
-
         return [
             'id_customer' => $customerTransfer->getIdCustomer(),
             'customerJson' => json_encode($form->toArray()),
             'registered' => $customerTransfer->getRegistered(),
             'addresses' => $addresses,
             'form' => $form->renderDataForTwig()[AbstractForm::OUTPUT_PAYLOAD]['fields'],
-//            'form' => $form->getForm(),
         ];
     }
 
