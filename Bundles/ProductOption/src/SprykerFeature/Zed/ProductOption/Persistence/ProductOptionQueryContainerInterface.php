@@ -76,7 +76,7 @@ interface ProductOptionQueryContainerInterface
      *
      * @return SpyProductOptionTypeUsageQuery
      */
-    public function queryProductOptonTypeUsageById($idProductOptionTypeUsage);
+    public function queryProductOptionTypeUsageById($idProductOptionTypeUsage);
 
     /**
      * @param int $fkProduct
@@ -99,7 +99,7 @@ interface ProductOptionQueryContainerInterface
      *
      * @return SpyProductOptionValueUsageQuery
      */
-    public function queryProductOptonValueUsageById($idProductOptionValueUsage);
+    public function queryProductOptionValueUsageById($idProductOptionValueUsage);
 
     /**
      * @param int $fkProductOptionTypeUsage
