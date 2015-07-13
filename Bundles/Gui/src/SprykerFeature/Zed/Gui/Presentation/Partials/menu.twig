@@ -14,7 +14,7 @@
                 {% if node.shortcut is defined %}data-hotkey="{{ node.shortcut }}"{% endif %}
                 >
             {% if depth == 0 %}
-            <i class="{% if node.icon is defined and node.icon != '' %}{{ node.icon }}{% else %}fa font-spryker menu-icon{% endif %}">s</i>
+            <i class="{% if node.icon is defined and node.icon != '' %}{{ node.icon }}{% else %}fa font-spryker menu-icon{% endif %}"></i>
             {% endif %}
             <span class="nav-label">{{ node.label }}</span>
         </a>
@@ -29,7 +29,7 @@
         <li class="{{ node.is_active is defined and node.is_active ? " active" : "" }}">
             <a href="javascript:void(0)">
                 {% if depth == 0 %}
-                <i class="{% if node.icon is defined and node.icon != '' %}{{ node.icon }}{% else %}fa font-spryker menu-icon{% endif %}">s</i>
+                <i class="{% if node.icon is defined and node.icon != '' %}{{ node.icon }}{% else %}fa font-spryker menu-icon{% endif %}"></i>
                 {% endif %}
                 <span class="nav-label">{{ node.label }}</span>
                 <span class="fa arrow"></span>
@@ -62,11 +62,11 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
 
-                    {#<a href="/" style="background: url(/bundles/Gui/sprite/images/sprite.svg); width: 165px; height: 159px; display: block;"></a>#}
-                    <a href="/" style="width: 165px; height: 159px; display: block; text-align: center;">
-                        <span class="font-spryker spryker-logo"></span>
-                        <span>Spryker</span>
-                    </a>
+                    <a href="/" style="background: url(/bundles/Gui/sprite/images/sprite.svg); width: 165px; height: 159px; display: block;"></a>
+                    {#<a href="/" style="width: 165px; height: 159px; display: block; text-align: center;">#}
+                        {#<span class="font-spryker spryker-logo"></span>#}
+                        {#<span>Spryker</span>#}
+                    {#</a>#}
 
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a href="">Profile</a></li>
@@ -84,3 +84,34 @@
         </ul>
     </div>
 </nav>
+
+<style>
+/* this will be moved in spryker.less file in a new PR
+/* Spryker Font .. * /
+@font-face {
+    font-family: 'Spryker';
+    src: url('/bundles/Gui/fonts/Spryker.ttf') format('truetype');
+}
+
+.font-spryker {
+    font-family: "Spryker";
+}
+.menu-icon {
+    font-size: 20px;
+}
+.font-spryker.menu-icon {
+    width: 17px;
+}
+.font-spryker:before {
+    content: "s";
+    margin-left: -25px;
+}
+.spryker-logo {
+    font-size: 140px;
+    font-size: 30px;
+    text-align: center;
+    float: left;
+}
+*/
+/* .. Spryker font */
+</style>
