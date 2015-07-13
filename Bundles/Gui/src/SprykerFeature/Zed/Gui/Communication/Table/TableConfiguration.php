@@ -5,10 +5,6 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
-/**
- * Class TableConfiguration
- * @package SprykerFeature\Zed\Gui\Communication\Table
- */
 class TableConfiguration
 {
 
