@@ -9,11 +9,8 @@ namespace SprykerFeature\Zed\ProductOption\Business\Model;
 use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTranslation;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslation;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValuePrice;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsage;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusion;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraint;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPreset;
@@ -78,7 +75,8 @@ class DataImportWriter implements DataImportWriterInterface
 
         $associatedAbstractProductIds = $this->queryContainer
             ->queryAssociatedAbstractProductIdsForProductOptionType($productOptionTypeEntity->getIdProductOptionType())
-            ->find();
+            ->find()
+        ;
 
         foreach ($associatedAbstractProductIds as $idAbstractProduct) {
             $this->touchAbstractProductById($idAbstractProduct);
@@ -232,11 +230,14 @@ class DataImportWriter implements DataImportWriterInterface
 
         $productOptionValueUsageEntity
             ->setSequence($sequence)
-            ->save();
+            ->save()
+        ;
 
         $idAbstractProduct = $this->queryContainer
             ->queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage)
-            ->findOne();
+            ->findOne()
+            ->getIdAbstractProduct()
+        ;
 
         $this->touchAbstractProductById($idAbstractProduct);
 
@@ -353,11 +354,17 @@ class DataImportWriter implements DataImportWriterInterface
         // not implemented
     }
 
+    /**
+     * @param int $idAbstractProduct
+     */
     protected function touchAbstractProductById($idAbstractProduct)
     {
         $this->productFacade->touchProductActive($idAbstractProduct);
     }
 
+    /**
+     * @param string $concreteSku
+     */
     protected function touchAbstractProductByConcreteSku($concreteSku)
     {
         $idAbstractProduct = $this->productFacade->getAbstractProductIdByConcreteSku($concreteSku);
@@ -374,7 +381,7 @@ class DataImportWriter implements DataImportWriterInterface
     protected function getIdProductOptionType($importKeyProductOptionType)
     {
         $idProductOptionType = $this->queryContainer
-            ->queryProductOptionTypeIdByImportKey($importKeyProductOptionType)
+            ->queryProductOptionTypeByImportKey($importKeyProductOptionType)
             ->findOne()
             ->getIdProductOptionType()
         ;
@@ -473,16 +480,16 @@ class DataImportWriter implements DataImportWriterInterface
 
     /**
      * @param int $idProduct
-     * @param int $idProductOptionValue
+     * @param int $idProductOptionType
      *
      * @throws MissingProductOptionTypeUsageException
      *
      * @return int
      */
-    protected function getIdProductOptionTypeUsage($idProduct, $idProductOptionValue)
+    protected function getIdProductOptionTypeUsage($idProduct, $idProductOptionType)
     {
         $productOptionTypeUsage = $this->queryContainer
-            ->queryProductOptionTypeUsageIdByFKs($idProduct, $idProductOptionValue)
+            ->queryProductOptionTypeUsageByFKs($idProduct, $idProductOptionType)
             ->findOne()
         ;
 

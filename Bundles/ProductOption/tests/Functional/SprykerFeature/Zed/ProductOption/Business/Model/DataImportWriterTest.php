@@ -7,6 +7,7 @@
 namespace Functional\SprykerFeature\Zed\ProductOption\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\Exception\PropelException;
 use Pyz\Zed\ProductOption\Business\Internal\DemoData\Importer\Decorator\InMemoryProductOptionQueryContainer;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
@@ -27,7 +28,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsa
 /**
  * @group Business
  * @group Zed
- * @group ProdutOption
+ * @group ProductOption
  * @group DataImportWriterTest
  *
  * @method ProductOptionFacade getFacade()
@@ -82,7 +83,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->assertEquals(1, $result->count());
 
         $optionValues = $result[0]->getSpyProductOptionValues();
-        $this->assertEquals(1, $optionValues->count(), 'Failed assetting that method is idempotent');
+        $this->assertEquals(1, $optionValues->count(), 'Failed asserting that method is idempotent');
 
         $this->assertEquals('VIOLET', $optionValues[0]->getImportKey());
         $this->assertEquals(299, $optionValues[0]->getSpyProductOptionValuePrice()->getPrice());
@@ -189,8 +190,8 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $optionShadeViolet = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionFittingClassic = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
-        $productOptionFitting = $this->createProductOptionTypeUsage($product, $optionFittingClassic);
         $productOptionShade = $this->createProductOptionTypeUsage($product, $optionShadeViolet);
+        $productOptionFitting = $this->createProductOptionTypeUsage($product, $optionFittingClassic);
 
         $idProductOptionValueUsageSmall = $this->facade->importProductOptionValueUsage($productOptionFitting->getIdProductOptionTypeUsage(),  'CLASSIC');
         $idProductOptionValueUsageViolet = $this->facade->importProductOptionValueUsage($productOptionShade->getIdProductOptionTypeUsage(),  'VIOLET');
@@ -204,7 +205,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
             ->filterByFkProductOptionValueUsageB([$idProductOptionValueUsageSmall, $idProductOptionValueUsageViolet])
             ->find();
 
-        $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
+        $this->assertEquals(1, $result->count(), 'Failed asserting that method is idempotent');
 
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
@@ -266,6 +267,14 @@ class DataImportWriterTest extends AbstractFunctionalTest
         return $product;
     }
 
+    /**
+     * @param string $typeKey
+     * @param string $valueKey
+     *
+     * @throws PropelException
+     *
+     * @return SpyProductOptionType
+     */
     private function createOptionTypeWithValue($typeKey, $valueKey)
     {
         $optionValue = (new SpyProductOptionValue())->setImportKey($valueKey);
@@ -275,6 +284,14 @@ class DataImportWriterTest extends AbstractFunctionalTest
         return $optionType;
     }
 
+    /**
+     * @param SpyProduct $product
+     * @param SpyProductOptionType $optionType
+     *
+     * @throws PropelException
+     *
+     * @return SpyProductOptionTypeUsage
+     */
     private function createProductOptionTypeUsage($product, $optionType)
     {
         $productOptionTypeUsage = (new SpyProductOptionTypeUsage())
@@ -287,6 +304,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
         return $productOptionTypeUsage;
     }
 
+    /**
+     * @param int $idAbstractProduct
+     */
     private function performAssertionOnTouchTable($idAbstractProduct)
     {
         $query = SpyTouchQuery::create()

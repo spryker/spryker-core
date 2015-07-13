@@ -40,18 +40,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param string $importKeyProductOptionType
-     *
-     * @return SpyProductOptionTypeQuery
-     */
-    public function queryProductOptionTypeIdByImportKey($importKeyProductOptionType)
-    {
-        return SpyProductOptionTypeQuery::create()
-            ->filterByImportKey($importKeyProductOptionType)
-        ;
-    }
-
-    /**
      * @param int $fkProductOptionType
      * @param int $fkLocale
      *
@@ -65,14 +53,14 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param string $importKeyProductOptionValue
+     * @param string $idProductOptionValue
      *
      * @return SpyProductOptionValueQuery
      */
-    public function queryOptionValueById($idProductOptionTypeUsage)
+    public function queryOptionValueById($idProductOptionValue)
     {
         return SpyProductOptionTypeUsageQuery::create()
-            ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage);
+            ->filterByIdProductOptionTypeUsage($idProductOptionValue);
     }
 
     /**
@@ -97,18 +85,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyProductOptionValueQuery::create()
             ->filterByImportKey($importKeyProductOptionValue);
-    }
-
-    /**
-     * @param string $importKeyProductOptionValue
-     *
-     * @return SpyProductOptionValueQuery
-     */
-    public function queryProductOptionValueIdByImportKey($importKeyProductOptionValue)
-    {
-        return SpyProductOptionValueQuery::create()
-            ->filterByImportKey($importKeyProductOptionValue)
-        ;
     }
 
     /**
@@ -149,20 +125,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $fkProduct
-     * @param int $fkProductOptionType
-     *
-     * @return SpyProductOptionTypeUsageQuery
-     */
-    public function queryProductOptionTypeUsageIdByFKs($fkProduct, $fkProductOptionType)
-    {
-        return SpyProductOptionTypeUsageQuery::create()
-            ->filterByFkProduct($fkProduct)
-            ->filterByFkProductOptionType($fkProductOptionType)
-        ;
-    }
-
-    /**
      * @param int $idProductOptionValueUsage
      *
      * @return SpyProductOptionValueUsageQuery
@@ -174,16 +136,16 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $fkProduct
-     * @param int $fkProductOptionType
+     * @param int $fkProductOptionTypeUsage
+     * @param int $fkProductOptionValue
      *
      * @return SpyProductOptionTypeUsageQuery
      */
-    public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionType)
+    public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionValue)
     {
         return SpyProductOptionValueUsageQuery::create()
             ->filterByFkProductOptionTypeUsage($fkProductOptionTypeUsage)
-            ->filterByFkProductOptionValue($fkProductOptionType)
+            ->filterByFkProductOptionValue($fkProductOptionValue)
         ;
     }
 
