@@ -13,6 +13,9 @@ use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
  */
 class IndexController extends AbstractController
 {
+    /**
+     * @return array
+     */
     public function indexAction()
     {
         $table = $this->getDependencyContainer()->createCountryTable();
@@ -23,6 +26,9 @@ class IndexController extends AbstractController
         );
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function tableAction()
     {
         $table = $this->getDependencyContainer()->createCountryTable();
