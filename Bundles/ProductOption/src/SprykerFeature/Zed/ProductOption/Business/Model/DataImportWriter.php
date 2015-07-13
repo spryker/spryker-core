@@ -524,4 +524,27 @@ class DataImportWriter implements DataImportWriterInterface
         $this->productFacade->touchProductActive($idAbstractProduct);
     }
 
+
+    /**
+     * @param int $idProductOptionTypeUsageA
+     * @param int $idProductOptionTypeUsageB
+     *
+     * @return bool
+     */
+    protected function hasProductOptionTypeUsageExclusion($idProductOptionTypeUsageA, $idProductOptionTypeUsageB)
+    {
+        return $this->queryContainer->queryProductOptionTypeUsageExclusionByFks($idProductOptionTypeUsageA, $idProductOptionTypeUsageB)->count() > 0;
+    }
+
+    /**
+     * @param int $idProductOptionValueUsageSource
+     * @param int $idProductOptionValueUsage
+     *
+     * @return bool
+     */
+    protected function hasProductOptionValueUsageConstraints($idProductOptionValueUsageSource, $idProductOptionValueUsage)
+    {
+        return $this->queryContainer->queryProductOptionValueUsageConstraintsByFks($idProductOptionValueUsageSource, $idProductOptionValueUsage)->count() > 0;
+    }
+
 }
