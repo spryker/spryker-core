@@ -19,7 +19,7 @@ class IndexController extends AbstractController
         $table->init();
 
         return $this->viewResponse(
-            ['gui' => ['countryTable' => $table]] // TODO remove gui
+            ['countryTable' => $table]
         );
     }
 
