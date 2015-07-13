@@ -268,14 +268,18 @@ abstract class AbstractTable
             ->orderBy($orderColumn, $order[0]['dir']);
         $search = $this->getSearchTherm();
 
+
         if (strlen($search['value']) > 0) {
             $i = 0;
+            $query->setIdentifierQuoting(true);
             foreach ($columns as $column) {
                 if ($i !== 0) {
                     $query->_or();
                 }
                 $query->where(
-                    'spy_country.' . $column . ' LIKE ?', //TODO perfomance
+                    'spy_country.'
+                    . $query->quoteIdentifier($column)
+                    . ' LIKE ?', //TODO perfomance
                     '%' . $search['value'] . '%'
                 );
                 ++$i;
