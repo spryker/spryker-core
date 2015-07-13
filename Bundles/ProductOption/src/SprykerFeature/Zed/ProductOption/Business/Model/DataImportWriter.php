@@ -524,6 +524,154 @@ class DataImportWriter implements DataImportWriterInterface
         $this->productFacade->touchProductActive($idAbstractProduct);
     }
 
+    /**
+     * @param string $importKeyProductOptionType
+     *
+     * @throws MissingProductOptionTypeException
+     *
+     * @return int
+     */
+    protected function getIdProductOptionType($importKeyProductOptionType)
+    {
+        $idProductOptionType = $this->queryContainer
+            ->queryProductOptionTypeIdByImportKey($importKeyProductOptionType)
+            ->findOne()
+            ->getIdProductOptionType()
+        ;
+
+        if (null === $idProductOptionType) {
+            throw new MissingProductOptionTypeException(
+                sprintf(
+                    'Tried to retrieve a product option type with import key %s, but it does not exist.',
+                    $importKeyProductOptionType
+                )
+            );
+        }
+
+        return $idProductOptionType;
+    }
+
+    /**
+     * @param string $importKeyProductOptionValue
+     *
+     * @throws MissingProductOptionValueException
+     *
+     * @return SpyProductOptionValue
+     */
+    protected function getProductOptionValue($importKeyProductOptionValue)
+    {
+        $productOptionValue = $this->queryContainer
+            ->queryProductOptionValueByImportKey($importKeyProductOptionValue)
+            ->findOne()
+        ;
+
+        if (null === $productOptionValue) {
+            throw new MissingProductOptionValueException(
+                sprintf(
+                    'Tried to retrieve a product option value with import key %s, but it does not exist.',
+                    $importKeyProductOptionValue
+                )
+            );
+        }
+
+        return $productOptionValue;
+    }
+
+    /**
+     * @param $idProductOptionTypeUsage
+     *
+     * @return bool
+     */
+    protected function hasProductOptionTypeUsage($idProductOptionTypeUsage)
+    {
+        return $this->queryContainer->queryProductOptionTypeUsageById($idProductOptionTypeUsage)->count() === 0;
+    }
+
+    /**
+     * @param int $idProductOptionTypeUsage
+     *
+     * @throws MissingProductOptionTypeUsageException
+     */
+    protected function checkHasProductOptionTypeUsage($idProductOptionTypeUsage)
+    {
+        if ($this->hasProductOptionTypeUsage($idProductOptionTypeUsage)) {
+            throw new MissingProductOptionTypeUsageException(
+                sprintf(
+                    'Tried to retrieve a product option type usage with id %d, but it does not exist.',
+                    $idProductOptionTypeUsage
+                )
+            );
+        }
+    }
+
+    /**
+     * @param int $idProductOptionValueUsageSource
+     *
+     * @return bool
+     */
+    protected function hasProductOptionValueUsage($idProductOptionValueUsageSource)
+    {
+        return $this->queryContainer->queryProductOptionValueUsageById($idProductOptionValueUsageSource)->count() > 0;
+    }
+
+    /**
+     * @param int $idProductOptionValueUsage
+     *
+     * @throws MissingProductOptionValueUsageException
+     */
+    protected function checkHasProductOptionValue($idProductOptionValueUsage)
+    {
+        if (!$this->hasProductOptionValueUsage($idProductOptionValueUsage)) {
+            throw new MissingProductOptionValueUsageException(
+                sprintf(
+                    'Tried to retrieve a product option value usage with id %d, but it does not exist.',
+                    $idProductOptionValueUsage
+                )
+            );
+        }
+    }
+
+    /**
+     * @param $idProductOptionTypeUsage
+     *
+     * @return bool
+     */
+    protected function hasProductOptionTypeUsage($idProductOptionTypeUsage)
+    {
+        return $this->queryContainer->queryProductOptionTypeUsageById($idProductOptionTypeUsage)->count() === 0;
+    }
+
+    /**
+     * @param int $idProductOptionValueUsageSource
+     *
+     * @return bool
+     */
+    protected function hasProductOptionValueUsage($idProductOptionValueUsageSource)
+    {
+        return $this->queryContainer->queryProductOptionValueUsageById($idProductOptionValueUsageSource)->count() > 0;
+    }
+
+    /**
+     * @param int $idProduct
+     * @param int $idProductOptionValue
+     *
+     * @throws MissingProductOptionTypeUsageException
+     *
+     * @return int
+     */
+    protected function getIdProductOptionTypeUsage($idProduct, $idProductOptionValue)
+    {
+        $productOptionTypeUsage = $this->queryContainer
+            ->queryProductOptionTypeUsageIdByFKs($idProduct, $idProductOptionValue)
+            ->findOne()
+        ;
+
+        if (null === $productOptionTypeUsage) {
+            throw new MissingProductOptionTypeUsageException('Tried to retrieve a product option type usage, but it does not exist.');
+        }
+
+        return $productOptionTypeUsage->getIdProductOptionTypeUsage();
+    }
 
     /**
      * @param int $idProductOptionTypeUsageA
@@ -534,6 +682,27 @@ class DataImportWriter implements DataImportWriterInterface
     protected function hasProductOptionTypeUsageExclusion($idProductOptionTypeUsageA, $idProductOptionTypeUsageB)
     {
         return $this->queryContainer->queryProductOptionTypeUsageExclusionByFks($idProductOptionTypeUsageA, $idProductOptionTypeUsageB)->count() > 0;
+    }
+
+    /**
+     * @param int $idProductOptionTypeUsage
+     * @param int $idProductOptionValue
+     *
+     * @throws MissingProductOptionValueUsageException
+     *
+     * @return int
+     */
+    protected function getIdProductOptionValueUsage($idProductOptionTypeUsage, $idProductOptionValue)
+    {
+        $productOptionValueUsage = $this->queryContainer
+            ->queryProductOptionValueUsageByFKs($idProductOptionTypeUsage, $idProductOptionValue)
+            ->findOne();
+
+        if (null === $productOptionValueUsage) {
+            throw new MissingProductOptionValueUsageException('Tried to retrieve a product option value usage, but it does not exist.');
+        }
+
+        return $productOptionValueUsage->getIdProductOptionValueUsage();
     }
 
     /**
