@@ -215,14 +215,18 @@ abstract class AbstractExporter implements ExporterInterface
      */
     protected function buildResultIteratorForType($locale, $type, \DateTime $lastRunTimestamp)
     {
-        $chunkSize = 100;
         $query = $this->queryContainer->createBasicExportableQuery($type, $lastRunTimestamp);
         $query->setFormatter(new PropelArraySetFormatter());
 
         /** @var QueryExpanderPluginInterface $queryExpander */
         foreach ($this->queryPipeline[$type] as $queryExpander) {
             $query = $queryExpander->expandQuery($query, $locale);
-            $chunkSize = $queryExpander->getChunkSize();
+        }
+
+        if (array_key_exists($type, $this->chunkSizeTypeMap)) {
+            $chunkSize = $this->chunkSizeTypeMap[$type];
+        } else {
+            $chunkSize = $this->standardChunkSize;
         }
 
         return new BatchIterator($query, $chunkSize);
