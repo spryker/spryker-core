@@ -44,8 +44,6 @@
 
 </table>
 
-{{ gui.orderItemsTable | raw }}
-
 {% for event in all_events %}
     <a class="btn btn-primary"
        href="/oms/trigger/trigger-event-for-order?id-sales-order={{ idOrder }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">

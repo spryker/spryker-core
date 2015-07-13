@@ -37,9 +37,6 @@ class DetailsController extends AbstractController
 
         $allEvents = $this->groupEvents($events);
 
-        $gui['orderItemsTable'] = new DetailsTable();
-
-        $gui['orderItemsTable']->prepareDate($orderItems);
 
         return [
             'idOrder' => $idOrder,
@@ -47,8 +44,6 @@ class DetailsController extends AbstractController
             'orderItems' => $orderItems,
             'events' => $events,
             'all_events' => $allEvents,
-            'gui' => $gui
-
         ];
     }
 
