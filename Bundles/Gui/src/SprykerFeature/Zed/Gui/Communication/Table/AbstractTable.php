@@ -1,13 +1,19 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class AbstractTable
+ * @package SprykerFeature\Zed\Gui\Communication\Table
+ */
 abstract class AbstractTable
 {
     /**
@@ -50,16 +56,19 @@ abstract class AbstractTable
      */
     protected $defaultUrl = 'table';
 
+    /**
+     *
+     */
     public function init()
     {
         $this->locator = Locator::getInstance();
-        $this->request = $this->locator->application()->pluginPimple()->getApplication()['request'];
-
+        $this->request = $this
+            ->locator
+            ->application()
+            ->pluginPimple()
+            ->getApplication()['request'];
         $config = $this->newTableConfiguration();
-
-        $limit = $this->request->query->get('length', $this->defaultLimit);
-        $config->setPageLength($limit);
-
+        $config->setPageLength($this->getLimit());
         $config = $this->configure($config);
         $this->setConfiguration($config);
     }
@@ -72,6 +81,11 @@ abstract class AbstractTable
         return new TableConfiguration();
     }
 
+    /**
+     * @param TableConfiguration $config
+     *
+     * @return mixed
+     */
     abstract protected function configure(TableConfiguration $config);
 
     /**
@@ -82,6 +96,11 @@ abstract class AbstractTable
         $this->config = $config;
     }
 
+    /**
+     * @param TableConfiguration $config
+     *
+     * @return mixed
+     */
     abstract protected function prepareData(TableConfiguration $config);
 
     /**
@@ -91,19 +110,15 @@ abstract class AbstractTable
     {
         $tableData = [];
 
-        foreach ($data as $object) {
-            if (false === is_array($object)) {
-                $object = $object->toArray();
-            }
-
+        foreach ($data as $row) {
             if (is_array($this->config->getHeaders()) === true) {
-                $object = array_intersect_key(
-                    $object,
+                $row = array_intersect_key(
+                    $row,
                     $this->config->getHeaders()
                 );
             }
 
-            $tableData[] = array_values($object);
+            $tableData[] = array_values($row);
         }
         $this->setData($tableData);
     }
@@ -122,6 +137,90 @@ abstract class AbstractTable
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * @return TableConfiguration
+     */
+    public function getConfiguration()
+    {
+        return $this->config;
+    }
+
+    /**
+     * @return \Twig_Environment
+     * @throws \LogicException
+     */
+    private function getTwig()
+    {
+
+        /** @var \Twig_Environment $twig */
+        $twig = $this
+            ->locator
+            ->application()
+            ->pluginPimple()
+            ->getApplication()['twig'];
+        /** @var \Twig_Loader_Chain $loaderChain */
+        $loaderChain = $twig->getLoader();
+        $loaderChain->addLoader(
+            new \Twig_Loader_Filesystem(
+                __DIR__ . '/../../Presentation/Table/'
+            )
+        );
+
+        if ($twig === null) {
+            throw new \LogicException('Twig environment not set up.');
+        }
+
+        return $twig;
+    }
+
+    /**
+     * @return array
+     */
+    public function getJS()
+    {
+        return [
+            'plugins/dataTables/jquery.dataTables.js',
+            'plugins/dataTables/dataTables.bootstrap.js',
+            'plugins/dataTables/dataTables.responsive.js',
+            'plugins/dataTables/dataTables.tableTools.min.js',
+        ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOffset()
+    {
+        return $this->request->query->get('start', 0);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrders()
+    {
+        return $this->request->query->get(
+            'order',
+            [['column' => 0, 'dir' => 'asc']]
+        );
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSearchTherm()
+    {
+        return $this->request->query->get('search', null);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLimit()
+    {
+        return $this->request->query->get('length', $this->defaultLimit);
     }
 
     /**
@@ -169,70 +268,21 @@ abstract class AbstractTable
     }
 
     /**
-     * @return TableConfiguration
-     */
-    public function getConfiguration()
-    {
-        return $this->config;
-    }
-
-    /**
-     * @return \Twig_Environment
-     * @throws \LogicException
-     */
-    private function getTwig()
-    {
-
-        /** @var \Twig_Environment $twig */
-        $twig = $this
-            ->locator
-            ->application()
-            ->pluginPimple()
-            ->getApplication()['twig'];
-        /** @var \Twig_Loader_Chain $loaderChain */
-        $loaderChain = $twig->getLoader();
-        $loaderChain->addLoader(
-            new \Twig_Loader_Filesystem(
-                __DIR__ . '/../../Presentation/Table/'
-            )
-        );
-
-        if ($twig === null) {
-            throw new \LogicException('Twig environment not set up.');
-        }
-
-        return $twig;
-    }
-
-
-    public function getJS()
-    {
-        return [
-            'plugins/dataTables/jquery.dataTables.js',
-            'plugins/dataTables/dataTables.bootstrap.js',
-            'plugins/dataTables/dataTables.responsive.js',
-            'plugins/dataTables/dataTables.tableTools.min.js',
-        ];
-    }
-
-    /**
      * @param ModelCriteria $query
      * @param TableConfiguration $config
-     * @return ObjectCollection
+     * @return array
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config)
     {
         $limit = $config->getPageLength();
-        $offset = $this->request->query->get('start', 0);
-        $order = $this->request->query->get('order', [['column' => 0, 'dir' => 'asc']]);
+        $offset = $this->getOffset();
+        $order = $this->getOrders();
         $columns = array_keys($config->getHeaders());
         $orderColumn = $columns[$order[0]['column']];
         $this->total = $query->count();
         $query
-            ->offset($offset)
-            ->limit($limit)
             ->orderBy($orderColumn, $order[0]['dir']);
-        $search = $this->request->query->get('search', null);
+        $search = $this->getSearchTherm();
 
         if (strlen($search['value']) > 0) {
             $i = 0;
@@ -241,19 +291,27 @@ abstract class AbstractTable
                     $query->_or();
                 }
                 $query->where(
-                    'spy_country.' . $column . ' LIKE ?',
+                    'spy_country.' . $column . ' LIKE ?', //TODO perfomance
                     '%' . $search['value'] . '%'
                 );
                 ++$i;
             }
+            $this->filtered = $query->count();
+        } else {
+            $this->filtered = $this->total;
         }
 
+        $query
+            ->offset($offset)
+            ->limit($limit);
         $data = $query->find();
-        $this->filtered = $this->total;
 
-        return $data->getArrayCopy();
+        return $data->toArray();
     }
 
+    /**
+     * @return array
+     */
     public function fetchData()
     {
         $data = $this->prepareData($this->config);
