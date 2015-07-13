@@ -10,10 +10,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class AbstractTable
- * @package SprykerFeature\Zed\Gui\Communication\Table
- */
 abstract class AbstractTable
 {
     /**
