@@ -266,10 +266,9 @@ abstract class AbstractTable
         $this->total = $query->count();
         $query
             ->orderBy($orderColumn, $order[0]['dir']);
-        $search = $this->getSearchTherm();
+        $searchTherm = $this->getSearchTherm();
 
-
-        if (strlen($search['value']) > 0) {
+        if (mb_strlen($searchTherm['value']) > 0) {
             $i = 0;
             $query->setIdentifierQuoting(true);
             foreach ($columns as $column) {
@@ -280,7 +279,7 @@ abstract class AbstractTable
                     'spy_country.'
                     . $query->quoteIdentifier($column)
                     . ' LIKE ?', //TODO perfomance
-                    '%' . $search['value'] . '%'
+                    '%' . $searchTherm['value'] . '%'
                 );
                 ++$i;
             }
