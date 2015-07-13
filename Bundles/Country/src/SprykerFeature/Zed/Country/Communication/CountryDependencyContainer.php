@@ -29,6 +29,7 @@ class CountryDependencyContainer extends AbstractCommunicationDependencyContaine
     public function createCountryTable()
     {
         $countryQuery = $this->getQueryContainer()->queryCountries();
+
         return $this->getFactory()->createTableCountryTable($countryQuery);
     }
 }
