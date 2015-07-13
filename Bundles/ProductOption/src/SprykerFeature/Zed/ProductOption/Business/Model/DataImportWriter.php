@@ -115,7 +115,7 @@ class DataImportWriter implements DataImportWriterInterface
      * @param string $importKeyProductOptionValue
      * @param string $importKeyProductOptionType
      * @param array $localizedNames
-     * @param float $price
+     * @param int $price
      *
      * @throws MissingProductOptionTypeException
      *
@@ -130,9 +130,8 @@ class DataImportWriter implements DataImportWriterInterface
             ->findOneOrCreate();
 
         if (null !== $price) {
-            $normalizedPrice = (int) str_replace('.', '', number_format($price, 2));
             $priceEntity = (new SpyProductOptionValuePrice())
-                ->setPrice($normalizedPrice);
+                ->setPrice($price);
             $productOptionValueEntity->setSpyProductOptionValuePrice($priceEntity);
         }
 
