@@ -29,14 +29,10 @@ class DetailsController extends AbstractController
     public function indexAction(Request $request)
     {
         $idOrder = $request->get('id-sales-order');
-
         $orderEntity = $this->getQueryContainer()->querySalesOrderById($idOrder)->findOne();
         $orderItems = $this->getQueryContainer()->querySalesOrderItemsWithState($idOrder)->find();
-
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
-
         $allEvents = $this->groupEvents($events);
-
 
         return [
             'idOrder' => $idOrder,
@@ -61,5 +57,4 @@ class DetailsController extends AbstractController
 
         return array_unique($allEvents);
     }
-
 }
