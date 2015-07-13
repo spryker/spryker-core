@@ -642,6 +642,23 @@ class DataImportWriter implements DataImportWriterInterface
     }
 
     /**
+     * @param int $idProductOptionTypeUsage
+     *
+     * @throws MissingProductOptionTypeUsageException
+     */
+    protected function checkHasProductOptionTypeUsage($idProductOptionTypeUsage)
+    {
+        if ($this->hasProductOptionTypeUsage($idProductOptionTypeUsage)) {
+            throw new MissingProductOptionTypeUsageException(
+                sprintf(
+                    'Tried to retrieve a product option type usage with id %d, but it does not exist.',
+                    $idProductOptionTypeUsage
+                )
+            );
+        }
+    }
+
+    /**
      * @param int $idProductOptionValueUsageSource
      *
      * @return bool
@@ -649,6 +666,23 @@ class DataImportWriter implements DataImportWriterInterface
     protected function hasProductOptionValueUsage($idProductOptionValueUsageSource)
     {
         return $this->queryContainer->queryProductOptionValueUsageById($idProductOptionValueUsageSource)->count() > 0;
+    }
+
+    /**
+     * @param int $idProductOptionValueUsage
+     *
+     * @throws MissingProductOptionValueUsageException
+     */
+    protected function checkHasProductOptionValue($idProductOptionValueUsage)
+    {
+        if (!$this->hasProductOptionValueUsage($idProductOptionValueUsage)) {
+            throw new MissingProductOptionValueUsageException(
+                sprintf(
+                    'Tried to retrieve a product option value usage with id %d, but it does not exist.',
+                    $idProductOptionValueUsage
+                )
+            );
+        }
     }
 
     /**
