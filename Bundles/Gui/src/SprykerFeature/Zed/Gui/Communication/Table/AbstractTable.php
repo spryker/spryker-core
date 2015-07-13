@@ -172,19 +172,6 @@ abstract class AbstractTable
     }
 
     /**
-     * @return array
-     */
-    public function getJS()
-    {
-        return [
-            'plugins/dataTables/jquery.dataTables.js',
-            'plugins/dataTables/dataTables.bootstrap.js',
-            'plugins/dataTables/dataTables.responsive.js',
-            'plugins/dataTables/dataTables.tableTools.min.js',
-        ];
-    }
-
-    /**
      * @return mixed
      */
     public function getOffset()
@@ -266,6 +253,7 @@ abstract class AbstractTable
     /**
      * @param ModelCriteria $query
      * @param TableConfiguration $config
+     *
      * @return array
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config)
