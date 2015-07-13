@@ -56,7 +56,17 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * @var ExportFailedDeciderPluginInterface[]
      */
+
     protected $decider = [];
+    /**
+     * @var int
+     */
+    private $standardChunkSize = 1000;
+
+    /**
+     * @var array
+     */
+    private $chunkSizeTypeMap = [];
 
     /**
      * @param FrontendExporterQueryContainer $queryContainer
@@ -254,6 +264,43 @@ abstract class AbstractExporter implements ExporterInterface
         }
 
         return $processedResultSet;
+    }
+
+    /**
+     * @param int $standardChunkSize
+     *
+     * @return $this
+     */
+    public function setStandardChunkSize($standardChunkSize)
+    {
+        $this->standardChunkSize = $standardChunkSize;
+
+        return $this;
+    }
+
+    /**
+     * @param array $chunkSizeTypeMap
+     *
+     * @return $this
+     */
+    public function setChunkSizeTypeMap(array $chunkSizeTypeMap)
+    {
+        $this->chunkSizeTypeMap = $chunkSizeTypeMap;
+
+        return $this;
+    }
+
+    /**
+     * @param string $type
+     * @param int $chunkSize
+     *
+     * @return $this
+     */
+    public function setChunkSizeForType($type, $chunkSize)
+    {
+        $this->chunkSizeTypeMap[$type] = $chunkSize;
+
+        return $this;
     }
 
 }

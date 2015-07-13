@@ -57,6 +57,8 @@ class FrontendExporterDependencyContainer extends AbstractBusinessDependencyCont
      */
     protected function createKeyValueExporter()
     {
+        $config = $this->getConfig();
+
         $keyValueExporter = $this->getFactory()->createExporterKeyValueExporter(
             $this->createFrontendExporterQueryContainer(),
             $this->createKeyValueWriter(),
@@ -65,7 +67,8 @@ class FrontendExporterDependencyContainer extends AbstractBusinessDependencyCont
             $this->createBatchResultModel()
         );
 
-        $config = $this->getConfig();
+        $keyValueExporter->setStandardChunkSize($config->getStandardChunkSize());
+        $keyValueExporter->setChunkSizeTypeMap($config->getChunkSizeTypeMap());
 
         foreach ($config->getKeyValueProcessors() as $keyValueProcessor) {
             $keyValueExporter->addDataProcessor($keyValueProcessor);
@@ -184,6 +187,9 @@ class FrontendExporterDependencyContainer extends AbstractBusinessDependencyCont
             $this->createFailedResultModel(),
             $this->createBatchResultModel()
         );
+
+        $searchExporter->setStandardChunkSize($config->getStandardChunkSize());
+        $searchExporter->setChunkSizeTypeMap($config->getChunkSizeTypeMap());
 
         foreach ($config->getSearchExportFailedDeciders() as $searchDecider) {
             $searchExporter->addDecider($searchDecider);
