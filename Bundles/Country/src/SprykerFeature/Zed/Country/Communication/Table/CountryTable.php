@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Country\Communication\Table;
 
 use Propel\Runtime\Collection\ObjectCollection;

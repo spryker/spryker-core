@@ -112,6 +112,4 @@ class TableConfiguration
     {
         $this->url = $url;
     }
-
-
 }
