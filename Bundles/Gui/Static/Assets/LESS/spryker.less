@@ -1,5 +1,31 @@
 /* Custom Spryker CSS Elements */
 @font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(/bundles/Gui/fonts/OpenSansLight.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(/bundles/Gui/fonts/OpenSans.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(/bundles/Gui/fonts/OpenSansSemibold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/bundles/Gui/fonts/OpenSansBold.ttf) format('truetype');
+}
+
+/* Spryker Font .. */
+@font-face {
   font-family: 'Spryker';
   src: url('/bundles/Gui/fonts/Spryker.ttf') format('truetype');
 }
@@ -10,3 +36,17 @@
 .menu-icon {
   font-size: 20px;
 }
+.font-spryker.menu-icon {
+  width: 17px;
+}
+.font-spryker:before {
+  content: "s";
+  margin-left: -25px;
+}
+.spryker-logo {
+  font-size: 140px;
+  font-size: 30px;
+  text-align: center;
+  float: left;
+}
+/* .. Spryker font */
