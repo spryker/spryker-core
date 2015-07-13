@@ -8,13 +8,13 @@
           package="vendor.spryker.spryker.Bundles.Country.src.SprykerFeature.Zed.Country.Persistence.Propel">
 
     <table name="spy_country" phpName="SpyCountry">
-        <column name="id_country" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_country" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 
-        <column name="iso2_code" type="VARCHAR" size="2" required="true" />
-        <column name="iso3_code" type="VARCHAR" size="3" required="false" />
-        <column name="name" type="VARCHAR" size="255" required="false" />
-        <column name="postal_code_mandatory" type="BOOLEAN" default="false" />
-        <column name="postal_code_regex" type="VARCHAR" size="500" />
+        <column name="iso2_code" type="VARCHAR" size="2" required="true"/>
+        <column name="iso3_code" type="VARCHAR" size="3" required="false"/>
+        <column name="name" type="VARCHAR" size="255" required="false"/>
+        <column name="postal_code_mandatory" type="BOOLEAN" default="false"/>
+        <column name="postal_code_regex" type="VARCHAR" size="500"/>
         <unique>
             <unique-column name="iso2_code"/>
         </unique>
@@ -24,18 +24,18 @@
     </table>
 
     <table name="spy_region" phpName="SpyRegion">
-        <column name="id_region" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_country" type="INTEGER" />
+        <column name="id_region" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_country" type="INTEGER"/>
 
-        <column name="name" type="VARCHAR" size="100" required="true" />
-        <column name="iso2_code" type="VARCHAR" size="6" required="true" />
+        <column name="name" type="VARCHAR" size="100" required="true"/>
+        <column name="iso2_code" type="VARCHAR" size="6" required="true"/>
 
         <unique>
             <unique-column name="iso2_code"/>
         </unique>
 
         <foreign-key foreignTable="spy_country" phpName="SpyCountry">
-            <reference local="fk_country" foreign="id_country" />
+            <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
     </table>
 

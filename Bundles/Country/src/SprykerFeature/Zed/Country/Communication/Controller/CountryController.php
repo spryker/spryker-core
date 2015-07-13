@@ -21,11 +21,6 @@ class CountryController extends AbstractController
 
         if ($form->isValid()) {
             $data = $form->getData();
-
-            // $country = $this->createCountryTransfer();
-            // $country->fromArray($data, true);
-
-            // $lastInsertedId = $this->getFacade()->saveCountry($country);
         }
 
         return $this->viewResponse([

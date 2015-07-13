@@ -16,19 +16,23 @@ use Symfony\Component\Routing\RouterInterface;
 
 class Application extends \Silex\Application
 {
-
     use UrlGeneratorTrait;
     use TwigTrait;
     use TranslationTrait;
+
+    const COOKIES = 'cookies';
+    const REQUEST = 'request';
+    const ROUTERS = 'routers';
+    const REQUEST_STACK = 'request_stack';
 
     /**
      * Returns a form.
      *
      * @see createBuilder()
      *
-     * @param string|FormTypeInterface $type    The type of the form
-     * @param mixed                    $data    The initial data
-     * @param array                    $options The options
+     * @param string|FormTypeInterface $type The type of the form
+     * @param mixed $data The initial data
+     * @param array $options The options
      *
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      *
@@ -38,7 +42,7 @@ class Application extends \Silex\Application
     {
         /** @var FormInterface $form */
         $form = $this['form.factory']->create($type, $data, $options);
-        $request = ($this['request_stack']) ? $this['request_stack']->getCurrentRequest() : $this['request'];
+        $request = ($this[self::REQUEST_STACK]) ? $this[self::REQUEST_STACK]->getCurrentRequest() : $this[self::REQUEST];
         $form->handleRequest($request);
 
         return $form;
@@ -49,19 +53,19 @@ class Application extends \Silex\Application
      */
     public function getCookieBag()
     {
-        return $this['cookies'];
+        return $this[self::COOKIES];
     }
 
     /**
      * Add a router to the list of routers.
      *
-     * @param RouterInterface $router   The router
-     * @param int             $priority The priority of the router
+     * @param RouterInterface $router The router
+     * @param int $priority The priority of the router
      */
     public function addRouter(RouterInterface $router, $priority = 0)
     {
-        /** @var \Pimple $this */
-        $this['routers'] = $this->share($this->extend('routers', function (ChainRouter $chainRouter) use ($router, $priority) {
+        /* @var \Pimple $this */
+        $this[self::ROUTERS] = $this->share($this->extend(self::ROUTERS, function (ChainRouter $chainRouter) use ($router, $priority) {
             $chainRouter->add($router, $priority);
 
             return $chainRouter;

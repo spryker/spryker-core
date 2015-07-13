@@ -25,7 +25,8 @@ class CountryManager implements CountryManagerInterface
      */
     public function __construct(
         CountryQueryContainerInterface $countryQueryContainer
-    ) {
+    )
+    {
         $this->countryQueryContainer = $countryQueryContainer;
     }
 
@@ -60,8 +61,7 @@ class CountryManager implements CountryManagerInterface
             ->setPostalCodeMandatory($countryData['postal_code_mandatory'])
             ->setPostalCodeRegex($countryData['postal_code_regex'])
             ->setIso2Code($iso2code)
-            ->setIso3Code($countryData['iso3_code'])
-        ;
+            ->setIso3Code($countryData['iso3_code']);
 
         $country->save();
 
