@@ -42,11 +42,6 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     private $queryContainer;
 
     /**
-     * @var Factory
-     */
-    private $factory;
-
-    /**
      * @param Factory $factory
      * @param Locator $locator
      */
