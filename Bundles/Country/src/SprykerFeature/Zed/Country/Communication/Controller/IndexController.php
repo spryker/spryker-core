@@ -5,6 +5,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Country\Business\CountryFacade;
 use SprykerFeature\Zed\Country\Communication\CountryDependencyContainer;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method CountryDependencyContainer getDependencyContainer()
@@ -27,7 +28,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function tableAction()
     {
