@@ -9,10 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Tests\Domain\AuditLoggerTest;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
-
+use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * Class AbstractForm
+ * @package SprykerFeature\Zed\Gui\Communication\Form
+ */
 abstract class AbstractForm
 {
     /**
@@ -32,11 +36,15 @@ abstract class AbstractForm
 
 
     /**
+     * Prepares form
+     *
      * @return $this
      */
     abstract protected function buildFormFields();
 
     /**
+     * Set the values for fields
+     *
      * @return $this
      */
     abstract protected function populateFormFields();
@@ -82,7 +90,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return $this
      */
@@ -134,7 +142,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @return \Symfony\Component\Form\FormErrorIterator
+     * @return FormErrorIterator
      */
     public function getErrors()
     {
@@ -142,9 +150,9 @@ abstract class AbstractForm
     }
 
     /**
-     * @param                     $name
-     * @param string | Constraint $type
-     * @param array               $options
+     * @param string $name
+     * @param string|Constraint $type
+     * @param array $options
      *
      * @return $this
      */
@@ -154,7 +162,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name 
      * @param array $options
      *
      * @return $this
@@ -167,7 +175,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -180,7 +188,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -193,7 +201,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -206,7 +214,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -219,7 +227,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -232,7 +240,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -245,7 +253,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -258,7 +266,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -271,7 +279,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -283,10 +291,8 @@ abstract class AbstractForm
         return $this;
     }
 
-    /* == Choice Fields == */
-
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -299,7 +305,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -312,7 +318,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -325,7 +331,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -338,7 +344,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -351,7 +357,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -364,7 +370,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -376,10 +382,8 @@ abstract class AbstractForm
         return $this;
     }
 
-    /* == Date and Time Fields == */
-
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -392,7 +396,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -405,7 +409,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -418,7 +422,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -430,10 +434,8 @@ abstract class AbstractForm
         return $this;
     }
 
-    /* == Other Fields == */
-
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -446,7 +448,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -459,7 +461,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -474,7 +476,7 @@ abstract class AbstractForm
     /* == Field Groups == */
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -487,7 +489,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -499,10 +501,8 @@ abstract class AbstractForm
         return $this;
     }
 
-    /* == Hidden fields == */
-
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -514,10 +514,8 @@ abstract class AbstractForm
         return $this;
     }
 
-    /* == Buttons == */
-
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -530,7 +528,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -544,7 +542,7 @@ abstract class AbstractForm
 
     /**
      * @param string $name
-     * @param array  $options
+     * @param array $options
      *
      * @return $this
      */
@@ -558,7 +556,7 @@ abstract class AbstractForm
     /* == Base fields == */
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -570,10 +568,8 @@ abstract class AbstractForm
         return $this;
     }
 
-    /* == Custom Fields == */
-
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -586,7 +582,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param       $name
+     * @param string $name
      * @param array $options
      *
      * @return $this
