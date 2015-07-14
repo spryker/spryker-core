@@ -9,8 +9,8 @@ namespace SprykerFeature\Yves\Price\Communication\Plugin;
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use Silex\Application;
 use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Yves\Twig\Dependency\Plugin\TwigFilterPluginInterface;
-use SprykerFeature\Yves\Twig\Dependency\Plugin\TwigFunctionPluginInterface;
+use SprykerFeature\Yves\Twig\Communication\Dependency\Plugin\TwigFilterPluginInterface;
+use SprykerFeature\Yves\Twig\Communication\Dependency\Plugin\TwigFunctionPluginInterface;
 
 class TwigPrice extends AbstractPlugin implements TwigFilterPluginInterface, TwigFunctionPluginInterface
 {

@@ -5,14 +5,14 @@
 
 namespace SprykerFeature\Yves\Glossary\Communication\Plugin;
 
-use SprykerEngine\Yves\Kernel\AbstractPlugin;
+use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Yves\Glossary\Communication\GlossaryDependencyContainer;
 use SprykerFeature\Yves\Glossary\Communication\TranslationServiceProvider;
 
 /**
  * @method GlossaryDependencyContainer getDependencyContainer()
  */
-class TranslationServicePlugin extends AbstractPlugin
+class TranslationService extends AbstractPlugin
 {
     /**
      * @return TranslationServiceProvider

@@ -7,7 +7,7 @@
 namespace SprykerFeature\Yves\Assets\Communication\Plugin;
 
 use Silex\Application;
-use SprykerFeature\Yves\Twig\Dependency\Plugin\TwigFunctionPluginInterface;
+use SprykerFeature\Yves\Twig\Communication\Dependency\Plugin\TwigFunctionPluginInterface;
 use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Yves\Assets\Communication\AssetsDependencyContainer;
 use Symfony\Component\HttpFoundation\RequestStack;

@@ -9,11 +9,7 @@ namespace SprykerFeature\Yves\FrontendExporter\Communication\Plugin;
 use Silex\Application;
 use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Yves\FrontendExporter\Communication\FrontendExporterDependencyContainer;
-use SprykerFeature\Yves\FrontendExporter\Communication\Router\StorageRouter;
 
-/**
- * Class StorageRouterPlugin
- */
 /**
  * @method FrontendExporterDependencyContainer getDependencyContainer()
  */
@@ -22,7 +18,7 @@ class StorageRouter extends AbstractPlugin
 
     /**
      * @param Application $application
-     * @param null        $sslEnabled
+     * @param bool $sslEnabled
      *
      * @return StorageRouter
      */

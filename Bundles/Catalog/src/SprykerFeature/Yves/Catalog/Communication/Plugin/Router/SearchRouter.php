@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Yves\Catalog\Communication\Router;
+namespace SprykerFeature\Yves\Catalog\Communication\Plugin\Router;
 
 use Silex\Application;
 use SprykerFeature\Shared\Application\Communication\ControllerServiceBuilder;
@@ -13,7 +13,7 @@ use SprykerEngine\Yves\Application\Business\Routing\AbstractRouter;
 use SprykerEngine\Yves\Kernel\Communication\BundleControllerAction;
 use SprykerEngine\Yves\Kernel\Communication\Controller\RouteNameResolver;
 use SprykerEngine\Yves\Kernel\Communication\ControllerLocator;
-use SprykerFeature\Yves\FrontendExporter\Mapper\UrlMapperInterface;
+use SprykerFeature\Yves\FrontendExporter\Communication\Mapper\UrlMapperInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 

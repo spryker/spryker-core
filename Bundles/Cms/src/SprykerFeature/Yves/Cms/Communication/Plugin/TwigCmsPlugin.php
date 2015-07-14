@@ -8,7 +8,7 @@ namespace SprykerFeature\Yves\Cms\Communication\Plugin;
 
 use Silex\Application;
 use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Yves\Twig\Dependency\Plugin\TwigFunctionPluginInterface;
+use SprykerFeature\Yves\Twig\Communication\Dependency\Plugin\TwigFunctionPluginInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class TwigCmsPlugin extends AbstractPlugin implements TwigFunctionPluginInterface

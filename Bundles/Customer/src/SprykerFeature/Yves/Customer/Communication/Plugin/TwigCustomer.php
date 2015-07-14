@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Yves\Customer\Communication\Plugin;
 
-use SprykerFeature\Yves\Twig\Dependency\Plugin\TwigFunctionPluginInterface;
+use SprykerFeature\Yves\Twig\Communication\Dependency\Plugin\TwigFunctionPluginInterface;
 use Silex\Application;
 use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
 use Twig_SimpleFunction;
