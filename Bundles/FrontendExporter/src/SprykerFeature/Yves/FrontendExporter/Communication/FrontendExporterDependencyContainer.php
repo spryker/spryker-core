@@ -27,9 +27,11 @@ class FrontendExporterDependencyContainer extends AbstractCommunicationDependenc
      */
     public function createResourceCreators()
     {
-        return $this->getFactory()->createFrontendExporterSettings(
+        $settings = $this->getFactory()->createFrontendExporterSettings(
             $this->getLocator()
         );
+
+        return $settings->getResourceCreators();
     }
 
     /**
