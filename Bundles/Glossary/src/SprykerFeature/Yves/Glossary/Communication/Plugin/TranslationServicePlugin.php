@@ -1,21 +1,19 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Yves\Glossary\Plugin;
+namespace SprykerFeature\Yves\Glossary\Communication\Plugin;
 
-use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Yves\Glossary\GlossaryDependencyContainer;
-use SprykerFeature\Yves\Glossary\TranslationServiceProvider;
+use SprykerEngine\Yves\Kernel\AbstractPlugin;
+use SprykerFeature\Yves\Glossary\Communication\GlossaryDependencyContainer;
+use SprykerFeature\Yves\Glossary\Communication\TranslationServiceProvider;
 
 /**
  * @method GlossaryDependencyContainer getDependencyContainer()
  */
 class TranslationServicePlugin extends AbstractPlugin
 {
-
     /**
      * @return TranslationServiceProvider
      */
@@ -23,5 +21,4 @@ class TranslationServicePlugin extends AbstractPlugin
     {
         return $this->getDependencyContainer()->createTranslationServiceProvider();
     }
-
 }

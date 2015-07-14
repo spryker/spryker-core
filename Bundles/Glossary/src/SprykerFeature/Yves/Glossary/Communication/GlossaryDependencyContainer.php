@@ -1,10 +1,9 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Yves\Glossary;
+namespace SprykerFeature\Yves\Glossary\Communication;
 
 use Generated\Yves\Ide\FactoryAutoCompletion\Glossary;
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
