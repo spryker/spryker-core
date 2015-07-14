@@ -11,7 +11,9 @@ use SprykerFeature\Zed\Cart\Business\CartFacade;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProductQuery;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 
 /**
@@ -197,21 +199,59 @@ class CartFacadeTest extends AbstractFunctionalTest
 
         $abstractProduct1 = SpyAbstractProductQuery::create()
             ->filterBySku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
-            ->findOneOrCreate()
+            ->findOne()
         ;
-        $abstractProduct1->setSku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)->save();
+        if (!$abstractProduct1) {
+            $abstractProduct1 = new SpyAbstractProduct();
+        }
+        $abstractProduct1->setSku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
+            ->setAttributes('{}')
+            ->save()
+        ;
 
-        $concreteProduct1 = SpyProductQuery::create()->filterBySku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)->findOneOrCreate();
-        $concreteProduct1->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)->setSpyAbstractProduct($abstractProduct1)->save();
+        $concreteProduct1 = SpyProductQuery::create()
+            ->filterBySku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->findOne()
+        ;
+
+        if (!$concreteProduct1) {
+            $concreteProduct1 = new SpyProduct();
+        }
+        $concreteProduct1
+            ->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setSpyAbstractProduct($abstractProduct1)
+            ->setAttributes('{}')
+            ->save()
+        ;
 
         $abstractProduct2 = SpyAbstractProductQuery::create()
             ->filterBySku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)
-            ->findOneOrCreate()
+            ->findOne()
         ;
-        $abstractProduct2->setSku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)->save();
 
-        $concreteProduct2 = SpyProductQuery::create()->filterBySku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)->findOneOrCreate();
-        $concreteProduct2->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)->setSpyAbstractProduct($abstractProduct2)->save();
+        if (!$abstractProduct2) {
+            $abstractProduct2 = new SpyAbstractProduct();
+        }
+
+        $abstractProduct2
+            ->setSku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)
+            ->setAttributes('{}')
+            ->save()
+        ;
+
+        $concreteProduct2 = SpyProductQuery::create()
+            ->filterBySku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
+            ->findOne()
+        ;
+        if (!$concreteProduct2) {
+            $concreteProduct2 = new SpyProduct();
+        }
+        $concreteProduct2
+            ->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
+            ->setSpyAbstractProduct($abstractProduct2)
+            ->setAttributes('{}')
+            ->save()
+        ;
 
         $priceProductConcrete1 = SpyPriceProductQuery::create()
             ->filterByProduct($concreteProduct1)

@@ -6,12 +6,11 @@
 
 namespace SprykerFeature\Zed\Product\Business\Attribute;
 
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Product\Business\Exception\AttributeExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\AttributeTypeExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingAttributeTypeException;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributesMetadata;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributeType;
 
 class AttributeManager implements AttributeManagerInterface
@@ -23,18 +22,11 @@ class AttributeManager implements AttributeManagerInterface
     protected $productQueryContainer;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @param ProductQueryContainerInterface $productQueryContainer
-     * @param LocatorLocatorInterface $locator
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer, LocatorLocatorInterface $locator)
+    public function __construct(ProductQueryContainerInterface $productQueryContainer)
     {
         $this->productQueryContainer = $productQueryContainer;
-        $this->locator = $locator;
     }
 
     /**
@@ -101,7 +93,7 @@ class AttributeManager implements AttributeManagerInterface
 
         $attributeTypeId = $this->getAttributeType($attributeType)->getPrimaryKey();
 
-        $attributeEntity = $this->locator->product()->entitySpyProductAttributesMetadata()
+        $attributeEntity = (new SpyProductAttributesMetadata())
             ->setKey($attributeName)
             ->setFkType($attributeTypeId)
             ->setIsEditable($isEditable)
@@ -142,7 +134,7 @@ class AttributeManager implements AttributeManagerInterface
     {
         $this->checkAttributeTypeDoesNotExist($name);
 
-        $attributeTypeEntity = $this->locator->product()->entitySpyProductAttributeType();
+        $attributeTypeEntity = (new SpyProductAttributeType());
         $attributeTypeEntity
             ->setName($name)
             ->setInputRepresentation($inputType)

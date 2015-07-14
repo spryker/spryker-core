@@ -8,6 +8,7 @@ namespace Functional\SprykerFeature\Zed\Stock;
 
 use Codeception\TestCase\Test;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
@@ -57,24 +58,36 @@ class CalculatorTest extends Test
 
     protected function setTestData()
     {
-
         $abstractProduct = SpyAbstractProductQuery::create()
             ->filterBySku('test')
-            ->findOneOrCreate()
+            ->findOne()
         ;
-        $abstractProduct->setSku('test')
+
+        if (null === $abstractProduct) {
+            $abstractProduct = new SpyAbstractProduct();
+            $abstractProduct->setSku('test');
+        }
+
+        $abstractProduct->setAttributes('{}')
             ->save()
         ;
 
-        $this->productEntity = SpyProductQuery::create()
+        $product = SpyProductQuery::create()
             ->filterBySku('test2')
-            ->findOneOrCreate()
+            ->findOne()
         ;
-        $this->productEntity
-            ->setSku('test2')
-            ->setFkAbstractProduct($abstractProduct->getIdAbstractProduct())
+
+        if (null === $product) {
+            $product = new SpyProduct();
+            $product->setSku('test2');
+        }
+
+        $product->setFkAbstractProduct($abstractProduct->getIdAbstractProduct())
+            ->setAttributes('{}')
             ->save()
         ;
+
+        $this->productEntity = $product;
 
         $stockType1 = SpyStockQuery::create()
             ->filterByName('warehouse1')
@@ -111,5 +124,4 @@ class CalculatorTest extends Test
             ->save()
         ;
     }
-
 }

@@ -102,9 +102,9 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param array $formData
      * @param LocaleTransfer $locale
-     * @param int $glossaryKey
+     * @param string $glossaryKey
+     * @param string $value
      *
      * @return TranslationTransfer
      */
@@ -370,7 +370,8 @@ class TranslationManager implements TranslationManagerInterface
             $translationEntity->setValue($transferTranslation->getValue());
             $translationEntity->save();
 
-            $translation = (new TranslationTransfer())->fromArray($translationEntity->toArray());
+            $translation = new TranslationTransfer();
+            $translation->fromArray($translationEntity->toArray());
         } else {
             $translation = $this->createTranslationFromTransfer($transferTranslation);
         }

@@ -75,7 +75,7 @@ class Catalog implements CatalogInterface
 
     /**
      * @param array $ids
-     * @param null $indexByKey
+     * @param bool $indexByKey
      *
      * @return array
      */

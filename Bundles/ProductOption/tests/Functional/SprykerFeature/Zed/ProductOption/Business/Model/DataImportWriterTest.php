@@ -222,8 +222,14 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $result = SpyProductOptionConfigurationPresetQuery::create()->findByFkProduct($product->getIdProduct());
         $this->assertEquals(1, $result->count());
         $values = $result[0]->getSpyProductOptionConfigurationPresetValues();
-        foreach($values as $value) {
-            $this->assertContains($value->getFkProductOptionValueUsage(), [$productOptionValueUsageSmall->getIdProductOptionValueUsage(), $productOptionValueUsageViolet->getIdProductOptionValueUsage()]);
+        foreach ($values as $value) {
+            $this->assertContains(
+                $value->getFkProductOptionValueUsage(),
+                [
+                    $productOptionValueUsageSmall->getIdProductOptionValueUsage(),
+                    $productOptionValueUsageViolet->getIdProductOptionValueUsage(),
+                ]
+            );
         }
 
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
@@ -231,9 +237,18 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
     private function createConcreteProduct()
     {
-        $abstractProduct = (new SpyAbstractProduct())->setSku('ABC123');
+        $abstractProduct = (new SpyAbstractProduct())
+            ->setSku('ABC123')
+            ->setAttributes('{}')
+        ;
         $abstractProduct->save();
-        $product = (new SpyProduct())->setSku('ABC123')->setIsActive(true)->setSpyAbstractProduct($abstractProduct);
+
+        $product = (new SpyProduct)
+            ->setSku('ABC123')
+            ->setAttributes('{}')
+            ->setIsActive(true)
+            ->setSpyAbstractProduct($abstractProduct)
+        ;
 
         $product->save();
 
@@ -270,7 +285,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
             ->find();
 
         $this->assertEquals(1, $query->count());
-        foreach($query as $touchEntity) {
+        foreach ($query as $touchEntity) {
             $this->assertEquals($touchEntity->getItemId(), $idAbstractProduct);
         }
     }
