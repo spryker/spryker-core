@@ -6,10 +6,13 @@
 
 namespace SprykerFeature\Zed\Oms\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
+use SprykerFeature\Zed\Customer\Business\Customer\Customer;
+use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Oms\Persistence\Propel\Base\SpyOmsOrderProcessQuery;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
@@ -94,6 +97,8 @@ class SandboxController extends AbstractController
 
         $state = $this->saveTestState();
 
+        $customer = $this->generateCustomer();
+
         $cities = [
             'Berlin',
             'Hamburg',
@@ -103,7 +108,7 @@ class SandboxController extends AbstractController
 
         $address = $this->saveTestAddress($cities, $country);
 
-        $order = $this->saveTestOrder($address);
+        $order = $this->saveTestOrder($address, $customer);
 
         $process = $this->saveTestProcess();
 
@@ -159,7 +164,7 @@ class SandboxController extends AbstractController
      *
      * @return string
      */
-    protected function generateCustomer($isLast = false)
+    protected function generateCustomerName($isLast = false)
     {
         $firstNames = [
             'Adam', 'Alexia', 'Astrid', 'Bruno', 'Denis', 'Mathias',
@@ -183,8 +188,8 @@ class SandboxController extends AbstractController
     protected function saveTestAddress($cities, SpyCountry $country)
     {
         $address = new SpySalesOrderAddress();
-        $address->setFirstName($this->generateCustomer());
-        $address->setLastName($this->generateCustomer(true));
+        $address->setFirstName($this->generateCustomerName());
+        $address->setLastName($this->generateCustomerName(true));
         $address->setAddress1('Address');
         $address->setZipCode(10115);
         $address->setCity($cities[array_rand($cities)]);
@@ -199,10 +204,12 @@ class SandboxController extends AbstractController
      *
      * @return SpySalesOrder
      */
-    protected function saveTestOrder(SpySalesOrderAddress $address)
+    protected function saveTestOrder(SpySalesOrderAddress $address, SpyCustomer $customer)
     {
         $order = new SpySalesOrder();
         $order->setIsTest(true);
+        $order->setFkCustomer($customer->getIdCustomer());
+        $order->setEmail($customer->getEmail());
         $order->setFirstName($address->getFirstName());
         $order->setLastName($address->getLastName());
         $order->setShippingAddress($address);
@@ -253,6 +260,20 @@ class SandboxController extends AbstractController
         $order->setSubtotal($total);
         $order->setGrandTotal($total);
         $order->save();
+    }
+
+    protected function generateCustomer()
+    {
+        $email = sprintf('customer_%d@spryker.com', rand(0, 1000));
+
+        $customer = new SpyCustomer();
+        $customer->setFirstName($this->generateCustomerName());
+        $customer->setLastName($this->generateCustomerName(true));
+        $customer->setEmail($email);
+
+        $customer->save();
+
+        return $customer;
     }
 
 }
