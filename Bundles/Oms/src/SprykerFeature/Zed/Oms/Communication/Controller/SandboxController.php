@@ -19,6 +19,7 @@ use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStateQuery;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
 use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrderQuery;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpense;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
@@ -157,6 +158,15 @@ class SandboxController extends AbstractController
         $orderItem->setSku($sku);
         $orderItem->setName('Answering Machine');
         $orderItem->save();
+
+        $orderExpense = new SpySalesExpense();
+        $orderExpense->setFkSalesOrder($order->getIdSalesOrder());
+        $orderExpense->setFkSalesOrderItem($orderItem->getIdSalesOrderItem());
+        $orderExpense->setType('sale');
+        $orderExpense->setName('Expense Demo');
+        $orderExpense->setPriceToPay($price);
+        $orderExpense->setGrossPrice($price);
+        $orderExpense->save();
     }
 
     /**

@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
-use SprykerFeature\Zed\Sales\Communication\Table\DetailsTable;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
@@ -28,37 +27,21 @@ class DetailsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idOrder = $request->get('id-sales-order');
-        $orderEntity = $this->getQueryContainer()->querySalesOrderById($idOrder)->findOne();
-        $orderItems = $this->getQueryContainer()->querySalesOrderItemsWithState($idOrder)->find();
+        $orderId = $request->get('id-sales-order');
 
-        $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
-
+        $orderEntity = $this->getQueryContainer()->querySalesOrderById($orderId)->findOne();
+        $orderItems = $this->getQueryContainer()->querySalesOrderItemsWithState($orderId)->find();
+        $events = $this->getFacade()->getArrayWithManualEvents($orderId);
         $allEvents = $this->groupEvents($events);
-
-        $gui['orderItemsTable'] = new DetailsTable();
-
-        $gui['orderItemsTable']->prepareDate($orderItems);
-
-        $gui['orderItemsTable'] = new DetailsTable();
-
-        $gui['orderItemsTable']->prepareDate($orderItems);
-
-        $gui['orderItemsTable'] = new DetailsTable();
-
-        $gui['orderItemsTable']->prepareDate($orderItems);
-
-        $gui['orderItemsTable'] = new DetailsTable();
-
-        $gui['orderItemsTable']->prepareDate($orderItems);
+        $expenses = $this->getQueryContainer()->querySalesExpensesByOrderId($orderId)->find();
 
         return [
-            'idOrder' => $idOrder,
+            'idOrder' => $orderId,
             'orderDetails' => $orderEntity,
             'orderItems' => $orderItems,
             'events' => $events,
-            'all_events' => $allEvents,
-            'gui' => $gui
+            'allEvents' => $allEvents,
+            'expenses' => $expenses,
         ];
     }
 
@@ -76,4 +59,5 @@ class DetailsController extends AbstractController
 
         return array_unique($allEvents);
     }
+
 }
