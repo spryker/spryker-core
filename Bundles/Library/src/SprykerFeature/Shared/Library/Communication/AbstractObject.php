@@ -45,7 +45,7 @@ abstract class AbstractObject implements ObjectInterface
                     }
 
                     if (is_object($subValue) && method_exists($subValue, 'toArray')) {
-                        /* @var ObjectInterface $subValue */
+                        /** @var ObjectInterface $subValue */
                         $value[$subKey] = $subValue->toArray(false);
                     }
                 }

@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Zed\Application\Business\Model\Twig\RouteResolver;
 use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use SprykerFeature\Zed\Library\Twig\Loader\Filesystem;
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider as SilexTwigServiceProvider;
@@ -34,11 +35,13 @@ class TwigServiceProvider extends SilexTwigServiceProvider
 
         parent::register($app);
 
+        $this->provideFormTypeExtension();
+        $this->provideFormTypeTemplates();
+
         $app['twig.loader.zed'] = $app->share(function () {
             $namespace = Config::get(SystemConfig::PROJECT_NAMESPACE);
 
             $storeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
-
             return new Filesystem(
                 [
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/',
@@ -68,6 +71,8 @@ class TwigServiceProvider extends SilexTwigServiceProvider
         $app['twig.global.variables'] = $app->share(function () {
              return [];
         });
+
+
         $app['twig'] = $app->share(
             $app->extend(
                 'twig',
@@ -133,4 +138,39 @@ class TwigServiceProvider extends SilexTwigServiceProvider
         return $this->app->render('@' . $route . '.twig', $parameters);
     }
 
+    /**
+     * @return void
+     */
+    protected  function provideFormTypeExtension()
+    {
+        $this->app['form.type.extensions'] = $this->app->share(function () {
+            return array(
+                new NoValidateTypeExtension()
+            );
+        });
+
+    }
+
+    /**
+     * @return void
+     */
+    protected function provideFormTypeTemplates()
+    {
+        $path = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Gui/src/SprykerFeature/Zed/Gui/Presentation/Form/Type';
+
+        $this->app['twig.loader.filesystem']->addPath(
+            $path
+        );
+
+        $files = new \FilesystemIterator($path, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::KEY_AS_PATHNAME);
+
+        $typeTemplates = array();
+        foreach ($files as $file) {
+            $typeTemplates[] = $file->getFilename();
+        }
+
+        $this->app['twig.form.templates'] = array_merge([
+            'bootstrap_3_layout.html.twig',
+        ], $typeTemplates);
+    }
 }

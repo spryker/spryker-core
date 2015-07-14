@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method GlossaryFacade getFacade()
@@ -20,17 +21,22 @@ class IndexController extends AbstractController
 {
 
     /**
+     * @param Request $request
+     *
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $availableLocales = $this->getDependencyContainer()
             ->createEnabledLocales()
         ;
 
-        return $this->viewResponse([
+        $grid = $this->getDependencyContainer()->createGlossaryKeyTranslationGrid($request);
+
+        return [
             'locales' => $availableLocales,
-        ]);
+            'grid' => $grid->renderData(),
+        ];
     }
 
 }

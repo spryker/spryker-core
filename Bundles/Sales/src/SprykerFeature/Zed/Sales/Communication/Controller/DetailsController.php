@@ -31,8 +31,26 @@ class DetailsController extends AbstractController
         $idOrder = $request->get('id-sales-order');
         $orderEntity = $this->getQueryContainer()->querySalesOrderById($idOrder)->findOne();
         $orderItems = $this->getQueryContainer()->querySalesOrderItemsWithState($idOrder)->find();
+
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
+
         $allEvents = $this->groupEvents($events);
+
+        $gui['orderItemsTable'] = new DetailsTable();
+
+        $gui['orderItemsTable']->prepareDate($orderItems);
+
+        $gui['orderItemsTable'] = new DetailsTable();
+
+        $gui['orderItemsTable']->prepareDate($orderItems);
+
+        $gui['orderItemsTable'] = new DetailsTable();
+
+        $gui['orderItemsTable']->prepareDate($orderItems);
+
+        $gui['orderItemsTable'] = new DetailsTable();
+
+        $gui['orderItemsTable']->prepareDate($orderItems);
 
         return [
             'idOrder' => $idOrder,
@@ -40,6 +58,7 @@ class DetailsController extends AbstractController
             'orderItems' => $orderItems,
             'events' => $events,
             'all_events' => $allEvents,
+            'gui' => $gui
         ];
     }
 

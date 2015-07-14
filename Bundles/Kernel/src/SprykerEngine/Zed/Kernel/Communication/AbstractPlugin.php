@@ -162,5 +162,4 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     {
         return $this->queryContainer;
     }
-
 }

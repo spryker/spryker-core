@@ -16,6 +16,7 @@ use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Symfony\Component\Form\FormFactory;
+use SprykerFeature\Zed\Product\Communication\Form\BuildFormFactoryHelper;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -253,6 +254,17 @@ abstract class AbstractController
     }
 
     /**
+     * Returns an instance of form factory
+     *
+     * @return FormFactory
+     */
+    protected function getFormFactory()
+    {
+        return $this->application['form.factory'];
+    }
+
+    /**
+     * @return void
      */
     protected function clearBreadcrumbs()
     {

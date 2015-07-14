@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Country\Business;
 
+use Generated\Shared\Country\CountryInterface;
 use SprykerFeature\Zed\Country\Business\Exception\CountryExistsException;
 use SprykerFeature\Zed\Country\Business\Exception\MissingCountryException;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
@@ -24,7 +25,8 @@ class CountryManager implements CountryManagerInterface
      */
     public function __construct(
         CountryQueryContainerInterface $countryQueryContainer
-    ) {
+    )
+    {
         $this->countryQueryContainer = $countryQueryContainer;
     }
 
@@ -43,6 +45,7 @@ class CountryManager implements CountryManagerInterface
     /**
      * @param string $iso2code
      * @param array $countryData
+     * @deprecated
      *
      * @throws CountryExistsException
      *
@@ -58,12 +61,21 @@ class CountryManager implements CountryManagerInterface
             ->setPostalCodeMandatory($countryData['postal_code_mandatory'])
             ->setPostalCodeRegex($countryData['postal_code_regex'])
             ->setIso2Code($iso2code)
-            ->setIso3Code($countryData['iso3_code'])
-        ;
+            ->setIso3Code($countryData['iso3_code']);
 
         $country->save();
 
         return $country->getIdCountry();
+    }
+
+    /**
+     * @param CountryInterface $countryTransfer
+     * @return int
+     */
+    public function saveCountry(CountryInterface $countryTransfer)
+    {
+        return $this->createCountry($countryTransfer->getIso2Code(), $countryTransfer->toArray());
+
     }
 
     /**

@@ -30,8 +30,7 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     {
         $query = $this->queryCountries();
         $query
-            ->filterByIso2Code($iso2Code)
-        ;
+            ->filterByIso2Code($iso2Code);
 
         return $query;
     }
@@ -53,8 +52,7 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     {
         $query = $this->queryRegions();
         $query
-            ->filterByIso2Code($isoCode)
-        ;
+            ->filterByIso2Code($isoCode);
 
         return $query;
     }
