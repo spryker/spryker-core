@@ -10,4 +10,5 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class MailConfig extends AbstractBundleConfig
 {
+
 }

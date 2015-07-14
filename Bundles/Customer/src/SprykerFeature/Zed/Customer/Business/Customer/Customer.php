@@ -163,7 +163,7 @@ class Customer
     protected function sendPasswordRestoreToken(CustomerTransfer $customerTransfer)
     {
         $customerTransfer = $this->get($customerTransfer);
-        $link = $this->hostYves . "/password/restore?token=" . $customerTransfer->getRestorePasswordKey();
+        $link = $this->hostYves . '/password/restore?token=' . $customerTransfer->getRestorePasswordKey();
         foreach ($this->passwordRestoreTokenSender as $sender) {
             $sender->send($customerTransfer->getEmail(), $link);
         }
@@ -174,7 +174,7 @@ class Customer
      */
     protected function sendRegistrationToken(CustomerTransfer $customerTransfer)
     {
-        $link = $this->hostYves . "/register/confirm?token=" . $customerTransfer->getRegistrationKey();
+        $link = $this->hostYves . '/register/confirm?token=' . $customerTransfer->getRegistrationKey();
         foreach ($this->registrationTokenSender as $sender) {
             $sender->send($customerTransfer->getEmail(), $link);
         }

@@ -124,4 +124,5 @@ class CalculatorTest extends Test
             ->save()
         ;
     }
+
 }

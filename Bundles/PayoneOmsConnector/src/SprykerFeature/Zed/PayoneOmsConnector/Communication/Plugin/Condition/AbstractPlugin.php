@@ -1,8 +1,8 @@
 <?php
 
-  /**
-  * (c) Spryker Systems GmbH copyright protected
-  */
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
