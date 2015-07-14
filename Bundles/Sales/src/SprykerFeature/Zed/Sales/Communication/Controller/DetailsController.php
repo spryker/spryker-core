@@ -27,21 +27,23 @@ class DetailsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $orderId = $request->get('id-sales-order');
+        $idOrder = $request->get('id-sales-order');
 
-        $orderEntity = $this->getQueryContainer()->querySalesOrderById($orderId)->findOne();
-        $orderItems = $this->getQueryContainer()->querySalesOrderItemsWithState($orderId)->find();
-        $events = $this->getFacade()->getArrayWithManualEvents($orderId);
+        $orderEntity = $this->getQueryContainer()->querySalesOrderById($idOrder)->findOne();
+        $orderItems = $this->getQueryContainer()->querySalesOrderItemsWithState($idOrder)->find();
+        $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
         $allEvents = $this->groupEvents($events);
-        $expenses = $this->getQueryContainer()->querySalesExpensesByOrderId($orderId)->find();
+        $expenses = $this->getQueryContainer()->querySalesExpensesByOrderId($idOrder)->find();
+        $payments = [];
 
         return [
-            'idOrder' => $orderId,
+            'idOrder' => $idOrder,
             'orderDetails' => $orderEntity,
             'orderItems' => $orderItems,
             'events' => $events,
             'allEvents' => $allEvents,
             'expenses' => $expenses,
+            'payments' => $payments,
         ];
     }
 
