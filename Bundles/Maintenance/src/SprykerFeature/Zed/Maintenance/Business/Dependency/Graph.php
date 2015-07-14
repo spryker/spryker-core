@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Maintenance\Business\Dependency;
 
 
+use SprykerFeature\Zed\Library\Service\GraphViz;
 use Symfony\Component\Finder\Finder;
 
 class Graph
@@ -36,7 +37,7 @@ class Graph
         $outgoingDependencies = $this->bundleParser->parseOutgoingDependencies($bundleName);
         $incomingDependencies = $this->manager->parseIncomingDependencies($bundleName);
 
-        $graph = new \SprykerFeature_Zed_Library_Service_GraphViz(true, $this->graphDefault, 'G', false, true);
+        $graph = new GraphViz(true, $this->graphDefault, 'G', false, true);
         $graph->addNode($bundleName);
 
         foreach (array_keys($outgoingDependencies) as $foreignBundleName) {

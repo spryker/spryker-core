@@ -6,18 +6,32 @@
 namespace SprykerFeature\Zed\Maintenance\Business\Dependency;
 
 
+use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 class BundleParser
 {
 
-    protected $coreBundleNamespaces = ['SprykerFeature', 'SprykerEngine'];
+    const SPRYKER_ENGINE = 'SprykerEngine';
+    protected $coreBundleNamespaces = ['SprykerFeature', self::SPRYKER_ENGINE];
+    /**
+     * @var MaintenanceConfig
+     */
+    protected $config;
 
-    public function __construct()
+    /**
+     * @param MaintenanceConfig $config
+     */
+    public function __construct(MaintenanceConfig $config)
     {
-
+        $this->config = $config;
     }
 
+    /**
+     * @param $bundleName
+     * @return array
+     */
     public function parseOutgoingDependencies($bundleName)
     {
         $allFileDependencies = $this->parseDependencies($bundleName);
@@ -27,20 +41,18 @@ class BundleParser
     }
 
     /**
+     * We only detect dependencies which are declared in the class' use statement
+     *
      * @param $bundle
      * @return array
      */
     protected function parseDependencies($bundle)
     {
-        $files = (new Finder())->files()->in(APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $bundle . '/src/*/Zed/');
-            //->exclude(['Base','Map']);
+        $files = $this->findAllFilesOfBundle($bundle);
 
         $dependencies = [];
         foreach ($files as $file) {
 
-            echo('<pre><b>'.print_r($file->getPath(), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
-
-            /* @var $file \Symfony\Component\Finder\SplFileInfo */
             $content = $file->getContents();
 
             $matches = [];
@@ -52,13 +64,24 @@ class BundleParser
     }
 
     /**
+     * @param $bundle
+     * @return SplFileInfo[]
+     */
+    protected function findAllFilesOfBundle($bundle)
+    {
+        $files = (new Finder())
+            ->files()
+            ->in($this->config->getBundleDirectory() . $bundle . '/src/*/Zed/')
+            ->exclude($this->config->getExcludedDirectoriesForDependencies());
+        return $files;
+    }
+
+    /**
      * @param $dependencies
      * @return array
      */
     protected function filterCoreClasses($dependencies)
     {
-
-
         $reducedDependenciesPerFile = [];
         foreach ($dependencies as $fileName => $fileDependencies) {
 
@@ -70,7 +93,6 @@ class BundleParser
                 if (in_array($bundleNamespace, $this->coreBundleNamespaces)) {
                     $reducedDependencies[] = $fileDependency;
                 }
-
             }
             $reducedDependenciesPerFile[$fileName] = $reducedDependencies;
         }
@@ -87,8 +109,6 @@ class BundleParser
         $bundleDepenencies = [];
         foreach ($allFileDependencies as $fileDependencies) {
             foreach ($fileDependencies as $fileDependency) {
-
-
                 $expl = explode('\\', $fileDependency);
                 $foreignBundle = $expl[2];
                 if ($bundle !== $foreignBundle) {
@@ -97,22 +117,37 @@ class BundleParser
                     }
                     $bundleDepenencies[$foreignBundle]++;
                 }
-
-
             }
         }
         return $bundleDepenencies;
     }
 
+    /**
+     * @param $bundleName
+     * @return bool
+     */
     public function isEngine($bundleName)
     {
-        $directories = (new Finder())->directories()->depth('== 0')->in(APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $bundleName . '/src');
+        $directories = $this->findBundleNamespaceDirectoriesForBundle($bundleName);
         foreach ($directories as $directory) {
-            if ($directory->getFilename() === 'SprykerEngine') { // TODO
+            if ($directory->getFilename() === self::SPRYKER_ENGINE) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * @param $bundleName
+     * @return SplFileInfo[]
+     */
+    protected function findBundleNamespaceDirectoriesForBundle($bundleName)
+    {
+        $directories = (new Finder())
+            ->directories()
+            ->depth('== 0')
+            ->in($this->config->getBundleDirectory() . $bundleName . '/src');
+        return $directories;
     }
 
 

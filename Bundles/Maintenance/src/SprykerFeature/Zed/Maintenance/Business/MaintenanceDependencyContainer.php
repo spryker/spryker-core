@@ -117,7 +117,8 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDependencyBundleParser()
     {
-        return $this->getFactory()->createDependencyBundleParser();
+        $config = $this->getConfig();
+        return $this->getFactory()->createDependencyBundleParser($config);
     }
 
     /**

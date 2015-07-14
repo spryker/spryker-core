@@ -28,14 +28,13 @@ class Manager
 
     public function parseIncomingDependencies($bundleName)
     {
-
         $allForeignBundles = $this->collectAllForeignBundles($bundleName);
 
         $incomingDependencies = [];
         foreach ($allForeignBundles as $foreignBundle) {
 
             try {
-                $dependencies = $this->bundleParser->parseOutgoingDependencies($foreignBundle);
+                $dependencies = $this->bundleParser->parseOutgoingDependencies($foreignBundle, true);
             } catch (\Exception $e) {
                 $dependencies = []; // TODO illegal try-catch
             }
@@ -46,7 +45,6 @@ class Manager
                 $incomingDependencies[$foreignBundle] += $dependencies[$bundleName];
             }
         }
-
 
         return $incomingDependencies;
     }
