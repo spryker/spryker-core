@@ -156,6 +156,11 @@ abstract class AbstractTable
             ->application()
             ->pluginPimple()
             ->getApplication()['twig'];
+
+        if ($twig === null) {
+            throw new \LogicException('Twig environment not set up.');
+        }
+
         /** @var \Twig_Loader_Chain $loaderChain */
         $loaderChain = $twig->getLoader();
         $loaderChain->addLoader(
@@ -163,10 +168,6 @@ abstract class AbstractTable
                 __DIR__ . '/../../Presentation/Table/'
             )
         );
-
-        if ($twig === null) {
-            throw new \LogicException('Twig environment not set up.');
-        }
 
         return $twig;
     }
@@ -271,13 +272,18 @@ abstract class AbstractTable
         if (mb_strlen($searchTherm['value']) > 0) {
             $i = 0;
             $query->setIdentifierQuoting(true);
+            $tableName = $query->getTableMap()->getName();
+
             foreach ($columns as $column) {
                 if ($i !== 0) {
                     $query->_or();
                 }
                 $query->where(
-                    'spy_country.'
-                    . $query->quoteIdentifier($column)
+                    $tableName . '.'
+                    . $query
+                        ->getTableMap()
+                        ->getColumnByPhpName($column)
+                        ->getName()
                     . ' LIKE ?', //TODO perfomance
                     '%' . $searchTherm['value'] . '%'
                 );
