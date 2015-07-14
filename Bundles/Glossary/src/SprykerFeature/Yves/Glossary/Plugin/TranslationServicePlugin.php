@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Yves\Glossary\Plugin;
 
-use SprykerEngine\Yves\Kernel\AbstractPlugin;
+use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Yves\Glossary\GlossaryDependencyContainer;
 use SprykerFeature\Yves\Glossary\TranslationServiceProvider;
 

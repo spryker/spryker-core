@@ -7,7 +7,7 @@
 namespace SprykerFeature\Yves\FrontendExporter;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Yves\FrontendExporter\Creator\ResourceCreatorInterface;
+use SprykerFeature\Yves\FrontendExporter\Communication\Creator\ResourceCreatorInterface;
 use Generated\Yves\Ide\AutoCompletion;
 
 class FrontendExporterSettings
