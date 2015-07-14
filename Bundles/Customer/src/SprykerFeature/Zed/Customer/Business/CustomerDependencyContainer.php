@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,6 +22,7 @@ use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
  */
 class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return CustomerQueryContainerInterface
      */
@@ -83,4 +85,5 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getLocator()->locale()->facade();
     }
+
 }

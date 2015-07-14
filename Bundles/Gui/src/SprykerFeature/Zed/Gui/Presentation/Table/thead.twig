@@ -1,0 +1,11 @@
+{% if config.headers is defined %}
+<thead>
+    <tr>
+        {% for id, value in config.headers %}
+        <th id="{{ id }}">
+            {{ value }}
+        </th>
+        {% endfor %}
+    </tr>
+</thead>
+{%  endif %}

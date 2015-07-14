@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
+use SprykerFeature\Zed\Sales\Communication\Table\DetailsTable;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
@@ -28,7 +29,6 @@ class DetailsController extends AbstractController
     public function indexAction(Request $request)
     {
         $idOrder = $request->get('id-sales-order');
-
         $orderEntity = $this->getQueryContainer()->querySalesOrderById($idOrder)->findOne();
         $orderItems = $this->getQueryContainer()->querySalesOrderItemsWithState($idOrder)->find();
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
@@ -57,5 +57,4 @@ class DetailsController extends AbstractController
 
         return array_unique($allEvents);
     }
-
 }

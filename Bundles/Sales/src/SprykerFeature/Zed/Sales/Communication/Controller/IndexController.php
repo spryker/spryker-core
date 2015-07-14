@@ -14,9 +14,14 @@ class IndexController extends AbstractController
 
     /**
      * @param Request $request
+     *
+     * @return array
      */
     public function indexAction(Request $request)
     {
+        $grid = $this->getDependencyContainer()->getSalesGrid($request);
+
+        return $grid->renderData();
     }
 
 }

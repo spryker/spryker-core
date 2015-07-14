@@ -77,5 +77,4 @@ class UiExampleDependencyContainer extends AbstractCommunicationDependencyContai
     {
         return $this->getLocator()->uiExample()->queryContainer();
     }
-
 }

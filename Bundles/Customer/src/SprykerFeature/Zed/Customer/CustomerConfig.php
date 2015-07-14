@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,4 +18,5 @@ class CustomerConfig extends AbstractBundleConfig
     {
         return $this->get(SystemConfig::HOST_YVES);
     }
+
 }

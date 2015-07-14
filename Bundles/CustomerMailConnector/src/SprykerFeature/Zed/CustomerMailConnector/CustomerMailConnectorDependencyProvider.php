@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class CustomerMailConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    
     const FACADE_MAIL = 'mail facade';
 
     /**
@@ -25,4 +27,5 @@ class CustomerMailConnectorDependencyProvider extends AbstractBundleDependencyPr
 
         return $container;
     }
+
 }

@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
+use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,6 +88,7 @@ class ProfileController extends AbstractController
             'customerJson' => json_encode($form->toArray()),
             'registered' => $customerTransfer->getRegistered(),
             'addresses' => $addresses,
+            'form' => $form->renderDataForTwig()[AbstractForm::OUTPUT_PAYLOAD]['fields'],
         ];
     }
 

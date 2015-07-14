@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,7 +13,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
 use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredException;
@@ -218,9 +218,10 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
      * @throws CustomerNotFoundException
      * @throws PropelException
+     *
+     * @return bool
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
@@ -237,9 +238,10 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
      * @throws PropelException
      * @throws CustomerNotFoundException
+     *
+     * @return bool
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
@@ -256,9 +258,10 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
      * @throws PropelException
      * @throws CustomerNotFoundException
+     *
+     * @return bool
      */
     public function delete(CustomerTransfer $customerTransfer)
     {
@@ -271,10 +274,11 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
      * @throws PropelException
      * @throws CustomerNotFoundException
      * @throws CustomerNotUpdatedException
+     *
+     * @return bool
      */
     public function update(CustomerTransfer $customerTransfer)
     {
@@ -297,10 +301,10 @@ class Customer
     protected function entityToTransfer(SpyCustomerAddress $customer)
     {
         $data = $customer->toArray();
-        unset($data["fk_misc_region"]);
-        unset($data["deleted_at"]);
-        unset($data["created_at"]);
-        unset($data["updated_at"]);
+        unset($data['fk_misc_region']);
+        unset($data['deleted_at']);
+        unset($data['created_at']);
+        unset($data['updated_at']);
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->fromArray($data);
 
@@ -325,8 +329,9 @@ class Customer
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return SpyCustomer
      * @throws CustomerNotFoundException
+     *
+     * @return SpyCustomer
      */
     protected function getCustomer(CustomerTransfer $customerTransfer)
     {
@@ -346,4 +351,5 @@ class Customer
 
         throw new CustomerNotFoundException();
     }
+
 }
