@@ -44,4 +44,5 @@ class OrderDetailsManager
 
         return $events;
     }
+
 }
