@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
+use SprykerFeature\Zed\Library\Service\GraphViz;
 
 class CategoryTreeRenderer
 {
@@ -18,7 +19,7 @@ class CategoryTreeRenderer
     const UNKNOWN_CATEGORY = 'Unknown Category';
 
     /**
-     * @var \SprykerFeature_Zed_Library_Service_GraphViz
+     * @var GraphViz
      */
     protected $graph;
 
@@ -59,7 +60,7 @@ class CategoryTreeRenderer
      */
     public function render()
     {
-        $this->graph = new \SprykerFeature_Zed_Library_Service_GraphViz(true, $this->graphDefault, 'G', false, true);
+        $this->graph = new GraphViz(true, $this->graphDefault, 'G', false, true);
         $rootNode = $this->queryContainer->queryRootNode()->findOne();
         if ($rootNode) {
             $this->renderChildren($rootNode);

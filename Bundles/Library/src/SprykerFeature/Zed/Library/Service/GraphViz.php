@@ -4,6 +4,8 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
+namespace SprykerFeature\Zed\Library\Service;
+
 /**
  * Image_GraphViz
  *
@@ -119,7 +121,7 @@
  * @link      http://www.graphviz.org/
  * @since     Class available since Release 0.1
  */
-class SprykerFeature_Zed_Library_Service_GraphViz
+class GraphViz
 {
 
     /**
