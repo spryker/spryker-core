@@ -22,4 +22,12 @@ class DetailsTable extends BaseTable
         $this->setConfiguration($config);
 
     }
+
+    protected function configure(TableConfiguration $config)
+    {
+    }
+
+    protected function prepareData(TableConfiguration $config)
+    {
+    }
 }
