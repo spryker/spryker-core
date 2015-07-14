@@ -169,6 +169,8 @@ class TwigServiceProvider extends SilexTwigServiceProvider
             $typeTemplates[] = $file->getFilename();
         }
 
-        $this->app['twig.form.templates'] = array_merge(['form_div_layout.html.twig'], $typeTemplates);
+        $this->app['twig.form.templates'] = array_merge([
+            'bootstrap_3_layout.html.twig',
+        ], $typeTemplates);
     }
 }
