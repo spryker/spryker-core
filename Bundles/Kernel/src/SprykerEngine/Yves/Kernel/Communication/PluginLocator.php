@@ -13,12 +13,10 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 class PluginLocator extends AbstractLocator
 {
 
-    const SUFFIX = 'Plugin';
-
     /**
      * @var string
      */
-    protected $factoryClassNamePattern = '\\{{namespace}}\\Yves\\Kernel\\Factory';
+    protected $factoryClassNamePattern = '\\{{namespace}}\\Yves\\Kernel\\Communication\\Factory';
 
     /**
      * @param string $bundle
@@ -33,7 +31,7 @@ class PluginLocator extends AbstractLocator
     {
         $factory = $this->getFactory($bundle);
 
-        return $factory->create(ucfirst($className) . self::SUFFIX, $factory, $locator);
+        return $factory->create(ucfirst($className), $factory, $locator);
     }
 
 }

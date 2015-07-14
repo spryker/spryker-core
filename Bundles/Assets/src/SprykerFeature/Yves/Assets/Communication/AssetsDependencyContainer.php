@@ -9,7 +9,7 @@ namespace SprykerFeature\Yves\Assets\Communication;
 use Generated\Yves\Ide\FactoryAutoCompletion\AssetsCommunication;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Yves\Assets\Communication\Model\AssetUrlBuilderInterface;
 use SprykerFeature\Yves\Assets\Communication\Model\CacheBusterInterface;
 use SprykerFeature\Yves\Assets\Communication\Model\MediaUrlBuilderInterface;
@@ -17,7 +17,7 @@ use SprykerFeature\Yves\Assets\Communication\Model\MediaUrlBuilderInterface;
 /**
  * @method AssetsCommunication getFactory()
  */
-class AssetsDependencyContainer extends AbstractDependencyContainer
+class AssetsDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

@@ -13,7 +13,7 @@ use SprykerEngine\Client\Kernel\Service\AbstractClient;
 /**
  * @method CustomerDependencyContainer getDependencyContainer()
  */
-class CustomerClient extends AbstractClient
+class CustomerClient extends AbstractClient implements CustomerClientInterface
 {
 
     /**

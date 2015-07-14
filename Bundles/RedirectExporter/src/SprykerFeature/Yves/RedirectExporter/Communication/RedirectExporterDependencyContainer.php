@@ -6,14 +6,14 @@
 
 namespace SprykerFeature\Yves\RedirectExporter\Communication;
 
-use Generated\Yves\Ide\FactoryAutoCompletion\RedirectExporter;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use Generated\Yves\Ide\FactoryAutoCompletion\RedirectExporterCommunication;
+use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Yves\RedirectExporter\Communication\ResourceCreator\RedirectResourceCreator;
 
 /**
  * @method RedirectExporter getFactory()
  */
-class RedirectExporterDependencyContainer extends AbstractDependencyContainer
+class RedirectExporterDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

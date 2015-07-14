@@ -6,13 +6,13 @@
 
 namespace SprykerFeature\Yves\ProductExporter\Communication;
 
-use Generated\Yves\Ide\FactoryAutoCompletion\ProductExporter;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use Generated\Yves\Ide\FactoryAutoCompletion\ProductExporterCommunication;
+use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
 /**
  * Class ProductExportDependencyContainer
  */
-class ProductExporterDependencyContainer extends AbstractDependencyContainer
+class ProductExporterDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

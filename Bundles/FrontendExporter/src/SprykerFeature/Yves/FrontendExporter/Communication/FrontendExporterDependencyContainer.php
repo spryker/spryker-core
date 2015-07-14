@@ -7,37 +7,29 @@
 namespace SprykerFeature\Yves\FrontendExporter\Communication;
 
 use Generated\Yves\Ide\FactoryAutoCompletion\FrontendExporter;
+use Generated\Yves\Ide\FactoryAutoCompletion\FrontendExporterCommunication;
 use SprykerFeature\Client\Catalog\Service\Model\FacetConfig;
 use SprykerFeature\Client\FrontendExporter\Service\Matcher\UrlMatcher;
+use SprykerFeature\Yves\FrontendExporter\Communication\Creator\ResourceCreatorInterface;
 use SprykerFeature\Yves\FrontendExporter\Communication\Mapper\UrlMapper;
 use SprykerFeature\Yves\FrontendExporter\Communication\Router\StorageRouter;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Silex\Application;
 
 /**
- * @method FrontendExporter getFactory()
+ * @method FrontendExporterCommunication getFactory()
  */
-class FrontendExporterDependencyContainer extends AbstractDependencyContainer
+class FrontendExporterDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
-     * @param Application $application
-     * @param bool|null $sslEnabled
-     *
-     * @return StorageRouter
+     * @return ResourceCreatorInterface[]
      */
-    public function createStorageRouter(Application $application, $sslEnabled = null)
+    public function createResourceCreators()
     {
-        $storageRouter = $this->getFactory()->createRouterStorageRouter(
-            $application,
-            $this->createUrlMatcher(),
-            $this->createUrlMapper(),
-            $sslEnabled
+        return $this->getFactory()->createFrontendExporterSettings(
+            $this->getLocator()
         );
-
-        $storageRouter->addResourceCreators($this->createSettings()->getResourceCreators());
-
-        return $storageRouter;
     }
 
     /**
@@ -51,19 +43,9 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return FrontendExporterSettings
-     */
-    protected function createSettings()
-    {
-        return $this->getFactory()->createFrontendExporterSettings(
-            $this->getLocator()
-        );
-    }
-
-    /**
      * @return UrlMatcher
      */
-    protected function createUrlMatcher()
+    public function createUrlMatcher()
     {
         $urlMatcher = $this->getLocator()->frontendExporter()
             ->client()
@@ -78,6 +60,14 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     protected function createFacetConfig()
     {
         return $this->getLocator()->catalog()->client()->createFacetConfig();
+    }
+
+    /**
+     * @return Application
+     */
+    public function createApplication()
+    {
+        return $this->getLocator()->application()->pluginPimple()->getApplication();
     }
 
 }

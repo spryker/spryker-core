@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Yves\Checkout\Communication;
 
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
-class CheckoutDependencyContainer extends AbstractDependencyContainer
+class CheckoutDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
 }

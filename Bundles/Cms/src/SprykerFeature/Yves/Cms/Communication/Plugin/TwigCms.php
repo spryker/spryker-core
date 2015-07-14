@@ -11,7 +11,7 @@ use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Yves\Twig\Communication\Dependency\Plugin\TwigFunctionPluginInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class TwigCmsPlugin extends AbstractPlugin implements TwigFunctionPluginInterface
+class TwigCms extends AbstractPlugin implements TwigFunctionPluginInterface
 {
 
     /**

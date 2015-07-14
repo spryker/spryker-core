@@ -101,7 +101,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
     protected function generateYvesFactoryInterface()
     {
         $methodTagGenerator = new ConstructableMethodTagBuilder([
-            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => '',
+            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Yves',
             ConstructableMethodTagBuilder::OPTION_KEY_CLASS_NAME_PART_LEVEL => 4
         ]);

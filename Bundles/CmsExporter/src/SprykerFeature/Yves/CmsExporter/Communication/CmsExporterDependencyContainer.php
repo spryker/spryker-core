@@ -6,14 +6,14 @@
 
 namespace SprykerFeature\Yves\CmsExporter\Communication;
 
-use Generated\Yves\Ide\FactoryAutoCompletion\CmsExporter;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use Generated\Yves\Ide\FactoryAutoCompletion\CmsExporterCommunication;
+use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Yves\CmsExporter\Communication\ResourceCreator\PageResourceCreator;
 
 /**
- * @method CmsExporter getFactory()
+ * @method CmsExporterCommunication getFactory()
  */
-class CmsExporterDependencyContainer extends AbstractDependencyContainer
+class CmsExporterDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

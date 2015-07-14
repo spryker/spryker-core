@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Yves\FrontendExporter;
+namespace SprykerFeature\Yves\FrontendExporter\Communication;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Yves\FrontendExporter\Communication\Creator\ResourceCreatorInterface;

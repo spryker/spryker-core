@@ -7,14 +7,15 @@
 namespace SprykerFeature\Yves\Twig\Communication;
 
 use Generated\Yves\Ide\FactoryAutoCompletion\Twig;
+use Generated\Yves\Ide\FactoryAutoCompletion\TwigCommunication;
 use Silex\Application;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Yves\Twig\Communication\Model\YvesExtension;
 
 /**
- * @method Twig getFactory()
+ * @method TwigCommunication getFactory()
  */
-class TwigDependencyContainer extends AbstractDependencyContainer
+class TwigDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

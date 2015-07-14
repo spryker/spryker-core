@@ -2,10 +2,10 @@
 
 namespace SprykerEngine\Yves\Messenger\Communication;
 
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Yves\Messenger\Communication\Plugin\TwigMessengerExtension;
 
-class MessengerDependencyContainer extends AbstractDependencyContainer
+class MessengerDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

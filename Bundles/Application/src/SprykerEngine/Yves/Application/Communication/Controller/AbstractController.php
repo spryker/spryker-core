@@ -10,7 +10,6 @@ use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Yves\Application\Business\Application;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
 use SprykerEngine\Yves\Kernel\Communication\Factory;
 use SprykerFeature\Shared\ZedRequest\Client\Response as TransferResponse;
 use SprykerFeature\Yves\Library\Session\TransferSession;

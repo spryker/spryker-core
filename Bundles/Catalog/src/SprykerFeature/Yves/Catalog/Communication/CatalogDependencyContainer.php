@@ -6,36 +6,27 @@
 
 namespace SprykerFeature\Yves\Catalog\Communication;
 
-use Generated\Yves\Ide\FactoryAutoCompletion\Catalog;
 use Silex\Application;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Yves\Catalog\Communication\Router\SearchRouter;
+use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Yves\FrontendExporter\Communication\Mapper\UrlMapperInterface;
 
-/**
- * Class CatalogDependencyContainer
- */
-class CatalogDependencyContainer extends AbstractDependencyContainer
+class CatalogDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
-     * @var Catalog
+     * @return UrlMapperInterface
      */
-    protected $factory;
+    public function createUrlMapper()
+    {
+        return $this->getLocator()->frontendExporter()->pluginUrlMapper()->createUrlMapper();
+    }
 
     /**
-     * @param Application $app
-     * @param bool $sslEnabled
-     *
-     * @return SearchRouter
+     * @return Application
      */
-    public function createSearchRouter(Application $app, $sslEnabled = false)
+    public function createApplication()
     {
-        return $this->getFactory()->createRouterSearchRouter(
-            $app,
-            $this->getLocator(),
-            $this->getLocator()->frontendExporter()->pluginUrlMapper()->createUrlMapper(),
-            $sslEnabled
-        );
+        return $this->getLocator()->application()->pluginPimple()->getApplication();
     }
 
 }

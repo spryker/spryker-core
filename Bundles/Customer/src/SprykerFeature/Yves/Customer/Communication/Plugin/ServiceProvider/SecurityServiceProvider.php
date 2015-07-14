@@ -4,38 +4,34 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Yves\Customer\Communication\Provider;
+namespace SprykerFeature\Yves\Customer\Communication\Plugin\ServiceProvider;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Customer\CustomerConfig;
 use Silex\Application;
-use Silex\Provider\SecurityServiceProvider as SilexSecurityServiceProvider;
-use Generated\Zed\Ide\AutoCompletion;
+use Silex\ServiceProviderInterface;
+use SprykerEngine\Shared\Config;
+use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Shared\Customer\CustomerConfig;
 use SprykerFeature\Yves\Customer\Communication\Handler\AjaxAuthenticationHandler;
+use SprykerFeature\Yves\Customer\Communication\Plugin\UserProvider;
 
-class SecurityServiceProvider extends SilexSecurityServiceProvider
+class SecurityServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
-     * @var AutoCompletion
+     * @var UserProvider
      */
-    protected $locator;
+    private $userProvider;
 
     /**
-     * @var FactoryInterface
+     * @param UserProvider $userProvider
+     *
+     * @return SecurityServiceProvider
      */
-    protected $factory;
-
-    /**
-     * @param FactoryInterface        $factory
-     * @param LocatorLocatorInterface $locator
-     */
-    public function __construct(FactoryInterface $factory, LocatorLocatorInterface $locator)
+    public function setUserProvider($userProvider)
     {
-        $this->factory = $factory;
-        $this->locator = $locator;
+        $this->userProvider = $userProvider;
+
+        return $this;
     }
 
     /**
@@ -43,8 +39,6 @@ class SecurityServiceProvider extends SilexSecurityServiceProvider
      */
     public function register(Application $app)
     {
-        parent::register($app);
-
         $app['security.authentication.success_handler._proto'] = $app->protect(function ($name, $options) use ($app) {
             return $app->share(function () use ($name, $options, $app) {
                 return new AjaxAuthenticationHandler();
@@ -53,7 +47,7 @@ class SecurityServiceProvider extends SilexSecurityServiceProvider
 
         $app['security.authentication.failure_handler._proto'] = $app->protect(function ($name, $options) use ($app) {
             return $app->share(function () use ($name, $options, $app) {
-                return  new AjaxAuthenticationHandler();
+                return new AjaxAuthenticationHandler();
             });
         });
 
@@ -69,10 +63,7 @@ class SecurityServiceProvider extends SilexSecurityServiceProvider
                     'logout_path' => '/customer/logout',
                 ],
                 'users' => $app->share(function ($app) {
-                    return $this->locator->customer()
-                        ->pluginSecurityService()
-                        ->createUserProvider($app['session'])
-                    ;
+                    return $this->userProvider;
                 }),
             ],
         ];
@@ -91,6 +82,13 @@ class SecurityServiceProvider extends SilexSecurityServiceProvider
                 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
             ],
         ];
+    }
+
+    /**
+     * @param Application $app
+     */
+    public function boot(Application $app)
+    {
     }
 
 }

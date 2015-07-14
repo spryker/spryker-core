@@ -6,15 +6,15 @@
 
 namespace SprykerFeature\Yves\CategoryExporter\Communication;
 
-use Generated\Yves\Ide\FactoryAutoCompletion\CategoryExporter;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use Generated\Yves\Ide\FactoryAutoCompletion\CategoryExporterCommunication;
+use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Yves\CategoryExporter\Communication\ResourceCreator\CategoryResourceCreator;
 
-class CategoryExporterDependencyContainer extends AbstractDependencyContainer
+class CategoryExporterDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
-     * @var CategoryExporter
+     * @var CategoryExporterCommunication
      */
     protected $factory;
 

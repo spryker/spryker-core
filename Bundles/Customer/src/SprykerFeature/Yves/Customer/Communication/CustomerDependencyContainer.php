@@ -6,7 +6,8 @@
 
 namespace SprykerFeature\Yves\Customer\Communication;
 
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use Generated\Yves\Ide\FactoryAutoCompletion\CustomerCommunication;
+use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use SprykerFeature\Yves\Customer\Communication\Provider\SecurityServiceProvider;
 use SprykerFeature\Yves\Customer\Communication\Provider\UserProvider;
@@ -14,28 +15,10 @@ use Silex\Application;
 use SprykerFeature\Yves\Customer\Communication\Model\Customer;
 
 /**
- * @method \Generated\Yves\Ide\FactoryAutoCompletion\Customer getFactory()
+ * @method CustomerCommunication getFactory()
  */
-class CustomerDependencyContainer extends AbstractDependencyContainer
+class CustomerDependencyContainer extends AbstractCommunicationDependencyContainer
 {
-
-    /**
-     * @return SecurityServiceProvider
-     */
-    public function createSecurityServiceProvider()
-    {
-        return $this->getFactory()->createProviderSecurityServiceProvider($this->getFactory(), $this->getLocator());
-    }
-
-    /**
-     * @param SessionInterface $session
-     *
-     * @return UserProvider
-     */
-    public function createUserProvider(SessionInterface $session)
-    {
-        return $this->getFactory()->createProviderUserProvider($this->getFactory(), $this->getLocator(), $session);
-    }
 
     /**
      * @param Application $application

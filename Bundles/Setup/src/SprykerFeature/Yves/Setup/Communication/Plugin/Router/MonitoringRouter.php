@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Yves\Setup\Communication\Router;
+namespace SprykerFeature\Yves\Setup\Communication\Plugin\Router;
 
 use SprykerFeature\Shared\Application\Communication\ControllerServiceBuilder;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
@@ -23,22 +23,6 @@ class MonitoringRouter extends AbstractRouter
 {
 
     const HEARTBEAT_URL = 'system/heartbeat';
-
-    /**
-     * @var LocatorLocatorInterface
-     */
-    protected $locator;
-
-    /**
-     * @param LocatorLocatorInterface $locator
-     * @param Application $app
-     * @param bool $sslEnabled
-     */
-    public function __construct(LocatorLocatorInterface $locator, Application $app, $sslEnabled = false)
-    {
-        $this->locator = $locator;
-        parent::__construct($app, $sslEnabled);
-    }
 
     /**
      * {@inheritdoc}

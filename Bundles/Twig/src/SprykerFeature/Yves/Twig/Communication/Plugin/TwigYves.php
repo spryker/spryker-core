@@ -13,7 +13,7 @@ use SprykerFeature\Yves\Twig\Communication\TwigDependencyContainer;
 /**
  * @method TwigDependencyContainer getDependencyContainer()
  */
-class TwigYvesPlugin extends AbstractPlugin
+class TwigYves extends AbstractPlugin
 {
 
     /**

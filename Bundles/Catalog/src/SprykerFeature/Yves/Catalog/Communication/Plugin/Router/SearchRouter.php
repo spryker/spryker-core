@@ -7,45 +7,24 @@
 namespace SprykerFeature\Yves\Catalog\Communication\Plugin\Router;
 
 use Silex\Application;
+use SprykerEngine\Yves\Kernel\Locator;
 use SprykerFeature\Shared\Application\Communication\ControllerServiceBuilder;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Yves\Application\Business\Routing\AbstractRouter;
 use SprykerEngine\Yves\Kernel\Communication\BundleControllerAction;
 use SprykerEngine\Yves\Kernel\Communication\Controller\RouteNameResolver;
 use SprykerEngine\Yves\Kernel\Communication\ControllerLocator;
+use SprykerFeature\Yves\Catalog\Communication\CatalogDependencyContainer;
 use SprykerFeature\Yves\FrontendExporter\Communication\Mapper\UrlMapperInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
+/**
+ * @method CatalogDependencyContainer getDependencyContainer()
+ */
 class SearchRouter extends AbstractRouter
 {
-
-    /**
-     * @var LocatorLocatorInterface
-     */
-    protected $locator;
-
-    /**
-     * @var UrlMapperInterface
-     */
-    protected $urlMapper;
-
-    /**
-     * @param Application $app
-     * @param LocatorLocatorInterface $locator
-     * @param UrlMapperInterface $urlMapper
-     * @param null $sslEnabled
-     */
-    public function __construct(
-        Application $app,
-        LocatorLocatorInterface $locator,
-        UrlMapperInterface $urlMapper,
-        $sslEnabled = null
-    ) {
-        parent::__construct($app, $sslEnabled);
-        $this->locator = $locator;
-        $this->urlMapper = $urlMapper;
-    }
 
     /**
      * {@inheritdoc}
@@ -53,7 +32,7 @@ class SearchRouter extends AbstractRouter
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         if ('/search' === $name) {
-            $request = ($this->app['request_stack']) ? $this->app['request_stack']->getCurrentRequest() : $this->app['request'];
+            $request = $this->getRequest();
             $requestParameters = $request->query->all();
             //if no page is provided we generate a url to change the filter and therefore want to reset the page
             //TODO @see SprykerFeature\Yves\Catalog\Business\Model\AbstractSearch Line 77
@@ -61,8 +40,8 @@ class SearchRouter extends AbstractRouter
             if (!isset($parameters['page']) && isset($requestParameters['page'])) {
                 unset($requestParameters['page']);
             }
-            $pathInfo = $this->urlMapper->generateUrlFromParameters(
-                $this->urlMapper->mergeParameters($requestParameters, $parameters)
+            $pathInfo = $this->getUrlMapper()->generateUrlFromParameters(
+                $this->getUrlMapper()->mergeParameters($requestParameters, $parameters)
             );
             $pathInfo = $name . $pathInfo;
 
@@ -77,16 +56,16 @@ class SearchRouter extends AbstractRouter
     public function match($pathinfo)
     {
         if ('/search' === $pathinfo) {
-            $request = ($this->app['request_stack']) ? $this->app['request_stack']->getCurrentRequest() : $this->app['request'];
-            $this->urlMapper->injectParametersFromUrlIntoRequest($pathinfo, $request);
+            $request = $this->getRequest();
+            $this->getUrlMapper()->injectParametersFromUrlIntoRequest($pathinfo, $request);
 
             $bundleControllerAction = new BundleControllerAction('Catalog', 'Catalog', 'fulltextSearch');
             $controllerResolver = new ControllerLocator($bundleControllerAction);
             $routeResolver = new RouteNameResolver('catalog');
 
             $service = (new ControllerServiceBuilder())->createServiceForController(
-                $this->app,
-                $this->locator,
+                $this->getApplication(),
+                Locator::getInstance(),
                 $bundleControllerAction,
                 $controllerResolver,
                 $routeResolver
@@ -98,6 +77,33 @@ class SearchRouter extends AbstractRouter
             ];
         }
         throw new ResourceNotFoundException();
+    }
+
+    /**
+     * @return UrlMapperInterface
+     */
+    private function getUrlMapper()
+    {
+        return $this->getDependencyContainer()->createUrlMapper();
+    }
+
+    /**
+     * @return Request
+     */
+    private function getRequest()
+    {
+        $application = $this->getApplication();
+        $request = ($application['request_stack']) ? $application['request_stack']->getCurrentRequest() : $application['request'];
+
+        return $request;
+    }
+
+    /**
+     * @return Application
+     */
+    private function getApplication()
+    {
+        return $this->getDependencyContainer()->createApplication();
     }
 
 }
