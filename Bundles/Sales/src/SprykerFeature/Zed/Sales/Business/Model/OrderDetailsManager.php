@@ -56,7 +56,7 @@ class OrderDetailsManager
 
         $statuses = [];
         foreach($orderItems as $i => $orderItem) {
-            $statuses[$orderItem->getIdSalesOrderItem()] = $orderItem->getState()->getName();
+            $statuses[] = $orderItem->getState()->getName();
         }
 
         return $statuses;
