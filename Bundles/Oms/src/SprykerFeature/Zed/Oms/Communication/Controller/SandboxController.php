@@ -272,6 +272,9 @@ class SandboxController extends AbstractController
         $order->save();
     }
 
+    /**
+     * @return SpyCustomer
+     */
     protected function generateCustomer()
     {
         $email = sprintf('customer_%d@spryker.com', rand(0, 1000));
