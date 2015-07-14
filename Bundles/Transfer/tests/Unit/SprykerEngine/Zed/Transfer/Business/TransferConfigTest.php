@@ -40,10 +40,9 @@ class TransferConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($this->getConfig()->getGeneratedTargetDirectory()));
     }
 
-    public function testGetSourceDirectoriesShouldReturnArrayWithOneEntryIfOnlyVendorTransferExist()
+    public function testGetSourceDirectoriesShouldReturnArray()
     {
         $this->assertTrue(is_array($this->getConfig()->getSourceDirectories()));
-        $this->assertCount(1, $this->getConfig()->getSourceDirectories());
     }
 
     public function testGetSourceDirectoriesShouldReturnArrayWithTwoEntriesIfProjectAndVendorTransferExist()
