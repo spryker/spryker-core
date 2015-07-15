@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,12 +22,12 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @var array
      */
-    protected $logItems = array();
+    protected $logItems = [];
 
     /**
      * @var SpySalesOrderItem[]
      */
-    protected $items = array();
+    protected $items = [];
 
     /**
      * @var EventInterface
@@ -36,22 +37,22 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @var CommandInterface[]
      */
-    protected $commands = array();
+    protected $commands = [];
 
     /**
      * @var ConditionInterface[]
      */
-    protected $conditions = array();
+    protected $conditions = [];
 
     /**
      * @var StateInterface[]
      */
-    protected $sources = array();
+    protected $sources = [];
 
     /**
      * @var StateInterface[]
      */
-    protected $targets = array();
+    protected $targets = [];
 
     /**
      * @var bool
@@ -136,7 +137,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param boolean $error
+     * @param bool $error
      */
     public function setError($error)
     {
@@ -190,27 +191,27 @@ class TransitionLog implements TransitionLogInterface
 
         $logItem->setHostname(System::getHostname());
 
-        if (isset($this->logContext["module"])) {
-            $logItem->setModule($this->logContext["module"]);
+        if (isset($this->logContext['module'])) {
+            $logItem->setModule($this->logContext['module']);
         } else {
             $logItem->setModule('Not available.');
         }
 
-        if (isset($this->logContext["controller"])) {
-            $logItem->setController($this->logContext["controller"]);
+        if (isset($this->logContext['controller'])) {
+            $logItem->setController($this->logContext['controller']);
         } else {
             $logItem->setController('Not available.');
         }
 
-        if (isset($this->logContext["action"])) {
-            $logItem->setAction($this->logContext["action"]);
+        if (isset($this->logContext['action'])) {
+            $logItem->setAction($this->logContext['action']);
         } else {
             $logItem->setAction('Not available.');
         }
 
-        if (isset($this->logContext["params"])) {
-            $params = array();
-            $this->getOutputParams($this->logContext["params"], $params);
+        if (isset($this->logContext['params'])) {
+            $params = [];
+            $this->getOutputParams($this->logContext['params'], $params);
             $logItem->setParams($params);
         } else {
             $logItem->setParams(['Not available.']);
@@ -227,7 +228,6 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @return void
      */
     public function saveAll()
     {
@@ -248,7 +248,7 @@ class TransitionLog implements TransitionLogInterface
 //            return $auth->getIdentity();
 //        }
 
-        return null;
+        return;
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,4 +22,5 @@ class GitFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->getConsoleCommands();
     }
+
 }

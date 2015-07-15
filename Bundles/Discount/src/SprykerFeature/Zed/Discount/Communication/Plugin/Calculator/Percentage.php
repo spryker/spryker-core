@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,12 +14,14 @@ use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
  */
 class Percentage extends AbstractCalculator
 {
+
     const MIN_VALUE = 0.1;
     const MAX_VALUE = 100;
 
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $number
+     *
      * @return float
      */
     public function calculate(array $discountableObjects, $number)
@@ -43,4 +46,5 @@ class Percentage extends AbstractCalculator
     {
         return self::MAX_VALUE;
     }
+
 }

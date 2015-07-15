@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface;
-
 
 abstract class AbstractContainer implements ContainerInterface
 {
@@ -28,6 +27,7 @@ abstract class AbstractContainer implements ContainerInterface
             }
         }
         ksort($result);
+
         return $result;
     }
 
@@ -41,6 +41,7 @@ abstract class AbstractContainer implements ContainerInterface
             $stringArray[] = $key . ' = ' . $value;
         }
         $result = implode("\n", $stringArray);
+
         return $result;
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ interface ControllerExtensionInterface
 
     /**
      * @param $controller
+     *
      * @return mixed
      */
     public function extend($controller);

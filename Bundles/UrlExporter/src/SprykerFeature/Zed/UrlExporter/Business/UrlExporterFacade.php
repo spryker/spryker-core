@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class UrlExporterFacade extends AbstractFacade
 {
+
     /**
      * @param array $resultSet
      * @param LocaleTransfer $locale
@@ -38,4 +40,5 @@ class UrlExporterFacade extends AbstractFacade
 
         return $redirectBuilder->buildRedirects($redirectResultSet, $locale);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Library\Filter;
 
 class FilterChain implements FilterInterface
 {
+
     /**
      * @var FilterInterface[]|Callable[]
      */
@@ -15,9 +17,9 @@ class FilterChain implements FilterInterface
     /**
      * @param string $string
      *
-     * @return string
-     *
      * @throws \LogicException
+     *
+     * @return string
      */
     public function filter($string)
     {
@@ -55,4 +57,5 @@ class FilterChain implements FilterInterface
 
         return $this;
     }
+
 }

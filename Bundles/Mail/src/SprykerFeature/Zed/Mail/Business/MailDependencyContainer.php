@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,14 +8,15 @@ namespace SprykerFeature\Zed\Mail\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\MailBusiness;
 use SprykerFeature\Shared\Library\Config;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Pyz\Shared\Mail\MailConfig;
 
 /**
  * @method MailBusiness getFactory()
  */
-class MailDependencyContainer extends AbstractDependencyContainer
+class MailDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return MailSenderInterface
      */
@@ -45,12 +47,13 @@ class MailDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return string
-     *
      * @throws \Exception
+     *
+     * @return string
      */
     protected function getAPIKey()
     {
         return Config::get(MailConfig::MAIL_PROVIDER_MANDRILL)['api-key'];
     }
+
 }

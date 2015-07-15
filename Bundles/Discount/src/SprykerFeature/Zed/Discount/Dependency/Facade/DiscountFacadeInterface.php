@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,6 +7,7 @@
 namespace SprykerFeature\Zed\Discount\Dependency\Facade;
 
 use Generated\Shared\Discount\OrderInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
@@ -24,11 +26,14 @@ interface DiscountFacadeInterface
 {
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     *
+     * @param CalculableInterface $container
      *
      * @return array
      */
-    public function calculateDiscounts(OrderInterface $container);
+    public function calculateDiscounts(CalculableInterface $container);
+    //public function calculateDiscounts(OrderInterface $container);
 
     /**
      * @param string $code
@@ -39,16 +44,20 @@ interface DiscountFacadeInterface
     public function isVoucherUsable($code, $idDiscountVoucherPool);
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     *
+     * @param CalculableInterface $container
      * @param DecisionRule $decisionRule
      *
      * @return ModelResult
      */
-    public function isMinimumCartSubtotalReached(OrderInterface $container, DecisionRule $decisionRule);
+    public function isMinimumCartSubtotalReached(CalculableInterface $container, DecisionRule $decisionRule);
+    //public function isMinimumCartSubtotalReached(OrderInterface $container, DecisionRule $decisionRule);
 
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $percentage
+     *
      * @return float
      */
     public function calculatePercentage(array $discountableObjects, $percentage);
@@ -56,6 +65,7 @@ interface DiscountFacadeInterface
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $amount
+     *
      * @return float
      */
     public function calculateFixed(array $discountableObjects, $amount);
@@ -76,6 +86,7 @@ interface DiscountFacadeInterface
     /**
      * @param string $code
      * @param int $idVoucherPool
+     *
      * @return SpyDiscountVoucher
      */
     public function createVoucherCode($code, $idVoucherPool);
@@ -163,25 +174,34 @@ interface DiscountFacadeInterface
     public function getCalculatorPluginByName($pluginName);
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     *
+     * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
      */
-    public function getDiscountableItems(OrderInterface $container);
+    public function getDiscountableItems(CalculableInterface $container);
+    //public function getDiscountableItems(OrderInterface $container);
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     *
+     * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
      */
-    public function getDiscountableItemExpenses(OrderInterface $container);
+    public function getDiscountableItemExpenses(CalculableInterface $container);
+    //public function getDiscountableItemExpenses(OrderInterface $container);
 
     /**
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     *
+     * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
      */
-    public function getDiscountableOrderExpenses(OrderInterface $container);
+    public function getDiscountableOrderExpenses(CalculableInterface $container);
+    //public function getDiscountableOrderExpenses(OrderInterface $container);
 
     /**
      * @return array

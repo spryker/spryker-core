@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,9 +20,9 @@ class PriceTypeForm extends AbstractForm
         $this->addField('name')
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
     }
 
@@ -32,4 +33,5 @@ class PriceTypeForm extends AbstractForm
     {
         return [];
     }
+
 }

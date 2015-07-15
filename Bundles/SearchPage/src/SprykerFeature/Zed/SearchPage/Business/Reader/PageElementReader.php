@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,8 +29,9 @@ class PageElementReader implements PageElementReaderInterface
     /**
      * @param int $idPageElement
      *
-     * @return SpySearchPageElement
      * @throws PageElementDoesNotExistException
+     *
+     * @return SpySearchPageElement
      */
     public function getPageElementById($idPageElement)
     {
@@ -47,4 +49,5 @@ class PageElementReader implements PageElementReaderInterface
 
         return $pageElementEntity;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,12 +13,13 @@ use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class TranslationFileLoaderFactory
 {
+
     /**
      * @param string $format
      *
-     * @return LoaderInterface
-     *
      * @throws TranslationFormatNotFoundException
+     *
+     * @return LoaderInterface
      */
     public static function getLoader($format)
     {
@@ -35,4 +37,5 @@ class TranslationFileLoaderFactory
                 );
         }
     }
+
 }

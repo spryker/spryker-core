@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,7 +25,8 @@ class Button extends TwigFunction
     protected function getFunction()
     {
         $button = $this;
-        return function($title, array $options = []) use ($button) {
+
+        return function ($title, array $options = []) use ($button) {
             $id = $button->getId($title, $options);
             $class = $button->getClass($options);
             $html = '<button class="' . $class . '" id="' . $id . '">' . $title . '</button>';
@@ -36,6 +38,7 @@ class Button extends TwigFunction
     /**
      * @param $title
      * @param array $options
+     *
      * @return string
      */
     protected function getId($title, array $options)
@@ -52,6 +55,7 @@ class Button extends TwigFunction
 
     /**
      * @param array $options
+     *
      * @return string
      */
     protected function getClass(array $options)
@@ -63,4 +67,5 @@ class Button extends TwigFunction
 
         return $class;
     }
+
 }

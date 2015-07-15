@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerFeature\Zed\StockSalesConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\StockProductTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;
 use SprykerFeature\Zed\StockSalesConnector\Business\StockSalesConnectorDependencyContainer;
 
 /**
@@ -15,6 +15,7 @@ use SprykerFeature\Zed\StockSalesConnector\Business\StockSalesConnectorDependenc
  */
 class UpdateStockPlugin extends AbstractPlugin
 {
+
     // TODO not sure this Connector/Plugin will be needed after refactor sales Bundle!
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,10 +10,12 @@ use Generated\Shared\Transfer\MailTransfer;
 
 interface MailSenderInterface
 {
+
     /**
      * @param MailTransfer $mailTransfer
      *
      * @return array
      */
     public function sendMail(MailTransfer $mailTransfer);
+
 }

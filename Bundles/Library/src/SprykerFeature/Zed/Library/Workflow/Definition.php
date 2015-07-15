@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,28 +29,33 @@ abstract class Definition implements DefinitionInterface
 
     /**
      * @param ContextInterface $context
+     *
      * @return mixed
      */
     abstract protected function getSuccessResultFromContext(ContextInterface $context);
 
     /**
      * @param array $logContext
+     *
      * @return mixed
      */
     public function run(array $logContext)
     {
         $context = $this->buildContext();
         $invoker = $this->getTaskInvoker();
-        /* @var TaskInterface $task */
+        /** @var TaskInterface $task */
         foreach ($this->getTasks() as $task) {
             $invoker->invokeTask($task, $context, $logContext);
             if (!$task->isSuccess()) {
                 // If something failed, exit immediately
                 $result = new \SprykerEngine\Zed\Kernel\Business\ModelResult();
                 $result->addErrors($task->getErrors());
+
                 return $result;
             }
         }
+
         return $this->getSuccessResultFromContext($context);
     }
+
 }

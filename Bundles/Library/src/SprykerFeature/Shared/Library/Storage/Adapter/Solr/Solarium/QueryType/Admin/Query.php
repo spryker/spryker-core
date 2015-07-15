@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,10 +10,10 @@ use Solarium\Core\Query\Query as BaseQuery;
 
 /**
  * Class Query
- * @package SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin
  */
 class Query extends BaseQuery
 {
+
     const QUERY_ADMIN = 'admin';
 
     /**
@@ -20,10 +21,10 @@ class Query extends BaseQuery
      *
      * @var array
      */
-    protected $options = array(
+    protected $options = [
         'resultclass' => 'SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\Result',
         'handler' => 'cores/',
-    );
+    ];
 
     /**
      * {@inheritdoc}
@@ -48,4 +49,5 @@ class Query extends BaseQuery
     {
         return new ResponseParser();
     }
+
 }

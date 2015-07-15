@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,4 +21,5 @@ interface DependencyContainerInterface
      * @param AbstractQueryContainer $queryContainer
      */
     public function setQueryContainer(AbstractQueryContainer $queryContainer);
+
 }

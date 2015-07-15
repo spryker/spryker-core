@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Zed\TaxFrontendExporterConnector\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 /**
@@ -14,6 +14,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
  */
 class TaxFrontendExporterConnectorQueryContainer extends AbstractQueryContainer
 {
+
     /**
      * @param ModelCriteria $expandableQuery
      *
@@ -23,4 +24,5 @@ class TaxFrontendExporterConnectorQueryContainer extends AbstractQueryContainer
     {
         return $this->getDependencyContainer()->createProductTaxExpander()->expandQuery($expandableQuery);
     }
+
 }

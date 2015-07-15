@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\ProductSearch\Persistence\Propel\SpyProductSearchAttribut
 
 interface ProductSearchQueryContainerInterface
 {
+
     /**
      * @return SpyProductSearchAttributesOperationQuery
      */
@@ -40,4 +42,5 @@ interface ProductSearchQueryContainerInterface
      * @return ModelCriteria
      */
     public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale);
+
 }

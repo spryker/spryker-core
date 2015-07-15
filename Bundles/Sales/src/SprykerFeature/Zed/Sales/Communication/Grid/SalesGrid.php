@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,7 +22,6 @@ class SalesGrid extends AbstractGrid
     {
         $this->query->orderByIdSalesOrder(Criteria::DESC);
     }
-
 
     public function definePlugins()
     {
@@ -56,4 +56,5 @@ class SalesGrid extends AbstractGrid
 
         ];
     }
+
 }

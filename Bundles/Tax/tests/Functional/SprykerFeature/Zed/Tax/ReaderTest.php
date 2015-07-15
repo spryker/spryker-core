@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,7 +35,7 @@ class ReaderTest extends Test
     private $taxFacade;
 
     /**
-     * @var AutoCompletion $locator
+     * @var AutoCompletion
      */
     protected $locator;
 
@@ -117,4 +118,5 @@ class ReaderTest extends Test
 
         return $taxSetEntity;
     }
+
 }

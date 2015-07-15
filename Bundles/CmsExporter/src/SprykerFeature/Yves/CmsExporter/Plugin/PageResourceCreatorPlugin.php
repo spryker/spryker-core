@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Yves\CmsExporter\ResourceCreator\PageResourceCreator;
  */
 class PageResourceCreatorPlugin extends AbstractPlugin
 {
+
     /**
      * @return PageResourceCreator
      */
@@ -21,4 +23,5 @@ class PageResourceCreatorPlugin extends AbstractPlugin
     {
         return $this->getDependencyContainer()->createPageResourceCreator();
     }
+
 }

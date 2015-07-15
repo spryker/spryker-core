@@ -1,7 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
+namespace SprykerFeature\Zed\Library\Service;
 
 /**
  * Image_GraphViz
@@ -22,7 +25,7 @@
  * send a note to license@php.net so we can mail you a copy immediately.
  *
  * @category  Image
- * @package   Image_GraphViz
+ *
  * @author    Dr. Volker G�bbels <vmg@arachnion.de>
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @author    Karsten Dambekalns <k.dambekalns@fishfarm.de>
@@ -30,7 +33,9 @@
  * @author    Philippe Jausions <Philippe.Jausions@11abacus.com>
  * @copyright 2001-2007 Dr. Volker G�bbels <vmg@arachnion.de> and Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license   http://www.php.net/license/3_0.txt  PHP License 3.0
+ *
  * @version   CVS: $Id: GraphViz.php 304688 2010-10-24 05:21:17Z clockwerx $
+ *
  * @link      http://pear.php.net/package/Image_GraphViz
  * @link      http://www.graphviz.org/
  * @since     File available since Release 0.1.0
@@ -101,7 +106,7 @@
  * </code>
  *
  * @category  Image
- * @package   Image_GraphViz
+ *
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @author    Dr. Volker G�bbels <vmg@arachnion.de>
  * @author    Karsten Dambekalns <k.dambekalns@fishfarm.de>
@@ -109,13 +114,16 @@
  * @author    Philippe Jausions <Philippe.Jausions@11abacus.com>
  * @copyright 2001-2007 Dr. Volker G�bbels <vmg@arachnion.de> and Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license   http://www.php.net/license/3_0.txt The PHP License, Version 3.0
+ *
  * @version   Release: @package_version@
+ *
  * @link      http://pear.php.net/package/Image_GraphViz
  * @link      http://www.graphviz.org/
  * @since     Class available since Release 0.1
  */
-class SprykerFeature_Zed_Library_Service_GraphViz
+class GraphViz
 {
+
     /**
      * Base path to GraphViz commands
      *
@@ -142,21 +150,20 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      *
      * @var array
      */
-    public $graph = array('edgesFrom'  => array(),
-                       'nodes'      => array(),
-                       'attributes' => array(),
-                       'directed'   => true,
-                       'clusters'   => array(),
-                       'subgraphs'  => array(),
-                       'name'       => 'G',
-                       'strict'     => true,
-                      );
+    public $graph = ['edgesFrom' => [],
+                       'nodes' => [],
+                       'attributes' => [],
+                       'directed' => true,
+                       'clusters' => [],
+                       'subgraphs' => [],
+                       'name' => 'G',
+                       'strict' => true,
+                      ];
 
     /**
      * Whether to return PEAR_Error instance on failures instead of FALSE
      *
-     * @var boolean
-     * @access protected
+     * @var bool
      */
     public $_returnFalseOnError = true;
 
@@ -166,26 +173,24 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * Setting the name of the Graph is useful for including multiple image
      * maps on one page. If not set, the graph will be named 'G'.
      *
-     * @param boolean $directed    Directed (TRUE) or undirected (FALSE) graph.
+     * @param bool $directed    Directed (TRUE) or undirected (FALSE) graph.
      *                             Note: You MUST pass a boolean, and not just
      *                             an  expression that evaluates to TRUE or
      *                             FALSE (i.e. NULL, empty string, 0 will NOT
      *                             work)
      * @param array   $attributes  Attributes of the graph
      * @param string  $name        Name of the Graph
-     * @param boolean $strict      Whether to collapse multiple edges between
+     * @param bool $strict      Whether to collapse multiple edges between
      *                             same nodes
-     * @param boolean $returnError Set to TRUE to return PEAR_Error instances
+     * @param bool $returnError Set to TRUE to return PEAR_Error instances
      *                             on failures instead of FALSE
-     *
-     * @access public
      */
-    public function __construct($directed = true, $attributes = array(),
+    public function __construct($directed = true, $attributes = [],
                             $name = 'G', $strict = true, $returnError = false)
     {
         $this->setDirected($directed);
         $this->setAttributes($attributes);
-        $this->graph['name']   = $name;
+        $this->graph['name'] = $name;
         $this->graph['strict'] = (boolean) $strict;
 
         $this->_returnFalseOnError = !$returnError;
@@ -200,8 +205,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      *                        of the formats supported by GraphViz.
      * @param string $command "dot" or "neato"
      *
-     * @return boolean TRUE on success, FALSE or PEAR_Error otherwise
-     * @access public
+     * @return bool TRUE on success, FALSE or PEAR_Error otherwise
      */
     public function image($format = 'svg', $command = null)
     {
@@ -286,19 +290,20 @@ class SprykerFeature_Zed_Library_Service_GraphViz
 
     /**
      * Renders the graph directly as a svn, without creating temporary files
+     *
      * @param string $command "dot" or "neato"
      */
     public function renderSVG($command = 'dot')
     {
-        $descriptorspec = array(
-            0 => array("pipe", "r"),  // stdin
-            1 => array("pipe", "w"),  // stdout
-            2 => array("pipe", "a") // stderr
-        );
+        $descriptorspec = [
+            0 => ['pipe', 'r'],  // stdin
+            1 => ['pipe', 'w'],  // stdout
+            2 => ['pipe', 'a'], // stderr
+        ];
 
         $returnCode = 0;
-        system($command . ' -V',$returnCode);
-        if ($returnCode != 0) {
+        system($command . ' -V', $returnCode);
+        if ($returnCode !== 0) {
             return '<div style="border:1px solid red;color:red;"><p>Could not run <b>'
              . $command . '</b>.</p><p>Please install graphviz through your package manager or download it from <a href="http://www.graphviz.org/">http://www.graphviz.org/</a></p><p>On Mac, make sure the webserver can find it (<tt>sudo ln -s /opt/local/bin/'
              . $command . ' /usr/bin/' . $command . '</tt>)</p></div>';
@@ -314,6 +319,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
             proc_close($process);
             // get rid of xml declaration
             $svg = explode('<svg ', $svg);
+
             return '<div style="overflow-x:scroll;overflow-y:hidden"><svg ' . $svg[1] . '</div>';
         }
     }
@@ -327,7 +333,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      *
      * @return string The image (data) created by GraphViz, FALSE or PEAR_Error
      *                on error
-     * @access public
+     *
      * @since  Method available since Release 1.1.0
      */
     public function fetch($format = 'svg', $command = null)
@@ -354,6 +360,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
                 return false;
             }
             throw new ErrorException('Could not read rendered file');
+
             return $error;
         }
 
@@ -373,9 +380,8 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      *                           of the formats supported by GraphViz.
      * @param string $command    "dot" or "neato"
      *
-     * @return boolean TRUE if the file was saved, FALSE or PEAR_Error
+     * @return bool TRUE if the file was saved, FALSE or PEAR_Error
      *                 otherwise.
-     * @access public
      */
     public function renderDotFile($dotfile, $outputfile, $format = 'svg',
                            $command = null)
@@ -385,6 +391,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
                 return false;
             }
             throw new ErrorException('Could not find dot file');
+
             return $error;
         }
 
@@ -399,22 +406,22 @@ class SprykerFeature_Zed_Library_Service_GraphViz
         }
         $command_orig = $command;
 
-        $command = $this->binPath.(($command == 'dot') ? $this->dotCommand
+        $command = $this->binPath . (($command === 'dot') ? $this->dotCommand
                                                        : $this->neatoCommand);
 
-        $command .= ' -T'.escapeshellarg($format)
-                    .' -o'.escapeshellarg($outputfile)
-                    .' '.escapeshellarg($dotfile)
-                    .' 2>&1';
+        $command .= ' -T' . escapeshellarg($format)
+                    . ' -o' . escapeshellarg($outputfile)
+                    . ' ' . escapeshellarg($dotfile)
+                    . ' 2>&1';
         exec($command, $msg, $return_val);
 
         clearstatcache();
-        if (file_exists($outputfile) && filemtime($outputfile) > $oldmtime && $return_val == 0) {
+        if (file_exists($outputfile) && filemtime($outputfile) > $oldmtime && $return_val === 0) {
             return true;
         } elseif ($this->_returnFalseOnError) {
             return false;
         }
-        throw new ErrorException($command_orig.' command failed: ' . implode("\n", $msg));
+        throw new ErrorException($command_orig . ' command failed: ' . implode("\n", $msg));
     }
 
     /**
@@ -427,15 +434,13 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * @param array  $attributes Attributes of the cluster.
      * @param string $group      ID of group to nest cluster into
      *
-     * @return void
-     * @access public
      * @see    addSubgraph()
      */
-    public function addCluster($id, $title, $attributes = array(), $group = 'default')
+    public function addCluster($id, $title, $attributes = [], $group = 'default')
     {
-        $this->graph['clusters'][$id]['title']      = $title;
+        $this->graph['clusters'][$id]['title'] = $title;
         $this->graph['clusters'][$id]['attributes'] = $attributes;
-        $this->graph['clusters'][$id]['embedIn']    = $group;
+        $this->graph['clusters'][$id]['embedIn'] = $group;
     }
 
     /**
@@ -445,15 +450,12 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * @param array  $title      Title.
      * @param array  $attributes Attributes of the cluster.
      * @param string $group      ID of group to nest subgraph into
-     *
-     * @return void
-     * @access public
      */
-    public function addSubgraph($id, $title, $attributes = array(), $group = 'default')
+    public function addSubgraph($id, $title, $attributes = [], $group = 'default')
     {
-        $this->graph['subgraphs'][$id]['title']      = $title;
+        $this->graph['subgraphs'][$id]['title'] = $title;
         $this->graph['subgraphs'][$id]['attributes'] = $attributes;
-        $this->graph['subgraphs'][$id]['embedIn']    = $group;
+        $this->graph['subgraphs'][$id]['embedIn'] = $group;
     }
 
     /**
@@ -462,11 +464,8 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * @param string $name       Name of the node.
      * @param array  $attributes Attributes of the node.
      * @param string $group      Group of the node.
-     *
-     * @return void
-     * @access public
      */
-    public function addNode($name, $attributes = array(), $group = 'default')
+    public function addNode($name, $attributes = [], $group = 'default')
     {
         $this->graph['nodes'][$group][$name] = $attributes;
     }
@@ -483,9 +482,6 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      *
      * @param string $name  Name of the node to be removed.
      * @param string $group Group of the node.
-     *
-     * @return void
-     * @access public
      */
     public function removeNode($name, $group = 'default')
     {
@@ -516,18 +512,17 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * @param array $attributes Attributes of the edge.
      * @param array $ports      Start node => port, End node => port
      *
-     * @return integer an edge ID that can be used with {@link removeEdge()}
-     * @access public
+     * @return int an edge ID that can be used with {@link removeEdge()}
      */
-    public function addEdge($edge, $attributes = array(), $ports = array())
+    public function addEdge($edge, $attributes = [], $ports = [])
     {
         if (!is_array($edge)) {
             return;
         }
 
         $from = key($edge);
-        $to   = $edge[$from];
-        $info = array();
+        $to = $edge[$from];
+        $info = [];
 
         if (is_array($ports)) {
             if (array_key_exists($from, $ports)) {
@@ -560,11 +555,8 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * Removes an edge from the graph.
      *
      * @param array   $edge Start and End node of the edge to be removed.
-     * @param integer $id   specific edge ID (only usefull when multiple edges
+     * @param int $id   specific edge ID (only usefull when multiple edges
      *                      exist between the same 2 nodes)
-     *
-     * @return void
-     * @access public
      */
     public function removeEdge($edge, $id = null)
     {
@@ -573,13 +565,13 @@ class SprykerFeature_Zed_Library_Service_GraphViz
         }
 
         $from = key($edge);
-        $to   = $edge[$from];
+        $to = $edge[$from];
 
         if (!is_null($id)) {
             if (isset($this->graph['edgesFrom'][$from][$to][$id])) {
                 unset($this->graph['edgesFrom'][$from][$to][$id]);
 
-                if (count($this->graph['edgesFrom'][$from][$to]) == 0) {
+                if (count($this->graph['edgesFrom'][$from][$to]) === 0) {
                     unset($this->graph['edgesFrom'][$from][$to]);
                 }
             }
@@ -592,9 +584,6 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * Adds attributes to the graph.
      *
      * @param array $attributes Attributes to be added to the graph.
-     *
-     * @return void
-     * @access public
      */
     public function addAttributes($attributes)
     {
@@ -607,9 +596,6 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * Sets attributes of the graph.
      *
      * @param array $attributes Attributes to be set for the graph.
-     *
-     * @return void
-     * @access public
      */
     public function setAttributes($attributes)
     {
@@ -626,11 +612,10 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * @param array $input input to escape
      *
      * @return array input escaped
-     * @access protected
      */
     public function _escapeArray($input)
     {
-        $output = array();
+        $output = [];
 
         foreach ((array) $input as $k => $v) {
             switch ($k) {
@@ -654,10 +639,9 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * Returns a safe "ID" in DOT syntax
      *
      * @param string  $input string to use as "ID"
-     * @param boolean $html  whether to attempt detecting HTML-like content
+     * @param bool $html  whether to attempt detecting HTML-like content
      *
      * @return string
-     * @access protected
      */
     public function _escape($input, $html = false)
     {
@@ -668,7 +652,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
         case 'digraph':
         case 'subgraph':
         case 'strict':
-            return '"'.$input.'"';
+            return '"' . $input . '"';
         }
 
         if (is_bool($input)) {
@@ -677,7 +661,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
 
         if ($html && (strpos($input, '</') !== false
                       || strpos($input, '/>') !== false)) {
-            return '<'.$input.'>';
+            return '<' . $input . '>';
         }
 
         if (preg_match('/^([a-z_][a-z_0-9]*|-?(\.[0-9]+|[0-9]+(\.[0-9]*)?))$/i',
@@ -685,8 +669,8 @@ class SprykerFeature_Zed_Library_Service_GraphViz
             return $input;
         }
 
-        return '"'.str_replace(array("\r\n", "\n", "\r", '"'),
-                               array('\n',   '\n', '\n', '\"'), $input).'"';
+        return '"' . str_replace(["\r\n", "\n", "\r", '"'],
+                               ['\n',   '\n', '\n', '\"'], $input) . '"';
     }
 
     /**
@@ -695,10 +679,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * Note: You MUST pass a boolean, and not just an expression that evaluates
      *       to TRUE or FALSE (i.e. NULL, empty string, 0 will not work)
      *
-     * @param boolean $directed Directed (TRUE) or undirected (FALSE) graph.
-     *
-     * @return void
-     * @access public
+     * @param bool $directed Directed (TRUE) or undirected (FALSE) graph.
      */
     public function setDirected($directed)
     {
@@ -711,9 +692,6 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * Loads a graph from a file in Image_GraphViz format
      *
      * @param string $file File to load graph from.
-     *
-     * @return void
-     * @access public
      */
     public function load($file)
     {
@@ -725,15 +703,15 @@ class SprykerFeature_Zed_Library_Service_GraphViz
             }
 
             // Convert old storage format to new one
-            $defaults = array('edgesFrom'  => array(),
-                              'nodes'      => array(),
-                              'attributes' => array(),
-                              'directed'   => true,
-                              'clusters'   => array(),
-                              'subgraphs'  => array(),
-                              'name'       => 'G',
-                              'strict'     => true,
-                        );
+            $defaults = ['edgesFrom' => [],
+                              'nodes' => [],
+                              'attributes' => [],
+                              'directed' => true,
+                              'clusters' => [],
+                              'subgraphs' => [],
+                              'name' => 'G',
+                              'strict' => true,
+                        ];
 
             $this->graph = array_merge($defaults, $g);
 
@@ -741,7 +719,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
                 foreach ($this->graph['edges'] as $id => $nodes) {
                     $attr = (isset($this->graph['edgeAttributes'][$id]))
                             ? $this->graph['edgeAttributes'][$id]
-                            : array();
+                            : [];
 
                     $this->addEdge($nodes, $attr);
                 }
@@ -762,7 +740,6 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      *
      * @return string File the graph was saved to, FALSE or PEAR_Error on
      *                failure.
-     * @access public
      */
     public function save($file = '')
     {
@@ -784,6 +761,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
         }
 
         throw new ErrorException('Could not save serialized graph instance');
+
         return $error;
     }
 
@@ -793,11 +771,10 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * @param string $parent Group ID
      *
      * @return array list of group IDs
-     * @access protected
      */
     public function _getSubgraphs($parent)
     {
-        $subgraphs = array();
+        $subgraphs = [];
         foreach ($this->graph['clusters'] as $id => $info) {
             if ($info['embedIn'] === $parent) {
                 $subgraphs[] = $id;
@@ -808,6 +785,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
                 $subgraphs[] = $id;
             }
         }
+
         return $subgraphs;
     }
 
@@ -815,12 +793,12 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * Returns a list of cluster/subgraph IDs
      *
      * @return array
-     * @access protected
      */
     public function _getGroups()
     {
         $groups = array_merge(array_keys($this->graph['clusters']),
                               array_keys($this->graph['subgraphs']));
+
         return array_unique($groups);
     }
 
@@ -828,11 +806,10 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * Returns a list of top groups
      *
      * @return array
-     * @access protected
      */
     public function _getTopGraphs()
     {
-        $top = array();
+        $top = [];
         $groups = $this->_getGroups();
 
         foreach ($groups as $id) {
@@ -857,20 +834,19 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * Parses the graph into GraphViz markup.
      *
      * @return string GraphViz markup
-     * @access public
      */
     public function parse()
     {
-        $parsedGraph  = (empty($this->graph['strict'])) ? '' : 'strict ';
+        $parsedGraph = (empty($this->graph['strict'])) ? '' : 'strict ';
         $parsedGraph .= (empty($this->graph['directed'])) ? 'graph ' : 'digraph ';
-        $parsedGraph .= $this->_escape($this->graph['name'])." {\n";
+        $parsedGraph .= $this->_escape($this->graph['name']) . " {\n";
 
         $indent = '    ';
 
         $attr = $this->_escapeArray($this->graph['attributes']);
 
         foreach ($attr as $key => $value) {
-            $parsedGraph .= $indent.$key.'='.$value.";\n";
+            $parsedGraph .= $indent . $key . '=' . $value . ";\n";
         }
 
         $groups = $this->_getGroups();
@@ -901,31 +877,31 @@ class SprykerFeature_Zed_Library_Service_GraphViz
                     $t = $to;
 
                     if (array_key_exists('portFrom', $info)) {
-                        $f .= ':'.$this->_escape($info['portFrom']);
+                        $f .= ':' . $this->_escape($info['portFrom']);
                     }
 
                     if (array_key_exists('portTo', $info)) {
-                        $t .= ':'.$this->_escape($info['portTo']);
+                        $t .= ':' . $this->_escape($info['portTo']);
                     }
 
-                    $parsedGraph .= $indent.$f.$separator.$t;
+                    $parsedGraph .= $indent . $f . $separator . $t;
 
                     if (!empty($info['attributes'])) {
-                        $attributeList = array();
+                        $attributeList = [];
 
                         foreach ($this->_escapeArray($info['attributes']) as $key => $value) {
                             switch ($key) {
                             case 'lhead':
                             case 'ltail':
                                 if (strncasecmp($value, 'cluster', 7)) {
-                                    $value = 'cluster_'.$value;
+                                    $value = 'cluster_' . $value;
                                 }
                                 break;
                             }
-                            $attributeList[] = $key.'='.$value;
+                            $attributeList[] = $key . '=' . $value;
                         }
 
-                        $parsedGraph .= ' [ '.implode(',', $attributeList).' ]';
+                        $parsedGraph .= ' [ ' . implode(',', $attributeList) . ' ]';
                     }
 
                     $parsedGraph .= ";\n";
@@ -943,26 +919,26 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * @param string $indent space indentation
      *
      * @return string output
-     * @access protected
      */
     public function _nodes($nodes, $indent)
     {
         $parsedGraph = '';
         foreach ($nodes as $node => $attributes) {
-            $parsedGraph .= $indent.$this->_escape($node);
+            $parsedGraph .= $indent . $this->_escape($node);
 
-            $attributeList = array();
+            $attributeList = [];
 
             foreach ($this->_escapeArray($attributes) as $key => $value) {
-                $attributeList[] = $key.'='.$value;
+                $attributeList[] = $key . '=' . $value;
             }
 
             if (!empty($attributeList)) {
-                $parsedGraph .= ' [ '.implode(',', $attributeList).' ]';
+                $parsedGraph .= ' [ ' . implode(',', $attributeList) . ' ]';
             }
 
             $parsedGraph .= ";\n";
         }
+
         return $parsedGraph;
     }
 
@@ -970,7 +946,6 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      * Generates output for a group
      *
      * @return string output
-     * @access protected
      */
     public function _subgraph($group, &$indent)
     {
@@ -984,32 +959,32 @@ class SprykerFeature_Zed_Library_Service_GraphViz
             if (isset($this->graph['clusters'][$group])) {
                 $type = 'clusters';
                 if (strncasecmp($group, 'cluster', 7)) {
-                    $_group = $this->_escape('cluster_'.$group);
+                    $_group = $this->_escape('cluster_' . $group);
                 }
             } elseif (isset($this->graph['subgraphs'][$group])) {
                 $type = 'subgraphs';
             }
-            $parsedGraph .= $indent.'subgraph '.$_group." {\n";
+            $parsedGraph .= $indent . 'subgraph ' . $_group . " {\n";
 
             $indent .= '    ';
 
             if ($type !== null && isset($this->graph[$type][$group])) {
                 $cluster = $this->graph[$type][$group];
-                $_attr    = $this->_escapeArray($cluster['attributes']);
+                $_attr = $this->_escapeArray($cluster['attributes']);
 
-                $attr = array();
+                $attr = [];
                 foreach ($_attr as $key => $value) {
-                    $attr[] = $key.'='.$value;
+                    $attr[] = $key . '=' . $value;
                 }
 
                 if (strlen($cluster['title'])) {
                     $attr[] = 'label='
-                              .$this->_escape($cluster['title'], true);
+                              . $this->_escape($cluster['title'], true);
                 }
 
                 if ($attr) {
-                    $parsedGraph .= $indent.'graph [ '.implode(',', $attr)
-                                    ." ];\n";
+                    $parsedGraph .= $indent . 'graph [ ' . implode(',', $attr)
+                                    . " ];\n";
                 }
             }
         }
@@ -1023,7 +998,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
         if ($group !== 'default') {
             $indent = substr($indent, 0, -4);
 
-            $parsedGraph .= $indent."}\n";
+            $parsedGraph .= $indent . "}\n";
         }
 
         return $parsedGraph;
@@ -1034,8 +1009,9 @@ class SprykerFeature_Zed_Library_Service_GraphViz
      *
      * @param string $file
      *
-     * @return bool|string
      * @throws ErrorException
+     *
+     * @return bool|string
      */
     public function saveParsedGraph($file = '')
     {
@@ -1043,7 +1019,7 @@ class SprykerFeature_Zed_Library_Service_GraphViz
 
         if (!empty($parsedGraph)) {
             if (empty($file)) {
-                $file =  time() . '.dot';
+                $file = time() . '.dot';
             }
 
             $path = '/tmp/spryker_graphs';
@@ -1072,7 +1048,8 @@ class SprykerFeature_Zed_Library_Service_GraphViz
         $googleApi = new \SprykerFeature_Zed_Library_Service_GoogleGraph();
         $googleApi->setCht('gv:dot');
         $googleApi->setChof('gif');
-        $googleApi->setChl('digraph'.$googleGraph);
+        $googleApi->setChl('digraph' . $googleGraph);
+
         return $googleApi->request();
     }
 

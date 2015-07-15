@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ class PriceGridController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function priceAction(Request $request)
@@ -31,6 +33,7 @@ class PriceGridController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function priceTypeAction(Request $request)
@@ -42,12 +45,13 @@ class PriceGridController extends AbstractController
 
     /**
      * @param array $data
+     *
      * @return array
      */
     protected function orderData(array $data)
     {
         foreach ($data as $index => $row) {
-            if (null != $row['sku_product_concrete']) {
+            if (null !== $row['sku_product_concrete']) {
                 $data[$index]['sku_product'] = $row['sku_product_concrete'];
                 $data[$index]['/**
  * @method PriceDependencyContainer getDependencyContainer()
@@ -72,4 +76,5 @@ abstract']);
 
         return $data;
     }
+
 }

@@ -1,26 +1,27 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ItemPriceToPayCalculator;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * Class ItemPriceToPayTest
+ *
  * @group ItemPriceToPayTest
  * @group Calculation
- * @package PhpUnit\SprykerFeature\Zed\Calculation\Communication\Plugin
  */
 class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
 {
+
     const ITEM_GROSS_PRICE = 10000;
     const ITEM_SALESRULE_DISCOUNT_AMOUNT = 100;
     const ITEM_COUPON_DISCOUNT_AMOUNT = 50;
@@ -31,12 +32,12 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
 
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $calculator = new ItemPriceToPayCalculator(Locator::getInstance());
         $calculator->recalculate($order);
 
-        foreach ($order->getItems() as $item) {
+        foreach ($order->getCalculableObject()->getItems() as $item) {
             $this->assertEquals(self::ITEM_GROSS_PRICE, $item->getPriceToPay());
         }
     }
@@ -47,17 +48,17 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
 
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
         $calculator = new ItemPriceToPayCalculator(Locator::getInstance());
         $calculator->recalculate($order);
 
-        foreach ($order->getItems() as $item) {
+        foreach ($order->getCalculableObject()->getItems() as $item) {
             $this->assertEquals(self::ITEM_GROSS_PRICE - self::ITEM_COUPON_DISCOUNT_AMOUNT, $item->getPriceToPay());
         }
     }
@@ -68,7 +69,7 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
 
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
@@ -78,11 +79,11 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
         $calculator = new ItemPriceToPayCalculator(Locator::getInstance());
         $calculator->recalculate($order);
 
-        foreach ($order->getItems() as $item) {
+        foreach ($order->getCalculableObject()->getItems() as $item) {
             $this->assertEquals(
                 self::ITEM_GROSS_PRICE - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_SALESRULE_DISCOUNT_AMOUNT,
                 $item->getPriceToPay()
@@ -96,7 +97,7 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
 
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
@@ -106,12 +107,12 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $order->addItem($item);
-        $order->addItem(clone $item);
+        $order->getCalculableObject()->addItem($item);
+        $order->getCalculableObject()->addItem(clone $item);
         $calculator = new ItemPriceToPayCalculator(Locator::getInstance());
         $calculator->recalculate($order);
 
-        foreach ($order->getItems() as $item) {
+        foreach ($order->getCalculableObject()->getItems() as $item) {
             $this->assertEquals(
                 self::ITEM_GROSS_PRICE - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_SALESRULE_DISCOUNT_AMOUNT,
                 $item->getPriceToPay()
@@ -128,13 +129,13 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
         $order = new OrderTransfer();
 
-        return $order;
+        return new CalculableContainer($order);
     }
 
     /**
@@ -147,11 +148,4 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
         return $item;
     }
 
-    /**
-     * @return AbstractLocatorLocator|Locator|AutoCompletion
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
-    }
 }

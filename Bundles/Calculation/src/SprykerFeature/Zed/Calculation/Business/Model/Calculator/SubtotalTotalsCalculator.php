@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,11 +7,10 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\ExpenseInterface;
-use Generated\Shared\Calculation\ExpensesInterface;
-use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\Calculation\OrderItemOptionInterface;
 use Generated\Shared\Sales\OrderItemsInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class SubtotalTotalsCalculator implements
@@ -20,24 +20,24 @@ class SubtotalTotalsCalculator implements
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param CalculableInterface $calculableContainer
+     * @param $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        CalculableInterface $calculableContainer,
+        $calculableItems
     ) {
         $subtotal = $this->calculateSubtotal($calculableItems);
         $totalsTransfer->setSubtotal($subtotal);
     }
 
     /**
-     * @param \ArrayObject $calculableItems
+     * @param $calculableItems
      *
      * @return int
      */
-    public function calculateSubtotal(\ArrayObject $calculableItems)
+    public function calculateSubtotal($calculableItems)
     {
         $subtotal = 0;
 
@@ -46,9 +46,11 @@ class SubtotalTotalsCalculator implements
         }
 
         foreach ($calculableItems as $item) {
-            $subtotal += $item->getGrossPrice();
-            $subtotal += $this->sumOptions($item->getOptions());
-            $subtotal += $this->sumExpenses($item->getExpenses());
+            for ($i = 0; $i < $item->getQuantity(); $i++) {
+                $subtotal += $item->getGrossPrice();
+                $subtotal += $this->sumOptions($item->getOptions());
+                $subtotal += $this->sumExpenses($item->getExpenses());
+            }
         }
 
         return $subtotal;
@@ -83,4 +85,5 @@ class SubtotalTotalsCalculator implements
 
         return $expensesPrice;
     }
+
 }

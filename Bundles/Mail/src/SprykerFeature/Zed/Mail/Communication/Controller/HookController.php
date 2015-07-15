@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HookController extends AbstractController
 {
+
     public function rejectAction(Request $request)
     {
         //TODO
@@ -17,4 +19,5 @@ class HookController extends AbstractController
         //methods:
         //handleMailRejection(messageId, recipient, rejectReason)
     }
+
 }

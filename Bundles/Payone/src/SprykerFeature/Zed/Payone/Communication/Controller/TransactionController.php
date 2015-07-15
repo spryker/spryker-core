@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,11 +25,14 @@ class TransactionController extends AbstractController implements PayoneApiConst
      */
     public function statusUpdateAction(Request $request)
     {
-        /********************************************************************************************************
-         * @todo: Payone allways sends status updates in ISO-8859-1 !!!! Do we have to transform???
-         ********************************************************************************************************/
+        //Payone always sends status updates in ISO-8859-1. We transform them to utf8.
+        $requestParameters = $request->request->all();
+        foreach ($requestParameters as $requestParameterKey => $requestParameter) {
+            $requestParameters[$requestParameterKey] = utf8_encode($requestParameter);
+        }
+
         $response = $this->getFacade()
-            ->processTransactionStatusUpdate($request->request->all());
+            ->processTransactionStatusUpdate($requestParameters);
 
         $callback = function () use ($response) {
             echo $response;

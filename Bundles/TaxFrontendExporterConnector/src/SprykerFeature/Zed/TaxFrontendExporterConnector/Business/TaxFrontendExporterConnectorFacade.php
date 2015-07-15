@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class TaxFrontendExporterConnectorFacade extends AbstractFacade
 {
+
     /**
      * @param array $resultSet
      * @param array $processedResultSet
@@ -30,4 +32,5 @@ class TaxFrontendExporterConnectorFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->getHelperModel()->getDefaultPriceType();
     }
+
 }

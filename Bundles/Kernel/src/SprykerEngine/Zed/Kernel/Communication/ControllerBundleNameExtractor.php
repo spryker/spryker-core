@@ -1,17 +1,19 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Zed\Kernel\Communication;
 
-class ControllerBundleNameExtractor 
+class ControllerBundleNameExtractor
 {
 
     const BUNDLE_NAME_POSITION = 2;
 
     /**
      * @param string|object $controller
+     *
      * @return string
      */
     public function getBundleName($controller)
@@ -23,4 +25,5 @@ class ControllerBundleNameExtractor
 
         return $controllerNameParts[self::BUNDLE_NAME_POSITION];
     }
+
 }

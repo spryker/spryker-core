@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\AbstractPaymentMethodContainer;
-
 
 class BankAccountContainer extends AbstractPaymentMethodContainer
 {
@@ -47,8 +46,6 @@ class BankAccountContainer extends AbstractPaymentMethodContainer
      */
     protected $mandate_identification;
 
-
-    
     /**
      * @param string $bankaccount
      */

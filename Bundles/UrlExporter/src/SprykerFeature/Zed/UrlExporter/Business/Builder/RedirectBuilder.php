@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class RedirectBuilder implements RedirectBuilderInterface
 {
+
     /**
      * @var KeyBuilderInterface
      */
@@ -41,10 +43,11 @@ class RedirectBuilder implements RedirectBuilderInterface
                 'from_url' => $redirect['from_url'],
                 'to_url' => $redirect['to_url'],
                 'status' => $redirect['status'],
-                'id' => $redirect['redirect_id']
+                'id' => $redirect['redirect_id'],
             ];
         }
 
         return $returnedResultSet;
     }
+
 }

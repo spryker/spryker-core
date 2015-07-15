@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -76,7 +77,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     protected function isSslEnabled()
     {
@@ -198,4 +199,5 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
             }
         });
     }
+
 }

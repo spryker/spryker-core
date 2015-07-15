@@ -1,10 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 /**
  * @deprecated
+ *
  * @todo get rid of me
  */
 
@@ -32,12 +34,12 @@ class SystemConfig extends AbstractBundleConfig
     /**
      * @var array
      */
-    protected $hostToIpAddressMapping = array();
+    protected $hostToIpAddressMapping = [];
 
     /**
      * @var array
      */
-    public $storePoolMapping = array(
+    public $storePoolMapping = [
         'DE' => '00',
         'PL' => '01',
         'FR' => '02',
@@ -52,7 +54,7 @@ class SystemConfig extends AbstractBundleConfig
         'AR' => '12',
         'CL' => '13',
         'CO' => '14',
-    );
+    ];
 
     /**
      * @return string
@@ -67,7 +69,7 @@ class SystemConfig extends AbstractBundleConfig
      */
     public function getHosts()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -97,7 +99,7 @@ class SystemConfig extends AbstractBundleConfig
     public function orderCheckShouldBePerformed()
     {
         $date = Zend_Date::now();
-        $hour = (int)($date->get('HH'));
+        $hour = (int) ($date->get('HH'));
 
         // there is no minimum amount for orders between 22h - 6h
         return ($hour > 6 && $hour < 22);
@@ -109,9 +111,9 @@ class SystemConfig extends AbstractBundleConfig
     public function getThresholds()
     {
         // minutes => amount of orders
-        return array(
+        return [
             15 => 1,
-        );
+        ];
     }
 
     /**
@@ -119,7 +121,7 @@ class SystemConfig extends AbstractBundleConfig
      */
     public function getRegisteredWatchdogChecks()
     {
-        $checks = array();
+        $checks = [];
 
         foreach ($this->getThresholds() as $minutes => $amountOfOrders) {
             $checks[] = $this->factory->createModelWatchdogSalesOrder($minutes, $amountOfOrders);
@@ -133,9 +135,9 @@ class SystemConfig extends AbstractBundleConfig
      */
     public function getNotificationEmailGroups()
     {
-        return array(
+        return [
             '',
-        );
+        ];
     }
 
     /**
@@ -143,10 +145,10 @@ class SystemConfig extends AbstractBundleConfig
      */
     public function getNotificationEmailSettings()
     {
-        return array(
+        return [
             \SprykerFeature_Zed_System_Business_Model_Watchdog_Abstract::NOTIFICATION_FROM => '',
             \SprykerFeature_Zed_System_Business_Model_Watchdog_Abstract::NOTIFICATION_SUBJECT => '',
-        );
+        ];
     }
 
     /**

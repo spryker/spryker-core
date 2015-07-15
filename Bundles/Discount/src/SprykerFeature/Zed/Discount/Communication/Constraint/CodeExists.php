@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\Constraint;
 
 class CodeExists extends Constraint
 {
+
     public $message = 'The Code {{ value }} already exists in the Database!';
 
     /**
@@ -32,7 +34,7 @@ class CodeExists extends Constraint
         $voucherName = null,
         $options = null
     ) {
-        $this->queryContainer= $queryContainer;
+        $this->queryContainer = $queryContainer;
         $this->voucherId = $voucherName;
         parent::__construct($options);
     }
@@ -52,4 +54,5 @@ class CodeExists extends Constraint
     {
         return $this->voucherId;
     }
+
 }

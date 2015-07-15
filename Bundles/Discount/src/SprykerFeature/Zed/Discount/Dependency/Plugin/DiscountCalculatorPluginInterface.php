@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,9 +10,11 @@ use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 interface DiscountCalculatorPluginInterface
 {
+
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $number
+     *
      * @return
      */
     public function calculate(array $discountableObjects, $number);
@@ -31,4 +34,5 @@ interface DiscountCalculatorPluginInterface
      * @return float
      */
     public function getMaxValue();
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -99,4 +100,5 @@ class CamelHumpClassResolverTest extends \PHPUnit_Framework_TestCase
         $resolver = new CamelHumpClassResolver($classResolver);
         $resolver->resolve('Foo', 'Kernel');
     }
+
 }

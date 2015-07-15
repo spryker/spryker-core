@@ -1,31 +1,33 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\TotalsInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 interface SubtotalTotalsCalculatorInterface
 {
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param CalculableInterface $calculableContainer
+     * @param $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        CalculableInterface $calculableContainer,
+        $calculableItems
     );
 
     /**
-     * @param \ArrayObject $calculableItems
+     * @param $calculableItems
      *
      * @return int
      */
-    public function calculateSubtotal(\ArrayObject $calculableItems);
+    public function calculateSubtotal($calculableItems);
+
 }

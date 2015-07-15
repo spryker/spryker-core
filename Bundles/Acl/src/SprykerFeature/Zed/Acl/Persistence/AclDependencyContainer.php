@@ -1,12 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\Acl\Persistence;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\AclPersistence;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRoleQuery;
@@ -19,7 +20,7 @@ use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 /**
  * @method AclPersistence getFactory()
  */
-class AclDependencyContainer extends AbstractDependencyContainer
+class AclDependencyContainer extends AbstractPersistenceDependencyContainer
 {
 
     /**
@@ -72,6 +73,7 @@ class AclDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @throws \ErrorException
+     *
      * @return UserQueryContainer
      */
     private function createUserQueryContainer()

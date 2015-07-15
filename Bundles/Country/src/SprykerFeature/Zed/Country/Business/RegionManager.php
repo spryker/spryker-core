@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,7 +23,8 @@ class RegionManager implements RegionManagerInterface
      */
     public function __construct(
         CountryQueryContainerInterface $countryQueryContainer
-    ) {
+    )
+    {
         $this->countryQueryContainer = $countryQueryContainer;
     }
 
@@ -41,8 +43,7 @@ class RegionManager implements RegionManagerInterface
         $region
             ->setIso2Code($isoCode)
             ->setFkCountry($fkCountry)
-            ->setName($regionName)
-        ;
+            ->setName($regionName);
 
         $region->save();
 
@@ -72,4 +73,5 @@ class RegionManager implements RegionManagerInterface
 
         return $query->count() > 0;
     }
+
 }

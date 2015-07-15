@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -41,8 +42,8 @@ class CommentForm extends AbstractForm
                         'type' => 'string',
                         'message' => 'Please add comment',
                     ]),
-                    new NotBlank()
-                ])
+                    new NotBlank(),
+                ]),
             ])
         ;
         $fields[] = $this->addField('fk_sales_order')
@@ -52,4 +53,5 @@ class CommentForm extends AbstractForm
             ->setRefresh(false)
         ;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -27,8 +28,8 @@ class DefinitionNormalizer
             $normalizedDefinition['interface'] = [
                 [
                     'name' => 'Generated\\Shared\\' . $transferDefinition['bundle'] . '\\' . $transferDefinition['name'] . 'Interface',
-                    'bundle' => $transferDefinition['bundle']
-                ]
+                    'bundle' => $transferDefinition['bundle'],
+                ],
             ];
 
             $normalizedDefinitions[] = $normalizedDefinition;
@@ -66,4 +67,5 @@ class DefinitionNormalizer
 
         return $attributes;
     }
+
 }

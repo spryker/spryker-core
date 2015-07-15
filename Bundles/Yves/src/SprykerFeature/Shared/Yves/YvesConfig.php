@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Shared\Library\ConfigInterface;
 
 interface YvesConfig extends ConfigInterface
 {
+
     const YVES_THEME = 'YVES_THEME';
     const YVES_TRUSTED_PROXIES = 'YVES_TRUSTED_PROXIES';
     const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
@@ -26,4 +28,5 @@ interface YvesConfig extends ConfigInterface
     const TRANSFER_DEBUG_SESSION_NAME = 'TRANSFER_DEBUG_SESSION_NAME';
 
     const YVES_AUTH_SETTINGS = 'YVES_AUTH_SETTINGS';
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerEngine\Zed\Kernel\AbstractUnitTest;
 use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
+use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group SprykerFeature
@@ -40,13 +42,13 @@ class ExpenseTest extends AbstractUnitTest
         $item = $this->getItemWithFixtureData();
         $item->addExpense($expense);
 
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $calculator = new ExpensePriceToPayCalculatorPlugin(new Factory('Calculation'), $this->getLocator());
         $calculator->setOwnFacade($this->getFacade());
         $calculator->recalculate($order);
 
-        foreach ($order->getItems() as $item) {
+        foreach ($order->getCalculableObject()->getItems() as $item) {
             foreach ($item->getExpenses() as $expense) {
                 $this->assertEquals($expense->getGrossPrice(), $expense->getPriceToPay());
             }
@@ -66,13 +68,13 @@ class ExpenseTest extends AbstractUnitTest
         $discount->setAmount($expense->getGrossPrice());
 
         $expense->addDiscountItem($discount);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $calculator = new ExpensePriceToPayCalculatorPlugin(new Factory('Calculation'), $this->getLocator());
         $calculator->setOwnFacade($this->getFacade());
         $calculator->recalculate($order);
 
-        foreach ($order->getItems() as $item) {
+        foreach ($order->getCalculableObject()->getItems() as $item) {
             foreach ($item->getExpenses() as $expense) {
                 $this->assertEquals(0, $expense->getPriceToPay());
             }
@@ -89,20 +91,20 @@ class ExpenseTest extends AbstractUnitTest
         $item->addExpense($expense);
 
         $discount = $this->getPriceDiscount();
-        $discount->setAmount($expense->getGrossPrice()/4);
+        $discount->setAmount($expense->getGrossPrice() / 4);
 
         $expense->addDiscountItem($discount);
         $expense->addDiscountItem(clone $discount);
 
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $calculator = new ExpensePriceToPayCalculatorPlugin(new Factory('Calculation'), $this->getLocator());
         $calculator->setOwnFacade($this->getFacade());
         $calculator->recalculate($order);
 
-        foreach ($order->getItems() as $item) {
+        foreach ($order->getCalculableObject()->getItems() as $item) {
             foreach ($item->getExpenses() as $expense) {
-                $this->assertEquals($expense->getGrossPrice()/2, $expense->getPriceToPay());
+                $this->assertEquals($expense->getGrossPrice() / 2, $expense->getPriceToPay());
             }
         }
     }
@@ -116,13 +118,13 @@ class ExpenseTest extends AbstractUnitTest
     }
 
     /**
-     * @return OrderTransfer
+     * @return CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
         $order = new OrderTransfer();
 
-        return $order;
+        return new CalculableContainer($order);
     }
 
     /**
@@ -152,4 +154,5 @@ class ExpenseTest extends AbstractUnitTest
     {
         return Locator::getInstance();
     }
+
 }

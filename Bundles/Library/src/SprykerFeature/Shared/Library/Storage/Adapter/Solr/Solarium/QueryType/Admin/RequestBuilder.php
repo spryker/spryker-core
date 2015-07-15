@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,14 +11,15 @@ use Solarium\Core\Query\QueryInterface;
 
 /**
  * Class RequestBuilder
- * @package SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin
  */
 class RequestBuilder extends BaseRequestBuilder
 {
+
     /**
      * Build request for a system query
      *
      * @param  QueryInterface                $query
+     *
      * @return \Solarium\Core\Client\Request
      */
     public function build(QueryInterface $query)
@@ -27,4 +29,5 @@ class RequestBuilder extends BaseRequestBuilder
 //        $request->addParam('omitHeader', 'true');
         return $request;
     }
+
 }

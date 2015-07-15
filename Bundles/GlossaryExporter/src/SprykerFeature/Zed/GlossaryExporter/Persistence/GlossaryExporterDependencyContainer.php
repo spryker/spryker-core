@@ -1,13 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\GlossaryExporter\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 
-class GlossaryExporterDependencyContainer extends AbstractDependencyContainer
+class GlossaryExporterDependencyContainer extends AbstractPersistenceDependencyContainer
 {
 
 }

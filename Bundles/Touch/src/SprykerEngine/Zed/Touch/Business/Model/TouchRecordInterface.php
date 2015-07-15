@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,14 +10,17 @@ use Propel\Runtime\Exception\PropelException;
 
 interface TouchRecordInterface
 {
+
     /**
      * @param string $itemType
      * @param string $itemEvent
      * @param int $idItem
      *
-     * @return bool
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return bool
      */
     public function saveTouchRecord($itemType, $itemEvent, $idItem);
+
 }

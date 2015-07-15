@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class ProductConfig extends AbstractBundleConfig
 {
+
     /**
      * @return string
      */
@@ -16,4 +18,5 @@ class ProductConfig extends AbstractBundleConfig
     {
         return \SprykerFeature_Shared_Library_Data::getLocalStoreSpecificPath('import/products');
     }
+
 }

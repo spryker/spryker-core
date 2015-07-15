@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Country\Business\Internal\Regions;
 
 class UnitedStatesRegionInstaller implements RegionInstallInterface
 {
+
     /**
      * {@inheritdoc}
      */
@@ -63,7 +65,7 @@ class UnitedStatesRegionInstaller implements RegionInstallInterface
             'US-WA' => 'Washington',
             'US-WV' => 'Virginia',
             'US-WI' => 'Wisconsin',
-            'US-WY' => 'Wyoming'
+            'US-WY' => 'Wyoming',
         ];
     }
 
@@ -74,4 +76,5 @@ class UnitedStatesRegionInstaller implements RegionInstallInterface
     {
         return 'US';
     }
+
 }

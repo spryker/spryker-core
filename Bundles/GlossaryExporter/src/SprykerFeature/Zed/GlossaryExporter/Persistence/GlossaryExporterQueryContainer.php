@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTab
 
 class GlossaryExporterQueryContainer extends AbstractQueryContainer implements GlossaryExporterQueryContainerInterface
 {
+
     /**
      * @param ModelCriteria $expandableQuery
      * @param LocaleTransfer $locale
@@ -52,4 +54,5 @@ class GlossaryExporterQueryContainer extends AbstractQueryContainer implements G
 
         return $expandableQuery;
     }
+
 }

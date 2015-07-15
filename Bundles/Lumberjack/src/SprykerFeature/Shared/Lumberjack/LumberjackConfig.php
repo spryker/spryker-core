@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,5 +10,7 @@ use SprykerFeature\Shared\Library\ConfigInterface;
 
 interface LumberjackConfig extends ConfigInterface
 {
+
     const LUMBERJACK = 'LUMBERJACK';
+
 }

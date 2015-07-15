@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,10 +12,8 @@ interface NavigationCollectorInterface
 {
 
     /**
-     * @param NavigationSchemaFinderInterface $navigationSchemaFinder
-     *
      * @return array
      */
-    public function mergeNavigationFiles(NavigationSchemaFinderInterface $navigationSchemaFinder);
+    public function getNavigation();
 
 }

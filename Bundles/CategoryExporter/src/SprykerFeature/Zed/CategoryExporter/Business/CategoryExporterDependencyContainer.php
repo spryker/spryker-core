@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,7 @@
 namespace SprykerFeature\Zed\CategoryExporter\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryExporterBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\CategoryExporter\Business\Exploder\GroupedNodeExploder;
 use SprykerFeature\Zed\CategoryExporter\Business\Formatter\CategoryNodeFormatterInterface;
@@ -18,7 +19,7 @@ use SprykerFeature\Zed\CategoryExporter\Persistence\CategoryExporterQueryContain
  * @method CategoryExporterBusiness getFactory()
  * @method CategoryExporterQueryContainer getQueryContainer()
  */
-class CategoryExporterDependencyContainer extends AbstractDependencyContainer
+class CategoryExporterDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

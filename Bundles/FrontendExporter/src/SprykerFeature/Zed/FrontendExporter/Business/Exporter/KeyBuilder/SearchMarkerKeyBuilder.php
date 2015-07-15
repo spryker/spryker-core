@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class SearchMarkerKeyBuilder implements KeyBuilderInterface
 {
+
     use KeyBuilderTrait;
 
     /**
@@ -29,4 +31,5 @@ class SearchMarkerKeyBuilder implements KeyBuilderInterface
     {
         return 'search-export';
     }
+
 }

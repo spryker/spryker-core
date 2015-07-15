@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 
 class NavigationQueryExpander
 {
+
     /**
      * @var LocaleTransfer
      */
@@ -97,5 +99,5 @@ class NavigationQueryExpander
 
         return $expandableQuery;
     }
-}
 
+}

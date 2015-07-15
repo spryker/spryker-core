@@ -24,6 +24,7 @@
         <unique>
             <unique-column name="url"/>
         </unique>
+
     </table>
 
     <table name="spy_redirect" phpName="SpyRedirect">

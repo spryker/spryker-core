@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-
 
 class ConsumerScoreContainer extends AbstractRequestContainer
 {
@@ -76,7 +75,6 @@ class ConsumerScoreContainer extends AbstractRequestContainer
      */
     protected $language;
 
-    
     /**
      * @param string $addresschecktype
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Shared\Calculation\Dependency\Transfer\PriceItemInterface;
 
 class PriceItemFixture extends CartItemFixture implements PriceItemInterface
 {
+
     private $price = 0;
 
     /**
@@ -27,6 +29,7 @@ class PriceItemFixture extends CartItemFixture implements PriceItemInterface
     public function setGrossPrice($grossPrice)
     {
         $this->price = $grossPrice;
+
         return $this;
     }
 

@@ -1,15 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\AbstractPaymentMethodContainer;
-
 
 class BankAccountContainer extends AbstractPaymentMethodContainer
 {
-
 
     /**
      * @var string
@@ -39,11 +37,6 @@ class BankAccountContainer extends AbstractPaymentMethodContainer
      * @var string
      */
     protected $bic;
-    /**
-     * @var string
-     */
-    protected $mandate_identification;
-    
 
     /**
      * @param string $bankaccount
@@ -155,22 +148,6 @@ class BankAccountContainer extends AbstractPaymentMethodContainer
     public function getBic()
     {
         return $this->bic;
-    }
-
-    /**
-     * @param string $mandateIdentification
-     */
-    public function setMandateIdentification($mandateIdentification)
-    {
-        $this->mandate_identification = $mandateIdentification;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMandateIdentification()
-    {
-        return $this->mandate_identification;
     }
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,8 +16,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 {
 
     /**
-     * @todo think of doing it with MAX(sequence_number) ?
      * @param int $transactionId
+     *
      * @return SpyPaymentPayoneTransactionStatusLogQuery
      */
     public function getCurrentSequenceNumberQuery($transactionId)
@@ -30,7 +31,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 
     /**
      * @param int $transactionId
-     * @return SpyPaymentPayoneQuery
+     *
+     * @return Propel\SpyPaymentPayoneQuery
      */
     public function getPaymentByTransactionIdQuery($transactionId)
     {
@@ -43,6 +45,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @param int $fkPayment
      * @param string $requestName
+     *
      * @return SpyPaymentPayoneApiLogQuery
      */
     public function getApiLogByPaymentAndRequestTypeQuery($fkPayment, $requestName)
@@ -50,6 +53,19 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
         $query = SpyPaymentPayoneApiLogQuery::create();
         $query->filterByFkPaymentPayone($fkPayment)
               ->filterByRequest($requestName);
+
+        return $query;
+    }
+
+    /**
+     * @param int $orderId
+     *
+     * @return SpyPaymentPayoneQuery
+     */
+    public function getPaymentByOrderId($orderId)
+    {
+        $query = SpyPaymentPayoneQuery::create();
+        $query->findByFkSalesOrder($orderId);
 
         return $query;
     }

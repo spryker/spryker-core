@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Yves\ProductExporter\Model\AbstractProduct;
 
 class FrontendProductBuilder implements FrontendProductBuilderInterface
 {
+
     /**
      * @var FactoryInterface|ProductExporter
      */
@@ -48,4 +50,5 @@ class FrontendProductBuilder implements FrontendProductBuilderInterface
 
         return $product;
     }
+
 }

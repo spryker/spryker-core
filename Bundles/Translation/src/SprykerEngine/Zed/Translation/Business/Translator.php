@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Symfony\Component\Translation\MessageSelector;
 
 class Translator extends \Symfony\Component\Translation\Translator
 {
+
     /**
      * Constructor.
      *
@@ -53,7 +55,7 @@ class Translator extends \Symfony\Component\Translation\Translator
      *
      * @return string
      */
-    public function trans($id, array $parameters = array(), $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
         $translation = parent::trans($id, $parameters, $domain, $locale);
 
@@ -78,7 +80,7 @@ class Translator extends \Symfony\Component\Translation\Translator
      *
      * @return string
      */
-    public function transChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
+    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
     {
         $translation = parent::transChoice($id, $number, $parameters, $domain, $locale);
 
@@ -114,4 +116,5 @@ class Translator extends \Symfony\Component\Translation\Translator
     {
         return array_key_exists($format, $this->getLoaders());
     }
+
 }

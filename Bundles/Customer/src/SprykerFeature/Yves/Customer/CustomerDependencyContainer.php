@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,8 +13,12 @@ use SprykerFeature\Yves\Customer\Provider\UserProvider;
 use Silex\Application;
 use SprykerFeature\Yves\Customer\Model\Customer;
 
+/**
+ * @method \Generated\Yves\Ide\FactoryAutoCompletion\Customer getFactory()
+ */
 class CustomerDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @return SecurityServiceProvider
      */
@@ -41,4 +46,5 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelCustomer($application);
     }
+
 }

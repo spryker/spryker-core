@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 
 interface ProductQueryContainerInterface
 {
+
     /**
      * @param string $skus
      * @param LocaleTransfer $locale
@@ -82,4 +84,5 @@ interface ProductQueryContainerInterface
      * @return $this
      */
     public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleTransfer $locale);
+
 }

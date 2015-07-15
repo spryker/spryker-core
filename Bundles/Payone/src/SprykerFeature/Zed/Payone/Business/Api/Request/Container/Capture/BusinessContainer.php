@@ -1,36 +1,40 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Capture;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
 class BusinessContainer extends AbstractContainer
 {
 
     /**
      * (YYYYMMDD)
+     *
      * @var string
      */
     protected $document_date;
     /**
      * (YYYYMMDD)
+     *
      * @var string
      */
     protected $booking_date;
     /**
      * (Unixtimestamp)
+     *
      * @var string
      */
     protected $due_time;
     /**
      * ENUM
+     *
      * @var string
      */
     protected $settleaccount;
-
 
     /**
      * @param string $booking_date

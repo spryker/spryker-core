@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -135,4 +136,5 @@ interface SystemConfig extends ConfigInterface
     const ZED_USER_SETTINGS = 'ZED_USER_SETTINGS';
     const ZED_AUTH_SETTINGS = 'ZED_AUTH_SETTINGS';
     const ZED_ACL_SETTINGS = 'ZED_ACL_SETTINGS';
+
 }

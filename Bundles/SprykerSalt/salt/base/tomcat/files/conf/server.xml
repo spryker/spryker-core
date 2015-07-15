@@ -17,7 +17,7 @@
   </GlobalNamingResources>
 
   <Service name="Catalina">
-    <Executor name="tomcatThreadPool" namePrefix="catalina-exec-" 
+    <Executor name="tomcatThreadPool" namePrefix="catalina-exec-"
         maxThreads="150" minSpareThreads="4"/>
 
     <!-- HTTP connector -->
@@ -29,8 +29,8 @@
         maxThreads="500"
         minSpareThreads="100"
         maxSpareThreads="250"
-        URIEncoding="UTF-8"/> 
-    
+        URIEncoding="UTF-8"/>
+
     <Engine name="Catalina" defaultHost="localhost">
       <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
              resourceName="UserDatabase"/>
@@ -42,10 +42,10 @@
 {%- if 'dwh_saiku' in grains.roles %}
       <!-- Datawarehouse - Saiku VHosts -->
 {%- for store, store_details in settings.environments[environment].stores.items() %}
-      <Host 
+      <Host
         name="{{ store_details.dwh.saiku_hostname }}" unpackWARs="false" autoDeploy="true">
-          <Context 
-            path="" 
+          <Context
+            path=""
             docBase="/data/shop/{{ environment }}/current/vendor/project-a/dwh-package/src/ProjectA/Zed/Dwh/File/cubes.war"
             crossContext="true"
             swallowOutput="true"

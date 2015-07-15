@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Ui\Communication\Plugin\Twig;
 
-use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 use SprykerFeature\Zed\Library\Twig\TwigFunction;
 
 class ConfirmDialog extends TwigFunction
@@ -29,8 +29,9 @@ class ConfirmDialog extends TwigFunction
      */
     protected function getFunction()
     {
-        return function() {
+        return function () {
             $output = $this->getOutput();
+
             return $output;
         };
     }

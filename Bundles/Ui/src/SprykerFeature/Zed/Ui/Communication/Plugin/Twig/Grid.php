@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,7 +24,7 @@ class Grid extends TwigFunction
      */
     protected function getFunction()
     {
-        return function($grid) {
+        return function ($grid) {
             return $grid;
         };
     }

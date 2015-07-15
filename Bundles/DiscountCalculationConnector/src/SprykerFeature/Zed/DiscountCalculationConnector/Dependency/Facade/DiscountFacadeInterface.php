@@ -1,18 +1,21 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Dependency\Facade;
 
-use Generated\Shared\DiscountCalculationConnector\OrderInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 interface DiscountFacadeInterface
 {
+
     /**
-     * @param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      *
-     * @return array
+     * @return mixed
      */
-    public function calculateDiscounts(OrderInterface $calculableContainer);
+    public function calculateDiscounts(CalculableInterface $calculableContainer);
+
 }

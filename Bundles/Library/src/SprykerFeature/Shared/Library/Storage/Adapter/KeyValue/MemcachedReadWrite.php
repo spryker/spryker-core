@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,8 +12,10 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
     /**
      * @param $key
      * @param $value
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function set($key, $value)
     {
@@ -20,7 +23,7 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
         $this->addWriteAccessStats($key);
         if (!$result) {
             throw new \Exception(
-                'could not set memcacheKey: "' . $key.'" with value: "' . json_encode($value) . '"'
+                'could not set memcacheKey: "' . $key . '" with value: "' . json_encode($value) . '"'
             );
         }
 
@@ -29,8 +32,10 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
 
     /**
      * @param array $items
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function setMulti(array $items)
     {
@@ -38,7 +43,7 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
         $this->addMultiWriteAccessStats($items);
         if (!$result) {
             throw new \Exception(
-                'could not set memcacheKeys for items: "[' . implode(',', array_keys($items)).']" with values: "[' . implode(',', array_values($items)).']"'
+                'could not set memcacheKeys for items: "[' . implode(',', array_keys($items)) . ']" with values: "[' . implode(',', array_values($items)) . ']"'
             );
         }
 
@@ -47,6 +52,7 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
 
     /**
      * @param $key
+     *
      * @return bool
      */
     public function delete($key)
@@ -59,7 +65,6 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
 
     /**
      * @param array $keys
-     * @return void
      */
     public function deleteMulti(array $keys)
     {
@@ -80,6 +85,8 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
                 }
             }
         }
+
         return $deleteCount;
     }
+
 }

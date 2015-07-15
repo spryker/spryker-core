@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface ProductFrontendExporterConnectorQueryContainerInterface
 {
+
     /**
      * @param ModelCriteria $expandableQuery
      * @param LocaleTransfer $locale
@@ -17,4 +19,5 @@ interface ProductFrontendExporterConnectorQueryContainerInterface
      * @return ModelCriteria
      */
     public function expandQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale);
+
 }

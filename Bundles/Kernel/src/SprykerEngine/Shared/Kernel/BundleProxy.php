@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class BundleProxy
 {
+
     const LOCATOR_MATCHER_SUFFIX = 'Matcher';
 
     /**
@@ -54,6 +56,7 @@ class BundleProxy
 
     /**
      * @param array $locator
+     *
      * @return $this
      */
     public function setLocator(array $locator = [])
@@ -67,6 +70,7 @@ class BundleProxy
 
     /**
      * @param LocatorInterface $locator
+     *
      * @return $this
      */
     public function addLocator(LocatorInterface $locator)
@@ -76,7 +80,7 @@ class BundleProxy
         if (!class_exists($matcherClass)) {
             throw new \LogicException(sprintf('Could not find a "%s"!', $matcherClass));
         }
-        $matcher= new $matcherClass();
+        $matcher = new $matcherClass();
 
         $this->locator[] = $locator;
         $this->locatorMatcher[$locatorClass] = $matcher;
@@ -105,7 +109,7 @@ class BundleProxy
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function hasFacade()
     {
@@ -124,6 +128,7 @@ class BundleProxy
      * TODO Check if performance is good enough here!?
      *
      * @param $method
+     *
      * @return bool
      */
     protected function hasItem($method)
@@ -131,9 +136,11 @@ class BundleProxy
         foreach ($this->locator as $locator) {
             $matcher = $this->locatorMatcher[get_class($locator)];
             if ($matcher->match($method)) {
-                return $locator->canLocate($this->bundle, $this->locatorLocator, $matcher->filter($method));
+                return $locator->canLocate($this->bundle);
             }
         }
+
         return false;
     }
+
 }

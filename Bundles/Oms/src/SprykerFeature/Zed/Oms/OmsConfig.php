@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,8 +7,6 @@
 namespace SprykerFeature\Zed\Oms;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class OmsConfig extends AbstractBundleConfig
@@ -39,7 +38,7 @@ class OmsConfig extends AbstractBundleConfig
      */
     public function selectProcess(OrderTransfer $orderTransfer)
     {
-        return null;
+        return;
     }
 
 }

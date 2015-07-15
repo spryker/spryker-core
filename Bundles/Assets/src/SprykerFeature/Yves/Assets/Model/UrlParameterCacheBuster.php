@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Yves\Assets\Model;
 
 class UrlParameterCacheBuster implements CacheBusterInterface
 {
+
     /**
      * @var string
      */
@@ -20,7 +22,6 @@ class UrlParameterCacheBuster implements CacheBusterInterface
         $this->cacheBust = (string) $cacheBust;
     }
 
-
     public function addCacheBust($url)
     {
         return $url . '?v=' . $this->getCacheBust();
@@ -33,4 +34,5 @@ class UrlParameterCacheBuster implements CacheBusterInterface
     {
         return $this->cacheBust;
     }
+
 }

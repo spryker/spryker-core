@@ -1,70 +1,78 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
 abstract class AbstractRequestContainer extends AbstractContainer implements PayoneApiConstants
 {
 
     /**
-     * @var int
+     * @var int merchant id
      */
     protected $mid;
 
     /**
-     * @var int
+     * @var int payment portal id
      */
     protected $portalid;
 
     /**
-     * @var string
+     * @var string payment portal id as md5
      */
     protected $key;
 
     /**
-     * @var string
+     * @var string version of the the payone api defaults to 3.8
+     */
+    protected $api_version;
+
+    /**
+     * @var string test or live mode
      */
     protected $mode;
 
     /**
-     * @var string
+     * @var string payone query name (e.g. preauthorization, authorization...)
      */
     protected $request;
 
     /**
-     * @var string
+     * @var string encoding (ISO 8859-1 or UTF-8)
      */
     protected $encoding;
 
     /**
      * name of the solution-partner (company)
+     *
      * @var string
      */
     protected $solution_name;
 
     /**
      * version of the solution-partner's app / extension / plugin / etc..
+     *
      * @var string
      */
     protected $solution_version;
 
     /**
      * system-name
+     *
      * @var string
      */
     protected $integrator_name;
 
     /**
      * system-version
+     *
      * @var string
      */
     protected $integrator_version;
-
 
     /**
      * @param string $encoding
@@ -96,6 +104,22 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
     public function getKey()
     {
         return $this->key;
+    }
+
+    /**
+     * @param string $api_version
+     */
+    public function setApiVersion($api_version)
+    {
+        $this->api_version = $api_version;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiVersion()
+    {
+        return $this->api_version;
     }
 
     /**
@@ -164,6 +188,7 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
 
     /**
      * set the system-Name
+     *
      * @param string $integrator_name
      */
     public function setIntegratorName($integrator_name)
@@ -181,6 +206,7 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
 
     /**
      * set the system-version
+     *
      * @param string $integrator_version
      */
     public function setIntegratorVersion($integrator_version)
@@ -198,6 +224,7 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
 
     /**
      * set the name of the solution-partner (company)
+     *
      * @param string $solution_name
      */
     public function setSolutionName($solution_name)
@@ -215,6 +242,7 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
 
     /**
      * set the version of the solution-partner's app / extension / plugin / etc..
+     *
      * @param string $solution_version
      */
     public function setSolutionVersion($solution_version)

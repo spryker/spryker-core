@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,4 +13,5 @@ interface TaxProductConnectorToProductInterface
      * @param int $idAbstractProduct
      */
     public function touchProductActive($idAbstractProduct);
+
 }

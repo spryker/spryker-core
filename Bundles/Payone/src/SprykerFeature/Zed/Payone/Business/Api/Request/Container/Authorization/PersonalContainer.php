@@ -1,22 +1,25 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
 class PersonalContainer extends AbstractContainer
 {
 
     /**
      * Merchant's customer ID (Permitted symbols: 0-9, a-z, A-Z, .,-,_,/)
+     *
      * @var string
      */
     protected $customerid;
     /**
      * PAYONE debtor ID
+     *
      * @var int
      */
     protected $userid;
@@ -58,6 +61,7 @@ class PersonalContainer extends AbstractContainer
     protected $city;
     /**
      * Country (ISO-3166)
+     *
      * @var string
      */
     protected $country;
@@ -75,6 +79,7 @@ class PersonalContainer extends AbstractContainer
     protected $telephonenumber;
     /**
      * Date of birth (YYYYMMDD)
+     *
      * @var int
      */
     protected $birthday;
@@ -88,11 +93,21 @@ class PersonalContainer extends AbstractContainer
      * @var string
      */
     protected $vatid;
+
+    /**
+     * @var string
+     */
+    protected $gender;
+
+    /**
+     * @var string
+     */
+    protected $personalid;
+
     /**
      * @var string
      */
     protected $ip;
-
 
     /**
      * @param string $addressaddition
@@ -380,6 +395,38 @@ class PersonalContainer extends AbstractContainer
     public function getVatId()
     {
         return $this->vatid;
+    }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param string $personalid
+     */
+    public function setPersonalid($personalid)
+    {
+        $this->personalid = $personalid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPersonalid()
+    {
+        return $this->personalid;
     }
 
     /**

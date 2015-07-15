@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Tax\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Tax\TaxConfig;
 use SprykerFeature\Zed\Tax\Business\Model\TaxReaderInterface;
 use SprykerFeature\Zed\Tax\Business\Model\TaxWriterInterface;
@@ -15,7 +16,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\TaxBusiness;
  * @method TaxBusiness getFactory()
  * @method TaxConfig getConfig()
  */
-class TaxDependencyContainer extends AbstractDependencyContainer
+class TaxDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
@@ -39,4 +40,5 @@ class TaxDependencyContainer extends AbstractDependencyContainer
             $this->getConfig()->getTaxChangePlugins()
         );
     }
+
 }

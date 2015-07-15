@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Generated\Shared\Transfer\RulesTransfer;
 
 interface RuleValidatorInterface
 {
+
     /**
      * @param RulesTransfer $rules
      *
@@ -52,4 +54,5 @@ interface RuleValidatorInterface
      * @return bool
      */
     public function isAccessible($bundle, $controller, $action);
+
 }

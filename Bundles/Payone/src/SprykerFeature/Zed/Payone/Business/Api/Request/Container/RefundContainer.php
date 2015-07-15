@@ -1,13 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
-
 
 class RefundContainer extends AbstractRequestContainer
 {
@@ -21,34 +21,48 @@ class RefundContainer extends AbstractRequestContainer
      * @var string
      */
     protected $txid;
+
     /**
      * @var int
      */
     protected $sequencenumber;
+
     /**
      * @var int
      */
     protected $amount;
+
     /**
      * @var string
      */
     protected $currency;
+
+    /**
+     * @var string
+     */
+    protected $narrative_text;
+
     /**
      * @var string
      */
     protected $use_customerdata;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer
      */
     protected $paymentMethod;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     protected $invoicing;
 
-
     /**
      * @param int $amount
+     * Amount of refund (in smallest currency unit! e.g.
+     * cent). The amount must be less than or equal to
+     * the amount of the corresponding booking.
+     * (Always provide a negative amount)
      */
     public function setAmount($amount)
     {
@@ -77,6 +91,22 @@ class RefundContainer extends AbstractRequestContainer
     public function getCurrency()
     {
         return $this->currency;
+    }
+
+    /**
+     * @param string $narrative_text
+     */
+    public function setNarrativeText($narrative_text)
+    {
+        $this->narrative_text = $narrative_text;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNarrativeText()
+    {
+        return $this->narrative_text;
     }
 
     /**

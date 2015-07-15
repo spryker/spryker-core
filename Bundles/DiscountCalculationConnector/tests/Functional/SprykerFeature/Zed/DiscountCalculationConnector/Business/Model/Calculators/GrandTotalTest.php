@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,15 +22,17 @@ use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalcul
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * Class GrandTotalWithoutDiscountsTest
+ *
  * @group GrandTotalWithoutDiscountsTest
  * @group Calculation
- * @package PhpUnit\SprykerFeature\Zed\Calculation\Business\Model\Calculator
  */
 class GrandTotalTest extends Test
 {
+
     const ITEM_GROSS_PRICE = 10000;
     const ITEM_COUPON_DISCOUNT_AMOUNT = 1000;
     const ITEM_SALESRULE_DISCOUNT_AMOUNT = 1000;
@@ -52,7 +55,7 @@ class GrandTotalTest extends Test
 
         $totalsTransfer = $this->getPriceTotals();
         $calculator = $this->getGrandTotalCalculator();
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
+        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
         $this->assertEquals(0, $totalsTransfer->getGrandTotalWithDiscounts());
     }
 
@@ -62,17 +65,18 @@ class GrandTotalTest extends Test
 
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
+        $item->setQuantity(1);
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
         $itemCollection = new OrderItemsTransfer();
         $itemCollection->addOrderItem($item);
-        $order->setItems($itemCollection);
+        $order->getCalculableObject()->setItems($itemCollection);
 
         $totalsTransfer = $this->getPriceTotals();
         $calculator = $this->getGrandTotalCalculator();
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
+        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
         $this->assertEquals(self::ITEM_GROSS_PRICE, $totalsTransfer->getGrandTotal());
     }
 
@@ -82,19 +86,20 @@ class GrandTotalTest extends Test
 
         $item = $this->getItemWithFixtureData();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
+        $item->setQuantity(1);
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
         $itemCollection = new OrderItemsTransfer();
         $itemCollection->addOrderItem($item);
-        $order->setItems($itemCollection);
+        $order->getCalculableObject()->setItems($itemCollection);
 
         $totalsTransfer = $this->getPriceTotals();
         $calculator = $this->getGrandTotalCalculator();
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
+        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
         $calculator = $this->getGrandTotalWithDiscountCalculator();
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
+        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
         $this->assertEquals(
             $totalsTransfer->getGrandTotal() - self::ITEM_SALESRULE_DISCOUNT_AMOUNT,
             $totalsTransfer->getGrandTotalWithDiscounts()
@@ -144,7 +149,7 @@ class GrandTotalTest extends Test
     }
 
     /**
-     * @return OrderTransfer
+     * @return CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
@@ -157,7 +162,7 @@ class GrandTotalTest extends Test
 
         $order->setExpenses(new ExpenseTransfer());
 
-        return $order;
+        return new CalculableContainer($order);
     }
 
     /**
@@ -179,4 +184,5 @@ class GrandTotalTest extends Test
 
         return $expense;
     }
+
 }

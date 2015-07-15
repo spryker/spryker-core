@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,9 +19,10 @@ class PaymentRedirected extends AbstractCondition
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        $b = (microtime()*1000000%2)?true:false;
-        $bS = $b?'true':'false';
-        SprykerFeature_Shared_Library_Log::log('Condition PaymentRedirected for item: '.$orderItem->getIdSalesOrderItem().' '.$bS, 'statemachine.log');
+        $b = (microtime() * 1000000 % 2) ? true : false;
+        $bS = $b ? 'true' : 'false';
+        SprykerFeature_Shared_Library_Log::log('Condition PaymentRedirected for item: ' . $orderItem->getIdSalesOrderItem() . ' ' . $bS, 'statemachine.log');
+
         return $b;
     }
 

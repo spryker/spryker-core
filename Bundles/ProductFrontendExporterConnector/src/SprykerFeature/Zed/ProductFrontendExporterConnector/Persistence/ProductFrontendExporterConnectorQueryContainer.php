@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductFrontendExporterConnectorQueryContainer extends AbstractQueryContainer implements ProductFrontendExporterConnectorQueryContainerInterface
 {
+
     /**
      * @param ModelCriteria $expandableQuery
      * @param LocaleTransfer $locale
@@ -24,4 +26,5 @@ class ProductFrontendExporterConnectorQueryContainer extends AbstractQueryContai
     {
         return $this->getDependencyContainer()->getProductQueryExpander()->expandQuery($expandableQuery, $locale);
     }
+
 }

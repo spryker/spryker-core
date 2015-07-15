@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\GlossaryExporter\Communication\GlossaryExporterDependency
  */
 class TranslationQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+
     /**
      * @return string
      */
@@ -42,4 +44,5 @@ class TranslationQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
     {
         return 500;
     }
+
 }

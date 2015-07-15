@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\ClassResolver;
 use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
 use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 
@@ -19,6 +19,7 @@ abstract class AbstractLocator implements LocatorInterface
 
     /**
      * @param string $factoryClassNamePattern
+     *
      * @throws LocatorException
      */
     final public function __construct($factoryClassNamePattern = null)
@@ -45,9 +46,12 @@ abstract class AbstractLocator implements LocatorInterface
 
     /**
      * TODO make abstract
+     *
      * @param $bundle
-     * @return boolean
+     *
      * @throws \ErrorException
+     *
+     * @return bool
      */
     public function canLocate($bundle)
     {
@@ -57,8 +61,9 @@ abstract class AbstractLocator implements LocatorInterface
     /**
      * @param string $bundle
      *
-     * @return AbstractFactory
      * @throws LocatorException
+     *
+     * @return AbstractFactory
      */
     protected function getFactory($bundle)
     {
@@ -73,11 +78,13 @@ abstract class AbstractLocator implements LocatorInterface
     }
 
     /**
-     * @return null|string
      * @throws LocatorException
+     *
+     * @return null|string
      */
     private function getFactoryClassNamePattern()
     {
         return $this->factoryClassNamePattern;
     }
+
 }

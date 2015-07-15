@@ -1,26 +1,28 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\PriceCartConnector\Business;
 
+use Generated\Shared\PriceCartConnector\ChangeInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\Transfer\CartItemCollectionInterfaceTransfer;
-use Generated\Shared\Transfer\CartItemInterfaceTransfer;
 
 /**
  * @method PriceCartConnectorDependencyContainer getDependencyContainer()
  */
 class PriceCartConnectorFacade extends AbstractFacade
 {
+
     /**
-     * @param ItemCollectionInterface $items
+     * @param ChangeInterface $change
      *
-     * @return ItemCollectionInterface|ItemInterface[]
+     * @return ChangeInterface
      */
-    public function addGrossPriceToItems(ItemCollectionInterface $items)
+    public function addGrossPriceToItems(ChangeInterface $change)
     {
-        return $this->getDependencyContainer()->createPriceManager()->addGrossPriceToItems($items);
+        return $this->getDependencyContainer()->createPriceManager()->addGrossPriceToItems($change);
     }
+
 }

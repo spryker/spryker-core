@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -82,4 +83,5 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($foo, $class->getFoo());
         $this->assertSame($bar, $class->getBar());
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,7 +21,7 @@ class EntityMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $options = [
             EntityMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             EntityMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            EntityMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            EntityMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
         $methodTagBuilder = new EntityMethodTagBuilder($options);
@@ -38,7 +39,7 @@ class EntityMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $options = [
             EntityMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             EntityMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            EntityMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            EntityMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
         $methodTagBuilder = new EntityMethodTagBuilder($options);
@@ -53,7 +54,7 @@ class EntityMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $options = [
             EntityMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             EntityMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            EntityMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            EntityMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
         $methodTagBuilder = new EntityMethodTagBuilder($options);
@@ -70,7 +71,7 @@ class EntityMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $options = [
             EntityMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             EntityMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            EntityMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            EntityMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
         $methodTagBuilder = new EntityMethodTagBuilder($options);
@@ -81,6 +82,5 @@ class EntityMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         ;
         $this->assertNotContains($expectedMethodTag, $methodTags);
     }
-
 
 }

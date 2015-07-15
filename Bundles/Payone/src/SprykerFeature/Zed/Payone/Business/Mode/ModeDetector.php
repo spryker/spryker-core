@@ -1,10 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Mode;
-
 
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 

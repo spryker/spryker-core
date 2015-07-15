@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,11 +8,11 @@ namespace SprykerFeature\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Zed\Discount\Business\Writer\AbstractWriter;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 
 class DiscountVoucherPoolWriter extends AbstractWriter
 {
+
     /**
      * @var AutoCompletion
      */
@@ -19,6 +20,7 @@ class DiscountVoucherPoolWriter extends AbstractWriter
 
     /**
      * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     *
      * @return mixed
      */
     public function create(VoucherPoolTransfer $discountVoucherPoolTransfer)
@@ -32,8 +34,10 @@ class DiscountVoucherPoolWriter extends AbstractWriter
 
     /**
      * @param VoucherPoolTransfer $discountVoucherPoolTransfer
-     * @return array|mixed|SpyDiscountVoucherPool
+     *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return array|mixed|SpyDiscountVoucherPool
      */
     public function update(VoucherPoolTransfer $discountVoucherPoolTransfer)
     {
@@ -45,4 +49,5 @@ class DiscountVoucherPoolWriter extends AbstractWriter
 
         return $discountVoucherPoolEntity;
     }
+
 }

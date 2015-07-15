@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class TwigAssetPlugin extends AbstractPlugin implements TwigFunctionPluginInterface
 {
+
     /**
      * @param Application $application
      *
@@ -33,7 +35,7 @@ class TwigAssetPlugin extends AbstractPlugin implements TwigFunctionPluginInterf
             }),
             new \Twig_SimpleFunction('media', function ($value) use ($mediaUrlBuilder) {
                 return $mediaUrlBuilder->buildUrl($value);
-            })
+            }),
         ];
     }
 
@@ -60,4 +62,5 @@ class TwigAssetPlugin extends AbstractPlugin implements TwigFunctionPluginInterf
 
         return  $requestStack->getCurrentRequest()->isSecure();
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,4 +27,5 @@ class LogoutController extends AbstractController
 
         return $this->redirectResponse('/', 302);
     }
+
 }

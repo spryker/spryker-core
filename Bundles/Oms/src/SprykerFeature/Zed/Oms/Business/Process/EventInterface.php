@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Oms\Business\Process;
 
 interface EventInterface
 {
+
     /**
      * @param mixed $manual
      */
@@ -33,12 +35,12 @@ interface EventInterface
     public function hasCommand();
 
     /**
-     * @param boolean $onEnter
+     * @param bool $onEnter
      */
     public function setOnEnter($onEnter);
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isOnEnter();
 
@@ -83,4 +85,5 @@ interface EventInterface
      * @return bool
      */
     public function hasTimeout();
+
 }

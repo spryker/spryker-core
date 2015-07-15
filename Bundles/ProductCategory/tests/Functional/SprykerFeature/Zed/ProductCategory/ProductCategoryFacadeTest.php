@@ -1,15 +1,18 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Functional\SprykerFeature\Zed\ProductCategory;
 
-use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
+use SprykerEngine\Zed\Kernel\Container;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
@@ -28,6 +31,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 class ProductCategoryFacadeTest extends AbstractFunctionalTest
 {
+
     /**
      * @var ProductCategoryFacade
      */
@@ -63,10 +67,11 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         parent::setUp();
         $this->locator = Locator::getInstance();
 
-        $this->localeFacade = new LocaleFacade(new Factory('Locale'), $this->locator);
-        $this->productFacade = new ProductFacade(new Factory('Product'), $this->locator);
-        $this->categoryFacade = $this->getFacade('SprykerFeature', 'Category');
+        $this->localeFacade = $this->locator->locale()->facade();
+        $this->productFacade = $this->locator->product()->facade();
+        $this->categoryFacade = $this->locator->category()->facade();
         $this->productCategoryFacade = new ProductCategoryFacade(new Factory('ProductCategory'), $this->locator);
+        $this->productCategoryFacade->setExternalDependencies(new Container());
         $this->productCategoryQueryContainer = new ProductQueryContainer(
             new PersistenceFactory('ProductCategory'),
             $this->locator
@@ -85,8 +90,18 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $localeName = 'ABCDE';
 
         $locale = $this->localeFacade->createLocale($localeName);
-        $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractSku);
-        $this->productFacade->createConcreteProduct($concreteSku, $idAbstractProduct);
+
+        $abstractProductTransfer = new AbstractProductTransfer();
+        $abstractProductTransfer->setSku($abstractSku);
+        $abstractProductTransfer->setAttributes([]);
+        $abstractProductTransfer->setLocalizedAttributes([]);
+        $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProductTransfer);
+
+        $concreteProductTransfer = new ConcreteProductTransfer();
+        $concreteProductTransfer->setSku($concreteSku);
+        $concreteProductTransfer->setAttributes([]);
+        $concreteProductTransfer->setLocalizedAttributes([]);
+        $this->productFacade->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
 
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setName($categoryName);
@@ -117,4 +132,5 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         SpyCategoryQuery::create()->deleteAll();
         Propel::getConnection()->query('SET foreign_key_checks = 1;');
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,7 +13,6 @@ use Propel\Runtime\Propel;
 use Propel\Runtime\ServiceContainer\StandardServiceContainer;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -35,7 +35,7 @@ class PropelServiceProvider implements ServiceProviderInterface
         $manager->setConfiguration($this->getConfig());
         $manager->setName('zed');
 
-        /* @var $serviceContainer StandardServiceContainer */
+        /** @var StandardServiceContainer $serviceContainer */
         $serviceContainer = Propel::getServiceContainer();
         $serviceContainer->setAdapterClass('zed', 'mysql');
         $serviceContainer->setConnectionManager('zed', $manager);
@@ -45,8 +45,9 @@ class PropelServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     private function getConfig()
     {

@@ -1,18 +1,21 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\PriceCartConnector\Business\Manager;
 
-use Generated\Shared\PriceCartConnector\CartItemsInterface;
+use Generated\Shared\PriceCartConnector\ChangeInterface;
 
 interface PriceManagerInterface
 {
+
     /**
-     * @param CartItemsInterface|CartItemsInterface[] $items
+     * @param ChangeInterface $change
      *
-     * @return CartItemsInterface|CartItemsInterface[]
+     * @return ChangeInterface
      */
-    public function addGrossPriceToItems(CartItemsInterface $items);
+    public function addGrossPriceToItems(ChangeInterface $change);
+
 }

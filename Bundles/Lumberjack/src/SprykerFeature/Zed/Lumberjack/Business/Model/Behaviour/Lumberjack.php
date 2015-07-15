@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,6 +24,7 @@ class Lumberjack extends Behavior
 
     /**
      * @param $builder
+     *
      * @return string
      */
     public function postSave($builder)
@@ -59,4 +61,5 @@ if ($affectedRows > 0) {
 
         return $script;
     }
+
 }

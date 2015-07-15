@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Zed\Setup\Communication\Console\Npm;
 
 use SprykerFeature\Zed\Console\Business\Model\Console;
-
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,6 +14,7 @@ use Symfony\Component\Process\Process;
 
 class RunnerConsole extends Console
 {
+
     const COMMAND_NAME = 'code:npm';
 
     const NPM_COMMAND_TPL = 'npm run %s';
@@ -30,20 +31,17 @@ class RunnerConsole extends Console
     const OPTION_TASK_BUILD_ZED = 'build-zed';
     const OPTION_TASK_BUILD_ZED_SHORT = 'z';
 
-
     /**
      * @var array
      */
     protected $commands = [
-        self::OPTION_TASK_BUILD_ALL  => 'spy-install',
+        self::OPTION_TASK_BUILD_ALL => 'spy-install',
         self::OPTION_TASK_BUILD_CORE => 'spy-install-core',
-        self::OPTION_TASK_BUILD_ZED  => 'spy-task-zed dist',
-        self::OPTION_TASK_BUILD_YVES => 'spy-task-yves dist'
+        self::OPTION_TASK_BUILD_ZED => 'spy-task-zed dist',
+        self::OPTION_TASK_BUILD_YVES => 'spy-task-yves dist',
     ];
 
-
     /**
-     * @return void
      */
     protected function configure()
     {
@@ -89,7 +87,6 @@ EOM
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -111,7 +108,6 @@ EOM
 
     /**
      * @param string $command
-     * @return void
      */
     protected function runCommand($command)
     {
@@ -132,7 +128,7 @@ EOM
             self::OPTION_TASK_BUILD_ALL,
             self::OPTION_TASK_BUILD_CORE,
             self::OPTION_TASK_BUILD_ZED,
-            self::OPTION_TASK_BUILD_YVES
+            self::OPTION_TASK_BUILD_YVES,
         ];
 
         foreach ($tasks as $task) {
@@ -143,4 +139,5 @@ EOM
 
         return self::OPTION_TASK_BUILD_ALL;
     }
+
 }

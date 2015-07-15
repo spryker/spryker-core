@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,11 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use SprykerFeature\Yves\FrontendExporter\Creator\ResourceCreatorInterface;
-use SprykerFeature\Sdk\FrontendExporter\Matcher\UrlMatcherInterface;
+use SprykerFeature\Client\FrontendExporter\Service\Matcher\UrlMatcherInterface;
 use SprykerEngine\Yves\Application\Business\Routing\AbstractRouter;
 
 class StorageRouter extends AbstractRouter
 {
+
     /**
      * @var ResourceCreatorInterface[]
      */
@@ -51,7 +53,7 @@ class StorageRouter extends AbstractRouter
     /**
      * {@inheritdoc}
      */
-    public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         if ($this->urlMatcher->matchUrl($name, $this->app['locale'])) {
             $request = $this->getRequest();
@@ -69,7 +71,7 @@ class StorageRouter extends AbstractRouter
 
             return $this->getUrlOrPathForType($pathInfo, $referenceType);
         }
-        throw new RouteNotFoundException;
+        throw new RouteNotFoundException();
     }
 
     /**
@@ -124,6 +126,8 @@ class StorageRouter extends AbstractRouter
         if ($this->app['request_stack']) {
             return $this->app['request_stack']->getCurrentRequest();
         }
+
         return $this->app['request'];
     }
+
 }

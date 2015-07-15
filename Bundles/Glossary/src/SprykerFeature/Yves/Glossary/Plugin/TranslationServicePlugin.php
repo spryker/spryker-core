@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Yves\Glossary\TranslationServiceProvider;
  */
 class TranslationServicePlugin extends AbstractPlugin
 {
+
     /**
      * @return TranslationServiceProvider
      */
@@ -21,4 +23,5 @@ class TranslationServicePlugin extends AbstractPlugin
     {
         return $this->getDependencyContainer()->createTranslationServiceProvider();
     }
+
 }

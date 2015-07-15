@@ -1,14 +1,15 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\Acl\Persistence;
 
-use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
+use Generated\Zed\Ide\FactoryAutoCompletion\AclPersistence;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\Exception\PropelException;
-use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -23,15 +24,16 @@ use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRolesQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRuleQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRoleQuery;
-use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserUserTableMap;
 use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUserQuery;
 
 /**
  * @method AclDependencyContainer getDependencyContainer()
+ * @method AclPersistence getFactory()
  */
 class AclQueryContainer extends AbstractQueryContainer
 {
+
     const ROLE_NAME = 'role_name';
     const TYPE = 'type';
     const BUNDLE = 'bundle';
@@ -354,7 +356,7 @@ class AclQueryContainer extends AbstractQueryContainer
             $condition
         );
 
-        $hasRole = sprintf("COUNT(%s)", SpyAclGroupsHasRolesTableMap::COL_FK_ACL_ROLE);
+        $hasRole = sprintf('COUNT(%s)', SpyAclGroupsHasRolesTableMap::COL_FK_ACL_ROLE);
 
         $query->withColumn(SpyAclRoleTableMap::COL_NAME, self::ROLE_NAME);
         $query->withColumn(SpyAclRuleTableMap::COL_TYPE, self::TYPE);
@@ -365,4 +367,5 @@ class AclQueryContainer extends AbstractQueryContainer
 
         return $query;
     }
+
 }

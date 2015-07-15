@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,14 +24,14 @@ use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\Naviga
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidator;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidator;
 use SprykerFeature\Zed\Application\Business\Model\Url\UrlBuilder;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Psr\Log\LoggerInterface;
 
 /**
  * @method ApplicationBusiness getFactory()
  * @method ApplicationConfig getConfig()
  */
-class ApplicationDependencyContainer extends AbstractDependencyContainer
+class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
@@ -138,7 +139,6 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
     public function createNavigationBuilder()
     {
         return $this->getFactory()->createModelNavigationNavigationBuilder(
-            $this->createNavigationSchemaFinder(),
             $this->createNavigationCollector(),
             $this->createMenuFormatter(),
             $this->createPathExtractor()
@@ -177,7 +177,10 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      */
     protected function createNavigationCollector()
     {
-        return $this->getFactory()->createModelNavigationCollectorNavigationCollector();
+        return $this->getFactory()->createModelNavigationCollectorNavigationCollector(
+            $this->createNavigationSchemaFinder(),
+            $this->getConfig()->getRootNavigationSchema()
+        );
     }
 
     /**
@@ -213,4 +216,5 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
 
         return $this->getFactory()->createModelNavigationValidatorMenuLevelValidator($maxMenuCount);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Shared\Kernel\AbstractLocator;
 
 class MissingPropertyLocator extends AbstractLocator
 {
+
     /**
      * @param $bundle
      * @param LocatorLocatorInterface $locator
@@ -21,6 +23,5 @@ class MissingPropertyLocator extends AbstractLocator
     {
 
     }
-
 
 }

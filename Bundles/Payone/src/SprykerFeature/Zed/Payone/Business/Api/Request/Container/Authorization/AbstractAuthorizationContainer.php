@@ -1,22 +1,22 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization;
+
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;
 
-
-abstract class AbstractAuthorizationContainer extends AbstractRequestContainer
+abstract class AbstractAuthorizationContainer extends AbstractRequestContainer implements AuthorizationContainerInterface
 {
 
     /**
      * Sub account ID
+     *
      * @var int
      */
     protected $aid;
@@ -26,30 +26,34 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer
     protected $clearingtype;
     /**
      * Merchant reference number for the payment process. (Permitted symbols: 0-9, a-z, A-Z, .,-,_,/)
+     *
      * @var string
      */
     protected $reference;
     /**
      * Total amount (in smallest currency unit! e.g. cent)
+     *
      * @var int
      */
     protected $amount;
     /**
      * Currency (ISO-4217)
+     *
      * @var string
      */
     protected $currency;
     /**
      * Individual parameter
+     *
      * @var string
      */
     protected $param;
     /**
      * dynamic text for debit and creditcard payments
+     *
      * @var string
      */
     protected $narrative_text;
-    
 
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
@@ -71,7 +75,6 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     protected $invoicing;
-
 
     /**
      * @param int $aid

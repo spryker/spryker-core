@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,9 +23,11 @@ interface DocumentAttributeWriterInterface
     /**
      * @param DocumentAttributeInterface $documentAttribute
      *
-     * @return int
      * @throws DocumentAttributeDoesNotExistException
      * @throws PropelException
+     *
+     * @return int
      */
     public function updateDocumentAttribute(DocumentAttributeInterface $documentAttribute);
+
 }

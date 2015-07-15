@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,10 +19,11 @@ class StackExecutor
 
     /**
      * @param array $calculatorStack
-     * @param OrderInterface $calculableContainer
-     * @return OrderInterface
+     * @param CalculableInterface $calculableContainer
+     *
+     * @return CalculableInterface
      */
-    public function recalculate(array $calculatorStack, OrderInterface $calculableContainer)
+    public function recalculate(array $calculatorStack, CalculableInterface $calculableContainer)
     {
         foreach ($calculatorStack as $calculator) {
             if ($calculator instanceof CalculatorPluginInterface) {
@@ -29,9 +31,9 @@ class StackExecutor
             }
             if ($calculator instanceof TotalsCalculatorPluginInterface) {
                 $calculator->recalculateTotals(
-                    $calculableContainer->getTotals(),
+                    $calculableContainer->getCalculableObject()->getTotals(),
                     $calculableContainer,
-                    $calculableContainer->getItems()
+                    $calculableContainer->getCalculableObject()->getItems()
                 );
             }
         }
@@ -41,20 +43,21 @@ class StackExecutor
 
     /**
      * @param array $calculatorStack
-     * @param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return TotalsInterface
      */
     public function recalculateTotals(
         array $calculatorStack,
-        OrderInterface $calculableContainer,
+        //OrderInterface $calculableContainer,
+        CalculableInterface $calculableContainer,
         \ArrayObject $calculableItems = null
     ) {
         $totalsTransfer = new TotalsTransfer();
         $totalsTransfer->setDiscount(new DiscountTotalsTransfer());
 
-        $calculableItems = $calculableItems ? $calculableItems : $calculableContainer->getItems();
+        $calculableItems = $calculableItems ? $calculableItems : $calculableContainer->getCalculableObject()->getItems();
         if ($calculableItems instanceof OrderItemsTransfer) {
             $calculableItems = $calculableItems->getOrderItems();
         }
@@ -66,4 +69,5 @@ class StackExecutor
 
         return $totalsTransfer;
     }
+
 }

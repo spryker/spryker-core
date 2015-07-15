@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -91,6 +92,6 @@ class ApplicationFacade extends AbstractFacade
 
     public function prepareNavigation()
     {
-        return $this->getDependencyContainer()->createNavigationBuilder()->prepare();
+        $this->getDependencyContainer()->createNavigationBuilder()->prepare();
     }
 }

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 /**
  * @link http://code.google.com/intl/de-DE/apis/chart/image/docs/data_formats.html
- *
  * @link https://developers.google.com/chart/image/docs/chart_params
  */
 class SprykerFeature_Zed_Library_Service_GoogleGraph
@@ -38,7 +38,7 @@ class SprykerFeature_Zed_Library_Service_GoogleGraph
     public function request($sendHeader = true, $contentType = 'gif')
     {
         assert(is_bool($sendHeader));
-        assert(in_array($contentType, array('gif', 'png', 'json')));
+        assert(in_array($contentType, ['gif', 'png', 'json']));
 
         $client = new Zend_Http_Client();
         $client->setUri(self::URI);
@@ -51,6 +51,7 @@ class SprykerFeature_Zed_Library_Service_GoogleGraph
         if ($sendHeader) {
             header('content-type: image/' . $contentType);
         }
+
         return $response->getBody();
     }
 
@@ -63,6 +64,7 @@ class SprykerFeature_Zed_Library_Service_GoogleGraph
         }
 
         $form = $form . '<input type="submit"  /></form>';
+
        return $form;
     }
 
@@ -123,6 +125,7 @@ class SprykerFeature_Zed_Library_Service_GoogleGraph
 
     /**
      * Chart Label Data (various types)
+     *
      * @param $chld
      */
     public function setChld($chld)
@@ -132,6 +135,7 @@ class SprykerFeature_Zed_Library_Service_GoogleGraph
 
     /**
      * Chart legend text and style
+     *
      * @link https://developers.google.com/chart/image/docs/chart_params#gcharts_legend
      *
      * @param $chdl
@@ -143,6 +147,7 @@ class SprykerFeature_Zed_Library_Service_GoogleGraph
 
     /**
      * Chart legend text and style
+     *
      * @link https://developers.google.com/chart/image/docs/chart_params#gcharts_legend
      *
      * @param $chdlp
@@ -154,6 +159,7 @@ class SprykerFeature_Zed_Library_Service_GoogleGraph
 
     /**
      * Chart legend text and style
+     *
      * @link https://developers.google.com/chart/image/docs/chart_params#gcharts_legend
      *
      * @param $chdls
@@ -222,6 +228,7 @@ class SprykerFeature_Zed_Library_Service_GoogleGraph
     {
         $params = get_object_vars($this);
         $out = http_build_query($params);
+
         return self::URI . '?' . $out;
     }
 

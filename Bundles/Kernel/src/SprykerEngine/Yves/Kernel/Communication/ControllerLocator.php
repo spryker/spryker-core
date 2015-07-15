@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,7 +12,6 @@ use SprykerEngine\Shared\Kernel\Communication\ControllerLocatorInterface;
 use SprykerEngine\Shared\Kernel\IdentityMapClassResolver;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Yves\Kernel\ClassNamePattern;
-
 
 class ControllerLocator implements ControllerLocatorInterface
 {
@@ -42,13 +42,15 @@ class ControllerLocator implements ControllerLocatorInterface
      * @param \Pimple $application
      * @param LocatorLocatorInterface $locator
      *
-     * @return object
      * @throws ClassResolver\ClassNotFoundException
+     *
+     * @return object
      */
     public function locate(\Pimple $application, LocatorLocatorInterface $locator)
     {
         $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
         $factory = new Factory($this->bundleControllerAction->getBundle());
+
         return $resolver->resolve(
             $this->prepareClassName(),
             $this->bundleControllerAction->getBundle(),
@@ -62,6 +64,7 @@ class ControllerLocator implements ControllerLocatorInterface
     public function canLocate()
     {
         $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
+
         return $resolver->canResolve(
             $this->prepareClassName(),
             $this->bundleControllerAction->getBundle()

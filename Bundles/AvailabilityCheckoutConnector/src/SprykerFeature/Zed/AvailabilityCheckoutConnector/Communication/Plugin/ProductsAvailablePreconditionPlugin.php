@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreconditionInterface;
  */
 class ProductsAvailablePreconditionPlugin extends AbstractPlugin implements CheckoutPreconditionInterface
 {
+
     /**
      * @param string $sku
      * @param int $quantity
@@ -74,4 +76,5 @@ class ProductsAvailablePreconditionPlugin extends AbstractPlugin implements Chec
 
         return $result;
     }
+
 }

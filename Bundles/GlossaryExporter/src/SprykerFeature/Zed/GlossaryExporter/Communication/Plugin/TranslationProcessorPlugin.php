@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ use SprykerFeature\Zed\GlossaryExporter\Communication\GlossaryExporterDependency
  */
 class TranslationProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
+
     /**
      * @var KeyBuilderInterface
      */
@@ -32,7 +34,6 @@ class TranslationProcessorPlugin extends AbstractPlugin implements DataProcessor
         parent::__construct($factory, $locator);
         $this->keyBuilder = $this->getDependencyContainer()->getKeyBuilder();
     }
-
 
     /**
      * @return string
@@ -60,4 +61,5 @@ class TranslationProcessorPlugin extends AbstractPlugin implements DataProcessor
 
         return $processedResultSet;
     }
+
 }

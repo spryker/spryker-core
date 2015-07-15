@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMapping
 
 interface ProductCategoryManagerInterface
 {
+
     /**
      * @param string $sku
      * @param string $categoryName
@@ -27,11 +29,13 @@ interface ProductCategoryManagerInterface
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @return int
      * @throws ProductCategoryMappingExistsException
      * @throws MissingProductException
      * @throws MissingCategoryNodeException
      * @throws PropelException
+     *
+     * @return int
      */
     public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
+
 }

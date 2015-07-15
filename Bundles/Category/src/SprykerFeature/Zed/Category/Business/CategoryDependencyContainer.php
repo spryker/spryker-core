@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,14 +19,14 @@ use SprykerFeature\Zed\Category\CategoryDependencyProvider;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
  * @method CategoryBusiness getFactory()
  * @method CategoryQueryContainer getQueryContainer()
  */
-class CategoryDependencyContainer extends AbstractDependencyContainer
+class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
@@ -139,4 +140,5 @@ class CategoryDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_URL);
     }
+
 }

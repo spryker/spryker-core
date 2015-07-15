@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -44,9 +45,10 @@ class DiscountGrid extends AbstractGrid
             $this->createDefaultColumn()
                 ->setName(self::DISCOUNT_IS_ACTIVE)
                 ->filterable()
-                ->sortable()
+                ->sortable(),
         ];
 
         return $plugins;
     }
+
 }

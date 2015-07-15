@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,11 +14,12 @@ use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
  */
 class Installer extends AbstractInstallerPlugin
 {
+
     /**
-     * @return void
      */
     public function install()
     {
         $this->getDependencyContainer()->getInstallerFacade()->install($this->messenger);
     }
+
 }

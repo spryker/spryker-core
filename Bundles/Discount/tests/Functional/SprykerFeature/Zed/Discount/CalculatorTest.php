@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,13 +12,11 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerEngine\Shared\Config;
 use SprykerFeature\Zed\Discount\Business\Model\Calculator;
-use SprykerFeature\Zed\Discount\Business\DecisionRule;
-use SprykerFeature\Zed\Discount\Business\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Business\Model\Distributor;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
+use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group DiscountCalculatorTest
@@ -25,6 +24,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
  */
 class CalculatorTest extends Test
 {
+
     const ITEM_GROSS_PRICE_500 = 500;
 
     public function testCalculationWithoutAnyDiscountShouldNotReturnMatchingDiscounts()
@@ -231,6 +231,7 @@ class CalculatorTest extends Test
      * @param $isActive
      * @param $collectorPlugin
      * @param bool $isPrivileged
+     *
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount
      */
     protected function initializeDiscount(
@@ -254,11 +255,10 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return mixed
+     * @return CalculableContainer
      */
     protected function getOrderWithTwoItems()
     {
-        $locator = Locator::getInstance();
         $order = new OrderTransfer();
         $item = new OrderItemTransfer();
         $itemCollection = new OrderItemsTransfer();
@@ -269,7 +269,7 @@ class CalculatorTest extends Test
 
         $order->setItems($itemCollection);
 
-        return $order;
+        return new CalculableContainer($order);
     }
 
     /**
@@ -284,4 +284,5 @@ class CalculatorTest extends Test
 
         return $result;
     }
+
 }

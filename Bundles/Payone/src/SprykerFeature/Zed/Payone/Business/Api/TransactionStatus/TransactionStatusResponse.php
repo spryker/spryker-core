@@ -1,10 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\TransactionStatus;
-
 
 class TransactionStatusResponse
 {
@@ -18,7 +18,6 @@ class TransactionStatusResponse
      */
     const STATUS_ERROR = 'TSERROR';
 
-
     /**
      * @var string
      */
@@ -28,11 +27,10 @@ class TransactionStatusResponse
      */
     protected $errorMessage = '';
 
-
     /**
      * @param bool $isSuccess
      */
-    function __construct($isSuccess)
+    public function __construct($isSuccess)
     {
         assert(is_bool($isSuccess));
         $this->status = $isSuccess ? self::STATUS_OK : self::STATUS_ERROR;
@@ -47,6 +45,7 @@ class TransactionStatusResponse
         if($this->isError() && $this->getErrorMessage()) {
             $output .= ' : ' . $this->getErrorMessage();
         }
+
         return $output;
     }
 
@@ -79,7 +78,7 @@ class TransactionStatusResponse
      */
     public function isSuccess()
     {
-        return ($this->getStatus() == self::STATUS_OK);
+        return ($this->getStatus() === self::STATUS_OK);
     }
 
     /**

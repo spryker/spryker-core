@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class CartCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_CUSTOMER = 'customer facade';
 
     /**
@@ -25,4 +27,5 @@ class CartCheckoutConnectorDependencyProvider extends AbstractBundleDependencyPr
 
         return $container;
     }
+
 }

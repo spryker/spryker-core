@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+
     /**
      * @param Application $app
      */
@@ -28,6 +30,7 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
 
     /**
      * @param Application $app
+     *
      * @return string
      */
     public function boot(Application $app)
@@ -55,4 +58,5 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
             }
         });
     }
+
 }

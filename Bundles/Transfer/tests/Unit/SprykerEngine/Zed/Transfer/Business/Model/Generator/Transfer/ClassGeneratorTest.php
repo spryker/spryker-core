@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInter
 
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
-use SprykerEngine\Zed\Transfer\Business\Model\TransferGenerator;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -49,10 +49,11 @@ class ClassGeneratorTest extends \PHPUnit_Framework_TestCase
         $transferGenerator = new ClassGenerator($this->getFixtureDirectory());
         $transferDefinition = new ClassDefinition();
         $transferDefinition->setDefinition([
-            'name' => 'Name'
+            'name' => 'Name',
         ]);
         $transferGenerator->generate($transferDefinition);
 
         $this->assertTrue(is_dir($this->getFixtureDirectory()));
     }
+
 }

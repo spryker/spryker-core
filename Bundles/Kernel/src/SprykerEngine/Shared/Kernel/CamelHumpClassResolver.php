@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -29,8 +30,9 @@ class CamelHumpClassResolver implements ClassResolverInterface
      * @param string $classNamePattern
      * @param string $bundle
      *
-     * @return bool
      * @throws ClassNameAmbiguousException
+     *
+     * @return bool
      */
     public function canResolve($classNamePattern, $bundle)
     {
@@ -61,8 +63,9 @@ class CamelHumpClassResolver implements ClassResolverInterface
      * @param string $bundle
      * @param array $arguments
      *
-     * @return object
      * @throws \Exception
+     *
+     * @return object
      */
     public function resolve($classNamePattern, $bundle, array $arguments = [])
     {
@@ -94,6 +97,7 @@ class CamelHumpClassResolver implements ClassResolverInterface
     /**
      * @param array $parts
      * @param int $length
+     *
      * @return array
      */
     private function findCombinations(array $parts, $length = 0)
@@ -119,6 +123,7 @@ class CamelHumpClassResolver implements ClassResolverInterface
 
     /**
      * @param string $classNamePattern
+     *
      * @return array
      */
     private function getCamelHumpClassParts($classNamePattern)
@@ -131,6 +136,7 @@ class CamelHumpClassResolver implements ClassResolverInterface
 
     /**
      * @param string $classNamePattern
+     *
      * @return array
      */
     private function getClassBaseName($classNamePattern)

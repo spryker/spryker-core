@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GridController extends AbstractController
 {
+
     /**
      * @param Request $request
      *
@@ -39,4 +41,5 @@ class GridController extends AbstractController
 
         return $this->jsonResponse($form->renderData());
     }
+
 }

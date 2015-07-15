@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
 class BusinessContainer extends AbstractContainer
 {
@@ -26,7 +27,6 @@ class BusinessContainer extends AbstractContainer
      * @var string
      */
     protected $document_date;
-
 
     /**
      * @param string $booking_date

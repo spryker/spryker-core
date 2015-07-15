@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,7 +18,6 @@ use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInterface\Interf
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInterface\TransferInterfaceDefinitionBuilder;
 use SprykerEngine\Zed\Transfer\Business\Model\TransferGenerator;
 use SprykerFeature\Zed\Console\Business\Model\ConsoleMessenger;
-use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -54,7 +54,7 @@ class TransferGeneratorTest extends Test
         $generator = new ClassGenerator($targetDirectory);
 
         $sourceDirectories = [
-            __DIR__ . '/Fixtures'
+            __DIR__ . '/Fixtures',
         ];
 
         $normalizer = new DefinitionNormalizer();
@@ -84,7 +84,7 @@ class TransferGeneratorTest extends Test
 
         $sourceDirectories = [
             __DIR__ . '/Fixtures/Project/',
-            __DIR__ . '/Fixtures/Vendor/'
+            __DIR__ . '/Fixtures/Vendor/',
         ];
         $normalizer = new DefinitionNormalizer();
         $loader = new TransferDefinitionLoader($normalizer, $sourceDirectories);
@@ -113,7 +113,7 @@ class TransferGeneratorTest extends Test
 
         $sourceDirectories = [
             __DIR__ . '/Fixtures/Project/',
-            __DIR__ . '/Fixtures/Vendor/'
+            __DIR__ . '/Fixtures/Vendor/',
         ];
 
         $normalizer = new DefinitionNormalizer();
@@ -132,4 +132,5 @@ class TransferGeneratorTest extends Test
             file_get_contents($targetDirectory . 'Test/CatFaceInterface.php')
         );
     }
+
 }

@@ -1,16 +1,15 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\TransactionStatus;
-use SprykerFeature\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
-use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\AbstractRequest;
 
+use SprykerFeature\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
 
 class TransactionStatusRequest extends AbstractRequest implements TransactionStatusUpdateInterface
 {
-
 
     /**
      * @var string Payment portal key as MD5 value
@@ -127,7 +126,6 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
      */
     protected $invoice_deliveryenddate;
 
-
     /**
      * @var string
      */
@@ -185,12 +183,12 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
      */
     protected $creditor_identifier;
 
-
     /** @var string */
     protected $clearing_legalnote;
 
     /**
      * (YYYYMMDD)
+     *
      * @var string
      */
     protected $clearing_duedate;
@@ -604,7 +602,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_bankaccount
      */
-    public function setClearingBankaccount( $clearing_bankaccount)
+    public function setClearingBankaccount($clearing_bankaccount)
     {
         $this->clearing_bankaccount = $clearing_bankaccount;
     }
@@ -620,7 +618,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_bankaccountholder
      */
-    public function setClearingBankaccountholder( $clearing_bankaccountholder)
+    public function setClearingBankaccountholder($clearing_bankaccountholder)
     {
         $this->clearing_bankaccountholder = $clearing_bankaccountholder;
     }
@@ -636,7 +634,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_bankbic
      */
-    public function setClearingBankbic( $clearing_bankbic)
+    public function setClearingBankbic($clearing_bankbic)
     {
         $this->clearing_bankbic = $clearing_bankbic;
     }
@@ -652,7 +650,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_bankcity
      */
-    public function setClearingBankcity( $clearing_bankcity)
+    public function setClearingBankcity($clearing_bankcity)
     {
         $this->clearing_bankcity = $clearing_bankcity;
     }
@@ -668,7 +666,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_bankcode
      */
-    public function setClearingBankcode( $clearing_bankcode)
+    public function setClearingBankcode($clearing_bankcode)
     {
         $this->clearing_bankcode = $clearing_bankcode;
     }
@@ -684,7 +682,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_bankcountry
      */
-    public function setClearingBankcountry( $clearing_bankcountry)
+    public function setClearingBankcountry($clearing_bankcountry)
     {
         $this->clearing_bankcountry = $clearing_bankcountry;
     }
@@ -700,7 +698,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_bankiban
      */
-    public function setClearingBankiban( $clearing_bankiban)
+    public function setClearingBankiban($clearing_bankiban)
     {
         $this->clearing_bankiban = $clearing_bankiban;
     }
@@ -716,7 +714,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_bankname
      */
-    public function setClearingBankname( $clearing_bankname)
+    public function setClearingBankname($clearing_bankname)
     {
         $this->clearing_bankname = $clearing_bankname;
     }
@@ -780,7 +778,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_duedate
      */
-    public function setClearingDuedate( $clearing_duedate)
+    public function setClearingDuedate($clearing_duedate)
     {
         $this->clearing_duedate = $clearing_duedate;
     }
@@ -844,7 +842,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_instructionnote
      */
-    public function setClearingInstructionnote( $clearing_instructionnote)
+    public function setClearingInstructionnote($clearing_instructionnote)
     {
         $this->clearing_instructionnote = $clearing_instructionnote;
     }
@@ -860,7 +858,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_legalnote
      */
-    public function setClearingLegalnote( $clearing_legalnote)
+    public function setClearingLegalnote($clearing_legalnote)
     {
         $this->clearing_legalnote = $clearing_legalnote;
     }
@@ -876,7 +874,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     /**
      * @param string $clearing_reference
      */
-    public function setClearingReference( $clearing_reference)
+    public function setClearingReference($clearing_reference)
     {
         $this->clearing_reference = $clearing_reference;
     }
@@ -888,7 +886,5 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     {
         return $this->clearing_reference;
     }
-
-
 
 }

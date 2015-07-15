@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,6 +7,7 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Discount\OrderInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
@@ -17,6 +19,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 
 class Discount
 {
+
     const KEY_DISCOUNTS = 'discounts';
     const KEY_ERRORS = 'errors';
 
@@ -31,7 +34,9 @@ class Discount
     protected $decisionRule;
 
     /**
-     * @var OrderInterface
+     * @ var OrderInterface
+     *
+     * @var CalculableInterface
      */
     protected $discountContainer;
 
@@ -61,7 +66,9 @@ class Discount
     protected $distributor;
 
     /**
-     * @param OrderInterface $discountContainer
+     * @ param OrderInterface $discountContainer
+     *
+     * @param CalculableInterface $discountContainer
      * @param DiscountQueryContainer $queryContainer
      * @param DecisionRuleInterface $decisionRule
      * @param DiscountConfig $discountSettings
@@ -69,7 +76,8 @@ class Discount
      * @param DistributorInterface $distributor
      */
     public function __construct(
-        OrderInterface $discountContainer,
+        //OrderInterface $discountContainer,
+        CalculableInterface $discountContainer,
         DiscountQueryContainer $queryContainer,
         DecisionRuleInterface $decisionRule,
         DiscountConfig $discountSettings,
@@ -142,6 +150,7 @@ class Discount
 
     /**
      * @param int $idDiscount
+     *
      * @return DiscountDecisionRulePluginInterface[]
      */
     protected function getDecisionRulePlugins($idDiscount)
@@ -162,7 +171,7 @@ class Discount
 
             $decisionRulePlugin->setContext(
                 [
-                    AbstractDecisionRule::KEY_ENTITY => $decisionRule
+                    AbstractDecisionRule::KEY_ENTITY => $decisionRule,
                 ]
             );
 
@@ -174,6 +183,7 @@ class Discount
 
     /**
      * @param int $idDiscount
+     *
      * @return SpyDiscountDecisionRule[]
      */
     protected function retrieveDecisionRules($idDiscount)
@@ -185,12 +195,13 @@ class Discount
 
     /**
      * @param int $idDiscount
+     *
      * @return null|DiscountDecisionRulePluginInterface
      */
     protected function getDefaultVoucherDecisionRulePluginIfNeeded($idDiscount)
     {
-        if (count($this->discountContainer->getCouponCodes()) == 0) {
-            return null;
+        if (count($this->discountContainer->getCalculableObject()->getCouponCodes()) === 0) {
+            return;
         }
 
         $discount = $this->queryContainer->queryDiscount()->findPk($idDiscount);
@@ -206,6 +217,7 @@ class Discount
             return $plugin;
         }
 
-        return null;
+        return;
     }
+
 }

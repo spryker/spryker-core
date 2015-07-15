@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -42,7 +43,7 @@ class MonitoringRouter extends AbstractRouter
     /**
      * {@inheritdoc}
      */
-    public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         throw new RouteNotFoundException();
     }
@@ -74,4 +75,5 @@ class MonitoringRouter extends AbstractRouter
 
         throw new ResourceNotFoundException();
     }
+
 }

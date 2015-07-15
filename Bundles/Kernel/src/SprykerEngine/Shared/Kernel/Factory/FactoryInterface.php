@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerEngine\Shared\Kernel\Factory;
 
 /**
  * Interface FactoryInterface
- * @package SprykerEngine\Shared\Kernel\Factory
  */
 interface FactoryInterface
 {

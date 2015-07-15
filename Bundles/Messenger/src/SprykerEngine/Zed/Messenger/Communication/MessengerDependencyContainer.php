@@ -2,10 +2,10 @@
 
 namespace SprykerEngine\Zed\Messenger\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Messenger\Communication\Plugin\TwigMessengerExtension;
 
-class MessengerDependencyContainer extends AbstractDependencyContainer
+class MessengerDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

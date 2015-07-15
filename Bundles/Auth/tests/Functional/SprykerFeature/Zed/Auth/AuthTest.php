@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,13 +25,14 @@ use Generated\Shared\Transfer\UserTransfer;
  */
 class AuthTest extends Test
 {
+
     /**
-     * @var AuthFacade $authFacade
+     * @var AuthFacade
      */
     private $authFacade;
 
     /**
-     * @var UserFacade $userFacade
+     * @var UserFacade
      */
     private $userFacade;
 
@@ -204,4 +206,5 @@ class AuthTest extends Test
         $isAllowed = $this->authFacade->isAuthorized($hash);
         $this->assertTrue($isAllowed);
     }
+
 }

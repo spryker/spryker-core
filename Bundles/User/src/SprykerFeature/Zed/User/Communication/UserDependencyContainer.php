@@ -1,13 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\User\Communication;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\UserCommunication;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method UserCommunication getFactory()
  */
-class UserDependencyContainer extends AbstractDependencyContainer
+class UserDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
@@ -83,4 +83,5 @@ class UserDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getLocator()->user()->facade();
     }
+
 }

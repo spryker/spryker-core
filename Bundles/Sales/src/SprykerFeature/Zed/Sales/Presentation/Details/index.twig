@@ -1,14 +1,10 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
 
 {% block head_css_bundles -%}
     <link rel="stylesheet" type="text/css" href="{{ staticPath('Sales/styles/bundle.css') }}">
 {%- endblock %}
 
 {% block content %}
-
-    <div class="spy-layout compact">
-        <h1>Order <b>{{ idOrder }}</b> ({{ orderDetails.CreatedAt.date }})</h1>
-    </div>
 
 {#{% include '@Sales/Details/section/customer-details.twig' %}#}
 

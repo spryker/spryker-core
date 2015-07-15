@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 
 class TranslationServiceProvider implements TranslationServiceProviderInterface
 {
+
     /**
      * Registers services on the given app.
      *
@@ -37,4 +39,5 @@ class TranslationServiceProvider implements TranslationServiceProviderInterface
     public function boot(Application $app)
     {
     }
+
 }

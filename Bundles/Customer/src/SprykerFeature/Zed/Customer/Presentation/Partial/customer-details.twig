@@ -1,41 +1,39 @@
-<form
-        class="spy-form spy-layout sparse"
-        spy-app="spyForm,spyGrid,spyLayout"
-        ng-controller="FormController"
-        src="/customer/profile/edit"
-        name="customer-form"
-        model="{{ customerJson }}"
-        >
+{% include '@Gui/Partials/Table/header.twig' with { table_title: 'User Details <small>' ~ form.id_customer.value ~ '</small>' } %}
 
-    <div class="spy-layout n3">
-        <div>{{ "customer.profile.id" | trans }} {[{ field.id_customer.value }]}</div>
-        <div>{{ "customer.profile.registered" | trans }} {{ registered | date }}</div>
-        <div></div>
-    </div>
+<form class="form-horizontal" method="get">
 
-    <div class="spy-layout n3">
-        <div>
-            <div spy-input-text="field.email" options="{ label: '{{ "customer.profile.email" | trans }}'}"></div>
-            <div spy-input-text="field.salutation" options="{ label: '{{ "customer.profile.salutation" | trans }}' }"></div>
-            {#
-            <div>
-                <button class="button default" ng-disabled="query" type="submit" ng-click="update()">{{ "customer.profile.update" | trans }}</button>
-                <p>
-                    <a href="/customer/profile/sendPasswordRestoreToken?id={[{ field.id_customer.value}]}">
-                        {{ "customer.profile.send.registertoken" | trans }}
-                    </a>
-                </p>
-            </div>
-            #}
-        </div>
-        <div>
-            {#<div spy-input-select="field.gender" options="{ label : '{{ "customer.profile.gender" | trans }}' }"></div>#}
-            <div spy-input-text="field.first_name" options="{ label : '{{ "customer.profile.first_name" | trans }}' }"></div>
-        </div>
-        <div>
-            {#<div spy-input-text="field.date_of_birth" options="{ label : '{{ "customer.profile.date_of_birth" | trans }}' }"></div>#}
-            <div spy-input-text="field.last_name" options="{ label : '{{ "customer.profile.last_name" | trans }}' }"></div>
+
+    <div class="form-group"><label class="col-sm-2 control-label">{{ "First Name" | trans }}</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="first_name" value="{{ form.first_name.value }}">
+            {#{{ form_row(form.first_name) }}#}
         </div>
     </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group"><label class="col-sm-2 control-label">Last Name</label>
+        <div class="col-sm-10"><input type="text" class="form-control" name="last_name" value="{{ form.last_name.value }}"></div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group"><label class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10"><input type="password" class="form-control" name="password"> <span class="help-block m-b-none">Password will be changed if a new one will be provided.</span>
+        </div>
+    </div>
+    {#{{ form.row(form.first_name) }}#}
+    <div class="hr-line-dashed"></div>
 
+
+    <div class="form-group"><label class="col-sm-2 control-label">&nbsp;</label>
+
+        <div class="col-sm-10">
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group">
+        <div class="col-sm-4 col-sm-offset-2">
+            <button type="submit" class="btn btn-white">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
 </form>
+
+{% include '@Gui/Partials/Table/footer.twig' %}

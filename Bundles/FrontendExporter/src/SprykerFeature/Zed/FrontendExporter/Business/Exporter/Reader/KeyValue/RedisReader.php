@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Reader\ReaderInterface
 
 class RedisReader implements ReaderInterface
 {
+
     /**
      * @var ReadInterface
      */
@@ -33,7 +35,6 @@ class RedisReader implements ReaderInterface
         return $this->redis->get($key);
     }
 
-
     /**
      * @return string
      */
@@ -41,4 +42,5 @@ class RedisReader implements ReaderInterface
     {
         return 'redis-reader';
     }
+
 }

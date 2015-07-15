@@ -1,12 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Git\Communication\Console;
-
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 
 class CleanConsole extends BaseCommand
 {
@@ -41,6 +39,7 @@ class CleanConsole extends BaseCommand
     {
         $command = str_replace(':', ' ', self::COMMAND_NAME);
         $command .= ' -df';
+
         return $command;
     }
 

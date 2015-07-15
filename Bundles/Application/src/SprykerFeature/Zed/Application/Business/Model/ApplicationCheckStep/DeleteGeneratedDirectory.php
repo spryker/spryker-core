@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,7 +16,7 @@ class DeleteGeneratedDirectory extends AbstractApplicationCheckStep
      */
     public function run()
     {
-        $dir = APPLICATION_SOURCE_DIR . 'Generated';
+        $dir = APPLICATION_SOURCE_DIR . DIRECTORY_SEPARATOR . 'Generated';
         $this->info('Delete "' . $dir . '" directory');
 
         $filesystem = new Filesystem();

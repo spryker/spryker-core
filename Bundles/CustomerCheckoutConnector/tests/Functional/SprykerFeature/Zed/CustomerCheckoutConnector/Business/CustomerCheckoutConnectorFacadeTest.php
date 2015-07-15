@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -63,7 +64,6 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setBillingAddress(new CustomerAddressTransfer())
             ->setShippingAddress(new CustomerAddressTransfer())
         ;
-
 
         $this->customerCheckoutConnectorFacade->hydrateOrderTransfer($orderTransfer, $checkoutRequest);
 
@@ -142,4 +142,5 @@ class CustomerCheckoutConnectorFacadeTest extends Test
         $this->assertSame($orderTransfer->getBillingAddress()->getIso2Code(), $shippingAddress->getIso2Code());
         $this->assertSame($orderTransfer->getShippingAddress()->getZipCode(), $shippingAddress->getZipCode());
     }
+
 }

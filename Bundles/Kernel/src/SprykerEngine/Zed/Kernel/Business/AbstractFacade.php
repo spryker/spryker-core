@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,6 +22,7 @@ abstract class AbstractFacade implements FacadeInterface
 
     /**
      * TODO Locator will be removed
+     *
      * @param FactoryInterface $factory
      * @param Locator $locator
      */
@@ -52,6 +54,7 @@ abstract class AbstractFacade implements FacadeInterface
 
     /**
      * TODO move to constructor
+     *
      * @param AbstractQueryContainer $queryContainer
      */
     public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
@@ -61,4 +64,5 @@ abstract class AbstractFacade implements FacadeInterface
             $this->getDependencyContainer()->setQueryContainer($queryContainer);
         }
     }
+
 }

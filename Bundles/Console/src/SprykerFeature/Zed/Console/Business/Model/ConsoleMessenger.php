@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,4 +11,5 @@ use Symfony\Component\Console\Logger\ConsoleLogger;
 
 class ConsoleMessenger extends ConsoleLogger implements MessengerInterface
 {
+
 }

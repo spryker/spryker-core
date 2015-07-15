@@ -1,13 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Calculation\Business;
 
-use Generated\Shared\Calculation\OrderInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Calculation\TotalsInterface;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\CalculationConfig;
 
 /**
@@ -18,22 +19,23 @@ class CalculationFacade extends AbstractFacade
 {
 
     /**
-     * @param OrderInterface $calculableContainer
-     * @return OrderInterface
+     * @param CalculableInterface $calculableContainer
+     *
+     * @return CalculableInterface
      */
-    public function recalculate(OrderInterface $calculableContainer)
+    public function recalculate(CalculableInterface $calculableContainer)
     {
-
         $calculatorStack = $this->getDependencyContainer()->getConfig()->getCalculatorStack();
 
         return $this->getDependencyContainer()->getStackExecutor()->recalculate($calculatorStack, $calculableContainer);
     }
 
     /**
-     * @param OrderInterface $calculableContainer
-     * @return OrderInterface
+     * @param CalculableInterface $calculableContainer
+     *
+     * @return CalculableInterface
      */
-    public function performSoftRecalculation(OrderInterface $calculableContainer)
+    public function performSoftRecalculation(CalculableInterface $calculableContainer)
     {
         $calculatorStack = $this->getDependencyContainer()->getConfig()->getSoftCalculatorStack();
 
@@ -41,14 +43,14 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param CalculableInterface $calculableContainer
+     * @param null $calculableItems
      *
      * @return TotalsInterface
      */
     public function recalculateTotals(
-        OrderInterface $calculableContainer,
-        \ArrayObject $calculableItems = null
+        CalculableInterface $calculableContainer,
+        $calculableItems = null
     ) {
         $calculatorStack = $this->getDependencyContainer()->getConfig()->getCalculatorStack();
 
@@ -60,9 +62,10 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      */
-    public function recalculateExpensePriceToPay(OrderInterface $calculableContainer)
+    public function recalculateExpensePriceToPay(CalculableInterface $calculableContainer)
     {
         $calculator = $this->getDependencyContainer()->getExpensePriceToPayCalculator();
         $calculator->recalculate($calculableContainer);
@@ -70,13 +73,13 @@ class CalculationFacade extends AbstractFacade
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param CalculableInterface $calculableContainer
+     * @param $calculableItems
      */
     public function recalculateExpenseTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        CalculableInterface $calculableContainer,
+        $calculableItems
     ) {
         $calculator = $this->getDependencyContainer()->getExpenseTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
@@ -84,49 +87,49 @@ class CalculationFacade extends AbstractFacade
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param CalculableInterface $calculableContainer
+     * @param $calculableItems
      */
     public function recalculateGrandTotalTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        CalculableInterface $calculableContainer,
+        $calculableItems
     ) {
         $calculator = $this->getDependencyContainer()->getGrandTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      */
-    public function recalculateItemPriceToPay(OrderInterface $calculableContainer)
+    public function recalculateItemPriceToPay(CalculableInterface $calculableContainer)
     {
         $calculator = $this->getDependencyContainer()->getItemPriceToPayCalculator();
         $calculator->recalculate($calculableContainer);
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      */
-    public function recalculateOptionPriceToPay(OrderInterface $calculableContainer)
+    public function recalculateOptionPriceToPay(CalculableInterface $calculableContainer)
     {
         $calculator = $this->getDependencyContainer()->getOptionPriceToPayCalculator();
         $calculator->recalculate($calculableContainer);
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      */
-    public function recalculateRemoveAllExpenses(OrderInterface $calculableContainer)
+    public function recalculateRemoveAllExpenses(CalculableInterface $calculableContainer)
     {
         $calculator = $this->getDependencyContainer()->getRemoveAllExpensesCalculator();
         $calculator->recalculate($calculableContainer);
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      */
-    public function recalculateRemoveTotals(OrderInterface $calculableContainer)
+    public function recalculateRemoveTotals(CalculableInterface $calculableContainer)
     {
         $calculator = $this->getDependencyContainer()->getRemoveTotalsCalculator();
         $calculator->recalculate($calculableContainer);
@@ -134,13 +137,13 @@ class CalculationFacade extends AbstractFacade
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param CalculableInterface $calculableContainer
+     * @param $calculableItems
      */
     public function recalculateSubtotalTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        CalculableInterface $calculableContainer,
+        $calculableItems
     ) {
         $calculator = $this->getDependencyContainer()->getSubtotalTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
@@ -148,13 +151,13 @@ class CalculationFacade extends AbstractFacade
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param CalculableInterface $calculableContainer
+     * @param $calculableItems
      */
     public function recalculateSubtotalWithoutItemExpensesTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        CalculableInterface $calculableContainer,
+        $calculableItems
     ) {
         $calculator = $this->getDependencyContainer()->getSubtotalWithoutItemExpensesTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
@@ -162,15 +165,16 @@ class CalculationFacade extends AbstractFacade
 
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param CalculableInterface $calculableContainer
+     * @param $calculableItems
      */
     public function recalculateTaxTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        CalculableInterface $calculableContainer,
+        $calculableItems
     ) {
         $calculator = $this->getDependencyContainer()->getTaxTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
+
 }

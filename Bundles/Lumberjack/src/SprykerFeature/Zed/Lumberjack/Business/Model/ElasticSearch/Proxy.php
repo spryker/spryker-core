@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,10 +15,10 @@ class Proxy
     const SEARCH_TYPE_SINGLE = 'single';
     const SEARCH_TYPE_MULTI = 'multi';
 
-    protected $config = array(
-        'timeout'      => 180,
-        'keepalive' => true
-    );
+    protected $config = [
+        'timeout' => 180,
+        'keepalive' => true,
+    ];
 
     /**
      * @return string
@@ -29,6 +30,7 @@ class Proxy
 
         $http = new \Zend_Http_Client($url);
         $http->setConfig($this->config);
+
         return $http->request()->getBody();
     }
 
@@ -36,8 +38,10 @@ class Proxy
      * @param array $getParams
      * @param array $postData
      * @param string $type
-     * @return string
+     *
      * @throws \ErrorException
+     *
+     * @return string
      */
     public function getSearch(array $getParams, array $postData, $type = self::SEARCH_TYPE_SINGLE)
     {
@@ -53,6 +57,7 @@ class Proxy
         }
 
         $http->setRawData($postData['request']);
+
         return str_replace('\\u0000', '', $http->request()->getBody());
     }
 
@@ -62,15 +67,17 @@ class Proxy
     protected function getElasticSearchConfig()
     {
         $config = Config::get(LumberjackConfig::LUMBERJACK);
-        return array(
+
+        return [
             'host' => $config->elasticsearch->host,
             'port' => $config->elasticsearch->port,
             'index' => $config->elasticsearch->index,
-        );
+        ];
     }
 
     /**
      * @param string $type
+     *
      * @return string
      */
     protected function getSearchUrlByType($type)
@@ -101,4 +108,5 @@ class Proxy
 
         return $protocol . '://' . $host . ':' . $port . '/';
     }
+
 }

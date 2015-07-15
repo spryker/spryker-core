@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ use SprykerFeature\Zed\ProductCategory\Persistence\Propel\Map\SpyProductCategory
 
 class ProductCategoryPathQueryExpander
 {
+
     /**
      * @var LocaleTransfer
      */
@@ -44,8 +46,9 @@ class ProductCategoryPathQueryExpander
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      *
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     public function expandQuery(ModelCriteria $expandableQuery, $excludeDirectParent = true, $excludeRoot = true)
     {
@@ -93,4 +96,5 @@ class ProductCategoryPathQueryExpander
 
         return $expandableQuery;
     }
+
 }

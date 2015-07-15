@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface QueryExpanderPluginInterface
 {
+
     /**
      * @return string
      */
@@ -27,4 +29,5 @@ interface QueryExpanderPluginInterface
      * @return int
      */
     public function getChunkSize();
+
 }

@@ -1,13 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Auth\Business;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\AuthBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
 use SprykerFeature\Zed\Auth\Business\Model\Auth;
 use SprykerFeature\Zed\User\Business\UserFacade;
@@ -15,8 +15,9 @@ use SprykerFeature\Zed\User\Business\UserFacade;
 /**
  * @method AuthBusiness getFactory()
  */
-class AuthDependencyContainer extends AbstractDependencyContainer
+class AuthDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return AuthFacade
      */
@@ -40,7 +41,7 @@ class AuthDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelAuth(
             $this->getLocator(),
-            $this->getLocator()->application()->pluginSession(),
+            $this->getLocator()->session()->client(),
             $this->getLocator()->user()->facade(),
             $this->getConfig(),
             $this->createStaticTokenClient()
@@ -54,4 +55,5 @@ class AuthDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createClientStaticToken();
     }
+
 }

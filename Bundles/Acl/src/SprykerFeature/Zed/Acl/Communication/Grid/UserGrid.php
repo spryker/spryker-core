@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
 
 class UserGrid extends AbstractGrid
 {
+
     const USERNAME = 'username';
     const FIRST_NAME = 'first_name';
     const LAST_NAME = 'last_name';
@@ -37,7 +39,7 @@ class UserGrid extends AbstractGrid
             $this->createDefaultColumn()
                 ->setName(self::GROUP_NAME)
                 ->filterable()
-                ->sortable()
+                ->sortable(),
         ];
 
         return $plugins;

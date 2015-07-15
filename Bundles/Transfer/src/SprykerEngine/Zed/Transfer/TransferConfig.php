@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -35,10 +36,12 @@ class TransferConfig extends AbstractBundleConfig
             APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/*/Shared/*/Transfer/',
         ];
 
-        if (glob(APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/')) {
-            $directories[] = APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
+        $applicationTransferGlobPattern = APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
+        if (glob($applicationTransferGlobPattern)) {
+            $directories[] = $applicationTransferGlobPattern;
         }
 
         return $directories;
     }
+
 }

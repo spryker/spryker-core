@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelper;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group TaxTest
@@ -22,6 +24,7 @@ use SprykerEngine\Zed\Kernel\Locator;
  */
 class TaxTest extends \PHPUnit_Framework_TestCase
 {
+
     const EXPENSE_1000 = 1000;
     const ITEM_GROSS_PRICE_1000 = 1000;
     const TAX_PERCENTAGE_10 = 10;
@@ -42,11 +45,11 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $item->setTax($tax);
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
         $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $totalsTransfer = $this->getPriceTotals();
         $calculator = $this->getCalculator();
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
+        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
 
         $taxRates = $totalsTransfer->getTax()->getTaxRates();
 
@@ -65,7 +68,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $item->setTax($tax);
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
         $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $item = $this->getItemWithFixtureData();
         $tax = new TaxItemTransfer();
@@ -74,11 +77,11 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $item->setTax($tax);
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
         $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $totalsTransfer = $this->getPriceTotals();
         $calculator = $this->getCalculator();
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
+        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
 
         $taxRates = $totalsTransfer->getTax()->getTaxRates();
 
@@ -99,7 +102,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $item->setTax($tax);
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
         $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $expense = $this->getExpenseWithFixtureData();
         $tax = new TaxItemTransfer();
@@ -117,7 +120,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $item->setTax($tax);
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
         $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $expense = $this->getExpenseWithFixtureData();
         $tax = new TaxItemTransfer();
@@ -126,11 +129,11 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $expense->setTax($tax);
         $expense->setGrossPrice(self::EXPENSE_1000);
         $expense->setPriceToPay(self::EXPENSE_1000);
-        $order->addExpense($expense);
+        $order->getCalculableObject()->addExpense($expense);
 
         $totalsTransfer = $this->getPriceTotals();
         $calculator = $this->getCalculator();
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getItems());
+        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
 
         $taxRates = $totalsTransfer->getTax()->getTaxRates();
 
@@ -151,13 +154,13 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
         $order = new OrderTransfer();
 
-        return $order;
+        return new CalculableContainer($order);
     }
 
     /**
@@ -195,4 +198,5 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     {
         return Locator::getInstance();
     }
+
 }

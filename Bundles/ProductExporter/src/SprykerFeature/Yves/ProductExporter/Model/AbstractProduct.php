@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Shared\Product\Model\AbstractProductInterface;
 
 class AbstractProduct implements AbstractProductInterface
 {
+
     /**
      * @var array
      */
@@ -65,7 +67,7 @@ class AbstractProduct implements AbstractProductInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {
@@ -73,7 +75,7 @@ class AbstractProduct implements AbstractProductInterface
     }
 
     /**
-     * @param boolean $isActive
+     * @param bool $isActive
      */
     public function setIsActive($isActive = true)
     {
@@ -123,7 +125,7 @@ class AbstractProduct implements AbstractProductInterface
             return $this->abstractAttributes[$name];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -168,4 +170,5 @@ class AbstractProduct implements AbstractProductInterface
     {
         $this->category = $category;
     }
+
 }

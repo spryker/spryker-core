@@ -1,10 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Zed\Kernel;
 
+use SprykerEngine\Client\Kernel\Service\ClientLocator;
 use SprykerEngine\Shared\Kernel\BundleProxy;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Shared\Kernel\TransferLocator;
@@ -31,10 +33,12 @@ class Locator extends AbstractLocatorLocator
                 new PluginLocator(),
                 new EntityLocator(),
                 new ConsoleLocator(),
+                new ClientLocator(),
             ];
         }
         $bundleProxy->setLocator($this->locator);
 
         return $bundleProxy;
     }
+
 }

@@ -1,14 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryBusiness;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
@@ -17,8 +16,9 @@ use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer
 /**
  * @method ProductCategoryBusiness getFactory()
  */
-class ProductCategoryDependencyContainer extends AbstractDependencyContainer
+class ProductCategoryDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return ProductCategoryManagerInterface
      */
@@ -63,4 +63,5 @@ class ProductCategoryDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getLocator()->category()->facade();
     }
+
 }

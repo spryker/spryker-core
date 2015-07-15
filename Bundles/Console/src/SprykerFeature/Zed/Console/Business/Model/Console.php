@@ -1,32 +1,29 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Console\Business\Model;
 
-use Generated\Zed\Ide\AutoCompletion;
-
+use Psr\Log\LoggerInterface;
 use Silex\Application;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
-
+use SprykerEngine\Zed\Kernel\Container;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use SprykerFeature\Zed\Console\Communication\ConsoleBootstrap;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Psr\Log\LoggerInterface;
-
+/**
+ * @method ConsoleBootstrap getApplication()
+ */
 class Console extends SymfonyCommand
 {
 
@@ -53,17 +50,14 @@ class Console extends SymfonyCommand
     private $facade;
 
     /**
+     * @var AbstractQueryContainer
+     */
+    private $queryContainer;
+
+    /**
      * @var LoggerInterface
      */
     protected $messenger;
-
-    /**
-     * @param AbstractDependencyContainer $dependencyContainer
-     */
-    public function setDependencyContainer(AbstractDependencyContainer $dependencyContainer)
-    {
-        $this->dependencyContainer = $dependencyContainer;
-    }
 
     /**
      * @param Container $container
@@ -77,7 +71,15 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return AbstractDependencyContainer
+     * @param AbstractCommunicationDependencyContainer $dependencyContainer
+     */
+    public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
+    {
+        $this->dependencyContainer = $dependencyContainer;
+    }
+
+    /**
+     * @return AbstractCommunicationDependencyContainer
      */
     protected function getDependencyContainer()
     {
@@ -101,6 +103,26 @@ class Console extends SymfonyCommand
     }
 
     /**
+     * @param AbstractQueryContainer $queryContainer
+     *
+     * @return $this
+     */
+    public function setQueryContainer(AbstractQueryContainer $queryContainer)
+    {
+        $this->queryContainer = $queryContainer;
+
+        return $this;
+    }
+
+    /**
+     * @return AbstractQueryContainer
+     */
+    protected function getQueryContainer()
+    {
+        return $this->queryContainer;
+    }
+
+    /**
      * @param InputInterface $input
      * @param OutputInterface $output
      */
@@ -119,7 +141,6 @@ class Console extends SymfonyCommand
      */
     protected function runDependingCommand($command, array $arguments = [])
     {
-        //TODO find is unknown
         $command = $this->getApplication()->find($command);
         $arguments['command'] = $command;
         $input = new ArrayInput($arguments);

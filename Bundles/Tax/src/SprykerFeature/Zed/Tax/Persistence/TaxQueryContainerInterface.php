@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
 
 interface TaxQueryContainerInterface
 {
+
     /**
      * @param int $id
      *
@@ -41,4 +43,5 @@ interface TaxQueryContainerInterface
      * @return $this
      */
     public function joinTaxRates(ModelCriteria $expandableQuery);
+
 }

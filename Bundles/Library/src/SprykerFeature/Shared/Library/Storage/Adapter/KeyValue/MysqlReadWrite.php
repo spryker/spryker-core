@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,8 +12,10 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
     /**
      * @param $key
      * @param $value
-     * @return mixed|void
+     *
      * @throws \Exception
+     *
+     * @return mixed|void
      */
     public function set($key, $value)
     {
@@ -25,8 +28,10 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
 
     /**
      * @param array $items
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function setMulti(array $items)
     {
@@ -35,13 +40,16 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
             $result[] = $this->runInsert($key, $value);
         }
         $this->addMultiWriteAccessStats($items);
+
         return $result;
     }
 
     /**
      * @param $key
-     * @return bool|mixed|\mysqli_result
+     *
      * @throws \Exception
+     *
+     * @return bool|mixed|\mysqli_result
      */
     public function delete($key)
     {
@@ -53,8 +61,10 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
 
     /**
      * @param array $keys
-     * @return array
+     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function deleteMulti(array $keys)
     {
@@ -68,8 +78,9 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
     }
 
     /**
-     * @return int
      * @throws \Exception
+     *
+     * @return int
      */
     public function deleteAll()
     {
@@ -79,8 +90,10 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
     /**
      * @param $key
      * @param $value
-     * @return bool|\mysqli_result
+     *
      * @throws \Exception
+     *
+     * @return bool|\mysqli_result
      */
     protected function runInsert($key, $value)
     {
@@ -95,14 +108,16 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
 
         return $statement->execute([
             $key,
-            json_encode($value)
+            json_encode($value),
         ]);
     }
 
     /**
      * @param $key
-     * @return bool|\mysqli_result
+     *
      * @throws \Exception
+     *
+     * @return bool|\mysqli_result
      */
     protected function runDelete($key)
     {

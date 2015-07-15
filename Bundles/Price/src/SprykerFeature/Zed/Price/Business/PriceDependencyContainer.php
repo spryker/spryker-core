@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,13 +7,12 @@
 namespace SprykerFeature\Zed\Price\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\PriceBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
 use SprykerFeature\Zed\Price\Business\Model\WriterInterface;
 use SprykerFeature\Zed\Price\Business\Model\ReaderInterface;
 use SprykerFeature\Zed\Price\Dependency\Facade\PriceToProductInterface;
 use SprykerFeature\Zed\Price\Dependency\Facade\PriceToTouchInterface;
-use SprykerFeature\Zed\Price\Business\PriceSettings;
 use SprykerFeature\Zed\Price\Business\Internal\Install;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerFeature\Zed\Price\PriceConfig;
@@ -21,7 +21,7 @@ use SprykerFeature\Zed\Price\PriceConfig;
  * @method PriceBusiness getFactory()
  * @method PriceConfig getConfig()
  */
-class PriceDependencyContainer extends AbstractDependencyContainer
+class PriceDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
@@ -90,7 +90,7 @@ class PriceDependencyContainer extends AbstractDependencyContainer
      */
     protected function getTouchFacade()
     {
-        if (empty ($this->touchFacade)) {
+        if (empty($this->touchFacade)) {
             $this->touchFacade = $this->getLocator()->touch()->facade();
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,7 @@
 namespace SprykerFeature\Zed\SearchPage\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SearchPageCommunication;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\SearchPage\Business\SearchPageFacade;
 use SprykerFeature\Zed\SearchPage\Communication\Form\PageElementForm;
 use SprykerFeature\Zed\SearchPage\Communication\Grid\PageElementGrid;
@@ -16,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method SearchPageCommunication getFactory()
  */
-class SearchPageDependencyContainer extends AbstractDependencyContainer
+class SearchPageDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
@@ -60,4 +61,5 @@ class SearchPageDependencyContainer extends AbstractDependencyContainer
             $request
         );
     }
+
 }

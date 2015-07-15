@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -59,7 +60,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
             self::OPTION_KEY_FILE_NAME_SUFFIX,
             self::OPTION_KEY_PROJECT_PATH_PATTERN,
             self::OPTION_KEY_VENDOR_PATH_PATTERN,
-            self::OPTION_KEY_APPLICATION
+            self::OPTION_KEY_APPLICATION,
         ]);
 
         $resolver->setAllowedTypes(self::OPTION_KEY_METHOD_STRING_PATTERN, 'string');
@@ -197,4 +198,5 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
 
         return $className;
     }
+
 }

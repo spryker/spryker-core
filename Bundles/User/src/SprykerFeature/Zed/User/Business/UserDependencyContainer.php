@@ -1,13 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\User\Business;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\UserBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\User\Business\Model\Installer;
 use SprykerFeature\Zed\User\Business\Model\UserInterface;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
@@ -17,8 +17,9 @@ use SprykerFeature\Zed\User\UserConfig;
  * @method UserBusiness getFactory()
  * @method UserConfig getConfig()
  */
-class UserDependencyContainer extends AbstractDependencyContainer
+class UserDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return UserInterface
      */
@@ -26,7 +27,7 @@ class UserDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelUser(
             $this->getQueryContainer(),
-            $this->getLocator()->application()->pluginSession(),
+            $this->getLocator()->session()->client(),
             $this->getConfig()
         );
     }
@@ -50,4 +51,5 @@ class UserDependencyContainer extends AbstractDependencyContainer
             $this->getConfig()
         );
     }
+
 }

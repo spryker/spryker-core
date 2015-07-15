@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,7 +16,7 @@ class TestAutoloader
         'Unit',
         'YvesUnit',
         'Functional',
-        'Acceptance'
+        'Acceptance',
     ];
 
     /**
@@ -159,6 +160,7 @@ class TestAutoloader
 
     /**
      * @param string $resourceName
+     *
      * @return bool
      */
     private function isLoadingAllowed($resourceName)
@@ -172,6 +174,7 @@ class TestAutoloader
                 return true;
             }
         }
+
         return false;
     }
 

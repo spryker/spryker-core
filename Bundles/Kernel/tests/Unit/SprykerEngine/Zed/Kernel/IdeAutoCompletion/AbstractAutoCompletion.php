@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,11 +21,12 @@ abstract class AbstractAutoCompletion extends \PHPUnit_Framework_TestCase
     {
         if ($this->baseDir . 'test/') {
             $finder = new Finder();
-            /* @var $file SplFileInfo */
+            /** @var SplFileInfo $file */
             foreach ($finder->files()->in($this->baseDir . 'test/') as $file) {
                 unlink($file->getPathname());
             }
             rmdir($this->baseDir . 'test/');
         }
     }
+
 }

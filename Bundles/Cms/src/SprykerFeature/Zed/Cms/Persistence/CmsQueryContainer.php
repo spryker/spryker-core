@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,10 +11,10 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
+
     /**
      * @return SpyCmsTemplateQuery
      */
@@ -41,6 +42,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
 
     /**
      * @param int $id
+     *
      * @return SpyCmsTemplateQuery
      */
     public function queryTemplateById($id)
@@ -77,6 +79,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
 
     /**
      * @param int $id
+     *
      * @return SpyCmsPageQuery
      */
     public function queryPageById($id)
@@ -133,6 +136,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
 
     /**
      * @param int $idCmsPage
+     *
      * @return SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsByPageId($idCmsPage)
@@ -142,4 +146,5 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
 
         return $query;
     }
+
 }

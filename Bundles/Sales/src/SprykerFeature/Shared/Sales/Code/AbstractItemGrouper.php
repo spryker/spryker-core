@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,8 +10,6 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 
 /**
- * Class ItemGrouper
- * @package SprykerFeature\Shared\Sales\Code
  * @TODO Validate cross-bundle Dependencies
  */
 abstract class AbstractItemGrouper
@@ -34,6 +33,7 @@ abstract class AbstractItemGrouper
 
     /**
      * @param OrderItemCollection $items
+     *
      * @return OrderItemCollection
      */
     public function groupItemsByUniqueId(OrderItemCollection $items)
@@ -45,6 +45,7 @@ abstract class AbstractItemGrouper
      * This Method is not Options aware. Use with caution
      *
      * @param OrderItemCollection $items
+     *
      * @return OrderItemCollection
      */
     public function groupItemsBySku(OrderItemCollection $items)
@@ -55,6 +56,7 @@ abstract class AbstractItemGrouper
     /**
      * @param OrderItemCollection $items
      * @param string $key
+     *
      * @return OrderItemCollection
      * @static
      */
@@ -63,7 +65,7 @@ abstract class AbstractItemGrouper
         $index = [];
         $methodName = 'get' . ucfirst($key);
 
-        /* @var $item \SprykerFeature\Shared\Sales\Transfer\OrderItem */
+        /** @var \SprykerFeature\Shared\Sales\Transfer\OrderItem $item */
         foreach ($items as $item) {
             $groupKey = $item->$methodName();
             if (isset($index[$groupKey])) {
@@ -83,4 +85,5 @@ abstract class AbstractItemGrouper
 
         return $transferItems;
     }
+
 }

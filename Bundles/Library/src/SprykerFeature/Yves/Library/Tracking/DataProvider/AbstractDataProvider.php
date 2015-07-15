@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -99,4 +100,5 @@ abstract class AbstractDataProvider implements DataProviderInterface
             );
         }
     }
+
 }

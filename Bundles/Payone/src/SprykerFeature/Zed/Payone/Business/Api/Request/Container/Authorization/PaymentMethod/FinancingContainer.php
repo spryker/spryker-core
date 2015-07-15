@@ -1,18 +1,19 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 
 class FinancingContainer extends AbstractPaymentMethodContainer
 {
 
     /**
      * Enum FinancingType
+     *
      * @var string
      */
     protected $financingtype;
@@ -20,7 +21,6 @@ class FinancingContainer extends AbstractPaymentMethodContainer
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     protected $redirect;
-
 
     /**
      * @param string $financingtype

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,11 +9,9 @@ namespace SprykerEngine\Yves\Application\Communication\Controller;
 use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
-use SprykerEngine\Shared\Messenger\Communication\Presenter\TwigPresenter;
 use SprykerEngine\Yves\Application\Business\Application;
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
 use SprykerEngine\Yves\Kernel\Communication\Factory;
-use SprykerEngine\Yves\Messenger\Communication\Presenter\YvesPresenter;
 use SprykerFeature\Shared\ZedRequest\Client\Response as TransferResponse;
 use SprykerFeature\Yves\Library\Session\TransferSession;
 use Symfony\Component\Form\FormInterface;
@@ -52,8 +51,8 @@ abstract class AbstractController
     public function __construct(Application $app, Factory $factory, LocatorLocatorInterface $locator)
     {
         $this->app = $app;
-        $this->locator = $locator;
         $this->factory = $factory;
+        $this->locator = $locator;
 
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
@@ -61,12 +60,11 @@ abstract class AbstractController
     }
 
     /**
-     * TODO Wrong place! Needs to be in Newrelic
+     * @return Factory
      */
-    public function disableLoggingToNewRelic()
+    protected function getFactory()
     {
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreApdex();
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreTransaction();
+        return $this->factory;
     }
 
     /**
@@ -84,7 +82,7 @@ abstract class AbstractController
     /**
      * @return Application
      */
-    private function getApplication()
+    protected function getApplication()
     {
         return $this->app;
     }
@@ -136,6 +134,7 @@ abstract class AbstractController
      * @param null $data
      * @param int $status
      * @param array $headers
+     *
      * @return JsonResponse
      */
     protected function jsonResponse($data = null, $status = 200, $headers = [])
@@ -145,6 +144,7 @@ abstract class AbstractController
 
     /**
      * @param array $data
+     *
      * @return array
      */
     protected function viewResponse(array $data = [])
@@ -157,7 +157,7 @@ abstract class AbstractController
      */
     protected function addMessagesFromZedResponse(TransferResponse $transferResponse)
     {
-        $this->getMessenger()->addMessagesFromResponse($transferResponse);
+        //$this->getMessenger()->addMessagesFromResponse($transferResponse);
     }
 
     /**
@@ -165,17 +165,20 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
+        return;
+        //return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
     }
 
     /**
      * @param $message
-     * @return $this
+     *
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageSuccess($message)
     {
-        $this->getMessenger()->success($message);
+        //$this->getMessenger()->success($message);
 
         return $this;
     }
@@ -183,12 +186,13 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageWarning($message)
     {
-        $this->getMessenger()->warning($message);
+        //$this->getMessenger()->warning($message);
 
         return $this;
     }
@@ -196,12 +200,13 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageError($message)
     {
-        $this->getMessenger()->error($message);
+        //$this->getMessenger()->error($message);
 
         return $this;
     }
@@ -239,6 +244,7 @@ abstract class AbstractController
 
     /**
      * @param Request $request
+     *
      * @return string
      */
     protected function getSecurityError(Request $request)
@@ -247,8 +253,9 @@ abstract class AbstractController
     }
 
     /**
-     * @return mixed
      * @throws \LogicException
+     *
+     * @return mixed
      */
     protected function getSecurityContext()
     {
@@ -261,6 +268,17 @@ abstract class AbstractController
     }
 
     /**
+     * @return bool
+     */
+    protected function hasUser()
+    {
+        $securityContext = $this->getSecurityContext();
+        $token = $securityContext->getToken();
+
+        return is_null($token);
+    }
+
+    /**
      * @return mixed
      */
     protected function getUser()
@@ -268,7 +286,7 @@ abstract class AbstractController
         $securityContext = $this->getSecurityContext();
         $token = $securityContext->getToken();
         if (is_null($token)) {
-            throw new \LogicException("No logged in user found.");
+            throw new \LogicException('No logged in user found.');
         }
 
         return $token->getUser();
@@ -315,8 +333,9 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Twig_Environment
      * @throws \LogicException
+     *
+     * @return \Twig_Environment
      */
     private function getTwig()
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExceptionController
 {
+
     /**
      * @param FlattenException $exception
      * @param string $format
@@ -20,4 +22,5 @@ class ExceptionController
     {
         return new Response($exception->getMessage());
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,6 +21,7 @@ use SprykerEngine\Zed\Kernel\Locator;
  */
 class DistributorTest extends Test
 {
+
     const ITEM_GROSS_PRICE_ZERO = 0;
     const ITEM_GROSS_PRICE_1000 = 1000;
     const ITEM_GROSS_PRICE_2000 = 2000;
@@ -154,6 +156,7 @@ class DistributorTest extends Test
 
     /**
      * @param array $grossPrices
+     *
      * @return array|OrderItemTransfer[]
      */
     protected function getItems(array $grossPrices)
@@ -168,4 +171,5 @@ class DistributorTest extends Test
 
         return $items;
     }
+
 }

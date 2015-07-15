@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
  */
 class ProductFrontendExporterConnectorFacade extends AbstractFacade
 {
+
     /**
      * @param array $products
      * @param LocaleTransfer $locale
@@ -36,4 +38,5 @@ class ProductFrontendExporterConnectorFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->getProductExportDecider()->isFailed($result);
     }
+
 }

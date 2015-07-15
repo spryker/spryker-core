@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductCategorySearchProcessorInterface
 {
+
     /**
      * @param array $resultSet
      * @param array $processedResultSet
@@ -17,4 +19,5 @@ interface ProductCategorySearchProcessorInterface
      * @return array
      */
     public function process(array &$resultSet, array $processedResultSet, LocaleTransfer $locale);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,43 +7,44 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\ExpenseInterface;
-use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\ExpenseTotalItemTransfer;
 use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Calculation\TotalsInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class ExpenseTotalsCalculator implements
     TotalsCalculatorPluginInterface,
     ExpenseTotalsCalculatorInterface
 {
+
     /**
      * @param TotalsInterface $totalsTransfer
-     * @param OrderInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param CalculableInterface $calculableContainer
+     * @param $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
-        OrderInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        CalculableInterface $calculableContainer,
+        $calculableItems
     ) {
         $expenseTotal = $this->createExpenseTotalTransfer($calculableContainer, $calculableItems);
         $totalsTransfer->setExpenses($expenseTotal);
     }
 
     /**
-     * @param OrderInterface $calculableContainer
+     * @param CalculableInterface $calculableContainer
      *
      * @return int
      */
-    public function calculateExpenseTotal(OrderInterface $calculableContainer)
+    public function calculateExpenseTotal(CalculableInterface $calculableContainer)
     {
         $orderExpensesTotal = 0;
-        if ($calculableContainer->getExpenses() instanceof ExpensesTransfer) {
-            $expenses = $calculableContainer->getExpenses()->getCalculationExpenses();
+        if ($calculableContainer->getCalculableObject()->getExpenses() instanceof ExpensesTransfer) {
+            $expenses = $calculableContainer->getCalculableObject()->getExpenses()->getCalculationExpenses();
         } else {
-            $expenses = $calculableContainer->getExpenses();
+            $expenses = $calculableContainer->getCalculableObject()->getExpenses();
         }
 
         foreach ($expenses as $expense) {
@@ -56,6 +58,7 @@ class ExpenseTotalsCalculator implements
 
     /**
      * @param \ArrayObject|CalculableItemInterface[] $calculableItems
+     *
      * @return int
      */
     protected function calculateItemExpenseTotal(\ArrayObject $calculableItems)
@@ -79,19 +82,19 @@ class ExpenseTotalsCalculator implements
     }
 
     /**
-     * @param OrderInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param CalculableInterface $calculableContainer
+     * @param $calculableItems
      *
      * @return array
      */
     protected function sumExpenseItems(
-        OrderInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        CalculableInterface $calculableContainer,
+        $calculableItems
     ) {
         $orderExpenseItems = [];
 
-        if ($calculableContainer->getExpenses() instanceof ExpensesTransfer) {
-            foreach ($calculableContainer->getExpenses()->getCalculationExpenses() as $expense) {
+        if ($calculableContainer->getCalculableObject()->getExpenses() instanceof ExpensesTransfer) {
+            foreach ($calculableContainer->getCalculableObject()->getExpenses()->getCalculationExpenses() as $expense) {
                 $this->transformExpenseToExpenseTotalItemInArray($expense, $orderExpenseItems);
             }
         }
@@ -125,14 +128,14 @@ class ExpenseTotalsCalculator implements
     }
 
     /**
-     * @param OrderInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param CalculableInterface $calculableContainer
+     * @param $calculableItems
      *
      * @return ExpenseTotalsTransfer
      */
     protected function createExpenseTotalTransfer(
-        OrderInterface $calculableContainer,
-        \ArrayObject $calculableItems
+        CalculableInterface $calculableContainer,
+        $calculableItems
     ) {
         $expenseTotalTransfer = new ExpenseTotalsTransfer();
         $expenseTotalTransfer->setTotalOrderAmount($this->calculateExpenseTotal($calculableContainer));
@@ -144,4 +147,5 @@ class ExpenseTotalsCalculator implements
 
         return $expenseTotalTransfer;
     }
+
 }

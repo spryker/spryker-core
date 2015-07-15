@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,9 +9,10 @@ namespace YvesUnit\SprykerEngine\Yves\Kernel\Communication;
 use SprykerEngine\Yves\Kernel\Communication\Controller\RouteNameResolver;
 
 /**
+ * @group SprykerEngine
+ * @group Yves
  * @group Kernel
  * @group Communication
- * @group Controller
  * @group RouteNameResolver
  */
 class RouteNameResolverTest extends \PHPUnit_Framework_TestCase
@@ -22,4 +24,5 @@ class RouteNameResolverTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('foo/bar/baz', $resolver->resolve());
     }
+
 }

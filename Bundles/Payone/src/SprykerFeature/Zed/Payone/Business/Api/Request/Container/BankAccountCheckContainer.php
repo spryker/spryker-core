@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-
 
 class BankAccountCheckContainer extends AbstractRequestContainer
 {
@@ -48,7 +47,6 @@ class BankAccountCheckContainer extends AbstractRequestContainer
      */
     protected $bic;
 
-    
     /**
      * @param int $aid
      */

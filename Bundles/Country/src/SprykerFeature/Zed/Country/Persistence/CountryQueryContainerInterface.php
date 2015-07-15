@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyRegionQuery;
 
 interface CountryQueryContainerInterface
 {
+
     /**
      * @return SpyCountryQuery
      */
@@ -33,4 +35,5 @@ interface CountryQueryContainerInterface
      * @return SpyRegionQuery
      */
     public function queryRegionByIsoCode($isoCode);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use Generated\Yves\Ide\FactoryAutoCompletion\Assets;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
-use SprykerEngine\Yves\Kernel\Factory;
 use SprykerFeature\Yves\Assets\Model\AssetUrlBuilderInterface;
 use SprykerFeature\Yves\Assets\Model\CacheBusterInterface;
 use SprykerFeature\Yves\Assets\Model\MediaUrlBuilderInterface;
@@ -19,8 +19,10 @@ use SprykerFeature\Yves\Assets\Model\MediaUrlBuilderInterface;
  */
 class AssetsDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @param bool $isDomainSecured
+     *
      * @throws \Exception
      *
      * @return AssetUrlBuilderInterface
@@ -36,9 +38,9 @@ class AssetsDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createModelAssetUrlBuilder($host, $this->createCacheBuster());
     }
 
-
     /**
      * @param bool $isDomainSecured
+     *
      * @throws \Exception
      *
      * @return MediaUrlBuilderInterface
@@ -68,4 +70,5 @@ class AssetsDependencyContainer extends AbstractDependencyContainer
 
         return $this->getFactory()->createModelUrlParameterCacheBuster($cacheBust);
     }
+
 }

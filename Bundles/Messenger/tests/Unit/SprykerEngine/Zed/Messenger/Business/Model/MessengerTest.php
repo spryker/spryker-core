@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Messenger\Business\Model\Messenger;
 
 class MessengerTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @var Messenger
      */
@@ -86,4 +88,5 @@ class MessengerTest extends \PHPUnit_Framework_TestCase
             );
         }
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,4 +23,5 @@ class NopaymentQueryContainer extends AbstractQueryContainer
         return SpyNopaymentPaidQuery::create()
             ->findByFkSalesOrderItem($orderItem->getIdSalesOrderItem());
     }
+
 }

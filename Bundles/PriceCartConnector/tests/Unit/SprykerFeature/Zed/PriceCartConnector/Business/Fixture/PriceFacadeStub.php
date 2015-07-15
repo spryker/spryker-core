@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Price\Business\PriceFacade;
 
 class PriceFacadeStub extends PriceFacade
 {
+
     private $prices = [];
     private $validities = [];
 
@@ -25,6 +27,10 @@ class PriceFacadeStub extends PriceFacade
 
     public function hasValidPrice($sku, $priceType = null)
     {
+        if (!isset($this->validities[$sku])) {
+            return false;
+        }
+
         return $this->validities[$sku];
     }
 
@@ -37,5 +43,5 @@ class PriceFacadeStub extends PriceFacade
     {
         $this->validities[$sku] = $validity;
     }
+
 }
- 

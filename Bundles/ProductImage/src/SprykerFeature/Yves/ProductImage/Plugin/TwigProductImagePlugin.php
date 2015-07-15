@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Yves\Twig\Dependency\Plugin\TwigFunctionPluginInterface;
 
 class TwigProductImagePlugin extends AbstractPlugin implements TwigFunctionPluginInterface
 {
+
     /**
      * @param Application $application
      *
@@ -33,7 +35,8 @@ class TwigProductImagePlugin extends AbstractPlugin implements TwigFunctionPlugi
                 return \SprykerFeature_Shared_Library_Image::getAbsoluteProductImageUrl(
                     \SprykerFeature_Shared_Library_Image::getFirstProductImageFilenameBySize($images, $size)
                 );
-            })
+            }),
         ];
     }
+
 }

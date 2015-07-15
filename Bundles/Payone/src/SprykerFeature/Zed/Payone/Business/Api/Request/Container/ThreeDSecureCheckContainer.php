@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-
 
 class ThreeDSecureCheckContainer extends AbstractRequestContainer
 {
@@ -60,7 +59,6 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
      */
     protected $language;
 
-    
     /**
      * @param int $aid
      */

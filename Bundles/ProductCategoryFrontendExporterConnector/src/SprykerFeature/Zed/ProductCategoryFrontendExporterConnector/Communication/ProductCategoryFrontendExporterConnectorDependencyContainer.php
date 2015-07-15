@@ -1,20 +1,21 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business\ProductCategoryFrontendExporterConnectorFacade;
 
 /**
  * Class ProductCategoryFrontendExporterConnectorDependencyContainer
- * @package SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Communication
  */
-class ProductCategoryFrontendExporterConnectorDependencyContainer extends AbstractDependencyContainer
+class ProductCategoryFrontendExporterConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return ProductCategoryQueryContainerInterface
      */
@@ -30,4 +31,5 @@ class ProductCategoryFrontendExporterConnectorDependencyContainer extends Abstra
     {
         return $this->getLocator()->productCategoryFrontendExporterConnector()->facade();
     }
+
 }

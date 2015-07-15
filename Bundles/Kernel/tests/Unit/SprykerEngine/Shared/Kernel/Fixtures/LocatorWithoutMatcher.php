@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,9 +27,10 @@ class LocatorWithoutMatcher implements LocatorInterface
     /**
      * @param string $bundle
      *
-     * @return boolean
+     * @return bool
      */
     public function canLocate($bundle)
     {
     }
+
 }

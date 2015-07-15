@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Response\Container;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
 abstract class AbstractResponseContainer implements PayoneApiConstants
 {
@@ -31,11 +32,10 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
      */
     protected $customermessage;
 
-
     /**
      * @param array $params
      */
-    function __construct(array $params = array())
+    public function __construct(array $params = [])
     {
         if (count($params) > 0) {
             $this->init($params);
@@ -45,7 +45,7 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
     /**
      * @param array $data
      */
-    public function init(array $data = array())
+    public function init(array $data = [])
     {
         foreach ($data as $key => $value) {
             $key = ucwords(str_replace('_', ' ', $key));
@@ -62,7 +62,7 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
      */
     public function toArray()
     {
-        $result = array();
+        $result = [];
         foreach ($this as $key => $data) {
             if ($data === null) {
                 continue;
@@ -71,6 +71,7 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
                 $result[$key] = $data;
             }
         }
+
         return $result;
     }
 
@@ -79,11 +80,12 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
      */
     public function __toString()
     {
-        $stringArray = array();
+        $stringArray = [];
         foreach ($this->toArray() as $key => $value) {
             $stringArray[] = $key . '=' . $value;
         }
         $result = implode('|', $stringArray);
+
         return $result;
     }
 
@@ -136,6 +138,18 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
     }
 
     /**
+     * @return bool
+     */
+    public function isError()
+    {
+        if($this->errorcode === null){
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @param string $errormessage
      */
     public function setErrormessage($errormessage)
@@ -153,6 +167,7 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
 
     /**
      * @param string $key
+     *
      * @return null|mixed
      */
     public function getValue($key)
@@ -163,7 +178,8 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
     /**
      * @param string $key
      * @param string $name
-     * @return boolean|null
+     *
+     * @return bool|null
      */
     public function setValue($key, $name)
     {
@@ -180,21 +196,25 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
         if (property_exists($this, $name)) {
             return $this->$name;
         }
-        return null;
+
+        return;
     }
 
     /**
      * @param string $name
      * @param mixed $value
-     * @return boolean|null
+     *
+     * @return bool|null
      */
     protected function set($name, $value)
     {
         if (property_exists($this, $name)) {
             $this->$name = $value;
+
             return true;
         }
-        return null;
+
+        return;
     }
 
     /**
@@ -206,7 +226,6 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
     }
 
     /**
-     * @return null
      */
     public function getRawResponse()
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,4 +26,5 @@ class NopaymentConditionPlugin extends AbstractPlugin implements ConditionInterf
     {
         return $this->getDependencyContainer()->createFacade()->isPaid($orderItem);
     }
+
 }

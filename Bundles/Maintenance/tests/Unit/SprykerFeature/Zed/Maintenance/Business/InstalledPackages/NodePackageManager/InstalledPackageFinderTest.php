@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace Unit\SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePac
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
 use Symfony\Component\Process\Process;
 
 /**

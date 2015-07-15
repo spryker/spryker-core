@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,18 +22,18 @@ class CarForm extends AbstractForm
             ->setLabel('Wheels')
             ->setConstraints([
                 new SerializeAssert\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
 
         $this->addField('shock_absorber')
             ->setLabel('Shock absorber')
             ->setConstraints([
                 new SerializeAssert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
     }
 
@@ -42,10 +43,11 @@ class CarForm extends AbstractForm
     protected function getDefaultData()
     {
         $data = [
-            'wheels'    =>  'Standard',
-            'shock_absorber'      =>  'Fox'
+            'wheels' => 'Standard',
+            'shock_absorber' => 'Fox',
         ];
 
         return $data;
     }
+
 }

@@ -1,16 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Category\Business\Model;
 
-use Generated\Shared\Transfer\CategoryCategory as CategoryTransferTransfer;
 use Generated\Shared\Category\CategoryInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttribute;
@@ -35,8 +33,9 @@ class CategoryWriter implements CategoryWriterInterface
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
      *
-     * @return SpyCategory
      * @throws \ErrorException
+     *
+     * @return SpyCategory
      */
     public function create(CategoryInterface $category, LocaleTransfer $locale)
     {
@@ -50,9 +49,10 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
-     * @return int
      *
      * @throws PropelException
+     *
+     * @return int
      */
     public function update(CategoryInterface $category, LocaleTransfer $locale)
     {
@@ -93,8 +93,9 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     protected function persistCategory()
     {
@@ -161,4 +162,5 @@ class CategoryWriter implements CategoryWriterInterface
             ->findOne()
         ;
     }
+
 }

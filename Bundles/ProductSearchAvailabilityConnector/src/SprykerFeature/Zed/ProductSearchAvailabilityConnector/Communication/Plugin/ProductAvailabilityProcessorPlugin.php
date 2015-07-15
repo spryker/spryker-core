@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInt
 
 class ProductAvailabilityProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
+
     /**
      * @return string
      */
@@ -31,7 +33,7 @@ class ProductAvailabilityProcessorPlugin extends AbstractPlugin implements DataP
 
         foreach ($resultSet as $index => $productRawData) {
             if (isset($processedResultSet[$index])) {
-                $isAvailable = (bool)(
+                $isAvailable = (bool) (
                     $productRawData['is_never_out_of_stock'] ||
                     $productRawData['quantity'] > 0
                 );
@@ -42,4 +44,5 @@ class ProductAvailabilityProcessorPlugin extends AbstractPlugin implements DataP
 
         return $processedResultSet;
     }
+
 }

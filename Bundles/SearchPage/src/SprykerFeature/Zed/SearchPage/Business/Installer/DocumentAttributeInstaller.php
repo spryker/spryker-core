@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 
 class DocumentAttributeInstaller extends AbstractInstaller
 {
+
     const TYPE_FILTER = 'filter';
     const ATTRIBUTE_TYPE = 'type';
     const ATTRIBUTE_NAME = 'name';
@@ -50,12 +52,12 @@ class DocumentAttributeInstaller extends AbstractInstaller
     }
 
     /**
-     * @return void
      */
     public function install()
     {
         if ($this->documentAttributeReader->hasDocumentAttributes()) {
             $this->info('Skipping DocumentAttributeInstaller, cause attributes are already in DB.');
+
             return;
         }
 
@@ -71,19 +73,19 @@ class DocumentAttributeInstaller extends AbstractInstaller
         return [
             [
                 self::ATTRIBUTE_NAME => 'string-facet',
-                self::ATTRIBUTE_TYPE => self::TYPE_FILTER
+                self::ATTRIBUTE_TYPE => self::TYPE_FILTER,
             ],
             [
                 self::ATTRIBUTE_NAME => 'integer-facet',
-                self::ATTRIBUTE_TYPE => self::TYPE_FILTER
+                self::ATTRIBUTE_TYPE => self::TYPE_FILTER,
             ],
             [
                 self::ATTRIBUTE_NAME => 'string-sort',
-                self::ATTRIBUTE_TYPE => self::SORT
+                self::ATTRIBUTE_TYPE => self::SORT,
             ],
             [
                 self::ATTRIBUTE_NAME => 'integer-sort',
-                self::ATTRIBUTE_TYPE => self::SORT
+                self::ATTRIBUTE_TYPE => self::SORT,
             ],
         ];
     }
@@ -120,4 +122,5 @@ class DocumentAttributeInstaller extends AbstractInstaller
             $this->documentAttributeWriter->createDocumentAttribute($documentAttributeTransfer);
         }
     }
+
 }

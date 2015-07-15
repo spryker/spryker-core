@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,7 +23,6 @@ class PullConsole extends BaseCommand
         $this->addOption(self::OPTION_REBASE, null, InputOption::VALUE_NONE, 'rebase on pull');
     }
 
-
     /**
      *
      */
@@ -44,6 +44,7 @@ class PullConsole extends BaseCommand
         if ($this->input->getOption(self::OPTION_REBASE)) {
             $command .= ' --rebase';
         }
+
         return $command;
     }
 

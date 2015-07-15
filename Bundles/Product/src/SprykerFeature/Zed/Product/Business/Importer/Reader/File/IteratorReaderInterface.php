@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Product\Business\Importer\Reader\File;
 
 interface IteratorReaderInterface
 {
+
     /**
      * @param \SplFileInfo $file
      *
@@ -20,4 +22,5 @@ interface IteratorReaderInterface
      * @return array
      */
     public function getArrayFromFile(\SplFileInfo $file);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,7 @@
 namespace SprykerFeature\Zed\Customer\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Customer\Communication\Grid\AddressGrid;
@@ -17,8 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method CustomerCommunication getFactory()
  */
-class CustomerDependencyContainer extends AbstractDependencyContainer
+class CustomerDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @param Request $request
      *
@@ -78,4 +80,5 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getLocator()->customer()->queryContainer();
     }
+
 }

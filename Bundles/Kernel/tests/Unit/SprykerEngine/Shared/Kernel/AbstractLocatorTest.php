@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerEngine\Shared\Kernel;
-
-use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 
 use Unit\SprykerEngine\Shared\Kernel\Fixtures\Locator;
 use Unit\SprykerEngine\Shared\Kernel\Fixtures\MissingPropertyLocator;
@@ -54,4 +53,5 @@ class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Unit\SprykerEngine\Shared\Kernel\Fixtures\Factory', $instance);
     }
+
 }

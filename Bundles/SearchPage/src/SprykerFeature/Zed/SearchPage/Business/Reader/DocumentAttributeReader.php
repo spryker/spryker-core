@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -62,4 +63,5 @@ class DocumentAttributeReader implements DocumentAttributeReaderInterface
 
         return $documentAttributeQuery->findOne();
     }
+
 }

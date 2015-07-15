@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,6 +21,7 @@ class ControllerExtender
 
     /**
      * @param $controller
+     *
      * @return mixed
      */
     protected function applyExtensions($controller)
@@ -33,6 +35,7 @@ class ControllerExtender
 
     /**
      * @param array $extensions
+     *
      * @return $this
      */
     public function addControllerExtensions(array $extensions)
@@ -46,6 +49,7 @@ class ControllerExtender
 
     /**
      * @param ControllerExtensionInterface $extension
+     *
      * @return $this
      */
     public function addControllerExtension(ControllerExtensionInterface $extension)

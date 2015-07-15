@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,13 +20,15 @@ class DateInterval extends \Zend_Validate_Abstract
 
     /**
      * @param string $dateString
+     *
      * @return bool
      */
     public function isValid($dateString)
     {
         $dateInterval = \DateInterval::createFromDateString($dateString);
-        if (count(array_filter((array) $dateInterval)) == 0) {
+        if (count(array_filter((array) $dateInterval)) === 0) {
             $this->_error(self::WRONG_FORMAT);
+
             return false;
         }
 

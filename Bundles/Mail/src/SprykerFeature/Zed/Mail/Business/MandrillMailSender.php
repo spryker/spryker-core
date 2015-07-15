@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use Generated\Shared\Transfer\MailRecipientTransfer;
 
 class MandrillMailSender implements MailSenderInterface
 {
+
     /**
      * @var \Mandrill
      */
@@ -35,8 +37,9 @@ class MandrillMailSender implements MailSenderInterface
     /**
      * @param MailTransfer $mailTransfer
      *
-     * @return array
      * @throws \Mandrill_Error
+     *
+     * @return array
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
@@ -64,7 +67,7 @@ class MandrillMailSender implements MailSenderInterface
         foreach ($templateContent as $name => $content) {
             $result[] = [
                 'name' => $name,
-                'content' => $content
+                'content' => $content,
             ];
         }
 
@@ -108,7 +111,7 @@ class MandrillMailSender implements MailSenderInterface
             'metadata' => $mailTransfer->getMetadata(),
             'recipient_metadata' => $this->extractRecipientMetadata($mailTransfer->getRecipients()),
             'attachments' => $this->extractFiles($mailTransfer->getAttachments()),
-            'images' => $this->extractFiles($mailTransfer->getImages())
+            'images' => $this->extractFiles($mailTransfer->getImages()),
         ];
     }
 
@@ -167,7 +170,7 @@ class MandrillMailSender implements MailSenderInterface
 
             $result[] = [
                 'rcpt' => $recipient->getEmail(),
-                'vars' => $this->convertToJsonStyle($recipient->getMergeVars())
+                'vars' => $this->convertToJsonStyle($recipient->getMergeVars()),
             ];
         }
 
@@ -190,7 +193,7 @@ class MandrillMailSender implements MailSenderInterface
 
             $result[] = [
                 'rcpt' => $individualData->getEmail(),
-                'values' => $individualData->getMetadata()
+                'values' => $individualData->getMetadata(),
             ];
         }
 
@@ -210,10 +213,11 @@ class MandrillMailSender implements MailSenderInterface
             $result[] = [
                 'type' => $this->inclusionHandler->guessType($file->getFileName()),
                 'name' => $file->getDisplayName() ? $file->getDisplayName() : $this->inclusionHandler->getFilename($file->getFileName()),
-                'content' => $this->inclusionHandler->encodeBase64($file->getFileName())
+                'content' => $this->inclusionHandler->encodeBase64($file->getFileName()),
             ];
         }
 
         return $result;
     }
+
 }

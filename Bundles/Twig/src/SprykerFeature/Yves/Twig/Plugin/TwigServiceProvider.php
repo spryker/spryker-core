@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class TwigServiceProvider extends SilexTwigServiceProvider
 {
+
     /**
      * @var SprykerApplication
      */
@@ -73,7 +75,7 @@ class TwigServiceProvider extends SilexTwigServiceProvider
      */
     public function boot(Application $app)
     {
-        $app['dispatcher']->addListener(KernelEvents::VIEW, array($this, 'onKernelView'), 0);
+        $app['dispatcher']->addListener(KernelEvents::VIEW, [$this, 'onKernelView'], 0);
     }
 
     /**
@@ -89,11 +91,11 @@ class TwigServiceProvider extends SilexTwigServiceProvider
         $controller = $this->app['request']->attributes->get('_controller');
 
         if (!is_string($controller) || empty($controller)) {
-            return null;
+            return;
         }
 
         if (isset($parameters['alternativeRoute'])) {
-            $route = (string)$parameters['alternativeRoute'];
+            $route = (string) $parameters['alternativeRoute'];
         } else {
             $route = $helper->getRouteFromDestination($controller);
         }
@@ -130,7 +132,7 @@ class TwigServiceProvider extends SilexTwigServiceProvider
             return new \Twig_Loader_Chain(
                 [
                     $app['twig.loader.yves'],
-                    $app['twig.loader.filesystem']
+                    $app['twig.loader.filesystem'],
                 ]
             );
         });
@@ -141,14 +143,13 @@ class TwigServiceProvider extends SilexTwigServiceProvider
      */
     protected function registerTwigCache(Application $app)
     {
-        $app['twig.options'] = array(
-            'cache' => \SprykerFeature_Shared_Library_Data::getLocalStoreSpecificPath('cache/twig')
-        );
+        $app['twig.options'] = [
+            'cache' => \SprykerFeature_Shared_Library_Data::getLocalStoreSpecificPath('cache/twig'),
+        ];
     }
 
     /**
      * @param Application $app
-     *
      */
     protected function registerTwig(Application $app)
     {
@@ -177,4 +178,5 @@ class TwigServiceProvider extends SilexTwigServiceProvider
             )
         );
     }
+
 }

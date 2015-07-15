@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Stock\Business\Model;
 
 class Calculator implements CalculatorInterface
 {
+
     /**
      * @var Reader
      */
@@ -22,6 +24,7 @@ class Calculator implements CalculatorInterface
 
     /**
      * @param string $sku
+     *
      * @return int
      */
     public function calculateStockForProduct($sku)
@@ -35,4 +38,5 @@ class Calculator implements CalculatorInterface
 
         return $quantity;
     }
+
 }

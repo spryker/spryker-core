@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace Unit\SprykerEngine\Zed\Kernel\Communication;
 
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Communication\DependencyContainerLocator;
 use SprykerEngine\Zed\Kernel\Communication\PluginLocator;
 
 /**
@@ -56,4 +56,18 @@ class PluginLocatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf($fullyQualifiedClassName, $locatedPlugin);
     }
+
+    public function testCreateInstanceShouldInjectDependencyContainerIfOneExists()
+    {
+        $locator = new PluginLocator(
+            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\PluginLocator\\Factory'
+        );
+        $locatedClass = $locator->locate('Kernel', Locator::getInstance(), 'Foo');
+
+        $this->assertInstanceOf(
+            'Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\PluginLocator\Plugin\Foo',
+            $locatedClass
+        );
+    }
+
 }

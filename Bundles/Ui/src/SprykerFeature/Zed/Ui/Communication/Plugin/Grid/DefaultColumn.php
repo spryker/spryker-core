@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -42,6 +43,7 @@ class DefaultColumn extends AbstractGridPlugin
 
     /**
      * @param string $name
+     *
      * @return $this
      */
     public function setName($name)
@@ -56,7 +58,7 @@ class DefaultColumn extends AbstractGridPlugin
      */
     public function filterable()
     {
-        /**
+        /*
          * @todo SprykerFeature_Zed_Library_Propel_Helper is missing.
          * need to be included again and used for filterable elements
          */
@@ -181,7 +183,7 @@ class DefaultColumn extends AbstractGridPlugin
      */
     protected function getFilterValue()
     {
-        return $this->getDedicatedRequestValue(DefaultColumn::PARAM_FILTER);
+        return $this->getDedicatedRequestValue(self::PARAM_FILTER);
     }
 
     /**
@@ -213,7 +215,7 @@ class DefaultColumn extends AbstractGridPlugin
             $sortDirection = $this->defaultSortDirection;
         }
 
-        if ($requestedSortDirection && $requestedSortColumnName == $this->name) {
+        if ($requestedSortDirection && $requestedSortColumnName === $this->name) {
             $sortDirection = $requestedSortDirection;
         }
 
@@ -227,11 +229,11 @@ class DefaultColumn extends AbstractGridPlugin
     {
         $requestData = $this->getStateContainer()->getRequestData();
 
-        if (isset($requestData[DefaultColumn::PARAM_SORT_COLUMN])) {
-            return (string)$requestData[DefaultColumn::PARAM_SORT_COLUMN];
+        if (isset($requestData[self::PARAM_SORT_COLUMN])) {
+            return (string) $requestData[self::PARAM_SORT_COLUMN];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -241,11 +243,11 @@ class DefaultColumn extends AbstractGridPlugin
     {
         $requestData = $this->getStateContainer()->getRequestData();
 
-        if (isset($requestData[DefaultColumn::PARAM_SORT_DIRECTION])) {
-            return (string)$requestData[DefaultColumn::PARAM_SORT_DIRECTION];
+        if (isset($requestData[self::PARAM_SORT_DIRECTION])) {
+            return (string) $requestData[self::PARAM_SORT_DIRECTION];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -258,9 +260,10 @@ class DefaultColumn extends AbstractGridPlugin
         $requestData = $this->getStateContainer()->getRequestData();
 
         if (isset($requestData[$key][$this->name])) {
-            return (string)$requestData[$key][$this->name];
+            return (string) $requestData[$key][$this->name];
         }
 
-        return null;
+        return;
     }
+
 }

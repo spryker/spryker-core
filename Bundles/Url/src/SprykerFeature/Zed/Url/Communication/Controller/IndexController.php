@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Url\Communication\UrlDependencyContainer;
  */
 class IndexController extends AbstractController
 {
+
     /**
      * indexAction
      */
@@ -34,4 +36,5 @@ class IndexController extends AbstractController
 
         return $this->jsonResponse($grid->renderData());
     }
+
 }

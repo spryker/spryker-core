@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface PageBuilderInterface
 {
+
     /**
      * @param array $pageResultSet
      * @param LocaleTransfer $locale
@@ -16,4 +18,5 @@ interface PageBuilderInterface
      * @return array
      */
     public function buildPages(array $pageResultSet, LocaleTransfer $locale);
+
 }

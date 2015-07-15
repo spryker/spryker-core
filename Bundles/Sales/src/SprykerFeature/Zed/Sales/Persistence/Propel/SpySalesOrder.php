@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Sales\Persistence\Propel;
 
 use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrder as BaseSpySalesOrder;
+use SprykerFeature\Zed\Sales\Persistence\Propel\Map\SpySalesOrderTableMap;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_sales_order' table.
@@ -20,4 +21,26 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrder as BaseSpySal
 class SpySalesOrder extends BaseSpySalesOrder
 {
 
+    /**
+     * Set the value of [increment_id] column.
+     *
+     * @param string $v new value
+     * @deprecated
+     * @return $this|\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder The current object (for fluent API support)
+     */
+    public function setIncrementId($v)
+    {
+        $this->setOrderReference($v);
+    }
+
+    /**
+     * Get the [increment_id] column value.
+     *
+     * @deprecated
+     * @return string
+     */
+    public function getIncrementId()
+    {
+        return $this->getOrderReference();
+    }
 }

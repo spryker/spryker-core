@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Yves\Assets\Model;
 
 class AssetUrlBuilder extends AbstractUrlBuilder implements AssetUrlBuilderInterface
 {
+
     /**
      * @var CacheBusterInterface
      */
@@ -41,4 +43,5 @@ class AssetUrlBuilder extends AbstractUrlBuilder implements AssetUrlBuilderInter
     {
         return $this->cacheBuster;
     }
+
 }

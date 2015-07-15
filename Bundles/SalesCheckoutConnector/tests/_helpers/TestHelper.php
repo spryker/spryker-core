@@ -1,6 +1,6 @@
 <?php
 
-namespace Sales\Codeception\Module;
+namespace SalesCheckoutConnector\Codeception\Module;
 
 use Codeception\Module;
 use Codeception\TestCase;

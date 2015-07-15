@@ -1,10 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Shared\ZedRequest\Client;
 
+use Generated\Client\Ide\AutoCompletion;
 use Guzzle\Http\Client;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\Message\Response;
@@ -12,7 +14,7 @@ use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerFeature\Client\Auth\Service\AuthClientInterface;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
@@ -22,11 +24,14 @@ use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Shared\Yves\YvesConfig;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
+use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
+
     const META_TRANSFER_ERROR =
-        'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
+        'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.'
+    ;
 
     /**
      * @var bool
@@ -49,7 +54,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected static $timeoutInSeconds = 10;
 
     /**
-     * @var LocatorLocatorInterface
+     * @var AutoCompletion
      */
     protected $locator;
 
@@ -59,17 +64,22 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected $factory;
 
     /**
+     * @var AuthClientInterface
+     */
+    protected $authClient;
+
+    /**
      * @param FactoryInterface $factory
-     * @param LocatorLocatorInterface $locator
+     * @param AuthClientInterface $authClient
      * @param string $baseUrl
      */
     public function __construct(
         FactoryInterface $factory,
-        LocatorLocatorInterface $locator,
+        AuthClientInterface $authClient,
         $baseUrl
     ) {
         $this->factory = $factory;
-        $this->locator = $locator;
+        $this->authClient = $authClient;
         $this->baseUrl = $baseUrl;
     }
 
@@ -92,8 +102,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param array $metaTransfers
      * @param null $timeoutInSeconds
      * @param bool $isBackgroundRequest
-     * @return \SprykerFeature\Shared\Library\Communication\Response
+     *
      * @throws \LogicException
+     *
+     * @return \SprykerFeature\Shared\Library\Communication\Response
      */
     public function request(
         $pathInfo,
@@ -131,6 +143,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param bool $isBackgroundRequest
+     *
      * @return bool
      */
     protected function isRequestAllowed($isBackgroundRequest)
@@ -141,6 +154,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
             }
             self::$alreadyRequested = true;
         }
+
         return true;
     }
 
@@ -157,27 +171,28 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $this->baseUrl,
             [
                 Client::REQUEST_OPTIONS => [
-                    'timeout' => ($timeoutInSeconds ? : self::$timeoutInSeconds),
-                    'connect_timeout' => 1.5
-                ]
+                    'timeout' => ($timeoutInSeconds ?: self::$timeoutInSeconds),
+                    'connect_timeout' => 1.5,
+                ],
             ]
         );
 
-        $char = (strpos($pathInfo, '?') === false) ? '?' :' &';
-        $pathInfo .= $char.'yvesRequestId='.Lumberjack::getInstance()->getRequestId();
+        $char = (strpos($pathInfo, '?') === false) ? '?' : ' &';
+        $pathInfo .= $char . 'yvesRequestId=' . Lumberjack::getInstance()->getRequestId();
 
         $client->setUserAgent('Yves 2.0');
-        /* @var EntityEnclosingRequest $request */
+        /** @var EntityEnclosingRequest $request */
         $request = $client->post($pathInfo);
         $request->addHeader('X-Yves-Host', 1);
         foreach ($this->getHeaders() as $header => $value) {
             $request->addHeader($header, $value);
         }
 
-        $rawRequestBody = json_encode($requestTransfer->toArray(false));
-
+        $data = $requestTransfer->toArray(true);
+//        unset($data['transfer']);
+        $rawRequestBody = json_encode($data);
         $request->setBody($rawRequestBody, 'application/json');
-        //$request->setHeader('Host', System::getHostname());
+//        $request->setHeader('Host', System::getHostname());
 
         return $request;
     }
@@ -185,15 +200,17 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param TransferInterface $transferObject
      * @param array $metaTransfers
-     * @return AbstractRequest
+     *
      * @throws \LogicException
+     *
+     * @return AbstractRequest
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
-        $request = $this->factory->createClientRequest($this->locator);
+        $request = $this->getClientRequest();
         $request->setSessionId(session_id());
         $request->setTime(time());
-        $request->setHost(System::getHostname()?: 'n/a');
+        $request->setHost(System::getHostname() ?: 'n/a');
 
         foreach ($metaTransfers as $name => $metaTransfer) {
             if (!is_string($name) || is_numeric($name) || !$metaTransfer instanceof TransferInterface) {
@@ -201,22 +218,20 @@ abstract class AbstractHttpClient implements HttpClientInterface
             }
             $request->addMetaTransfer($name, $metaTransfer);
         }
-        if (!empty($this->username)) {
-            $request->setUsername($this->username);
-        }
-        if (!empty($this->password)) {
-            $request->setPassword($this->password);
-        }
+
         if (!empty($transferObject)) {
             $request->setTransfer($transferObject);
         }
+
         return $request;
     }
 
     /**
      * @param EntityEnclosingRequest $request
-     * @return Response
+     *
      * @throws InvalidZedResponseException
+     *
+     * @return Response
      */
     protected function sendRequest(EntityEnclosingRequest $request)
     {
@@ -230,8 +245,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param Response $response
-     * @return ZedResponse
+     *
      * @throws InvalidZedResponseException
+     *
+     * @return ZedResponse
      */
     protected function getTransferFromResponse(Response $response)
     {
@@ -239,7 +256,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         if (empty($data) || !is_array($data)) {
             throw new InvalidZedResponseException('no valid JSON', $response);
         }
-        $responseTransfer = $this->factory->createClientResponse($this->locator);
+        $responseTransfer = $this->factory->createClientResponse();
         $responseTransfer->fromArray($data);
 
         return $responseTransfer;
@@ -289,6 +306,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * Used for debug output
+     *
      * @return int
      */
     public static function getRequestCounter()
@@ -312,4 +330,15 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $request->addSubscriber(new CookiePlugin($cookieArray));
         }
     }
+
+    /**
+     * @return Request
+     */
+    private function getClientRequest()
+    {
+        $request = $this->factory->createClientRequest();
+
+        return $request;
+    }
+
 }

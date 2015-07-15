@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param Request $request
+     *
      * @return array
      */
     public function indexAction(Request $request)
@@ -33,6 +35,7 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param Request $request
+     *
      * @return mixed|void
      */
     protected function initialize(Request $request)
@@ -42,6 +45,7 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param Request $request
+     *
      * @return mixed
      */
     abstract protected function initializeGrid(Request $request);
@@ -56,6 +60,7 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function createAction(Request $request)
@@ -78,6 +83,7 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function updateAction(Request $request)
@@ -101,8 +107,10 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param Request $request
-     * @return array
+     *
      * @throws \ErrorException
+     *
+     * @return array
      */
     protected function handleCreateOrUpdateRequest(Request $request)
     {
@@ -117,6 +125,7 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param Request $request
+     *
      * @return
      */
     protected function createTransferCollection(Request $request)
@@ -144,11 +153,12 @@ abstract class AbstractGridController extends AbstractWidgetController
     /**
      * @param array $parameters
      * @param Request $request
+     *
      * @return AbstractTransfer
      */
     protected function createTransfer(array $parameters, Request $request)
     {
-        /* @var $transfer AbstractTransfer */
+        /** @var AbstractTransfer $transfer */
         $transfer = $this->loadTransfer();
         $transfer->fromArray($parameters, true);
 
@@ -157,6 +167,7 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param $collection
+     *
      * @return array
      */
     protected function extractResultIds($collection)
@@ -172,6 +183,7 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function readAction(Request $request)
@@ -184,6 +196,7 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function destroyAction(Request $request)
@@ -205,8 +218,10 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param Request $request
-     * @return array
+     *
      * @throws \ErrorException
+     *
+     * @return array
      */
     protected function handleDestroyRequest(Request $request)
     {
@@ -221,6 +236,7 @@ abstract class AbstractGridController extends AbstractWidgetController
     /**
      * @param $grid
      * @param null $result
+     *
      * @return JsonResponse
      */
     protected function sendGridResponse($grid, $result = null)
@@ -242,6 +258,7 @@ abstract class AbstractGridController extends AbstractWidgetController
     /**
      * @param $grid
      * @param $message
+     *
      * @return JsonResponse
      */
     protected function sendGridError($grid, $message)
@@ -257,12 +274,13 @@ abstract class AbstractGridController extends AbstractWidgetController
 
     /**
      * @param array $ids
+     *
      * @return array
      */
     protected function fetchReturnData($ids)
     {
         if (!is_array($ids)) {
-            $ids = (array)$ids;
+            $ids = (array) $ids;
         }
         $dataSource = $this->grid->getDataSource();
         $data = $dataSource->getDataByField($this->grid->getIdFieldName(), $ids);
@@ -292,6 +310,7 @@ abstract class AbstractGridController extends AbstractWidgetController
     /**
      * @param $grid
      * @param $collection
+     *
      * @throws \ErrorException
      */
     public function handleCreateOrUpdate($grid, $collection = null)
@@ -302,6 +321,7 @@ abstract class AbstractGridController extends AbstractWidgetController
     /**
      * @param $grid
      * @param AbstractTransferCollection $collection
+     *
      * @throws \ErrorException
      */
     public function handleDestroy($grid, AbstractTransferCollection $collection = null)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 class DiscountWriter extends AbstractWriter
 {
+
     /**
      * @var \Generated\Zed\Ide\AutoCompletion
      */
@@ -16,6 +18,7 @@ class DiscountWriter extends AbstractWriter
 
     /**
      * @param DiscountTransfer $discountTransfer
+     *
      * @return mixed
      */
     public function create(DiscountTransfer $discountTransfer)
@@ -29,8 +32,10 @@ class DiscountWriter extends AbstractWriter
 
     /**
      * @param DiscountTransfer $discountTransfer
-     * @return array|mixed|\SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount
+     *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return array|mixed|\SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount
      */
     public function update(DiscountTransfer $discountTransfer)
     {
@@ -41,4 +46,5 @@ class DiscountWriter extends AbstractWriter
 
         return $discountEntity;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
 interface OrderStateMachineInterface
 {
+
     /**
      * @param string $eventId
      * @param SpySalesOrderItem[] $orderItems
@@ -17,21 +19,23 @@ interface OrderStateMachineInterface
      *
      * @return array
      */
-    public function triggerEvent($eventId, array $orderItems, $data, array $logContext = array());
+    public function triggerEvent($eventId, array $orderItems, $data, array $logContext = []);
 
     /**
      * @param SpySalesOrderItem[] $orderItems
      * @param array $data
      * @param array $logContext
+     *
      * @return array
      */
-    public function triggerEventForNewItem(array $orderItems, array $data, array $logContext = array());
+    public function triggerEventForNewItem(array $orderItems, array $data, array $logContext = []);
 
     /**
      * @param array $logContext
+     *
      * @return int
      */
-    public function checkConditions(array $logContext = array());
+    public function checkConditions(array $logContext = []);
 
     /**
      * @param array $orderItemIds
@@ -58,4 +62,5 @@ interface OrderStateMachineInterface
      * @return array
      */
     public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data);
+
 }

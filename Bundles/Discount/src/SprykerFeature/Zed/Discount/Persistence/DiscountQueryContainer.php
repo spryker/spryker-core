@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,12 +14,13 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCat
 
 /**
  * Class DiscountQueryContainer
- * @package SprykerFeature\Zed\Discount\Persistence
  */
 class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQueryContainerInterface
 {
+
     /**
      * @param string $code
+     *
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery
      */
     public function queryVoucher($code)
@@ -28,6 +30,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
 
     /**
      * @param int $idDiscount
+     *
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRuleQuery
      */
     public function queryDecisionRules($idDiscount)
@@ -48,7 +51,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
                 . SpyDiscountTableMap::COL_VALID_TO . ' >= ? )',
                 [
                     time(),
-                    time()
+                    time(),
                 ]
             )->_or()->where(
                 SpyDiscountTableMap::COL_VALID_FROM . ' IS NULL AND '
@@ -120,4 +123,5 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     {
         return (new Propel\SpyDiscountVoucherPoolCategoryQuery());
     }
+
 }

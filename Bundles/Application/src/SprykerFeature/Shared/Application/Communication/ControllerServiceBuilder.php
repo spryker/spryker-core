@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use SprykerEngine\Shared\Kernel\Communication\BundleControllerActionInterface;
 use SprykerEngine\Shared\Kernel\Communication\RouteNameResolverInterface;
 use SprykerEngine\Shared\Kernel\Communication\ControllerLocatorInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\Locator;
 
 class ControllerServiceBuilder
 {

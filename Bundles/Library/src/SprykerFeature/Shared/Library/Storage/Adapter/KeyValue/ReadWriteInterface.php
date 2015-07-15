@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,11 +8,10 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 
 /**
  * Interface ReadWriteInterface
- *
- * @package SprykerFeature\Shared\Library\Storage\Adapter\KeyValue
  */
 interface ReadWriteInterface extends ReadInterface
 {
+
     /**
      * @param string $key
      * @param mixed  $value
@@ -37,4 +37,5 @@ interface ReadWriteInterface extends ReadInterface
      * @return int
      */
     public function deleteAll();
+
 }

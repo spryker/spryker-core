@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -104,6 +105,7 @@ class StateContainer implements StateContainerInterface
 
     /**
      * @param Criteria $specifiedQuery
+     *
      * @return mixed|void
      */
     public function setSpecifiedQuery(Criteria $specifiedQuery)
@@ -126,4 +128,5 @@ class StateContainer implements StateContainerInterface
     {
         $this->trimmedQuery = $trimmedQuery;
     }
+
 }

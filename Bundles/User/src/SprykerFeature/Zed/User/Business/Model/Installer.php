@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\User\UserConfig;
 
 class Installer implements InstallerInterface
 {
+
     /**
      * @var UserQueryContainer
      */
@@ -62,4 +64,5 @@ class Installer implements InstallerInterface
             }
         }
     }
+
 }

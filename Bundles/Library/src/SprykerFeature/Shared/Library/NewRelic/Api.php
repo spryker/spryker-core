@@ -1,17 +1,19 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 /**
  * The PHP API for New Relic
+ *
  * @link https://newrelic.com/docs/php/the-php-api
  */
 class SprykerFeature_Shared_Library_NewRelic_Api
 {
 
     /**
-     * @var $this
+     * @var
      */
     protected static $instance;
 
@@ -35,6 +37,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
 
     /**
      * @static
+     *
      * @return $this
      */
     public static function getInstance()
@@ -42,6 +45,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if (is_null(self::$instance)) {
             self::$instance = new \SprykerFeature_Shared_Library_NewRelic_Api();
         }
+
         return self::$instance;
     }
 
@@ -50,6 +54,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
      *
      * @param $message
      * @param Exception $e
+     *
      * @return $this
      */
     public function noticeError($message, Exception $e)
@@ -57,6 +62,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_notice_error($message, $e);
         }
+
         return $this;
     }
 
@@ -69,6 +75,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
      * succeeded or false otherwise.
      *
      * @param $name
+     *
      * @return $this
      */
     public function setAppName($name)
@@ -76,6 +83,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_set_appname($name);
         }
+
         return $this;
     }
 
@@ -92,6 +100,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
      * of transactions should be less than 1000 unique transaction names -- exceeding that is not recommended.
      *
      * @param $name
+     *
      * @return $this
      */
     public function setNameOfTransaction($name)
@@ -101,6 +110,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_name_transaction($name);
         }
+
         return $this;
     }
 
@@ -127,6 +137,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_end_of_transaction();
         }
+
         return $this;
     }
 
@@ -142,6 +153,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_ignore_transaction();
         }
+
         return $this;
     }
 
@@ -156,6 +168,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_ignore_apdex();
         }
+
         return $this;
     }
 
@@ -164,6 +177,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
      * passed as an argument, mark the transaction as a web application.
      *
      * @param $flag
+     *
      * @return $this
      */
     public function markAsBackgroundJob($flag = true)
@@ -172,9 +186,9 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_background_job($flag);
         }
+
         return $this;
     }
-
 
     /**
      * Adds a custom metric with the specified name and value, which is of type double. These custom metrics can then
@@ -182,16 +196,18 @@ class SprykerFeature_Shared_Library_NewRelic_Api
      *
      * @param $metricName
      * @param $value
+     *
      * @return $this
      */
     public function addCustomMetric($metricName, $value)
     {
         if ($this->active) {
             if(strpos($metricName, 'Custom/') !== 0) {
-                $metricName = 'Custom/'.$metricName;
+                $metricName = 'Custom/' . $metricName;
             }
             newrelic_custom_metric($metricName, $value);
         }
+
         return $this;
     }
 
@@ -201,6 +217,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
      *
      * @param $key
      * @param $value
+     *
      * @return $this
      */
     public function addCustomParameter($key, $value)
@@ -208,6 +225,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_add_custom_parameter($key, $value);
         }
+
         return $this;
     }
 
@@ -216,6 +234,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
      * the list to be instrumented.
      *
      * @param string $tracer
+     *
      * @return $this
      */
     public function addCustomTracer($tracer = 'classname::function_name')
@@ -223,6 +242,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_add_custom_tracer($tracer);
         }
+
         return $this;
     }
 
@@ -232,6 +252,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
      * script tags should be returned as part of the string.
      *
      * @param bool $flag
+     *
      * @return $this
      */
     public function getBrowserTimingHeader($flag = true)
@@ -239,6 +260,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_get_browser_timing_header($flag);
         }
+
         return $this;
     }
 
@@ -248,6 +270,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
      * or not surrounding script tags should be returned as part of the string.
      *
      * @param bool $flag
+     *
      * @return $this
      */
     public function getBrowserTimingFooter($flag = true)
@@ -255,6 +278,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_get_browser_timing_footer($flag);
         }
+
         return $this;
     }
 
@@ -269,6 +293,8 @@ class SprykerFeature_Shared_Library_NewRelic_Api
         if ($this->active) {
             newrelic_disable_autorum();
         }
+
         return $this;
     }
+
 }

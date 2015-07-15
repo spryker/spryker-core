@@ -1,13 +1,22 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Response\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 
-
-class PreAuthorizationResponseContainer extends AuthorizationResponseContainer
+class PreAuthorizationResponseContainer extends AbstractResponseContainer
 {
+
+    /**
+     * @var string
+     */
+    protected $txid;
+
+    /**
+     * @var string
+     */
+    protected $userid;
 
 }

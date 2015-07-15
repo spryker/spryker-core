@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
 
 interface TaxableItemInterface
 {
+
     /**
      * @return int
      */
@@ -30,4 +32,5 @@ interface TaxableItemInterface
      * @return $this
      */
     public function setPriceToPay($price);
+
 }

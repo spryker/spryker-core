@@ -1,35 +1,30 @@
 {% extends '@Application/Layout/layout.twig' %}
 {% block content %}
+    <section class="spy-layout plain">
+        <h3>Sandbox (only for test purpose)</h3>
+    </section>
 
-    <a href="/oms/index/draw?process=Nopayment01&format=gif&font=14">'Nopayment' Prozess anzeigen</a>
-
-    <form action="/oms/sandbox/add">
-        <button>Add OrderItem</button>
+    <form action="/oms/sandbox/add" style="margin-bottom: 20px;">
+        <button class="button default">Add new order</button> &nbsp;
+        <a href="/oms/index/draw?process={{ processName }}&amp;format=gif&amp;font=14" style="color: #369; text-decoration: none;"><em>{{ processName }}</em> process display</a>
     </form>
 
-    <table border="1px solid lightgrey" width="100%">
+    <div class="spy-grid">
+
+    <table>
         <tr>
-            <th>OrderItem ID</th>
-            <th>Process</th>
-            <th>State</th>
-            <th>Event triggern</th>
+            <th class="ng-isolate-scope" spy-grid-head=""><b class="title">Order ID</b></th>
+            <th class="ng-isolate-scope" spy-grid-head=""><b class="title">Customer</b></th>
+            <th class="ng-isolate-scope" spy-grid-head=""><b class="title">Total Price</b></th>
         </tr>
-        {% for orderItem in orderItems %}
+        {% for row in orders %}
         <tr>
-            <td>{{ orderItem['id'] }}</td>
-            <td>{{ orderItem['process'] }}</td>
-            <td>{{ orderItem['state'] }}</td>
-            <td>
-                {% for event in orderItem['events'] %}
-                <form action="/oms/sandbox/trigger">
-                    <input type="hidden" name="event" value="{{ event }}">
-                    <input type="hidden" name="id" value="{{ orderItem['id'] }}">
-                    <button>Event '{{ event }}' triggern</button>
-                </form>
-                {%  endfor %}
-            </td>
+            <td>{{ row.getIdSalesOrder }}</td>
+            <td><a href="/sales/details?id-sales-order={{ row.getIdSalesOrder }}">{{ row.getFirstName }} {{ row.getLastName }} {% if row.getIsTest %}[<em>Test order</em>]{% endif %}</a></td>
+            <td>{{ row.getGrandTotal }}</td>
         </tr>
         {% endfor %}
     </table>
+    </div>
 
 {% endblock %}

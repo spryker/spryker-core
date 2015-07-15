@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -46,12 +47,12 @@ class Repeater extends AbstractPlugin
             return;
         }
 
-        $repeatData = array(
+        $repeatData = [
             'module' => $httpRequest->attributes->get('module'),
             'controller' => $httpRequest->attributes->get('controller'),
             'action' => $httpRequest->attributes->get('action'),
             'params' => $transferObject->toArray(false),
-        );
+        ];
 
         $mvc = sprintf(
             '%s_%s_%s',
@@ -63,4 +64,5 @@ class Repeater extends AbstractPlugin
         \SprykerFeature_Shared_Library_Log::setFlashInFile($repeatData, 'last_yves_request_' . $mvc . '.log');
         \SprykerFeature_Shared_Library_Log::setFlashInFile($repeatData, 'last_yves_request.log');
     }
+
 }

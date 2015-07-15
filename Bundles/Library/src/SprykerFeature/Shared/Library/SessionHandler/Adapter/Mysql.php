@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Shared\Library\SessionHandler\Adapter;
 
-use \PDO as PDO;
+use PDO as PDO;
 
 class Mysql implements \SessionHandlerInterface
 {
@@ -75,6 +76,7 @@ class Mysql implements \SessionHandlerInterface
     /**
      * @param string $savePath
      * @param string $sessionName
+     *
      * @return bool
      */
     public function open($savePath, $sessionName)
@@ -87,11 +89,13 @@ class Mysql implements \SessionHandlerInterface
      */
     public function close() {
         unset($this->connection);
+
         return true;
     }
 
     /**
      * @param string $sessionId
+     *
      * @return null|string
      */
     public function read($sessionId) {
@@ -113,6 +117,7 @@ class Mysql implements \SessionHandlerInterface
     /**
      * @param string $sessionId
      * @param string $sessionData
+     *
      * @return bool
      */
     public function write($sessionId, $sessionData) {
@@ -130,7 +135,7 @@ class Mysql implements \SessionHandlerInterface
 
         $storeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
         $timestamp = date('Y-m-d H:i:s', time());
-        $query = "REPLACE INTO session (session.key, session.value, session.store, session.environment, session.expires, session.updated_at) VALUES (?,?,?,?,?,?)";
+        $query = 'REPLACE INTO session (session.key, session.value, session.store, session.environment, session.expires, session.updated_at) VALUES (?,?,?,?,?,?)';
 
         $statement = $this->connection->prepare($query);
         $result = $statement->execute([$key, $data, $storeName, $environment, $expires, $timestamp]);
@@ -142,6 +147,7 @@ class Mysql implements \SessionHandlerInterface
 
     /**
      * @param int|string $sessionId
+     *
      * @return bool
      */
     public function destroy($sessionId) {
@@ -156,6 +162,7 @@ class Mysql implements \SessionHandlerInterface
 
     /**
      * @param int $maxLifetime
+     *
      * @return bool
      */
     public function gc($maxLifetime) {

@@ -1,12 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Cleaner;
+
 use SprykerEngine\Zed\Transfer\Business\Model\TransferCleaner;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @group SprykerEngine
@@ -53,4 +53,5 @@ class TransferCleanerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse(file_exists($this->getTestDirectory() . 'file'));
     }
+
 }

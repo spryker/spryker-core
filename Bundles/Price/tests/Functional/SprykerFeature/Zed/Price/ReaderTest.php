@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,7 +13,9 @@ use SprykerFeature\Zed\Price\Business\PriceFacade;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProductQuery;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 
 /**
@@ -32,7 +35,7 @@ class ReaderTest extends Test
      */
     private $priceFacade;
     /**
-     * @var AutoCompletion $locator
+     * @var AutoCompletion
      */
     protected $locator;
 
@@ -57,9 +60,9 @@ class ReaderTest extends Test
         $isTypeInResult_1 = false;
         $isTypeInResult_2 = false;
         foreach ($priceTypes as $priceType) {
-            if ($priceType == self::DUMMY_PRICE_TYPE_1) {
+            if ($priceType === self::DUMMY_PRICE_TYPE_1) {
                 $isTypeInResult_1 = true;
-            } elseif ($priceType == self::DUMMY_PRICE_TYPE_2) {
+            } elseif ($priceType === self::DUMMY_PRICE_TYPE_2) {
                 $isTypeInResult_2 = true;
             }
         }
@@ -124,16 +127,40 @@ class ReaderTest extends Test
         $priceType2 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_2)->findOneOrCreate();
         $priceType2->setName(self::DUMMY_PRICE_TYPE_2)->save();
 
-
         $abstractProduct = SpyAbstractProductQuery::create()
             ->filterBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT)
-            ->findOneOrCreate()
+            ->findOne()
         ;
-        $abstractProduct->setSku(self::DUMMY_SKU_ABSTRACT_PRODUCT)->save();
 
-        $concreteProduct = SpyProductQuery::create()->filterBySku(self::DUMMY_SKU_CONCRETE_PRODUCT)->findOneOrCreate();
+        if (null === $abstractProduct) {
+            $abstractProduct = new SpyAbstractProduct();
+        }
+
+        $abstractProduct->setSku(self::DUMMY_SKU_ABSTRACT_PRODUCT)
+            ->setAttributes('{}')
+            ->save()
+        ;
+
+        $concreteProduct = SpyProductQuery::create()
+            ->filterBySku(self::DUMMY_SKU_CONCRETE_PRODUCT)
+            ->findOne()
+        ;
+
+        if (null === $concreteProduct) {
+            $concreteProduct = new SpyProduct();
+        }
+        $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
+            ->setSpyAbstractProduct($abstractProduct)
+            ->setAttributes('{}')
+            ->save()
+        ;
+
         $this->deletePriceEntitiesConcrete($concreteProduct);
-        $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)->setSpyAbstractProduct($abstractProduct)->save();
+        $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
+            ->setSpyAbstractProduct($abstractProduct)
+            ->setAttributes('{}')
+            ->save()
+        ;
 
         $this->deletePriceEntitiesAbstract($abstractProduct);
         $this->locator->price()->entitySpyPriceProduct()

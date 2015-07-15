@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -42,8 +43,9 @@ class Role implements RoleInterface
      * @param string $name
      * @param int $idGroup
      *
-     * @return RoleTransfer
      * @throws RoleNameExistsException
+     *
+     * @return RoleTransfer
      */
     public function addRole($name, $idGroup)
     {
@@ -61,9 +63,10 @@ class Role implements RoleInterface
     /**
      * @param RoleTransfer $data
      *
-     * @return RoleTransfer
      * @throws RoleNameExistsException
      * @throws RoleNotFoundException
+     *
+     * @return RoleTransfer
      */
     public function save(RoleTransfer $data)
     {
@@ -125,8 +128,9 @@ class Role implements RoleInterface
     /**
      * @param int $idGroup
      *
-     * @return RolesTransfer
      * @throws GroupNotFoundException
+     *
+     * @return RolesTransfer
      */
     public function getGroupRoles($idGroup)
     {
@@ -146,8 +150,9 @@ class Role implements RoleInterface
     /**
      * @param int $id
      *
-     * @return RoleTransfer
      * @throws EmptyEntityException
+     *
+     * @return RoleTransfer
      */
     public function getRoleById($id)
     {
@@ -166,8 +171,9 @@ class Role implements RoleInterface
     /**
      * @param int $id
      *
-     * @return bool
      * @throws RoleNotFoundException
+     *
+     * @return bool
      */
     public function removeRoleById($id)
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,11 +14,10 @@ use SprykerFeature\Shared\System\SystemConfig;
 
 /**
  * Class StorageInstanceBuilder
- *
- * @package SprykerFeature\Shared\Library\Storage
  */
 class StorageInstanceBuilder
 {
+
     const KV_NAMESPACE = '\SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\\';
     const SEARCH_ELASTICA_ADAPTER = 'elastica';
     const ADAPTER_READ_WRITE = 'ReadWrite';
@@ -36,8 +36,9 @@ class StorageInstanceBuilder
     private static $searchInstances = [];
 
     /**
-     * @return Client
      * @throws \ErrorException
+     *
+     * @return Client
      */
     public static function getElasticsearchInstance()
     {
@@ -57,33 +58,36 @@ class StorageInstanceBuilder
     /**
      * @param bool $debug
      *
-     * @return KeyValueReadWriteInterface
      * @throws \Exception
+     *
+     * @return KeyValueReadWriteInterface
      */
-    public static function getKvStorageReadWriteInstance($debug = false)
+    public static function getStorageReadWriteInstance($debug = false)
     {
-        return self::getKvStorageInstance(self::ADAPTER_READ_WRITE, $debug);
+        return self::getStorageInstance(self::ADAPTER_READ_WRITE, $debug);
     }
 
     /**
      * @param bool $debug
      *
-     * @return KeyValueReadInterface
      * @throws \Exception
+     *
+     * @return KeyValueReadInterface
      */
-    public static function getKvStorageReadInstance($debug = false)
+    public static function getStorageReadInstance($debug = false)
     {
-        return self::getKvStorageInstance(self::ADAPTER_READ, $debug);
+        return self::getStorageInstance(self::ADAPTER_READ, $debug);
     }
 
     /**
      * @param string $type
      * @param bool   $debug
      *
-     * @return AdapterInterface
      * @throws \Exception
+     *
+     * @return AdapterInterface
      */
-    private static function getKvStorageInstance($type, $debug = false)
+    private static function getStorageInstance($type, $debug = false)
     {
 
         $kvAdapter = Config::get(SystemConfig::STORAGE_KV_SOURCE);
@@ -114,7 +118,7 @@ class StorageInstanceBuilder
                 return [
                     'protocol' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
                     'port' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_PORT),
-                    'host' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_HOST)
+                    'host' => Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_HOST),
                 ];
             case self::SEARCH_ELASTICA_ADAPTER:
                 return [

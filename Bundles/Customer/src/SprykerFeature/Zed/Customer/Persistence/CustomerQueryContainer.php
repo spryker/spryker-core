@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQueryContainerInterface
 {
+
     /**
      * @param string $email
      *
@@ -71,8 +73,9 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      * @param int $idAddress
      * @param string $email
      *
-     * @return SpyCustomerAddressQuery
      * @throws PropelException
+     *
+     * @return SpyCustomerAddressQuery
      */
     public function queryAddressForCustomer($idAddress, $email)
     {
@@ -88,8 +91,9 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @param int $idAddress
      *
-     * @return SpyCustomerAddressQuery
      * @throws PropelException
+     *
+     * @return SpyCustomerAddressQuery
      */
     public function queryAddress($idAddress)
     {
@@ -133,4 +137,5 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
 
         return $query;
     }
+
 }

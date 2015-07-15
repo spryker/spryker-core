@@ -1,14 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\AbstractPaymentMethodContainer;
-
 
 class DebitContainer extends AbstractRequestContainer
 {
@@ -55,7 +55,6 @@ class DebitContainer extends AbstractRequestContainer
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     protected $invoicing;
-
 
     /**
      * @param int $amount

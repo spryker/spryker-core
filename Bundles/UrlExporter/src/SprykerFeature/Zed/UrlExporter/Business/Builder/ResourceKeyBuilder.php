@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuil
 
 class ResourceKeyBuilder extends SharedResourceKeyBuilder
 {
+
     /**
      * @param array $data
      * @param string $localeName
@@ -47,4 +49,5 @@ class ResourceKeyBuilder extends SharedResourceKeyBuilder
     {
         return $this->resourceType;
     }
+
 }

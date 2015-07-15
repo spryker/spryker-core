@@ -1,14 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Shared\Kernel;
 
-/**
- * Interface LocatorLocatorInterface
- * @package SprykerEngine\Shared\Kernel
- */
 interface LocatorLocatorInterface
 {
 

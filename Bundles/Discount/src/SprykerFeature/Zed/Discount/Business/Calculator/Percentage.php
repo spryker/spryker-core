@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,9 +10,11 @@ use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface
 
 class Percentage
 {
+
     /**
      * @param DiscountableItemInterface[] $discountableObjects
      * @param float $number
+     *
      * @return float
      */
     public function calculate(array $discountableObjects, $number)
@@ -52,6 +55,7 @@ class Percentage
 
     /**
      * @param float $number
+     *
      * @throws \InvalidArgumentException
      */
     protected function checkIsValidNumber($number)
@@ -60,4 +64,5 @@ class Percentage
             throw new \InvalidArgumentException('Wrong number');
         }
     }
+
 }

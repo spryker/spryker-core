@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Shared\Yves\YvesConfig;
 
 class ErrorHandler
 {
+
     /**
      * @var ErrorHandler
      */
@@ -31,11 +33,13 @@ class ErrorHandler
     public static function initialize()
     {
         if (!self::$instance) {
-            self::$instance = new self;
+            self::$instance = new self();
             set_exception_handler([self::$instance, 'handleException']);
             register_shutdown_function([self::$instance, 'handleFatal']);
+
             return self::$instance;
         }
+
         return self::$instance;
     }
 
@@ -66,7 +70,6 @@ class ErrorHandler
             exit(-1);
         }
     }
-
 
     public function handleFatal()
     {

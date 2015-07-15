@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Product\Business\Model;
 
 interface ProductBatchResultInterface
 {
+
     /**
      * @return int
      */
@@ -46,4 +48,5 @@ interface ProductBatchResultInterface
      * @param bool $failed
      */
     public function setIsFailed($failed = true);
+
 }

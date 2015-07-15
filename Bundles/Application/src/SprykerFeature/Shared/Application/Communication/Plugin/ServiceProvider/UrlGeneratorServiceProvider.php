@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Silex\ServiceProviderInterface;
  */
 class UrlGeneratorServiceProvider implements ServiceProviderInterface
 {
+
     /**
      * {@inheritdoc}
      */
@@ -20,6 +22,7 @@ class UrlGeneratorServiceProvider implements ServiceProviderInterface
     {
         $app['url_generator'] = $app->share(function ($app) {
             $app->flush();
+
             return $app['routers'];
         });
     }
@@ -30,4 +33,5 @@ class UrlGeneratorServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
+
 }

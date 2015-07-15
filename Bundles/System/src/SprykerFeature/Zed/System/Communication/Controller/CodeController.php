@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\System\Communication\Controller;
-
-
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
@@ -22,9 +21,9 @@ class CodeController extends AbstractController{
 
         $treeCreator = new \SprykerFeature_Zed_Library_Code_PathValidator_Tree();
         $validator = new \SprykerFeature_Zed_Library_Code_PathValidator($treeCreator->getTree());
-        
+
         return $this->viewResponse([
-            'errors' => $validator->check($fileList)
+            'errors' => $validator->check($fileList),
         ]);
     }
 
@@ -34,6 +33,7 @@ class CodeController extends AbstractController{
         $classMap1 = $directoryHelper->getFiles(APPLICATION_SOURCE_DIR);
         $classMap2 = $directoryHelper->getFiles(APPLICATION_VENDOR_DIR . '/spryker/');
         $classMap = array_merge($classMap1, $classMap2);
+
         return $classMap;
     }
 
@@ -66,32 +66,31 @@ class CodeController extends AbstractController{
         $key = 'ad7e8294603a23290ca1f032649f242d7af5125a1058853';
         $application = '3072056';
 
-        $echo = array();
+        $echo = [];
         exec("curl -X GET 'https://api.newrelic.com/v2/applications/$application/metrics/data.json' -H 'X-Api-Key:$key' -i -d 'names[]=Apdex&summarize=false' ", $echo);
         $result = json_decode(end($echo));
 
-        $data = array();
+        $data = [];
         foreach ($result->metric_data->metrics as $metric) {
             $i = 0;
             foreach ($metric->timeslices as $timeslice) {
 
                 $dt = new \DateTime($timeslice->from);
-                $from  = $dt->format('H:i');
+                $from = $dt->format('H:i');
 
-                $item = array(
+                $item = [
                     'from' => $from,
                     'value' => $timeslice->values->count,
-                );
+                ];
 
                 $i++;
                 $data[] = $item;
             }
         }
-        
+
         return $this->viewResponse([
-            'chartData' => $data
+            'chartData' => $data,
         ]);
     }
-
 
 }

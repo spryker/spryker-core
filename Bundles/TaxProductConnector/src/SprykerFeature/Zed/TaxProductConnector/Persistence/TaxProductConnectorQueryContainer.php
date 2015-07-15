@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,7 +24,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     {
         return SpyAbstractProductQuery::create()
             ->select([
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
             ])
             ->useSpyTaxSetQuery()
                 ->useSpyTaxSetTaxQuery()
@@ -54,4 +55,5 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
             ])
             ;
     }
+
 }

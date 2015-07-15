@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,10 +11,12 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 interface CollectionToArrayTransformerInterface
 {
+
     /**
      * @param ObjectCollection $orderItems
      *
      * @return SpySalesOrderItem[] $orderItems
      */
     public function transformCollectionToArray(ObjectCollection $orderItems);
+
 }

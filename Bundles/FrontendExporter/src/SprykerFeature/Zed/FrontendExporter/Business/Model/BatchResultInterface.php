@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface BatchResultInterface
 {
+
     /**
      * @return int
      */
@@ -83,4 +85,5 @@ interface BatchResultInterface
      * @param LocaleTransfer $processedLocale
      */
     public function setProcessedLocale(LocaleTransfer $processedLocale);
+
 }

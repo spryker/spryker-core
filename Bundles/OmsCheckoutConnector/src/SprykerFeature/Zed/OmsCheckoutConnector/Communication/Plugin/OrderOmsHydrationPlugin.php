@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,4 +26,5 @@ class OrderOmsHydrationPlugin extends AbstractPlugin implements CheckoutOrderHyd
     {
         $this->getFacade()->hydrateOrderTransfer($orderTransfer, $checkoutRequest);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -39,7 +40,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     private $facade;
 
     /**
-     * @var AutoCompletion $locator
+     * @var AutoCompletion
      */
     protected $locator;
 
@@ -64,7 +65,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
     public function testImportProductOptionValue()
     {
-        $optionType = (new SpyProductOptionType)->setImportKey('SHADE');
+        $optionType = (new SpyProductOptionType())->setImportKey('SHADE');
         $optionType->save();
 
         $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
@@ -115,7 +116,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     {
         $product = $this->createConcreteProduct();
 
-        $optionType = (new SpyProductOptionType)->setImportKey('SHADE');
+        $optionType = (new SpyProductOptionType())->setImportKey('SHADE');
         $optionType->save();
 
         $this->facade->importProductOptionTypeUsage('ABC123', 'SHADE');
@@ -205,13 +206,13 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $optionFitting = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
         $productOptionShade = $this->createProductOptionTypeUsage($product, $optionShade);
-        $productOptionValueUsageViolet = (new SpyProductOptionValueUsage)
+        $productOptionValueUsageViolet = (new SpyProductOptionValueUsage())
             ->setSpyProductOptionValue($optionShade->getSpyProductOptionValues()[0]);
         $productOptionShade->addSpyProductOptionValueUsage($productOptionValueUsageViolet);
         $productOptionShade->save();
 
         $productOptionFitting = $this->createProductOptionTypeUsage($product, $optionFitting);
-        $productOptionValueUsageSmall = (new SpyProductOptionValueUsage)
+        $productOptionValueUsageSmall = (new SpyProductOptionValueUsage())
             ->setSpyProductOptionValue($optionFitting->getSpyProductOptionValues()[0]);
         $productOptionFitting->addSpyProductOptionValueUsage($productOptionValueUsageSmall);
         $productOptionFitting->save();
@@ -221,8 +222,14 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $result = SpyProductOptionConfigurationPresetQuery::create()->findByFkProduct($product->getIdProduct());
         $this->assertEquals(1, $result->count());
         $values = $result[0]->getSpyProductOptionConfigurationPresetValues();
-        foreach($values as $value) {
-            $this->assertContains($value->getFkProductOptionValueUsage(), [$productOptionValueUsageSmall->getIdProductOptionValueUsage(), $productOptionValueUsageViolet->getIdProductOptionValueUsage()]);
+        foreach ($values as $value) {
+            $this->assertContains(
+                $value->getFkProductOptionValueUsage(),
+                [
+                    $productOptionValueUsageSmall->getIdProductOptionValueUsage(),
+                    $productOptionValueUsageViolet->getIdProductOptionValueUsage(),
+                ]
+            );
         }
 
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
@@ -230,9 +237,18 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
     private function createConcreteProduct()
     {
-        $abstractProduct = (new SpyAbstractProduct())->setSku('ABC123');
+        $abstractProduct = (new SpyAbstractProduct())
+            ->setSku('ABC123')
+            ->setAttributes('{}')
+        ;
         $abstractProduct->save();
-        $product = (new SpyProduct)->setSku('ABC123')->setIsActive(true)->setSpyAbstractProduct($abstractProduct);
+
+        $product = (new SpyProduct)
+            ->setSku('ABC123')
+            ->setAttributes('{}')
+            ->setIsActive(true)
+            ->setSpyAbstractProduct($abstractProduct)
+        ;
 
         $product->save();
 
@@ -241,8 +257,8 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
     private function createOptionTypeWithValue($typeKey = 'SHADE', $valueKey = 'VIOLET')
     {
-        $optionValue = (new SpyProductOptionValue)->setImportKey($valueKey);
-        $optionType = (new SpyProductOptionType)->setImportKey($typeKey)->addSpyProductOptionValue($optionValue);
+        $optionValue = (new SpyProductOptionValue())->setImportKey($valueKey);
+        $optionType = (new SpyProductOptionType())->setImportKey($typeKey)->addSpyProductOptionValue($optionValue);
         $optionType->save();
 
         return $optionType;
@@ -269,8 +285,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
             ->find();
 
         $this->assertEquals(1, $query->count());
-        foreach($query as $touchEntity) {
+        foreach ($query as $touchEntity) {
             $this->assertEquals($touchEntity->getItemId(), $idAbstractProduct);
         }
     }
+
 }

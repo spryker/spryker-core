@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ class HelloProvider implements ProviderInterface, PageTypeInterface
     /**
      * @param array $dataProvider
      * @param $pageType
+     *
      * @return mixed|string
      */
     public function getTrackingOutput(array $dataProvider, $pageType)
@@ -33,4 +35,5 @@ class HelloProvider implements ProviderInterface, PageTypeInterface
     {
         return Tracking::POSITION_BEFORE_CLOSING_HEAD;
     }
+
 }

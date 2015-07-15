@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Symfony\Component\Translation\MessageSelector;
 
 interface TranslatorInterface extends \Symfony\Component\Translation\TranslatorInterface
 {
+
     /**
      * Constructor.
      *
@@ -34,4 +36,5 @@ interface TranslatorInterface extends \Symfony\Component\Translation\TranslatorI
      * @return bool
      */
     public function has($id);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\ResourceAwareSpyUrlTableMap;
 
 class UrlExporterQueryContainer extends AbstractQueryContainer implements UrlExporterQueryContainerInterface
 {
+
     /**
      * @param ModelCriteria $expandableQuery
      *
@@ -65,4 +67,5 @@ class UrlExporterQueryContainer extends AbstractQueryContainer implements UrlExp
 
         return $expandableQuery;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;
 
 interface ReaderInterface
 {
+
     /**
      * @return array
      */
@@ -57,16 +59,18 @@ interface ReaderInterface
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getAbstractProductIdBySku($sku);
 
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getConcreteProductIdBySku($sku);
 
@@ -81,8 +85,10 @@ interface ReaderInterface
     /**
      * @param int $idStockProduct
      *
-     * @return SpyStockProduct
      * @throws StockProductNotFoundException
+     *
+     * @return SpyStockProduct
      */
     public function getStockProductById($idStockProduct);
+
 }

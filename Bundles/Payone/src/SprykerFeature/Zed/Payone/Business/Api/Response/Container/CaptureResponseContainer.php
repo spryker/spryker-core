@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Response\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
-
 
 class CaptureResponseContainer extends AbstractResponseContainer
 {
@@ -56,6 +55,7 @@ class CaptureResponseContainer extends AbstractResponseContainer
     protected $clearing_legalnote;
     /**
      * (YYYYMMDD)
+     *
      * @var string
      */
     protected $clearing_duedate;
@@ -107,8 +107,7 @@ class CaptureResponseContainer extends AbstractResponseContainer
      * @var string
      */
     protected $clearing_amount;
-    
-    
+
     /**
      * @param string $clearing_bankaccount
      */

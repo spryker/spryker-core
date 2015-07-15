@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Communication\Produ
  */
 class ProductPriceQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+
     /**
      * @return string
      */
@@ -33,6 +35,7 @@ class ProductPriceQueryExpanderPlugin extends AbstractPlugin implements QueryExp
     public function expandQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
         $priceTypeEntity = $this->getDependencyContainer()->getQueryContainer()->getFkDefaultPriceType($this->getDefaultPriceType())->findOne();
+
         return $this->getDependencyContainer()->getQueryContainer()->expandQuery($expandableQuery, $priceTypeEntity->getIdPriceType());
     }
 

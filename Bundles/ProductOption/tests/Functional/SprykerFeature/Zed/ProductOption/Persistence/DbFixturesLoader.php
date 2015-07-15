@@ -38,17 +38,17 @@ class DbFixturesLoader
             ->execute();
 
         $dbConnection
-            ->prepare("INSERT INTO spy_abstract_product (sku, fk_tax_set) VALUES ('ABC123', {$ids['idTaxSet']})")
+            ->prepare("INSERT INTO spy_abstract_product (sku, fk_tax_set, attributes) VALUES ('ABC123', {$ids['idTaxSet']}, '{}')")
             ->execute();
         $ids['idAbstractProduct'] = $dbConnection->lastInsertId();
 
         $dbConnection
-            ->prepare("INSERT INTO spy_product (sku, fk_abstract_product) VALUES ('DEF456', {$ids['idAbstractProduct']})")
+            ->prepare("INSERT INTO spy_product (sku, fk_abstract_product, attributes) VALUES ('DEF456', {$ids['idAbstractProduct']}, '{}')")
             ->execute();
         $ids['idConcreteProduct'] = $dbConnection->lastInsertId();
 
         $dbConnection
-            ->prepare("INSERT INTO spy_product_option_type (fk_tax_set) VALUES (NULL)")
+            ->prepare('INSERT INTO spy_product_option_type (fk_tax_set) VALUES (NULL)')
             ->execute();
         $ids['idTypeColor'] = $dbConnection->lastInsertId();
 
@@ -78,7 +78,7 @@ class DbFixturesLoader
         $ids['idValueYellow'] = $dbConnection->lastInsertId();
 
         $dbConnection
-            ->prepare("INSERT INTO spy_product_option_value_price (price) VALUES (199)")
+            ->prepare('INSERT INTO spy_product_option_value_price (price) VALUES (199)')
             ->execute();
         $ids['idPriceLarge'] = $dbConnection->lastInsertId();
 
@@ -236,7 +236,6 @@ class DbFixturesLoader
             ->execute();
         $ids['idConfigPresetB'] = $dbConnection->lastInsertId();
 
-
         $dbConnection
             ->prepare("INSERT INTO spy_product_option_configuration_preset_value (fk_product_option_configuration_preset, fk_product_option_value_usage)
                        VALUES
@@ -249,4 +248,5 @@ class DbFixturesLoader
 
         return $ids;
     }
+
 }

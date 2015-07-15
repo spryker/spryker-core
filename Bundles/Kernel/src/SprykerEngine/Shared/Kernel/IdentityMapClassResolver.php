@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerEngine\Shared\Kernel\ClassResolver\InstanceBuilder;
 
 class IdentityMapClassResolver implements ClassResolverInterface
 {
+
     const MAP_KEY_CAN_RESOLVE = 'can resolve result';
     const MAP_KEY_CLASS_NAME = 'resolved class name';
 
@@ -31,6 +33,7 @@ class IdentityMapClassResolver implements ClassResolverInterface
 
     /**
      * @param ClassResolverInterface $resolver
+     *
      * @return IdentityMapClassResolver
      */
     public static function getInstance(ClassResolverInterface $resolver)
@@ -69,7 +72,7 @@ class IdentityMapClassResolver implements ClassResolverInterface
         } else {
             $result = $this->resolver->canResolve($classNamePattern, $bundle);
             $this->map[$classNamePattern] = [
-                self::MAP_KEY_CAN_RESOLVE => $result
+                self::MAP_KEY_CAN_RESOLVE => $result,
             ];
 
             return $result;
@@ -81,8 +84,9 @@ class IdentityMapClassResolver implements ClassResolverInterface
      * @param string $bundle
      * @param array $arguments
      *
-     * @return object
      * @throws ClassNotFoundException
+     *
+     * @return object
      */
     public function resolve($classNamePattern, $bundle, array $arguments = [])
     {
@@ -124,4 +128,5 @@ class IdentityMapClassResolver implements ClassResolverInterface
     {
         return (new InstanceBuilder())->createInstance($className, $arguments);
     }
+
 }

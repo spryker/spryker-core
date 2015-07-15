@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -44,9 +45,10 @@ class VoucherPoolGrid extends AbstractGrid
             $this->createBooleanColumn()
                 ->setName(self::IS_INFINITELY_USABLE)
                 ->filterable()
-                ->sortable()
+                ->sortable(),
         ];
 
         return $plugins;
     }
+
 }

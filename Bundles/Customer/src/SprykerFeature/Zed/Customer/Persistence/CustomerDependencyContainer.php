@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,11 +7,12 @@
 namespace SprykerFeature\Zed\Customer\Persistence;
 
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 
-class CustomerDependencyContainer extends AbstractDependencyContainer
+class CustomerDependencyContainer extends AbstractPersistenceDependencyContainer
 {
+
     /**
      * @return SpyCustomerQuery
      */
@@ -26,4 +28,5 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
     {
         return SpyCustomerAddressQuery::create();
     }
+
 }

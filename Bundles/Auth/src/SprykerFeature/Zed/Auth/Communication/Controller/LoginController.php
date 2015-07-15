@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LoginController extends AbstractController
 {
+
     /**
      * @param Request $request
      *
@@ -28,7 +30,7 @@ class LoginController extends AbstractController
         $form->init();
 
         return $this->viewResponse([
-            'form' => json_encode($form->toArray())
+            'form' => json_encode($form->toArray()),
         ]);
     }
 
@@ -65,6 +67,7 @@ class LoginController extends AbstractController
             $statusCode = 401;
         }
 
-        return $this->jsonResponse([ "content" => $response], $statusCode, $headers);
+        return $this->jsonResponse(['content' => $response], $statusCode, $headers);
     }
+
 }

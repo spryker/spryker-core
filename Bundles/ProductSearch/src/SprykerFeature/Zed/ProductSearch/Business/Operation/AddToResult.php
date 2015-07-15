@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business\Operation;
 
 class AddToResult implements OperationInterface
 {
+
     /**
      * @return string
      */
@@ -31,5 +33,5 @@ class AddToResult implements OperationInterface
 
         return $targetDocument;
     }
+
 }
- 

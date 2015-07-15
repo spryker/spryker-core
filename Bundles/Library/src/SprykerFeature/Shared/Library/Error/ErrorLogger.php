@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,8 +7,8 @@
 namespace SprykerFeature\Shared\Library\Error;
 
 use SprykerFeature\Shared\Library\Application\Version;
-use \SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
-use \SprykerFeature\Shared\Lumberjack\Code\Log\Types;
+use SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
+use SprykerFeature\Shared\Lumberjack\Code\Log\Types;
 
 class ErrorLogger
 {
@@ -31,7 +32,7 @@ class ErrorLogger
         try {
             $lumberjack = Lumberjack::getInstance();
             $lumberjack->addField('message', $exception->getMessage());
-            $lumberjack->addField('trace', '<pre>'.$exception->getTraceAsString().'</pre>');
+            $lumberjack->addField('trace', '<pre>' . $exception->getTraceAsString() . '</pre>');
             $lumberjack->addField('className', get_class($exception));
             $lumberjack->addField('fileName', $exception->getFile());
             $lumberjack->addField('line', $exception->getLine());
@@ -56,7 +57,7 @@ class ErrorLogger
         try {
             self::addDeploymentInfo();
             self::addLumberjackRequestId();
-            $message = $message = get_class($exception) . ' - ' . $exception->getMessage().' in file "'.$exception->getFile().'"';
+            $message = $message = get_class($exception) . ' - ' . $exception->getMessage() . ' in file "' . $exception->getFile() . '"';
             \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->noticeError($message, $exception);
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
@@ -73,7 +74,7 @@ class ErrorLogger
 
     protected static function addDeploymentInfo()
     {
-        $deployData = (new Version)->toArray();
+        $deployData = (new Version())->toArray();
         foreach ($deployData as $name => $data) {
             if (!empty($data)) {
                 \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomParameter('Deployment_' . $name, $data);
@@ -94,4 +95,5 @@ class ErrorLogger
             self::sendExceptionToNewRelic($internalException, true);
         }
     }
+
 }

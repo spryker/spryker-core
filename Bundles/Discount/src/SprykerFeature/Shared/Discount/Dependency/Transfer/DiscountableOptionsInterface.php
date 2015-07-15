@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,4 +18,5 @@ interface DiscountableOptionsInterface
      * @param \ArrayObject $collection
      */
     public function setDiscounts(\ArrayObject $collection);
+
 }

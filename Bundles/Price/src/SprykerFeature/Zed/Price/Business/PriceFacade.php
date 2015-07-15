@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -27,6 +28,7 @@ class PriceFacade extends AbstractFacade
     /**
      * @param string $sku
      * @param null $priceType
+     *
      * @return int
      */
     public function getPriceBySku($sku, $priceType = null)
@@ -36,6 +38,7 @@ class PriceFacade extends AbstractFacade
 
     /**
      * @param string $name
+     *
      * @return SpyPriceType
      */
     public function createPriceType($name)
@@ -45,6 +48,7 @@ class PriceFacade extends AbstractFacade
 
     /**
      * @param PriceProductTransfer $transferPriceProduct
+     *
      * @return mixed
      */
     public function setPriceForProduct(PriceProductTransfer $transferPriceProduct)
@@ -63,6 +67,7 @@ class PriceFacade extends AbstractFacade
     /**
      * @param string $sku
      * @param null $priceType
+     *
      * @return bool
      */
     public function hasValidPrice($sku, $priceType = null)
@@ -89,10 +94,12 @@ class PriceFacade extends AbstractFacade
     /**
      * @param string $sku
      * @param string $priceType
+     *
      * @return int
      */
     public function getIdPriceProduct($sku, $priceType)
     {
         return $this->getDependencyContainer()->getReaderModel()->getProductPriceIdBySku($sku, $priceType);
     }
+
 }

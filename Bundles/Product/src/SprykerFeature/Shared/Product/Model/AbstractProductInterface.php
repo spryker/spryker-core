@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Product\Model;
 
 interface AbstractProductInterface
 {
+
     /**
      * @return array
      */
@@ -28,12 +30,12 @@ interface AbstractProductInterface
     public function setConcreteProducts(array $products);
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isActive();
 
     /**
-     * @param boolean $isActive
+     * @param bool $isActive
      */
     public function setIsActive($isActive = true);
 
@@ -56,4 +58,5 @@ interface AbstractProductInterface
      * @param string $name
      */
     public function setName($name);
+
 }

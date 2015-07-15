@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\FrontendExporter\Business\Model;
 
 interface FailedResultInterface
 {
+
     /**
      * @return int
      */
@@ -56,4 +58,5 @@ interface FailedResultInterface
      * @return int
      */
     public function getFailedCount();
+
 }

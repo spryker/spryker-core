@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use Symfony\Component\Validator\Constraint;
 
 class GroupExistsConstraint extends Constraint
 {
+
     public $message = Messages::GROUP_EXISTS_ERROR;
 
     /**
@@ -69,4 +71,5 @@ class GroupExistsConstraint extends Constraint
     {
         return $this->locator;
     }
+
 }

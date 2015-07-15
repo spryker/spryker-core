@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -100,6 +101,7 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param NodeTransfer $categoryNode
+     *
      * @throws \ErrorException
      */
     public function moveCategoryNode(NodeTransfer $categoryNode)
@@ -166,4 +168,5 @@ class CategoryFacade extends AbstractFacade
             ->getParents($idNode, $locale, $excludeStartNode)
         ;
     }
+
 }

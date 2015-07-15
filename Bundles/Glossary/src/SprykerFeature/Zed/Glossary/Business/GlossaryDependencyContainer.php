@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,7 @@
 namespace SprykerFeature\Zed\Glossary\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Glossary\Business\Key\KeyManagerInterface;
 use SprykerFeature\Zed\Glossary\Business\Key\KeySourceInterface;
 use SprykerFeature\Zed\Glossary\Business\Translation\TranslationManagerInterface;
@@ -21,7 +22,7 @@ use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
  * @method GlossaryConfig getConfig()
  * @method GlossaryQueryContainerInterface getQueryContainer()
  */
-class GlossaryDependencyContainer extends AbstractDependencyContainer
+class GlossaryDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

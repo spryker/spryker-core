@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -88,6 +89,7 @@ class OrderManager
         Propel::getConnection()->commit();
 
         $orderTransfer->setIdSalesOrder($orderEntity->getIdSalesOrder());
+
         return $orderTransfer;
     }
 
@@ -99,7 +101,7 @@ class OrderManager
     protected function saveAddressTransfer(SalesAddressTransfer $address = null)
     {
         if (is_null($address)) {
-            return null;
+            return;
         }
 
         $addressEntity = new SpySalesOrderAddress();
@@ -119,4 +121,5 @@ class OrderManager
 
         return $addressEntity;
     }
+
 }

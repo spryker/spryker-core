@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,17 +7,17 @@
 namespace SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryFrontendExporterConnectorBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 
 /**
  * Class ProductCategoryFrontendExporterDependencyContainer
- * @package SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Business
  */
 /**
  * @method ProductCategoryFrontendExporterConnectorBusiness getFactory()
  */
-class ProductCategoryFrontendExporterConnectorDependencyContainer extends AbstractDependencyContainer
+class ProductCategoryFrontendExporterConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return Processor\ProductCategoryBreadcrumbProcessor
      */
@@ -26,4 +27,5 @@ class ProductCategoryFrontendExporterConnectorDependencyContainer extends Abstra
             $this->getLocator()->categoryExporter()->facade()
         );
     }
+
 }

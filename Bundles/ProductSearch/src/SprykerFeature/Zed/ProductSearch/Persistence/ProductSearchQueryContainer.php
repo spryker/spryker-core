@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,6 +21,7 @@ use SprykerFeature\Zed\ProductSearch\Persistence\Propel\SpyProductSearchAttribut
  */
 class ProductSearchQueryContainer extends AbstractQueryContainer implements ProductSearchQueryContainerInterface
 {
+
     /**
      * @return SpyProductSearchAttributesOperationQuery
      */
@@ -97,4 +99,5 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
 
         return $productSearchQueryExpander->expandProductQuery($expandableQuery, $locale);
     }
+
 }

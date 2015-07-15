@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,37 +18,41 @@ interface TaxWriterInterface
     /**
      * @param TaxRateTransfer $taxRateTransfer
      *
-     * @return TaxRateTransfer
      * @throws PropelException
+     *
+     * @return TaxRateTransfer
      */
     public function createTaxRate(TaxRateTransfer $taxRateTransfer);
 
     /**
      * @param TaxRateTransfer $taxRateTransfer
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return int
      */
     public function updateTaxRate(TaxRateTransfer $taxRateTransfer);
 
     /**
      * @param TaxSetTransfer $taxSetTransfer
      *
-     * @return TaxSetTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException
+     *
+     * @return TaxSetTransfer
      */
     public function createTaxSet(TaxSetTransfer $taxSetTransfer);
 
     /**
      * @param TaxSetTransfer $taxSetTransfer
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException
+     *
+     * @return int
      */
     public function updateTaxSet(TaxSetTransfer $taxSetTransfer);
 
@@ -55,9 +60,10 @@ interface TaxWriterInterface
      * @param int $taxSetId
      * @param TaxRateTransfer $taxRateTransfer
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return int
      */
     public function addTaxRateToTaxSet($taxSetId, TaxRateTransfer $taxRateTransfer);
 
@@ -65,10 +71,11 @@ interface TaxWriterInterface
      * @param int $taxSetId
      * @param int $taxRateId
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException
+     *
+     * @return int
      */
     public function removeTaxRateFromTaxSet($taxSetId, $taxRateId);
 
@@ -85,4 +92,5 @@ interface TaxWriterInterface
      * @throws PropelException
      */
     public function deleteTaxSet($id);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 class UserProvider implements UserProviderInterface
 {
+
     /** @var FactoryInterface  */
     protected $factory;
 
@@ -50,10 +52,11 @@ class UserProvider implements UserProviderInterface
             $user = $this->fetchUser($username);
             $this->session->set($this->getKey($username), $user);
         }
+
         return new User(
-            $user["username"],
-            $user["password"],
-            $user["roles"],
+            $user['username'],
+            $user['password'],
+            $user['roles'],
             true,
             true,
             true,
@@ -76,7 +79,7 @@ class UserProvider implements UserProviderInterface
      */
     protected function getKey($username)
     {
-        return "userdata:".$username;
+        return 'userdata:' . $username;
     }
 
     /**
@@ -88,11 +91,12 @@ class UserProvider implements UserProviderInterface
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setEmail($username);
-        $customerTransfer = $this->locator->customer()->sdk()->getCustomer($customerTransfer);
+        $customerTransfer = $this->locator->customer()->client()->getCustomer($customerTransfer);
+
         return [
-            "username" => $customerTransfer->getEmail(),
-            "password" => $customerTransfer->getPassword(),
-            "roles" => ["ROLE_USER"]
+            'username' => $customerTransfer->getEmail(),
+            'password' => $customerTransfer->getPassword(),
+            'roles' => ['ROLE_USER'],
         ];
     }
 
@@ -106,6 +110,7 @@ class UserProvider implements UserProviderInterface
         if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
         }
+
         return $this->loadUserByUsername($user->getUsername());
     }
 
@@ -118,4 +123,5 @@ class UserProvider implements UserProviderInterface
     {
         return $class === 'Symfony\Component\Security\Core\User\User';
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerFeature\Zed\Payone\Business\Api\Adapter;
 
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\Http\AbstractHttpAdapter;
 
-
 class Simulator extends AbstractHttpAdapter
 {
 
@@ -15,7 +15,6 @@ class Simulator extends AbstractHttpAdapter
      * @var array
      */
     protected $rawResponse;
-
 
     /**
      * @param array $rawResponse
@@ -35,6 +34,7 @@ class Simulator extends AbstractHttpAdapter
 
     /**
      * @param array $request
+     *
      * @return string
      */
     protected function createRawResponseFromArray(array $request)
@@ -55,6 +55,7 @@ class Simulator extends AbstractHttpAdapter
 
     /**
      * @param array $params
+     *
      * @return array
      */
     protected function performRequest(array $params)

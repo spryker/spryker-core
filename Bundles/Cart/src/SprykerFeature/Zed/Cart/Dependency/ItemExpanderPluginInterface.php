@@ -1,19 +1,21 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Cart\Dependency;
 
-use SprykerFeature\Shared\Cart\Transfer\ItemCollectionInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
+use Generated\Shared\Cart\ChangeInterface;
 
 interface ItemExpanderPluginInterface
 {
+
     /**
-     * @param ItemCollectionInterface|ItemInterface[] $items
+     * @param ChangeInterface $change
      *
-     * @return ItemCollectionInterface|ItemInterface[]
+     * @return ChangeInterface
      */
-    public function expandItems(ItemCollectionInterface $items);
+    public function expandItems(ChangeInterface $change);
+
 }

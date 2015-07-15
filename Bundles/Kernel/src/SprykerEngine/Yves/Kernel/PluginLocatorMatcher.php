@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,10 +10,10 @@ use SprykerEngine\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 /**
  * Class YvesLocatorMatcher
- * @package SprykerEngine\Yves\Kernel\Business
  */
 class PluginLocatorMatcher implements LocatorMatcherInterface
 {
+
     const METHOD_PREFIX = 'plugin';
 
     /**
@@ -34,4 +35,5 @@ class PluginLocatorMatcher implements LocatorMatcherInterface
     {
         return $method;
     }
+
 }

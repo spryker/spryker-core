@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,20 +9,20 @@ namespace Functional\SprykerFeature\Zed\Discount\Business\DecisionRule;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Generated\Shared\Transfer\Calculation\DependencyTotalsInterfaceTransfer;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\OrderTransfer;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
+use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
- * Class MinimumCartSubtotalTest
  * @group DiscountDecisionRuleMinimumCartSubtotalTest
  * @group Discount
- * @package Unit\SprykerFeature\Zed\Discount\Business\DecisionRule
  */
 class MinimumCartSubtotalTest extends Test
 {
+
     const MINIMUM_CART_SUBTOTAL_TEST_500 = 500;
     const CART_SUBTOTAL_400 = 400;
     const CART_SUBTOTAL_500 = 500;
@@ -29,11 +30,10 @@ class MinimumCartSubtotalTest extends Test
 
     public function testShouldReturnTrueForAnOrderWithAHighEnoughSubtotal()
     {
-        $locator = $this->getLocator();
-        $order = new OrderTransfer();
+        $order = new CalculableContainer(new OrderTransfer());
         $totals = new TotalsTransfer();
         $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_1000);
-        $order->setTotals($totals);
+        $order->getCalculableObject()->setTotals($totals);
 
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
@@ -45,14 +45,10 @@ class MinimumCartSubtotalTest extends Test
 
     public function testShouldReturnFalseForAnOrderWithATooLowSubtotal()
     {
-        $locator = $this->getLocator();
-        /* @var Order $order */
-        $order = new \Generated\Shared\Transfer\OrderTransfer();
-
-        /* @var TotalsInterface $totals */
-        $totals = new \Generated\Shared\Transfer\TotalsTransfer();
+        $order = new CalculableContainer(new OrderTransfer());
+        $totals = new TotalsTransfer();
         $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_400);
-        $order->setTotals($totals);
+        $order->getCalculableObject()->setTotals($totals);
 
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
@@ -64,14 +60,10 @@ class MinimumCartSubtotalTest extends Test
 
     public function testShouldReturnTrueForAnOrderWithAExactlyMatchingSubtotal()
     {
-        $locator = $this->getLocator();
-        /* @var Order $order */
-        $order = new \Generated\Shared\Transfer\OrderTransfer();
-
-        /* @var TotalsInterface $totals */
-        $totals = new \Generated\Shared\Transfer\TotalsTransfer();
+        $order = new CalculableContainer(new OrderTransfer());
+        $totals = new TotalsTransfer();
         $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_500);
-        $order->setTotals($totals);
+        $order->getCalculableObject()->setTotals($totals);
 
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
@@ -83,11 +75,12 @@ class MinimumCartSubtotalTest extends Test
 
     /**
      * @param int $value
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule
+     *
+     * @return SpyDiscountDecisionRule
      */
     protected function getDecisionRuleEntity($value)
     {
-        $decisionRule = new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule();
+        $decisionRule = new SpyDiscountDecisionRule();
         $decisionRule->setValue($value);
 
         return $decisionRule;
@@ -98,6 +91,7 @@ class MinimumCartSubtotalTest extends Test
      */
     protected function getLocator()
     {
-        return  Locator::getInstance();
+        return Locator::getInstance();
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\WriterInterface
 
 class KeyValueMarker implements MarkerInterface
 {
+
     /**
      * @var WriterInterface
      */
@@ -66,7 +68,7 @@ class KeyValueMarker implements MarkerInterface
     public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale)
     {
         $timestampKey = $this->keyBuilder->generateKey($exportType, $locale->getLocaleName());
-        $this->writer->write([ $timestampKey => (new \DateTime())->format('Y-m-d H:i:s')]);
+        $this->writer->write([$timestampKey => (new \DateTime())->format('Y-m-d H:i:s')]);
     }
+
 }
- 

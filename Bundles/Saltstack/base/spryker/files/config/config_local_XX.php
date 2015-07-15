@@ -1,22 +1,20 @@
 <?php
+
 /**
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
- *
  */
 use ProjectA\Shared\System\SystemConfig;
 use ProjectA\Shared\Yves\YvesConfig;
-use ProjectA\Shared\Payone\PayoneConfig;
 
 $environment = '{{ environment }}';
 
 $config[SystemConfig::ZED_MYSQL_USERNAME] = '{{ settings.environments[environment].stores[store].zed.database.username }}';
 $config[SystemConfig::ZED_MYSQL_PASSWORD] = '{{ settings.environments[environment].stores[store].zed.database.password }}';
 $config[SystemConfig::ZED_MYSQL_DATABASE] = '{{ settings.environments[environment].stores[store].zed.database.database }}';
-$config[SystemConfig::ZED_MYSQL_HOST]     = '{{ settings.environments[environment].stores[store].zed.database.hostname }}';
+$config[SystemConfig::ZED_MYSQL_HOST] = '{{ settings.environments[environment].stores[store].zed.database.hostname }}';
 $config[SystemConfig::ZED_MYSQL_PORT] = 3306;
 
-
-/** Public URL's */
+/* Public URL's */
 $yvesHost = '{{ settings.environments[environment].stores[store].yves.hostnames[0] }}';
 $config[SystemConfig::HOST_YVES] = 'http://' . $yvesHost;
 $config[SystemConfig::HOST_STATIC_ASSETS] = $config[SystemConfig::HOST_STATIC_MEDIA] = $yvesHost;

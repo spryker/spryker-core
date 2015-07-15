@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,11 +10,11 @@ use SprykerEngine\Zed\Translation\Business\TranslationFileFinder;
 use SprykerEngine\Zed\Translation\Business\TranslationFileLoaderFactory;
 use SprykerEngine\Zed\Translation\Business\Translator;
 use SprykerEngine\Zed\Translation\Business\TranslatorInterface;
-use SprykerEngine\Zed\Translation\TranslationConfig;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class TranslatorTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @var TranslatorInterface
      */
@@ -85,4 +86,5 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
             $this->translator->transChoice('choice', 1)
         );
     }
+
 }

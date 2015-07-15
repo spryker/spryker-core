@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -146,7 +147,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $propertyInfo = [
             'name' => $property['name'],
-            'type' => $this->getPropertyType($property)
+            'type' => $this->getPropertyType($property),
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
@@ -399,7 +400,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $method = [
             'name' => $methodName,
             'property' => $propertyName,
-            'return' => $this->getReturnType($property)
+            'return' => $this->getReturnType($property),
         ];
         $this->methods[$methodName] = $method;
     }
@@ -462,4 +463,5 @@ class ClassDefinition implements ClassDefinitionInterface
 
         return $method;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,7 +9,6 @@ namespace SprykerFeature\Yves\Twig;
 use Generated\Yves\Ide\FactoryAutoCompletion\Twig;
 use Silex\Application;
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
-use SprykerEngine\Yves\Kernel\Factory;
 use SprykerFeature\Yves\Twig\Model\YvesExtension;
 
 /**
@@ -16,6 +16,7 @@ use SprykerFeature\Yves\Twig\Model\YvesExtension;
  */
 class TwigDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @var TwigSettings
      */
@@ -42,4 +43,5 @@ class TwigDependencyContainer extends AbstractDependencyContainer
 
         return $this->settings;
     }
+
 }

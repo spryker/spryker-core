@@ -1,13 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Country\Business;
 
-
 interface RegionManagerInterface
 {
+
     /**
      * @param string $isoCode
      * @param int $fkCountry
@@ -16,4 +17,5 @@ interface RegionManagerInterface
      * @return int
      */
     public function createRegion($isoCode, $fkCountry, $regionName);
+
 }

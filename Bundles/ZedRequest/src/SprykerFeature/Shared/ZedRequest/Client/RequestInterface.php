@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface RequestInterface
 {
+
     /**
      * @return string
      */
@@ -16,12 +18,14 @@ interface RequestInterface
 
     /**
      * @param string $host
+     *
      * @return $this
      */
     public function setHost($host);
 
     /**
      * @param string $name
+     *
      * @return TransferInterface
      */
     public function getMetaTransfer($name);
@@ -29,6 +33,7 @@ interface RequestInterface
     /**
      * @param string $name
      * @param TransferInterface $transferObject
+     *
      * @return $this
      */
     public function addMetaTransfer($name, TransferInterface $transferObject);
@@ -40,6 +45,7 @@ interface RequestInterface
 
     /**
      * @param string $password
+     *
      * @return $this
      */
     public function setPassword($password);
@@ -51,6 +57,7 @@ interface RequestInterface
 
     /**
      * @param string $sessionId
+     *
      * @return $this
      */
     public function setSessionId($sessionId);
@@ -62,6 +69,7 @@ interface RequestInterface
 
     /**
      * @param string $time
+     *
      * @return $this
      */
     public function setTime($time);
@@ -73,6 +81,7 @@ interface RequestInterface
 
     /**
      * @param TransferInterface $transferObject
+     *
      * @return $this
      */
     public function setTransfer(TransferInterface $transferObject);
@@ -84,7 +93,9 @@ interface RequestInterface
 
     /**
      * @param string $username
+     *
      * @return $this
      */
     public function setUsername($username);
+
 }

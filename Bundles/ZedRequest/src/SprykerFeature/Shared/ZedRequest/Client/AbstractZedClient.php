@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,9 +24,9 @@ abstract class AbstractZedClient
     /**
      * @var TransferInterface[]|\Closure[]
      */
-    private $metaTransfers = array(
+    private $metaTransfers = [
 
-    );
+    ];
 
     /**
      * @param HttpClientInterface $httpClient
@@ -44,6 +45,7 @@ abstract class AbstractZedClient
     public function addMetaTransfer($name, $metaTransfer)
     {
         $this->metaTransfers[$name] = $metaTransfer;
+
         return $this;
     }
 
@@ -57,6 +59,7 @@ abstract class AbstractZedClient
                 $this->metaTransfers[$name] = $transfer();
             }
         }
+
         return $this->metaTransfers;
     }
 
@@ -71,7 +74,7 @@ abstract class AbstractZedClient
     public function call($url, TransferInterface $object, $timeoutInSeconds = null, $isBackgroundRequest = false)
     {
         $this->lastResponse = null;
-        $this->lastResponse =  $this->httpClient->request(
+        $this->lastResponse = $this->httpClient->request(
             $url,
             $object,
             $this->prepareAndGetMetaTransfers(),
@@ -83,14 +86,17 @@ abstract class AbstractZedClient
     }
 
     /**
-     * @return ResponseInterface
      * @throws \BadMethodCallException
+     *
+     * @return ResponseInterface
      */
     public function getLastResponse()
     {
         if ($this->lastResponse === null) {
             throw new \BadMethodCallException('No response available yet');
         }
+
         return $this->lastResponse;
     }
+
 }

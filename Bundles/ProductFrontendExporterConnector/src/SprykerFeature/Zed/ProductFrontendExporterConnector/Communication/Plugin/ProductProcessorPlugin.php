@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ use SprykerFeature\Zed\ProductFrontendExporterConnector\Communication\ProductFro
  */
 class ProductProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
+
     /**
      * @var ProductFrontendExporterConnectorFacade
      */
@@ -53,4 +55,5 @@ class ProductProcessorPlugin extends AbstractPlugin implements DataProcessorPlug
     {
         return 'abstract_product';
     }
+
 }

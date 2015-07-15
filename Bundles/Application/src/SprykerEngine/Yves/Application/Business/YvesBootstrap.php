@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -48,12 +49,11 @@ abstract class YvesBootstrap extends Bootstrap
     {
         /** @var AutoCompletion $locator */
         $locator = Locator::getInstance();
+
         $yvesExtension = $locator->twig()->pluginTwigYves($app);
-        $twigMessengerPlugin = $locator->messenger()->pluginTwigMessenger();
 
         return [
             $yvesExtension->getTwigYvesExtension($app),
-            $twigMessengerPlugin->getTwigMessengerExtension(),
         ];
     }
 

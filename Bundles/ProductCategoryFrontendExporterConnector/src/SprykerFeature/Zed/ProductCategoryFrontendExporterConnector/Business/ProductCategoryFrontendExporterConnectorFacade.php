@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,10 +14,12 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductCategoryFrontendExporterConnectorFacade extends AbstractFacade
 {
+
     /**
      * @param array $resultSet
      * @param array $processedResultSet
      * @param LocaleTransfer $locale
+     *
      * @return array
      */
     public function processProductCategoryBreadcrumbs(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
@@ -25,4 +28,5 @@ class ProductCategoryFrontendExporterConnectorFacade extends AbstractFacade
 
         return $breadcumbProcessor->process($resultSet, $processedResultSet, $locale);
     }
+
 }

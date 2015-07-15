@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,7 +9,6 @@ namespace SprykerFeature\Zed\CartCheckoutConnector\Business;
 use Generated\Shared\CartCheckoutConnector\CheckoutRequestInterface;
 use Generated\Shared\CartCheckoutConnector\OrderInterface;
 use Generated\Shared\CartCheckoutConnector\OrderItemInterface;
-use Generated\Shared\Transfer\CartItemsTransfer;
 use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 
@@ -62,4 +62,5 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     {
         return new OrderItemTransfer();
     }
+
 }

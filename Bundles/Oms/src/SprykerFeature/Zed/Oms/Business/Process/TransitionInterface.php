@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Oms\Business\Process;
 
 interface TransitionInterface
 {
+
     /**
      * @param mixed $happy
      */
@@ -66,4 +68,5 @@ interface TransitionInterface
      * @return StateInterface
      */
     public function getTarget();
+
 }

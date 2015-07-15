@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Yves\Twig\Dependency\Plugin\TwigFilterPluginInterface;
 
 class TwigNativePlugin extends AbstractPlugin implements TwigFilterPluginInterface
 {
+
     /**
      * @return \Twig_SimpleFilter[]
      */
@@ -24,7 +26,8 @@ class TwigNativePlugin extends AbstractPlugin implements TwigFilterPluginInterfa
             }),
             new \Twig_SimpleFilter('int', function ($value) {
                 return (int) $value;
-            })
+            }),
         ];
     }
+
 }

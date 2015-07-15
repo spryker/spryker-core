@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,13 +22,14 @@ class BundleNameFinder extends AbstractBundle
 
         $finder = new Finder();
         $dirs = $this->getBundleDirectories();
-        /* @var SplFileInfo $bundleDirectory */
+        /** @var SplFileInfo $bundleDirectory */
         foreach ($finder->directories()->in($dirs)->depth(0) as $bundleDirectory) {
             $bundleName = $bundleDirectory->getRelativePathname();
             $bundles[] = $bundleName;
         }
 
         $bundles = array_unique($bundles);
+
         sort($bundles);
 
         return $bundles;
@@ -52,9 +54,10 @@ class BundleNameFinder extends AbstractBundle
 
         $dirs = [
             $projectBundlePathPattern,
-            $vendorBundlePathPattern
+            $vendorBundlePathPattern,
         ];
 
         return $dirs;
     }
+
 }

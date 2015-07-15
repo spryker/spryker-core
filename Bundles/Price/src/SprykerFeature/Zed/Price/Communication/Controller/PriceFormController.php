@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,7 +12,6 @@ use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\Price\Communication\PriceDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Price\Communication\Form\PriceForm;
 
 /**
  * @method PriceDependencyContainer getDependencyContainer()
@@ -19,8 +19,10 @@ use SprykerFeature\Zed\Price\Communication\Form\PriceForm;
  */
 class PriceFormController extends AbstractController
 {
+
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function priceAction(Request $request)
@@ -33,7 +35,7 @@ class PriceFormController extends AbstractController
             $transferPriceProduct = new PriceProductTransfer();
             $transferPriceProduct->fromArray($form->getRequestData());
 
-            if (null == $transferPriceProduct->getIdPriceProduct()) {
+            if (null === $transferPriceProduct->getIdPriceProduct()) {
                 $this->getFacade()->createPriceForProduct($transferPriceProduct);
             } else {
                 $this->getFacade()->setPriceForProduct($transferPriceProduct);
@@ -45,6 +47,7 @@ class PriceFormController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function priceTypeAction(Request $request)
@@ -60,4 +63,5 @@ class PriceFormController extends AbstractController
 
         return $this->jsonResponse($form->toArray());
     }
+
 }

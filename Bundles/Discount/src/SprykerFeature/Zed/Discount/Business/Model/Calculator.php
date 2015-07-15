@@ -1,10 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount as DiscountEntity;
 use SprykerFeature\Zed\Discount\Business\DiscountSettingsInterface;
 use Generated\Shared\Discount\OrderInterface;
@@ -12,6 +14,7 @@ use Generated\Shared\Discount\OrderInterface;
 class Calculator implements
     CalculatorInterface
 {
+
     const KEY_DISCOUNT_ENTITY = 'entity';
     const KEY_DISCOUNT_AMOUNT = 'amount';
     const KEY_DISCOUNT_REASON = 'reason';
@@ -23,14 +26,18 @@ class Calculator implements
 
     /**
      * @param DiscountEntity[] $discounts
-     * @param OrderInterface $container
+     * @ param OrderInterface $container
+     *
+     * @param CalculableInterface $container
      * @param DiscountSettingsInterface $settings
      * @param DistributorInterface $distributor
+     *
      * @return DiscountEntity[]
      */
     public function calculate(
         array $discounts,
-        OrderInterface $container,
+        //OrderInterface $container,
+        CalculableInterface $container,
         DiscountSettingsInterface $settings,
         DistributorInterface $distributor
     ) {
@@ -46,7 +53,7 @@ class Calculator implements
 
             $calculatedDiscounts[] = [
                 self::KEY_DISCOUNT_ENTITY => $discount,
-                self::KEY_DISCOUNT_AMOUNT => $discountAmount
+                self::KEY_DISCOUNT_AMOUNT => $discountAmount,
             ];
         }
 
@@ -61,6 +68,7 @@ class Calculator implements
 
     /**
      * @param array $calculatedDiscounts
+     *
      * @return array
      */
     protected function filterOutNonPrivilegedDiscounts(array $calculatedDiscounts)
@@ -73,6 +81,7 @@ class Calculator implements
 
     /**
      * @param array $calculatedDiscounts
+     *
      * @return array
      */
     protected function sortByDiscountAmountDesc(array $calculatedDiscounts)
@@ -86,6 +95,7 @@ class Calculator implements
 
     /**
      * @param array $calculatedDiscounts
+     *
      * @return array
      */
     protected function filterOutUnprivileged(array $calculatedDiscounts)
@@ -116,4 +126,5 @@ class Calculator implements
     {
         return $discount[self::KEY_DISCOUNT_ENTITY];
     }
+
 }

@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Response\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
-
 
 class CreditCardCheckResponseContainer extends AbstractResponseContainer
 {
@@ -18,7 +17,6 @@ class CreditCardCheckResponseContainer extends AbstractResponseContainer
      * @var string
      */
     protected $truncatedcardpan;
-
 
     /**
      * @param string $truncatedcardpan

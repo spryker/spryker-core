@@ -1,10 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Product\Business\Product;
 
+use Generated\Shared\Product\AbstractProductInterface;
+use Generated\Shared\Product\ConcreteProductInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -17,6 +20,7 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface ProductManagerInterface
 {
+
     /**
      * @param string $sku
      *
@@ -25,41 +29,46 @@ interface ProductManagerInterface
     public function hasAbstractProduct($sku);
 
     /**
-     * @param string $sku
-
-     * @return int
+     * @param AbstractProductInterface $abstractProductTransfer
+     *
      * @throws AbstractProductExistsException
+     *
+     * @return int
      */
-    public function createAbstractProduct($sku);
+    public function createAbstractProduct(AbstractProductInterface $abstractProductTransfer);
 
     /**
      * @param string $sku
-     * @return int
      *
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getAbstractProductIdBySku($sku);
 
     /**
-     * @param int $idAbstractProduct
+     * @param AbstractProductInterface $abstractProductTransfer
      * @param LocaleTransfer $locale
-     * @param string $name
-     * @param string $attributes
      *
-     * @return int
      * @throws AbstractProductAttributesExistException
+     * @throws PropelException
+     * 
+     * @return int
      */
-    public function createAbstractProductAttributes($idAbstractProduct, LocaleTransfer $locale, $name, $attributes);
+    public function createAbstractProductAttributes(
+        AbstractProductInterface $abstractProductTransfer,
+        LocaleTransfer $locale
+    );
 
     /**
-     * @param string $sku
+     * @param ConcreteProductInterface $concreteProductTransfer
      * @param int $idAbstractProduct
-     * @param bool $isActive
+     *
+     * @throws ConcreteProductExistsException
      *
      * @return int
-     * @throws ConcreteProductExistsException
      */
-    public function createConcreteProduct($sku, $idAbstractProduct, $isActive = true);
+    public function createConcreteProduct(ConcreteProductInterface $concreteProductTransfer, $idAbstractProduct);
 
     /**
      * @param string $sku
@@ -71,21 +80,24 @@ interface ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getConcreteProductIdBySku($sku);
 
     /**
-     * @param int $idConcreteProduct
+     * @param ConcreteProductInterface $concreteProductTransfer
      * @param LocaleTransfer $locale
-     * @param string $name
-     * @param string $attributes
+     *
+     * @throws ConcreteProductAttributesExistException
      *
      * @return int
-     * @throws ConcreteProductAttributesExistException
      */
-    public function createConcreteProductAttributes($idConcreteProduct, LocaleTransfer $locale, $name, $attributes);
+    public function createConcreteProductAttributes(
+        ConcreteProductInterface $concreteProductTransfer,
+        LocaleTransfer $locale
+    );
 
     /**
      * @param int $idAbstractProduct
@@ -97,10 +109,11 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
+     *
+     * @return UrlTransfer
      */
     public function createProductUrl($sku, $url, LocaleTransfer $locale);
 
@@ -109,10 +122,11 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
+     *
+     * @return UrlTransfer
      */
     public function createProductUrlByIdProduct($idAbstractProduct, $url, LocaleTransfer $locale);
 
@@ -121,10 +135,11 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
+     *
+     * @return UrlTransfer
      */
     public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale);
 
@@ -133,26 +148,30 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
+     *
+     * @return UrlTransfer
      */
     public function createAndTouchProductUrlByIdProduct($idAbstractProduct, $url, LocaleTransfer $locale);
 
     /**
      * @param string $sku
      *
-     * @return float
      * @throws MissingProductException
+     *
+     * @return float
      */
     public function getEffectiveTaxRateForConcreteProduct($sku);
 
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getAbstractProductIdByConcreteSku($sku);
+
 }

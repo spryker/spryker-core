@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,7 +17,7 @@ class Tracking
     const POSITION_AFTER_OPENING_BODY = 'after opening body';
 
     /**
-     * @var $this
+     * @var
      */
     protected static $instance;
 
@@ -72,6 +73,7 @@ class Tracking
 
     /**
      * @param Session $session
+     *
      * @return $this
      */
     public function setSession(Session $session)
@@ -84,6 +86,7 @@ class Tracking
     /**
      * @param $key
      * @param $value
+     *
      * @return $this
      */
     public function setValue($key, $value)
@@ -147,7 +150,7 @@ class Tracking
      */
     public function buildTracking()
     {
-        /* @var $provider ProviderInterface */
+        /** @var ProviderInterface $provider */
         foreach ($this->provider as $provider) {
             $tracking = $this->createTrackingOutput(
                 $provider->getTrackingOutput($this->dataProvider, $this->getPageType())
@@ -232,4 +235,5 @@ class Tracking
             return PageTypeInterface::PAGE_TYPE_HOME;
         }
     }
+
 }

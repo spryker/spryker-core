@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Response\Container;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
-
 
 class GetInvoiceResponseContainer extends AbstractResponseContainer
 {
@@ -14,7 +13,6 @@ class GetInvoiceResponseContainer extends AbstractResponseContainer
      * @var string
      */
     protected $response;
-
 
     /**
      * @param string $response
@@ -41,9 +39,10 @@ class GetInvoiceResponseContainer extends AbstractResponseContainer
             $result = parent::__toString();
         }
         else {
-            $stringArray = array('status=' . $this->getStatus(), 'data=PDF-Content');
+            $stringArray = ['status=' . $this->getStatus(), 'data=PDF-Content'];
             $result = implode('|', $stringArray);
         }
+
         return $result;
     }
 

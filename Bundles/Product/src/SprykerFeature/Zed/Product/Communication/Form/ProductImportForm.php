@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,11 +10,10 @@ use SprykerFeature\Zed\Library\Form;
 
 /**
  * Class Import
- *
- * @package SprykerFeature\Zed\Catalog\Communication\Form
  */
 class ProductImportForm extends Form
 {
+
     const FORM_IDENTIFIER = 'productImportForm';
     const FORM_ELEMENT_IMPORT_FILE_NAME = 'importFile';
     const FORM_ACTION = '/product/import/save/';
@@ -47,7 +47,7 @@ class ProductImportForm extends Form
      */
     public function getErrorMessage()
     {
-        $errorMessage =  self::FORM_ERROR_MESSAGE_DEFAULT . PHP_EOL;
+        $errorMessage = self::FORM_ERROR_MESSAGE_DEFAULT . PHP_EOL;
         $erroneousElements = $this->getMessages();
         foreach ($erroneousElements as $element) {
             foreach ($element as $message) {
@@ -65,4 +65,5 @@ class ProductImportForm extends Form
     {
         return self::FORM_ELEMENT_IMPORT_FILE_NAME;
     }
+
 }

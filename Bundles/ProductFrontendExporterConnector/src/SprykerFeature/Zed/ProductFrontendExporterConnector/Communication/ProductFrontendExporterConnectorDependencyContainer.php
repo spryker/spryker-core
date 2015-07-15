@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,15 +7,16 @@
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductFrontendExporterConnectorCommunication;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Business\ProductFrontendExporterConnectorFacade;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Persistence\ProductFrontendExporterConnectorQueryContainerInterface;
 
 /**
  * @property ProductFrontendExporterConnectorCommunication $factory
  */
-class ProductFrontendExporterConnectorDependencyContainer extends AbstractDependencyContainer
+class ProductFrontendExporterConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return ProductFrontendExporterConnectorFacade
      */
@@ -46,4 +48,5 @@ class ProductFrontendExporterConnectorDependencyContainer extends AbstractDepend
     {
         return $this->getLocator()->productFrontendExporterConnector()->queryContainer();
     }
+
 }

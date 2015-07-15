@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,14 +7,15 @@
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductFrontendExporterConnectorPersistence;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 /**
  * @method ProductFrontendExporterConnectorPersistence getFactory()
  */
-class ProductFrontendExporterConnectorDependencyContainer extends AbstractDependencyContainer
+class ProductFrontendExporterConnectorDependencyContainer extends AbstractPersistenceDependencyContainer
 {
+
     /**
      * @return ProductQueryExpanderInterface
      */
@@ -31,4 +33,5 @@ class ProductFrontendExporterConnectorDependencyContainer extends AbstractDepend
     {
         return $this->getLocator()->product()->queryContainer();
     }
+
 }

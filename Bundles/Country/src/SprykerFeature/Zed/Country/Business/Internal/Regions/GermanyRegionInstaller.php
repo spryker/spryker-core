@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Country\Business\Internal\Regions;
 
 class GermanyRegionInstaller implements RegionInstallInterface
 {
+
     /**
      * {@inheritdoc}
      */
@@ -28,7 +30,7 @@ class GermanyRegionInstaller implements RegionInstallInterface
             'DE-SN' => 'Sachsen',
             'DE-ST' => 'Sachsen-Anhalt',
             'DE-SH' => 'Schleswig-Holstein',
-            'DE-TH' => 'Thüringen'
+            'DE-TH' => 'Thüringen',
         ];
     }
 
@@ -39,4 +41,5 @@ class GermanyRegionInstaller implements RegionInstallInterface
     {
         return 'DE';
     }
+
 }

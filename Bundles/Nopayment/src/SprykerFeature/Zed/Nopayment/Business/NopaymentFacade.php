@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -33,4 +34,5 @@ class NopaymentFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createNopaymentPaid()->isPaid($orderItem);
     }
+
 }

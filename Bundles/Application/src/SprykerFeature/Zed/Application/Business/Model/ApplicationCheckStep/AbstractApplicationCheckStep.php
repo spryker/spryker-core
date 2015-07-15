@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,7 +17,6 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     use LoggerAwareTrait;
 
     /**
-     * @return void
      */
     abstract public function run();
 
@@ -26,14 +26,12 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
      * @param mixed $level
      * @param string $message
      * @param array $context
-     * @return null
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         if ($this->logger) {
             $this->logger->log($level, $message, $context);
         }
     }
-
 
 }

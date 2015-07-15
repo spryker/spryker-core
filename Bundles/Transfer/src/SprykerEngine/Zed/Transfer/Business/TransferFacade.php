@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -35,4 +36,5 @@ class TransferFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->createTransferCleaner()->cleanDirectory();
     }
+
 }

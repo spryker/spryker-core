@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -27,8 +28,9 @@ class FacadeLocator extends AbstractLocator
      * @param LocatorLocatorInterface $locator
      * @param null|string $className
      *
-     * @return object
      * @throws LocatorException
+     *
+     * @return object
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
@@ -37,8 +39,8 @@ class FacadeLocator extends AbstractLocator
         $facade = $factory->create($bundle . self::FACADE_SUFFIX, $factory, $locator);
 
         try {
-            $bundleConfigLocator = new BundleDependencyProviderLocator(); // TODO Make singleton because of performance
-            $bundleBuilder = $bundleConfigLocator->locate($bundle, $locator);
+            $bundleProviderLocator = new BundleDependencyProviderLocator(); // TODO Make singleton because of performance
+            $bundleBuilder = $bundleProviderLocator->locate($bundle, $locator);
 
             $container = new Container();
             $bundleBuilder->provideBusinessLayerDependencies($container);
@@ -51,7 +53,7 @@ class FacadeLocator extends AbstractLocator
 
         } catch (ClassNotFoundException $e) {
             // TODO remove try-catch when all bundles have a Builder
-            \SprykerFeature_Shared_Library_Log::log($bundle, 'builder_missing.log');
+            \SprykerFeature_Shared_Library_Log::log(APPLICATION . ' - ' . $bundle, 'builder_missing.log');
         }
 
         return $facade;
@@ -59,12 +61,14 @@ class FacadeLocator extends AbstractLocator
 
     /**
      * @param string $bundle
-     * 
+     *
      * @return bool
      */
     public function canLocate($bundle)
     {
         $factory = $this->getFactory($bundle);
+
         return $factory->exists($bundle . self::FACADE_SUFFIX);
     }
+
 }

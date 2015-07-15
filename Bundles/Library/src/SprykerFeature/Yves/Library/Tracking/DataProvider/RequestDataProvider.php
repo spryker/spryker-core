@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -33,4 +34,5 @@ class RequestDataProvider extends AbstractDataProvider
         $request = ($this->app['request_stack']) ? $this->app['request_stack']->getCurrentRequest() : $this->app['request'];
         \Zend_Debug::dump($request, __CLASS__ . ' LINE: ' . __LINE__ . '<br/><br/>');die();
     }
+
 }

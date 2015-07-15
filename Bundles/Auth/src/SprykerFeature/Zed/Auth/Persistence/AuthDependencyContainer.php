@@ -1,19 +1,20 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Auth\Persistence;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Zed\Ide\FactoryAutoCompletion\AuthPersistence;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 
-class AuthDependencyContainer extends AbstractDependencyContainer
+class AuthDependencyContainer extends AbstractPersistenceDependencyContainer
 {
 
     /**
      * @var AuthPersistence
      */
     protected $factory;
+
 }

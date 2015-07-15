@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
 class ShippingContainer extends AbstractContainer
 {
@@ -35,17 +36,18 @@ class ShippingContainer extends AbstractContainer
      */
     protected $shipping_city;
     /**
-     * ISO-3166 Subdivisions
-     * only necessary for country US or CA
+     * ISO-3166-2 Subdivisions
+     * only necessary for country US, CA, CN, JP, MX, BR, AR, ID, TH, IN
+     *
      * @var string
      */
     protected $shipping_state;
     /**
      * Country (ISO-3166)
+     *
      * @var string
      */
     protected $shipping_country;
-
 
     /**
      * @param string $shipping_city

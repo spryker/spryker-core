@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 
 class FrontendExporterQueryContainer extends AbstractQueryContainer
 {
+
     /**
      * @param string $type
      * @param \DateTime $lastExportedAt
@@ -29,9 +31,9 @@ class FrontendExporterQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyTouchQuery
-     *
      * @throws PropelException
+     *
+     * @return SpyTouchQuery
      */
     public function queryExportTypes()
     {
@@ -43,4 +45,5 @@ class FrontendExporterQueryContainer extends AbstractQueryContainer
 
         return $query;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContainerInterface
 {
+
     /**
      * @param int $id
      *
@@ -85,4 +87,5 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
 
         return $this;
     }
+
 }

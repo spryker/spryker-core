@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,8 +7,6 @@
 namespace Unit\SprykerFeature\Shared\Library\Currency;
 
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
-use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
-use SprykerFeature\Shared\Library\Filter\FilterChain;
 
 /**
  * @group Currency
@@ -40,4 +39,5 @@ class CurrencyManagerTest extends \PHPUnit_Framework_TestCase
         $result = $currencyManager->format($given, $includeSymbol);
         $this->assertSame($expected, $result);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,11 +11,12 @@ use Silex\ServiceProviderInterface;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use \SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
-use \SprykerFeature\Shared\Lumberjack\Code\Log\Types;
+use SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
+use SprykerFeature\Shared\Lumberjack\Code\Log\Types;
 
 class YvesLoggingServiceProvider implements ServiceProviderInterface
 {
+
     /**
      * Registers services on the given app.
      *
@@ -67,7 +69,7 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
         $lumberjack->addHttpUserAgent();
         $lumberjack->addField('params.post', $request->request->all());
         $lumberjack->addField('params.get', $request->query->all());
-        $lumberjack->send(Types::REQUEST, 'User '.$sessionId.' on /'.$route, $request->getMethod());
+        $lumberjack->send(Types::REQUEST, 'User ' . $sessionId . ' on /' . $route, $request->getMethod());
     }
 
     /**
@@ -80,7 +82,7 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
         $requestUri = $request->getRequestUri();
 
         $nr = \SprykerFeature_Shared_Library_NewRelic_Api::getInstance();
-        $nr ->setNameOfTransaction($transactionName)
+        $nr->setNameOfTransaction($transactionName)
             ->addCustomParameter('request_uri', $requestUri)
             ->addCustomParameter('host', $host);
 
@@ -88,4 +90,5 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
             $nr->markIgnoreTransaction();
         }
     }
+
 }

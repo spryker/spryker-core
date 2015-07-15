@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,4 +23,5 @@ class NoPayment extends AbstractCommand implements CommandByOrderInterface
     {
         return [];
     }
+
 }

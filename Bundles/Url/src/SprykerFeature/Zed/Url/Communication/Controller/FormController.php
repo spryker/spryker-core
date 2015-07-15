@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,8 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FormController extends AbstractController
 {
+
     /**
      * @todo finish in next PR
+     *
      * @param Request $request
      *
      * @return JsonResponse
@@ -42,6 +45,7 @@ class FormController extends AbstractController
 
     /**
      * @deprecated this is for test purpose
+     *
      * @param Request $request
      *
      * @return JsonResponse
@@ -53,4 +57,5 @@ class FormController extends AbstractController
 
         return $this->jsonResponse($form->renderData());
     }
+
 }

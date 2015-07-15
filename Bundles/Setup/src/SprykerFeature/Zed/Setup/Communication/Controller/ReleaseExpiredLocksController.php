@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,5 @@ class ReleaseExpiredLocksController extends AbstractController
         $releasedLocksCount = $this->facadeMisc->releaseExpiredLocks();
         \SprykerFeature_Zed_Library_Setup::renderAndExit('Released ' . $releasedLocksCount . ' expired locks.');
     }
-
 
 }

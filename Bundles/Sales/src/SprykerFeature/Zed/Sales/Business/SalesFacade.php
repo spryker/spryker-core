@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ class SalesFacade extends AbstractFacade
 
     /**
      * @deprecated
+     *
      * @param CommentTransfer $commentTransfer
      *
      * @return CommentTransfer
@@ -45,6 +47,7 @@ class SalesFacade extends AbstractFacade
 
     /**
      * @deprecated
+     *
      * @param int $orderItemId
      *
      * @return array
@@ -59,8 +62,9 @@ class SalesFacade extends AbstractFacade
 
     /**
      * @param int $orderItemId
+     *
      * @deprecated
-     * 
+     *
      * @return OrderItemsTransfer
      */
     public function getOrderItemById($orderItemId)
@@ -81,4 +85,5 @@ class SalesFacade extends AbstractFacade
             ->createOrderManager()
             ->saveOrder($transferOrder);
     }
+
 }

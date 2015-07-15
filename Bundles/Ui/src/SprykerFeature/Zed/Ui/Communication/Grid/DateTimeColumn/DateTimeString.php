@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Ui\Communication\Grid\DateTimeColumn;
 
-use \Carbon\Carbon;
+use Carbon\Carbon;
 use SprykerFeature\Zed\Ui\Business\Grid\DateTimeColumn\TimeRangeFormat\DayFormat;
 use SprykerFeature\Zed\Ui\Business\Grid\DateTimeColumn\TimeRangeFormat\MonthFormat;
 use SprykerFeature\Zed\Ui\Business\Grid\DateTimeColumn\TimeRangeFormat\YearFormat;
@@ -24,45 +25,44 @@ class DateTimeString extends FilterFormatAbstract
             'min' => 2000,
             'max' => 2100,
             'min_length' => 4,
-            'max_length' => 4
+            'max_length' => 4,
         ],
         'n' => [
             'min' => 1,
             'max' => 12,
             'min_length' => 1,
-            'max_length' => 2
+            'max_length' => 2,
         ],
         'm' => [
             'min' => 1,
             'max' => 12,
             'min_length' => 2,
             'max_length' => 2,
-            'zero_prefix' => true
+            'zero_prefix' => true,
         ],
         'j' => [
             'min' => 1,
             'max' => 31,
             'min_length' => 1,
-            'max_length' => 2
+            'max_length' => 2,
         ],
         'd' => [
             'min' => 1,
             'max' => 31,
             'min_length' => 2,
             'max_length' => 2,
-            'zero_prefix' => true
+            'zero_prefix' => true,
         ],
     ];
 
     /**
-     * @return null
      */
     public function getTimeRangeGenerator()
     {
         $format = $this->getUnambiguousFormat();
 
         if (!$format) {
-            return null;
+            return;
         }
 
         $carbonDate = Carbon::createFromFormat($format->getFormat(), $this->filterValue);
@@ -79,7 +79,7 @@ class DateTimeString extends FilterFormatAbstract
         $suggestions = [];
 
         $format = $this->getUnambiguousFormat();
-        if ($format && strlen($this->filterValue) == 4) {
+        if ($format && strlen($this->filterValue) === 4) {
             return [$this->filterValue];
         }
 
@@ -92,11 +92,11 @@ class DateTimeString extends FilterFormatAbstract
 
         foreach ($suggestedValues as $suggestionKey => $value) {
             foreach ($this->getFormats() as $format) {
-                if ($format->getFormat()[strlen($format->getFormat()) - 1] == '/') {
+                if ($format->getFormat()[strlen($format->getFormat()) - 1] === '/') {
                     continue;
                 }
 
-                if ($suggestionKey == $this->getFormatLetter($format->getFormat(), 0)) {
+                if ($suggestionKey === $this->getFormatLetter($format->getFormat(), 0)) {
                     $c = 1;
                     $suggestion = $value;
                     while ($this->getFormatLetter($format->getFormat(), $c)) {
@@ -150,23 +150,25 @@ class DateTimeString extends FilterFormatAbstract
             }
         }
 
-        return null;
+        return;
     }
 
     /**
      * @param $string
      * @param $format
+     *
      * @return bool
      */
     public static function isStringMatchingDateFormat($string, $format)
     {
         $dateTime = \DateTime::createFromFormat($format, $string);
 
-        return $dateTime && $dateTime->format($format) == $string;
+        return $dateTime && $dateTime->format($format) === $string;
     }
 
     /**
      * @param array $formatLetter
+     *
      * @return int|string
      */
     protected function generateFormatValue(array $formatLetter)
@@ -182,19 +184,20 @@ class DateTimeString extends FilterFormatAbstract
     /**
      * @param $value
      * @param array $formatLetter
+     *
      * @return null|string
      */
     protected function suggestValue($value, array $formatLetter)
     {
-        if ($value[0] == '0') {
+        if ($value[0] === '0') {
             if (isset($formatLetter['zero_prefix']) && $formatLetter['zero_prefix']) {
-                if (strlen($value) == 2) {
+                if (strlen($value) === 2) {
                     return $value;
-                } elseif (strlen($value) == 1) {
+                } elseif (strlen($value) === 1) {
                     return 0 . rand(1, 9);
                 }
             } else {
-                return null;
+                return;
             }
         }
 
@@ -203,11 +206,11 @@ class DateTimeString extends FilterFormatAbstract
                 $value = $value . '0';
             }
         } elseif (strlen($value) > $formatLetter['max_length']) {
-            return null;
+            return;
         }
 
         if ($value > $formatLetter['max'] || $value < $formatLetter['min']) {
-            return null;
+            return;
         }
 
         return $value;
@@ -216,7 +219,6 @@ class DateTimeString extends FilterFormatAbstract
     /**
      * @param string $format
      * @param int $position
-     * @return null
      */
     protected function getFormatLetter($format, $position)
     {
@@ -224,8 +226,7 @@ class DateTimeString extends FilterFormatAbstract
             return $format[0 + $position * 2];
         }
 
-        return null;
+        return;
     }
 
 }
-

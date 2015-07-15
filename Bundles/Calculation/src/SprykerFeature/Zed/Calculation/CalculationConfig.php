@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerFeature\Zed\Calculation;
 
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class CalculationConfig extends AbstractBundleConfig
@@ -42,4 +42,5 @@ class CalculationConfig extends AbstractBundleConfig
         return [
         ];
     }
+
 }

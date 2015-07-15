@@ -1,15 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder;
 
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderTrait;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
-
 class UrlKeyBuilder implements KeyBuilderInterface
 {
+
     use KeyBuilderTrait;
 
     /**
@@ -29,4 +28,5 @@ class UrlKeyBuilder implements KeyBuilderInterface
     {
         return 'url';
     }
+
 }

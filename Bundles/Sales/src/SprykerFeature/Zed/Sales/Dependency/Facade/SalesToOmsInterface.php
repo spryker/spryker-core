@@ -19,4 +19,5 @@ interface SalesToOmsInterface
      * @return SpyOmsOrderProcess
      */
     public function getProcessEntity($processName);
+
 }

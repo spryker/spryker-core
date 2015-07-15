@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,5 @@ class BundleNameFinder extends \SprykerEngine\Zed\Kernel\BundleNameFinder
             'BundleD',
         ];
     }
-
 
 }

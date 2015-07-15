@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,6 +26,7 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 class PageManager implements PageManagerInterface
 {
+
     /**
      * @var CmsQueryContainerInterface
      */
@@ -82,10 +84,11 @@ class PageManager implements PageManagerInterface
     /**
      * @param PageTransfer $page
      *
-     * @return PageTransfer
      * @throws MissingTemplateException
      * @throws MissingPageException
      * @throws PageExistsException
+     *
+     * @return PageTransfer
      */
     public function savePage(PageTransfer $page)
     {
@@ -101,10 +104,11 @@ class PageManager implements PageManagerInterface
     /**
      * @param PageTransfer $page
      *
-     * @return PageTransfer
      * @throws MissingTemplateException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return PageTransfer
      */
     protected function createPage(PageTransfer $page)
     {
@@ -123,10 +127,11 @@ class PageManager implements PageManagerInterface
     /**
      * @param PageTransfer $page
      *
-     * @return PageTransfer
      * @throws MissingPageException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return PageTransfer
      */
     protected function updatePage(PageTransfer $page)
     {
@@ -179,8 +184,9 @@ class PageManager implements PageManagerInterface
     /**
      * @param int $idPage
      *
-     * @return SpyCmsPage
      * @throws MissingPageException
+     *
+     * @return SpyCmsPage
      */
     public function getPageById($idPage)
     {
@@ -212,7 +218,8 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @var SpyCmsGlossaryKeyMapping[] $pageMappings
+     *
+     * @var SpyCmsGlossaryKeyMapping[]
      */
     public function touchPageActive(PageTransfer $page)
     {
@@ -228,8 +235,9 @@ class PageManager implements PageManagerInterface
      * @param PageTransfer $page
      * @param string $url
      *
-     * @return UrlTransfer
      * @throws UrlExistsException
+     *
+     * @return UrlTransfer
      */
     public function createPageUrl(PageTransfer $page, $url)
     {
@@ -249,4 +257,5 @@ class PageManager implements PageManagerInterface
 
         return $query->count() > 0;
     }
+
 }

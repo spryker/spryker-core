@@ -86,7 +86,7 @@
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr" required="false"/>
         <column name="first_name" required="false" size="100" type="VARCHAR"/>
         <column name="last_name" required="false" size="100" type="VARCHAR"/>
-        <column name="orderReference" type="VARCHAR" size="45" required="false"/>
+        <column name="order_reference" type="VARCHAR" size="45" required="false"/>
         <column name="grand_total" type="INTEGER" required="true"/>
         <column name="subtotal" type="INTEGER" required="true"/>
         <column name="is_test" type="BOOLEAN" required="true" default="false"/>
@@ -100,7 +100,7 @@
             <reference local="fk_sales_order_address_shipping" foreign="id_sales_order_address"/>
         </foreign-key>
         <unique>
-            <unique-column name="orderReference"/>
+            <unique-column name="order_reference"/>
         </unique>
     </table>
 

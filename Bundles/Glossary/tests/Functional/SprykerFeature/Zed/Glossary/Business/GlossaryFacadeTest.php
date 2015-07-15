@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryKeyQuery;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -128,4 +130,5 @@ class GlossaryFacadeTest extends Test
 
         $this->assertNotSame($variant1->getValue(), $variant2->getValue());
     }
+
 }

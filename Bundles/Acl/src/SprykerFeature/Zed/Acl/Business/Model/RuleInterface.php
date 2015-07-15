@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
-use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -15,6 +15,7 @@ use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 
 interface RuleInterface
 {
+
     /**
      * @param string $bundle
      * @param string $controller
@@ -22,16 +23,18 @@ interface RuleInterface
      * @param int $idRole
      * @param string $type
      *
-     * @return RuleTransfer
      * @throws RuleNotFoundException
+     *
+     * @return RuleTransfer
      */
     public function addRule($bundle, $controller, $action, $idRole, $type = 'allow');
 
     /**
      * @param RuleTransfer $data
      *
-     * @return RuleTransfer
      * @throws RuleNotFoundException
+     *
+     * @return RuleTransfer
      */
     public function save(RuleTransfer $data);
 
@@ -73,16 +76,18 @@ interface RuleInterface
     /**
      * @param int $id
      *
-     * @return RuleTransfer
      * @throws RuleNotFoundException
+     *
+     * @return RuleTransfer
      */
     public function getRuleById($id);
 
     /**
      * @param int $id
      *
-     * @return bool
      * @throws RuleNotFoundException
+     *
+     * @return bool
      */
     public function removeRuleById($id);
 
@@ -111,4 +116,5 @@ interface RuleInterface
      * @return bool
      */
     public function isAllowed(UserTransfer $user, $bundle, $controller, $action);
+
 }

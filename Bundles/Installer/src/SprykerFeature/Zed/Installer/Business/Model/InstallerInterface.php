@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ interface InstallerInterface
 {
 
     /**
-     * @return void
      */
     public function install();
 

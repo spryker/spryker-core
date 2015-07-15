@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use League\Csv\Reader;
 
 class CsvReader implements IteratorReaderInterface
 {
+
     /**
      * @var string
      */
@@ -39,8 +41,9 @@ class CsvReader implements IteratorReaderInterface
     /**
      * @param \SplFileInfo $file
      *
-     * @return \Iterator
      * @throws \FileNotFoundException
+     *
+     * @return \Iterator
      */
     public function getIteratorFromFile(\SplFileInfo $file)
     {
@@ -64,8 +67,9 @@ class CsvReader implements IteratorReaderInterface
     /**
      * @param \SplFileInfo $file
      *
-     * @return Reader
      * @throws \FileNotFoundException
+     *
+     * @return Reader
      */
     protected function getFileReader(\SplFileInfo $file)
     {
@@ -82,4 +86,5 @@ class CsvReader implements IteratorReaderInterface
 
         return $reader;
     }
+
 }

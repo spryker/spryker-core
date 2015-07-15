@@ -1,8 +1,8 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 interface SprykerFeature_Shared_Mail_Code_Messages
 {
 
@@ -17,4 +17,5 @@ interface SprykerFeature_Shared_Mail_Code_Messages
     const SUBJECT_PRODUCT_AVAILABLE = 'mail.subject.product.available';
     const SUBJECT_PAYMENT_FAILED = 'mail.subject.payment.failed';
     const SUBJECT_SHARE_WISHLIST = 'mail.subject.share.wishlist';
+
 }

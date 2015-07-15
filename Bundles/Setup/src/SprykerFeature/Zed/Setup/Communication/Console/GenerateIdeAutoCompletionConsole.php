@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,21 +18,23 @@ class GenerateIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate ide auto completion files, for all applications [ Sdk, Yves, Zed ]');
+        $this->setDescription('Generate ide auto completion files, for all applications [ Client, Yves, Zed ]');
     }
 
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->runDependingCommand(GenerateSdkIdeAutoCompletionConsole::COMMAND_NAME);
-        $this->info('Sdk-Files successfully created.', false);
+        $this->runDependingCommand(GenerateClientIdeAutoCompletionConsole::COMMAND_NAME);
+        $this->info('Client-Files successfully created.', false);
         $this->runDependingCommand(GenerateYvesIdeAutoCompletionConsole::COMMAND_NAME);
         $this->info('Yves-Files successfully created.', false);
         $this->runDependingCommand(GenerateZedIdeAutoCompletionConsole::COMMAND_NAME);
         $this->info('Zed-Files successfully created.', false);
     }
+
 }

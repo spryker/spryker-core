@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -31,4 +32,5 @@ interface GridPluginInterface extends StateContainerBeanInterface
      * @return mixed
      */
     public function specifyQuery(ModelCriteria $query);
+
 }

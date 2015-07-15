@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Shared\System\SystemConfig;
 
 /**
  * This class represents a store!
+ *
  * @see https://project-a.atlassian.net/wiki/display/YUZ/Store+concept
  */
 class Store
@@ -22,6 +24,7 @@ class Store
 
     /**
      * Name of the store = name of the area
+     *
      * @link  https://project-a.atlassian.net/wiki/display/SYSOP/Port+numbering
      *
      * @var string
@@ -30,37 +33,44 @@ class Store
 
     /**
      * List of all storeNames
+     *
      * @var array
      */
     protected $allStoreNames;
 
     /**
      * List of locales
+     *
      * @var array
      */
     protected $locales;
 
     /**
      * List of countries
+     *
      * @var array
      */
     protected $countries;
 
     /**
      * Examples: DE, PL
+     *
      * @var string
      */
     protected $currentCountry;
 
     /**
      * Examples: de_DE, pl_PL
+     *
      * @var string
      */
     protected $currentLocale;
 
     /**
      * Examples: EUR, PLN
+     *
      * @link http://en.wikipedia.org/wiki/ISO_4217
+     *
      * @var string
      */
     protected $currencyIsoCode;
@@ -120,8 +130,9 @@ class Store
     /**
      * @param string $currentStoreName
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     protected function getStoreSetup($currentStoreName)
     {
@@ -209,7 +220,7 @@ class Store
      */
     public function getInactiveStores()
     {
-        $inActiveStores = array();
+        $inActiveStores = [];
         foreach ($this->getAllowedStores() as $store) {
             if ($this->storeName !== $store) {
                 $inActiveStores[] = $store;
@@ -313,4 +324,5 @@ class Store
 
         return $prefix;
     }
+
 }

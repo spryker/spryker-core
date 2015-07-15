@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,4 +25,5 @@ class CmsExporterDependencyContainer extends AbstractDependencyContainer
             $this->getLocator()
         );
     }
+
 }

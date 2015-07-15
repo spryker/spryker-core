@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,8 +25,9 @@ class Config
     /**
      * @param string $key
      *
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public static function get($key)
     {
@@ -52,6 +54,7 @@ class Config
 
     /**
      * Loads config_default and config_local and merges them
+     *
      * @param null $environment
      */
     public static function init($environment = null)
@@ -65,32 +68,32 @@ class Config
 
         $config = new \ArrayObject();
 
-        /**
+        /*
          * e.g. config_default.php
          */
         self::buildConfig('default', $config);
 
-        /**
+        /*
          * e.g. config_default-production.php
          */
         self::buildConfig('default-' . $environment, $config);
 
-        /**
+        /*
          * e.g. config_default_DE.php
          */
         self::buildConfig('default_' . $storeName, $config);
 
-        /**
+        /*
          * e.g. config_default-production_DE.php
          */
         self::buildConfig('default-' . $environment . '_' . $storeName, $config);
 
-        /**
+        /*
          * e.g. config_local.php
          */
         self::buildConfig('local', $config);
 
-        /**
+        /*
          * e.g. config_local_DE.php
          */
         self::buildConfig('local_' . $storeName, $config);
@@ -100,6 +103,7 @@ class Config
 
     /**
      * @param $type
+     *
      * @return \ArrayObject
      */
     protected static function buildConfig($type = null, \ArrayObject $config)

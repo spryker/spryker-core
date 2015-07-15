@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -45,8 +46,9 @@ class TransferDefinitionBuilder extends AbstractDefinitionBuilder
     public function getDefinitions()
     {
         $definitions = $this->loader->getDefinitions();
-        $definitions = $this->merger->merge($definitions);;
+        $definitions = $this->merger->merge($definitions);
 
         return $this->buildDefinitions($definitions, $this->classDefinition);
     }
+
 }

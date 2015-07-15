@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,15 +16,17 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * Class DiscountsTest
+ *
  * @group DiscountTest
  * @group Calculation
- * @package PhpUnit\SprykerFeature\Zed\Calculation\Communication\Plugin
  */
 class DiscountsTest extends Test
 {
+
     const EXPENSE_1000 = 1000;
     const SALES_DISCOUNT_100 = 100;
     const SALES_DISCOUNT_50 = 50;
@@ -32,7 +35,6 @@ class DiscountsTest extends Test
 
     public function testDiscountShouldBeZeroForItemsAndExpensesWithoutAnyDiscount()
     {
-        $locator = $this->getLocator();
         $order = $this->getOrderWithFixtureData();
 
         $item = $this->getItemWithFixtureData();
@@ -42,11 +44,11 @@ class DiscountsTest extends Test
         $expense->setGrossPrice(self::EXPENSE_1000);
 
         $item->addExpense($expense);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $calculator = new DiscountTotalsCalculator(Locator::getInstance());
         $totals = new TotalsTransfer();
-        $calculator->recalculateTotals($totals, $order, $order->getItems());
+        $calculator->recalculateTotals($totals, $order, $order->getCalculableObject()->getItems());
 
         $this->assertEquals(0, $totals->getDiscount()->getTotalAmount());
         $this->assertCount(0, $totals->getDiscount()->getDiscountItems());
@@ -67,12 +69,12 @@ class DiscountsTest extends Test
         $discount->setAmount(self::SALES_DISCOUNT_100);
 
         $item->addDiscount($discount);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
         $totals = $this->getPriceTotals();
 
         $calculator = new DiscountTotalsCalculator(Locator::getInstance());
 
-        $calculator->recalculateTotals($totals, $order, $order->getItems());
+        $calculator->recalculateTotals($totals, $order, $order->getCalculableObject()->getItems());
 
         $this->assertEquals(self::SALES_DISCOUNT_100, $totals->getDiscount()->getTotalAmount());
         $this->assertCount(1, $totals->getDiscount()->getDiscountItems());
@@ -102,11 +104,11 @@ class DiscountsTest extends Test
         $discount->setDisplayName(self::DISCOUNT_DISPLAY_NAME);
         $discount->setAmount(self::SALES_DISCOUNT_100);
         $item->addDiscount($discount);
-        $order->addItem($item);
+        $order->getCalculableObject()->addItem($item);
 
         $totals = $this->getPriceTotals();
         $calculator = new DiscountTotalsCalculator(Locator::getInstance());
-        $calculator->recalculateTotals($totals, $order, $order->getItems());
+        $calculator->recalculateTotals($totals, $order, $order->getCalculableObject()->getItems());
 
         $this->assertEquals(
             self::SALES_DISCOUNT_50 + self::SALES_DISCOUNT_100,
@@ -120,11 +122,11 @@ class DiscountsTest extends Test
     }
 
     /**
-     * @return OrderTransfer
+     * @return CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
-        return new OrderTransfer();
+        return new CalculableContainer(new OrderTransfer());
     }
 
     /**
@@ -166,4 +168,5 @@ class DiscountsTest extends Test
     {
         return Locator::getInstance();
     }
+
 }

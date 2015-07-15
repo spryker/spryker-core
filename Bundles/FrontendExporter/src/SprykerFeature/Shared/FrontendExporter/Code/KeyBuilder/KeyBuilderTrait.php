@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerEngine\Shared\Kernel\Store;
 
 trait KeyBuilderTrait
 {
+
     /**
      * @var string
      */
@@ -26,12 +28,11 @@ trait KeyBuilderTrait
             Store::getInstance()->getStoreName(),
             $localeName,
             $this->getBundleName(),
-            $this->buildKey($data)
+            $this->buildKey($data),
         ];
 
         return $this->escapeKey(implode($this->keySeparator, $keyParts));
     }
-
 
     /**
      * @param string $key
@@ -40,7 +41,7 @@ trait KeyBuilderTrait
      */
     protected function escapeKey($key)
     {
-        $charsToReplace = array('"', "'", ' ', "\0", "\n", "\r");
+        $charsToReplace = ['"', "'", ' ', "\0", "\n", "\r"];
 
         return str_replace($charsToReplace, '-', mb_strtolower(trim($key)));
     }
@@ -56,4 +57,5 @@ trait KeyBuilderTrait
      * @return string
      */
     abstract public function getBundleName();
+
 }

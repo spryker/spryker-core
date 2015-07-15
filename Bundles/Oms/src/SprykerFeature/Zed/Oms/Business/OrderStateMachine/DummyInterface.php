@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 interface DummyInterface
 {
+
     /**
      * @param string $processName
      *
@@ -20,4 +22,5 @@ interface DummyInterface
      * @return array
      */
     public function getOrderItems($processName);
+
 }

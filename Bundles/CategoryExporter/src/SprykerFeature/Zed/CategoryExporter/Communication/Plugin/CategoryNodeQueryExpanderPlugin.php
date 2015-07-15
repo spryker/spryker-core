@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -46,4 +47,5 @@ class CategoryNodeQueryExpanderPlugin extends AbstractPlugin implements QueryExp
     {
         return 100;
     }
+
 }
