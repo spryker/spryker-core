@@ -76,12 +76,14 @@
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
                 <h2>{% block section_title %}{{ section_title | default('Section Title') }}{% endblock %}</h2>
+                {% block breadcrumb_body %}
                 <ol class="breadcrumb">
                     <li>
                         <a href="/">{{ 'Dashboard' | trans }}</a>
                     </li>
                     {% block breadcrumb %}{% endblock %}
                 </ol>
+                {% endblock %}
             </div>
             <div class="col-lg-2">
 
@@ -105,23 +107,7 @@
 
 
 {% block footer_js %}
-<!-- Mainly scripts -->
-{#<script src="/bundles/Gui/scripts/jquery-2.1.1.js"></script>#}
-{#<script src="/bundles/Gui/scripts/bootstrap.min.js"></script>#}
-{#<script src="/bundles/Gui/scripts/plugins/metisMenu/jquery.metisMenu.js"></script>#}
-{#<script src="/bundles/Gui/scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>#}
-
-<!-- FooTable -->
-{#<script src="/bundles/Gui/scripts/plugins/footable/footable.all.min.js"></script>#}
-
-<!-- Custom and plugin javascript -->
 <script src="/bundles/Gui/scripts/resources.min.js"></script>
-<script src="/bundles/Gui/scripts/bundle.js"></script>
-<script src="/bundles/Gui/scripts/plugins/dataTables/jquery.dataTables.js"></script>
-<script src="/bundles/Gui/scripts/plugins/dataTables/dataTables.bootstrap.js"></script>
-<script src="/bundles/Gui/scripts/plugins/dataTables/dataTables.responsive.js"></script>
-<script src="/bundles/Gui/scripts/plugins/dataTables/dataTables.tableTools.min.js"></script>
-{#<script src="/bundles/Gui/scripts/plugins/pace/pace.min.js"></script>#}
 {% endblock %}
 
 </body>
