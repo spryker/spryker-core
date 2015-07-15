@@ -119,7 +119,7 @@
         <column name="tax_percentage" type="DECIMAL" size="8" scale="4" required="false"/>
         <column name="variety" type="CHAR" sqlType="ENUM('Single','Config','Simple','Bundle')" required="true" />
         <column name="ean" type="VARCHAR" size="32" required="true" default="" description="/Internation Article Number (13 digits)/"/>
-        <column name="qty" type="INTEGER" size="11" unsigned="true" default="1" required="true" description="/Quantity ordered for item/"/>
+        <column name="quantity" type="INTEGER" size="11" unsigned="true" default="1" required="true" description="/Quantity ordered for item/"/>
 
         <behavior name="timestampable"/>
 

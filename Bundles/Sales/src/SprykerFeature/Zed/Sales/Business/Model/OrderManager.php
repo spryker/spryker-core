@@ -81,7 +81,7 @@ class OrderManager
             $itemEntity->setGrossPrice($item->getGrossPrice());
             $itemEntity->setPriceToPay($item->getPriceToPay());
             $itemEntity->setFkOmsOrderProcess($fkOrderProcess);
-            $itemEntity->setQty(!is_null($item->getQuantity()) ? $item->getQuantity() : 1);
+            $itemEntity->setQuantity(!is_null($item->getQuantity()) ? $item->getQuantity() : 1);
 
             $itemEntity->save();
             $item->setIdSalesOrderItem($itemEntity->getIdSalesOrderItem());

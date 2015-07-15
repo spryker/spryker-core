@@ -245,7 +245,7 @@ class SalesFacadeTest extends Test
         $this->assertSame($item1->getSku(), $item1Entity->getSku());
         $this->assertSame($item1->getGrossPrice(), $item1Entity->getGrossPrice());
         $this->assertSame($item1->getPriceToPay(), $item1Entity->getPriceToPay());
-        $this->assertSame($item1->getQuantity(), $item1Entity->getQty());
+        $this->assertSame($item1->getQuantity(), $item1Entity->getQuantity());
 
         $this->assertSame($item2->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
         $this->assertSame($item2->getName(), $item2Entity->getName());
@@ -254,7 +254,7 @@ class SalesFacadeTest extends Test
         $this->assertSame($item2->getSku(), $item2Entity->getSku());
         $this->assertSame($item2->getGrossPrice(), $item2Entity->getGrossPrice());
         $this->assertSame($item2->getPriceToPay(), $item2Entity->getPriceToPay());
-        $this->assertSame($item2->getQuantity(), $item2Entity->getQty());
+        $this->assertSame($item2->getQuantity(), $item2Entity->getQuantity());
     }
 
     public function testSaveOrderAttachesProcessToItem()

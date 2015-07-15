@@ -27,7 +27,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('This Command will generate the bundle ide auto completion interface for the Client.');
+        $this->setDescription('Generate the bundle ide auto completion interface for the Client.');
     }
 
     /**
