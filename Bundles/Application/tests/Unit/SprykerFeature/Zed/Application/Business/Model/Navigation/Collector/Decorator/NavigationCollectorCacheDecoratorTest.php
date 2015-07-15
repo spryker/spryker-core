@@ -48,6 +48,7 @@ class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
             $navigationCollectorCacheDecorator->getNavigation()
         );
     }
+
     public function testIfCacheIsEnabledGetNavigationMustReturnNavigationFromCache()
     {
         $navigationCacheMock = $this->getMock(
@@ -78,4 +79,5 @@ class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
             $navigationCollectorCacheDecorator->getNavigation()
         );
     }
+    
 }

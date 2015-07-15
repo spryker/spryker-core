@@ -40,4 +40,5 @@ class NavigationCacheBuilderTest extends \PHPUnit_Framework_TestCase
         $navigationCacheBuilder = new NavigationCacheBuilder($navigationCollectorMock, $navigationCacheMock);
         $navigationCacheBuilder->writeNavigationCache();
     }
+
 }

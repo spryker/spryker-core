@@ -22,4 +22,5 @@ interface NavigationCacheInterface
      * @return array
      */
     public function getNavigation();
+
 }
