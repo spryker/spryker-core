@@ -34,7 +34,7 @@ class DetailsController extends AbstractController
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
         $allEvents = $this->groupEvents($events);
         $expenses = $this->getQueryContainer()->querySalesExpensesByOrderId($idOrder)->find();
-        $payments = [];
+        //$payments = [];
 
         return [
             'idOrder' => $idOrder,
@@ -43,7 +43,8 @@ class DetailsController extends AbstractController
             'events' => $events,
             'allEvents' => $allEvents,
             'expenses' => $expenses,
-            'payments' => $payments,
+            // @todo include in new PR
+            //'payments' => $payments,
         ];
     }
 
