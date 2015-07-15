@@ -76,16 +76,16 @@ class DataImportWriter implements DataImportWriterInterface
                 ->setImportKey($importKeyProductOptionType);
         }
 
-        $this->createOrUpdateOptionTypeTranslations($productOptionTypeEntity, $localizedNames);
-
         $productOptionTypeEntity->save();
+
+        $this->createOrUpdateOptionTypeTranslations($productOptionTypeEntity, $localizedNames);
 
         $associatedAbstractProductIds = $this->queryContainer
             ->queryAssociatedAbstractProductIdsForProductOptionType($productOptionTypeEntity->getIdProductOptionType())
             ->find();
 
         foreach ($associatedAbstractProductIds as $idAbstractProduct) {
-            $this->productFacade->touchProductActive($idAbstractProduct);
+            $this->touchAbstractProductById($idAbstractProduct);
         }
 
         return $productOptionTypeEntity->getIdProductOptionType();
@@ -95,7 +95,7 @@ class DataImportWriter implements DataImportWriterInterface
      * @param SpyProductOptionType $productOptionTypeEntity
      * @param array $localizedNames
      */
-    private function createOrUpdateOptionTypeTranslations(SpyProductOptionType $productOptionTypeEntity, array $localizedNames)
+    protected function createOrUpdateOptionTypeTranslations(SpyProductOptionType $productOptionTypeEntity, array $localizedNames)
     {
         foreach ($localizedNames as $localeName => $localizedOptionTypeName) {
 
@@ -162,16 +162,16 @@ class DataImportWriter implements DataImportWriterInterface
             $productOptionValueEntity->setSpyProductOptionValuePrice($priceEntity);
         }
 
-        $this->createOrUpdateOptionValueTranslations($productOptionValueEntity, $localizedNames);
-
         $productOptionValueEntity->save();
+
+        $this->createOrUpdateOptionValueTranslations($productOptionValueEntity, $localizedNames);
 
         $associatedAbstractProductIds = $this->queryContainer
             ->queryAssociatedAbstractProductIdsForProductOptionValue($productOptionValueEntity->getIdProductOptionValue())
             ->find();
 
         foreach ($associatedAbstractProductIds as $idAbstractProduct) {
-            $this->productFacade->touchProductActive($idAbstractProduct);
+            $this->touchAbstractProductById($idAbstractProduct);
         }
 
         return $productOptionValueEntity->getIdProductOptionValue();
@@ -181,7 +181,7 @@ class DataImportWriter implements DataImportWriterInterface
      * @param SpyProductOptionValue $productOptionValueEntity
      * @param array $localizedNames
      */
-    private function createOrUpdateOptionValueTranslations(SpyProductOptionValue $productOptionValueEntity, array $localizedNames)
+    protected function createOrUpdateOptionValueTranslations(SpyProductOptionValue $productOptionValueEntity, array $localizedNames)
     {
         foreach ($localizedNames as $localeName => $localizedOptionValueName) {
 
@@ -248,7 +248,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->setSequence($sequence)
             ->save();
 
-        $this->touchAbstractProduct($sku);
+        $this->touchAbstractProductByConcreteSku($sku);
 
         return $productOptionTypeUsageEntity->getIdProductOptionTypeUsage();
     }
@@ -305,7 +305,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage)
             ->findOne();
 
-        $this->productFacade->touchProductActive($idAbstractProduct);
+        $this->touchAbstractProductById($idAbstractProduct);
 
         return $productOptionValueUsageEntity->getIdProductOptionValueUsage();
     }
@@ -374,7 +374,7 @@ class DataImportWriter implements DataImportWriterInterface
 
         $optionTypeExclusionEntity->save();
 
-        $this->touchAbstractProduct($sku);
+        $this->touchAbstractProductByConcreteSku($sku);
     }
 
     /**
@@ -440,7 +440,7 @@ class DataImportWriter implements DataImportWriterInterface
 
         $optionValueConstraintEntity->save();
 
-        $this->touchAbstractProduct($sku);
+        $this->touchAbstractProductByConcreteSku($sku);
      }
 
     /**
@@ -503,12 +503,22 @@ class DataImportWriter implements DataImportWriterInterface
 
         $presetConfig->save();
 
-        $this->touchAbstractProduct($sku);
+        $this->touchAbstractProductByConcreteSku($sku);
 
         return $presetConfig->getIdProductOptionConfigurationPreset();
     }
 
-    protected function touchAbstractProduct($concreteSku)
+    public function flushBuffer()
+    {
+        // not implemented
+    }
+
+    protected function touchAbstractProductById($idAbstractProduct)
+    {
+        $this->productFacade->touchProductActive($idAbstractProduct);
+    }
+
+    protected function touchAbstractProductByConcreteSku($concreteSku)
     {
         $idAbstractProduct = $this->productFacade->getAbstractProductIdByConcreteSku($concreteSku);
         $this->productFacade->touchProductActive($idAbstractProduct);
