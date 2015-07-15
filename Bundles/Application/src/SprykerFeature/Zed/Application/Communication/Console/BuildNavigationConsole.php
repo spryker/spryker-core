@@ -37,6 +37,7 @@ class BuildNavigationConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->getMessenger()->info('Build navigation cache');
         $this->getFacade()->buildNavigationCache();
     }
 
