@@ -33,6 +33,7 @@
         <property name="quantity" type="int" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
+        <property name="totalPrice" type="int" />
         <property name="taxSet" type="TaxSet" />
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="discounts" type="Discount[]"  singular="discount" />

@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Cart\Business\Operator\OperatorInterface;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Zed\Cart\CartConfig;
 use SprykerFeature\Zed\Cart\CartDependencyProvider;
+use SprykerFeature\Zed\Cart\Business\Model;
 
 /**
  * @method CartBusiness getFactory()
@@ -106,11 +107,21 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $bundleConfig = $this->getConfig();
 
-        foreach ($bundleConfig->getCartItemPlugins() as $itemExpanderPlugin) {
+        foreach ($bundleConfig->getItemExpanderPlugins() as $itemExpanderPlugin) {
             $operator->addItemExpanderPlugin($itemExpanderPlugin);
         }
 
         return $operator;
+    }
+
+    /**
+     * @return Model\CartGrouping\KeyBuilder
+     */
+    public function createCartGroupingKeyBuilder()
+    {
+        $bundleConfig = $this->getConfig();
+
+        return $this->getFactory()->createModelCartGroupingKeyBuilder($bundleConfig->getKeyBuilderPlugins());
     }
 
 }

@@ -8,7 +8,9 @@ namespace SprykerFeature\Zed\Cart\Business;
 
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\CartItemTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+
 
 /**
  * @method CartDependencyContainer getDependencyContainer()
@@ -74,6 +76,18 @@ class CartFacade extends AbstractFacade
         $calculator = $this->getDependencyContainer()->createCartCalculator();
 
         return $calculator->recalculate($cart);
+    }
+
+    /**
+     * @param CartItemTransfer $cartItem
+     *
+     * @return string
+     */
+    public function buildGroupKey(CartItemTransfer $cartItem)
+    {
+        $keyBuilder = $this->getDependencyContainer()->createCartGroupingKeyBuilder();
+
+        return $keyBuilder->build($cartItem);
     }
 
 }

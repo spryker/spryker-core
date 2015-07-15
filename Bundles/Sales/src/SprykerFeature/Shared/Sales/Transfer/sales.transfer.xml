@@ -79,7 +79,6 @@
         <property name="fkOmsOrderItemStatus" type="int" />
         <property name="name" type="string" />
         <property name="sku" type="string" />
-        <property name="uniqueIdentifier" type="string" />
         <property name="groupKey" type="string"/>
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />

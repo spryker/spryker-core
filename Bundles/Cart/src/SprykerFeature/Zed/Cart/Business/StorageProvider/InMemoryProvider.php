@@ -32,8 +32,8 @@ class InMemoryProvider implements StorageProviderInterface
                 );
             }
 
-            if (isset($skuIndex[$item->getSku()])) {
-                $existingItem = $existingItems->offsetGet($skuIndex[$item->getSku()]);
+            if (isset($skuIndex[$item->getGroupKey()])) {
+                $existingItem = $existingItems->offsetGet($skuIndex[$item->getGroupKey()]);
                 $existingItem->setQuantity($existingItem->getQuantity() + $item->getQuantity());
             } else {
                 $existingItems->append($item);
@@ -118,7 +118,7 @@ class InMemoryProvider implements StorageProviderInterface
         $skuIndex = [];
 
         foreach ($cartItems as $key => $cartItem) {
-            $skuIndex[$cartItem->getSku()] = $key;
+            $skuIndex[$cartItem->getGroupKey()] = $key;
         }
 
         return $skuIndex;

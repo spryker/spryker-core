@@ -120,6 +120,7 @@
         <column name="variety" type="CHAR" sqlType="ENUM('Single','Config','Simple','Bundle')" required="true" />
         <column name="ean" type="VARCHAR" size="32" required="true" default="" description="/Internation Article Number (13 digits)/"/>
         <column name="quantity" type="INTEGER" size="11" unsigned="true" default="1" required="true" description="/Quantity ordered for item/"/>
+        <column name="group_key" type="VARCHAR" size="255" required="false" description="/Grouping key used to split order items to separate quantity buckets/"/>
 
         <behavior name="timestampable"/>
 
@@ -204,7 +205,6 @@
             <reference local="fk_sales_order" foreign="id_sales_order"/>
         </foreign-key>
         <unique>
-            <unique-column name="fk_sales_order_item"/>
             <unique-column name="fk_sales_order"/>
             <unique-column name="type"/>
         </unique>
