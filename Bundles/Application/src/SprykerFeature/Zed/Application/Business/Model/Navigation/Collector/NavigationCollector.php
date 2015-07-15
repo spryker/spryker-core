@@ -19,24 +19,17 @@ class NavigationCollector implements NavigationCollectorInterface
     private $navigationSchemaFinder;
 
     /**
-     * @var NavigationCacheInterface
-     */
-    private $navigationCache;
-
-    /**
      * @var string
      */
     private $rootNavigationFile;
 
     /**
      * @param NavigationSchemaFinderInterface $navigationSchemaFinder
-     * @param NavigationCacheInterface $navigationCache
      * @param string $rootNavigationFile
      */
-    public function __construct(NavigationSchemaFinderInterface $navigationSchemaFinder, NavigationCacheInterface $navigationCache, $rootNavigationFile)
+    public function __construct(NavigationSchemaFinderInterface $navigationSchemaFinder, $rootNavigationFile)
     {
         $this->navigationSchemaFinder = $navigationSchemaFinder;
-        $this->navigationCache = $navigationCache;
         $this->rootNavigationFile = $rootNavigationFile;
     }
 

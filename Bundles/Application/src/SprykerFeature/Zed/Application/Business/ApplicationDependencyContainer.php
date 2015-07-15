@@ -16,6 +16,8 @@ use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\ExportKey
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\ExportSearch;
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\InstallDemoData;
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollector;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Extractor\PathExtractor;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
@@ -146,6 +148,17 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
+     * @return NavigationCacheBuilder
+     */
+    public function createNavigationCacheBuilder()
+    {
+        return $this->getFactory()->createModelNavigationCacheNavigationCacheBuilder(
+            $this->createNavigationCollector(),
+            $this->createNavigationCache()
+        );
+    }
+
+    /**
      * @return MenuFormatter
      */
     protected function createMenuFormatter()
@@ -215,6 +228,17 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
         $maxMenuCount = $this->getConfig()->getMaxMenuLevelCount();
 
         return $this->getFactory()->createModelNavigationValidatorMenuLevelValidator($maxMenuCount);
+    }
+
+    /**
+     * @return NavigationCache
+     */
+    private function createNavigationCache()
+    {
+        return $this->getFactory()->createModelNavigationCacheNavigationCache(
+            $this->getConfig()->getCacheFile(),
+            $this->getConfig()->isNavigationCacheEnabled()
+        );
     }
 
 }

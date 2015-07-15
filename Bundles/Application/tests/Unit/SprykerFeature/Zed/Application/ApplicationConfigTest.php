@@ -27,6 +27,11 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
         return Locator::getInstance();
     }
 
+    public function testGetCheckStepsShouldReturnArray()
+    {
+        $this->assertInternalType('array', $this->getConfig()->getCheckSteps());
+    }
+
     public function testGetMaxMenuLevelCountShouldReturnInteger()
     {
         $this->assertInternalType('integer', $this->getConfig()->getMaxMenuLevelCount());
@@ -52,6 +57,11 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
     public function testGetCacheFileShouldReturnString()
     {
         $this->assertInternalType('string', $this->getConfig()->getCacheFile());
+    }
+
+    public function testIsNavigationCacheEnabledShouldReturnBool()
+    {
+        $this->assertInternalType('bool', $this->getConfig()->isNavigationCacheEnabled());
     }
 
 }

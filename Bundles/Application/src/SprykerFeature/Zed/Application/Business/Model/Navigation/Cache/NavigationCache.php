@@ -40,7 +40,7 @@ class NavigationCache implements NavigationCacheInterface
     /**
      * @param array $navigation
      */
-    public function set(array $navigation)
+    public function setNavigation(array $navigation)
     {
         file_put_contents($this->cacheFile, serialize($navigation));
     }
@@ -48,7 +48,7 @@ class NavigationCache implements NavigationCacheInterface
     /**
      * @return array
      */
-    public function get()
+    public function getNavigation()
     {
         return unserialize(file_get_contents($this->cacheFile));
     }

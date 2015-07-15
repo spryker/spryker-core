@@ -16,10 +16,10 @@ interface NavigationCacheInterface
     /**
      * @param array $navigation
      */
-    public function set(array $navigation);
+    public function setNavigation(array $navigation);
 
     /**
      * @return array
      */
-    public function get();
+    public function getNavigation();
 }

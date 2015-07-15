@@ -77,7 +77,7 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($navigationCache->isEnabled());
 
         $navigationData = ['foo' => 'bar'];
-        $navigationCache->set($navigationData);
+        $navigationCache->setNavigation($navigationData);
 
         $this->assertTrue($navigationCache->isEnabled());
     }
@@ -89,9 +89,9 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
 
         $navigationCache = new NavigationCache($cacheFile, $isEnabled);
         $navigationData = ['foo' => 'bar'];
-        $navigationCache->set($navigationData);
+        $navigationCache->setNavigation($navigationData);
 
-        $cachedNavigationData = $navigationCache->get();
+        $cachedNavigationData = $navigationCache->getNavigation();
         $this->assertSame($navigationData, $cachedNavigationData);
     }
 
