@@ -19,9 +19,25 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $grid = $this->getDependencyContainer()->getSalesGrid($request);
+        $table = $this->getDependencyContainer()->createOrdersTable();
+        $table->init();
 
-        return $grid->renderData();
+        return $this->viewResponse([
+            'orders' => $table,
+        ]);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()->createOrdersTable();
+        $table->init();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
     }
 
 }

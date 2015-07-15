@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Zed\Sales\Communication\Grid\CommentsGrid;
 use SprykerFeature\Zed\Sales\Communication\Grid\OrderItemsGrid;
 use SprykerFeature\Zed\Sales\Communication\Grid\SalesGrid;
+use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -74,6 +75,17 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getFactory()->createGridOrderItemsGrid(
             $this->getQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder));
+    }
+
+    public function createOrdersTable()
+    {
+        $orderQuery = $this->getQueryContainer()->querySalesOrder();
+        $orderQuery = SpySalesOrderQuery::create();
+        $orderQuery->select('*');
+
+        var_dump($orderQuery->toString());
+
+        return $this->getFactory()->createTableOrdersTable($orderQuery);
     }
 
 }
