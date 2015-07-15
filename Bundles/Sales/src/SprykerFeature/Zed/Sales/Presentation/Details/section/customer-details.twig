@@ -24,7 +24,7 @@
         <div class="fix-height">
             {{ shippingAddress.firstName }} {{ shippingAddress.lastName }}<br>
             {{ shippingAddress.address1 ~ ' ' ~ shippingAddress.address2 ~ ' ' ~ shippingAddress.address3 }}<br>
-            {{ shippingAddress.city }} {{ shippingAddress.zipCode }}
+            {{ shippingAddress.zipCode }} {{ shippingAddress.city }}
         </div>
         {% include '@Gui/Partials/Table/footer.twig' %}
     </div>
@@ -33,7 +33,7 @@
         <div class="fix-height">
             {{ billingAddress.firstName }} {{ billingAddress.lastName }}<br>
             {{ billingAddress.address1 ~ ' ' ~ billingAddress.address2 ~ ' ' ~ billingAddress.address3 }}<br>
-            {{ billingAddress.city }} {{ billingAddress.zipCode }}
+            {{ billingAddress.zipCode }} {{ billingAddress.city }}
         </div>
         {% include '@Gui/Partials/Table/footer.twig' %}
     </div>
