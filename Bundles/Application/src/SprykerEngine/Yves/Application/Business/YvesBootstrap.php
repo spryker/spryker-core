@@ -48,9 +48,7 @@ abstract class YvesBootstrap extends Bootstrap
      */
     protected function getTwigExtensions(SharedApplication $app)
     {
-        $locator = $this->getLocator();
-
-        $yvesExtension = $locator->twig()->pluginTwigYves();
+        $yvesExtension = $this->getLocator($app)->twig()->pluginTwigYves();
 
         return [
             $yvesExtension->getTwigYvesExtension($app),
@@ -68,11 +66,13 @@ abstract class YvesBootstrap extends Bootstrap
     }
 
     /**
+     * @param Application $app
+     *
      * @return AutoCompletion
      */
-    private function getLocator()
+    protected function getLocator(Application $app)
     {
-        return Locator::getInstance();
+        return $app['locator'];
     }
 
 }
