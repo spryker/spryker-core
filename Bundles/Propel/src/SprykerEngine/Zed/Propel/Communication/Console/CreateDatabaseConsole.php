@@ -28,11 +28,29 @@ class CreateDatabaseConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
+     *
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Postgresql database has to be created beforehand');
+
+        $this->info('Creating Database');
+        if(Config::get(SystemConfig::ZED_DB_ENGINE) == 'pgsql') {
+            $this->info('!! Postgresql database has to be created beforehand');
+            return;
+        }
+
+
+        $con = new \PDO(
+            Config::get(SystemConfig::ZED_DB_ENGINE)
+            . ':host='
+            . Config::get(SystemConfig::ZED_DB_HOST)
+            . ';port=' . Config::get(SystemConfig::ZED_DB_PORT),
+            Config::get(SystemConfig::ZED_DB_USERNAME),
+            Config::get(SystemConfig::ZED_DB_PASSWORD)
+        );
+        $q = 'CREATE DATABASE IF NOT EXISTS ' . Config::get(SystemConfig::ZED_DB_DATABASE) . ' CHARACTER SET "utf8"';
+        $con->exec($q);
     }
 
 }
