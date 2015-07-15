@@ -1,22 +1,40 @@
 <div class="row">
     <div class="col-md-4">
         {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Customer Data' } %}
-
-        <table class="footable table table-stripped toggle-arrow-tiny">
-            <tr>
-                <td>Customer ID:</td>
-                <td>{{ orderDetails.fkCustomer }}</td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-                <td>{{ orderDetails.email }}</td>
-            </tr>
-            <tr>
-                <td>Name:</td>
-                <td>{{ orderDetails.firstName ~ ' ' ~ orderDetails.lastName }}</td>
-            </tr>
-        </table>
-
+        <div class="fix-height">
+            <table class="footable table table-stripped toggle-arrow-tiny">
+                <tr>
+                    <td>Customer ID:</td>
+                    <td>{{ orderDetails.fkCustomer }}</td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>{{ orderDetails.email }}</td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td>{{ orderDetails.firstName ~ ' ' ~ orderDetails.lastName }}</td>
+                </tr>
+            </table>
+        </div>
+        {% include '@Gui/Partials/Table/footer.twig' %}
+    </div>
+    <div class="col-md-4">
+        {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Shipping Address' } %}
+        <div class="fix-height">
+            {{ shippingAddress.firstName }} {{ shippingAddress.lastName }}<br>
+            {{ shippingAddress.address1 ~ ' ' ~ shippingAddress.address2 ~ ' ' ~ shippingAddress.address3 }}<br>
+            {{ shippingAddress.city }} {{ shippingAddress.zipCode }}
+        </div>
+        {% include '@Gui/Partials/Table/footer.twig' %}
+    </div>
+    <div class="col-md-4">
+        {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Billing Address' } %}
+        <div class="fix-height">
+            {{ billingAddress.firstName }} {{ billingAddress.lastName }}<br>
+            {{ billingAddress.address1 ~ ' ' ~ billingAddress.address2 ~ ' ' ~ billingAddress.address3 }}<br>
+            {{ billingAddress.city }} {{ billingAddress.zipCode }}
+        </div>
         {% include '@Gui/Partials/Table/footer.twig' %}
     </div>
 </div>

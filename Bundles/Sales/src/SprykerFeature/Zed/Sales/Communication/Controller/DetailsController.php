@@ -29,12 +29,32 @@ class DetailsController extends AbstractController
     {
         $idOrder = $request->get('id-sales-order');
 
-        $orderEntity = $this->getQueryContainer()->querySalesOrderById($idOrder)->findOne();
-        $orderItems = $this->getQueryContainer()->querySalesOrderItemsWithState($idOrder)->find();
+        $orderEntity = $this->getQueryContainer()
+            ->querySalesOrderById($idOrder)
+            ->findOne()
+        ;
+        $orderItems = $this->getQueryContainer()
+            ->querySalesOrderItemsWithState($idOrder)
+            ->find()
+        ;
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
         $allEvents = $this->groupEvents($events);
-        $expenses = $this->getQueryContainer()->querySalesExpensesByOrderId($idOrder)->find();
-        //$payments = [];
+        $expenses = $this->getQueryContainer()
+            ->querySalesExpensesByOrderId($idOrder)
+            ->find()
+        ;
+        $shippingAddress = $this->getQueryContainer()
+            ->querySalesOrderAddressById($orderEntity->getFkSalesOrderAddressShipping())
+            ->findOne()
+        ;
+        if ($orderEntity->getFkSalesOrderAddressShipping() === $orderEntity->getFkSalesOrderAddressBilling()) {
+            $billingAddress = $shippingAddress;
+        } else {
+            $billingAddress = $this->getQueryContainer()
+                ->querySalesOrderAddressById($orderEntity->getFkSalesOrderAddressBilling())
+                ->findOne()
+            ;
+        }
 
         return [
             'idOrder' => $idOrder,
@@ -43,8 +63,8 @@ class DetailsController extends AbstractController
             'events' => $events,
             'allEvents' => $allEvents,
             'expenses' => $expenses,
-            // @todo include in new PR
-            //'payments' => $payments,
+            'billingAddress' => $billingAddress,
+            'shippingAddress' => $shippingAddress,
         ];
     }
 
