@@ -9,6 +9,11 @@ class TableConfiguration
 {
 
     /**
+     * @var
+     */
+    protected $url;
+
+    /**
      * @var array
      */
     private $headers;
@@ -22,11 +27,6 @@ class TableConfiguration
      * @var
      */
     private $pageLength;
-
-    /**
-     * @var
-     */
-    protected $url;
 
     /**
      * @return array
@@ -49,16 +49,6 @@ class TableConfiguration
     }
 
     /**
-     * @param array $array
-     *
-     * @return bool
-     */
-    private function isAssoc(array $array)
-    {
-        return array_keys($array) !== range(0, count($array) - 1);
-    }
-
-    /**
      * @return array
      */
     public function getSortable()
@@ -78,7 +68,7 @@ class TableConfiguration
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getPageLength()
     {
@@ -108,4 +98,15 @@ class TableConfiguration
     {
         $this->url = $url;
     }
+
+    /**
+     * @param array $array
+     *
+     * @return bool
+     */
+    private function isAssoc(array $array)
+    {
+        return array_keys($array) !== range(0, count($array) - 1);
+    }
+
 }

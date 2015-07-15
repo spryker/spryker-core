@@ -2,7 +2,7 @@
 {% for row in data %}
     <tr role="row">
         {% for id, value in row %}
-        <td id="{{ id ~ '-' ~ loop.index }}">{{ value }}</td>
+            <td id="{{ id ~ '-' ~ loop.index }}">{{ value }}</td>
         {%  endfor %}
     </tr>
 {%  endfor %}

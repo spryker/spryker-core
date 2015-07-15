@@ -7,139 +7,154 @@
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+
 use Symfony\Component\Validator\Constraints;
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Constraints\Length;
 
 class AddressForm extends AbstractForm
 {
+    /**
+     * @var SpyCustomerAddressQueryQuery
+     */
+    protected $customerAddressQuery;
 
-    public function addFormFields()
+    /**
+     * @param SpyCustomerQuery $customerQuery
+     */
+    public function __construct(SpyCustomerAddressQuery $customerAddressQuery)
     {
-        $this->addField('id_customer_address')
-            ->setConstraints([
-                new Constraints\Required([
-                    new Constraints\Type([
-                        'type' => 'int',
-                    ]),
-                ]),
-            ])
-        ;
+        $this->customerQuery = $customerAddressQuery;
+    }
 
-        $this->addField('fk_customer')
-            ->setConstraints([
-                new Constraints\Required([
-                    new Constraints\Type([
-                        'type' => 'int',
-                    ]),
-                ]),
-            ])
-        ;
+    /**
+     * @return $this
+     */
+    public function buildFormFields()
+    {
 
-        $this->addField('first_name')
-            ->setConstraints([
-                new Constraints\Required([
-                    new Constraints\Type([
-                        'type' => 'string',
-                    ]),
-                    new Constraints\NotBlank(),
-                ]),
-            ])
-        ;
-
-        $this->addField('last_name')
-            ->setConstraints([
-                new Constraints\Required([
-                    new Constraints\Type([
-                        'type' => 'string',
-                    ]),
-                    new Constraints\NotBlank(),
-                ]),
-            ])
-        ;
-
-        $this->addField('company')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-            ])
-        ;
-
-        $this->addField('address1')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-            ])
-        ;
-
-        $this->addField('address2')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-            ])
-        ;
-
-        $this->addField('zip_code')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-            ])
-        ;
-
-        $this->addField('city')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-                new Constraints\NotBlank(),
-            ])
-        ;
-
-        $this->addField('fk_country')
-            ->setAccepts($this->getCountryOptions())
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-                new Constraints\Choice([
-                    'choices' => array_column($this->getCountryOptions(), 'value'),
-                ]),
-            ])
-            ->setValueHook(function ($value) {
-                return $value ? (int) $value : null;
-            })
-        ;
-
-        $this->addField('state')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-            ])
-        ;
+        return $this->addHidden(
+                'id_customer_address',
+                []
+            )
+            ->addHidden(
+                'fk_customer',
+                []
+            )
+            ->addChoice(
+                'salutation',
+                [
+                    'label' => 'Salutation',
+                    'constraints' => []
+                ]
+            )
+            ->addText(
+                'first_name',
+                [
+                    'label' => 'First Name',
+                    'constraints' => [
+                        new Required(),
+                        new NotBlank(),
+                        new Length(['max' => 100])
+                    ]
+                ]
+            )
+            ->addText(
+                'last_name',
+                [
+                    'label' => 'Last Name',
+                    'constraints' => [
+                        new Required(),
+                        new NotBlank(),
+                        new Length(['max' => 100])
+                    ]
+                ]
+            )
+            ->addText(
+                'address1',
+                [
+                    'label' => 'Address line 1',
+                    'constraints' => [
+                    ]
+                ]
+            )
+            ->addText(
+                'address2',
+                [
+                    'label' => 'Address line 2',
+                    'constraints' => [
+                    ]
+                ]
+            )
+            ->addText(
+                'address3',
+                [
+                    'label' => 'Address line 3',
+                    'constraints' => [
+                    ]
+                ]
+            )
+            ->addText(
+                'company',
+                [
+                    'label' => 'Company',
+                    'constraints' => [
+                    ]
+                ]
+            )
+            ->addText(
+                'city',
+                [
+                    'label' => 'City',
+                    'constraints' => [
+                    ]
+                ]
+            )
+            ->addText(
+                'zip_code',
+                [
+                    'label' => 'Zip Code',
+                    'constraints' => [
+                        new Length(['max' => 15])
+                    ]
+                ]
+            )
+            ->addChoice(
+                'fk_country',
+                [
+                    'label' => 'Country',
+                    'constraints' => [
+                        'choices' => $this->getCountryOptions(),
+                    ]
+                ]
+            )
+            ->addText(
+                'phone',
+                [
+                    'label' => 'Phone',
+                ]
+            );
     }
 
     /**
      * @return array
      */
-    public function getDefaultData()
+    public function populateFormFields()
     {
-        $addressId = $this->stateContainer->getRequestValue('id_customer_address');
-        if (!$addressId) {
-            return [];
+        $result = [];
+
+        $idCustomerAddress = $this->request->get('id_customer_address');
+        if (false === is_null($idCustomerAddress)) {
+            $customerAddressDetailEntity = $this
+                ->customerAddressQuery
+                ->findOneByIdCustomerAddress($idCustomerAddress);
+
+            $result = $customerAddressDetailEntity->toArray();
         }
 
-        $addressTransfer = new CustomerAddressTransfer();
-        $addressTransfer->setIdCustomerAddress($addressId);
-        $addressTransfer = $this->getLocator()->customer()->facade()->getAddress($addressTransfer);
-        if ($addressTransfer) {
-            return $addressTransfer->toArray();
-        }
-
-        return [];
+        return $result;
     }
 
     /**
@@ -148,7 +163,7 @@ class AddressForm extends AbstractForm
     public function getCountryOptions()
     {
         return [
-            ['value' => '1', 'label' => 'Germany'],
+            [1 => 'Germany'],
         ];
     }
 

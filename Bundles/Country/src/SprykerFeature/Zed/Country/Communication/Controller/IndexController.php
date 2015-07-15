@@ -2,6 +2,7 @@
 namespace SprykerFeature\Zed\Country\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Country\Communication\Table\CountryTable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController extends AbstractController
@@ -11,6 +12,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
+        /** @var CountryTable $table */
         $table = $this->getDependencyContainer()->createCountryTable();
         $table->init();
 
