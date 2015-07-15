@@ -2,6 +2,8 @@
  * get the  highest height value of all elements and change them to be equal
  */
 (function($){
+    'use strict';
+
     $.fn.sprykerFixHeight = function(){
         var maxHeight = 0;
         this.each(function(){
