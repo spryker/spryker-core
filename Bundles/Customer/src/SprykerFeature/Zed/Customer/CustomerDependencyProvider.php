@@ -11,7 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    
+
     const REGISTRATION_TOKEN_SENDERS = 'Registration Token Senders';
     const PASSWORD_RESTORE_TOKEN_SENDERS = 'Password Restore TokenSenders';
     const PASSWORD_RESTORED_CONFIRMATION_SENDERS = 'Password RestoredConfirmation Senders';
@@ -28,6 +28,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * Overwrite in project
+     *
      * @param Container $container
      *
      * @return mixed[]
@@ -40,5 +41,5 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
             self::PASSWORD_RESTORED_CONFIRMATION_SENDERS => [],
         ];
     }
-    
+
 }

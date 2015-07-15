@@ -11,7 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class CustomerMailConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    
+
     const FACADE_MAIL = 'mail facade';
 
     /**

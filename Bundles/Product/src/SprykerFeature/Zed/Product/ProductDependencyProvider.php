@@ -37,5 +37,5 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-    
+
 }

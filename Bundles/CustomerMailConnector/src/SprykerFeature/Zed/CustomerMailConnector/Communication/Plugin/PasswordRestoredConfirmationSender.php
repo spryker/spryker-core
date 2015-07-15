@@ -34,7 +34,7 @@ class PasswordRestoredConfirmationSender extends AbstractSender implements Passw
         $mailTransfer->addRecipient($mailRecipientTransfer);
         $mailTransfer->setSubject(self::SUBJECT);
         $mailTransfer->setTemplateName(self::TEMPLATE);
-        $mailTransfer->setMerge(TRUE);
+        $mailTransfer->setMerge(true);
         $mailTransfer->setMergeLanguage('handlebars');
 
         $result = $this->getDependencyContainer()

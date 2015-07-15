@@ -113,7 +113,7 @@ class ZedClient
      */
     protected function isLoggingAllowed($pathInfo)
     {
-        return strpos($pathInfo, 'heartbeat');
+        return mb_strpos($pathInfo, 'heartbeat') !== false;
     }
 
     /**

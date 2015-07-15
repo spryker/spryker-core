@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Product\Business\Builder;
 
 class SimpleAttributeMergeBuilder
 {
+
     const PRODUCT_URLS = 'product_urls';
     const URL = 'url';
     const ABSTRACT_ATTRIBUTES = 'abstract_attributes';

@@ -35,10 +35,10 @@ class RegistrationTokenSender extends AbstractSender implements RegistrationToke
         $mailTransfer->addRecipient($mailRecipientTransfer);
         $mailTransfer->setSubject(self::SUBJECT);
         $mailTransfer->setTemplateName(self::TEMPLATE);
-        $mailTransfer->setMerge(TRUE);
+        $mailTransfer->setMerge(true);
         $mailTransfer->setMergeLanguage('handlebars');
         $globalMergeVars = [
-                'registration_token_url' => $token
+                'registration_token_url' => $token,
         ];
         $mailTransfer->setGlobalMergeVars($globalMergeVars);
 
