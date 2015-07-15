@@ -18,6 +18,7 @@ use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\InstallDe
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\Decorator\NavigationCollectorCacheDecorator;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollector;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Extractor\PathExtractor;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
@@ -141,7 +142,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
     public function createNavigationBuilder()
     {
         return $this->getFactory()->createModelNavigationNavigationBuilder(
-            $this->createNavigationCollector(),
+            $this->createCachedNavigationCollector(),
             $this->createMenuFormatter(),
             $this->createPathExtractor()
         );
@@ -238,6 +239,17 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getFactory()->createModelNavigationCacheNavigationCache(
             $this->getConfig()->getCacheFile(),
             $this->getConfig()->isNavigationCacheEnabled()
+        );
+    }
+
+    /**
+     * @return NavigationCollectorCacheDecorator
+     */
+    private function createCachedNavigationCollector()
+    {
+        return $this->getFactory()->createModelNavigationCollectorDecoratorNavigationCollectorCacheDecorator(
+            $this->createNavigationCollector(),
+            $this->createNavigationCache()
         );
     }
 

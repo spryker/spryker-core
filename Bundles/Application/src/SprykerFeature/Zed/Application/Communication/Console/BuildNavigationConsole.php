@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class BuildNavigationConsole extends Console
 {
 
-    const COMMAND_NAME = 'application:build-navigation';
+    const COMMAND_NAME = 'application:build-navigation-cache';
     const DESCRIPTION = 'Build the navigation tree';
 
     protected function configure()
@@ -37,7 +37,7 @@ class BuildNavigationConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->prepareNavigation();
+        $this->getFacade()->buildNavigationCache();
     }
 
 }
