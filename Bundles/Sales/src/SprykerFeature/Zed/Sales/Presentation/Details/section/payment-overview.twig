@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-12">
+        {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Payment Overview' } %}
+
+        <table class="footable table table-stripped toggle-arrow-tiny">
+            <tr>
+                <th>{{ 'Payment Type' | trans }}</th>
+                <th>{{ 'Transaction ID' | trans }}</th>
+                <th>{{ 'Transaction Time' | trans }}</th>
+                <th>{{ 'Status' | trans }}</th>
+                <th>{{ 'Amount' | trans }}</th>
+            </tr>
+            {% for pay in payments %}
+                <tr>
+                    <td>{{ pay.name }}</td>
+                    <td>1</td>
+                    <td>{{ pay.grossPrice | currency }}</td>
+                    <td>{{ pay.priceToPay | currency }}</td>
+                    <td>{{ pay.priceToPay | currency }}</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+
+        {% include '@Gui/Partials/Table/footer.twig' %}
+    </div>
+</div>

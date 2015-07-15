@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
+            {% if table_title is defined and table_title != '' %}
             <div class="ibox-title">
-                <h5>{{ table_title|raw }}</h5>
+                <h5>{{ table_title | trans | raw }}</h5>
             </div>
+            {% endif %}
             <div class="ibox-content">
