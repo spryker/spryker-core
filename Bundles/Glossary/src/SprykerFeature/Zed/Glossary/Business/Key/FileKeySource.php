@@ -26,6 +26,8 @@ class FileKeySource implements KeySourceInterface
     public function retrieveKeyArray()
     {
         $result = include $this->filePath;
+
         return array_keys($result);
     }
+
 }

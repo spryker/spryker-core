@@ -27,7 +27,7 @@ class SecurityServiceProvider extends AbstractPlugin implements ServiceProviderI
      *
      * @return SecurityServiceProvider
      */
-    public function setUserProvider($userProvider)
+    public function setUserProvider(UserProvider $userProvider)
     {
         $this->userProvider = $userProvider;
 
