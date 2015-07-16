@@ -24,6 +24,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedAbstractProductAtt
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributes;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
+use Zend\Stdlib\ArrayObject;
 
 class ProductManager implements ProductManagerInterface
 {
@@ -75,7 +76,7 @@ class ProductManager implements ProductManagerInterface
      *
      * @throws AbstractProductExistsException
      * @throws PropelException
-     * 
+     *
      * @return int
      */
     public function createAbstractProduct(AbstractProductInterface $abstractProductTransfer)
@@ -93,7 +94,11 @@ class ProductManager implements ProductManagerInterface
 
         $abstractProduct->save();
 
-        return $abstractProduct->getPrimaryKey();
+        $idAbstractProduct = $abstractProduct->getPrimaryKey();
+        $abstractProductTransfer->setIdAbstractProduct($idAbstractProduct);
+        $this->createAbstractProductAttributes($abstractProductTransfer);
+
+        return $idAbstractProduct;
     }
 
     /**
@@ -138,33 +143,27 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param AbstractProductInterface $abstractProductTransfer
-     * @param LocaleTransfer $locale
-     *
      * @throws AbstractProductAttributesExistException
      * @throws PropelException
-     * 
-     * @return int
      */
-    public function createAbstractProductAttributes(
-        AbstractProductInterface $abstractProductTransfer,
-        LocaleTransfer $locale
-    ) {
+    protected function createAbstractProductAttributes(AbstractProductInterface $abstractProductTransfer)
+    {
         $idAbstractProduct = $abstractProductTransfer->getIdAbstractProduct();
 
-        $this->checkAbstractProductAttributesDoNotExist($idAbstractProduct, $locale);
-        $encodedAttributes = $this->encodeAttributes($abstractProductTransfer->getLocalizedAttributes());
+        foreach ($abstractProductTransfer->getLocalizedAttributes() as $localizedAttributes) {
+            $locale = $localizedAttributes->getLocale();
+            $this->checkAbstractProductAttributesDoNotExist($idAbstractProduct, $locale);
+            $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
 
-        $abstractProductAttributesEntity = new SpyLocalizedAbstractProductAttributes();
-        $abstractProductAttributesEntity
-            ->setFkAbstractProduct($idAbstractProduct)
-            ->setFkLocale($locale->getIdLocale())
-            ->setName($abstractProductTransfer->getName())
-            ->setAttributes($encodedAttributes)
-        ;
-
-        $abstractProductAttributesEntity->save();
-
-        return $abstractProductAttributesEntity->getPrimaryKey();
+            $abstractProductAttributesEntity = new SpyLocalizedAbstractProductAttributes();
+            $abstractProductAttributesEntity
+                ->setFkAbstractProduct($idAbstractProduct)
+                ->setFkLocale($locale->getIdLocale())
+                ->setName($abstractProductTransfer->getName())
+                ->setAttributes($encodedAttributes)
+            ;
+            $abstractProductAttributesEntity->save();
+        }
     }
 
     /**
@@ -228,7 +227,11 @@ class ProductManager implements ProductManagerInterface
 
         $concreteProductEntity->save();
 
-        return $concreteProductEntity->getPrimaryKey();
+        $idConcreteProduct = $concreteProductEntity->getPrimaryKey();
+        $concreteProductTransfer->setIdConcreteProduct($idConcreteProduct);
+        $this->createConcreteProductAttributes($concreteProductTransfer);
+
+        return $idConcreteProduct;
     }
 
     /**
@@ -285,32 +288,28 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param ConcreteProductInterface $concreteProductTransfer
-     * @param LocaleTransfer $locale
-     *
      * @throws ConcreteProductAttributesExistException
      * @throws PropelException
-     *
-     * @return int
      */
-    public function createConcreteProductAttributes(
-        ConcreteProductInterface $concreteProductTransfer,
-        LocaleTransfer $locale
-    ) {
+    protected function createConcreteProductAttributes(ConcreteProductInterface $concreteProductTransfer)
+    {
         $idConcreteProduct = $concreteProductTransfer->getIdConcreteProduct();
-        $this->checkConcreteProductAttributesDoNotExist($idConcreteProduct, $locale);
-        $encodedAttributes = $this->encodeAttributes($concreteProductTransfer->getLocalizedAttributes());
 
-        $productAttributeEntity = new SpyLocalizedProductAttributes();
-        $productAttributeEntity
-            ->setFkProduct($idConcreteProduct)
-            ->setFkLocale($locale->getIdLocale())
-            ->setName($concreteProductTransfer->getName())
-            ->setAttributes($encodedAttributes)
-        ;
+        foreach ($concreteProductTransfer->getLocalizedAttributes() as $localizedAttributes) {
+            $locale = $localizedAttributes->getLocale();
+            $this->checkConcreteProductAttributesDoNotExist($idConcreteProduct, $locale);
+            $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
 
-        $productAttributeEntity->save();
+            $productAttributeEntity = new SpyLocalizedProductAttributes();
+            $productAttributeEntity
+                ->setFkProduct($idConcreteProduct)
+                ->setFkLocale($locale->getIdLocale())
+                ->setName($concreteProductTransfer->getName())
+                ->setAttributes($encodedAttributes)
+            ;
 
-        return $productAttributeEntity->getPrimaryKey();
+            $productAttributeEntity->save();
+        }
     }
 
     /**
