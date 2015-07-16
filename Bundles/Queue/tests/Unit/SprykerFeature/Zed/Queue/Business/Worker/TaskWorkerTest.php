@@ -46,7 +46,7 @@ class TaskWorkerTest extends Test
     protected function getMockTaskPlugin()
     {
         $mockBuilder = $this->getMockBuilder(
-            'Functional\SprykerFeature\Zed\Queue\Mock\MockTaskPlugin'
+            'Unit\SprykerFeature\Zed\Queue\Mock\MockTaskPlugin'
         )->setConstructorArgs(['task_name', 'test_queue']);
         $mockTaskPlugin = $mockBuilder->getMock();
         $mockTaskPlugin
@@ -59,5 +59,4 @@ class TaskWorkerTest extends Test
 
         return $mockTaskPlugin;
     }
-
 }

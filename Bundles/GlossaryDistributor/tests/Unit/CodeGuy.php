@@ -3,7 +3,7 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-namespace Glossary;
+namespace GlossaryDistributor;
 
 use \Codeception\Maybe;
 use GlossaryDistributor\Codeception\Module\CodeHelper;

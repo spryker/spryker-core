@@ -7,11 +7,14 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Pyz\Zed\Glossary\Business\GlossaryFacade;
+use Pyz\Zed\Glossary\GlossaryDependencyProvider;
 use SprykerEngine\Zed\Kernel\Communication\Factory as CommuncationFactory;
 use SprykerEngine\Zed\Kernel\Business\Factory;
+use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
+use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryKeyQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryTranslationQuery;
 use SprykerFeature\Zed\GlossaryQueue\Business\GlossaryQueueFacade;
@@ -70,14 +73,6 @@ class GlossaryTaskWorkerPluginTest extends Test
     }
 
     /**
-     * @return GlossaryFacade
-     */
-    private function createGlossaryFacade()
-    {
-        return $this->getLocator()->glossary()->facade();
-    }
-
-    /**
      * @return GlossaryQueueFacade
      */
     private function createGlossaryQueueFacade()
@@ -91,6 +86,32 @@ class GlossaryTaskWorkerPluginTest extends Test
         $glossaryQueueFacade->setExternalDependencies($container);
 
         return $glossaryQueueFacade;
+    }
+
+    /**
+     * @return GlossaryQueueFacade
+     */
+    private function createGlossaryFacade()
+    {
+        $container = new Container();
+        $container[GlossaryDependencyProvider::FACADE_TOUCH] = function (Container $container) {
+            return $container->getLocator()->touch()->facade();
+        };
+
+        $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
+            return $container->getLocator()->locale()->facade();
+        };
+
+        $glossaryFacade = new MockGlossaryFacade(new Factory('Glossary'), $this->getLocator());
+        $glossaryFacade->setExternalDependencies($container);
+        $glossaryFacade->setOwnQueryContainer(
+            new GlossaryQueryContainer(
+                new PersistenceFactory('Glossary'),
+                $this->getLocator()
+            )
+        );
+
+        return $glossaryFacade;
     }
 
     /**
