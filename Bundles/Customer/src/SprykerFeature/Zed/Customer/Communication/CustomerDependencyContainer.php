@@ -8,16 +8,12 @@ namespace SprykerFeature\Zed\Customer\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-
 use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
-
-use SprykerFeature\Zed\Customer\Communication\Grid\AddressGrid;
-use SprykerFeature\Zed\Customer\Communication\Grid\CustomerGrid;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
-
-use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
+use SprykerFeature\Zed\Customer\Communication\Table\AddressTable;
 use SprykerFeature\Zed\Customer\Communication\Table\CustomerTable;
 
 /**
@@ -39,10 +35,21 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCustomerTable()
     {
-        /* @var SpyCustomerQuery $customerQuery */
+        /** @var SpyCustomerQuery $customerQuery */
         $customerQuery = $this->getQueryContainer()->queryCustomers();
 
         return $this->getFactory()->createTableCustomerTable($customerQuery);
+    }
+
+    /**
+     * @return AddressTable
+     */
+    public function createCustomerAddressTable($idCustomer)
+    {
+        /** @var SpyCustomerAddressQuery $addressQuery */
+        $addressQuery = $this->getQueryContainer()->queryAddresses();
+
+        return $this->getFactory()->createTableAddressTable($addressQuery, $idCustomer);
     }
 
     /**
@@ -58,4 +65,19 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
         return $this->getFactory()->createFormCustomerForm($customerQuery, $type);
     }
 
+    /**
+     * @param $type
+     *
+     * @return AddressForm
+     */
+    public function createAddressForm($type)
+    {
+        /** @var SpyCustomerQuery $customerQuery */
+        $customerQuery = $this->getQueryContainer()->queryCustomers();
+
+        /** @var SpyCustomerAddressQuery $addressQuery */
+        $addressQuery = $this->getQueryContainer()->queryAddresses();
+
+        return $this->getFactory()->createFormAddressForm($addressQuery, $customerQuery, $type);
+    }
 }

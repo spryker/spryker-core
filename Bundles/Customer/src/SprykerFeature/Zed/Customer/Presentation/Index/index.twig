@@ -7,9 +7,9 @@
 {% block content %}
 
     <p>
-        <a href="/customer/add" class="btn btn-primary ">Add a new customer</a>
+        <a href="/customer/add" class="btn btn-primary ">{{ 'Add a new customer' | trans }}</a>
     </p>
-    <div class="spy-layout">
-        {{ customerTable | raw }}
-    </div>
+
+    {{ customerTable | raw }}
+
 {% endblock %}

@@ -49,33 +49,44 @@ class CustomerForm extends AbstractForm
      */
     public function buildFormFields()
     {
+        $emailConstraints = [
+            new NotBlank(),
+            new Required(),
+            new Email(),
+        ];
+
+        if (self::ADD === $this->type) {
+            $emailConstraints[] = new Callback([
+                'methods' => [
+                    function ($email, ExecutionContext $context)
+                    {
+                        if ($this->getCustomerFacade()->hasEmail($email))
+                        {
+                            $context->addViolation('Email is already used');
+                        }
+                    },
+                ],
+            ]);
+        }
+
+        $emailParams = [
+            'label'       => 'Email',
+            'constraints' => $emailConstraints,
+        ];
+
+        if (self::UPDATE == $this->type) {
+            $emailParams['disabled'] = 'disabled';
+        }
+
         $this->addHidden(
-            'IdCustomer',
-            [
-                'label' => 'Customer ID',
-            ]
-        )
+                'IdCustomer',
+                [
+                    'label' => 'Customer ID',
+                ]
+            )
             ->addEmail(
                 'email',
-                [
-                    'label'       => 'Email',
-                    'constraints' => [
-                        new NotBlank(),
-                        new Required(),
-                        new Email(),
-                        new Callback([
-                            'methods' => [
-                                function ($email, ExecutionContext $context)
-                                {
-                                    if ($this->getCustomerFacade()->hasEmail($email))
-                                    {
-                                        $context->addViolation('Email is already used');
-                                    }
-                                },
-                            ],
-                        ]),
-                    ],
-                ]
+                $emailParams
             )
             ->addChoice(
                 'salutation',

@@ -6,8 +6,8 @@
 {% block content %}
 
     <p>
-        <a href="/customer/edit?id_customer={{ id_customer }}" class="btn btn-primary">Edit Customer</a>&nbsp;&nbsp;&nbsp;
-        <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-primary">Manage Addresses</a>
+        <a href="/customer/edit?id_customer={{ id_customer }}" class="btn btn-primary">{{ 'Edit Customer' | trans }}</a>&nbsp;&nbsp;&nbsp;
+        <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-primary">{{ 'Manage Addresses' | trans }}</a>
     </p>
 
 {% endblock %}

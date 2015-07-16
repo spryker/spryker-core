@@ -33,14 +33,14 @@ class CustomerTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeaders([
-            'IdCustomer'  => 'Customer ID',
-            'Email'       => 'Email',
-            'FirstName'   => 'First Name',
+            'IdCustomer' => '#',
+            'Email'      => 'Email',
             'LastName'   => 'Last Name',
-            'CreatedAt'   => 'Registration Date',
-            'ZipCode'     => 'ZIP Code',
-            'City'        => 'City',
-            'Country'     => 'Country',
+            'FirstName'  => 'First Name',
+            'CreatedAt'  => 'Registration Date',
+            'ZipCode'    => 'ZIP Code',
+            'City'       => 'City',
+            'Country'    => 'Country',
         ]);
         $config->setSortable([
             'IdCustomer',

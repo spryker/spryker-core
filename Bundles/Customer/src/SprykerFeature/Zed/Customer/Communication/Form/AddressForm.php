@@ -7,26 +7,43 @@
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+
+use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
 
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Length;
 
+use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
+
 class AddressForm extends AbstractForm
 {
     /**
-     * @var SpyCustomerAddressQueryQuery
+     * @var SpyCustomerAddressQuery
      */
     protected $customerAddressQuery;
 
     /**
-     * @param SpyCustomerQuery $customerQuery
+     * @var SpyCustomerQuery
      */
-    public function __construct(SpyCustomerAddressQuery $customerAddressQuery)
+    protected $customerQuery;
+
+    /**
+     * @var
+     */
+    protected $type;
+
+    /**
+     * @param SpyCustomerAddressQuery $addressQuery
+     */
+    public function __construct(SpyCustomerAddressQuery $addressQuery, SpyCustomerQuery $customerQuery, $type)
     {
-        $this->customerQuery = $customerAddressQuery;
+        $this->customerQuery = $customerQuery;
+        $this->addressQuery = $addressQuery;
+        $this->type = $type;
     }
 
     /**
@@ -34,106 +51,117 @@ class AddressForm extends AbstractForm
      */
     public function buildFormFields()
     {
-
         return $this->addHidden(
-                'id_customer_address',
-                []
-            )
+            'id_customer_address',
+            [
+                'constraints' => [],
+            ]
+        )
             ->addHidden(
                 'fk_customer',
-                []
+                [
+                    'constraints' => [],
+                ]
             )
             ->addChoice(
                 'salutation',
                 [
-                    'label' => 'Salutation',
-                    'constraints' => []
+                    'label'       => 'Salutation',
+                    'placeholder' => 'Select one',
+                    'choices'     => $this->getSalutationOptions(),
                 ]
             )
             ->addText(
                 'first_name',
                 [
-                    'label' => 'First Name',
+                    'label'       => 'First Name',
                     'constraints' => [
                         new Required(),
                         new NotBlank(),
-                        new Length(['max' => 100])
-                    ]
+                        new Length(['max' => 100]),
+                    ],
                 ]
             )
             ->addText(
                 'last_name',
                 [
-                    'label' => 'Last Name',
+                    'label'       => 'Last Name',
                     'constraints' => [
                         new Required(),
                         new NotBlank(),
-                        new Length(['max' => 100])
-                    ]
+                        new Length(['max' => 100]),
+                    ],
                 ]
             )
             ->addText(
                 'address1',
                 [
-                    'label' => 'Address line 1',
+                    'label'       => 'Address line 1',
                     'constraints' => [
-                    ]
+                    ],
                 ]
             )
             ->addText(
                 'address2',
                 [
-                    'label' => 'Address line 2',
+                    'label'       => 'Address line 2',
                     'constraints' => [
-                    ]
+                    ],
                 ]
             )
             ->addText(
                 'address3',
                 [
-                    'label' => 'Address line 3',
+                    'label'       => 'Address line 3',
                     'constraints' => [
-                    ]
+                    ],
                 ]
             )
             ->addText(
                 'company',
                 [
-                    'label' => 'Company',
+                    'label'       => 'Company',
                     'constraints' => [
-                    ]
+                    ],
                 ]
             )
             ->addText(
                 'city',
                 [
-                    'label' => 'City',
+                    'label'       => 'City',
                     'constraints' => [
-                    ]
+                    ],
                 ]
             )
             ->addText(
                 'zip_code',
                 [
-                    'label' => 'Zip Code',
+                    'label'       => 'Zip Code',
                     'constraints' => [
-                        new Length(['max' => 15])
-                    ]
+                        new Length(['max' => 15]),
+                    ],
                 ]
             )
             ->addChoice(
                 'fk_country',
                 [
-                    'label' => 'Country',
+                    'label'       => 'Country',
+                    'placeholder' => 'Select one',
                     'constraints' => [
                         'choices' => $this->getCountryOptions(),
-                    ]
+                    ],
                 ]
             )
             ->addText(
                 'phone',
                 [
                     'label' => 'Phone',
+                ]
+            )
+            ->addSubmit(
+                'submit',
+                [
+                    'label' => 'Save',
                 ]
             );
     }
@@ -145,16 +173,40 @@ class AddressForm extends AbstractForm
     {
         $result = [];
 
+        $idCustomer = $this->request->get('id_customer');
+
+        if (false === is_null($idCustomer))
+        {
+            $customerDetailEntity =$this
+                ->customerQuery
+                ->findByIdCustomer($idCustomer);
+
+            $customerDetails = $customerDetailEntity->toArray();
+        }
+
         $idCustomerAddress = $this->request->get('id_customer_address');
-        if (false === is_null($idCustomerAddress)) {
-            $customerAddressDetailEntity = $this
+        if (false === is_null($idCustomerAddress))
+        {
+            $addressDetailEntity = $this
                 ->customerAddressQuery
                 ->findOneByIdCustomerAddress($idCustomerAddress);
 
-            $result = $customerAddressDetailEntity->toArray();
+            $result = $addressDetailEntity->toArray();
         }
 
         return $result;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSalutationOptions()
+    {
+        return [
+            0 => SpyCustomerTableMap::COL_SALUTATION_MR,
+            1 => SpyCustomerTableMap::COL_SALUTATION_MRS,
+            2 => SpyCustomerTableMap::COL_SALUTATION_DR,
+        ];
     }
 
     /**

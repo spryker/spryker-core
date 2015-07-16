@@ -6,8 +6,10 @@
 {% block content %}
 
     <p>
-        <a href="/customer/view/?id_customer={{ id_customer }}" class="btn btn-primary ">Back to Customer</a>
+        <a href="/customer/view/?id_customer={{ id_customer }}" class="btn btn-primary ">{{ 'View Customer' | trans }}</a>&nbsp;&nbsp;&nbsp;
+        <a href="/customer/address/add?id_customer={{ id_customer }}" class="btn btn-primary">{{ 'Add a new address' | trans }}</a>
     </p>
 
+    {{ addressTable | raw }}
 
 {% endblock %}

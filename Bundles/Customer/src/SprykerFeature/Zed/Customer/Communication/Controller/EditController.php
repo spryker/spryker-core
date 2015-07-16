@@ -28,16 +28,12 @@ class EditController extends AbstractController
         if ($customerForm->isValid()) {
             $data = $customerForm->getData();
 
-            die(dump($data));
-
             /** @var CustomerTransfer $customer */
             $customer = $this->createCustomerTransfer();
             $customer->fromArray($data, true);
 
             $this->getFacade()->updateCustomer($customer);
-            if ($lastInsertId) {
-                $this->redirectResponse(sprintf('/customer/edit?id_customer=%d', $lastInsertId));
-            }
+            $this->redirectResponse(sprintf('/customer/view/?id_customer=%d', $idCustomer));
         }
 
         return $this->viewResponse([
