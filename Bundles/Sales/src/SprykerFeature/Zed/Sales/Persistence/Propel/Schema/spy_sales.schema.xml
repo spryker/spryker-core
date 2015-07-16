@@ -86,7 +86,7 @@
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr" required="false"/>
         <column name="first_name" required="false" size="100" type="VARCHAR"/>
         <column name="last_name" required="false" size="100" type="VARCHAR"/>
-        <column name="order_reference" type="VARCHAR" size="45" required="false"/>
+        <column name="order_reference" type="VARCHAR" size="45" required="true"/>
         <column name="grand_total" type="INTEGER" required="true"/>
         <column name="subtotal" type="INTEGER" required="true"/>
         <column name="is_test" type="BOOLEAN" required="true" default="false"/>
@@ -290,6 +290,15 @@
         <foreign-key foreignTable="spy_sales_order_item_bundle" phpName="SalesOrderItemBundle" refPhpName="SalesOrderItemBundleItem">
             <reference local="fk_sales_order_item_bundle" foreign="id_sales_order_item_bundle"/>
         </foreign-key>
+    </table>
+
+    <table name="spy_sales_order_number_sequence" phpName="SpySalesOrderNumberSequence">
+        <column name="id_sales_order_number_sequence" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="name" type="VARCHAR" size="255" required="true" />
+        <column name="current_id" type="INTEGER" required="true" />
+        <unique>
+            <unique-column name="name" />
+        </unique>
     </table>
 
 
