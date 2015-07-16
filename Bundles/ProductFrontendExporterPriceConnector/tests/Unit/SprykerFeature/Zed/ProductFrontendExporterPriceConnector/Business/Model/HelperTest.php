@@ -11,7 +11,7 @@ use SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Business\Model\Help
 class HelperTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testOrganizeData()
+    public function testCallOrganizeDataMustReturnOrganizedArray()
     {
         $mock = $this->getMock('SprykerFeature\Zed\Price\Business\PriceFacade', [], [], '', false);
 
