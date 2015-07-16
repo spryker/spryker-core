@@ -16,14 +16,6 @@ class FooPlugin extends AbstractPlugin
 {
 
     /**
-     * @return Factory
-     */
-    public function getFactory()
-    {
-        return parent::getFactory();
-    }
-
-    /**
      * @return DependencyContainerInterface
      */
     public function getDependencyContainer()

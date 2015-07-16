@@ -13,11 +13,6 @@ abstract class AbstractPlugin
 {
 
     /**
-     * @var Factory
-     */
-    private $factory;
-
-    /**
      * @var DependencyContainerInterface
      */
     private $dependencyContainer;
@@ -28,19 +23,9 @@ abstract class AbstractPlugin
      */
     public function __construct(Factory $factory, LocatorLocatorInterface $locator)
     {
-        $this->factory = $factory;
-
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
         }
-    }
-
-    /**
-     * @return Factory
-     */
-    protected function getFactory()
-    {
-        return $this->factory;
     }
 
     /**
