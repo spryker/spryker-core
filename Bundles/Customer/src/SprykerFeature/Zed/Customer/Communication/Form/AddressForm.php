@@ -147,9 +147,7 @@ class AddressForm extends AbstractForm
                 [
                     'label'       => 'Country',
                     'placeholder' => 'Select one',
-                    'constraints' => [
-                        'choices' => $this->getCountryOptions(),
-                    ],
+                    'choices' => $this->getCountryOptions(),
                 ]
             )
             ->addText(
@@ -215,7 +213,7 @@ class AddressForm extends AbstractForm
     public function getCountryOptions()
     {
         return [
-            [1 => 'Germany'],
+            1 => 'Germany',
         ];
     }
 

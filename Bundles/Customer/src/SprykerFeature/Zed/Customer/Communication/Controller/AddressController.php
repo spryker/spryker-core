@@ -42,14 +42,22 @@ class AddressController extends AbstractController
         );
     }
 
-    public function viewAction()
+    public function viewAction(Request $request)
     {
+        $idCustomerAddress = $request->get('id_customer_address');
 
+        return $this->viewResponse([
+            'id_customer_address' => $idCustomerAddress,
+        ]);
     }
 
     public function editAction()
     {
+        $idCustomerAddress = $request->get('id_customer_address');
 
+        return $this->viewResponse([
+            'id_customer_address' => $idCustomerAddress,
+        ]);
     }
 
     public function addAction(Request $request)
