@@ -21,14 +21,23 @@ class IndexController extends AbstractController
     {
         $grid = $this->getDependencyContainer()->getSalesGrid($request);
 
-        return $grid->renderData();
 
-//        $table = $this->getDependencyContainer()->createOrdersTable();
-//        $table->init();
+        $table = $this->getDependencyContainer()->createOrdersTable();
+        $table->init();
 //
 //        return $this->viewResponse([
+//            'grid' => [
+//                'content' => [
+//                    'rows' => []
+//                ],
+//            ],
 //            'orders' => $table,
 //        ]);
+
+        return [
+            'orders' => $table,
+//            'grid' => $grid->renderData(),
+        ];
     }
 
     /**

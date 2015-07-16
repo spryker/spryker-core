@@ -16,6 +16,8 @@ class OrdersTable extends AbstractTable
 
     /**
      * @param TableConfiguration $config
+     *
+     * @return TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -39,11 +41,14 @@ class OrdersTable extends AbstractTable
 //        ]);
 
         $config->setHeaders([
-            'id_sales_order' => 'ID',
-            'email' => 'Email',
+            'IdSalesOrder' => 'ID',
+            'Email' => 'Email',
+            'FkCustomer' => 'Customer Id',
+            'FirstName' => 'First Name',
+            'LastName' => 'Last Name',
         ]);
         $config->setSortable([
-            'email',
+//            'email',
         ]);
 
         return $config;

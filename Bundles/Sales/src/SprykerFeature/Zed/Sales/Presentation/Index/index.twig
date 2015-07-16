@@ -6,36 +6,7 @@
 
     {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Order List' } %}
 
-    <table class="footable table table-stripped toggle-arrow-tiny">
-        <thead>
-        <tr>
-            <th>{{ 'Order ID' | trans }}</th>
-            <th>{{ 'Timestamp' | trans }}</th>
-            <th>{{ 'Customer Id' | trans }}</th>
-            <th>{{ 'Email' | trans }}</th>
-            <th>{{ 'Billing Name' | trans }}</th>
-            <th colspan="2">{{ 'Value' | trans }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for row in content.rows %}
-            <tr>
-                <td>{{ row.id_sales_order }}</td>
-                <td>{{ row.created_at }}</td>
-                <td>{{ row.fk_customer }}</td>
-                <td>{{ row.email }}</td>
-                <td>{{ row.grand_total | currency }}</td>
-                <td><a href="/sales/details?id-sales-order={{ row.id_sales_order }}">{{ 'View' | trans }}</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    {#{% include '@Gui/Partials/pagination.twig' with {#}
-        {#'url': '/sales/',#}
-        {#'totalPages': content.pages,#}
-        {#'currentPage': content.page#}
-    {#} %}#}
+    {{ orders | raw }}
 
     {% include '@Gui/Partials/Table/footer.twig' %}
 

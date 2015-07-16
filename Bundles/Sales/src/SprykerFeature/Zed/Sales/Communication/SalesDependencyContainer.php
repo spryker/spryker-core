@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Sales\Communication\Grid\SalesGrid;
 use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\Sales\Communication\Table\OrdersTable;
 
 /**
  * @method SalesCommunication getFactory()
@@ -77,13 +78,12 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
             $this->getQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder));
     }
 
+    /**
+     * @return OrdersTable
+     */
     public function createOrdersTable()
     {
         $orderQuery = $this->getQueryContainer()->querySalesOrder();
-        $orderQuery = SpySalesOrderQuery::create();
-        $orderQuery->select('*');
-
-        var_dump($orderQuery->toString());
 
         return $this->getFactory()->createTableOrdersTable($orderQuery);
     }
