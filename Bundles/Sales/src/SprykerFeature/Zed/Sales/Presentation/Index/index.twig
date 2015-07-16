@@ -6,10 +6,6 @@
 
     {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Order List' } %}
 
-    {{ orders | raw }}
-
-    {#
-
     <table class="footable table table-stripped toggle-arrow-tiny">
         <thead>
         <tr>
@@ -24,16 +20,16 @@
         <tbody>
         {% for row in content.rows %}
             <tr>
-                <td><a href="/sales/details?id-sales-order={{ row.id_sales_order }}">{{ row.id_sales_order }}</a></td>
-                <td><a href="/sales/details?id-sales-order={{ row.id_sales_order }}">{{ row.first_name }} {{ row.last_name }}</a></td>
+                <td>{{ row.id_sales_order }}</td>
                 <td>{{ row.created_at }}</td>
+                <td>{{ row.fk_customer }}</td>
+                <td>{{ row.email }}</td>
                 <td>{{ row.grand_total | currency }}</td>
+                <td><a href="/sales/details?id-sales-order={{ row.id_sales_order }}">{{ 'View' | trans }}</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    #}
 
     {#{% include '@Gui/Partials/pagination.twig' with {#}
         {#'url': '/sales/',#}
