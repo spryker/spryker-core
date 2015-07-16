@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class AbstractController
 {
 
+    const DEPENDENCY_CONTAINER = 'DependencyContainer';
+
     /**
      * @var Application
      */
@@ -47,8 +49,8 @@ abstract class AbstractController
         $this->app = $app;
         $this->locator = $locator;
 
-        if ($factory->exists('DependencyContainer')) {
-            $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
+        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
+            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
         }
     }
 

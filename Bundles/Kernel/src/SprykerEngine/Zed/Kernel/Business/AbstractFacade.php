@@ -15,6 +15,8 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 abstract class AbstractFacade implements FacadeInterface
 {
 
+    const DEPENDENCY_CONTAINER = 'DependencyContainer';
+
     /**
      * @var DependencyContainerInterface
      */
@@ -28,8 +30,8 @@ abstract class AbstractFacade implements FacadeInterface
      */
     public function __construct(FactoryInterface $factory, Locator $locator)
     {
-        if ($factory->exists('DependencyContainer')) {
-            $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
+        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
+            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
         }
     }
 

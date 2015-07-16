@@ -14,6 +14,8 @@ use SprykerEngine\Client\Kernel\DependencyContainer\DependencyContainerInterface
 abstract class AbstractClient
 {
 
+    const DEPENDENCY_CONTAINER = 'DependencyContainer';
+
     /**
      * @var DependencyContainerInterface
      */
@@ -25,8 +27,8 @@ abstract class AbstractClient
      */
     public function __construct(FactoryInterface $factory, LocatorLocatorInterface $locator)
     {
-        if ($factory->exists('DependencyContainer')) {
-            $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
+        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
+            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
         }
     }
 
