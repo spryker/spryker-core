@@ -1,13 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Maintenance\Business\Dependency;
 
-
 use SprykerFeature\Zed\Library\Service\GraphViz;
-use Symfony\Component\Finder\Finder;
 
 class Graph
 {

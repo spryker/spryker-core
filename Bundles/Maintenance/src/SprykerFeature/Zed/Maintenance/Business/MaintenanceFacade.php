@@ -33,6 +33,7 @@ class MaintenanceFacade extends AbstractFacade
 
     /**
      * @param $bundleName
+     *
      * @return array
      */
     public function showOutgoingDependenciesForBundle($bundleName)
@@ -42,6 +43,7 @@ class MaintenanceFacade extends AbstractFacade
 
     /**
      * @param $bundleName
+     *
      * @return array
      */
     public function showIncomingDependenciesForBundle($bundleName)
@@ -53,5 +55,5 @@ class MaintenanceFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createDependencyGraph()->draw($bundleName);
     }
-    
+
 }

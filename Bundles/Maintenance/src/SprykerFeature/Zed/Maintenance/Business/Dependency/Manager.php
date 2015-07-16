@@ -1,10 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Maintenance\Business\Dependency;
-
 
 use Symfony\Component\Finder\Finder;
 
@@ -51,6 +51,7 @@ class Manager
 
     /**
      * @param $bundleName
+     *
      * @return array
      */
     protected function collectAllForeignBundles($bundleName)
@@ -65,6 +66,7 @@ class Manager
                 $allForeignBundles[] = $foreignBundleName;
             }
         }
+
         return $allForeignBundles;
     }
 

@@ -8,10 +8,10 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * Class NoValidateType
- * @package SprykerFeature\Zed\Gui\Communication\Form\Type\Extension
  */
 class NoValidateTypeExtension extends AbstractTypeExtension
 {
+
     /**
      * {@inheritdoc}
      */
@@ -29,4 +29,5 @@ class NoValidateTypeExtension extends AbstractTypeExtension
     {
         return 'form';
     }
+
 }

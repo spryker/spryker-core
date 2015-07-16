@@ -6,7 +6,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
@@ -35,7 +34,6 @@ abstract class AbstractTable
     {
         $this->locator = Locator::getInstance();
         $this->request = $this->locator->application()->pluginPimple()->getApplication()['request'];
-
 
         $config = $this->newTableConfiguration();
 
@@ -111,7 +109,7 @@ abstract class AbstractTable
 
         $twigVars = [
             'data' => $this->data,
-            'config' => $this->prepareConfig()
+            'config' => $this->prepareConfig(),
         ];
 
         return $this->getTwig()->render(
@@ -135,7 +133,7 @@ abstract class AbstractTable
                 'sortable' => $this->config->getSortable(),
                 'emptyHeaders' => $configArray['columnCount']
                     - count($this->config->getHeaders()),
-                'pageLength' => $this->config->getPageLength()
+                'pageLength' => $this->config->getPageLength(),
             ];
         }
 
@@ -151,12 +149,12 @@ abstract class AbstractTable
     }
 
     /**
-     * @return \Twig_Environment
      * @throws \LogicException
+     * @return \Twig_Environment
+     *
      */
     private function getTwig()
     {
-
 
         /** @var \Twig_Environment $twig */
         $twig = $this
@@ -197,6 +195,7 @@ abstract class AbstractTable
     /**
      * @param ModelCriteria $query
      * @param TableConfiguration $config
+     *
      * @return ObjectCollection
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config)
@@ -209,6 +208,7 @@ abstract class AbstractTable
             ->offset($offset)
             ->limit($limit)
             ->find();
+
         return $data->getArrayCopy();
     }
 

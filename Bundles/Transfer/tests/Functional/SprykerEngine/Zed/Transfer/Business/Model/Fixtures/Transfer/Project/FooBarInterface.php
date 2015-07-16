@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,6 +26,5 @@ interface FooBarInterface extends TransferInterface
      * @return string
      */
     public function getName();
-
 
 }

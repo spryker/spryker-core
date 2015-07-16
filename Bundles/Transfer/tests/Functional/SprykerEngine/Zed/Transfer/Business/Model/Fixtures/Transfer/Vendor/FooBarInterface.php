@@ -39,5 +39,4 @@ interface FooBarInterface extends TransferInterface
      */
     public function getBla();
 
-
 }

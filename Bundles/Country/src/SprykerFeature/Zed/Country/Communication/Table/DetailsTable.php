@@ -1,4 +1,5 @@
 <?php
+
 namespace SprykerFeature\Zed\Country\Communication\Table;
 
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
@@ -22,7 +23,7 @@ class DetailsTable extends AbstractTable
     {
         $config->setHeaders(
             [
-                'header1' => 'First header'
+                'header1' => 'First header',
             ]);
 
         $config->setSortable(['header1']);
@@ -41,6 +42,5 @@ class DetailsTable extends AbstractTable
 //            ['header1' => 'bbb']
 //        ];
     }
-
 
 }

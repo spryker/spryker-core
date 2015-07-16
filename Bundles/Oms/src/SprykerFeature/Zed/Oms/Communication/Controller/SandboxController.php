@@ -6,12 +6,10 @@
 
 namespace SprykerFeature\Zed\Oms\Communication\Controller;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
-use SprykerFeature\Zed\Customer\Business\Customer\Customer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Oms\Persistence\Propel\Base\SpyOmsOrderProcessQuery;

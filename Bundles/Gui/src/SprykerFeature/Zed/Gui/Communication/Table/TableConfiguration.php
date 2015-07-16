@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
-class BaseTableConfiguration {
+class TableConfiguration {
 
     /**
      * @var array
@@ -21,7 +22,7 @@ class BaseTableConfiguration {
     /**
      * @param array $headers
      */
-    public function setHeaders(array $headers){
+    public function setHeaders(array $headers) {
         if ($this->isAssoc($headers) === true){
             $this->headers = $headers;
         }
@@ -30,21 +31,21 @@ class BaseTableConfiguration {
     /**
      * @return array
      */
-    public function getHeaders(){
+    public function getHeaders() {
         return $this->headers;
     }
 
     /**
      * @return array
      */
-    public function getSortable(){
+    public function getSortable() {
         return $this->sortable;
     }
 
     /**
      * @param array $sortable
      */
-    public function setSortable(array $sortable){
+    public function setSortable(array $sortable) {
         $this->sortable = array_intersect(
             $sortable,
             array_keys($this->headers)
@@ -70,6 +71,5 @@ class BaseTableConfiguration {
     {
         return $this->pageLength;
     }
-
 
 }

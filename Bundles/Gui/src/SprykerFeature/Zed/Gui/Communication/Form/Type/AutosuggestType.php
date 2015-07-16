@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: andreyorsoev
@@ -15,10 +16,10 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Class AutosuggestType
- * @package SprykerFeature\Zed\Gui\Communication\Form\Type
  */
 class AutosuggestType extends AbstractType
 {
+
     /**
      * @param FormView $view
      * @param FormInterface $form
@@ -56,4 +57,5 @@ class AutosuggestType extends AbstractType
     {
         return 'autosuggest';
     }
+
 }

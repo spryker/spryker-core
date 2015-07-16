@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
 
 /**

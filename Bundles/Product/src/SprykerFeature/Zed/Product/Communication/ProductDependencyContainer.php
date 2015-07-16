@@ -20,10 +20,10 @@ class ProductDependencyContainer extends AbstractCommunicationDependencyContaine
         return $this->getLocator()->product()->facade();
     }
 
-    public function createProductForm(){
-
+    public function createProductForm() {
 
         return $this->getFactory()->createFormProductForm($blankConstraint);
 
     }
+
 }

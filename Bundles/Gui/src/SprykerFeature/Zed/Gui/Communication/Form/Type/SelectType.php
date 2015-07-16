@@ -9,10 +9,10 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Class AutosuggestType
- * @package SprykerFeature\Zed\Gui\Communication\Form\Type
  */
 class SelectType extends AbstractType
 {
+
     /**
      * @param FormView $view
      * @param FormInterface $form
@@ -50,4 +50,5 @@ class SelectType extends AbstractType
     {
         return 'select';
     }
+
 }

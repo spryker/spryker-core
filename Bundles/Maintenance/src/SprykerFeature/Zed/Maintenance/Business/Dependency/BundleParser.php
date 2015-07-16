@@ -1,10 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Maintenance\Business\Dependency;
-
 
 use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Finder\Finder;
@@ -30,6 +30,7 @@ class BundleParser
 
     /**
      * @param $bundleName
+     *
      * @return array
      */
     public function parseOutgoingDependencies($bundleName)
@@ -37,6 +38,7 @@ class BundleParser
         $allFileDependencies = $this->parseDependencies($bundleName);
         $allFileDependencies = $this->filterCoreClasses($allFileDependencies);
         $bundleDepenencies = $this->filterBundleDependencies($allFileDependencies, $bundleName);
+
         return $bundleDepenencies;
     }
 
@@ -44,6 +46,7 @@ class BundleParser
      * We only detect dependencies which are declared in the class' use statement
      *
      * @param $bundle
+     *
      * @return array
      */
     protected function parseDependencies($bundle)
@@ -60,11 +63,13 @@ class BundleParser
 
             $dependencies[$file->getPath() . '/' . $file->getFilename()] = $matches[1];
         }
+
         return $dependencies;
     }
 
     /**
      * @param $bundle
+     *
      * @return SplFileInfo[]
      */
     protected function findAllFilesOfBundle($bundle)
@@ -73,11 +78,13 @@ class BundleParser
             ->files()
             ->in($this->config->getBundleDirectory() . $bundle . '/src/*/Zed/')
             ->exclude($this->config->getExcludedDirectoriesForDependencies());
+
         return $files;
     }
 
     /**
      * @param $dependencies
+     *
      * @return array
      */
     protected function filterCoreClasses($dependencies)
@@ -96,12 +103,14 @@ class BundleParser
             }
             $reducedDependenciesPerFile[$fileName] = $reducedDependencies;
         }
+
         return $reducedDependenciesPerFile;
     }
 
     /**
      * @param $allFileDependencies
      * @param $bundle
+     *
      * @return array
      */
     protected function filterBundleDependencies($allFileDependencies, $bundle)
@@ -119,11 +128,13 @@ class BundleParser
                 }
             }
         }
+
         return $bundleDepenencies;
     }
 
     /**
      * @param $bundleName
+     *
      * @return bool
      */
     public function isEngine($bundleName)
@@ -134,11 +145,13 @@ class BundleParser
                 return true;
             }
         }
+
         return false;
     }
 
     /**
      * @param $bundleName
+     *
      * @return SplFileInfo[]
      */
     protected function findBundleNamespaceDirectoriesForBundle($bundleName)
@@ -147,8 +160,8 @@ class BundleParser
             ->directories()
             ->depth('== 0')
             ->in($this->config->getBundleDirectory() . $bundleName . '/src');
+
         return $directories;
     }
-
 
 }
