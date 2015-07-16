@@ -7,30 +7,41 @@
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
-
+use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Callback;
+use SprykerFeature\Zed\Customer\Business\Customer\Customer;
+use Symfony\Component\Validator\Context\ExecutionContext;
+use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 
 class CustomerForm extends AbstractForm
 {
+    const ADD = 'add';
+    const UPDATE = 'update';
+
     /**
      * @var SpyCustomerQueryQuery
      */
     protected $customerQuery;
 
     /**
+     * @var
+     */
+    protected $type;
+
+    /**
      * @param SpyCustomerQuery $customerQuery
      */
-    public function __construct(SpyCustomerQuery $customerQuery)
+    public function __construct(SpyCustomerQuery $customerQuery, $type)
     {
         $this->customerQuery = $customerQuery;
+        $this->type = $type;
     }
 
     /**
@@ -38,19 +49,40 @@ class CustomerForm extends AbstractForm
      */
     public function buildFormFields()
     {
-
-        return $this->addHidden(
+        $this->addHidden(
             'IdCustomer',
             [
                 'label' => 'Customer ID',
             ]
         )
+            ->addEmail(
+                'email',
+                [
+                    'label'       => 'Email',
+                    'constraints' => [
+                        new NotBlank(),
+                        new Required(),
+                        new Email(),
+                        new Callback([
+                            'methods' => [
+                                function ($email, ExecutionContext $context)
+                                {
+                                    if ($this->getCustomerFacade()->hasEmail($email))
+                                    {
+                                        $context->addViolation('Email is already used');
+                                    }
+                                },
+                            ],
+                        ]),
+                    ],
+                ]
+            )
             ->addChoice(
                 'salutation',
                 [
-                    'label'   => 'Salutation',
+                    'label'       => 'Salutation',
                     'placeholder' => 'Select one',
-                    'choices' => $this->getSalutationOptions(),
+                    'choices'     => $this->getSalutationOptions(),
                 ]
             )
             ->addText(
@@ -75,34 +107,55 @@ class CustomerForm extends AbstractForm
                     ],
                 ]
             )
-            ->addText(
-                'email',
-                [
-                    'label'       => 'Email',
-                    'constraints' => [
-                        new NotBlank(),
-                        new Required(),
-                        new Email()
-                    ],
-                ]
-            )
             ->addChoice(
                 'gender',
                 [
-                    'label'   => 'Gender',
+                    'label'       => 'Gender',
                     'placeholder' => 'Select one',
-                    'choices' => $this->getGenderOptions(),
+                    'choices'     => $this->getGenderOptions(),
+                    'constraints' => [
+                        new Required(),
+                    ],
+                ]
+            );
+
+        if (self::UPDATE === $this->type)
+        {
+            $this->addChoice(
+                'default_billing_address',
+                [
+                    'label' => 'Billing Address',
+                    'placeholder' => 'Select one',
+                    'choices'     => $this->getAddressOptions(),
                 ]
             )
-            ->addTextarea(
-                'comment',
+            ->addChoice(
+                'default_shipping_address',
                 [
-                    'label' => 'Comment',
-                    'constraints' => [
-                        new Length(['max' => 255])
-                    ]
+                    'label' => 'Shipping Address',
+                    'placeholder' => 'Select one',
+                    'choices'     => $this->getAddressOptions(),
                 ]
-            )->addSubmit();
+            );
+        }
+
+        $this->addTextarea(
+            'comment',
+            [
+                'label'       => 'Comment',
+                'constraints' => [
+                    new Length(['max' => 255]),
+                ],
+            ]
+        )
+        ->addSubmit(
+            'submit',
+            [
+                'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
+            ]
+        );
+
+        return $this;
     }
 
     /**
@@ -131,9 +184,8 @@ class CustomerForm extends AbstractForm
     protected function getGenderOptions()
     {
         return [
-            0 => 'Unknown',
-            1 => 'Male',
-            2 => 'Female',
+            0 => SpyCustomerTableMap::COL_GENDER_MALE,
+            1 => SpyCustomerTableMap::COL_GENDER_FEMALE,
         ];
     }
 
@@ -143,10 +195,26 @@ class CustomerForm extends AbstractForm
     protected function getSalutationOptions()
     {
         return [
-            0 => 'Mr.',
-            1 => 'Mrs.',
-            2 => 'Dr.',
+            0 => SpyCustomerTableMap::COL_SALUTATION_MR,
+            1 => SpyCustomerTableMap::COL_SALUTATION_MRS,
+            2 => SpyCustomerTableMap::COL_SALUTATION_DR,
         ];
+    }
+
+    protected function getAddressOptions()
+    {
+        return [];
+    }
+
+
+    /**
+     * @return CustomerFacade
+     */
+    protected function getCustomerFacade()
+    {
+        return $this->getLocator()
+            ->customer()
+            ->facade();
     }
 
 }

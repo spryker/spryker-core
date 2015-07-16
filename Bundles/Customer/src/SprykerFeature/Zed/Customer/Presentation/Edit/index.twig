@@ -1,0 +1,15 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block head_title 'Edit customer' | trans %}
+{% block section_title 'Edit customer' | trans %}
+
+{% block content %}
+
+    <p>
+        <a href="/customer/view?id_customer={{ id_customer }}" class="btn btn-primary">View Customer</a>&nbsp;&nbsp;&nbsp;
+        <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-primary ">Manage Addresses</a>
+    </p>
+
+    {{ form(form) }}
+
+{% endblock %}

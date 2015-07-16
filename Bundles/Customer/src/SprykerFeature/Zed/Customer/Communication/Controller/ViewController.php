@@ -6,12 +6,17 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
-use SprykerEngine\Yves\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class ViewController extends AbstractController
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $idCustomer = $request->get('id_customer');
 
+        return $this->viewResponse([
+            'id_customer' => $idCustomer,
+        ]);
     }
 }

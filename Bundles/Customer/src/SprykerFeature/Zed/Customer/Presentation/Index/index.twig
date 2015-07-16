@@ -1,14 +1,15 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block head_title 'Customer' | trans %}
+{% block head_title 'Customers' | trans %}
 
-{% block section_title 'Add a customer' | trans %}
+{% block section_title 'Customers' | trans %}
 
 {% block content %}
 
     <p>
-        <a href="{{ app.request.getRequestUri() }}/add" class="btn btn-primary ">Add a new customer</a>
+        <a href="/customer/add" class="btn btn-primary ">Add a new customer</a>
     </p>
-    {{ customerTable | raw }}
-
+    <div class="spy-layout">
+        {{ customerTable | raw }}
+    </div>
 {% endblock %}

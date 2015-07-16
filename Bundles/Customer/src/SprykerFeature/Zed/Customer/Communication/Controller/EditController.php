@@ -8,21 +8,19 @@ namespace SprykerFeature\Zed\Customer\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class AddController
- * @package SprykerFeature\Zed\Customer\Communication\Controller
- */
-class AddController extends AbstractController
+class EditController extends AbstractController
 {
-
     /**
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $idCustomer = $request->get('id_customer');
+
         /** @var CustomerForm $customerForm */
-        $customerForm = $this->getDependencyContainer()->createCustomerForm('add');
+        $customerForm = $this->getDependencyContainer()->createCustomerForm('update');
         $customerForm->init();
 
         $customerForm->handleRequest();
@@ -30,18 +28,21 @@ class AddController extends AbstractController
         if ($customerForm->isValid()) {
             $data = $customerForm->getData();
 
+            die(dump($data));
+
             /** @var CustomerTransfer $customer */
             $customer = $this->createCustomerTransfer();
             $customer->fromArray($data, true);
 
-            $lastInsertId = $this->getFacade()->registerCustomer($customer);
+            $this->getFacade()->updateCustomer($customer);
             if ($lastInsertId) {
-                $this->redirectResponse(sprintf('/customer/view?id_customer=%d', $lastInsertId));
+                $this->redirectResponse(sprintf('/customer/edit?id_customer=%d', $lastInsertId));
             }
         }
 
         return $this->viewResponse([
             'form' => $customerForm->createView(),
+            'id_customer' => $idCustomer,
         ]);
     }
 
@@ -51,4 +52,5 @@ class AddController extends AbstractController
     protected function createCustomerTransfer() {
         return new CustomerTransfer();
     }
+
 }

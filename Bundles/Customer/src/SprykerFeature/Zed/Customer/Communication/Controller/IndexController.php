@@ -23,7 +23,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        /* @var CustomerTable $table */
+        /** @var CustomerTable $table */
         $table = $this->getDependencyContainer()->createCustomerTable();
         $table->init();
 
@@ -37,7 +37,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        /* @var CustomerTable $table */
+        /** @var CustomerTable $table */
         $table = $this->getDependencyContainer()->createCustomerTable();
         $table->init();
 
