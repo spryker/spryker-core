@@ -1,5 +1,6 @@
 {% import 'interface-macros.php.twig' as macro %}
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,12 +10,13 @@ namespace {{ namespace }};
 {% for use in uses %}
 use {{ use }};
 {% endfor %}
+use SprykerEngine\Shared\Transfer\TransferInterface;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
-interface {{ name }}
+interface {{ name }} extends TransferInterface
 {
 
 {% for methodName, method  in methods %}
@@ -28,5 +30,4 @@ interface {{ name }}
 {{ macro.addAdd(method) }}
 {% endif %}
 {% endfor %}
-
 }
