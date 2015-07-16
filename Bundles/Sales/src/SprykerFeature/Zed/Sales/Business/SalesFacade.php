@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Sales\Business;
 
+use Generated\Shared\Sales\SplitResponseInterface;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
@@ -101,6 +102,17 @@ class SalesFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createOrderManager()
             ->saveOrder($transferOrder);
+    }
+
+    /**
+     * @param integer $salesOrderItemId
+     * @param integer $quantity
+     *
+     * @return SplitResponseInterface
+     */
+    public function splitSalesOrderItem($salesOrderItemId, $quantity)
+    {
+        return $this->getDependencyContainer()->createOrderItemSplitter()->split($salesOrderItemId, $quantity);
     }
 
     /**

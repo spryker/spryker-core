@@ -23,7 +23,7 @@ class InMemoryProvider implements StorageProviderInterface
     public function addItems(CartInterface $cart, ChangeInterface $change)
     {
         $existingItems = $cart->getItems();
-        $skuIndex = $this->createSkuIndex($existingItems);
+        $cartIndex = $this->createCartIndex($existingItems);
 
         foreach ($change->getItems() as $item) {
             if ($item->getQuantity() < 1) {
@@ -32,8 +32,8 @@ class InMemoryProvider implements StorageProviderInterface
                 );
             }
 
-            if (isset($skuIndex[$item->getGroupKey()])) {
-                $existingItem = $existingItems->offsetGet($skuIndex[$item->getGroupKey()]);
+            if (isset($cartIndex[$item->getGroupKey()])) {
+                $existingItem = $existingItems->offsetGet($cartIndex[$item->getGroupKey()]);
                 $existingItem->setQuantity($existingItem->getQuantity() + $item->getQuantity());
             } else {
                 $existingItems->append($item);
@@ -52,7 +52,7 @@ class InMemoryProvider implements StorageProviderInterface
     public function removeItems(CartInterface $cart, ChangeInterface $change)
     {
         $existingItems = $cart->getItems();
-        $skuIndex = $this->createSkuIndex($existingItems);
+        $cartIndex = $this->createCartIndex($existingItems);
 
         foreach ($change->getItems() as $item) {
             if ($item->getQuantity() < 1) {
@@ -61,8 +61,8 @@ class InMemoryProvider implements StorageProviderInterface
                 );
             }
 
-            if (isset($skuIndex[$item->getSku()])) {
-                $this->decreaseExistingItem($existingItems, $skuIndex[$item->getSku()], $item);
+            if (isset($cartIndex[$item->getSku()])) {
+                $this->decreaseExistingItem($existingItems, $cartIndex[$item->getSku()], $item);
             }
         }
 
@@ -113,15 +113,15 @@ class InMemoryProvider implements StorageProviderInterface
      *
      * @return array
      */
-    protected function createSkuIndex(\ArrayObject $cartItems)
+    protected function createCartIndex(\ArrayObject $cartItems)
     {
-        $skuIndex = [];
+        $cartIndex = [];
 
         foreach ($cartItems as $key => $cartItem) {
-            $skuIndex[$cartItem->getGroupKey()] = $key;
+            $cartIndex[$cartItem->getGroupKey()] = $key;
         }
 
-        return $skuIndex;
+        return $cartIndex;
     }
 
 }

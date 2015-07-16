@@ -150,5 +150,10 @@
         <property name="orderId" type="string" />
     </transfer>
 
+    <transfer name="SplitResponse">
+        <property name="success" type="boolean" />
+        <property name="validationMessages" type="array" singular="code" />
+    </transfer>
+
 </transfers>
 

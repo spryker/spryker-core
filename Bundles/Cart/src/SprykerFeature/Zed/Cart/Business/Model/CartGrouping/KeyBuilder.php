@@ -34,10 +34,6 @@ class KeyBuilder
      */
     public function build(CartItemInterface $cartItem)
     {
-        if (empty($this->groupingProviderStack)) {
-            return $this->getDefaultGroupingKey($cartItem);
-        }
-
         $keyParts = $this->buildParts($cartItem);
 
         if (empty($keyParts)) {
@@ -45,16 +41,6 @@ class KeyBuilder
         }
 
         return $this->combineParts($keyParts);
-    }
-
-    /**
-     * @param CartItemInterface $cartItem
-     *
-     * @return string
-     */
-    protected function getDefaultGroupingKey(CartItemInterface $cartItem)
-    {
-        return $cartItem->getSku();
     }
 
     /**
@@ -79,13 +65,5 @@ class KeyBuilder
     private function combineParts(array $keyParts)
     {
         return implode(self::KEY_PART_SEPARATOR, $keyParts);
-    }
-
-    /**
-     * @param GroupingProviderInterface $groupingProvider
-     */
-    public function addGroupingProvider(GroupingProviderInterface $groupingProvider)
-    {
-        $this->groupingProviderStack[] = $groupingProvider;
     }
 }
