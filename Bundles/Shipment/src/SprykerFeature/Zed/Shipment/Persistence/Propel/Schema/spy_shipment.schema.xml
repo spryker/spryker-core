@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<database name="zed"
+          namespace="SprykerFeature\Zed\Shipment\Persistence\Propel"
+          namespaceAutoPackage="false"
+          package="vendor.spryker.spryker.Bundles.Shipment.src.SprykerFeature.Zed.Shipment.Persistence.Propel"
+          defaultIdMethod="native"
+          defaultPhpNamingMethod="underscore"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+
+    <table name="spy_shipment_carrier" phpName="SpyShipmentCarrier" identifierQuoting="true">
+        <column name="id_shipment_carrier" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="is_active" type="BOOLEAN" default="true" required="true"/>
+        <unique>
+            <unique-column name="name"/>
+        </unique>
+        <index name="name">
+            <index-column name="name"/>
+        </index>
+        <index name="is_active">
+            <index-column name="is_active"/>
+        </index>
+    </table>
+
+    <table name="spy_shipment_method" phpName="SpyShipmentMethod" identifierQuoting="true">
+        <column name="id_shipment_method" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_shipment_method_carrier" type="INTEGER" required="true" />
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="is_active" type="BOOLEAN" default="true" required="true"/>
+
+        <behavior name="timestampable"/>
+
+        <foreign-key foreignTable="spy_shipment_carrier" phpName="ShipmentCarrier" refPhpName="ShipmentMethods">
+            <reference local="fk_shipment_method_carrier" foreign="id_shipment_carrier"/>
+        </foreign-key>
+
+        <index name="name">
+            <index-column name="name"/>
+        </index>
+        <index name="is_active">
+            <index-column name="is_active"/>
+        </index>
+    </table>
+
+</database>
