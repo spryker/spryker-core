@@ -28,6 +28,7 @@
         <column name="fk_shipment_method_carrier" type="INTEGER" required="true" />
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
+        <column name="price" type="INTEGER" required="false" />
 
         <behavior name="timestampable"/>
 
