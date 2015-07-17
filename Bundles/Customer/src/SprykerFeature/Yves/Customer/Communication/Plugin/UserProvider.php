@@ -20,26 +20,9 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
 {
 
     /**
-     * @var SessionClientInterface
-     */
-    private $sessionClient;
-
-    /**
      * @var CustomerClientInterface
      */
     private $customerClient;
-
-    /**
-     * @param SessionClientInterface $sessionClient
-     *
-     * @return $this
-     */
-    public function setSessionClient(SessionClientInterface $sessionClient)
-    {
-        $this->sessionClient = $sessionClient;
-
-        return $this;
-    }
 
     /**
      * @param CustomerClientInterface $customerClient
@@ -60,16 +43,14 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $user = $this->sessionClient->get($this->getKey($username));
-        if (!$user) {
-            $user = $this->fetchUser($username);
-            $this->sessionClient->set($this->getKey($username), $user);
-        }
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setEmail($username);
+        $customerTransfer = $this->customerClient->getCustomer($customerTransfer);
 
         return new User(
-            $user['username'],
-            $user['password'],
-            $user['roles']
+            $customerTransfer->getEmail(),
+            $customerTransfer->getPassword(),
+            ['ROLE_USER']
         );
     }
 
@@ -78,35 +59,10 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
      */
     public function logout($username)
     {
-        $this->sessionClient->remove($this->getKey($username));
-    }
-
-    /**
-     * @param string $username
-     *
-     * @return string
-     */
-    protected function getKey($username)
-    {
-        return 'userdata:' . $username;
-    }
-
-    /**
-     * @param string $username
-     *
-     * @return array
-     */
-    protected function fetchUser($username)
-    {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setEmail($username);
-        $customerTransfer = $this->customerClient->getCustomer($customerTransfer);
 
-        return [
-            'username' => $customerTransfer->getEmail(),
-            'password' => $customerTransfer->getPassword(),
-            'roles' => ['ROLE_USER'],
-        ];
+        $this->customerClient->logout($customerTransfer);
     }
 
     /**

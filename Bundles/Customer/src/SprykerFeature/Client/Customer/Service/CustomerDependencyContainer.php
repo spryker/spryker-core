@@ -6,31 +6,36 @@
 
 namespace SprykerFeature\Client\Customer\Service;
 
+use Generated\Client\Ide\FactoryAutoCompletion\CustomerService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
-use SprykerFeature\Client\Customer\Service\Model\Customer;
-use Generated\Yves\Ide\FactoryAutoCompletion\Customer as CustomerFactory;
-use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
+use SprykerFeature\Client\Customer\CustomerDependencyProvider;
+use SprykerFeature\Client\Customer\Service\Session\CustomerSessionInterface;
+use SprykerFeature\Client\Customer\Service\Zed\CustomerStubInterface;
 
 /**
- * @method CustomerFactory getFactory()
+ * @method CustomerService getFactory()
  */
 class CustomerDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**
-     * @return ZedRequestClient
+     * @return CustomerStubInterface
      */
-    protected function createZedClient()
+    public function createZedCustomerStub()
     {
-        return $this->getLocator()->zedRequest()->client();
+        return $this->getFactory()->createZedCustomerStub(
+            $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_ZED)
+        );
     }
 
     /**
-     * @return Customer
+     * @return CustomerSessionInterface
      */
-    public function createModelCustomer()
+    public function createSessionCustomerSession()
     {
-        return $this->getFactory()->createModelCustomer($this->createZedClient());
+        return $this->getFactory()->createSessionCustomerSession(
+            $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_SESSION)
+        );
     }
 
 }

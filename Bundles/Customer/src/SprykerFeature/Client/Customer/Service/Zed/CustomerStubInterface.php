@@ -3,13 +3,13 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
-namespace SprykerFeature\Client\Customer\Service;
+namespace SprykerFeature\Client\Customer\Service\Zed;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 
-interface CustomerClientInterface
+interface CustomerStubInterface
 {
 
     /**
@@ -17,7 +17,7 @@ interface CustomerClientInterface
      *
      * @return CustomerTransfer
      */
-    public function registerCustomer(CustomerTransfer $customerTransfer);
+    public function register(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer
@@ -43,23 +43,30 @@ interface CustomerClientInterface
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return Response
      */
-    public function deleteCustomer(CustomerTransfer $customerTransfer);
+    public function delete(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerTransfer
      */
-    public function getCustomer(CustomerTransfer $customerTransfer);
+    public function get(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerTransfer
      */
-    public function updateCustomer(CustomerTransfer $customerTransfer);
+    public function update(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param CustomerAddressTransfer $addressTransfer
+     *
+     * @return Response
+     */
+    public function updateAddress(CustomerAddressTransfer $addressTransfer);
 
     /**
      * @param CustomerAddressTransfer $addressTransfer
@@ -73,20 +80,6 @@ interface CustomerClientInterface
      *
      * @return CustomerAddressTransfer
      */
-    public function updateAddress(CustomerAddressTransfer $addressTransfer);
-
-    /**
-     * @param CustomerAddressTransfer $addressTransfer
-     *
-     * @return CustomerAddressTransfer
-     */
     public function createAddress(CustomerAddressTransfer $addressTransfer);
-
-    /**
-     * @param CustomerTransfer $customerTransfer
-     *
-     * @return CustomerTransfer
-     */
-    public function logout(CustomerTransfer $customerTransfer);
 
 }

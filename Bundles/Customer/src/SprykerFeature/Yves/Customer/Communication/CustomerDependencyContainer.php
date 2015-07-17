@@ -9,8 +9,6 @@ namespace SprykerFeature\Yves\Customer\Communication;
 use Generated\Yves\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use SprykerFeature\Yves\Customer\Communication\Provider\SecurityServiceProvider;
-use SprykerFeature\Yves\Customer\Communication\Provider\UserProvider;
 use Silex\Application;
 use SprykerFeature\Yves\Customer\Communication\Model\Customer;
 

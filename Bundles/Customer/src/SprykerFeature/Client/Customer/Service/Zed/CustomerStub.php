@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Customer\Service\Model;
+namespace SprykerFeature\Client\Customer\Service\Zed;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -12,13 +12,13 @@ use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 
-class Customer
+class CustomerStub implements CustomerStubInterface
 {
 
     /**
      * @var ZedRequestClient
      */
-    protected $zedStub;
+    private $zedStub;
 
     /**
      * @param ZedRequestClient $zedStub

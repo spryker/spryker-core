@@ -9,12 +9,13 @@ namespace SprykerFeature\Yves\Customer\Communication\Model;
 use Silex\Application;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
-use LogicException;
 
 class Customer
 {
 
-    /** @var Application */
+    /**
+     * @var Application
+     */
     protected $application;
 
     /**
@@ -45,7 +46,7 @@ class Customer
     {
         $token = $this->getToken();
         if (!$token) {
-            throw new LogicException('No security token found.');
+            throw new \LogicException('No security token found.');
         }
 
         $user = $token->getUser();
@@ -63,11 +64,11 @@ class Customer
     {
         $security = $this->application['security'];
         if (!$security) {
-            return;
+            return false;
         }
         $token = $security->getToken();
         if (!$token) {
-            return;
+            return false;
         }
 
         return $token;
