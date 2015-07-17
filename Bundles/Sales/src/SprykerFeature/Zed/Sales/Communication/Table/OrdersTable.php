@@ -5,9 +5,17 @@ namespace SprykerFeature\Zed\Sales\Communication\Table;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
+use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 
 class OrdersTable extends AbstractTable
 {
+    const ID_SALES_ORDER = 'IdSalesOrder';
+    const CREATED_AT = 'CreatedAt';
+    const FK_CUSTOMER = 'FkCustomer';
+    const EMAIL = 'Email';
+    const GRAND_TOTAL = 'GrandTotal';
+    const FIRST_NAME = 'FirstName';
+    const URL = 'url';
 
     public function __construct(SpySalesOrderQuery $salesQuery)
     {
@@ -41,17 +49,27 @@ class OrdersTable extends AbstractTable
 //        ]);
 
         $config->setHeaders([
-            'IdSalesOrder' => 'ID',
-            'Email' => 'Email',
-            'FkCustomer' => 'Customer Id',
-            'FirstName' => 'First Name',
-            'LastName' => 'Last Name',
+            self::ID_SALES_ORDER => 'Order ID',
+            self::CREATED_AT => 'Timestamp',
+            self::FK_CUSTOMER => 'Customer Id',
+            self::EMAIL => 'Email',
+            self::GRAND_TOTAL => 'Value',
+            self::FIRST_NAME => 'Billing Name',
+            self::URL => 'Url',
         ]);
         $config->setSortable([
-//            'email',
+            self::CREATED_AT,
         ]);
 
         return $config;
+    }
+
+    protected function formatPrice($value, $includeSymbol = true)
+    {
+        $currencyManager = CurrencyManager::getInstance();
+        $value = $currencyManager->convertCentToDecimal($value);
+
+        return $currencyManager->format($value, $includeSymbol);
     }
 
     /**
@@ -62,14 +80,16 @@ class OrdersTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->salesQuery;
-//            ->leftJoinBillingAddress('billing')
-//            ->withColumn('billing.first_name', 'FirstName')
-//            ->withColumn('billing.last_name', 'LastName')
-//            ->withColumn('billing.zip_code', 'ZipCode')
-//            ->withColumn('billing.city', 'City')
-//            ->withColumn('billing.fk_country', 'Country');
+        $results = $this->runQuery($query, $config);
+        foreach ($results as &$v) {
+            $v[self::GRAND_TOTAL] = $this->formatPrice($v[self::GRAND_TOTAL]);
+            $v[self::URL] = sprintf(
+                '<a class="btn btn-primary" href="/sales/details/?id-sales-order=%d">View</a>',
+                $v['IdSalesOrder']
+            );
+        }
 
-        return $this->runQuery($query, $config);
+        return $results;
     }
 
 }
