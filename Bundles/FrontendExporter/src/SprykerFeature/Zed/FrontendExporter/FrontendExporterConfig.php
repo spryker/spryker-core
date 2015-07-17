@@ -88,4 +88,20 @@ class FrontendExporterConfig extends AbstractBundleConfig
         return Config::get(SystemConfig::ELASTICA_PARAMETER__DOCUMENT_TYPE);
     }
 
+    /**
+     * @return int
+     */
+    public function getStandardChunkSize()
+    {
+        return 1000;
+    }
+
+    /**
+     * @return array
+     */
+    public function getChunkSizeTypeMap()
+    {
+        return [];
+    }
+
 }
