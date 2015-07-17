@@ -8,7 +8,8 @@
     <p>
         <a href="/customer/" class="btn btn-default">{{ 'Back to Customers' | trans }}</a>&nbsp;&nbsp;&nbsp;
         <a href="/customer/address/add?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'Add a new address' | trans }}</a>&nbsp;&nbsp;&nbsp;
-        <a href="/customer/view/?id_customer={{ id_customer }}" class="btn btn-sm btn-info">{{ 'View Customer' | trans }}</a>
+        <a href="/customer/view/?id_customer={{ id_customer }}" class="btn btn-sm btn-info">{{ 'View Customer' | trans }}</a>&nbsp;&nbsp;&nbsp;
+        <a href="/customer/edit/?id_customer={{ id_customer }}" class="btn btn-sm btn-warning">{{ 'Edit Customer' | trans }}</a>
     </p>
 
     {{ addressTable | raw }}

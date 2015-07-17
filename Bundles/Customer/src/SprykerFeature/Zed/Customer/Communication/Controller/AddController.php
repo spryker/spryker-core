@@ -19,28 +19,26 @@ class AddController extends AbstractController
     /**
      * @return array
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         /** @var CustomerForm $customerForm */
-        $customerForm = $this->getDependencyContainer()->createCustomerForm('add');
-        $customerForm->init();
+        $form = $this->getDependencyContainer()->createCustomerForm('add');
+        $form->init();
 
-        $customerForm->handleRequest();
+        $form->handleRequest();
 
-        if ($customerForm->isValid()) {
-            $data = $customerForm->getData();
+        if ($form->isValid()) {
+            $data = $form->getData();
 
-            /** @var CustomerTransfer $customer */
-            $customer = $this->createCustomerTransfer();
-            $customer->fromArray($data, true);
+            $customerTransfer = $this->createCustomerTransfer();
+            $customerTransfer->fromArray($data, true);
 
-            $lastInsertId = $this->getFacade()->registerCustomer($customer);
+            $lastInsertId = $this->getFacade()->registerCustomer($customerTransfer);
 
             return $this->redirectResponse('/customer/');
         }
 
         return $this->viewResponse([
-            'form' => $customerForm->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -50,4 +48,5 @@ class AddController extends AbstractController
     protected function createCustomerTransfer() {
         return new CustomerTransfer();
     }
+
 }

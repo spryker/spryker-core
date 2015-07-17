@@ -19,8 +19,13 @@ use Symfony\Component\Validator\Constraints\Length;
 
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 
+/**
+ * Class AddressForm
+ * @package SprykerFeature\Zed\Customer\Communication\Form
+ */
 class AddressForm extends AbstractForm
 {
+
     const UPDATE = 'update';
     /**
      * @var SpyCustomerAddressQuery
@@ -40,8 +45,7 @@ class AddressForm extends AbstractForm
     /**
      * @param SpyCustomerAddressQuery $addressQuery
      */
-    public function __construct(SpyCustomerAddressQuery $addressQuery, SpyCustomerQuery $customerQuery, $type)
-    {
+    public function __construct(SpyCustomerAddressQuery $addressQuery, SpyCustomerQuery $customerQuery, $type) {
         $this->customerQuery = $customerQuery;
         $this->addressQuery = $addressQuery;
         $this->type = $type;
@@ -50,8 +54,7 @@ class AddressForm extends AbstractForm
     /**
      * @return $this
      */
-    public function buildFormFields()
-    {
+    public function buildFormFields() {
         return $this->addHidden(
             'id_customer_address',
             [
@@ -119,14 +122,6 @@ class AddressForm extends AbstractForm
                 ]
             )
             ->addText(
-                'company',
-                [
-                    'label'       => 'Company',
-                    'constraints' => [
-                    ],
-                ]
-            )
-            ->addText(
                 'city',
                 [
                     'label'       => 'City',
@@ -146,12 +141,12 @@ class AddressForm extends AbstractForm
             ->addChoice(
                 'fk_country',
                 [
-                    'label'       => 'Country',
-                    'placeholder' => 'Select one',
-                    'choices'     => $this->getCountryOptions(),
+                    'label'             => 'Country',
+                    'placeholder'       => 'Select one',
+                    'choices'           => $this->getCountryOptions(),
                     'preferred_choices' => [
-                        $this->addressQuery->useCountryQuery()->findOneByName('Germany')->getIdCountry()
-                    ]
+                        $this->addressQuery->useCountryQuery()->findOneByName('Germany')->getIdCountry(),
+                    ],
                 ]
             )
             ->addText(
@@ -160,13 +155,30 @@ class AddressForm extends AbstractForm
                     'label' => 'Phone',
                 ]
             )
+            ->addText(
+                'company',
+                [
+                    'label'       => 'Company',
+                    'constraints' => [
+                    ],
+                ]
+            )
+            ->addTextarea(
+                'comment',
+                [
+                    'label'       => 'Comment',
+                    'constraints' => [
+                        new Length(['max' => 255]),
+                    ],
+                ]
+            )
             ->addSubmit(
                 'submit',
                 [
                     'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
-                    'attr' => [
-                        'class' => 'btn btn-primary'
-                    ]
+                    'attr'  => [
+                        'class' => 'btn btn-primary',
+                    ],
                 ]
             );
     }
@@ -174,14 +186,12 @@ class AddressForm extends AbstractForm
     /**
      * @return array
      */
-    public function populateFormFields()
-    {
+    public function populateFormFields() {
         $result = [];
 
         $idCustomer = $this->request->get('id_customer');
 
-        if (false === is_null($idCustomer))
-        {
+        if (false === is_null($idCustomer)) {
             $customerDetailEntity = $this
                 ->customerQuery
                 ->findOneByIdCustomer($idCustomer);
@@ -190,8 +200,7 @@ class AddressForm extends AbstractForm
         }
 
         $idCustomerAddress = $this->request->get('id_customer_address');
-        if (false === is_null($idCustomerAddress))
-        {
+        if (false === is_null($idCustomerAddress)) {
             $addressDetailEntity = $this
                 ->addressQuery
                 ->findOneByIdCustomerAddress($idCustomerAddress);
@@ -199,8 +208,7 @@ class AddressForm extends AbstractForm
             $result = $addressDetailEntity->toArray();
         }
 
-        if (empty($result['salutation']))
-        {
+        if (empty($result['salutation'])) {
             $result['salutation'] = !empty($customerDetails['salutation']) ? $customerDetails['salutation'] : false;
         }
 
@@ -208,19 +216,16 @@ class AddressForm extends AbstractForm
             // key: value => value: key
             $salutations = array_flip($this->getSalutationOptions());
 
-            if (isset($salutations[$result['salutation']]))
-            {
+            if (isset($salutations[$result['salutation']])) {
                 $result['salutation'] = $salutations[$result['salutation']];
             }
         }
 
-        if (empty($result['first_name']))
-        {
+        if (empty($result['first_name'])) {
             $result['first_name'] = !empty($customerDetails['first_name']) ? $customerDetails['first_name'] : '';
         }
 
-        if (empty($result['last_name']))
-        {
+        if (empty($result['last_name'])) {
             $result['last_name'] = !empty($customerDetails['last_name']) ? $customerDetails['last_name'] : '';
         }
 
@@ -230,8 +235,7 @@ class AddressForm extends AbstractForm
     /**
      * @return array
      */
-    protected function getSalutationOptions()
-    {
+    protected function getSalutationOptions() {
         return [
             0 => SpyCustomerTableMap::COL_SALUTATION_MR,
             1 => SpyCustomerTableMap::COL_SALUTATION_MRS,
@@ -242,17 +246,14 @@ class AddressForm extends AbstractForm
     /**
      * @return array
      */
-    public function getCountryOptions()
-    {
+    public function getCountryOptions() {
         $countries = $this->addressQuery
             ->useCountryQuery()
             ->find();
 
         $result = [];
-        if (!empty($countries))
-        {
-            foreach ($countries->getData() as $country)
-            {
+        if (!empty($countries)) {
+            foreach ($countries->getData() as $country) {
                 $result[$country->getIdCountry()] = $country->getName();
             }
         }

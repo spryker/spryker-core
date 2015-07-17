@@ -10,11 +10,19 @@ use Generated\Shared\Transfer\CustomerAddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class AddressController
+ * @package SprykerFeature\Zed\Customer\Communication\Controller
+ */
 class AddressController extends AbstractController
 {
 
-    public function indexAction(Request $request)
-    {
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function indexAction(Request $request) {
         $idCustomer = $request->get('id_customer');
 
         /** @var CustomerTable $table */
@@ -30,8 +38,7 @@ class AddressController extends AbstractController
     /**
      * @return JsonResponse
      */
-    public function tableAction(Request $request)
-    {
+    public function tableAction(Request $request) {
         $idCustomer = $request->get('id_customer');
 
         /** @var CustomerTable $table */
@@ -48,16 +55,14 @@ class AddressController extends AbstractController
      *
      * @return array
      */
-    public function viewAction(Request $request)
-    {
+    public function viewAction(Request $request) {
         $idCustomerAddress = $request->get('id_customer_address');
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
 
         $addressDetails = $this->getFacade()->getAddress($customerAddress);
-        if ($addressDetails)
-        {
+        if ($addressDetails) {
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
@@ -67,8 +72,8 @@ class AddressController extends AbstractController
         $address = $this->getFacade()->getAddress($customerAddressTransfer);
 
         return $this->viewResponse([
-            'address' => $address->toArray(),
-            'id_customer' => $idCustomer,
+            'address'             => $address->toArray(),
+            'id_customer'         => $idCustomer,
             'id_customer_address' => $idCustomerAddress,
         ]);
     }
@@ -78,16 +83,14 @@ class AddressController extends AbstractController
      *
      * @return array
      */
-    public function editAction(Request $request)
-    {
+    public function editAction(Request $request) {
         $idCustomerAddress = $request->get('id_customer_address');
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
 
         $addressDetails = $this->getFacade()->getAddress($customerAddress);
-        if ($addressDetails)
-        {
+        if ($addressDetails) {
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
@@ -97,8 +100,7 @@ class AddressController extends AbstractController
 
         $addressForm->handleRequest();
 
-        if ($addressForm->isValid())
-        {
+        if ($addressForm->isValid()) {
             $data = $addressForm->getData();
 
             /** @var CustomerAddressTransfer $customerAddress */
@@ -106,6 +108,7 @@ class AddressController extends AbstractController
             $customerAddress->fromArray($data, true);
 
             $this->getFacade()->updateAddress($customerAddress);
+
             return $this->redirectResponse(sprintf('/customer/address/?id_customer=%d', $idCustomer));
         }
 
@@ -121,8 +124,7 @@ class AddressController extends AbstractController
      *
      * @return array
      */
-    public function addAction(Request $request)
-    {
+    public function addAction(Request $request) {
         $idCustomer = intval($request->get('id_customer'));
 
         /** @var AddressForm $addressForm */
@@ -131,8 +133,7 @@ class AddressController extends AbstractController
 
         $addressForm->handleRequest();
 
-        if ($addressForm->isValid())
-        {
+        if ($addressForm->isValid()) {
             $data = $addressForm->getData();
             $data['fk_customer'] = $idCustomer;
 
@@ -141,6 +142,7 @@ class AddressController extends AbstractController
             $customerAddress->fromArray($data, true);
 
             $this->getFacade()->createAddress($customerAddress);
+
             return $this->redirectResponse(sprintf('/customer/address/?id_customer=%d', $idCustomer));
         }
 
@@ -153,8 +155,8 @@ class AddressController extends AbstractController
     /**
      * @return CustomerTransfer
      */
-    protected function createCustomerAddressTransfer()
-    {
+    protected function createCustomerAddressTransfer() {
         return new CustomerAddressTransfer();
     }
+
 }

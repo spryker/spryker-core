@@ -52,6 +52,8 @@ abstract class AbstractTable
      */
     protected $defaultUrl = 'table';
 
+
+
     /**
      *
      */
@@ -248,6 +250,7 @@ abstract class AbstractTable
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = array_merge($configArray, [
                 'headers'    => $this->config->getHeaders(),
+                'searchable' => $this->config->getSearchable(),
                 'sortable'   => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
                 'url'        => $this->config->getUrl(),
@@ -267,7 +270,7 @@ abstract class AbstractTable
         $limit = $config->getPageLength();
         $offset = $this->getOffset();
         $order = $this->getOrders();
-        $columns = array_keys($config->getHeaders());
+        $columns = $config->getSearchable();
         $orderColumn = $columns[$order[0]['column']];
         $this->total = $query->count();
         $query
@@ -276,10 +279,11 @@ abstract class AbstractTable
 
         if (mb_strlen($searchTherm['value']) > 0) {
             $isFirst = true;
+
             $query->setIdentifierQuoting(true);
             $tableName = $query->getTableMap()->getName();
 
-            foreach ($columns as $column) {
+            foreach ($columns as $value) {
                 if (!$isFirst) {
                     $query->_or();
                 } else {
@@ -290,10 +294,10 @@ abstract class AbstractTable
                     sprintf('LOWER(%s.%s) LIKE ?',
                         $tableName,
                         $query->getTableMap()
-                            ->getColumnByPhpName($column)
-                            ->getName(),
-                        '%' . mb_strtolower($searchTherm['value']) . '%'
-                    )
+                            ->getColumnByPhpName($value)
+                            ->getName()
+                    ),
+                    '%' . mb_strtolower($searchTherm['value']) . '%'
                 );
             }
             $this->filtered = $query->count();

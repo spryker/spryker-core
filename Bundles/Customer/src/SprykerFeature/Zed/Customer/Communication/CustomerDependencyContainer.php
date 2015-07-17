@@ -25,16 +25,14 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     /**
      * @return CustomerQueryContainerInterface
      */
-    public function createQueryContainer()
-    {
+    public function createQueryContainer() {
         return $this->getLocator()->customer()->queryContainer();
     }
 
     /**
      * @return CustomerTable
      */
-    public function createCustomerTable()
-    {
+    public function createCustomerTable() {
         /** @var SpyCustomerQuery $customerQuery */
         $customerQuery = $this->getQueryContainer()->queryCustomers();
 
@@ -44,12 +42,14 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     /**
      * @return AddressTable
      */
-    public function createCustomerAddressTable($idCustomer)
-    {
+    public function createCustomerAddressTable($idCustomer) {
         /** @var SpyCustomerAddressQuery $addressQuery */
         $addressQuery = $this->getQueryContainer()->queryAddresses();
 
-        return $this->getFactory()->createTableAddressTable($addressQuery, $idCustomer);
+        /** @var SpyCustomerQuery $customerQuery */
+        $customerQuery = $this->getQueryContainer()->queryCustomers();
+
+        return $this->getFactory()->createTableAddressTable($addressQuery, $customerQuery, $idCustomer);
     }
 
     /**
@@ -57,8 +57,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      *
      * @return CustomerForm
      */
-    public function createCustomerForm($type)
-    {
+    public function createCustomerForm($type) {
         /** @var SpyCustomerQuery $customerQuery */
         $customerQuery = $this->getQueryContainer()->queryCustomers();
 
@@ -73,8 +72,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      *
      * @return AddressForm
      */
-    public function createAddressForm($type)
-    {
+    public function createAddressForm($type) {
         /** @var SpyCustomerQuery $customerQuery */
         $customerQuery = $this->getQueryContainer()->queryCustomers();
 
@@ -83,4 +81,5 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
 
         return $this->getFactory()->createFormAddressForm($addressQuery, $customerQuery, $type);
     }
+
 }

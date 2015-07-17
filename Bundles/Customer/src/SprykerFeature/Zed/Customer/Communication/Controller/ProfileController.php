@@ -29,8 +29,7 @@ class ProfileController extends AbstractController
      *
      * @return array
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $idCustomer = $request->query->get('id');
         $customerUri = '/customer';
 
@@ -50,8 +49,7 @@ class ProfileController extends AbstractController
         try {
             $idShippingAddress = $this->getFacade()
                 ->getDefaultShippingAddress($customerTransfer)
-                ->getIdCustomerAddress()
-            ;
+                ->getIdCustomerAddress();
         } catch (AddressNotFoundException $e) {
             $idShippingAddress = null;
         }
@@ -59,8 +57,7 @@ class ProfileController extends AbstractController
         try {
             $idBillingAddress = $this->getFacade()
                 ->getDefaultBillingAddress($customerTransfer)
-                ->getIdCustomerAddress()
-            ;
+                ->getIdCustomerAddress();
         } catch (AddressNotFoundException $e) {
             $idBillingAddress = null;
         }
@@ -69,26 +66,26 @@ class ProfileController extends AbstractController
         $addressesItems = $customerTransfer->getAddresses()->getCustomerAddressItems();
         foreach ($addressesItems as $address) {
             $addresses[] = [
-                'id' => $address->getIdCustomerAddress(),
-                'first_name' => $address->getFirstName(),
-                'last_name' => $address->getLastName(),
-                'address1' => $address->getAddress1(),
-                'address2' => $address->getAddress2(),
-                'address3' => $address->getAddress3(),
-                'company' => $address->getCompany(),
-                'zipCode' => $address->getZipCode(),
-                'city' => $address->getCity(),
-                'isDefaultBilling' => ($address->getIdCustomerAddress() === $idBillingAddress),
+                'id'                => $address->getIdCustomerAddress(),
+                'first_name'        => $address->getFirstName(),
+                'last_name'         => $address->getLastName(),
+                'address1'          => $address->getAddress1(),
+                'address2'          => $address->getAddress2(),
+                'address3'          => $address->getAddress3(),
+                'company'           => $address->getCompany(),
+                'zipCode'           => $address->getZipCode(),
+                'city'              => $address->getCity(),
+                'isDefaultBilling'  => ($address->getIdCustomerAddress() === $idBillingAddress),
                 'isDefaultShipping' => ($address->getIdCustomerAddress() === $idShippingAddress),
             ];
         }
 
         return [
-            'id_customer' => $customerTransfer->getIdCustomer(),
+            'id_customer'  => $customerTransfer->getIdCustomer(),
             'customerJson' => json_encode($form->toArray()),
-            'registered' => $customerTransfer->getRegistered(),
-            'addresses' => $addresses,
-            'form' => $form->renderDataForTwig()[AbstractForm::OUTPUT_PAYLOAD]['fields'],
+            'registered'   => $customerTransfer->getRegistered(),
+            'addresses'    => $addresses,
+            'form'         => $form->renderDataForTwig()[AbstractForm::OUTPUT_PAYLOAD]['fields'],
         ];
     }
 
@@ -97,8 +94,7 @@ class ProfileController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function sendPasswordRestoreTokenAction(Request $request)
-    {
+    public function sendPasswordRestoreTokenAction(Request $request) {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($request->query->get('id'));
         $this->getFacade()->forgotPassword($customerTransfer);
@@ -111,8 +107,7 @@ class ProfileController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function editAction(Request $request)
-    {
+    public function editAction(Request $request) {
         $form = $this->getDependencyContainer()->createCustomerForm($request);
         $form->init();
 
@@ -130,8 +125,7 @@ class ProfileController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function addressesAction(Request $request)
-    {
+    public function addressesAction(Request $request) {
         $grid = $this->getDependencyContainer()->createAddressGrid($request);
 
         return $this->jsonResponse($grid->renderData());
@@ -142,8 +136,7 @@ class ProfileController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function addressAction(Request $request)
-    {
+    public function addressAction(Request $request) {
         $form = $this->getDependencyContainer()->createAddressForm($request);
         $form->init();
 
@@ -167,8 +160,7 @@ class ProfileController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function setDefaultShippingAddressAction(Request $request)
-    {
+    public function setDefaultShippingAddressAction(Request $request) {
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
@@ -182,8 +174,7 @@ class ProfileController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function setDefaultBillingAddressAction(Request $request)
-    {
+    public function setDefaultBillingAddressAction(Request $request) {
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
