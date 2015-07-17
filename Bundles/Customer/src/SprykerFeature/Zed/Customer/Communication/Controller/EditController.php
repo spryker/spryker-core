@@ -17,7 +17,8 @@ class EditController extends AbstractController
     /**
      * @return array
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request)
+    {
         $idCustomer = $request->get('id_customer');
 
         /** @var CustomerForm $form */
@@ -56,14 +57,16 @@ class EditController extends AbstractController
     /**
      * @return CustomerTransfer
      */
-    protected function createCustomerTransfer() {
+    protected function createCustomerTransfer()
+    {
         return new CustomerTransfer();
     }
 
     /**
      * @return CustomerAddressTransfer
      */
-    protected function createCustomerAddressTransfer() {
+    protected function createCustomerAddressTransfer()
+    {
         return new CustomerAddressTransfer();
     }
 
@@ -71,7 +74,8 @@ class EditController extends AbstractController
      * @param int $idCustomer
      * @param int $defaultBillingAddress
      */
-    private function updateShippingAddress($idCustomer, $defaultBillingAddress) {
+    private function updateShippingAddress($idCustomer, $defaultBillingAddress)
+    {
         $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultBillingAddress);
         $this->getFacade()->setDefaultBillingAddress($addressTransfer);
     }
@@ -80,7 +84,8 @@ class EditController extends AbstractController
      * @param int $idCustomer
      * @param int $defaultShippingAddress
      */
-    private function updateBillingAddress($idCustomer, $defaultShippingAddress) {
+    private function updateBillingAddress($idCustomer, $defaultShippingAddress)
+    {
         $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultShippingAddress);
         $this->getFacade()->setDefaultShippingAddress($addressTransfer);
     }
@@ -91,7 +96,8 @@ class EditController extends AbstractController
      *
      * @return CustomerAddressTransfer
      */
-    private function createCustomAddressTransfer($idCustomer, $billingAddress) {
+    private function createCustomAddressTransfer($idCustomer, $billingAddress)
+    {
         $addressTransfer = $this->createCustomerAddressTransfer();
 
         $addressTransfer->setIdCustomerAddress($billingAddress);

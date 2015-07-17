@@ -21,10 +21,6 @@ use SprykerFeature\Zed\Customer\Business\Customer\Customer;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 
-/**
- * Class CustomerForm
- * @package SprykerFeature\Zed\Customer\Communication\Form
- */
 class CustomerForm extends AbstractForm
 {
 
@@ -49,7 +45,8 @@ class CustomerForm extends AbstractForm
     /**
      * @param SpyCustomerQuery $customerQuery
      */
-    public function __construct(SpyCustomerQuery $customerQuery, SpyCustomerAddressQuery $customerAddressQuery, $type) {
+    public function __construct(SpyCustomerQuery $customerQuery, SpyCustomerAddressQuery $customerAddressQuery, $type)
+    {
         $this->customerQuery = $customerQuery;
         $this->customerAddressQuery = $customerAddressQuery;
         $this->type = $type;
@@ -58,7 +55,8 @@ class CustomerForm extends AbstractForm
     /**
      * @return $this
      */
-    public function buildFormFields() {
+    public function buildFormFields()
+    {
         $emailConstraints = [
             new NotBlank(),
             new Required(),
@@ -173,7 +171,8 @@ class CustomerForm extends AbstractForm
     /**
      * @return array
      */
-    protected function populateFormFields() {
+    protected function populateFormFields()
+    {
         $result = [];
 
         $idCustomer = $this->request->get('id_customer');
@@ -212,7 +211,8 @@ class CustomerForm extends AbstractForm
     /**
      * @return array
      */
-    protected function getGenderOptions() {
+    protected function getGenderOptions()
+    {
         return [
             0 => SpyCustomerTableMap::COL_GENDER_MALE,
             1 => SpyCustomerTableMap::COL_GENDER_FEMALE,
@@ -222,7 +222,8 @@ class CustomerForm extends AbstractForm
     /**
      * @return array
      */
-    protected function getSalutationOptions() {
+    protected function getSalutationOptions()
+    {
         return [
             0 => SpyCustomerTableMap::COL_SALUTATION_MR,
             1 => SpyCustomerTableMap::COL_SALUTATION_MRS,
@@ -233,7 +234,8 @@ class CustomerForm extends AbstractForm
     /**
      * @return array
      */
-    protected function getAddressOptions() {
+    protected function getAddressOptions()
+    {
         $idCustomer = $this->request->get('id_customer');
         $addresses = $this->customerAddressQuery->findByFkCustomer($idCustomer);
 
@@ -248,11 +250,11 @@ class CustomerForm extends AbstractForm
         return $result;
     }
 
-
     /**
      * @return CustomerFacade
      */
-    protected function getCustomerFacade() {
+    protected function getCustomerFacade()
+    {
         return $this->getLocator()
             ->customer()
             ->facade();

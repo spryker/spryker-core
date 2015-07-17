@@ -11,10 +11,6 @@ use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-/**
- * Class CustomerTable
- * @package SprykerFeature\Zed\Customer\Communication\Table
- */
 class CustomerTable extends AbstractTable
 {
 
@@ -31,14 +27,16 @@ class CustomerTable extends AbstractTable
     /**
      * @param SpyCustomerQuery $customerQuery
      */
-    public function __construct(SpyCustomerQuery $customerQuery) {
+    public function __construct(SpyCustomerQuery $customerQuery)
+    {
         $this->customerQuery = $customerQuery;
     }
 
     /**
      * @param TableConfiguration $config
      */
-    protected function configure(TableConfiguration $config) {
+    protected function configure(TableConfiguration $config)
+    {
         $config->setHeaders([
             'IdCustomer'     => '#',
             self::CREATED_AT => 'Registration Date',
@@ -75,7 +73,8 @@ class CustomerTable extends AbstractTable
      *
      * @return ObjectCollection
      */
-    protected function prepareData(TableConfiguration $config) {
+    protected function prepareData(TableConfiguration $config)
+    {
         $query = $this->customerQuery
             ->leftJoinBillingAddress('billing')
             ->withColumn('billing.first_name', 'FirstName')
@@ -107,7 +106,8 @@ class CustomerTable extends AbstractTable
      *
      * @return array|string
      */
-    private function buildLinks($details) {
+    private function buildLinks($details)
+    {
         $result = '';
 
         $idCustomer = !empty($details['IdCustomer']) ? $details['IdCustomer'] : false;

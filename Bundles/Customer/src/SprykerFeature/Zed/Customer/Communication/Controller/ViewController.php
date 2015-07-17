@@ -18,7 +18,8 @@ class ViewController extends AbstractController
      *
      * @return array
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request)
+    {
         $idCustomer = $request->get('id_customer');
 
         $customerTransfer = $this->createCustomerTransfer();
@@ -38,7 +39,8 @@ class ViewController extends AbstractController
     /**
      * @return CustomerTransfer
      */
-    protected function createCustomerTransfer() {
+    protected function createCustomerTransfer()
+    {
         return new CustomerTransfer();
     }
 

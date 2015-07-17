@@ -21,7 +21,8 @@ class IndexController extends AbstractController
     /**
      * @return array
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         /** @var CustomerTable $table */
         $table = $this->getDependencyContainer()->createCustomerTable();
         $table->init();
@@ -34,7 +35,8 @@ class IndexController extends AbstractController
     /**
      * @return JsonResponse
      */
-    public function tableAction() {
+    public function tableAction()
+    {
         /** @var CustomerTable $table */
         $table = $this->getDependencyContainer()->createCustomerTable();
         $table->init();

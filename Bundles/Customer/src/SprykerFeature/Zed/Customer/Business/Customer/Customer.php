@@ -70,8 +70,7 @@ class Customer
     {
         $customerCount = $this->queryContainer
             ->queryCustomerByEmail($email)
-            ->count()
-        ;
+            ->count();
 
         return ($customerCount > 0);
     }

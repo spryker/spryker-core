@@ -15,7 +15,8 @@ class AddController extends AbstractController
     /**
      * @return array
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         /** @var CustomerForm $customerForm */
         $form = $this->getDependencyContainer()->createCustomerForm('add');
         $form->init();
@@ -41,7 +42,8 @@ class AddController extends AbstractController
     /**
      * @return CustomerTransfer
      */
-    protected function createCustomerTransfer() {
+    protected function createCustomerTransfer()
+    {
         return new CustomerTransfer();
     }
 

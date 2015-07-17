@@ -18,7 +18,8 @@ class AddressController extends AbstractController
      *
      * @return array
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request)
+    {
         $idCustomer = $request->get('id_customer');
 
         /** @var CustomerTable $table */
@@ -34,7 +35,8 @@ class AddressController extends AbstractController
     /**
      * @return JsonResponse
      */
-    public function tableAction(Request $request) {
+    public function tableAction(Request $request)
+    {
         $idCustomer = $request->get('id_customer');
 
         /** @var CustomerTable $table */
@@ -51,7 +53,8 @@ class AddressController extends AbstractController
      *
      * @return array
      */
-    public function viewAction(Request $request) {
+    public function viewAction(Request $request)
+    {
         $idCustomerAddress = $request->get('id_customer_address');
 
         $customerAddress = $this->createCustomerAddressTransfer();
@@ -79,7 +82,8 @@ class AddressController extends AbstractController
      *
      * @return array
      */
-    public function editAction(Request $request) {
+    public function editAction(Request $request)
+    {
         $idCustomerAddress = $request->get('id_customer_address');
 
         $customerAddress = $this->createCustomerAddressTransfer();
@@ -120,7 +124,8 @@ class AddressController extends AbstractController
      *
      * @return array
      */
-    public function addAction(Request $request) {
+    public function addAction(Request $request)
+    {
         $idCustomer = intval($request->get('id_customer'));
 
         /** @var AddressForm $addressForm */
@@ -151,7 +156,8 @@ class AddressController extends AbstractController
     /**
      * @return CustomerTransfer
      */
-    protected function createCustomerAddressTransfer() {
+    protected function createCustomerAddressTransfer()
+    {
         return new CustomerAddressTransfer();
     }
 

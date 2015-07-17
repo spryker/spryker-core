@@ -29,7 +29,8 @@ class ProfileController extends AbstractController
      *
      * @return array
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request)
+    {
         $idCustomer = $request->query->get('id');
         $customerUri = '/customer';
 
@@ -94,7 +95,8 @@ class ProfileController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function sendPasswordRestoreTokenAction(Request $request) {
+    public function sendPasswordRestoreTokenAction(Request $request)
+    {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($request->query->get('id'));
         $this->getFacade()->forgotPassword($customerTransfer);
@@ -107,7 +109,8 @@ class ProfileController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function editAction(Request $request) {
+    public function editAction(Request $request)
+    {
         $form = $this->getDependencyContainer()->createCustomerForm($request);
         $form->init();
 
@@ -125,7 +128,8 @@ class ProfileController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function addressesAction(Request $request) {
+    public function addressesAction(Request $request)
+    {
         $grid = $this->getDependencyContainer()->createAddressGrid($request);
 
         return $this->jsonResponse($grid->renderData());
@@ -136,7 +140,8 @@ class ProfileController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function addressAction(Request $request) {
+    public function addressAction(Request $request)
+    {
         $form = $this->getDependencyContainer()->createAddressForm($request);
         $form->init();
 
@@ -160,7 +165,8 @@ class ProfileController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function setDefaultShippingAddressAction(Request $request) {
+    public function setDefaultShippingAddressAction(Request $request)
+    {
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
@@ -174,7 +180,8 @@ class ProfileController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function setDefaultBillingAddressAction(Request $request) {
+    public function setDefaultBillingAddressAction(Request $request)
+    {
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));

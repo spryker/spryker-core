@@ -35,7 +35,8 @@ class AddressTable extends AbstractTable
     /**
      * @param SpyCustomerAddressQuery $addressQuery
      */
-    public function __construct(SpyCustomerAddressQuery $addressQuery, SpyCustomerQuery $customerQuery, $idCustomer) {
+    public function __construct(SpyCustomerAddressQuery $addressQuery, SpyCustomerQuery $customerQuery, $idCustomer)
+    {
         $this->addressQuery = $addressQuery;
         $this->customerQuery = $customerQuery;
         $this->idCustomer = $idCustomer;
@@ -44,19 +45,20 @@ class AddressTable extends AbstractTable
     /**
      * @param TableConfiguration $config
      */
-    protected function configure(TableConfiguration $config) {
+    protected function configure(TableConfiguration $config)
+    {
         $config->setHeaders([
             self::ID_CUSTOMER_ADDRESS => '#',
-            'LastName'          => 'Last Name',
-            'FirstName'         => 'First Name',
-            'Address1'          => 'Address ',
-            'Address2'          => 'Address (2nd line)',
-            'Address3'          => 'Address (3rd line)',
-            'Company'           => 'Company',
-            'ZipCode'           => 'Zip Code',
-            'City'              => 'City',
-            'Country'           => 'Country',
-            self::ACTIONS       => self::ACTIONS,
+            'LastName'                => 'Last Name',
+            'FirstName'               => 'First Name',
+            'Address1'                => 'Address ',
+            'Address2'                => 'Address (2nd line)',
+            'Address3'                => 'Address (3rd line)',
+            'Company'                 => 'Company',
+            'ZipCode'                 => 'Zip Code',
+            'City'                    => 'City',
+            'Country'                 => 'Country',
+            self::ACTIONS             => self::ACTIONS,
         ]);
 
         $config->setSortable([
@@ -87,7 +89,8 @@ class AddressTable extends AbstractTable
      *
      * @return ObjectCollection
      */
-    protected function prepareData(TableConfiguration $config) {
+    protected function prepareData(TableConfiguration $config)
+    {
         $query = $this->addressQuery
             ->filterByFkCustomer($this->idCustomer)
             ->leftJoinCountry('country')
@@ -104,16 +107,15 @@ class AddressTable extends AbstractTable
             $defaultShippingAddress = !empty($customer[self::DEFAULT_SHIPPING_ADDRESS]) ? $customer[self::DEFAULT_SHIPPING_ADDRESS] : false;
         }
 
-
         if (!empty($lines)) {
             foreach ($lines as $key => $value) {
                 $id = !empty($value[self::ID_CUSTOMER_ADDRESS]) ? $value[self::ID_CUSTOMER_ADDRESS] : false;
 
                 $tags = [];
-                if ( (false === is_bool($id)) && ($id === $defaultBillingAddress)) {
+                if ((false === is_bool($id)) && ($id === $defaultBillingAddress)) {
                     $tags[] = '<span class="label label-danger" title="Default billing address">BILLING</span>';
                 }
-                if ( (false === is_bool($id)) && ($id === $defaultShippingAddress)) {
+                if ((false === is_bool($id)) && ($id === $defaultShippingAddress)) {
                     $tags[] = '<span class="label label-danger" title="Default shipping address">SHIPPING</span>';
                 }
 
@@ -131,7 +133,8 @@ class AddressTable extends AbstractTable
      *
      * @return array|string
      */
-    private function buildLinks($details) {
+    private function buildLinks($details)
+    {
         $result = '';
 
         $idCustomerAddress = !empty($details[self::ID_CUSTOMER_ADDRESS]) ? $details[self::ID_CUSTOMER_ADDRESS] : false;

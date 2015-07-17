@@ -19,10 +19,6 @@ use Symfony\Component\Validator\Constraints\Length;
 
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 
-/**
- * Class AddressForm
- * @package SprykerFeature\Zed\Customer\Communication\Form
- */
 class AddressForm extends AbstractForm
 {
 
@@ -45,7 +41,8 @@ class AddressForm extends AbstractForm
     /**
      * @param SpyCustomerAddressQuery $addressQuery
      */
-    public function __construct(SpyCustomerAddressQuery $addressQuery, SpyCustomerQuery $customerQuery, $type) {
+    public function __construct(SpyCustomerAddressQuery $addressQuery, SpyCustomerQuery $customerQuery, $type)
+    {
         $this->customerQuery = $customerQuery;
         $this->addressQuery = $addressQuery;
         $this->type = $type;
@@ -54,7 +51,8 @@ class AddressForm extends AbstractForm
     /**
      * @return $this
      */
-    public function buildFormFields() {
+    public function buildFormFields()
+    {
         return $this->addHidden(
             'id_customer_address',
             [
@@ -186,7 +184,8 @@ class AddressForm extends AbstractForm
     /**
      * @return array
      */
-    public function populateFormFields() {
+    public function populateFormFields()
+    {
         $result = [];
 
         $idCustomer = $this->request->get('id_customer');
@@ -235,7 +234,8 @@ class AddressForm extends AbstractForm
     /**
      * @return array
      */
-    protected function getSalutationOptions() {
+    protected function getSalutationOptions()
+    {
         return [
             0 => SpyCustomerTableMap::COL_SALUTATION_MR,
             1 => SpyCustomerTableMap::COL_SALUTATION_MRS,
@@ -246,7 +246,8 @@ class AddressForm extends AbstractForm
     /**
      * @return array
      */
-    public function getCountryOptions() {
+    public function getCountryOptions()
+    {
         $countries = $this->addressQuery
             ->useCountryQuery()
             ->find();
