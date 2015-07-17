@@ -91,8 +91,8 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param $idCustomer
-     * @param $billingAddress
+     * @param int $idCustomer
+     * @param int $billingAddress
      *
      * @return CustomerAddressTransfer
      */
