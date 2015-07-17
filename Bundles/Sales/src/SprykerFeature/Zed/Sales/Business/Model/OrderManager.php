@@ -11,7 +11,6 @@ use Propel\Runtime\Propel;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
-use SprykerFeature\Zed\Sales\Dependency\Plugin\OrderReferenceGeneratorInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
@@ -67,6 +66,8 @@ class OrderManager
         $orderEntity->setFirstName($orderTransfer->getFirstName());
         $orderEntity->setLastName($orderTransfer->getLastName());
 
+        $orderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($orderTransfer));
+
         $orderEntity->save();
 
         $fkOrderProcess = $this->omsFacade->getProcessEntity($orderTransfer->getProcess())->getIdOmsOrderProcess();
@@ -89,7 +90,8 @@ class OrderManager
         Propel::getConnection()->commit();
 
         $orderTransfer->setIdSalesOrder($orderEntity->getIdSalesOrder());
-
+        $orderTransfer->setOrderReference($orderEntity->getOrderReference());
+        
         return $orderTransfer;
     }
 

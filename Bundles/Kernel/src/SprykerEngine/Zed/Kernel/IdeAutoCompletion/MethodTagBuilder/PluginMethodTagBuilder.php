@@ -54,6 +54,11 @@ class PluginMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
             return true;
         }
 
+        $reflection = new \ReflectionClass($className);
+        if (!$reflection->isInstantiable()) {
+            return true;
+        }
+
         return false;
     }
 

@@ -11,6 +11,7 @@ use SprykerFeature\Shared\System\SystemConfig;
 
 class CustomerConfig extends AbstractBundleConfig
 {
+
     /**
      * @return string
      */

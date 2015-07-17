@@ -1,4 +1,7 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace Functional\SprykerFeature\Zed\Sales\Business;
 
@@ -112,7 +115,8 @@ class SalesFacadeTest extends Test
             ->setEmail('max@mustermann.de')
             ->setFirstName('Max')
             ->setLastName('Mustermann')
-            ->setProcess('process-test-1');
+            ->setProcess('process-test-1')
+        ;
 
         return $orderTransfer;
     }
@@ -280,6 +284,13 @@ class SalesFacadeTest extends Test
 
         $item1Entity = $item1Query->findOne();
         $this->assertSame($process->getIdOmsOrderProcess(), $item1Entity->getFkOmsOrderProcess());
+    }
+
+    public function testSaveOrderGeneratesOrderReference()
+    {
+        $orderTransfer = $this->getValidBaseOrderTransfer();
+        $orderTransfer = $this->salesFacade->saveOrder($orderTransfer);
+        $this->assertNotNull($orderTransfer->getOrderReference());
     }
 
 }

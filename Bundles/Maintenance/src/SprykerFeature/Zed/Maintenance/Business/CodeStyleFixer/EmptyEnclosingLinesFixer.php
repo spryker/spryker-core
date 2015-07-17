@@ -27,8 +27,8 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
         $tokens = Tokens::fromCode($content);
 
         /**
-         * @var int
-         * @var Token
+         * @var int $index
+         * @var Token $token
          */
         foreach ($tokens as $index => $token) {
             /* @var Token $openingBrace */

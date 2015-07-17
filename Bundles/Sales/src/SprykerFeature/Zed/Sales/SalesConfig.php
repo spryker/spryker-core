@@ -58,6 +58,7 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated
      * @return array
      */
     public function getOrderIncrementKeys()
@@ -66,6 +67,7 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated
      * @return array
      */
     public function getOrderIncrementPrefix()
@@ -74,6 +76,7 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated
      * @return int
      */
     public function getOrderIncrementDigits()
@@ -111,4 +114,28 @@ class SalesConfig extends AbstractBundleConfig
         ];
     }
 
+    /**
+     * @return int
+     */
+    public function getMinimumOrderNumber()
+    {
+        return 100;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderNumberIncrementMin()
+    {
+        return 23;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderNumberIncrementMax()
+    {
+        return 42;
+    }
+    
 }

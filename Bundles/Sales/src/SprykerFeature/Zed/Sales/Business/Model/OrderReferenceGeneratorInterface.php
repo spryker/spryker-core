@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Sales\Dependency\Plugin;
+namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
 

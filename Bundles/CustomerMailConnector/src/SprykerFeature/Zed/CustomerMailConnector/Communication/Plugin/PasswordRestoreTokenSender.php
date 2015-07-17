@@ -35,10 +35,10 @@ class PasswordRestoreTokenSender extends AbstractSender implements PasswordResto
         $mailTransfer->addRecipient($mailRecipientTransfer);
         $mailTransfer->setSubject(self::SUBJECT);
         $mailTransfer->setTemplateName(self::TEMPLATE);
-        $mailTransfer->setMerge(TRUE);
+        $mailTransfer->setMerge(true);
         $mailTransfer->setMergeLanguage('handlebars');
         $globalMergeVars = [
-            'reset_password_token_url' => $token
+            'reset_password_token_url' => $token,
         ];
         $mailTransfer->setGlobalMergeVars($globalMergeVars);
 

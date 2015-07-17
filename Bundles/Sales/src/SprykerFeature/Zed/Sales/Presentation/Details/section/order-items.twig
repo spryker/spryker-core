@@ -1,8 +1,25 @@
-{% include '@Gui/Partials/Table/header.twig' with {
-    table_title: 'Order <b>' ~ idOrder ~ '</b> (' ~ orderDetails.CreatedAt.date ~ ')'
-} %}
+<div class="row">
+    <div class="col-md-12">
 
-<table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+        {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Trigger all matching states' } %}
+
+        <div>
+            {% for event in allEvents %}
+                <a class="btn btn-primary"
+                   href="/oms/trigger/trigger-event-for-order?id-sales-order={{ idOrder }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
+                    {{ event }}
+                </a>
+            {% endfor %}
+        </div>
+
+        {% include '@Gui/Partials/Table/footer.twig' %}
+
+    </div>
+</div>
+
+{% include '@Gui/Partials/Table/header.twig' with { table_title: 'Order Items' } %}
+
+<table class="footable table table-stripped toggle-arrow-tiny">
     <thead>
     <tr class="text-left">
         <th>{{ "Item name" | trans }}</th>
@@ -19,8 +36,8 @@
         <tr>
             <td>{{ orderItem.Name }}</td>
             <td>{{ orderItem.Sku }}</td>
-            <td>{{ orderItem.GrossPrice }} &euro;</td>
-            <td>{{ orderItem.PriceToPay }} &euro;</td>
+            <td>{{ orderItem.GrossPrice | currency }}</td>
+            <td>{{ orderItem.PriceToPay | currency }}</td>
             <td>{{ orderItem.State.Name }}</td>
             <td>
                 {% if events[orderItem.IdSalesOrderItem] |length > 0 %}
@@ -44,13 +61,4 @@
 
 </table>
 
-{{ gui.orderItemsTable | raw }}
-
-{% for event in all_events %}
-    <a class="btn btn-primary"
-       href="/oms/trigger/trigger-event-for-order?id-sales-order={{ idOrder }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
-        {{ event }}</a>
-{% endfor %}
-
 {% include '@Gui/Partials/Table/footer.twig' %}
-

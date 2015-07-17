@@ -243,7 +243,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
         ;
         $abstractProduct->save();
 
-        $product = (new SpyProduct)
+        $product = (new SpyProduct())
             ->setSku('ABC123')
             ->setAttributes('{}')
             ->setIsActive(true)

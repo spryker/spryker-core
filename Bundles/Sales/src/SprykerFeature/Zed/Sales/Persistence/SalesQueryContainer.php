@@ -61,6 +61,32 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @param int $idSalesOrderAddress
+     *
+     * @return SpySalesOrderAddressQuery
+     */
+    public function querySalesOrderAddressById($idSalesOrderAddress)
+    {
+        $query = $this->getFactory()->createPropelSpySalesOrderAddressQuery();
+        $query->filterByIdSalesOrderAddress($idSalesOrderAddress);
+
+        return $query;
+    }
+
+    /**
+     * @param int $orderId
+     *
+     * @return SpySalesExpenseQuery
+     */
+    public function querySalesExpensesByOrderId($orderId)
+    {
+        $query = $this->getFactory()->createPropelSpySalesExpenseQuery();
+        $query->filterByFkSalesOrder($orderId);
+
+        return $query;
+    }
+
+    /**
      * @param $idOrderItem
      *
      * @return SpySalesOrderItemQuery
