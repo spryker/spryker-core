@@ -22,6 +22,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraintQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
+use Pyz\Zed\ProductOption\Business\Internal\DemoData\Importer\Decorator\InMemoryProductOptionQueryContainer;
 
 /**
  * @group Business
@@ -49,12 +50,14 @@ class DataImportWriterTest extends AbstractFunctionalTest
         parent::setUp();
 
         $this->facade = $this->getFacade();
+        InMemoryProductOptionQueryContainer::disable();
     }
 
     public function testImportProductOptionType()
     {
         $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
         $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
+        $this->facade->flushBuffer();
 
         $result = SpyProductOptionTypeQuery::create()->findByImportKey('SHADE');
 
@@ -70,6 +73,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
         $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
         $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
+        $this->facade->flushBuffer();
 
         $result = SpyProductOptionTypeQuery::create()
             ->findByImportKey('SHADE');
@@ -92,6 +96,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->createProductOptionTypeUsage($product, $optionType);
 
         $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
+        $this->facade->flushBuffer();
 
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
@@ -108,6 +113,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $optionValueUsage->save();
 
         $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
+        $this->facade->flushBuffer();
 
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
@@ -121,6 +127,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
         $this->facade->importProductOptionTypeUsage('ABC123', 'SHADE');
         $this->facade->importProductOptionTypeUsage('ABC123', 'SHADE');
+        $this->facade->flushBuffer();
 
         $result = SpyProductOptionTypeUsageQuery::create()
             ->filterByFkProductOptionType($optionType->getIdProductOptionType())
@@ -140,6 +147,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
         $this->facade->importProductOptionValueUsage($productOptionTypeUsage->getIdProductOptionTypeUsage(),  'VIOLET');
         $this->facade->importProductOptionValueUsage($productOptionTypeUsage->getIdProductOptionTypeUsage(),  'VIOLET');
+        $this->facade->flushBuffer();
 
         $result = SpyProductOptionValueUsageQuery::create()
             ->filterByFkProductOptionTypeUsage($productOptionTypeUsage->getIdProductOptionTypeUsage())
@@ -162,6 +170,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
         $this->facade->importProductOptionTypeUsageExclusion($product->getSku(), 'SHADE', 'FITTING');
         $this->facade->importProductOptionTypeUsageExclusion($product->getSku(), 'SHADE', 'FITTING');
+        $this->facade->flushBuffer();
 
         $result = SpyProductOptionTypeUsageExclusionQuery::create()
             ->filterByFkProductOptionTypeUsageA($productOptionShade->getIdProductOptionTypeUsage())
@@ -188,6 +197,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
         $this->facade->importProductOptionValueUsageConstraint($product->getSku(), $idProductOptionValueUsageSmall, 'VIOLET', 'NOT');
         $this->facade->importProductOptionValueUsageConstraint($product->getSku(), $idProductOptionValueUsageViolet, 'CLASSIC', 'NOT');
+        $this->facade->flushBuffer();
 
         $result = SpyProductOptionValueUsageConstraintQuery::create()
             ->filterByFkProductOptionValueUsageA([$idProductOptionValueUsageSmall, $idProductOptionValueUsageViolet])
@@ -218,6 +228,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $productOptionFitting->save();
 
         $this->facade->importPresetConfiguration($product->getSku(), ['VIOLET', 'CLASSIC']);
+        $this->facade->flushBuffer();
 
         $result = SpyProductOptionConfigurationPresetQuery::create()->findByFkProduct($product->getIdProduct());
         $this->assertEquals(1, $result->count());
