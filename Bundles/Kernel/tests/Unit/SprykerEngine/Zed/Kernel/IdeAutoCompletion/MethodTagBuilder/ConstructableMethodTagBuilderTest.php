@@ -104,7 +104,6 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testBuildMethodTagsShouldNotReturnMethodTagIfNotInstantiable()
     {
-        Autoloader::allowNamespace('ProjectNamespace');
         $options = [
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',

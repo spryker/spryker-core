@@ -6,17 +6,31 @@
 
 namespace SprykerFeature\Yves\Customer\Communication\Plugin;
 
+use SprykerFeature\Client\Customer\Service\CustomerClientInterface;
 use SprykerFeature\Yves\Twig\Communication\Dependency\Plugin\TwigFunctionPluginInterface;
 use Silex\Application;
 use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
 use Twig_SimpleFunction;
-use SprykerFeature\Yves\Customer\Communication\CustomerDependencyContainer;
 
-/**
- * @method CustomerDependencyContainer getDependencyContainer()
- */
 class TwigCustomer extends AbstractPlugin implements TwigFunctionPluginInterface
 {
+
+    /**
+     * @var CustomerClientInterface
+     */
+    private $customerClient;
+
+    /**
+     * @param CustomerClientInterface $customerClient
+     *
+     * @return $this
+     */
+    public function setCustomerClient(CustomerClientInterface $customerClient)
+    {
+        $this->customerClient = $customerClient;
+
+        return $this;
+    }
 
     /**
      * @param Application $application
@@ -26,15 +40,15 @@ class TwigCustomer extends AbstractPlugin implements TwigFunctionPluginInterface
     public function getFunctions(Application $application)
     {
         return [
-            new Twig_SimpleFunction('getUsername', function () use ($application) {
-                $customer = $this->getDependencyContainer()->createCustomer($application);
+            new Twig_SimpleFunction('getUsername', function () {
+                if (!$this->customerClient->isLoggedIn()) {
+                    return null;
+                }
 
-                return $customer->getUsername();
+                return $this->customerClient->getCustomer()->getEmail();
             }),
-            new Twig_SimpleFunction('isLoggedIn', function () use ($application) {
-                $customer = $this->getDependencyContainer()->createCustomer($application);
-
-                return $customer->isLoggedIn();
+            new Twig_SimpleFunction('isLoggedIn', function () {
+                return $this->customerClient->isLoggedIn();
             }),
         ];
     }

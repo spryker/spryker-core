@@ -7,11 +7,10 @@
 namespace SprykerFeature\Yves\Customer\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Client\Customer\Service\CustomerClientInterface;
-use SprykerFeature\Client\Session\Service\SessionClientInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -43,26 +42,20 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setEmail($username);
-        $customerTransfer = $this->customerClient->getCustomer($customerTransfer);
+        if (!$this->customerClient->isLoggedIn()) {
+            $customerTransfer = new CustomerTransfer();
+            $customerTransfer->setEmail($username);
+            $customerTransfer = $this->customerClient->getCustomerByEmail($customerTransfer);
+            $this->customerClient->setCustomer($customerTransfer);
+        } else {
+            $customerTransfer = $this->customerClient->getCustomer();
+        }
 
         return new User(
             $customerTransfer->getEmail(),
             $customerTransfer->getPassword(),
             ['ROLE_USER']
         );
-    }
-
-    /**
-     * @param string $username
-     */
-    public function logout($username)
-    {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setEmail($username);
-
-        $this->customerClient->logout($customerTransfer);
     }
 
     /**

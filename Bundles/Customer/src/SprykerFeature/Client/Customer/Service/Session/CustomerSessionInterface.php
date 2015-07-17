@@ -10,16 +10,23 @@ use Generated\Shared\Customer\CustomerInterface;
 interface CustomerSessionInterface
 {
 
+    public function logout();
+
     /**
-     * @param CustomerInterface $customerTransfer
+     * @return bool
      */
-    public function logout(CustomerInterface $customerTransfer);
+    public function hasCustomer();
+
+    /**
+     * @return CustomerInterface
+     */
+    public function getCustomer();
 
     /**
      * @param CustomerInterface $customerTransfer
      *
      * @return CustomerInterface
      */
-    public function get(CustomerInterface $customerTransfer);
+    public function setCustomer(CustomerInterface $customerTransfer);
 
 }

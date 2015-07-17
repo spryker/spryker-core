@@ -6,7 +6,8 @@
 
 namespace SprykerFeature\Client\Customer\Service;
 
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Customer\CustomerAddressInterface;
+use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 
@@ -17,118 +18,154 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 {
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerInterface
      */
-    public function registerCustomer(CustomerTransfer $customerTransfer)
+    public function registerCustomer(CustomerInterface $customerTransfer)
     {
         return $this->getDependencyContainer()->createZedCustomerStub()->register($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerInterface
      */
-    public function confirmRegistration(CustomerTransfer $customerTransfer)
+    public function confirmRegistration(CustomerInterface $customerTransfer)
     {
         return $this->getDependencyContainer()->createZedCustomerStub()->confirmRegistration($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerInterface
      */
-    public function forgotPassword(CustomerTransfer $customerTransfer)
+    public function forgotPassword(CustomerInterface $customerTransfer)
     {
         return $this->getDependencyContainer()->createZedCustomerStub()->forgotPassword($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerInterface
      */
-    public function restorePassword(CustomerTransfer $customerTransfer)
+    public function restorePassword(CustomerInterface $customerTransfer)
     {
         return $this->getDependencyContainer()->createZedCustomerStub()->restorePassword($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerInterface
      */
-    public function deleteCustomer(CustomerTransfer $customerTransfer)
+    public function deleteCustomer(CustomerInterface $customerTransfer)
     {
         return $this->getDependencyContainer()->createZedCustomerStub()->delete($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
-     *
-     * @return CustomerTransfer
+     * @return CustomerInterface
      */
-    public function getCustomer(CustomerTransfer $customerTransfer)
+    public function getCustomer()
     {
-        $customerTransfer = $this->getDependencyContainer()->createSessionCustomerSession()->get($customerTransfer);
-        $user = $this->sessionClient->get($this->getKey($username));
-        if (!$user) {
-            $user = $this->fetchUser($username);
-            $this->sessionClient->set($this->getKey($username), $user);
-        }
+        $customerTransfer = $this->getDependencyContainer()->createSessionCustomerSession()->getCustomer();
 
-        return $this->getDependencyContainer()->createZedCustomerStub()->get($customerTransfer);
+        return $customerTransfer;
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerInterface
      */
-    public function updateCustomer(CustomerTransfer $customerTransfer)
+    public function setCustomer(CustomerInterface $customerTransfer)
+    {
+        $customerTransfer = $this->getDependencyContainer()->createSessionCustomerSession()->setCustomer($customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerInterface
+     */
+    public function getCustomerByEmail(CustomerInterface $customerTransfer)
+    {
+        $customerTransfer = $this->getDependencyContainer()->createZedCustomerStub()->get($customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerInterface
+     */
+    public function updateCustomer(CustomerInterface $customerTransfer)
     {
         return $this->getDependencyContainer()->createZedCustomerStub()->update($customerTransfer);
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerInterface
      */
-    public function logout(CustomerTransfer $customerTransfer)
+    public function login(CustomerInterface $customerTransfer)
     {
-        return $this->getDependencyContainer()->createSessionCustomerSession()->logout($customerTransfer);
+        $customerTransfer = $this->getCustomerByEmail($customerTransfer);
+        $this->getDependencyContainer()->createSessionCustomerSession()->setCustomer($customerTransfer);
+
+        return $customerTransfer;
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
-     *
-     * @return CustomerAddressTransfer
+     * @return mixed
      */
-    public function getAddress(CustomerAddressTransfer $addressTransfer)
+    public function logout()
+    {
+        return $this->getDependencyContainer()->createSessionCustomerSession()->logout();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLoggedIn()
+    {
+        return $this->getDependencyContainer()->createSessionCustomerSession()->hasCustomer();
+    }
+
+    /**
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
+     */
+    public function getAddress(CustomerAddressInterface $addressTransfer)
     {
         return $this->getDependencyContainer()->createZedCustomerStub()->getAddress($addressTransfer);
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param CustomerAddressInterface $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return CustomerAddressInterface
      */
-    public function updateAddress(CustomerAddressTransfer $addressTransfer)
+    public function updateAddress(CustomerAddressInterface $addressTransfer)
     {
         return $this->getDependencyContainer()->createZedCustomerStub()->updateAddress($addressTransfer);
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param CustomerAddressInterface $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return CustomerAddressInterface
      */
-    public function createAddress(CustomerAddressTransfer $addressTransfer)
+    public function createAddress(CustomerAddressInterface $addressTransfer)
     {
         return $this->getDependencyContainer()->createZedCustomerStub()->createAddress($addressTransfer);
     }

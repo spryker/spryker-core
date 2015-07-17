@@ -12,7 +12,7 @@ use SprykerFeature\Client\Session\Service\SessionClientInterface;
 class CustomerSession implements CustomerSessionInterface
 {
 
-    const SESSION_KEY_PREFIX = 'userdata:';
+    const SESSION_KEY = 'customer data';
 
     /**
      * @var SessionClientInterface
@@ -27,14 +27,25 @@ class CustomerSession implements CustomerSessionInterface
         $this->sessionClient = $sessionClient;
     }
 
-    /**
-     * @param CustomerInterface $customerTransfer
-     */
-    public function logout(CustomerInterface $customerTransfer)
+    public function logout()
     {
-        $this->sessionClient->remove(
-            $this->getKey($customerTransfer->getEmail())
-        );
+        $this->sessionClient->remove(self::SESSION_KEY);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCustomer()
+    {
+        return $this->sessionClient->has(self::SESSION_KEY);
+    }
+
+    /**
+     * @return CustomerInterface
+     */
+    public function getCustomer()
+    {
+        return $this->sessionClient->get(self::SESSION_KEY);
     }
 
     /**
@@ -42,36 +53,14 @@ class CustomerSession implements CustomerSessionInterface
      *
      * @return CustomerInterface
      */
-    public function get(CustomerInterface $customerTransfer)
-    {
-        return $this->sessionClient->get(
-            $this->getKey($customerTransfer->getEmail())
-        );
-    }
-
-    /**
-     * @param CustomerInterface $customerTransfer
-     *
-     * @return CustomerInterface
-     */
-    public function set(CustomerInterface $customerTransfer)
+    public function setCustomer(CustomerInterface $customerTransfer)
     {
         $this->sessionClient->set(
-            $this->getKey($customerTransfer->getEmail()),
+            self::SESSION_KEY,
             $customerTransfer
         );
 
         return $customerTransfer;
-    }
-
-    /**
-     * @param string $username
-     *
-     * @return string
-     */
-    private function getKey($username)
-    {
-        return self::SESSION_KEY_PREFIX . $username;
     }
 
 }
