@@ -25,13 +25,15 @@ class TwigCustomer extends AbstractPlugin implements TwigFunctionPluginInterface
      */
     public function getFunctions(Application $application)
     {
-        $customer = $this->getDependencyContainer()->createCustomer($application);
-
         return [
-            new Twig_SimpleFunction('getUsername', function () use ($customer) {
+            new Twig_SimpleFunction('getUsername', function () use ($application) {
+                $customer = $this->getDependencyContainer()->createCustomer($application);
+
                 return $customer->getUsername();
             }),
-            new Twig_SimpleFunction('isLoggedIn', function () use ($customer) {
+            new Twig_SimpleFunction('isLoggedIn', function () use ($application) {
+                $customer = $this->getDependencyContainer()->createCustomer($application);
+
                 return $customer->isLoggedIn();
             }),
         ];

@@ -7,6 +7,7 @@ namespace SprykerFeature\Yves\Glossary\Communication\Plugin\ServiceProvider;
 
 use Generated\Yves\Ide\AutoCompletion;
 use Generated\Yves\Ide\FactoryAutoCompletion\GlossaryCommunication;
+use SprykerFeature\Yves\Glossary\Communication\GlossaryDependencyContainer;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Silex\Application;
@@ -15,12 +16,14 @@ use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Client\Glossary\Service\GlossaryClientInterface;
 
 /**
- * @method GlossaryCommunication getFactory()
+ * @method GlossaryDependencyContainer getDependencyContainer()
  */
 class TranslationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
-
+    /**
+     * @var GlossaryClientInterface
+     */
     private $glossaryClient;
 
     /**
@@ -41,7 +44,7 @@ class TranslationServiceProvider extends AbstractPlugin implements ServiceProvid
     public function register(Application $app)
     {
         $app['translator'] = $app->share(function ($app) {
-            $twigTranslator = $this->getFactory()->createTwigTranslator(
+            $twigTranslator = $this->getDependencyContainer()->createTwigTranslator(
                 $this->glossaryClient, $app['locale']
             );
 
