@@ -6,9 +6,13 @@
 
 namespace Functional\SprykerFeature\Zed\ProductOption\Business\Model;
 
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
 use Generated\Zed\Ide\AutoCompletion;
+use Pyz\Zed\ProductOption\Business\Internal\DemoData\Importer\Decorator\InMemoryProductOptionQueryContainer;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
+use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
+use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionConfigurationPresetQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusionQuery;
@@ -17,12 +21,8 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsage;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraintQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
-use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
-use Pyz\Zed\ProductOption\Business\Internal\DemoData\Importer\Decorator\InMemoryProductOptionQueryContainer;
 
 /**
  * @group Business
@@ -71,8 +71,8 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $optionType = (new SpyProductOptionType())->setImportKey('SHADE');
         $optionType->save();
 
-        $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
-        $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
+        $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '299');
+        $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '299');
         $this->facade->flushBuffer();
 
         $result = SpyProductOptionTypeQuery::create()
