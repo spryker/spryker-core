@@ -61,7 +61,7 @@ class AddressController extends AbstractController
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
 
         $addressDetails = $this->getFacade()->getAddress($customerAddress);
-        if ($addressDetails) {
+        if (false === empty($addressDetails)) {
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
@@ -90,7 +90,7 @@ class AddressController extends AbstractController
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
 
         $addressDetails = $this->getFacade()->getAddress($customerAddress);
-        if ($addressDetails) {
+        if (false === empty($addressDetails)) {
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
