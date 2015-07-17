@@ -149,6 +149,9 @@ class AddressForm extends AbstractForm
                     'label'       => 'Country',
                     'placeholder' => 'Select one',
                     'choices'     => $this->getCountryOptions(),
+                    'preferred_choices' => [
+                        $this->addressQuery->useCountryQuery()->findOneByName('Germany')->getIdCountry()
+                    ]
                 ]
             )
             ->addText(
@@ -161,6 +164,9 @@ class AddressForm extends AbstractForm
                 'submit',
                 [
                     'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
+                    'attr' => [
+                        'class' => 'btn btn-primary'
+                    ]
                 ]
             );
     }

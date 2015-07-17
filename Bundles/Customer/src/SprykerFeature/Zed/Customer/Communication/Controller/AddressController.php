@@ -52,7 +52,23 @@ class AddressController extends AbstractController
     {
         $idCustomerAddress = $request->get('id_customer_address');
 
+        $customerAddress = $this->createCustomerAddressTransfer();
+        $customerAddress->setIdCustomerAddress($idCustomerAddress);
+
+        $addressDetails = $this->getFacade()->getAddress($customerAddress);
+        if ($addressDetails)
+        {
+            $idCustomer = $addressDetails->getFkCustomer();
+        }
+
+        $customerAddressTransfer = $this->createCustomerAddressTransfer();
+        $customerAddressTransfer->setIdCustomerAddress($idCustomerAddress);
+
+        $address = $this->getFacade()->getAddress($customerAddressTransfer);
+
         return $this->viewResponse([
+            'address' => $address->toArray(),
+            'id_customer' => $idCustomer,
             'id_customer_address' => $idCustomerAddress,
         ]);
     }

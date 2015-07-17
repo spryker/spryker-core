@@ -56,6 +56,8 @@ class CustomerTable extends AbstractTable
             self::COUNTRY,
         ]);
 
+        $config->setUrl('table');
+
         return $config;
     }
 

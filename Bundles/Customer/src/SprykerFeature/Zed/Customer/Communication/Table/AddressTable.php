@@ -101,6 +101,7 @@ class AddressTable extends AbstractTable
         {
             $links = [
                 'Edit' => '/customer/address/edit/?id_customer_address=%d',
+                'View' => '/customer/address/view/?id_customer_address=%d',
             ];
 
             $result = [];

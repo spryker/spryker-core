@@ -6,9 +6,9 @@
 {% block content %}
 
     <p>
-        <a href="/customer/" class="btn btn-primary">{{ 'Back to Customers' | trans }}</a>&nbsp;&nbsp;&nbsp;
-        <a href="/customer/view?id_customer={{ id_customer }}" class="btn btn-primary">{{ 'View Customer' | trans }}</a>&nbsp;&nbsp;&nbsp;
-        <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-primary ">{{ 'Manage Addresses' | trans }}</a>
+        <a href="/customer/" class="btn btn-default">{{ 'Back to Customers' | trans }}</a>&nbsp;&nbsp;&nbsp;
+        <a href="/customer/view?id_customer={{ id_customer }}" class="btn btn-sm btn-info">{{ 'View Customer' | trans }}</a>&nbsp;&nbsp;&nbsp;
+        <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-default ">{{ 'Manage Addresses' | trans }}</a>
     </p>
 
     {{ form(form) }}

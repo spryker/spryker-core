@@ -170,6 +170,9 @@ class CustomerForm extends AbstractForm
             'submit',
             [
                 'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                ],
             ]
         );
 
