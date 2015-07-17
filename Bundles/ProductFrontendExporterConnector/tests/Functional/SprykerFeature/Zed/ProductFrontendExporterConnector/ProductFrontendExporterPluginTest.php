@@ -10,6 +10,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
@@ -155,7 +156,6 @@ class ProductFrontendExporterPluginTest extends Test
     {
         $abstractProductTransfer = new AbstractProductTransfer();
         $abstractProductTransfer->setSku($sku);
-        $abstractProductTransfer->setName($name);
         $abstractProductTransfer->setIsActive(true);
         $abstractProductTransfer->setAttributes(
             [
@@ -165,7 +165,10 @@ class ProductFrontendExporterPluginTest extends Test
                 'depth' => 850,
             ]
         );
-        $abstractProductTransfer->setLocalizedAttributes(
+        $localizedAttributesTransfer = new LocalizedAttributesTransfer();
+        $localizedAttributesTransfer->setLocale($locale);
+        $localizedAttributesTransfer->setName($name);
+        $localizedAttributesTransfer->setAttributes(
             [
                 'thumbnail_url' => '/images/product/default.png',
                 'main_color' => 'gray',
@@ -174,10 +177,10 @@ class ProductFrontendExporterPluginTest extends Test
                 'name' => 'Ted Technical Robot',
             ]
         );
+        $abstractProductTransfer->addLocalizedAttributes($localizedAttributesTransfer);
 
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProductTransfer);
         $abstractProductTransfer->setIdAbstractProduct($idAbstractProduct);
-        $this->productFacade->createAbstractProductAttributes($abstractProductTransfer, $locale);
 
         return $idAbstractProduct;
     }
@@ -194,7 +197,6 @@ class ProductFrontendExporterPluginTest extends Test
     {
         $concreteProductTransfer = new ConcreteProductTransfer();
         $concreteProductTransfer->setSku($sku);
-        $concreteProductTransfer->setName($name);
         $concreteProductTransfer->setIsActive(true);
         $concreteProductTransfer->setAttributes(
             [
@@ -203,17 +205,18 @@ class ProductFrontendExporterPluginTest extends Test
                 'available' => true,
             ]
         );
-        $concreteProductTransfer->setLocalizedAttributes(
-            [
-                'image_url' => '/images/product/robot_buttons_black.png',
-                'material' => 'aluminium',
-                'gender' => 'b',
-            ]
-        );
+        $localizedAttributes = new LocalizedAttributesTransfer();
+        $localizedAttributes->setLocale($locale);
+        $localizedAttributes->setName($name);
+        $localizedAttributes->setAttributes([
+            'image_url' => '/images/product/robot_buttons_black.png',
+            'material' => 'aluminium',
+            'gender' => 'b',
+        ]);
+        $concreteProductTransfer->addLocalizedAttributes($localizedAttributes);
         $idConcreteProduct = $this->productFacade->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
 
         $concreteProductTransfer->setIdConcreteProduct($idConcreteProduct);
-        $this->productFacade->createConcreteProductAttributes($concreteProductTransfer, $locale);
 
         return $idConcreteProduct;
     }

@@ -48,22 +48,25 @@ class AbstractProductWriter implements AbstractProductWriterInterface
      */
     public function writeAbstractProduct(AbstractProductTransfer $product)
     {
-         return (
-            $this->productStatement->execute(
-                [
-                    ':sku' => $product->getSku(),
-                    ':attributes' => json_encode($product->getAttributes()),
-                ]
-            ) &&
+        $this->productStatement->execute(
+            [
+                ':sku' => $product->getSku(),
+                ':attributes' => json_encode($product->getAttributes()),
+            ]
+        );
+
+        foreach ($product->getLocalizedAttributes() as $localizedAttributes) {
             $this->attributesStatement->execute(
                 [
-                    ':attributes' => json_encode($product->getLocalizedAttributes()),
-                    ':name' => $product->getName(),
+                    ':attributes' => json_encode($localizedAttributes->getAttributes()),
+                    ':name' => $localizedAttributes->getName(),
                     ':abstractProductSku' => $product->getSku(),
                     ':fkLocale' => $this->localeTransfer->getIdLocale(),
                 ]
-            )
-         );
+            );
+        }
+
+        return true;
     }
 
     protected function createProductStatement()

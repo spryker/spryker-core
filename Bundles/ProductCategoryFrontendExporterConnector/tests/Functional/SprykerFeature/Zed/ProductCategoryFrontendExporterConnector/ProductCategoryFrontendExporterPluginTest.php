@@ -9,6 +9,7 @@ namespace Functional\SprykerFeature\Zed\ProductCategoryFrontendExporterConnector
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -231,7 +232,7 @@ class ProductCategoryFrontendExporterPluginTest extends Test
     {
         $abstractProductTransfer = new AbstractProductTransfer();
         $abstractProductTransfer->setSku($sku);
-        $abstractProductTransfer->setName($name);
+
         $abstractProductTransfer->setIsActive(true);
         $abstractProductTransfer->setAttributes(
             [
@@ -241,20 +242,21 @@ class ProductCategoryFrontendExporterPluginTest extends Test
                 'depth' => 850,
             ]
         );
-        $abstractProductTransfer->setLocalizedAttributes(
-            [
-                'thumbnail_url' => '/images/product/default.png',
-                'main_color' => 'gray',
-                'other_colors' => 'red',
-                'description' => 'A description!',
-                'name' => 'Ted Technical Robot',
-            ]
-        );
+        $localizedAttributes = new LocalizedAttributesTransfer();
+        $localizedAttributes->setLocale($locale);
+        $localizedAttributes->setName($name);
+        $localizedAttributes->setAttributes([
+            'thumbnail_url' => '/images/product/default.png',
+            'main_color' => 'gray',
+            'other_colors' => 'red',
+            'description' => 'A description!',
+            'name' => 'Ted Technical Robot',
+        ]);
 
+        $abstractProductTransfer->addLocalizedAttributes($localizedAttributes);
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProductTransfer);
 
         $abstractProductTransfer->setIdAbstractProduct($idAbstractProduct);
-        $this->productFacade->createAbstractProductAttributes($abstractProductTransfer, $locale);
 
         return $idAbstractProduct;
     }
@@ -271,7 +273,6 @@ class ProductCategoryFrontendExporterPluginTest extends Test
     {
         $concreteProductTransfer = new ConcreteProductTransfer();
         $concreteProductTransfer->setSku($sku);
-        $concreteProductTransfer->setName($name);
         $concreteProductTransfer->setIsActive(true);
         $concreteProductTransfer->setAttributes(
             [
@@ -280,17 +281,19 @@ class ProductCategoryFrontendExporterPluginTest extends Test
                 'available' => true,
             ]
         );
-        $concreteProductTransfer->setLocalizedAttributes(
-            [
-                'image_url' => '/images/product/robot_buttons_black.png',
-                'material' => 'aluminium',
-                'gender' => 'b',
-            ]
-        );
+
+        $localizedAttributes = new LocalizedAttributesTransfer();
+        $localizedAttributes->setLocale($locale);
+        $localizedAttributes->setName($name);
+        $localizedAttributes->setAttributes([
+            'image_url' => '/images/product/robot_buttons_black.png',
+            'material' => 'aluminium',
+            'gender' => 'b',
+        ]);
+        $concreteProductTransfer->addLocalizedAttributes($localizedAttributes);
         $idConcreteProduct = $this->productFacade->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
 
         $concreteProductTransfer->setIdConcreteProduct($idConcreteProduct);
-        $this->productFacade->createConcreteProductAttributes($concreteProductTransfer, $locale);
 
         return $idConcreteProduct;
     }

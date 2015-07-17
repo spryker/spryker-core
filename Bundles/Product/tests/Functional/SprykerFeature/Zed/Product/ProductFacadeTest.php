@@ -9,6 +9,7 @@ namespace Functional\SprykerFeature\Zed\Product;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
@@ -120,7 +121,7 @@ class ProductFacadeTest extends Test
         $abstractProduct = new AbstractProductTransfer();
         $abstractProduct->setSku('AnAbstractProductSku');
         $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes([]);
+        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
 
@@ -140,14 +141,14 @@ class ProductFacadeTest extends Test
         $abstractProduct = new AbstractProductTransfer();
         $abstractProduct->setSku('AnAbstractProductSku');
         $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes([]);
+        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
 
         $concreteProduct = new ConcreteProductTransfer();
         $concreteProduct->setSku('AConcreteProductSku');
         $concreteProduct->setAttributes([]);
-        $concreteProduct->setLocalizedAttributes([]);
+        $concreteProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
         $this->productFacade->createConcreteProduct($concreteProduct, $idAbstractProduct);
 
@@ -166,7 +167,7 @@ class ProductFacadeTest extends Test
         $abstractProduct = new AbstractProductTransfer();
         $abstractProduct->setSku('AProductSku');
         $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes([]);
+        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
         $this->productFacade->createAbstractProduct($abstractProduct);
 
@@ -185,13 +186,13 @@ class ProductFacadeTest extends Test
         $abstractProduct = new AbstractProductTransfer();
         $abstractProduct->setSku('AnAbstractProductSku');
         $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes([]);
+        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
 
         $concreteProduct = new ConcreteProductTransfer();
         $concreteProduct->setSku('AConcreteProductSku');
         $concreteProduct->setAttributes([]);
-        $concreteProduct->setLocalizedAttributes([]);
+        $concreteProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
         $idConcreteProduct = $this->productFacade->createConcreteProduct($concreteProduct, $idAbstractProduct);
 
         $this->assertEquals(1, $concreteProductQuery->count());
@@ -208,14 +209,14 @@ class ProductFacadeTest extends Test
         $abstractProduct = new AbstractProductTransfer();
         $abstractProduct->setSku('AnAbstractProductSku');
         $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes([]);
+        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
 
         $concreteProduct = new ConcreteProductTransfer();
         $concreteProduct->setSku('AConcreteProductSku');
         $concreteProduct->setAttributes([]);
-        $concreteProduct->setLocalizedAttributes([]);
+        $concreteProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
         $this->productFacade->createConcreteProduct($concreteProduct, $idAbstractProduct);
 
         $this->assertTrue($this->productFacade->hasConcreteProduct('AConcreteProductSku'));
@@ -232,7 +233,7 @@ class ProductFacadeTest extends Test
         $abstractProduct = new AbstractProductTransfer();
         $abstractProduct->setSku('AnAbstractProductSku');
         $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes([]);
+        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
         $url = $this->productFacade->createProductUrl('AnAbstractProductSku', $urlString, $locale);
 
