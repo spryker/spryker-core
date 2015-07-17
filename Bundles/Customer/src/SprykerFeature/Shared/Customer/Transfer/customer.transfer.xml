@@ -24,6 +24,7 @@
         <property name="isDefaultBilling" type="bool" />
         <property name="isDefaultShipping" type="bool" />
         <property name="fkCountry" type="int" />
+        <property name="fkRegion" type="int" />
         <property name="iso2Code" type="string" />
     </transfer>
 
