@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerAddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,7 +23,7 @@ class AddressController extends AbstractController
 
         return $this->viewResponse([
             'addressTable' => $table,
-            'id_customer' => $idCustomer,
+            'id_customer'  => $idCustomer,
         ]);
     }
 
@@ -42,6 +43,11 @@ class AddressController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     public function viewAction(Request $request)
     {
         $idCustomerAddress = $request->get('id_customer_address');
@@ -51,42 +57,88 @@ class AddressController extends AbstractController
         ]);
     }
 
-    public function editAction()
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function editAction(Request $request)
     {
         $idCustomerAddress = $request->get('id_customer_address');
 
+        $customerAddress = $this->createCustomerAddressTransfer();
+        $customerAddress->setIdCustomerAddress($idCustomerAddress);
+
+        $addressDetails = $this->getFacade()->getAddress($customerAddress);
+        if ($addressDetails)
+        {
+            $idCustomer = $addressDetails->getFkCustomer();
+        }
+
+        /** @var AddressForm $addressForm */
+        $addressForm = $this->getDependencyContainer()->createAddressForm('update');
+        $addressForm->init();
+
+        $addressForm->handleRequest();
+
+        if ($addressForm->isValid())
+        {
+            $data = $addressForm->getData();
+
+            /** @var CustomerAddressTransfer $customerAddress */
+            $customerAddress = $this->createCustomerAddressTransfer();
+            $customerAddress->fromArray($data, true);
+
+            $this->getFacade()->updateAddress($customerAddress);
+            return $this->redirectResponse(sprintf('/customer/address/?id_customer=%d', $idCustomer));
+        }
+
         return $this->viewResponse([
+            'form'                => $addressForm->createView(),
+            'id_customer'         => $idCustomer,
             'id_customer_address' => $idCustomerAddress,
         ]);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     public function addAction(Request $request)
     {
-        $idCustomer = $request->get('id_customer');
+        $idCustomer = intval($request->get('id_customer'));
 
-        /** @var CustomerForm $addressForm */
+        /** @var AddressForm $addressForm */
         $addressForm = $this->getDependencyContainer()->createAddressForm('add');
         $addressForm->init();
 
         $addressForm->handleRequest();
 
-        if ($addressForm->isValid()) {
+        if ($addressForm->isValid())
+        {
             $data = $addressForm->getData();
+            $data['fk_customer'] = $idCustomer;
 
-            /** @var CustomerTransfer $customer */
-            $customer = $this->createCustomerTransfer();
-            $customer->fromArray($data, true);
+            /** @var CustomerAddressTransfer $customerAddress */
+            $customerAddress = $this->createCustomerAddressTransfer();
+            $customerAddress->fromArray($data, true);
 
-            $lastInsertId = $this->getFacade()->registerCustomer($customer);
-            if ($lastInsertId) {
-                $this->redirectResponse(sprintf('/customer/view?id_customer=%d', $lastInsertId));
-            }
+            $this->getFacade()->createAddress($customerAddress);
+            return $this->redirectResponse(sprintf('/customer/address/?id_customer=%d', $idCustomer));
         }
 
         return $this->viewResponse([
-            'form' => $addressForm->createView(),
+            'form'        => $addressForm->createView(),
             'id_customer' => $idCustomer,
         ]);
     }
 
+    /**
+     * @return CustomerTransfer
+     */
+    protected function createCustomerAddressTransfer()
+    {
+        return new CustomerAddressTransfer();
+    }
 }

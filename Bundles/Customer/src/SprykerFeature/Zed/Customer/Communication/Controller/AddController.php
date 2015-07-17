@@ -35,9 +35,8 @@ class AddController extends AbstractController
             $customer->fromArray($data, true);
 
             $lastInsertId = $this->getFacade()->registerCustomer($customer);
-            if ($lastInsertId) {
-                $this->redirectResponse(sprintf('/customer/view?id_customer=%d', $lastInsertId));
-            }
+
+            return $this->redirectResponse('/customer/');
         }
 
         return $this->viewResponse([

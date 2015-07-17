@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use SprykerFeature\Zed\Customer\Persistence\Propel\Base\SpyCustomerAddressQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
@@ -31,6 +32,11 @@ class CustomerForm extends AbstractForm
     protected $customerQuery;
 
     /**
+     * @var SpyCustomerAddressQuery
+     */
+    protected $customerAddressQuery;
+
+    /**
      * @var
      */
     protected $type;
@@ -38,9 +44,10 @@ class CustomerForm extends AbstractForm
     /**
      * @param SpyCustomerQuery $customerQuery
      */
-    public function __construct(SpyCustomerQuery $customerQuery, $type)
+    public function __construct(SpyCustomerQuery $customerQuery, SpyCustomerAddressQuery $customerAddressQuery, $type)
     {
         $this->customerQuery = $customerQuery;
+        $this->customerAddressQuery = $customerAddressQuery;
         $this->type = $type;
     }
 
@@ -177,13 +184,36 @@ class CustomerForm extends AbstractForm
         $result = [];
 
         $idCustomer = $this->request->get('id_customer');
+
         if (false === is_null($idCustomer))
         {
             $customerDetailEntity = $this
                 ->customerQuery
                 ->findOneByIdCustomer($idCustomer);
 
-            $result = $customerDetailEntity->toArray();
+            if ($customerDetailEntity) {
+                $result = $customerDetailEntity->toArray();
+            }
+        }
+
+        if (!empty($result['salutation'])) {
+            // key: value => value: key
+            $salutations = array_flip($this->getSalutationOptions());
+
+            if (isset($salutations[$result['salutation']]))
+            {
+                $result['salutation'] = $salutations[$result['salutation']];
+            }
+        }
+
+        if (!empty($result['gender'])) {
+            // key: value => value: key
+            $genders = array_flip($this->getGenderOptions());
+
+            if (isset($genders[$result['gender']]))
+            {
+                $result['gender'] = $genders[$result['gender']];
+            }
         }
 
         return $result;
@@ -214,7 +244,19 @@ class CustomerForm extends AbstractForm
 
     protected function getAddressOptions()
     {
-        return [];
+        $idCustomer = $this->request->get('id_customer');
+        $addresses = $this->customerAddressQuery->findByFkCustomer($idCustomer);
+
+        $result = [];
+        if (!empty($addresses))
+        {
+            foreach ($addresses->getData() as $address)
+            {
+                $result[$address->getIdCustomerAddress()] = sprintf('%s %s (%s, %s %s)', $address->getFirstName(), $address->getLastName(), $address->getAddress1(), $address->getZipCode(), $address->getCity());
+            }
+        }
+
+        return $result;
     }
 
 

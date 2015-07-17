@@ -5,9 +5,10 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 class EditController extends AbstractController
@@ -33,7 +34,8 @@ class EditController extends AbstractController
             $customer->fromArray($data, true);
 
             $this->getFacade()->updateCustomer($customer);
-            $this->redirectResponse(sprintf('/customer/view/?id_customer=%d', $idCustomer));
+
+            return $this->redirectResponse(sprintf('/customer/view/?id_customer=%d', $idCustomer));
         }
 
         return $this->viewResponse([
@@ -47,6 +49,10 @@ class EditController extends AbstractController
      */
     protected function createCustomerTransfer() {
         return new CustomerTransfer();
+    }
+
+    protected function createCustomerAddressTransfer() {
+        return new CustomerAddressTransfer();
     }
 
 }

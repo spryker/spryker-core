@@ -21,6 +21,7 @@ use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 
 class AddressForm extends AbstractForm
 {
+    const UPDATE = 'update';
     /**
      * @var SpyCustomerAddressQuery
      */
@@ -147,7 +148,7 @@ class AddressForm extends AbstractForm
                 [
                     'label'       => 'Country',
                     'placeholder' => 'Select one',
-                    'choices' => $this->getCountryOptions(),
+                    'choices'     => $this->getCountryOptions(),
                 ]
             )
             ->addText(
@@ -159,7 +160,7 @@ class AddressForm extends AbstractForm
             ->addSubmit(
                 'submit',
                 [
-                    'label' => 'Save',
+                    'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
                 ]
             );
     }
@@ -175,9 +176,9 @@ class AddressForm extends AbstractForm
 
         if (false === is_null($idCustomer))
         {
-            $customerDetailEntity =$this
+            $customerDetailEntity = $this
                 ->customerQuery
-                ->findByIdCustomer($idCustomer);
+                ->findOneByIdCustomer($idCustomer);
 
             $customerDetails = $customerDetailEntity->toArray();
         }
@@ -186,10 +187,35 @@ class AddressForm extends AbstractForm
         if (false === is_null($idCustomerAddress))
         {
             $addressDetailEntity = $this
-                ->customerAddressQuery
+                ->addressQuery
                 ->findOneByIdCustomerAddress($idCustomerAddress);
 
             $result = $addressDetailEntity->toArray();
+        }
+
+        if (empty($result['salutation']))
+        {
+            $result['salutation'] = !empty($customerDetails['salutation']) ? $customerDetails['salutation'] : false;
+        }
+
+        if (!empty($result['salutation'])) {
+            // key: value => value: key
+            $salutations = array_flip($this->getSalutationOptions());
+
+            if (isset($salutations[$result['salutation']]))
+            {
+                $result['salutation'] = $salutations[$result['salutation']];
+            }
+        }
+
+        if (empty($result['first_name']))
+        {
+            $result['first_name'] = !empty($customerDetails['first_name']) ? $customerDetails['first_name'] : '';
+        }
+
+        if (empty($result['last_name']))
+        {
+            $result['last_name'] = !empty($customerDetails['last_name']) ? $customerDetails['last_name'] : '';
         }
 
         return $result;
@@ -212,9 +238,20 @@ class AddressForm extends AbstractForm
      */
     public function getCountryOptions()
     {
-        return [
-            1 => 'Germany',
-        ];
+        $countries = $this->addressQuery
+            ->useCountryQuery()
+            ->find();
+
+        $result = [];
+        if (!empty($countries))
+        {
+            foreach ($countries->getData() as $country)
+            {
+                $result[$country->getIdCountry()] = $country->getName();
+            }
+        }
+
+        return $result;
     }
 
 }

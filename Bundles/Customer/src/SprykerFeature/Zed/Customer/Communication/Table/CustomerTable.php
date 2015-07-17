@@ -15,6 +15,8 @@ class CustomerTable extends AbstractTable
 {
     const FORMAT = 'D, M jS, Y';
     const ACTIONS = 'Actions';
+    const COUNTRY = 'Country';
+    const CREATED_AT = 'CreatedAt';
 
     /**
      * @var SpyCustomerQuery
@@ -36,22 +38,22 @@ class CustomerTable extends AbstractTable
     {
         $config->setHeaders([
             'IdCustomer'  => '#',
+            self::CREATED_AT => 'Registration Date',
             'Email'       => 'Email',
             'LastName'    => 'Last Name',
             'FirstName'   => 'First Name',
-            'CreatedAt'   => 'Registration Date',
             'ZipCode'     => 'ZIP Code',
             'City'        => 'City',
-            'Country'     => 'Country',
+            self::COUNTRY => self::COUNTRY,
             self::ACTIONS => self::ACTIONS,
         ]);
         $config->setSortable([
             'IdCustomer',
-            'CreatedAt',
+            self::CREATED_AT,
             'FirstName',
             'LastName',
             'ZipCode',
-            'Country',
+            self::COUNTRY,
         ]);
 
         return $config;
@@ -70,7 +72,7 @@ class CustomerTable extends AbstractTable
             ->withColumn('billing.last_name', 'LastName')
             ->withColumn('billing.zip_code', 'ZipCode')
             ->withColumn('billing.city', 'City')
-            ->withColumn('billing.fk_country', 'Country');
+            ->withColumn('billing.fk_country', self::COUNTRY);
 
         $lines = $this->runQuery($query, $config);
 
@@ -78,7 +80,13 @@ class CustomerTable extends AbstractTable
         {
             foreach ($lines as $key => $value)
             {
-                $lines[$key]['CreatedAt'] = gmdate(self::FORMAT, strtotime($value['CreatedAt']));
+                 $country = $this->customerQuery
+                    ->useAddressQuery()
+                    ->useCountryQuery()
+                    ->findOneByIdCountry($lines[$key][self::COUNTRY]);
+
+                $lines[$key][self::COUNTRY] = $country ? $country->getName() : '';
+                $lines[$key][self::CREATED_AT] = gmdate(self::FORMAT, strtotime($value[self::CREATED_AT]));
                 $lines[$key][self::ACTIONS] = $this->buildLinks($value);
             }
         }

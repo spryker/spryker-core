@@ -130,11 +130,13 @@ class Customer
     public function register(CustomerTransfer $customerTransfer)
     {
         try {
-            // @todo clean this up. is misusing the exception
             $this->getCustomer($customerTransfer);
         } catch (CustomerNotFoundException $e) {
             $customerTransfer->setRegistrationKey($this->generateKey());
             $customer = new SpyCustomer();
+            $customer->setFirstName($customerTransfer->getFirstName());
+            $customer->setLastName($customerTransfer->getLastName());
+            $customer->setGender($customerTransfer->getGender());
             $customer->setPassword($customerTransfer->getPassword());
             $customer->setEmail($customerTransfer->getEmail());
             $customer->setRegistrationKey($customerTransfer->getRegistrationKey());
@@ -287,6 +289,7 @@ class Customer
         $customer->setCompany($customerTransfer->getCompany());
         $customer->setDateOfBirth($customerTransfer->getDateOfBirth());
         $customer->setSalutation($customerTransfer->getSalutation());
+        $customer->setGender($customerTransfer->getGender());
         $customer->save();
 
         return true;

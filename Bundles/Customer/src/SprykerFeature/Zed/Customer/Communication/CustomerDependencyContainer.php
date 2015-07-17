@@ -62,7 +62,10 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
         /** @var SpyCustomerQuery $customerQuery */
         $customerQuery = $this->getQueryContainer()->queryCustomers();
 
-        return $this->getFactory()->createFormCustomerForm($customerQuery, $type);
+        /** @var SpyCustomerAddressQuery $addressQuery */
+        $addressQuery = $this->getQueryContainer()->queryAddresses();
+
+        return $this->getFactory()->createFormCustomerForm($customerQuery, $addressQuery, $type);
     }
 
     /**

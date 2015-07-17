@@ -17,6 +17,9 @@ class AddressTable extends AbstractTable
      */
     protected $addressQuery;
 
+    /**
+     * @var
+     */
     protected $idCustomer;
 
     /**
@@ -44,7 +47,7 @@ class AddressTable extends AbstractTable
             'ZipCode'           => 'Zip Code',
             'City'              => 'City',
             'Country'           => 'Country',
-            self::ACTIONS => self::ACTIONS,
+            self::ACTIONS       => self::ACTIONS,
         ]);
         $config->setSortable([
             'IdCustomerAddress',
@@ -67,12 +70,13 @@ class AddressTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->addressQuery
+            ->filterByFkCustomer($this->idCustomer)
             ->leftJoinCountry('country')
             ->withColumn('country.name', 'Country');
 
         $lines = $this->runQuery($query, $config);
 
-        if (empty($lines))
+        if (!empty($lines))
         {
             foreach ($lines as $key => $value)
             {
@@ -96,7 +100,7 @@ class AddressTable extends AbstractTable
         if ($idCustomerAddress)
         {
             $links = [
-                'Edit' => '/customer/address/edit/?id_customer=%d',
+                'Edit' => '/customer/address/edit/?id_customer_address=%d',
             ];
 
             $result = [];
