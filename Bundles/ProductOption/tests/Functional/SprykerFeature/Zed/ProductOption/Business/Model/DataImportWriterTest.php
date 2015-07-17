@@ -6,9 +6,14 @@
 
 namespace Functional\SprykerFeature\Zed\ProductOption\Business\Model;
 
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
 use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\Exception\PropelException;
+use Pyz\Zed\ProductOption\Business\Internal\DemoData\Importer\Decorator\InMemoryProductOptionQueryContainer;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
+use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
+use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionConfigurationPresetQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusionQuery;
@@ -17,17 +22,13 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsage;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraintQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
-use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
-use Pyz\Zed\ProductOption\Business\Internal\DemoData\Importer\Decorator\InMemoryProductOptionQueryContainer;
 
 /**
  * @group Business
  * @group Zed
- * @group ProdutOption
+ * @group ProductOption
  * @group DataImportWriterTest
  *
  * @method ProductOptionFacade getFacade()
@@ -71,8 +72,8 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $optionType = (new SpyProductOptionType())->setImportKey('SHADE');
         $optionType->save();
 
-        $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
-        $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
+        $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '299');
+        $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '299');
         $this->facade->flushBuffer();
 
         $result = SpyProductOptionTypeQuery::create()
@@ -82,7 +83,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->assertEquals(1, $result->count());
 
         $optionValues = $result[0]->getSpyProductOptionValues();
-        $this->assertEquals(1, $optionValues->count(), 'Failed assetting that method is idempotent');
+        $this->assertEquals(1, $optionValues->count(), 'Failed asserting that method is idempotent');
 
         $this->assertEquals('VIOLET', $optionValues[0]->getImportKey());
         $this->assertEquals(299, $optionValues[0]->getSpyProductOptionValuePrice()->getPrice());
@@ -92,7 +93,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     public function testTouchUpdatedWhenUpdatingProductOptionType()
     {
         $product = $this->createConcreteProduct();
-        $optionType = $this->createOptionTypeWithValue();
+        $optionType = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $this->createProductOptionTypeUsage($product, $optionType);
 
         $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
@@ -104,7 +105,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     public function testTouchUpdatedWhenUpdatingProductOptionValue()
     {
         $product = $this->createConcreteProduct();
-        $optionType = $this->createOptionTypeWithValue();
+        $optionType = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionTypeUsage = $this->createProductOptionTypeUsage($product, $optionType);
         $optionValueUsage = (new SpyProductOptionValueUsage())
             ->setFkProductOptionTypeUsage($optionTypeUsage->getIdProductOptionTypeUsage())
@@ -142,7 +143,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     public function testImportProductOptionValueUsage()
     {
         $product = $this->createConcreteProduct();
-        $optionType = $this->createOptionTypeWithValue();
+        $optionType = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $productOptionTypeUsage = $this->createProductOptionTypeUsage($product, $optionType);
 
         $this->facade->importProductOptionValueUsage($productOptionTypeUsage->getIdProductOptionTypeUsage(),  'VIOLET');
@@ -162,7 +163,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     public function testImportProductOptionTypeUsageExclusion()
     {
         $product = $this->createConcreteProduct();
-        $optionShadeViolet = $this->createOptionTypeWithValue();
+        $optionShadeViolet = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionFittingClassic = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
         $productOptionFitting = $this->createProductOptionTypeUsage($product, $optionFittingClassic);
@@ -186,11 +187,11 @@ class DataImportWriterTest extends AbstractFunctionalTest
     {
         $product = $this->createConcreteProduct();
 
-        $optionShadeViolet = $this->createOptionTypeWithValue();
+        $optionShadeViolet = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionFittingClassic = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
-        $productOptionFitting = $this->createProductOptionTypeUsage($product, $optionFittingClassic);
         $productOptionShade = $this->createProductOptionTypeUsage($product, $optionShadeViolet);
+        $productOptionFitting = $this->createProductOptionTypeUsage($product, $optionFittingClassic);
 
         $idProductOptionValueUsageSmall = $this->facade->importProductOptionValueUsage($productOptionFitting->getIdProductOptionTypeUsage(),  'CLASSIC');
         $idProductOptionValueUsageViolet = $this->facade->importProductOptionValueUsage($productOptionShade->getIdProductOptionTypeUsage(),  'VIOLET');
@@ -204,7 +205,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
             ->filterByFkProductOptionValueUsageB([$idProductOptionValueUsageSmall, $idProductOptionValueUsageViolet])
             ->find();
 
-        $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
+        $this->assertEquals(1, $result->count(), 'Failed asserting that method is idempotent');
 
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
@@ -212,7 +213,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     public function testImportProductOptionPresetConfiguration()
     {
         $product = $this->createConcreteProduct();
-        $optionShade = $this->createOptionTypeWithValue();
+        $optionShade = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionFitting = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
         $productOptionShade = $this->createProductOptionTypeUsage($product, $optionShade);
@@ -266,7 +267,15 @@ class DataImportWriterTest extends AbstractFunctionalTest
         return $product;
     }
 
-    private function createOptionTypeWithValue($typeKey = 'SHADE', $valueKey = 'VIOLET')
+    /**
+     * @param string $typeKey
+     * @param string $valueKey
+     *
+     * @throws PropelException
+     *
+     * @return SpyProductOptionType
+     */
+    private function createOptionTypeWithValue($typeKey, $valueKey)
     {
         $optionValue = (new SpyProductOptionValue())->setImportKey($valueKey);
         $optionType = (new SpyProductOptionType())->setImportKey($typeKey)->addSpyProductOptionValue($optionValue);
@@ -275,6 +284,14 @@ class DataImportWriterTest extends AbstractFunctionalTest
         return $optionType;
     }
 
+    /**
+     * @param SpyProduct $product
+     * @param SpyProductOptionType $optionType
+     *
+     * @throws PropelException
+     *
+     * @return SpyProductOptionTypeUsage
+     */
     private function createProductOptionTypeUsage($product, $optionType)
     {
         $productOptionTypeUsage = (new SpyProductOptionTypeUsage())
@@ -287,6 +304,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
         return $productOptionTypeUsage;
     }
 
+    /**
+     * @param int $idAbstractProduct
+     */
     private function performAssertionOnTouchTable($idAbstractProduct)
     {
         $query = SpyTouchQuery::create()
