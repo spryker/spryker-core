@@ -1,10 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Country\Business;
 
+use Generated\Shared\Country\CountryInterface;
 use SprykerFeature\Zed\Country\Business\Exception\CountryExistsException;
 use SprykerFeature\Zed\Country\Business\Exception\MissingCountryException;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
@@ -12,6 +14,7 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
 
 class CountryManager implements CountryManagerInterface
 {
+
     /**
      * @var CountryQueryContainerInterface
      */
@@ -22,7 +25,8 @@ class CountryManager implements CountryManagerInterface
      */
     public function __construct(
         CountryQueryContainerInterface $countryQueryContainer
-    ) {
+    )
+    {
         $this->countryQueryContainer = $countryQueryContainer;
     }
 
@@ -41,9 +45,11 @@ class CountryManager implements CountryManagerInterface
     /**
      * @param string $iso2code
      * @param array $countryData
+     * @deprecated
+     *
+     * @throws CountryExistsException
      *
      * @return int
-     * @throws CountryExistsException
      */
     public function createCountry($iso2code, array $countryData)
     {
@@ -55,8 +61,7 @@ class CountryManager implements CountryManagerInterface
             ->setPostalCodeMandatory($countryData['postal_code_mandatory'])
             ->setPostalCodeRegex($countryData['postal_code_regex'])
             ->setIso2Code($iso2code)
-            ->setIso3Code($countryData['iso3_code'])
-        ;
+            ->setIso3Code($countryData['iso3_code']);
 
         $country->save();
 
@@ -64,10 +69,21 @@ class CountryManager implements CountryManagerInterface
     }
 
     /**
+     * @param CountryInterface $countryTransfer
+     * @return int
+     */
+    public function saveCountry(CountryInterface $countryTransfer)
+    {
+        return $this->createCountry($countryTransfer->getIso2Code(), $countryTransfer->toArray());
+
+    }
+
+    /**
      * @param string $iso2code
      *
-     * @return int
      * @throws MissingCountryException
+     *
+     * @return int
      */
     public function getIdCountryByIso2Code($iso2code)
     {
@@ -92,4 +108,5 @@ class CountryManager implements CountryManagerInterface
             throw new CountryExistsException();
         }
     }
+
 }

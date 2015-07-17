@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\UserTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 
@@ -22,7 +22,7 @@ class UserTest extends Test
 {
 
     /**
-     * @var UserFacade $userFacade
+     * @var UserFacade
      */
     private $userFacade;
 
@@ -195,4 +195,5 @@ class UserTest extends Test
 
         $this->assertTrue($this->userFacade->isValidPassword($data['password'], $user->getPassword()));
     }
+
 }

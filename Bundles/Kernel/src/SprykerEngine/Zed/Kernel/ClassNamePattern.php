@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerEngine\Zed\Kernel;
 
 class ClassNamePattern
 {
+
     /**
      * @var string
      */

@@ -8,6 +8,7 @@ use SprykerFeature\Zed\GlossaryQueue\Dependency\Facade\GlossaryQueueToGlossaryIn
 
 class QueueTranslationManager implements QueueTranslationManagerInterface
 {
+
     /**
      * @var GlossaryQueueToGlossaryInterface
      */
@@ -56,4 +57,5 @@ class QueueTranslationManager implements QueueTranslationManagerInterface
             );
         }
     }
+
 }

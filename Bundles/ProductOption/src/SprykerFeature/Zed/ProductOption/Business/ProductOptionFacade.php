@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Zed\ProductOption\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
@@ -36,9 +36,9 @@ class ProductOptionFacade extends AbstractFacade
      * @param array $localizedNames
      * @param float $price
      *
-     * @return int
-     *
      * @throws MissingProductOptionTypeException
+     *
+     * @return int
      */
     public function importProductOptionValue($importKeyProductOptionValue, $importKeyProductOptionType, array $localizedNames = [], $price = null)
     {
@@ -51,9 +51,9 @@ class ProductOptionFacade extends AbstractFacade
      * @param bool $isOptional
      * @param int $sequence
      *
-     * @return int
-     *
      * @throws MissingProductOptionTypeException
+     *
+     * @return int
      */
     public function importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional = false, $sequence = null)
     {
@@ -65,10 +65,10 @@ class ProductOptionFacade extends AbstractFacade
      * @param string $importKeyProductOptionValue
      * @param int $sequence
      *
-     * @return int
-     *
      * @throws MissingProductOptionTypeUsageException
      * @throws MissingProductOptionValueException
+     *
+     * @return int
      */
     public function importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyProductOptionValue, $sequence = null)
     {
@@ -109,11 +109,11 @@ class ProductOptionFacade extends AbstractFacade
      * @param bool $isDefault
      * @param int $sequence
      *
-     * @return int
-     *
      * @throws MissingProductOptionValueUsageException
      * @throws MissingProductOptionValueException
      * @throws MissingProductOptionValueUsageException
+     *
+     * @return int
      */
     public function importPresetConfiguration($sku, array $importKeysOptionValues, $isDefault = false, $sequence = null)
     {
@@ -202,4 +202,11 @@ class ProductOptionFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->getProductOptionReaderModel()->getEffectiveTaxRateForTypeUsage($idTypeUsage);
     }
+
+
+    public function flushBuffer()
+    {
+        $this->getDependencyContainer()->getDataImportWriterModel()->flushBuffer();
+    }
+
 }

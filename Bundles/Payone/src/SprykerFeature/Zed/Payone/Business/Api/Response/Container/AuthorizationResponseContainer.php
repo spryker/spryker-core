@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -96,8 +97,6 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
      * @var string
      */
     protected $clearing_amount;
-
-
 
     /**
      * @param string $clearing_bankaccount
@@ -452,12 +451,3 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
     }
 
 }
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 
 class CategoryNodeQueryExpander
 {
+
     /**
      * @var LocaleTransfer
      */
@@ -40,8 +42,9 @@ class CategoryNodeQueryExpander
     /**
      * @param ModelCriteria $expandableQuery
      *
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     public function expandQuery(ModelCriteria $expandableQuery)
     {
@@ -97,4 +100,5 @@ class CategoryNodeQueryExpander
 
         return $expandableQuery;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -31,4 +32,5 @@ abstract class AbstractClientLocatorMatcher implements LocatorMatcherInterface
     {
         return strrev(substr(strrev($method), strlen(self::METHOD_SUFFIX)));
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class AuthorizationIsErrorPlugin extends AbstractPlugin
 {
+
     /**
      * @param OrderTransfer $orderTransfer
      *

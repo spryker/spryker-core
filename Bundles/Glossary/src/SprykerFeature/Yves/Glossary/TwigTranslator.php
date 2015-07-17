@@ -1,26 +1,35 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Yves\Glossary;
 
-use SprykerFeature\Client\Glossary\Service\Translator;
+use SprykerFeature\Client\Glossary\Service\GlossaryClientInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class TwigTranslator implements TranslatorInterface
 {
-    /**
-     * @var Translator
-     */
-    protected $translator;
 
     /**
-     * @param Translator $translator
+     * @var GlossaryClientInterface
      */
-    public function __construct(Translator $translator)
+    private $client;
+
+    /**
+     * @var string
+     */
+    private $localeName;
+
+    /**
+     * @param GlossaryClientInterface $client
+     * @param null|string $localeName
+     */
+    public function __construct(GlossaryClientInterface $client, $localeName = null)
     {
-        $this->translator = $translator;
+        $this->client = $client;
+        $this->localeName = $localeName;
     }
 
     /**
@@ -37,9 +46,13 @@ class TwigTranslator implements TranslatorInterface
      *
      * @api
      */
-    public function trans($id, array $parameters = array(), $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
-        return $this->translator->translate($id, $parameters);
+        if (is_null($locale)) {
+            $locale = $this->localeName;
+        }
+
+        return $this->client->translate($id, $parameters, $locale);
     }
 
     /**
@@ -57,34 +70,29 @@ class TwigTranslator implements TranslatorInterface
      *
      * @api
      */
-    public function transChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
+    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
     {
         // TODO: Implement transChoice() method.
     }
 
     /**
-     * Sets the current locale.
+     * @param string $localeName
      *
-     * @param string $locale The locale
-     *
-     * @throws \InvalidArgumentException If the locale contains invalid characters
-     *
-     * @api
+     * @return $this
      */
-    public function setLocale($locale)
+    public function setLocale($localeName)
     {
-        // TODO: Implement setLocale() method.
+        $this->localeName = $localeName;
+
+        return $this;
     }
 
     /**
-     * Returns the current locale.
-     *
-     * @return string The locale
-     *
-     * @api
+     * @return string
      */
     public function getLocale()
     {
-        return $this->translator->getLocale();
+        return $this->localeName;
     }
+
 }

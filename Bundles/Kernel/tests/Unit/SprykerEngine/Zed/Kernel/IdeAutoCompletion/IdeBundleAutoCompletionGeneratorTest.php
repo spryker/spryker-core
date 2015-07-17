@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,8 +7,6 @@
 namespace Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion;
 
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeBundleAutoCompletionGenerator;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 use Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion\Fixtures\BundleNameFinder;
 use Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion\Fixtures\MethodTagBuilder;
 
@@ -88,9 +87,10 @@ class IdeBundleAutoCompletionGeneratorTest extends AbstractAutoCompletion
             IdeBundleAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(),
             IdeBundleAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Zed\Ide\AutoCompletion',
             IdeBundleAutoCompletionGenerator::OPTION_KEY_INTERFACE_NAME => 'TestInterface',
-            IdeBundleAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => $this->baseDir . 'test/'
+            IdeBundleAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => $this->baseDir . 'test/',
         ];
 
         return $options;
     }
+
 }

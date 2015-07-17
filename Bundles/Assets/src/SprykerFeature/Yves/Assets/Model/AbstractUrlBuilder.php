@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Yves\Assets\Model;
 
 abstract class AbstractUrlBuilder
 {
+
     /**
      * @var string
      */
@@ -23,8 +25,9 @@ abstract class AbstractUrlBuilder
     /**
      * @param string $assetPath
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function buildUrl($assetPath)
     {
@@ -50,4 +53,5 @@ abstract class AbstractUrlBuilder
     {
         return (($urlPart[0] === '/') ? '' : '/');
     }
+
 }

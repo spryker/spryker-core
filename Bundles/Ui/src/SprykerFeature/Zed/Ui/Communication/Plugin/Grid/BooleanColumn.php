@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ class BooleanColumn extends DefaultColumn
 
     /**
      * @param ModelCriteria $query
+     *
      * @return mixed|ModelCriteria
      */
     protected function applyFilter(ModelCriteria $query)
@@ -42,7 +44,7 @@ class BooleanColumn extends DefaultColumn
         $filterValue = strtolower($this->getFilterValue());
 
         if (!$filterValue) {
-            return null;
+            return;
         }
 
         if (strpos('true', $filterValue) === 0) {
@@ -53,11 +55,12 @@ class BooleanColumn extends DefaultColumn
             return 0;
         }
 
-        return null;
+        return;
     }
 
     /**
      * @param array $data
+     *
      * @return array
      */
     public function getData(array $data)
@@ -71,6 +74,7 @@ class BooleanColumn extends DefaultColumn
 
     /**
      * @param array $data
+     *
      * @return array
      */
     protected function convertRowValuesToBoolean(array $data)
@@ -79,11 +83,12 @@ class BooleanColumn extends DefaultColumn
             if (isset($row[$this->name])
                 && !is_bool($row[$this->name])
             ) {
-                $row[$this->name] = (boolean)$row[$this->name];
+                $row[$this->name] = (boolean) $row[$this->name];
                 $data[DefaultRowsRenderer::DATA_DEFINITION_ROWS][$key] = $row;
             }
         }
 
         return $data;
     }
+
 }

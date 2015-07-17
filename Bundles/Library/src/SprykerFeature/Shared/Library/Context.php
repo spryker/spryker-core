@@ -1,10 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 class SprykerFeature_Shared_Library_Context
 {
+
     const CONTEXT_SHARED = '*';
     const CONTEXT_YVES = 'yves';
     const CONTEXT_ZED = 'zed';
@@ -13,7 +14,7 @@ class SprykerFeature_Shared_Library_Context
     protected static $contexts = null;
 
     /** @var array */
-    protected static $instances = array();
+    protected static $instances = [];
 
     /** @var string */
     protected static $defaultContext = self::CONTEXT_SHARED;
@@ -23,9 +24,12 @@ class SprykerFeature_Shared_Library_Context
 
     /**
      * Creates \SprykerFeature_Shared_Library_Context object based on given context name.
+     *
      * @param string|\SprykerFeature_Shared_Library_Context $context
-     * @return \SprykerFeature_Shared_Library_Context
+     *
      * @throws Exception
+     *
+     * @return \SprykerFeature_Shared_Library_Context
      */
     public static function getInstance($context = null)
     {
@@ -42,11 +46,13 @@ class SprykerFeature_Shared_Library_Context
         if (!isset(static::$instances[$context])) {
             static::$instances[$context] = new self($context);
         }
+
         return static::$instances[$context];
     }
 
     /**
      * Sets default context, should be used only while bootstrapping the system
+     *
      * @param string|\SprykerFeature_Shared_Library_Context $context
      */
     public static function setDefaultContext($context = self::CONTEXT_SHARED)
@@ -82,9 +88,9 @@ class SprykerFeature_Shared_Library_Context
         if (static::$contexts === null) {
             $contexts = \SprykerEngine\Shared\Kernel\Store::getInstance()->getContexts();
             if (isset($contexts['*'])) {
-                $defaults = is_array($contexts['*']) ? $contexts['*'] : array();
+                $defaults = is_array($contexts['*']) ? $contexts['*'] : [];
             } else {
-                $defaults = array();
+                $defaults = [];
             }
             foreach ($contexts as $k => $v) {
                 $contexts[$k] = array_replace_recursive($defaults, $v);
@@ -95,6 +101,7 @@ class SprykerFeature_Shared_Library_Context
 
     /**
      * @param string $name
+     *
      * @return bool
      */
     public function __isset($name)
@@ -104,6 +111,7 @@ class SprykerFeature_Shared_Library_Context
 
     /**
      * @param string $name
+     *
      * @return mixed
      */
     public function __get($name)
@@ -113,7 +121,9 @@ class SprykerFeature_Shared_Library_Context
 
     /**
      * Checks if value exists in context.
+     *
      * @param string $name
+     *
      * @return bool
      */
     public function has($name)
@@ -123,7 +133,9 @@ class SprykerFeature_Shared_Library_Context
 
     /**
      * Retrieves value from context.
+     *
      * @param string $name
+     *
      * @return mixed
      */
     public function get($name)
@@ -133,8 +145,10 @@ class SprykerFeature_Shared_Library_Context
 
     /**
      * Converts date/time from internal timezone to context's timezone.
+     *
      * @param string|DateTime $dateTime date/time to be converted
      * @param string $format output format
+     *
      * @return string
      */
     public function dateTimeConvertTo($dateTime, $format = 'Y-m-d H:i:s')
@@ -143,13 +157,16 @@ class SprykerFeature_Shared_Library_Context
             $dateTime = new DateTime($dateTime, new DateTimeZone(\SprykerEngine\Shared\Kernel\Store::getInstance()->getTimezone()));
         }
         $dateTime->setTimezone(new DateTimeZone($this->timezone));
+
         return $dateTime->format($format);
     }
 
     /**
      * Converts date/time from context's timezone to internal timezone.
+     *
      * @param string|DateTime $dateTime date/time to be converted
      * @param string $format output format
+     *
      * @return string
      */
     public function dateTimeConvertFrom($dateTime, $format = 'Y-m-d H:i:s')
@@ -158,14 +175,17 @@ class SprykerFeature_Shared_Library_Context
             $dateTime = new DateTime($dateTime, new DateTimeZone($this->timezone));
         }
         $dateTime->setTimezone(new DateTimeZone(\SprykerEngine\Shared\Kernel\Store::getInstance()->getTimezone()));
+
         return $dateTime->format($format);
     }
 
     /**
      * Converts date/time to context't timezone from external context's timezone.
+     *
      * @param \SprykerFeature_Shared_Library_Context|string $contextFrom context from which to convert
      * @param string|DateTime $dateTime date/time to be converted
      * @param string $format output format
+     *
      * @return string
      */
     public function dateTimeConverToFrom($contextFrom, $dateTime, $format = 'Y-m-d H:i:s')
@@ -174,14 +194,17 @@ class SprykerFeature_Shared_Library_Context
             $dateTime = new DateTime($dateTime, new DateTimeZone(self::getInstance($contextFrom)->timezone));
         }
         $dateTime->setTimezone(new DateTimeZone($this->timezone));
+
         return $dateTime->format($format);
     }
 
     /**
      * Converts date/time from context's timezone to external context't timezone.
+     *
      * @param \SprykerFeature_Shared_Library_Context|string $contextTo context to which to convert
      * @param string|DateTime $dateTime date/time to be converted
      * @param string $format output format
+     *
      * @return string
      */
     public function dateTimeConvertFromTo($contextTo, $dateTime, $format = 'Y-m-d H:i:s')
@@ -190,6 +213,8 @@ class SprykerFeature_Shared_Library_Context
             $dateTime = new DateTime($dateTime, new DateTimeZone($this->timezone));
         }
         $dateTime->setTimezone(new DateTimeZone(self::getInstance($contextTo)->timezone));
+
         return $dateTime->format($format);
     }
+
 }

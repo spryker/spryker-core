@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,7 @@ use Solarium\Core\Query\QueryInterface;
 
 /**
  * Class SolrRead
- * @package SprykerFeature\Shared\Library\Storage\Adapter\Solr
+ *
  * @property \Solarium\Client $resource
  */
 class SolrRead extends Solr implements ReadInterface
@@ -25,6 +26,7 @@ class SolrRead extends Solr implements ReadInterface
 
     /**
      * @param QueryInterface $query
+     *
      * @return \Solarium\QueryType\Select\Result\Result
      */
     public function select(QueryInterface $query)
@@ -39,6 +41,8 @@ class SolrRead extends Solr implements ReadInterface
     {
         $select = $this->getResource()->createSelect();
         $result = $this->getResource()->select($select);
+
         return $result->getNumFound();
     }
+
 }

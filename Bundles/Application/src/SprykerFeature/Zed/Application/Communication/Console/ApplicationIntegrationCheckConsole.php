@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -35,7 +36,6 @@ class ApplicationIntegrationCheckConsole extends Console
      * @param OutputInterface $output
      *
      * @throws \Exception
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -70,4 +70,5 @@ class ApplicationIntegrationCheckConsole extends Console
 
         return $steps;
     }
+
 }

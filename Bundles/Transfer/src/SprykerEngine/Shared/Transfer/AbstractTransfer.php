@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -122,11 +123,11 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
 
             // Process Array
             if (is_array($value) && $this->isArray($getterReturn) && $type === 'ArrayObject') {
-                /** @var TransferInterface $transferObject */
+                /* @var TransferInterface $transferObject */
                 $elementType = $this->getArrayTypeWithNamespace($getterReturn);
                 $transferObjectsArray = new \ArrayObject();
                 foreach ($value as $arrayElement) {
-                    $transferObject = new $elementType;
+                    $transferObject = new $elementType();
                     if (is_array($arrayElement)) {
                         $transferObject->fromArray($arrayElement);
                     }
@@ -138,7 +139,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
             // Process nested Transfer Objects
             if ($this->isTransferClass($type)) {
                 /** @var TransferInterface $transferObject */
-                $transferObject = new $type;
+                $transferObject = new $type();
                 if (is_array($value)) {
                     $transferObject->fromArray($value);
                     $value = $transferObject;
@@ -236,4 +237,5 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
             $this->modifiedProperties[] = $property;
         }
     }
+
 }

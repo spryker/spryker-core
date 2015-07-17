@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Predis\Connection\ConnectionException;
 
 /**
  * @property \Predis\Client $resource
+ *
  * @method \Predis\Client getResource()
  */
 abstract class Redis extends AbstractKeyValue
@@ -46,4 +48,5 @@ abstract class Redis extends AbstractKeyValue
             $this->resource->disconnect();
         }
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryWriterInterface
 {
+
     /**
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
@@ -30,4 +32,5 @@ interface CategoryWriterInterface
      * @param int $idCategory
      */
     public function delete($idCategory);
+
 }

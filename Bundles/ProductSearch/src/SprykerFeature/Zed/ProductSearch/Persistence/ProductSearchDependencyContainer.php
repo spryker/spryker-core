@@ -1,15 +1,17 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\ProductSearch\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 
-class ProductSearchDependencyContainer extends AbstractDependencyContainer
+class ProductSearchDependencyContainer extends AbstractPersistenceDependencyContainer
 {
+
     /**
      * @return ProductSearchQueryExpanderInterface
      */
@@ -27,4 +29,5 @@ class ProductSearchDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getLocator()->product()->queryContainer();
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,11 +13,14 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 
 interface DecisionRuleInterface
 {
+
     /**
      * @param SpyDiscount $discountEntity
      * @ param OrderInterface $discountableContainer
+     *
      * @param CalculableInterface $discountableContainer
      * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
+     *
      * @return bool
      */
     public function evaluate(
@@ -25,4 +29,5 @@ interface DecisionRuleInterface
         CalculableInterface $discountableContainer,
         array $decisionRulePlugins
     );
+
 }

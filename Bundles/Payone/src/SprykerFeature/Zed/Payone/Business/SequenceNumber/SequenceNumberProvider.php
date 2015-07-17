@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Zed\Payone\Business\SequenceNumber;
 
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-
 
 class SequenceNumberProvider implements SequenceNumberProviderInterface
 {
@@ -26,6 +26,7 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
 
     /**
      * @param string $transactionId
+     *
      * @return int
      */
     public function getNextSequenceNumber($transactionId)
@@ -35,6 +36,7 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
 
     /**
      * @param string $transactionId
+     *
      * @return int
      */
     public function getCurrentSequenceNumber($transactionId)

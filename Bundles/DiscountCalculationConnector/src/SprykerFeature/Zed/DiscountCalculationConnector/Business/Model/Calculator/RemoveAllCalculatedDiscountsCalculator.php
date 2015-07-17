@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,7 +23,7 @@ class RemoveAllCalculatedDiscountsCalculator
                 $option->setDiscounts(new \ArrayObject());
             }
             foreach ($item->getExpenses() as $expense) {
-                $expense->setDiscounts(new \ArrayObject);
+                $expense->setDiscounts(new \ArrayObject());
             }
         }
 
@@ -32,4 +33,5 @@ class RemoveAllCalculatedDiscountsCalculator
 
         $calculableContainer->getCalculableObject()->setDiscounts(new \ArrayObject());
     }
+
 }

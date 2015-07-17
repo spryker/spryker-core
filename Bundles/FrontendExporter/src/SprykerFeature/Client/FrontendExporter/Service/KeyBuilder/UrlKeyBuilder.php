@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\UrlKeyBuilder as Shar
 
 /**
  * Class UrlKeyBuilder
- * @package SprykerFeature\Client\YvesExport\KeyBuilder
  */
 class UrlKeyBuilder extends SharedUrlKeyBuilder
 {

@@ -1,19 +1,17 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerFeature\Zed\Kernel\Communication\Plugin;
 
-use Generated\Shared\Transfer\CartTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Library\Communication\Response;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\FilterControllerEvent;
 use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\GatewayController;
 use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\NotGatewayController;

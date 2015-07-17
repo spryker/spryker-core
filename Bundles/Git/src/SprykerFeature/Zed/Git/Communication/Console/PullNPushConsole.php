@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -44,6 +45,7 @@ class PullNPushConsole extends BaseCommand
         if ($this->input->getOption(self::OPTION_REBASE)) {
             $command .= ' --rebase';
         }
+
         return $command . ' && git push origin $branch';
     }
 

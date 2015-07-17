@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,10 +8,10 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 
 /**
  * Interface ReadInterface
- * @package SprykerFeature\Shared\Library\Storage\Adapter\KeyValue
  */
 interface ReadInterface
 {
+
     /**
      * @param string $key
      *
@@ -36,7 +37,6 @@ interface ReadInterface
     public function getAllKeys();
 
     /**
-     * @return void
      */
     public function resetAccessStats();
 
@@ -49,4 +49,5 @@ interface ReadInterface
      * @return int
      */
     public function getCountItems();
+
 }

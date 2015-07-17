@@ -41,7 +41,6 @@ class ReceiverInstaller extends AbstractInstaller
     }
 
     /**
-     * @return void
      */
     public function install()
     {
@@ -52,4 +51,5 @@ class ReceiverInstaller extends AbstractInstaller
             $this->receiverWriter->create($receiver);
         }
     }
+
 }

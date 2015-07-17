@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,4 +22,5 @@ class AbstractLocatorLocatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('SprykerEngine\Shared\Kernel\BundleProxy', $bundleProxy);
     }
+
 }

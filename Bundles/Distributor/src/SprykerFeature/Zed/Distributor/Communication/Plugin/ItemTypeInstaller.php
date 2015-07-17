@@ -11,8 +11,10 @@ use SprykerFeature\Zed\Installer\Communication\Plugin\InstallerInterface;
  */
 class ItemTypeInstaller extends AbstractPlugin implements InstallerInterface
 {
+
     public function install()
     {
         $this->getFacade()->installItemTypes();
     }
+
 }

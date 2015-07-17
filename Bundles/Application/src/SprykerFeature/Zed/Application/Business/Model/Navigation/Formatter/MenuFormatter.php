@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,6 +25,7 @@ class MenuFormatter implements MenuFormatterInterface
     const BUNDLE = 'bundle';
     const CHILDREN = 'children';
     const TITLE = 'title';
+    const ICON = 'icon';
     const SHORTCUT = 'shortcut';
     const IS_ACTIVE = 'is_active';
     const CHILD_IS_ACTIVE = 'child_is_active';
@@ -61,6 +63,7 @@ class MenuFormatter implements MenuFormatterInterface
     /**
      * @param array $pages
      * @param string $pathInfo
+     *
      * @return array
      */
     public function formatMenu(array $pages, $pathInfo)
@@ -75,6 +78,7 @@ class MenuFormatter implements MenuFormatterInterface
      * @param array $pages
      * @param string $pathInfo
      * @param int $currentLevel
+     *
      * @return array
      */
     protected function formatPages(array $pages, $pathInfo, $currentLevel = 1)
@@ -101,6 +105,7 @@ class MenuFormatter implements MenuFormatterInterface
                 $formattedPage[self::CHILDREN] = $children;
                 $children = [];
             }
+
             $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
         }
 
@@ -109,6 +114,7 @@ class MenuFormatter implements MenuFormatterInterface
 
     /**
      * @param array $page
+     *
      * @return string
      */
     protected function getUri(array $page)
@@ -126,6 +132,7 @@ class MenuFormatter implements MenuFormatterInterface
 
     /**
      * @param array $page
+     *
      * @return array
      */
     protected function formatPage(array $page)
@@ -133,13 +140,16 @@ class MenuFormatter implements MenuFormatterInterface
         $formattedPage = [];
 
         $url = $this->getUri($page);
-        if ('#' ==! $url) {
+        if ('#' === !$url) {
             $this->urlUniqueValidator->validate($url);
             $this->urlUniqueValidator->addUrl($url);
         }
         $formattedPage[self::URI] = $url;
         $formattedPage[self::LABEL] = $page[self::LABEL];
         $formattedPage[self::TITLE] = $page[self::TITLE];
+        if (isset($page[self::ICON])) {
+            $formattedPage[self::ICON] = $page[self::ICON];
+        }
 
         if (isset($page[self::SHORTCUT]) && strlen($page[self::SHORTCUT]) === 1) {
             $formattedPage[self::SHORTCUT] = $page[self::SHORTCUT];
@@ -151,9 +161,11 @@ class MenuFormatter implements MenuFormatterInterface
         }
         if (count($attributes)) {
             $formattedPage[self::ATTRIBUTES] = $attributes;
-            return array($formattedPage, $page);
+
+            return [$formattedPage, $page];
         }
 
         return $formattedPage;
     }
+
 }

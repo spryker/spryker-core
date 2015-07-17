@@ -6,6 +6,7 @@ use Generated\Shared\Queue\QueueMessageInterface;
 
 interface TaskPluginInterface
 {
+
     /**
      * @return string
      */
@@ -20,4 +21,5 @@ interface TaskPluginInterface
      * @param QueueMessageInterface $queueMessage
      */
     public function run(QueueMessageInterface $queueMessage);
+
 }

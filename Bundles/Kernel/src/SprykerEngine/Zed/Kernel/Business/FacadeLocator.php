@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -27,8 +28,9 @@ class FacadeLocator extends AbstractLocator
      * @param LocatorLocatorInterface $locator
      * @param null|string $className
      *
-     * @return object
      * @throws LocatorException
+     *
+     * @return object
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
@@ -65,6 +67,8 @@ class FacadeLocator extends AbstractLocator
     public function canLocate($bundle)
     {
         $factory = $this->getFactory($bundle);
+
         return $factory->exists($bundle . self::FACADE_SUFFIX);
     }
+
 }

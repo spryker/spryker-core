@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class RefundIsErrorPlugin extends AbstractPlugin
 {
+
     /**
      * @param OrderTransfer $orderTransfer
      *
@@ -18,6 +20,5 @@ class RefundIsErrorPlugin extends AbstractPlugin
     {
         return $this->getDependencyContainer()->createPayoneFacade()->isRefundError($orderTransfer);
     }
+
 }
-
-

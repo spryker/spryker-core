@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,11 +19,14 @@ use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
  */
 class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePluginInterface
 {
+
     /**
      * @param DiscountEntity $discountEntity
      * @ param OrderInterface $container
+     *
      * @param CalculableInterface $container
      * @param DecisionRuleEntity $decisionRuleEntity
+     *
      * @return ModelResult
      */
     public function check(
@@ -56,4 +60,5 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
 
         return $componentResult;
     }
+
 }

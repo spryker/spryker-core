@@ -1,14 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\Payone;
 
-
 use Generated\Client\Ide\FactoryAutoCompletion\Payone;
 use Generated\Shared\Transfer\StandardParameterTransfer;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Payone\ClientApi\HashGeneratorInterface;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
@@ -16,7 +16,7 @@ use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 /**
  * @method Payone getFactory()
  */
-class PayoneDependencyContainer extends AbstractDependencyContainer
+class PayoneDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**

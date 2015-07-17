@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ class GridController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function categoryAction(Request $request)
@@ -29,6 +31,7 @@ class GridController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function categoryNodeAction(Request $request)
@@ -37,4 +40,5 @@ class GridController extends AbstractController
 
         return $this->jsonResponse($grid->renderData());
     }
+
 }

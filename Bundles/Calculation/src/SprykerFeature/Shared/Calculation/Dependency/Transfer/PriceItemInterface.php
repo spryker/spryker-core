@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -33,4 +34,5 @@ interface PriceItemInterface extends TransferInterface
      * @return $this
      */
     public function setPriceToPay($priceToPay);
+
 }

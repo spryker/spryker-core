@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,17 +12,19 @@ use SprykerFeature\Yves\Catalog\Router\SearchRouter;
 
 /**
  * Class SearchRouterPlugin
- * @package SprykerFeature\Yves\Catalog
  */
 class SearchRouterPlugin extends AbstractPlugin
 {
+
     /**
      * @param Application $app
      * @param bool $sslEnabled
+     *
      * @return SearchRouter
      */
     public function createSearchRouter(Application $app, $sslEnabled = false)
     {
         return $this->getDependencyContainer()->createSearchRouter($app, $sslEnabled);
     }
+
 }

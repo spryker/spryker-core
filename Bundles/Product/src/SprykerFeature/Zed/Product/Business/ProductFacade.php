@@ -1,21 +1,20 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Product\Business;
 
+use Generated\Shared\Product\AbstractProductInterface;
+use Generated\Shared\Product\ConcreteProductInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
-use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\AttributeExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\AttributeTypeExistsException;
-use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductAttributesExistException;
-use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingAttributeTypeException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Business\Model\ProductBatchResult;
@@ -26,6 +25,7 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
  */
 class ProductFacade extends AbstractFacade
 {
+
     /**
      * @param \SplFileInfo $file
      *
@@ -53,8 +53,9 @@ class ProductFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getAbstractProductIdBySku($sku)
     {
@@ -64,8 +65,9 @@ class ProductFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getConcreteProductIdBySku($sku)
     {
@@ -75,8 +77,9 @@ class ProductFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @return int
      * @throws MissingProductException
+     *
+     * @return int
      */
     public function getAbstractProductIdByConcreteSku($sku)
     {
@@ -86,8 +89,9 @@ class ProductFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @return float
      * @throws MissingProductException
+     *
+     * @return float
      */
     public function getEffectiveTaxRateForConcreteProduct($sku)
     {
@@ -123,8 +127,9 @@ class ProductFacade extends AbstractFacade
      * @param string $inputType
      * @param int|null $fkParentAttributeType
      *
-     * @return int
      * @throws AttributeTypeExistsException
+     *
+     * @return int
      */
     public function createAttributeType($name, $inputType, $fkParentAttributeType = null)
     {
@@ -138,9 +143,10 @@ class ProductFacade extends AbstractFacade
      * @param string $attributeType
      * @param bool $isEditable
      *
-     * @return int
      * @throws AttributeExistsException
      * @throws MissingAttributeTypeException
+     *
+     * @return int
      */
     public function createAttribute($attributeName, $attributeType, $isEditable = true)
     {
@@ -162,32 +168,15 @@ class ProductFacade extends AbstractFacade
     }
 
     /**
-     * @param string $sku
-
-     * @return int
-     * @throws AbstractProductExistsException
-     */
-    public function createAbstractProduct($sku)
-    {
-        $productManager = $this->getDependencyContainer()->createProductManager();
-
-        return $productManager->createAbstractProduct($sku);
-    }
-
-    /**
-     * @param int $idAbstractProduct
-     * @param LocaleTransfer $locale
-     * @param string $name
-     * @param string $attributes
+     * @param AbstractProductInterface $abstractProductTransfer
      *
      * @return int
-     * @throws AbstractProductAttributesExistException
      */
-    public function createAbstractProductAttributes($idAbstractProduct, LocaleTransfer $locale, $name, $attributes)
+    public function createAbstractProduct(AbstractProductInterface $abstractProductTransfer)
     {
         $productManager = $this->getDependencyContainer()->createProductManager();
 
-        return $productManager->createAbstractProductAttributes($idAbstractProduct, $locale, $name, $attributes);
+        return $productManager->createAbstractProduct($abstractProductTransfer);
     }
 
     /**
@@ -203,34 +192,16 @@ class ProductFacade extends AbstractFacade
     }
 
     /**
-     * @param string $sku
+     * @param ConcreteProductInterface $concreteProductTransfer
      * @param int $idAbstractProduct
-     * @param bool $isActive
      *
      * @return int
-     * @throws ConcreteProductExistsException
      */
-    public function createConcreteProduct($sku, $idAbstractProduct, $isActive = true)
+    public function createConcreteProduct(ConcreteProductInterface $concreteProductTransfer, $idAbstractProduct)
     {
         $productManager = $this->getDependencyContainer()->createProductManager();
 
-        return $productManager->createConcreteProduct($sku, $idAbstractProduct, $isActive);
-    }
-
-    /**
-     * @param int $idConcreteProduct
-     * @param LocaleTransfer $locale
-     * @param string $name
-     * @param string $attributes
-     *
-     * @return int
-     * @throws ConcreteProductAttributesExistException
-     */
-    public function createConcreteProductAttributes($idConcreteProduct, LocaleTransfer $locale, $name, $attributes)
-    {
-        $productManager = $this->getDependencyContainer()->createProductManager();
-
-        return $productManager->createConcreteProductAttributes($idConcreteProduct, $locale, $name, $attributes);
+        return $productManager->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
     }
 
     /**
@@ -248,10 +219,11 @@ class ProductFacade extends AbstractFacade
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
+     *
+     * @return UrlTransfer
      */
     public function createProductUrl($sku, $url, LocaleTransfer $locale)
     {
@@ -263,10 +235,11 @@ class ProductFacade extends AbstractFacade
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @return Url
      * @throws PropelException
      * @throws UrlExistsException
      * @throws MissingProductException
+     *
+     * @return Url
      */
     public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale)
     {
@@ -285,10 +258,12 @@ class ProductFacade extends AbstractFacade
      * @param string $sku
      *
      * @return string
+     *
      * @todo examine this as the product sku mapper is gone
      */
     public function getAbstractSkuFromConcreteProduct($sku)
     {
         return $this->getDependencyContainer()->getProductSkuMapper()->getAbstractSkuFromConcreteProduct($sku);
     }
+
 }

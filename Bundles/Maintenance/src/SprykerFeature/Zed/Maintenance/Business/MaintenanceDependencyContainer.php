@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,18 +9,22 @@ namespace SprykerFeature\Zed\Maintenance\Business;
 use Generated\Shared\Maintenance\InstalledPackagesInterface;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\MaintenanceBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Maintenance\Business\Dependency\BundleParser;
+use SprykerFeature\Zed\Maintenance\Business\Dependency\Graph;
+use SprykerFeature\Zed\Maintenance\Business\Dependency\Manager;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
 /**
  * @method MaintenanceBusiness getFactory()
  * @method MaintenanceConfig getConfig()
  */
-class MaintenanceDependencyContainer extends AbstractDependencyContainer
+class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
@@ -95,6 +100,34 @@ class MaintenanceDependencyContainer extends AbstractDependencyContainer
             $installedPackages,
             $this->getConfig()->getPathToFossFile()
         );
+    }
+
+    /**
+     * @return Graph
+     */
+    public function createDependencyGraph()
+    {
+        $bundleParser = $this->createDependencyBundleParser();
+        $manager = $this->createDependencyManager();
+        return $this->getFactory()->createDependencyGraph($bundleParser, $manager);
+    }
+
+    /**
+     * @return BundleParser
+     */
+    public function createDependencyBundleParser()
+    {
+        $config = $this->getConfig();
+        return $this->getFactory()->createDependencyBundleParser($config);
+    }
+
+    /**
+     * @return Manager
+     */
+    public function createDependencyManager()
+    {
+        $bundleParser = $this->createDependencyBundleParser();
+        return $this->getFactory()->createDependencyManager($bundleParser);
     }
 
 }

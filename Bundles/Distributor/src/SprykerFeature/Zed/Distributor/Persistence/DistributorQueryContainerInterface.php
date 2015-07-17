@@ -9,6 +9,7 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuer
 
 interface DistributorQueryContainerInterface
 {
+
     /**
      * @return ModelCriteria
      */
@@ -26,6 +27,7 @@ interface DistributorQueryContainerInterface
      * @param string $timestamp
      *
      * @throws PropelException
+     *
      * @return SpyDistributorItemQuery
      */
     public function queryTouchedItemsByTypeKey($typeKey, $timestamp);
@@ -42,4 +44,5 @@ interface DistributorQueryContainerInterface
      * @return SpyDistributorItemQuery
      */
     public function queryItemByTypeAndId($itemType, $idItem);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 
 class NodeUrlManager implements NodeUrlManagerInterface
 {
+
     /**
      * @var CategoryTreeReaderInterface
      */
@@ -57,4 +59,5 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $url = $this->urlFacade->createUrl($categoryUrl, $locale, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
         $this->urlFacade->touchUrlActive($url->getIdUrl());
     }
+
 }

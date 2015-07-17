@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DistributorConsole extends Console
 {
+
     const COMMAND_NAME = 'distributor:distribute-items';
     const COMMAND_DESCRIPTION = 'distribute items';
     const TYPE = 'type';
@@ -31,8 +32,6 @@ class DistributorConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     *
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -50,10 +49,11 @@ class DistributorConsole extends Console
         $itemTypes = [];
         $itemType = $input->getArgument(self::TYPE);
 
-        if (false !== $itemType) {
+        if (null !== $itemType) {
             $itemTypes[] = $itemType;
         }
 
         return $itemTypes;
     }
+
 }

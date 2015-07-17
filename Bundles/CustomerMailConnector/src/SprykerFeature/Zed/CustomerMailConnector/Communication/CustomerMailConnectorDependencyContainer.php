@@ -1,22 +1,25 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use Generated\Shared\Transfer\MailTransfer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Mail\Business\MailFacade;
-use Generated\Shared\Transfer\MailMail as MailTransferTransfer;
+use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorDependencyProvider;
 
-class CustomerMailConnectorDependencyContainer extends AbstractDependencyContainer
+class CustomerMailConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return MailFacade
      */
     public function createMailFacade()
     {
-        return $this->getLocator()->mail()->facade();
+        return $this->getProvidedDependency(CustomerMailConnectorDependencyProvider::FACADE_MAIL);
     }
 
     /**
@@ -24,6 +27,7 @@ class CustomerMailConnectorDependencyContainer extends AbstractDependencyContain
      */
     public function createMailTransfer()
     {
-        return new \Generated\Shared\Transfer\MailTransfer();
+        return new MailTransfer();
     }
+
 }

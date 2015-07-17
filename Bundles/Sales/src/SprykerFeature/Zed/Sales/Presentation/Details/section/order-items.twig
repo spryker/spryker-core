@@ -1,61 +1,64 @@
-<div class="spy-layout sparse">
-    <h3>Order Items Overview</h3>
-    <section class="spy-layout compact" spy-app="spyForm">
+<div class="row">
+    <div class="col-md-12">
 
-        {% if orderItems|length > 0 %}
+        {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Trigger all matching states' } %}
 
-            <table class="spy-grid">
-                <tr class="text-left">
-                    <th>{{ "Item name" | trans }}</th>
-                    <th>{{ "SKU" | trans }}</th>
-                    <th>{{ "Gross price" | trans }}</th>
-                    {#<th>{{ "Quantity" | trans }}</th>#}
-                    <th>{{ "Price to pay" | trans }}</th>
-                    <th>{{ "Current state" | trans }}</th>
-                    <th>{{ "Trigger event" | trans }}</th>
-                    <th>{{ "Process" | trans }}</th>
-                </tr>
-                {% for orderItem in orderItems %}
-                    <tr>
-                        <td>{{ orderItem.Name }}</td>
-                        <td>{{ orderItem.Sku }}</td>
-                        <td>{{ orderItem.GrossPrice|number_format(2) }} &euro;</td>
-                        {#<td>{{ orderItem.Qty }}</td>#}
-                        <td>{{ orderItem.PriceToPay |number_format(2) }} &euro;</td>
-                        <td>{{ orderItem.State.Name }}</td>
-                        <td>
-                            {% if events[orderItem.IdSalesOrderItem] |length > 0 %}
-                                {% for event in events[orderItem.IdSalesOrderItem] %}
-                                    <a class="button"
-                                       href="/oms/trigger/trigger-event-for-order-items?id-sales-order-item={{ orderItem.IdSalesOrderItem }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
-                                        {{ event }}</a>
-                                {% endfor %}
-                            {% else -%}
-                                -
-                            {%- endif %}
-                        </td>
-                        <td>
-                            <a href="/oms/index/draw?process={{ orderItem.process.name }}&format=gif&font=14" target="_blank">
-                                {{ orderItem.process.name }}</a>
-                            </td>
-                    </tr>
-                {% endfor %}
-            </table>
-
-            {% for event in all_events %}
-                <a class="button"
+        <div>
+            {% for event in allEvents %}
+                <a class="btn btn-primary"
                    href="/oms/trigger/trigger-event-for-order?id-sales-order={{ idOrder }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
-                    {{ event }}</a>
+                    {{ event }}
+                </a>
             {% endfor %}
+        </div>
 
-        {% else %}
-            <p>There are no items for this order</p>
-        {% endif %}
+        {% include '@Gui/Partials/Table/footer.twig' %}
 
-    </section>
+    </div>
 </div>
 
+{% include '@Gui/Partials/Table/header.twig' with { table_title: 'Order Items' } %}
 
+<table class="footable table table-stripped toggle-arrow-tiny">
+    <thead>
+    <tr class="text-left">
+        <th>{{ "Item name" | trans }}</th>
+        <th>{{ "SKU" | trans }}</th>
+        <th>{{ "Gross price" | trans }}</th>
+        <th>{{ "Price to pay" | trans }}</th>
+        <th>{{ "Current state" | trans }}</th>
+        <th>{{ "Trigger event" | trans }}</th>
+        <th>{{ "Process" | trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for orderItem in orderItems %}
+        <tr>
+            <td>{{ orderItem.Name }}</td>
+            <td>{{ orderItem.Sku }}</td>
+            <td>{{ orderItem.GrossPrice | currency }}</td>
+            <td>{{ orderItem.PriceToPay | currency }}</td>
+            <td>{{ orderItem.State.Name }}</td>
+            <td>
+                {% if events[orderItem.IdSalesOrderItem] |length > 0 %}
+                    {% for event in events[orderItem.IdSalesOrderItem] %}
+                        <a class="btn btn-sm btn-primary"
+                           href="/oms/trigger/trigger-event-for-order-items?id-sales-order-item={{ orderItem.IdSalesOrderItem }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
+                            {{ event }}</a>
+                    {% endfor %}
+                {% else -%}
+                    -
+                {%- endif %}
+            </td>
+            <td>
+                <a href="/oms/index/draw?process={{ orderItem.process.name }}&format=gif&font=14" target="_blank">
+                    {{ orderItem.process.name }}
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
 
+</table>
 
-
+{% include '@Gui/Partials/Table/footer.twig' %}

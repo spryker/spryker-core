@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuil
 
 abstract class SharedCategoryResourceKeyBuilder extends SharedResourceKeyBuilder
 {
+
     /**
      * @return string
      */
@@ -17,4 +19,5 @@ abstract class SharedCategoryResourceKeyBuilder extends SharedResourceKeyBuilder
     {
         return CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
     }
+
 }

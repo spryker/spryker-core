@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuil
 
 class PageResourceKeyBuilder extends SharedResourceKeyBuilder
 {
+
     /**
      * @return string
      */
@@ -17,4 +19,5 @@ class PageResourceKeyBuilder extends SharedResourceKeyBuilder
     {
         return CmsConfig::RESOURCE_TYPE_PAGE;
     }
+
 }

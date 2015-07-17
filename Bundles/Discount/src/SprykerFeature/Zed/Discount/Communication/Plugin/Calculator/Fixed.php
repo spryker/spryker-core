@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,18 +11,19 @@ use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 
 /**
  * Class DecisionRuleMinimumCartSubtotal
- * @package SprykerFeature\Zed\Discount\Communication\Plugin
  */
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
  */
 class Fixed extends AbstractCalculator
 {
+
     const MIN_VALUE = 0.1;
 
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $number
+     *
      * @return float
      */
     public function calculate(array $discountableObjects, $number)
@@ -44,6 +46,7 @@ class Fixed extends AbstractCalculator
      */
     public function getMaxValue()
     {
-        return null;
+        return;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,10 +23,10 @@ class TestClassResolver
     }
 
     /**
-     * @return null
      */
     public function getData()
     {
         return $this->data;
     }
+
 }

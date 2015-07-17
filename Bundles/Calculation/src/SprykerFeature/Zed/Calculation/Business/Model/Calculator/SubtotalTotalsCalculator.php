@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,7 +17,6 @@ class SubtotalTotalsCalculator implements
     TotalsCalculatorPluginInterface,
     SubtotalTotalsCalculatorInterface
 {
-
 
     /**
      * @param TotalsInterface $totalsTransfer
@@ -85,4 +85,5 @@ class SubtotalTotalsCalculator implements
 
         return $expensesPrice;
     }
+
 }

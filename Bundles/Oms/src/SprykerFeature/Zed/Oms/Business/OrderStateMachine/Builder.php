@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,7 +24,7 @@ class Builder implements BuilderInterface
     /**
      * @var ProcessInterface[]
      */
-    protected static $processBuffer = array();
+    protected static $processBuffer = [];
 
     /**
      * @var EventInterface
@@ -83,8 +84,8 @@ class Builder implements BuilderInterface
 
             $this->mergeSubProcessFiles();
 
-            /* @var $processMap ProcessInterface[] */
-            $processMap = array();
+            /** @var ProcessInterface[] $processMap */
+            $processMap = [];
 
             list($processMap, $mainProcess) = $this->createSubProcess($processMap);
 
@@ -105,7 +106,6 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @return void
      */
     protected function mergeSubProcessFiles()
     {
@@ -130,7 +130,7 @@ class Builder implements BuilderInterface
         }
 
         foreach ($xmlElements as $xmlElement) {
-            /* @var $xmlElement SimpleXMLElement */
+            /* @var SimpleXMLElement $xmlElement */
             $child = $intoXmlNode->addChild($xmlElement->getName(), $xmlElement);
             $attributes = $xmlElement->attributes();
             foreach ($attributes as $k => $v) {
@@ -178,7 +178,7 @@ class Builder implements BuilderInterface
      */
     protected function createEvents()
     {
-        $eventMap = array();
+        $eventMap = [];
 
         foreach ($this->rootElement as $xmlProcess) {
             if (!isset($xmlProcess->events)) {
@@ -215,7 +215,7 @@ class Builder implements BuilderInterface
         $mainProcess = null;
         $xmlProcesses = $this->rootElement->children();
         foreach ($xmlProcesses as $xmlProcess) {
-            /* @var $xmlProcess SimpleXMLElement */
+            /* @var SimpleXMLElement $xmlProcess */
 
             $process = clone $this->process;
             $processName = $this->getAttributeString($xmlProcess, 'name');
@@ -231,7 +231,7 @@ class Builder implements BuilderInterface
 
         }
 
-        return array($processMap, $mainProcess);
+        return [$processMap, $mainProcess];
     }
 
     /**
@@ -263,7 +263,7 @@ class Builder implements BuilderInterface
      */
     protected function createStates(array $processMap)
     {
-        $stateToProcessMap = array();
+        $stateToProcessMap = [];
 
         $xmlProcesses = $this->rootElement->children();
         foreach ($xmlProcesses as $xmlProcess) {
@@ -273,7 +273,7 @@ class Builder implements BuilderInterface
             if (!empty($xmlProcess->states)) {
                 $xmlStates = $xmlProcess->states->children();
                 foreach ($xmlStates as $xmlState) {
-                    /* @var $xmlState SimpleXMLElement */
+                    /* @var SimpleXMLElement $xmlState */
                     $state = clone $this->state;
                     $state->setName($this->getAttributeString($xmlState, 'name'));
                     $state->setDisplay($this->getAttributeString($xmlState, 'display'));

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,11 +10,13 @@ use Generated\Zed\Ide\AutoCompletion;
 use Silex\Application;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Symfony\Component\Form\FormFactory;
+use SprykerFeature\Zed\Product\Communication\Form\BuildFormFactoryHelper;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -33,7 +36,7 @@ abstract class AbstractController
     private $locator;
 
     /**
-     * @var AbstractDependencyContainer
+     * @var AbstractCommunicationDependencyContainer
      */
     private $dependencyContainer;
 
@@ -82,7 +85,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return AbstractDependencyContainer
+     * @return AbstractCommunicationDependencyContainer
      */
     public function getDependencyContainer()
     {
@@ -91,6 +94,7 @@ abstract class AbstractController
 
     /**
      * TODO move to constructor
+     *
      * @param AbstractFacade $facade
      */
     public function setOwnFacade(AbstractFacade $facade)
@@ -100,6 +104,7 @@ abstract class AbstractController
 
     /**
      * TODO move to constructor
+     *
      * @param AbstractQueryContainer $queryContainer
      */
     public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
@@ -180,8 +185,9 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageSuccess($message)
     {
@@ -193,8 +199,9 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \Exception
+     *
+     * @return $this
      */
     protected function addMessageWarning($message)
     {
@@ -206,8 +213,9 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageError($message)
     {
@@ -225,10 +233,20 @@ abstract class AbstractController
      */
     protected function createForm($type = 'form', $data = null, array $options = [])
     {
-        /* @var $formFactory \Symfony\Component\Form\FormFactory */
+        /** @var FormFactory $formFactory */
         $formFactory = $this->application['form.factory'];
 
         return $formFactory->create($type, $data, $options);
+    }
+
+    /**
+     * Returns an instance of form factory
+     *
+     * @return FormFactory
+     */
+    protected function getFormFactory()
+    {
+        return $this->application['form.factory'];
     }
 
     /**
@@ -240,8 +258,9 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Twig_Environment
      * @throws \LogicException
+     *
+     * @return \Twig_Environment
      */
     private function getTwig()
     {

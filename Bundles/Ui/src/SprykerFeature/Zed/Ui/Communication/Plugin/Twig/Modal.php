@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,7 +24,7 @@ class Modal extends TwigFunction
      */
     protected function getFunction()
     {
-        return function($title, $content, $footer = null, $extraData = null) {
+        return function ($title, $content, $footer = null, $extraData = null) {
             $extras = '';
             if (is_array($extraData)) {
                 foreach ($extraData as $key => $value) {

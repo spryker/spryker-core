@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,6 +7,7 @@
 namespace SprykerEngine\Yves\Application\Business;
 
 use Generated\Yves\Ide\AutoCompletion;
+use SprykerEngine\Yves\Application\Communication\Plugin\ControllerProviderInterface;
 use SprykerFeature\Shared\Application\Business\Application as SharedApplication;
 use SprykerEngine\Yves\Application\Business\Application as YvesApplication;
 use SprykerFeature\Shared\Application\Business\Bootstrap;
@@ -15,7 +17,7 @@ abstract class YvesBootstrap extends Bootstrap
 {
 
     /**
-     * @return \SprykerEngine\Yves\Application\Communication\Plugin\ControllerProviderInterface[]
+     * @return ControllerProviderInterface[]
      */
     abstract protected function getControllerProviders();
 
@@ -46,10 +48,7 @@ abstract class YvesBootstrap extends Bootstrap
      */
     protected function getTwigExtensions(SharedApplication $app)
     {
-        /** @var AutoCompletion $locator */
-        $locator = Locator::getInstance();
-
-        $yvesExtension = $locator->twig()->pluginTwigYves($app);
+        $yvesExtension = $this->getLocator($app)->twig()->pluginTwigYves();
 
         return [
             $yvesExtension->getTwigYvesExtension($app),
@@ -64,6 +63,16 @@ abstract class YvesBootstrap extends Bootstrap
     protected function globalTemplateVariables(SharedApplication $app)
     {
         return parent::globalTemplateVariables($app);
+    }
+
+    /**
+     * @param Application $app
+     *
+     * @return AutoCompletion
+     */
+    protected function getLocator(Application $app)
+    {
+        return $app['locator'];
     }
 
 }

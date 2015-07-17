@@ -1,21 +1,22 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\ZedRequest\Service;
 
-use Generated\Client\Ide\FactoryAutoCompletion\ZedRequest;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use Generated\Client\Ide\FactoryAutoCompletion\ZedRequestService;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\ZedRequest\Service\Client\ZedClient;
+use SprykerFeature\Client\ZedRequest\ZedRequestDependencyProvider;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Shared\Yves\YvesConfig;
 
 /**
- * @method ZedRequest getFactory()
+ * @method ZedRequestService getFactory()
  */
-class ZedRequestDependencyContainer extends AbstractDependencyContainer
+class ZedRequestDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**
@@ -25,7 +26,7 @@ class ZedRequestDependencyContainer extends AbstractDependencyContainer
     {
         $httpClient = $this->getFactory()->createClientHttpClient(
             $this->getFactory(),
-            $this->getLocator(),
+            $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_AUTH),
             'http://' . Config::get(SystemConfig::HOST_ZED_API)
         );
 

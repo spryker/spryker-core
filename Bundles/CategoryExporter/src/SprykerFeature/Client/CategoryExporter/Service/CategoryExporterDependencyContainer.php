@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,7 @@
 namespace SprykerFeature\Client\CategoryExporter\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\CategoryExporter;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\CategoryExporter\Service\Builder\CategoryTreeBuilder;
 use SprykerFeature\Client\CategoryExporter\Service\Model\Navigation;
 use SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder;
@@ -15,7 +16,7 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 /**
  * @method CategoryExporter getFactory()
  */
-class CategoryExporterDependencyContainer extends AbstractDependencyContainer
+class CategoryExporterDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**
@@ -24,7 +25,7 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     public function createNavigation()
     {
         return $this->getFactory()->createModelNavigation(
-            $this->getLocator()->kvStorage()->client(),
+            $this->getLocator()->storage()->client(),
             $this->createNavigationKeyBuilder()
         );
     }
@@ -35,7 +36,7 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     public function createCategoryTreeBuilder()
     {
         return $this->getFactory()->createBuilderCategoryTreeBuilder(
-            $this->getLocator()->kvStorage()->client(),
+            $this->getLocator()->storage()->client(),
             $this->createResourceKeyBuilder()
         );
     }
@@ -55,4 +56,5 @@ class CategoryExporterDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createKeyBuilderCategoryResourceKeyBuilder();
     }
+
 }

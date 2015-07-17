@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductSearchFacade extends AbstractFacade
 {
+
     /**
      * @param array $productsRaw
      * @param array $processedProducts
@@ -48,4 +50,5 @@ class ProductSearchFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->getInstaller($messenger)->install();
     }
+
 }

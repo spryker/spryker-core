@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,17 +7,13 @@
 namespace SprykerFeature\Zed\System\Communication\Controller;
 
 use Exception;
-use PhpParser\Lexer;
-use PhpParser\Lexer\Emulative;
-use PhpParser\Parser;
-use SprykerEngine\Shared\Kernel\TransferLocator;
 use SprykerFeature\Shared\Library\Config;
-
-
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerEngine\Zed\Kernel\Business\FacadeLocator;
+use Symfony\Component\HttpFoundation\Request;
 
-class SandboxController extends AbstractController{
+class SandboxController extends AbstractController
+{
 
     public function patternAction()
     {
@@ -30,11 +27,9 @@ class SandboxController extends AbstractController{
 
             $className = $classNameGenerator->extractClassNameFromPath($filePath);
         }
-
     }
 
     /**
-     * from library
      * @return array
      */
     protected function createFilelist()
@@ -42,6 +37,7 @@ class SandboxController extends AbstractController{
         $directoryHelper = new \SprykerFeature_Zed_Library_Helper_Directory();
         $classMap1 = $directoryHelper->getFiles(APPLICATION_SOURCE_DIR . '/' . $this->getNamespaceProject() . '/');
         $classMap2 = $directoryHelper->getFiles(APPLICATION_VENDOR_DIR . '/spryker/');
+
         return array_merge($classMap1, $classMap2);
     }
 
@@ -52,12 +48,13 @@ class SandboxController extends AbstractController{
 
     /**
      * @param Request $request
+     *
      * @throws Exception
      */
     public function configAction(Request $request)
     {
-        $configClass = $request->query->get('class','XXX');
-        $masterKey = $request->query->get('key','XXX');
+        $configClass = $request->query->get('class', 'XXX');
+        $masterKey = $request->query->get('key', 'XXX');
 
         $config = Config::get($masterKey);
         echo '<pre>';
@@ -69,24 +66,23 @@ class SandboxController extends AbstractController{
         $keys = array_keys($config);
         foreach ($keys as $key) {
             $var = $this->createVar($masterKey, $key);
-            echo 'const ' . $var . " = '".$var."';<br />";
+            echo 'const ' . $var . " = '" . $var . "';<br />";
         }
 
-
-        echo "
-        }";
+        echo '
+        }';
 
         echo '<br /><br />';
         foreach ($keys as $key) {
             $v = $config->$key;
 
-            if(is_string($v)){
+            if (is_string($v)) {
                 $v = "'$v'";
             }
-            if(is_bool($v)){
-                $v = $v?'true':'false';
+            if (is_bool($v)) {
+                $v = $v ? 'true' : 'false';
             }
-            if(is_array($v)){
+            if (is_array($v)) {
                 $v = 'ARRAY';
             }
 
@@ -94,7 +90,7 @@ class SandboxController extends AbstractController{
         }
         echo '<br /><br />';
         foreach ($keys as $key) {
-            echo 'Config::get(' . $configClass . 'Config::' . $this->createVar($masterKey, $key) . ")<br />";
+            echo 'Config::get(' . $configClass . 'Config::' . $this->createVar($masterKey, $key) . ')<br />';
         }
 
         die;
@@ -114,39 +110,36 @@ class SandboxController extends AbstractController{
     public function listAction()
     {
         $helper = new \SprykerFeature_Zed_Library_Helper_Directory();
-        $files = $helper->getFiles(APPLICATION_VENDOR_DIR.'/spryker/', array('SprykerFeature/Yves/','SprykerFeature/Zed/'),'Config.php');
-        $configFiles = array();
-        foreach($files as $file){
+        $files = $helper->getFiles(APPLICATION_VENDOR_DIR . '/spryker/', ['SprykerFeature/Yves/', 'SprykerFeature/Zed/'], 'Config.php');
+        $configFiles = [];
+        foreach ($files as $file) {
 
             $class = $this->getClassName($file);
 
-            if(!empty($class))
-            {
-                $ns = str_replace('Config','',$class);
-                $refl = new \ReflectionClass('\SprykerFeature\\Shared\\'.$ns.'\\'.$class);
-                if($refl->implementsInterface('\SprykerFeature\Shared\Library\ConfigInterface')){
+            if (!empty($class)) {
+                $ns = str_replace('Config', '', $class);
+                $refl = new \ReflectionClass('\SprykerFeature\\Shared\\' . $ns . '\\' . $class);
+                if ($refl->implementsInterface('\SprykerFeature\Shared\Library\ConfigInterface')) {
                     $configFiles[$file] = $refl;
                 }
             }
         }
 
-        $data = array();
-        foreach($configFiles as $path => $refl){
-            /* @var $refl \ReflectionClass */
-
+        $data = [];
+        foreach ($configFiles as $path => $refl) {
+            /* @var \ReflectionClass $refl */
 
             $consts = $refl->getConstants();
-            foreach($consts as $constName => $constKey)
-            {
-                $dataItem = array();
+            foreach ($consts as $constName => $constKey) {
+                $dataItem = [];
 
                 $dataItem['namespace'] = $refl->getNamespaceName();
 
                 $dataItem['configKey'] = $constName;
 
-                if(Config::hasValue($constKey)){
+                if (Config::hasValue($constKey)) {
                     $dataItem['configData'] = print_r(Config::get($constKey), true);
-                }else{
+                } else {
                     $dataItem['configData'] = 'missing';
                 }
 
@@ -155,28 +148,28 @@ class SandboxController extends AbstractController{
         }
 
         echo '<table border="1">';
-        foreach($data as $dataItem){
+        foreach ($data as $dataItem) {
             $exppl = explode('\\', $dataItem['namespace']);
             $ns = end($exppl);
             echo '<tr>';
-            echo '<td>'.$dataItem['namespace'].'</td>';
-            echo '<td>'.$dataItem['configKey'].'</td>';
-            echo '<td>Config::get('.$ns.'Config::'.$dataItem['configKey'].')</td>';
-            echo '<td><pre>'.$dataItem['configData'].'</pre></td>';
+            echo '<td>' . $dataItem['namespace'] . '</td>';
+            echo '<td>' . $dataItem['configKey'] . '</td>';
+            echo '<td>Config::get(' . $ns . 'Config::' . $dataItem['configKey'] . ')</td>';
+            echo '<td><pre>' . $dataItem['configData'] . '</pre></td>';
             echo '</tr>';
         }
         echo '</table>';
 
-
-        echo '<pre>'; var_dump('STOP'); echo '<hr>'; echo __FILE__.' '.__LINE__; die;
+        echo '<pre>';
+        var_dump('STOP');
+        echo '<hr>';
+        echo __FILE__ . ' ' . __LINE__;
+        die;
 
     }
 
-
     protected function getClassName($path)
     {
-
-
         $code = file_get_contents($path);
         $this->openFiles[$path] = $code;
         $tokens = token_get_all($code);
@@ -200,9 +193,6 @@ class SandboxController extends AbstractController{
         return false;
     }
 
-    /**
-     *
-     */
     public function testAction()
     {
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace Unit\SprykerEngine\Zed\Kernel\Communication;
 
 use SprykerEngine\Zed\Kernel\Communication\BundleControllerAction;
 use SprykerEngine\Zed\Kernel\Communication\ControllerLocator;
-use SprykerEngine\Zed\Kernel\Communication\DependencyContainerLocator;
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -76,4 +76,5 @@ class ControllerLocatorTest extends \PHPUnit_Framework_TestCase
         $locatedClass = $controllerLocator->locate(new \Pimple(), Locator::getInstance());
         $this->assertInstanceOf('Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\FooController', $locatedClass);
     }
+
 }

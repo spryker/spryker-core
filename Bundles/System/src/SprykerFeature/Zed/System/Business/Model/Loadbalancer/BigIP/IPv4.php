@@ -1,8 +1,8 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
 {
 
@@ -35,6 +35,7 @@ class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
     /**
      * @param string $ipAddress
      * @param string $portNumber
+     *
      * @return string
      */
     public function calculateStickyCookieValue($ipAddress, $portNumber)
@@ -44,6 +45,7 @@ class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
 
     /**
      * @param string $ipAddress
+     *
      * @return number
      */
     protected function getStringByIpAddress($ipAddress)
@@ -53,7 +55,7 @@ class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
 
         foreach ($reversedIpParts as $ipPart) {
             $decHex = dechex($ipPart);
-            $code .= ((strlen($decHex) == 1) ? '0' : '') . $decHex;
+            $code .= ((strlen($decHex) === 1) ? '0' : '') . $decHex;
         }
 
         return hexdec($code);
@@ -83,22 +85,24 @@ class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
     /**
      * @param string $hostname
      * @param string $applicationName
-     * @return string
+     *
      * @throws ErrorException
+     *
+     * @return string
      */
     public function getCookieValueByHost($hostname, $applicationName)
     {
-        if ($applicationName != self::APPLICATION_NAME_ZED && $applicationName != self::APPLICATION_NAME_YVES) {
+        if ($applicationName !== self::APPLICATION_NAME_ZED && $applicationName !== self::APPLICATION_NAME_YVES) {
             throw new ErrorException('Cannot find loadbalancer setting for application ' . $applicationName);
         }
 
         $hosts = $this->factory->createSettings()->getHosts($this->environment);
 
         foreach ($hosts as $host) {
-            if ($host[\SprykerFeature_Zed_System_Business_Settings::KEY_HOST] == $hostname) {
+            if ($host[\SprykerFeature_Zed_System_Business_Settings::KEY_HOST] === $hostname) {
                 $ipAddress = $this->factory->createSettings()->getHostIpAddressByHostname($hostname);
 
-                if ($applicationName == self::APPLICATION_NAME_ZED) {
+                if ($applicationName === self::APPLICATION_NAME_ZED) {
                     return $this->calculateStickyCookieValue($ipAddress, $host[\SprykerFeature_Zed_System_Business_Settings::KEY_ZED_PORT]);
                 } else {
                     return $this->calculateStickyCookieValue($ipAddress, $host[\SprykerFeature_Zed_System_Business_Settings::KEY_YVES_PORT]);
@@ -112,18 +116,19 @@ class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
     /**
      * @param $applicationName
      * @param null $store
+     *
      * @return string
      */
     public function getCookieName($applicationName, $store = null)
     {
 
-        if (! $store) {
+        if (!$store) {
             $store = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
         }
 
         $poolNumber = $this->factory->createSettings()->getStorePoolNumberByStore($store);
 
-        if ($this->environment == 'staging') {
+        if ($this->environment === 'staging') {
             return 'BIGipServerpool_' . $poolNumber . '_' . $this->environment;
         } else {
             return 'BIGipServerpool_' . $poolNumber . '_' . $this->environment . '_' . $applicationName;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,11 +11,10 @@ use SprykerFeature\Zed\Product\Business\Importer\Writer\ConcreteProductWriterInt
 
 /**
  * Class ConcreteProductWriter
- *
- * @package Zed\Product\Component\Importer\Writer\Null
  */
 class ConcreteProductWriter implements ConcreteProductWriterInterface
 {
+
     /**
      * @param ConcreteProductTransfer $product
      *
@@ -24,4 +24,5 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
     {
         return is_object($product);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,6 +7,9 @@
 namespace Functional\SprykerFeature\Zed\ProductCategoryFrontendExporterConnector;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -42,6 +46,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
  */
 class ProductCategoryFrontendExporterPluginTest extends Test
 {
+
     /**
      * @var AutoCompletion
      */
@@ -136,14 +141,13 @@ class ProductCategoryFrontendExporterPluginTest extends Test
         $this->doExporterTest(
             [
                 $this->locator->productFrontendExporterConnector()->pluginProductQueryExpanderPlugin(),
-                $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbQueryExpanderPlugin()
+                $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbQueryExpanderPlugin(),
             ],
             [
                 $this->locator->productFrontendExporterConnector()->pluginProductProcessorPlugin(),
-                $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbProcessorPlugin()
+                $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbProcessorPlugin(),
             ],
-            ['de.abcde.resource.abstract_product.' . $idAbstractProduct =>
-                [
+            ['de.abcde.resource.abstract_product.' . $idAbstractProduct => [
                     'abstract_attributes' => [
                         'thumbnail_url' => '/images/product/default.png',
                         'price' => 1395,
@@ -169,17 +173,17 @@ class ProductCategoryFrontendExporterPluginTest extends Test
                                 'gender' => 'b',
                                 'age' => 8,
                                 'available' => true,
-                            ]
-                        ]
+                            ],
+                        ],
                     ],
                     'category' => [
                         $idCategoryNode => [
-                            'node_id' => (string)$idCategoryNode,
+                            'node_id' => (string) $idCategoryNode,
                             'name' => 'ACategory',
-                            'url' => '/acategory'
-                        ]
-                    ]
-                ]
+                            'url' => '/acategory',
+                        ],
+                    ],
+                ],
             ]
         );
     }
@@ -226,26 +230,33 @@ class ProductCategoryFrontendExporterPluginTest extends Test
      */
     protected function createAbstractProductWithAttributes($sku, $name, $locale)
     {
-        $idAbstractProduct = $this->productFacade->createAbstractProduct($sku);
+        $abstractProductTransfer = new AbstractProductTransfer();
+        $abstractProductTransfer->setSku($sku);
 
-        $this->productFacade->createAbstractProductAttributes(
-            $idAbstractProduct,
-            $locale,
-            $name,
-            json_encode(
-                [
-                    'thumbnail_url' => '/images/product/default.png',
-                    'price' => 1395,
-                    'width' => 12,
-                    'height' => 27,
-                    'depth' => 850,
-                    'main_color' => 'gray',
-                    'other_colors' => 'red',
-                    'description' => 'A description!',
-                    'name' => 'Ted Technical Robot',
-                ]
-            )
+        $abstractProductTransfer->setIsActive(true);
+        $abstractProductTransfer->setAttributes(
+            [
+                'price' => 1395,
+                'width' => 12,
+                'height' => 27,
+                'depth' => 850,
+            ]
         );
+        $localizedAttributes = new LocalizedAttributesTransfer();
+        $localizedAttributes->setLocale($locale);
+        $localizedAttributes->setName($name);
+        $localizedAttributes->setAttributes([
+            'thumbnail_url' => '/images/product/default.png',
+            'main_color' => 'gray',
+            'other_colors' => 'red',
+            'description' => 'A description!',
+            'name' => 'Ted Technical Robot',
+        ]);
+
+        $abstractProductTransfer->addLocalizedAttributes($localizedAttributes);
+        $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProductTransfer);
+
+        $abstractProductTransfer->setIdAbstractProduct($idAbstractProduct);
 
         return $idAbstractProduct;
     }
@@ -260,23 +271,29 @@ class ProductCategoryFrontendExporterPluginTest extends Test
      */
     protected function createConcreteProductWithAttributes($idAbstractProduct, $sku, $name, LocaleTransfer $locale)
     {
-        $idConcreteProduct = $this->productFacade->createConcreteProduct($sku, $idAbstractProduct, true);
-
-        $this->productFacade->createConcreteProductAttributes(
-            $idConcreteProduct,
-            $locale,
-            $name,
-            json_encode(
-                [
-                    'image_url' => '/images/product/robot_buttons_black.png',
-                    'weight' => 1.2,
-                    'material' => 'aluminium',
-                    'gender' => 'b',
-                    'age' => 8,
-                    'available' => true,
-                ]
-            )
+        $concreteProductTransfer = new ConcreteProductTransfer();
+        $concreteProductTransfer->setSku($sku);
+        $concreteProductTransfer->setIsActive(true);
+        $concreteProductTransfer->setAttributes(
+            [
+                'weight' => 1.2,
+                'age' => 8,
+                'available' => true,
+            ]
         );
+
+        $localizedAttributes = new LocalizedAttributesTransfer();
+        $localizedAttributes->setLocale($locale);
+        $localizedAttributes->setName($name);
+        $localizedAttributes->setAttributes([
+            'image_url' => '/images/product/robot_buttons_black.png',
+            'material' => 'aluminium',
+            'gender' => 'b',
+        ]);
+        $concreteProductTransfer->addLocalizedAttributes($localizedAttributes);
+        $idConcreteProduct = $this->productFacade->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
+
+        $concreteProductTransfer->setIdConcreteProduct($idConcreteProduct);
 
         return $idConcreteProduct;
     }
@@ -335,8 +352,9 @@ class ProductCategoryFrontendExporterPluginTest extends Test
     }
 
     /**
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     protected function prepareQuery()
     {
@@ -347,4 +365,5 @@ class ProductCategoryFrontendExporterPluginTest extends Test
 
         return $query;
     }
+
 }

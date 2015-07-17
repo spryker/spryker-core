@@ -1,0 +1,78 @@
+{%- macro leaf(node, depth=0) -%}
+    {%- if node is defined %}
+        {%- if menu_highlight is defined -%}
+            {%- if menu_highlight == node.uri -%}
+                <li class="item active">
+            {%- else -%}
+                <li class="item">
+            {%- endif -%}
+        {%- else-%}
+            <li class="item{{ node.is_active is defined and node.is_active ? " active" : "" }}">
+        {%- endif -%}
+        <a
+                href="{{ node.uri }}"
+                {% if node.shortcut is defined %}data-hotkey="{{ node.shortcut }}"{% endif %}
+                >
+            <i class="fa fa-flask"></i>
+            <span class="nav-label">{{ node.label }}</span>
+        </a>
+        </li>
+    {% endif -%}
+{%- endmacro -%}
+
+{%- macro branch(node, depth=0) -%}
+    {%- import _self as menu -%}
+
+    {%- if node is defined %}
+        <li class="{{ node.is_active is defined and node.is_active ? " active" : "" }}">
+            <a href="javascript:void(0)">
+                <i class="fa fa-flask"></i>
+                <span class="nav-label">{{ node.label }}</span>
+                <span class="fa arrow"></span>
+            </a>
+
+            <ul class="nav nav-second-level collapse">
+                {{ menu.tree(node.children, (depth + 1)) }}
+            </ul>
+        </li>
+    {% endif -%}
+{%- endmacro -%}
+
+{%- macro tree(root) -%}
+    {%- import _self as menu -%}
+
+    {%- for child in root -%}
+        {%- if child.children is defined and child.children is not empty -%}
+            {{ menu.branch(child, 0) }}
+        {%- else -%}
+            {{ menu.leaf(child, 0) }}
+        {%- endif -%}
+    {%- endfor -%}
+{%- endmacro -%}
+
+{%- import _self as menu -%}
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul tabindex="0" class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+
+                    <a href="/" style="background: url(/bundles/Gui/sprite/images/sprite.svg); width: 165px; height: 159px; display: block;"></a>
+
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="">Profile</a></li>
+                        <li><a href="">Contacts</a></li>
+                        <li><a href="">Mailbox</a></li>
+                        <li class="divider"></li>
+                        <li><a href="">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            {{ menu.tree(navigation.menu) }}
+        </ul>
+    </div>
+</nav>

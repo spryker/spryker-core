@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,8 +7,6 @@
 namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInterface;
 
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInterface\InterfaceDefinition;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInterface\InterfaceGenerator;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @group SprykerEngine
@@ -64,9 +63,9 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => [
                 [
                     'name' => 'Foo',
-                    'type' => 'Bar'
-                ]
-            ]
+                    'type' => 'Bar',
+                ],
+            ],
         ]);
 
         $expectedUse = 'Generated\\Shared\\Transfer\\BarTransfer';
@@ -83,9 +82,9 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => [
                 [
                     'name' => 'Foo',
-                    'type' => 'Bar[]'
-                ]
-            ]
+                    'type' => 'Bar[]',
+                ],
+            ],
         ]);
 
         $methods = $interfaceDefinition->getMethods();
@@ -103,9 +102,9 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => [
                 [
                     'name' => 'Foo',
-                    'type' => 'array'
-                ]
-            ]
+                    'type' => 'array',
+                ],
+            ],
         ]);
 
         $methods = $interfaceDefinition->getMethods();
@@ -124,9 +123,9 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
                 [
                     'name' => 'Items',
                     'type' => 'array',
-                    'singular' => 'Item'
-                ]
-            ]
+                    'singular' => 'Item',
+                ],
+            ],
         ]);
 
         $methods = $interfaceDefinition->getMethods();
@@ -134,4 +133,5 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('getItems', $methods);
         $this->assertArrayHasKey('addItem', $methods);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\ExportFailedDeciderPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Communication\ProductFrontendExporterConnectorDependencyContainer;
 
 /**
@@ -17,6 +17,7 @@ use SprykerFeature\Zed\ProductFrontendExporterConnector\Communication\ProductFro
  */
 class ProductExportIsFailedDeciderPlugin extends AbstractPlugin implements ExportFailedDeciderPluginInterface
 {
+
     /**
      * @param BatchResultInterface $result
      *
@@ -34,4 +35,5 @@ class ProductExportIsFailedDeciderPlugin extends AbstractPlugin implements Expor
     {
         return 'abstract_product';
     }
+
 }

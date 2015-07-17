@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ use Propel\Runtime\Collection\Collection;
 
 class TaxWriter implements TaxWriterInterface
 {
+
     /**
      * @var AutoCompletion
      */
@@ -57,8 +59,9 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param TaxRateTransfer $taxRateTransfer
      *
-     * @return TaxRateTransfer
      * @throws PropelException
+     *
+     * @return TaxRateTransfer
      */
     public function createTaxRate(TaxRateTransfer $taxRateTransfer)
     {
@@ -72,15 +75,16 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param TaxRateTransfer $taxRateTransfer
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return int
      */
     public function updateTaxRate(TaxRateTransfer $taxRateTransfer)
     {
         $taxRateEntity = $this->queryContainer->queryTaxRate($taxRateTransfer->getIdTaxRate())->findOne();
 
-        if (null == $taxRateEntity) {
+        if (null === $taxRateEntity) {
             throw new ResourceNotFoundException();
         }
 
@@ -96,10 +100,11 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param TaxSetTransfer $taxSetTransfer
      *
-     * @return TaxSetTransfer
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException
+     *
+     * @return TaxSetTransfer
      */
     public function createTaxSet(TaxSetTransfer $taxSetTransfer)
     {
@@ -125,16 +130,17 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param TaxSetTransfer $taxSetTransfer
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException
+     *
+     * @return int
      */
     public function updateTaxSet(TaxSetTransfer $taxSetTransfer)
     {
         $taxSetEntity = $this->queryContainer->queryTaxSet($taxSetTransfer->getIdTaxSet())->findOne();
 
-        if (null == $taxSetEntity) {
+        if (null === $taxSetEntity) {
             throw new ResourceNotFoundException();
         }
 
@@ -160,9 +166,10 @@ class TaxWriter implements TaxWriterInterface
      * @param int $taxSetId
      * @param TaxRateTransfer $taxRateTransfer
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
+     *
+     * @return int
      */
     public function addTaxRateToTaxSet($taxSetId, TaxRateTransfer $taxRateTransfer)
     {
@@ -187,15 +194,15 @@ class TaxWriter implements TaxWriterInterface
         return $taxSetEntity->save();
     }
 
-
     /**
      * @param int $taxSetId
      * @param int $taxRateId
      *
-     * @return int
      * @throws PropelException
      * @throws ResourceNotFoundException
      * @throws MissingTaxRateException
+     *
+     * @return int
      */
     public function removeTaxRateFromTaxSet($taxSetId, $taxRateId)
     {
@@ -274,4 +281,5 @@ class TaxWriter implements TaxWriterInterface
 
         return $taxRateEntity;
     }
+
 }

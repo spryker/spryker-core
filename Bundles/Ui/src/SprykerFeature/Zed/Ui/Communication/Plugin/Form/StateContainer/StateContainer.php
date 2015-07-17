@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StateContainer extends AbstractPlugin implements StateContainerInterface
 {
+
     /**
      * @var Request
      */
@@ -43,6 +45,7 @@ class StateContainer extends AbstractPlugin implements StateContainerInterface
 
     /**
      * @param $request
+     *
      * @return $this
      */
     public function setRequest($request)
@@ -72,6 +75,7 @@ class StateContainer extends AbstractPlugin implements StateContainerInterface
 
     /**
      * @param $key
+     *
      * @return mixed|null
      */
     public function getRequestValue($key)
@@ -89,6 +93,7 @@ class StateContainer extends AbstractPlugin implements StateContainerInterface
 
     /**
      * @param $key
+     *
      * @return mixed|void
      */
     public function clearActiveValue($key)
@@ -106,6 +111,7 @@ class StateContainer extends AbstractPlugin implements StateContainerInterface
 
     /**
      * @param $key
+     *
      * @return mixed
      */
     public function getActiveValue($key)
@@ -118,6 +124,7 @@ class StateContainer extends AbstractPlugin implements StateContainerInterface
 
     /**
      * @param array $data
+     *
      * @return array
      */
     public function setActiveValues(array $data)
@@ -138,6 +145,7 @@ class StateContainer extends AbstractPlugin implements StateContainerInterface
 
     /**
      * @param $key
+     *
      * @return mixed|null
      */
     public function getLatestValue($key)
@@ -154,6 +162,7 @@ class StateContainer extends AbstractPlugin implements StateContainerInterface
     /**
      * @param array $data
      * @param $key
+     *
      * @return null|mixed
      */
     protected function getValueOrNull(array $data, $key)
@@ -162,6 +171,7 @@ class StateContainer extends AbstractPlugin implements StateContainerInterface
             return $data[$key];
         }
 
-        return null;
+        return;
     }
+
 }

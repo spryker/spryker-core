@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Product\Business\Builder\ProductBuilderInterface;
 
 class ProductBuilder implements ProductBuilderInterface
 {
+
     const ABSTRACT_PRODUCT_REFERENCE = 'refSku';
     const BUNDLED_PRODUCTS_REFERENCES = 'refBundleSkus';
     const PRODUCT_URL_FIELD = 'url';
@@ -89,4 +91,5 @@ class ProductBuilder implements ProductBuilderInterface
 
         return $product;
     }
+
 }

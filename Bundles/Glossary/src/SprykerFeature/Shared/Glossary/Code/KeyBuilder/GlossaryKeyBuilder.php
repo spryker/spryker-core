@@ -1,16 +1,16 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Shared\Glossary\Code\KeyBuilder;
 
-
-
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderTrait;
 
 trait GlossaryKeyBuilder
 {
+
     use KeyBuilderTrait;
 
     /**
@@ -30,4 +30,5 @@ trait GlossaryKeyBuilder
     {
         return 'glossary';
     }
+
 }

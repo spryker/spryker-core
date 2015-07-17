@@ -7,6 +7,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 interface QueueConnectionInterface
 {
+
     /**
      * @param int $fetchSize
      */
@@ -45,4 +46,5 @@ interface QueueConnectionInterface
      * @return QueueMessageInterface
      */
     public function decodeMessage(AMQPMessage $amqpMessage);
+
 }

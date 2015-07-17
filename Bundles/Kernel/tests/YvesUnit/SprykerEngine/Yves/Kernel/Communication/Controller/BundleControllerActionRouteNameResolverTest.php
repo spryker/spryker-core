@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,4 +26,5 @@ class BundleControllerActionRouteNameResolverTest extends \PHPUnit_Framework_Tes
 
         $this->assertSame('foo/bar/baz', $resolver->resolve());
     }
+
 }

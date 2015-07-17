@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,7 +11,9 @@ interface PathExtractorInterface
 
     /**
      * @param array $menu
+     *
      * @return array
      */
     public function extractPathFromMenu(array $menu);
+
 }

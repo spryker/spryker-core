@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use Unit\SprykerFeature\Client\ZedRequest\Service\Client\Fixture\CommunicationOb
  */
 class AbstractObjectTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testConstructorWithoutParameters()
     {
         $object = new CommunicationObject();
@@ -30,7 +32,7 @@ class AbstractObjectTest extends \PHPUnit_Framework_TestCase
 
     public function testFromArray()
     {
-        $data = ['test1' => 1, 'test2' => "hund"];
+        $data = ['test1' => 1, 'test2' => 'hund'];
 
         $object = new CommunicationObject();
         $object->fromArray($data);
@@ -57,4 +59,5 @@ class AbstractObjectTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(['test2' => 3], $object->toArray());
     }
+
 }

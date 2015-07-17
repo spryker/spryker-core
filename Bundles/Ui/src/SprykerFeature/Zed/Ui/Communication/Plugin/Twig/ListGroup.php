@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,14 +24,14 @@ class ListGroup extends TwigFunction
      */
     protected function getFunction()
     {
-        return function(array $items) {
+        return function (array $items) {
             if (is_array(array_values($items)[0])) {
                 $html = '<div class="list-group">';
 
                 foreach ($items as $item) {
-                    $class  = '';
+                    $class = '';
                     $target = '';
-                    $data   = '';
+                    $data = '';
                     $extras = '';
 
                     if (array_key_exists('class', $item)) {
@@ -59,7 +60,7 @@ class ListGroup extends TwigFunction
                         }
                     }
 
-                    $html .= '<a href="' . $item['href'] . '" class="list-group-item' . $class . '"' . $target . $data . $extras .'>';
+                    $html .= '<a href="' . $item['href'] . '" class="list-group-item' . $class . '"' . $target . $data . $extras . '>';
                     $html .= $item['label'];
                     $html .= '</a>';
                 }

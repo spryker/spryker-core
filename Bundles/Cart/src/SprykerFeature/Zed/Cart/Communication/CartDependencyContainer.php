@@ -1,13 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Cart\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
-class CartDependencyContainer extends AbstractDependencyContainer
+class CartDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
 }

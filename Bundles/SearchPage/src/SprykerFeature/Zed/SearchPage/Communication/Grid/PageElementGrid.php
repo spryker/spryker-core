@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\Ui\Dependency\Plugin\GridPluginInterface;
 
 class PageElementGrid extends AbstractGrid
 {
+
     const ID_SEARCH_PAGE_ELEMENT = 'id_search_page_element';
     const ELEMENT_KEY = 'element_key';
     const IS_ELEMENT_ACTIVE = 'is_element_active';
@@ -53,4 +55,5 @@ class PageElementGrid extends AbstractGrid
 
         return $plugins;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RedirectController extends AbstractController
 {
+
     /**
      * @param array $meta
      *
@@ -22,4 +24,5 @@ class RedirectController extends AbstractController
             $meta['status']
         );
     }
+
 }

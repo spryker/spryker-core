@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Generated\Shared\Transfer\TypeTransfer;
 
 interface WriterInterface
 {
+
     /**
      * @param TypeTransfer $stockTypeTransfer
      *
@@ -51,4 +53,5 @@ interface WriterInterface
      * @return int
      */
     public function createStockProduct(StockProductTransfer $transferStockProduct);
+
 }

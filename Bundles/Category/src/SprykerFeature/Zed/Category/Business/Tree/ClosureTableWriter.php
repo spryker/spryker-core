@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -57,6 +58,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
 
     /**
      * @param NodeTransfer $categoryNode
+     *
      * @throws PropelException
      */
     protected function createRootNode(NodeTransfer $categoryNode)
@@ -87,7 +89,8 @@ class ClosureTableWriter implements ClosureTableWriterInterface
             SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
             SpyCategoryClosureTableTableMap::COL_DEPTH
         );
-        $statement = $connection->prepare((string)$query);
+        $statement = $connection->prepare((string) $query);
         $statement->execute([$nodeId, $parentId, $nodeId, $nodeId]);
     }
+
 }

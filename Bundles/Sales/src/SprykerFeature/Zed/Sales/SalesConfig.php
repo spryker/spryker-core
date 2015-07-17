@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,6 +29,7 @@ class SalesConfig extends AbstractBundleConfig
 
     /**
      * total count of digits in invoiceNumber including prefix (max 20)
+     *
      * @return int
      */
     public function getInvoiceIncrementDigits()
@@ -37,6 +39,7 @@ class SalesConfig extends AbstractBundleConfig
 
     /**
      * minimum incrementation of invoice number
+     *
      * @return int
      */
     public function getInvoiceIncrementMin()
@@ -46,6 +49,7 @@ class SalesConfig extends AbstractBundleConfig
 
     /**
      * maximum incrementation of invoice number
+     *
      * @return int
      */
     public function getInvoiceIncrementMax()
@@ -54,16 +58,16 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     *
+     * @deprecated
      * @return array
      */
     public function getOrderIncrementKeys()
     {
-        return array('2', '5', '9', '3', '8', '1', '7', '6', '4');
+        return ['2', '5', '9', '3', '8', '1', '7', '6', '4'];
     }
 
     /**
-     *
+     * @deprecated
      * @return array
      */
     public function getOrderIncrementPrefix()
@@ -72,7 +76,7 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     *
+     * @deprecated
      * @return int
      */
     public function getOrderIncrementDigits()
@@ -82,6 +86,7 @@ class SalesConfig extends AbstractBundleConfig
 
     /**
      * @throws \Exception
+     *
      * @return int
      */
     public function getStateMachineTriggerQueueProcessMessageAmount()
@@ -104,9 +109,33 @@ class SalesConfig extends AbstractBundleConfig
      */
     public function getMarkAsTestConditions()
     {
-        return  array(
-            'last_name' => 'Tester'
-        );
+        return  [
+            'last_name' => 'Tester',
+        ];
     }
 
+    /**
+     * @return int
+     */
+    public function getMinimumOrderNumber()
+    {
+        return 100;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderNumberIncrementMin()
+    {
+        return 23;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderNumberIncrementMax()
+    {
+        return 42;
+    }
+    
 }

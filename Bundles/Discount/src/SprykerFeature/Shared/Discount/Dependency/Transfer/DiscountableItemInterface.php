@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,4 +35,5 @@ interface DiscountableItemInterface
      * @return DiscountableExpenseInterface[]|\ArrayObject
      */
     public function getExpenses();
+
 }

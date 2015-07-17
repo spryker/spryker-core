@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -41,6 +42,7 @@ class Redis implements \SessionHandlerInterface
     /**
      * @param string $savePath
      * @param string $sessionName
+     *
      * @return bool
      */
     public function open($savePath, $sessionName)
@@ -55,11 +57,13 @@ class Redis implements \SessionHandlerInterface
      */
     public function close() {
         unset($this->connection);
+
         return true;
     }
 
     /**
      * @param string $sessionId
+     *
      * @return null|string
      */
     public function read($sessionId) {
@@ -74,6 +78,7 @@ class Redis implements \SessionHandlerInterface
     /**
      * @param string $sessionId
      * @param string $sessionData
+     *
      * @return bool
      */
     public function write($sessionId, $sessionData) {
@@ -92,6 +97,7 @@ class Redis implements \SessionHandlerInterface
 
     /**
      * @param int|string $sessionId
+     *
      * @return bool
      */
     public function destroy($sessionId) {
@@ -106,6 +112,7 @@ class Redis implements \SessionHandlerInterface
 
     /**
      * @param int $maxLifetime
+     *
      * @return bool
      */
     public function gc($maxLifetime) {

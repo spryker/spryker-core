@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Yves\FrontendExporter\Creator\ResourceCreatorInterface;
 
 class PageResourceCreator implements ResourceCreatorInterface
 {
+
     /**
      * @var LocatorLocatorInterface
      */
@@ -59,7 +61,8 @@ class PageResourceCreator implements ResourceCreatorInterface
         return [
             '_controller' => $service,
             '_route' => $routeResolver->resolve(),
-            'meta'  =>  $data
+            'meta' => $data,
         ];
     }
+
 }

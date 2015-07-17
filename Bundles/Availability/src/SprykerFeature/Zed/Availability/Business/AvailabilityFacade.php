@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityToCheckou
     /**
      * @param string $sku
      * @param int $quantity
+     *
      * @return bool
      */
     public function isProductSellable($sku, $quantity)
@@ -26,6 +28,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityToCheckou
 
     /**
      * @param string $sku
+     *
      * @return int
      */
     public function calculateStockForProduct($sku)

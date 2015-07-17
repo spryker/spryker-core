@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,4 +21,4 @@ interface FilterFormatInterface
      */
     public function getSuggestions();
 
-} 
+}

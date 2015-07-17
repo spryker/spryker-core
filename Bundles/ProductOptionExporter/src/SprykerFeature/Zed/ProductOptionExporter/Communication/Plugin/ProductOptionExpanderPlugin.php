@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\ProductOptionExporter\Communication\ProductOptionExporter
  */
 class ProductOptionExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+
     /**
      * @return string
      */
@@ -42,4 +44,5 @@ class ProductOptionExpanderPlugin extends AbstractPlugin implements QueryExpande
     {
         return 100;
     }
+
 }

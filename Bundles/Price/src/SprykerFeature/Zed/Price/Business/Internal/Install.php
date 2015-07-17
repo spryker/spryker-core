@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerFeature\Zed\Price\Business\Internal;
 
 use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Price\Business\PriceSettings;
 use SprykerFeature\Zed\Price\PriceConfig;
 

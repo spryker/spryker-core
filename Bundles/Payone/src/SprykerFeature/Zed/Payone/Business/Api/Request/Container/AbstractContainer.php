@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,6 +27,7 @@ abstract class AbstractContainer implements ContainerInterface
             }
         }
         ksort($result);
+
         return $result;
     }
 
@@ -39,6 +41,7 @@ abstract class AbstractContainer implements ContainerInterface
             $stringArray[] = $key . ' = ' . $value;
         }
         $result = implode("\n", $stringArray);
+
         return $result;
     }
 

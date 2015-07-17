@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,10 +11,10 @@ use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
 
 /**
  * Class UrlMatcher
- * @package SprykerFeature\Yves\FrontendExporter\Business\Matcher
  */
 class UrlMatcher implements UrlMatcherInterface
 {
+
     /**
      * @var
      */
@@ -46,4 +47,5 @@ class UrlMatcher implements UrlMatcherInterface
 
         return $this->keyValueReader->get($urlKey);
     }
+
 }

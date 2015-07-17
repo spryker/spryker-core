@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 
 class Discount
 {
+
     const KEY_DISCOUNTS = 'discounts';
     const KEY_ERRORS = 'errors';
 
@@ -33,6 +35,7 @@ class Discount
 
     /**
      * @ var OrderInterface
+     *
      * @var CalculableInterface
      */
     protected $discountContainer;
@@ -64,6 +67,7 @@ class Discount
 
     /**
      * @ param OrderInterface $discountContainer
+     *
      * @param CalculableInterface $discountContainer
      * @param DiscountQueryContainer $queryContainer
      * @param DecisionRuleInterface $decisionRule
@@ -146,6 +150,7 @@ class Discount
 
     /**
      * @param int $idDiscount
+     *
      * @return DiscountDecisionRulePluginInterface[]
      */
     protected function getDecisionRulePlugins($idDiscount)
@@ -166,7 +171,7 @@ class Discount
 
             $decisionRulePlugin->setContext(
                 [
-                    AbstractDecisionRule::KEY_ENTITY => $decisionRule
+                    AbstractDecisionRule::KEY_ENTITY => $decisionRule,
                 ]
             );
 
@@ -178,6 +183,7 @@ class Discount
 
     /**
      * @param int $idDiscount
+     *
      * @return SpyDiscountDecisionRule[]
      */
     protected function retrieveDecisionRules($idDiscount)
@@ -189,12 +195,13 @@ class Discount
 
     /**
      * @param int $idDiscount
+     *
      * @return null|DiscountDecisionRulePluginInterface
      */
     protected function getDefaultVoucherDecisionRulePluginIfNeeded($idDiscount)
     {
-        if (count($this->discountContainer->getCalculableObject()->getCouponCodes()) == 0) {
-            return null;
+        if (count($this->discountContainer->getCalculableObject()->getCouponCodes()) === 0) {
+            return;
         }
 
         $discount = $this->queryContainer->queryDiscount()->findPk($idDiscount);
@@ -210,6 +217,7 @@ class Discount
             return $plugin;
         }
 
-        return null;
+        return;
     }
+
 }

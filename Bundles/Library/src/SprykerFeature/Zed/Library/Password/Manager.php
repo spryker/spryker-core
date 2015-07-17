@@ -1,10 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 class SprykerFeature_Zed_Library_Password_Manager
 {
+
     const MAX_PASSWORD_LENGTH = 4096;
 
     /**
@@ -15,13 +16,13 @@ class SprykerFeature_Zed_Library_Password_Manager
     /**
      * @var array
      */
-    private $algorithmOptions = array();
+    private $algorithmOptions = [];
 
     /**
      * @param string $algorithm
      * @param array $algorithmOptions
      */
-    public function __construct($algorithm, $algorithmOptions = array())
+    public function __construct($algorithm, $algorithmOptions = [])
     {
         $this->algorithm = $algorithm;
         $this->algorithmOptions = $algorithmOptions;
@@ -48,14 +49,16 @@ class SprykerFeature_Zed_Library_Password_Manager
         if (!$this->isPasswordTooLong($password) && password_verify($password, $hash)) {
             return true;
         }
+
         return false;
     }
 
     /**
      * @param string $password
      *
-     * @return string
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public function hash($password)
     {
@@ -71,6 +74,7 @@ class SprykerFeature_Zed_Library_Password_Manager
                 print_r($this->algorithmOptions, true)
             ));
         }
+
         return $hash;
     }
 
@@ -85,4 +89,5 @@ class SprykerFeature_Zed_Library_Password_Manager
     {
         return strlen($password) > self::MAX_PASSWORD_LENGTH;
     }
+
 }

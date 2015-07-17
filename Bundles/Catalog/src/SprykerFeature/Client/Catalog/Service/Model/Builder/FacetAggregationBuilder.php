@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,15 +12,16 @@ use Elastica\Aggregation\Max;
 use Elastica\Aggregation\Min;
 use Elastica\Aggregation\Nested;
 use Elastica\Aggregation\Terms;
-use Elastica\Query;
 
 class FacetAggregationBuilder implements FacetAggregationBuilderInterface
 {
+
     const FACET_VALUE = 'facet-value';
     const FACET_NAME = 'facet-name';
 
     /**
      * @param string $fieldName
+     *
      * @return AbstractAggregation
      */
     public function createStringFacetAggregation($fieldName)

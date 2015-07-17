@@ -1,16 +1,17 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Business\ProductFrontendExporterPriceConnectorFacade;
 use SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Persistence\ProductFrontendExporterPriceConnectorQueryContainer
     as QueryContainer;
 
-class ProductFrontendExporterPriceConnectorDependencyContainer extends AbstractDependencyContainer
+class ProductFrontendExporterPriceConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
@@ -36,4 +37,5 @@ class ProductFrontendExporterPriceConnectorDependencyContainer extends AbstractD
     {
         return $this->getLocator()->productFrontendExporterPriceConnector()->queryContainer();
     }
+
 }

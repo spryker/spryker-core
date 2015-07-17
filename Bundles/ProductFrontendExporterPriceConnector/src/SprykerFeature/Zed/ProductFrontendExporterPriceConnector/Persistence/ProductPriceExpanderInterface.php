@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface ProductPriceExpanderInterface
 {
+
     /**
      * @param ModelCriteria $expandableQuery
      * @param int $idPriceType
@@ -16,4 +18,5 @@ interface ProductPriceExpanderInterface
      * @return ModelCriteria
      */
     public function expandQuery(ModelCriteria $expandableQuery, $idPriceType);
+
 }

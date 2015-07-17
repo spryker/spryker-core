@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Shared\Product\ProductConfig;
 
 abstract class SharedAbstractProductResourceKeyBuilder extends SharedResourceKeyBuilder
 {
+
     /**
      * @return string
      */
@@ -17,4 +19,5 @@ abstract class SharedAbstractProductResourceKeyBuilder extends SharedResourceKey
     {
         return ProductConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT;
     }
+
 }

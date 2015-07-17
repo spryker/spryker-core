@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Client\Kernel;
 
-use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\AbstractLocator;
@@ -25,8 +25,9 @@ class BundleDependencyProviderLocator extends AbstractLocator
      * @param LocatorLocatorInterface $locator
      * @param string|null $className
      *
-     * @return BundleDependencyProviderInterface
      * @throws LocatorException
+     *
+     * @return BundleDependencyProviderInterface
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
@@ -35,4 +36,5 @@ class BundleDependencyProviderLocator extends AbstractLocator
 
         return $factory->create($className);
     }
+
 }

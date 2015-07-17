@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use LogicException;
 
 class Customer
 {
+
     /** @var Application */
     protected $application;
 
@@ -61,13 +63,14 @@ class Customer
     {
         $security = $this->application['security'];
         if (!$security) {
-            return null;
+            return;
         }
         $token = $security->getToken();
         if (!$token) {
-            return null;
+            return;
         }
 
         return $token;
     }
+
 }

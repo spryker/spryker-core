@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,13 +8,13 @@ namespace SprykerFeature\Shared\Library\Storage;
 
 /**
  * Class AdapterInterface
- * @package SprykerFeature\Shared\Library\DataSource
  */
 interface AdapterInterface
 {
 
     /**
      * @param array $config
+     *
      * @return $this
      */
     public function setConfig(array $config);
@@ -24,18 +25,19 @@ interface AdapterInterface
     public function getConfig();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getDebug();
 
     /**
      * @param $debug
+     *
      * @return $this
      */
     public function setDebug($debug);
 
     /**
-     * @return void
      */
     public function connect();
+
 }

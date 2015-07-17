@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -76,8 +77,9 @@ class UserFacade extends AbstractFacade
     /**
      * @param UserTransfer $user
      *
-     * @return UserTransfer
      * @throws Exception\UserNotFoundException
+     *
+     * @return UserTransfer
      */
     public function updateUser(UserTransfer $user)
     {
@@ -172,4 +174,5 @@ class UserFacade extends AbstractFacade
             ->getUserModel()
             ->removeUser($idUser);
     }
+
 }

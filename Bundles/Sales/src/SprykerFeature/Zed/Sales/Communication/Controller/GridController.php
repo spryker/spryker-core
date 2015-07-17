@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -43,4 +44,5 @@ class GridController extends AbstractController
 
         return $this->jsonResponse($gridData);
     }
+
 }

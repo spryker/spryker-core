@@ -1,8 +1,8 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 class SprykerFeature_Shared_Library_Log
 {
 
@@ -26,7 +26,7 @@ class SprykerFeature_Shared_Library_Log
      *
      * @param mixed $expression
      * @param string $fileName
-     * @param boolean $showInfo
+     * @param bool $showInfo
      * @param string $dir
      */
     public static function logRaw($expression, $fileName, $showInfo = true, $dir = 'logs')
@@ -51,6 +51,7 @@ class SprykerFeature_Shared_Library_Log
      * - if file already exists, it will be truncated first
      *
      * @static
+     *
      * @param $expression
      * @param string $fileName
      */
@@ -65,7 +66,9 @@ class SprykerFeature_Shared_Library_Log
      * Retrieves Content from Flashfile
      *
      * @static
+     *
      * @param string $fileName
+     *
      * @return string
      * @static
      */
@@ -79,12 +82,14 @@ class SprykerFeature_Shared_Library_Log
         if (empty($content)) {
             return '';
         }
+
         return unserialize($content);
     }
 
     /**
      * @param string $fileName
      * @param string $dir
+     *
      * @return string
      * @static
      */
@@ -101,6 +106,8 @@ class SprykerFeature_Shared_Library_Log
         }
 
         assert(is_writable($logPath));
+
         return $logPath . DIRECTORY_SEPARATOR . $fileName;
     }
+
 }

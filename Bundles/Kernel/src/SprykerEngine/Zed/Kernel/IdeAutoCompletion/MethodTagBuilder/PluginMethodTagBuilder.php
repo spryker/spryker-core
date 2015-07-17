@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -53,6 +54,11 @@ class PluginMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
             return true;
         }
 
+        $reflection = new \ReflectionClass($className);
+        if (!$reflection->isInstantiable()) {
+            return true;
+        }
+
         return false;
     }
 
@@ -68,4 +74,5 @@ class PluginMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
 
         return implode($classNameParts);
     }
+
 }

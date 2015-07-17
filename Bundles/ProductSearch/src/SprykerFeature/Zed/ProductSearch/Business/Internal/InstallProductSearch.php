@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -44,7 +45,6 @@ class InstallProductSearch extends AbstractInstaller
     }
 
     /**
-     * @return void
      */
     public function install()
     {
@@ -52,7 +52,6 @@ class InstallProductSearch extends AbstractInstaller
     }
 
     /**
-     * @return void
      */
     protected function createProductType()
     {
@@ -77,7 +76,7 @@ class InstallProductSearch extends AbstractInstaller
                 ],
                 'full-text' => [
                     'type' => 'string',
-                    'include_in_all' => false
+                    'include_in_all' => false,
                 ],
                 'full-text-boosted' => [
                     'type' => 'string',
@@ -89,79 +88,80 @@ class InstallProductSearch extends AbstractInstaller
                     'properties' => [
                         'sku' => ['type' => 'string'],
                         'name' => ['type' => 'string'],
-                        'url' => ['type' => 'string']
-                    ]
+                        'url' => ['type' => 'string'],
+                    ],
                 ],
                 'string-facet' => [
                     'type' => 'nested',
                     'include_in_all' => false,
                     'properties' => [
                         'facet-name' => ['type' => 'string', 'index' => 'not_analyzed'],
-                        'facet-value' => ['type' => 'string', 'index' => 'not_analyzed']
-                    ]
+                        'facet-value' => ['type' => 'string', 'index' => 'not_analyzed'],
+                    ],
                 ],
                 'integer-facet' => [
                     'type' => 'nested',
                     'include_in_all' => false,
                     'properties' => [
                         'facet-name' => ['type' => 'string', 'index' => 'not_analyzed'],
-                        'facet-value' => ['type' => 'integer']
-                    ]
+                        'facet-value' => ['type' => 'integer'],
+                    ],
                 ],
                 'float-facet' => [
                     'type' => 'nested',
                     'include_in_all' => false,
                     'properties' => [
                         'facet-name' => ['type' => 'string', 'index' => 'not_analyzed'],
-                        'facet-value' => ['type' => 'float']
-                    ]
+                        'facet-value' => ['type' => 'float'],
+                    ],
                 ],
                 'completion-terms' => [
                     'type' => 'string',
-                    'include_in_all' => false
+                    'include_in_all' => false,
                 ],
                 'suggestion-terms' => [
                     'type' => 'string',
-                    'include_in_all' => false
+                    'include_in_all' => false,
                 ],
                 'string-sort' => [
                     'type' => 'object',
                     'include_in_all' => false,
                     'properties' => [
-                        'name' => ['type' => 'string']
-                    ]
+                        'name' => ['type' => 'string'],
+                    ],
                 ],
                 'integer-sort' => [
                     'type' => 'object',
                     'include_in_all' => false,
                     'properties' => [
-                        'name' => ['type' => 'integer']
-                    ]
+                        'name' => ['type' => 'integer'],
+                    ],
                 ],
                 'float-sort' => [
                     'type' => 'object',
                     'include_in_all' => false,
                     'properties' => [
-                        'name' => ['type' => 'float']
-                    ]
+                        'name' => ['type' => 'float'],
+                    ],
                 ],
                 'bool-sort' => [
                     'type' => 'object',
                     'include_in_all' => false,
                     'properties' => [
-                        'name' => ['type' => 'boolean']
-                    ]
+                        'name' => ['type' => 'boolean'],
+                    ],
                 ],
                 'category' => [
                     'type' => 'object',
                     'include_in_all' => false,
                     'properties' => [
                         'direct_parents' => ['type' => 'integer'],
-                        'all_parents' => ['type' => 'integer']
-                    ]
-                ]
+                        'all_parents' => ['type' => 'integer'],
+                    ],
+                ],
             ]);
             $mapping->send();
         }
     }
+
 }

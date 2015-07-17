@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -54,7 +55,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'integer' => 1,
             'transfer' => [
                 'string' => 'foo',
-                'integer' => 1
+                'integer' => 1,
             ],
         ];
 
@@ -144,9 +145,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
                 'bool' => null,
                 'array' => null,
                 'transfer' => null,
-                'transfer_collection' => new \ArrayObject()
+                'transfer_collection' => new \ArrayObject(),
             ],
-            'transfer_collection' => new \ArrayObject()
+            'transfer_collection' => new \ArrayObject(),
         ];
 
         $this->assertEquals($expected, $given);
@@ -186,7 +187,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $given = $transfer->modifiedToArray();
         $expected = [
             'string' => 'foo',
-            'integer' => 2
+            'integer' => 2,
         ];
 
         $this->assertEquals($expected, $given);
@@ -212,8 +213,8 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'array' => [],
             'transfer' => [
                 'string' => 'bar',
-                'integer' => 3
-            ]
+                'integer' => 3,
+            ],
         ];
 
         $this->assertEquals($expected, $given);
@@ -252,4 +253,5 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($transfer, $clonedTransfer);
     }
+
 }

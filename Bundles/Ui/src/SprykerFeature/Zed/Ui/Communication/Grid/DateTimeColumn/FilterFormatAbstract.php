@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -57,7 +58,7 @@ abstract class FilterFormatAbstract implements FilterFormatInterface
     protected function getSuggestionEqualingFilterValue()
     {
         return [
-            $this->getFormatEqualingFilterValue()->getTranslation()
+            $this->getFormatEqualingFilterValue()->getTranslation(),
         ];
     }
 
@@ -86,7 +87,7 @@ abstract class FilterFormatAbstract implements FilterFormatInterface
             return $startingWithFormat ? $startingWithFormat : $equalFormat;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -100,7 +101,7 @@ abstract class FilterFormatAbstract implements FilterFormatInterface
             return $formats[0];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -129,7 +130,7 @@ abstract class FilterFormatAbstract implements FilterFormatInterface
             }
         }
 
-        return null;
+        return;
     }
 
 }

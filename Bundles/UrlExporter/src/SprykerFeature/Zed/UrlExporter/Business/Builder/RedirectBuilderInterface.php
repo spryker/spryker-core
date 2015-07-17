@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface RedirectBuilderInterface
 {
+
     /**
      * @param array $redirectResultSet
      * @param LocaleTransfer $locale
@@ -16,4 +18,5 @@ interface RedirectBuilderInterface
      * @return array
      */
     public function buildRedirects(array $redirectResultSet, LocaleTransfer $locale);
+
 }

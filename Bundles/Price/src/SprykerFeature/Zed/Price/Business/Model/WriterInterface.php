@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,11 +12,14 @@ use Propel\Runtime\Exception\PropelException;
 
 interface WriterInterface
 {
+
     /**
      * @param string $name
-     * @return SpyPriceType
+     *
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return SpyPriceType
      */
     public function createPriceType($name);
 
@@ -28,4 +32,5 @@ interface WriterInterface
      * @param PriceProductTransfer $transferPriceProduct
      */
     public function createPriceForProduct(PriceProductTransfer $transferPriceProduct);
+
 }

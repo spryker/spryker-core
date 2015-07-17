@@ -1,8 +1,8 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 
 namespace Unit\SprykerFeature\Zed\Mail\Business;
 
@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Mail\Business\InclusionHandlerInterface;
  */
 class InclusionHandlerTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @var InclusionHandlerInterface
      */
@@ -45,4 +46,5 @@ class InclusionHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('VGVzdCBGaWxlIENvbnRlbnQ=', $this->inclusionHandler->encodeBase64($textFilePath));
     }
+
 }

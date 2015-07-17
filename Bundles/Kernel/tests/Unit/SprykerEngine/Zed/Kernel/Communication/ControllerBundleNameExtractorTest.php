@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,4 +25,5 @@ class ControllerBundleNameExtractorTest extends \PHPUnit_Framework_TestCase
         $extractor = new ControllerBundleNameExtractor();
         $this->assertSame('Kernel', $extractor->getBundleName($extractor));
     }
+
 }

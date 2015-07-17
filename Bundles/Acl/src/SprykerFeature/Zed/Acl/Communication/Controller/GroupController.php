@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -39,7 +40,7 @@ class GroupController extends AbstractController
     public function viewAction(Request $request)
     {
         $idGroup = $request->get('id');
-        $query=sprintf("?id=%s", $idGroup);
+        $query = sprintf('?id=%s', $idGroup);
 
         return $this->viewResponse(['query' => $query]);
     }
@@ -126,4 +127,5 @@ class GroupController extends AbstractController
 
         return $this->jsonResponse($data);
     }
+
 }

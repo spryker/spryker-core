@@ -3,9 +3,7 @@
   "autoload": {
     "psr-0": {
       "SprykerEngine": "src/",
-      "Acceptance": "tests/",
       "Functional": "tests/",
-      "Integration": "tests/",
       "Unit": "tests/",
       "YvesUnit": "tests/"
     }

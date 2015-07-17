@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerEngine\Yves\Kernel;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Yves\Kernel\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 
 abstract class AbstractPlugin
 {
@@ -18,10 +18,10 @@ abstract class AbstractPlugin
     private $dependencyContainer;
 
     /**
-     * @param FactoryInterface $factory
+     * @param Factory $factory
      * @param LocatorLocatorInterface $locator
      */
-    public function __construct(FactoryInterface $factory, LocatorLocatorInterface $locator)
+    public function __construct(Factory $factory, LocatorLocatorInterface $locator)
     {
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
@@ -35,4 +35,5 @@ abstract class AbstractPlugin
     {
         return $this->dependencyContainer;
     }
+
 }

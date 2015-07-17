@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ interface CalculatorInterface
     /**
      * @param array $discounts
      * @ param OrderInterface $container
+     *
      * @param CalculableInterface $container
      * @param DiscountSettingsInterface $settings
      * @param DistributorInterface $distributor
@@ -26,4 +28,5 @@ interface CalculatorInterface
         DiscountSettingsInterface $settings,
         DistributorInterface $distributor
     );
+
 }

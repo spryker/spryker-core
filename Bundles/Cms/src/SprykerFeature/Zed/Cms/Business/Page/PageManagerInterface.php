@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,22 +17,25 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface PageManagerInterface
 {
+
     /**
      * @param PageTransfer $page
      *
-     * @return PageTransfer
      * @throws MissingTemplateException
      * @throws MissingPageException
      * @throws MissingUrlException
      * @throws PageExistsException
+     *
+     * @return PageTransfer
      */
     public function savePage(PageTransfer $page);
 
     /**
      * @param int $idPage
      *
-     * @return SpyCmsPage
      * @throws MissingPageException
+     *
+     * @return SpyCmsPage
      */
     public function getPageById($idPage);
 
@@ -51,8 +55,10 @@ interface PageManagerInterface
      * @param PageTransfer $page
      * @param string $url
      *
-     * @return UrlTransfer
      * @throws UrlExistsException
+     *
+     * @return UrlTransfer
      */
     public function createPageUrl(PageTransfer $page, $url);
+
 }

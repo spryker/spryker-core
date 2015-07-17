@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -70,8 +71,9 @@ class ControllerLocator implements ControllerLocatorInterface
      * @param \Pimple $application
      * @param LocatorLocatorInterface $locator
      *
-     * @return object
      * @throws ClassResolver\ClassNotFoundException
+     *
+     * @return object
      */
     public function locate(\Pimple $application, LocatorLocatorInterface $locator)
     {

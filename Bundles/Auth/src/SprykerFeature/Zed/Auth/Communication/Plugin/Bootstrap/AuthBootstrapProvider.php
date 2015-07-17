@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+
     /**
      * @param Application $app
      */
@@ -57,4 +59,5 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
             }
         });
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -41,7 +42,6 @@ class CaptureContainer extends AbstractRequestContainer
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     protected $invoicing;
-
 
     /**
      * @param int $amount

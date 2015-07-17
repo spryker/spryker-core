@@ -1,18 +1,15 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Lumberjack\Business\Model\Logger;
 
-use Generated\Shared\Transfer\MetaRequestTransfer;
 use Guzzle\Http\QueryString;
-use SprykerFeature\Shared\Lumberjack\Code\Log\Helper;
 use SprykerFeature\Shared\Lumberjack\Code\Log\Types;
 use SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
-use SprykerFeature\Zed\Auth\Business\Model\Auth;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use Psr\Log\AbstractLogger;
 
 class RequestLogger extends AbstractLogger
@@ -22,9 +19,8 @@ class RequestLogger extends AbstractLogger
      * @param mixed $level
      * @param string $message
      * @param array $context
-     * @return null
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         if (!($message instanceof Request)) {
             throw new \InvalidArgumentException('$message must be a instance of "SprykerFeature\Zed\Application\Component\Request"');
@@ -62,6 +58,7 @@ class RequestLogger extends AbstractLogger
 
     /**
      * @param string $rawBody
+     *
      * @return \SprykerFeature_Zed_Library_Sanitize_Array
      */
     protected function decodeRawBody($rawBody)
@@ -95,6 +92,5 @@ class RequestLogger extends AbstractLogger
 
         return $rawBody;
     }
-
 
 }

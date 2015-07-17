@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 
-use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
@@ -52,6 +52,11 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
             return true;
         }
 
+        $reflection = new \ReflectionClass($className);
+        if (!$reflection->isInstantiable()) {
+            return true;
+        }
+
         return false;
     }
 
@@ -77,8 +82,9 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     /**
      * @param string $className
      *
-     * @return array
      * @throws \ErrorException
+     *
+     * @return array
      */
     protected function createConstructor($className)
     {
@@ -86,12 +92,12 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
             $class = new \ReflectionClass($className);
 
             $constructor = $class->getConstructor();
-            /* @var $constructor \ReflectionMethod */
+            /** @var \ReflectionMethod $constructor */
             if (isset($constructor)) {
                 $parameters = $constructor->getParameters();
                 if (!empty($parameters)) {
                     $constructorData = [];
-                    /* @var $param \ReflectionParameter */
+                    /** @var \ReflectionParameter $param */
                     foreach ($parameters as $param) {
                         $paramData = '';
                         if ($param->isArray()) {

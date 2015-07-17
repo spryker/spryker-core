@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,7 +9,6 @@ namespace SprykerFeature\Zed\Acl\Communication\Form;
 use Generated\Zed\Ide\FactoryAutoCompletion\AclCommunication;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Acl\Messages\Messages;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class GroupForm extends AbstractForm
 {
+
     const FIELD_ID_ACL_GROUP = 'id_acl_group';
     const FIELD_NAME = 'name';
 
@@ -61,7 +62,7 @@ class GroupForm extends AbstractForm
             $entity = $query->findOne();
 
             $response = $entity->toArray();
-            $response[self::FIELD_ID_ACL_GROUP] = (int)$response[self::FIELD_ID_ACL_GROUP];
+            $response[self::FIELD_ID_ACL_GROUP] = (int) $response[self::FIELD_ID_ACL_GROUP];
         }
 
         return $response;
@@ -78,7 +79,7 @@ class GroupForm extends AbstractForm
             ->setConstraints(
                 [
                     new Assert\Type([
-                        'type' => 'string'
+                        'type' => 'string',
                     ]),
 
                     new Assert\NotBlank(),
@@ -87,7 +88,7 @@ class GroupForm extends AbstractForm
                         $this->getGroupName(),
                         $this->getGroupId(),
                         $this->getLocator()
-                    )
+                    ),
                 ]
             );
     }
@@ -117,4 +118,5 @@ class GroupForm extends AbstractForm
     {
         return $this->aclQueryContainer;
     }
+
 }

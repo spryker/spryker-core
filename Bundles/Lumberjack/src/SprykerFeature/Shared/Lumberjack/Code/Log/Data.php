@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -64,18 +65,20 @@ class Data
         if (is_null($value)) {
             $string = (string) null;
             $this->addDataIfPossible($key, $string);
+
             return;
         }
 
         if (is_bool($value)) {
             $string = ($value) ? '(bool) true' : '(bool) false';
             $this->addDataIfPossible($key, $string);
+
             return;
         }
 
         if (is_scalar($value)) {
             $string = (string) $value;
-            /**
+            /*
              * this is used to make sure only valid json (and not json within json) will be send to the elastic
              * search server.
              */
@@ -83,6 +86,7 @@ class Data
                 $value = addslashes($value);
             }
             $this->addDataIfPossible($key, $string);
+
             return;
         }
 
@@ -156,6 +160,7 @@ class Data
 
     /**
      * @param $string
+     *
      * @return string
      */
     protected function getCheckedString($string)
@@ -169,6 +174,7 @@ class Data
 
     /**
      * @param $data
+     *
      * @return array
      */
     public function objectToArray($data)
@@ -179,6 +185,7 @@ class Data
             foreach ($data as $key => $value) {
                 $converted[$key] = $this->objectToArray($value);
             }
+
             return $converted;
         }
 
@@ -192,6 +199,7 @@ class Data
             // Added str_replace in order to get rid of the \u0000 NULL characters in front of class attribute names
             $converted[$this->filterKeyName($key)] = $this->objectToArray($value);
         }
+
         return $converted;
     }
 
@@ -199,19 +207,20 @@ class Data
      * @param string $key
      * @param \Traversable|array $data
      * @param bool $toString
+     *
      * @return array
      */
     protected function flattenArray($key, $data, $toString = true)
     {
-        $flattenedArray = array();
+        $flattenedArray = [];
         foreach ($data as $dataKey => $value) {
             $keyName = $key . '.' . $dataKey;
 
             if (is_bool($value)) {
-                $flattenedArray[$this->filterKeyName($keyName)] = ($value)? '(bool) true' : '(bool) false';
+                $flattenedArray[$this->filterKeyName($keyName)] = ($value) ? '(bool) true' : '(bool) false';
             } elseif (is_scalar($value)) {
 
-                /**
+                /*
                  * this is used to make sure only valid json (and not json within json) will be send to the elastic
                  * search server.
                  */
@@ -240,6 +249,7 @@ class Data
 
     /**
      * @param $string
+     *
      * @return mixed
      */
     protected function isJson($string)
@@ -249,11 +259,12 @@ class Data
 
     /**
      * @param $keyName
+     *
      * @return mixed
      */
     protected function filterKeyName($keyName)
     {
-        return str_replace(array("\\u0000", "\0", '*'), '', $keyName);
+        return str_replace(['\\u0000', "\0", '*'], '', $keyName);
     }
 
     /**
@@ -375,4 +386,5 @@ class Data
     {
         return $this->data;
     }
+
 }

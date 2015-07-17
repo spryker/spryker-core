@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ use Propel\Runtime\Exception\PropelException;
 
 class PriceQueryContainer extends AbstractQueryContainer
 {
+
     const DATE_NOW = 'now';
 
     /**
@@ -43,8 +45,9 @@ class PriceQueryContainer extends AbstractQueryContainer
      * @param string $sku
      * @param SpyPriceType $priceType
      *
-     * @return Propel\SpyPriceProductQuery
      * @throws PropelException
+     *
+     * @return Propel\SpyPriceProductQuery
      */
     public function queryPriceEntityForAbstractProduct($sku, SpyPriceType $priceType)
     {
@@ -60,8 +63,9 @@ class PriceQueryContainer extends AbstractQueryContainer
      * @param string $sku
      * @param SpyPriceType $priceType
      *
-     * @return Propel\SpyPriceProductQuery
      * @throws PropelException
+     *
+     * @return Propel\SpyPriceProductQuery
      */
     public function queryPriceEntityForConcreteProduct($sku, SpyPriceType $priceType)
     {
@@ -88,8 +92,9 @@ class PriceQueryContainer extends AbstractQueryContainer
      * @param PriceProductTransfer $transferPriceProduct
      * @param SpyPriceType $priceType
      *
-     * @return Propel\SpyPriceProductQuery
      * @throws PropelException
+     *
+     * @return Propel\SpyPriceProductQuery
      */
     public function querySpecificPriceForAbstractProduct(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType)
     {
@@ -106,8 +111,9 @@ class PriceQueryContainer extends AbstractQueryContainer
      * @param PriceProductTransfer $transferPriceProduct
      * @param SpyPriceType $priceType
      *
-     * @return SpyPriceProductQuery
      * @throws PropelException
+     *
+     * @return SpyPriceProductQuery
      */
     public function querySpecificPriceForConcreteProduct(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType)
     {
@@ -158,15 +164,16 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     public function queryPriceTypeForm()
     {
         return SpyPriceTypeQuery::create()
             ->select([
-                SpyPriceTypeTableMap::COL_NAME=> 'value',
-                SpyPriceTypeTableMap::COL_NAME => 'label'
+                SpyPriceTypeTableMap::COL_NAME => 'value',
+                SpyPriceTypeTableMap::COL_NAME => 'label',
             ])
             ->withColumn(SpyPriceTypeTableMap::COL_NAME, 'value')
             ->withColumn(SpyPriceTypeTableMap::COL_NAME, 'label')

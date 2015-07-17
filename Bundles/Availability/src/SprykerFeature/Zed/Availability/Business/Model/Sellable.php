@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\Stock\Business\StockFacade;
 
 class Sellable implements SellableInterface
 {
+
     /**
      * @var OmsFacade
      */
@@ -34,6 +36,7 @@ class Sellable implements SellableInterface
     /**
      * @param string $sku
      * @param int $quantity
+     *
      * @return bool
      */
     public function isProductSellable($sku, $quantity)
@@ -48,6 +51,7 @@ class Sellable implements SellableInterface
 
     /**
      * @param string $sku
+     *
      * @return int
      */
     public function calculateStockForProduct($sku)

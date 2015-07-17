@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,10 +12,10 @@ use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
 
 /**
  * Class SetupDependencyContainer
- * @package SprykerFeature\Yves\Setup
  */
 class SetupDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @var Setup
      */
@@ -23,6 +24,7 @@ class SetupDependencyContainer extends AbstractDependencyContainer
     /**
      * @param Application $app
      * @param bool $sslEnabled
+     *
      * @return Router\MonitoringRouter
      */
     public function createMonitoringRouter(Application $app, $sslEnabled = false)
@@ -33,4 +35,5 @@ class SetupDependencyContainer extends AbstractDependencyContainer
             $sslEnabled
         );
     }
+
 }

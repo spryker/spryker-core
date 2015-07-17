@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,9 +24,10 @@ class StockGrid extends AbstractGrid
             $this->createDefaultColumn()
                 ->setName(self::NAME)
                 ->filterable()
-                ->sortable()
+                ->sortable(),
         ];
 
         return $plugins;
     }
+
 }

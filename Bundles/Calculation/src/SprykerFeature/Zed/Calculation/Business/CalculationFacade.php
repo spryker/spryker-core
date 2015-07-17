@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -175,4 +176,5 @@ class CalculationFacade extends AbstractFacade
         $calculator = $this->getDependencyContainer()->getTaxTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,8 +8,10 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 
 class MysqlRead extends Mysql implements ReadInterface
 {
+
     /**
      * @param $key
+     *
      * @return mixed
      */
     public function get($key)
@@ -21,6 +24,7 @@ class MysqlRead extends Mysql implements ReadInterface
 
     /**
      * @param array $keys
+     *
      * @return array
      */
     public function getMulti(array $keys)
@@ -50,8 +54,9 @@ class MysqlRead extends Mysql implements ReadInterface
     }
 
     /**
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     public function getAllKeys()
     {
@@ -71,8 +76,10 @@ class MysqlRead extends Mysql implements ReadInterface
 
     /**
      * @param $key
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     protected function runGet($key)
     {
@@ -95,7 +102,7 @@ class MysqlRead extends Mysql implements ReadInterface
 
     /**
      * @param array $keys
-     * @return null
+     *
      * @throws \Exception
      */
     protected function runGetMulti(array $keys)

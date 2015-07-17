@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,8 +18,8 @@ use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Shared\Library\Communication\Request;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use \SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
-use \SprykerFeature\Shared\Lumberjack\Code\Log\Types;
+use SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
+use SprykerFeature\Shared\Lumberjack\Code\Log\Types;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Shared\Yves\YvesConfig;
 
@@ -81,8 +82,10 @@ class ZedClient
      * @param array $metaTransfers
      * @param null $timeoutInSeconds
      * @param bool $isBackgroundRequest
-     * @return \SprykerFeature\Shared\Library\Communication\Response
+     *
      * @throws \LogicException
+     *
+     * @return \SprykerFeature\Shared\Library\Communication\Response
      */
     public function request($pathInfo, TransferInterface $transferObject = null, array $metaTransfers = [], $timeoutInSeconds = null, $isBackgroundRequest = false)
     {
@@ -105,15 +108,17 @@ class ZedClient
 
     /**
      * @param $pathInfo
+     *
      * @return bool
      */
     protected function isLoggingAllowed($pathInfo)
     {
-        return strpos($pathInfo, 'heartbeat');
+        return mb_strpos($pathInfo, 'heartbeat') !== false;
     }
 
     /**
      * @param bool $isBackgroundRequest
+     *
      * @return bool
      */
     protected function isRequestAllowed($isBackgroundRequest)
@@ -124,6 +129,7 @@ class ZedClient
             }
             self::$alreadyRequested = true;
         }
+
         return true;
     }
 
@@ -131,6 +137,7 @@ class ZedClient
      * @param string $pathInfo
      * @param Request $requestTransfer
      * @param int $timeoutInSeconds
+     *
      * @return EntityEnclosingRequest
      */
     protected function createGuzzleRequest($pathInfo, Request $requestTransfer, $timeoutInSeconds = null)
@@ -139,17 +146,17 @@ class ZedClient
             $this->baseUrl,
             [
                 Client::REQUEST_OPTIONS => [
-                    'timeout' => ($timeoutInSeconds ? : self::$timeoutInSeconds),
-                    'connect_timeout' => 1.5
-                ]
+                    'timeout' => ($timeoutInSeconds ?: self::$timeoutInSeconds),
+                    'connect_timeout' => 1.5,
+                ],
             ]
         );
 
-        $char = (strpos($pathInfo,'?')===false)?'?':'&';
-        $pathInfo .= $char.'yvesRequestId='.Lumberjack::getInstance()->getRequestId();
+        $char = (strpos($pathInfo, '?') === false) ? '?' : '&';
+        $pathInfo .= $char . 'yvesRequestId=' . Lumberjack::getInstance()->getRequestId();
 
         $client->setUserAgent('Yves 2.0');
-        /* @var EntityEnclosingRequest $request */
+        /** @var EntityEnclosingRequest $request */
         $request = $client->post($pathInfo);
         $request->addHeader('X-Yves-Host', 1);
 
@@ -164,15 +171,17 @@ class ZedClient
     /**
      * @param TransferInterface $transferObject
      * @param array $metaTransfers
-     * @return Request
+     *
      * @throws \LogicException
+     *
+     * @return Request
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
         $request = new Request();
         $request->setSessionId(session_id());
         $request->setTime(time());
-        $request->setHost(System::getHostname()?: 'n/a');
+        $request->setHost(System::getHostname() ?: 'n/a');
 
         foreach ($metaTransfers as $name => $metaTransfer) {
             if (!is_string($name) || is_numeric($name) || !$metaTransfer instanceof TransferInterface) {
@@ -189,13 +198,16 @@ class ZedClient
         if (!empty($transferObject)) {
             $request->setTransfer($transferObject);
         }
+
         return $request;
     }
 
     /**
      * @param EntityEnclosingRequest $request
-     * @return Response
+     *
      * @throws Exception\InvalidZedResponseException
+     *
+     * @return Response
      */
     protected function sendRequest(EntityEnclosingRequest $request)
     {
@@ -209,8 +221,10 @@ class ZedClient
 
     /**
      * @param Response $response
-     * @return \SprykerFeature\Shared\Library\Communication\Response
+     *
      * @throws Exception\InvalidZedResponseException
+     *
+     * @return \SprykerFeature\Shared\Library\Communication\Response
      */
     protected function getTransferFromResponse(Response $response)
     {
@@ -221,6 +235,7 @@ class ZedClient
 
         $responseTransfer = new \SprykerFeature\Shared\Library\Communication\Response();
         $responseTransfer->fromArray($data);
+
         return $responseTransfer;
     }
 
@@ -268,6 +283,7 @@ class ZedClient
 
     /**
      * Used for debug output
+     *
      * @return int
      */
     public static function getRequestCounter()
@@ -291,4 +307,5 @@ class ZedClient
             $request->addSubscriber(new CookiePlugin($cookieArray));
         }
     }
+
 }

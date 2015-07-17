@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,6 +21,7 @@ use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
  */
 class SubtotalTest extends \PHPUnit_Framework_TestCase
 {
+
     const ITEM_GROSS_PRICE = 10000;
 
     public function testSubtotalShouldBeZeroForAnEmptyOrder()
@@ -100,4 +102,5 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     {
         return Locator::getInstance();
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,4 +24,5 @@ class OptionPriceToPayCalculatorPlugin extends AbstractPlugin implements Calcula
     {
         $this->getFacade()->recalculateOptionPriceToPay($calculableContainer);
     }
+
 }

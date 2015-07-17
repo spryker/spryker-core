@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,6 +7,7 @@
 namespace SprykerFeature\Zed\Setup\Communication\Console;
 
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder;
+use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\PropelMethodTagBuilder;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeBundleAutoCompletionGenerator;
@@ -35,6 +37,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -65,7 +68,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
     {
         $options = [
             IdeAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Zed\Ide',
-            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Zed/Ide/'
+            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Zed/Ide/',
         ];
 
         return $options;
@@ -101,14 +104,14 @@ class GenerateZedIdeAutoCompletionConsole extends Console
             ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed',
         ]);
-        $persistenceMethodTagGenerator = new ConstructableMethodTagBuilder([
+        $persistenceMethodTagGenerator = new PropelMethodTagBuilder([
             ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Persistence/',
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed',
         ]);
 
         $options = [
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Zed\Ide\FactoryAutoCompletion',
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Zed/Ide/'
+            IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Zed/Ide/',
         ];
 
         $generator = new IdeFactoryAutoCompletionGenerator($options);
@@ -122,4 +125,5 @@ class GenerateZedIdeAutoCompletionConsole extends Console
 
         $this->info('Generate Zed IdeFactoryAutoCompletion file');
     }
+
 }

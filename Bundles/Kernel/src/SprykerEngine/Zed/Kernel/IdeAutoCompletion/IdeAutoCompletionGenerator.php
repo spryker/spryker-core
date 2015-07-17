@@ -1,19 +1,16 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Zed\Kernel\IdeAutoCompletion;
 
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-
 class IdeAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerator
 {
 
     /**
      * @param null $output
-     * @return mixed
      */
     public function create($output = null)
     {
@@ -46,4 +43,5 @@ class IdeAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerator
 
         return $methodTags;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,13 +9,13 @@ namespace SprykerFeature\Yves\Twig\Plugin;
 use Silex\Application;
 use SprykerEngine\Yves\Kernel\AbstractPlugin;
 use SprykerFeature\Yves\Twig\TwigDependencyContainer;
-use \Twig_Extension;
 
 /**
  * @method TwigDependencyContainer getDependencyContainer()
  */
 class TwigYvesPlugin extends AbstractPlugin
 {
+
     /**
      * @param Application $application
      *
@@ -26,4 +27,4 @@ class TwigYvesPlugin extends AbstractPlugin
             ->createYvesTwigExtension($application);
     }
 
-    }
+}

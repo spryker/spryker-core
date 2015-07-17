@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Library\Import\Exception;
 
 class CsvFileReader implements ReaderInterface
 {
+
     /**
      * @var string
      */
@@ -40,8 +42,10 @@ class CsvFileReader implements ReaderInterface
 
     /**
      * @param mixed $filepath
-     * @return Input
+     *
      * @throws Exception\SourceNotReadableException
+     *
+     * @return Input
      */
     public function read($filepath)
     {
@@ -77,7 +81,7 @@ class CsvFileReader implements ReaderInterface
                 $headerRow = $row;
                 continue;
             }
-            
+
             if (count($headerRow) !== count($row)) {
                 throw new Exception\SourceNotReadableException('Some rows contain different count of fields than the header.');
             }
@@ -87,4 +91,5 @@ class CsvFileReader implements ReaderInterface
 
         return new Input($filepath, $data);
     }
+
 }

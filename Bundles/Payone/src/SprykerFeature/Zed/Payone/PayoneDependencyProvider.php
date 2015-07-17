@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -47,4 +48,5 @@ class PayoneDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
 }

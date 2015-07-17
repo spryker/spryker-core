@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,4 +15,5 @@ abstract class InstallerConfig extends AbstractBundleConfig
      * @return array
      */
     abstract public function getInstallerStack();
+
 }

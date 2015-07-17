@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,6 +25,7 @@ class TriggerController extends AbstractController
         $redirect = $request->query->get('redirect', '/');
 
         $this->getFacade()->triggerEventForOrderItems($event, [$idOrderItem]);
+
         return $this->redirectResponse($redirect);
     }
 
@@ -36,6 +38,8 @@ class TriggerController extends AbstractController
         $orderItems = $this->getQueryContainer()->querySalesOrderItemsByIdOrder($idOrder)->find();
 
         $this->getFacade()->triggerEvent($event, $orderItems, []);
+
         return $this->redirectResponse($redirect);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,4 +19,5 @@ interface CommandByItemInterface extends CommandInterface
      * @return array
      */
     public function run(SpySalesOrderItem $orderItem, ReadOnlyArrayObject $data);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocaleQuery;
 
 class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQueryContainerInterface
 {
+
     /**
      * @param string $localeName
      *
@@ -34,4 +36,5 @@ class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQuery
 
         return $query;
     }
+
 }

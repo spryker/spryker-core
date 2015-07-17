@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\GlossaryDistributor\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\GlossaryDistributor\Persistence\GlossaryDistributorQueryContainer;
 
-class GlossaryDistributorDependencyContainer extends AbstractDependencyContainer
+class GlossaryDistributorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
@@ -15,4 +15,5 @@ class GlossaryDistributorDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getQueryContainer();
     }
+
 }

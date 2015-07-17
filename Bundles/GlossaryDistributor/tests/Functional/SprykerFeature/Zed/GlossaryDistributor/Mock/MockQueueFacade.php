@@ -7,6 +7,7 @@ use SprykerFeature\Zed\Distributor\Dependency\Facade\DistributorToQueueInterface
 
 class MockQueueFacade implements DistributorToQueueInterface
 {
+
     /**
      * @var array
      */
@@ -28,4 +29,5 @@ class MockQueueFacade implements DistributorToQueueInterface
     {
         return $this->publishedMessages;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,7 @@
 namespace SprykerFeature\Zed\Acl\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\AclBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Model\GroupInterface;
 use SprykerFeature\Zed\Acl\Business\Model\RoleInterface;
@@ -14,7 +15,6 @@ use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Business\Model\RuleValidator;
 use SprykerFeature\Zed\Acl\Business\Model\Installer;
 use SprykerFeature\Zed\Acl\Business\Model\Rule;
-use SprykerFeature\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 
 /**
@@ -22,7 +22,7 @@ use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
  * @method AclConfig getConfig()
  * @method AclQueryContainer getQueryContainer()
  */
-class AclDependencyContainer extends AbstractDependencyContainer
+class AclDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
@@ -81,4 +81,5 @@ class AclDependencyContainer extends AbstractDependencyContainer
             $this->getConfig()
         );
     }
+
 }

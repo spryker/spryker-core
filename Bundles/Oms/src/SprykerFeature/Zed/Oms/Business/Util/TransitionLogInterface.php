@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLog;
 
 interface TransitionLogInterface
 {
+
     /**
      * @param EventInterface $event
      */
@@ -65,13 +67,14 @@ interface TransitionLogInterface
     public function save(SpySalesOrderItem $orderItem);
 
     /**
-     * @return void
      */
     public function saveAll();
 
     /**
      * @param SpySalesOrder $order
+     *
      * @return SpyOmsTransitionLog[]
      */
     public function getLogForOrder(SpySalesOrder $order);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -67,4 +68,5 @@ class TranslationForm extends AbstractForm
 
         return $fields;
     }
+
 }

@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Queue\Business\Worker;
 
 interface TaskWorkerInterface
 {
+
     /**
      * @param string $responseQueueName
      *
@@ -37,4 +38,5 @@ interface TaskWorkerInterface
      * @param int $fetchSize
      */
     public function work($timeout = 10, $fetchSize = 10);
+
 }

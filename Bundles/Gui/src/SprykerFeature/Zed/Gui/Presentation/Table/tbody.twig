@@ -1,0 +1,9 @@
+<tbody>
+{% for row in data %}
+    <tr role="row">
+        {% for id, value in row %}
+        <td id="{{ id ~ '-' ~ loop.index }}">{{ value }}</td>
+        {%  endfor %}
+    </tr>
+{%  endfor %}
+</tbody>

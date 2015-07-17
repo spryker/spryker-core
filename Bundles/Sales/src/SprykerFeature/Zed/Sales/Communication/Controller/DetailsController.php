@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,22 +29,48 @@ class DetailsController extends AbstractController
     {
         $idOrder = $request->get('id-sales-order');
 
-        $orderEntity = $this->getQueryContainer()->querySalesOrderById($idOrder)->findOne();
-        $orderItems = $this->getQueryContainer()->querySalesOrderItemsWithState($idOrder)->find();
+        $orderEntity = $this->getQueryContainer()
+            ->querySalesOrderById($idOrder)
+            ->findOne()
+        ;
+        $orderItems = $this->getQueryContainer()
+            ->querySalesOrderItemsWithState($idOrder)
+            ->find()
+        ;
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
         $allEvents = $this->groupEvents($events);
+        $expenses = $this->getQueryContainer()
+            ->querySalesExpensesByOrderId($idOrder)
+            ->find()
+        ;
+        $shippingAddress = $this->getQueryContainer()
+            ->querySalesOrderAddressById($orderEntity->getFkSalesOrderAddressShipping())
+            ->findOne()
+        ;
+        if ($orderEntity->getFkSalesOrderAddressShipping() === $orderEntity->getFkSalesOrderAddressBilling()) {
+            $billingAddress = $shippingAddress;
+        } else {
+            $billingAddress = $this->getQueryContainer()
+                ->querySalesOrderAddressById($orderEntity->getFkSalesOrderAddressBilling())
+                ->findOne()
+            ;
+        }
 
         return [
             'idOrder' => $idOrder,
             'orderDetails' => $orderEntity,
             'orderItems' => $orderItems,
             'events' => $events,
-            'all_events' => $allEvents
+            'allEvents' => $allEvents,
+            'expenses' => $expenses,
+            'billingAddress' => $billingAddress,
+            'shippingAddress' => $shippingAddress,
         ];
     }
 
     /**
      * @param $events
+     *
      * @return array
      */
     protected function groupEvents($events)
@@ -55,4 +82,5 @@ class DetailsController extends AbstractController
 
         return array_unique($allEvents);
     }
+
 }

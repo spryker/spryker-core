@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerEngine\Zed\Kernel\Persistence;
 
 use SprykerEngine\Shared\Kernel\AbstractFactory;
 use SprykerEngine\Zed\Kernel\BundleConfigLocator;
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 class Factory extends AbstractFactory
 {
@@ -22,14 +22,15 @@ class Factory extends AbstractFactory
      */
     protected $baseClasses = [
         'DependencyContainer',
-        'QueryContainer'
+        'QueryContainer',
     ];
 
     /**
      * @param string $class
      *
-     * @return object
      * @throws \Exception
+     *
+     * @return object
      */
     public function create($class)
     {
@@ -54,4 +55,5 @@ class Factory extends AbstractFactory
 
         return $resolver->resolve($class, $this->getBundle(), $arguments);
     }
+
 }

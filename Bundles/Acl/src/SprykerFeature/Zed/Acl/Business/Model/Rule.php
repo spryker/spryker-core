@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -76,8 +77,9 @@ class Rule implements RuleInterface
      * @param int $idRole
      * @param string $type
      *
-     * @return RuleTransfer
      * @throws RuleNotFoundException
+     *
+     * @return RuleTransfer
      */
     public function addRule($bundle, $controller, $action, $idRole, $type = 'allow')
     {
@@ -95,8 +97,9 @@ class Rule implements RuleInterface
     /**
      * @param RuleTransfer $data
      *
-     * @return RuleTransfer
      * @throws RuleNotFoundException
+     *
+     * @return RuleTransfer
      */
     public function save(RuleTransfer $data)
     {
@@ -223,8 +226,9 @@ class Rule implements RuleInterface
     /**
      * @param int $id
      *
-     * @return RuleTransfer
      * @throws RuleNotFoundException
+     *
+     * @return RuleTransfer
      */
     public function getRuleById($id)
     {
@@ -243,8 +247,9 @@ class Rule implements RuleInterface
     /**
      * @param int $id
      *
-     * @return bool
      * @throws RuleNotFoundException
+     *
+     * @return bool
      */
     public function removeRuleById($id)
     {
@@ -342,4 +347,5 @@ class Rule implements RuleInterface
 
         return $this->rulesValidator->isAccessible($bundle, $controller, $action);
     }
+
 }

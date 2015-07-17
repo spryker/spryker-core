@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business\Operation;
 
 class DefaultOperation implements OperationInterface
 {
+
     /**
      * @param array  $sourceDocument
      * @param array  $targetDocument
@@ -27,4 +29,5 @@ class DefaultOperation implements OperationInterface
     {
         return 'Default';
     }
+
 }

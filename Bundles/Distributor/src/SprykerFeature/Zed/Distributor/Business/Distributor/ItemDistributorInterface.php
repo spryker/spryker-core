@@ -10,4 +10,5 @@ interface ItemDistributorInterface
      * @param BatchIteratorInterface $batchIterator
      */
     public function distributeByType($itemType, BatchIteratorInterface $batchIterator);
+
 }

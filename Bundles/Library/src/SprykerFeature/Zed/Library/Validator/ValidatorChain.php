@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 /**
  * Class ValidatorChain
- * @package SprykerFeature\Zed\Library\Validator
  */
 class ValidatorChain
 {
@@ -43,7 +43,7 @@ class ValidatorChain
     protected $validatorChain = [
         self::CREATE => [],
         self::UPDATE => [],
-        self::DEFAULT_VALIDATION => []
+        self::DEFAULT_VALIDATION => [],
     ];
 
     /**
@@ -70,11 +70,13 @@ class ValidatorChain
      * If you pass null it will return the default validation chain
      *
      * @param null|string $validationType
+     *
      * @return array
      */
     public function getValidatorChain($validationType = self::DEFAULT_VALIDATION)
     {
         $this->validateValidationType($validationType);
+
         return $this->validatorChain[$validationType];
     }
 
@@ -85,12 +87,14 @@ class ValidatorChain
      * @param \Zend_Validate_Interface $validator
      * @param $fieldName
      * @param string $validationType
+     *
      * @return $this
      */
     public function addValidator(\Zend_Validate_Interface $validator, $fieldName, $validationType = self::DEFAULT_VALIDATION)
     {
         $this->validateValidationType($validationType);
         $this->validatorChain[$validationType][$fieldName][] = $validator;
+
         return $this;
     }
 
@@ -98,6 +102,7 @@ class ValidatorChain
      * @param array $validators
      * @param $fieldName
      * @param string $validationType
+     *
      * @return $this
      */
     public function addValidators(array $validators, $fieldName, $validationType = self::DEFAULT_VALIDATION)
@@ -105,11 +110,13 @@ class ValidatorChain
         foreach ($validators as $validator) {
             $this->addValidator($validator, $fieldName, $validationType);
         }
+
         return $this;
     }
 
     /**
      * @param string $validationType
+     *
      * @throws \Exception
      */
     protected function validateValidationType($validationType)
@@ -127,6 +134,7 @@ class ValidatorChain
      *
      * @param array|AbstractTransfer $data
      * @param string $validationType
+     *
      * @return bool
      */
     public function isValid($data, $validationType = self::DEFAULT_VALIDATION)
@@ -139,6 +147,7 @@ class ValidatorChain
         foreach ($validatorChain as $fieldName => $validators) {
             $this->validateField($validators, $fieldName);
         }
+
         return !$this->hasErrors;
     }
 
@@ -189,11 +198,14 @@ class ValidatorChain
 
     /**
      * @param $validationType
+     *
      * @return bool
      */
     protected function hasValidationType($validationType)
     {
         $validatorChain = $this->getValidatorChain($validationType);
+
         return !empty($validatorChain);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -44,4 +45,5 @@ class StockProductGrid extends AbstractGrid
 
         return $plugins;
     }
+
 }

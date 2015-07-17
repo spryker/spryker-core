@@ -18,7 +18,7 @@ use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\Voucher;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
@@ -35,7 +35,7 @@ use SprykerFeature\Zed\Discount\Business\Model\DecisionRuleEngine;
  * @method DiscountBusiness getFactory()
  * @method DiscountConfig getConfig()
  */
-class DiscountDependencyContainer extends AbstractDependencyContainer
+class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

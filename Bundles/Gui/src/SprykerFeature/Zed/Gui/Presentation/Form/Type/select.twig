@@ -1,0 +1,18 @@
+{% block select_widget %}
+    {{ form_widget(form) }}
+    <script type="text/javascript">
+        (function ($) {
+            $(window).load(function () {
+                $(function() {
+                    $('#{{ id }}').select2({
+                        placeholder: '{{ placeholder }}',
+                        ajax: {
+                            url: '{{ url }}',
+                            cache: true
+                        }
+                    });
+                });
+            });
+        })(jQuery);
+    </script>
+{% endblock select_widget %}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,7 +25,7 @@ class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
     public function testBuildTransferDefinitionShouldReturnArrayWithClassDefinitions()
     {
         $directories = [
-            __DIR__ . '/Fixtures/Project/'
+            __DIR__ . '/Fixtures/Project/',
         ];
 
         $normalizer = new DefinitionNormalizer();
@@ -42,6 +43,5 @@ class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = $result[0];
         $this->assertInstanceOf('SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition', $transferDefinition);
     }
-
 
 }

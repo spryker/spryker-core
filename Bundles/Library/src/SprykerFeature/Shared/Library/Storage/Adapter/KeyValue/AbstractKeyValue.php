@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,7 +11,6 @@ use SprykerFeature\Shared\Library\Storage\AdapterTrait;
 
 /**
  * Class AbstractKeyValue
- * @package SprykerFeature\Shared\Library\DataSource\Adapter\KeyValue
  */
 abstract class AbstractKeyValue implements AdapterInterface
 {
@@ -48,7 +48,7 @@ abstract class AbstractKeyValue implements AdapterInterface
                 'read' => [],
                 'write' => [],
                 'delete' => [],
-            ]
+            ],
         ];
     }
 
@@ -125,4 +125,5 @@ abstract class AbstractKeyValue implements AdapterInterface
             $this->accessStats['keys']['delete'] = $this->accessStats['keys']['delete'] + $keys;
         }
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface SearchPageConfigProcessorInterface
 {
+
     /**
      * @param array $configRaw
      * @param LocaleTransfer $localeDto
@@ -16,4 +18,5 @@ interface SearchPageConfigProcessorInterface
      * @return array
      */
     public function processSearchPageConfig(array $configRaw, LocaleTransfer $localeDto);
+
 }

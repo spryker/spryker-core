@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,7 +19,7 @@ interface TranslationInterface
      *
      * @return string
      */
-    public function translate($id, array $parameters = array(), $domain = null, LocaleTransfer $locale = null);
+    public function translate($id, array $parameters = [], $domain = null, LocaleTransfer $locale = null);
 
     /**
      * @param string $id
@@ -29,6 +30,6 @@ interface TranslationInterface
      *
      * @return string
      */
-    public function translateChoice($id, $number, array $parameters = array(), $domain = null, LocaleTransfer $locale = null);
+    public function translateChoice($id, $number, array $parameters = [], $domain = null, LocaleTransfer $locale = null);
 
 }

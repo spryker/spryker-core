@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class UserForm extends AbstractForm
 {
+
     const FIELD_USER_ID = 'id_user_user';
     const FIELD_USER_FIRST_NAME = 'first_name';
     const FIELD_USER_LAST_NAME = 'last_name';
@@ -68,7 +70,7 @@ class UserForm extends AbstractForm
             $entity = $query->findOne();
 
             $response = $entity->toArray();
-            $response[self::FIELD_GROUP_ID] = (int)$response[self::FIELD_GROUP_ID];
+            $response[self::FIELD_GROUP_ID] = (int) $response[self::FIELD_GROUP_ID];
         }
 
         $response[self::FIELD_USER_PASSWORD] = null;
@@ -88,29 +90,28 @@ class UserForm extends AbstractForm
             ->setRefresh(false)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
 
                 new Assert\NotBlank(),
 
                 new Assert\Choice([
                     'choices' => array_column($this->getGroups(), 'value'),
-                    'message' => Messages::CHOOSE_GROUP_ERROR
-                ])
+                    'message' => Messages::CHOOSE_GROUP_ERROR,
+                ]),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             });
-
 
         $this->addField(self::FIELD_USER_FIRST_NAME)
             ->setConstraints(
                 [
                     new Assert\Type([
-                        'type' => 'string'
+                        'type' => 'string',
                     ]),
 
-                    new Assert\NotBlank()
+                    new Assert\NotBlank(),
                 ]
             );
 
@@ -118,20 +119,19 @@ class UserForm extends AbstractForm
             ->setConstraints(
                 [
                     new Assert\Type([
-                        'type' => 'string'
+                        'type' => 'string',
                     ]),
 
-                    new Assert\NotBlank()
+                    new Assert\NotBlank(),
                 ]
             );
 
-
         $usernameConstraints = [
             new Assert\Type([
-                'type' => 'string'
+                'type' => 'string',
             ]),
 
-            new Assert\NotBlank()
+            new Assert\NotBlank(),
         ];
 
         $idUser = $this->getUserId();
@@ -152,8 +152,8 @@ class UserForm extends AbstractForm
             ->setConstraints(
                 [
                     new Assert\Type([
-                        'type' => 'string'
-                    ])
+                        'type' => 'string',
+                    ]),
                 ]
             );
     }
@@ -169,7 +169,7 @@ class UserForm extends AbstractForm
 
         foreach ($groups as $group) {
             $response[] = $this->formatOption(
-                (int)$group->getIdAclGroup(),
+                (int) $group->getIdAclGroup(),
                 $group->getName()
             );
         }
@@ -228,4 +228,5 @@ class UserForm extends AbstractForm
     {
         return $this->aclQueryContainer;
     }
+
 }

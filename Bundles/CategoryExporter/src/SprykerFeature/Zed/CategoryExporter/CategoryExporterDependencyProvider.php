@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,7 +15,7 @@ class CategoryExporterDependencyProvider extends AbstractBundleDependencyProvide
     const QUERY_CONTAINER_CATEGORY = 'category query container';
 
     /**
-     * @var Container $container
+     * @var Container
      *
      * @return Container
      */
@@ -28,7 +29,7 @@ class CategoryExporterDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @var Container $container
+     * @var Container
      *
      * @return Container
      */

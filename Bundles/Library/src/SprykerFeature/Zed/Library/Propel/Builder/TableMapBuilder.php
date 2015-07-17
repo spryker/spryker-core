@@ -13,6 +13,7 @@ class TableMapBuilder extends \Propel\Generator\Builder\Om\TableMapBuilder
      *
      * @param string $objName
      * @param string $clsName
+     *
      * @return string
      */
     public function buildObjectInstanceCreationCode($objName, $clsName)
@@ -20,7 +21,7 @@ class TableMapBuilder extends \Propel\Generator\Builder\Om\TableMapBuilder
         $bundle = $this->getBundleName();
 
         return "
-                /* @var \$locator \\Generated\\Zed\\Ide\\AutoCompletion */
+                /** @var \\Generated\\Zed\\Ide\\AutoCompletion \$locator */
                 \$locator = \\SprykerEngine\\Zed\\Kernel\\Locator::getInstance();
                 $objName = \$locator->"
                     . lcfirst($bundle)

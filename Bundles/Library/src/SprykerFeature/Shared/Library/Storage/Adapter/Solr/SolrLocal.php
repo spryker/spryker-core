@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,7 +11,6 @@ use SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\
 
 /**
  * Class SolrReadWrite
- * @package SprykerFeature\Shared\Library\Storage\Adapter\Solr
  */
 class SolrLocal extends Solr implements LocalInterface
 {
@@ -18,6 +18,7 @@ class SolrLocal extends Solr implements LocalInterface
     /**
      * @param string $type
      * @param array $options
+     *
      * @return \Solarium\Core\Query\Query
      */
     public function createQuery($type, $options = null)
@@ -27,6 +28,7 @@ class SolrLocal extends Solr implements LocalInterface
 
     /**
      * @param QueryInterface $query
+     *
      * @return \Solarium\Core\Query\Result\ResultInterface
      */
     public function execute(QueryInterface $query)

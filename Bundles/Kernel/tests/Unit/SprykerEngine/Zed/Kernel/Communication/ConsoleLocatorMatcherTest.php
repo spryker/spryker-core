@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -36,4 +37,5 @@ class ConsoleLocatorMatcherTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame('Foo', (new ConsoleLocatorMatcher())->filter('consoleFoo'));
     }
+
 }

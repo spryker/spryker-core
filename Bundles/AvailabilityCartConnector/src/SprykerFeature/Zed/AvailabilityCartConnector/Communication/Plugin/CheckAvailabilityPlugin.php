@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,9 +14,11 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CheckAvailabilityPlugin extends AbstractPlugin
 {
+
     /**
      * @param string $sku
      * @param int $quantity
+     *
      * @return bool
      */
     public function isProductSellable($sku, $quantity)
@@ -25,10 +28,12 @@ class CheckAvailabilityPlugin extends AbstractPlugin
 
     /**
      * @param string $sku
+     *
      * @return int
      */
     public function calculateStockForProduct($sku)
     {
         return $this->getDependencyContainer()->getAvailabilityFacade()->calculateStockForProduct($sku);
     }
+
 }

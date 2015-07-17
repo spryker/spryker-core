@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use Generated\Shared\Cart\CartInterface;
 
 class IncreaseOperator extends AbstractOperator
 {
+
     /**
      * @param CartInterface $cart
      * @param ChangeInterface $change
@@ -29,4 +31,5 @@ class IncreaseOperator extends AbstractOperator
     {
         return Messages::INCREASE_ITEMS_SUCCESS;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class TranslationFacade extends AbstractFacade implements TranslationInterface
 {
+
     /**
      * @param string $id
      * @param array $parameters
@@ -19,7 +21,7 @@ class TranslationFacade extends AbstractFacade implements TranslationInterface
      *
      * @return string
      */
-    public function translate($id, array $parameters = array(), $domain = null, LocaleTransfer $locale = null)
+    public function translate($id, array $parameters = [], $domain = null, LocaleTransfer $locale = null)
     {
         return $this->getDependencyContainer()
             ->createTranslator($locale->getLocaleName())
@@ -35,7 +37,7 @@ class TranslationFacade extends AbstractFacade implements TranslationInterface
      *
      * @return string
      */
-    public function translateChoice($id, $number, array $parameters = array(), $domain = null, LocaleTransfer $locale = null)
+    public function translateChoice($id, $number, array $parameters = [], $domain = null, LocaleTransfer $locale = null)
     {
         return $this->getDependencyContainer()
             ->createTranslator($locale->getLocaleName())

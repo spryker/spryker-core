@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,12 +10,14 @@ use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuForma
 
 class PathExtractor implements PathExtractorInterface
 {
+
     const URI = 'uri';
     const LABEL = 'label';
     const TITLE = 'title';
 
     /**
      * @param array $menu
+     *
      * @return array
      */
     public function extractPathFromMenu(array $menu)
@@ -31,6 +34,7 @@ class PathExtractor implements PathExtractorInterface
     /**
      * @param array $nodes
      * @param array $path
+     *
      * @return array
      */
     protected function extractActiveNodes(array $nodes, array &$path)
@@ -49,6 +53,7 @@ class PathExtractor implements PathExtractorInterface
 
     /**
      * @param array $node
+     *
      * @return array
      */
     protected function formatNode(array $node)
@@ -59,4 +64,5 @@ class PathExtractor implements PathExtractorInterface
             self::TITLE => $node[MenuFormatter::TITLE],
         ];
     }
+
 }

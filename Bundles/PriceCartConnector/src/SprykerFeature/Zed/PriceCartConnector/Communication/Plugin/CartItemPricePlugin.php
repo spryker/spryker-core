@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Zed\PriceCartConnector\Communication\Plugin;
 
 use Generated\Shared\Cart\ChangeInterface;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
@@ -19,6 +19,7 @@ use SprykerFeature\Zed\PriceCartConnector\Communication\PriceCartConnectorDepend
  */
 class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
+
     /**
      * @var PriceManagerInterface
      */

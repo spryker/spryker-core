@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Library\Import\InputTypeDetectorInterface;
  */
 class FilenameTypeDetector implements InputTypeDetectorInterface
 {
+
     const REGEX_DELIMITER = '#';
 
     /**
@@ -32,8 +34,10 @@ class FilenameTypeDetector implements InputTypeDetectorInterface
 
     /**
      * @param Input $input
-     * @return string The type
+     *
      * @throws Exception\ImportTypeNotDetectedException
+     *
+     * @return string The type
      */
     public function detect(Input $input)
     {
@@ -49,12 +53,15 @@ class FilenameTypeDetector implements InputTypeDetectorInterface
 
     /**
      * @param string $regexp
+     *
      * @return string
      */
     protected function prepareRegexp($regexp)
     {
         $regexp = addcslashes($regexp, self::REGEX_DELIMITER);
         $regexp = self::REGEX_DELIMITER . $regexp . self::REGEX_DELIMITER . 'i';
+
         return $regexp;
     }
+
 }

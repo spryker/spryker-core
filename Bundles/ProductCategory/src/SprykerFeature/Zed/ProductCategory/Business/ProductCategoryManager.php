@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {
+
     /**
      * @var ProductCategoryQueryContainerInterface
      */
@@ -77,11 +79,12 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @return int
      * @throws ProductCategoryMappingExistsException
      * @throws MissingProductException
      * @throws MissingCategoryNodeException
      * @throws PropelException
+     *
+     * @return int
      */
     public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale)
     {
@@ -121,4 +124,5 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             );
         }
     }
+
 }

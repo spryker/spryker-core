@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GrandTotalWithDiscountsTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculatorPluginInterface
 {
+
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableInterface $calculableContainer
@@ -32,4 +34,5 @@ class GrandTotalWithDiscountsTotalsCalculatorPlugin extends AbstractPlugin imple
             ->recalculateGrandTotalWithDiscountsTotals($totalsTransfer, $calculableContainer, $calculableItems)
         ;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface DataProcessorPluginInterface
 {
+
     /**
      * @return string
      */
@@ -22,4 +24,5 @@ interface DataProcessorPluginInterface
      * @return array
      */
     public function processData(array &$resultSet, array $processedResultSet, LocaleTransfer $locale);
+
 }

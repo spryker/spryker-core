@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerEngine\Zed\Kernel;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\AbstractLocator;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
@@ -50,6 +50,7 @@ abstract class AbstractDependencyContainer
 
     /**
      * @deprecated
+     *
      * @return AutoCompletion|LocatorLocatorInterface
      */
     protected function getLocator()

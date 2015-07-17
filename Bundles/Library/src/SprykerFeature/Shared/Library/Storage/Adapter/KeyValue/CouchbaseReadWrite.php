@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,7 +24,7 @@ class CouchbaseReadWrite extends CouchbaseRead implements ReadWriteInterface
      */
     public function setMulti(array $items)
     {
-        if (count($items) == 0) {
+        if (count($items) === 0) {
             return;
         }
         $this->getResource()->setMulti($items);
@@ -44,7 +45,7 @@ class CouchbaseReadWrite extends CouchbaseRead implements ReadWriteInterface
      */
     public function deleteMulti(array $keys)
     {
-        if (count($keys) == 0) {
+        if (count($keys) === 0) {
             return;
         }
 
@@ -65,4 +66,5 @@ class CouchbaseReadWrite extends CouchbaseRead implements ReadWriteInterface
 
         return $count;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,4 +35,5 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\BarModel', $model);
     }
+
 }

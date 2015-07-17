@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,4 +10,5 @@ use Psr\Log\LoggerInterface;
 
 interface MessengerInterface extends LoggerInterface
 {
+
 }

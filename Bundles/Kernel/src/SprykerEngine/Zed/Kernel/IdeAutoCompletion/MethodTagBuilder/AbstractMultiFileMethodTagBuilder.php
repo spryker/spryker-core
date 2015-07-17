@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -101,10 +102,9 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
             . $this->options[self::OPTION_KEY_PATH_PATTERN]
         ;
 
-
         try {
             $finder = new Finder();
-            /* @var $file SplFileInfo */
+            /** @var SplFileInfo $file */
             foreach ($finder->files()->in($pathPattern)->depth($this->options[self::OPTION_KEY_DEPTH]) as $file) {
                 $className = $this->buildClassNameFromFile($file);
 
@@ -181,11 +181,11 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
     {
         $search = [
             self::PLACEHOLDER_CLASS_NAME,
-            self::PLACEHOLDER_METHOD_NAME
+            self::PLACEHOLDER_METHOD_NAME,
         ];
         $replace = [
             $className,
-            $methodName
+            $methodName,
         ];
 
         return ' * ' . str_replace($search, $replace, $this->options[self::OPTION_KEY_METHOD_STRING_PATTERN]);
@@ -227,4 +227,5 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
 
         return $className;
     }
+
 }

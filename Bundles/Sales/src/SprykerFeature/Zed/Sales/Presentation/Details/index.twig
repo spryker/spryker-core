@@ -1,21 +1,20 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
 
-{% block head_css_bundles -%}
-    <link rel="stylesheet" type="text/css" href="{{ staticPath('Sales/styles/bundle.css') }}">
-{%- endblock %}
+{% block section_title %}
+    {{ 'Order ID:' | trans }} {{ idOrder }} ({{ orderDetails.CreatedAt.date | date('Y-m-d G:i:s', false) }})
+{% endblock %}
+
+{% block breadcrumb_body '' %}
 
 {% block content %}
 
-    <div class="spy-layout compact">
-        <h1>Order <b>{{ idOrder }}</b> ({{ orderDetails.CreatedAt.date }})</h1>
-    </div>
-
-{#{% include '@Sales/Details/section/customer-details.twig' %}#}
+    {% include '@Sales/Details/section/customer-details.twig' %}
 
     <div class="spy-layout">
         {% include '@Sales/Details/section/order-items.twig' %}
+        {% include '@Sales/Details/section/expenses.twig' %}
         {#{% include '@Sales/Details/section/invoices.twig' %}#}
-        {#{% include '@Sales/Details/section/payment-options.twig' %}#}
+        {#{% include '@Sales/Details/section/payment-overview.twig' %}#}
         {#{% include '@Sales/Details/section/shipping.twig' %}#}
         {#{% include '@Sales/Details/section/returns.twig' %}#}
         {#{% include '@Sales/Details/section/comments.twig' %}#}

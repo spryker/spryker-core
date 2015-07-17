@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,4 +35,5 @@ class MockPostHook implements CheckoutPostSaveHookInterface
     {
         $checkoutResponse->fromArray($this->checkoutResponse->toArray(true));
     }
+
 }

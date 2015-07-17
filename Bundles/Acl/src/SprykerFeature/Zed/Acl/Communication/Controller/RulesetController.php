@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -29,7 +30,7 @@ class RulesetController extends AbstractController
     public function indexAction(Request $request)
     {
         $idGroup = $request->get('id');
-        $query=sprintf("?id=%s", $idGroup);
+        $query = sprintf('?id=%s', $idGroup);
 
         return $this->viewResponse(['query' => $query]);
     }
@@ -93,4 +94,5 @@ class RulesetController extends AbstractController
 
         return $this->jsonResponse($data);
     }
+
 }

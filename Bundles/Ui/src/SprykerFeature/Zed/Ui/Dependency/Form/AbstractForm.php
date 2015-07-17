@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Zed\Ui\Dependency\Form;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
@@ -15,12 +15,11 @@ use SprykerFeature\Zed\Ui\Communication\Plugin\Form\StateContainer\StateContaine
 use SprykerFeature\Zed\Ui\Communication\Plugin\Form\SubForm;
 use SprykerFeature\Zed\Ui\Dependency\Plugin\FormPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validator;
 use Exception;
 
 abstract class AbstractForm
 {
+
     const STATE_NEW = 'new';
     const STATE_SUCCESS = 'success';
     const STATE_FAIL = 'fail';
@@ -119,13 +118,14 @@ abstract class AbstractForm
     }
 
     /**
-     * @return bool
      * @throws Exception
+     *
+     * @return bool
      */
     public function isValid()
     {
         if (!$this->isInitialized) {
-            throw new Exception("Form is not initialized.");
+            throw new Exception('Form is not initialized.');
         }
 
         if (!$this->stateContainer->receivedSubmitRequest()) {
@@ -149,22 +149,39 @@ abstract class AbstractForm
     }
 
     /**
-     * @return array|mixed
      * @throws Exception
+     *
+     * @return array|mixed
      */
     public function renderData()
     {
-        return [self::OUTPUT_PAYLOAD => $this->toArray()];
+        return $this->renderDataForTwig();
     }
 
     /**
-     * @return array|mixed
+     * @return array
+     */
+    public function renderDataForTwig()
+    {
+        $data = $this->toArray();
+
+        foreach ($data['fields'] as $k => $v) {
+            $data['fields'][$v['name']] = $v;
+            unset($data['fields'][$k]);
+        }
+
+        return $data['fields'];
+    }
+
+    /**
      * @throws Exception
+     *
+     * @return array|mixed
      */
     public function toArray()
     {
         if (!$this->isInitialized) {
-            throw new Exception("Form is not initialized.");
+            throw new Exception('Form is not initialized.');
         }
 
         $output = [];
@@ -250,4 +267,5 @@ abstract class AbstractForm
 
         return $this->stateContainer->setActiveValues($defaultData);
     }
+
 }

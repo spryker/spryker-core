@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,20 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class MaintenanceConfig extends AbstractBundleConfig
 {
+
+    public function getBundleDirectory()
+    {
+        return APPLICATION_VENDOR_DIR
+        . DIRECTORY_SEPARATOR . 'spryker'
+        . DIRECTORY_SEPARATOR . 'spryker'
+        . DIRECTORY_SEPARATOR . 'Bundles'
+        . DIRECTORY_SEPARATOR;
+    }
+
+    public function getExcludedDirectoriesForDependencies()
+    {
+        return ['Persistence/Propel/Base', 'Persistence/Propel/Map'];
+    }
 
     /**
      * @return string

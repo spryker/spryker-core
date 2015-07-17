@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,4 +22,5 @@ interface ProductOptionExporterToProductInterface
      * @return float
      */
     public function getEffectiveTaxRateForConcreteProduct($sku);
+
 }

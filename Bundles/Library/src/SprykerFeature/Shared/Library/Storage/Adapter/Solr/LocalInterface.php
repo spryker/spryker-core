@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use Solarium\Core\Query\QueryInterface;
 
 /**
  * Class LocalInterface
- * @package SprykerFeature\Shared\Library\DataSource\Adapter\Solr
  */
 interface LocalInterface
 {
@@ -17,12 +17,14 @@ interface LocalInterface
     /**
      * @param string $type
      * @param array $options
+     *
      * @return \Solarium\Core\Query\Query
      */
     public function createQuery($type, $options = null);
 
     /**
      * @param QueryInterface $query
+     *
      * @return \Solarium\Core\Query\Result\ResultInterface
      */
     public function execute(QueryInterface $query);
@@ -42,4 +44,5 @@ interface LocalInterface
      * @param $coreName
      */
     public function unloadCore($coreName);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,14 +25,14 @@ interface SalesQueryContainerInterface
     public function querySalesOrder();
 
     /**
-     * @var int $idOrder
+     * @var int
      *
      * @return SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByIdSalesOrder($idOrder);
 
     /**
-     * @var int $idOrder
+     * @var int
      *
      * @return SpySalesOrderItemQuery
      */
@@ -41,5 +42,4 @@ interface SalesQueryContainerInterface
      * @return SpySalesOrderItemQuery
      */
     public function querySalesOrderItem();
-
 }

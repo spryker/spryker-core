@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Ui\Library\Constraints;
 
 trait ConstraintSerializeTrait
 {
+
     protected $constraint_options;
 
     public function serialize()
@@ -15,16 +17,16 @@ trait ConstraintSerializeTrait
 
         $options = $this->constraint_options;
 
-        if (count($options) == 0) {
+        if (count($options) === 0) {
             $options = true;
-        } elseif (count($options) == 1
+        } elseif (count($options) === 1
         && isset($options[$className])) {
             $options = $options[$className];
         }
 
         return [
-            'name'  => $className,
-            'options'  =>  $options,
+            'name' => $className,
+            'options' => $options,
         ];
     }
 
@@ -34,4 +36,5 @@ trait ConstraintSerializeTrait
 
         return 'Symfony\Component\Validator\Constraints\\' . $validatorClass;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -70,9 +71,10 @@ class Writer implements WriterInterface
     /**
      * @param string $name
      *
-     * @return SpyPriceType
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return SpyPriceType
      */
     public function createPriceType($name)
     {
@@ -85,8 +87,9 @@ class Writer implements WriterInterface
     /**
      * @param PriceProductTransfer $transferPriceProduct
      *
-     * @return SpyPriceProduct
      * @throws \Exception
+     *
+     * @return SpyPriceProduct
      */
     public function createPriceForProduct(PriceProductTransfer $transferPriceProduct)
     {
@@ -156,13 +159,14 @@ class Writer implements WriterInterface
     /**
      * @param PriceProductTransfer $transferPriceProduct
      *
-     * @return PriceProductTransfer
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return PriceProductTransfer
      */
     protected function setPriceType(PriceProductTransfer $transferPriceProduct)
     {
-        if (null == $transferPriceProduct->getPriceTypeName()) {
+        if (null === $transferPriceProduct->getPriceTypeName()) {
             $transferPriceProduct->setPriceTypeName($this->priceSettings->getPriceTypeDefaultName());
         }
 
@@ -172,8 +176,9 @@ class Writer implements WriterInterface
     /**
      * @param int $idPriceProduct
      *
-     * @return SpyPriceProduct
      * @throws \Exception
+     *
+     * @return SpyPriceProduct
      */
     protected function getPriceProductById($idPriceProduct)
     {
@@ -195,7 +200,7 @@ class Writer implements WriterInterface
         $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
         $priceEntities = $this->queryContainer
             ->queryPriceEntityForAbstractProduct($transferPriceProduct->getSkuProduct(), $priceType);
-        if (null != $transferPriceProduct->getIdPriceProduct()) {
+        if (null !== $transferPriceProduct->getIdPriceProduct()) {
             $this->queryContainer->addFilter($priceEntities, $transferPriceProduct->getIdPriceProduct());
         }
 
@@ -206,6 +211,7 @@ class Writer implements WriterInterface
      * @param int $idConcreteProduct
      * @param string $priceType
      * @param \DateTime $date
+     *
      * @return SpyPriceProduct
      */
     protected function getPriceEntityForConcreteProduct($idConcreteProduct, $priceType, \DateTime $date)
@@ -225,10 +231,11 @@ class Writer implements WriterInterface
         $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
         $priceEntities = $this->queryContainer
             ->queryPriceEntityForConcreteProduct($transferPriceProduct->getSkuProduct(), $priceType);
-        if (null != $transferPriceProduct->getIdPriceProduct()) {
+        if (null !== $transferPriceProduct->getIdPriceProduct()) {
             $this->queryContainer->addFilter($priceEntities, $transferPriceProduct->getIdPriceProduct());
         }
 
         return (bool) $priceEntities->count() > 0;
     }
+
 }

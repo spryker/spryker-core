@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,10 +10,10 @@ use SprykerEngine\Shared\Transfer\TransferInterface;
 
 /**
  * Interface HttpClientInterface
- * @package SprykerFeature\Shared\Library\ZedRequest\Client
  */
 interface HttpClientInterface
 {
+
     /**
      * @param int $timeoutInSeconds
      */
@@ -24,8 +25,10 @@ interface HttpClientInterface
      * @param array $metaTransfers
      * @param null $timeoutInSeconds
      * @param bool $isBackgroundRequest
-     * @return \SprykerFeature\Shared\Library\Communication\Response
+     *
      * @throws \LogicException
+     *
+     * @return \SprykerFeature\Shared\Library\Communication\Response
      */
     public function request(
         $pathInfo,
@@ -37,7 +40,9 @@ interface HttpClientInterface
 
     /**
      * Used for debug output
+     *
      * @return int
      */
     public static function getRequestCounter();
+
 }

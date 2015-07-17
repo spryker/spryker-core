@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -29,4 +30,5 @@ interface InterfaceDefinitionInterface extends DefinitionInterface
      * @return array
      */
     public function getMethods();
+
 }

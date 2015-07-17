@@ -1,8 +1,8 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 
 namespace SprykerFeature\Zed\Cms\Communication\Grid;
 
@@ -40,4 +40,5 @@ class CmsGrid extends AbstractGrid
             ,
         ];
     }
+
 }

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model;
 
-use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountItemsTransfer;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -21,11 +21,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\StackExecutor;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin;
 use SprykerFeature\Zed\DiscountCalculationConnector\Communication\Plugin\DiscountCalculatorPlugin;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
@@ -37,6 +32,7 @@ use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
  */
 class CalculatorTest extends AbstractFunctionalTest
 {
+
     const ITEM_GROSS_PRICE = 10000;
     const ITEM_COUPON_DISCOUNT_AMOUNT = 1000;
     const ITEM_DISCOUNT_AMOUNT = 1000;
@@ -62,7 +58,7 @@ class CalculatorTest extends AbstractFunctionalTest
             $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin'),
             $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin'),
             $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin'),
-            $this->locator->discountCalculationConnector()->pluginGrandTotalWithDiscountsTotalsCalculatorPlugin()
+            $this->locator->discountCalculationConnector()->pluginGrandTotalWithDiscountsTotalsCalculatorPlugin(),
         ];
 
         return $stack;
@@ -286,4 +282,5 @@ class CalculatorTest extends AbstractFunctionalTest
     {
         return Locator::getInstance();
     }
+
 }

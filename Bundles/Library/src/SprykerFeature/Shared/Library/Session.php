@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,12 +12,14 @@ use SprykerFeature\Shared\Library\SessionHandler\Adapter\Redis;
 
 class Session
 {
+
     const BUCKET_NAME_POSTFIX = 'sessions';
     const PASSWORD = 'password';
     const USER = 'user';
 
     /**
      * @param string $savePath e.g. '10.10.10.1:8091;10.10.10.2:8091'
+     *
      * @return \SprykerFeature\Shared\Library\SessionHandler\Adapter\Couchbase
      */
     public static function registerCouchbaseSessionHandler($savePath)
@@ -30,12 +33,12 @@ class Session
 
         $handler = new Couchbase($hosts, $user, $password, self::getBucketName(), true, $lifetime);
         session_set_save_handler(
-            array($handler, 'open'),
-            array($handler, 'close'),
-            array($handler, 'read'),
-            array($handler, 'write'),
-            array($handler, 'destroy'),
-            array($handler, 'gc')
+            [$handler, 'open'],
+            [$handler, 'close'],
+            [$handler, 'read'],
+            [$handler, 'write'],
+            [$handler, 'destroy'],
+            [$handler, 'gc']
         );
 
         return $handler;
@@ -43,6 +46,7 @@ class Session
 
     /**
      * @param string $savePath e.g. '10.10.10.1:3306;10.10.10.2:3306'
+     *
      * @return Mysql
      */
     public static function registerMysqlSessionHandler($savePath)
@@ -55,12 +59,12 @@ class Session
 
         $handler = new Mysql($hosts, $user, $password, $lifetime);
         session_set_save_handler(
-            array($handler, 'open'),
-            array($handler, 'close'),
-            array($handler, 'read'),
-            array($handler, 'write'),
-            array($handler, 'destroy'),
-            array($handler, 'gc')
+            [$handler, 'open'],
+            [$handler, 'close'],
+            [$handler, 'read'],
+            [$handler, 'write'],
+            [$handler, 'destroy'],
+            [$handler, 'gc']
         );
 
         return $handler;
@@ -68,18 +72,19 @@ class Session
 
     /**
      * @param string $savePath
+     *
      * @return Redis
      */
     public static function registerRedisSessionHandler($savePath)
     {
         $handler = new Redis($savePath);
         session_set_save_handler(
-            array($handler, 'open'),
-            array($handler, 'close'),
-            array($handler, 'read'),
-            array($handler, 'write'),
-            array($handler, 'destroy'),
-            array($handler, 'gc')
+            [$handler, 'open'],
+            [$handler, 'close'],
+            [$handler, 'read'],
+            [$handler, 'write'],
+            [$handler, 'destroy'],
+            [$handler, 'gc']
         );
 
         return $handler;
@@ -98,6 +103,7 @@ class Session
 
     /**
      * @param string $savePathSegment
+     *
      * @return array|null
      */
     protected static function getCredentialsFromSavePathSegment($savePathSegment)
@@ -107,6 +113,7 @@ class Session
 
             if (strstr($credentials, ':')) {
                 $parts = explode(':', $credentials);
+
                 return [
                     self::USER => $parts[0],
                     self::PASSWORD => $parts[1],
@@ -115,12 +122,13 @@ class Session
                 return [self::USER => $credentials];
             }
         } else {
-            return null;
+            return;
         }
     }
 
     /**
      * @param string $savePath
+     *
      * @return array
      */
     protected static function getHostsFromSavePath($savePath)
@@ -138,4 +146,5 @@ class Session
 
         return $hosts;
     }
+
 }

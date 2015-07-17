@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -83,4 +84,5 @@ interface FinderInterface
      * @return string
      */
     public function getStateDisplayName(SpySalesOrderItem $orderItem);
+
 }

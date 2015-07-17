@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 class Request extends AbstractObject implements
     EmbeddedTransferInterface
 {
+
     /**
      * @var array
      */
@@ -36,16 +38,19 @@ class Request extends AbstractObject implements
 
     /**
      * @param string $host
+     *
      * @return $this
      */
     public function setHost($host)
     {
         $this->values['host'] = $host;
+
         return $this;
     }
 
     /**
      * @param string $name
+     *
      * @return TransferInterface
      */
     public function getMetaTransfer($name)
@@ -59,19 +64,21 @@ class Request extends AbstractObject implements
 
             return $transfer;
         }
-        return null;
+
+        return;
     }
 
     /**
      * @param string $name
      * @param TransferInterface $transferObject
+     *
      * @return $this
      */
     public function addMetaTransfer($name, TransferInterface $transferObject)
     {
         $this->values['metaTransfers'][$name] = [
             'data' => $transferObject->toArray(false),
-            'className' => get_class($transferObject)
+            'className' => get_class($transferObject),
         ];
 
         return $this;
@@ -87,11 +94,13 @@ class Request extends AbstractObject implements
 
     /**
      * @param string $password
+     *
      * @return $this
      */
     public function setPassword($password)
     {
         $this->values['password'] = $password;
+
         return $this;
     }
 
@@ -105,11 +114,13 @@ class Request extends AbstractObject implements
 
     /**
      * @param string $sessionId
+     *
      * @return $this
      */
     public function setSessionId($sessionId)
     {
         $this->values['sessionId'] = $sessionId;
+
         return $this;
     }
 
@@ -123,11 +134,13 @@ class Request extends AbstractObject implements
 
     /**
      * @param string $time
+     *
      * @return $this
      */
     public function setTime($time)
     {
         $this->values['time'] = $time;
+
         return $this;
     }
 
@@ -139,13 +152,16 @@ class Request extends AbstractObject implements
         if (!empty($this->values['transferClassName']) && !empty($this->values['transfer'])) {
             $getMethodName = (new TransferLocatorHelper())
                 ->transferClassNameToLocatorMethod($this->values['transferClassName']);
+
             return $this->locator->$getMethodName($this->values['transfer']);
         }
-        return null;
+
+        return;
     }
 
     /**
      * @param TransferInterface $transferObject
+     *
      * @return $this
      */
     public function setTransfer(TransferInterface $transferObject)
@@ -166,11 +182,14 @@ class Request extends AbstractObject implements
 
     /**
      * @param string $username
+     *
      * @return $this
      */
     public function setUsername($username)
     {
         $this->values['username'] = $username;
+
         return $this;
     }
+
 }

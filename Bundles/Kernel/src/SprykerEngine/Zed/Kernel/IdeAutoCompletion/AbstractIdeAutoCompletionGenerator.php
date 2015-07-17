@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,7 +8,6 @@ namespace SprykerEngine\Zed\Kernel\IdeAutoCompletion;
 
 use SprykerEngine\Zed\Kernel\BundleNameFinder;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\MethodTagBuilderInterface;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractIdeAutoCompletionGenerator
@@ -80,7 +80,6 @@ abstract class AbstractIdeAutoCompletionGenerator
 
     /**
      * @param null $output
-     * @return mixed
      */
     abstract public function create($output = null);
 
@@ -93,6 +92,7 @@ abstract class AbstractIdeAutoCompletionGenerator
 
     /**
      * @param MethodTagBuilderInterface $methodTagBuilder
+     *
      * @return $this
      */
     public function addMethodTagBuilder(MethodTagBuilderInterface $methodTagBuilder)
@@ -141,7 +141,7 @@ abstract class AbstractIdeAutoCompletionGenerator
      */
     protected function getBundles()
     {
-        /* @var $bundleNameFinder BundleNameFinder */
+        /** @var BundleNameFinder $bundleNameFinder */
         $bundleNameFinder = $this->options[self::OPTION_KEY_BUNDLE_NAME_FINDER];
 
         return $bundleNameFinder->getBundleNames();

@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Distributor\Dependency\Plugin\ItemProcessorPluginInterfac
 
 class ItemDistributor implements ItemDistributorInterface
 {
+
     const QUEUE_NAMES = 'queue_names';
 
     /**
@@ -67,10 +68,9 @@ class ItemDistributor implements ItemDistributorInterface
         $messageTransfer = $this->getMessageTransfer();
         $queueNames = $this->itemQueueProvider->getAllQueuesForType($type);
         $processorPipeline = $this->getProcessorPipelineByType($type);
+        $processedItems = $this->processItems($processorPipeline, $itemBatch);
 
-        foreach ($itemBatch as $rawItem) {
-            $processedItem = $this->processItem($processorPipeline, $rawItem);
-
+        foreach ($processedItems as $processedItem) {
             $messageTransfer->setType($type);
             $messageTransfer->setPayload($processedItem);
 
@@ -84,31 +84,31 @@ class ItemDistributor implements ItemDistributorInterface
 
     /**
      * @param ItemProcessorPluginInterface[] $processorPipeline
-     * @param array $processableItem
+     * @param array $processableItems
      *
-     * @throws \Exception
      * @return array
      */
-    protected function processItem(array $processorPipeline, array $processableItem)
+    protected function processItems(array $processorPipeline, array $processableItems)
     {
         if (empty($processorPipeline)) {
-            return $processableItem;
+            return $processableItems;
         }
 
-        $processedItem = [];
+        $processedItems = [];
 
         foreach ($processorPipeline as $processor) {
-            $processedItem = $processor->processItem($processableItem);
+             $processedItems = $processor->processItems($processableItems, $processedItems);
         }
 
-        return $processedItem;
+        return $processedItems;
     }
 
     /**
      * @param string $type
      *
-     * @return ItemProcessorPluginInterface[]
      * @throws \Exception
+     *
+     * @return ItemProcessorPluginInterface[]
      */
     protected function getProcessorPipelineByType($type)
     {
@@ -126,4 +126,5 @@ class ItemDistributor implements ItemDistributorInterface
     {
         return new QueueMessageTransfer();
     }
+
 }

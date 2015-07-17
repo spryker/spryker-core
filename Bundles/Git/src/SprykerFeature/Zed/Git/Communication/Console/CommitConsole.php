@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -51,6 +52,7 @@ class CommitConsole extends BaseCommand
             $command .= ' -a';
         }
         $message = $this->input->getArgument(self::ARGUMENT_MESSAGE);
+
         return $command . ' -m "' . $message . '"';
     }
 

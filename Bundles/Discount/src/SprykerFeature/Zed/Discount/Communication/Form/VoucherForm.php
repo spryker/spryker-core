@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
@@ -16,10 +16,10 @@ use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validator;
 
 class VoucherForm extends AbstractForm
 {
+
     const ID_DISCOUNT_VOUCHER = 'id_discount_voucher';
     const FK_DISCOUNT_VOUCHER_POOL = 'fk_discount_voucher_pool';
     const CODE = 'code';
@@ -66,9 +66,9 @@ class VoucherForm extends AbstractForm
             ->setConstraints([
                 new Assert\Optional([
                     new Assert\Type([
-                        'type' => 'integer'
-                    ])
-                ])
+                        'type' => 'integer',
+                    ]),
+                ]),
             ]);
 
         $this->addField(self::FK_DISCOUNT_VOUCHER_POOL)
@@ -76,22 +76,22 @@ class VoucherForm extends AbstractForm
             ->setRefresh(false)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
                 new Assert\Choice([
                     'choices' => array_column($this->getVoucherPools(), 'value'),
-                    'message' => 'Please choose one of the given Voucher Pools'
+                    'message' => 'Please choose one of the given Voucher Pools',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             });
 
         $this->addField(self::CODE)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
                 new Assert\NotBlank(),
                 $this->factory->createConstraintCodeExists(
@@ -104,7 +104,7 @@ class VoucherForm extends AbstractForm
             ->setConstraints([
                 new Assert\Type(
                     ['type' => 'boolean']
-                )
+                ),
             ]);
     }
 
@@ -121,7 +121,7 @@ class VoucherForm extends AbstractForm
         }
 
         return [
-            self::IS_ACTIVE =>  true
+            self::IS_ACTIVE => true,
         ];
     }
 
@@ -133,11 +133,11 @@ class VoucherForm extends AbstractForm
         $voucherPools = $this->queryContainer->queryVoucherPool()->find();
 
         $data = [];
-        /* @var SpyDiscountVoucherPool $voucherPool */
+        /** @var SpyDiscountVoucherPool $voucherPool */
         foreach ($voucherPools as $voucherPool) {
             $data[] = [
                 'value' => $voucherPool->getPrimaryKey(),
-                'label' => $voucherPool->getName()
+                'label' => $voucherPool->getName(),
             ];
         }
 
@@ -151,4 +151,5 @@ class VoucherForm extends AbstractForm
     {
         return $this->stateContainer->getRequestValue(self::ID_DISCOUNT_VOUCHER);
     }
+
 }

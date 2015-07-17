@@ -1,10 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Oms\Business\Util;
 
+use SprykerFeature\Zed\Library\Service\GraphViz;
 use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
@@ -54,7 +56,7 @@ class Drawer implements DrawerInterface
     protected $commands;
 
     /**
-     * @var \SprykerFeature_Zed_Library_Service_GraphViz
+     * @var GraphViz
      */
     protected $graph;
 
@@ -66,7 +68,7 @@ class Drawer implements DrawerInterface
     {
         $this->commandModels = $commands;
         $this->conditionModels = $conditions;
-        $this->graph = new \SprykerFeature_Zed_Library_Service_GraphViz(true, $this->graphDefault, 'G', false, true);
+        $this->graph = new GraphViz(true, $this->graphDefault, 'G', false, true);
     }
 
     /**
@@ -263,7 +265,7 @@ class Drawer implements DrawerInterface
             $conditionLabel = $transition->getCondition();
 
             if (!isset($this->conditionModels[$transition->getCondition()])) {
-                $conditionLabel .= ' '.$this->notImplemented;
+                $conditionLabel .= ' ' . $this->notImplemented;
             }
 
             $label[] = $conditionLabel;
@@ -305,7 +307,7 @@ class Drawer implements DrawerInterface
                         $commandLabel .= ' (by item)';
                     }
                 } else {
-                    $commandLabel .= ' '.$this->notImplemented;
+                    $commandLabel .= ' ' . $this->notImplemented;
                 }
                 $label[] = $commandLabel;
             }
@@ -389,6 +391,7 @@ class Drawer implements DrawerInterface
     /**
      * @param TransitionInterface $transition
      * @param string $toName
+     *
      * @return mixed
      */
     protected function addEdgeToState(TransitionInterface $transition, $toName)
@@ -416,4 +419,5 @@ class Drawer implements DrawerInterface
             $this->fontsizeSmall = $fontsize - 2;
         }
     }
+
 }

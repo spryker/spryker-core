@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Yves\Assets\Model\MediaUrlBuilder;
 
 class MediaUrlBuilderTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @var string
      */
@@ -39,4 +41,5 @@ class MediaUrlBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('//' . $this->host . '/media.jpg', $provider->buildUrl('/media.jpg'));
     }
+
 }

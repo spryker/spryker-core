@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -74,7 +75,6 @@ class ConsumerScoreContainer extends AbstractRequestContainer
      */
     protected $language;
 
-    
     /**
      * @param string $addresschecktype
      */

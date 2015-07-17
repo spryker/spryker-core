@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,8 +26,9 @@ class QueryContainerLocator extends AbstractLocator
      * @param LocatorLocatorInterface $locator
      * @param null|string $className
      *
-     * @return object
      * @throws LocatorException
+     *
+     * @return object
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
@@ -61,6 +63,8 @@ class QueryContainerLocator extends AbstractLocator
     public function canLocate($bundle)
     {
         $factory = $this->getFactory($bundle);
+
         return $factory->exists($bundle . 'QueryContainer');
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 
 class DiscountVoucherWriter extends AbstractWriter
 {
+
     /**
      * @var AutoCompletion
      */
@@ -19,6 +21,7 @@ class DiscountVoucherWriter extends AbstractWriter
 
     /**
      * @param VoucherTransfer $discountVoucherTransfer
+     *
      * @return mixed
      */
     public function create(VoucherTransfer $discountVoucherTransfer)
@@ -32,8 +35,10 @@ class DiscountVoucherWriter extends AbstractWriter
 
     /**
      * @param VoucherTransfer $discountVoucherTransfer
-     * @return array|mixed|SpyDiscountVoucher
+     *
      * @throws PropelException
+     *
+     * @return array|mixed|SpyDiscountVoucher
      */
     public function update(VoucherTransfer $discountVoucherTransfer)
     {
@@ -46,4 +51,5 @@ class DiscountVoucherWriter extends AbstractWriter
 
         return $discountVoucherEntity;
     }
+
 }

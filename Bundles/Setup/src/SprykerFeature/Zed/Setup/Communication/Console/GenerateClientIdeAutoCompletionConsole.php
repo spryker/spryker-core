@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -32,6 +33,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -49,8 +51,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
         $generator
             ->addMethodTagBuilder(new GeneratedInterfaceMethodTagBuilder(
                 [
-                    GeneratedInterfaceMethodTagBuilder::OPTION_METHOD_STRING_PATTERN =>
-                        ' * @method \\Generated\Client\Ide\{{bundle}} {{methodName}}()'
+                    GeneratedInterfaceMethodTagBuilder::OPTION_METHOD_STRING_PATTERN => ' * @method \\Generated\Client\Ide\{{bundle}} {{methodName}}()',
                 ]
             ))
         ;
@@ -71,8 +72,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
             IdeAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
                 [
                     BundleNameFinder::OPTION_KEY_APPLICATION => 'Client',
-                    BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN =>
-                        $this->getProjectNamespace() . '/',
+                    BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN => $this->getProjectNamespace() . '/',
                 ]
             ),
         ];
@@ -105,8 +105,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
 
         $options = [
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Client\Ide\FactoryAutoCompletion',
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR =>
-                APPLICATION_SOURCE_DIR . '/Generated/Client/Ide/',
+            IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Client/Ide/',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => true,
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Client',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
@@ -126,11 +125,13 @@ class GenerateClientIdeAutoCompletionConsole extends Console
     }
 
     /**
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     private function getProjectNamespace()
     {
         return Config::get(SystemConfig::PROJECT_NAMESPACES)[0];
     }
+
 }

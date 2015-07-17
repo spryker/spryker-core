@@ -3,8 +3,7 @@
 namespace SprykerFeature\Zed\Queue\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\QueueBusiness;
-
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
 use SprykerFeature\Zed\Queue\Business\Provider\TaskProviderInterface;
 use SprykerFeature\Zed\Queue\Business\Worker\TaskWorkerInterface;
@@ -17,7 +16,7 @@ use SprykerFeature\Zed\Queue\QueueDependencyProvider;
  * @method QueueBusiness getFactory()
  * @method QueueConfig getConfig()
  */
-class QueueDependencyContainer extends AbstractDependencyContainer
+class QueueDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
@@ -74,10 +73,12 @@ class QueueDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @throws \ErrorException
+     *
      * @return TaskPluginInterface[]
      */
     protected function getWorkerTasks()
     {
         return $this->getProvidedDependency(QueueDependencyProvider::WORKER_TASKS);
     }
+
 }

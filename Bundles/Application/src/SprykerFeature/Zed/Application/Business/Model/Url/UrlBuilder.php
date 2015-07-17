@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ class UrlBuilder implements UrlBuilderInterface
      * @param string $controller
      * @param string $action
      * @param array $queryParameter
+     *
      * @return string
      */
     public function build($bundle, $controller = null, $action = null, array $queryParameter = [])
@@ -49,6 +51,7 @@ class UrlBuilder implements UrlBuilderInterface
 
     /**
      * @param array $mca
+     *
      * @return array
      */
     protected static function removeNullValues(array $mca)
@@ -59,4 +62,5 @@ class UrlBuilder implements UrlBuilderInterface
 
         return array_filter($mca, $filterCallback);
     }
+
 }

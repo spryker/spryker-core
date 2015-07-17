@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,8 +13,8 @@ use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerFeature\Client\Cart\Service\Session\CartSessionInterface;
+use SprykerFeature\Client\Cart\Service\Storage\CartStorageInterface;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
-use SprykerFeature\Client\Cart\Service\KvStorage\CartKvStorageInterface;
 
 /**
  * @method CartDependencyContainer getDependencyContainer()
@@ -28,9 +29,10 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $cart = $this->getSession()->getCart();
         foreach ($cart->getItems() as $cartItem) {
-            $product = $this->getKvStorage()->getProduct($cartItem->getId());
+            $product = $this->getStorage()->getProduct($cartItem->getId());
             $cartItem->setName($product['abstract_name']);
         }
+
         return $cart;
     }
 
@@ -43,11 +45,11 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return CartKvStorageInterface
+     * @return CartStorageInterface
      */
-    private function getKvStorage()
+    private function getStorage()
     {
-        return $this->getDependencyContainer()->createKvStorage();
+        return $this->getDependencyContainer()->createStorage();
     }
 
     /**
@@ -59,8 +61,7 @@ class CartClient extends AbstractClient implements CartClientInterface
 
         $this->getSession()
             ->setItemCount(0)
-            ->setCart($cartTransfer)
-        ;
+            ->setCart($cartTransfer);
 
         return $cartTransfer;
     }
@@ -112,10 +113,10 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     *
      * @param string $sku
      *
      * @throws \InvalidArgumentException
+     *
      * @return CartItemInterface
      */
     private function getItemBySku($sku)

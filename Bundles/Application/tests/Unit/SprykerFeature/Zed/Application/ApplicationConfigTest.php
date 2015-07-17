@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,6 +27,11 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
         return Locator::getInstance();
     }
 
+    public function testGetCheckStepsShouldReturnArray()
+    {
+        $this->assertInternalType('array', $this->getConfig()->getCheckSteps());
+    }
+
     public function testGetMaxMenuLevelCountShouldReturnInteger()
     {
         $this->assertInternalType('integer', $this->getConfig()->getMaxMenuLevelCount());
@@ -42,4 +48,20 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInternalType('string', $this->getConfig()->getNavigationSchemaFileNamePattern());
     }
+
+    public function testGetRootNavigationSchemaShouldReturnString()
+    {
+        $this->assertInternalType('string', $this->getConfig()->getRootNavigationSchema());
+    }
+
+    public function testGetCacheFileShouldReturnString()
+    {
+        $this->assertInternalType('string', $this->getConfig()->getCacheFile());
+    }
+
+    public function testIsNavigationCacheEnabledShouldReturnBool()
+    {
+        $this->assertInternalType('bool', $this->getConfig()->isNavigationCacheEnabled());
+    }
+
 }

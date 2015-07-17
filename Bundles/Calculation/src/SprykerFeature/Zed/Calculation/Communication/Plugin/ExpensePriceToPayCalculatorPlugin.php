@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,4 +24,5 @@ class ExpensePriceToPayCalculatorPlugin extends AbstractPlugin implements Calcul
     {
         $this->getFacade()->recalculateExpensePriceToPay($calculableContainer);
     }
+
 }

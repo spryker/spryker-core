@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,7 +9,6 @@ namespace SprykerFeature\Zed\Category\Communication\Form;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +62,7 @@ class CategoryForm extends AbstractForm
         }
 
         return [
-            self::IS_ACTIVE => true
+            self::IS_ACTIVE => true,
         ];
     }
 
@@ -73,7 +73,7 @@ class CategoryForm extends AbstractForm
             ->setConstraints(
                 [
                     new Assert\Type([
-                        'type' => 'string'
+                        'type' => 'string',
                     ]),
                     new Assert\NotBlank(),
                     $this->factory->createConstraintCategoryNameExists(
@@ -89,7 +89,7 @@ class CategoryForm extends AbstractForm
                 [
                     new Assert\Type(
                         ['type' => 'boolean']
-                    )
+                    ),
                 ]
             );
     }
@@ -109,4 +109,5 @@ class CategoryForm extends AbstractForm
     {
         return $this->locale;
     }
+
 }

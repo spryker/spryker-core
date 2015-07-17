@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class IndexController extends AbstractController
 {
+
     public function indexAction()
     {
 
@@ -34,4 +36,5 @@ class IndexController extends AbstractController
             }
         );
     }
+
 }

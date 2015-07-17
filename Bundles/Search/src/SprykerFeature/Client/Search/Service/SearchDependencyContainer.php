@@ -1,14 +1,15 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\Search\Service;
 
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\ZedRequest\Service\Client\ZedClient;
 
-class SearchDependencyContainer extends AbstractDependencyContainer
+class SearchDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**
@@ -23,4 +24,5 @@ class SearchDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createProviderIndexClientProvider($this->getFactory(), $this->getLocator());
     }
+
 }

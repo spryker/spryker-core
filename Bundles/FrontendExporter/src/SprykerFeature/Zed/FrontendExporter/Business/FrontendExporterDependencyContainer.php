@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,16 +12,11 @@ use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\FrontendExporter;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Reader\KeyValue\RedisReader;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\SearchExporter;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\ExporterInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
-use SprykerFeature\Zed\FrontendExporter\Business\Exporter\KeyValueExporter;
-use SprykerFeature\Zed\FrontendExporter\Business\Exporter\KeyValueMarker;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\MarkerInterface;
-use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\KeyValue\RedisWriter;
-use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
-use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\Search\ElasticsearchWriter;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\FrontendExporter\Business\Internal\InstallElasticsearch;
 use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
@@ -34,8 +30,9 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
  * @method FrontendExporterBusiness getFactory()
  * @method FrontendExporterConfig getConfig()
  */
-class FrontendExporterDependencyContainer extends AbstractDependencyContainer
+class FrontendExporterDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return FrontendExporter
      */
@@ -60,6 +57,8 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
      */
     protected function createKeyValueExporter()
     {
+        $config = $this->getConfig();
+
         $keyValueExporter = $this->getFactory()->createExporterKeyValueExporter(
             $this->createFrontendExporterQueryContainer(),
             $this->createKeyValueWriter(),
@@ -68,7 +67,8 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
             $this->createBatchResultModel()
         );
 
-        $config = $this->getConfig();
+        $keyValueExporter->setStandardChunkSize($config->getStandardChunkSize());
+        $keyValueExporter->setChunkSizeTypeMap($config->getChunkSizeTypeMap());
 
         foreach ($config->getKeyValueProcessors() as $keyValueProcessor) {
             $keyValueExporter->addDataProcessor($keyValueProcessor);
@@ -91,7 +91,7 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     protected function createKeyValueWriter()
     {
         return $this->getFactory()->createExporterWriterKeyValueRedisWriter(
-            StorageInstanceBuilder::getKvStorageReadWriteInstance()
+            StorageInstanceBuilder::getStorageReadWriteInstance()
         );
     }
 
@@ -113,7 +113,7 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     protected function createRedisReader()
     {
         return $this->getFactory()->createExporterReaderKeyValueRedisReader(
-            StorageInstanceBuilder::getKvStorageReadWriteInstance()
+            StorageInstanceBuilder::getStorageReadWriteInstance()
         );
     }
 
@@ -187,6 +187,9 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
             $this->createFailedResultModel(),
             $this->createBatchResultModel()
         );
+
+        $searchExporter->setStandardChunkSize($config->getStandardChunkSize());
+        $searchExporter->setChunkSizeTypeMap($config->getChunkSizeTypeMap());
 
         foreach ($config->getSearchExportFailedDeciders() as $searchDecider) {
             $searchExporter->addDecider($searchDecider);
@@ -279,4 +282,5 @@ class FrontendExporterDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getProvidedDependency(FrontendExporterDependencyProvider::FACADE_LOCALE);
     }
+
 }

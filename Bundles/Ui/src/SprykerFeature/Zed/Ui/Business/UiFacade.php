@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ class UiFacade extends AbstractFacade
      * @param array $plugins
      * @param array $requestData
      * @param ModelCriteria $query
+     *
      * @return mixed
      */
     public function getGridOutput(array $plugins, array $requestData, ModelCriteria $query)
@@ -26,4 +28,5 @@ class UiFacade extends AbstractFacade
 
         return $gridProcessor->getData();
     }
+
 }

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerFeature\Shared\Library\Filter;
 
-use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
 use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 
 /**
@@ -13,6 +13,7 @@ use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
  */
 class SeparatorToCamelCaseFilterTest extends \PHPUnit_Framework_TestCase
 {
+
     public function dataProvider()
     {
         return [
@@ -39,4 +40,5 @@ class SeparatorToCamelCaseFilterTest extends \PHPUnit_Framework_TestCase
         $filter = new SeparatorToCamelCaseFilter($seperator, $upperCase);
         $this->assertEquals($expected, $filter->filter($string));
     }
+
 }

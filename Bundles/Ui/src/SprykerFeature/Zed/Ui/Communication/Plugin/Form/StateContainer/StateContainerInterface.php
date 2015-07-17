@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -68,4 +69,5 @@ interface StateContainerInterface
      * @return mixed
      */
     public function getLatestValue($key);
+
 }

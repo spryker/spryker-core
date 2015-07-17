@@ -36,7 +36,7 @@ class Helper implements HelperInterface
 //            $organizedPrices[$priceTypes[$index]]['is_active'] = $isActive[$index];
         }
 
-        return json_encode($organizedPrices);
+        return $organizedPrices;
     }
 
     /**

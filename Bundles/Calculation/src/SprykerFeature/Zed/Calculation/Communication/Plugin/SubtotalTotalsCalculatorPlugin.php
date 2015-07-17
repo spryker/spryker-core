@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -31,4 +32,5 @@ class SubtotalTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCal
             ->recalculateSubtotalTotals($totalsTransfer, $calculableContainer, $calculableItems)
         ;
     }
+
 }

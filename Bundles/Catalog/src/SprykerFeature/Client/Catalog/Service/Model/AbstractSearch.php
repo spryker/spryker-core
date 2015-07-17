@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractSearch
 {
+
     const DEFAULT_ITEMS_PER_PAGE = 10;
     const DEFAULT_MULTI_SEARCH_OPERATOR = 'OR';
     const PAGE = 'page';
@@ -81,6 +83,7 @@ abstract class AbstractSearch
 
     /**
      * @param Request $request
+     *
      * @return Query
      */
     abstract protected function createSearchQuery(Request $request);
@@ -141,7 +144,7 @@ abstract class AbstractSearch
             'currentItemsPerPage' => $this->itemsPerPage,
             'sortNames' => array_keys($this->facetConfig->getActiveSortAttributes()),
             'currentSortParam' => $this->sortParam,
-            'currentSortOrder' => $this->sortOrder
+            'currentSortOrder' => $this->sortOrder,
         ];
     }
 
@@ -164,6 +167,7 @@ abstract class AbstractSearch
     /**
      * @param ResultSet $resultSet
      * @param array $activeParameters
+     *
      * @return array
      */
     protected function extractFacetDataFromResult(ResultSet $resultSet, array $activeParameters)
@@ -196,6 +200,7 @@ abstract class AbstractSearch
 
     /**
      * @param Query $query
+     *
      * @return $this
      */
     protected function addSortingToQuery(Query $query)
@@ -212,11 +217,10 @@ abstract class AbstractSearch
             $nestedSortField = implode('.', [$sortField, $sortParam]);
             $query->setSort(
                 [
-                    $nestedSortField =>
-                        [
+                    $nestedSortField => [
                             'order' => $sortOrder,
-                            'mode' =>  'min'
-                        ]
+                            'mode' => 'min',
+                        ],
                 ]
             );
         }
@@ -260,6 +264,7 @@ abstract class AbstractSearch
      * @param array $activeParameters
      * @param array $facets
      * @param array $ranges
+     *
      * @return array
      */
     protected function createFacetResult(array $activeParameters, array $facets, array $ranges)
@@ -271,12 +276,12 @@ abstract class AbstractSearch
                 $currentFacet = [
                     'name' => $paramName,
                     'config' => $facetConfig,
-                    'values' => $facets[$currentFacetName]
+                    'values' => $facets[$currentFacetName],
                 ];
                 if (isset($activeParameters[$paramName])) {
                     $currentFacet['activeValue'] = $activeParameters[$paramName];
                 }
-                if ($facetConfig[FacetConfig::KEY_TYPE] == FacetConfig::TYPE_SLIDER) {
+                if ($facetConfig[FacetConfig::KEY_TYPE] === FacetConfig::TYPE_SLIDER) {
                     $currentFacet['rangeValues'] = $ranges[$currentFacetName];
                 }
                 $preparedFacets[$currentFacetName] = $currentFacet;
@@ -285,4 +290,5 @@ abstract class AbstractSearch
 
         return $preparedFacets;
     }
+
 }

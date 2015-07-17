@@ -1,49 +1,52 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\Glossary\Service;
 
-use Generated\Client\Ide\FactoryAutoCompletion\Glossary;
-use SprykerFeature\Client\KvStorage\Service\KvStorageClientInterface;
+use Generated\Client\Ide\FactoryAutoCompletion\GlossaryService;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
+use SprykerFeature\Client\Glossary\GlossaryDependencyProvider;
+use SprykerFeature\Client\Glossary\Service\Storage\GlossaryStorageInterface;
+use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
 
 /**
- * @method Glossary getFactory()
+ * @method GlossaryService getFactory()
  */
-class GlossaryDependencyContainer extends AbstractDependencyContainer
+class GlossaryDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**
-     * @return KvStorageClientInterface
+     * @param $locale
+     *
+     * @return GlossaryStorageInterface
      */
-    protected function getKvStorage()
+    public function createTranslator($locale)
     {
-        return $this->getLocator()->kvStorage()->client();
+        return $this->getFactory()->createStorageGlossaryStorage(
+            $this->getStorage(),
+            $this->getKeyBuilder(),
+            $locale
+        );
+    }
+
+    /**
+     * @return StorageClientInterface
+     */
+    private function getStorage()
+    {
+        return $this->getProvidedDependency(GlossaryDependencyProvider::STORAGE);
     }
 
     /**
      * @return KeyBuilderInterface
      */
-    protected function getKeyBuilder()
+    private function getKeyBuilder()
     {
         return $this->getFactory()->createKeyBuilderGlossaryKeyBuilder();
     }
 
-    /**
-     * @param string $locale
-     *
-     * @return Translator
-     */
-    public function createTranslator($locale)
-    {
-        return $this->getFactory()->createTranslator(
-            $this->getKvStorage(),
-            $this->getKeyBuilder(),
-            $locale
-        );
-    }
 }

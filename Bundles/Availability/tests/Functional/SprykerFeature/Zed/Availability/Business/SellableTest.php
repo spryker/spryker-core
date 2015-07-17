@@ -1,13 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Functional\SprykerFeature\Zed\Availability;
 
-use Codeception\TestCase\Test;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Availability\Business\AvailabilityFacade;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
@@ -28,6 +27,7 @@ use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockQuery;
  */
 class SellableTest extends AbstractFunctionalTest
 {
+
     /**
      * @var AvailabilityFacade
      */
@@ -40,7 +40,6 @@ class SellableTest extends AbstractFunctionalTest
         $locator = Locator::getInstance();
         $this->availabilityFacade = $this->getFacade('SprykerFeature', 'Availability');
     }
-
 
     public function testIsProductSellable()
     {
@@ -72,12 +71,14 @@ class SellableTest extends AbstractFunctionalTest
         $abstractProduct = new SpyAbstractProduct();
         $abstractProduct
             ->setSku('AP1337')
+            ->setAttributes('{}')
         ;
 
         $concreteProduct = new SpyProduct();
         $concreteProduct
             ->setSku('P1337')
             ->setSpyAbstractProduct($abstractProduct)
+            ->setAttributes('{}')
         ;
 
         $stock = new SpyStock();
@@ -100,19 +101,33 @@ class SellableTest extends AbstractFunctionalTest
     {
         $abstractProduct = SpyAbstractProductQuery::create()
             ->filterBySku('test2')
-            ->findOneOrCreate()
+            ->findOne()
         ;
-        $abstractProduct->setSku('test2')->save();
+
+        if (!$abstractProduct) {
+            $abstractProduct = new SpyAbstractProduct();
+        }
+
+        $abstractProduct
+            ->setSku('test2')
+            ->setAttributes('{}')
+            ->save()
+        ;
 
         $productEntity = SpyProductQuery::create()
             ->filterByFkAbstractProduct($abstractProduct->getIdAbstractProduct())
             ->filterBySku('test1')
-            ->findOneOrCreate()
+            ->findOne()
         ;
+
+        if (!$productEntity) {
+            $productEntity = new SpyProduct();
+        }
 
         $productEntity
             ->setFkAbstractProduct($abstractProduct->getIdAbstractProduct())
             ->setSku('test1')
+            ->setAttributes('{}')
             ->save()
         ;
 
@@ -149,6 +164,5 @@ class SellableTest extends AbstractFunctionalTest
             ->save()
         ;
     }
-
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,7 +20,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
@@ -190,8 +190,9 @@ class CategoryQueryContainer extends AbstractQueryContainer
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
-     * @return SpyCategoryNodeQuery
      * @throws PropelException
+     *
+     * @return SpyCategoryNodeQuery
      */
     public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false)
     {
@@ -281,9 +282,9 @@ class CategoryQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyCategoryQuery
      * @param int $idLocale
      *
+     * @return SpyCategoryQuery
      * @return SpyCategoryQuery
      */
     public function queryCategory($idLocale)
@@ -318,8 +319,9 @@ class CategoryQueryContainer extends AbstractQueryContainer
      * @param string $name
      * @param int $idLocale
      *
-     * @return SpyCategoryAttributeQuery
      * @throws PropelException
+     *
+     * @return SpyCategoryAttributeQuery
      */
     public function queryCategoryByName($name, $idLocale)
     {
@@ -332,8 +334,9 @@ class CategoryQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idLocale
      *
-     * @return SpyCategoryNodeQuery
      * @throws PropelException
+     *
+     * @return SpyCategoryNodeQuery
      */
     public function queryCategoryNode($idLocale)
     {
@@ -391,8 +394,9 @@ class CategoryQueryContainer extends AbstractQueryContainer
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
      *
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     public function joinCategoryQueryWithParentCategories(
         ModelCriteria $expandableQuery,
@@ -526,8 +530,9 @@ class CategoryQueryContainer extends AbstractQueryContainer
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
      *
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     public function joinRelatedCategoryQueryWithUrls(
         ModelCriteria $expandableQuery,
@@ -591,8 +596,9 @@ class CategoryQueryContainer extends AbstractQueryContainer
      * @param string $categoryName
      * @param int $idLocale
      *
-     * @return SpyCategoryNodeQuery
      * @throws PropelException
+     *
+     * @return SpyCategoryNodeQuery
      */
     public function queryNodeByCategoryName($categoryName, $idLocale)
     {
@@ -607,4 +613,5 @@ class CategoryQueryContainer extends AbstractQueryContainer
 
         return $nodeQuery;
     }
+
 }

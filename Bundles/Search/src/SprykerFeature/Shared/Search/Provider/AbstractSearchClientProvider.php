@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,14 +13,16 @@ use SprykerEngine\Shared\Kernel\AbstractClientProvider;
 
 /**
  * Class ClientStorageProvider
- * @package SprykerFeature\Shared\Search
+ *
  * @method Client getInstance()
  */
 abstract class AbstractSearchClientProvider extends AbstractClientProvider
 {
+
     /**
-     * @return Client
      * @throws \Exception
+     *
+     * @return Client
      */
     protected function createClient()
     {
@@ -29,4 +32,5 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
             'host' => Config::get(SystemConfig::ELASTICA_PARAMETER__HOST),
         ]));
     }
+
 }

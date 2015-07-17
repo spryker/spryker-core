@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,19 +8,17 @@ namespace SprykerFeature\Zed\Category\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
-use SprykerFeature\Zed\Category\Business\CategoryFacade;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Category\CategoryDependencyProvider;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryForm;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
 use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CategoryCommunication getFactory()
  */
-class CategoryDependencyContainer extends AbstractDependencyContainer
+class CategoryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**

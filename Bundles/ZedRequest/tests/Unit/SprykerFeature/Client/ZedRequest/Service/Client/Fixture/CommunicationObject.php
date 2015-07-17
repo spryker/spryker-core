@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ class CommunicationObject extends AbstractObject
         'test1' => null,
         'test2' => null,
         'test3' => [],
-        'test4' => [null]
+        'test4' => [null],
     ];
+
 }

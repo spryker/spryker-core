@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,6 +9,19 @@ namespace SprykerFeature\Zed\Product\Business\Builder;
 class SimpleAttributeMergeBuilder
 {
 
+    const PRODUCT_URLS = 'product_urls';
+    const URL = 'url';
+    const ABSTRACT_ATTRIBUTES = 'abstract_attributes';
+    const CONCRETE_ATTRIBUTES = 'concrete_attributes';
+    const CONCRETE_LOCALIZED_ATTRIBUTES = 'concrete_localized_attributes';
+    const CONCRETE_SKUS = 'concrete_skus';
+    const CONCRETE_NAMES = 'concrete_names';
+    const CONCRETE_PRODUCTS = 'concrete_products';
+    const NAME = 'name';
+    const SKU = 'sku';
+    const ATTRIBUTES = 'attributes';
+    const ABSTRACT_LOCALIZED_ATTRIBUTES = 'abstract_localized_attributes';
+
     /**
      * @param array $productsData
      *
@@ -16,28 +30,32 @@ class SimpleAttributeMergeBuilder
     public function buildProducts(array $productsData)
     {
         foreach ($productsData as &$productData) {
-            $productUrls = explode(',', $productData['product_urls']);
-            $productData['url'] = $productUrls[0];
+            $productUrls = explode(',', $productData[self::PRODUCT_URLS]);
+            $productData[self::URL] = $productUrls[0];
 
-            $abstractAttributes = json_decode($productData['abstract_attributes'], true);
-            $productData['abstract_attributes'] = $this->normalizeAttributes($abstractAttributes);
+            $productData[self::ABSTRACT_ATTRIBUTES] = $this->extractAbstractAttributes($productData);
 
-            $concreteAttributes = explode('$%', $productData['concrete_attributes']);
-            $concreteSkus = explode(',', $productData['concrete_skus']);
-            $concreteNames = explode(',', $productData['concrete_names']);
-            $productData['concrete_products'] = [];
+            $concreteAttributes = explode('$%', $productData[self::CONCRETE_ATTRIBUTES]);
+            $concreteLocalizedAttributes = explode('$%', $productData[self::CONCRETE_LOCALIZED_ATTRIBUTES]);
+
+            $concreteSkus = explode(',', $productData[self::CONCRETE_SKUS]);
+            $concreteNames = explode(',', $productData[self::CONCRETE_NAMES]);
+            $productData[self::CONCRETE_PRODUCTS] = [];
 
             $processedConcreteSkus = [];
             for ($i = 0, $l = count($concreteSkus); $i < $l; $i++) {
                 if (isset($processedConcreteSkus[$concreteSkus[$i]])) {
                     continue;
                 }
+                $decodedAttributes = json_decode($concreteAttributes[$i], true);
+                $decodedLocalizedAttributes = json_decode($concreteLocalizedAttributes[$i], true);
+                $mergedAttributes = array_merge($decodedAttributes, $decodedLocalizedAttributes);
 
                 $processedConcreteSkus[$concreteSkus[$i]] = true;
-                $productData['concrete_products'][] = [
-                    'name' => $concreteNames[$i],
-                    'sku' => $concreteSkus[$i],
-                    'attributes' => json_decode($concreteAttributes[$i], true)
+                $productData[self::CONCRETE_PRODUCTS][] = [
+                    self::NAME => $concreteNames[$i],
+                    self::SKU => $concreteSkus[$i],
+                    self::ATTRIBUTES => $mergedAttributes,
                 ];
             }
         }
@@ -58,4 +76,19 @@ class SimpleAttributeMergeBuilder
 
         return array_combine($newKeys, $attributes);
     }
+
+    /**
+     * @param array $productData
+     *
+     * @return array
+     */
+    protected function extractAbstractAttributes(array $productData)
+    {
+        $decodedAttributes = json_decode($productData[self::ABSTRACT_ATTRIBUTES], true);
+        $decodedLocalizedAttributes = json_decode($productData[self::ABSTRACT_LOCALIZED_ATTRIBUTES], true);
+        $abstractAttributes = array_merge($decodedAttributes, $decodedLocalizedAttributes);
+
+         return $this->normalizeAttributes($abstractAttributes);
+    }
+
 }

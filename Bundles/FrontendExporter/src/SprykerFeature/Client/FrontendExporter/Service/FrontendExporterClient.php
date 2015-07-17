@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Yves\FrontendExporter\Business\Model\UrlResource;
 
 /**
  * @todo Rename all YvesExport Bundles to PageExport or just Export.
+ *
  * @method FrontendExporterDependencyContainer getDependencyContainer()
  */
 class FrontendExporterClient extends AbstractClient implements UrlMatcherInterface

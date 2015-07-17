@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,7 +17,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_URL = 'url facade';
 
     /**
-     * @var Container $container
+     * @var Container
      *
      * @return Container
      */

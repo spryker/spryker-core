@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ use SprykerFeature\Yves\Customer\Model\Customer;
  */
 class CustomerDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @return SecurityServiceProvider
      */
@@ -44,4 +46,5 @@ class CustomerDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelCustomer($application);
     }
+
 }

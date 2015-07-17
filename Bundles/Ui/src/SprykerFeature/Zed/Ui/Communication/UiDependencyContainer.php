@@ -1,18 +1,20 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Ui\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\Validator\Validator;
 
-class UiDependencyContainer extends AbstractDependencyContainer
+class UiDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
      * @param $filterValue
+     *
      * @return array
      */
     public function getDateTimeColumnFormats($filterValue)
@@ -27,12 +29,13 @@ class UiDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param $filterValue
+     *
      * @return object
      */
     public function getCalendarWeekFormat($filterValue)
     {
         $calendarWeek = $this->getFactory()->create(
-            "Grid\\DateTimeColumn\\CalendarWeek",
+            'Grid\\DateTimeColumn\\CalendarWeek',
             $filterValue
         );
 
@@ -41,12 +44,13 @@ class UiDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param $filterValue
+     *
      * @return object
      */
     public function getCalendarWordFormat($filterValue)
     {
         $calendarWord = $this->getFactory()->create(
-            "Grid\\DateTimeColumn\\CalendarWord",
+            'Grid\\DateTimeColumn\\CalendarWord',
             $filterValue
         );
 
@@ -55,12 +59,13 @@ class UiDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param $filterValue
+     *
      * @return object
      */
     public function getHumanDateFormat($filterValue)
     {
         $humanDate = $this->getFactory()->create(
-            "Grid\\DateTimeColumn\\HumanDate",
+            'Grid\\DateTimeColumn\\HumanDate',
             $filterValue
         );
 
@@ -69,12 +74,13 @@ class UiDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param $filterValue
+     *
      * @return object
      */
     public function getDateTimeStringFormat($filterValue)
     {
         $dateTimeString = $this->getFactory()->create(
-            "Grid\\DateTimeColumn\\DateTimeString",
+            'Grid\\DateTimeColumn\\DateTimeString',
             $filterValue
         );
 
@@ -88,4 +94,5 @@ class UiDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getLocator()->application()->pluginPimple()->getApplication()['validator'];
     }
+
 }

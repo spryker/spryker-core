@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,9 +7,9 @@
 namespace SprykerFeature\Zed\Application\Communication;
 
 use SprykerFeature\Zed\Application\Business\ApplicationFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
-class ApplicationDependencyContainer extends AbstractDependencyContainer
+class ApplicationDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
@@ -18,4 +19,5 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getLocator()->application()->facade();
     }
+
 }

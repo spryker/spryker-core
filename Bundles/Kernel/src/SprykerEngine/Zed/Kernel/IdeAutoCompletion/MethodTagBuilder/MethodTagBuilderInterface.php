@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,4 +16,5 @@ interface MethodTagBuilderInterface
      * @return array
      */
     public function buildMethodTags($bundle, array $methodTags = []);
+
 }

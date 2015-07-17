@@ -1,39 +1,23 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Customer;
 
-use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
-use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
-use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\System\SystemConfig;
 
 class CustomerConfig extends AbstractBundleConfig
 {
 
     /**
-     * @return PasswordRestoredConfirmationSenderPluginInterface[]
+     * @return string
      */
-    public function getPasswordRestoredConfirmationSenders()
+    public function getHostYves()
     {
-        return [];
+        return $this->get(SystemConfig::HOST_YVES);
     }
 
-    /**
-     * @return PasswordRestoreTokenSenderPluginInterface[]
-     */
-    public function getPasswordRestoreTokenSenders()
-    {
-        return [];
-    }
-
-    /**
-     * @return RegistrationTokenSenderPluginInterface[]
-     */
-    public function getRegistrationTokenSenders()
-    {
-        return [];
-    }
 }

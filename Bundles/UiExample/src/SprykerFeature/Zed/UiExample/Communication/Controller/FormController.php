@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ class FormController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function uiExampleAction(Request $request)
@@ -34,4 +36,5 @@ class FormController extends AbstractController
 
         return $this->jsonResponse($form->renderData());
     }
+
 }

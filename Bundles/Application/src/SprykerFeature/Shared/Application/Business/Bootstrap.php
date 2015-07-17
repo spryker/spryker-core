@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,9 +8,7 @@ namespace SprykerFeature\Shared\Application\Business;
 
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Yves\YvesConfig;
-
 use Silex\ServiceProviderInterface;
-
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
@@ -17,6 +16,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 abstract class Bootstrap
 {
+
     /**
      * @return Application
      */
@@ -170,4 +170,5 @@ abstract class Bootstrap
      * @return Application
      */
     abstract protected function getBaseApplication();
+
 }

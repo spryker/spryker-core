@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -59,4 +60,5 @@ class Cloud
 
         return Config::get(SystemConfig::CLOUD_CDN_ENABLED) === true;
     }
+
 }

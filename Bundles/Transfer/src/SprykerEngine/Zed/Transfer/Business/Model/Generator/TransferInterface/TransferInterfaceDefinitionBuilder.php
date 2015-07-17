@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -40,4 +41,5 @@ class TransferInterfaceDefinitionBuilder extends AbstractDefinitionBuilder
 
         return $this->buildDefinitions($definitions, $this->interfaceDefinition);
     }
+
 }

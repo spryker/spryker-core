@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -30,11 +31,14 @@ class FixedTypeDetector implements InputTypeDetectorInterface
 
     /**
      * @param Input $input
-     * @return string The type
+     *
      * @throws Exception\ImportTypeNotDetectedException
+     *
+     * @return string The type
      */
     public function detect(Input $input)
     {
         return $this->type;
     }
+
 }

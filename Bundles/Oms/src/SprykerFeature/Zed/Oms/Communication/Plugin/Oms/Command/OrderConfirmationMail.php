@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature_Shared_Library_Log;
 
 class OrderConfirmationMail implements CommandByOrderInterface
 {
+
     /**
      * @param SpySalesOrderItem[] $orderItems
      * @param SpySalesOrder $orderEntity
@@ -21,7 +23,7 @@ class OrderConfirmationMail implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        SprykerFeature_Shared_Library_Log::log('Command OrderConfirmationMail by Order for nr of items: '.count($orderItems), 'statemachine.log');
+        SprykerFeature_Shared_Library_Log::log('Command OrderConfirmationMail by Order for nr of items: ' . count($orderItems), 'statemachine.log');
     }
 
 }

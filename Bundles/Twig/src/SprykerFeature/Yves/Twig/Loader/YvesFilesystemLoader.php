@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Twig_Error_Loader;
 
 class YvesFilesystemLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
 {
+
     /**
      * @var array
      */
@@ -53,7 +55,7 @@ class YvesFilesystemLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderI
      */
     public function setPaths(array $paths)
     {
-        $this->paths = array();
+        $this->paths = [];
         foreach ($paths as $path) {
             $this->addPath($path);
         }
@@ -69,7 +71,7 @@ class YvesFilesystemLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderI
     public function addPath($path)
     {
         // invalidate the cache
-        $this->cache = array();
+        $this->cache = [];
         $this->paths[] = rtrim($path, '/\\');
     }
 
@@ -83,7 +85,7 @@ class YvesFilesystemLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderI
     public function prependPath($path)
     {
         // invalidate the cache
-        $this->cache = array();
+        $this->cache = [];
 
         $path = rtrim($path, '/\\');
 
@@ -163,16 +165,16 @@ class YvesFilesystemLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderI
     /**
      * @param string $name
      *
-     * @return string
-     *
      * @throws Twig_Error_Loader
+     *
+     * @return string
      */
     protected function findTemplate($name)
     {
         $name = (string) $name;
 
         // normalize name
-        $name = str_replace(array('///','//','\\'), '/', $name);
+        $name = str_replace(['///', '//', '\\'], '/', $name);
 
         if (isset($this->cache[$name])) {
             if ($this->cache[$name] !== false) {
@@ -184,7 +186,7 @@ class YvesFilesystemLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderI
 
         $this->validateName($name);
 
-        if (isset($name[0]) && '@' == $name[0]) {
+        if (isset($name[0]) && '@' === $name[0]) {
             if (false === $pos = strpos($name, '/')) {
                 $this->cache[$name] = false;
                 throw new Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
@@ -233,4 +235,5 @@ class YvesFilesystemLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderI
             }
         }
     }
+
 }

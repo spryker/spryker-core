@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -52,4 +53,5 @@ interface CustomerCheckoutConnectorToCustomerInterface
      * @return bool
      */
     public function hasEmail($email);
+
 }

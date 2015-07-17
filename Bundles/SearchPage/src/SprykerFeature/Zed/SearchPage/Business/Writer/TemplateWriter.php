@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -43,8 +44,9 @@ class TemplateWriter implements TemplateWriterInterface
     /**
      * @param TemplateInterface $template
      *
-     * @return int
      * @throws TemplateDoesNotExistException
+     *
+     * @return int
      */
     public function updateTemplate(TemplateInterface $template)
     {
@@ -64,4 +66,5 @@ class TemplateWriter implements TemplateWriterInterface
 
         return $idTemplate;
     }
+
 }

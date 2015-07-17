@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,7 +11,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayoneBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentManagerInterface;
 use SprykerFeature\Zed\Payone\Business\Order\OrderManagerInterface;
@@ -27,15 +28,13 @@ use SprykerFeature\Zed\Payone\Business\ApiLog\ApiLogFinder;
  * @method Factory|PayoneBusiness getFactory()
  * @method PayoneConfig getConfig()
  */
-class PayoneDependencyContainer extends AbstractDependencyContainer
+class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
      * @var StandardParameterInterface
      */
     private $standardParameter;
-
-
 
     /**
      * @return PayoneFacade
@@ -156,15 +155,17 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @todo move implementation to PayoneConfig
+     *
      * @return array
      */
     protected function getAvailablePaymentMethods()
     {
         $storeConfig = $this->getProvidedDependency(PayoneDependencyProvider::STORE_CONFIG);
+
         return [
             PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createPaymentMethodMapperPrePayment($storeConfig),
             PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createPaymentMethodMapperCreditCardPseudo($storeConfig),
-            PayoneApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createPaymentMethodMapperPayPal($storeConfig)
+            PayoneApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createPaymentMethodMapperPayPal($storeConfig),
         ];
     }
 

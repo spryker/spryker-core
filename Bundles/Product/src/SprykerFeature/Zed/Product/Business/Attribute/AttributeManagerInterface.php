@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Product\Business\Exception\MissingAttributeTypeException;
 
 interface AttributeManagerInterface
 {
+
     /**
      * @param string $attributeName
      *
@@ -30,9 +32,10 @@ interface AttributeManagerInterface
      * @param string $attributeType
      * @param bool $isEditable
      *
-     * @return int
      * @throws AttributeExistsException
      * @throws MissingAttributeTypeException
+     *
+     * @return int
      */
     public function createAttribute($attributeName, $attributeType, $isEditable = true);
 
@@ -41,8 +44,10 @@ interface AttributeManagerInterface
      * @param string $inputType
      * @param int|null $fkParentAttributeType
      *
-     * @return int
      * @throws AttributeTypeExistsException
+     *
+     * @return int
      */
     public function createAttributeType($name, $inputType, $fkParentAttributeType = null);
+
 }

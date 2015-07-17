@@ -1,16 +1,16 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Shared\ZedRequest\Client;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Kernel\TransferLocatorHelper;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
 abstract class AbstractResponse extends AbstractObject implements EmbeddedTransferInterface, ResponseInterface
 {
+
     /**
      * @var array
      */
@@ -19,21 +19,14 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
         'errorMessages' => [],
         'success' => true,
         'transfer' => null,
-        'transferClassName' => null
+        'transferClassName' => null,
     ];
 
     /**
-     * @var LocatorLocatorInterface
-     */
-    protected $locator;
-
-    /**
-     * @param LocatorLocatorInterface $locator
      * @param array $values
      */
-    public function __construct(LocatorLocatorInterface $locator, array $values = null)
+    public function __construct(array $values = null)
     {
-        $this->locator = $locator;
         parent::__construct($values);
     }
 
@@ -188,7 +181,8 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
 
             return $transfer;
         }
-        return null;
+
+        return;
     }
 
     /**
@@ -205,6 +199,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
 
     /**
      * @param TransferInterface $transferObject
+     *
      * @return $this
      */
     public function setTransfer(TransferInterface $transferObject)
@@ -214,4 +209,5 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
 
         return $this;
     }
+
 }

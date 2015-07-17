@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -33,7 +34,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
         };
 
         $container[self::KV_STORAGE] = function (Container $container) {
-            return $container->getLocator()->kvStorage()->client();
+            return $container->getLocator()->storage()->client();
         };
 
         return $container;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
 
 interface ExportFailedDeciderPluginInterface
 {
+
     /**
      * @param BatchResultInterface $result
      *
@@ -20,4 +22,5 @@ interface ExportFailedDeciderPluginInterface
      * @return string
      */
     public function getProcessableType();
+
 }

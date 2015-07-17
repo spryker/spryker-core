@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,8 +25,9 @@ class ConsoleLocator extends AbstractLocator
      * @param LocatorLocatorInterface $locator
      * @param null|string $className
      *
-     * @return object
      * @throws LocatorException
+     *
+     * @return object
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
@@ -48,6 +50,10 @@ class ConsoleLocator extends AbstractLocator
         // @todo make lazy
         if ($locator->$bundleName()->hasFacade()) {
             $resolvedConsole->setFacade($locator->$bundleName()->facade());
+        }
+
+        if ($locator->$bundleName()->hasQueryContainer()) {
+            $resolvedConsole->setQueryContainer($locator->$bundleName()->queryContainer());
         }
 
         return $resolvedConsole;

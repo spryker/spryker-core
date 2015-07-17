@@ -1,13 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Yves\Customer\Provider;
 
+use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Customer\CustomerConfig;
 use Silex\Application;
 use Silex\Provider\SecurityServiceProvider as SilexSecurityServiceProvider;
@@ -16,6 +17,7 @@ use SprykerFeature\Yves\Customer\Handler\AjaxAuthenticationHandler;
 
 class SecurityServiceProvider extends SilexSecurityServiceProvider
 {
+
     /**
      * @var AutoCompletion
      */
@@ -55,26 +57,40 @@ class SecurityServiceProvider extends SilexSecurityServiceProvider
             });
         });
 
-        $app["security.firewalls"] = [
-            "secured" => [
-                "pattern" => Config::get(CustomerConfig::CUSTOMER_SECURED_PATTERN),
-                "form" => [
-                    "login_path" => "/login",
-                    "login_check" => "/login_check",
+        $app['security.firewalls'] = [
+            'secured' => [
+                'anonymous' => true,
+                'pattern' => '^/',
+                'form' => [
+                    'login_path' => '/login',
+                    'login_check' => '/login_check',
                 ],
-                "logout" => [
-                    "logout_path" => "/customer/logout",
+                'logout' => [
+                    'logout_path' => '/customer/logout',
                 ],
-                "users" => $app->share(function ($app) {
+                'users' => $app->share(function ($app) {
                     return $this->locator->customer()
                         ->pluginSecurityService()
-                        ->createUserProvider($app["session"]);
+                        ->createUserProvider($app['session'])
+                    ;
                 }),
             ],
-            "unsecured" => [
-                "pattern" => Config::get(CustomerConfig::CUSTOMER_ANONYMOUS_PATTERN),
-                "anonymous" => true,
+        ];
+
+        $app['security.access_control'] = [
+            [
+                'path' => '^/login',
+                'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+            ],
+            [
+                'path' => Config::get(CustomerConfig::CUSTOMER_SECURED_PATTERN),
+                'role' => 'ROLE_USER',
+            ],
+            [
+                'path' => Config::get(CustomerConfig::CUSTOMER_ANONYMOUS_PATTERN),
+                'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
             ],
         ];
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -27,13 +28,14 @@ use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
  */
 class AclTest extends Test
 {
+
     /**
-     * @var AclFacade $facade
+     * @var AclFacade
      */
     private $facade;
 
     /**
-     * @var UserFacade $facade
+     * @var UserFacade
      */
     private $userFacade;
 
@@ -523,4 +525,5 @@ class AclTest extends Test
             $this->assertEquals(false, $hasAccess);
         }
     }
+
 }

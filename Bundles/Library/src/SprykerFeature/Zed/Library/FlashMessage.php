@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,7 +17,6 @@
  * - Notification
  * - Success
  * - Error
- *
  */
 class SprykerFeature_Zed_Library_FlashMessage
 {
@@ -24,10 +24,11 @@ class SprykerFeature_Zed_Library_FlashMessage
     /**
      * @var array
      */
-    protected $types = array('error', 'success', 'notification');
+    protected $types = ['error', 'success', 'notification'];
 
     /**
      * Singleton
+     *
      * @var \SprykerFeature_Zed_Library_FlashMessage
      */
     protected static $instance;
@@ -44,6 +45,7 @@ class SprykerFeature_Zed_Library_FlashMessage
 
     /**
      * @static
+     *
      * @return \SprykerFeature_Zed_Library_FlashMessage
      */
     public static function getInstance()
@@ -51,6 +53,7 @@ class SprykerFeature_Zed_Library_FlashMessage
         if (is_null(self::$instance)) {
             self::$instance = new \SprykerFeature_Zed_Library_FlashMessage();
         }
+
         return self::$instance;
     }
 
@@ -114,7 +117,7 @@ class SprykerFeature_Zed_Library_FlashMessage
         assert(is_string($message));
 
         if (is_null($this->session->$type) || false === is_array($this->session->$type)) {
-            $this->session->$type = array();
+            $this->session->$type = [];
         }
 
         $messages = $this->session->$type;
@@ -127,6 +130,7 @@ class SprykerFeature_Zed_Library_FlashMessage
      *
      * @param $type
      * @param bool $removeFromSession
+     *
      * @return array
      */
     protected function getMessages($type, $removeFromSession = true)
@@ -138,9 +142,10 @@ class SprykerFeature_Zed_Library_FlashMessage
             if ($removeFromSession) {
                 unset($this->session->$type);
             }
+
             return $message;
         } else {
-            return array();
+            return [];
         }
     }
 

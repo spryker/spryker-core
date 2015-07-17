@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Elastica\Filter\Nested;
 
 class NestedFilterBuilder implements NestedFilterBuilderInterface
 {
+
     /**
      * @var FilterBuilderInterface
      */
@@ -33,7 +35,7 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
     {
         return $this->bindMultipleNestedFilter($fieldName, [
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-name', $nestedFieldName),
-                $this->filterBuilder->createTermFilter($fieldName . '.facet-value', $nestedFieldValue)
+                $this->filterBuilder->createTermFilter($fieldName . '.facet-value', $nestedFieldValue),
             ]
         );
     }
@@ -49,7 +51,7 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
     {
         return $this->bindMultipleNestedFilter($fieldName, [
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-name', $nestedFieldName),
-                $this->filterBuilder->createTermsFilter($fieldName . '.facet-value', $nestedFieldValues)
+                $this->filterBuilder->createTermsFilter($fieldName . '.facet-value', $nestedFieldValues),
             ]
         );
     }
@@ -75,7 +77,7 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
     {
         return $this->bindMultipleNestedFilter($fieldName, [
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-name', $nestedFieldName),
-                $this->filterBuilder->createRangeFilter($fieldName . '.facet-value', $minValue, $maxValue, $greaterParam, $lessParam)
+                $this->filterBuilder->createRangeFilter($fieldName . '.facet-value', $minValue, $maxValue, $greaterParam, $lessParam),
             ]
         );
     }
@@ -92,4 +94,5 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
             $this->filterBuilder->createBoolAndFilter()->setFilters($filters)
         );
     }
+
 }

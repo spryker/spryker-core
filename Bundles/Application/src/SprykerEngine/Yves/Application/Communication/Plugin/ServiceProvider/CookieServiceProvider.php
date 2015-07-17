@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class CookieServiceProvider implements ServiceProviderInterface
 {
+
     /**
      * @var YvesApplication
      */
@@ -48,6 +50,7 @@ class CookieServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-        $app['dispatcher']->addListener(KernelEvents::RESPONSE, array($this, 'onKernelResponse'), -255);
+        $app['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], -255);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,7 +27,7 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         return $this->viewResponse([
-            'processes' => $this->getFacade()->getProcesses()
+            'processes' => $this->getFacade()->getProcesses(),
         ]);
     }
 
@@ -61,7 +62,7 @@ class IndexController extends AbstractController
 
         $response = $this->getFacade()->drawProcess($processName, null, $format, $fontsize);
 
-        $callback = function() use ($response) {
+        $callback = function () use ($response) {
             echo $response;
         };
 
@@ -97,7 +98,7 @@ class IndexController extends AbstractController
         }
 
         return $this->viewResponse([
-            'processName' => $processName
+            'processName' => $processName,
         ]);
     }
 
@@ -131,7 +132,7 @@ class IndexController extends AbstractController
             $process = $this->getFacade()->getProcess($orderItem->getProcess()->getName());
             $events = $process->getStateFromAllProcesses($orderItem->getState()->getName())->getEvents();
 
-            /* @var $orderItem SpySalesOrderItem */
+            /* @var SpySalesOrderItem $orderItem */
             echo '<tr>';
             echo '<td><a href="/sales/order-details/activity-log?id_sales_order=' . $orderItem->getOrder()->getIdSalesOrder() . '">' . $orderItem->getOrder()->getIdSalesOrder() . '</a></td>';
             echo '<td>' . $orderItem->getIdSalesOrderItem() . '</td>';
@@ -165,9 +166,9 @@ class IndexController extends AbstractController
         $orderItemId = $request->query->get('id');
         $event = $request->query->get('event');
 
-        $data = array(
-            'aaa' => 'bbb'
-        );
+        $data = [
+            'aaa' => 'bbb',
+        ];
 
         $orderItems = SpySalesOrderItemQuery::create()->findByIdSalesOrderItem($orderItemId);
         $this->getFacade()->triggerEvent($event, $orderItems, $data);
@@ -203,4 +204,5 @@ class IndexController extends AbstractController
         echo __FILE__ . ' ' . __LINE__;
         die;
     }
+
 }

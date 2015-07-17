@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -69,7 +70,7 @@ class ClassGenerator implements GeneratorInterface
             'interfaces' => $classDefinition->getInterfaces(),
             'constructorDefinition' => $classDefinition->getConstructorDefinition(),
             'properties' => $classDefinition->getProperties(),
-            'methods' => $classDefinition->getMethods()
+            'methods' => $classDefinition->getMethods(),
         ];
     }
 

@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Distributor\Dependency\Plugin;
 
 interface ConsumerProviderPluginInterface
 {
+
     /**
      * @return string
      */
@@ -15,4 +16,5 @@ interface ConsumerProviderPluginInterface
      * @return array
      */
     public function getConsumerList(array $item = []);
+
 }

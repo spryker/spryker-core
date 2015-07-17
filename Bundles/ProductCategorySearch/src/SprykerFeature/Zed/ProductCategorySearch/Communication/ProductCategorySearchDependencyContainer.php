@@ -1,20 +1,21 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\ProductCategorySearch\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use SprykerFeature\Zed\ProductCategorySearch\Business\ProductCategorySearchFacade;
 
 /**
  * Class ProductCategorySearchDependencyContainer
- * @package SprykerFeature\Zed\ProductCategorySearch\Communication
  */
-class ProductCategorySearchDependencyContainer extends AbstractDependencyContainer
+class ProductCategorySearchDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return ProductCategorySearchFacade
      */
@@ -30,4 +31,5 @@ class ProductCategorySearchDependencyContainer extends AbstractDependencyContain
     {
         return $this->getLocator()->productCategory()->queryContainer();
     }
+
 }

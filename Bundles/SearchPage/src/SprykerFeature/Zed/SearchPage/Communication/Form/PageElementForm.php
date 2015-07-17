@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Constraints;
  */
 class PageElementForm extends AbstractForm
 {
+
     const ID_SEARCH_PAGE_ELEMENT = 'id_search_page_element';
     const IS_ELEMENT_ACTIVE = 'is_element_active';
     const FK_SEARCH_DOCUMENT_ATTRIBUTE = 'fk_search_document_attribute';
@@ -27,7 +29,7 @@ class PageElementForm extends AbstractForm
     protected function getDefaultData()
     {
         return [
-            self::IS_ELEMENT_ACTIVE => false
+            self::IS_ELEMENT_ACTIVE => false,
         ];
     }
 
@@ -38,17 +40,17 @@ class PageElementForm extends AbstractForm
             ->setRefresh(false)
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Constraints\NotBlank()
+                new Constraints\NotBlank(),
             ])
         ;
         $this->addField(self::IS_ELEMENT_ACTIVE)
             ->setRefresh(false)
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'bool'
-                ])
+                    'type' => 'bool',
+                ]),
             ])
         ;
         $this->addField(self::FK_SEARCH_DOCUMENT_ATTRIBUTE)
@@ -56,15 +58,15 @@ class PageElementForm extends AbstractForm
             ->setRefresh(false)
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
                 new Constraints\Choice([
                     'choices' => array_column($this->getDocumentAttributes(), 'value'),
-                    'message' => 'Please choose one of the given Attributes'
+                    'message' => 'Please choose one of the given Attributes',
                 ]),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             })
         ;
         $this->addField(self::FK_SEARCH_PAGE_ELEMENT_TEMPLATE)
@@ -72,16 +74,16 @@ class PageElementForm extends AbstractForm
             ->setRefresh(false)
             ->setConstraints([
                 new Constraints\Type([
-                    'type' => 'integer'
+                    'type' => 'integer',
                 ]),
                 new Constraints\Choice([
                     'choices' => array_column($this->getTemplates(), 'value'),
-                    'message' => 'Please choose one of the given Templates'
+                    'message' => 'Please choose one of the given Templates',
                 ]),
-                new Constraints\NotBlank()
+                new Constraints\NotBlank(),
             ])
             ->setValueHook(function ($value) {
-                return $value ? (int)$value : null;
+                return $value ? (int) $value : null;
             })
         ;
     }
@@ -126,7 +128,7 @@ class PageElementForm extends AbstractForm
         $formattedOptions = [];
         foreach ($options as $option) {
             $formattedOptions[] = $this->formatOption(
-                (int)$option[$valueKey],
+                (int) $option[$valueKey],
                 $option[$labelKey]
             );
         }
@@ -151,4 +153,5 @@ class PageElementForm extends AbstractForm
             'label' => $label,
         ];
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ExportProcessorInterface
 {
+
     /**
      * @param array $resultSet
      * @param array $processedResultSet
@@ -17,4 +19,5 @@ interface ExportProcessorInterface
      * @return array
      */
     public function processDataForExport(array &$resultSet, array $processedResultSet, LocaleTransfer $locale);
+
 }

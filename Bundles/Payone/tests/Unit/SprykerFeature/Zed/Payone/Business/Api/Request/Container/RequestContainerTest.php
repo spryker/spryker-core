@@ -1,14 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
-
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CashOnDeliveryContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\DirectDebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\EWalletContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\FinancingContainer;
@@ -57,7 +56,6 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     protected $reference = 'DE000000001';
     protected $clearingType = 'pre';
     protected $narrativeText = 'some-text';
-
 
     public function testRefundContainer()
     {
@@ -266,8 +264,6 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $container = new GetInvoiceContainer();
         $this->assertCount(1, $container->toArray()); // request set in container
     }
-
-
 
     public function testPersonalContainer()
     {

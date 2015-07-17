@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -44,7 +45,7 @@ class InstalledPackageCollectorFilterTest extends \PHPUnit_Framework_TestCase
         ;
 
         $finder = [
-            $finderMock
+            $finderMock,
         ];
         $collector = new InstalledPackageCollector($collection, $finder);
         $collectorFilter = new InstalledPackageCollectorFilter($collector);

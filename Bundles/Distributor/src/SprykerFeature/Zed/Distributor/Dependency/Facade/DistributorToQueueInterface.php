@@ -12,4 +12,5 @@ interface DistributorToQueueInterface
      * @param QueueMessageTransfer $queueMessage
      */
     public function publishMessage($queueName, QueueMessageTransfer $queueMessage);
+
 }

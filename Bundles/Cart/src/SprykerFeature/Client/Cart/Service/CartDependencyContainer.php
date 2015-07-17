@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,16 +7,16 @@
 namespace SprykerFeature\Client\Cart\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\CartService;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Cart\CartDependencyProvider;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use SprykerFeature\Client\Cart\Service\KvStorage\CartKvStorageInterface;
+use SprykerFeature\Client\Cart\Service\Storage\CartStorageInterface;
 
 /**
  * @method CartService getFactory()
  */
-class CartDependencyContainer extends AbstractDependencyContainer
+class CartDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**
@@ -44,13 +45,13 @@ class CartDependencyContainer extends AbstractDependencyContainer
     }
 
     /**
-     * @return CartKvStorageInterface
+     * @return CartStorageInterface
      */
-    public function createKvStorage()
+    public function createStorage()
     {
-        $kvStorage = $this->getProvidedDependency(CartDependencyProvider::KV_STORAGE);
+        $storage = $this->getProvidedDependency(CartDependencyProvider::KV_STORAGE);
 
-        return $this->getFactory()->createKvStorageCartKvStorage($kvStorage);
+        return $this->getFactory()->createStorageCartStorage($storage);
     }
 
 }

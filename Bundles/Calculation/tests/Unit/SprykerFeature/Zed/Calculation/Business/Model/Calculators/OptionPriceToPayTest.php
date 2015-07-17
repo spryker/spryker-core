@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,6 +22,7 @@ use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
  */
 class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
 {
+
     const ITEM_GROSS_PRICE = 10000;
     const ITEM_SALESRULE_DISCOUNT_AMOUNT = 100;
     const ITEM_COUPON_DISCOUNT_AMOUNT = 50;
@@ -188,4 +190,5 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     {
         return Locator::getInstance();
     }
+
 }

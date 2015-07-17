@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ class ProductCategorySearchProcessor implements ProductCategorySearchProcessorIn
      * @param array $resultSet
      * @param array $processedResultSet
      * @param LocaleTransfer $locale
+     *
      * @return array
      */
     public function process(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
@@ -29,4 +31,5 @@ class ProductCategorySearchProcessor implements ProductCategorySearchProcessorIn
 
         return $processedResultSet;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Yves\Assets\Model\CacheBusterInterface;
 
 class AssetUrlBuilderTest extends \PHPUnit_Framework_TestCase
 {
+
     private $host;
 
     protected function setUp()
@@ -41,7 +43,6 @@ class AssetUrlBuilderTest extends \PHPUnit_Framework_TestCase
             $this->getCacheBusterMock()
         );
 
-
         $this->assertEquals('//' . $this->host . '/media.css', $provider->buildUrl('/media.css'));
     }
 
@@ -57,4 +58,5 @@ class AssetUrlBuilderTest extends \PHPUnit_Framework_TestCase
 
         return $mock;
     }
+
 }

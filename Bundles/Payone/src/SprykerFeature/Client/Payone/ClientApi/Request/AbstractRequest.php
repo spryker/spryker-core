@@ -1,10 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\Payone\ClientApi\Request;
-
 
 abstract class AbstractRequest extends AbstractContainer
 {
@@ -65,7 +65,6 @@ abstract class AbstractRequest extends AbstractContainer
      * @var string
      */
     protected $hash;
-
 
     /**
      * @param string $encoding

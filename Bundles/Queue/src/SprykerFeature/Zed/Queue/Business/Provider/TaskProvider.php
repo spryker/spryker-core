@@ -28,6 +28,7 @@ class TaskProvider implements TaskProviderInterface
      * @param string $queueName
      *
      * @throws NoTaskConfiguredForGivenQueueException
+     *
      * @return null|TaskPluginInterface
      */
     public function getTaskByQueueName($queueName)
@@ -46,6 +47,7 @@ class TaskProvider implements TaskProviderInterface
 
     /**
      * @param TaskPluginInterface $task
+     *
      * @throws TaskAlreadyDefinedForQueueException
      */
     protected function addTask(TaskPluginInterface $task)
@@ -62,4 +64,5 @@ class TaskProvider implements TaskProviderInterface
         }
         $this->tasks[$task->getQueueName()] = $task;
     }
+
 }

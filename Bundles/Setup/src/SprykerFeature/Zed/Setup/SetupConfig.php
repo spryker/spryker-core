@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,7 +23,7 @@ class SetupConfig extends AbstractBundleConfig
             'config',
             'Zed',
             'cronjobs',
-            'jobs.php'
+            'jobs.php',
         ]);
     }
 
@@ -57,4 +58,5 @@ class SetupConfig extends AbstractBundleConfig
     {
         return APPLICATION_SOURCE_DIR . DIRECTORY_SEPARATOR . 'Generated';
     }
+
 }

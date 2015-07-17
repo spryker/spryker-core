@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Oms\Business\Process;
 
 interface ProcessInterface
 {
+
     /**
      * @param string $highlightState
      * @param null $format
@@ -83,8 +85,9 @@ interface ProcessInterface
     /**
      * @param string $stateId
      *
-     * @return StateInterface
      * @throws \Exception
+     *
+     * @return StateInterface
      */
     public function getStateFromAllProcesses($stateId);
 
@@ -167,4 +170,5 @@ interface ProcessInterface
      * @return mixed
      */
     public function getFile();
+
 }

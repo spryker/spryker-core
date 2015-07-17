@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Client\Catalog\Service\Model;
 
 class FacetConfig
 {
+
     const KEY_FACET_FIELD_NAME = 'facet_field_name';
     const KEY_SORT_FIELD_NAME = 'sort_field_name';
     const KEY_MULTI_VALUED = 'multi_valued';
@@ -57,6 +59,7 @@ class FacetConfig
 
     /**
      * @param string $sortParam
+     *
      * @return mixed|null
      */
     public function getSortFieldFromParam($sortParam)
@@ -66,12 +69,11 @@ class FacetConfig
             return $attributeConfig[self::KEY_SORT_FIELD_NAME];
         }
 
-        return null;
+        return;
     }
 
     /**
      * @param string $internalName
-     * @return null
      */
     public function getSortNameFromInternalName($internalName)
     {
@@ -88,6 +90,7 @@ class FacetConfig
 
     /**
      * @param string $facetName
+     *
      * @return string|null
      */
     public function getParameterNameForFacet($facetName)
@@ -97,8 +100,10 @@ class FacetConfig
 
     /**
      * @param string $paramName
-     * @return string|null
+     *
      * @throws \RuntimeException
+     *
+     * @return string|null
      */
     public function getFacetNameFromParameter($paramName)
     {
@@ -108,7 +113,7 @@ class FacetConfig
         $facetForParam = array_filter(static::$attributes, $callback);
         $keys = array_keys($facetForParam);
         if (count($keys) > 1) {
-            throw new \RuntimeException('Parameter names for Facets must be unique, Duplicates found for param: '. $paramName);
+            throw new \RuntimeException('Parameter names for Facets must be unique, Duplicates found for param: ' . $paramName);
         }
 
         return array_pop($keys);
@@ -116,8 +121,10 @@ class FacetConfig
 
     /**
      * @param string $shortParamName
-     * @return string|null
+     *
      * @throws \RuntimeException
+     *
+     * @return string|null
      */
     public function getFacetNameFromShortParameter($shortParamName)
     {
@@ -127,7 +134,7 @@ class FacetConfig
         $facetForParam = array_filter(static::$attributes, $callback);
         $keys = array_keys($facetForParam);
         if (count($keys) > 1) {
-            throw new \RuntimeException('Short Parameter names for Facets must be unique, Duplicates found for short param: '. $shortParamName);
+            throw new \RuntimeException('Short Parameter names for Facets must be unique, Duplicates found for short param: ' . $shortParamName);
         }
 
         return array_pop($keys);
@@ -135,6 +142,7 @@ class FacetConfig
 
     /**
      * @param string $paramName
+     *
      * @return array|mixed
      */
     public function getFacetSetupFromParameter($paramName)
@@ -147,14 +155,16 @@ class FacetConfig
         if (count($facetForParam) > 0) {
             return array_pop($facetForParam);
         } else {
-            return array();
+            return [];
         }
     }
 
     /**
      * @param string $shortParamName
-     * @return string|null
+     *
      * @throws \RuntimeException
+     *
+     * @return string|null
      */
     public function getParameterNameForShortParameter($shortParamName)
     {
@@ -164,10 +174,10 @@ class FacetConfig
         $facetForParam = array_filter(static::$attributes, $callback);
         $keys = array_keys($facetForParam);
         if (count($keys) > 1) {
-            throw new \RuntimeException('Short Parameter names for Facets must be unique, Duplicates found for short param: '. $shortParamName);
+            throw new \RuntimeException('Short Parameter names for Facets must be unique, Duplicates found for short param: ' . $shortParamName);
         }
 
-        $facetSetup= array_pop($facetForParam);
+        $facetSetup = array_pop($facetForParam);
 
         return $facetSetup[self::KEY_PARAM];
     }
@@ -198,6 +208,7 @@ class FacetConfig
 
     /**
      * @param bool $onlyActive
+     *
      * @return array
      */
     public function getAllParamNamesForFacets($onlyActive = false)
@@ -294,7 +305,7 @@ class FacetConfig
      */
     protected static function filterFacetByParamNameCallback($facet, $paramName)
     {
-        return $facet[self::KEY_PARAM] == $paramName;
+        return $facet[self::KEY_PARAM] === $paramName;
     }
 
     /**
@@ -305,6 +316,7 @@ class FacetConfig
      */
     protected static function filterFacetByShortParamNameCallback($facet, $shortParamName)
     {
-        return isset($facet[self::KEY_SHORT_PARAM]) && $facet[self::KEY_SHORT_PARAM] == $shortParamName;
+        return isset($facet[self::KEY_SHORT_PARAM]) && $facet[self::KEY_SHORT_PARAM] === $shortParamName;
     }
+
 }

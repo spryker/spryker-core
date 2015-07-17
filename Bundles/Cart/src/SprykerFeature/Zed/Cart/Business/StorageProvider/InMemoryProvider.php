@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use Generated\Shared\Cart\CartItemInterface;
 
 class InMemoryProvider implements StorageProviderInterface
 {
+
     /**
      * @param CartInterface $cart
      * @param ChangeInterface $change

@@ -1,13 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Country\Business\Cldr;
 
-
 class JsonFileCldrDataProvider implements CldrDataProviderInterface
 {
+
     /**
      * @var string
      */
@@ -26,6 +27,8 @@ class JsonFileCldrDataProvider implements CldrDataProviderInterface
         $rawFileInput = file_get_contents(
             $this->cldrFilePath
         );
+
         return json_decode($rawFileInput, true);
     }
+
 }

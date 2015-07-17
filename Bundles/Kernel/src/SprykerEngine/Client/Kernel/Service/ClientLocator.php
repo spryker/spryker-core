@@ -25,6 +25,7 @@ class ClientLocator extends AbstractLocator
      * @param null $className
      *
      * @throws LocatorException
+     *
      * @return object
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)

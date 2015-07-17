@@ -1,51 +1,41 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
 
 {% block body_class %}spy-page{% endblock %}
 
 {% block title_content %}Customer{% endblock %}
 
 {% block content %}
-    <section
-            class="spy-grid"
-            spy-app="spyGrid,spyForm,spyFormAction"
-            ng-controller="GridController"
-            ng-strict-di
-            src="/customer/index/grid"
-            name="grid"
-            on="{ form_success : 'update' }"
-            ng-class="{ query : queryActive }"
-            >
 
-        <h3>{{ "customer.index" | trans }}</h3>
+    {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Customers List' } %}
 
-        <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
-
-        <table class="spy-grid spy-interactive">
+        <table class="footable table table-stripped toggle-arrow-tiny">
             <thead>
             <tr>
-                <th spy-grid-head="columns['first_name']" label="Vorname"></th>
-                <th spy-grid-head="columns['last_name']" label="Nachname"></th>
-                <th spy-grid-head="columns['email']" label="E-Mail"></th>
-                <th spy-grid-head="columns['created_at']" label="Signed Up"></th>
+                <th>{{ 'Vorname' | trans }}</th>
+                <th>{{ 'Nachname' | trans }}</th>
+                <th>{{ 'E-Mail' | trans }}</th>
+                <th>{{ 'Signed Up' | trans }}</th>
             </tr>
             </thead>
 
             <tbody>
-            <tr ng-repeat="row in rows">
-                <td><a class="cell" href="/customer/profile?id={[{ row.id_customer }]}">{[{ row.first_name + ' ' + row.middle_name + ' ' + row.last_name }]}</a></td>
-                <td>{[{ row.email }]}</td>
-                <td>{[{ row.created_at }]}</td>
+            {% for row in content.rows %}
+            <tr>
+                <td><a class="cell" href="/customer/profile?id={{ row.id_customer }}">{{ row.first_name ~ ' ' ~ row.last_name }}</a></td>
+                <td>{{ row.email }}</td>
+                <td>{{ row.created_at }}</td>
             </tr>
-            <tr ng-if="!rows.length">
-                <td colspan="4">{{ "grid.no.results" | trans }}</td>
-            </tr>
+            {% endfor %}
             </tbody>
 
         </table>
 
-        <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+    {% include '@Gui/Partials/pagination.twig' with {
+        'url': '/sales/',
+        'totalPages': content.pages,
+        'currentPage': content.page
+    } %}
 
-    </div>
+    {% include '@Gui/Partials/Table/footer.twig' %}
 
-    </section>
 {% endblock %}

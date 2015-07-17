@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,10 +7,11 @@
 namespace SprykerFeature\Client\ZedRequest\Service\Client;
 
 use SprykerFeature\Shared\ZedRequest\Client\AbstractHttpClient;
-use SprykerFeature\Client\ZedRequest\Service\ZedRequestSettings;
+use SprykerFeature\Client\ZedRequest\Service\ZedRequestConfig;
 
 class HttpClient extends AbstractHttpClient
 {
+
     /**
      * @return array
      */
@@ -19,10 +21,11 @@ class HttpClient extends AbstractHttpClient
     }
 
     /**
-     * @return ZedRequestSettings
+     * @return ZedRequestConfig
      */
     protected function getSettings()
     {
-        return $this->factory->createZedRequestSettings($this->locator);
+        return $this->factory->createZedRequestConfig($this->authClient);
     }
+
 }

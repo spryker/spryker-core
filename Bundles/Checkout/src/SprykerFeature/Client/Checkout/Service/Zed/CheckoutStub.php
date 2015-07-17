@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -35,4 +36,5 @@ class CheckoutStub implements CheckoutStubInterface
     {
         return $this->zedStub->call('/checkout/gateway/request-checkout', $transferCheckout);
     }
+
 }

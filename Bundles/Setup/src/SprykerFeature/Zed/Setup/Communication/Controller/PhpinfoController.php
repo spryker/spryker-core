@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,5 @@ class PhpinfoController extends AbstractController
         $what = $request->query->get('what');
         echo $this->facadeSetup->getPhpInfo($what);
     }
-
 
 }

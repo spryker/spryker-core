@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\GroupsTransfer;
-
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroup;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRoles;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclUserHasGroup;
@@ -23,6 +23,7 @@ use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasUserException;
 
 class Group implements GroupInterface
 {
+
     /**
      * @var AclQueryContainer
      */
@@ -93,8 +94,9 @@ class Group implements GroupInterface
     /**
      * @param int $id
      *
-     * @return SpyAclGroup
      * @throws GroupNotFoundException
+     *
+     * @return SpyAclGroup
      */
     public function getEntityGroupById($id)
     {
@@ -176,8 +178,9 @@ class Group implements GroupInterface
      * @param int $idRole
      * @param int $idGroup
      *
-     * @return int
      * @throws GroupAlreadyHasRoleException
+     *
+     * @return int
      */
     public function addRoleToGroup($idRole, $idGroup)
     {
@@ -197,8 +200,9 @@ class Group implements GroupInterface
      * @param int $idGroup
      * @param int $idUser
      *
-     * @return int
      * @throws GroupAlreadyHasUserException
+     *
+     * @return int
      */
     public function addUser($idGroup, $idUser)
     {
@@ -264,8 +268,9 @@ class Group implements GroupInterface
     /**
      * @param int $id
      *
-     * @return GroupTransfer
      * @throws GroupNotFoundException
+     *
+     * @return GroupTransfer
      */
     public function getGroupById($id)
     {
@@ -281,8 +286,9 @@ class Group implements GroupInterface
     /**
      * @param int $id
      *
-     * @return bool
      * @throws GroupNotFoundException
+     *
+     * @return bool
      */
     public function removeGroupById($id)
     {
@@ -300,8 +306,9 @@ class Group implements GroupInterface
     /**
      * @param int $id
      *
-     * @return SpyAclGroup
      * @throws EmptyEntityException
+     *
+     * @return SpyAclGroup
      */
     protected function getGroupEntityById($id)
     {
@@ -317,8 +324,9 @@ class Group implements GroupInterface
     /**
      * @param int $idGroup
      *
-     * @return RoleTransfer
      * @throws GroupNotFoundException
+     *
+     * @return RoleTransfer
      */
     public function getRoles($idGroup)
     {
@@ -360,4 +368,5 @@ class Group implements GroupInterface
             throw new GroupNotFoundException();
         }
     }
+
 }

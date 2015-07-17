@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder;
 
 abstract class SharedResourceKeyBuilder implements KeyBuilderInterface
 {
+
     use KeyBuilderTrait;
 
     /**
@@ -31,4 +33,5 @@ abstract class SharedResourceKeyBuilder implements KeyBuilderInterface
      * @return string
      */
     abstract protected function getResourceType();
+
 }

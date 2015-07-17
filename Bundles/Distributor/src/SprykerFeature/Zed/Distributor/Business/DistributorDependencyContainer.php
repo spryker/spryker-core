@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Distributor\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\DistributorBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Distributor\Business\Builder\QueueNameBuilderInterface;
 use SprykerFeature\Zed\Distributor\Business\Distributor\ItemDistributorInterface;
 use SprykerFeature\Zed\Distributor\Business\Distributor\TypeDistributor;
@@ -27,7 +27,7 @@ use SprykerFeature\Zed\Distributor\DistributorDependencyProvider;
  * @method DistributorBusiness getFactory()
  * @method DistributorQueryContainerInterface getQueryContainer()
  */
-class DistributorDependencyContainer extends AbstractDependencyContainer
+class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
@@ -87,7 +87,7 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
      */
     protected function createItemDistributor()
     {
-        $itemDistributor =  $this->getFactory()->createDistributorItemDistributor(
+        $itemDistributor = $this->getFactory()->createDistributorItemDistributor(
             $this->createMessageRouter(),
             $this->createItemQueueProvider()
         );
@@ -101,6 +101,7 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @throws \ErrorException
+     *
      * @return DistributorToQueueInterface
      */
     protected function getQueueFacade()
@@ -181,4 +182,5 @@ class DistributorDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getProvidedDependency(DistributorDependencyProvider::QUERY_EXPANDERS);
     }
+
 }

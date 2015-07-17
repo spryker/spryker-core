@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,6 +26,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
 
     /**
      * External dependencies
+     *
      * @var Container
      */
     private $container;
@@ -63,9 +65,10 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
 
     /**
      * @param string $key
-     * @return mixed
      *
      * @throws \ErrorException
+     *
+     * @return mixed
      */
     public function getProvidedDependency($key)
     {
@@ -86,11 +89,14 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
 
     /**
      * TODO Will be removed.
+     *
      * @deprecated
+     *
      * @return DependencyContainerInterface
      */
     protected function getDependencyContainer()
     {
         return $this->dependencyContainer;
     }
+
 }

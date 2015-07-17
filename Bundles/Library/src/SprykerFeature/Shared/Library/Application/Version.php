@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Library\Application;
 
 class Version
 {
+
     /**
      * @var string
      */
@@ -24,6 +26,7 @@ class Version
                 self::$content = file_get_contents($path);
             }
         }
+
         return self::$content;
     }
 
@@ -33,6 +36,7 @@ class Version
     public function hasData()
     {
         $content = self::getRevTxt();
+
         return $content !== 'no rev.txt';
     }
 
@@ -46,6 +50,7 @@ class Version
 
     /**
      * @param string $type
+     *
      * @return string
      */
     protected function extract($type)
@@ -53,6 +58,7 @@ class Version
         if (preg_match('~^' . $type . ': (.+)$~', self::getRevTxt(), $matches)) {
             return $matches[1];
         }
+
         return '';
     }
 
@@ -80,7 +86,8 @@ class Version
         return [
             'Date' => $this->getDate(),
             'Path' => $this->getPath(),
-            'Revision' => $this->getRevision()
+            'Revision' => $this->getRevision(),
         ];
     }
+
 }

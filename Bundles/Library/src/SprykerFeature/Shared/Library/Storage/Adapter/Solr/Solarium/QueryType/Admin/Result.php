@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,19 +10,21 @@ use Solarium\Core\Query\Result\QueryType as BaseResult;
 
 /**
  * Class Result
- * @package SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin
  */
 class Result extends BaseResult
 {
+
     /**
      * Ensures the response is parsed and returns a property.
      *
      * @param  string $property The name of the class member variable.
+     *
      * @return mixed            The value of the property.
      */
     public function returnProperty($property)
     {
         $this->parseResponse();
+
         return $this->$property;
     }
 
@@ -31,7 +34,9 @@ class Result extends BaseResult
     public function getStatus()
     {
         // TODO: remove this debug output
-        echo PHP_EOL.'<hr /><pre>'; var_dump($this->getData()); echo __CLASS__.' '.__FILE__ . ':'.__LINE__.''; echo '</pre><hr />'.PHP_EOL; exit();
+        echo PHP_EOL . '<hr /><pre>'; var_dump($this->getData()); echo __CLASS__ . ' ' . __FILE__ . ':' . __LINE__ . ''; echo '</pre><hr />' . PHP_EOL; exit();
+
         return $this;
     }
+
 }

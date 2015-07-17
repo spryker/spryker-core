@@ -1,18 +1,16 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Functional\SprykerFeature\Zed\Country;
 
-use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use Propel\Runtime\Propel;
-use Psr\Log\LoggerInterface;
 use SprykerFeature\Zed\Country\Business\CountryFacade;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
@@ -23,6 +21,7 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
  */
 class CountryFacadeTest extends AbstractFunctionalTest
 {
+
     /**
      * @var Locator|AutoCompletion
      */
@@ -46,7 +45,6 @@ class CountryFacadeTest extends AbstractFunctionalTest
         $this->countryQueryContainer = new CountryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Country'), $this->locator);
     }
 
-
     protected function eraseCountries()
     {
         Propel::getConnection()->query('SET foreign_key_checks = 0;');
@@ -55,7 +53,6 @@ class CountryFacadeTest extends AbstractFunctionalTest
     }
 
     /**
-     *
      * @return MessengerInterface
      */
     protected function getMockLogger()
@@ -86,4 +83,5 @@ class CountryFacadeTest extends AbstractFunctionalTest
 
         $this->assertEquals($country->getIdCountry(), $this->countryFacade->getIdCountryByIso2Code('qx'));
     }
+
 }

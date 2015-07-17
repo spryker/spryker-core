@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,4 +20,5 @@ class RemoveTotalsCalculator implements CalculatorPluginInterface
     {
         $calculableContainer->getCalculableObject()->setTotals(new TotalsTransfer());
     }
+
 }

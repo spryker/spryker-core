@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInte
 
 class OperationManager implements OperationManagerInterface
 {
+
     /**
      * @var ProductSearchQueryContainerInterface
      */
@@ -63,4 +65,5 @@ class OperationManager implements OperationManagerInterface
 
         return $attributeOperationEntity->getPrimaryKey();
     }
+
 }

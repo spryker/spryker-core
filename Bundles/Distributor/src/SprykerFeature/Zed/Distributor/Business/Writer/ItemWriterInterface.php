@@ -7,11 +7,14 @@ use SprykerFeature\Zed\Distributor\Business\Exception\ItemTypeDoesNotExistExcept
 
 interface ItemWriterInterface
 {
+
     /**
      * @param string $itemType
      * @param int $idItem
+     *
      * @throws ItemTypeDoesNotExistException
      * @throws PropelException
      */
     public function touchItem($itemType, $idItem);
+
 }

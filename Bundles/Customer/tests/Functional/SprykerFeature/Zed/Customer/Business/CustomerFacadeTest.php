@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,6 +23,7 @@ use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredExcepti
  */
 class CustomerFacadeTest extends Test
 {
+
     const TESTER_EMAIL = 'tester@spryker.com';
     const TESTER_PASSWORD = 'tester';
     const TESTER_NAME = 'Tester';
@@ -290,4 +292,5 @@ class CustomerFacadeTest extends Test
         $renderedAddress = $this->locator->customer()->facade()->renderAddress($addressTransfer);
         $this->assertNotNull($renderedAddress);
     }
+
 }

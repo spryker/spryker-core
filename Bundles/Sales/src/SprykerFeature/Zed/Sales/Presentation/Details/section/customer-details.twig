@@ -1,33 +1,43 @@
-<div class="spy-layout n3">
-    <div class="spy-layout sparse">
-        <h4>Customer Data</h4>
-        <p>Customer ID: 123456789</p>
-        <p>Customer {{ orderDetails.FirstName }} {{ orderDetails.LastName }}</p>
-        <p>E-Mail: <a href="javascript:void(0)">{{ orderDetails.Email }}</a></p>
-        {% if orderDetails.IsTest == 'true' %}<button class="button abort" disabled>Test order</button>{% endif %}
+<div class="row">
+    <div class="col-md-4">
+        {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Customer Data' } %}
+        <div class="fix-height">
+            <table class="footable table table-stripped toggle-arrow-tiny">
+                <tr>
+                    <td>Customer ID:</td>
+                    <td>{{ orderDetails.fkCustomer }}</td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>{{ orderDetails.email }}</td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td>{{ orderDetails.firstName ~ ' ' ~ orderDetails.lastName }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="text-center"><a class="btn btn-primary" target="_blank" href="/customer/view?id_customer={{ orderDetails.fkCustomer }}">{{ 'View' | trans }}</a></div>
+        {% include '@Gui/Partials/Table/footer.twig' %}
     </div>
-    {#
-    <div class="spy-layout sparse">
-        <h4>Shipping Address</h4>
-        <p>Max Mustermann</p>
-        <p>Musterstraße 1</p>
-        <p>10115 Berlin</p>
+    <div class="col-md-4">
+        {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Shipping Address' } %}
+        <div class="fix-height">
+            {{ shippingAddress.firstName }} {{ shippingAddress.lastName }}<br>
+            {{ shippingAddress.address1 ~ ' ' ~ shippingAddress.address2 ~ ' ' ~ shippingAddress.address3 }}<br>
+            {{ shippingAddress.zipCode }} {{ shippingAddress.city }}
+        </div>
+        <div class="text-center"><a class="btn btn-primary" target="_blank" href="/customer/address/view?id_customer_address={{ orderDetails.fkSalesOrderAddressShipping }}">{{ 'View' | trans }}</a></div>
+        {% include '@Gui/Partials/Table/footer.twig' %}
     </div>
-    <div class="spy-layout sparse">
-        <h4>Billing Address</h4>
-        <p>Max Mustermann</p>
-        <p>Musterstraße 1</p>
-        <p>10115 Berlin</p>
+    <div class="col-md-4">
+        {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Billing Address' } %}
+        <div class="fix-height">
+            {{ billingAddress.firstName }} {{ billingAddress.lastName }}<br>
+            {{ billingAddress.address1 ~ ' ' ~ billingAddress.address2 ~ ' ' ~ billingAddress.address3 }}<br>
+            {{ billingAddress.zipCode }} {{ billingAddress.city }}
+        </div>
+        <div class="text-center"><a class="btn btn-primary" target="_blank" href="/customer/address/view?id_customer_address={{ orderDetails.fkSalesOrderAddressBilling }}">{{ 'View' | trans }}</a></div>
+        {% include '@Gui/Partials/Table/footer.twig' %}
     </div>
-    #}
-
-    {#
-    <div class="" ng-controller="TemplateController"
-            src="/sales/index/orderInfo"
-            name="order_info"
-            >
-        <div>-template-</div>
-    </div>
-    #}
-
 </div>

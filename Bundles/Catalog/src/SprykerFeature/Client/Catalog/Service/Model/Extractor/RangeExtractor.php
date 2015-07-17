@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Client\Catalog\Service\Model\Extractor;
 
 class RangeExtractor extends AbstractAggregationExtractor
 {
+
     /**
      * @param array $aggregation
      * @param string $fieldName
@@ -29,4 +31,5 @@ class RangeExtractor extends AbstractAggregationExtractor
 
         return $ranges;
     }
+
 }

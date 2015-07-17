@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 interface ExpenseTotalsCalculatorInterface
 {
+
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableInterface $calculableContainer
@@ -27,4 +29,5 @@ interface ExpenseTotalsCalculatorInterface
      * @return int
      */
     public function calculateExpenseTotal(CalculableInterface $calculableContainer);
+
 }

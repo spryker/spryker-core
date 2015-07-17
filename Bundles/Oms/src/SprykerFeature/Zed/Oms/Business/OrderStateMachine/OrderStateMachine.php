@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -32,13 +33,13 @@ class OrderStateMachine implements OrderStateMachineInterface
     const MAX_EVENT_REPEATS = 10;
     const MAX_ON_ENTER = 50;
 
-    protected $eventCounter = array();
+    protected $eventCounter = [];
 
-    protected $returnData = array();
+    protected $returnData = [];
 
-    protected $processBuffer = array();
+    protected $processBuffer = [];
 
-    protected $states = array();
+    protected $states = [];
 
     /**
      * @var OmsQueryContainerInterface
@@ -118,13 +119,13 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @return array
      */
-    public function triggerEvent($eventId, array $orderItems, $data, array $logContext = array())
+    public function triggerEvent($eventId, array $orderItems, $data, array $logContext = [])
     {
         assert('is_string($eventId)');
         assert('count($orderItems) > 0');
 
         if (false === $this->checkForEventRepetitions($eventId)) {
-            return array();
+            return [];
         }
 
         $data = $this->makeDataReadOnly($data);
@@ -138,7 +139,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         $log->addItems($orderItems);
 
         $orderGroup = $this->groupByOrderAndState($eventId, $orderItems, $processes);
-        $sourceStateBuffer = array();
+        $sourceStateBuffer = [];
         foreach ($orderGroup as $groupedOrderItems) {
             $this->runCommand($eventId, $groupedOrderItems, $processes, $data, $log);
             $sourceStateBuffer = $this->updateStateByEvent($eventId, $groupedOrderItems, $sourceStateBuffer, $log);
@@ -195,10 +196,10 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @return array
      */
-    public function triggerEventForNewItem(array $orderItems, array $data, array $logContext = array())
+    public function triggerEventForNewItem(array $orderItems, array $data, array $logContext = [])
     {
         $data = $this->makeDataReadOnly($data);
-        $sourceStateBuffer = array();
+        $sourceStateBuffer = [];
         $processes = $this->getProcesses($orderItems);
         $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($orderItems, $processes, $sourceStateBuffer);
         $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent, $data, $logContext);
@@ -227,7 +228,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @return int
      */
-    public function checkConditions(array $logContext = array())
+    public function checkConditions(array $logContext = [])
     {
         $affectedOrderItems = 0;
         foreach ($this->activeProcesses as $processName) {
@@ -263,15 +264,15 @@ class OrderStateMachine implements OrderStateMachineInterface
 
         $log->addItems($orderItems);
 
-        $sourceStateBuffer = $this->updateStateByTransition($stateToTransitionsMap, $orderItems, array(), $log);
+        $sourceStateBuffer = $this->updateStateByTransition($stateToTransitionsMap, $orderItems, [], $log);
 
-        $processes = array($process->getName() => $process);
+        $processes = [$process->getName() => $process];
 
         $this->saveOrderItems($orderItems, $log, $processes, $sourceStateBuffer);
 
         $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($orderItems, $processes, $sourceStateBuffer);
 
-        $data = $this->makeDataReadOnly(array());
+        $data = $this->makeDataReadOnly([]);
 
         $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent, $data);
 
@@ -284,12 +285,13 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param StateInterface $sourceState
      * @param TransitionLogInterface $log
      *
-     * @return StateInterface
      * @throws Exception
+     *
+     * @return StateInterface
      */
     protected function checkCondition(array $transitions, $orderItem, StateInterface $sourceState, TransitionLogInterface $log)
     {
-        $possibleTransitions = array();
+        $possibleTransitions = [];
 
         foreach ($transitions as $transition) {
             if ($transition->hasCondition()) {
@@ -326,11 +328,12 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param SpySalesOrderItem[] $orderItems
+     *
      * @return ProcessInterface[]
      */
     protected function getProcesses(array $orderItems)
     {
-        $processes = array();
+        $processes = [];
         foreach ($orderItems as $orderItem) {
             $processName = $orderItem->getProcess()->getName();
             if (false === array_key_exists($processName, $processes)) {
@@ -352,7 +355,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function filterAffectedOrderItems($eventId, array $orderItems, $processes)
     {
-        $orderItemsFiltered = array();
+        $orderItemsFiltered = [];
         foreach ($orderItems as $orderItem) {
             $stateId = $orderItem->getState()->getName();
             $processId = $orderItem->getProcess()->getName();
@@ -377,7 +380,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function groupByOrderAndState($eventId, array $orderItems, $processes)
     {
-        $orderEventGroup = array();
+        $orderEventGroup = [];
         foreach ($orderItems as $orderItem) {
             $stateId = $orderItem->getState()->getName();
             $processId = $orderItem->getProcess()->getName();
@@ -389,7 +392,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             if ($state->hasEvent($eventId)) {
                 $key = $orderId . '-' . $stateId;
                 if (!isset($orderEventGroup[$key])) {
-                    $orderEventGroup[$key] = array();
+                    $orderEventGroup[$key] = [];
                 }
                 $orderEventGroup[$key][] = $orderItem;
             }
@@ -400,9 +403,10 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param CommandInterface $command
-     * @return string
      *
      * @throws LogicException
+     *
+     * @return string
      */
     protected function getCommandType(CommandInterface $command)
     {
@@ -476,10 +480,10 @@ class OrderStateMachine implements OrderStateMachineInterface
     {
         assert(is_string($eventId) || is_null($eventId));
         if (is_null($sourceStateBuffer)) {
-            $sourceStateBuffer = array();
+            $sourceStateBuffer = [];
         }
 
-        $targetStateMap = array();
+        $targetStateMap = [];
         foreach ($orderItems as $i => $orderItem) {
             $stateId = $orderItem->getState()->getName();
             $sourceStateBuffer[$orderItem->getIdSalesOrderItem()] = $stateId;
@@ -517,9 +521,9 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected function updateStateByTransition($stateToTransitionsMap, array $orderItems, array $sourceStateBuffer, TransitionLogInterface $log)
     {
         if (is_null($sourceStateBuffer)) {
-            $sourceStateBuffer = array();
+            $sourceStateBuffer = [];
         }
-        $targetStateMap = array();
+        $targetStateMap = [];
         foreach ($orderItems as $i => $orderItem) {
             $stateId = $orderItem->getState()->getName();
             $sourceStateBuffer[$orderItem->getIdSalesOrderItem()] = $stateId;
@@ -572,12 +576,13 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param array $processes
      * @param array $sourceStateBuffer
      *
-     * @return array
      * @throws LogicException
+     *
+     * @return array
      */
     protected function filterItemsWithOnEnterEvent(array $orderItems, array $processes, array $sourceStateBuffer)
     {
-        $orderItemsWithOnEnterEvent = array();
+        $orderItemsWithOnEnterEvent = [];
         foreach ($orderItems as $orderItem) {
             $stateId = $orderItem->getState()->getName();
             $processId = $orderItem->getProcess()->getName();
@@ -600,7 +605,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             ) {
                 $event = $targetState->getOnEnterEvent();
                 if (false === array_key_exists($event->getName(), $orderItemsWithOnEnterEvent)) {
-                    $orderItemsWithOnEnterEvent[$event->getName()] = array();
+                    $orderItemsWithOnEnterEvent[$event->getName()] = [];
                 }
                 $orderItemsWithOnEnterEvent[$event->getName()][] = $orderItem;
             }
@@ -663,11 +668,11 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function createStateToTransitionMap(array $transitions)
     {
-        $stateToTransitionsMap = array();
+        $stateToTransitionsMap = [];
         foreach ($transitions as $transition) {
             $sourceId = $transition->getSource()->getName();
             if (false === array_key_exists($sourceId, $stateToTransitionsMap)) {
-                $stateToTransitionsMap[$sourceId] = array();
+                $stateToTransitionsMap[$sourceId] = [];
             }
             $stateToTransitionsMap[$sourceId][] = $transition;
         }
@@ -710,7 +715,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             $sourceState = $sourceStateBuffer[$orderItem->getIdSalesOrderItem()];
             $targetState = $orderItem->getState()->getName();
 
-            if ($sourceState != $targetState) {
+            if ($sourceState !== $targetState) {
                 $timeoutModel->dropOldTimeout($process, $sourceState, $orderItem);
                 $timeoutModel->setNewTimeout($process, $orderItem, $currentTime);
             }
@@ -727,8 +732,9 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $commandString
      *
-     * @return CommandByOrderInterface|CommandByItemInterface
      * @throws LogicException
+     *
+     * @return CommandByOrderInterface|CommandByItemInterface
      */
     protected function getCommand($commandString)
     {
@@ -752,4 +758,5 @@ class OrderStateMachine implements OrderStateMachineInterface
 
         return $this->conditions[$conditionString];
     }
+
 }

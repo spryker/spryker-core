@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,6 +18,7 @@ class ExpenseTotalsCalculator implements
     TotalsCalculatorPluginInterface,
     ExpenseTotalsCalculatorInterface
 {
+
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableInterface $calculableContainer
@@ -56,6 +58,7 @@ class ExpenseTotalsCalculator implements
 
     /**
      * @param \ArrayObject|CalculableItemInterface[] $calculableItems
+     *
      * @return int
      */
     protected function calculateItemExpenseTotal(\ArrayObject $calculableItems)
@@ -144,4 +147,5 @@ class ExpenseTotalsCalculator implements
 
         return $expenseTotalTransfer;
     }
+
 }

@@ -1,17 +1,18 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Communication;
 
-use SprykerFeature\Zed\Calculation\Business\Model\StackExecutor;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade;
 use SprykerFeature\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountFacadeInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
-class DiscountCalculationConnectorDependencyContainer extends AbstractDependencyContainer
+class DiscountCalculationConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return DiscountFacadeInterface
      */
@@ -27,4 +28,5 @@ class DiscountCalculationConnectorDependencyContainer extends AbstractDependency
     {
         return $this->getLocator()->discountCalculationConnector()->facade();
     }
+
 }

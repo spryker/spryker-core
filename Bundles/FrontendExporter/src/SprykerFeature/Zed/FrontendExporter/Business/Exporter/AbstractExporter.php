@@ -1,12 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\FrontendExporter\Business\Exporter;
 
-use Criteria;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\Formatter\AbstractFormatter;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\ProcessException;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Exception\WriteException;
 use SprykerFeature\Zed\FrontendExporter\Business\Exporter\Writer\WriterInterface;
@@ -20,14 +21,17 @@ use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 
 abstract class AbstractExporter implements ExporterInterface
 {
+
     /**
      * @var DataProcessorPluginInterface[]
      */
     protected $dataProcessorPipeline = [];
+
     /**
      * @var FailedResultInterface
      */
     protected $failedResultPrototype;
+
     /**
      * @var BatchResultInterface
      */
@@ -42,6 +46,7 @@ abstract class AbstractExporter implements ExporterInterface
      * @var MarkerInterface
      */
     protected $marker;
+
     /**
      * @var FrontendExporterQueryContainer
      */
@@ -58,6 +63,16 @@ abstract class AbstractExporter implements ExporterInterface
     protected $decider = [];
 
     /**
+     * @var int
+     */
+    private $standardChunkSize = 1000;
+
+    /**
+     * @var array
+     */
+    private $chunkSizeTypeMap = [];
+
+    /**
      * @param FrontendExporterQueryContainer $queryContainer
      * @param WriterInterface $writer
      * @param MarkerInterface $marker
@@ -70,8 +85,7 @@ abstract class AbstractExporter implements ExporterInterface
         MarkerInterface $marker,
         FailedResultInterface $failedResultPrototype,
         BatchResultInterface $batchResultPrototype
-    )
-    {
+    ) {
         $this->writer = $writer;
         $this->failedResultPrototype = $failedResultPrototype;
         $this->batchResultPrototype = $batchResultPrototype;
@@ -196,7 +210,7 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
-     * @param string $locale
+     * @param LocaleTransfer $locale
      * @param string $type
      * @param \DateTime $lastRunTimestamp
      *
@@ -204,14 +218,18 @@ abstract class AbstractExporter implements ExporterInterface
      */
     protected function buildResultIteratorForType($locale, $type, \DateTime $lastRunTimestamp)
     {
-        $chunkSize = 100;
         $query = $this->queryContainer->createBasicExportableQuery($type, $lastRunTimestamp);
-        $query->setFormatter(new PropelArraySetFormatter());
+        $query->setFormatter($this->getFormatter());
 
         /** @var QueryExpanderPluginInterface $queryExpander */
         foreach ($this->queryPipeline[$type] as $queryExpander) {
             $query = $queryExpander->expandQuery($query, $locale);
-            $chunkSize = $queryExpander->getChunkSize();
+        }
+
+        if (array_key_exists($type, $this->chunkSizeTypeMap)) {
+            $chunkSize = $this->chunkSizeTypeMap[$type];
+        } else {
+            $chunkSize = $this->standardChunkSize;
         }
 
         return new BatchIterator($query, $chunkSize);
@@ -254,4 +272,50 @@ abstract class AbstractExporter implements ExporterInterface
 
         return $processedResultSet;
     }
+
+    /**
+     * @return AbstractFormatter
+     */
+    protected function getFormatter()
+    {
+        return new PropelArraySetFormatter();
+    }
+
+    /**
+     * @param int $standardChunkSize
+     *
+     * @return $this
+     */
+    public function setStandardChunkSize($standardChunkSize)
+    {
+        $this->standardChunkSize = $standardChunkSize;
+
+        return $this;
+    }
+
+    /**
+     * @param array $chunkSizeTypeMap
+     *
+     * @return $this
+     */
+    public function setChunkSizeTypeMap(array $chunkSizeTypeMap)
+    {
+        $this->chunkSizeTypeMap = $chunkSizeTypeMap;
+
+        return $this;
+    }
+
+    /**
+     * @param string $type
+     * @param int $chunkSize
+     *
+     * @return $this
+     */
+    public function setChunkSizeForType($type, $chunkSize)
+    {
+        $this->chunkSizeTypeMap[$type] = $chunkSize;
+
+        return $this;
+    }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderDetailsManager
 {
+
     /**
      * @var SalesQueryContainerInterface
      */
@@ -28,6 +30,7 @@ class OrderDetailsManager
 
     /**
      * @param $idOrder
+     *
      * @return array
      */
     public function getArrayWithManualEvents($idOrder)
@@ -38,8 +41,25 @@ class OrderDetailsManager
         foreach($orderItems as $i => $orderItem) {
             $events[$orderItem->getIdSalesOrderItem()] = $this->omsFacade->getManualEvents($orderItem->getIdSalesOrderItem());
         }
+
         return $events;
     }
 
+    /**
+     * @param int $idOrder
+     *
+     * @return array
+     */
+    public function getAggregateState($idOrder)
+    {
+        $orderItems = $this->queryContainer->querySalesOrderItemsByIdSalesOrder($idOrder)->find();
+
+        $status = [];
+        foreach($orderItems as $i => $orderItem) {
+            $status[$orderItem->getIdSalesOrderItem()] = $orderItem->getState()->getName();
+        }
+
+        return $status;
+    }
 
 }

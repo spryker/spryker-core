@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,10 +11,10 @@ use SprykerEngine\Zed\Kernel\Business\ModelResult;
 
 /**
  * Class Voucher
- * @package SprykerFeature\Zed\Discount\Business\DecisionRule
  */
 class Voucher
 {
+
     const REASON_VOUCHER_CODE_NOT_AVAILABLE = 'Voucher code is not valid';
 
     /**
@@ -32,6 +33,7 @@ class Voucher
     /**
      * @param string $code
      * @param int $idDiscountVoucherPool
+     *
      * @return ModelResult
      */
     public function isUsable($code, $idDiscountVoucherPool)
@@ -61,4 +63,5 @@ class Voucher
 
         return $result;
     }
+
 }

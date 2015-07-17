@@ -1,16 +1,18 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\AvailabilityCartConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\AvailabilityCartConnector\AvailabilityCartConnectorDependencyProvider;
 use SprykerFeature\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityToCartConnectorFacadeInterface as AvailabilityFacade;
 
-class AvailabilityCartConnectorDependencyContainer extends AbstractDependencyContainer
+class AvailabilityCartConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return AvailabilityFacade
      */

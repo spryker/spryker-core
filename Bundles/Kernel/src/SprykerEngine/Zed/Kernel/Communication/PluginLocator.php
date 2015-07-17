@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,8 +7,6 @@
 namespace SprykerEngine\Zed\Kernel\Communication;
 
 use SprykerEngine\Shared\Kernel\AbstractLocator;
-use SprykerEngine\Shared\Kernel\ClassResolver;
-use SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException;
 use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
@@ -26,8 +25,9 @@ class PluginLocator extends AbstractLocator
      * @param LocatorLocatorInterface $locator
      * @param null|string $className
      *
-     * @return object
      * @throws LocatorException
+     *
+     * @return object
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
@@ -52,6 +52,10 @@ class PluginLocator extends AbstractLocator
             if (method_exists($plugin, 'setOwnFacade')) {
                 $plugin->setOwnFacade($locator->$bundleName()->facade());
             }
+        }
+
+        if ($locator->$bundleName()->hasQueryContainer()) {
+            $plugin->setQueryContainer($locator->$bundleName()->queryContainer());
         }
 
         return $plugin;

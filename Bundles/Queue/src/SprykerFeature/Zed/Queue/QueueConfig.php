@@ -5,7 +5,6 @@ namespace SprykerFeature\Zed\Queue;
 use Generated\Shared\Transfer\AmqpParameterTransfer;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
 
 class QueueConfig extends AbstractBundleConfig
 {
@@ -41,4 +40,5 @@ class QueueConfig extends AbstractBundleConfig
     {
         return 1000;
     }
+
 }

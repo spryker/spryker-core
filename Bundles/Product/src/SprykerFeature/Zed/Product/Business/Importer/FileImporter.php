@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\Product\Business\Validator\DataValidatorInterface;
 
 class FileImporter implements FileImporterInterface
 {
+
     /**
      * @var DataValidatorInterface
      */
@@ -115,7 +117,7 @@ class FileImporter implements FileImporterInterface
     protected function preProcess(array $data)
     {
         if (!$this->importProductValidator->isValid($data)) {
-            return null;
+            return;
         }
 
         return $data;
@@ -156,4 +158,5 @@ class FileImporter implements FileImporterInterface
     {
         $this->invalidProducts[$line] = 'Not importable';
     }
+
 }

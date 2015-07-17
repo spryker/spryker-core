@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,8 +20,9 @@ class FormController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
      * @throws \Exception
+     *
+     * @return JsonResponse
      */
     public function createPageElementAction(Request $request)
     {
@@ -43,8 +45,9 @@ class FormController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
      * @throws \Exception
+     *
+     * @return JsonResponse
      */
     public function updatePageElementAction(Request $request)
     {
@@ -67,4 +70,5 @@ class FormController extends AbstractController
     {
 
     }
+
 }

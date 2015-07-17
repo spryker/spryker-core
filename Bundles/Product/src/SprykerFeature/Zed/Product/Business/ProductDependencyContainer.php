@@ -1,13 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Product\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Locale\LocaleInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductBusiness;
-use SprykerEngine\Zed\Kernel\Business\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use SprykerFeature\Zed\Product\Business\Builder\ProductBuilderInterface;
 use SprykerFeature\Zed\Product\Business\Importer\FileImporter;
@@ -26,13 +27,16 @@ use SprykerFeature\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerFeature\Zed\Product\ProductConfig;
+use SprykerFeature\Zed\Product\ProductDependencyProvider;
 
 /**
  * @method ProductBusiness getFactory()
  * @method ProductConfig getConfig()
+ * @method ProductQueryContainerInterface getQueryContainer()
  */
-class ProductDependencyContainer extends AbstractDependencyContainer
+class ProductDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return UploadedFileImporter
      */
@@ -122,15 +126,6 @@ class ProductDependencyContainer extends AbstractDependencyContainer
         return $this->getFactory()->createModelProductBatchResult();
     }
 
-
-    /**
-     * @return ProductQueryContainerInterface
-     */
-    protected function createProductQueryContainer()
-    {
-        return $this->getLocator()->product()->queryContainer();
-    }
-
     /**
      * @param MessengerInterface $messenger
      *
@@ -152,8 +147,7 @@ class ProductDependencyContainer extends AbstractDependencyContainer
     public function createAttributeManager()
     {
         return $this->getFactory()->createAttributeAttributeManager(
-            $this->createProductQueryContainer(),
-            $this->getLocator()
+            $this->getQueryContainer()
         );
     }
 
@@ -163,42 +157,42 @@ class ProductDependencyContainer extends AbstractDependencyContainer
     public function createProductManager()
     {
         return $this->getFactory()->createProductProductManager(
-            $this->createProductQueryContainer(),
-            $this->createTouchFacade(),
-            $this->createUrlFacade(),
-            $this->getLocator()
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
+            $this->getUrlFacade()
         );
     }
 
     /**
      * @return ProductToLocaleInterface
      */
-    protected function createLocaleFacade()
+    protected function getLocaleFacade()
     {
-        return $this->getLocator()->locale()->facade();
+        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_LOCALE);
     }
 
     /**
      * @return ProductToTouchInterface
      */
-    protected function createTouchFacade()
+    protected function getTouchFacade()
     {
-        return $this->getLocator()->touch()->facade();
+        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_TOUCH);
     }
 
     /**
      * @return ProductToUrlInterface
      */
-    protected function createUrlFacade()
+    protected function getUrlFacade()
     {
-        return $this->getLocator()->url()->facade();
+        return  $this->getProvidedDependency(ProductDependencyProvider::FACADE_URL);
     }
 
     /**
-     * @return LocaleTransfer
+     * @return LocaleInterface
      */
     protected function getCurrentLocale()
     {
-        return $this->getLocator()->locale()->facade()->getCurrentLocale();
+        return $this->getLocaleFacade()->getCurrentLocale();
     }
+
 }

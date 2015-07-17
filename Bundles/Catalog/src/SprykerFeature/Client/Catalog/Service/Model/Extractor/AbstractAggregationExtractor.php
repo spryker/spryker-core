@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Client\Catalog\Service\Model\Extractor;
 
 abstract class AbstractAggregationExtractor implements AggregationExtractorInterface
 {
+
     /**
      * @param array $aggregation
      * @param string $fieldName
@@ -35,4 +37,5 @@ abstract class AbstractAggregationExtractor implements AggregationExtractorInter
 
         return $data;
     }
+
 }

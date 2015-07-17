@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -67,7 +68,7 @@ class MvcRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         throw new RouteNotFoundException();
     }
@@ -82,7 +83,7 @@ class MvcRouter implements RouterInterface
         $controllerLocator = new ControllerLocator($bundleControllerAction);
 
         if (!$controllerLocator->canLocate()) {
-            throw new ResourceNotFoundException;
+            throw new ResourceNotFoundException();
         }
 
         $routeNameResolver = new RouteNameResolver($request);
@@ -97,7 +98,8 @@ class MvcRouter implements RouterInterface
 
         return [
             '_controller' => $service,
-            '_route' => $routeNameResolver->resolve()
+            '_route' => $routeNameResolver->resolve(),
         ];
     }
+
 }

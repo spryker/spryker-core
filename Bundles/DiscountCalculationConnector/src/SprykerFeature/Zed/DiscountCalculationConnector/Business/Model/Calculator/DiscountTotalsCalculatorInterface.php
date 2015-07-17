@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInter
 
 interface DiscountTotalsCalculatorInterface extends TotalsCalculatorPluginInterface
 {
+
     /**
      * @param CalculableInterface $discountableContainer
      * @param $discountableItems
@@ -18,4 +20,5 @@ interface DiscountTotalsCalculatorInterface extends TotalsCalculatorPluginInterf
         CalculableInterface $discountableContainer,
         $discountableItems
     );
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,7 +9,6 @@ namespace SprykerFeature\Zed\Discount\Communication\Form;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validator;
 
 class VoucherPoolCategoryForm extends AbstractForm
 {
@@ -27,18 +27,18 @@ class VoucherPoolCategoryForm extends AbstractForm
             ->setConstraints([
                 new Assert\Optional([
                     new Assert\Type([
-                        'type' => 'integer'
-                    ])
-                ])
+                        'type' => 'integer',
+                    ]),
+                ]),
             ]);
 
         $this->addField('name')
             ->setRefresh(false)
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
     }
 
@@ -56,7 +56,8 @@ class VoucherPoolCategoryForm extends AbstractForm
         }
 
         return [
-            'name'  =>  ''
+            'name' => '',
         ];
     }
+
 }

@@ -1,10 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
-
 
 abstract class AbstractDefinitionBuilder implements DefinitionBuilderInterface
 {
@@ -25,4 +25,5 @@ abstract class AbstractDefinitionBuilder implements DefinitionBuilderInterface
 
         return $definitionInstances;
     }
+
 }

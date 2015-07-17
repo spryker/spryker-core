@@ -1,12 +1,13 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Product\Business\Importer\Writer\Db;
 
+use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Product\Business\Importer\Writer\ConcreteProductWriterInterface;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
 
 class ConcreteProductWriter implements ConcreteProductWriterInterface
 {
+
     /**
      * @var \PDOStatement
      */
@@ -31,15 +33,14 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
     protected $localeTransfer;
 
     /**
-     * @param LocaleTransfer $localeTransfer
+     * @param LocaleInterface $localeTransfer
      */
-    public function __construct(LocaleTransfer $localeTransfer)
+    public function __construct(LocaleInterface $localeTransfer)
     {
         $this->localeTransfer = $localeTransfer;
         $this->createProductStatement();
         $this->createAttributesStatement();
     }
-
 
     /**
      * @param ConcreteProductTransfer $product
@@ -48,23 +49,27 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
      */
     public function writeProduct(ConcreteProductTransfer $product)
     {
-        return (
-            $this->productStatement->execute(
-                [
-                    ':sku' => $product->getSku(),
-                    ':isActive' => (int) $product->getIsActive(),
-                    ':abstractProductSku' => $product->getAbstractProductSku()
-                ]
-            ) &&
+        $this->productStatement->execute(
+            [
+                ':sku' => $product->getSku(),
+                ':isActive' => (int) $product->getIsActive(),
+                ':attributes' => json_encode($product->getAttributes()),
+                ':abstractProductSku' => $product->getAbstractProductSku(),
+            ]
+        );
+
+        foreach ($product->getLocalizedAttributes() as $localizedAttributes) {
             $this->attributesStatement->execute(
                 [
                     ':productSku' => $product->getSku(),
-                    ':name' => $product->getName(),
-                    ':attributes' => json_encode($product->getAttributes()),
-                    ':fkLocale' => $this->localeTransfer->getIdLocale()
+                    ':name' => $localizedAttributes->getName(),
+                    ':attributes' => json_encode($localizedAttributes->getAttributes()),
+                    ':fkLocale' => $this->localeTransfer->getIdLocale(),
                 ]
-            )
-        );
+            );
+        }
+
+        return true;
     }
 
     /**
@@ -77,16 +82,18 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
         $this->productStatement = $connection->prepare(
             sprintf(
                 'INSERT INTO %1$s
-                  (%2$s, %3$s, %4$s) VALUES
-                  (:sku, :isActive, (SELECT %5$s FROM %6$s WHERE %7$s = :abstractProductSku))
+                  (%2$s, %3$s, %4$s , %5$s) VALUES
+                  (:sku, :isActive, (SELECT %6$s FROM %7$s WHERE %8$s = :abstractProductSku), :attributes)
                   ON DUPLICATE KEY UPDATE
                       %2$s=VALUES(%2$s),
                       %3$s=VALUES(%3$s),
-                      %4$s=VALUES(%4$s);',
+                      %4$s=VALUES(%4$s),
+                      %5$s=VALUES(%5$s);',
                 SpyProductTableMap::TABLE_NAME,
                 SpyProductTableMap::COL_SKU,
                 SpyProductTableMap::COL_IS_ACTIVE,
                 SpyProductTableMap::COL_FK_ABSTRACT_PRODUCT,
+                SpyProductTableMap::COL_ATTRIBUTES,
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
                 SpyAbstractProductTableMap::TABLE_NAME,
                 SpyAbstractProductTableMap::COL_SKU
@@ -124,4 +131,5 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
             )
         );
     }
+
 }

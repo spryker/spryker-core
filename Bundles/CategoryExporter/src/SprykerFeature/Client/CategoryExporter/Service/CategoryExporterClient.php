@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerEngine\Client\Kernel\Service\AbstractClient;
  */
 class CategoryExporterClient extends AbstractClient
 {
+
     /**
      * @param string $locale
      *
@@ -32,4 +34,5 @@ class CategoryExporterClient extends AbstractClient
     {
         return $this->getDependencyContainer()->createCategoryTreeBuilder()->createTreeFromCategoryNode($categoryNode, $locale);
     }
+
 }

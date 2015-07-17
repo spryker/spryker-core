@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,14 +21,17 @@ class DateTimeFormat extends \Zend_Validate_Abstract
     /**
      * @param mixed $value
      * @param array $context
+     *
      * @return bool
      */
     public function isValid($value, $context = null)
     {
         if (!preg_match('/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/', $value)) {
             $this->_error(self::WRONG_FORMAT);
+
             return false;
         }
+
         return true;
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,7 +23,6 @@ class RedirectContainer extends AbstractContainer
      * @var string
      */
     protected $backurl;
-
 
     /**
      * @param string $backurl

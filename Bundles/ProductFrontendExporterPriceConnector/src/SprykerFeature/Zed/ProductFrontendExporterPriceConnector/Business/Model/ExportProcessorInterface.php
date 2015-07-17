@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,10 +8,13 @@ namespace SprykerFeature\Zed\ProductFrontendExporterPriceConnector\Business\Mode
 
 interface ExportProcessorInterface
 {
+
     /**
      * @param array $resultSet
      * @param array $processedResultSet
+     *
      * @return array
      */
     public function processData(array &$resultSet, array $processedResultSet);
+
 }

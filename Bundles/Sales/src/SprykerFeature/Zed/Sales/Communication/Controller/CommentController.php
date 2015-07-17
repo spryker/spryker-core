@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -38,4 +39,5 @@ class CommentController extends AbstractController
 
         return $this->jsonResponse($form->renderData());
     }
+
 }

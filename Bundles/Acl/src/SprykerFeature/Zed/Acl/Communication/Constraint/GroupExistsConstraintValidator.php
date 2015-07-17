@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class GroupExistsConstraintValidator extends ConstraintValidator
 {
+
     /**
      * @param mixed $value
      * @param Constraint $constraint
@@ -37,4 +39,5 @@ class GroupExistsConstraintValidator extends ConstraintValidator
             ->setParameter('{{ value }}', $value)
             ->addViolation();
     }
+
 }

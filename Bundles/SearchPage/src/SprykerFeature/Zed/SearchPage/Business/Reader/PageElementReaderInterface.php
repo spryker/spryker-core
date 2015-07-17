@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,8 +15,10 @@ interface PageElementReaderInterface
     /**
      * @param int $idPageElement
      *
-     * @return SpySearchPageElement
      * @throws PageElementDoesNotExistException
+     *
+     * @return SpySearchPageElement
      */
     public function getPageElementById($idPageElement);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,13 +12,14 @@ use Symfony\Cmf\Component\Routing\ChainRouter;
 
 class RoutingServiceProvider implements ServiceProviderInterface
 {
+
     /**
      * {@inheritdoc}
      */
     public function register(Application $app)
     {
         $app['url_matcher'] = $app->share(function () use ($app) {
-            /* @var ChainRouter $chainRouter */
+            /** @var ChainRouter $chainRouter */
             $chainRouter = $app['routers'];
             $chainRouter->setContext($app['request_context']);
 
@@ -35,4 +37,5 @@ class RoutingServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
+
 }

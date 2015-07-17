@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -35,7 +36,7 @@ abstract class AbstractFactory implements FactoryInterface
      */
     protected $baseClasses = [
         'DependencyContainer',
-        'Factory'
+        'Factory',
     ];
 
     /**
@@ -93,9 +94,9 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @return string
-     *
      * @throws FactoryException
+     *
+     * @return string
      */
     protected function getClassNamePattern()
     {
@@ -105,4 +106,5 @@ abstract class AbstractFactory implements FactoryInterface
 
         return $this->classNamePattern;
     }
+
 }

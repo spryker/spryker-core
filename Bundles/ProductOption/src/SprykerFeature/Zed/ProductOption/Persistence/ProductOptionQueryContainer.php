@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,10 +18,6 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTran
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslationQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionTypeTableMap;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValueTableMap;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionTypeUsageTableMap;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValueUsageTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
@@ -43,18 +40,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param string $importKeyProductOptionType
-     *
-     * @return SpyProductOptionTypeQuery
-     */
-    public function queryProductOptionTypeIdByImportKey($importKeyProductOptionType)
-    {
-        return SpyProductOptionTypeQuery::create()
-            ->filterByImportKey($importKeyProductOptionType)
-            ->select(SpyProductOptionTypeTableMap::COL_ID_PRODUCT_OPTION_TYPE);
-    }
-
-    /**
      * @param int $fkProductOptionType
      * @param int $fkLocale
      *
@@ -68,14 +53,14 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param string $importKeyProductOptionValue
+     * @param string $idProductOptionValue
      *
      * @return SpyProductOptionValueQuery
      */
-    public function queryOptionValueById($idProductOptionTypeUsage)
+    public function queryOptionValueById($idProductOptionValue)
     {
         return SpyProductOptionTypeUsageQuery::create()
-            ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage);
+            ->filterByIdProductOptionTypeUsage($idProductOptionValue);
     }
 
     /**
@@ -103,18 +88,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param string $importKeyProductOptionValue
-     *
-     * @return SpyProductOptionValueQuery
-     */
-    public function queryProductOptionValueIdByImportKey($importKeyProductOptionValue)
-    {
-        return SpyProductOptionValueQuery::create()
-            ->filterByImportKey($importKeyProductOptionValue)
-            ->select(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE);
-    }
-
-    /**
      * @param int $fkProductOptionValue
      * @param int $fkLocale
      *
@@ -132,7 +105,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return SpyProductOptionTypeUsageQuery
      */
-    public function queryProductOptonTypeUsageById($idProductOptionTypeUsage)
+    public function queryProductOptionTypeUsageById($idProductOptionTypeUsage)
     {
         return SpyProductOptionTypeUsageQuery::create()
             ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage);
@@ -152,41 +125,28 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $fkProduct
-     * @param int $fkProductOptionType
-     *
-     * @return SpyProductOptionTypeUsageQuery
-     */
-    public function queryProductOptionTypeUsageIdByFKs($fkProduct, $fkProductOptionType)
-    {
-        return SpyProductOptionTypeUsageQuery::create()
-            ->filterByFkProduct($fkProduct)
-            ->filterByFkProductOptionType($fkProductOptionType)
-            ->select(SpyProductOptionTypeUsageTableMap::COL_ID_PRODUCT_OPTION_TYPE_USAGE);
-    }
-
-    /**
      * @param int $idProductOptionValueUsage
      *
      * @return SpyProductOptionValueUsageQuery
      */
-    public function queryProductOptonValueUsageById($idProductOptionValueUsage)
+    public function queryProductOptionValueUsageById($idProductOptionValueUsage)
     {
         return SpyProductOptionValueUsageQuery::create()
             ->filterByIdProductOptionValueUsage($idProductOptionValueUsage);
     }
 
     /**
-     * @param int $fkProduct
-     * @param int $fkProductOptionType
+     * @param int $fkProductOptionTypeUsage
+     * @param int $fkProductOptionValue
      *
      * @return SpyProductOptionTypeUsageQuery
      */
-    public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionType)
+    public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionValue)
     {
         return SpyProductOptionValueUsageQuery::create()
             ->filterByFkProductOptionTypeUsage($fkProductOptionTypeUsage)
-            ->filterByFkProductOptionValue($fkProductOptionType);
+            ->filterByFkProductOptionValue($fkProductOptionValue)
+        ;
     }
 
     /**
@@ -200,7 +160,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         return SpyProductOptionValueUsageQuery::create()
             ->filterByFkProductOptionTypeUsage($fkProductOptionTypeUsage)
             ->filterByFkProductOptionValue($fkProductOptionType)
-            ->select(SpyProductOptionValueUsageTableMap::COL_ID_PRODUCT_OPTION_VALUE_USAGE);
+        ;
     }
 
     /**
@@ -238,7 +198,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyAbstractProductQuery::create()
             ->select([
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
             ])
             ->useSpyProductQuery()
                 ->useSpyProductOptionTypeUsageQuery()
@@ -259,7 +219,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyAbstractProductQuery::create()
             ->select([
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
             ])
             ->useSpyProductQuery()
                 ->useSpyProductOptionTypeUsageQuery()
@@ -281,9 +241,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage)
     {
         return SpyAbstractProductQuery::create()
-            ->select([
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT
-            ])
             ->useSpyProductQuery()
                 ->useSpyProductOptionTypeUsageQuery()
                     ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage)
@@ -291,7 +248,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->endUse()
             ->groupByIdAbstractProduct();
     }
-
 
     /**
      * @param int $idProduct
@@ -314,7 +270,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryTypeUsagesForConcreteProduct($idProduct, $idLocale)
     {
         $sql =
-            "SELECT
+            'SELECT
             typeUsage.id_product_option_type_usage AS idTypeUsage,
             typeUsage.is_optional AS isOptional,
             typeTranslation.name AS label
@@ -327,7 +283,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ON typeTranslation.fk_locale = spy_locale.id_locale
             WHERE typeUsage.fk_product = :idProduct
             AND spy_locale.id_locale = :idLocale
-            ORDER BY typeUsage.sequence"
+            ORDER BY typeUsage.sequence'
         ;
 
         $statement = $this->getConnection()
@@ -336,7 +292,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         $statement->execute(
             [
                 ':idProduct' => $idProduct,
-                ':idLocale' => $idLocale
+                ':idLocale' => $idLocale,
             ]
         );
 
@@ -352,7 +308,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryValueUsagesForTypeUsage($idTypeUsage, $idLocale)
     {
         $sql =
-            "SELECT
+            'SELECT
             id_product_option_value_usage AS idValueUsage,
             valueUsage.sequence AS sequence,
             valueTranslation.name AS label,
@@ -368,7 +324,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             INNER JOIN spy_product_option_type_usage AS typeUsage
             ON (valueUsage.fk_product_option_type_usage = typeUsage.id_product_option_type_usage)
             WHERE typeUsage.id_product_option_type_usage = :idTypeUsage
-            AND spy_locale.id_locale = :idLocale"
+            AND spy_locale.id_locale = :idLocale'
         ;
 
         $statement = $this->getConnection()
@@ -377,7 +333,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         $statement->execute(
             [
                 ':idTypeUsage' => $idTypeUsage,
-                ':idLocale' => $idLocale
+                ':idLocale' => $idLocale,
             ]
         );
 
@@ -392,13 +348,13 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryTypeExclusionsForTypeUsage($idTypeUsage)
     {
         $sql =
-            "SELECT fk_product_option_type_usage_b AS excludes
+            'SELECT fk_product_option_type_usage_b AS excludes
             FROM spy_product_option_type_usage_exclusion AS exclusionA
             WHERE exclusionA.fk_product_option_type_usage_a = :idTypeUsage
             UNION ALL
             SELECT fk_product_option_type_usage_a AS excludes
             FROM spy_product_option_type_usage_exclusion AS exclusionB
-            WHERE exclusionB.fk_product_option_type_usage_b = :idTypeUsage"
+            WHERE exclusionB.fk_product_option_type_usage_b = :idTypeUsage'
         ;
 
         $statement = $this->getConnection()
@@ -417,7 +373,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryValueConstraintsForValueUsage($idValueUsage)
     {
         $sql =
-            "SELECT
+            'SELECT
             fk_product_option_value_usage_b AS valueUsageId,
             operator
             FROM spy_product_option_value_usage_constraint AS constraintA
@@ -428,7 +384,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             operator
             FROM spy_product_option_value_usage_constraint AS constraintB
             WHERE constraintB.fk_product_option_value_usage_b = :idValueUsage
-            ORDER BY operator ASC"
+            ORDER BY operator ASC'
         ;
 
         $statement = $this->getConnection()
@@ -448,7 +404,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryValueConstraintsForValueUsageByOperator($idValueUsage, $operator)
     {
         $sql =
-            "SELECT
+            'SELECT
             fk_product_option_value_usage_b AS valueUsageId
             FROM spy_product_option_value_usage_constraint AS constraintA
             WHERE constraintA.fk_product_option_value_usage_a = :idValueUsage
@@ -458,7 +414,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             fk_product_option_value_usage_a AS valueUsageId
             FROM spy_product_option_value_usage_constraint AS constraintB
             WHERE constraintB.fk_product_option_value_usage_b = :idValueUsage
-            AND operator = :operator"
+            AND operator = :operator'
         ;
 
         $statement = $this->getConnection()
@@ -467,7 +423,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         $statement->execute(
             [
                 ':idValueUsage' => $idValueUsage,
-                ':operator' => $operator
+                ':operator' => $operator,
             ]);
 
         return $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -481,13 +437,13 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryConfigPresetsForConcreteProduct($idProduct)
     {
         $sql =
-            "SELECT
+            'SELECT
             configPreset.id_product_option_configuration_preset AS presetId,
             is_default AS isDefault
             FROM
             spy_product_option_configuration_preset AS configPreset
             WHERE configPreset.fk_product = :idProduct
-            ORDER BY configPreset.sequence"
+            ORDER BY configPreset.sequence'
         ;
 
         $statement = $this->getConnection()
@@ -506,9 +462,9 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryValueUsagesForConfigPreset($idConfigPreset)
     {
         $sql =
-            "SELECT presetValue.fk_product_option_value_usage as valueUsageId
+            'SELECT presetValue.fk_product_option_value_usage as valueUsageId
             FROM spy_product_option_configuration_preset_value AS presetValue
-            WHERE presetValue.fk_product_option_configuration_preset = :idConfigPreset"
+            WHERE presetValue.fk_product_option_configuration_preset = :idConfigPreset'
         ;
 
         $statement = $this->getConnection()
@@ -527,7 +483,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryEffectiveTaxRateForTypeUsage($idTypeUsage)
     {
         $sql =
-            "SELECT SUM(spy_tax_rate.rate) AS taxRate
+            'SELECT SUM(spy_tax_rate.rate) AS taxRate
             FROM spy_product_option_type_usage AS optionTypeUsage
             INNER JOIN spy_product_option_type AS optionType
             ON (optionTypeUsage.fk_product_option_type = optionType.id_product_option_type)
@@ -537,7 +493,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ON (spy_tax_set_tax.fk_tax_set=spy_tax_set.id_tax_set)
             INNER JOIN spy_tax_rate
             ON (spy_tax_set_tax.fk_tax_rate=spy_tax_rate.id_tax_rate)
-            WHERE optionTypeUsage.id_product_option_type_usage = :idTypeUsage"
+            WHERE optionTypeUsage.id_product_option_type_usage = :idTypeUsage'
         ;
 
         $statement = $this->getConnection()
@@ -555,4 +511,5 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return Propel::getConnection();
     }
+
 }

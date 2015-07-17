@@ -6,18 +6,25 @@
     <transfer name="ConcreteProduct">
         <property name="idConcreteProduct" type="int" />
         <property name="sku" type="string" />
+        <property name="productImageUrl" type="string" />
         <property name="abstractProductSku" type="string" />
-        <property name="name" type="string" />
         <property name="attributes" type="array" singular="attribute" />
+        <property name="localizedAttributes" type="LocalizedAttributes[]" />
         <property name="isActive" type="bool" />
     </transfer>
 
     <transfer name="AbstractProduct">
         <property name="idAbstractProduct" type="int" />
         <property name="sku" type="string" />
+        <property name="attributes" type="array" singular="attribute" />
+        <property name="localizedAttributes" type="LocalizedAttributes[]" />
+        <property name="isActive" type="bool" />
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="locale" type="Locale" />
         <property name="name" type="string" />
         <property name="attributes" type="array" singular="attribute" />
-        <property name="isActive" type="bool" />
     </transfer>
 
 </transfers>

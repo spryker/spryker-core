@@ -1,30 +1,31 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 class SprykerFeature_Zed_Library_Setup
 {
 
     /**
      * @var array
      */
-    protected static $successMessages = array();
+    protected static $successMessages = [];
 
     /**
      * @var array
      */
-    protected static $errorMessages = array();
+    protected static $errorMessages = [];
 
     /**
      * Checks if the given directories are there and writeable
      *
      * @static
+     *
      * @param array $directories
      */
     public static function checkDirectories(array $directories)
     {
-        $checks = array();
+        $checks = [];
         foreach ($directories as $directory) {
             $checks[] = \SprykerFeature_Zed_Library_Setup::checkCondition('is_dir', $directory);
             $checks[] = \SprykerFeature_Zed_Library_Setup::checkCondition('is_writable', $directory);
@@ -55,7 +56,7 @@ class SprykerFeature_Zed_Library_Setup
         $dirHelper = new \SprykerFeature_Zed_Library_Helper_Directory();
         $directories = $dirHelper->getDirs($root);
 
-        $entitiesDirectories = array();
+        $entitiesDirectories = [];
         foreach ($directories as $directory) {
             $directory = str_replace('\\', '/', $directory);
             if (strpos($directory, '/' . $pattern . '/') !== false) {
@@ -74,6 +75,7 @@ class SprykerFeature_Zed_Library_Setup
         } else {
             self::$errorMessages[] = "ERROR - {$callBack} - {$value}";
         }
+
         return $success;
     }
 
@@ -88,7 +90,7 @@ class SprykerFeature_Zed_Library_Setup
             $str = '<ul><li>' . implode('</li><li>', $str) . '</li></ul>';
         }
 
-        if (strtolower(PHP_SAPI) != 'cli') {
+        if (strtolower(PHP_SAPI) !== 'cli') {
 echo "
 <html>
 <body style='background-color: $background; font-family: courier new; color: $color;'>

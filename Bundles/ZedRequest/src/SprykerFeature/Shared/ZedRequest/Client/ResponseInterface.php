@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface ResponseInterface
 {
+
     /**
      * @param array $values
      */
@@ -21,18 +23,21 @@ interface ResponseInterface
 
     /**
      * @param string $messageString
+     *
      * @return bool
      */
     public function hasErrorMessage($messageString);
 
     /**
      * @param array $errorMessages
+     *
      * @return $this
      */
     public function addErrorMessages(array $errorMessages);
 
     /**
      * @param Message $errorMessage
+     *
      * @return $this
      */
     public function addErrorMessage(Message $errorMessage);
@@ -44,18 +49,21 @@ interface ResponseInterface
 
     /**
      * @param string $messageString
+     *
      * @return bool
      */
     public function hasMessage($messageString);
 
     /**
      * @param Message $message
+     *
      * @return $this
      */
     public function addMessage(Message $message);
 
     /**
      * @param array $messages
+     *
      * @return $this
      */
     public function addMessages(array $messages);
@@ -67,6 +75,7 @@ interface ResponseInterface
 
     /**
      * @param bool $success
+     *
      * @return $this
      */
     public function setSuccess($success);
@@ -78,7 +87,9 @@ interface ResponseInterface
 
     /**
      * @param TransferInterface $transferObject
+     *
      * @return $this
      */
     public function setTransfer(TransferInterface $transferObject);
+
 }

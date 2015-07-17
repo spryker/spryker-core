@@ -1,7 +1,8 @@
 <?php
-  /**
-  * (c) Spryker Systems GmbH copyright protected
-  */
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
@@ -50,4 +51,5 @@ abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInt
      * @return bool
      */
     abstract protected function callFacade(OrderTransfer $orderTransfer);
-} 
+
+}

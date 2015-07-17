@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class CalculationCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_CALCULATION = 'calculation facade';
 
     public function provideBusinessLayerDependencies(Container $container)
@@ -20,4 +22,5 @@ class CalculationCheckoutConnectorDependencyProvider extends AbstractBundleDepen
 
         return $container;
     }
+
 }

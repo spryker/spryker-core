@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,9 +15,11 @@ class Copy
 
     /**
      * TODO arguments must be switched entityToTransfer i expect entity to be the first argument
+     *
      * @param AbstractTransfer $transfer
      * @param ActiveRecordInterface $entity
      * @param bool $enrich
+     *
      * @return AbstractTransfer
      */
     public static function entityToTransfer(AbstractTransfer $transfer, ActiveRecordInterface $entity, $enrich = false)
@@ -31,7 +34,7 @@ class Copy
                 if (method_exists($transfer, $setMethod)) {
                     $value = $entity->$method();
                     if ($enrichAbleProperties && array_key_exists($enrichAbleProperty, $enrichAbleProperties)) {
-                        $enrichTransfer = new $enrichAbleProperties[$enrichAbleProperty];
+                        $enrichTransfer = new $enrichAbleProperties[$enrichAbleProperty]();
                         if ($value instanceof ActiveRecordInterface) {
                             $enrichedTransfer = self::entityToTransfer($enrichTransfer, $value, $enrich);
                             $transfer->$setMethod($enrichedTransfer);
@@ -60,6 +63,7 @@ class Copy
      * @param AbstractTransfer $transfer
      * @param ActiveRecordInterface $entity
      * @param bool $enrich
+     *
      * @return ActiveRecordInterface
      */
     public static function transferToEntity(AbstractTransfer $transfer, ActiveRecordInterface $entity, $enrich = false)
@@ -105,13 +109,13 @@ class Copy
                      *
                      * Only set values which are not NULL and which are not an empty string
                      */
-
                     if (!is_null($value) && !($value === '')) {
                         $entity->$setMethod($value);
                     }
                 }
             }
         }
+
         return $entity;
     }
 
@@ -124,6 +128,7 @@ class Copy
      *
      * @param AbstractTransfer $transfer
      * @param ActiveRecordInterface $entity
+     *
      * @return ActiveRecordInterface
      */
     public static function transferToEntityNoNullValues(AbstractTransfer $transfer, ActiveRecordInterface $entity)
@@ -137,6 +142,7 @@ class Copy
                 }
             }
         }
+
         return $entity;
     }
 
@@ -144,6 +150,7 @@ class Copy
      * @param $transferCollection
      * @param Collection $entityCollection
      * @param $enrich
+     *
      * @return mixed
      */
     public static function entityCollectionToTransferCollection($transferCollection, Collection $entityCollection, $enrich)
@@ -153,6 +160,7 @@ class Copy
             $transfer = self::entityToTransfer($transfer, $entity, $enrich);
             $transferCollection->add($transfer);
         }
+
         return $transferCollection;
     }
 
@@ -160,22 +168,25 @@ class Copy
      * @param $transferCollection
      * @param Collection $entityCollection
      * @param $enrich
+     *
      * @return Collection
      */
     private static function transferCollectionToEntityCollection($transferCollection, Collection $entityCollection, $enrich)
     {
         foreach ($transferCollection as $transfer) {
             $entityName = $entityCollection->getModel();
-            $entity = new $entityName;
+            $entity = new $entityName();
             $entity = self::transferToEntity($transfer, $entity, $enrich);
             $entityCollection->append($entity);
         }
+
         return $entityCollection;
     }
 
     /**
      * @param AbstractTransfer $transfer
      * @param $enrich
+     *
      * @return array
      */
     private static function getEnrichAbleProperties(AbstractTransfer $transfer, $enrich)
@@ -197,12 +208,14 @@ class Copy
                 );
             }
         }
+
         return $enrichAbleProperties;
     }
 
     /**
      * @param AbstractTransfer $transfer
      * @param $enrich
+     *
      * @return array
      */
     private static function getEnrichAbleEntityLoaderMethods(AbstractTransfer $transfer, $enrich)
@@ -224,6 +237,8 @@ class Copy
                 );
             }
         }
+
         return $enrichAbleEntityLoaderMethods;
     }
+
 }

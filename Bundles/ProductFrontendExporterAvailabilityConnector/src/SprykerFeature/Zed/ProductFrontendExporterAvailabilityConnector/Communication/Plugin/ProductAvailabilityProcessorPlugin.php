@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInt
 
 class ProductAvailabilityProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
+
     /**
      * @return string
      */
@@ -36,4 +38,5 @@ class ProductAvailabilityProcessorPlugin extends AbstractPlugin implements DataP
 
         return $processedResultSet;
     }
+
 }

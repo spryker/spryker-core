@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,11 +14,14 @@ use SprykerEngine\Zed\Kernel\Business\ModelResult;
 
 class DecisionRuleEngine implements DecisionRuleInterface
 {
+
     /**
      * @param SpyDiscount $discountEntity
      * @ param OrderInterface $discountableContainer
+     *
      * @param CalculableInterface $discountableContainer
      * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
+     *
      * @return bool
      */
     public function evaluate(
@@ -36,4 +40,5 @@ class DecisionRuleEngine implements DecisionRuleInterface
 
         return $result;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -40,7 +41,6 @@ class PrePaymentContainer extends AbstractPaymentMethodContainer
      * @var
      */
     protected $clearing_bankname;
-
 
     /**
      * @param string $clearingBankAccountHolder

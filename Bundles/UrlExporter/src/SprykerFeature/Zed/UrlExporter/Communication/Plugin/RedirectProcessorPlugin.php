@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\UrlExporter\Communication\UrlExporterDependencyContainer;
  */
 class RedirectProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
+
     /**
      * @return string
      */
@@ -36,4 +38,5 @@ class RedirectProcessorPlugin extends AbstractPlugin implements DataProcessorPlu
 
         return $processedResultSet;
     }
+
 }

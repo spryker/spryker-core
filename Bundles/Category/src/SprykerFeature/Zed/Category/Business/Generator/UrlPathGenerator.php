@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,11 +8,10 @@ namespace SprykerFeature\Zed\Category\Business\Generator;
 
 /**
  * Class UrlGenerator
- *
- * @package SprykerFeature\Zed\CategoryTree\Business\Generator
  */
 class UrlPathGenerator implements UrlPathGeneratorInterface
 {
+
     /**
      * @param array $categoryPath
      *
@@ -30,4 +30,5 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
 
         return '/' . implode('/', $formattedPath);
     }
+
 }

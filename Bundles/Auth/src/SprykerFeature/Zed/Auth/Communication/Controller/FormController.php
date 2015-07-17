@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FormController extends AbstractController
 {
+
     /**
      * @param Request $request
      *
@@ -27,7 +29,8 @@ class FormController extends AbstractController
         $form->init();
 
         return $this->viewResponse([
-            'form' => json_encode($form->toArray())
+            'form' => json_encode($form->toArray()),
         ]);
     }
+
 }

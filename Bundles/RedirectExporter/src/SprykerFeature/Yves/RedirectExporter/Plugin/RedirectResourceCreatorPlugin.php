@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Yves\RedirectExporter\ResourceCreator\RedirectResourceCreator
  */
 class RedirectResourceCreatorPlugin extends AbstractPlugin
 {
+
     /**
      * @return RedirectResourceCreator
      */
@@ -21,4 +23,5 @@ class RedirectResourceCreatorPlugin extends AbstractPlugin
     {
         return $this->getDependencyContainer()->createRedirectResourceCreator();
     }
+
 }

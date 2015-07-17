@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap
 
 class ProductQueryExpander implements ProductQueryExpanderInterface
 {
+
     /**
      * @var ProductQueryContainerInterface
      */
@@ -49,9 +51,11 @@ class ProductQueryExpander implements ProductQueryExpanderInterface
         ;
 
         $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_SKU, 'abstract_sku');
+        $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_ATTRIBUTES, 'abstract_attributes');
         $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT, 'id_abstract_product');
         $expandableQuery->groupBy('abstract_sku');
 
         return $expandableQuery;
     }
+
 }

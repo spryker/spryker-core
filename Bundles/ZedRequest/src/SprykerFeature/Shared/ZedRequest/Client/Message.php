@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,9 +8,10 @@ namespace SprykerFeature\Shared\ZedRequest\Client;
 
 class Message extends AbstractObject
 {
+
     protected $values = [
         'data' => [],
-        'message' => null
+        'message' => null,
     ];
 
     /**
@@ -22,11 +24,13 @@ class Message extends AbstractObject
 
     /**
      * @param array $data
+     *
      * @return $this
      */
     public function setData($data)
     {
         $this->values['data'] = $data;
+
         return $this;
     }
 
@@ -40,11 +44,14 @@ class Message extends AbstractObject
 
     /**
      * @param string $message
+     *
      * @return $this
      */
     public function setMessage($message)
     {
         $this->values['message'] = $message;
+
         return $this;
     }
+
 }

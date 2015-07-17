@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -23,8 +24,9 @@ abstract class AbstractClientLocator extends AbstractLocator
      * @param LocatorLocatorInterface $locator
      * @param null|string $className
      *
-     * @return object
      * @throws LocatorException
+     *
+     * @return object
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
@@ -37,4 +39,5 @@ abstract class AbstractClientLocator extends AbstractLocator
 
         return $this->cachedClients[$key];
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -47,28 +48,31 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
 
     /**
      * name of the solution-partner (company)
+     *
      * @var string
      */
     protected $solution_name;
 
     /**
      * version of the solution-partner's app / extension / plugin / etc..
+     *
      * @var string
      */
     protected $solution_version;
 
     /**
      * system-name
+     *
      * @var string
      */
     protected $integrator_name;
 
     /**
      * system-version
+     *
      * @var string
      */
     protected $integrator_version;
-
 
     /**
      * @param string $encoding
@@ -184,6 +188,7 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
 
     /**
      * set the system-Name
+     *
      * @param string $integrator_name
      */
     public function setIntegratorName($integrator_name)
@@ -201,6 +206,7 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
 
     /**
      * set the system-version
+     *
      * @param string $integrator_version
      */
     public function setIntegratorVersion($integrator_version)
@@ -218,6 +224,7 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
 
     /**
      * set the name of the solution-partner (company)
+     *
      * @param string $solution_name
      */
     public function setSolutionName($solution_name)
@@ -235,6 +242,7 @@ abstract class AbstractRequestContainer extends AbstractContainer implements Pay
 
     /**
      * set the version of the solution-partner's app / extension / plugin / etc..
+     *
      * @param string $solution_version
      */
     public function setSolutionVersion($solution_version)

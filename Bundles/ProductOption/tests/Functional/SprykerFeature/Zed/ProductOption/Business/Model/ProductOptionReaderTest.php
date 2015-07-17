@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
  */
 class ProductOptionReaderTest extends AbstractFunctionalTest
 {
+
     /**
      * @var array
      */
@@ -30,7 +32,7 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
     public function testQueryTypeUsagesForConcreteProduct()
     {
         $result = $this->getFacade()
-            ->getTypeUsagesForConcreteProduct($this->ids['idConcreteProduct'],  $this->ids['idLocale']);
+            ->getTypeUsagesForConcreteProduct($this->ids['idConcreteProduct'], $this->ids['idLocale']);
 
         $this->assertCount(2, $result);
         $this->assertEquals('Color', $result[0]['label']);
@@ -128,4 +130,5 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
 
         $this->assertNull($result);
     }
+
 }

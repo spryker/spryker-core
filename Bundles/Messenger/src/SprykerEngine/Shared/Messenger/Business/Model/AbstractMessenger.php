@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -95,7 +96,7 @@ abstract class AbstractMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * 
+     *
      * @return MessengerInterface
      */
     public function alert($message, array $context = [])
@@ -114,7 +115,7 @@ abstract class AbstractMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * 
+     *
      * @return MessengerInterface
      */
     public function critical($message, array $context = [])
@@ -132,7 +133,7 @@ abstract class AbstractMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * 
+     *
      * @return MessengerInterface
      */
     public function error($message, array $context = [])
@@ -152,7 +153,7 @@ abstract class AbstractMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * 
+     *
      * @return MessengerInterface
      */
     public function warning($message, array $context = [])
@@ -169,7 +170,7 @@ abstract class AbstractMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * 
+     *
      * @return MessengerInterface
      */
     public function notice($message, array $context = [])
@@ -203,7 +204,7 @@ abstract class AbstractMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * 
+     *
      * @return MessengerInterface
      */
     public function info($message, array $context = [])
@@ -220,7 +221,7 @@ abstract class AbstractMessenger implements MessengerInterface
      *
      * @param string $message
      * @param array $context
-     * 
+     *
      * @return MessengerInterface
      */
     public function debug($message, array $context = [])
@@ -238,7 +239,7 @@ abstract class AbstractMessenger implements MessengerInterface
      * @param mixed $level
      * @param string $message
      * @param array $context
-     * 
+     *
      * @return MessengerInterface
      */
     public function log($level, $message, array $context = [])

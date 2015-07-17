@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractGrid
 {
+
     const OUTPUT_PAYLOAD = 'content';
 
     /**
@@ -58,8 +60,7 @@ abstract class AbstractGrid
         $this->init();
     }
 
-
-    public function init(){
+    public function init() {
 
     }
 
@@ -127,4 +128,5 @@ abstract class AbstractGrid
     {
         return $this->locator->ui()->pluginGridDateTimeColumn();
     }
+
 }

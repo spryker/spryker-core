@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\CategoryExporter\Business\Formatter\CategoryNodeFormatter
 
 class CategoryNodeProcessor implements CategoryNodeProcessorInterface
 {
+
     /**
      * @var KeyBuilderInterface
      */
@@ -47,6 +49,8 @@ class CategoryNodeProcessor implements CategoryNodeProcessorInterface
             $exportData[$categoryKey] = $this->nodeFormatter->formatCategoryNode($categoryNode);
             unset($categoryNodes[$index]);
         }
+
         return $exportData;
     }
+
 }

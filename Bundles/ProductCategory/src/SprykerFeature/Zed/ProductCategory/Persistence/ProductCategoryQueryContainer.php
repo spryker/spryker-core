@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuer
  */
 class ProductCategoryQueryContainer extends AbstractQueryContainer implements ProductCategoryQueryContainerInterface
 {
+
     /**
      * @param ModelCriteria $query
      * @param LocaleTransfer $locale
@@ -87,4 +89,5 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
 
         return $query;
     }
+
 }

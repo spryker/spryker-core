@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Yves\Customer\CustomerDependencyContainer;
  */
 class TwigCustomerPlugin extends AbstractPlugin implements TwigFunctionPluginInterface
 {
+
     /**
      * @param Application $application
      *
@@ -35,4 +37,4 @@ class TwigCustomerPlugin extends AbstractPlugin implements TwigFunctionPluginInt
         ];
     }
 
-    }
+}

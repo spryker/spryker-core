@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Yves\FrontendExporter\Creator\ResourceCreatorInterface;
 
 class RedirectResourceCreator implements ResourceCreatorInterface
 {
+
     /**
      * @var LocatorLocatorInterface
      */
@@ -60,7 +62,8 @@ class RedirectResourceCreator implements ResourceCreatorInterface
         return [
             '_controller' => $service,
             '_route' => $routeResolver->resolve(),
-            'meta'  =>  $data
+            'meta' => $data,
         ];
     }
+
 }

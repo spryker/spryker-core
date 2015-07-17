@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use SprykerFeature\Zed\Application\Business\Model\Twig\EnvironmentInfo;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
@@ -32,7 +32,7 @@ class TranslationServiceProvider extends \Silex\Provider\TranslationServiceProvi
             [
                 'adapter' => 'csv',
                 'content' => $pathToLanguageFile,
-                'locale' => \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale()
+                'locale' => \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale(),
             ]
         );
         \Zend_Registry::set('Zend_Translate', $translator);

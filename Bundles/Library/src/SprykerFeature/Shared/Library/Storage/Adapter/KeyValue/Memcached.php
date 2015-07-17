@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 
 /**
  * @property \Memcached $resource
+ *
  * @method \Memcached getResource()
  */
 abstract class Memcached extends AbstractKeyValue
@@ -46,4 +48,5 @@ abstract class Memcached extends AbstractKeyValue
             $this->resource->quit();
         }
     }
+
 }

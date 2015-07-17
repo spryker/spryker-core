@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResult;
 
 abstract class AbstractExporterConsole extends Console
 {
+
     /**
      * @param array|BatchResult[] $results
      *
@@ -39,4 +41,5 @@ abstract class AbstractExporterConsole extends Console
 
         return $summary;
     }
+
 }

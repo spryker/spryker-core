@@ -1,7 +1,9 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use SprykerFeature\Zed\Application\Business\Model\Twig\EnvironmentInfo;
@@ -27,4 +29,4 @@ class EnvironmentInformationServiceProvider implements ServiceProviderInterface
         $twig->addFunction(new EnvironmentInfo());
     }
 
-} 
+}

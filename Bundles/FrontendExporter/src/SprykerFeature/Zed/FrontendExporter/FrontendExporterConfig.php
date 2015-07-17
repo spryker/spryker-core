@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,7 +7,6 @@
 namespace SprykerFeature\Zed\FrontendExporter;
 
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\ExportFailedDeciderPluginInterface;
@@ -87,4 +87,21 @@ class FrontendExporterConfig extends AbstractBundleConfig
     {
         return Config::get(SystemConfig::ELASTICA_PARAMETER__DOCUMENT_TYPE);
     }
+
+    /**
+     * @return int
+     */
+    public function getStandardChunkSize()
+    {
+        return 1000;
+    }
+
+    /**
+     * @return array
+     */
+    public function getChunkSizeTypeMap()
+    {
+        return [];
+    }
+
 }

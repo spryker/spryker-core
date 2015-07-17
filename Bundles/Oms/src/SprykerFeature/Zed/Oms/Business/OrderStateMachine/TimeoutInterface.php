@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use Propel\Runtime\Exception\PropelException;
 
 interface TimeoutInterface
 {
+
     /**
      * @param OrderStateMachineInterface $orderStateMachine
      *
@@ -39,4 +41,5 @@ interface TimeoutInterface
      * @throws PropelException
      */
     public function dropOldTimeout(ProcessInterface $process, $stateId, SpySalesOrderItem $orderItem);
+
 }

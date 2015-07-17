@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,12 +12,14 @@ use SprykerFeature\Zed\Cms\Business\Exception\TemplateExistsException;
 
 interface TemplateManagerInterface
 {
+
     /**
      * @param string $name
      * @param string $path
      *
-     * @return CmsTemplateTransfer
      * @throws TemplateExistsException
+     *
+     * @return CmsTemplateTransfer
      */
     public function createTemplate($name, $path);
 
@@ -44,16 +47,19 @@ interface TemplateManagerInterface
     /**
      * @param int $idTemplate
      *
-     * @return CmsTemplateTransfer
      * @throws MissingTemplateException
+     *
+     * @return CmsTemplateTransfer
      */
     public function getTemplateById($idTemplate);
 
     /**
      * @param string $path
      *
-     * @return CmsTemplateTransfer
      * @throws MissingTemplateException
+     *
+     * @return CmsTemplateTransfer
      */
     public function getTemplateByPath($path);
+
 }

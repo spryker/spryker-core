@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResult;
  */
 class FrontendExporterFacade extends AbstractFacade
 {
+
     /**
      * @param LocaleTransfer $locale
      *
@@ -42,6 +44,7 @@ class FrontendExporterFacade extends AbstractFacade
     /**
      * @param LocaleTransfer $locale
 
+     *
      * @return array|BatchResult[]
      */
     public function updateSearchForLocale(LocaleTransfer $locale)
@@ -53,8 +56,6 @@ class FrontendExporterFacade extends AbstractFacade
 
     /**
      * @param MessengerInterface $messenger
-     *
-     * @return void
      */
     public function install(MessengerInterface $messenger)
     {

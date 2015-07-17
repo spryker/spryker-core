@@ -217,10 +217,11 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
 
         $queueMessage->setError($exception->getMessage());
         if (!is_null($this->errorQueueName)) {
-            $this->errorQueueName->publish($this->errorQueueName, $queueMessage);
+            $this->queueConnection->publish($this->errorQueueName, $queueMessage);
         }
         if (!is_null($this->errorHandler)) {
             $this->errorHandler->handleError($exception);
         }
     }
+
 }

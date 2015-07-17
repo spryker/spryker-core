@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\TaxFrontendExporterConnector\Business\Model;
 
 class ExportProcessor implements ExportProcessorInterface
 {
+
     /**
      * @param array $resultSet
      * @param array $processedResultSet
@@ -60,4 +62,5 @@ class ExportProcessor implements ExportProcessorInterface
 
         return $processedResultSet;
     }
+
 }

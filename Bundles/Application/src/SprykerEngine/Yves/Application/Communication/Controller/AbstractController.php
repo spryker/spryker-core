@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,11 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractController
 {
-
-    /**
-     * @var Factory
-     */
-    private $factory;
 
     /**
      * @var Application
@@ -51,21 +47,12 @@ abstract class AbstractController
     {
         $this->app = $app;
         $this->locator = $locator;
-        $this->factory = $factory;
 
         if ($factory->exists('DependencyContainer')) {
             $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
         }
     }
 
-    /**
-     * TODO Wrong place! Needs to be in Newrelic
-     */
-    public function disableLoggingToNewRelic()
-    {
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreApdex();
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreTransaction();
-    }
     /**
      * @param string $path
      * @param array $parameters
@@ -133,6 +120,7 @@ abstract class AbstractController
      * @param null $data
      * @param int $status
      * @param array $headers
+     *
      * @return JsonResponse
      */
     protected function jsonResponse($data = null, $status = 200, $headers = [])
@@ -142,6 +130,7 @@ abstract class AbstractController
 
     /**
      * @param array $data
+     *
      * @return array
      */
     protected function viewResponse(array $data = [])
@@ -162,14 +151,16 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        return null;
+        return;
         //return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
     }
 
     /**
      * @param $message
-     * @return $this
+     *
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageSuccess($message)
     {
@@ -181,8 +172,9 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageWarning($message)
     {
@@ -194,8 +186,9 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @return $this
      * @throws \ErrorException
+     *
+     * @return $this
      */
     protected function addMessageError($message)
     {
@@ -237,6 +230,7 @@ abstract class AbstractController
 
     /**
      * @param Request $request
+     *
      * @return string
      */
     protected function getSecurityError(Request $request)
@@ -245,8 +239,9 @@ abstract class AbstractController
     }
 
     /**
-     * @return mixed
      * @throws \LogicException
+     *
+     * @return mixed
      */
     protected function getSecurityContext()
     {
@@ -259,6 +254,17 @@ abstract class AbstractController
     }
 
     /**
+     * @return bool
+     */
+    protected function hasUser()
+    {
+        $securityContext = $this->getSecurityContext();
+        $token = $securityContext->getToken();
+
+        return is_null($token);
+    }
+
+    /**
      * @return mixed
      */
     protected function getUser()
@@ -266,7 +272,7 @@ abstract class AbstractController
         $securityContext = $this->getSecurityContext();
         $token = $securityContext->getToken();
         if (is_null($token)) {
-            throw new \LogicException("No logged in user found.");
+            throw new \LogicException('No logged in user found.');
         }
 
         return $token->getUser();
@@ -313,8 +319,9 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Twig_Environment
      * @throws \LogicException
+     *
+     * @return \Twig_Environment
      */
     private function getTwig()
     {

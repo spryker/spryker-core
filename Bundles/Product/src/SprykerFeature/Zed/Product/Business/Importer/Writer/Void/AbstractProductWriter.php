@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,4 +21,5 @@ class AbstractProductWriter implements AbstractProductWriterInterface
     {
         return is_object($product);
     }
+
 }

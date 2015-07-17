@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,9 +29,9 @@ interface DataImportWriterInterface
      * @param array $localizedNames
      * @param float $price
      *
-     * @return int
-     *
      * @throws MissingProductOptionTypeException
+     *
+     * @return int
      */
     public function importProductOptionValue($importKeyProductOptionValue, $importKeyProductOptionType, array $localizedNames = [], $price = null);
 
@@ -40,9 +41,9 @@ interface DataImportWriterInterface
      * @param bool $isOptional
      * @param int $sequence
      *
-     * @return int
-     *
      * @throws MissingProductOptionTypeException
+     *
+     * @return int
      */
     public function importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional = false, $sequence = null);
 
@@ -51,10 +52,10 @@ interface DataImportWriterInterface
      * @param string $importKeyProductOptionValue
      * @param int $sequence
      *
-     * @return int
-     *
      * @throws MissingProductOptionTypeUsageException
      * @throws MissingProductOptionValueException
+     *
+     * @return int
      */
     public function importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyProductOptionValue, $sequence = null);
 
@@ -86,11 +87,15 @@ interface DataImportWriterInterface
      * @param bool $isDefault
      * @param int $sequence
      *
-     * @return int
-     *
      * @throws MissingProductOptionValueUsageException
      * @throws MissingProductOptionValueException
      * @throws MissingProductOptionValueUsageException
+     *
+     * @return int
      */
     public function importPresetConfiguration($sku, array $importKeysProductOptionValues, $isDefault = false, $sequence = null);
+
+
+    public function flushBuffer();
+
 }

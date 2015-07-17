@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use SprykerFeature\Yves\Twig\TwigSettings;
 
 class YvesExtension extends \Twig_Extension
 {
+
     /**
      * @var Application
      */
@@ -67,4 +69,5 @@ class YvesExtension extends \Twig_Extension
 
         return $twigFunctions;
     }
+
 }

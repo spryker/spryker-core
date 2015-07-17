@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -93,7 +94,6 @@ class ExportProcessor implements ExportProcessorInterface
         return $configs;
     }
 
-
     /**
      * @param int $idConfigPreset
      *
@@ -128,7 +128,7 @@ class ExportProcessor implements ExportProcessorInterface
                 'isOptional' => (bool) $typeUsage['isOptional'],
                 'taxRate' => $this->processOptionTaxRate($sku, $typeUsage['idTypeUsage']),
                 'excludes' => $this->processTypeExclusions($typeUsage['idTypeUsage']),
-                'values' => $this->processValuesForTypeUsage($typeUsage['idTypeUsage'], $idLocale)
+                'values' => $this->processValuesForTypeUsage($typeUsage['idTypeUsage'], $idLocale),
             ];
             $options[] = $optionData;
         }
@@ -233,4 +233,5 @@ class ExportProcessor implements ExportProcessorInterface
 
         $constraints[$operator] = $valueIds;
     }
+
 }

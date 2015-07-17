@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueueWorkerConsole extends Console
 {
+
     const COMMAND_NAME = 'queue:start-worker';
     const COMMAND_DESCRIPTION = 'processes queue messages via tasks';
     const QUEUE_NAME = 'queue-name';
@@ -34,8 +35,6 @@ class QueueWorkerConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     *
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -66,4 +65,5 @@ class QueueWorkerConsole extends Console
     {
         return Store::getInstance()->getCurrentCountry();
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistanceFactory;
  */
 class LocaleFacadeTest extends Test
 {
+
     /**
      * @var \SprykerEngine\Zed\Locale\Business\LocaleFacade
      */
@@ -76,4 +78,5 @@ class LocaleFacadeTest extends Test
             array_keys($this->localeNames)
         );
     }
+
 }

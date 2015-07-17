@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -89,7 +90,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getBool()
     {
@@ -97,7 +98,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param boolean $bool
+     * @param bool $bool
      *
      * @return AbstractTransfer
      */
@@ -119,6 +120,7 @@ class AbstractTransfer extends ParentAbstractTransfer
 
     /**
      * @param array|\ArrayObject $array
+     *
      * @return AbstractTransfer
      */
     public function setArray($array)
@@ -170,6 +172,5 @@ class AbstractTransfer extends ParentAbstractTransfer
 
         return $this;
     }
-
 
 }

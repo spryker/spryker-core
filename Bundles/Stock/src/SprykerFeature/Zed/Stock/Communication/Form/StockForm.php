@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,9 +20,9 @@ class StockForm extends AbstractForm
         $fields[] = $this->addField('name')
             ->setConstraints([
                 new Assert\Type([
-                    'type' => 'string'
+                    'type' => 'string',
                 ]),
-                new Assert\NotBlank()
+                new Assert\NotBlank(),
             ]);
 
         return $fields;
@@ -34,4 +35,5 @@ class StockForm extends AbstractForm
     {
         return [];
     }
+
 }

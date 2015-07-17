@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block head_title %}{{ title }}{% endblock %}</title>
+
+    {% block head_css_old %}
+
+        {% block head_css_application_old -%}
+            {#<link rel="stylesheet" type="text/css" href="{{ staticPath('Application/styles/bundle.css') }}">#}
+        {%- endblock %}
+
+        {% block head_css_ui_old -%}
+            <link href="/bundles/Gui/styles/bootstrap.min.css" rel="stylesheet">
+            <link href="/bundles/Gui/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+            <!-- FooTable -->
+            <link href="/bundles/Gui/styles/plugins/footable/footable.core.css" rel="stylesheet">
+
+            <link href="/bundles/Gui/styles/animate.css" rel="stylesheet">
+            <link href="/bundles/Gui/styles/style.min.css" rel="stylesheet">
+            {#<link rel="stylesheet" type="text/css" href="{{ staticPath('Ui/styles/bundle.css') }}">#}
+        {%- endblock %}
+
+        {% block head_css_bundles_old %}{% endblock %}
+
+
+    {% endblock %}
+
+    {% block head_js_old %}
+        {% block head_js_application_old -%}
+            {#<script type="application/javascript" src="{{ staticPath('Application/scripts/bundle.js') }}"></script>#}
+        {%- endblock %}
+
+        {% block head_js_ui_old -%}
+            {#<script type="application/javascript" src="{{ staticPath('Ui/scripts/bundle.js') }}"></script>#}
+        {%- endblock %}
+
+        {% block head_js_bundles_old %}{% endblock %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    {% block body_menu %}
+        {% include '@Gui/Partials/menu.twig' %}
+    {% endblock %}
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    <form role="search" class="navbar-form-custom" action="search_results.html">
+                        <div class="form-group">
+                            <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                        </div>
+                    </form>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message">Spryker Administration</span>
+                    </li>
+                    <li>
+                        <a href="/auth/logout">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>{% block section_title %}{{ section_title | default('Section Title') }}{% endblock %}</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/">{{ 'Dashboard' | trans }}</a>
+                    </li>
+                    {% block breadcrumb %}{% endblock %}
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+        <div class="footer">
+            <div>
+                <strong>Copyright</strong> Spryker GmbH &copy; 2015
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% block footer_js %}
+<script src="/bundles/Gui/scripts/resources.min.js"></script>
+{% endblock %}
+
+</body>
+
+</html>

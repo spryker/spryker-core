@@ -1,17 +1,17 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 use SprykerFeature\Shared\Library\Cloud;
 
 /**
  * Performance Optimization:
  *  Cache the information if the directory exists
- *
  */
 class SprykerFeature_Shared_Library_Data
 {
+
     const PATH_DATA = 'data';
     const PATH_SHARED = 'static';
     const PATH_COMMON = 'common';
@@ -20,7 +20,9 @@ class SprykerFeature_Shared_Library_Data
      * This directory is local host only and not store specific
      *
      * @static
+     *
      * @param string $relativePath relative path in data directory
+     *
      * @return mixed
      */
     public static function getLocalCommonPath($relativePath = null)
@@ -28,6 +30,7 @@ class SprykerFeature_Shared_Library_Data
         $path = self::getBaseDataPath(false, false);
         $path .= DIRECTORY_SEPARATOR . self::PATH_COMMON;
         $path = self::addRelativePath($path, $relativePath);
+
         return self::createDirectoryIfNotExisting($path);
     }
 
@@ -35,7 +38,9 @@ class SprykerFeature_Shared_Library_Data
      * This directory is local host only but store specific
      *
      * @static
+     *
      * @param string $relativePath relative path in data directory
+     *
      * @return mixed
      */
     public static function getLocalStoreSpecificPath($relativePath = null)
@@ -50,7 +55,9 @@ class SprykerFeature_Shared_Library_Data
      * This directory is shared between hosts (NFS) but not store specific
      *
      * @static
+     *
      * @param string $relativePath relative path in data directory
+     *
      * @return mixed
      */
     public static function getSharedCommonPath($relativePath = null)
@@ -70,7 +77,9 @@ class SprykerFeature_Shared_Library_Data
      * This directory is shared between hosts (NFS) and is store specific
      *
      * @static
+     *
      * @param string $relativePath relative path in data directory
+     *
      * @return mixed
      */
     public static function getSharedStoreSpecificPath($relativePath = null)
@@ -88,6 +97,7 @@ class SprykerFeature_Shared_Library_Data
     /**
      * @param bool $storeSpecific (stored in store specific sub.folder?)
      * @param bool $isSharedBetweenHosts (weather to store in 'static' directory in shared NFS)
+     *
      * @return string
      */
     protected static function getBaseDataPath($storeSpecific = false, $isSharedBetweenHosts = true)
@@ -106,6 +116,7 @@ class SprykerFeature_Shared_Library_Data
     /**
      * @param string $path
      * @param string $relativePath
+     *
      * @return string
      */
     protected static function addRelativePath($path, $relativePath)
@@ -116,13 +127,16 @@ class SprykerFeature_Shared_Library_Data
         if (substr($path, -1) !== DIRECTORY_SEPARATOR) {
             $path .= DIRECTORY_SEPARATOR;
         }
+
         return $path;
     }
 
     /**
      * @param string $path
-     * @return string
+     *
      * @throws Exception
+     *
+     * @return string
      */
     protected static function createDirectoryIfNotExisting($path)
     {
@@ -136,6 +150,8 @@ class SprykerFeature_Shared_Library_Data
         if (false === is_writable($path)) {
             throw new Exception('Data directory not writable! (' . $path . ')');
         }
+
         return $path;
     }
+
 }

@@ -1,13 +1,16 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace Unit\SprykerFeature\Zed\ProductImage\Business\Model;
 
 use SprykerFeature\Zed\ProductImage\Business\Model\Filesystem;
 
 class FilesystemTest extends \PHPUnit_Framework_TestCase
 {
+
     const TEST_MAPPING_ID = 12030;
     const TEST_REVERSED_DIRECTORY_PATH = '/030/21/';
     const PATH_ORIGINAL = 'images/products/original';
@@ -33,4 +36,5 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
 
         return $mock;
     }
+
 }

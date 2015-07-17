@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,8 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GridController extends AbstractController
 {
+
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function discountAction(Request $request)
@@ -28,6 +31,7 @@ class GridController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function decisionRuleAction(Request $request)
@@ -39,6 +43,7 @@ class GridController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function voucherAction(Request $request)
@@ -50,6 +55,7 @@ class GridController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function voucherPoolCategoryAction(Request $request)
@@ -61,6 +67,7 @@ class GridController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function voucherPoolAction(Request $request)
@@ -69,4 +76,5 @@ class GridController extends AbstractController
 
         return $this->jsonResponse($grid->toArray());
     }
+
 }

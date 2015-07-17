@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -54,6 +55,7 @@ class CaptureResponseContainer extends AbstractResponseContainer
     protected $clearing_legalnote;
     /**
      * (YYYYMMDD)
+     *
      * @var string
      */
     protected $clearing_duedate;
@@ -105,8 +107,7 @@ class CaptureResponseContainer extends AbstractResponseContainer
      * @var string
      */
     protected $clearing_amount;
-    
-    
+
     /**
      * @param string $clearing_bankaccount
      */

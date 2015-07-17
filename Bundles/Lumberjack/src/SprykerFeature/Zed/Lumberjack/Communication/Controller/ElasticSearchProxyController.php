@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,8 +7,7 @@
 namespace SprykerFeature\Zed\Lumberjack\Communication\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use \SprykerFeature\Zed\Lumberjack\Business\Model\ElasticSearch\Proxy;
-
+use SprykerFeature\Zed\Lumberjack\Business\Model\ElasticSearch\Proxy;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
 class ElasticSearchProxyController extends AbstractController
@@ -17,6 +17,7 @@ class ElasticSearchProxyController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function searchAction(Request $request)
@@ -52,10 +53,10 @@ class ElasticSearchProxyController extends AbstractController
                 $this->facadeLumberjack->getSearch(
                     [
                         'size' => $request->query->get('hits'),
-                        'from' => 0
+                        'from' => 0,
                     ],
                     [
-                        'request' => $request->query->get('query')
+                        'request' => $request->query->get('query'),
                     ],
                     Proxy::SEARCH_TYPE_SINGLE
                 )
@@ -63,8 +64,8 @@ class ElasticSearchProxyController extends AbstractController
         );
 
         $csvContent = $this->facadeLumberjack->getCsvFromElasticSearchJsonResponse($response, ';', '"');
-        header("Content-type: text/csv");
-        header("Cache-Control: no-store, no-cache");
+        header('Content-type: text/csv');
+        header('Cache-Control: no-store, no-cache');
         header('Content-Disposition: attachment; filename="lumberjack.csv"');
         echo $csvContent;
     }
@@ -114,4 +115,5 @@ class ElasticSearchProxyController extends AbstractController
     {
         header('Access-Control-Allow-Origin: *');
     }
+
 }

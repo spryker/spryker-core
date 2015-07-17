@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,9 +10,12 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 interface GatewayControllerListenerInterface
 {
+
     /**
      * @param FilterControllerEvent $event
+     *
      * @return callable
      */
     public function onKernelController(FilterControllerEvent $event);
+
 }

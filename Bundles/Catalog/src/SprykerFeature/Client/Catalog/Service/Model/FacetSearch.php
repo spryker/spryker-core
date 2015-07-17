@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,7 +16,6 @@ use SprykerFeature\Client\Catalog\Service\Model\Extractor\AggregationExtractorIn
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @package SprykerFeature\Client\Catalog\Service\Model
  */
 class FacetSearch extends AbstractSearch
 {
@@ -67,6 +67,7 @@ class FacetSearch extends AbstractSearch
 
     /**
      * @param Request $request
+     *
      * @return Query
      */
     protected function createSearchQuery(Request $request)
@@ -91,7 +92,7 @@ class FacetSearch extends AbstractSearch
         $query->setQuery(
             (new Filtered())
                 ->setFilter(new Term([
-                    'category.direct-parents' => $this->category['node_id']
+                    'category.direct-parents' => $this->category['node_id'],
                 ]))
         );
     }

@@ -1,11 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Shared\Catalog\Code;
 
 interface ProductAttributeConstantInterface
 {
+
     const ATTRIBUTE_NAME = 'name';
     const ATTRIBUTE_DESCRIPTION = 'description';
     const ATTRIBUTE_SHORT_DESCRIPTION = 'short_description';
@@ -16,4 +19,5 @@ interface ProductAttributeConstantInterface
     const ATTRIBUTE_META_DESCRIPTION = 'meta_description';
     const ATTRIBUTE_META_KEYWORDS = 'meta_keywords';
     const ATTRIBUTE_META_TITLE = 'meta_title';
+
 }

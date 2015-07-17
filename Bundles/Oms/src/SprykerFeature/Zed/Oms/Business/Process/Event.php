@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -70,7 +71,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @param boolean $onEnter
+     * @param bool $onEnter
      */
     public function setOnEnter($onEnter)
     {
@@ -78,7 +79,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isOnEnter()
     {
@@ -116,7 +117,7 @@ class Event implements EventInterface
      */
     public function getTransitionsBySource(StateInterface $sourceState)
     {
-        $transitions = array();
+        $transitions = [];
 
         foreach ($this->transitions as $transition) {
             if ($transition->getSource()->getName() === $sourceState->getName()) {

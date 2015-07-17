@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use SprykerFeature\Zed\Ui\Communication\Plugin\Form\Bean\FieldBeanTrait;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use SprykerFeature\Zed\Ui\Dependency\Plugin\AbstractFormPlugin;
 use SprykerFeature\Zed\Ui\Library\Constraints\SerializeInterface;
-use Symfony\Component\Validator\Validator;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Field extends AbstractFormPlugin
@@ -49,7 +49,7 @@ class Field extends AbstractFormPlugin
             return $value;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -57,7 +57,7 @@ class Field extends AbstractFormPlugin
      */
     protected function toArray()
     {
-        $messages =  $this->getMessages();
+        $messages = $this->getMessages();
 
         if ($this->stateContainer->receivedSubmitRequest()) {
             $messages = array_merge($messages, $this->getErrorMessages());
@@ -78,6 +78,7 @@ class Field extends AbstractFormPlugin
 
     /**
      * @param array $output
+     *
      * @return array|void
      */
     public function extendOutput(array $output)
@@ -89,6 +90,7 @@ class Field extends AbstractFormPlugin
 
     /**
      * @param $mixed
+     *
      * @return array
      */
     protected function getKeyLessArray($mixed)
@@ -104,6 +106,7 @@ class Field extends AbstractFormPlugin
 
     /**
      * @param $mixed
+     *
      * @return array
      */
     protected function getKeyLessArrayIfArray($mixed)
@@ -136,11 +139,12 @@ class Field extends AbstractFormPlugin
 
     /**
      * @param array $data
+     *
      * @return array|\stdClass
      */
     protected function getEmptyStdClassIfEmpty(array $data)
     {
-        if (count($data) == 0) {
+        if (count($data) === 0) {
             $data = new \stdClass();
         }
 
@@ -154,7 +158,7 @@ class Field extends AbstractFormPlugin
     {
         $errors = $this->getErrors();
 
-        return ! (bool) count($errors);
+        return !(bool) count($errors);
     }
 
     /**
@@ -209,7 +213,7 @@ class Field extends AbstractFormPlugin
 
         $options = [
             'allowExtraFields' => true,
-            'fields' => $fields
+            'fields' => $fields,
         ];
 
         return new Assert\Collection($options);
@@ -217,6 +221,7 @@ class Field extends AbstractFormPlugin
 
     /**
      * @param $value
+     *
      * @return bool
      */
     protected function acceptsValue($value)
@@ -234,4 +239,5 @@ class Field extends AbstractFormPlugin
 
         return $valueAccepted;
     }
+
 }

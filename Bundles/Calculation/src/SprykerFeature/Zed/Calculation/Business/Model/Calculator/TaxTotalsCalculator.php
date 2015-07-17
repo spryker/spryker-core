@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInter
 
 class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 {
+
     /**
      * @var PriceCalculationHelperInterface
      */
@@ -151,4 +153,5 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
         return $taxItem;
     }
+
 }

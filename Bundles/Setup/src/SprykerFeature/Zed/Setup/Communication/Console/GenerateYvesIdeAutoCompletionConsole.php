@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -33,6 +34,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -50,8 +52,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         $generator
             ->addMethodTagBuilder(new GeneratedInterfaceMethodTagBuilder(
                 [
-                    GeneratedInterfaceMethodTagBuilder::OPTION_METHOD_STRING_PATTERN =>
-                        ' * @method \\Generated\Yves\Ide\{{bundle}} {{methodName}}()'
+                    GeneratedInterfaceMethodTagBuilder::OPTION_METHOD_STRING_PATTERN => ' * @method \\Generated\Yves\Ide\{{bundle}} {{methodName}}()',
                 ]
             ))
         ;
@@ -107,8 +108,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
 
         $options = [
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Yves\Ide\FactoryAutoCompletion',
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR =>
-                APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide/',
+            IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide/',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => false,
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
@@ -128,11 +128,13 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
     }
 
     /**
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     private function getProjectNamespace()
     {
         return Config::get(SystemConfig::PROJECT_NAMESPACES)[0];
     }
+
 }

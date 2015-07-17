@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -18,4 +19,5 @@ class AuthQueryContainer extends AbstractQueryContainer
     {
         return SpyResetPasswordQuery::create();
     }
+
 }

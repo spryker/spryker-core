@@ -41,6 +41,7 @@
         <column name="id_customer_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
         <column name="fk_customer" required="true" type="INTEGER"/>
         <column name="fk_country" type="INTEGER" required="true"/>
+        <column name="fk_region" type="INTEGER" />
 
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, "/>
         <column name="first_name" required="true" size="100" type="VARCHAR"/>
@@ -58,10 +59,12 @@
         <foreign-key foreignTable="spy_customer" phpName="Customer" refPhpName="Address">
             <reference foreign="id_customer" local="fk_customer"/>
         </foreign-key>
+        <foreign-key foreignTable="spy_region" phpName="Region" refPhpName="CustomerAddress">
+            <reference local="fk_region" foreign="id_region"/>
+        </foreign-key>
         <foreign-key foreignTable="spy_country" phpName="Country" refPhpName="CustomerAddress">
             <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
-
         <index>
             <index-column name="fk_customer"/>
         </index>

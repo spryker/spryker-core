@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -70,7 +71,6 @@ class AddressCheckContainer extends AbstractRequestContainer
      */
     protected $language;
 
-    
     /**
      * @param string $addresschecktype
      */

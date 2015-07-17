@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Price;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class PriceConfig extends AbstractBundleConfig
@@ -20,4 +20,5 @@ class PriceConfig extends AbstractBundleConfig
     {
         return self::DEFAULT_PRICE_TYPE;
     }
+
 }

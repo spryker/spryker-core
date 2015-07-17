@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -36,9 +37,10 @@ interface DataProviderInterface
     /**
      * @param DataProviderInterface $dataProvider
      *
-     * @return self
-     *
      * @throws \SprykerFeature\Yves\Library\Tracking\DataProvider\DataProviderException
+     *
+     * @return self
      */
     public function mergeDataProvider(DataProviderInterface $dataProvider);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,7 +9,6 @@ namespace SprykerFeature\Zed\Sales\Persistence;
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderCommentQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 
@@ -35,19 +35,19 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @var int $idOrder
+     * @var int
      *
      * @return SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByIdSalesOrder($idOrder)
     {
         $query = $this->getFactory()->createPropelSpySalesOrderItemQuery();
+
         return $query->filterByFkSalesOrder($idOrder);
     }
 
-
     /**
-     * @var int $idOrder
+     * @var int
      *
      * @return SpySalesOrderItemQuery
      */
@@ -56,10 +56,35 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
         $query = $this->querySalesOrderItemsByIdSalesOrder($idOrder);
         $query->joinWith('State');
         $query->joinWith('Process');
+
         return $query;
     }
 
+    /**
+     * @param int $idSalesOrderAddress
+     *
+     * @return SpySalesOrderAddressQuery
+     */
+    public function querySalesOrderAddressById($idSalesOrderAddress)
+    {
+        $query = $this->getFactory()->createPropelSpySalesOrderAddressQuery();
+        $query->filterByIdSalesOrderAddress($idSalesOrderAddress);
 
+        return $query;
+    }
+
+    /**
+     * @param int $orderId
+     *
+     * @return SpySalesExpenseQuery
+     */
+    public function querySalesExpensesByOrderId($orderId)
+    {
+        $query = $this->getFactory()->createPropelSpySalesExpenseQuery();
+        $query->filterByFkSalesOrder($orderId);
+
+        return $query;
+    }
 
     /**
      * @param $idOrderItem
@@ -98,4 +123,5 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
         return $query;
     }
+
 }

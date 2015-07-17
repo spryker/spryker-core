@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,8 +14,30 @@ class IndexController extends AbstractController
 
     /**
      * @param Request $request
+     *
+     * @return array
      */
     public function indexAction(Request $request)
     {
+        $table = $this->getDependencyContainer()->createOrdersTable();
+        $table->init();
+
+        return [
+            'orders' => $table,
+        ];
     }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()->createOrdersTable();
+        $table->init();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
+
 }

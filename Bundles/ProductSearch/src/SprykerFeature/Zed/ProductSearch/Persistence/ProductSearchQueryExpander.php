@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,6 +20,7 @@ use SprykerFeature\Zed\ProductSearch\Persistence\Propel\Map\SpySearchableProduct
 
 class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
 {
+
     /**
      * @var ProductQueryContainerInterface
      */
@@ -63,8 +65,9 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
     /**
      * @param ModelCriteria $expandableQuery
      *
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     protected function joinSearchableProducts(ModelCriteria $expandableQuery)
     {
@@ -89,4 +92,5 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
 
         return $expandableQuery;
     }
+
 }

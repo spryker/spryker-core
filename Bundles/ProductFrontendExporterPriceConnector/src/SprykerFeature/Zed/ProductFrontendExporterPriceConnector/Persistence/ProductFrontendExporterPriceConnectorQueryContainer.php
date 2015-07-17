@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,6 +29,7 @@ class ProductFrontendExporterPriceConnectorQueryContainer extends AbstractQueryC
 
     /**
      * @param string $priceType
+     *
      * @return SpyPriceTypeQuery
      */
     public function getFkDefaultPriceType($priceType)
@@ -35,4 +37,5 @@ class ProductFrontendExporterPriceConnectorQueryContainer extends AbstractQueryC
         return SpyPriceTypeQuery::create()
             ->filterByName($priceType);
     }
+
 }

@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Client\FrontendExporter\Service\Matcher;
 
-use SprykerFeature\Client\KvStorage\Service\KvStorageClientInterface;
+use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class UrlMatcher implements UrlMatcherInterface
@@ -17,15 +18,15 @@ class UrlMatcher implements UrlMatcherInterface
     protected $urlKeyBuilder;
 
     /**
-     * @var KvStorageClientInterface
+     * @var StorageClientInterface
      */
     protected $keyValueReader;
 
     /**
      * @param KeyBuilderInterface $urlKeyBuilder
-     * @param KvStorageClientInterface $keyValueReader
+     * @param StorageClientInterface $keyValueReader
      */
-    public function __construct(KeyBuilderInterface $urlKeyBuilder, KvStorageClientInterface $keyValueReader)
+    public function __construct(KeyBuilderInterface $urlKeyBuilder, StorageClientInterface $keyValueReader)
     {
         $this->urlKeyBuilder = $urlKeyBuilder;
         $this->keyValueReader = $keyValueReader;
@@ -53,4 +54,5 @@ class UrlMatcher implements UrlMatcherInterface
 
         return false;
     }
+
 }

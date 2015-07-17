@@ -1,11 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Discount\Business\Calculator;
-
-use Generated\Shared\Transfer\Discount\DependencyDiscountItemInterfaceTransfer;
 
 class Fixed
 {
@@ -13,6 +12,7 @@ class Fixed
     /**
      * @param DiscountItemInterface[] $discountableObjects
      * @param float $number
+     *
      * @return float
      */
     public function calculate(array $discountableObjects, $number)
@@ -23,4 +23,5 @@ class Fixed
 
         return $number;
     }
+
 }

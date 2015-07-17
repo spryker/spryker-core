@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,13 +13,13 @@ use SprykerFeature\Zed\ProductCategorySearch\Communication\ProductCategorySearch
 
 /**
  * Class ProductCategoryProcessorPlugin
- * @package SprykerFeature\Zed\ProductCategory\Communication\Plugin
  */
 /**
  * @method ProductCategorySearchDependencyContainer getDependencyContainer()
  */
 class ProductCategorySearchProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
+
     /**
      * @return string
      */
@@ -40,4 +41,5 @@ class ProductCategorySearchProcessorPlugin extends AbstractPlugin implements Dat
 
         return $facade->processProductCategorySearchData($resultSet, $processedResultSet, $locale);
     }
+
 }

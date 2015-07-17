@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,12 +10,13 @@ use Elastica\Index;
 use Generated\Client\Ide\FactoryAutoCompletion\Catalog;
 use SprykerFeature\Client\Catalog\CatalogDependencyProvider;
 use SprykerFeature\Client\Catalog\Service\Model\FacetConfig;
-use SprykerEngine\Client\Kernel\Service\AbstractDependencyContainer;
+use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class CatalogDependencyContainer extends AbstractDependencyContainer
+class CatalogDependencyContainer extends AbstractServiceDependencyContainer
 {
+
     /**
      * @var Catalog
      */
@@ -27,16 +29,17 @@ class CatalogDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createModelCatalog(
             $this->getProductKeyBuilder(),
-            $this->createKvStorage(),
+            $this->createStorage(),
             \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale()
         );
     }
 
     /**
-     * @return mixed
      * @throws \ErrorException
+     *
+     * @return mixed
      */
-    public function createKvStorage()
+    public function createStorage()
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::KVSTORAGE);
     }
@@ -44,6 +47,7 @@ class CatalogDependencyContainer extends AbstractDependencyContainer
     /**
      * @param Request $request
      * @param array $category
+     *
      * @return Model\FacetSearch
      */
     public function createFacetSearch(Request $request, array $category)
@@ -65,6 +69,7 @@ class CatalogDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param Request $request
+     *
      * @return Model\FulltextSearch
      */
     public function createFulltextSearch(Request $request)
@@ -93,6 +98,7 @@ class CatalogDependencyContainer extends AbstractDependencyContainer
 
     /**
      * @param FacetConfig $facetConfig
+     *
      * @return Model\FacetFilterHandler
      */
     protected function createFacetFilterHandler(FacetConfig $facetConfig)
@@ -144,4 +150,5 @@ class CatalogDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createKeyBuilderProductResourceKeyBuilder();
     }
+
 }

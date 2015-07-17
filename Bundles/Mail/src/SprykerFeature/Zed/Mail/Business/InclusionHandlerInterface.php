@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Mail\Business;
 
 interface InclusionHandlerInterface
 {
+
     /**
      * @param string $path
      *
@@ -27,4 +29,5 @@ interface InclusionHandlerInterface
      * @return string
      */
     public function encodeBase64($path);
+
 }

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Library;
 
-use SprykerFeature\Zed\Auth\Communication\Plugin\Auth;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Library\Validator\ValidatorChain;
 
@@ -54,6 +54,7 @@ class Form extends \Zend_Form
 
     /**
      * @param array $data
+     *
      * @return bool
      */
     public function isValid($data = null)
@@ -61,6 +62,7 @@ class Form extends \Zend_Form
         if (null === $data) {
             $data = $this->getRequest()->request->all();
         }
+
         return parent::isValid($data);
     }
 
@@ -88,6 +90,7 @@ class Form extends \Zend_Form
 
     /**
      * @param \Zend_View_Interface $view
+     *
      * @return string
      */
     public function render(\Zend_View_Interface $view = null)
@@ -107,6 +110,7 @@ class Form extends \Zend_Form
             }
         }
         $this->_setIsRendered();
+
         return $content;
     }
 

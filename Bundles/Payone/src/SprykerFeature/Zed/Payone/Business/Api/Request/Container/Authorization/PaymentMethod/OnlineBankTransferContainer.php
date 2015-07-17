@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -42,7 +43,6 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
      * @var RedirectContainer
      */
     protected $redirect;
-
 
     /**
      * @param string $bankaccount

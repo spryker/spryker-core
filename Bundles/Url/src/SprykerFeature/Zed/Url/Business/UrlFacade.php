@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,15 +20,17 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
  */
 class UrlFacade extends AbstractFacade
 {
+
     /**
      * @param string $url
      * @param LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
+     *
+     * @return UrlTransfer
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
     {
@@ -42,9 +45,10 @@ class UrlFacade extends AbstractFacade
      * @param string $resourceType
      * @param int $idResource
      *
-     * @return UrlTransfer
      * @throws PropelException
      * @throws UrlExistsException
+     *
+     * @return UrlTransfer
      */
     public function createUrlForCurrentLocale($url, $resourceType, $idResource)
     {
@@ -93,8 +97,9 @@ class UrlFacade extends AbstractFacade
     /**
      * @param string $urlString
      *
-     * @return UrlTransfer
      * @throws MissingUrlException
+     *
+     * @return UrlTransfer
      */
     public function getUrlByPath($urlString)
     {
@@ -107,8 +112,9 @@ class UrlFacade extends AbstractFacade
     /**
      * @param int $idUrl
      *
-     * @return UrlTransfer
      * @throws MissingUrlException
+     *
+     * @return UrlTransfer
      */
     public function getUrlById($idUrl)
     {
@@ -130,10 +136,11 @@ class UrlFacade extends AbstractFacade
      * @param string $toUrl
      * @param int $status
      *
-     * @return RedirectTransfer
      * @throws MissingUrlException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return RedirectTransfer
      */
     public function createRedirect($toUrl, $status = 303)
     {
@@ -148,9 +155,10 @@ class UrlFacade extends AbstractFacade
      * @param LocaleTransfer $locale
      * @param int $idRedirect
      *
-     * @return UrlTransfer
      * @throws UrlExistsException
      * @throws MissingLocaleException
+     *
+     * @return UrlTransfer
      */
     public function createRedirectUrl($url, LocaleTransfer $locale, $idRedirect)
     {
@@ -180,4 +188,5 @@ class UrlFacade extends AbstractFacade
 
         $redirectManager->touchRedirectActive($redirect);
     }
+
 }

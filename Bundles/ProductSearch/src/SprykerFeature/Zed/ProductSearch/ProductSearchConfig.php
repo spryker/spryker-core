@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class ProductSearchConfig extends AbstractBundleConfig
 {
+
     /**
      * @return array|OperationInterface[]
      */
@@ -26,4 +28,5 @@ class ProductSearchConfig extends AbstractBundleConfig
             new CopyToMultiField(),
         ];
     }
+
 }

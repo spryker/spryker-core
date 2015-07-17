@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,5 +10,7 @@ use SprykerFeature\Shared\Library\ConfigInterface;
 
 interface UserConfig extends ConfigInterface
 {
-    const USER_SYSTEM_USERS = "USER_SYSTEM_USERS";
+
+    const USER_SYSTEM_USERS = 'USER_SYSTEM_USERS';
+
 }

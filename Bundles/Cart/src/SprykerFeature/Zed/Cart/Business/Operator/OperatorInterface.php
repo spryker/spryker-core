@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 interface OperatorInterface
 {
+
     /**
      * @param ChangeInterface $cartChange
      *
@@ -22,4 +24,5 @@ interface OperatorInterface
      * @param ItemExpanderPluginInterface $itemExpander
      */
     public function addItemExpanderPlugin(ItemExpanderPluginInterface $itemExpander);
+
 }

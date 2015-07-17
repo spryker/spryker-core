@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\TaxFrontendExporterConnector\Communication\TaxFrontendExp
  */
 class TaxProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
+
     /**
      * @return string
      */
@@ -37,4 +39,5 @@ class TaxProcessorPlugin extends AbstractPlugin implements DataProcessorPluginIn
             ->processDataForExport($resultSet, $processedResultSet)
         ;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -67,7 +68,7 @@ class InterfaceGenerator implements GeneratorInterface
             'bundle' => $classDefinition->getBundle(),
             'name' => $classDefinition->getName(),
             'uses' => $classDefinition->getUses(),
-            'methods' => $classDefinition->getMethods()
+            'methods' => $classDefinition->getMethods(),
         ];
     }
 

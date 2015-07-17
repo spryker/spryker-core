@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,7 +17,6 @@ class RefundResponseContainer extends AbstractResponseContainer
      * @var string
      */
     protected $protect_result_avs;
-
 
     /**
      * @param string $protect_result_avs

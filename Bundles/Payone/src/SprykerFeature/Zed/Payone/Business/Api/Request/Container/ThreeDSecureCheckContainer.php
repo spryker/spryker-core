@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -58,7 +59,6 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
      */
     protected $language;
 
-    
     /**
      * @param int $aid
      */

@@ -61,10 +61,9 @@ class TypeDistributor
             $currentTimestamp = $this->getCurrentTimestamp();
             $lastTimestamp = $this->distributionMarker->getLastDistributionTimestampByType($itemType);
             $batchIterator = $this->getBatchIterator($itemType, $lastTimestamp);
+            $batchCount = $batchIterator->count();
 
             $this->itemDistributor->distributeByType($itemType, $batchIterator);
-
-            $batchCount = $batchIterator->count();
 
             if (!is_null($messenger)) {
                 $messenger->info(
@@ -119,8 +118,9 @@ class TypeDistributor
     /**
      * @param string $type
      *
-     * @return DistributorQueryExpanderPluginInterface[]
      * @throws \Exception
+     *
+     * @return DistributorQueryExpanderPluginInterface[]
      */
     protected function getQueryPipelineByType($type)
     {
@@ -135,4 +135,5 @@ class TypeDistributor
 
         return $this->queryPipeline[$type];
     }
+
 }
