@@ -40,11 +40,11 @@ class ItemWriter implements ItemWriterInterface
         $foreignKeyColumn = $this->getForeignKeyByType($itemType);
 
         if (!$item) {
-             $this->createItem($itemType, $idItem, $foreignKeyColumn);
+            $this->createItem($itemType, $idItem, $foreignKeyColumn);
+        } else {
+            $item->setTouched(new \DateTime());
+            $item->save();
         }
-
-        $item->setTouched(new \DateTime());
-        $item->save();
     }
 
     /**
