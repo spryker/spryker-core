@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Sales\Communication\Table;
 
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
@@ -15,7 +19,7 @@ class OrdersTable extends AbstractTable
     const EMAIL = 'Email';
     const GRAND_TOTAL = 'GrandTotal';
     const FIRST_NAME = 'FirstName';
-    const URL = 'url';
+    const URL = 'Url';
 
     /**
      * @param SpySalesOrderQuery $salesQuery

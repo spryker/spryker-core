@@ -50,11 +50,11 @@ class SalesFacade extends AbstractFacade
      *
      * @return array
      */
-    public function getAggregateStatus($idOrder)
+    public function getAggregateState($idOrder)
     {
         $orderManager = $this->getDependencyContainer()->createOrderDetailsManager();
 
-        return $orderManager->getAggregateStatus($idOrder);
+        return $orderManager->getAggregateState($idOrder);
     }
 
     /**
