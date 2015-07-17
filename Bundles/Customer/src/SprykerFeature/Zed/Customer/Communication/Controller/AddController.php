@@ -9,10 +9,6 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-/**
- * Class AddController
- * @package SprykerFeature\Zed\Customer\Communication\Controller
- */
 class AddController extends AbstractController
 {
 

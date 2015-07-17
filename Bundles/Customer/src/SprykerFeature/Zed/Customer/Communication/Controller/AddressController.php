@@ -10,10 +10,6 @@ use Generated\Shared\Transfer\CustomerAddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class AddressController
- * @package SprykerFeature\Zed\Customer\Communication\Controller
- */
 class AddressController extends AbstractController
 {
 

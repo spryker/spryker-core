@@ -10,10 +10,6 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-/**
- * Class ViewController
- * @package SprykerFeature\Zed\Customer\Communication\Controller
- */
 class ViewController extends AbstractController
 {
 

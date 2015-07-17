@@ -11,10 +11,6 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class EditController
- * @package SprykerFeature\Zed\Customer\Communication\Controller
- */
 class EditController extends AbstractController
 {
 
