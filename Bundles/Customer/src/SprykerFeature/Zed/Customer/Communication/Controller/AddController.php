@@ -18,7 +18,9 @@ class AddController extends AbstractController
     public function indexAction()
     {
         /** @var CustomerForm $customerForm */
-        $form = $this->getDependencyContainer()->createCustomerForm('add');
+        $form = $this->getDependencyContainer()
+                     ->createCustomerForm('add')
+        ;
         $form->init();
 
         $form->handleRequest();
@@ -29,7 +31,9 @@ class AddController extends AbstractController
             $customerTransfer = $this->createCustomerTransfer();
             $customerTransfer->fromArray($data, true);
 
-            $lastInsertId = $this->getFacade()->registerCustomer($customerTransfer);
+            $lastInsertId = $this->getFacade()
+                                 ->registerCustomer($customerTransfer)
+            ;
 
             return $this->redirectResponse('/customer/');
         }

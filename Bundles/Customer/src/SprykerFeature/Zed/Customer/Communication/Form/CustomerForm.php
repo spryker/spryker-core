@@ -67,7 +67,9 @@ class CustomerForm extends AbstractForm
             $emailConstraints[] = new Callback([
                 'methods' => [
                     function ($email, ExecutionContext $context) {
-                        if ($this->getCustomerFacade()->hasEmail($email)) {
+                        if ($this->getCustomerFacade()
+                            ->hasEmail($email)
+                        ) {
                             $context->addViolation('Email is already used');
                         }
                     },
@@ -76,7 +78,7 @@ class CustomerForm extends AbstractForm
         }
 
         $emailParams = [
-            'label'       => 'Email',
+            'label' => 'Email',
             'constraints' => $emailConstraints,
         ];
 
@@ -84,86 +86,61 @@ class CustomerForm extends AbstractForm
             $emailParams['disabled'] = 'disabled';
         }
 
-        $this->addHidden(
-            'IdCustomer',
-            [
+        $this->addHidden('IdCustomer', [
                 'label' => 'Customer ID',
-            ]
-        )
-            ->addEmail(
-                'email',
-                $emailParams
-            )
-            ->addChoice(
-                'salutation',
-                [
-                    'label'       => 'Salutation',
+            ])
+            ->addEmail('email', $emailParams)
+            ->addChoice('salutation', [
+                    'label' => 'Salutation',
                     'placeholder' => 'Select one',
-                    'choices'     => $this->getSalutationOptions(),
-                ]
-            )
-            ->addText(
-                'first_name',
-                [
-                    'label'       => 'First Name',
+                    'choices' => $this->getSalutationOptions(),
+                ])
+            ->addText('first_name', [
+                    'label' => 'First Name',
                     'constraints' => [
                         new Required(),
                         new NotBlank(),
                         new Length(['max' => 100]),
                     ],
-                ]
-            )
-            ->addText(
-                'last_name',
-                [
-                    'label'       => 'Last Name',
+                ])
+            ->addText('last_name', [
+                    'label' => 'Last Name',
                     'constraints' => [
                         new Required(),
                         new NotBlank(),
                         new Length(['max' => 100]),
                     ],
-                ]
-            )
-            ->addChoice(
-                'gender',
-                [
-                    'label'       => 'Gender',
+                ])
+            ->addChoice('gender', [
+                    'label' => 'Gender',
                     'placeholder' => 'Select one',
-                    'choices'     => $this->getGenderOptions(),
+                    'choices' => $this->getGenderOptions(),
                     'constraints' => [
                         new Required(),
                     ],
-                ]
-            );
+                ])
+        ;
 
         if (self::UPDATE === $this->type) {
-            $this->addChoice(
-                'default_billing_address',
-                [
-                    'label'       => 'Billing Address',
+            $this->addChoice('default_billing_address', [
+                    'label' => 'Billing Address',
                     'placeholder' => 'Select one',
-                    'choices'     => $this->getAddressOptions(),
-                ]
-            )
-                ->addChoice(
-                    'default_shipping_address',
-                    [
-                        'label'       => 'Shipping Address',
+                    'choices' => $this->getAddressOptions(),
+                ])
+                ->addChoice('default_shipping_address', [
+                        'label' => 'Shipping Address',
                         'placeholder' => 'Select one',
-                        'choices'     => $this->getAddressOptions(),
-                    ]
-                );
+                        'choices' => $this->getAddressOptions(),
+                    ])
+            ;
         }
 
-        $this->addSubmit(
-            'submit',
-            [
+        $this->addSubmit('submit', [
                 'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
-                'attr'  => [
+                'attr' => [
                     'class' => 'btn btn-primary',
                 ],
-            ]
-        );
+            ]);
 
         return $this;
     }
@@ -178,9 +155,7 @@ class CustomerForm extends AbstractForm
         $idCustomer = $this->request->get('id_customer');
 
         if (false === is_null($idCustomer)) {
-            $customerDetailEntity = $this
-                ->customerQuery
-                ->findOneByIdCustomer($idCustomer);
+            $customerDetailEntity = $this->customerQuery->findOneByIdCustomer($idCustomer);
 
             if ($customerDetailEntity) {
                 $result = $customerDetailEntity->toArray();
@@ -242,8 +217,7 @@ class CustomerForm extends AbstractForm
         $result = [];
         if (!empty($addresses)) {
             foreach ($addresses->getData() as $address) {
-                $result[$address->getIdCustomerAddress()] = sprintf('%s %s (%s, %s %s)', $address->getFirstName(), $address->getLastName(), $address->getAddress1(), $address->getZipCode(),
-                    $address->getCity());
+                $result[$address->getIdCustomerAddress()] = sprintf('%s %s (%s, %s %s)', $address->getFirstName(), $address->getLastName(), $address->getAddress1(), $address->getZipCode(), $address->getCity());
             }
         }
 
@@ -257,7 +231,8 @@ class CustomerForm extends AbstractForm
     {
         return $this->getLocator()
             ->customer()
-            ->facade();
+            ->facade()
+            ;
     }
 
 }

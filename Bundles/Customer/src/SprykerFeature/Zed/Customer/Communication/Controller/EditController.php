@@ -22,7 +22,9 @@ class EditController extends AbstractController
         $idCustomer = $request->get('id_customer');
 
         /** @var CustomerForm $form */
-        $form = $this->getDependencyContainer()->createCustomerForm('update');
+        $form = $this->getDependencyContainer()
+            ->createCustomerForm('update')
+        ;
         $form->init();
 
         $form->handleRequest();
@@ -33,7 +35,9 @@ class EditController extends AbstractController
             /** @var CustomerTransfer $customer */
             $customer = $this->createCustomerTransfer();
             $customer->fromArray($data, true);
-            $this->getFacade()->updateCustomer($customer);
+            $this->getFacade()
+                ->updateCustomer($customer)
+            ;
 
             $defaultBillingAddress = !empty($data['default_billing_address']) ? $data['default_billing_address'] : false;
             if (false === empty($defaultBillingAddress)) {
@@ -49,7 +53,7 @@ class EditController extends AbstractController
         }
 
         return $this->viewResponse([
-            'form'        => $form->createView(),
+            'form' => $form->createView(),
             'id_customer' => $idCustomer,
         ]);
     }
@@ -77,7 +81,9 @@ class EditController extends AbstractController
     private function updateShippingAddress($idCustomer, $defaultBillingAddress)
     {
         $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultBillingAddress);
-        $this->getFacade()->setDefaultBillingAddress($addressTransfer);
+        $this->getFacade()
+            ->setDefaultBillingAddress($addressTransfer)
+        ;
     }
 
     /**
@@ -87,7 +93,9 @@ class EditController extends AbstractController
     private function updateBillingAddress($idCustomer, $defaultShippingAddress)
     {
         $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultShippingAddress);
-        $this->getFacade()->setDefaultShippingAddress($addressTransfer);
+        $this->getFacade()
+            ->setDefaultShippingAddress($addressTransfer)
+        ;
     }
 
     /**

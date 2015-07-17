@@ -28,7 +28,10 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createQueryContainer()
     {
-        return $this->getLocator()->customer()->queryContainer();
+        return $this->getLocator()
+            ->customer()
+            ->queryContainer()
+            ;
     }
 
     /**
@@ -38,10 +41,9 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $config = $this->getConfig();
         $senderPlugins = $this->getProvidedDependency(CustomerDependencyProvider::SENDER_PLUGINS);
-        $customer = $this->getFactory()->createCustomerCustomer(
-            $this->createQueryContainer(),
-            $config->getHostYves()
-        );
+        $customer = $this->getFactory()
+            ->createCustomerCustomer($this->createQueryContainer(), $config->getHostYves())
+        ;
 
         foreach ($senderPlugins[CustomerDependencyProvider::REGISTRATION_TOKEN_SENDERS] as $sender) {
             $customer->addRegistrationTokenSender($sender);
@@ -63,11 +65,9 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createAddress()
     {
-        return $this->getFactory()->createCustomerAddress(
-            $this->createQueryContainer(),
-            $this->createCountryFacade(),
-            $this->createLocaleFacade()
-        );
+        return $this->getFactory()
+            ->createCustomerAddress($this->createQueryContainer(), $this->createCountryFacade(), $this->createLocaleFacade())
+            ;
     }
 
     /**
@@ -75,7 +75,10 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCountryFacade()
     {
-        return $this->getLocator()->country()->facade();
+        return $this->getLocator()
+            ->country()
+            ->facade()
+            ;
     }
 
     /**
@@ -83,7 +86,10 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createLocaleFacade()
     {
-        return $this->getLocator()->locale()->facade();
+        return $this->getLocator()
+            ->locale()
+            ->facade()
+            ;
     }
 
 }

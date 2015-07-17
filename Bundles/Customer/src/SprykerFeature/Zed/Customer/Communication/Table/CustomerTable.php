@@ -38,15 +38,15 @@ class CustomerTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeaders([
-            'IdCustomer'     => '#',
+            'IdCustomer' => '#',
             self::CREATED_AT => 'Registration Date',
-            'Email'          => 'Email',
-            'LastName'       => 'Last Name',
-            'FirstName'      => 'First Name',
-            'ZipCode'        => 'ZIP Code',
-            'City'           => 'City',
-            self::COUNTRY    => self::COUNTRY,
-            self::ACTIONS    => self::ACTIONS,
+            'Email' => 'Email',
+            'LastName' => 'Last Name',
+            'FirstName' => 'First Name',
+            'ZipCode' => 'ZIP Code',
+            'City' => 'City',
+            self::COUNTRY => self::COUNTRY,
+            self::ACTIONS => self::ACTIONS,
         ]);
 
         $config->setSortable([
@@ -75,22 +75,22 @@ class CustomerTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->customerQuery
-            ->leftJoinBillingAddress('billing')
+        $query = $this->customerQuery->leftJoinBillingAddress('billing')
             ->withColumn('billing.first_name', 'FirstName')
             ->withColumn('billing.last_name', 'LastName')
             ->withColumn('billing.zip_code', 'ZipCode')
             ->withColumn('billing.city', 'City')
-            ->withColumn('billing.fk_country', self::COUNTRY);
+            ->withColumn('billing.fk_country', self::COUNTRY)
+        ;
 
         $lines = $this->runQuery($query, $config);
         if (!empty($lines)) {
             foreach ($lines as $key => $value) {
 
-                $country = $this->customerQuery
-                    ->useAddressQuery()
+                $country = $this->customerQuery->useAddressQuery()
                     ->useCountryQuery()
-                    ->findOneByIdCountry($lines[$key][self::COUNTRY]);
+                    ->findOneByIdCountry($lines[$key][self::COUNTRY])
+                ;
 
                 $lines[$key][self::COUNTRY] = $country ? $country->getName() : '';
                 $lines[$key][self::CREATED_AT] = gmdate(self::FORMAT, strtotime($value[self::CREATED_AT]));
@@ -111,9 +111,9 @@ class CustomerTable extends AbstractTable
         $result = '';
 
         $idCustomer = !empty($details['IdCustomer']) ? $details['IdCustomer'] : false;
-        if ($idCustomer) {
+        if (false !== $idCustomer) {
             $links = [
-                'Edit'             => '/customer/edit/?id_customer=%d',
+                'Edit' => '/customer/edit/?id_customer=%d',
                 'Manage addresses' => '/customer/address/?id_customer=%d',
             ];
 

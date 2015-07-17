@@ -49,16 +49,16 @@ class AddressTable extends AbstractTable
     {
         $config->setHeaders([
             self::ID_CUSTOMER_ADDRESS => '#',
-            'LastName'                => 'Last Name',
-            'FirstName'               => 'First Name',
-            'Address1'                => 'Address ',
-            'Address2'                => 'Address (2nd line)',
-            'Address3'                => 'Address (3rd line)',
-            'Company'                 => 'Company',
-            'ZipCode'                 => 'Zip Code',
-            'City'                    => 'City',
-            'Country'                 => 'Country',
-            self::ACTIONS             => self::ACTIONS,
+            'LastName' => 'Last Name',
+            'FirstName' => 'First Name',
+            'Address1' => 'Address ',
+            'Address2' => 'Address (2nd line)',
+            'Address3' => 'Address (3rd line)',
+            'Company' => 'Company',
+            'ZipCode' => 'Zip Code',
+            'City' => 'City',
+            'Country' => 'Country',
+            self::ACTIONS => self::ACTIONS,
         ]);
 
         $config->setSortable([
@@ -91,10 +91,10 @@ class AddressTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->addressQuery
-            ->filterByFkCustomer($this->idCustomer)
+        $query = $this->addressQuery->filterByFkCustomer($this->idCustomer)
             ->leftJoinCountry('country')
-            ->withColumn('country.name', 'Country');
+            ->withColumn('country.name', 'Country')
+        ;
         $lines = $this->runQuery($query, $config);
 
         $customer = $this->customerQuery->findOneByIdCustomer($this->idCustomer);
@@ -138,7 +138,7 @@ class AddressTable extends AbstractTable
         $result = '';
 
         $idCustomerAddress = !empty($details[self::ID_CUSTOMER_ADDRESS]) ? $details[self::ID_CUSTOMER_ADDRESS] : false;
-        if ($idCustomerAddress) {
+        if (false !== $idCustomerAddress) {
             $links = [
                 'Edit' => '/customer/address/edit/?id_customer_address=%d',
                 'View' => '/customer/address/view/?id_customer_address=%d',

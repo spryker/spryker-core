@@ -27,7 +27,10 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createQueryContainer()
     {
-        return $this->getLocator()->customer()->queryContainer();
+        return $this->getLocator()
+            ->customer()
+            ->queryContainer()
+            ;
     }
 
     /**
@@ -36,9 +39,13 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCustomerTable()
     {
         /** @var SpyCustomerQuery $customerQuery */
-        $customerQuery = $this->getQueryContainer()->queryCustomers();
+        $customerQuery = $this->getQueryContainer()
+            ->queryCustomers()
+        ;
 
-        return $this->getFactory()->createTableCustomerTable($customerQuery);
+        return $this->getFactory()
+            ->createTableCustomerTable($customerQuery)
+            ;
     }
 
     /**
@@ -47,12 +54,18 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCustomerAddressTable($idCustomer)
     {
         /** @var SpyCustomerAddressQuery $addressQuery */
-        $addressQuery = $this->getQueryContainer()->queryAddresses();
+        $addressQuery = $this->getQueryContainer()
+            ->queryAddresses()
+        ;
 
         /** @var SpyCustomerQuery $customerQuery */
-        $customerQuery = $this->getQueryContainer()->queryCustomers();
+        $customerQuery = $this->getQueryContainer()
+            ->queryCustomers()
+        ;
 
-        return $this->getFactory()->createTableAddressTable($addressQuery, $customerQuery, $idCustomer);
+        return $this->getFactory()
+            ->createTableAddressTable($addressQuery, $customerQuery, $idCustomer)
+            ;
     }
 
     /**
@@ -63,12 +76,18 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCustomerForm($type)
     {
         /** @var SpyCustomerQuery $customerQuery */
-        $customerQuery = $this->getQueryContainer()->queryCustomers();
+        $customerQuery = $this->getQueryContainer()
+            ->queryCustomers()
+        ;
 
         /** @var SpyCustomerAddressQuery $addressQuery */
-        $addressQuery = $this->getQueryContainer()->queryAddresses();
+        $addressQuery = $this->getQueryContainer()
+            ->queryAddresses()
+        ;
 
-        return $this->getFactory()->createFormCustomerForm($customerQuery, $addressQuery, $type);
+        return $this->getFactory()
+            ->createFormCustomerForm($customerQuery, $addressQuery, $type)
+            ;
     }
 
     /**
@@ -79,12 +98,18 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createAddressForm($type)
     {
         /** @var SpyCustomerQuery $customerQuery */
-        $customerQuery = $this->getQueryContainer()->queryCustomers();
+        $customerQuery = $this->getQueryContainer()
+            ->queryCustomers()
+        ;
 
         /** @var SpyCustomerAddressQuery $addressQuery */
-        $addressQuery = $this->getQueryContainer()->queryAddresses();
+        $addressQuery = $this->getQueryContainer()
+            ->queryAddresses()
+        ;
 
-        return $this->getFactory()->createFormAddressForm($addressQuery, $customerQuery, $type);
+        return $this->getFactory()
+            ->createFormAddressForm($addressQuery, $customerQuery, $type)
+            ;
     }
 
 }

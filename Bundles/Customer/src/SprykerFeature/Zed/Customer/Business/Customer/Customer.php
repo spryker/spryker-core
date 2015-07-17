@@ -68,9 +68,9 @@ class Customer
      */
     public function hasEmail($email)
     {
-        $customerCount = $this->queryContainer
-            ->queryCustomerByEmail($email)
-            ->count();
+        $customerCount = $this->queryContainer->queryCustomerByEmail($email)
+            ->count()
+        ;
 
         return ($customerCount > 0);
     }
@@ -110,9 +110,7 @@ class Customer
         $customerTransfer->fromArray($customer->toArray());
         $addresses = $customer->getAddresses();
         if ($addresses) {
-            $customerTransfer->setAddresses(
-                $this->entityCollectionToTransferCollection($addresses)
-            );
+            $customerTransfer->setAddresses($this->entityCollectionToTransferCollection($addresses));
         }
 
         return $customerTransfer;
@@ -200,9 +198,9 @@ class Customer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
-        $customer = $this->queryContainer
-            ->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
-            ->findOne();
+        $customer = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
+            ->findOne()
+        ;
         if (!$customer) {
             throw new CustomerNotFoundException('Customer not found.');
         }
@@ -337,13 +335,13 @@ class Customer
     protected function getCustomer(CustomerTransfer $customerTransfer)
     {
         if ($customerTransfer->getIdCustomer()) {
-            $customer = $this->queryContainer
-                ->queryCustomerById($customerTransfer->getIdCustomer())
-                ->findOne();
+            $customer = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
+                ->findOne()
+            ;
         } elseif ($customerTransfer->getEmail()) {
-            $customer = $this->queryContainer
-                ->queryCustomerByEmail($customerTransfer->getEmail())
-                ->findOne();
+            $customer = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
+                ->findOne()
+            ;
         }
 
         if (isset($customer) && ($customer !== null)) {

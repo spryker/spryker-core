@@ -26,7 +26,7 @@ class CustomerFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createCustomer()
             ->hasEmail($email)
-        ;
+            ;
     }
 
     /**
@@ -36,9 +36,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function registerCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()->createCustomer()
+        return $this->getDependencyContainer()
+            ->createCustomer()
             ->register($customerTransfer)
-        ;
+            ;
     }
 
     /**
@@ -48,9 +49,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()->createCustomer()
+        return $this->getDependencyContainer()
+            ->createCustomer()
             ->confirmRegistration($customerTransfer)
-        ;
+            ;
     }
 
     /**
@@ -60,9 +62,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()->createCustomer()
+        return $this->getDependencyContainer()
+            ->createCustomer()
             ->forgotPassword($customerTransfer)
-        ;
+            ;
     }
 
     /**
@@ -72,9 +75,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()->createCustomer()
+        return $this->getDependencyContainer()
+            ->createCustomer()
             ->restorePassword($customerTransfer)
-        ;
+            ;
     }
 
     /**
@@ -84,9 +88,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function deleteCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()->createCustomer()
+        return $this->getDependencyContainer()
+            ->createCustomer()
             ->delete($customerTransfer)
-        ;
+            ;
     }
 
     /**
@@ -96,9 +101,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function getCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()->createCustomer()
+        return $this->getDependencyContainer()
+            ->createCustomer()
             ->get($customerTransfer)
-        ;
+            ;
     }
 
     /**
@@ -108,9 +114,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function updateCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()->createCustomer()
+        return $this->getDependencyContainer()
+            ->createCustomer()
             ->update($customerTransfer)
-        ;
+            ;
     }
 
     /**
@@ -120,9 +127,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function getAddress(CustomerAddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()->createAddress()
+        return $this->getDependencyContainer()
+            ->createAddress()
             ->getAddress($addressTransfer)
-        ;
+            ;
     }
 
     /**
@@ -132,9 +140,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function updateAddress(CustomerAddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()->createAddress()
+        return $this->getDependencyContainer()
+            ->createAddress()
             ->updateAddress($addressTransfer)
-        ;
+            ;
     }
 
     /**
@@ -144,9 +153,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function createAddress(CustomerAddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()->createAddress()
+        return $this->getDependencyContainer()
+            ->createAddress()
             ->createAddress($addressTransfer)
-        ;
+            ;
     }
 
     /**
@@ -156,9 +166,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function setDefaultBillingAddress(CustomerAddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()->createAddress()
+        return $this->getDependencyContainer()
+            ->createAddress()
             ->setDefaultBillingAddress($addressTransfer)
-        ;
+            ;
     }
 
     /**
@@ -168,9 +179,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function setDefaultShippingAddress(CustomerAddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()->createAddress()
+        return $this->getDependencyContainer()
+            ->createAddress()
             ->setDefaultShippingAddress($addressTransfer)
-        ;
+            ;
     }
 
     /**
@@ -180,9 +192,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function renderAddress(CustomerAddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()->createAddress()
+        return $this->getDependencyContainer()
+            ->createAddress()
             ->getFormattedAddressString($addressTransfer)
-        ;
+            ;
     }
 
     /**
@@ -192,9 +205,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()->createAddress()
+        return $this->getDependencyContainer()
+            ->createAddress()
             ->getDefaultShippingAddress($customerTransfer)
-        ;
+            ;
     }
 
     /**
@@ -204,9 +218,10 @@ class CustomerFacade extends AbstractFacade
      */
     public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()->createAddress()
+        return $this->getDependencyContainer()
+            ->createAddress()
             ->getDefaultBillingAddress($customerTransfer)
-        ;
+            ;
     }
 
 }

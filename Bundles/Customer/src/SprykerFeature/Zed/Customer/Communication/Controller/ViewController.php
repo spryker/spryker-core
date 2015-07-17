@@ -26,12 +26,14 @@ class ViewController extends AbstractController
         $customerTransfer->setIdCustomer($idCustomer);
 
         /** @var CustomerTransfer $customer */
-        $customer = $this->getFacade()->getCustomer($customerTransfer);
+        $customer = $this->getFacade()
+            ->getCustomer($customerTransfer)
+        ;
         $addresses = $customer->getAddresses();
 
         return $this->viewResponse([
-            'customer'    => $customer->toArray(),
-            'addresses'   => $addresses->toArray(),
+            'customer' => $customer->toArray(),
+            'addresses' => $addresses->toArray(),
             'id_customer' => $idCustomer,
         ]);
     }

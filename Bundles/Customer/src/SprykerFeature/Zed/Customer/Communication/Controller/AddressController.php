@@ -23,12 +23,14 @@ class AddressController extends AbstractController
         $idCustomer = $request->get('id_customer');
 
         /** @var CustomerTable $table */
-        $table = $this->getDependencyContainer()->createCustomerAddressTable($idCustomer);
+        $table = $this->getDependencyContainer()
+            ->createCustomerAddressTable($idCustomer)
+        ;
         $table->init();
 
         return $this->viewResponse([
             'addressTable' => $table,
-            'id_customer'  => $idCustomer,
+            'id_customer' => $idCustomer,
         ]);
     }
 
@@ -40,12 +42,12 @@ class AddressController extends AbstractController
         $idCustomer = $request->get('id_customer');
 
         /** @var CustomerTable $table */
-        $table = $this->getDependencyContainer()->createCustomerAddressTable($idCustomer);
+        $table = $this->getDependencyContainer()
+            ->createCustomerAddressTable($idCustomer)
+        ;
         $table->init();
 
-        return $this->jsonResponse(
-            $table->fetchData()
-        );
+        return $this->jsonResponse($table->fetchData());
     }
 
     /**
@@ -60,7 +62,9 @@ class AddressController extends AbstractController
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
 
-        $addressDetails = $this->getFacade()->getAddress($customerAddress);
+        $addressDetails = $this->getFacade()
+            ->getAddress($customerAddress)
+        ;
         if (false === empty($addressDetails)) {
             $idCustomer = $addressDetails->getFkCustomer();
         }
@@ -68,11 +72,13 @@ class AddressController extends AbstractController
         $customerAddressTransfer = $this->createCustomerAddressTransfer();
         $customerAddressTransfer->setIdCustomerAddress($idCustomerAddress);
 
-        $address = $this->getFacade()->getAddress($customerAddressTransfer);
+        $address = $this->getFacade()
+            ->getAddress($customerAddressTransfer)
+        ;
 
         return $this->viewResponse([
-            'address'             => $address->toArray(),
-            'id_customer'         => $idCustomer,
+            'address' => $address->toArray(),
+            'id_customer' => $idCustomer,
             'id_customer_address' => $idCustomerAddress,
         ]);
     }
@@ -89,13 +95,17 @@ class AddressController extends AbstractController
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
 
-        $addressDetails = $this->getFacade()->getAddress($customerAddress);
+        $addressDetails = $this->getFacade()
+            ->getAddress($customerAddress)
+        ;
         if (false === empty($addressDetails)) {
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
         /** @var AddressForm $addressForm */
-        $addressForm = $this->getDependencyContainer()->createAddressForm('update');
+        $addressForm = $this->getDependencyContainer()
+            ->createAddressForm('update')
+        ;
         $addressForm->init();
 
         $addressForm->handleRequest();
@@ -107,14 +117,16 @@ class AddressController extends AbstractController
             $customerAddress = $this->createCustomerAddressTransfer();
             $customerAddress->fromArray($data, true);
 
-            $this->getFacade()->updateAddress($customerAddress);
+            $this->getFacade()
+                ->updateAddress($customerAddress)
+            ;
 
             return $this->redirectResponse(sprintf('/customer/address/?id_customer=%d', $idCustomer));
         }
 
         return $this->viewResponse([
-            'form'                => $addressForm->createView(),
-            'id_customer'         => $idCustomer,
+            'form' => $addressForm->createView(),
+            'id_customer' => $idCustomer,
             'id_customer_address' => $idCustomerAddress,
         ]);
     }
@@ -129,7 +141,9 @@ class AddressController extends AbstractController
         $idCustomer = intval($request->get('id_customer'));
 
         /** @var AddressForm $addressForm */
-        $addressForm = $this->getDependencyContainer()->createAddressForm('add');
+        $addressForm = $this->getDependencyContainer()
+            ->createAddressForm('add')
+        ;
         $addressForm->init();
 
         $addressForm->handleRequest();
@@ -142,13 +156,15 @@ class AddressController extends AbstractController
             $customerAddress = $this->createCustomerAddressTransfer();
             $customerAddress->fromArray($data, true);
 
-            $this->getFacade()->createAddress($customerAddress);
+            $this->getFacade()
+                ->createAddress($customerAddress)
+            ;
 
             return $this->redirectResponse(sprintf('/customer/address/?id_customer=%d', $idCustomer));
         }
 
         return $this->viewResponse([
-            'form'        => $addressForm->createView(),
+            'form' => $addressForm->createView(),
             'id_customer' => $idCustomer,
         ]);
     }
