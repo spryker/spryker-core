@@ -29,7 +29,7 @@ class EditController extends AbstractController
 
         $form->handleRequest();
 
-        if ($form->isValid()) {
+        if (true === $form->isValid()) {
             $data = $form->getData();
 
             /** @var CustomerTransfer $customer */

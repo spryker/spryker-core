@@ -87,60 +87,60 @@ class CustomerForm extends AbstractForm
         }
 
         $this->addHidden('IdCustomer', [
-                'label' => 'Customer ID',
-            ])
+            'label' => 'Customer ID',
+        ])
             ->addEmail('email', $emailParams)
             ->addChoice('salutation', [
-                    'label' => 'Salutation',
-                    'placeholder' => 'Select one',
-                    'choices' => $this->getSalutationOptions(),
-                ])
+                'label' => 'Salutation',
+                'placeholder' => 'Select one',
+                'choices' => $this->getSalutationOptions(),
+            ])
             ->addText('first_name', [
-                    'label' => 'First Name',
-                    'constraints' => [
-                        new Required(),
-                        new NotBlank(),
-                        new Length(['max' => 100]),
-                    ],
-                ])
+                'label' => 'First Name',
+                'constraints' => [
+                    new Required(),
+                    new NotBlank(),
+                    new Length(['max' => 100]),
+                ],
+            ])
             ->addText('last_name', [
-                    'label' => 'Last Name',
-                    'constraints' => [
-                        new Required(),
-                        new NotBlank(),
-                        new Length(['max' => 100]),
-                    ],
-                ])
+                'label' => 'Last Name',
+                'constraints' => [
+                    new Required(),
+                    new NotBlank(),
+                    new Length(['max' => 100]),
+                ],
+            ])
             ->addChoice('gender', [
-                    'label' => 'Gender',
-                    'placeholder' => 'Select one',
-                    'choices' => $this->getGenderOptions(),
-                    'constraints' => [
-                        new Required(),
-                    ],
-                ])
+                'label' => 'Gender',
+                'placeholder' => 'Select one',
+                'choices' => $this->getGenderOptions(),
+                'constraints' => [
+                    new Required(),
+                ],
+            ])
         ;
 
         if (self::UPDATE === $this->type) {
             $this->addChoice('default_billing_address', [
-                    'label' => 'Billing Address',
+                'label' => 'Billing Address',
+                'placeholder' => 'Select one',
+                'choices' => $this->getAddressOptions(),
+            ])
+                ->addChoice('default_shipping_address', [
+                    'label' => 'Shipping Address',
                     'placeholder' => 'Select one',
                     'choices' => $this->getAddressOptions(),
                 ])
-                ->addChoice('default_shipping_address', [
-                        'label' => 'Shipping Address',
-                        'placeholder' => 'Select one',
-                        'choices' => $this->getAddressOptions(),
-                    ])
             ;
         }
 
         $this->addSubmit('submit', [
-                'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
-                'attr' => [
-                    'class' => 'btn btn-primary',
-                ],
-            ]);
+            'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
+            'attr' => [
+                'class' => 'btn btn-primary',
+            ],
+        ]);
 
         return $this;
     }
@@ -157,25 +157,23 @@ class CustomerForm extends AbstractForm
         if (false === is_null($idCustomer)) {
             $customerDetailEntity = $this->customerQuery->findOneByIdCustomer($idCustomer);
 
-            if ($customerDetailEntity) {
+            if (false === is_null($customerDetailEntity)) {
                 $result = $customerDetailEntity->toArray();
             }
         }
 
-        if (!empty($result['salutation'])) {
-            // key: value => value: key
+        if (false === empty($result['salutation'])) {
             $salutations = array_flip($this->getSalutationOptions());
 
-            if (isset($salutations[$result['salutation']])) {
+            if (true === isset($salutations[$result['salutation']])) {
                 $result['salutation'] = $salutations[$result['salutation']];
             }
         }
 
-        if (!empty($result['gender'])) {
-            // key: value => value: key
+        if (false === empty($result['gender'])) {
             $genders = array_flip($this->getGenderOptions());
 
-            if (isset($genders[$result['gender']])) {
+            if (true === isset($genders[$result['gender']])) {
                 $result['gender'] = $genders[$result['gender']];
             }
         }
@@ -189,8 +187,8 @@ class CustomerForm extends AbstractForm
     protected function getGenderOptions()
     {
         return [
-            0 => SpyCustomerTableMap::COL_GENDER_MALE,
-            1 => SpyCustomerTableMap::COL_GENDER_FEMALE,
+            SpyCustomerTableMap::COL_GENDER_MALE,
+            SpyCustomerTableMap::COL_GENDER_FEMALE,
         ];
     }
 
@@ -200,9 +198,9 @@ class CustomerForm extends AbstractForm
     protected function getSalutationOptions()
     {
         return [
-            0 => SpyCustomerTableMap::COL_SALUTATION_MR,
-            1 => SpyCustomerTableMap::COL_SALUTATION_MRS,
-            2 => SpyCustomerTableMap::COL_SALUTATION_DR,
+            SpyCustomerTableMap::COL_SALUTATION_MR,
+            SpyCustomerTableMap::COL_SALUTATION_MRS,
+            SpyCustomerTableMap::COL_SALUTATION_DR,
         ];
     }
 
@@ -215,7 +213,7 @@ class CustomerForm extends AbstractForm
         $addresses = $this->customerAddressQuery->findByFkCustomer($idCustomer);
 
         $result = [];
-        if (!empty($addresses)) {
+        if (false === empty($addresses)) {
             foreach ($addresses->getData() as $address) {
                 $result[$address->getIdCustomerAddress()] = sprintf('%s %s (%s, %s %s)', $address->getFirstName(), $address->getLastName(), $address->getAddress1(), $address->getZipCode(), $address->getCity());
             }

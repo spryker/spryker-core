@@ -147,38 +147,34 @@ class AddressForm extends AbstractForm
         $result = [];
 
         $idCustomer = $this->request->get('id_customer');
-
         if (false === is_null($idCustomer)) {
             $customerDetailEntity = $this->customerQuery->findOneByIdCustomer($idCustomer);
-
             $customerDetails = $customerDetailEntity->toArray();
         }
 
         $idCustomerAddress = $this->request->get('id_customer_address');
         if (false === is_null($idCustomerAddress)) {
             $addressDetailEntity = $this->addressQuery->findOneByIdCustomerAddress($idCustomerAddress);
-
             $result = $addressDetailEntity->toArray();
         }
 
-        if (empty($result['salutation'])) {
+        if (true === empty($result['salutation'])) {
             $result['salutation'] = !empty($customerDetails['salutation']) ? $customerDetails['salutation'] : false;
         }
 
-        if (!empty($result['salutation'])) {
-            // key: value => value: key
+        if (false === empty($result['salutation'])) {
             $salutations = array_flip($this->getSalutationOptions());
 
-            if (isset($salutations[$result['salutation']])) {
+            if (true === isset($salutations[$result['salutation']])) {
                 $result['salutation'] = $salutations[$result['salutation']];
             }
         }
 
-        if (empty($result['first_name'])) {
+        if (true === empty($result['first_name'])) {
             $result['first_name'] = !empty($customerDetails['first_name']) ? $customerDetails['first_name'] : '';
         }
 
-        if (empty($result['last_name'])) {
+        if (true === empty($result['last_name'])) {
             $result['last_name'] = !empty($customerDetails['last_name']) ? $customerDetails['last_name'] : '';
         }
 
@@ -191,9 +187,9 @@ class AddressForm extends AbstractForm
     protected function getSalutationOptions()
     {
         return [
-            0 => SpyCustomerTableMap::COL_SALUTATION_MR,
-            1 => SpyCustomerTableMap::COL_SALUTATION_MRS,
-            2 => SpyCustomerTableMap::COL_SALUTATION_DR,
+            SpyCustomerTableMap::COL_SALUTATION_MR,
+            SpyCustomerTableMap::COL_SALUTATION_MRS,
+            SpyCustomerTableMap::COL_SALUTATION_DR,
         ];
     }
 
@@ -207,7 +203,7 @@ class AddressForm extends AbstractForm
         ;
 
         $result = [];
-        if (!empty($countries)) {
+        if (false === empty($countries)) {
             foreach ($countries->getData() as $country) {
                 $result[$country->getIdCountry()] = $country->getName();
             }

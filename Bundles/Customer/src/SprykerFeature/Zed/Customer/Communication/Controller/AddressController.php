@@ -57,6 +57,7 @@ class AddressController extends AbstractController
      */
     public function viewAction(Request $request)
     {
+        $idCustomer = false;
         $idCustomerAddress = $request->get('id_customer_address');
 
         $customerAddress = $this->createCustomerAddressTransfer();
@@ -90,6 +91,7 @@ class AddressController extends AbstractController
      */
     public function editAction(Request $request)
     {
+        $idCustomer = false;
         $idCustomerAddress = $request->get('id_customer_address');
 
         $customerAddress = $this->createCustomerAddressTransfer();
@@ -110,7 +112,7 @@ class AddressController extends AbstractController
 
         $addressForm->handleRequest();
 
-        if ($addressForm->isValid()) {
+        if (true === $addressForm->isValid()) {
             $data = $addressForm->getData();
 
             /** @var CustomerAddressTransfer $customerAddress */
@@ -148,7 +150,7 @@ class AddressController extends AbstractController
 
         $addressForm->handleRequest();
 
-        if ($addressForm->isValid()) {
+        if (true === $addressForm->isValid()) {
             $data = $addressForm->getData();
             $data['fk_customer'] = $idCustomer;
 
