@@ -33,11 +33,11 @@ class TableConfiguration
      */
     private $sortableFields;
 
-
     /**
      * @return array
      */
-    public function getHeaders() {
+    public function getHeaders()
+    {
         return $this->headers;
     }
 
@@ -47,7 +47,8 @@ class TableConfiguration
      * @param array $headers Provide php names for table columns
      *                       if you are goin to user Propel Query as data population
      */
-    public function setHeaders(array $headers) {
+    public function setHeaders(array $headers)
+    {
         if ($this->isAssoc($headers) === true) {
             $this->headers = $headers;
         }
@@ -56,69 +57,75 @@ class TableConfiguration
     /**
      * @return array
      */
-    public function getSortable() {
+    public function getSortable()
+    {
         return $this->sortableFields;
     }
 
     /**
      * @param array $sortable
      */
-    public function setSortable(array $sortable) {
-        $this->sortableFields = array_intersect(
-            $sortable,
-            array_keys($this->headers)
-        );
+    public function setSortable(array $sortable)
+    {
+        $this->sortableFields = array_intersect($sortable, array_keys($this->headers));
     }
 
     /**
      * @return array
      */
-    public function getSearchable() {
+    public function getSearchable()
+    {
         return !empty($this->searchableFields) ? $this->searchableFields : array_keys($this->headers);
     }
 
     /**
      * @param array $searchable
      */
-    public function setSearchable(array $searchable) {
+    public function setSearchable(array $searchable)
+    {
         $this->searchableFields = $searchable;
     }
 
     /**
      * @return int
      */
-    public function getPageLength() {
+    public function getPageLength()
+    {
         return $this->pageLength;
     }
 
     /**
      * @param $length
      */
-    public function setPageLength($length) {
+    public function setPageLength($length)
+    {
         $this->pageLength = $length;
     }
 
     /**
      * @return string
      */
-    public function getUrl() {
+    public function getUrl()
+    {
         return $this->url;
     }
 
     /**
      * @param string $url
      */
-    public function setUrl($url) {
+    public function setUrl($url)
+    {
         $this->url = $url;
     }
 
     /**
-     * @param array $array
+     * @param array $arr
      *
      * @return bool
      */
-    private function isAssoc(array $array) {
-        return array_keys($array) !== range(0, count($array) - 1);
+    private function isAssoc(array $arr)
+    {
+        return (array_values($arr) !== $arr);
     }
 
 }

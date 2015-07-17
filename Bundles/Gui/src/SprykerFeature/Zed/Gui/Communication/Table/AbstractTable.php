@@ -198,11 +198,11 @@ abstract class AbstractTable
     public function getOrders()
     {
         return $this->request->query->get('order', [
-                [
-                    'column' => 0,
-                    'dir' => 'asc',
-                ],
-            ]);
+            [
+                'column' => 0,
+                'dir' => 'asc',
+            ],
+        ]);
     }
 
     /**
