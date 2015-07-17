@@ -101,7 +101,6 @@ class TransferServer
         if (!$this->request) {
             if ($this->repeatIsActive) {
                 $this->request = new Request(
-                    $this->locator,
                     $this->repeater->getRepeatData($this->getHttpRequest()->query->get('mvc'))['params']
                 );
             } else {
