@@ -156,7 +156,6 @@ class ProductFrontendExporterPluginTest extends Test
     {
         $abstractProductTransfer = new AbstractProductTransfer();
         $abstractProductTransfer->setSku($sku);
-        $abstractProductTransfer->setName($name);
         $abstractProductTransfer->setIsActive(true);
         $abstractProductTransfer->setAttributes(
             [
@@ -168,6 +167,7 @@ class ProductFrontendExporterPluginTest extends Test
         );
         $localizedAttributesTransfer = new LocalizedAttributesTransfer();
         $localizedAttributesTransfer->setLocale($locale);
+        $localizedAttributesTransfer->setName($name);
         $localizedAttributesTransfer->setAttributes(
             [
                 'thumbnail_url' => '/images/product/default.png',
@@ -197,7 +197,6 @@ class ProductFrontendExporterPluginTest extends Test
     {
         $concreteProductTransfer = new ConcreteProductTransfer();
         $concreteProductTransfer->setSku($sku);
-        $concreteProductTransfer->setName($name);
         $concreteProductTransfer->setIsActive(true);
         $concreteProductTransfer->setAttributes(
             [
@@ -208,6 +207,7 @@ class ProductFrontendExporterPluginTest extends Test
         );
         $localizedAttributes = new LocalizedAttributesTransfer();
         $localizedAttributes->setLocale($locale);
+        $localizedAttributes->setName($name);
         $localizedAttributes->setAttributes([
             'image_url' => '/images/product/robot_buttons_black.png',
             'material' => 'aluminium',

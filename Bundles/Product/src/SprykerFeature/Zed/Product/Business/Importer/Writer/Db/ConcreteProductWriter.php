@@ -49,24 +49,27 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
      */
     public function writeProduct(ConcreteProductTransfer $product)
     {
-        return (
-            $this->productStatement->execute(
-                [
-                    ':sku' => $product->getSku(),
-                    ':isActive' => (int) $product->getIsActive(),
-                    ':attributes' => json_encode($product->getAttributes()),
-                    ':abstractProductSku' => $product->getAbstractProductSku(),
-                ]
-            ) &&
+        $this->productStatement->execute(
+            [
+                ':sku' => $product->getSku(),
+                ':isActive' => (int) $product->getIsActive(),
+                ':attributes' => json_encode($product->getAttributes()),
+                ':abstractProductSku' => $product->getAbstractProductSku(),
+            ]
+        );
+
+        foreach ($product->getLocalizedAttributes() as $localizedAttributes) {
             $this->attributesStatement->execute(
                 [
                     ':productSku' => $product->getSku(),
-                    ':name' => $product->getName(),
-                    ':attributes' => json_encode($product->getLocalizedAttributes()),
+                    ':name' => $localizedAttributes->getName(),
+                    ':attributes' => json_encode($localizedAttributes->getAttributes()),
                     ':fkLocale' => $this->localeTransfer->getIdLocale(),
                 ]
-            )
-        );
+            );
+        }
+
+        return true;
     }
 
     /**

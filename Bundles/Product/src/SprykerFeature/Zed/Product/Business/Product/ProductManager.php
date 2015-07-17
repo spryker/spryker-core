@@ -159,7 +159,7 @@ class ProductManager implements ProductManagerInterface
             $abstractProductAttributesEntity
                 ->setFkAbstractProduct($idAbstractProduct)
                 ->setFkLocale($locale->getIdLocale())
-                ->setName($abstractProductTransfer->getName())
+                ->setName($localizedAttributes->getName())
                 ->setAttributes($encodedAttributes)
             ;
             $abstractProductAttributesEntity->save();
@@ -304,7 +304,7 @@ class ProductManager implements ProductManagerInterface
             $productAttributeEntity
                 ->setFkProduct($idConcreteProduct)
                 ->setFkLocale($locale->getIdLocale())
-                ->setName($concreteProductTransfer->getName())
+                ->setName($localizedAttributes->getName())
                 ->setAttributes($encodedAttributes)
             ;
 
