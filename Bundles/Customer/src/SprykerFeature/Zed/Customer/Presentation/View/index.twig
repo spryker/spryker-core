@@ -52,8 +52,7 @@
                                 Billing
                             {% endif %}
                             Address
-                            {% if address.comment is empty %}
-                            {% else %}
+                            {% if address.comment|default %}
                                 ({{ address.comment }})
                             {% endif %}
                         </th>
