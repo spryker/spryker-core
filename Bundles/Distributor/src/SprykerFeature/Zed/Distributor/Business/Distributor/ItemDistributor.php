@@ -126,4 +126,5 @@ class ItemDistributor implements ItemDistributorInterface
     {
         return new QueueMessageTransfer();
     }
+
 }

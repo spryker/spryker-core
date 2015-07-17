@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace Unit\SprykerFeature\Zed\Queue\Mock;
 
 use Generated\Shared\Queue\QueueMessageInterface;
@@ -19,8 +23,8 @@ class MockTaskPlugin implements TaskPluginInterface
     protected $queueName;
 
     /**
-     * @param $name
-     * @param $queueName
+     * @param string $name
+     * @param string $queueName
      */
     public function __construct($name, $queueName)
     {
