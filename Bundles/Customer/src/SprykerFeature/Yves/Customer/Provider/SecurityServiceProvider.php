@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Yves\Customer\Provider;
 
+use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Customer\CustomerConfig;
 use Silex\Application;
 use Silex\Provider\SecurityServiceProvider as SilexSecurityServiceProvider;
@@ -59,7 +59,8 @@ class SecurityServiceProvider extends SilexSecurityServiceProvider
 
         $app['security.firewalls'] = [
             'secured' => [
-                'pattern' => Config::get(CustomerConfig::CUSTOMER_SECURED_PATTERN),
+                'anonymous' => true,
+                'pattern' => '^/',
                 'form' => [
                     'login_path' => '/login',
                     'login_check' => '/login_check',
@@ -70,12 +71,24 @@ class SecurityServiceProvider extends SilexSecurityServiceProvider
                 'users' => $app->share(function ($app) {
                     return $this->locator->customer()
                         ->pluginSecurityService()
-                        ->createUserProvider($app['session']);
+                        ->createUserProvider($app['session'])
+                    ;
                 }),
             ],
-            'unsecured' => [
-                'pattern' => Config::get(CustomerConfig::CUSTOMER_ANONYMOUS_PATTERN),
-                'anonymous' => true,
+        ];
+
+        $app['security.access_control'] = [
+            [
+                'path' => '^/login',
+                'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+            ],
+            [
+                'path' => Config::get(CustomerConfig::CUSTOMER_SECURED_PATTERN),
+                'role' => 'ROLE_USER',
+            ],
+            [
+                'path' => Config::get(CustomerConfig::CUSTOMER_ANONYMOUS_PATTERN),
+                'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
             ],
         ];
     }
