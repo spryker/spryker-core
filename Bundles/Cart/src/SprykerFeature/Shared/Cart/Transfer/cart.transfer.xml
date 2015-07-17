@@ -31,7 +31,7 @@
         <property name="quantity" type="int" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
-        <property name="tax" type="TaxItem" />
+        <property name="taxSet" type="TaxSet" />
         <property name="expenses" type="Expense[]" />
         <property name="discounts" type="Discount[]" />
     </transfer>

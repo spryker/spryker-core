@@ -32,7 +32,7 @@
         <property name="type" type="string" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
-        <property name="tax" type="TaxItem" />
+        <property name="taxSet" type="TaxSet" />
         <property name="name" type="string" />
         <property name="discounts" type="Discount[]" singular="discountItem" />
     </transfer>
@@ -48,13 +48,18 @@
         <property name="priceToPay" type="int" />
     </transfer>
 
-    <transfer name="Tax">
+    <transfer name="TaxTotal">
+        <property name="taxSets" type="TaxSet[]" singular="taxSet" />
         <property name="totalAmount" type="int" />
-        <property name="taxRates" type="TaxItem[]" singular="taxRate" />
     </transfer>
 
-    <transfer name="TaxItem">
-        <property name="percentage" type="string" />
+    <transfer name="TaxSet">
+        <property name="taxRates" type="TaxRate[]" singular="taxRate" />
+        <property name="amount" type="int" />
+    </transfer>
+
+    <transfer name="TaxRate">
+        <property name="rate" type="int" />
         <property name="amount" type="int" />
     </transfer>
 
@@ -63,7 +68,7 @@
         <property name="subtotalWithoutItemExpenses" type="int" />
         <property name="expenses" type="ExpenseTotals[]" />
         <property name="discount" type="DiscountTotals" />
-        <property name="tax" type="Tax" />
+        <property name="taxTotal" type="TaxTotal" />
         <property name="grandTotalWithDiscounts" type="int" />
         <property name="grandTotal" type="int" />
     </transfer>
