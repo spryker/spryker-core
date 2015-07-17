@@ -6,34 +6,7 @@
 
     {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Order List' } %}
 
-    <table class="footable table table-stripped toggle-arrow-tiny">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>{{ "Name" | trans }}</th>
-            <th>{{ "Data" | trans }}</th>
-            <th>{{ "Total value" | trans }}</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        {% for row in content.rows %}
-            <tr>
-                <td><a href="/sales/details?id-sales-order={{ row.id_sales_order }}">{{ row.id_sales_order }}</a></td>
-                <td><a href="/sales/details?id-sales-order={{ row.id_sales_order }}">{{ row.first_name }} {{ row.last_name }}</a></td>
-                <td>{{ row.created_at }}</td>
-                <td>{{ row.grand_total | currency }}</td>
-            </tr>
-        {% endfor %}
-
-        </tbody>
-    </table>
-
-    {% include '@Gui/Partials/pagination.twig' with {
-        'url': '/sales/',
-        'totalPages': content.pages,
-        'currentPage': content.page
-    } %}
+    {{ orders | raw }}
 
     {% include '@Gui/Partials/Table/footer.twig' %}
 

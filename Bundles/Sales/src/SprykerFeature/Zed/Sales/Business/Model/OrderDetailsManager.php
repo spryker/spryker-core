@@ -45,4 +45,21 @@ class OrderDetailsManager
         return $events;
     }
 
+    /**
+     * @param int $idOrder
+     *
+     * @return array
+     */
+    public function getAggregateState($idOrder)
+    {
+        $orderItems = $this->queryContainer->querySalesOrderItemsByIdSalesOrder($idOrder)->find();
+
+        $status = [];
+        foreach($orderItems as $i => $orderItem) {
+            $status[$orderItem->getIdSalesOrderItem()] = $orderItem->getState()->getName();
+        }
+
+        return $status;
+    }
+
 }
