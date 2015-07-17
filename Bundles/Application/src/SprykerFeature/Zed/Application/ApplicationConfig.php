@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Application;
 
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig as SharedApplicationConfig;
 
 class ApplicationConfig extends AbstractBundleConfig
 {
@@ -54,6 +55,30 @@ class ApplicationConfig extends AbstractBundleConfig
     public function getNavigationSchemaFileNamePattern()
     {
         return 'navigation.xml';
+    }
+
+    /**
+     * @return string
+     */
+    public function getRootNavigationSchema()
+    {
+        return APPLICATION_ROOT_DIR . '/config/Zed/' . $this->getNavigationSchemaFileNamePattern();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCacheFile()
+    {
+        return APPLICATION_ROOT_DIR . '/src/Generated/navigation.cache';
+    }
+
+    /**
+     * @return string
+     */
+    public function isNavigationCacheEnabled()
+    {
+        return $this->get(SharedApplicationConfig::NAVIGATION_CACHE_ENABLED);
     }
 
 }

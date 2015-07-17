@@ -18,33 +18,25 @@ class NavigationBuilder
     const PATH = 'path';
 
     /**
-     * @var NavigationSchemaFinderInterface
-     */
-    protected $navigationSchemaFinder;
-
-    /**
      * @var NavigationCollectorInterface
      */
-    protected $navigationCollector;
+    private $navigationCollector;
 
     /**
      * @var MenuFormatterInterface
      */
-    protected $menuFormatter;
+    private $menuFormatter;
 
     /**
-     * @param NavigationSchemaFinderInterface $navigationSchemaFinder
      * @param NavigationCollectorInterface $navigationCollector
      * @param MenuFormatterInterface $menuFormatter
      * @param PathExtractorInterface $pathExtractor
      */
     public function __construct(
-        NavigationSchemaFinderInterface $navigationSchemaFinder,
         NavigationCollectorInterface $navigationCollector,
         MenuFormatterInterface $menuFormatter,
         PathExtractorInterface $pathExtractor
     ) {
-        $this->navigationSchemaFinder = $navigationSchemaFinder;
         $this->navigationCollector = $navigationCollector;
         $this->menuFormatter = $menuFormatter;
         $this->pathExtractor = $pathExtractor;
@@ -57,9 +49,7 @@ class NavigationBuilder
      */
     public function build($pathInfo)
     {
-        $navigationPages = $this->navigationCollector->mergeNavigationFiles(
-            $this->navigationSchemaFinder
-        );
+        $navigationPages = $this->navigationCollector->getNavigation();
 
         $menu = $this->menuFormatter->formatMenu($navigationPages, $pathInfo);
         $path = $this->pathExtractor->extractPathFromMenu($menu);
