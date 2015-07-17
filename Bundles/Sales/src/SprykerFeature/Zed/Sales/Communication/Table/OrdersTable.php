@@ -17,6 +17,9 @@ class OrdersTable extends AbstractTable
     const FIRST_NAME = 'FirstName';
     const URL = 'url';
 
+    /**
+     * @param SpySalesOrderQuery $salesQuery
+     */
     public function __construct(SpySalesOrderQuery $salesQuery)
     {
         $this->salesQuery = $salesQuery;
@@ -29,32 +32,13 @@ class OrdersTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-//        $config->setHeaders([
-//            'IdCustomer'  => 'Customer ID',
-//            'Email'       => 'Email',
-//            'FirstName'   => 'First Name',
-//            'LastName'   => 'Last Name',
-//            'CreatedAt'   => 'Registration Date',
-//            'ZipCode'     => 'ZIP Code',
-//            'City'        => 'City',
-//            'Country'     => 'Country',
-//        ]);
-//        $config->setSortable([
-//            'IdCustomer',
-//            'CreatedAt',
-//            'FirstName',
-//            'LastName',
-//            'ZipCode',
-//            'Country',
-//        ]);
-
         $config->setHeaders([
             self::ID_SALES_ORDER => 'Order ID',
             self::CREATED_AT => 'Timestamp',
             self::FK_CUSTOMER => 'Customer Id',
             self::EMAIL => 'Email',
-            self::GRAND_TOTAL => 'Value',
             self::FIRST_NAME => 'Billing Name',
+            self::GRAND_TOTAL => 'Value',
             self::URL => 'Url',
         ]);
         $config->setSortable([
@@ -64,6 +48,12 @@ class OrdersTable extends AbstractTable
         return $config;
     }
 
+    /**
+     * @param int $value
+     * @param bool $includeSymbol
+     *
+     * @return string
+     */
     protected function formatPrice($value, $includeSymbol = true)
     {
         $currencyManager = CurrencyManager::getInstance();
@@ -75,19 +65,28 @@ class OrdersTable extends AbstractTable
     /**
      * @param TableConfiguration $config
      *
-     * @return ObjectCollection
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->salesQuery;
-        $results = $this->runQuery($query, $config);
-        foreach ($results as &$v) {
-            $v[self::GRAND_TOTAL] = $this->formatPrice($v[self::GRAND_TOTAL]);
-            $v[self::URL] = sprintf(
-                '<a class="btn btn-primary" href="/sales/details/?id-sales-order=%d">View</a>',
-                $v['IdSalesOrder']
-            );
+        $queryResults = $this->runQuery($query, $config);
+        $results = [];
+        foreach ($queryResults as $item) {
+            $results[] = [
+                self::ID_SALES_ORDER => $item[self::ID_SALES_ORDER],
+                self::CREATED_AT => $item[self::CREATED_AT],
+                self::FK_CUSTOMER => $item[self::FK_CUSTOMER],
+                self::EMAIL => $item[self::EMAIL],
+                self::FIRST_NAME => $item[self::FIRST_NAME],
+                self::GRAND_TOTAL => $this->formatPrice($item[self::GRAND_TOTAL]),
+                self::URL => sprintf(
+                    '<a class="btn btn-primary" href="/sales/details/?id-sales-order=%d">View</a>',
+                    $item['IdSalesOrder']
+                ),
+            ];
         }
+        unset($queryResults);
 
         return $results;
     }
