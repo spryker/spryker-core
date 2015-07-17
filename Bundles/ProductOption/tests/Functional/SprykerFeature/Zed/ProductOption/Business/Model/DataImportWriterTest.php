@@ -92,7 +92,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     public function testTouchUpdatedWhenUpdatingProductOptionType()
     {
         $product = $this->createConcreteProduct();
-        $optionType = $this->createOptionTypeWithValue();
+        $optionType = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $this->createProductOptionTypeUsage($product, $optionType);
 
         $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
@@ -104,7 +104,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     public function testTouchUpdatedWhenUpdatingProductOptionValue()
     {
         $product = $this->createConcreteProduct();
-        $optionType = $this->createOptionTypeWithValue();
+        $optionType = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionTypeUsage = $this->createProductOptionTypeUsage($product, $optionType);
         $optionValueUsage = (new SpyProductOptionValueUsage())
             ->setFkProductOptionTypeUsage($optionTypeUsage->getIdProductOptionTypeUsage())
@@ -142,7 +142,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     public function testImportProductOptionValueUsage()
     {
         $product = $this->createConcreteProduct();
-        $optionType = $this->createOptionTypeWithValue();
+        $optionType = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $productOptionTypeUsage = $this->createProductOptionTypeUsage($product, $optionType);
 
         $this->facade->importProductOptionValueUsage($productOptionTypeUsage->getIdProductOptionTypeUsage(),  'VIOLET');
@@ -162,7 +162,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     public function testImportProductOptionTypeUsageExclusion()
     {
         $product = $this->createConcreteProduct();
-        $optionShadeViolet = $this->createOptionTypeWithValue();
+        $optionShadeViolet = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionFittingClassic = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
         $productOptionFitting = $this->createProductOptionTypeUsage($product, $optionFittingClassic);
@@ -186,7 +186,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     {
         $product = $this->createConcreteProduct();
 
-        $optionShadeViolet = $this->createOptionTypeWithValue();
+        $optionShadeViolet = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionFittingClassic = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
         $productOptionFitting = $this->createProductOptionTypeUsage($product, $optionFittingClassic);
@@ -212,7 +212,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
     public function testImportProductOptionPresetConfiguration()
     {
         $product = $this->createConcreteProduct();
-        $optionShade = $this->createOptionTypeWithValue();
+        $optionShade = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionFitting = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
         $productOptionShade = $this->createProductOptionTypeUsage($product, $optionShade);
@@ -266,7 +266,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
         return $product;
     }
 
-    private function createOptionTypeWithValue($typeKey = 'SHADE', $valueKey = 'VIOLET')
+    private function createOptionTypeWithValue($typeKey, $valueKey)
     {
         $optionValue = (new SpyProductOptionValue())->setImportKey($valueKey);
         $optionType = (new SpyProductOptionType())->setImportKey($typeKey)->addSpyProductOptionValue($optionValue);
