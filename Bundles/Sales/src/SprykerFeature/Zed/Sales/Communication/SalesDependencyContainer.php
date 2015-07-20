@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Communication\Table\OrdersTable;
+use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
 
 /**
  * @method SalesCommunication getFactory()
@@ -43,6 +44,18 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
             null,
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @param $idSalesOrder
+     *
+     * @return CustomerForm
+     */
+    public function createCustomerForm($idSalesOrder)
+    {
+        $customerQuery = $this->getQueryContainer()->querySalesOrderById($idSalesOrder);
+
+        return $this->getFactory()->createFormCustomerForm($customerQuery);
     }
 
     /**

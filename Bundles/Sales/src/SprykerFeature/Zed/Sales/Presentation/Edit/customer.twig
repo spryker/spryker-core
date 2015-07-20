@@ -1,0 +1,15 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set page_title = 'Customer details' %}
+
+{% block head_title page_title | trans %}
+
+{% block content %}
+
+    {% include '@Gui/Partials/Table/header.twig' with { table_title: page_title } %}
+
+    {{ form(form) }}
+
+    {% include '@Gui/Partials/Table/footer.twig' %}
+
+{% endblock %}
