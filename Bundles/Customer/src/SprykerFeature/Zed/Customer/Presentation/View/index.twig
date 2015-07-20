@@ -11,6 +11,7 @@
         <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-default">{{ 'Manage Addresses' | trans }}</a>
     </p>
 
+    {% include '@Gui/Partials/Table/header.twig' with { table_title: '' } %}
     <div>
         <h1>{{ customer.salutation }} {{ customer.last_name }} {{ customer.first_name }}</h1>
 
@@ -72,5 +73,6 @@
             </tfoot>
         </table>
     </div>
+    {% include '@Gui/Partials/Table/footer.twig' %}
 
 {% endblock %}

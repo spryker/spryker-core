@@ -10,6 +10,8 @@
         <a href="/customer/address/edit?id_customer_address={{ id_customer_address }}" class="btn btn-sm btn-warning">{{ 'Edit Address' | trans }}</a>&nbsp;&nbsp;&nbsp;
     </p>
 
+
+    {% include '@Gui/Partials/Table/header.twig' with { table_title: '' } %}
     <div>
         <h1>{{ address.salutation }} {{ address.last_name }} {{ address.first_name }}</h1>
 
@@ -52,5 +54,6 @@
             <tfoot></tfoot>
         </table>
     </div>
+    {% include '@Gui/Partials/Table/footer.twig' %}
 
 {% endblock %}
