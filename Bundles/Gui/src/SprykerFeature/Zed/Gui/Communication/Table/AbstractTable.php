@@ -276,7 +276,7 @@ abstract class AbstractTable
         $limit = $config->getPageLength();
         $offset = $this->getOffset();
         $order = $this->getOrders();
-        $columns = $config->getSearchable();
+        $columns = array_keys($config->getHeaders());
         $orderColumn = $columns[$order[0]['column']];
         $this->total = $query->count();
         $query->orderBy($orderColumn, $order[0]['dir']);
@@ -290,7 +290,7 @@ abstract class AbstractTable
                 ->getName()
             ;
 
-            foreach ($columns as $value) {
+            foreach ($config->getSearchable() as $value) {
                 if (!$isFirst) {
                     $query->_or();
                 } else {
