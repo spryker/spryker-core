@@ -7,7 +7,8 @@
       "Functional": "tests/",
       "Integration": "tests/",
       "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "YvesUnit": "tests/",
+      "ClientUnit": "tests/"
     }
   },
   "require": {

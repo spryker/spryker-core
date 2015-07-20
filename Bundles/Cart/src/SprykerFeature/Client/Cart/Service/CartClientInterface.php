@@ -7,6 +7,7 @@
 namespace SprykerFeature\Client\Cart\Service;
 
 use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Cart\CartItemInterface;
 
 interface CartClientInterface
 {
@@ -27,12 +28,11 @@ interface CartClientInterface
     public function getItemCount();
 
     /**
-     * @param string $sku
-     * @param int $quantity
+     * @param CartItemInterface $cartItemTransfer
      *
      * @return CartInterface
      */
-    public function addItem($sku, $quantity = 1);
+    public function addItem(CartItemInterface $cartItemTransfer);
 
     /**
      * @param string $sku

@@ -61,7 +61,8 @@ class CartClient extends AbstractClient implements CartClientInterface
 
         $this->getSession()
             ->setItemCount(0)
-            ->setCart($cartTransfer);
+            ->setCart($cartTransfer)
+        ;
 
         return $cartTransfer;
     }
@@ -75,14 +76,12 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param string $sku
-     * @param int $quantity
+     * @param CartItemInterface $cartItemTransfer
      *
      * @return CartInterface
      */
-    public function addItem($sku, $quantity = 1)
+    public function addItem(CartItemInterface $cartItemTransfer)
     {
-        $cartItemTransfer = $this->createChangedItem($sku, $quantity);
         $changeTransfer = $this->prepareCartChange($cartItemTransfer);
         $cartTransfer = $this->getZedStub()->addItem($changeTransfer);
 
