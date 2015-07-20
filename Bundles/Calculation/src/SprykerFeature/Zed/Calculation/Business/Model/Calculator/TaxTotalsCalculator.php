@@ -7,13 +7,13 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\ExpenseInterface;
-use Generated\Shared\Calculation\TaxItemInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\Sales\OrderItemOptionInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
-use Generated\Shared\Transfer\TaxItemTransfer;
-use Generated\Shared\Transfer\TaxTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Tax\TaxSetInterface;
+use Generated\Shared\Transfer\TaxTotalTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
@@ -22,9 +22,14 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 {
 
     /**
-     * @var PriceCalculationHelperInterface
+     * @var $priceCalculationHelper PriceCalculationHelperInterface
      */
     protected $priceCalculationHelper;
+
+    /**
+     * @var $calculatedTaxSets TaxSetTransfer[]
+     */
+    private $calculatedTaxSets;
 
     /**
      * @param PriceCalculationHelperInterface $priceCalculationHelper
@@ -44,114 +49,79 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
-        $groupedPrices = $this->sumPriceToPayGroupedByTaxRate($calculableContainer, $calculableItems);
-        $taxTransfer = $this->createTaxTransfer($groupedPrices);
-
-        $totalsTransfer->setTax($taxTransfer);
+        $this->calculateTaxAmountsForTaxableItems($calculableContainer, $calculableItems);
+        $this->calculateTaxTotals($totalsTransfer);
     }
 
     /**
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
-     *
-     * @return array
      */
-    protected function sumPriceToPayGroupedByTaxRate(
-        CalculableInterface $calculableContainer,
-        $calculableItems
-    ) {
-        $groupedPrices = [];
-        /* @var $item OrderItemTransfer */
-        foreach ($calculableItems as $item) {
-
-            $taxItem = $item->getTax();
-            if (is_null($taxItem)) {
-                $item->setTax(new TaxItemTransfer());
+    public function calculateTaxAmountsForTaxableItems(CalculableInterface $calculableContainer, $calculableItems)
+    {
+        /** @var $product OrderItemTransfer **/
+        foreach ($calculableItems as $product) {
+            $this->calculateTax($product);
+            foreach ($product->getExpenses() as $expense) {
+                $this->calculateTax($expense);
             }
-            $this->addTaxInfo($item->getTax(), $groupedPrices);
-            $this->addExpensesTaxInfo($item->getExpenses(), $groupedPrices);
-            $this->addOptionsTaxInfo($item->getOptions(), $groupedPrices);
         }
-        $this->addExpensesTaxInfo($calculableContainer->getCalculableObject()->getExpenses(), $groupedPrices);
 
-        return $groupedPrices;
+        /** @var $order OrderTransfer **/
+        $order = $calculableContainer->getCalculableObject();
+        $globalExpenses = $order->getExpenses();
+        foreach ($globalExpenses as $globalExpense) {
+            $this->calculateTax($globalExpense);
+        }
     }
 
     /**
-     * @param TaxItemInterface $tax
-     * @param $groupedPrices
+     * @param OrderItemTransfer $taxableItem
      */
-    protected function addTaxInfo(TaxItemInterface $tax, array &$groupedPrices)
+    private function calculateTax($taxableItem)
     {
-        $taxRate = (float) $tax->getPercentage();
-        if ($taxRate === 0.0) {
+        $taxSet = $taxableItem->getTaxSet();
+        if (null === $taxSet) {
             return;
         }
-        $taxRateIndex = number_format($taxRate, 2);
 
-        if (!isset($groupedPrices[$taxRateIndex])) {
-            $groupedPrices[$taxRateIndex] = ['percentage' => $taxRate, 'amount' => 0];
+        $taxableAmount = $taxableItem->getPriceToPay();
+
+        $taxRates = $taxSet->getTaxRates();
+
+        $effectiveTaxRate = 0;
+        foreach ($taxRates as &$taxRate) {
+            $effectiveTaxRate += $taxRate->getRate();
         }
-        $groupedPrices[$taxRateIndex]['amount'] += $tax->getAmount();
+
+        $taxAmountForTaxSet = $this->priceCalculationHelper->getTaxValueFromPrice($taxableAmount, $effectiveTaxRate);
+        $taxSet->setAmount($taxAmountForTaxSet);
+
+        $this->calculatedTaxSets[] = $taxSet;
     }
 
-    /**
-     * @param \ArrayObject|ExpenseInterface[] $expenses
-     * @param array $groupedPrices
-     */
-    protected function addExpensesTaxInfo(\ArrayObject $expenses, array &$groupedPrices)
+
+    public function calculateTaxTotals(TotalsInterface $totalsTransfer)
     {
-        foreach ($expenses as $expense) {
-            $this->addTaxInfo($expense->getTax(), $groupedPrices);
+        /** @var $groupedTotals TaxSetTransfer[] **/
+        $groupedTotals = [];
+
+        foreach ($this->calculatedTaxSets as $taxSet) {
+
+            if (false == isset($groupedTotals[$taxSet->getIdTaxSet()])) {
+                $groupedTotals[$taxSet->getIdTaxSet()] = $taxSet;
+                continue;
+            }
+
+            $oldAmount = $groupedTotals[$taxSet->getIdTaxSet()]->getAmount();
+            $groupedTotals[$taxSet->getIdTaxSet()]->setAmount($oldAmount + $taxSet->getAmount());
         }
-    }
 
-    /**
-     * @param \ArrayObject|OrderItemOptionInterface $options
-     * @param array $groupedPrices
-     */
-    protected function addOptionsTaxInfo(\ArrayObject $options, array &$groupedPrices)
-    {
-        foreach ($options as $option) {
-            $this->addTaxInfo($option->getTax(), $groupedPrices);
+        $taxTotalsTransfer = new TaxTotalTransfer();
+        foreach ($groupedTotals as $taxSet) {
+            $taxTotalsTransfer->addTaxSet($taxSet);
         }
+
+        $totalsTransfer->setTaxTotal($taxTotalsTransfer);
     }
-
-    /**
-     * @param array $groupedPrices
-     *
-     * @return TaxSetInterface
-     */
-    protected function createTaxTransfer(array $groupedPrices)
-    {
-        $tax = new TaxTransfer();
-        $totalTax = 0;
-        foreach ($groupedPrices as $group) {
-            $taxItem = $this->createTaxItemTransfer($group['amount'], $group['percentage']);
-            $tax->addTaxRate($taxItem);
-
-            $totalTax += $taxItem->getAmount();
-        }
-        $tax->setTotalAmount($totalTax);
-
-        return $tax;
-    }
-
-    /**
-     * @param int $amount
-     * @param float $percentage
-     *
-     * @return TaxItemTransfer
-     */
-    protected function createTaxItemTransfer($amount, $percentage)
-    {
-        $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($amount, $percentage);
-
-        $taxItem = new TaxItemTransfer();
-        $taxItem->setPercentage($percentage);
-        $taxItem->setAmount($taxAmount);
-
-        return $taxItem;
-    }
-
 }

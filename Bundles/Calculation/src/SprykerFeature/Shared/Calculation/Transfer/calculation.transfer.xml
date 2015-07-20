@@ -50,17 +50,18 @@
 
     <transfer name="TaxTotal">
         <property name="taxSets" type="TaxSet[]" singular="taxSet" />
-        <property name="totalAmount" type="int" />
+        <property name="amount" type="int" />
     </transfer>
 
     <transfer name="TaxSet">
+        <property name="idTaxSet" type="int" />
         <property name="taxRates" type="TaxRate[]" singular="taxRate" />
         <property name="amount" type="int" />
     </transfer>
 
     <transfer name="TaxRate">
+        <property name="idTaxRate" type="int" />
         <property name="rate" type="int" />
-        <property name="amount" type="int" />
     </transfer>
 
     <transfer name="Totals">

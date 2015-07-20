@@ -6,7 +6,8 @@
 
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\TaxItemTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
@@ -27,122 +28,108 @@ class TaxTest extends \PHPUnit_Framework_TestCase
 
     const EXPENSE_1000 = 1000;
     const ITEM_GROSS_PRICE_1000 = 1000;
+    const ITEM_GROSS_PRICE_450 = 450;
     const TAX_PERCENTAGE_10 = 10;
     const TAX_PERCENTAGE_20 = 20;
     const TAX_PERCENTAGE_30 = 30;
+    const ID_TAX_SET_1 = 123;
+    const ID_TAX_SET_2 = 224;
+    const ID_TAX_RATE_1 = 345;
+    const ID_TAX_RATE_2 = 456;
+    const ID_TAX_RATE_3 = 567;
     const KEY_TAX_RATES = 'tax_rates';
     const KEY_PERCENTAGE = 'percentage';
     const KEY_AMOUNT = 'amount';
 
-    public function testShouldHaveProperlyCalculatedTaxAmountsForAnOrderWithJustOneItem()
+    public function testTaxCalculatedForOrderWithOrderItemAndSingleTaxSet()
     {
-        $order = $this->getOrderWithFixtureData();
+        $orderTransfer = $this->getOrderTransfer();
+        $orderItemTransfer = $this->getOrderItemTransfer();
 
-        $item = $this->getItemWithFixtureData();
-        $tax = new TaxItemTransfer();
-        $tax->setPercentage(self::TAX_PERCENTAGE_10);
-        $tax->setAmount(self::ITEM_GROSS_PRICE_1000);
-        $item->setTax($tax);
-        $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
-        $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $order->getCalculableObject()->addItem($item);
+        $taxRate10 = (new TaxRateTransfer())
+            ->setRate(self::TAX_PERCENTAGE_10)
+            ->setIdTaxRate(self::ID_TAX_SET_1);
+        $taxRate20 = (new TaxRateTransfer())
+            ->setRate(self::TAX_PERCENTAGE_20)
+            ->setIdTaxRate(self::ID_TAX_SET_2);
 
-        $totalsTransfer = $this->getPriceTotals();
+        $taxSetTransfer = (new TaxSetTransfer)
+            ->setIdTaxSet(self::ID_TAX_SET_1)
+            ->addTaxRate($taxRate10)
+            ->addTaxRate($taxRate20);
+
+        $orderItemTransfer->setTaxSet($taxSetTransfer)
+           ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
+           ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
+
+        $orderTransfer->getCalculableObject()->addItem($orderItemTransfer);
+
+        $totalsTransfer = $this->getTotalsTransfer();
         $calculator = $this->getCalculator();
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
 
-        $taxRates = $totalsTransfer->getTax()->getTaxRates();
+        $calculator->recalculateTotals($totalsTransfer, $orderTransfer, $orderTransfer->getCalculableObject()->getItems());
 
-        $this->assertEquals(10, $taxRates[0]->getPercentage());
-        $this->assertEquals(91, $taxRates[0]->getAmount());
+        $taxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
+
+        $this->assertEquals(258, $taxSets[0]->getAmount());
+        $this->assertEquals(91, $taxSets[0]->getTaxRates()[0]->getAmount());
+        $this->assertEquals(167, $taxSets[0]->getTaxRates()[1]->getAmount());
     }
 
-    public function testShouldHaveProperlyCalculatedTaxAmountsForAnOrderWithTwoItems()
+    public function testTaxCalculatedForOrderWithMultipleOrderItemsAndMultipleTaxSets()
     {
-        $order = $this->getOrderWithFixtureData();
+        $taxRate10 = (new TaxRateTransfer())
+            ->setRate(self::TAX_PERCENTAGE_10)
+            ->setIdTaxRate(self::ID_TAX_RATE_1);
+        $taxRate20 = (new TaxRateTransfer())
+            ->setRate(self::TAX_PERCENTAGE_20)
+            ->setIdTaxRate(self::ID_TAX_RATE_2);
 
-        $item = $this->getItemWithFixtureData();
-        $tax = new TaxItemTransfer();
-        $tax->setPercentage(self::TAX_PERCENTAGE_10);
-        $tax->setAmount(self::ITEM_GROSS_PRICE_1000);
-        $item->setTax($tax);
-        $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
-        $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $order->getCalculableObject()->addItem($item);
+        $taxSetTransfer1 = (new TaxSetTransfer)
+            ->setIdTaxSet(self::ID_TAX_SET_1)
+            ->addTaxRate($taxRate10)
+            ->addTaxRate($taxRate20);
 
-        $item = $this->getItemWithFixtureData();
-        $tax = new TaxItemTransfer();
-        $tax->setPercentage(self::TAX_PERCENTAGE_20);
-        $tax->setAmount(self::ITEM_GROSS_PRICE_1000);
-        $item->setTax($tax);
-        $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
-        $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $order->getCalculableObject()->addItem($item);
+        $taxSetTransfer2 = clone $taxSetTransfer1;
 
-        $totalsTransfer = $this->getPriceTotals();
+        $taxRate30 = (new TaxRateTransfer())
+            ->setRate(self::TAX_PERCENTAGE_30)
+            ->setIdTaxRate(self::ID_TAX_RATE_3);
+
+        $taxSetTransfer3 = (new TaxSetTransfer)
+            ->setIdTaxSet(self::ID_TAX_SET_2)
+            ->addTaxRate($taxRate30);
+
+        $orderTransfer = $this->getOrderTransfer();
+
+        $orderItemTransfer1 = $this->getOrderItemTransfer();
+        $orderItemTransfer1->setTaxSet($taxSetTransfer1)
+            ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
+            ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
+        $orderTransfer->getCalculableObject()->addItem($orderItemTransfer1);
+
+        $orderItemTransfer2 = $this->getOrderItemTransfer();
+        $orderItemTransfer2->setTaxSet($taxSetTransfer2)
+            ->setGrossPrice(self::ITEM_GROSS_PRICE_450)
+            ->setPriceToPay(self::ITEM_GROSS_PRICE_450);
+        $orderTransfer->getCalculableObject()->addItem($orderItemTransfer2);
+
+        $orderItemTransfer3 = $this->getOrderItemTransfer();
+        $orderItemTransfer3->setTaxSet($taxSetTransfer3)
+            ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
+            ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
+        $orderTransfer->getCalculableObject()->addItem($orderItemTransfer3);
+
+        $totalsTransfer = $this->getTotalsTransfer();
         $calculator = $this->getCalculator();
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
 
-        $taxRates = $totalsTransfer->getTax()->getTaxRates();
+        $calculator->recalculateTotals($totalsTransfer, $orderTransfer, $orderTransfer->getCalculableObject()->getItems());
 
-        $this->assertEquals(10, $taxRates[0]->getPercentage());
-        $this->assertEquals(91, $taxRates[0]->getAmount());
-        $this->assertEquals(20, $taxRates[1]->getPercentage());
-        $this->assertEquals(167, $taxRates[1]->getAmount());
-    }
+        $groupedTaxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
 
-    public function testShouldHaveProperlyCalculatedTaxAmountsForAnOrderWithTwoItemsWithItemExpensesAndOrderExpenses()
-    {
-        $order = $this->getOrderWithFixtureData();
-
-        $item = $this->getItemWithFixtureData();
-        $tax = new TaxItemTransfer();
-        $tax->setPercentage(self::TAX_PERCENTAGE_10);
-        $tax->setAmount(self::ITEM_GROSS_PRICE_1000);
-        $item->setTax($tax);
-        $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
-        $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $order->getCalculableObject()->addItem($item);
-
-        $expense = $this->getExpenseWithFixtureData();
-        $tax = new TaxItemTransfer();
-        $tax->setPercentage(self::TAX_PERCENTAGE_10);
-        $tax->setAmount(self::EXPENSE_1000);
-        $expense->setTax($tax);
-        $expense->setGrossPrice(self::EXPENSE_1000);
-        $expense->setPriceToPay(self::EXPENSE_1000);
-        $item->addExpense($expense);
-
-        $item = $this->getItemWithFixtureData();
-        $tax = new TaxItemTransfer();
-        $tax->setPercentage(self::TAX_PERCENTAGE_20);
-        $tax->setAmount(self::ITEM_GROSS_PRICE_1000);
-        $item->setTax($tax);
-        $item->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
-        $item->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $order->getCalculableObject()->addItem($item);
-
-        $expense = $this->getExpenseWithFixtureData();
-        $tax = new TaxItemTransfer();
-        $tax->setPercentage(self::TAX_PERCENTAGE_30);
-        $tax->setAmount(self::EXPENSE_1000);
-        $expense->setTax($tax);
-        $expense->setGrossPrice(self::EXPENSE_1000);
-        $expense->setPriceToPay(self::EXPENSE_1000);
-        $order->getCalculableObject()->addExpense($expense);
-
-        $totalsTransfer = $this->getPriceTotals();
-        $calculator = $this->getCalculator();
-        $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
-
-        $taxRates = $totalsTransfer->getTax()->getTaxRates();
-
-        $this->assertEquals(10,  $taxRates[0]->getPercentage());
-        $this->assertEquals(182, $taxRates[0]->getAmount());
-        $this->assertEquals(20,  $taxRates[1]->getPercentage());
-        $this->assertEquals(167, $taxRates[1]->getAmount());
-        $this->assertEquals(30,  $taxRates[2]->getPercentage());
-        $this->assertEquals(231, $taxRates[2]->getAmount());
+        $this->assertCount(2, $groupedTaxSets);
+        $this->assertEquals(335, $groupedTaxSets[0]->getAmount());
+        $this->assertEquals(231, $groupedTaxSets[1]->getAmount());
     }
 
     /**
@@ -156,7 +143,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     /**
      * @return CalculableContainer
      */
-    protected function getOrderWithFixtureData()
+    private function getOrderTransfer()
     {
         $order = new OrderTransfer();
 
@@ -166,7 +153,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     /**
      * @return OrderItemTransfer
      */
-    protected function getItemWithFixtureData()
+    private function getOrderItemTransfer()
     {
         $item = new OrderItemTransfer();
 
@@ -176,7 +163,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     /**
      * @return ExpenseTransfer
      */
-    protected function getExpenseWithFixtureData()
+    private function getExpenseTransfer()
     {
         $expense = new ExpenseTransfer();
 
@@ -186,7 +173,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     /**
      * @return TotalsTransfer
      */
-    protected function getPriceTotals()
+    private function getTotalsTransfer()
     {
         return new TotalsTransfer();
     }
@@ -194,7 +181,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     /**
      * @return AbstractLocatorLocator|AutoCompletion|Locator
      */
-    protected function getLocator()
+    private function getLocator()
     {
         return Locator::getInstance();
     }
