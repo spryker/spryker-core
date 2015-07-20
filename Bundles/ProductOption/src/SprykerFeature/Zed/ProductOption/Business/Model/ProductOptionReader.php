@@ -7,10 +7,10 @@
 namespace SprykerFeature\Zed\ProductOption\Business\Model;
 
 use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
-use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
 
 class ProductOptionReader implements ProductOptionReaderInterface
@@ -29,28 +29,39 @@ class ProductOptionReader implements ProductOptionReaderInterface
     protected $queryContainer;
 
     /**
+     * @var ProductOptionToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param ProductOptionQueryContainerInterface $queryContainer
+     * @param ProductOptionToLocaleInterface $localeFacade
      */
     public function __construct(
-        ProductOptionQueryContainerInterface $queryContainer
+        ProductOptionQueryContainerInterface $queryContainer,
+        ProductOptionToLocaleInterface $localeFacade
+
     ) {
-        return $this->queryContainer = $queryContainer;
+        $this->queryContainer = $queryContainer;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
      * @param int $idProductOptionValueUsage
-     * @param int $idLocale
+     * @param string $localeCode
      *
      * @return ProductOptionTransfer
      */
-    public function getProductOption($idProductOptionValueUsage, $idLocale)
+    public function getProductOption($idProductOptionValueUsage, $localeCode)
     {
+        $localeTransfer = $this->localeFacade->getLocale($localeCode);
+
         $productOptionTransfer = (new ProductOptionTransfer)
             ->setIdOptionValueUsage($idProductOptionValueUsage)
-            ->setFkLocale($idLocale);
+            ->setLocalCode($localeCode);
 
         $result =  $this->queryContainer->queryProductOptionValueUsageWithAssociatedAttributes(
-            $idProductOptionValueUsage, $idLocale
+            $idProductOptionValueUsage, $localeTransfer->getIdLocale()
         )->select([
             self::COL_PRICE,
             self::COL_TRANSLATION_TYPE,

@@ -21,13 +21,13 @@ class ProductOptionFacade extends AbstractFacade
 
     /**
      * @param int $idProductOptionValueUsage
-     * @param int $idLocale
+     * @param string $localeCode
      *
      * @return ProductOptionTransfer
      */
-    public function getProductOption($idProductOptionValueUsage, $idLocale)
+    public function getProductOption($idProductOptionValueUsage, $localeCode)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getProductOption($idProductOptionValueUsage, $idLocale);
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getProductOption($idProductOptionValueUsage, $localeCode);
     }
 
     /**

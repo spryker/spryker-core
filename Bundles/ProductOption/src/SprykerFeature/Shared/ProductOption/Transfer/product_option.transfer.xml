@@ -5,7 +5,7 @@
 
     <transfer name="ProductOption">
         <property name="idOptionValueUsage" type="int" />
-        <property name="fkLocale" type="int" />
+        <property name="localCode" type="string " />
         <property name="labelOptionType" type="string" />
         <property name="labelOptionValue" type="string" />
         <property name="price" type="int" />

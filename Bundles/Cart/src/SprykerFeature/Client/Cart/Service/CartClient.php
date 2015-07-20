@@ -8,12 +8,10 @@ namespace SprykerFeature\Client\Cart\Service;
 
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Cart\CartItemInterface;
-use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerFeature\Client\Cart\Service\Session\CartSessionInterface;
-use SprykerFeature\Client\Cart\Service\Storage\CartStorageInterface;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 
 /**

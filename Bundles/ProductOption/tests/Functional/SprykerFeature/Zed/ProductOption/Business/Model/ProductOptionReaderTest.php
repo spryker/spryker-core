@@ -18,6 +18,8 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 class ProductOptionReaderTest extends AbstractFunctionalTest
 {
 
+    const LOCALE_CODE = 'xx_XX';
+
     /**
      * @var array
      */
@@ -35,7 +37,7 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         /** @var $productOptionTransfer ProductOptionTransfer */
         $productOptionTransfer = $this->getFacade()->getProductOption(
             $this->ids['idUsageLarge'],
-            $this->ids['idLocale']
+            self::LOCALE_CODE
         );
 
         $this->assertEquals('Size', $productOptionTransfer->getLabelOptionType());
