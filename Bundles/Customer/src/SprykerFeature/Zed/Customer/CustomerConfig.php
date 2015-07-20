@@ -20,4 +20,28 @@ class CustomerConfig extends AbstractBundleConfig
         return $this->get(SystemConfig::HOST_YVES);
     }
 
+    /**
+     * @return int
+     */
+    public function getMinimumCustomerNumber()
+    {
+        return 100;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCustomerNumberIncrementMin()
+    {
+        return 23;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCustomerNumberIncrementMax()
+    {
+        return 42;
+    }
+
 }

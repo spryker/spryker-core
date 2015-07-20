@@ -1,7 +1,4 @@
 <?php
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
 
 namespace SprykerFeature\Zed\Customer\Persistence\Propel;
 
@@ -20,4 +17,4 @@ use SprykerFeature\Zed\Customer\Persistence\Propel\Base\SpyCustomerQuery as Base
 class SpyCustomerQuery extends BaseSpyCustomerQuery
 {
 
-} // SpyCustomerQuery
+}

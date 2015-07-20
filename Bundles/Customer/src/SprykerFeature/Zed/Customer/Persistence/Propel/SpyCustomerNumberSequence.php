@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Customer\Persistence\Propel;
 
-use SprykerFeature\Zed\Customer\Persistence\Propel\Base\SpyCustomer as BaseSpyCustomer;
+use SprykerFeature\Zed\Customer\Persistence\Propel\Base\SpyCustomerNumberSequence as BaseSpyCustomerNumberSequence;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_customer' table.
+ * Skeleton subclass for representing a row from the 'spy_customer_number_sequence' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use SprykerFeature\Zed\Customer\Persistence\Propel\Base\SpyCustomer as BaseSpyCu
  * long as it does not already exist in the output directory.
  *
  */
-class SpyCustomer extends BaseSpyCustomer
+class SpyCustomerNumberSequence extends BaseSpyCustomerNumberSequence
 {
 
 }
