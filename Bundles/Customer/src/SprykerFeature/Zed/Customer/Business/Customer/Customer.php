@@ -110,7 +110,7 @@ class Customer
         $customerTransfer->fromArray($customer->toArray());
         $addresses = $customer->getAddresses();
         if ($addresses) {
-            $customerTransfer->setAddresses($this->entityCollectionToTransferCollection($addresses));
+            $customerTransfer->setAddresses($this->entityCollectionToTransferCollection($addresses, $customer));
         }
 
         return $customerTransfer;
@@ -315,11 +315,21 @@ class Customer
      *
      * @return CustomerAddressTransfer
      */
-    protected function entityCollectionToTransferCollection(ObjectCollection $entities)
+    protected function entityCollectionToTransferCollection(ObjectCollection $entities, SpyCustomer $customer)
     {
         $addressCollection = new AddressesTransfer();
-        foreach ($entities->getData() as $customer) {
-            $addressCollection->addCustomerAddress($this->entityToTransfer($customer));
+        foreach ($entities->getData() as $address) {
+            /** @var SpyCustomerAddress $address */
+            $addressTransfer = $this->entityToTransfer($address);
+
+            if ($customer->getDefaultBillingAddress() === $address->getIdCustomerAddress()) {
+                $addressTransfer->setIsDefaultBilling(true);
+            }
+            if ($customer->getDefaultShippingAddress() === $address->getIdCustomerAddress()) {
+                $addressTransfer->setIsDefaultShipping(true);
+            }
+
+            $addressCollection->addCustomerAddress($addressTransfer);
         }
 
         return $addressCollection;
