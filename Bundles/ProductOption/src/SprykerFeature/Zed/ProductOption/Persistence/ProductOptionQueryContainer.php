@@ -19,6 +19,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTra
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
 
@@ -27,12 +28,6 @@ use Propel\Runtime\Propel;
  */
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
-
-    const VIRTUAL_COL_TYPE = 'typeName';
-
-    const VIRTUAL_COL_VALUE = 'valueName';
-
-    const VIRTUAL_COL_PRICE = 'price';
 
     /**
      * @param string $importKeyProductOptionType
@@ -289,12 +284,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->filterByFkLocale($idLocale)
                 ->endUse()
             ->endUse()
-            ->filterByIdProductOptionValueUsage($idProductOptionValueUsage)
-            ->addAsColumn(self::VIRTUAL_COL_VALUE, SpyProductOptionValueTranslationTableMap::COL_NAME)
-            ->addAsColumn(self::VIRTUAL_COL_TYPE, SpyProductOptionTypeTranslationTableMap::COL_NAME)
-            ->addAsColumn(self::VIRTUAL_COL_PRICE, SpyProductOptionValuePriceTableMap::COL_PRICE);
+            ->filterByIdProductOptionValueUsage($idProductOptionValueUsage);
     }
-
 
     /**
      * @param int $idProductOptionValueUsage

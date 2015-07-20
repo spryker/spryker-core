@@ -16,6 +16,13 @@ use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
 class ProductOptionReader implements ProductOptionReaderInterface
 {
 
+    const COL_PRICE = 'SpyProductOptionValuePrice.Price';
+
+    const COL_TRANSLATION_TYPE = 'SpyProductOptionTypeTranslation.Name';
+
+    const COL_TRANSLATION_VALUE = 'SpyProductOptionValueTranslation.Name';
+
+
     /**
      * @var ProductOptionQueryContainerInterface
      */
@@ -44,17 +51,21 @@ class ProductOptionReader implements ProductOptionReaderInterface
 
         $result =  $this->queryContainer->queryProductOptionValueUsageWithAssociatedAttributes(
             $idProductOptionValueUsage, $idLocale
-        )->findOne();
+        )->select([
+            self::COL_PRICE,
+            self::COL_TRANSLATION_TYPE,
+            self::COL_TRANSLATION_VALUE
+        ])->findOne();
 
         $productOptionTransfer->setLabelOptionType(
-            $result->getVirtualColumn(ProductOptionQueryContainer::VIRTUAL_COL_TYPE)
+            $result[self::COL_TRANSLATION_TYPE]
         );
 
         $productOptionTransfer->setLabelOptionValue(
-            $result->getVirtualColumn(ProductOptionQueryContainer::VIRTUAL_COL_VALUE)
+            $result[self::COL_TRANSLATION_VALUE]
         );
 
-        $price = $result->getVirtualColumn(ProductOptionQueryContainer::VIRTUAL_COL_PRICE);
+        $price = $result[self::COL_PRICE];
         if (null === $price) {
             $productOptionTransfer->setPrice(0);
         } else {
