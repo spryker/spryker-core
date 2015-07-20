@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\SprykerFeature\Zed\Wishlist\Persistance;
+namespace spec\SprykerFeature\Zed\Wishlist\Persistence;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -16,7 +16,7 @@ class WishlistQueryContainerSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('SprykerFeature\Zed\Wishlist\Persistance\WishlistQueryContainer');
+        $this->shouldHaveType('SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainer');
     }
 
     function it_extends_abstract()
