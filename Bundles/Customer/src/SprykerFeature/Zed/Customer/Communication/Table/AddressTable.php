@@ -17,6 +17,15 @@ class AddressTable extends AbstractTable
     const DEFAULT_BILLING_ADDRESS = 'default_billing_address';
     const DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
     const ID_CUSTOMER_ADDRESS = 'IdCustomerAddress';
+    const LAST_NAME = 'LastName';
+    const FIRST_NAME = 'FirstName';
+    const ADDRESS_1 = 'Address1';
+    const ADDRESS_2 = 'Address2';
+    const ADDRESS_3 = 'Address3';
+    const COMPANY = 'Company';
+    const ZIP_CODE = 'ZipCode';
+    const CITY = 'City';
+    const COUNTRY = 'Country';
     /**
      * @var SpyCustomerAddressQuery
      */
@@ -49,34 +58,34 @@ class AddressTable extends AbstractTable
     {
         $config->setHeaders([
             self::ID_CUSTOMER_ADDRESS => '#',
-            'LastName' => 'Last Name',
-            'FirstName' => 'First Name',
-            'Address1' => 'Address ',
-            'Address2' => 'Address (2nd line)',
-            'Address3' => 'Address (3rd line)',
-            'Company' => 'Company',
-            'ZipCode' => 'Zip Code',
-            'City' => 'City',
-            'Country' => 'Country',
+            self::LAST_NAME => 'Last Name',
+            self::FIRST_NAME => 'First Name',
+            self::ADDRESS_1 => 'Address ',
+            self::ADDRESS_2 => 'Address (2nd line)',
+            self::ADDRESS_3 => 'Address (3rd line)',
+            self::COMPANY => self::COMPANY,
+            self::ZIP_CODE => 'Zip Code',
+            self::CITY => self::CITY,
+            self::COUNTRY => self::COUNTRY,
             self::ACTIONS => self::ACTIONS,
         ]);
 
         $config->setSortable([
             self::ID_CUSTOMER_ADDRESS,
-            'FirstName',
-            'LastName',
-            'ZipCode',
-            'Country',
+            self::FIRST_NAME,
+            self::LAST_NAME,
+            self::ZIP_CODE,
+            self::COUNTRY,
         ]);
 
         $config->setSearchable([
             self::ID_CUSTOMER_ADDRESS,
-            'LastName',
-            'FirstName',
-            'Address1',
-            'Address2',
-            'Address3',
-            'ZipCode',
+            self::LAST_NAME,
+            self::FIRST_NAME,
+            self::ADDRESS_1,
+            self::ADDRESS_2,
+            self::ADDRESS_3,
+            self::ZIP_CODE,
         ]);
 
         $config->setUrl(sprintf('table?id_customer=%d', $this->idCustomer));
@@ -93,7 +102,7 @@ class AddressTable extends AbstractTable
     {
         $query = $this->addressQuery->filterByFkCustomer($this->idCustomer)
             ->leftJoinCountry('country')
-            ->withColumn('country.name', 'Country')
+            ->withColumn('country.name', self::COUNTRY)
         ;
         $lines = $this->runQuery($query, $config);
 
@@ -119,7 +128,7 @@ class AddressTable extends AbstractTable
                     $tags[] = '<span class="label label-danger" title="Default shipping address">SHIPPING</span>';
                 }
 
-                $lines[$key]['Address1'] = (!empty($tags) ? implode('&nbsp;', $tags) . '&nbsp;' : '') . $lines[$key]['Address1'];
+                $lines[$key][self::ADDRESS_1] = (!empty($tags) ? implode('&nbsp;', $tags) . '&nbsp;' : '') . $lines[$key][self::ADDRESS_1];
 
                 $lines[$key][self::ACTIONS] = $this->buildLinks($value);
             }

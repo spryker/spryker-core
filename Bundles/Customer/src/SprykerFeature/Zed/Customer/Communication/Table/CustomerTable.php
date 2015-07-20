@@ -18,6 +18,12 @@ class CustomerTable extends AbstractTable
     const ACTIONS = 'Actions';
     const COUNTRY = 'Country';
     const CREATED_AT = 'CreatedAt';
+    const ID_CUSTOMER = 'IdCustomer';
+    const EMAIL = 'Email';
+    const LAST_NAME = 'LastName';
+    const FIRST_NAME = 'FirstName';
+    const ZIP_CODE = 'ZipCode';
+    const CITY = 'City';
 
     /**
      * @var SpyCustomerQuery
@@ -38,31 +44,31 @@ class CustomerTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeaders([
-            'IdCustomer' => '#',
+            self::ID_CUSTOMER => '#',
             self::CREATED_AT => 'Registration Date',
-            'Email' => 'Email',
-            'LastName' => 'Last Name',
-            'FirstName' => 'First Name',
-            'ZipCode' => 'ZIP Code',
-            'City' => 'City',
+            self::EMAIL => self::EMAIL,
+            self::LAST_NAME => 'Last Name',
+            self::FIRST_NAME => 'First Name',
+            self::ZIP_CODE => 'ZIP Code',
+            self::CITY => self::CITY,
             self::COUNTRY => self::COUNTRY,
             self::ACTIONS => self::ACTIONS,
         ]);
 
         $config->setSortable([
-            'IdCustomer',
+            self::ID_CUSTOMER,
             self::CREATED_AT,
-            'FirstName',
-            'LastName',
-            'ZipCode',
+            self::FIRST_NAME,
+            self::LAST_NAME,
+            self::ZIP_CODE,
             self::COUNTRY,
         ]);
 
         $config->setUrl('table');
 
         $config->setSearchable([
-            'IdCustomer',
-            'Email',
+            self::ID_CUSTOMER,
+            self::EMAIL,
         ]);
 
         return $config;
@@ -76,10 +82,10 @@ class CustomerTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->customerQuery->leftJoinBillingAddress('billing')
-            ->withColumn('billing.first_name', 'FirstName')
-            ->withColumn('billing.last_name', 'LastName')
-            ->withColumn('billing.zip_code', 'ZipCode')
-            ->withColumn('billing.city', 'City')
+            ->withColumn('billing.first_name', self::FIRST_NAME)
+            ->withColumn('billing.last_name', self::LAST_NAME)
+            ->withColumn('billing.zip_code', self::ZIP_CODE)
+            ->withColumn('billing.city', self::CITY)
             ->withColumn('billing.fk_country', self::COUNTRY)
         ;
 
@@ -110,7 +116,7 @@ class CustomerTable extends AbstractTable
     {
         $result = '';
 
-        $idCustomer = !empty($details['IdCustomer']) ? $details['IdCustomer'] : false;
+        $idCustomer = !empty($details[self::ID_CUSTOMER]) ? $details[self::ID_CUSTOMER] : false;
         if (false !== $idCustomer) {
             $links = [
                 'Edit' => '/customer/edit/?id_customer=%d',
