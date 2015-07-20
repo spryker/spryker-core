@@ -40,12 +40,16 @@ class ProfileController extends AbstractController
 
         $this->setMenuHighlight($customerUri);
 
-        $form = $this->getDependencyContainer()->createCustomerForm($request);
+        $form = $this->getDependencyContainer()
+            ->createCustomerForm($request)
+        ;
         $form->init();
 
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
-        $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
+        $customerTransfer = $this->getFacade()
+            ->getCustomer($customerTransfer)
+        ;
 
         try {
             $idShippingAddress = $this->getFacade()
@@ -66,7 +70,9 @@ class ProfileController extends AbstractController
         }
 
         $addresses = [];
-        $addressesItems = $customerTransfer->getAddresses()->getCustomerAddressItems();
+        $addressesItems = $customerTransfer->getAddresses()
+            ->getCustomerAddressItems()
+        ;
         foreach ($addressesItems as $address) {
             $addresses[] = [
                 'id' => $address->getIdCustomerAddress(),
@@ -101,7 +107,9 @@ class ProfileController extends AbstractController
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($request->query->get('id'));
-        $this->getFacade()->forgotPassword($customerTransfer);
+        $this->getFacade()
+            ->forgotPassword($customerTransfer)
+        ;
 
         return $this->redirectResponse('/customer/profile?id=' . $request->query->get('id'));
     }
@@ -113,13 +121,17 @@ class ProfileController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createCustomerForm($request);
+        $form = $this->getDependencyContainer()
+            ->createCustomerForm($request)
+        ;
         $form->init();
 
         if ($form->isValid()) {
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getRequestData());
-            $this->getFacade()->updateCustomer($customerTransfer);
+            $this->getFacade()
+                ->updateCustomer($customerTransfer)
+            ;
         }
 
         return $this->jsonResponse($form->renderData());
@@ -132,7 +144,9 @@ class ProfileController extends AbstractController
      */
     public function addressesAction(Request $request)
     {
-        $grid = $this->getDependencyContainer()->createAddressGrid($request);
+        $grid = $this->getDependencyContainer()
+            ->createAddressGrid($request)
+        ;
 
         return $this->jsonResponse($grid->renderData());
     }
@@ -144,19 +158,25 @@ class ProfileController extends AbstractController
      */
     public function addressAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createAddressForm($request);
+        $form = $this->getDependencyContainer()
+            ->createAddressForm($request)
+        ;
         $form->init();
 
         if ($form->isValid()) {
             $addressTransfer = new CustomerAddressTransfer();
             $addressTransfer->fromArray($form->getRequestData());
             if ($addressTransfer->getIdCustomerAddress()) {
-                $this->getFacade()->updateAddress($addressTransfer);
+                $this->getFacade()
+                    ->updateAddress($addressTransfer)
+                ;
 
                 return $this->jsonResponse($form->renderData());
             }
 
-            $this->getFacade()->createAddress($addressTransfer);
+            $this->getFacade()
+                ->createAddress($addressTransfer)
+            ;
         }
 
         return $this->jsonResponse($form->renderData());
@@ -172,7 +192,9 @@ class ProfileController extends AbstractController
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
-        $this->getFacade()->setDefaultShippingAddress($addressTransfer);
+        $this->getFacade()
+            ->setDefaultShippingAddress($addressTransfer)
+        ;
 
         return $this->redirectResponse('/customer/profile?id=' . $request->query->get('customer_id'));
     }
@@ -187,7 +209,9 @@ class ProfileController extends AbstractController
         $addressTransfer = new CustomerAddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
-        $this->getFacade()->setDefaultBillingAddress($addressTransfer);
+        $this->getFacade()
+            ->setDefaultBillingAddress($addressTransfer)
+        ;
 
         return $this->redirectResponse('/customer/profile?id=' . $request->query->get('customer_id'));
     }

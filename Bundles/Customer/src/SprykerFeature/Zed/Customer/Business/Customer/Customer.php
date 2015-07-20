@@ -68,8 +68,7 @@ class Customer
      */
     public function hasEmail($email)
     {
-        $customerCount = $this->queryContainer
-            ->queryCustomerByEmail($email)
+        $customerCount = $this->queryContainer->queryCustomerByEmail($email)
             ->count()
         ;
 
@@ -111,9 +110,7 @@ class Customer
         $customerTransfer->fromArray($customer->toArray());
         $addresses = $customer->getAddresses();
         if ($addresses) {
-            $customerTransfer->setAddresses(
-                $this->entityCollectionToTransferCollection($addresses)
-            );
+            $customerTransfer->setAddresses($this->entityCollectionToTransferCollection($addresses));
         }
 
         return $customerTransfer;
@@ -130,12 +127,13 @@ class Customer
     public function register(CustomerTransfer $customerTransfer)
     {
         try {
-
-            //TODO clean this up. is misusing the exception
             $this->getCustomer($customerTransfer);
         } catch (CustomerNotFoundException $e) {
             $customerTransfer->setRegistrationKey($this->generateKey());
             $customer = new SpyCustomer();
+            $customer->setFirstName($customerTransfer->getFirstName());
+            $customer->setLastName($customerTransfer->getLastName());
+            $customer->setGender($customerTransfer->getGender());
             $customer->setPassword($customerTransfer->getPassword());
             $customer->setEmail($customerTransfer->getEmail());
             $customer->setRegistrationKey($customerTransfer->getRegistrationKey());
@@ -200,9 +198,9 @@ class Customer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
-        $customer = $this->queryContainer
-            ->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
-            ->findOne();
+        $customer = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
+            ->findOne()
+        ;
         if (!$customer) {
             throw new CustomerNotFoundException('Customer not found.');
         }
@@ -288,6 +286,7 @@ class Customer
         $customer->setCompany($customerTransfer->getCompany());
         $customer->setDateOfBirth($customerTransfer->getDateOfBirth());
         $customer->setSalutation($customerTransfer->getSalutation());
+        $customer->setGender($customerTransfer->getGender());
         $customer->save();
 
         return true;
@@ -336,13 +335,13 @@ class Customer
     protected function getCustomer(CustomerTransfer $customerTransfer)
     {
         if ($customerTransfer->getIdCustomer()) {
-            $customer = $this->queryContainer
-                ->queryCustomerById($customerTransfer->getIdCustomer())
-                ->findOne();
+            $customer = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
+                ->findOne()
+            ;
         } elseif ($customerTransfer->getEmail()) {
-            $customer = $this->queryContainer
-                ->queryCustomerByEmail($customerTransfer->getEmail())
-                ->findOne();
+            $customer = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
+                ->findOne()
+            ;
         }
 
         if (isset($customer) && ($customer !== null)) {

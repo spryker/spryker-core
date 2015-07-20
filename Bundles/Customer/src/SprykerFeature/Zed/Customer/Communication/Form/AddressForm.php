@@ -7,139 +7,181 @@
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+
+use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
+
 use Symfony\Component\Validator\Constraints;
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Constraints\Length;
+
+use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 
 class AddressForm extends AbstractForm
 {
 
-    public function addFormFields()
+    const UPDATE = 'update';
+    const SALUTATION = 'salutation';
+    const FIRST_NAME = 'first_name';
+    const LAST_NAME = 'last_name';
+    const ID_CUSTOMER = 'id_customer';
+    const ID_CUSTOMER_ADDRESS = 'id_customer_address';
+    /**
+     * @var SpyCustomerAddressQuery
+     */
+    protected $customerAddressQuery;
+
+    /**
+     * @var SpyCustomerQuery
+     */
+    protected $customerQuery;
+
+    /**
+     * @var
+     */
+    protected $type;
+
+    /**
+     * @param SpyCustomerAddressQuery $addressQuery
+     */
+    public function __construct(SpyCustomerAddressQuery $addressQuery, SpyCustomerQuery $customerQuery, $type)
     {
-        $this->addField('id_customer_address')
-            ->setConstraints([
-                new Constraints\Required([
-                    new Constraints\Type([
-                        'type' => 'int',
-                    ]),
-                ]),
-            ])
-        ;
+        $this->customerQuery = $customerQuery;
+        $this->addressQuery = $addressQuery;
+        $this->type = $type;
+    }
 
-        $this->addField('fk_customer')
-            ->setConstraints([
-                new Constraints\Required([
-                    new Constraints\Type([
-                        'type' => 'int',
-                    ]),
-                ]),
-            ])
-        ;
-
-        $this->addField('first_name')
-            ->setConstraints([
-                new Constraints\Required([
-                    new Constraints\Type([
-                        'type' => 'string',
-                    ]),
-                    new Constraints\NotBlank(),
-                ]),
-            ])
-        ;
-
-        $this->addField('last_name')
-            ->setConstraints([
-                new Constraints\Required([
-                    new Constraints\Type([
-                        'type' => 'string',
-                    ]),
-                    new Constraints\NotBlank(),
-                ]),
-            ])
-        ;
-
-        $this->addField('company')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-            ])
-        ;
-
-        $this->addField('address1')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-            ])
-        ;
-
-        $this->addField('address2')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-            ])
-        ;
-
-        $this->addField('zip_code')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-            ])
-        ;
-
-        $this->addField('city')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-                new Constraints\NotBlank(),
-            ])
-        ;
-
-        $this->addField('fk_country')
-            ->setAccepts($this->getCountryOptions())
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-                new Constraints\Choice([
-                    'choices' => array_column($this->getCountryOptions(), 'value'),
-                ]),
-            ])
-            ->setValueHook(function ($value) {
-                return $value ? (int) $value : null;
-            })
-        ;
-
-        $this->addField('state')
-            ->setConstraints([
-                new Constraints\Type([
-                    'type' => 'string',
-                ]),
-            ])
-        ;
+    /**
+     * @return $this
+     */
+    public function buildFormFields()
+    {
+        return $this->addHidden(self::ID_CUSTOMER_ADDRESS)
+            ->addHidden('fk_customer')
+            ->addChoice(self::SALUTATION, [
+                    'label' => 'Salutation',
+                    'placeholder' => 'Select one',
+                    'choices' => $this->getSalutationOptions(),
+                ])
+            ->addText(self::FIRST_NAME, [
+                    'label' => 'First Name',
+                    'constraints' => [
+                        new Required(),
+                        new NotBlank(),
+                        new Length(['max' => 100]),
+                    ],
+                ])
+            ->addText(self::LAST_NAME, [
+                    'label' => 'Last Name',
+                    'constraints' => [
+                        new Required(),
+                        new NotBlank(),
+                        new Length(['max' => 100]),
+                    ],
+                ])
+            ->addText('address1', [
+                    'label' => 'Address line 1',
+                ])
+            ->addText('address2', [
+                    'label' => 'Address line 2',
+                ])
+            ->addText('address3', [
+                    'label' => 'Address line 3',
+                ])
+            ->addText('city', [
+                    'label' => 'City',
+                ])
+            ->addText('zip_code', [
+                    'label' => 'Zip Code',
+                    'constraints' => [
+                        new Length(['max' => 15]),
+                    ],
+                ])
+            ->addChoice('fk_country', [
+                    'label' => 'Country',
+                    'placeholder' => 'Select one',
+                    'choices' => $this->getCountryOptions(),
+                    'preferred_choices' => [
+                        $this->addressQuery->useCountryQuery()
+                            ->findOneByName('Germany')
+                            ->getIdCountry(),
+                    ],
+                ])
+            ->addText('phone', [
+                    'label' => 'Phone',
+                ])
+            ->addText('company', [
+                    'label' => 'Company',
+                ])
+            ->addTextarea('comment', [
+                    'label' => 'Comment',
+                    'constraints' => [
+                        new Length(['max' => 255]),
+                    ],
+                ])
+            ->addSubmit('submit', [
+                    'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
+                    'attr' => [
+                        'class' => 'btn btn-primary',
+                    ],
+                ])
+            ;
     }
 
     /**
      * @return array
      */
-    public function getDefaultData()
+    public function populateFormFields()
     {
-        $addressId = $this->stateContainer->getRequestValue('id_customer_address');
-        if (!$addressId) {
-            return [];
+        $result = [];
+
+        $idCustomer = $this->request->get(self::ID_CUSTOMER);
+        if (false === is_null($idCustomer)) {
+            $customerDetailEntity = $this->customerQuery->findOneByIdCustomer($idCustomer);
+            $customerDetails = $customerDetailEntity->toArray();
         }
 
-        $addressTransfer = new CustomerAddressTransfer();
-        $addressTransfer->setIdCustomerAddress($addressId);
-        $addressTransfer = $this->getLocator()->customer()->facade()->getAddress($addressTransfer);
-        if ($addressTransfer) {
-            return $addressTransfer->toArray();
+        $idCustomerAddress = $this->request->get(self::ID_CUSTOMER_ADDRESS);
+        if (false === is_null($idCustomerAddress)) {
+            $addressDetailEntity = $this->addressQuery->findOneByIdCustomerAddress($idCustomerAddress);
+            $result = $addressDetailEntity->toArray();
         }
 
-        return [];
+        if (true === empty($result[self::SALUTATION])) {
+            $result[self::SALUTATION] = !empty($customerDetails[self::SALUTATION]) ? $customerDetails[self::SALUTATION] : false;
+        }
+
+        if (false === empty($result[self::SALUTATION])) {
+            $salutations = array_flip($this->getSalutationOptions());
+
+            if (true === isset($salutations[$result[self::SALUTATION]])) {
+                $result[self::SALUTATION] = $salutations[$result[self::SALUTATION]];
+            }
+        }
+
+        if (true === empty($result[self::FIRST_NAME])) {
+            $result[self::FIRST_NAME] = !empty($customerDetails[self::FIRST_NAME]) ? $customerDetails[self::FIRST_NAME] : '';
+        }
+
+        if (true === empty($result[self::LAST_NAME])) {
+            $result[self::LAST_NAME] = !empty($customerDetails[self::LAST_NAME]) ? $customerDetails[self::LAST_NAME] : '';
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSalutationOptions()
+    {
+        return [
+            SpyCustomerTableMap::COL_SALUTATION_MR,
+            SpyCustomerTableMap::COL_SALUTATION_MRS,
+            SpyCustomerTableMap::COL_SALUTATION_DR,
+        ];
     }
 
     /**
@@ -147,9 +189,18 @@ class AddressForm extends AbstractForm
      */
     public function getCountryOptions()
     {
-        return [
-            ['value' => '1', 'label' => 'Germany'],
-        ];
+        $countries = $this->addressQuery->useCountryQuery()
+            ->find()
+        ;
+
+        $result = [];
+        if (false === empty($countries)) {
+            foreach ($countries->getData() as $country) {
+                $result[$country->getIdCountry()] = $country->getName();
+            }
+        }
+
+        return $result;
     }
 
 }

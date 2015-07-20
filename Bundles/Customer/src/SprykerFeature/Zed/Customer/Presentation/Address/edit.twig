@@ -1,0 +1,18 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block head_title 'Edit address' | trans %}
+{% block section_title 'Edit address' | trans %}
+
+{% block content %}
+
+    <p>
+        <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-default">{{ 'Back to Addresses' | trans }}</a>&nbsp;&nbsp;&nbsp;
+        <a href="/customer/address/view?id_customer_address={{ id_customer_address }}" class="btn btn-sm btn-info">{{ 'View Address' | trans }}</a>&nbsp;&nbsp;&nbsp;
+        <a href="/customer/view?id_customer={{ id_customer }}" class="btn btn-sm btn-info">{{ 'View Customer' | trans }}</a>
+    </p>
+
+    {% include '@Gui/Partials/Table/header.twig' with { table_title: '' } %}
+    {{ form(form) }}
+    {% include '@Gui/Partials/Table/footer.twig' %}
+
+{% endblock %}

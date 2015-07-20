@@ -9,14 +9,14 @@ class TableConfiguration
 {
 
     /**
-     * @var array
+     * @var
      */
-    private $headers;
+    protected $url;
 
     /**
      * @var array
      */
-    private $sortable;
+    private $headers;
 
     /**
      * @var
@@ -24,9 +24,14 @@ class TableConfiguration
     private $pageLength;
 
     /**
-     * @var
+     * @var array
      */
-    protected $url;
+    private $searchableFields;
+
+    /**
+     * @var array
+     */
+    private $sortableFields;
 
     /**
      * @return array
@@ -38,8 +43,9 @@ class TableConfiguration
 
     /**
      * @todo Zed Translation in Template
+     *
      * @param array $headers Provide php names for table columns
-     * if you are goin to user Propel Query as data population
+     *                       if you are goin to user Propel Query as data population
      */
     public function setHeaders(array $headers)
     {
@@ -49,21 +55,11 @@ class TableConfiguration
     }
 
     /**
-     * @param array $array
-     *
-     * @return bool
-     */
-    private function isAssoc(array $array)
-    {
-        return array_keys($array) !== range(0, count($array) - 1);
-    }
-
-    /**
      * @return array
      */
     public function getSortable()
     {
-        return $this->sortable;
+        return $this->sortableFields;
     }
 
     /**
@@ -71,14 +67,27 @@ class TableConfiguration
      */
     public function setSortable(array $sortable)
     {
-        $this->sortable = array_intersect(
-            $sortable,
-            array_keys($this->headers)
-        );
+        $this->sortableFields = array_intersect($sortable, array_keys($this->headers));
     }
 
     /**
-     * @return mixed
+     * @return array
+     */
+    public function getSearchable()
+    {
+        return !empty($this->searchableFields) ? $this->searchableFields : array_keys($this->headers);
+    }
+
+    /**
+     * @param array $searchable
+     */
+    public function setSearchable(array $searchable)
+    {
+        $this->searchableFields = $searchable;
+    }
+
+    /**
+     * @return int
      */
     public function getPageLength()
     {
@@ -108,4 +117,15 @@ class TableConfiguration
     {
         $this->url = $url;
     }
+
+    /**
+     * @param array $arr
+     *
+     * @return bool
+     */
+    private function isAssoc(array $arr)
+    {
+        return (array_values($arr) !== $arr);
+    }
+
 }
