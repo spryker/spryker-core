@@ -28,9 +28,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     public function testGetCartMustReturnInstanceOfCartTransfer()
     {
         $cartTransfer = new CartTransfer();
-        $sessionMock = $this->getMock('SprykerFeature\Client\Cart\Service\Session\CartSessionInterface', [
-            'getCart', 'setCart', 'getItemCount', 'setItemCount'
-        ]);
+        $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->once())
             ->method('getCart')
             ->will($this->returnValue($cartTransfer))
@@ -44,9 +42,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
 
     public function testClearCartMustSetItemCountInSessionToZero()
     {
-        $sessionMock = $this->getMock('SprykerFeature\Client\Cart\Service\Session\CartSessionInterface', [
-            'getCart', 'setCart', 'getItemCount', 'setItemCount'
-        ]);
+        $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->once())
             ->method('setItemCount')
             ->with(0)
@@ -62,9 +58,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     public function testClearCartMustSetCartTransferInSessionToAnEmptyInstance()
     {
         $cartTransfer = new CartTransfer();
-        $sessionMock = $this->getMock('SprykerFeature\Client\Cart\Service\Session\CartSessionInterface', [
-            'getCart', 'setCart', 'getItemCount', 'setItemCount'
-        ]);
+        $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->once())
             ->method('setItemCount')
             ->will($this->returnValue($sessionMock))
@@ -84,9 +78,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
 
     public function testGetItemCountMustReturnItemCountFromSession()
     {
-        $sessionMock = $this->getMock('SprykerFeature\Client\Cart\Service\Session\CartSessionInterface', [
-            'getCart', 'setCart', 'getItemCount', 'setItemCount'
-        ]);
+        $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->once())
             ->method('getItemCount')
             ->will($this->returnValue(0))
@@ -101,11 +93,161 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     public function testAddItemMustOnlyExceptTransferInterfaceAsArgument()
     {
         $cartItemTransfer = new CartItemTransfer();
+        $cartTransfer = new CartTransfer();
+        $sessionMock = $this->getSessionMock();
+        $sessionMock->expects($this->once())
+            ->method('getCart')
+            ->will($this->returnValue($cartTransfer))
+        ;
 
-        $dependencyContainerMock = $this->getDependencyContainerMock();
+        $stubMock = $this->getStubMock();
+        $stubMock->expects($this->once())
+            ->method('addItem')
+            ->will($this->returnValue($cartTransfer))
+        ;
+
+        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $cartTransfer = $cartClientMock->addItem($cartItemTransfer);
+
+        $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
+    }
+
+    public function testRemoveItemMustOnlyExceptTransferInterfaceAsArgument()
+    {
+        $cartItemTransfer = new CartItemTransfer();
+        $cartItemTransfer->setId('identifier');
+        $cartTransfer = new CartTransfer();
+        $cartTransfer->addItem($cartItemTransfer);
+
+        $sessionMock = $this->getSessionMock();
+        $sessionMock->expects($this->exactly(2))
+            ->method('getCart')
+            ->will($this->returnValue($cartTransfer))
+        ;
+
+        $stubMock = $this->getStubMock();
+        $stubMock->expects($this->once())
+            ->method('removeItem')
+            ->will($this->returnValue($cartTransfer))
+        ;
+
+        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
+        $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
+
+        $cartTransfer = $cartClientMock->removeItem($cartItemTransfer);
+
+        $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
+    }
+
+    public function testChangeItemQuantityMustOnlyExceptTransferInterfaceAsArgument()
+    {
+        $cartItemTransfer = new CartItemTransfer();
+        $cartItemTransfer->setQuantity(2);
+        $cartItemTransfer->setId('identifier');
+
+        $cartTransfer = new CartTransfer();
+        $cartTransfer->addItem($cartItemTransfer);
+
+        $sessionMock = $this->getSessionMock();
+        $sessionMock->expects($this->exactly(3))
+            ->method('getCart')
+            ->will($this->returnValue($cartTransfer))
+        ;
+
+        $stubMock = $this->getStubMock();
+        $stubMock->expects($this->once())
+            ->method('decreaseItemQuantity')
+            ->will($this->returnValue($cartTransfer))
+        ;
+        $stubMock->expects($this->never())
+            ->method('increaseItemQuantity')
+            ->will($this->returnValue($cartTransfer))
+        ;
+
+        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
+        $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
+
+        $cartItemTransfer = new CartItemTransfer();
+        $cartItemTransfer->setQuantity(1);
+        $cartItemTransfer->setId('identifier');
+
+        $cartTransfer = $cartClientMock->changeItemQuantity($cartItemTransfer);
+
+        $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
+    }
+
+    public function testChangeItemQuantityMustCallDecreaseItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
+    {
+        $cartItemTransfer = new CartItemTransfer();
+        $cartItemTransfer->setQuantity(2);
+        $cartItemTransfer->setId('identifier');
+
+        $cartTransfer = new CartTransfer();
+        $cartTransfer->addItem($cartItemTransfer);
+
+        $sessionMock = $this->getSessionMock();
+        $sessionMock->expects($this->exactly(3))
+            ->method('getCart')
+            ->will($this->returnValue($cartTransfer))
+        ;
+
+        $stubMock = $this->getStubMock();
+        $stubMock->expects($this->once())
+            ->method('decreaseItemQuantity')
+            ->will($this->returnValue($cartTransfer))
+        ;
+        $stubMock->expects($this->never())
+            ->method('increaseItemQuantity')
+            ->will($this->returnValue($cartTransfer))
+        ;
+
+        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
+        $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
+
+        $cartItemTransfer = new CartItemTransfer();
+        $cartItemTransfer->setQuantity(1);
+        $cartItemTransfer->setId('identifier');
+
+        $cartTransfer = $cartClientMock->changeItemQuantity($cartItemTransfer);
+
+        $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
+    }
+
+    public function testChangeItemQuantityMustCallIncreaseItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
+    {
+        $cartItemTransfer = new CartItemTransfer();
+        $cartItemTransfer->setQuantity(1);
+        $cartItemTransfer->setId('identifier');
+
+        $cartTransfer = new CartTransfer();
+        $cartTransfer->addItem($cartItemTransfer);
+
+        $sessionMock = $this->getSessionMock();
+        $sessionMock->expects($this->exactly(3))
+            ->method('getCart')
+            ->will($this->returnValue($cartTransfer))
+        ;
+
+        $stubMock = $this->getStubMock();
+        $stubMock->expects($this->never())
+            ->method('decreaseItemQuantity')
+            ->will($this->returnValue($cartTransfer))
+        ;
+        $stubMock->expects($this->once())
+            ->method('increaseItemQuantity')
+            ->will($this->returnValue($cartTransfer))
+        ;
+
+        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
+        $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
+
+        $cartItemTransfer = new CartItemTransfer();
+        $cartItemTransfer->setQuantity(2);
+        $cartItemTransfer->setId('identifier');
+
+        $cartTransfer = $cartClientMock->changeItemQuantity($cartItemTransfer);
 
         $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
     }
@@ -128,19 +270,19 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         ;
 
         if (!is_null($cartSession)) {
-            $dependencyContainerMock->expects($this->once())
+            $dependencyContainerMock->expects($this->any())
                 ->method('createSession')
                 ->will($this->returnValue($cartSession))
             ;
         }
         if (!is_null($cartStub)) {
-            $dependencyContainerMock->expects($this->once())
+            $dependencyContainerMock->expects($this->any())
                 ->method('createZedStub')
                 ->will($this->returnValue($cartStub))
             ;
         }
         if (!is_null($cartStorage)) {
-            $dependencyContainerMock->expects($this->once())
+            $dependencyContainerMock->expects($this->any())
                 ->method('createStorage')
                 ->will($this->returnValue($cartStorage))
             ;
@@ -161,11 +303,43 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             ['getDependencyContainer'], [], '', false)
         ;
 
-        $cartClientMock->expects($this->once())
+        $cartClientMock->expects($this->any())
             ->method('getDependencyContainer')
             ->will($this->returnValue($dependencyContainerMock));
 
         return $cartClientMock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getSessionMock()
+    {
+        $sessionMock = $this->getMock('SprykerFeature\Client\Cart\Service\Session\CartSessionInterface', [
+            'getCart',
+            'setCart',
+            'getItemCount',
+            'setItemCount'
+        ]);
+
+        return $sessionMock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|CartStubInterface
+     */
+    private function getStubMock()
+    {
+        return $this->getMock('SprykerFeature\Client\Cart\Service\Zed\CartStubInterface', [
+            'addItem',
+            'removeItem',
+            'increaseItemQuantity',
+            'decreaseItemQuantity',
+            'addCoupon',
+            'removeCoupon',
+            'clearCoupons',
+            'recalculate'
+        ]);
     }
 
 }

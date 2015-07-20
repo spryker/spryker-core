@@ -27,13 +27,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function getCart()
     {
-        $cart = $this->getSession()->getCart();
-        foreach ($cart->getItems() as $cartItem) {
-            $product = $this->getStorage()->getProduct($cartItem->getId());
-            $cartItem->setName($product['abstract_name']);
-        }
-
-        return $cart;
+        return $this->getSession()->getCart();
     }
 
     /**
@@ -42,14 +36,6 @@ class CartClient extends AbstractClient implements CartClientInterface
     private function getSession()
     {
         return $this->getDependencyContainer()->createSession();
-    }
-
-    /**
-     * @return CartStorageInterface
-     */
-    private function getStorage()
-    {
-        return $this->getDependencyContainer()->createStorage();
     }
 
     /**
@@ -97,14 +83,17 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param string $sku
+     * @param CartItemInterface $cartItemTransfer
      *
      * @return CartInterface
      */
-    public function removeItem($sku)
+    public function removeItem(CartItemInterface $cartItemTransfer)
     {
-        $cartItemTransfer = $this->getItemBySku($sku);
-        $cartItemTransfer = $this->createChangedItem($sku, $cartItemTransfer->getQuantity());
+        $cartItemTransfer = $this->mergeCartItems(
+            $cartItemTransfer,
+            $this->getItemByIdentifier($cartItemTransfer->getId())
+        );
+
         $changeTransfer = $this->prepareCartChange($cartItemTransfer);
         $cartTransfer = $this->getZedStub()->removeItem($changeTransfer);
 
@@ -112,54 +101,58 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param string $sku
+     * @param int $identifier
      *
      * @throws \InvalidArgumentException
      *
      * @return CartItemInterface
      */
-    private function getItemBySku($sku)
+    private function getItemByIdentifier($identifier)
     {
         $cartTransfer = $this->getCart();
 
         foreach ($cartTransfer->getItems() as $cartItemTransfer) {
-            if ($cartItemTransfer->getSku() === $sku) {
+            if ($cartItemTransfer->getId() === $identifier) {
                 return $cartItemTransfer;
             }
         }
 
-        throw new \InvalidArgumentException('No item with sku "' . $sku . '" found in cart');
+        throw new \InvalidArgumentException('No item with identifier "' . $identifier . '" found in cart');
     }
 
     /**
-     * @param string $sku
+     * @param CartItemInterface $cartItemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function changeItemQuantity($sku, $quantity = 1)
+    public function changeItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1)
     {
         if ($quantity === 0) {
-            return $this->removeItem($sku);
+            return $this->removeItem($cartItemTransfer);
         }
 
-        $cartItemTransfer = $this->getItemBySku($sku);
+        $cartItemTransfer = $this->getItemByIdentifier($cartItemTransfer->getId());
         if ($cartItemTransfer->getQuantity() > $quantity) {
-            return $this->decreaseItemQuantity($sku, $quantity);
+            return $this->decreaseItemQuantity($cartItemTransfer, $quantity);
         } else {
-            return $this->increaseItemQuantity($sku, $quantity);
+            return $this->increaseItemQuantity($cartItemTransfer, $quantity);
         }
     }
 
     /**
-     * @param string $sku
+     * @param CartItemInterface $cartItemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function decreaseItemQuantity($sku, $quantity = 1)
+    public function decreaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1)
     {
-        $cartItemTransfer = $this->createChangedItem($sku, $quantity);
+        $cartItemTransfer = $this->mergeCartItems(
+            $cartItemTransfer,
+            $this->getItemByIdentifier($cartItemTransfer->getId())
+        );
+        $cartItemTransfer->setQuantity($cartItemTransfer->getQuantity() - $quantity);
         $changeTransfer = $this->prepareCartChange($cartItemTransfer);
         $cartTransfer = $this->getZedStub()->decreaseItemQuantity($changeTransfer);
 
@@ -167,14 +160,18 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param string $sku
+     * @param CartItemInterface $cartItemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function increaseItemQuantity($sku, $quantity = 1)
+    public function increaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1)
     {
-        $cartItemTransfer = $this->createChangedItem($sku, $quantity);
+        $cartItemTransfer = $this->mergeCartItems(
+            $cartItemTransfer,
+            $this->getItemByIdentifier($cartItemTransfer->getId())
+        );
+        $cartItemTransfer->setQuantity($cartItemTransfer->getQuantity() + $quantity);
         $changeTransfer = $this->prepareCartChange($cartItemTransfer);
         $cartTransfer = $this->getZedStub()->increaseItemQuantity($changeTransfer);
 
@@ -202,23 +199,6 @@ class CartClient extends AbstractClient implements CartClientInterface
         $changeTransfer->setCart($cartTransfer);
 
         return $changeTransfer;
-    }
-
-    /**
-     * @param string $sku
-     * @param int $quantity
-     *
-     * @return CartItemTransfer
-     */
-    private function createChangedItem($sku, $quantity = 1)
-    {
-        $cartItemTransfer = new CartItemTransfer();
-
-        $cartItemTransfer->setId($sku);
-        $cartItemTransfer->setSku($sku);
-        $cartItemTransfer->setQuantity($quantity);
-
-        return $cartItemTransfer;
     }
 
     /**
@@ -285,6 +265,21 @@ class CartClient extends AbstractClient implements CartClientInterface
         $this->getSession()->setCart($cartTransfer);
 
         return $cartTransfer;
+    }
+
+    /**
+     * @param CartItemInterface $newCartItemTransfer
+     * @param CartItemInterface $oldCartItemByIdentifier
+     *
+     * @return CartItemInterface
+     */
+    private function mergeCartItems(CartItemInterface $newCartItemTransfer, CartItemInterface $oldCartItemByIdentifier)
+    {
+        $newCartItemTransfer->fromArray(
+            $oldCartItemByIdentifier->toArray()
+        );
+
+        return $newCartItemTransfer;
     }
 
 }

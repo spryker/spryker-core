@@ -35,35 +35,35 @@ interface CartClientInterface
     public function addItem(CartItemInterface $cartItemTransfer);
 
     /**
-     * @param string $sku
+     * @param CartItemInterface $cartItemTransfer
      *
      * @return CartInterface
      */
-    public function removeItem($sku);
+    public function removeItem(CartItemInterface $cartItemTransfer);
 
     /**
-     * @param string $sku
+     * @param CartItemInterface $cartItemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function changeItemQuantity($sku, $quantity = 1);
+    public function changeItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1);
 
     /**
-     * @param string $sku
+     * @param CartItemInterface $cartItemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function decreaseItemQuantity($sku, $quantity = 1);
+    public function decreaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1);
 
     /**
-     * @param string $sku
+     * @param CartItemInterface $cartItemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function increaseItemQuantity($sku, $quantity = 1);
+    public function increaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1);
 
     /**
      * @return CartInterface
