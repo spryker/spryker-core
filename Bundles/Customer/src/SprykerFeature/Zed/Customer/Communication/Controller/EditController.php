@@ -10,12 +10,15 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class EditController extends AbstractController
 {
 
     /**
-     * @return array
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
     public function indexAction(Request $request)
     {
