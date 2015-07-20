@@ -92,7 +92,9 @@ class Address
      */
     public function getAddress(CustomerAddressTransfer $addressTransfer)
     {
-        $entity = $this->queryContainer->queryAddress($addressTransfer->getIdCustomerAddress())
+        $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
+
+        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
             ->findOne()
         ;
 
@@ -126,11 +128,7 @@ class Address
 
         $entity->fromArray($addressTransfer->toArray());
         $entity->setCustomer($customer);
-        $country = $entity->getCountry();
-        if (!$country) {
-            $country = $this->getCustomerCountryId();
-        }
-        $entity->setCountry($country);
+        $entity->setFkCountry($this->getCustomerCountryId());
         $entity->save();
 
         return $this->entityToTransfer($entity);
