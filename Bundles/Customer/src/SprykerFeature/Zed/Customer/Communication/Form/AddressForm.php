@@ -23,6 +23,11 @@ class AddressForm extends AbstractForm
 {
 
     const UPDATE = 'update';
+    const SALUTATION = 'salutation';
+    const FIRST_NAME = 'first_name';
+    const LAST_NAME = 'last_name';
+    const ID_CUSTOMER = 'id_customer';
+    const ID_CUSTOMER_ADDRESS = 'id_customer_address';
     /**
      * @var SpyCustomerAddressQuery
      */
@@ -53,18 +58,14 @@ class AddressForm extends AbstractForm
      */
     public function buildFormFields()
     {
-        return $this->addHidden('id_customer_address', [
-                'constraints' => [],
-            ])
-            ->addHidden('fk_customer', [
-                    'constraints' => [],
-                ])
-            ->addChoice('salutation', [
+        return $this->addHidden(self::ID_CUSTOMER_ADDRESS)
+            ->addHidden('fk_customer')
+            ->addChoice(self::SALUTATION, [
                     'label' => 'Salutation',
                     'placeholder' => 'Select one',
                     'choices' => $this->getSalutationOptions(),
                 ])
-            ->addText('first_name', [
+            ->addText(self::FIRST_NAME, [
                     'label' => 'First Name',
                     'constraints' => [
                         new Required(),
@@ -72,7 +73,7 @@ class AddressForm extends AbstractForm
                         new Length(['max' => 100]),
                     ],
                 ])
-            ->addText('last_name', [
+            ->addText(self::LAST_NAME, [
                     'label' => 'Last Name',
                     'constraints' => [
                         new Required(),
@@ -82,23 +83,15 @@ class AddressForm extends AbstractForm
                 ])
             ->addText('address1', [
                     'label' => 'Address line 1',
-                    'constraints' => [
-                    ],
                 ])
             ->addText('address2', [
                     'label' => 'Address line 2',
-                    'constraints' => [
-                    ],
                 ])
             ->addText('address3', [
                     'label' => 'Address line 3',
-                    'constraints' => [
-                    ],
                 ])
             ->addText('city', [
                     'label' => 'City',
-                    'constraints' => [
-                    ],
                 ])
             ->addText('zip_code', [
                     'label' => 'Zip Code',
@@ -121,8 +114,6 @@ class AddressForm extends AbstractForm
                 ])
             ->addText('company', [
                     'label' => 'Company',
-                    'constraints' => [
-                    ],
                 ])
             ->addTextarea('comment', [
                     'label' => 'Comment',
@@ -146,36 +137,36 @@ class AddressForm extends AbstractForm
     {
         $result = [];
 
-        $idCustomer = $this->request->get('id_customer');
+        $idCustomer = $this->request->get(self::ID_CUSTOMER);
         if (false === is_null($idCustomer)) {
             $customerDetailEntity = $this->customerQuery->findOneByIdCustomer($idCustomer);
             $customerDetails = $customerDetailEntity->toArray();
         }
 
-        $idCustomerAddress = $this->request->get('id_customer_address');
+        $idCustomerAddress = $this->request->get(self::ID_CUSTOMER_ADDRESS);
         if (false === is_null($idCustomerAddress)) {
             $addressDetailEntity = $this->addressQuery->findOneByIdCustomerAddress($idCustomerAddress);
             $result = $addressDetailEntity->toArray();
         }
 
-        if (true === empty($result['salutation'])) {
-            $result['salutation'] = !empty($customerDetails['salutation']) ? $customerDetails['salutation'] : false;
+        if (true === empty($result[self::SALUTATION])) {
+            $result[self::SALUTATION] = !empty($customerDetails[self::SALUTATION]) ? $customerDetails[self::SALUTATION] : false;
         }
 
-        if (false === empty($result['salutation'])) {
+        if (false === empty($result[self::SALUTATION])) {
             $salutations = array_flip($this->getSalutationOptions());
 
-            if (true === isset($salutations[$result['salutation']])) {
-                $result['salutation'] = $salutations[$result['salutation']];
+            if (true === isset($salutations[$result[self::SALUTATION]])) {
+                $result[self::SALUTATION] = $salutations[$result[self::SALUTATION]];
             }
         }
 
-        if (true === empty($result['first_name'])) {
-            $result['first_name'] = !empty($customerDetails['first_name']) ? $customerDetails['first_name'] : '';
+        if (true === empty($result[self::FIRST_NAME])) {
+            $result[self::FIRST_NAME] = !empty($customerDetails[self::FIRST_NAME]) ? $customerDetails[self::FIRST_NAME] : '';
         }
 
-        if (true === empty($result['last_name'])) {
-            $result['last_name'] = !empty($customerDetails['last_name']) ? $customerDetails['last_name'] : '';
+        if (true === empty($result[self::LAST_NAME])) {
+            $result[self::LAST_NAME] = !empty($customerDetails[self::LAST_NAME]) ? $customerDetails[self::LAST_NAME] : '';
         }
 
         return $result;

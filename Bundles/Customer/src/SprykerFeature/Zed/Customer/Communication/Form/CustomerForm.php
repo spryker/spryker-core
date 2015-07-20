@@ -26,6 +26,9 @@ class CustomerForm extends AbstractForm
 
     const ADD = 'add';
     const UPDATE = 'update';
+    const SALUTATION = 'salutation';
+    const GENDER = 'gender';
+    const ID_CUSTOMER = 'id_customer';
 
     /**
      * @var SpyCustomerQueryQuery
@@ -86,11 +89,11 @@ class CustomerForm extends AbstractForm
             $emailParams['disabled'] = 'disabled';
         }
 
-        $this->addHidden('IdCustomer', [
+        $this->addHidden(self::ID_CUSTOMER, [
             'label' => 'Customer ID',
         ])
             ->addEmail('email', $emailParams)
-            ->addChoice('salutation', [
+            ->addChoice(self::SALUTATION, [
                 'label' => 'Salutation',
                 'placeholder' => 'Select one',
                 'choices' => $this->getSalutationOptions(),
@@ -111,7 +114,7 @@ class CustomerForm extends AbstractForm
                     new Length(['max' => 100]),
                 ],
             ])
-            ->addChoice('gender', [
+            ->addChoice(self::GENDER, [
                 'label' => 'Gender',
                 'placeholder' => 'Select one',
                 'choices' => $this->getGenderOptions(),
@@ -152,7 +155,7 @@ class CustomerForm extends AbstractForm
     {
         $result = [];
 
-        $idCustomer = $this->request->get('id_customer');
+        $idCustomer = $this->request->get(self::ID_CUSTOMER);
 
         if (false === is_null($idCustomer)) {
             $customerDetailEntity = $this->customerQuery->findOneByIdCustomer($idCustomer);
@@ -162,19 +165,19 @@ class CustomerForm extends AbstractForm
             }
         }
 
-        if (false === empty($result['salutation'])) {
+        if (false === empty($result[self::SALUTATION])) {
             $salutations = array_flip($this->getSalutationOptions());
 
-            if (true === isset($salutations[$result['salutation']])) {
-                $result['salutation'] = $salutations[$result['salutation']];
+            if (true === isset($salutations[$result[self::SALUTATION]])) {
+                $result[self::SALUTATION] = $salutations[$result[self::SALUTATION]];
             }
         }
 
-        if (false === empty($result['gender'])) {
+        if (false === empty($result[self::GENDER])) {
             $genders = array_flip($this->getGenderOptions());
 
-            if (true === isset($genders[$result['gender']])) {
-                $result['gender'] = $genders[$result['gender']];
+            if (true === isset($genders[$result[self::GENDER]])) {
+                $result[self::GENDER] = $genders[$result[self::GENDER]];
             }
         }
 
@@ -209,7 +212,7 @@ class CustomerForm extends AbstractForm
      */
     protected function getAddressOptions()
     {
-        $idCustomer = $this->request->get('id_customer');
+        $idCustomer = $this->request->get(self::ID_CUSTOMER);
         $addresses = $this->customerAddressQuery->findByFkCustomer($idCustomer);
 
         $result = [];
