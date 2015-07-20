@@ -6,12 +6,14 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
@@ -32,17 +34,14 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idNode
      * @param LocaleTransfer $locale
-     * @param bool $onlyOneLevel
-     * @param bool $excludeStartNode
      *
      * @return SpyCategoryNode[]|ObjectCollection
      */
-    public function getChildren($idNode, LocaleTransfer $locale, $onlyOneLevel = true, $excludeStartNode = true)
+    public function getChildren($idNode, LocaleTransfer $locale)
     {
         return $this->queryContainer
-            ->queryChildren($idNode, $locale->getIdLocale(), $onlyOneLevel, $excludeStartNode)
-            ->find()
-            ;
+            ->queryFirstLevelChildrenByIdLocale($idNode, $locale->getIdLocale())
+            ->find();
     }
 
     /**
@@ -69,8 +68,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryPath($idNode, $locale->getIdLocale(), $excludeRootNode, $onlyParents)
-            ->find()
-            ;
+            ->find();
     }
 
     /**
@@ -151,10 +149,9 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         $childrenCount = $this->queryContainer
             ->queryFirstLevelChildren($idNode)
-            ->count()
-        ;
+            ->count();
 
-        return  $childrenCount > 0;
+        return $childrenCount > 0;
     }
 
     /**
@@ -205,8 +202,36 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryNodeById($idNode)
-            ->findOne()
-            ;
+            ->findOne();
+    }
+
+    /**
+     * @param $idNode
+     *
+     * @return CategoryTransfer
+     */
+    public function getCategoryTransferById($idNode)
+    {
+        $categoryEntity = $this->getNodesByIdCategory($idNode);
+        $categoryTransfer = new CategoryTransfer();
+        foreach ($categoryEntity->getCategory()->getAttributes() as $attributeEntity) {
+            $categoryTransfer->setName($attributeEntity->getName());
+        }
+        $categoryTransfer->setIdCategory($categoryEntity->getFkCategory());
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return SpyCategoryNode[]
+     */
+    public function getRootNodes()
+    {
+        return $this->queryContainer
+            ->queryRootNode()
+            ->find();
     }
 
     /**
@@ -218,8 +243,49 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryNodesByCategoryId($idCategory)
-            ->find()
-            ;
+            ->find();
+    }
+
+    public function getNodesWithAttributes($idCategory)
+    {
+
+    }
+
+    public function getTreeAsArray(LocaleTransfer $localeTransfer)
+    {
+        $tree = $this->getTreeNodesRecursively(null, $localeTransfer);
+
+        return $tree;
+    }
+
+    /**
+     * @param SpyCategoryNode $node
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return SpyCategoryNode[]
+     */
+    private function getTreeNodesRecursively($node, LocaleTransfer $localeTransfer)
+    {
+        $tree = [];
+        if ($node == null) {
+            $children = $this->getRootNodes();
+            $parentId = '#';
+        } else {
+            $children = $this->getChildren($node->getIdCategoryNode(), $localeTransfer);
+            $parentId = $node->getIdCategoryNode();
+        }
+        foreach ($children as $child) {
+            $tree[] = [
+                'id'     => $child->getIdCategoryNode(),
+                'parent' => $parentId,
+                'text'   => $child->getCategory()->getAttributes()->getFirst()->getName(),
+            ];
+            if ($child->countDescendants() > 0) {
+                $tree = array_merge($tree, $this->getTreeNodesRecursively($child, $localeTransfer));
+            }
+        }
+
+        return $tree;
     }
 
 }

@@ -22,6 +22,8 @@
 
             <link href="/bundles/Gui/styles/animate.css" rel="stylesheet">
             <link href="/bundles/Gui/styles/style.min.css" rel="stylesheet">
+
+            <link href="/bundles/Gui/styles/plugins/jsTree/themes/spryker/style.css" rel="stylesheet" />
             {#<link rel="stylesheet" type="text/css" href="{{ staticPath('Ui/styles/bundle.css') }}">#}
         {%- endblock %}
 
@@ -108,7 +110,12 @@
 
 
 {% block footer_js %}
-<script src="/bundles/Gui/scripts/resources.min.js"></script>
+<!--<script src="/bundles/Gui/scripts/resources.min.js"></script>-->
+<!-- jstree test to be moved from here-->
+    <script src="/bundles/Gui/scripts/jquery-2.1.1.js"></script>
+    <script src="/bundles/Gui/scripts/plugins/jsTree/jstree.min.js"></script>
+    <script src="/bundles/Gui/scripts/sprykerPlugins/category.js"></script>
+
 {% endblock %}
 
 </body>

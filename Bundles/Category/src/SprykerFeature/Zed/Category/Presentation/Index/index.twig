@@ -8,7 +8,20 @@
 
 {% block content %}
 
-<div
+    {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Category List' } %}
+
+    <div class="tree-actions btn-group">
+        <a class="btn btn-default" href="#"><i class="fa fa-plus-square fa-2"></i> New</a>
+        <a class="btn btn-default" href="#"><i class="fa fa-pencil fa-fw"></i> Rename</a>
+        <a class="btn btn-danger" href="#"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
+        <a class="btn btn-default" href="#"><i class="fa fa-ban fa-fw"></i> Disable</a>
+    </div>
+    <div id="jstree_category"></div>
+
+    {% include '@Gui/Partials/Table/footer.twig' %}
+
+
+    <div
         spy-app="spyFormat, spyGrid, spyLayout, spyForm"
         ng-strict-di
         ng-controller="ComController"
@@ -33,12 +46,17 @@
 
         {% include '@Category/Grid/category-grid.twig' %}
 
+        <div class="cat grid"></div>
+
         {% include '@Category/Grid/category-node-grid.twig' %}
 
+        <div class="cat node grid"></div>
         {% include '@Category/Form/category-form.twig' %}
 
+        <div class="cat form"></div>
         {% include '@Category/Form/category-node-form.twig' %}
 
+        <div class="cat node form"></div>
     </div>
 
 
@@ -55,4 +73,8 @@
 </div>
 
 
+{% endblock %}
+
+{% block temp_footer_js %}
+    <script src="/bundles/Gui/scripts/plugins/jsTree/jstree.min.js"></script>
 {% endblock %}
