@@ -35,10 +35,10 @@
             {% if addresses.customer_address_items is empty %}
                 <tr>
                     <td colspan="2">
-                            <span>
-                                {{ 'No addresses found' | trans }}
+                            <span class="text-muted">
+                                {{ 'No addresses found.' | trans }}
                             </span>
-                        <a href="/customer/address/add?id_customer={{ id_customer }}">{{ 'Add new address' | trans }}</a>
+                        <a class="text-info" href="/customer/address/add?id_customer={{ id_customer }}">{{ 'Add a new address' | trans }}</a>
                     </td>
 
                 </tr>

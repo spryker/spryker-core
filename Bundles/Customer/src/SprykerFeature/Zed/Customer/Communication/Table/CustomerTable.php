@@ -119,6 +119,7 @@ class CustomerTable extends AbstractTable
         $idCustomer = !empty($details[self::ID_CUSTOMER]) ? $details[self::ID_CUSTOMER] : false;
         if (false !== $idCustomer) {
             $links = [
+                'View' => '/customer/view/?id_customer=%d',
                 'Edit' => '/customer/edit/?id_customer=%d',
                 'Manage addresses' => '/customer/address/?id_customer=%d',
             ];
