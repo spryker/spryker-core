@@ -5,15 +5,15 @@
 
 namespace SprykerFeature\Zed\Cart\Communication\Plugin;
 
+use Generated\Shared\Transfer\GroupKeyParameterTransfer;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use Generated\Shared\Cart\ChangeInterface;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
 
-
 /**
-* @method CartFacade getFacade()
-*/
+ * @method CartFacade getFacade()
+ */
 class GroupKeyExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
@@ -24,10 +24,15 @@ class GroupKeyExpanderPlugin extends AbstractPlugin implements ItemExpanderPlugi
     public function expandItems(ChangeInterface $change)
     {
         foreach ($change->getItems() as $cartItem) {
-            $groupKey = $this->getFacade()->buildGroupKey($cartItem);
+            $groupKeyPamaremeterTransfer = new GroupKeyParameterTransfer();
+            $groupKeyPamaremeterTransfer->setSku($cartItem->getSku());
+            $groupKeyPamaremeterTransfer->setName($cartItem->getName());
+
+            $groupKey = $this->getFacade()->buildGroupKey($groupKeyPamaremeterTransfer);
             $cartItem->setGroupKey($groupKey);
         }
 
         return $change;
     }
 }
+

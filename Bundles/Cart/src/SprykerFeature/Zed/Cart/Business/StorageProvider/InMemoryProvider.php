@@ -61,8 +61,8 @@ class InMemoryProvider implements StorageProviderInterface
                 );
             }
 
-            if (isset($cartIndex[$item->getSku()])) {
-                $this->decreaseExistingItem($existingItems, $cartIndex[$item->getSku()], $item);
+            if (isset($cartIndex[$item->getGroupKey()])) {
+                $this->decreaseExistingItem($existingItems, $cartIndex[$item->getGroupKey()], $item);
             }
         }
 

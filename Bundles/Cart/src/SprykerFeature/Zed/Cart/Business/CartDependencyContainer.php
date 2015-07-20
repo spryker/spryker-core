@@ -115,13 +115,13 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return Model\CartGrouping\KeyBuilder
+     * @return Model\ItemGrouping\KeyBuilder
      */
     public function createCartGroupingKeyBuilder()
     {
         $bundleConfig = $this->getConfig();
 
-        return $this->getFactory()->createModelCartGroupingKeyBuilder($bundleConfig->getKeyBuilderPlugins());
+        return $this->getFactory()->createModelItemGroupingKeyBuilder($bundleConfig->getKeyBuilderPlugins());
     }
 
 }

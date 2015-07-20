@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cart\Business\Model\CartGrouping;
+namespace SprykerFeature\Zed\Cart\Business\Model\ItemGrouping;
 
-use Generated\Shared\Cart\CartItemInterface;
+use Generated\Shared\Cart\GroupKeyParameterInterface;
 
 class KeyBuilder
 {
@@ -28,13 +28,13 @@ class KeyBuilder
     }
 
     /**
-     * @param CartItemInterface $cartItem
+     * @param GroupKeyParameterInterface $groupKeyParameters
      *
      * @return string
      */
-    public function build(CartItemInterface $cartItem)
+    public function build(GroupKeyParameterInterface $groupKeyParameters)
     {
-        $keyParts = $this->buildParts($cartItem);
+        $keyParts = $this->buildParts($groupKeyParameters);
 
         if (empty($keyParts)) {
             throw new \RuntimeException('There was no key parts provided for cart item grouping!');
@@ -44,15 +44,15 @@ class KeyBuilder
     }
 
     /**
-     * @param CartItemInterface $cartItem
+     * @param GroupKeyParameterInterface $groupKeyParameters
      *
      * @return array
      */
-    protected function buildParts(CartItemInterface $cartItem)
+    protected function buildParts(GroupKeyParameterInterface $groupKeyParameters)
     {
         $keyParts = [];
         foreach ($this->groupingProviderStack as $keyProvider) {
-            $keyParts[] = $keyProvider->buildPart($cartItem);
+            $keyParts[] = $keyProvider->buildPart($groupKeyParameters);
         }
         return $keyParts;
     }

@@ -45,5 +45,16 @@
         <property name="isSuccess" type="string" />
     </transfer>
 
+    <transfer name="StepStorage">
+        <property name="userId" type="string" />
+        <property name="stepName" type="string" />
+        <property name="isSuccess" type="string" />
+    </transfer>
+
+    <transfer name="GroupKeyParameter">
+        <property name="sku" type="string" />
+        <property name="name" type="string" />
+    </transfer>
+
 </transfers>
 

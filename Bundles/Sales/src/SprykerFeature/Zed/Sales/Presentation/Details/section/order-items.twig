@@ -30,6 +30,7 @@
             <tr class="text-left">
                 <th>{{ "Item name" | trans }}</th>
                 <th>{{ "SKU" | trans }}</th>
+                <th>{{ 'qty' | trans }}</th>
                 <th>{{ "Gross price" | trans }}</th>
                 <th>{{ "Price to pay" | trans }}</th>
                 <th>{{ "Current state" | trans }}</th>
@@ -42,6 +43,7 @@
                 <tr>
                     <td>{{ orderItem.Name }}</td>
                     <td>{{ orderItem.Sku }}</td>
+                    <td><a href="javascript:void(0);" onclick="$('#split_form_row_{{ orderItem.IdSalesOrderItem }}').toggle();">{{ orderItem.quantity }}</a></td>
                     <td>{{ orderItem.GrossPrice | currency }}</td>
                     <td>{{ orderItem.PriceToPay | currency }}</td>
                     <td>{{ orderItem.State.Name }}</td>
@@ -62,6 +64,16 @@
                         </a>
                     </td>
                 </tr>
+                {% if orderItemSplitFormCollection is defined %}
+                    <tr style="display: none;" id="split_form_row_{{ orderItem.IdSalesOrderItem }}">
+                        <td colspan="8">
+                            <h4>Split order item</h4>
+                            {% if orderItemSplitFormCollection.isFormSet(orderItem.IdSalesOrderItem) %}
+                                {{ form(orderItemSplitFormCollection.getById(orderItem.IdSalesOrderItem)) }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
             {% endfor %}
             </tbody>
 

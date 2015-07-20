@@ -87,10 +87,10 @@ class Splitter
      */
     protected function copy(Persistence\Propel\SpySalesOrderItem $salesOrderItem, $quantity)
     {
-        $splitSalesOrderItem = $this->createSalesOrderItemCopy($salesOrderItem, $quantity);
+        $copyOfSalesOrderItem = $this->createSalesOrderItemCopy($salesOrderItem, $quantity);
 
         foreach ($salesOrderItem->getOptions() as $salesOrderItemOption) {
-            $this->createOrderItemOptionCopy($salesOrderItemOption, $splitSalesOrderItem);
+            $this->createOrderItemOptionCopy($salesOrderItemOption, $copyOfSalesOrderItem);
         }
     }
 
@@ -102,49 +102,31 @@ class Splitter
      */
     protected function createSalesOrderItemCopy(Persistence\Propel\SpySalesOrderItem $salesOrderItem, $quantity)
     {
-        $splitSalesOrderItem = new Persistence\Propel\SpySalesOrderItem();
-        $this->hydrateFromEntity($salesOrderItem, $splitSalesOrderItem);
+        $copyOfSalesOrderItem = $salesOrderItem->copy(false);
 
-        $splitSalesOrderItem->setQuantity($quantity);
-        $splitSalesOrderItem->setLastStateChange(new \DateTime());
-        $splitSalesOrderItem->save();
+        $copyOfSalesOrderItem->setCreatedAt(new \DateTime());
+        $copyOfSalesOrderItem->setQuantity($quantity);
+        $copyOfSalesOrderItem->setLastStateChange(new \DateTime());
+        $copyOfSalesOrderItem->save();
 
-        return $splitSalesOrderItem;
+        return $copyOfSalesOrderItem;
     }
 
     /**
-     * @param ActiveRecordInterface $sourceEntity
-     * @param ActiveRecordInterface $destinationEntity
-     */
-    protected function hydrateFromEntity(
-        ActiveRecordInterface $sourceEntity,
-        ActiveRecordInterface $destinationEntity
-    ) {
-        $destinationEntity->hydrate(
-            $sourceEntity->toArray(
-                TableMap::TYPE_PHPNAME
-            ),
-            0,
-            false,
-            TableMap::TYPE_PHPNAME
-        );
-    }
-
-    /**
-     * @param Persistence\Propel\SpySalesOrderItemOption $salesOrderItemOptions
-     * @param Persistence\Propel\SpySalesOrderItem $splitSalesOrderItem
+     * @param Persistence\Propel\SpySalesOrderItemOption $salesOrderItemOption
+     * @param Persistence\Propel\SpySalesOrderItem $copyOfSalesOrderItem
      *
      * @return Persistence\Propel\SpySalesOrderItemOption
      */
     protected function createOrderItemOptionCopy(
-        Persistence\Propel\SpySalesOrderItemOption $salesOrderItemOptions,
-        Persistence\Propel\SpySalesOrderItem $splitSalesOrderItem
+        Persistence\Propel\SpySalesOrderItemOption $salesOrderItemOption,
+        Persistence\Propel\SpySalesOrderItem $copyOfSalesOrderItem
     ) {
 
-        $splitOrderItemOption = new Persistence\Propel\SpySalesOrderItemOption();
-        $this->hydrateFromEntity($salesOrderItemOptions, $splitOrderItemOption);
+        $splitOrderItemOption = $salesOrderItemOption->copy(false);
 
-        $splitOrderItemOption->setFkSalesOrderItem($splitSalesOrderItem->getIdSalesOrderItem());
+        $splitOrderItemOption->setCreatedAt(new \DateTime());
+        $splitOrderItemOption->setFkSalesOrderItem($copyOfSalesOrderItem->getIdSalesOrderItem());
         $splitOrderItemOption->save();
 
         return $splitOrderItemOption;

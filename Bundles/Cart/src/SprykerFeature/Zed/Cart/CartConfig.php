@@ -15,7 +15,7 @@ class CartConfig extends AbstractBundleConfig
     /**
      * @return ItemExpanderPluginInterface[]
      */
-    public function getCartItemPlugins()
+    public function getItemExpanderPlugins()
     {
         return [
             $this->getLocator()->cart()->pluginProductIdPlugin(),
