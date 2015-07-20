@@ -44,6 +44,7 @@ class EditController extends AbstractController
         }
 
         return $this->viewResponse([
+            'idOrder' => $idOrder,
             'form' => $form->createView(),
         ]);
     }

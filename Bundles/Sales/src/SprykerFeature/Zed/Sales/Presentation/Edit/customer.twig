@@ -1,15 +1,29 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set page_title = 'Customer details' %}
+{% set widget_title = 'Customer details' %}
 
-{% block head_title page_title | trans %}
+{% block head_title widget_title | trans %}
 
 {% block content %}
 
-    {% include '@Gui/Partials/Table/header.twig' with { table_title: page_title } %}
+    {% embed '@Gui/Partials/widget.twig' %}
 
-    {{ form(form) }}
+        {% block widget_header_content %}
+            <a class="btn btn-primary" href="/sales/details/?id-sales-order={{ idOrder }}">{{ 'View Order' | trans }}</a>
+        {% endblock %}
 
-    {% include '@Gui/Partials/Table/footer.twig' %}
+        {% block widget_content %}
 
+            {{ form(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block table_header_content %}
+    <div class="pull-right">
+        <a class="btn btn-primary" href="">hello world</a>
+    </div>
 {% endblock %}
