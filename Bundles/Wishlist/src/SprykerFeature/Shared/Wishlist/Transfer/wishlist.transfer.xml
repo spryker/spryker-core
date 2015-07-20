@@ -10,6 +10,7 @@
 
     <transfer name="WishlistItem">
         <property name="id" type="int"/>
+        <property name="created_at" type=""/>
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="options" type="OrderItemOption[]" singular="option" />

@@ -3,17 +3,14 @@
 namespace SprykerFeature\Client\Wishlist\Service;
 
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 class WishlistClient extends AbstractClient
 {
 
     public function getWishlist()
     {
-        $cart = $this->getDependencyContainer();
-
-        return $cart;
+        return new WishlistTransfer();
     }
 
-    public function addWishlistItem()
-    {}
 }

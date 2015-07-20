@@ -6,6 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 
 class WishlistClientSpec extends ObjectBehavior
@@ -27,22 +28,7 @@ class WishlistClientSpec extends ObjectBehavior
 
     function it_calls_getwishlist_method_and_brings_wishlistdata()
     {
-        $stack = new \SplStack();
-        $stack->push(new WishlistItemStruct(['sku'     => 146013,
-            'added_at' => 1234567453,
-            'concrete_product_id' => 123,
-            'quantity' => 5,
-            'wihk' => 1298]));
-
-
-        $stack->push(new WishlistItemStruct(['sku'     => 146313,
-            'sku'     => 142013,
-            'added_at' => 1034567453,
-            'concrete_product_id' => 125,
-            'quantity' => 3,
-            'wihk' => '12we']));
-
-        $this->getWishlist()->shouldReturn($stack);
+        $this->getWishlist()->shouldBeAnInstanceOf(WishlistTransfer::class);
     }
 }
 
