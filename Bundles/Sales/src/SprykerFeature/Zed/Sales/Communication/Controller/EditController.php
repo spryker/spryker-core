@@ -27,7 +27,8 @@ class EditController extends AbstractController
 
         if ($request->isMethod('POST') && $form->isValid()) {
 
-            $this->getFacade()->updateOrderCustomerData($form, $idOrder);
+            $orderTransfer = $form->getData();
+            $this->getFacade()->updateOrderCustomer($orderTransfer, $idOrder);
 
             $this->redirectResponse(sprintf('/sales/edit/customer?id-sales-order=%d', $idOrder));
         }
@@ -53,7 +54,8 @@ class EditController extends AbstractController
 
         if ($request->isMethod('POST') && $form->isValid()) {
 
-            $this->getFacade()->updateOrderAddress($form, $idOrderAddress);
+            $addressTransfer = $form->getData();
+            $this->getFacade()->updateOrderAddress($addressTransfer, $idOrderAddress);
 
             $this->redirectResponse(sprintf('/sales/edit/customer?id-sales-order=%d', $idOrder));
         }

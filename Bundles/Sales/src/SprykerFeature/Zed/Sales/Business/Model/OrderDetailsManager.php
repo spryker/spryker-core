@@ -6,6 +6,9 @@
 
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SalesAddressTransfer;
+use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Sales\Communication\Form\AddressForm;
 use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
@@ -32,26 +35,19 @@ class OrderDetailsManager
     }
 
     /**
-     * @param CustomerForm $customerForm
+     * @param OrderTransfer $orderTransfer
      * @param int $idOrder
      *
      * @return SpySalesOrder
      */
-    public function updateOrderCustomerData(CustomerForm $customerForm, $idOrder)
+    public function updateOrderCustomer(OrderTransfer $orderTransfer, $idOrder)
     {
-        $data = $customerForm->getData();
-
         $orderEntity = $this->queryContainer
             ->querySalesOrderById($idOrder)
             ->findOne()
         ;
 
-        $orderEntity
-            ->setFirstName($data[CustomerForm::FIRST_NAME])
-            ->setLastName($data[CustomerForm::LAST_NAME])
-            ->setEmail($data[CustomerForm::EMAIL])
-            ->setSalutation($data[CustomerForm::SALUTATION])
-        ;
+        Copy::transferToEntity($orderTransfer, $orderEntity);
 
         $orderEntity->save();
 
@@ -59,42 +55,22 @@ class OrderDetailsManager
     }
 
     /**
-     * @param AddressForm $addressForm
+     * @param SalesAddressTransfer $addressTransfer
      * @param int $idAddress
      *
-     * @return SpySalesAddressQuery
+     * @return SpySalesAddress
      */
-    public function updateOrderAddressData(AddressForm $addressForm, $idAddress)
+    public function updateOrderAddress(SalesAddressTransfer $addressTransfer, $idAddress)
     {
-        $data = $addressForm->getData();
-
-        $address = $this->queryContainer
+        $addressEntity = $this->queryContainer
             ->querySalesOrderAddressById($idAddress)
             ->findOne();
 
-        $address
-            ->setFirstName($data[AddressForm::FIRST_NAME])
-            ->setFirstName($data[AddressForm::FIRST_NAME])
-            ->setMiddleName($data[AddressForm::MIDDLE_NAME])
-            ->setLastName($data[AddressForm::LAST_NAME])
-            ->setEmail($data[AddressForm::EMAIL])
-            ->setAddress1($data[AddressForm::ADDRESS_1])
-            ->setAddress2($data[AddressForm::ADDRESS_1])
-            ->setAddress3($data[AddressForm::ADDRESS_1])
-            ->setCompany($data[AddressForm::COMPANY])
-            ->setCity($data[AddressForm::CITY])
-            ->setZipCode($data[AddressForm::ZIP_CODE])
-            ->setPoBox($data[AddressForm::PO_BOX])
-            ->setPhone($data[AddressForm::PHONE])
-            ->setCellPhone($data[AddressForm::CELL_PHONE])
-            ->setDescription($data[AddressForm::DESCRIPTION])
-            ->setComment($data[AddressForm::COMMENT])
-            ->setSalutation($data[AddressForm::SALUTATION])
-        ;
+        Copy::transferToEntity($addressTransfer, $addressEntity);
 
-        $address->save();
+        $addressEntity->save();
 
-        return $address;
+        return $addressEntity;
     }
 
     /**

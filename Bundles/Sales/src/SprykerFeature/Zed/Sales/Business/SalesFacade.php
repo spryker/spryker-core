@@ -6,9 +6,11 @@
 
 namespace SprykerFeature\Zed\Sales\Business;
 
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SalesAddressTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Sales\Communication\Form\AddressForm;
 use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
@@ -102,22 +104,28 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param CustomerForm $customerForm
+     * @param OrderTransfer $orderTransfer
      * @param int $idOrder
      *
      * @return SpySalesOrder
      */
-    public function updateOrderCustomerData(CustomerForm $customerForm, $idOrder)
+    public function updateOrderCustomer(OrderTransfer $orderTransfer, $idOrder)
     {
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
-            ->updateOrderCustomerData($customerForm, $idOrder);
+            ->updateOrderCustomer($orderTransfer, $idOrder);
     }
 
-    public function updateOrderAddress(AddressForm $addressForm, $idAddress)
+    /**
+     * @param AddressesTransfer $addressesTransfer
+     * @param int $idAddress
+     *
+     * @return mixed
+     */
+    public function updateOrderAddress(SalesAddressTransfer $addressesTransfer, $idAddress)
     {
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
-            ->updateOrderAddressData($addressForm, $idAddress);
+            ->updateOrderAddress($addressesTransfer, $idAddress);
     }
 }

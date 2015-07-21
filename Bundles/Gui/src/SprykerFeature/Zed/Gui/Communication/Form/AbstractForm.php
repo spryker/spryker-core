@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Gui\Communication\Form;
 
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +35,8 @@ abstract class AbstractForm
      */
     private $formFactory;
 
+    protected $defaultDataType;
+
 
     /**
      * Prepares form
@@ -62,9 +65,21 @@ abstract class AbstractForm
         $this->request = $app['request'];
         $this->formFactory = $app['form.factory'];
 
-        $this->form = $this->formFactory->create();
+        $this->form = $this->formFactory->create('form', $this->getDefaultDataType());
 
         return $this;
+    }
+
+    public function setDefaultDataType($type=null)
+    {
+        $this->defaultDataType = $type;
+
+        return $this;
+    }
+
+    protected function getDefaultDataType()
+    {
+        return $this->defaultDataType;
     }
 
     /**
@@ -138,7 +153,13 @@ abstract class AbstractForm
      */
     public function getData()
     {
-        return $this->form->getData();
+        $data = $this->form->getData();
+
+        if (is_null($this->getDefaultDataType()) && $this->getDefaultDataType() instanceof AbstractTransfer) {
+            return $this->getDefaultDataType()->fromArray($data, true);
+        }
+
+        return $data;
     }
 
     /**
@@ -156,7 +177,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function add($name, $type, $options = array())
+    public function add($name, $type, $options = [])
     {
         return $this->form->add($name, $type, $options);
     }
@@ -167,7 +188,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addText($name, $options = array())
+    public function addText($name, $options = [])
     {
         $this->add($name, 'text', $options);
 
@@ -180,7 +201,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addTextarea($name, $options = array())
+    public function addTextarea($name, $options = [])
     {
         $this->add($name, 'textarea', $options);
 
@@ -193,7 +214,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addEmail($name, $options = array())
+    public function addEmail($name, $options = [])
     {
         $this->add($name, 'email', $options);
 
@@ -206,7 +227,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addInteger($name, $options = array())
+    public function addInteger($name, $options = [])
     {
         $this->add($name, 'integer', $options);
 
@@ -219,7 +240,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addMoney($name, $options = array())
+    public function addMoney($name, $options = [])
     {
         $this->add($name, 'money', $options);
 
@@ -232,7 +253,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addNumber($name, $options = array())
+    public function addNumber($name, $options = [])
     {
         $this->add($name, 'number', $options);
 
@@ -245,7 +266,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addPassword($name, $options = array())
+    public function addPassword($name, $options = [])
     {
         $this->add($name, 'password', $options);
 
@@ -258,7 +279,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addPercent($name, $options = array())
+    public function addPercent($name, $options = [])
     {
         $this->add($name, 'percent', $options);
 
@@ -271,7 +292,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addSearch($name, $options = array())
+    public function addSearch($name, $options = [])
     {
         $this->add($name, 'search', $options);
 
@@ -284,7 +305,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addUrl($name, $options = array())
+    public function addUrl($name, $options = [])
     {
         $this->add($name, 'url', $options);
 
@@ -297,7 +318,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addChoice($name, $options = array())
+    public function addChoice($name, $options = [])
     {
         $this->add($name, 'choice', $options);
 
@@ -310,7 +331,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addEntity($name, $options = array())
+    public function addEntity($name, $options = [])
     {
         $this->add($name, 'entity', $options);
 
@@ -323,7 +344,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addCountry($name, $options = array())
+    public function addCountry($name, $options = [])
     {
         $this->add($name, 'country', $options);
 
@@ -336,7 +357,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addLanguage($name, $options = array())
+    public function addLanguage($name, $options = [])
     {
         $this->add($name, 'language', $options);
 
@@ -349,7 +370,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addLocale($name, $options = array())
+    public function addLocale($name, $options = [])
     {
         $this->add($name, 'locale', $options);
 
@@ -362,7 +383,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addTimezone($name, $options = array())
+    public function addTimezone($name, $options = [])
     {
         $this->add($name, 'timezone', $options);
 
@@ -375,7 +396,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addCurrency($name, $options = array())
+    public function addCurrency($name, $options = [])
     {
         $this->add($name, 'currency', $options);
 
@@ -388,7 +409,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addDate($name, $options = array())
+    public function addDate($name, $options = [])
     {
         $this->add($name, 'date', $options);
 
@@ -401,7 +422,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addDatetime($name, $options = array())
+    public function addDatetime($name, $options = [])
     {
         $this->add($name, 'datetime', $options);
 
@@ -414,7 +435,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addTime($name, $options = array())
+    public function addTime($name, $options = [])
     {
         $this->add($name, 'time', $options);
 
@@ -427,7 +448,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addBirthday($name, $options = array())
+    public function addBirthday($name, $options = [])
     {
         $this->add($name, 'birthday', $options);
 
@@ -440,7 +461,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addCheckbox($name, $options = array())
+    public function addCheckbox($name, $options = [])
     {
         $this->add($name, 'checkbox', $options);
 
@@ -453,7 +474,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addFile($name, $options = array())
+    public function addFile($name, $options = [])
     {
         $this->add($name, 'file', $options);
 
@@ -466,7 +487,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addRadio($name, $options = array())
+    public function addRadio($name, $options = [])
     {
         $this->add($name, 'radio', $options);
 
@@ -481,7 +502,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addCollection($name, $options = array())
+    public function addCollection($name, $options = [])
     {
         $this->add($name, 'collection', $options);
 
@@ -494,7 +515,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addRepeated($name, $options = array())
+    public function addRepeated($name, $options = [])
     {
         $this->add($name, 'repeated', $options);
 
@@ -507,7 +528,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addHidden($name, $options = array())
+    public function addHidden($name, $options = [])
     {
         $this->add($name, 'hidden', $options);
 
@@ -520,7 +541,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addButton($name, $options = array())
+    public function addButton($name, $options = [])
     {
         $this->add($name, 'button', $options);
 
@@ -533,7 +554,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addReset($name, $options = array())
+    public function addReset($name, $options = [])
     {
         $this->add($name, 'reset', $options);
 
@@ -546,7 +567,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addSubmit($name = 'submit', $options = array())
+    public function addSubmit($name = 'submit', $options = [])
     {
         $this->add($name, 'submit', $options);
 
@@ -561,7 +582,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addForm($name, $options = array())
+    public function addForm($name, $options = [])
     {
         $this->add($name, 'form', $options);
 
@@ -574,7 +595,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addSelect($name, $options = array())
+    public function addSelect($name, $options = [])
     {
         $this->add($name, new SelectType(), $options);
 
@@ -587,7 +608,7 @@ abstract class AbstractForm
      *
      * @return $this
      */
-    public function addAutosuggest($name, $options = array())
+    public function addAutosuggest($name, $options = [])
     {
         $this->add($name, new AutosuggestType(), $options);
 
