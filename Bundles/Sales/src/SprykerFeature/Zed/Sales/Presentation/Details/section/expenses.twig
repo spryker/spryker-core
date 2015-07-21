@@ -1,25 +1,31 @@
 <div class="row">
     <div class="col-md-12">
-        {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Expenses Overview' } %}
 
-        <table class="footable table table-stripped toggle-arrow-tiny">
-            <tr>
-                <th>{{ 'Expence' | trans }}</th>
-                <th>{{ 'QTY' | trans }}</th>
-                <th>{{ 'Gross Price' | trans }}</th>
-                <th>{{ 'Price to pay' | trans }}</th>
-            </tr>
-            {% for expense in expenses %}
-            <tr>
-                <td>{{ expense.name }}</td>
-                <td>1</td>
-                <td>{{ expense.grossPrice | currency }}</td>
-                <td>{{ expense.priceToPay | currency }}</td>
-            </tr>
-            {% endfor %}
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Expenses Overview' } %}
 
-        </table>
+            {% block widget_content %}
 
-        {% include '@Gui/Partials/Table/footer.twig' %}
+                <table class="footable table table-stripped toggle-arrow-tiny">
+                    <tr>
+                        <th>{{ 'Expence' | trans }}</th>
+                        <th>{{ 'QTY' | trans }}</th>
+                        <th>{{ 'Gross Price' | trans }}</th>
+                        <th>{{ 'Price to pay' | trans }}</th>
+                    </tr>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.name }}</td>
+                        <td>1</td>
+                        <td>{{ expense.grossPrice | currency }}</td>
+                        <td>{{ expense.priceToPay | currency }}</td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+
+            {% endblock %}
+
+        {% endembed %}
+
     </div>
 </div>
