@@ -284,6 +284,7 @@ class SandboxController extends AbstractController
         $customer->setFirstName($this->generateCustomerName());
         $customer->setLastName($this->generateCustomerName(true));
         $customer->setEmail($email);
+        $customer->setCustomerReference(uniqid());
 
         $customer->save();
 

@@ -1,18 +1,26 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block head_title 'Edit customer' | trans %}
-{% block section_title 'Edit customer' | trans %}
+{% set widget_title = 'Edit Customer' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
 
 {% block content %}
 
-    <p>
-        <a href="/customer/" class="btn btn-default">{{ 'Back to Customers' | trans }}</a>&nbsp;&nbsp;&nbsp;
-        <a href="/customer/view?id_customer={{ id_customer }}" class="btn btn-sm btn-info">{{ 'View Customer' | trans }}</a>&nbsp;&nbsp;&nbsp;
-        <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-default ">{{ 'Manage Addresses' | trans }}</a>
-    </p>
+    {% embed '@Gui/Partials/widget.twig' %}
 
-    {% include '@Gui/Partials/Table/header.twig' with { table_title: '' } %}
-    {{ form(form) }}
-    {% include '@Gui/Partials/Table/footer.twig' %}
+        {% block widget_header_content %}
+            <a href="/customer/" class="btn btn-sm btn-primary">{{ 'Back to Customers' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/view?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'View Customer' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-primary ">{{ 'Manage Addresses' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ form(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
 
 {% endblock %}

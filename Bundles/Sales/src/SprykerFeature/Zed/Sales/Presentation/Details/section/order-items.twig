@@ -1,64 +1,72 @@
 <div class="row">
     <div class="col-md-12">
 
-        {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Trigger all matching states' } %}
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Trigger all matching states' } %}
 
-        <div>
-            {% for event in allEvents %}
-                <a class="btn btn-primary"
-                   href="/oms/trigger/trigger-event-for-order?id-sales-order={{ idOrder }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
-                    {{ event }}
-                </a>
-            {% endfor %}
-        </div>
+            {% block widget_content %}
 
-        {% include '@Gui/Partials/Table/footer.twig' %}
+                <div>
+                    {% for event in allEvents %}
+                        <a class="btn btn-primary"
+                           href="/oms/trigger/trigger-event-for-order?id-sales-order={{ idOrder }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
+                            {{ event }}
+                        </a>
+                    {% endfor %}
+                </div>
+
+            {% endblock %}
+
+        {% endembed %}
 
     </div>
 </div>
 
-{% include '@Gui/Partials/Table/header.twig' with { table_title: 'Order Items' } %}
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order Items' } %}
 
-<table class="footable table table-stripped toggle-arrow-tiny">
-    <thead>
-    <tr class="text-left">
-        <th>{{ "Item name" | trans }}</th>
-        <th>{{ "SKU" | trans }}</th>
-        <th>{{ "Gross price" | trans }}</th>
-        <th>{{ "Price to pay" | trans }}</th>
-        <th>{{ "Current state" | trans }}</th>
-        <th>{{ "Trigger event" | trans }}</th>
-        <th>{{ "Process" | trans }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for orderItem in orderItems %}
-        <tr>
-            <td>{{ orderItem.Name }}</td>
-            <td>{{ orderItem.Sku }}</td>
-            <td>{{ orderItem.GrossPrice | currency }}</td>
-            <td>{{ orderItem.PriceToPay | currency }}</td>
-            <td>{{ orderItem.State.Name }}</td>
-            <td>
-                {% if events[orderItem.IdSalesOrderItem] |length > 0 %}
-                    {% for event in events[orderItem.IdSalesOrderItem] %}
-                        <a class="btn btn-sm btn-primary"
-                           href="/oms/trigger/trigger-event-for-order-items?id-sales-order-item={{ orderItem.IdSalesOrderItem }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
-                            {{ event }}</a>
-                    {% endfor %}
-                {% else -%}
-                    -
-                {%- endif %}
-            </td>
-            <td>
-                <a href="/oms/index/draw?process={{ orderItem.process.name }}&format=gif&font=14" target="_blank">
-                    {{ orderItem.process.name }}
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
+    {% block widget_content %}
 
-</table>
+        <table class="footable table table-stripped toggle-arrow-tiny">
+            <thead>
+            <tr class="text-left">
+                <th>{{ "Item name" | trans }}</th>
+                <th>{{ "SKU" | trans }}</th>
+                <th>{{ "Gross price" | trans }}</th>
+                <th>{{ "Price to pay" | trans }}</th>
+                <th>{{ "Current state" | trans }}</th>
+                <th>{{ "Trigger event" | trans }}</th>
+                <th>{{ "Process" | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for orderItem in orderItems %}
+                <tr>
+                    <td>{{ orderItem.Name }}</td>
+                    <td>{{ orderItem.Sku }}</td>
+                    <td>{{ orderItem.GrossPrice | currency }}</td>
+                    <td>{{ orderItem.PriceToPay | currency }}</td>
+                    <td>{{ orderItem.State.Name }}</td>
+                    <td>
+                        {% if events[orderItem.IdSalesOrderItem] |length > 0 %}
+                            {% for event in events[orderItem.IdSalesOrderItem] %}
+                                <a class="btn btn-sm btn-primary"
+                                   href="/oms/trigger/trigger-event-for-order-items?id-sales-order-item={{ orderItem.IdSalesOrderItem }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
+                                    {{ event }}</a>
+                            {% endfor %}
+                        {% else -%}
+                            -
+                        {%- endif %}
+                    </td>
+                    <td>
+                        <a href="/oms/index/draw?process={{ orderItem.process.name }}&format=gif&font=14" target="_blank">
+                            {{ orderItem.process.name }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
 
-{% include '@Gui/Partials/Table/footer.twig' %}
+        </table>
+
+    {% endblock %}
+
+{% endembed %}

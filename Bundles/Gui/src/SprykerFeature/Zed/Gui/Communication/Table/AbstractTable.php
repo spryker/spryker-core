@@ -54,8 +54,10 @@ abstract class AbstractTable
     protected $defaultUrl = 'table';
 
     /**
-     *
+     * @var null
      */
+    protected $tableIdentifier;
+
     public function init()
     {
         $this->locator = Locator::getInstance();
@@ -162,6 +164,36 @@ abstract class AbstractTable
     }
 
     /**
+     * @return string
+     */
+    public function getTableIdentifier()
+    {
+        if (null === $this->tableIdentifier) {
+            $this->generateTableIdentifier();
+        }
+
+        return $this->tableIdentifier;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function generateTableIdentifier($prefix='table-')
+    {
+        $this->tableIdentifier = uniqid($prefix);
+
+        return $this;
+    }
+
+    /**
+     * @param null $tableIdentifier
+     */
+    public function setTableIdentifier($tableIdentifier)
+    {
+        $this->tableIdentifier = $tableIdentifier;
+    }
+
+    /**
      * @return \Twig_Environment
      * @throws \LogicException
      */
@@ -248,18 +280,20 @@ abstract class AbstractTable
      */
     public function prepareConfig()
     {
-        $configArray = [
-            'tableId' => 'table-' . md5(time()),
-            'url' => $this->defaultUrl,
-        ];
         if ($this->getConfiguration() instanceof TableConfiguration) {
-            $configArray = array_merge($configArray, [
+            $configArray = [
+                'tableId' => $this->getTableIdentifier(),
                 'headers' => $this->config->getHeaders(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
-                'url' => $this->config->getUrl(),
-            ]);
+                'url' => (true === is_null($this->config->getUrl())) ? $this->defaultUrl : $this->config->getUrl(),
+            ];
+        } else {
+            $configArray = [
+                'tableId' => 'table-' . md5(time()),
+                'url' => $this->defaultUrl,
+            ];
         }
 
         return $configArray;

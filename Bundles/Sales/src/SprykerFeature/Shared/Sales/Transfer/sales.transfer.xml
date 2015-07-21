@@ -45,6 +45,7 @@
         <property name="poBox" type="string" />
         <property name="phone" type="string" />
         <property name="cellPhone" type="string" />
+        <property name="comment" type="string" />
         <property name="description" type="string" />
     </transfer>
 
