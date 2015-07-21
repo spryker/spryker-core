@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\ExpenseInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\CartInterface;
@@ -91,7 +90,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         $taxAmountForTaxSet = $this->priceCalculationHelper->getTaxValueFromPrice($taxableAmount, $effectiveTaxRate);
         $taxSet->setAmount($taxAmountForTaxSet);
 
-        $this->calculatedTaxSets[] = $taxSet;
+        $this->calculatedTaxSets[] = clone $taxSet;
     }
 
     /**

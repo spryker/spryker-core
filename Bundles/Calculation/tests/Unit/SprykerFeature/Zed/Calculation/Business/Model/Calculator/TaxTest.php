@@ -71,9 +71,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
 
         $taxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
 
-        $this->assertEquals(258, $taxSets[0]->getAmount());
-        $this->assertEquals(91, $taxSets[0]->getTaxRates()[0]->getAmount());
-        $this->assertEquals(167, $taxSets[0]->getTaxRates()[1]->getAmount());
+        $this->assertEquals(231, $taxSets[0]->getAmount());
     }
 
     public function testTaxCalculatedForOrderWithMultipleOrderItemsAndMultipleTaxSets()
@@ -130,6 +128,57 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $groupedTaxSets);
         $this->assertEquals(335, $groupedTaxSets[0]->getAmount());
         $this->assertEquals(231, $groupedTaxSets[1]->getAmount());
+    }
+
+    public function testCalculateTaxOnExpenses()
+    {
+        $caslculableContainer = $this->getOrderTransfer();
+        /** @var OrderTransfer $orderTransfer */
+        $orderTransfer = $caslculableContainer->getCalculableObject();
+        $orderItemTransfer = $this->getOrderItemTransfer();
+        $orderExpenseTransfer = $this->getExpenseTransfer();
+        $orderItemExpenseTransfer = $this->getExpenseTransfer();
+
+        $taxRate10 = (new TaxRateTransfer())
+            ->setRate(self::TAX_PERCENTAGE_30)
+            ->setIdTaxRate(self::ID_TAX_SET_1);
+        $taxSetTransfer = (new TaxSetTransfer)
+            ->setIdTaxSet(self::ID_TAX_SET_1)
+            ->addTaxRate($taxRate10);
+
+        $orderItemTransfer->setTaxSet($taxSetTransfer)
+            ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
+            ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
+
+        $orderExpenseTransfer->setTaxSet($taxSetTransfer)
+            ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
+            ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
+
+        $orderItemExpenseTransfer->setTaxSet($taxSetTransfer)
+            ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
+            ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
+
+        $orderItemTransfer->addExpense($orderItemExpenseTransfer);
+        $orderTransfer->addItem($orderItemTransfer);
+        $orderTransfer->addExpense($orderExpenseTransfer);
+
+        $totalsTransfer = $this->getTotalsTransfer();
+        $calculator = $this->getCalculator();
+
+        $calculator->recalculateTotals($totalsTransfer, $caslculableContainer, $orderTransfer->getItems());
+
+        $orderExpenseeTaxSet = $orderTransfer->getExpenses()[0]->getTaxSet();
+        $orderItemTaxSet = $orderItemTransfer->getTaxSet();
+        $orderItemExpenseTaxSet = $orderItemTransfer->getExpenses()[0]->getTaxSet();
+
+        $this->assertEquals(231, $orderExpenseeTaxSet->getAmount());
+
+        $this->assertEquals(231, $orderItemTaxSet->getAmount());
+        $this->assertEquals(231, $orderItemExpenseTaxSet->getAmount());
+
+        $groupedTaxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
+        $this->assertCount(1, $groupedTaxSets);
+        $this->assertEquals(693, $groupedTaxSets[0]->getAmount());
     }
 
     /**
