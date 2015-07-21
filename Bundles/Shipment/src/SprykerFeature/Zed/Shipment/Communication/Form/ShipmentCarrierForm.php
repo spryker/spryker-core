@@ -27,54 +27,6 @@ class ShipmentCarrierForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        return $this->addText(
-            'iso2_code',
-            [
-                'label' => 'ISO2 Code',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please provide correct ISO2 Code'
-                    ]),
-                    new Length([
-                        'min' => 2,
-                        'max' => 2
-                    ])
-                ]
-            ]
-        )
-            ->addText('iso3_code',
-                [
-                    'label' => 'ISO3 Code',
-                    'constraints' => [
-                        new NotBlank(),
-                        new Length([
-                            'min' => 3,
-                            'max' => 3
-                        ])
-                    ]
-                ]
-            )
-            ->addText('name',
-                [
-                    'label' => 'Country Name',
-                    'constraints' => [
-                        new NotBlank(),
-                    ]
-                ]
-            )
-            ->addCheckbox('postal_code_mandatory',
-                [
-                    'label' => 'Is postal code mandatory',
-                ]
-            )
-            ->addText('postal_code_regex',
-                [
-                    'label' => 'Postal code (regex)',
-                ]
-            )
-            ->addHidden('id_country')
-            ->addSubmit();
-
     }
 
     /**
@@ -82,17 +34,6 @@ class ShipmentCarrierForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        $result = [];
 
-        $idCountry = $this->request->get('id_country');
-        if (!is_null($idCountry)) {
-            $countryDetailEntity = $this
-                ->countryQuery
-                ->findOneByIdCountry($idCountry);
-
-            $result = $countryDetailEntity->toArray();
-        }
-
-        return $result;
     }
 }
