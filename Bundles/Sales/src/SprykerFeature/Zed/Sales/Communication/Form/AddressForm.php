@@ -44,11 +44,12 @@ class AddressForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        return $this->addChoice(self::SALUTATION, [
-            'label' => 'Salutation',
-            'placeholder' => '-select-',
-            'choices' => $this->getSalutationOptions(),
-        ])
+        return $this
+            ->addChoice(self::SALUTATION, [
+                'label' => 'Salutation',
+                'placeholder' => '-select-',
+                'choices' => $this->getSalutationOptions(),
+            ])
             ->addText(self::FIRST_NAME)
             ->addText(self::MIDDLE_NAME)
             ->addText(self::LAST_NAME)
@@ -109,6 +110,7 @@ class AddressForm extends AbstractForm
             self::CELL_PHONE => $address->getCellPhone(),
             self::DESCRIPTION => $address->getDescription(),
             self::COMMENT => $address->getComment(),
+            self::SALUTATION => $address->getSalutation(),
         ];
     }
 

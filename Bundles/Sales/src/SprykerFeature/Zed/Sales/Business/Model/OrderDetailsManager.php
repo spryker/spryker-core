@@ -89,6 +89,7 @@ class OrderDetailsManager
             ->setCellPhone($data[AddressForm::CELL_PHONE])
             ->setDescription($data[AddressForm::DESCRIPTION])
             ->setComment($data[AddressForm::COMMENT])
+            ->setSalutation($data[AddressForm::SALUTATION])
         ;
 
         $address->save();

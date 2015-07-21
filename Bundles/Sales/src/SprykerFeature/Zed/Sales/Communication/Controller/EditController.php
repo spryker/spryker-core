@@ -48,8 +48,7 @@ class EditController extends AbstractController
         $idOrder = $request->get('id-sales-order');
         $idOrderAddress = $request->get('id-address');
 
-        $form = $this->getDependencyContainer()->createAddressForm($idOrderAddress);
-        $form->init();
+        $form = $this->getDependencyContainer()->createAddressForm($idOrderAddress)->init();
         $form->handleRequest();
 
         if ($request->isMethod('POST') && $form->isValid()) {
