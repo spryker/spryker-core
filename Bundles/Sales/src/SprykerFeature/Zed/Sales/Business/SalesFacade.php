@@ -10,7 +10,9 @@ use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()
@@ -98,4 +100,16 @@ class SalesFacade extends AbstractFacade
             ->saveOrder($transferOrder);
     }
 
+    /**
+     * @param CustomerForm $customerForm
+     * @param int $idOrder
+     *
+     * @return SpySalesOrder
+     */
+    public function updateOrderCustomerData(CustomerForm $customerForm, $idOrder)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderDetailsManager()
+            ->updateOrderCustomerData($customerForm, $idOrder);
+    }
 }

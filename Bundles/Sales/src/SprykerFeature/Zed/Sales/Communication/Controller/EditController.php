@@ -16,7 +16,7 @@ class EditController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function customerAction(Request $request)
     {
@@ -26,21 +26,10 @@ class EditController extends AbstractController
         $form->handleRequest();
 
         if ($request->isMethod('POST') && $form->isValid()) {
-            $data = $form->getData();
 
-            $orderEntity = $this->getQueryContainer()
-                ->querySalesOrderById($idOrder)
-                ->findOne()
-            ;
+            $this->getFacade()->updateOrderCustomerData($form, $idOrder);
 
-            $orderEntity->setFirstName($data[CustomerForm::FIRST_NAME]);
-            $orderEntity->setLastName($data[CustomerForm::LAST_NAME]);
-            $orderEntity->setEmail($data[CustomerForm::EMAIL]);
-            $orderEntity->setSalutation($data[CustomerForm::SALUTATION]);
-
-            $orderEntity->save();
-
-            return $this->redirectResponse(sprintf('/sales/edit/customer?id=%d', $idOrder));
+            $this->redirectResponse(sprintf('/sales/edit/customer?id=%d', $idOrder));
         }
 
         return $this->viewResponse([
