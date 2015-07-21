@@ -12,16 +12,28 @@ class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
 
     const SEQUENCE_NAME = 'OrderReferenceGenerator';
 
-    /** @var CustomerSequenceInterface */
+    const PREFIX_STAGING = 'S';
+    const PREFIX_DEVELOPMENT = 'D';
+    const PREFIX_PRODUCTION = 'P';
+
+    /**
+     * @var CustomerSequenceInterface
+     */
     protected $customerSequence;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $isDevelopment;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $isStaging;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $storeName;
 
     /**
@@ -69,14 +81,14 @@ class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
     protected function getEnvironmentPrefix()
     {
         if ($this->isStaging) {
-            return 'S';
+            return self::PREFIX_STAGING;
         }
 
         if ($this->isDevelopment) {
-            return 'D';
+            return self::PREFIX_DEVELOPMENT;
         }
 
-        return 'P';
+        return self::PREFIX_PRODUCTION;
     }
 
     /**

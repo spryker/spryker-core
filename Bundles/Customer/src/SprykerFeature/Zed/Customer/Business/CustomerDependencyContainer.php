@@ -15,7 +15,8 @@ use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use SprykerEngine\Shared\Kernel\Store;
+use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
+use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerSequence;
 
 /**
  * @method CustomerConfig getConfig()
@@ -96,23 +97,22 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
             ;
     }
 
+    /**
+     * @return CustomerReferenceGenerator
+     */
     protected function createCustomerReferenceGenerator()
     {
-        $storeName = Store::getInstance()->getStoreName();
-
-        $environment = \SprykerFeature_Shared_Library_Environment::getInstance();
-
-        $isDevelopment = $environment->isDevelopment();
-        $isStaging = $environment->isStaging();
-
         return $this->getFactory()->createReferenceGeneratorCustomerReferenceGenerator(
             $this->createCustomerSequence(),
-            $isDevelopment,
-            $isStaging,
-            $storeName
+            $this->getConfig()->isDevelopmentEnvironment(),
+            $this->getConfig()->isStagingEnvironment(),
+            $this->getConfig()->getStoreName()
         );
     }
 
+    /**
+     * @return CustomerSequence
+     */
     protected function createCustomerSequence()
     {
         $randomNumberGenerator = $this->getFactory()->createReferenceGeneratorRandomNumberGenerator(

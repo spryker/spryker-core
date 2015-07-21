@@ -380,14 +380,16 @@ class Customer
         if ($customerTransfer->getIdCustomer()) {
             $customer = $this->queryContainer
                 ->queryCustomerById($customerTransfer->getIdCustomer())
-                ->findOne();
+                ->findOne()
+            ;
         } elseif ($customerTransfer->getEmail()) {
             $customer = $this->queryContainer
                 ->queryCustomerByEmail($customerTransfer->getEmail())
-                ->findOne();
+                ->findOne()
+            ;
         }
 
-        if (isset($customer) && ($customer !== null)) {
+        if (isset($customer)) {
             return true;
         }
 

@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Customer;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\System\SystemConfig;
+use SprykerEngine\Shared\Kernel\Store;
 
 class CustomerConfig extends AbstractBundleConfig
 {
@@ -18,6 +19,30 @@ class CustomerConfig extends AbstractBundleConfig
     public function getHostYves()
     {
         return $this->get(SystemConfig::HOST_YVES);
+    }
+
+    /**
+     * @return string
+     */
+    public function getStoreName()
+    {
+        return Store::getInstance()->getStoreName();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDevelopmentEnvironment()
+    {
+        return \SprykerFeature_Shared_Library_Environment::getInstance()->isDevelopment();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStagingEnvironment()
+    {
+        return \SprykerFeature_Shared_Library_Environment::getInstance()->isStaging();
     }
 
     /**

@@ -15,16 +15,24 @@ class CustomerSequence implements CustomerSequenceInterface
 
     const SEQUENCE_NAME = 'CustomerReferenceGenerator';
 
-    /** @var int */
-    protected $minimumOrderNumber;
+    /**
+     * @var int
+     */
+    protected $minimumCustomerNumber;
 
-    /** @var RandomNumberGenerator */
+    /**
+     * @var RandomNumberGenerator
+     */
     protected $randomNumberGenerator;
 
-    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, $minimumOrderNumber)
+    /**
+     * @param RandomNumberGeneratorInterface $randomNumberGenerator
+     * @param int $minimumCustomerNumber
+     */
+    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, $minimumCustomerNumber)
     {
         $this->randomNumberGenerator = $randomNumberGenerator;
-        $this->minimumOrderNumber = $minimumOrderNumber;
+        $this->minimumCustomerNumber = $minimumCustomerNumber;
     }
 
     /**
@@ -33,12 +41,12 @@ class CustomerSequence implements CustomerSequenceInterface
     public function generate()
     {
         $idCurrent = null;
-        $gotNoOrderNumber = true;
+        $gotCustomerNumber = false;
 
-        while ($gotNoOrderNumber) {
+        while (!$gotCustomerNumber) {
             $idCurrent = $this->createReferenceNumber();
             if ($idCurrent !== null) {
-                $gotNoOrderNumber = false;
+                $gotCustomerNumber = true;
             }
         }
 
@@ -76,7 +84,7 @@ class CustomerSequence implements CustomerSequenceInterface
      *
      * @return SpyCustomerNumberSequence
      */
-    protected function getSequence($transaction)
+    protected function getSequence(ConnectionInterface $transaction)
     {
         $sequence = SpyCustomerNumberSequenceQuery::create()
             ->findOneByName(self::SEQUENCE_NAME, $transaction);
@@ -84,7 +92,7 @@ class CustomerSequence implements CustomerSequenceInterface
         if ($sequence === null) {
             $sequence = new SpyCustomerNumberSequence();
             $sequence->setName(self::SEQUENCE_NAME);
-            $sequence->setCurrentId($this->minimumOrderNumber);
+            $sequence->setCurrentId($this->minimumCustomerNumber);
         }
 
         return $sequence;
