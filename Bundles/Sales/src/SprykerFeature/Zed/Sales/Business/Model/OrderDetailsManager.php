@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
+use SprykerFeature\Zed\Sales\Communication\Form\AddressForm;
 use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -55,6 +56,44 @@ class OrderDetailsManager
         $orderEntity->save();
 
         return $orderEntity;
+    }
+
+    /**
+     * @param AddressForm $addressForm
+     * @param int $idAddress
+     *
+     * @return SpySalesAddressQuery
+     */
+    public function updateOrderAddressData(AddressForm $addressForm, $idAddress)
+    {
+        $data = $addressForm->getData();
+
+        $address = $this->queryContainer
+            ->querySalesOrderAddressById($idAddress)
+            ->findOne();
+
+        $address
+            ->setFirstName($data[AddressForm::FIRST_NAME])
+            ->setFirstName($data[AddressForm::FIRST_NAME])
+            ->setMiddleName($data[AddressForm::MIDDLE_NAME])
+            ->setLastName($data[AddressForm::LAST_NAME])
+            ->setEmail($data[AddressForm::EMAIL])
+            ->setAddress1($data[AddressForm::ADDRESS_1])
+            ->setAddress2($data[AddressForm::ADDRESS_1])
+            ->setAddress3($data[AddressForm::ADDRESS_1])
+            ->setCompany($data[AddressForm::COMPANY])
+            ->setCity($data[AddressForm::CITY])
+            ->setZipCode($data[AddressForm::ZIP_CODE])
+            ->setPoBox($data[AddressForm::PO_BOX])
+            ->setPhone($data[AddressForm::PHONE])
+            ->setCellPhone($data[AddressForm::CELL_PHONE])
+            ->setDescription($data[AddressForm::DESCRIPTION])
+            ->setComment($data[AddressForm::COMMENT])
+        ;
+
+        $address->save();
+
+        return $address;
     }
 
     /**

@@ -27,7 +27,7 @@
             {{ shippingAddress.address1 ~ ' ' ~ shippingAddress.address2 ~ ' ' ~ shippingAddress.address3 }}<br>
             {{ shippingAddress.zipCode }} {{ shippingAddress.city }}
         </div>
-        <div class="text-center"><a class="btn btn-primary" href="/sales/edit/address?id-address={{ orderDetails.fkSalesOrderAddressShipping }}">{{ 'View' | trans }}</a></div>
+        <div class="text-center"><a class="btn btn-primary" href="/sales/edit/address?id-sales-order={{ idOrder }}&id-address={{ orderDetails.fkSalesOrderAddressShipping }}">{{ 'View' | trans }}</a></div>
         {% include '@Gui/Partials/Table/footer.twig' %}
     </div>
     <div class="col-md-4">
@@ -37,7 +37,7 @@
             {{ billingAddress.address1 ~ ' ' ~ billingAddress.address2 ~ ' ' ~ billingAddress.address3 }}<br>
             {{ billingAddress.zipCode }} {{ billingAddress.city }}
         </div>
-        <div class="text-center"><a class="btn btn-primary" href="/sales/edit/address?id-address={{ orderDetails.fkSalesOrderAddressBilling }}">{{ 'View' | trans }}</a></div>
+        <div class="text-center"><a class="btn btn-primary" href="/sales/edit/address?id-sales-order={{ idOrder }}&id-address={{ orderDetails.fkSalesOrderAddressBilling }}">{{ 'View' | trans }}</a></div>
         {% include '@Gui/Partials/Table/footer.twig' %}
     </div>
 </div>

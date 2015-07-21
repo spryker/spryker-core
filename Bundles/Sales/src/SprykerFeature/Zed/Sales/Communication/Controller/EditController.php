@@ -37,4 +37,31 @@ class EditController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function addressAction(Request $request)
+    {
+        $idOrder = $request->get('id-sales-order');
+        $idOrderAddress = $request->get('id-address');
+
+        $form = $this->getDependencyContainer()->createAddressForm($idOrderAddress);
+        $form->init();
+        $form->handleRequest();
+
+        if ($request->isMethod('POST') && $form->isValid()) {
+
+            $this->getFacade()->updateOrderAddress($form, $idOrderAddress);
+
+            $this->redirectResponse(sprintf('/sales/edit/customer?id-sales-order=%d', $idOrder));
+        }
+
+        return $this->viewResponse([
+            'idOrder' => $idOrder,
+            'form' => $form->createView(),
+        ]);
+    }
 }

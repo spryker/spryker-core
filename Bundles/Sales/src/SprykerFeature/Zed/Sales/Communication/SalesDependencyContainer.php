@@ -47,7 +47,7 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param $idSalesOrder
+     * @param int $idSalesOrder
      *
      * @return CustomerForm
      */
@@ -56,6 +56,18 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
         $customerQuery = $this->getQueryContainer()->querySalesOrderById($idSalesOrder);
 
         return $this->getFactory()->createFormCustomerForm($customerQuery);
+    }
+
+    /**
+     * @param int $idOrderAddress
+     *
+     * @return AddressForm
+     */
+    public function createAddressForm($idOrderAddress)
+    {
+        $addressQuery = $this->getQueryContainer()->querySalesOrderAddressById($idOrderAddress);
+
+        return $this->getFactory()->createFormAddressForm($addressQuery);
     }
 
     /**
