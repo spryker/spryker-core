@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -20,4 +21,4 @@ use SprykerFeature\Zed\Customer\Persistence\Propel\Base\SpyCustomerAddressArchiv
 class SpyCustomerAddressArchiveQuery extends BaseSpyCustomerAddressArchiveQuery
 {
 
-} // SpyCustomerAddressArchiveQuery
+}

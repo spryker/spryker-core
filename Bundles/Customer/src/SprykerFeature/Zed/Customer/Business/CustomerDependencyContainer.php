@@ -15,6 +15,8 @@ use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
+use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerSequence;
 
 /**
  * @method CustomerConfig getConfig()
@@ -41,9 +43,12 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $config = $this->getConfig();
         $senderPlugins = $this->getProvidedDependency(CustomerDependencyProvider::SENDER_PLUGINS);
-        $customer = $this->getFactory()
-            ->createCustomerCustomer($this->createQueryContainer(), $config->getHostYves())
-        ;
+
+        $customer = $this->getFactory()->createCustomerCustomer(
+            $this->createQueryContainer(),
+            $this->createCustomerReferenceGenerator(),
+            $config->getHostYves()
+        );
 
         foreach ($senderPlugins[CustomerDependencyProvider::REGISTRATION_TOKEN_SENDERS] as $sender) {
             $customer->addRegistrationTokenSender($sender);
@@ -90,6 +95,35 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
             ->locale()
             ->facade()
             ;
+    }
+
+    /**
+     * @return CustomerReferenceGenerator
+     */
+    protected function createCustomerReferenceGenerator()
+    {
+        return $this->getFactory()->createReferenceGeneratorCustomerReferenceGenerator(
+            $this->createCustomerSequence(),
+            $this->getConfig()->isDevelopmentEnvironment(),
+            $this->getConfig()->isStagingEnvironment(),
+            $this->getConfig()->getStoreName()
+        );
+    }
+
+    /**
+     * @return CustomerSequence
+     */
+    protected function createCustomerSequence()
+    {
+        $randomNumberGenerator = $this->getFactory()->createReferenceGeneratorRandomNumberGenerator(
+            $this->getConfig()->getCustomerNumberIncrementMin(),
+            $this->getConfig()->getCustomerNumberIncrementMax()
+        );
+
+        return $this->getFactory()->createReferenceGeneratorCustomerSequence(
+            $randomNumberGenerator,
+            $this->getConfig()->getMinimumCustomerNumber()
+        );
     }
 
 }
