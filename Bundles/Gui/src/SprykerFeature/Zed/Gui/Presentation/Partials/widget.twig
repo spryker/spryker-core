@@ -2,9 +2,11 @@
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>{{ widget_title | default('') | trans | raw }}</h5>
+                {% block widget_title -%}
+                    <h5>{{ widget_title | default('') | trans | raw }}</h5>
+                {%- endblock %}
                 <div class="pull-right">
-                    {% block widget_header_content -%}default{%- endblock %}
+                    {% block widget_header_content -%}{%- endblock %}
                 </div>
                 <div class="clearfix"></div>
             </div>
