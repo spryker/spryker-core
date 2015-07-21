@@ -1,18 +1,25 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block head_title 'Customers' | trans %}
+{% set widget_title = 'Customers' %}
 
-{% block section_title 'Customers' | trans %}
+{% block head_title widget_title | trans %}
+
+{% block section_title widget_title | trans %}
 
 {% block content %}
 
-    <p>
-        <a href="/customer/add" class="btn btn-primary ">{{ 'Add a new customer' | trans }}</a>
-    </p>
+    {% embed '@Gui/Partials/widget.twig' %}
 
-    {% include '@Gui/Partials/Table/header.twig' with { table_title: '' } %}
-    {{ customerTable | raw }}
-    {% include '@Gui/Partials/Table/footer.twig' %}
+        {% block widget_header_content %}
+            <a href="/customer/add" class="btn btn-sm btn-primary ">{{ 'Add a new customer' | trans }}</a>
+        {% endblock %}
 
+        {% block widget_content %}
+
+            {{ customerTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
 
 {% endblock %}
