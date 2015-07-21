@@ -56,8 +56,8 @@ class ProductOptionReader implements ProductOptionReaderInterface
     {
         $localeTransfer = $this->localeFacade->getLocale($localeCode);
 
-        $productOptionTransfer = (new ProductOptionTransfer)
-            ->setIdOptionValueUsage($idProductOptionValueUsage)
+        $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setIdOptionValueUsage($idProductOptionValueUsage)
             ->setLocalCode($localeCode);
 
         $result =  $this->queryContainer->queryProductOptionValueUsageWithAssociatedAttributes(
@@ -98,14 +98,14 @@ class ProductOptionReader implements ProductOptionReaderInterface
      */
     private function addTaxesToProductOptionTransfer(ProductOptionTransfer $productOptionTransfer, SpyTaxSet $taxSetEntity)
     {
-        $taxTransfer = (new TaxSetTransfer)
-            ->setIdTaxSet($taxSetEntity->getIdTaxSet())
+        $taxTransfer = new TaxSetTransfer();
+        $taxTransfer->setIdTaxSet($taxSetEntity->getIdTaxSet())
             ->setName($taxSetEntity->getName());
 
         foreach ($taxSetEntity->getSpyTaxRates() as $taxRate) {
 
-            $taxRateTransfer = (new TaxRateTransfer)
-                ->setIdTaxRate($taxRate->getIdTaxRate())
+            $taxRateTransfer = new TaxRateTransfer();
+            $taxRateTransfer->setIdTaxRate($taxRate->getIdTaxRate())
                 ->setName($taxRate->getName())
                 ->setRate($taxRate->getRate());
 

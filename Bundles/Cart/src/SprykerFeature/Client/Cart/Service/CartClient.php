@@ -146,12 +146,10 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function decreaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1)
     {
-        $cartItemTransfer = $this->mergeCartItems(
-            $cartItemTransfer,
-            $this->getItemByIdentifier($cartItemTransfer->getId())
+        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity(
+            $cartItemTransfer, $cartItemTransfer->getQuantity() - $quantity
         );
-        $cartItemTransfer->setQuantity($cartItemTransfer->getQuantity() - $quantity);
-        $changeTransfer = $this->prepareCartChange($cartItemTransfer);
+
         $cartTransfer = $this->getZedStub()->decreaseItemQuantity($changeTransfer);
 
         return $this->handleCartResponse($cartTransfer);
@@ -165,12 +163,10 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function increaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1)
     {
-        $cartItemTransfer = $this->mergeCartItems(
-            $cartItemTransfer,
-            $this->getItemByIdentifier($cartItemTransfer->getId())
+        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity(
+            $cartItemTransfer, $cartItemTransfer->getQuantity() + $quantity
         );
-        $cartItemTransfer->setQuantity($cartItemTransfer->getQuantity() + $quantity);
-        $changeTransfer = $this->prepareCartChange($cartItemTransfer);
+
         $cartTransfer = $this->getZedStub()->increaseItemQuantity($changeTransfer);
 
         return $this->handleCartResponse($cartTransfer);
@@ -251,6 +247,24 @@ class CartClient extends AbstractClient implements CartClientInterface
         $cartTransfer = $this->getZedStub()->clearCoupons($changeTransfer);
 
         return $this->handleCartResponse($cartTransfer);
+    }
+
+    /**
+     * @param CartItemInterface $cartItemTransfer
+     * @param int $quantity
+     *
+     * @return ChangeTransfer
+     */
+    private function createChangeTransferWithAdjustedQuantity(CartItemInterface $cartItemTransfer, $quantity)
+    {
+        $cartItemTransfer = $this->mergeCartItems(
+            $cartItemTransfer,
+            $this->getItemByIdentifier($cartItemTransfer->getId())
+        );
+
+        $cartItemTransfer->setQuantity($quantity);
+
+        return $this->prepareCartChange($cartItemTransfer);
     }
 
     /**
