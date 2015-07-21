@@ -15,6 +15,8 @@ use SprykerEngine\Zed\Kernel\Container;
 class ConsoleLocator extends AbstractLocator
 {
 
+    const DEPENDENCY_CONTAINER = 'DependencyContainer';
+
     /**
      * @var string
      */
@@ -34,8 +36,8 @@ class ConsoleLocator extends AbstractLocator
         $factory = $this->getFactory($bundle);
         $resolvedConsole = $factory->create('Console' . $className);
 
-        if ($factory->exists('DependencyContainer')) {
-            $resolvedConsole->setDependencyContainer($factory->create('DependencyContainer', $factory, $locator));
+        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
+            $resolvedConsole->setDependencyContainer($factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator));
         }
 
         $bundleName = lcfirst($bundle);

@@ -15,6 +15,7 @@ abstract class AbstractFactory implements FactoryInterface
     const SUFFIX_FACTORY = 'Factory';
     const METHOD_EXISTS = 'exists';
     const METHOD_CREATE = 'create';
+    const DEPENDENCY_CONTAINER = 'DependencyContainer';
 
     /**
      * @var string
@@ -48,7 +49,7 @@ abstract class AbstractFactory implements FactoryInterface
      * @var array
      */
     protected $baseClasses = [
-        'DependencyContainer',
+        self::DEPENDENCY_CONTAINER,
     ];
 
     /**

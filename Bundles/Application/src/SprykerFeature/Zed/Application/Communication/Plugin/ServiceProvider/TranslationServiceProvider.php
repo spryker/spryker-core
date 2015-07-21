@@ -8,8 +8,10 @@ namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use SprykerEngine\Shared\Kernel\Store;
+use Silex\Provider\TranslationServiceProvider as SilexTranslationServiceProvider;
 
-class TranslationServiceProvider extends \Silex\Provider\TranslationServiceProvider implements ServiceProviderInterface
+class TranslationServiceProvider extends SilexTranslationServiceProvider implements ServiceProviderInterface
 {
 
     /**
@@ -25,14 +27,14 @@ class TranslationServiceProvider extends \Silex\Provider\TranslationServiceProvi
      */
     public function boot(Application $app)
     {
-        $currentLanguage = \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLanguage();
+        $currentLanguage = Store::getInstance()->getCurrentLanguage();
         $pathToLanguageFile = APPLICATION_ROOT_DIR . '/config/Zed/language/' . $currentLanguage . '/lang.csv';
 
         $translator = new \SprykerFeature_Zed_Library_Translate(
             [
                 'adapter' => 'csv',
                 'content' => $pathToLanguageFile,
-                'locale' => \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale(),
+                'locale' => Store::getInstance()->getCurrentLocale(),
             ]
         );
         \Zend_Registry::set('Zend_Translate', $translator);

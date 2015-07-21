@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,7 +21,6 @@ use Symfony\Component\Validator\Validator;
  */
 class GlossaryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
-
     /**
      * @return GlossaryFacade
      */
@@ -119,5 +117,4 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getProvidedDependency(GlossaryDependencyProvider::FACADE_LOCALE);
     }
-
 }

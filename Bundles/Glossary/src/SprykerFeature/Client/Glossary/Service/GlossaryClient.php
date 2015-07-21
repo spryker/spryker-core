@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,15 +15,15 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
 {
 
     /**
-     * @param string $keyName
+     * @param string $id
      * @param array $parameters
      * @param string $localeName
      *
      * @return string
      */
-    public function translate($keyName, array $parameters = [], $localeName)
+    public function translate($id, array $parameters = [], $localeName)
     {
-        return $this->createTranslator($localeName)->translate($keyName, $parameters);
+        return $this->createTranslator($localeName)->translate($id, $parameters);
     }
 
     /**

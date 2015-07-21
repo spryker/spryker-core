@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,12 +9,12 @@ interface GlossaryClientInterface
 {
 
     /**
-     * @param string $keyName
+     * @param string $id
      * @param array $parameters
      * @param string $localeName
      *
      * @return string
      */
-    public function translate($keyName, array $parameters = [], $localeName);
+    public function translate($id, array $parameters = [], $localeName);
 
 }

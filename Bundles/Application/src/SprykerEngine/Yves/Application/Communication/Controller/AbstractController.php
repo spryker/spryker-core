@@ -10,8 +10,8 @@ use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Yves\Application\Business\Application;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
 use SprykerEngine\Yves\Kernel\Communication\Factory;
+use SprykerEngine\Zed\Kernel\AbstractDependencyContainer;
 use SprykerFeature\Shared\ZedRequest\Client\Response as TransferResponse;
 use SprykerFeature\Yves\Library\Session\TransferSession;
 use Symfony\Component\Form\FormInterface;
@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractController
 {
+
+    const DEPENDENCY_CONTAINER = 'DependencyContainer';
 
     /**
      * @var Application
@@ -48,8 +50,8 @@ abstract class AbstractController
         $this->app = $app;
         $this->locator = $locator;
 
-        if ($factory->exists('DependencyContainer')) {
-            $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
+        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
+            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
         }
     }
 

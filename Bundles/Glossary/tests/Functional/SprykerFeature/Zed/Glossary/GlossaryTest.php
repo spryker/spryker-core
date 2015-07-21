@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -28,7 +27,6 @@ use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
  */
 class GlossaryTest extends Test
 {
-
     /**
      * @var GlossaryFacade
      */
@@ -43,6 +41,7 @@ class GlossaryTest extends Test
      * @var GlossaryToTouchInterface
      */
     private $touchFacade;
+
 
     /**
      * @var GlossaryQueryContainerInterface
@@ -320,7 +319,7 @@ class GlossaryTest extends Test
         $container = new Container();
 
         $container[GlossaryDependencyProvider::FACADE_TOUCH] = function (Container $container) {
-            return $this->touchFacade;
+            return $this->touchFacade ;
         };
 
         $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
@@ -331,5 +330,4 @@ class GlossaryTest extends Test
 
         $this->glossaryFacade->setOwnQueryContainer($this->glossaryQueryContainer);
     }
-
 }

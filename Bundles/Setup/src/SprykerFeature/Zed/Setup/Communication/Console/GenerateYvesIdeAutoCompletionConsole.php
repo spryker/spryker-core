@@ -101,15 +101,15 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
     protected function generateYvesFactoryInterface()
     {
         $methodTagGenerator = new ConstructableMethodTagBuilder([
-            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => '',
+            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Yves',
-            ConstructableMethodTagBuilder::OPTION_KEY_CLASS_NAME_PART_LEVEL => 3,
+            ConstructableMethodTagBuilder::OPTION_KEY_CLASS_NAME_PART_LEVEL => 4
         ]);
 
         $options = [
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Yves\Ide\FactoryAutoCompletion',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Yves/Ide/',
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => false,
+            IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => true,
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Yves',
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
                 [

@@ -6,7 +6,7 @@
 
 namespace SprykerEngine\Yves\Kernel\Communication;
 
-use Generated\Zed\Ide\AutoCompletion;
+use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Yves\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 
