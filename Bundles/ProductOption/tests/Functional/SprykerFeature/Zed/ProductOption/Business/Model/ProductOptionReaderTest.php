@@ -7,6 +7,7 @@
 namespace Functional\SprykerFeature\Zed\ProductOption\Persistence;
 
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 
 /**
  * @group Business
@@ -16,6 +17,8 @@ use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
  */
 class ProductOptionReaderTest extends AbstractFunctionalTest
 {
+
+    const LOCALE_CODE = 'xx_XX';
 
     /**
      * @var array
@@ -27,6 +30,27 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         parent::setUp();
 
         $this->ids = DbFixturesLoader::loadFixtures();
+    }
+
+    public function testGetProductOption()
+    {
+        /** @var $productOptionTransfer ProductOptionTransfer */
+        $productOptionTransfer = $this->getFacade()->getProductOption(
+            $this->ids['idUsageLarge'],
+            self::LOCALE_CODE
+        );
+
+        $this->assertEquals('Size', $productOptionTransfer->getLabelOptionType());
+        $this->assertEquals('Large', $productOptionTransfer->getLabelOptionValue());
+        $this->assertEquals(199, $productOptionTransfer->getPrice());
+
+        $taxSetTransfer = $productOptionTransfer->getTaxSet();
+
+        $this->assertEquals('Baz', $taxSetTransfer->getName());
+
+        $taxRateTransfer = $taxSetTransfer->getTaxRates()[0];
+        $this->assertEquals('Foo', $taxRateTransfer->getName());
+        $this->assertEquals('10', $taxRateTransfer->getRate());
     }
 
     public function testQueryTypeUsagesForConcreteProduct()
