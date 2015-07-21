@@ -20,7 +20,7 @@ class EditController extends AbstractController
      */
     public function customerAction(Request $request)
     {
-        $idOrder = $request->get('id');
+        $idOrder = $request->get('id-sales-order');
         $form = $this->getDependencyContainer()->createCustomerForm($idOrder);
         $form->init();
         $form->handleRequest();
@@ -29,7 +29,7 @@ class EditController extends AbstractController
 
             $this->getFacade()->updateOrderCustomerData($form, $idOrder);
 
-            $this->redirectResponse(sprintf('/sales/edit/customer?id=%d', $idOrder));
+            $this->redirectResponse(sprintf('/sales/edit/customer?id-sales-order=%d', $idOrder));
         }
 
         return $this->viewResponse([
