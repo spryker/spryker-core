@@ -1,9 +1,0 @@
-{%- if environment == "production" -%}
-{%- set number_of_processes = grains.num_cpus * 4 -%}
-{%- else -%}
-{%- set number_of_processes = 2 -%}
-{%- endif -%}
-<?xml version='1.0' encoding='UTF-8'?>
-<hudson>
-  <numExecutors>{{ number_of_processes }}</numExecutors>
-</hudson>

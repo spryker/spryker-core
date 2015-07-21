@@ -1,2 +1,0 @@
-# Rackspace support user - allow to execute any command without password authentication
-rack  ALL=(ALL) NOPASSWD: ALL
