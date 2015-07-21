@@ -1,4 +1,0 @@
-monitorRole readonly
-controlRole readwrite
-dev readwrite
-qa readwrite

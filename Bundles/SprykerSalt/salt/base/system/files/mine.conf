@@ -1,3 +1,0 @@
-mine_functions:
-  network.interfaces: []
-  test.ping: []

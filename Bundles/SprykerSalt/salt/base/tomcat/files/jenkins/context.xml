@@ -1,3 +1,0 @@
-<Context docBase="/data/shop/{{ environment }}/shared/tomcat/webapps/jenkins.war" debug="0" crossContext="true" >
-   <Environment name="JENKINS_HOME" type="java.lang.String" value="/data/shop/{{ environment }}/shared/data/common/jenkins" override="true" />
-</Context>
