@@ -54,6 +54,11 @@ abstract class AbstractTable
     protected $defaultUrl = 'table';
 
     /**
+     * @var null
+     */
+    protected $tableId = null;
+
+    /**
      *
      */
     public function init()
@@ -162,6 +167,36 @@ abstract class AbstractTable
     }
 
     /**
+     * @return string
+     */
+    public function getTableId()
+    {
+        if (null === $this->tableId) {
+            $this->generateTableId();
+        }
+
+        return $this->tableId;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function generateTableId()
+    {
+        $this->tableId = uniqid('table-');
+
+        return $this;
+    }
+
+    /**
+     * @param null $tableId
+     */
+    public function setTableId($tableId)
+    {
+        $this->tableId = $tableId;
+    }
+
+    /**
      * @return \Twig_Environment
      * @throws \LogicException
      */
@@ -248,18 +283,20 @@ abstract class AbstractTable
      */
     public function prepareConfig()
     {
-        $configArray = [
-            'tableId' => 'table-' . md5(time()),
-            'url' => $this->defaultUrl,
-        ];
         if ($this->getConfiguration() instanceof TableConfiguration) {
-            $configArray = array_merge($configArray, [
+            $configArray = [
+                'tableId' => $this->getTableId(),
                 'headers' => $this->config->getHeaders(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
-                'url' => $this->config->getUrl(),
-            ]);
+                'url' => (true === is_null($this->config->getUrl())) ? $this->defaultUrl : $this->config->getUrl(),
+            ];
+        } else {
+            $configArray = [
+                'tableId' => 'table-' . md5(time()),
+                'url' => $this->defaultUrl,
+            ];
         }
 
         return $configArray;
