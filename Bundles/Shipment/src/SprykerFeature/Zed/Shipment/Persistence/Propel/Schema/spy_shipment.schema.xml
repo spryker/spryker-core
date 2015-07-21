@@ -14,7 +14,7 @@
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
 
         <foreign-key foreignTable="spy_glossary_key">
-            <reference local="fk_glossary_key_carrier_name" foreign="id_glossary_key" phpName="GlossaryTranslationKeyName" refPhpName="ShipmentCarrierName"/>
+            <reference local="fk_glossary_key_carrier_name" foreign="id_glossary_key" phpName="GlossaryKeyName" refPhpName="ShipmentCarrierName"/>
         </foreign-key>
 
         <index name="is_active">
