@@ -56,11 +56,8 @@ abstract class AbstractTable
     /**
      * @var null
      */
-    protected $tableId = null;
+    protected $tableIdentifier;
 
-    /**
-     *
-     */
     public function init()
     {
         $this->locator = Locator::getInstance();
@@ -169,31 +166,31 @@ abstract class AbstractTable
     /**
      * @return string
      */
-    public function getTableId()
+    public function getTableIdentifier()
     {
-        if (null === $this->tableId) {
-            $this->generateTableId();
+        if (null === $this->tableIdentifier) {
+            $this->generateTableIdentifier();
         }
 
-        return $this->tableId;
+        return $this->tableIdentifier;
     }
 
     /**
      * @return $this
      */
-    protected function generateTableId()
+    protected function generateTableIdentifier($prefix='table-')
     {
-        $this->tableId = uniqid('table-');
+        $this->tableIdentifier = uniqid($prefix);
 
         return $this;
     }
 
     /**
-     * @param null $tableId
+     * @param null $tableIdentifier
      */
-    public function setTableId($tableId)
+    public function setTableIdentifier($tableIdentifier)
     {
-        $this->tableId = $tableId;
+        $this->tableIdentifier = $tableIdentifier;
     }
 
     /**
@@ -285,7 +282,7 @@ abstract class AbstractTable
     {
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
-                'tableId' => $this->getTableId(),
+                'tableId' => $this->getTableIdentifier(),
                 'headers' => $this->config->getHeaders(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),

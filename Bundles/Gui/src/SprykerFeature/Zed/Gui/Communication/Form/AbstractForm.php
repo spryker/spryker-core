@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Gui\Communication\Form;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,7 +97,8 @@ abstract class AbstractForm
     public function init()
     {
         $this->injectDependencies()
-            ->buildFormFields();
+            ->buildFormFields()
+        ;
 
         $data = $this->populateFormFields();
         $this->setData($data);
@@ -121,6 +123,10 @@ abstract class AbstractForm
      */
     public function createView()
     {
+        if ($this->getDefaultDataType() instanceof AbstractTransfer) {
+            $this->setData($this->getData(false));
+        }
+
         return $this->form->createView();
     }
 

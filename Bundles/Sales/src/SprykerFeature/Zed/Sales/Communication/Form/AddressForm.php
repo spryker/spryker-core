@@ -30,8 +30,15 @@ class AddressForm extends AbstractForm
 
     const SUBMIT = 'submit';
 
-    protected $addressQuery;
-    protected $idOrder;
+    /**
+     * @var SpySalesOrderAddressQuery
+     */
+    private $addressQuery;
+
+    /**
+     * @var int
+     */
+    private $idOrder;
 
     /**
      * @param SpySalesOrderAddressQuery $addressQuery
@@ -39,6 +46,7 @@ class AddressForm extends AbstractForm
     public function __construct(SpySalesOrderAddressQuery $addressQuery)
     {
         $this->addressQuery = $addressQuery;
+//        $this->setDefaultDataType(new SalesAddressTransfer());
     }
 
     /**
@@ -46,7 +54,6 @@ class AddressForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $this->setDefaultDataType(new SalesAddressTransfer());
 
         return $this
             ->addChoice(self::SALUTATION, [
@@ -59,8 +66,6 @@ class AddressForm extends AbstractForm
             ->addText(self::LAST_NAME)
             ->addText(self::EMAIL)
             ->addText(self::ADDRESS_1)
-            ->addText(self::ADDRESS_2)
-            ->addText(self::ADDRESS_3)
             ->addText(self::COMPANY)
             ->addText(self::CITY)
             ->addText(self::ZIP_CODE)
@@ -68,7 +73,7 @@ class AddressForm extends AbstractForm
             ->addText(self::PHONE)
             ->addText(self::CELL_PHONE)
             ->addText(self::DESCRIPTION)
-            ->addText(self::COMMENT)
+            ->addTextarea(self::COMMENT)
 
             ->addSubmit(self::SUBMIT, [
                 'label' => 'Save',
@@ -104,8 +109,6 @@ class AddressForm extends AbstractForm
             self::LAST_NAME => $address->getLastName(),
             self::EMAIL => $address->getEmail(),
             self::ADDRESS_1 => $address->getAddress1(),
-            self::ADDRESS_2 => $address->getAddress2(),
-            self::ADDRESS_3 => $address->getAddress3(),
             self::COMPANY => $address->getCompany(),
             self::CITY => $address->getCity(),
             self::ZIP_CODE => $address->getZipCode(),

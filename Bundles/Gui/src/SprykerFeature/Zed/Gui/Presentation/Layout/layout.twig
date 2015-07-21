@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block head_title %}{{ title }}{% endblock %}</title>
+    <title>{% block head_title %}{{ title | trans }}{% endblock %}</title>
 
     {% block head_css_old %}
 
@@ -80,7 +80,7 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>{% block section_title %}{{ section_title | default('Section Title') }}{% endblock %}</h2>
+                <h2>{% block section_title %}{{ section_title | default('') | trans }}{% endblock %}</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="/">{{ 'Dashboard' | trans }}</a>

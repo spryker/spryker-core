@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SalesAddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,7 +27,7 @@ class EditController extends AbstractController
 
         if ($request->isMethod('POST') && $form->isValid()) {
 
-            $orderTransfer = $form->getData();
+            $orderTransfer = (new OrderTransfer())->fromArray($form->getData(), true);
             $this->getFacade()->updateOrderCustomer($orderTransfer, $idOrder);
 
             $this->redirectResponse(sprintf('/sales/edit/customer?id-sales-order=%d', $idOrder));
@@ -54,7 +54,7 @@ class EditController extends AbstractController
 
         if ($request->isMethod('POST') && $form->isValid()) {
 
-            $addressTransfer = $form->getData();
+            $addressTransfer = (new SalesAddressTransfer())->fromArray($form->getData(), true);
             $this->getFacade()->updateOrderAddress($addressTransfer, $idOrderAddress);
 
             $this->redirectResponse(sprintf('/sales/edit/customer?id-sales-order=%d', $idOrder));

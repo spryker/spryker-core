@@ -113,7 +113,8 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
-            ->updateOrderCustomer($orderTransfer, $idOrder);
+            ->updateOrderCustomer($orderTransfer, $idOrder)
+        ;
     }
 
     /**
@@ -126,6 +127,7 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
-            ->updateOrderAddress($addressesTransfer, $idAddress);
+            ->updateOrderAddress($addressesTransfer, $idAddress)
+        ;
     }
 }

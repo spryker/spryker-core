@@ -2,11 +2,10 @@
 
 {% set widget_title = 'View Cusomter' %}
 
-{% block head_title widget_title | trans %}
-{% block section_title widget_title | trans %}
+{% block head_title widget_title %}
+{% block section_title widget_title %}
 
 {% block content %}
-
 
     {% embed '@Gui/Partials/widget.twig' %}
 
@@ -79,7 +78,6 @@
             </tfoot>
         </table>
     </div>
-
 
         {% endblock %}
 
