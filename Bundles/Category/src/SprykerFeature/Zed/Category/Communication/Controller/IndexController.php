@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Category\Communication\Controller;
@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\NodeTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,13 +20,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-
     /**
      * @return array
      */
     public function indexAction()
     {
-        return [];
     }
 
     /**
@@ -41,19 +38,19 @@ class IndexController extends AbstractController
         $idParent = $request->get('idParent');
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setName($name);
-        $categoryId = $this->getFacade()->createCategory(
+        $idCategory = $this->getFacade()->createCategory(
             $categoryTransfer,
             $this->getDependencyContainer()->getCurrentLocale()
         );
         $nodeTransfer = new NodeTransfer();
-        $nodeTransfer->setFkCategory($categoryId);
+        $nodeTransfer->setFkCategory($idCategory);
         $nodeTransfer->setFkParentCategoryNode($idParent);
         $this->getFacade()->createCategoryNode(
             $nodeTransfer,
             $this->getDependencyContainer()->getCurrentLocale()
         );
 
-        return $categoryId;
+        return $idCategory;
     }
 
     /**
@@ -69,17 +66,26 @@ class IndexController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function getChildrenAction(Request $request)
     {
-        return json_encode($this->getFacade()->getChildren(
+        return $this->jsonResponse($this->getFacade()->getChildren(
             $request->get('id'),
             $this->getDependencyContainer()->getCurrentLocale()
         ));
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function getTreeNodesAction()
     {
         $tree = $this->getFacade()->getTreeAsArray($this->getDependencyContainer()->getCurrentLocale());
+
         return $this->jsonResponse($tree);
     }
 
@@ -96,5 +102,4 @@ class IndexController extends AbstractController
             }
         );
     }
-
 }

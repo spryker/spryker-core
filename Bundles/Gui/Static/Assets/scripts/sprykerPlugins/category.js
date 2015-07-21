@@ -5,7 +5,7 @@
 $(document).ready(function () {
     $(function() {
         $('#jstree_category').jstree({
-            'plugins': ['themes', 'checkbox', 'ui', 'crrm', 'wholerow'],
+            'plugins': ['themes', 'ui', 'crrm', 'wholerow'],
             'checkbox' : {
                 "keep_selected_style" : false
             },
@@ -34,11 +34,6 @@ $(document).ready(function () {
     });
     $('#jstree_category').on('changed.jstree', function (e, data) {
         console.log(data.selected);
-    });
-    $("#jstree_category").bind('loaded.jstree', function (event, data) {
-        if((data.inst._get_parent(data.rslt.obj)).length) {
-            data.inst._get_parent(data.rslt.obj).open_node(this, false);
-        }
     });
     $(function () {
         $("#createNodeBtn").click(function () {
