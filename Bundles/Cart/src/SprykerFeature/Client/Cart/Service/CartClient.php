@@ -89,7 +89,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $cartItemTransfer = $this->mergeCartItems(
             $cartItemTransfer,
-            $this->getItemByIdentifier($cartItemTransfer->getId())
+            $this->getItemByIdentifier($cartItemTransfer->getSku())
         );
 
         $changeTransfer = $this->prepareCartChange($cartItemTransfer);
@@ -110,7 +110,7 @@ class CartClient extends AbstractClient implements CartClientInterface
         $cartTransfer = $this->getCart();
 
         foreach ($cartTransfer->getItems() as $cartItemTransfer) {
-            if ($cartItemTransfer->getId() === $identifier) {
+            if ($cartItemTransfer->getSku() === $identifier) {
                 return $cartItemTransfer;
             }
         }
@@ -130,7 +130,7 @@ class CartClient extends AbstractClient implements CartClientInterface
             return $this->removeItem($cartItemTransfer);
         }
 
-        $cartItemTransfer = $this->getItemByIdentifier($cartItemTransfer->getId());
+        $cartItemTransfer = $this->getItemByIdentifier($cartItemTransfer->getSku());
         if ($cartItemTransfer->getQuantity() > $quantity) {
             return $this->decreaseItemQuantity($cartItemTransfer, $quantity);
         } else {
@@ -259,7 +259,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $cartItemTransfer = $this->mergeCartItems(
             $cartItemTransfer,
-            $this->getItemByIdentifier($cartItemTransfer->getId())
+            $this->getItemByIdentifier($cartItemTransfer->getSku())
         );
 
         $cartItemTransfer->setQuantity($quantity);
