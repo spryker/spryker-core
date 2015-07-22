@@ -15,6 +15,11 @@ use SprykerFeature\Zed\Product\Business\ProductFacade;
 class CartItemAbstractSkuPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
 
+    /**
+     * @param ChangeInterface $change
+     *
+     * @return ChangeInterface
+     */
     public function expandItems(ChangeInterface $change)
     {
         $facadeProduct = $this->getProductFacade();
