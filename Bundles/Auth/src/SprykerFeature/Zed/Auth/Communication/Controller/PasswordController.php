@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Auth\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Auth\Communication\AuthDependencyContainer;
+use SprykerFeature\Zed\Auth\Communication\Form\ResetPasswordForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,11 +34,11 @@ class PasswordController extends AbstractController
 
         $message = $messageType = null;
 
-        if ($request->isMethod('POST') && $form->isValid()) {
+        if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {
             // @todo implement resetPassword in AuthFacade
 //            $formData = $form->getData();
 //            $facade = $this->getDependencyContainer()->locateAuthFacade();
-//            if ($facade->resetPassword($formData['email'])) {
+//            if ($facade->resetPassword($formData[ResetPasswordForm::EMAIL])) {
 //                $message = 'Password sent on email';
 //                $messageType = 'success';
 //            } else {

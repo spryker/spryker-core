@@ -43,9 +43,7 @@ class AuthDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createLoginForm(Request $request)
     {
-        return $this->getFactory()->createFormLoginForm(
-            $request
-        );
+        return $this->getFactory()->createFormLoginForm();
     }
 
     /**
@@ -55,9 +53,7 @@ class AuthDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createResetPasswordForm(Request $request)
     {
-        return $this->getFactory()->createFormResetPasswordForm(
-            $request
-        );
+        return $this->getFactory()->createFormResetPasswordForm();
     }
 
 }

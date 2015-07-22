@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Auth\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Shared\Auth\Messages\Messages;
 use SprykerFeature\Zed\Auth\Communication\AuthDependencyContainer;
+use SprykerFeature\Zed\Auth\Communication\Form\LoginForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,12 +34,12 @@ class LoginController extends AbstractController
 
         $error = null;
 
-        if ($request->isMethod('POST') && $form->isValid()) {
+        if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {
             $formData = $form->getData();
 
             $isLogged = $this->getDependencyContainer()
                 ->locateAuthFacade()
-                ->login($formData['username'], $formData['password'])
+                ->login($formData[LoginForm::USERNAME], $formData[LoginForm::PASSWORD])
             ;
 
             if (true === $isLogged) {

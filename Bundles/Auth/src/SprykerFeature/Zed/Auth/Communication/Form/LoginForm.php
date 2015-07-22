@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Auth\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class LoginForm extends AbstractForm
