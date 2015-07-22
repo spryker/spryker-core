@@ -21,12 +21,12 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 {
 
     /**
-     * @var $priceCalculationHelper PriceCalculationHelperInterface
+     * @var PriceCalculationHelperInterface
      */
     protected $priceCalculationHelper;
 
     /**
-     * @var $calculatedTaxSets TaxSetInterface[]
+     * @var TaxSetInterface[]
      */
     private $calculatedTaxSets = [];
 
