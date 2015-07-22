@@ -43,13 +43,13 @@ class ProductOptionManager implements ProductOptionManagerInterface
     {
         foreach ($cartItem->getProductOptions() as &$productOption) {
 
-            if (null === $productOption->getIdOptionValueUsage() || null ===  $productOption->getLocalCode()) {
+            if (null === $productOption->getIdOptionValueUsage() || null ===  $productOption->getLocaleCode()) {
                 throw new \RuntimeException('Unable to expand product option. Missing required values: idOptionValueUsage, localeCode');
             }
 
             $productOption = $this->productOptionFacade->getProductOption(
                 $productOption->getIdOptionValueUsage(),
-                $productOption->getLocalCode()
+                $productOption->getLocaleCode()
             );
 
         }
