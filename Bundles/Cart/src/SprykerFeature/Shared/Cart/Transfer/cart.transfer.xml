@@ -25,6 +25,7 @@
     <transfer name="CartItem">
         <property name="id" type="int" />
         <property name="sku" type="string" />
+        <property name="abstractSku" type="string" />
         <property name="uniqueIdentifier" type="string" />
         <property name="name" type="string" />
         <property name="options" type="OrderItemOption[]" singular="option" />
