@@ -92,7 +92,7 @@ class AddressController extends AbstractController
     public function editAction(Request $request)
     {
         $idCustomer = false;
-        $idCustomerAddress = $request->get('id_customer_address');
+        $idCustomerAddress = intval($request->get('id_customer_address'));
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
@@ -100,6 +100,7 @@ class AddressController extends AbstractController
         $addressDetails = $this->getFacade()
             ->getAddress($customerAddress)
         ;
+
         if (false === empty($addressDetails)) {
             $idCustomer = $addressDetails->getFkCustomer();
         }

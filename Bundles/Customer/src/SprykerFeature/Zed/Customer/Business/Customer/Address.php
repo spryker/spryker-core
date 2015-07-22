@@ -92,9 +92,7 @@ class Address
      */
     public function getAddress(CustomerAddressTransfer $addressTransfer)
     {
-        $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
-
-        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
+        $entity = $this->queryContainer->queryAddress($addressTransfer->getIdCustomerAddress())
             ->findOne()
         ;
 
