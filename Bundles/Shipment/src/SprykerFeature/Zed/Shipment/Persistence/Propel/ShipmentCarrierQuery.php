@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Shipment\Persistence\Propel;
 
-use SprykerFeature\Zed\Shipment\Persistence\Propel\Base\SpyShipmentCarrier as BaseSpyShipmentCarrier;
+use SprykerFeature\Zed\Shipment\Persistence\Propel\Base\ShipmentCarrierQuery as BaseShipmentCarrierQuery;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_shipment_carrier' table.
+ * Skeleton subclass for performing query and update operations on the 'spy_shipment_carrier' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use SprykerFeature\Zed\Shipment\Persistence\Propel\Base\SpyShipmentCarrier as Ba
  * long as it does not already exist in the output directory.
  *
  */
-class SpyShipmentCarrier extends BaseSpyShipmentCarrier
+class ShipmentCarrierQuery extends BaseShipmentCarrierQuery
 {
 
 }
