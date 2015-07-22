@@ -147,4 +147,12 @@ interface ProductManagerInterface
      */
     public function getAbstractProductIdByConcreteSku($sku);
 
+    /**
+     * @param string $sku
+     *
+     * @return string
+     * @throws MissingProductException
+     */
+    public function getAbstractSkuFromConcreteProduct($sku);
+
 }
