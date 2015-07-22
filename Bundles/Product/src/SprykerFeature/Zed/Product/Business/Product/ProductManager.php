@@ -463,6 +463,12 @@ class ProductManager implements ProductManagerInterface
         return $effectiveTaxRate;
     }
 
+
+    public function getTaxSetForConcreteProduct($sku)
+    {
+
+    }
+
     /**
      * @param string $sku
      *
