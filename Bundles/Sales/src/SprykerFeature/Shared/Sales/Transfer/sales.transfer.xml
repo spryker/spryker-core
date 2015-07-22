@@ -82,7 +82,7 @@
         <property name="uniqueIdentifier" type="string" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
-        <property name="tax" type="TaxItem" />
+        <property name="taxSet" type="TaxSet" />
         <property name="quantity" type="int" />
         <property name="discounts" type="Discount[]" singular="discount" />
         <property name="options" type="OrderItemOption[]" singular="option" />
@@ -103,7 +103,7 @@
         <property name="description" type="string" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
-        <property name="tax" type="Tax" />
+        <property name="taxSet" type="TaxSet" />
         <property name="type" type="string" />
         <property name="discounts" type="Discount[]" singular="discount" />
     </transfer>

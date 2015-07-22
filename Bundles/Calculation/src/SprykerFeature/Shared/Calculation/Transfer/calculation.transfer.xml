@@ -32,7 +32,7 @@
         <property name="type" type="string" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
-        <property name="tax" type="TaxItem" />
+        <property name="taxSet" type="TaxSet" />
         <property name="name" type="string" />
         <property name="discounts" type="Discount[]" singular="discountItem" />
     </transfer>
@@ -48,14 +48,20 @@
         <property name="priceToPay" type="int" />
     </transfer>
 
-    <transfer name="Tax">
-        <property name="totalAmount" type="int" />
-        <property name="taxRates" type="TaxItem[]" singular="taxRate" />
+    <transfer name="TaxTotal">
+        <property name="taxSets" type="TaxSet[]" singular="taxSet" />
+        <property name="amount" type="int" />
     </transfer>
 
-    <transfer name="TaxItem">
-        <property name="percentage" type="string" />
+    <transfer name="TaxSet">
+        <property name="idTaxSet" type="int" />
+        <property name="taxRates" type="TaxRate[]" singular="taxRate" />
         <property name="amount" type="int" />
+    </transfer>
+
+    <transfer name="TaxRate">
+        <property name="idTaxRate" type="int" />
+        <property name="rate" type="int" />
     </transfer>
 
     <transfer name="Totals">
@@ -63,9 +69,16 @@
         <property name="subtotalWithoutItemExpenses" type="int" />
         <property name="expenses" type="ExpenseTotals[]" />
         <property name="discount" type="DiscountTotals" />
-        <property name="tax" type="Tax" />
+        <property name="taxTotal" type="TaxTotal" />
         <property name="grandTotalWithDiscounts" type="int" />
         <property name="grandTotal" type="int" />
+    </transfer>
+
+    <transfer name="Cart">
+        <property name="discounts" type="Discount[]" singular="discount" />
+        <property name="totals" type="Totals" />
+        <property name="expenses" type="Expense[]" singular="expense" />
+        <property name="items" type="CartItem[]"  singular="item" />
     </transfer>
 
     <transfer name="Order">
@@ -73,6 +86,21 @@
         <property name="totals" type="Totals" />
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="items" type="OrderItem[]"  singular="item" />
+    </transfer>
+
+
+    <transfer name="OrderItem">
+        <property name="grossPrice" type="int" />
+        <property name="priceToPay" type="int" />
+        <property name="taxSet" type="TaxSet" />
+        <property name="expenses" type="Expense[]" singular="expense" />
+    </transfer>
+
+    <transfer name="CartItem">
+        <property name="grossPrice" type="int" />
+        <property name="priceToPay" type="int" />
+        <property name="taxSet" type="TaxSet" />
+        <property name="expenses" type="Expense[]" singular="expense" />
     </transfer>
 
     <transfer name="OrderItemOption">

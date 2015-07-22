@@ -6,7 +6,7 @@
     <transfer name="Cart">
         <property name="items" type="CartItem[]" singular="item" />
         <property name="totals" type="Totals" />
-        <property name="expenses" type="Expense[]" />
+        <property name="expenses" type="Expense[]" singular="expense" />
         <property name="discounts" type="Discount[]" singular="discount" />
         <property name="couponCodes" type="array" singular="couponCode" />
     </transfer>
@@ -31,9 +31,9 @@
         <property name="quantity" type="int" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
-        <property name="tax" type="TaxItem" />
-        <property name="expenses" type="Expense[]" />
-        <property name="discounts" type="Discount[]" />
+        <property name="taxSet" type="TaxSet" />
+        <property name="expenses" type="Expense[]" singular="expense" />
+        <property name="discounts" type="Discount[]"  singular="discount" />
     </transfer>
 
     <transfer name="StepStorage">
