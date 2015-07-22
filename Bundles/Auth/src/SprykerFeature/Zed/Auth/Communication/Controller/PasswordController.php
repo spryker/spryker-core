@@ -24,22 +24,33 @@ class PasswordController extends AbstractController
      */
     public function resetAction(Request $request)
     {
-        $facade = $this->getDependencyContainer()->locateAuthFacade();
 
-        $form = $this->getDependencyContainer()->createResetPasswordForm($request);
-        $form->init();
+        $form = $this->getDependencyContainer()
+            ->createResetPasswordForm($request)
+            ->init()
+        ;
+        $form->handleRequest();
 
-        $formData = $form->getRequestData();
+        $message = $messageType = null;
 
-        if ($form->isValid()) {
-//            if ($facade->resetPassword($formData['username'])) {
-                return $this->jsonResponse([], 200, [
-                    'Spy-Location' => '/',
-                ]);
+        if ($request->isMethod('POST') && $form->isValid()) {
+            // @todo implement resetPassword in AuthFacade
+//            $formData = $form->getData();
+//            $facade = $this->getDependencyContainer()->locateAuthFacade();
+//            if ($facade->resetPassword($formData['email'])) {
+//                $message = 'Password sent on email';
+//                $messageType = 'success';
+//            } else {
+                $message = 'User not found';
+                $messageType = 'error';
 //            }
         }
 
-        return $this->jsonResponse($form->toArray(), 400);
+        return $this->viewResponse([
+            'form' => $form->createView(),
+            'message' => $message,
+            'messageType' => $messageType,
+        ]);
     }
 
 }

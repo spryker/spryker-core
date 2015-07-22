@@ -1,0 +1,22 @@
+{% extends '@Auth/Layout/layout.twig' %}
+
+{% form_theme form '@Auth/Layout/form.twig' %}
+
+{% block body_header %}{% endblock %}
+{% block body_menu %}{% endblock %}
+
+{% block content %}
+
+    {% if message is not empty %}
+        <div class="form-group has-{{ messageType }}">
+                <span class="help-block">
+                    <ul class="list-unstyled">
+                        <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ message | trans }}</li>
+                    </ul>
+                </span>
+        </div>
+    {% endif %}
+
+    {{ form(form) }}
+
+{% endblock %}

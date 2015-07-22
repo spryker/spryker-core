@@ -1,35 +1,43 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Auth/Layout/layout.twig' %}
 
-
-{% block head_css %}
-    <link rel="stylesheet" type="text/css" href="{{ staticPath('Auth/styles/bundle.css') }}">
-{% endblock %}
-
-
-{% block body_header %}{% endblock %}
-{% block body_menu   %}{% endblock %}
-
-
-{% block body_class %}spy-login{% endblock %}
-
+{% form_theme form '@Auth/Layout/form.twig' %}
 
 {% block content %}
-    <h1>Spryker</h1>
-    <h2>Commerce Framework</h2>
 
-    <section spy-app="spyForm">
-        <spy-form model="{{ form }}" src="/auth/login/check">
-            <div spy-input-text="field.username" options="{ placeholder : 'Username' }"></div>
+    {{ form_start(form) }}
 
-            <div class="pw">
-                <div spy-input-password="field.password" options="{ placeholder : 'Password' }"></div>
-
-                <a class="button" href="/auth/password/reset">Forgot?</a>
+        {% if error is not empty %}
+            <div class="form-group has-error">
+                <span class="help-block">
+                    <ul class="list-unstyled">
+                        <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error | trans }}</li>
+                    </ul>
+                </span>
             </div>
+        {% endif %}
 
-            <div class="spy-layout buttons">
-                <button class="button" ng-disabled="!field.username.value || !field.password.value || query" ng-click="update()">Login</button>
-            </div>
-        </spy-form>
-    </section>
+        {{ form_errors(form) }}
+
+        {{ form_row(form.username) }}
+        {{ form_row(form.password) }}
+
+        {{ form_row(form.submit) }}
+
+        {{ form_rest(form) }}
+
+    {{ form_end(form) }}
+
+    {#<spy-form model="{{ form }}" src="/auth/login/check">#}
+        {#<div spy-input-text="field.username" options="{ placeholder : 'Username' }"></div>#}
+
+        {#<div class="pw">#}
+            {#<div spy-input-password="field.password" options="{ placeholder : 'Password' }"></div>#}
+
+            {#<a class="button" href="/auth/password/reset">Forgot?</a>#}
+        {#</div>#}
+
+        {#<div class="spy-layout buttons">#}
+            {#<button class="button" ng-disabled="!field.username.value || !field.password.value || query" ng-click="update()">Login</button>#}
+        {#</div>#}
+    {#</spy-form>#}
 {% endblock %}

@@ -25,49 +25,33 @@ class LoginController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createLoginForm($request);
+        $form = $this->getDependencyContainer()
+            ->createLoginForm($request)
+            ->init()
+        ;
+        $form->handleRequest();
 
-        $form->init();
+        $error = null;
+
+        if ($request->isMethod('POST') && $form->isValid()) {
+            $formData = $form->getData();
+
+            $isLogged = $this->getDependencyContainer()
+                ->locateAuthFacade()
+                ->login($formData['username'], $formData['password'])
+            ;
+
+            if (true === $isLogged) {
+                return $this->redirectResponse('/');
+            } else {
+                $error = 'Authentication failed';
+            }
+        }
 
         return $this->viewResponse([
-            'form' => json_encode($form->toArray()),
+            'form' => $form->createView(),
+            'error' => $error,
         ]);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function checkAction(Request $request)
-    {
-        $statusCode = 401;
-        $headers = [];
-
-        $facade = $this->getDependencyContainer()->locateAuthFacade();
-
-        $form = $this->getDependencyContainer()->createLoginForm($request);
-        $form->init();
-
-        $formData = $form->getRequestData();
-
-        if (false === $form->isValid()) {
-            return $this->jsonResponse($form->toArray(), $statusCode, $headers);
-        }
-
-        //Business logic validation
-        $isLogged = $facade->login($formData['username'], $formData['password']);
-        $response = $form->toArray();
-
-        if (true === $isLogged) {
-            $statusCode = 200;
-            $headers['Spy-Location'] = '/';
-        } else {
-            $response['fields'][0]['messages'][] = Messages::ERROR_LOGIN_NOT_FOUND;
-            $statusCode = 401;
-        }
-
-        return $this->jsonResponse(['content' => $response], $statusCode, $headers);
     }
 
 }
