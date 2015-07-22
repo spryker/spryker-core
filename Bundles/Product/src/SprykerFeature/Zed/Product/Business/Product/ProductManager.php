@@ -487,6 +487,29 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * @param string $sku
+     *
+     * @return string
+     * @throws MissingProductException
+     */
+    public function getAbstractSkuFromConcreteProduct($sku)
+    {
+        $concreteProduct = $this->productQueryContainer->queryConcreteProductBySku($sku)->findOne();
+
+        if (!$concreteProduct) {
+            throw new MissingProductException(
+                sprintf(
+                    'Tried to retrieve a concrete product with sku %s, but it does not exist.',
+                    $sku
+                )
+            );
+        }
+
+        return $concreteProduct->getSpyAbstractProduct()->getSku();
+    }
+
+
+    /**
      * @param array $attributes
      *
      * @return string
