@@ -7,8 +7,6 @@ namespace SprykerFeature\Zed\Glossary\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Glossary\Communication\Form\KeyForm;
 use SprykerFeature\Zed\Glossary\Communication\Form\TranslationForm;
 use SprykerFeature\Zed\Glossary\Communication\Table\KeyTable;
 use SprykerFeature\Zed\Glossary\Communication\Table\TranslationTable;
