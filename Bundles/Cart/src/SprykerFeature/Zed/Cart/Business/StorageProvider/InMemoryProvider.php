@@ -118,7 +118,9 @@ class InMemoryProvider implements StorageProviderInterface
         $cartIndex = [];
 
         foreach ($cartItems as $key => $cartItem) {
-            $cartIndex[$cartItem->getGroupKey()] = $key;
+            if (!empty($cartItem->getGroupKey())) {
+                $cartIndex[$cartItem->getGroupKey()] = $key;
+            }
         }
 
         return $cartIndex;

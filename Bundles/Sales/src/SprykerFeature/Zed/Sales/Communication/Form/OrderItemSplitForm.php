@@ -29,9 +29,6 @@ class OrderItemSplitForm extends AbstractForm
                         'pattern' => '/^[0-9]+$/',
                         'message' => 'Please provide numeric value'
                     ])
-                ],
-                'attr' => [
-                    'size' => 10
                 ]
             ]
         )

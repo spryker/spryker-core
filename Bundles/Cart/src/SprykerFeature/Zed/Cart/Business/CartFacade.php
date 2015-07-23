@@ -17,7 +17,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class CartFacade extends AbstractFacade
 {
-
     /**
      * @param ChangeInterface $cartChange
      *
@@ -77,17 +76,4 @@ class CartFacade extends AbstractFacade
 
         return $calculator->recalculate($cart);
     }
-
-    /**
-     * @param GroupKeyParameterInterface $cartItem
-     *
-     * @return string
-     */
-    public function buildGroupKey(GroupKeyParameterInterface $cartItem)
-    {
-        $keyBuilder = $this->getDependencyContainer()->createCartGroupingKeyBuilder();
-
-        return $keyBuilder->build($cartItem);
-    }
-
 }

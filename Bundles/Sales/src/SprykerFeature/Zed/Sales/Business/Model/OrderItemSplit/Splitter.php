@@ -123,13 +123,13 @@ class Splitter
         Persistence\Propel\SpySalesOrderItem $copyOfSalesOrderItem
     ) {
 
-        $splitOrderItemOption = $salesOrderItemOption->copy(false);
+        $copyOfOrderItemOption = $salesOrderItemOption->copy(false);
 
-        $splitOrderItemOption->setCreatedAt(new \DateTime());
-        $splitOrderItemOption->setFkSalesOrderItem($copyOfSalesOrderItem->getIdSalesOrderItem());
-        $splitOrderItemOption->save();
+        $copyOfOrderItemOption->setCreatedAt(new \DateTime());
+        $copyOfOrderItemOption->setFkSalesOrderItem($copyOfSalesOrderItem->getIdSalesOrderItem());
+        $copyOfOrderItemOption->save();
 
-        return $splitOrderItemOption;
+        return $copyOfOrderItemOption;
     }
 
     /**

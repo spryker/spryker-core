@@ -51,10 +51,5 @@
         <property name="isSuccess" type="string" />
     </transfer>
 
-    <transfer name="GroupKeyParameter">
-        <property name="sku" type="string" />
-        <property name="name" type="string" />
-    </transfer>
-
 </transfers>
 

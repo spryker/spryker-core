@@ -15,12 +15,12 @@ class CartConfig extends AbstractBundleConfig
     /**
      * @return ItemExpanderPluginInterface[]
      */
-    public function getItemExpanderPlugins()
+    public function getCartItemPlugins()
     {
         return [
             $this->getLocator()->cart()->pluginProductIdPlugin(),
             $this->getLocator()->cart()->pluginCartItemAbstractSkuPlugin(),
+            $this->getLocator()->cart()->pluginSkuGroupKeyPlugin(),
         ];
     }
-
 }

@@ -107,21 +107,10 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $bundleConfig = $this->getConfig();
 
-        foreach ($bundleConfig->getItemExpanderPlugins() as $itemExpanderPlugin) {
+        foreach ($bundleConfig->getCartItemPlugins() as $itemExpanderPlugin) {
             $operator->addItemExpanderPlugin($itemExpanderPlugin);
         }
 
         return $operator;
     }
-
-    /**
-     * @return Model\ItemGrouping\KeyBuilder
-     */
-    public function createCartGroupingKeyBuilder()
-    {
-        $bundleConfig = $this->getConfig();
-
-        return $this->getFactory()->createModelItemGroupingKeyBuilder($bundleConfig->getKeyBuilderPlugins());
-    }
-
 }
