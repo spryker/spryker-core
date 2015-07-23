@@ -1,11 +1,9 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: andreyorsoev
- * Date: 09/07/15
- * Time: 14:01
+ * (c) Spryker Systems GmbH copyright protected
  */
+
 
 namespace SprykerFeature\Zed\Gui\Communication\Form\Type;
 
@@ -14,9 +12,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-/**
- * Class AutosuggestType
- */
 class AutosuggestType extends AbstractType
 {
 

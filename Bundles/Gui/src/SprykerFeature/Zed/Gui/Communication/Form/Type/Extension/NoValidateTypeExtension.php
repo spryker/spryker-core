@@ -6,9 +6,6 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
-/**
- * Class NoValidateType
- */
 class NoValidateTypeExtension extends AbstractTypeExtension
 {
 
