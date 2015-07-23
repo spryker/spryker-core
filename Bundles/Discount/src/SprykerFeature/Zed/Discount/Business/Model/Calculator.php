@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use Generated\Shared\Discount\OrderInterface;

@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Discount;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Zed\Discount\Business\Collector\CollectorInterface;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
-use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use SprykerFeature\Zed\Discount\Business\Model\CalculatorInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
