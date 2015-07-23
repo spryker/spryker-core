@@ -32,7 +32,8 @@ class AjaxController extends AbstractController
             ->createQueryContainer()
             ->queryActiveKeysByNameForAjax('%' . $term . '%')
             ->find()
-            ->toArray();
+            ->toArray()
+        ;
 
         return new JsonResponse($keys);
     }
