@@ -10,7 +10,7 @@
         data-page-length="{{ config.pageLength }}"
     {%  endif %}
     data-columns='[
-    {% for id, value in config.headers %}
+    {% for id, value in config.header %}
         {% if id in config.sortable %}
         { "orderable": true }
         {% else %}

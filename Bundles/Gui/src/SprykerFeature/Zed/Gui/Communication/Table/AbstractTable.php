@@ -64,7 +64,8 @@ abstract class AbstractTable
         $this->locator = Locator::getInstance();
         $this->request = $this->locator->application()
             ->pluginPimple()
-            ->getApplication()['request'];
+            ->getApplication()['request']
+        ;
         $config = $this->newTableConfiguration();
         $config->setPageLength($this->getLimit());
         $config = $this->configure($config);
@@ -286,7 +287,7 @@ abstract class AbstractTable
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
                 'tableId' => $this->getTableIdentifier(),
-                'headers' => $this->config->getHeader(),
+                'header' => $this->config->getHeader(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
