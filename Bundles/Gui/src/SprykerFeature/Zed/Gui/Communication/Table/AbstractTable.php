@@ -108,7 +108,7 @@ abstract class AbstractTable
     {
         $tableData = [];
 
-        $headers = $this->config->getHeaders();
+        $headers = $this->config->getHeader();
         $isArray = (true === is_array($headers));
         foreach ($data as $row) {
             if ($isArray) {
@@ -286,7 +286,7 @@ abstract class AbstractTable
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
                 'tableId' => $this->getTableIdentifier(),
-                'headers' => $this->config->getHeaders(),
+                'header' => $this->config->getHeader(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
@@ -313,7 +313,7 @@ abstract class AbstractTable
         $limit = $config->getPageLength();
         $offset = $this->getOffset();
         $order = $this->getOrders();
-        $columns = array_keys($config->getHeaders());
+        $columns = array_keys($config->getHeader());
         $orderColumn = $columns[$order[0]['column']];
         $this->total = $query->count();
         $query->orderBy($orderColumn, $order[0]['dir']);
