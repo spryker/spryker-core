@@ -32,7 +32,7 @@ class LoginController extends AbstractController
         ;
         $form->handleRequest();
 
-        $error = null;
+        $message = null;
 
         if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {
             $formData = $form->getData();
@@ -45,13 +45,13 @@ class LoginController extends AbstractController
             if (true === $isLogged) {
                 return $this->redirectResponse('/');
             } else {
-                $error = 'Authentication failed';
+                $message = 'Authentication failed';
             }
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'error' => $error,
+            'message' => $message,
         ]);
     }
 

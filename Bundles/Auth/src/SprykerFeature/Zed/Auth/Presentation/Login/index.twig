@@ -6,15 +6,7 @@
 
     {{ form_start(form) }}
 
-        {% if error is not empty %}
-            <div class="form-group has-error">
-                <span class="help-block">
-                    <ul class="list-unstyled">
-                        <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error | trans }}</li>
-                    </ul>
-                </span>
-            </div>
-        {% endif %}
+        {% include '@Auth/Partial/form-message.twig' %}
 
         {{ form_errors(form) }}
 

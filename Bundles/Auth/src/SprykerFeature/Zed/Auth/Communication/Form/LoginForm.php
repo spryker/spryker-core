@@ -16,8 +16,6 @@ class LoginForm extends AbstractForm
     const SUBMIT = 'submit';
 
     /**
-     * Prepares form
-     *
      * @return $this
      */
     protected function buildFormFields()
@@ -46,8 +44,6 @@ class LoginForm extends AbstractForm
     }
 
     /**
-     * Set the values for fields
-     *
      * @return $this
      */
     protected function populateFormFields()

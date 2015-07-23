@@ -36,15 +36,15 @@ class PasswordController extends AbstractController
 
         if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {
             // @todo implement resetPassword in AuthFacade
-//            $formData = $form->getData();
-//            $facade = $this->getDependencyContainer()->locateAuthFacade();
-//            if ($facade->resetPassword($formData[ResetPasswordForm::EMAIL])) {
-//                $message = 'Password sent on email';
-//                $messageType = 'success';
-//            } else {
+            $formData = $form->getData();
+            $facade = $this->getDependencyContainer()->locateAuthFacade();
+            if ($facade->resetPassword($formData[ResetPasswordForm::EMAIL])) {
+                $message = 'Password sent on email';
+                $messageType = 'success';
+            } else {
                 $message = 'User not found';
                 $messageType = 'error';
-//            }
+            }
         }
 
         return $this->viewResponse([
