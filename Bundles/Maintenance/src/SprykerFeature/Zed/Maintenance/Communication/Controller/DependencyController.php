@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,7 +27,7 @@ class DependencyController extends AbstractController
 
         return $this->viewResponse([
             'bundle' => $bundleName,
-            'dependencies' => $dependencies
+            'dependencies' => $dependencies,
         ]);
     }
 
@@ -38,7 +39,7 @@ class DependencyController extends AbstractController
 
         return $this->viewResponse([
             'bundle' => $bundleName,
-            'dependencies' => $dependencies
+            'dependencies' => $dependencies,
         ]);
     }
 
@@ -47,8 +48,7 @@ class DependencyController extends AbstractController
         $bundleName = $request->query->get('bundle', 'Glossary');
         $response = $this->getFacade()->drawDependencyGraph($bundleName);
 
-
-        $callback = function() use ($response) {
+        $callback = function () use ($response) {
             echo $response;
         };
 

@@ -33,17 +33,17 @@ class TransferGeneratorTest extends Test
 
     public function tearDown()
     {
-        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
-        $testFiles = [
-            'Project/FooBarInterface.php',
-            'Vendor/FooBarInterface.php',
-        ];
-
-        foreach ($testFiles as $testFile) {
-            if (file_exists($targetDirectory . $testFile)) {
-                unlink($targetDirectory . $testFile);
-            }
-        }
+//        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
+//        $testFiles = [
+//            'Project/FooBarInterface.php',
+//            'Vendor/FooBarInterface.php',
+//        ];
+//
+//        foreach ($testFiles as $testFile) {
+//            if (file_exists($targetDirectory . $testFile)) {
+//                unlink($targetDirectory . $testFile);
+//            }
+//        }
     }
 
     public function testExecuteShouldGenerateExpectedTransfer()
@@ -112,8 +112,7 @@ class TransferGeneratorTest extends Test
         $generator = new InterfaceGenerator($targetDirectory);
 
         $sourceDirectories = [
-            __DIR__ . '/Fixtures/Project/',
-            __DIR__ . '/Fixtures/Vendor/',
+            __DIR__ . '/Fixtures/',
         ];
 
         $normalizer = new DefinitionNormalizer();

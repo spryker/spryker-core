@@ -1,30 +1,29 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Gui\Communication\Form;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
-use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Acl\Tests\Domain\AuditLoggerTest;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
-use Symfony\Component\Form\FormErrorIterator;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * Class AbstractForm
- * @package SprykerFeature\Zed\Gui\Communication\Form
- */
 abstract class AbstractForm
 {
+
     /**
      * @var Form
      */
-    protected $form = null;
+    protected $form;
 
     /**
      * @var Request
@@ -36,8 +35,10 @@ abstract class AbstractForm
      */
     private $formFactory;
 
+    /**
+     * @var string
+     */
     protected $defaultDataType;
-
 
     /**
      * Prepares form
@@ -71,7 +72,12 @@ abstract class AbstractForm
         return $this;
     }
 
-    public function setDefaultDataType($type=null)
+    /**
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setDefaultDataType($type = null)
     {
         $this->defaultDataType = $type;
 
@@ -97,8 +103,7 @@ abstract class AbstractForm
     public function init()
     {
         $this->injectDependencies()
-            ->buildFormFields()
-        ;
+            ->buildFormFields();
 
         $data = $this->populateFormFields();
         $this->setData($data);
@@ -189,7 +194,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param string $name 
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -620,4 +625,5 @@ abstract class AbstractForm
 
         return $this;
     }
+
 }

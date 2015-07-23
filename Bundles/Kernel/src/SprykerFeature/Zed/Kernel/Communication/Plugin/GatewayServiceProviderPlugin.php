@@ -56,4 +56,5 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
             TransferServer::getInstance()->setRequest($request);
         });
     }
+
 }

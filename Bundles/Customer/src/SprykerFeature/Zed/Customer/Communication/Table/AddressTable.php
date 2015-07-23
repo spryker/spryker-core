@@ -56,7 +56,7 @@ class AddressTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeaders([
+        $config->setHeader([
             self::ID_CUSTOMER_ADDRESS => '#',
             self::LAST_NAME => 'Last Name',
             self::FIRST_NAME => 'First Name',

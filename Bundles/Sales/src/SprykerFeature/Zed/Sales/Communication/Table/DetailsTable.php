@@ -1,4 +1,5 @@
 <?php
+
 namespace SprykerFeature\Zed\Sales\Communication\Table;
 
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
@@ -16,8 +17,8 @@ class DetailsTable extends AbstractTable
         $this->loadObjectCollection($data);
 
         $config = new TableConfiguration();
-        $config->setHeaders([
-            'header1' => 'First header'
+        $config->setHeader([
+            'header1' => 'First header',
         ]);
 
         $config->setSortable(['header1']);
@@ -35,4 +36,5 @@ class DetailsTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
     }
+
 }

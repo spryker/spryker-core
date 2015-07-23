@@ -1,4 +1,5 @@
 <?php
+
 namespace SprykerFeature\Zed\Country\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
@@ -7,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController extends AbstractController
 {
+
     /**
      * @return array
      */
@@ -17,7 +19,7 @@ class IndexController extends AbstractController
         $table->init();
 
         return $this->viewResponse([
-            'countryTable' => $table
+            'countryTable' => $table,
         ]);
     }
 
@@ -33,4 +35,5 @@ class IndexController extends AbstractController
             $table->fetchData()
         );
     }
+
 }

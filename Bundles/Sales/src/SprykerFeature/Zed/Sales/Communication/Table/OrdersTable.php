@@ -36,7 +36,7 @@ class OrdersTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeaders([
+        $config->setHeader([
             self::ID_SALES_ORDER => 'Order ID',
             self::CREATED_AT => 'Timestamp',
             self::FK_CUSTOMER => 'Customer Id',

@@ -43,7 +43,7 @@ class CustomerTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeaders([
+        $config->setHeader([
             self::ID_CUSTOMER => '#',
             self::CREATED_AT => 'Registration Date',
             self::EMAIL => self::EMAIL,

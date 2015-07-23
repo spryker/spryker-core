@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,17 +10,17 @@ class TableConfiguration
 {
 
     /**
-     * @var
+     * @var string
      */
     protected $url;
 
     /**
      * @var array
      */
-    private $headers;
+    private $header;
 
     /**
-     * @var
+     * @var int
      */
     private $pageLength;
 
@@ -38,19 +39,18 @@ class TableConfiguration
      */
     public function getHeaders()
     {
-        return $this->headers;
+        return $this->header;
     }
 
     /**
      * @todo Zed Translation in Template
      *
-     * @param array $headers Provide php names for table columns
-     *                       if you are goin to user Propel Query as data population
+     * @param array $header
      */
-    public function setHeaders(array $headers)
+    public function setHeaders(array $header)
     {
-        if ($this->isAssoc($headers) === true) {
-            $this->headers = $headers;
+        if ($this->isAssoc($header) === true) {
+            $this->header = $header;
         }
     }
 
@@ -67,7 +67,7 @@ class TableConfiguration
      */
     public function setSortable(array $sortable)
     {
-        $this->sortableFields = array_intersect($sortable, array_keys($this->headers));
+        $this->sortableFields = array_intersect($sortable, array_keys($this->header));
     }
 
     /**
@@ -75,7 +75,7 @@ class TableConfiguration
      */
     public function getSearchable()
     {
-        return !empty($this->searchableFields) ? $this->searchableFields : array_keys($this->headers);
+        return !empty($this->searchableFields) ? $this->searchableFields : array_keys($this->header);
     }
 
     /**
@@ -95,7 +95,7 @@ class TableConfiguration
     }
 
     /**
-     * @param $length
+     * @param int $length
      */
     public function setPageLength($length)
     {
@@ -119,13 +119,13 @@ class TableConfiguration
     }
 
     /**
-     * @param array $arr
+     * @param array $array
      *
      * @return bool
      */
-    private function isAssoc(array $arr)
+    private function isAssoc(array $array)
     {
-        return (array_values($arr) !== $arr);
+        return (array_values($array) !== $array);
     }
 
 }

@@ -17,7 +17,6 @@ use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\Installed
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
 /**
@@ -109,6 +108,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $bundleParser = $this->createDependencyBundleParser();
         $manager = $this->createDependencyManager();
+
         return $this->getFactory()->createDependencyGraph($bundleParser, $manager);
     }
 
@@ -118,6 +118,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     public function createDependencyBundleParser()
     {
         $config = $this->getConfig();
+
         return $this->getFactory()->createDependencyBundleParser($config);
     }
 
@@ -127,6 +128,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     public function createDependencyManager()
     {
         $bundleParser = $this->createDependencyBundleParser();
+
         return $this->getFactory()->createDependencyManager($bundleParser);
     }
 

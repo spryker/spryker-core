@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -176,9 +177,11 @@ abstract class AbstractTable
     }
 
     /**
+     * @param string $prefix
+     *
      * @return $this
      */
-    protected function generateTableIdentifier($prefix='table-')
+    protected function generateTableIdentifier($prefix = 'table-')
     {
         $this->tableIdentifier = uniqid($prefix);
 
@@ -199,11 +202,11 @@ abstract class AbstractTable
      */
     private function getTwig()
     {
-
         /** @var \Twig_Environment $twig */
         $twig = $this->locator->application()
             ->pluginPimple()
-            ->getApplication()['twig'];
+            ->getApplication()['twig']
+        ;
 
         if ($twig === null) {
             throw new \LogicException('Twig environment not set up.');
@@ -272,7 +275,7 @@ abstract class AbstractTable
 
         return $this->getTwig()
             ->render('index.twig', $twigVars)
-            ;
+        ;
     }
 
     /**
@@ -321,8 +324,7 @@ abstract class AbstractTable
 
             $query->setIdentifierQuoting(true);
             $tableName = $query->getTableMap()
-                ->getName()
-            ;
+                ->getName();
 
             foreach ($config->getSearchable() as $value) {
                 if (!$isFirst) {
@@ -364,4 +366,5 @@ abstract class AbstractTable
 
         return $wrapperArray;
     }
+
 }

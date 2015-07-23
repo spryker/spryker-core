@@ -1,12 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
-
-use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PropelMethodTagBuilder extends ConstructableMethodTagBuilder
 {
