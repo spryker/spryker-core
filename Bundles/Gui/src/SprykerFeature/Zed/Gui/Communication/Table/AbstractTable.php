@@ -294,19 +294,19 @@ abstract class AbstractTable
      */
     public function prepareConfig()
     {
+        $configArray = [
+            'tableId' => $this->getTableIdentifier(),
+            'options' => $this->config->getTableOptions()->toArray(),
+            'url' => $this->defaultUrl,
+        ];
+
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
-                'tableId' => $this->getTableIdentifier(),
                 'header' => $this->config->getHeader(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
                 'url' => (true === is_null($this->config->getUrl())) ? $this->defaultUrl : $this->config->getUrl(),
-            ];
-        } else {
-            $configArray = [
-                'tableId' => 'table-' . md5(time()),
-                'url' => $this->defaultUrl,
             ];
         }
 

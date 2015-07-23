@@ -31,7 +31,7 @@ class OrdersTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeaders([
+        $config->setHeader([
             SpySalesOrderTableMap::COL_ID_SALES_ORDER => 'Order Id',
             SpySalesOrderTableMap::COL_CREATED_AT => 'Timestamp',
             SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer Id',

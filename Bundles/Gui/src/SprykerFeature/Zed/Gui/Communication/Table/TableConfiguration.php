@@ -34,6 +34,18 @@ class TableConfiguration
      */
     private $sortableFields;
 
+    private $tableOptions;
+
+    public function __construct()
+    {
+        $this->tableOptions = new TableOptions();
+    }
+
+    public function getTableOptions()
+    {
+        return $this->tableOptions;
+    }
+
     /**
      * @return array
      */
