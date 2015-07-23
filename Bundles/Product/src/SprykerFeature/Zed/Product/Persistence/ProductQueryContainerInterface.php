@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributesQ
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributesMetadataQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributeTypeQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
 
 interface ProductQueryContainerInterface
 {
@@ -25,6 +26,21 @@ interface ProductQueryContainerInterface
      * @return SpyProductQuery
      */
     public function getProductWithAttributeQuery($skus, LocaleTransfer $locale);
+
+    /**
+     * @param string $concreteSku
+     * @param int $idLocale
+     *
+     * @return SpyProductQuery
+     */
+    public function queryProductWithAttributesAndAbstractProduct($concreteSku, $idLocale);
+
+    /**
+     * @param $idAbstractProduct
+     *
+     * @return SpyTaxSetQuery
+     */
+    public function queryTaxSetForAbstractProduct($idAbstractProduct);
 
     /**
      * @param string $sku

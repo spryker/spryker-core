@@ -24,6 +24,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributesMetadataQu
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributeTypeQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
 
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {
@@ -50,6 +51,39 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             ->addAsColumn('name', SpyLocalizedProductAttributesTableMap::COL_NAME);
 
         return $query;
+    }
+
+    /**
+     * @param string $concreteSku
+     * @param int $idLocale
+     *
+     * @return SpyProductQuery
+     */
+    public function queryProductWithAttributesAndAbstractProduct($concreteSku, $idLocale)
+    {
+        $query = SpyProductQuery::create();
+
+        $query->filterBySku($concreteSku)
+            ->useSpyLocalizedProductAttributesQuery()
+                ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->useSpyAbstractProductQuery()
+            ->endUse();
+
+        return $query;
+    }
+
+    /**
+     * @param int $idAbstractProduct
+     *
+     * @return SpyTaxSetQuery
+     */
+    public function queryTaxSetForAbstractProduct($idAbstractProduct)
+    {
+        return SpyTaxSetQuery::create()
+            ->useSpyAbstractProductQuery()
+                ->filterByIdAbstractProduct($idAbstractProduct)
+            ->endUse();
     }
 
     /**

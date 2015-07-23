@@ -16,13 +16,27 @@ use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributes;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
 
 class ProductFacadeTest extends Test
 {
 
     const SKU_ABSTRACT_PRODUCT = 'Abstract product sku';
+
     const SKU_CONCRETE_PRODUCT = 'Concrete product sku';
+
+    const TAX_SET_NAME = 'Sales Tax';
+
+    const TAX_RATE_NAME = 'VAT';
+
+    const TAX_RATE_PERCENTAGE = 10;
+
+    const CONCRETE_PRODUCT_NAME = 'Concrete product name';
 
     /**
      * @var ProductFacade
@@ -272,6 +286,55 @@ class ProductFacadeTest extends Test
         $this->assertTrue($this->productFacade->hasConcreteProduct(self::SKU_CONCRETE_PRODUCT));
 
         $this->assertEquals($this->productFacade->getAbstractSkuFromConcreteProduct(self::SKU_CONCRETE_PRODUCT), self::SKU_ABSTRACT_PRODUCT);
+    }
+
+    /**
+     * @group Product
+     */
+    public function testGetConcreteProduct()
+    {
+        $localeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale();
+        $localeTransfer = $this->localeFacade->getLocale($localeName);
+
+        $taxRateEntity = new SpyTaxRate();
+        $taxRateEntity->setRate(self::TAX_RATE_PERCENTAGE)
+            ->setName(self::TAX_RATE_NAME);
+
+        $taxSetEntity = new SpyTaxSet();
+        $taxSetEntity->addSpyTaxRate($taxRateEntity)
+            ->setName(self::TAX_SET_NAME);
+
+        $abstractProductEntity = new SpyAbstractProduct();
+        $abstractProductEntity->setSpyTaxSet($taxSetEntity)
+            ->setAttributes('')
+            ->setSku(self::SKU_ABSTRACT_PRODUCT);
+
+        $localizedAttributesEntity = new SpyLocalizedProductAttributes();
+        $localizedAttributesEntity->setName(self::CONCRETE_PRODUCT_NAME)
+            ->setAttributes('')
+            ->setFkLocale($localeTransfer->getIdLocale());
+
+        $concreteProductEntity = new SpyProduct();
+        $concreteProductEntity->setSpyAbstractProduct($abstractProductEntity)
+            ->setAttributes('')
+            ->addSpyLocalizedProductAttributes($localizedAttributesEntity)
+            ->setSku(self::SKU_CONCRETE_PRODUCT)
+            ->save();
+
+        $concreteProductTransfer = $this->productFacade->getConcreteProduct($concreteProductEntity->getSku());
+        $this->assertEquals(self::CONCRETE_PRODUCT_NAME, $concreteProductTransfer->getName());
+        $this->assertEquals(self::SKU_CONCRETE_PRODUCT, $concreteProductTransfer->getSku());
+        $this->assertEquals(self::SKU_ABSTRACT_PRODUCT, $concreteProductTransfer->getAbstractProductSku());
+        $this->assertEquals($concreteProductEntity->getIdProduct(), $concreteProductTransfer->getIdConcreteProduct());
+        $this->assertEquals($abstractProductEntity->getIdAbstractProduct(), $concreteProductTransfer->getIdAbstractProduct());
+
+        $taxSetTransfer = $concreteProductTransfer->getTaxSet();
+        $this->assertEquals(self::TAX_SET_NAME, $taxSetTransfer->getName());
+
+        $this->assertNotEmpty($taxSetTransfer->getTaxRates());
+        $taxRateTransfer = $taxSetTransfer->getTaxRates()[0];
+        $this->assertEquals(self::TAX_RATE_NAME, $taxRateTransfer->getName());
+        $this->assertEquals(self::TAX_RATE_PERCENTAGE, $taxRateTransfer->getRate());
     }
 
 }

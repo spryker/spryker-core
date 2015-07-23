@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Product\Business\Product;
 
 use Generated\Shared\Product\AbstractProductInterface;
 use Generated\Shared\Product\ConcreteProductInterface;
+use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -18,16 +19,25 @@ use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductExistsException
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use SprykerFeature\Zed\Product\Dependency\Facade\ProductToUrlInterface;
+use SprykerFeature\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedAbstractProductAttributes;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributes;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
-use Zend\Stdlib\ArrayObject;
+use Generated\Shared\Transfer\TaxSetTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
 
 class ProductManager implements ProductManagerInterface
 {
+    const COL_ID_CONCRETE_PRODUCT = 'SpyProduct.IdProduct';
+
+    const COL_ABSTRACT_SKU = 'SpyAbstractProduct.Sku';
+
+    const COL_ID_ABSTRACT_PRODUCT = 'SpyAbstractProduct.IdAbstractProduct';
+
+    const COL_NAME = 'SpyLocalizedProductAttributes.Name';
 
     /**
      * @var ProductQueryContainerInterface
@@ -45,18 +55,26 @@ class ProductManager implements ProductManagerInterface
     protected $urlFacade;
 
     /**
+     * @var ProductToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param ProductQueryContainerInterface $productQueryContainer
      * @param ProductToTouchInterface $touchFacade
      * @param ProductToUrlInterface $urlFacade
+     * @param ProductToLocaleInterface $localeFacade
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         ProductToTouchInterface $touchFacade,
-        ProductToUrlInterface $urlFacade
+        ProductToUrlInterface $urlFacade,
+        ProductToLocaleInterface $localeFacade
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->urlFacade = $urlFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -464,9 +482,75 @@ class ProductManager implements ProductManagerInterface
     }
 
 
-    public function getTaxSetForConcreteProduct($sku)
-    {
 
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return ConcreteProductInterface
+     */
+    public function getConcreteProduct($concreteSku)
+    {
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
+
+        $concreteProduct = $this->productQueryContainer->queryProductWithAttributesAndAbstractProduct(
+            $concreteSku, $localeTransfer->getIdLocale()
+        )->select([
+            self::COL_ID_CONCRETE_PRODUCT,
+            self::COL_ABSTRACT_SKU,
+            self::COL_ID_ABSTRACT_PRODUCT,
+            self::COL_NAME
+        ])->findOne();
+
+        if (!$concreteProduct) {
+            throw new MissingProductException(
+                sprintf(
+                    'Tried to retrieve a concrete product with sku %s, but it does not exist.',
+                    $concreteSku
+                )
+            );
+        }
+
+        $concreteProductTransfer = new ConcreteProductTransfer();
+        $concreteProductTransfer->setSku($concreteSku)
+            ->setIdConcreteProduct($concreteProduct[self::COL_ID_CONCRETE_PRODUCT])
+            ->setAbstractProductSku($concreteProduct[self::COL_ABSTRACT_SKU])
+            ->setIdAbstractProduct($concreteProduct[self::COL_ID_ABSTRACT_PRODUCT])
+            ->setName($concreteProduct[self::COL_NAME]);
+
+        $this->addTaxesToProductTransfer($concreteProductTransfer);
+
+        return $concreteProductTransfer;
+    }
+
+    /**
+     * @param ConcreteProductInterface $productTransfer
+     */
+    private function addTaxesToProductTransfer(ConcreteProductInterface $concreteProductTransfer)
+    {
+        $taxSetEntity = $this->productQueryContainer
+            ->queryTaxSetForAbstractProduct($concreteProductTransfer->getIdAbstractProduct())
+            ->findOne();
+
+        if (null === $taxSetEntity) {
+            return;
+        }
+
+        $taxTransfer = new TaxSetTransfer();
+        $taxTransfer->setIdTaxSet($taxSetEntity->getIdTaxSet())
+            ->setName($taxSetEntity->getName());
+
+        foreach ($taxSetEntity->getSpyTaxRates() as $taxRate) {
+
+            $taxRateTransfer = new TaxRateTransfer();
+            $taxRateTransfer->setIdTaxRate($taxRate->getIdTaxRate())
+                ->setName($taxRate->getName())
+                ->setRate($taxRate->getRate());
+
+            $taxTransfer->addTaxRate($taxRateTransfer);
+        }
+
+        $concreteProductTransfer->setTaxSet($taxTransfer);
     }
 
     /**
