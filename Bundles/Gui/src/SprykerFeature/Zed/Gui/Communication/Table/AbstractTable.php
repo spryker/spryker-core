@@ -73,6 +73,16 @@ abstract class AbstractTable
     }
 
     /**
+     * @param string $name
+     *
+     * @return string
+     */
+    public function buildAlias($name)
+    {
+        return str_replace(['.', '(', ')'], '', $name);
+    }
+
+    /**
      * @return TableConfiguration
      */
     protected function newTableConfiguration()
@@ -125,17 +135,17 @@ abstract class AbstractTable
     }
 
     /**
-     * @param $order
-     * @param $data
+     * @param array $headers
+     * @param array $row
      *
      * @return array
      */
-    protected function reOrderByHeaders($order, $data)
+    protected function reOrderByHeaders(array $headers, array $row)
     {
         $result = [];
 
-        foreach ($order as $key => $value) {
-            $result[$key] = $data[$key];
+        foreach ($headers as $key => $value) {
+            $result[$key] = $row[$key];
         }
 
         return $result;
