@@ -96,7 +96,7 @@ class Auth implements AuthInterface
      */
     public function generateToken(UserTransfer $user)
     {
-        return md5(sprintf('%s%s', $user->getPassword(), $user->getIdUserUser()));
+        return md5(sprintf('%s%s', $user->getPassword(), $user->getIdUser()));
     }
 
     /**
@@ -165,7 +165,7 @@ class Auth implements AuthInterface
 
         $currentUser = $this->getCurrentUser($token);
 
-        $realUser = $this->userFacade->getUserById($currentUser->getIdUserUser());
+        $realUser = $this->userFacade->getUserById($currentUser->getIdUser());
 
         return $realUser->getPassword() === $currentUser->getPassword();
     }

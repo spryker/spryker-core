@@ -37,7 +37,7 @@ class TableConfiguration
     /**
      * @return array
      */
-    public function getHeaders()
+    public function getHeader()
     {
         return $this->header;
     }
@@ -47,7 +47,7 @@ class TableConfiguration
      *
      * @param array $header
      */
-    public function setHeaders(array $header)
+    public function setHeader(array $header)
     {
         if ($this->isAssoc($header) === true) {
             $this->header = $header;

@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\User\Communication\Controller;
 
 use Generated\Shared\Transfer\UserTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserUserTableMap;
+use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -30,11 +30,11 @@ class FormController extends AbstractController
 
             $user = new UserTransfer();
             $user->fromArray($formData);
-            $user->setIdUserUser($request->query->get('id'));
+            $user->setIdUser($request->query->get('id'));
 
             $newStatus = ($formData['status'] === true)
-                ? SpyUserUserTableMap::COL_STATUS_ACTIVE
-                : SpyUserUserTableMap::COL_STATUS_BLOCKED
+                ? SpyUserTableMap::COL_STATUS_ACTIVE
+                : SpyUserTableMap::COL_STATUS_BLOCKED
             ;
             $user->setStatus($newStatus);
 

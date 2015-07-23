@@ -17,8 +17,8 @@
         </unique>
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
-        <foreign-key foreignTable="spy_user_user" phpName="User" refPhpName="User" onDelete="CASCADE">
-            <reference foreign="id_user_user" local="fk_user_id"/>
+        <foreign-key foreignTable="spy_user" phpName="User" refPhpName="User" onDelete="CASCADE">
+            <reference foreign="id_user" local="fk_user_id"/>
         </foreign-key>
     </table>
 

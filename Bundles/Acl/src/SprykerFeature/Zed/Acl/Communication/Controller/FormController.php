@@ -50,7 +50,7 @@ class FormController extends AbstractController
             ;
 
             if (false === empty($idUser)) {
-                $user->setIdUserUser($data['id_user_user']);
+                $user->setIdUser($data['id_user']);
                 $user = $this->getDependencyContainer()->createUserFacade()
                     ->updateUser($user)
                 ;
@@ -76,7 +76,7 @@ class FormController extends AbstractController
             }
 
             if ($userGroup === false || $userGroup->getIdAclGroup() !== $data['id_acl_group']) {
-                $this->getFacade()->addUserToGroup($user->getIdUserUser(), $data['id_acl_group']);
+                $this->getFacade()->addUserToGroup($user->getIdUser(), $data['id_acl_group']);
             }
         }
 

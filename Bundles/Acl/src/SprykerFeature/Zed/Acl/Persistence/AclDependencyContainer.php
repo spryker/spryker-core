@@ -14,7 +14,7 @@ use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRoleQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRuleQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclUserHasGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRolesQuery;
-use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUserQuery;
+use SprykerFeature\Zed\User\Persistence\Propel\SpyUserQuery;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
 /**
@@ -64,7 +64,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
     }
 
     /**
-     * @return SpyUserUserQuery
+     * @return SpyUserQuery
      */
     public function createUserQuery()
     {

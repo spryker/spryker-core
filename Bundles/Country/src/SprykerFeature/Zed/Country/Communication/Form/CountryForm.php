@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Country\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
-use SprykerFeature\Zed\User\Persistence\Propel\Base\SpyUserUserQuery;
+use SprykerFeature\Zed\User\Persistence\Propel\Base\SpyUserQuery;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -17,14 +17,14 @@ class CountryForm extends AbstractForm
     protected $countryQuery;
 
     /**
-     * @var SpyUserUserQuery
+     * @var SpyUserQuery
      */
     protected $userQuery;
 
     /**
      * @param SpyCountryQuery $countryQuery
      */
-    public function __construct(SpyCountryQuery $countryQuery, SpyUserUserQuery $userQuery)
+    public function __construct(SpyCountryQuery $countryQuery, SpyUserQuery $userQuery)
     {
         $this->countryQuery = $countryQuery;
         $this->userQuery = $userQuery;

@@ -213,7 +213,7 @@ class Group implements GroupInterface
         $entity = new SpyAclUserHasGroup();
 
         $entity->setFkAclGroup($idGroup)
-            ->setFkUserUser($idUser);
+            ->setFkUser($idUser);
 
         return $entity->save();
     }

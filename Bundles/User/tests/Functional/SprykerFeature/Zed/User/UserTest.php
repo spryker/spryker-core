@@ -90,14 +90,14 @@ class UserTest extends Test
         $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
-        $this->assertNotNull($user->getIdUserUser());
+        $this->assertNotNull($user->getIdUser());
         $this->assertEquals($data['firstName'], $user->getFirstName());
         $this->assertEquals($data['lastName'], $user->getLastName());
         $this->assertEquals($data['username'], $user->getUsername());
         $this->assertNotEquals($data['password'], $user->getPassword());
     }
 
-    public function testAfterCallToRemoveUserUserMustBeMArkedAsDeleted()
+    public function testAfterCallToRemoveUserMustBeMArkedAsDeleted()
     {
         $this->setExpectedException('\SprykerFeature\Zed\User\Business\Exception\UserNotFoundException');
 
@@ -106,8 +106,8 @@ class UserTest extends Test
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
 
-        $this->userFacade->removeUser($user->getIdUserUser());
-        $this->userFacade->getUserById($user->getIdUserUser());
+        $this->userFacade->removeUser($user->getIdUser());
+        $this->userFacade->getUserById($user->getIdUser());
     }
 
     public function testUpdateUserWithSamePassword()
@@ -166,7 +166,7 @@ class UserTest extends Test
         $user = $this->userFacade->getUserByUsername($data['username']);
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
-        $this->assertEquals($user->getIdUserUser(), $mock->getIdUserUser());
+        $this->assertEquals($user->getIdUser(), $mock->getIdUser());
         $this->assertEquals($user->getFirstName(), $mock->getFirstName());
         $this->assertEquals($user->getLastName(), $mock->getLastName());
         $this->assertEquals($user->getUsername(), $mock->getUsername());
@@ -178,10 +178,10 @@ class UserTest extends Test
         $data = $this->mockUserData();
         $mock = $this->mockAddUser($data);
 
-        $user = $this->userFacade->getUserById($mock->getIdUserUser());
+        $user = $this->userFacade->getUserById($mock->getIdUser());
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
-        $this->assertEquals($user->getIdUserUser(), $mock->getIdUserUser());
+        $this->assertEquals($user->getIdUser(), $mock->getIdUser());
         $this->assertEquals($user->getFirstName(), $mock->getFirstName());
         $this->assertEquals($user->getLastName(), $mock->getLastName());
         $this->assertEquals($user->getUsername(), $mock->getUsername());

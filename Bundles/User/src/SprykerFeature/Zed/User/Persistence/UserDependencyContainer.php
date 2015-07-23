@@ -34,11 +34,11 @@ class UserDependencyContainer extends AbstractPersistenceDependencyContainer
     }
 
     /**
-     * @return SpyUserUserQuery
+     * @return SpyUserQuery
      */
     public function createUserQuery()
     {
-        return $this->getFactory()->createPropelSpyUserUserQuery();
+        return $this->getFactory()->createPropelSpyUserQuery();
     }
 
 }
