@@ -34,7 +34,7 @@ class MethodTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeaders([ 'isActive' => 'Active']);
+        $config->setHeader([ 'isActive' => 'Active']);
         $config->setUrl('table');
 
         return $config;
