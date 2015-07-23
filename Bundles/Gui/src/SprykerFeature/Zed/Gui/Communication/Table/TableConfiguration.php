@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,7 +12,7 @@ class TableConfiguration
 {
 
     /**
-     * @var string
+     * @var
      */
     protected $url;
 
@@ -23,7 +22,7 @@ class TableConfiguration
     private $header;
 
     /**
-     * @var int
+     * @var
      */
     private $pageLength;
 
@@ -63,7 +62,8 @@ class TableConfiguration
     /**
      * @todo Zed Translation in Template
      *
-     * @param array $header
+     * @param array $header Provide php names for table columns
+     *                       if you are goin to user Propel Query as data population
      */
     public function setHeader(array $header)
     {
@@ -113,7 +113,7 @@ class TableConfiguration
     }
 
     /**
-     * @param int $length
+     * @param $length
      */
     public function setPageLength($length)
     {
@@ -137,13 +137,13 @@ class TableConfiguration
     }
 
     /**
-     * @param array $array
+     * @param array $arr
      *
      * @return bool
      */
-    private function isAssoc(array $array)
+    private function isAssoc(array $arr)
     {
-        return (array_values($array) !== $array);
+        return (array_values($arr) !== $arr);
     }
 
 }
