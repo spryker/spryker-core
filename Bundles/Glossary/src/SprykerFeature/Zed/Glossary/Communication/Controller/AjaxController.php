@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AjaxController extends AbstractController
 {
+    const SEARCH_TERM = 'term';
+
     /**
      * @param Request $request
      *
@@ -26,7 +28,7 @@ class AjaxController extends AbstractController
      */
     public function keysAction(Request $request)
     {
-        $term = $request->query->get('term');
+        $term = $request->query->get(self::SEARCH_TERM);
         $keys = $this
             ->getDependencyContainer()
             ->createQueryContainer()
