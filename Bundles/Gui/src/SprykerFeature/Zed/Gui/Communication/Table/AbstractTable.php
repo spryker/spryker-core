@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Gui\Communication\Table;
 
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -347,7 +348,7 @@ abstract class AbstractTable
         ;
         $data = $query->find();
 
-        return $data->toArray();
+        return $data->toArray(null, false, TableMap::TYPE_COLNAME);
     }
 
     /**

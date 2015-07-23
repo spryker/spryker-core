@@ -8,17 +8,12 @@ namespace SprykerFeature\Zed\Sales\Communication\Table;
 
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use SprykerFeature\Zed\Sales\Persistence\Propel\Map\SpySalesOrderTableMap;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 
 class OrdersTable extends AbstractTable
 {
-    const ID_SALES_ORDER = 'IdSalesOrder';
-    const CREATED_AT = 'CreatedAt';
-    const FK_CUSTOMER = 'FkCustomer';
-    const EMAIL = 'Email';
-    const GRAND_TOTAL = 'GrandTotal';
-    const FIRST_NAME = 'FirstName';
     const URL = 'Url';
 
     /**
@@ -36,17 +31,17 @@ class OrdersTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeader([
-            self::ID_SALES_ORDER => 'Order ID',
-            self::CREATED_AT => 'Timestamp',
-            self::FK_CUSTOMER => 'Customer Id',
-            self::EMAIL => 'Email',
-            self::FIRST_NAME => 'Billing Name',
-            self::GRAND_TOTAL => 'Value',
+        $config->setHeaders([
+            SpySalesOrderTableMap::COL_ID_SALES_ORDER => 'Order Id',
+            SpySalesOrderTableMap::COL_CREATED_AT => 'Timestamp',
+            SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer Id',
+            SpySalesOrderTableMap::COL_EMAIL => 'Email',
+            SpySalesOrderTableMap::COL_FIRST_NAME => 'Billing Name',
+            SpySalesOrderTableMap::COL_GRAND_TOTAL => 'Value',
             self::URL => 'Url',
         ]);
         $config->setSortable([
-            self::CREATED_AT,
+            SpySalesOrderTableMap::COL_CREATED_AT,
         ]);
 
         return $config;
@@ -78,15 +73,15 @@ class OrdersTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $item) {
             $results[] = [
-                self::ID_SALES_ORDER => $item[self::ID_SALES_ORDER],
-                self::CREATED_AT => $item[self::CREATED_AT],
-                self::FK_CUSTOMER => $item[self::FK_CUSTOMER],
-                self::EMAIL => $item[self::EMAIL],
-                self::FIRST_NAME => $item[self::FIRST_NAME],
-                self::GRAND_TOTAL => $this->formatPrice($item[self::GRAND_TOTAL]),
+                SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
+                SpySalesOrderTableMap::COL_CREATED_AT => $item[SpySalesOrderTableMap::COL_CREATED_AT],
+                SpySalesOrderTableMap::COL_FK_CUSTOMER => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
+                SpySalesOrderTableMap::COL_EMAIL => $item[SpySalesOrderTableMap::COL_EMAIL],
+                SpySalesOrderTableMap::COL_FIRST_NAME => $item[SpySalesOrderTableMap::COL_FIRST_NAME],
+                SpySalesOrderTableMap::COL_GRAND_TOTAL => $this->formatPrice($item[SpySalesOrderTableMap::COL_GRAND_TOTAL]),
                 self::URL => sprintf(
                     '<a class="btn btn-primary" href="/sales/details/?id-sales-order=%d">View</a>',
-                    $item['IdSalesOrder']
+                    $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER]
                 ),
             ];
         }
