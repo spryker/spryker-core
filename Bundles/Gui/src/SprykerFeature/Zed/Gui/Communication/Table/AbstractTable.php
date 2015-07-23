@@ -365,9 +365,7 @@ abstract class AbstractTable
                     $isFirst = false;
                 }
 
-                $query->where(sprintf('LOWER(%s.%s) LIKE ?', $tableName, $query->getTableMap()
-                    ->getColumnByPhpName($value)
-                    ->getName()), '%' . mb_strtolower($searchTherm['value']) . '%');
+                $query->where(sprintf('LOWER(%s.%s) LIKE ?', $value, '%' . mb_strtolower($searchTherm['value']) . '%'));
             }
             $this->filtered = $query->count();
         } else {
@@ -401,4 +399,43 @@ abstract class AbstractTable
         return $wrapperArray;
     }
 
+    /**
+     * Build Alias for column
+     *
+     * @param string $column
+     *
+     * @return string
+     */
+    public function buildAlias($column)
+    {
+        return str_replace([
+            '.',
+            '(',
+            ')',
+        ], '', $column);
+    }
+
+    /**
+     * Drop table name from key
+     *
+     * @param string $key
+     *
+     * @return string
+     */
+    public function cutTablePrefix($key)
+    {
+        $position = mb_strpos($key, '.');
+
+        return (false !== $position) ? mb_substr($key, $position + 1) : $key;
+    }
+
+    /**
+     * @param string $str
+     *
+     * @return string
+     */
+    public function camelize($str)
+    {
+        return str_replace(' ', '', ucwords(mb_strtolower(str_replace('_', ' ', $str))));
+    }
 }

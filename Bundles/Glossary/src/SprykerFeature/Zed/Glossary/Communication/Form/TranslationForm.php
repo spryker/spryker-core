@@ -5,66 +5,93 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication\Form;
 
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
-use Symfony\Component\HttpFoundation\Request;
+use Propel\Runtime\Map\TableMap;
+use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryKeyQuery;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 
 class TranslationForm extends AbstractForm
 {
 
-    protected $localeFacade;
+    const FK_GLOSSARY_KEY = 'fk_glossary_key';
 
     /**
-     * @param Request $request
-     * @param QueryContainerInterface $queryContainer
-     * @param GlossaryToLocaleInterface $localeFacade
+     * @var SpyGlossaryTranslationQuery
      */
-    public function __construct(
-        Request $request,
-        QueryContainerInterface $queryContainer,
-        GlossaryToLocaleInterface $localeFacade
-    ) {
-        parent::__construct($request, $queryContainer);
-        $this->localeFacade = $localeFacade;
+    protected $glossaryTranslationQuery;
+
+    /**
+     * @var SpyGlossaryKeyQuery
+     */
+    protected $glossaryKeyQuery;
+
+    /**
+     * @var array
+     */
+    protected $locales;
+
+    /**
+     * @var
+     */
+    protected $type;
+
+    public function __construct(SpyGlossaryTranslationQuery $glossaryTranslationQuery, SpyGlossaryKeyQuery $glossaryKeyQuery, $locales, $type)
+    {
+        $this->glossaryTranslationQuery = $glossaryTranslationQuery;
+        $this->glossaryKeyQuery = $glossaryKeyQuery;
+
+        $this->locales = $locales;
+        $this->type = $type;
     }
 
     /**
      * @return array
      */
-    protected function getDefaultData()
+    protected function populateFormFields()
     {
-        $idGlossaryKey = $this->stateContainer
-            ->getRequestValue('id_glossary_key')
-        ;
+        $result = [];
 
-        $translations = [];
-        $translatedValues = $this->queryContainer
-            ->queryTranslationsByKeyId($idGlossaryKey)
-        ;
+        $fkGlossaryKey = $this->request->get(self::FK_GLOSSARY_KEY);
 
-        foreach ($translatedValues as $translation) {
-            $translations['locale_' . $translation->getFkLocale()] = $translation->getValue();
-        }
-
-        return $translations;
-    }
-
-    /**
-     * @return array
-     */
-    public function addFormFields()
-    {
-        $fields = [];
-
-        $locales = $this->localeFacade->getAvailableLocales();
-
-        foreach ($locales as $localeId => $locale) {
-            $fields[] = $this->addField('locale_' . $localeId)
-                ->setLabel($locale)
+        if (!empty($fkGlossaryKey)) {
+            $result = $this->glossaryTranslationQuery->leftJoinLocale('')
+                ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME)
+                ->filterByFkGlossaryKey($fkGlossaryKey)
+                ->find()
             ;
+
+            if (!empty($result)) {
+                $result = $result->toArray(null, false, TableMap::TYPE_COLNAME);
+            }
+
+            die(dump($result));
         }
 
-        return $fields;
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
+    public function buildFormFields()
+    {
+        $this->addHidden('fk_glossary_key')
+            ->addText('glossary_key', [
+                'label' => 'Name',
+                'attr' => [
+                    'disabled' => 'disabled',
+                ],
+            ])
+        ;
+
+        foreach ($this->locales as $locale) {
+            $this->addText('locale_' . $locale, [
+                'label' => $locale,
+            ]);
+        }
+
+        return $this;
     }
 }

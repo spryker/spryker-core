@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Translations' %}
+{% set widget_title = 'Edit translation' %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -10,13 +10,12 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_header_content %}
-            <a href="/glossary/add" class="btn btn-primary ">{{ 'Add a translation' | trans }}</a>&nbsp;&nbsp;&nbsp;
-            <a href="/glossary/key" class="btn btn-sm btn-default ">{{ 'Manage keys' | trans }}</a>
+            <a href="/glossary/" class="btn btn-sm btn-default">{{ 'Back to Translations' | trans }}</a>
         {% endblock %}
 
         {% block widget_content %}
 
-            {{ glossaryTable | raw }}
+            {{ form(form) }}
 
         {% endblock %}
 
