@@ -29,7 +29,11 @@ class WishlistStub
         return;
     }
 
-
+    public function removeItem(WishlistItemInterface $itemTransfer)
+    {
+        $this->client->call($this->getUrl('remove'), $itemTransfer);
+        return;
+    }
 
 
     private function getUrl($action)

@@ -1,23 +1,32 @@
 <?php
 
-namespace SprykerFeature\Zed\Wishlist\Business;
+namespace SprykerFeature\Zed\Wishlist\Business\Integrator;
 
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistProductTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerFeature\Zed\Wishlist\Business\EntityManager;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItem;
 use Zend\Stdlib\ArrayObject;
 
-class TransferObjectManager
+class TransferObjectIntegrator
 {
-    public function __construct(EntityManager $em)
+    public function __construct(EntityIntegrator $em)
     {
         $this->em = $em;
     }
 
     public function getWishlistTransfer(CustomerInterface $customerTransfer)
+    {
+        $wishlistTransfer = $this->getWishlistTransferInstance();
+        $wishlistTransfer->setCustomer($customerTransfer);
+        $wishlistTransfer->setItems($this->getWishlistItemsArrayObject($customerTransfer));
+
+        return $wishlistTransfer;
+    }
+
+    /** TODO  */
+    public function getWishlistItemTransfer(WishlistItemTransfer $wishlistItemTransfer)
     {
         $wishlistTransfer = $this->getWishlistTransferInstance();
         $wishlistTransfer->setCustomer($customerTransfer);

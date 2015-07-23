@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Wishlist\Business;
+namespace SprykerFeature\Zed\Wishlist\Business\Integrator;
 
 
 
@@ -11,8 +11,7 @@ use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlist;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItem;
 use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainer;
 
-
-class EntityManager
+class EntityIntegrator
 {
     protected $queryContainer;
 
@@ -39,7 +38,6 @@ class EntityManager
     {
         return $this->queryContainer
                     ->queryCustomerWishlistItemsArray($customerTransfer);
-
     }
 
 
@@ -56,6 +54,13 @@ class EntityManager
                 ->setAddedAt($itemTransfer->getAddedAt())
                 ->save();
         }
+    }
+
+    public function removeItem(WishlistItemInterface $wishlistItemTransfer)
+    {
+        return $this->queryContainer
+             ->filterWishlistItemQueryByPrimaryKey($wishlistItemTransfer)
+             ->delete();
     }
 
     protected function customerHasWishlist(CustomerInterface $customerTransfer)

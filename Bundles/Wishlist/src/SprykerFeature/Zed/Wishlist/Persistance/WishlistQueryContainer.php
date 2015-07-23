@@ -24,7 +24,7 @@ class WishlistQueryContainer extends AbstractQueryContainer
     public function queryCustomerWishlist(CustomerInterface $customerTransfer)
     {
         $wishlist = SpyWishlistQuery::create()
-                ->findOneByFkCustomer($customerTransfer->getIdCustomer());
+            ->findOneByFkCustomer($customerTransfer->getIdCustomer());
 
         return $wishlist;
     }
@@ -33,7 +33,7 @@ class WishlistQueryContainer extends AbstractQueryContainer
     {
         return SpyWishlistItemQuery::create()
             ->useSpyWishlistQuery('w')
-                ->filterByFkCustomer($customerTransfer->getIdCustomer())
+            ->filterByFkCustomer($customerTransfer->getIdCustomer())
             ->endUse()
             ->addJoinObject(
                 new Join(
@@ -64,7 +64,7 @@ class WishlistQueryContainer extends AbstractQueryContainer
     public function queryConcreteProduct(WishlistItemInterface $wishlistItemTransfer)
     {
         $concreteProduct = SpyProductQuery::create()
-                ->findOneBySku($wishlistItemTransfer->getProduct()->getConcreteSku());
+            ->findOneBySku($wishlistItemTransfer->getProduct()->getConcreteSku());
 
         return $concreteProduct;
     }
@@ -74,6 +74,12 @@ class WishlistQueryContainer extends AbstractQueryContainer
         return SpyWishlistItemQuery::create();
     }
 
+    public function filterWishlistItemQueryByPrimaryKey(WishlistItemInterface $wishlistTransfer)
+    {
+        return $this->getWishlistItemQuery()
+            ->filterByPrimaryKey($wishlistTransfer->getId());
+
+    }
 
 
 }

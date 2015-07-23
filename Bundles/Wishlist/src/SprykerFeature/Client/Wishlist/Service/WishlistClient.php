@@ -5,14 +5,22 @@ namespace SprykerFeature\Client\Wishlist\Service;
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
 use Generated\Shared\Wishlist\WishlistItemInterface;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
-use Generated\Shared\Transfer\WishlistTransfer;
+use SprykerFeature\Zed\Wishlist\Business\WishlistDependencyContainer;
 
+/**
+ * @method WishlistDependencyContainer getDependencyContainer()
+ */
 class WishlistClient extends AbstractClient
 {
 
+    public function removeItem(WishlistItemInterface $wishlistItemTransfer)
+    {
+        $this->getDependencyContainer()
+            ->createZedStub()
+            ->removeItem($wishlistItemTransfer);
+    }
 
     public function saveItem(WishlistItemInterface $wishlistItemTransfer)
     {
