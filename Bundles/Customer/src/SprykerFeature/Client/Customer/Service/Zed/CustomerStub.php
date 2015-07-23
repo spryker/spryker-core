@@ -19,7 +19,7 @@ class CustomerStub implements CustomerStubInterface
     /**
      * @var ZedRequestClient
      */
-    private $zedStub;
+    protected $zedStub;
 
     /**
      * @param ZedRequestClient $zedStub
