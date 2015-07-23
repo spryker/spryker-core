@@ -7,23 +7,20 @@
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DiscountTransfer;
+use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 
 class DiscountWriter extends AbstractWriter
 {
 
     /**
-     * @var \Generated\Zed\Ide\AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @param DiscountTransfer $discountTransfer
      *
-     * @return mixed
+     * @return SpyDiscount
      */
     public function create(DiscountTransfer $discountTransfer)
     {
-        $discountEntity = $this->locator->discount()->entitySpyDiscount();
+        $discountEntity = new SpyDiscount();
         $discountEntity->fromArray($discountTransfer->toArray());
         $discountEntity->save();
 
@@ -33,9 +30,9 @@ class DiscountWriter extends AbstractWriter
     /**
      * @param DiscountTransfer $discountTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws PropelException
      *
-     * @return array|mixed|\SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount
+     * @return SpyDiscount
      */
     public function update(DiscountTransfer $discountTransfer)
     {

@@ -6,8 +6,6 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Calculator;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
-
 class Percentage
 {
 

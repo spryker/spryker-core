@@ -15,18 +15,13 @@ class DiscountVoucherWriter extends AbstractWriter
 {
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @param VoucherTransfer $discountVoucherTransfer
      *
-     * @return mixed
+     * @return SpyDiscountVoucher
      */
     public function create(VoucherTransfer $discountVoucherTransfer)
     {
-        $discountVoucherEntity = $this->locator->discount()->entitySpyDiscountVoucher();
+        $discountVoucherEntity = new SpyDiscountVoucher();
         $discountVoucherEntity->fromArray($discountVoucherTransfer->toArray());
         $discountVoucherEntity->save();
 
@@ -38,14 +33,15 @@ class DiscountVoucherWriter extends AbstractWriter
      *
      * @throws PropelException
      *
-     * @return array|mixed|SpyDiscountVoucher
+     * @return SpyDiscountVoucher
      */
     public function update(VoucherTransfer $discountVoucherTransfer)
     {
         $queryContainer = $this->getQueryContainer();
         $discountVoucherEntity = $queryContainer
             ->queryDiscountVoucher()
-            ->findPk($discountVoucherTransfer->getIdDiscountVoucher());
+            ->findPk($discountVoucherTransfer->getIdDiscountVoucher())
+        ;
         $discountVoucherEntity->fromArray($discountVoucherTransfer->toArray());
         $discountVoucherEntity->save();
 

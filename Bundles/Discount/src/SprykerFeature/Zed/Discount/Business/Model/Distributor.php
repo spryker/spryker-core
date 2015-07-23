@@ -9,29 +9,14 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemInterface;
 
-class Distributor implements
-    DistributorInterface
+class Distributor implements DistributorInterface
 {
 
     /**
      * @var float
      */
     protected $roundingError;
-
-    /**
-     * @var Locator
-     */
-    protected $locator;
-
-    /**
-     * @param Locator $locator
-     */
-    public function __construct(Locator $locator)
-    {
-        $this->locator = $locator;
-    }
 
     /**
      * @param DiscountableItemInterface[] $discountableObjects
@@ -90,14 +75,6 @@ class Distributor implements
         }
 
         return $totalGrossPrice;
-    }
-
-    /**
-     * @return Locator|AutoCompletion
-     */
-    protected function getLocator()
-    {
-        return $this->locator;
     }
 
 }

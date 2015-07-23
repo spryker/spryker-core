@@ -9,15 +9,10 @@ namespace SprykerFeature\Zed\Discount\Business\Writer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Base\SpyDiscountVoucherPoolCategory;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategory;
 
 class DiscountVoucherPoolCategoryWriter extends AbstractWriter
 {
-
-    /**
-     * @var AutoCompletion
-     */
-    protected $locator;
 
     /**
      * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
@@ -28,7 +23,7 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
      */
     public function create(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
-        $discountVoucherPoolCategoryEntity = $this->locator->discount()->entitySpyDiscountVoucherPoolCategory();
+        $discountVoucherPoolCategoryEntity = new SpyDiscountVoucherPoolCategory();
         $discountVoucherPoolCategoryEntity->fromArray($discountVoucherPoolCategoryTransfer->toArray());
         $discountVoucherPoolCategoryEntity->save();
 
@@ -40,14 +35,15 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
      *
      * @throws PropelException
      *
-     * @return array|mixed|SpyDiscountVoucherPoolCategory
+     * @return SpyDiscountVoucherPoolCategory
      */
     public function update(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
         $queryContainer = $this->getQueryContainer();
         $discountVoucherPoolCategoryEntity = $queryContainer
             ->queryDiscountVoucherPoolCategory()
-            ->findPk($discountVoucherPoolCategoryTransfer->getIdDiscountVoucherPoolCategory());
+            ->findPk($discountVoucherPoolCategoryTransfer->getIdDiscountVoucherPoolCategory())
+        ;
         $discountVoucherPoolCategoryEntity->fromArray($discountVoucherPoolCategoryTransfer->toArray());
         $discountVoucherPoolCategoryEntity->save();
 

@@ -12,13 +12,11 @@ use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 class ItemExpense implements CollectorInterface
 {
     /**
-     * @ param OrderInterface $container
      * @param CalculableInterface $container
      *
      * @return OrderInterface[]
      */
     public function collect(CalculableInterface $container)
-    //public function collect(OrderInterface $container)
     {
         $discountableExpenses = [];
 

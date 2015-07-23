@@ -57,13 +57,11 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @ param OrderInterface $container
      * @param CalculableInterface $container
      *
      * @return Discount
      */
     public function getDiscount(CalculableInterface $container)
-    //public function getDiscount(OrderInterface $container)
     {
         return $this->getFactory()->createModelDiscount(
             $container,
@@ -241,4 +239,5 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createCollectorExpense();
     }
+
 }
