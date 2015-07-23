@@ -12,7 +12,7 @@ class TableConfiguration
 {
 
     /**
-     * @var
+     * @var string
      */
     protected $url;
 
@@ -22,7 +22,7 @@ class TableConfiguration
     private $header;
 
     /**
-     * @var
+     * @var int
      */
     private $pageLength;
 
