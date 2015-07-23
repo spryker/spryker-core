@@ -1,5 +1,25 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
+{% set widget_title = 'Shipment' %}
+
+{% block head_title widget_title | trans %}
+
+{% block section_title widget_title | trans %}
+
 {% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_header_content %}
+            <a href="/shipment/carrier/add" class="btn btn-sm btn-primary ">{{ 'Add a new carrier company' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ methodTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
 
 {% endblock %}
