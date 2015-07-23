@@ -76,18 +76,18 @@ class SecurityServiceProvider extends AbstractPlugin implements
             ],
         ];
 
-        $app['security.access_control'] = [
+        $app['security.access_rules'] = [
             [
-                'path' => '^/login',
-                'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                '^/login',
+                'IS_AUTHENTICATED_ANONYMOUSLY',
             ],
             [
-                'path' => Config::get(CustomerConfig::CUSTOMER_SECURED_PATTERN),
-                'role' => 'ROLE_USER',
+                Config::get(CustomerConfig::CUSTOMER_SECURED_PATTERN),
+                'ROLE_USER',
             ],
             [
-                'path' => Config::get(CustomerConfig::CUSTOMER_ANONYMOUS_PATTERN),
-                'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                Config::get(CustomerConfig::CUSTOMER_ANONYMOUS_PATTERN),
+                'IS_AUTHENTICATED_ANONYMOUSLY',
             ],
         ];
     }
