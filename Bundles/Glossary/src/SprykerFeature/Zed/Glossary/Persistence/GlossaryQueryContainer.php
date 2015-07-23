@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,7 +24,6 @@ use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
  */
 class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQueryContainerInterface
 {
-
     const TRANSLATION = 'translation';
     const TRANSLATION_IS_ACTIVE = 'translation_is_active';
     const KEY_IS_ACTIVE = 'key_is_active';
@@ -200,9 +198,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param array $localeIds
      *
-     * @throws PropelException
-     *
      * @return SpyGlossaryKeyQuery
+     * @throws PropelException
      */
     public function queryKeysAndTranslationsForEachLanguage(array $localeIds)
     {
@@ -250,9 +247,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param array $relevantLocales
      *
-     * @throws PropelException
-     *
      * @return ModelCriteria
+     * @throws PropelException
      */
     public function queryAllPossibleTranslations(array $relevantLocales)
     {
@@ -265,9 +261,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      * @param SpyGlossaryKeyQuery $keyQuery
      * @param array $relevantLocales
      *
-     * @throws PropelException
-     *
      * @return ModelCriteria
+     * @throws PropelException
      */
     protected function joinKeyQueryWithRelevantLocalesAndTranslations(
         SpyGlossaryKeyQuery $keyQuery,
@@ -276,7 +271,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $keyLocaleCrossJoin = new ModelJoin();
         $keyLocaleCrossJoin->setJoinType(Criteria::JOIN);
 
-        /*
+        /**
          * @param string $value
          *
          * @return string
@@ -369,5 +364,4 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     {
         return $this->queryKeys()->filterByIdGlossaryKey($idKey);
     }
-
 }

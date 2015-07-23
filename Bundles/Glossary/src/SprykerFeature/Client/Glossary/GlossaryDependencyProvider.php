@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,7 +11,7 @@ use SprykerEngine\Client\Kernel\Container;
 class GlossaryDependencyProvider extends AbstractDependencyProvider
 {
 
-    const STORAGE = 'glossary key value storage';
+    const KV_STORAGE = 'kv storage';
 
     /**
      * @param Container $container
@@ -21,7 +20,7 @@ class GlossaryDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[self::STORAGE] = function (Container $container) {
+        $container[self::KV_STORAGE] = function (Container $container) {
             return $container->getLocator()->storage()->client();
         };
 

@@ -15,6 +15,8 @@ use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
+use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerSequence;
 
 /**
  * @method CustomerConfig getConfig()
@@ -28,7 +30,10 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createQueryContainer()
     {
-        return $this->getLocator()->customer()->queryContainer();
+        return $this->getLocator()
+            ->customer()
+            ->queryContainer()
+            ;
     }
 
     /**
@@ -38,8 +43,10 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $config = $this->getConfig();
         $senderPlugins = $this->getProvidedDependency(CustomerDependencyProvider::SENDER_PLUGINS);
+
         $customer = $this->getFactory()->createCustomerCustomer(
             $this->createQueryContainer(),
+            $this->createCustomerReferenceGenerator(),
             $config->getHostYves()
         );
 
@@ -63,11 +70,9 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createAddress()
     {
-        return $this->getFactory()->createCustomerAddress(
-            $this->createQueryContainer(),
-            $this->createCountryFacade(),
-            $this->createLocaleFacade()
-        );
+        return $this->getFactory()
+            ->createCustomerAddress($this->createQueryContainer(), $this->createCountryFacade(), $this->createLocaleFacade())
+            ;
     }
 
     /**
@@ -75,7 +80,10 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCountryFacade()
     {
-        return $this->getLocator()->country()->facade();
+        return $this->getLocator()
+            ->country()
+            ->facade()
+            ;
     }
 
     /**
@@ -83,7 +91,39 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createLocaleFacade()
     {
-        return $this->getLocator()->locale()->facade();
+        return $this->getLocator()
+            ->locale()
+            ->facade()
+            ;
+    }
+
+    /**
+     * @return CustomerReferenceGenerator
+     */
+    protected function createCustomerReferenceGenerator()
+    {
+        return $this->getFactory()->createReferenceGeneratorCustomerReferenceGenerator(
+            $this->createCustomerSequence(),
+            $this->getConfig()->isDevelopmentEnvironment(),
+            $this->getConfig()->isStagingEnvironment(),
+            $this->getConfig()->getStoreName()
+        );
+    }
+
+    /**
+     * @return CustomerSequence
+     */
+    protected function createCustomerSequence()
+    {
+        $randomNumberGenerator = $this->getFactory()->createReferenceGeneratorRandomNumberGenerator(
+            $this->getConfig()->getCustomerNumberIncrementMin(),
+            $this->getConfig()->getCustomerNumberIncrementMax()
+        );
+
+        return $this->getFactory()->createReferenceGeneratorCustomerSequence(
+            $randomNumberGenerator,
+            $this->getConfig()->getMinimumCustomerNumber()
+        );
     }
 
 }

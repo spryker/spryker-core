@@ -10,6 +10,7 @@
 
     <table name="spy_customer" idMethod="native" phpName="SpyCustomer">
         <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="customer_reference" required="true" type="VARCHAR" size="255" />
         <column name="email" required="true" size="255" type="VARCHAR"/>
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr"/>
         <column name="first_name" size="100" type="VARCHAR"/>
@@ -72,5 +73,14 @@
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
 
+    </table>
+
+    <table name="spy_customer_number_sequence" phpName="SpyCustomerNumberSequence">
+        <column name="id_customer_number_sequence" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="name" type="VARCHAR" size="255" required="true" />
+        <column name="current_id" type="INTEGER" required="true" />
+        <unique>
+            <unique-column name="name" />
+        </unique>
     </table>
 </database>

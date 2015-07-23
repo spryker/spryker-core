@@ -19,6 +19,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTra
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
 
@@ -259,6 +260,48 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         return SpyProductOptionConfigurationPresetQuery::create()
             ->filterByFkProduct($idProduct)
             ->orderBySequence();
+    }
+
+
+    /**
+     * @param int $idProductOptionValueUsage
+     * @param int $idLocale
+     *
+     * @return SpyProductOptionValueUsageQuery
+     */
+    public function queryProductOptionValueUsageWithAssociatedAttributes($idProductOptionValueUsage, $idLocale)
+    {
+        return SpyProductOptionValueUsageQuery::create()
+            ->useSpyProductOptionValueQuery()
+                ->useSpyProductOptionValuePriceQuery()
+                ->endUse()
+                ->useSpyProductOptionTypeQuery()
+                    ->useSpyProductOptionTypeTranslationQuery()
+                        ->filterByFkLocale($idLocale)
+                    ->endUse()
+                ->endUse()
+                ->useSpyProductOptionValueTranslationQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
+            ->endUse()
+            ->filterByIdProductOptionValueUsage($idProductOptionValueUsage);
+    }
+
+    /**
+     * @param int $idProductOptionValueUsage
+     *
+     * @return SpyTaxSetQuery
+     */
+    public function queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage)
+    {
+        return SpyTaxSetQuery::create()
+            ->useSpyProductOptionTypeQuery()
+                ->useSpyProductOptionValueQuery()
+                    ->useSpyProductOptionValueUsageQuery()
+                        ->filterByIdProductOptionValueUsage($idProductOptionValueUsage)
+                    ->endUse()
+                ->endUse()
+            ->endUse();
     }
 
     /**

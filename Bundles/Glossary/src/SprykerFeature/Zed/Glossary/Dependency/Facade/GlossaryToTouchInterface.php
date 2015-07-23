@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -24,5 +23,4 @@ interface GlossaryToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $idItem);
-
 }

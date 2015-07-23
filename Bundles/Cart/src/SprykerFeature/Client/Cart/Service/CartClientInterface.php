@@ -7,6 +7,7 @@
 namespace SprykerFeature\Client\Cart\Service;
 
 use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Cart\CartItemInterface;
 
 interface CartClientInterface
 {
@@ -27,43 +28,42 @@ interface CartClientInterface
     public function getItemCount();
 
     /**
-     * @param string $sku
+     * @param CartItemInterface $cartItemTransfer
+     *
+     * @return CartInterface
+     */
+    public function addItem(CartItemInterface $cartItemTransfer);
+
+    /**
+     * @param CartItemInterface $cartItemTransfer
+     *
+     * @return CartInterface
+     */
+    public function removeItem(CartItemInterface $cartItemTransfer);
+
+    /**
+     * @param CartItemInterface $cartItemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function addItem($sku, $quantity = 1);
+    public function changeItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1);
 
     /**
-     * @param string $sku
-     *
-     * @return CartInterface
-     */
-    public function removeItem($sku);
-
-    /**
-     * @param string $sku
+     * @param CartItemInterface $cartItemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function changeItemQuantity($sku, $quantity = 1);
+    public function decreaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1);
 
     /**
-     * @param string $sku
+     * @param CartItemInterface $cartItemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function decreaseItemQuantity($sku, $quantity = 1);
-
-    /**
-     * @param string $sku
-     * @param int $quantity
-     *
-     * @return CartInterface
-     */
-    public function increaseItemQuantity($sku, $quantity = 1);
+    public function increaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1);
 
     /**
      * @return CartInterface

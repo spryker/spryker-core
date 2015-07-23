@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,13 +10,11 @@ use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface GlossaryToLocaleInterface
 {
-
     /**
      * @param string $localeName
      *
-     * @throws MissingLocaleException
-     *
      * @return LocaleTransfer
+     * @throws MissingLocaleException
      */
     public function getLocale($localeName);
 
@@ -30,5 +27,4 @@ interface GlossaryToLocaleInterface
      * @return array
      */
     public function getAvailableLocales();
-
 }

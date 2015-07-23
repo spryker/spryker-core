@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
 {
+
     /**
      * @var Request
      */
@@ -53,14 +54,14 @@ abstract class AbstractTable
     protected $defaultUrl = 'table';
 
     /**
-     *
+     * @var null
      */
+    protected $tableIdentifier;
+
     public function init()
     {
         $this->locator = Locator::getInstance();
-        $this->request = $this
-            ->locator
-            ->application()
+        $this->request = $this->locator->application()
             ->pluginPimple()
             ->getApplication()['request'];
         $config = $this->newTableConfiguration();
@@ -106,17 +107,36 @@ abstract class AbstractTable
     {
         $tableData = [];
 
+        $headers = $this->config->getHeaders();
+        $isArray = (true === is_array($headers));
         foreach ($data as $row) {
-            if (is_array($this->config->getHeaders()) === true) {
-                $row = array_intersect_key(
-                    $row,
-                    $this->config->getHeaders()
-                );
+            if ($isArray) {
+                $row = array_intersect_key($row, $headers);
+
+                $row = $this->reOrderByHeaders($headers, $row);
             }
 
             $tableData[] = array_values($row);
         }
+
         $this->setData($tableData);
+    }
+
+    /**
+     * @param $order
+     * @param $data
+     *
+     * @return array
+     */
+    protected function reOrderByHeaders($order, $data)
+    {
+        $result = [];
+
+        foreach ($order as $key => $value) {
+            $result[$key] = $data[$key];
+        }
+
+        return $result;
     }
 
     /**
@@ -144,6 +164,36 @@ abstract class AbstractTable
     }
 
     /**
+     * @return string
+     */
+    public function getTableIdentifier()
+    {
+        if (null === $this->tableIdentifier) {
+            $this->generateTableIdentifier();
+        }
+
+        return $this->tableIdentifier;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function generateTableIdentifier($prefix='table-')
+    {
+        $this->tableIdentifier = uniqid($prefix);
+
+        return $this;
+    }
+
+    /**
+     * @param null $tableIdentifier
+     */
+    public function setTableIdentifier($tableIdentifier)
+    {
+        $this->tableIdentifier = $tableIdentifier;
+    }
+
+    /**
      * @return \Twig_Environment
      * @throws \LogicException
      */
@@ -151,9 +201,7 @@ abstract class AbstractTable
     {
 
         /** @var \Twig_Environment $twig */
-        $twig = $this
-            ->locator
-            ->application()
+        $twig = $this->locator->application()
             ->pluginPimple()
             ->getApplication()['twig'];
 
@@ -163,11 +211,7 @@ abstract class AbstractTable
 
         /** @var \Twig_Loader_Chain $loaderChain */
         $loaderChain = $twig->getLoader();
-        $loaderChain->addLoader(
-            new \Twig_Loader_Filesystem(
-                __DIR__ . '/../../Presentation/Table/'
-            )
-        );
+        $loaderChain->addLoader(new \Twig_Loader_Filesystem(__DIR__ . '/../../Presentation/Table/'));
 
         return $twig;
     }
@@ -185,10 +229,12 @@ abstract class AbstractTable
      */
     public function getOrders()
     {
-        return $this->request->query->get(
-            'order',
-            [['column' => 0, 'dir' => 'asc']]
-        );
+        return $this->request->query->get('order', [
+            [
+                'column' => 0,
+                'dir' => 'asc',
+            ],
+        ]);
     }
 
     /**
@@ -221,13 +267,12 @@ abstract class AbstractTable
     public function render()
     {
         $twigVars = [
-            'config' => $this->prepareConfig()
+            'config' => $this->prepareConfig(),
         ];
 
-        return $this->getTwig()->render(
-            'index.twig',
-            $twigVars
-        );
+        return $this->getTwig()
+            ->render('index.twig', $twigVars)
+            ;
     }
 
     /**
@@ -235,16 +280,19 @@ abstract class AbstractTable
      */
     public function prepareConfig()
     {
-        $configArray = [
-            'tableId' => 'table-' . md5(time()),
-            'url' => $this->defaultUrl
-        ];
         if ($this->getConfiguration() instanceof TableConfiguration) {
-            $configArray += [
+            $configArray = [
+                'tableId' => $this->getTableIdentifier(),
                 'headers' => $this->config->getHeaders(),
+                'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
-                'url' => $this->config->getUrl()
+                'url' => (true === is_null($this->config->getUrl())) ? $this->defaultUrl : $this->config->getUrl(),
+            ];
+        } else {
+            $configArray = [
+                'tableId' => 'table-' . md5(time()),
+                'url' => $this->defaultUrl,
             ];
         }
 
@@ -265,38 +313,36 @@ abstract class AbstractTable
         $columns = array_keys($config->getHeaders());
         $orderColumn = $columns[$order[0]['column']];
         $this->total = $query->count();
-        $query
-            ->orderBy($orderColumn, $order[0]['dir']);
+        $query->orderBy($orderColumn, $order[0]['dir']);
         $searchTherm = $this->getSearchTherm();
 
         if (mb_strlen($searchTherm['value']) > 0) {
-            $i = 0;
-            $query->setIdentifierQuoting(true);
-            $tableName = $query->getTableMap()->getName();
+            $isFirst = true;
 
-            foreach ($columns as $column) {
-                if ($i !== 0) {
+            $query->setIdentifierQuoting(true);
+            $tableName = $query->getTableMap()
+                ->getName()
+            ;
+
+            foreach ($config->getSearchable() as $value) {
+                if (!$isFirst) {
                     $query->_or();
+                } else {
+                    $isFirst = false;
                 }
-                $query->where(
-                    $tableName . '.'
-                    . $query
-                        ->getTableMap()
-                        ->getColumnByPhpName($column)
-                        ->getName()
-                    . ' LIKE ?', //TODO perfomance
-                    '%' . $searchTherm['value'] . '%'
-                );
-                ++$i;
+
+                $query->where(sprintf('LOWER(%s.%s) LIKE ?', $tableName, $query->getTableMap()
+                    ->getColumnByPhpName($value)
+                    ->getName()), '%' . mb_strtolower($searchTherm['value']) . '%');
             }
             $this->filtered = $query->count();
         } else {
             $this->filtered = $this->total;
         }
 
-        $query
-            ->offset($offset)
-            ->limit($limit);
+        $query->offset($offset)
+            ->limit($limit)
+        ;
         $data = $query->find();
 
         return $data->toArray();
@@ -313,8 +359,9 @@ abstract class AbstractTable
             'draw' => $this->request->query->get('draw', 1),
             'recordsTotal' => $this->total,
             'recordsFiltered' => $this->filtered,
-            'data' => $this->data
+            'data' => $this->data,
         ];
+
         return $wrapperArray;
     }
 }

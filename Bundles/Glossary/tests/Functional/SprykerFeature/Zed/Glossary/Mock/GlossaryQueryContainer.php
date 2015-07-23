@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,5 +10,4 @@ use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 class GlossaryQueryContainer extends SprykerGlossaryQueryContainer implements GlossaryQueryContainerInterface
 {
-
 }

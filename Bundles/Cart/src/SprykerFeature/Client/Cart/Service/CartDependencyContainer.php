@@ -44,14 +44,4 @@ class CartDependencyContainer extends AbstractServiceDependencyContainer
         return $cartStub;
     }
 
-    /**
-     * @return CartStorageInterface
-     */
-    public function createStorage()
-    {
-        $storage = $this->getProvidedDependency(CartDependencyProvider::KV_STORAGE);
-
-        return $this->getFactory()->createStorageCartStorage($storage);
-    }
-
 }

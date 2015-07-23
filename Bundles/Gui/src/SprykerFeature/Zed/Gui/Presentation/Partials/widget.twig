@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                {% block widget_title -%}
+                    <h5>{{ widget_title | default('') | trans | raw }}</h5>
+                {%- endblock %}
+                <div class="pull-right">
+                    {% block widget_header_content -%}{%- endblock %}
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="ibox-content">
+
+                {% block widget_content -%}{%- endblock %}
+
+            </div>
+        </div>
+    </div>
+</div>
