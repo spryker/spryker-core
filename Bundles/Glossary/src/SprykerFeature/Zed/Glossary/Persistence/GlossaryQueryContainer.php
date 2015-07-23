@@ -38,7 +38,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      */
     public function queryKey($keyName)
     {
-        $query = $this->queryKeys()->doInsert();
+        $query = $this->queryKeys();
         $query->filterByKey($keyName);
 
         return $query;
