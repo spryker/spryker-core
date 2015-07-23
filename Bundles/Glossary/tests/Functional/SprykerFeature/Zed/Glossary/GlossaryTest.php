@@ -110,29 +110,6 @@ class GlossaryTest extends Test
         $this->assertFalse($specificKeyQuery->findOne()->getIsActive());
     }
 
-    public function testSynchronizeFilesWritesToDatabase()
-    {
-        /*
-         * This test is not yet final.
-         * Current Problem:
-         * It might work, but can also fail, as we know nothing about the preconditions (the database state)
-         * The method tests the sync between a config file with static files and the db
-         * It should not insert new records if these are already synced.
-         * However, this test knows nothing about the state.
-         * Possible Solution: A nice way to use another key file source (or other input) under the hood,
-         * i.e. by providing an overriding implementation of the file parser for the test
-         * Currently one could manually switch the concrete implementation in the glossary dependency container
-         */
-
-        $keyQuery = $this->glossaryQueryContainer->queryKeys();
-
-        $keyCountBeforeSynchronization = $keyQuery->count();
-        $this->glossaryFacade->synchronizeKeys();
-        $keyCountAfterSynchronization = $keyQuery->count();
-
-        $this->assertTrue($keyCountAfterSynchronization > $keyCountBeforeSynchronization);
-    }
-
     public function testCreateTranslationInsertsSomething()
     {
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
