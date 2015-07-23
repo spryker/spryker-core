@@ -30,6 +30,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     const GLOSSARY_KEY = 'glossary_key';
     const GLOSSARY_KEY_IS_ACTIVE = 'glossary_key_is_active';
     const LOCALE = 'locale';
+    const AJAX_AUTOCOMPLETE_LABEL = 'label';
+    const AJAX_AUTOCOMPLETE_VALUE = 'value';
 
     /**
      * @param string $keyName
@@ -65,9 +67,18 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     {
         $query = $this->queryActiveKeysByName($keyName);
         $query
-            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, 'label')
-            ->withColumn(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, 'value')
-            ->select(['label', 'value']);
+            ->withColumn(
+                SpyGlossaryKeyTableMap::COL_KEY,
+                self::AJAX_AUTOCOMPLETE_LABEL
+            )
+            ->withColumn(
+                SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY,
+                self::AJAX_AUTOCOMPLETE_VALUE
+            )
+            ->select([
+                self::AJAX_AUTOCOMPLETE_LABEL,
+                self::AJAX_AUTOCOMPLETE_VALUE
+            ]);
 
         return $query;
     }
