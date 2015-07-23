@@ -4,114 +4,37 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Communication;
+namespace SprykerFeature\Zed\Shipment\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
-use SprykerFeature\Zed\Customer\Communication\Table\AddressTable;
-use SprykerFeature\Zed\Customer\Communication\Table\CustomerTable;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
+use SprykerFeature\Zed\Shipment\Communication\Form\CarrierForm;
+use SprykerFeature\Zed\Shipment\Communication\Table\MethodTable;
+use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainer;
 
 /**
  * @method ShipmentCommunication getFactory()
+ * @method ShipmentQueryContainer getQueryContainer()
  */
 class ShipmentDependencyContainer extends AbstractCommunicationDependencyContainer
 {
-
-
     /**
-     * @return
+     * @return MethodTable
      */
-    public function createQueryContainer()
+    public function createMethodTable()
     {
-        return $this->getLocator()
-            ->shipment()
-            ->queryContainer()
-            ;
+        $methodQuery = $this->getQueryContainer()->queryMethods();
+
+        return $this->getFactory()->createTableMethodTable($methodQuery);
     }
 
     /**
-     * @return CustomerTable
+     * @return CarrierForm
      */
-    public function createCustomerTable()
+    public function createCarrierForm()
     {
-        /** @var SpyCustomerQuery $customerQuery */
-        $customerQuery = $this->getQueryContainer()
-            ->query
-        ;
+        $carrierQuery = $this->getQueryContainer()->queryCarriers();
 
-        return $this->getFactory()
-            ->createTableCustomerTable($customerQuery)
-            ;
+        return $this->getFactory()->createFormCarrierForm($carrierQuery);
     }
-
-    /**
-     * @return AddressTable
-     */
-    public function createCustomerAddressTable($idCustomer)
-    {
-        /** @var SpyCustomerAddressQuery $addressQuery */
-        $addressQuery = $this->getQueryContainer()
-            ->queryAddresses()
-        ;
-
-        /** @var SpyCustomerQuery $customerQuery */
-        $customerQuery = $this->getQueryContainer()
-            ->queryCustomers()
-        ;
-
-        return $this->getFactory()
-            ->createTableAddressTable($addressQuery, $customerQuery, $idCustomer)
-            ;
-    }
-
-    /**
-     * @param $type
-     *
-     * @return CustomerForm
-     */
-    public function createCustomerForm($type)
-    {
-        /** @var SpyCustomerQuery $customerQuery */
-        $customerQuery = $this->getQueryContainer()
-            ->queryCustomers()
-        ;
-
-        /** @var SpyCustomerAddressQuery $addressQuery */
-        $addressQuery = $this->getQueryContainer()
-            ->queryAddresses()
-        ;
-
-        return $this->getFactory()
-            ->createFormCustomerForm($customerQuery, $addressQuery, $type)
-            ;
-    }
-
-    /**
-     * @param $type
-     *
-     * @return AddressForm
-     */
-    public function createAddressForm($type)
-    {
-        /** @var SpyCustomerQuery $customerQuery */
-        $customerQuery = $this->getQueryContainer()
-            ->queryCustomers()
-        ;
-
-        /** @var SpyCustomerAddressQuery $addressQuery */
-        $addressQuery = $this->getQueryContainer()
-            ->queryAddresses()
-        ;
-
-        return $this->getFactory()
-            ->createFormAddressForm($addressQuery, $customerQuery, $type)
-            ;
-    }
-
 }
