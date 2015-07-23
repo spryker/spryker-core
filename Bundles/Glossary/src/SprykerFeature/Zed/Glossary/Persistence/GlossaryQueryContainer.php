@@ -38,8 +38,36 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      */
     public function queryKey($keyName)
     {
-        $query = $this->queryKeys();
+        $query = $this->queryKeys()->doInsert();
         $query->filterByKey($keyName);
+
+        return $query;
+    }
+
+    /**
+     * @param string $keyName
+     *
+     * @return SpyGlossaryKeyQuery
+     */
+    public function queryActiveKeysByName($keyName)
+    {
+        $query = $this->queryKeys();
+        $query->filterByIsActive(true)->filterByKey($keyName);
+
+        return $query;
+    }
+    /**
+     * @param string $keyName
+     *
+     * @return SpyGlossaryKeyQuery
+     */
+    public function queryActiveKeysByNameForAjax($keyName)
+    {
+        $query = $this->queryActiveKeysByName($keyName);
+        $query
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, 'label')
+            ->withColumn(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, 'value')
+            ->select(['label', 'value']);
 
         return $query;
     }
