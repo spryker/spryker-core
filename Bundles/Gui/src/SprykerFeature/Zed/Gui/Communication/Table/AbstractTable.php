@@ -11,6 +11,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
+use Propel\Runtime\Map\TableMap;
 
 abstract class AbstractTable
 {
