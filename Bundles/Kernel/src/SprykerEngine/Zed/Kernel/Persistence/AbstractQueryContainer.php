@@ -14,6 +14,8 @@ use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 abstract class AbstractQueryContainer implements QueryContainerInterface
 {
 
+    const DEPENDENCY_CONTAINER = 'DependencyContainer';
+
     /**
      * @var DependencyContainerInterface
      */
@@ -39,8 +41,8 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     {
         $this->factory = $factory;
 
-        if ($factory->exists('DependencyContainer')) {
-            $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
+        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
+            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
         }
     }
 

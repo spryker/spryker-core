@@ -1,0 +1,23 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Address details' %}
+
+{% block head_title widget_title | trans %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_header_content %}
+            <a class="btn btn-primary" href="/sales/details/?id-sales-order={{ idOrder }}">{{ 'View Order' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ form(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

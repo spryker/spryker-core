@@ -180,21 +180,6 @@ class ProductFacade extends AbstractFacade
     }
 
     /**
-     * @param AbstractProductInterface $abstractProductTransfer
-     * @param LocaleTransfer $locale
-     *
-     * @return int
-     */
-    public function createAbstractProductAttributes(
-        AbstractProductInterface $abstractProductTransfer,
-        LocaleTransfer $locale
-    ) {
-        $productManager = $this->getDependencyContainer()->createProductManager();
-
-        return $productManager->createAbstractProductAttributes($abstractProductTransfer, $locale);
-    }
-
-    /**
      * @param string $sku
      *
      * @return bool
@@ -217,21 +202,6 @@ class ProductFacade extends AbstractFacade
         $productManager = $this->getDependencyContainer()->createProductManager();
 
         return $productManager->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
-    }
-
-    /**
-     * @param ConcreteProductInterface $concreteProductTransfer
-     * @param LocaleTransfer $locale
-     *
-     * @return int
-     */
-    public function createConcreteProductAttributes(
-        ConcreteProductInterface $concreteProductTransfer,
-        LocaleTransfer $locale
-    ) {
-        $productManager = $this->getDependencyContainer()->createProductManager();
-
-        return $productManager->createConcreteProductAttributes($concreteProductTransfer, $locale);
     }
 
     /**
@@ -288,12 +258,10 @@ class ProductFacade extends AbstractFacade
      * @param string $sku
      *
      * @return string
-     *
-     * @todo examine this as the product sku mapper is gone
      */
     public function getAbstractSkuFromConcreteProduct($sku)
     {
-        return $this->getDependencyContainer()->getProductSkuMapper()->getAbstractSkuFromConcreteProduct($sku);
+        return $this->getDependencyContainer()->createProductManager()->getAbstractSkuFromConcreteProduct($sku);
     }
 
 }

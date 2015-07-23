@@ -14,7 +14,9 @@ use SprykerEngine\Zed\Kernel\Factory\FactoryInterface;
 abstract class AbstractFactory implements FactoryInterface
 {
 
-    const SUFFIX_FACTORY = 'Factory';
+    const SUFFIX_FACTORY = self::FACTORY;
+    const DEPENDENCY_CONTAINER = 'DependencyContainer';
+    const FACTORY = 'Factory';
 
     /**
      * @var string
@@ -35,8 +37,8 @@ abstract class AbstractFactory implements FactoryInterface
      * @var array
      */
     protected $baseClasses = [
-        'DependencyContainer',
-        'Factory',
+        self::DEPENDENCY_CONTAINER,
+        self::FACTORY,
     ];
 
     /**

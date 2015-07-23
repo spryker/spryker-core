@@ -47,20 +47,6 @@ interface ProductManagerInterface
     public function getAbstractProductIdBySku($sku);
 
     /**
-     * @param AbstractProductInterface $abstractProductTransfer
-     * @param LocaleTransfer $locale
-     *
-     * @throws AbstractProductAttributesExistException
-     * @throws PropelException
-     * 
-     * @return int
-     */
-    public function createAbstractProductAttributes(
-        AbstractProductInterface $abstractProductTransfer,
-        LocaleTransfer $locale
-    );
-
-    /**
      * @param ConcreteProductInterface $concreteProductTransfer
      * @param int $idAbstractProduct
      *
@@ -85,19 +71,6 @@ interface ProductManagerInterface
      * @return int
      */
     public function getConcreteProductIdBySku($sku);
-
-    /**
-     * @param ConcreteProductInterface $concreteProductTransfer
-     * @param LocaleTransfer $locale
-     *
-     * @throws ConcreteProductAttributesExistException
-     *
-     * @return int
-     */
-    public function createConcreteProductAttributes(
-        ConcreteProductInterface $concreteProductTransfer,
-        LocaleTransfer $locale
-    );
 
     /**
      * @param int $idAbstractProduct
@@ -173,5 +146,13 @@ interface ProductManagerInterface
      * @return int
      */
     public function getAbstractProductIdByConcreteSku($sku);
+
+    /**
+     * @param string $sku
+     *
+     * @return string
+     * @throws MissingProductException
+     */
+    public function getAbstractSkuFromConcreteProduct($sku);
 
 }

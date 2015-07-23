@@ -15,7 +15,7 @@ class CartStub implements CartStubInterface
 {
 
     /**
-     * @var ZedClient
+     * @var ZedRequestClient
      */
     private $zedStub;
 

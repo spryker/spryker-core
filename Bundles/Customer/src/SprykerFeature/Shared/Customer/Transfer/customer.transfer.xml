@@ -24,6 +24,7 @@
         <property name="isDefaultBilling" type="bool" />
         <property name="isDefaultShipping" type="bool" />
         <property name="fkCountry" type="int" />
+        <property name="fkRegion" type="int" />
         <property name="iso2Code" type="string" />
     </transfer>
 
@@ -34,6 +35,7 @@
     <transfer name="Customer">
         <property name="email" type="string" />
         <property name="idCustomer" type="int" />
+        <property name="customerReference" type="string" />
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
         <property name="company" type="string" />

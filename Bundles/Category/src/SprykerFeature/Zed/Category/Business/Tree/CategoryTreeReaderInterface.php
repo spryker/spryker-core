@@ -15,12 +15,10 @@ interface CategoryTreeReaderInterface
     /**
      * @param int $idNode
      * @param LocaleTransfer $locale
-     * @param bool $onlyOneLevel
-     * @param bool $excludeStartNode
      *
      * @return SpyCategoryNode[]
      */
-    public function getChildren($idNode, LocaleTransfer $locale, $onlyOneLevel = true, $excludeStartNode = true);
+    public function getChildren($idNode, LocaleTransfer $locale);
 
     /**
      * @param int $idNode

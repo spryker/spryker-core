@@ -1,0 +1,28 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Manager Addresses' %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block content %}
+
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_header_content %}
+            <a href="/customer/" class="btn btn-sm btn-default">{{ 'Back to Customers' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/address/add?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'Add a new address' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/view/?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'View Customer' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/edit/?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'Edit Customer' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ addressTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

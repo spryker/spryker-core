@@ -18,6 +18,8 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
 
     const BUNDLE_NAME = 'Kernel';
 
+    const DEPENDENCY_CONTAINER = 'DependencyContainer';
+
     public function testExistsShouldReturnTrueIfClassCanBeResolved()
     {
         $factory = new Factory(self::BUNDLE_NAME);
@@ -58,7 +60,7 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
     public function testBuildClassNameShouldReturnClassWithAddingBundleNameIfItsABaseClassName()
     {
         $factory = new Factory(self::BUNDLE_NAME);
-        $class = $factory->create('DependencyContainer');
+        $class = $factory->create(self::DEPENDENCY_CONTAINER);
 
         $this->assertInstanceOf('Unit\SprykerEngine\Shared\Kernel\Fixtures\KernelDependencyContainer', $class);
     }

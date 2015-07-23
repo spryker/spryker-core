@@ -38,7 +38,8 @@ class ProductOptionDependencyContainer extends AbstractBusinessDependencyContain
     public function getProductOptionReaderModel()
     {
         return $this->getFactory()->createModelProductOptionReader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_LOCALE)
         );
     }
 

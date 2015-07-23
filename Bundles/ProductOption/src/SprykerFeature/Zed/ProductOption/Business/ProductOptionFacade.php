@@ -11,12 +11,24 @@ use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionType
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 
 /**
  * @method ProductOptionDependencyContainer getDependencyContainer()
  */
 class ProductOptionFacade extends AbstractFacade
 {
+
+    /**
+     * @param int $idProductOptionValueUsage
+     * @param string $localeCode
+     *
+     * @return ProductOptionTransfer
+     */
+    public function getProductOption($idProductOptionValueUsage, $localeCode)
+    {
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getProductOption($idProductOptionValueUsage, $localeCode);
+    }
 
     /**
      * @param string $importKeyProductOptionType
@@ -201,6 +213,12 @@ class ProductOptionFacade extends AbstractFacade
     public function getEffectiveTaxRateForTypeUsage($idTypeUsage)
     {
         return $this->getDependencyContainer()->getProductOptionReaderModel()->getEffectiveTaxRateForTypeUsage($idTypeUsage);
+    }
+
+
+    public function flushBuffer()
+    {
+        $this->getDependencyContainer()->getDataImportWriterModel()->flushBuffer();
     }
 
 }

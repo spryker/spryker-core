@@ -15,6 +15,7 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTra
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageQuery;
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
+use SprykerFeature\Zed\Tax\Persistence\Propel\Base\SpyTaxSetQuery;
 
 interface ProductOptionQueryContainerInterface
 {
@@ -27,19 +28,19 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionTypeByImportKey($importKeyProductOptionType);
 
     /**
-     * @param string $importKeyProductOptionType
-     *
-     * @return SpyProductOptionTypeQuery
-     */
-    public function queryProductOptionTypeIdByImportKey($importKeyProductOptionType);
-
-    /**
      * @param int $fkProductOptionType
      * @param int $fkLocale
      *
      * @return SpyProductOptionTypeTranslationQuery
      */
     public function queryProductOptionTypeTranslationByFks($fkProductOptionType, $fkLocale);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return SpyProductOptionValueQuery
+     */
+    public function queryOptionValueById($idProductOptionValue);
 
     /**
      * @param string $importKeyProductOptionValue
@@ -57,13 +58,6 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionValueByImportKey($importKeyProductOptionValue);
 
     /**
-     * @param string $importKeyProductOptionValue
-     *
-     * @return SpyProductOptionValueQuery
-     */
-    public function queryProductOptionValueIdByImportKey($importKeyProductOptionValue);
-
-    /**
      * @param int $fkProductOptionValue
      * @param int $fkLocale
      *
@@ -76,7 +70,7 @@ interface ProductOptionQueryContainerInterface
      *
      * @return SpyProductOptionTypeUsageQuery
      */
-    public function queryProductOptonTypeUsageById($idProductOptionTypeUsage);
+    public function queryProductOptionTypeUsageById($idProductOptionTypeUsage);
 
     /**
      * @param int $fkProduct
@@ -87,27 +81,19 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionTypeUsageByFKs($fkProduct, $fkProductOptionType);
 
     /**
-     * @param int $fkProduct
-     * @param int $fkProductOptionType
-     *
-     * @return SpyProductOptionTypeUsageQuery
-     */
-    public function queryProductOptionTypeUsageIdByFKs($fkProduct, $fkProductOptionType);
-
-    /**
      * @param int $idProductOptionValueUsage
      *
      * @return SpyProductOptionValueUsageQuery
      */
-    public function queryProductOptonValueUsageById($idProductOptionValueUsage);
+    public function queryProductOptionValueUsageById($idProductOptionValueUsage);
 
     /**
      * @param int $fkProductOptionTypeUsage
-     * @param int $fkProductOptionType
+     * @param int $fkProductOptionValue
      *
      * @return SpyProductOptionValueUsageQuery
      */
-    public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionType);
+    public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionValue);
 
     /**
      * @param int $fkProductOptionTypeUsage
@@ -153,6 +139,21 @@ interface ProductOptionQueryContainerInterface
      * @return SpyAbstractProductQuery
      */
     public function queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage);
+
+    /**
+     * @param int $idProductOptionValueUsage
+     * @param int $idLocale
+     *
+     * @return SpyProductOptionValueUsageQuery
+     */
+    public function queryProductOptionValueUsageWithAssociatedAttributes($idProductOptionValueUsage, $idLocale);
+
+    /**
+     * @param int $idProductOptionValueUsage
+     *
+     * @return SpyTaxSetQuery
+     */
+    public function queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage);
 
     /**
      * @param int $idProduct

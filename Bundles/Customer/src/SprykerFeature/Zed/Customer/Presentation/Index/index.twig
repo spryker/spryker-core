@@ -1,41 +1,25 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block body_class %}spy-page{% endblock %}
+{% set widget_title = 'Customers' %}
 
-{% block title_content %}Customer{% endblock %}
+{% block head_title widget_title | trans %}
+
+{% block section_title widget_title | trans %}
 
 {% block content %}
 
-    {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Customers List' } %}
+    {% embed '@Gui/Partials/widget.twig' %}
 
-        <table class="footable table table-stripped toggle-arrow-tiny">
-            <thead>
-            <tr>
-                <th>{{ 'Vorname' | trans }}</th>
-                <th>{{ 'Nachname' | trans }}</th>
-                <th>{{ 'E-Mail' | trans }}</th>
-                <th>{{ 'Signed Up' | trans }}</th>
-            </tr>
-            </thead>
+        {% block widget_header_content %}
+            <a href="/customer/add" class="btn btn-sm btn-primary ">{{ 'Add a new customer' | trans }}</a>
+        {% endblock %}
 
-            <tbody>
-            {% for row in content.rows %}
-            <tr>
-                <td><a class="cell" href="/customer/profile?id={{ row.id_customer }}">{{ row.first_name ~ ' ' ~ row.last_name }}</a></td>
-                <td>{{ row.email }}</td>
-                <td>{{ row.created_at }}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
+        {% block widget_content %}
 
-        </table>
+            {{ customerTable | raw }}
 
-    {% include '@Gui/Partials/pagination.twig' with {
-        'url': '/sales/',
-        'totalPages': content.pages,
-        'currentPage': content.page
-    } %}
+        {% endblock %}
 
-    {% include '@Gui/Partials/Table/footer.twig' %}
+    {% endembed %}
 
 {% endblock %}

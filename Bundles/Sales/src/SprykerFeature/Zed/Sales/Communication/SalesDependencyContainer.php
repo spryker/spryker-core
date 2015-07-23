@@ -13,6 +13,8 @@ use SprykerFeature\Zed\Sales\Communication\Grid\OrderItemsGrid;
 use SprykerFeature\Zed\Sales\Communication\Grid\SalesGrid;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\Sales\Communication\Table\OrdersTable;
+use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
 
 /**
  * @method SalesCommunication getFactory()
@@ -41,6 +43,30 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
             null,
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return CustomerForm
+     */
+    public function createCustomerForm($idSalesOrder)
+    {
+        $customerQuery = $this->getQueryContainer()->querySalesOrderById($idSalesOrder);
+
+        return $this->getFactory()->createFormCustomerForm($customerQuery);
+    }
+
+    /**
+     * @param int $idOrderAddress
+     *
+     * @return AddressForm
+     */
+    public function createAddressForm($idOrderAddress)
+    {
+        $addressQuery = $this->getQueryContainer()->querySalesOrderAddressById($idOrderAddress);
+
+        return $this->getFactory()->createFormAddressForm($addressQuery);
     }
 
     /**
@@ -74,6 +100,16 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getFactory()->createGridOrderItemsGrid(
             $this->getQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder));
+    }
+
+    /**
+     * @return OrdersTable
+     */
+    public function createOrdersTable()
+    {
+        $orderQuery = $this->getQueryContainer()->querySalesOrder();
+
+        return $this->getFactory()->createTableOrdersTable($orderQuery);
     }
 
 }

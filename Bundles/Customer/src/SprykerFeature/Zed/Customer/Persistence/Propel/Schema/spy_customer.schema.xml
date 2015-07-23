@@ -10,6 +10,7 @@
 
     <table name="spy_customer" idMethod="native" phpName="SpyCustomer">
         <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="customer_reference" required="true" type="VARCHAR" size="255" />
         <column name="email" required="true" size="255" type="VARCHAR"/>
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr"/>
         <column name="first_name" size="100" type="VARCHAR"/>
@@ -41,6 +42,7 @@
         <column name="id_customer_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
         <column name="fk_customer" required="true" type="INTEGER"/>
         <column name="fk_country" type="INTEGER" required="true"/>
+        <column name="fk_region" type="INTEGER" />
 
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, "/>
         <column name="first_name" required="true" size="100" type="VARCHAR"/>
@@ -58,10 +60,12 @@
         <foreign-key foreignTable="spy_customer" phpName="Customer" refPhpName="Address">
             <reference foreign="id_customer" local="fk_customer"/>
         </foreign-key>
+        <foreign-key foreignTable="spy_region" phpName="Region" refPhpName="CustomerAddress">
+            <reference local="fk_region" foreign="id_region"/>
+        </foreign-key>
         <foreign-key foreignTable="spy_country" phpName="Country" refPhpName="CustomerAddress">
             <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
-
         <index>
             <index-column name="fk_customer"/>
         </index>
@@ -69,5 +73,14 @@
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
 
+    </table>
+
+    <table name="spy_customer_number_sequence" phpName="SpyCustomerNumberSequence">
+        <column name="id_customer_number_sequence" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="name" type="VARCHAR" size="255" required="true" />
+        <column name="current_id" type="INTEGER" required="true" />
+        <unique>
+            <unique-column name="name" />
+        </unique>
     </table>
 </database>

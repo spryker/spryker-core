@@ -1,40 +1,19 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block head_title 'sales.index'|trans %}
+{% set widget_title = 'Orders List' %}
+
+{% block head_title widget_title | trans %}
 
 {% block content %}
 
-    {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Order List' } %}
+    {% embed '@Gui/Partials/widget.twig' %}
 
-    <table class="footable table table-stripped toggle-arrow-tiny">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>{{ "Name" | trans }}</th>
-            <th>{{ "Data" | trans }}</th>
-            <th>{{ "Total value" | trans }}</th>
-        </tr>
-        </thead>
+        {% block widget_content %}
 
-        <tbody>
-        {% for row in content.rows %}
-            <tr>
-                <td><a href="/sales/details?id-sales-order={{ row.id_sales_order }}">{{ row.id_sales_order }}</a></td>
-                <td><a href="/sales/details?id-sales-order={{ row.id_sales_order }}">{{ row.first_name }} {{ row.last_name }}</a></td>
-                <td>{{ row.created_at }}</td>
-                <td>{{ row.grand_total | currency }}</td>
-            </tr>
-        {% endfor %}
+            {{ orders | raw }}
 
-        </tbody>
-    </table>
+        {% endblock %}
 
-    {% include '@Gui/Partials/pagination.twig' with {
-        'url': '/sales/',
-        'totalPages': content.pages,
-        'currentPage': content.page
-    } %}
-
-    {% include '@Gui/Partials/Table/footer.twig' %}
+    {% endembed %}
 
 {% endblock %}

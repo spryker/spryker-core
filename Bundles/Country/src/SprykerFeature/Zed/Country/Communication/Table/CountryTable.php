@@ -34,7 +34,7 @@ class CountryTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeaders([
+        $config->setHeader([
             'Iso2Code' => 'ISO2 code',
             'Iso3Code' => 'ISO3 Code',
             'Name' => 'Country name',

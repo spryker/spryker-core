@@ -12,9 +12,8 @@ class YvesPluginMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
 {
 
     const METHOD_STRING_PATTERN = '@method \{{className}} plugin{{methodName}}()';
-    const PATH_PATTERN = 'Plugin/';
+    const PATH_PATTERN = 'Communication/Plugin/';
     const APPLICATION_YVES = 'Yves';
-    const METHOD_SUFFIX = 'Plugin';
 
     /**
      * @param OptionsResolver $resolver
@@ -54,11 +53,10 @@ class YvesPluginMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
     protected function buildMethodNameFromClassName($className)
     {
         $classNameParts = explode('\\', $className);
-        $classNameParts = array_splice($classNameParts, 4);
-        $reversedClassString = strrev(implode($classNameParts));
-        $methodSuffixStringLength = strlen(self::METHOD_SUFFIX);
+        $classNameParts = array_splice($classNameParts, 5);
+        $methodName = implode($classNameParts);
 
-        return strrev(substr($reversedClassString, $methodSuffixStringLength));
+        return $methodName;
     }
 
 }

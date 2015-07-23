@@ -4,55 +4,19 @@
 {% block body_class %}spy-page{% endblock %}
 
 
-{% block title_content %}Category{% endblock %}
+{% block title_content %}{{ "Category" | trans }}{% endblock %}
+{% block section_title %}{{ "Category" | trans }}{% endblock %}
 
 {% block content %}
 
-<div
-        spy-app="spyFormat, spyGrid, spyLayout, spyForm"
-        ng-strict-di
-        ng-controller="ComController"
-        >
+    {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Category List' } %}
 
-    <div spy-form-update="read()" scope="category-grid" channel="category"></div>
-    <div spy-form-update="read()" scope="category-node-grid" channel="category"></div>
-    <div spy-form-update="closeLayer()" scope="category-form" channel="category"></div>
-    <div spy-form-abort="closeLayer()" scope="category-form" channel="category"></div>
+    <div id="jstree_category"></div>
 
-    <div spy-form-update="read()" scope="category-node-grid" channel="category-node"></div>
-    <div spy-form-update="closeLayer()" scope="category-node-form" channel="category-node"></div>
-    <div spy-form-abort="closeLayer()" scope="category-node-form" channel="category-node"></div>
+    {% include '@Gui/Partials/Table/footer.twig' %}
 
-    <spy-listen on="category-create-click" scope="category-form" do="create = true; read($argument); openLayer()" channel="category"></spy-listen>
-    <spy-listen on="category-update-click" scope="category-form" do="openLayer(); read($argument);" channel="category"></spy-listen>
+{% endblock %}
 
-    <spy-listen on="category-node-create-click" scope="category-node-form" do="create = true; read($argument); openLayer();" channel="category-node"></spy-listen>
-    <spy-listen on="category-node-update-click" scope="category-node-form" do="openLayer(); read($argument);" channel="category-node"></spy-listen>
-
-    <div class="spy-layout n2">
-
-        {% include '@Category/Grid/category-grid.twig' %}
-
-        {% include '@Category/Grid/category-node-grid.twig' %}
-
-        {% include '@Category/Form/category-form.twig' %}
-
-        {% include '@Category/Form/category-node-form.twig' %}
-
-    </div>
-
-
-    <div class="spy-layout sparse">
-
-        <h3>Category Tree</h3>
-
-        <div>
-            <iframe src="/category/index/render" frameBorder="0" style="width: 100%; height: 500px;" ></iframe>
-        </div>
-
-    </div>
-
-</div>
-
-
+{% block temp_footer_js %}
+    <script src="/bundles/Gui/scripts/plugins/jsTree/jstree.min.js"></script>
 {% endblock %}

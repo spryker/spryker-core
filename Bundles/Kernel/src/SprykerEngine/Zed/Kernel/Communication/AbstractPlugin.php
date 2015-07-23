@@ -16,6 +16,8 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 abstract class AbstractPlugin extends AbstractLogger implements MessengerInterface
 {
 
+    const DEPENDENCY_CONTAINER = 'DependencyContainer';
+
     /**
      * @var MessengerInterface
      */
@@ -42,8 +44,8 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      */
     public function __construct(Factory $factory, Locator $locator)
     {
-        if ($factory->exists('DependencyContainer')) {
-            $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
+        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
+            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
         }
     }
 

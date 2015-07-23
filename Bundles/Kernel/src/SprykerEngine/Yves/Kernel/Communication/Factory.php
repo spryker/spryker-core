@@ -28,6 +28,10 @@ class Factory extends AbstractFactory
         $arguments = func_get_args();
         array_shift($arguments);
 
+        if ($this->isMagicCall) {
+            $arguments = (count($arguments) > 0) ? $arguments[0] : [];
+        }
+
         $class = $this->buildClassName($class);
         $resolver = $this->getResolver();
 

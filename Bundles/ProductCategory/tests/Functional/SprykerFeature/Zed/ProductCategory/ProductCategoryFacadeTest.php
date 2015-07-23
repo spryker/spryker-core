@@ -9,6 +9,7 @@ namespace Functional\SprykerFeature\Zed\ProductCategory;
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
@@ -88,19 +89,24 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $concreteSku = 'ATestProduct';
         $categoryName = 'ATestCategory';
         $localeName = 'ABCDE';
+        $abstractName = 'abstractName';
 
         $locale = $this->localeFacade->createLocale($localeName);
 
         $abstractProductTransfer = new AbstractProductTransfer();
         $abstractProductTransfer->setSku($abstractSku);
         $abstractProductTransfer->setAttributes([]);
-        $abstractProductTransfer->setLocalizedAttributes([]);
+        $localizedAttributes = new LocalizedAttributesTransfer();
+        $localizedAttributes->setAttributes([]);
+        $localizedAttributes->setLocale($locale);
+        $localizedAttributes->setName($abstractName);
+        $abstractProductTransfer->addLocalizedAttributes($localizedAttributes);
         $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProductTransfer);
 
         $concreteProductTransfer = new ConcreteProductTransfer();
         $concreteProductTransfer->setSku($concreteSku);
         $concreteProductTransfer->setAttributes([]);
-        $concreteProductTransfer->setLocalizedAttributes([]);
+        $concreteProductTransfer->addLocalizedAttributes($localizedAttributes);
         $this->productFacade->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
 
         $categoryTransfer = new CategoryTransfer();

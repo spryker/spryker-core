@@ -222,6 +222,7 @@ class SandboxController extends AbstractController
         $order->setLastName($address->getLastName());
         $order->setShippingAddress($address);
         $order->setBillingAddress($address);
+        $order->setOrderReference(uniqid());
         $order->setSubtotal(0);
         $order->setGrandTotal(0);
         $order->save();
@@ -281,6 +282,7 @@ class SandboxController extends AbstractController
         $customer->setFirstName($this->generateCustomerName());
         $customer->setLastName($this->generateCustomerName(true));
         $customer->setEmail($email);
+        $customer->setCustomerReference(uniqid());
 
         $customer->save();
 

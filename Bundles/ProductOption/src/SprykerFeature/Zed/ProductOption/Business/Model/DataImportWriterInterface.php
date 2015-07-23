@@ -95,4 +95,7 @@ interface DataImportWriterInterface
      */
     public function importPresetConfiguration($sku, array $importKeysProductOptionValues, $isDefault = false, $sequence = null);
 
+
+    public function flushBuffer();
+
 }

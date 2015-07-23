@@ -1,11 +1,12 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
@@ -15,7 +16,6 @@ use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeExc
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
-
     /**
      * @var CategoryQueryContainer
      */
@@ -30,25 +30,23 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param int $idNode
+     * @param int            $idNode
      * @param LocaleTransfer $locale
-     * @param bool $onlyOneLevel
-     * @param bool $excludeStartNode
      *
      * @return SpyCategoryNode[]|ObjectCollection
      */
-    public function getChildren($idNode, LocaleTransfer $locale, $onlyOneLevel = true, $excludeStartNode = true)
+    public function getChildren($idNode, LocaleTransfer $locale)
     {
         return $this->queryContainer
-            ->queryChildren($idNode, $locale->getIdLocale(), $onlyOneLevel, $excludeStartNode)
+            ->queryFirstLevelChildrenByIdLocale($idNode, $locale->getIdLocale())
             ->find()
             ;
     }
 
     /**
-     * @param int $idNode
+     * @param int            $idNode
      * @param LocaleTransfer $locale
-     * @param bool $excludeRootNode
+     * @param bool           $excludeRootNode
      *
      * @return array
      */
@@ -58,10 +56,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param int $idNode
+     * @param int            $idNode
      * @param LocaleTransfer $locale
-     * @param bool $excludeRootNode
-     * @param bool $onlyParents
+     * @param bool           $excludeRootNode
+     * @param bool           $onlyParents
      *
      * @return array
      */
@@ -74,10 +72,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param int $idNode
+     * @param int            $idNode
      * @param LocaleTransfer $locale
-     * @param bool $excludeRootNode
-     * @param bool $onlyParents
+     * @param bool           $excludeRootNode
+     * @param bool           $onlyParents
      *
      * @return array
      */
@@ -101,10 +99,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param int $idNode
+     * @param int            $idNode
      * @param LocaleTransfer $locale
-     * @param bool $excludeRootNode
-     * @param bool $onlyParents
+     * @param bool           $excludeRootNode
+     * @param bool           $onlyParents
      *
      * @TODO Move getGroupedPathIds and getGroupedPaths to another class, duplicated Code!
      *
@@ -154,11 +152,11 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
             ->count()
         ;
 
-        return  $childrenCount > 0;
+        return $childrenCount > 0;
     }
 
     /**
-     * @param string $categoryName
+     * @param string         $categoryName
      * @param LocaleTransfer $locale
      *
      * @return bool
@@ -171,7 +169,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param string $categoryName
+     * @param string         $categoryName
      * @param LocaleTransfer $locale
      *
      * @throws MissingCategoryNodeException
@@ -210,6 +208,36 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @param $idNode
+     *
+     * @return CategoryTransfer
+     */
+    public function getCategoryTransferByIdNode($idNode)
+    {
+        $categoryEntity = $this->getNodesByIdCategory($idNode);
+        $categoryTransfer = new CategoryTransfer();
+        foreach ($categoryEntity->getCategory()->getAttributes() as $attributeEntity) {
+            $categoryTransfer->setName($attributeEntity->getName());
+        }
+        $categoryTransfer->setIdCategory($categoryEntity->getFkCategory());
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return SpyCategoryNode[]
+     */
+    public function getRootNodes()
+    {
+        return $this->queryContainer
+            ->queryRootNode()
+            ->find()
+            ;
+    }
+
+    /**
      * @param int $idCategory
      *
      * @return SpyCategoryNode[]
@@ -222,4 +250,45 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
             ;
     }
 
+    /**
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return SpyCategoryNode[]
+     */
+    public function getTree(LocaleTransfer $localeTransfer)
+    {
+        $tree = $this->getTreeNodesRecursively($localeTransfer);
+
+        return $tree;
+    }
+
+    /**
+     * @param SpyCategoryNode $node
+     * @param LocaleTransfer  $localeTransfer
+     *
+     * @return SpyCategoryNode[]
+     */
+    private function getTreeNodesRecursively(LocaleTransfer $localeTransfer, SpyCategoryNode $node = null)
+    {
+        $tree = [];
+        if ($node == null) {
+            $children = $this->getRootNodes();
+            $parentId = '#';
+        } else {
+            $children = $this->getChildren($node->getIdCategoryNode(), $localeTransfer);
+            $parentId = $node->getIdCategoryNode();
+        }
+        foreach ($children as $child) {
+            $tree[] = [
+                'id' => $child->getIdCategoryNode(),
+                'parent' => $parentId,
+                'text' => $child->getCategory()->getAttributes()->getFirst()->getName(),
+            ];
+            if ($child->countDescendants() > 0) {
+                $tree = array_merge($tree, $this->getTreeNodesRecursively($localeTransfer, $child));
+            }
+        }
+
+        return $tree;
+    }
 }

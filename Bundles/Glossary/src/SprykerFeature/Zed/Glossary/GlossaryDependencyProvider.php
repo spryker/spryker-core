@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -25,11 +24,11 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
         };
 
-        $container[self::PLUGIN_VALIDATOR] = function (Container $container) {
+        $container[GlossaryDependencyProvider::PLUGIN_VALIDATOR] = function (Container $container) {
             return $container->getLocator()->application()->pluginPimple()->getApplication()['validator'];
         };
 
@@ -43,11 +42,11 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container[GlossaryDependencyProvider::FACADE_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->facade();
         };
 
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
         };
 

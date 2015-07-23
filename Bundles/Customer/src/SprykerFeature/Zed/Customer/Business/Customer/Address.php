@@ -43,11 +43,8 @@ class Address
      * @param CustomerToCountryInterface $countryFacade
      * @param CustomerToLocaleInterface $localeFacade
      */
-    public function __construct(
-        QueryContainerInterface $queryContainer,
-        CustomerToCountryInterface $countryFacade,
-        CustomerToLocaleInterface $localeFacade
-    ) {
+    public function __construct(QueryContainerInterface $queryContainer, CustomerToCountryInterface $countryFacade, CustomerToLocaleInterface $localeFacade)
+    {
         $this->queryContainer = $queryContainer;
         $this->countryFacade = $countryFacade;
         $this->localeFacade = $localeFacade;
@@ -95,11 +92,9 @@ class Address
      */
     public function getAddress(CustomerAddressTransfer $addressTransfer)
     {
-        $entity = $this->queryContainer
-            ->queryAddress(
-                $addressTransfer->getIdCustomerAddress()
-            )
-            ->findOne();
+        $entity = $this->queryContainer->queryAddress($addressTransfer->getIdCustomerAddress())
+            ->findOne()
+        ;
 
         if (!$entity) {
             throw new AddressNotFoundException();
@@ -121,12 +116,9 @@ class Address
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-        $entity = $this->queryContainer
-            ->queryAddressForCustomer(
-                $addressTransfer->getIdCustomerAddress(),
-                $customer->getEmail()
-            )
-            ->findOne();
+        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
+            ->findOne()
+        ;
 
         if (!$entity) {
             throw new AddressNotFoundException();
@@ -134,11 +126,7 @@ class Address
 
         $entity->fromArray($addressTransfer->toArray());
         $entity->setCustomer($customer);
-        $country = $entity->getCountry();
-        if (!$country) {
-            $country = $this->getCustomerCountryId();
-        }
-        $entity->setCountry($country);
+        $entity->setFkCountry($this->getCustomerCountryId());
         $entity->save();
 
         return $this->entityToTransfer($entity);
@@ -157,12 +145,9 @@ class Address
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-        $entity = $this->queryContainer
-            ->queryAddressForCustomer(
-                $addressTransfer->getIdCustomerAddress(),
-                $customer->getEmail()
-            )
-            ->findOne();
+        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
+            ->findOne()
+        ;
 
         if (!$entity) {
             throw new AddressNotFoundException();
@@ -187,12 +172,9 @@ class Address
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-        $entity = $this->queryContainer
-            ->queryAddressForCustomer(
-                $addressTransfer->getIdCustomerAddress(),
-                $customer->getEmail()
-            )
-            ->findOne();
+        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
+            ->findOne()
+        ;
 
         if (!$entity) {
             throw new AddressNotFoundException();
@@ -227,12 +209,7 @@ class Address
             $address[] = $addressTransfer->getCompany();
         }
 
-        $address[] = sprintf(
-            '%s %s %s',
-            $addressTransfer->getSalutation(),
-            $addressTransfer->getFirstName(),
-            $addressTransfer->getLastName()
-        );
+        $address[] = sprintf('%s %s %s', $addressTransfer->getSalutation(), $addressTransfer->getFirstName(), $addressTransfer->getLastName());
 
         if (count($addressTransfer->getAddress1()) > 0) {
             $address[] = $addressTransfer->getAddress1();
@@ -244,11 +221,7 @@ class Address
             $address[] = $addressTransfer->getAddress3();
         }
 
-        $address[] = sprintf(
-            '%s %s',
-            $addressTransfer->getZipCode(),
-            $addressTransfer->getCity()
-        );
+        $address[] = sprintf('%s %s', $addressTransfer->getZipCode(), $addressTransfer->getCity());
 
         return $address;
     }
@@ -299,13 +272,13 @@ class Address
     protected function getCustomerFromAddressTransfer(CustomerAddressTransfer $addressTransfer)
     {
         if ($addressTransfer->getEmail()) {
-            $customer = $this->queryContainer
-                ->queryCustomerByEmail($addressTransfer->getEmail())
-                ->findOne();
+            $customer = $this->queryContainer->queryCustomerByEmail($addressTransfer->getEmail())
+                ->findOne()
+            ;
         } elseif ($addressTransfer->getFkCustomer()) {
-            $customer = $this->queryContainer
-                ->queryCustomerById($addressTransfer->getFkCustomer())
-                ->findOne();
+            $customer = $this->queryContainer->queryCustomerById($addressTransfer->getFkCustomer())
+                ->findOne()
+            ;
         }
 
         if (!isset($customer) || $customer === null) {
@@ -325,13 +298,13 @@ class Address
     protected function getCustomerFromCustomerTransfer(CustomerTransfer $customerTransfer)
     {
         if ($customerTransfer->getEmail()) {
-            $customer = $this->queryContainer
-                ->queryCustomerByEmail($customerTransfer->getEmail())
-                ->findOne();
+            $customer = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
+                ->findOne()
+            ;
         } elseif ($customerTransfer->getIdCustomer()) {
-            $customer = $this->queryContainer
-                ->queryCustomerById($customerTransfer->getIdCustomer())
-                ->findOne();
+            $customer = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
+                ->findOne()
+            ;
         }
 
         if (!isset($customer) || $customer === null) {
@@ -368,7 +341,9 @@ class Address
     {
         $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
         $id_address = $customer->getDefaultShippingAddress();
-        $address = $this->queryContainer->queryAddress($id_address)->findOne();
+        $address = $this->queryContainer->queryAddress($id_address)
+            ->findOne()
+        ;
         if ($address === null) {
             throw new AddressNotFoundException();
         }
@@ -387,7 +362,9 @@ class Address
     {
         $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
         $id_address = $customer->getDefaultBillingAddress();
-        $address = $this->queryContainer->queryAddress($id_address)->findOne();
+        $address = $this->queryContainer->queryAddress($id_address)
+            ->findOne()
+        ;
         if ($address === null) {
             throw new AddressNotFoundException();
         }
@@ -400,7 +377,9 @@ class Address
      */
     private function getIsoCode()
     {
-        $localeName = $this->localeFacade->getCurrentLocale()->getLocaleName();
+        $localeName = $this->localeFacade->getCurrentLocale()
+            ->getLocaleName()
+        ;
 
         return explode('_', $localeName)[1];
     }

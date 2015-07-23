@@ -1,0 +1,24 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Add new address' %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_header_content %}
+            <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'Back to Manage Addresses' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ form(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

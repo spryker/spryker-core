@@ -6,50 +6,116 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
-class TableConfiguration {
+class TableConfiguration
+{
+
+    /**
+     * @var string
+     */
+    protected $url;
 
     /**
      * @var array
      */
-    private $headers;
+    private $header;
 
     /**
-     * @var array
+     * @var int
      */
-    private $sortable;
-
     private $pageLength;
+
     /**
-     * @param array $headers
+     * @var array
      */
-    public function setHeaders(array $headers) {
-        if ($this->isAssoc($headers) === true){
-            $this->headers = $headers;
+    private $searchableFields;
+
+    /**
+     * @var array
+     */
+    private $sortableFields;
+
+    /**
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->header;
+    }
+
+    /**
+     * @todo Zed Translation in Template
+     *
+     * @param array $header
+     */
+    public function setHeaders(array $header)
+    {
+        if ($this->isAssoc($header) === true) {
+            $this->header = $header;
         }
     }
 
     /**
      * @return array
      */
-    public function getHeaders() {
-        return $this->headers;
-    }
-
-    /**
-     * @return array
-     */
-    public function getSortable() {
-        return $this->sortable;
+    public function getSortable()
+    {
+        return $this->sortableFields;
     }
 
     /**
      * @param array $sortable
      */
-    public function setSortable(array $sortable) {
-        $this->sortable = array_intersect(
-            $sortable,
-            array_keys($this->headers)
-        );
+    public function setSortable(array $sortable)
+    {
+        $this->sortableFields = array_intersect($sortable, array_keys($this->header));
+    }
+
+    /**
+     * @return array
+     */
+    public function getSearchable()
+    {
+        return !empty($this->searchableFields) ? $this->searchableFields : array_keys($this->header);
+    }
+
+    /**
+     * @param array $searchable
+     */
+    public function setSearchable(array $searchable)
+    {
+        $this->searchableFields = $searchable;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPageLength()
+    {
+        return $this->pageLength;
+    }
+
+    /**
+     * @param int $length
+     */
+    public function setPageLength($length)
+    {
+        $this->pageLength = $length;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 
     /**
@@ -59,17 +125,7 @@ class TableConfiguration {
      */
     private function isAssoc(array $array)
     {
-        return array_keys($array) !== range(0, count($array) - 1);
-    }
-
-    public function setPageLength($length)
-    {
-        $this->pageLength = $length;
-    }
-
-    public function getPageLength()
-    {
-        return $this->pageLength;
+        return (array_values($array) !== $array);
     }
 
 }

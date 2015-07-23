@@ -14,7 +14,12 @@ class BundleParser
 {
 
     const SPRYKER_ENGINE = 'SprykerEngine';
+
+    /**
+     * @var array
+     */
     protected $coreBundleNamespaces = ['SprykerFeature', self::SPRYKER_ENGINE];
+
     /**
      * @var MaintenanceConfig
      */
@@ -37,9 +42,9 @@ class BundleParser
     {
         $allFileDependencies = $this->parseDependencies($bundleName);
         $allFileDependencies = $this->filterCoreClasses($allFileDependencies);
-        $bundleDepenencies = $this->filterBundleDependencies($allFileDependencies, $bundleName);
+        $bundleDependencies = $this->filterBundleDependencies($allFileDependencies, $bundleName);
 
-        return $bundleDepenencies;
+        return $bundleDependencies;
     }
 
     /**
@@ -77,25 +82,26 @@ class BundleParser
         $files = (new Finder())
             ->files()
             ->in($this->config->getBundleDirectory() . $bundle . '/src/*/Zed/')
-            ->exclude($this->config->getExcludedDirectoriesForDependencies());
+            ->exclude($this->config->getExcludedDirectoriesForDependencies())
+        ;
 
         return $files;
     }
 
     /**
-     * @param $dependencies
+     * @param array $dependencies
      *
      * @return array
      */
-    protected function filterCoreClasses($dependencies)
+    protected function filterCoreClasses(array $dependencies)
     {
         $reducedDependenciesPerFile = [];
         foreach ($dependencies as $fileName => $fileDependencies) {
 
             $reducedDependencies = [];
             foreach ($fileDependencies as $fileDependency) {
-                $expl = explode('\\', $fileDependency);
-                $bundleNamespace = $expl[0];
+                $fileDependencyParts = explode('\\', $fileDependency);
+                $bundleNamespace = $fileDependencyParts[0];
 
                 if (in_array($bundleNamespace, $this->coreBundleNamespaces)) {
                     $reducedDependencies[] = $fileDependency;
@@ -108,33 +114,32 @@ class BundleParser
     }
 
     /**
-     * @param $allFileDependencies
+     * @param array $allFileDependencies
      * @param $bundle
      *
      * @return array
      */
-    protected function filterBundleDependencies($allFileDependencies, $bundle)
+    protected function filterBundleDependencies(array $allFileDependencies, $bundle)
     {
-        $bundleDepenencies = [];
+        $bundleDependencies = [];
         foreach ($allFileDependencies as $fileDependencies) {
             foreach ($fileDependencies as $fileDependency) {
                 $expl = explode('\\', $fileDependency);
                 $foreignBundle = $expl[2];
                 if ($bundle !== $foreignBundle) {
-                    if (false === array_key_exists($foreignBundle, $bundleDepenencies)) {
-                        $bundleDepenencies[$foreignBundle] = 0;
+                    if (false === array_key_exists($foreignBundle, $bundleDependencies)) {
+                        $bundleDependencies[$foreignBundle] = 0;
                     }
-                    $bundleDepenencies[$foreignBundle]++;
+                    $bundleDependencies[$foreignBundle]++;
                 }
             }
         }
 
-        return $bundleDepenencies;
+        return $bundleDependencies;
     }
 
     /**
-     * @param $bundleName
-     *
+     * @param string $bundleName
      * @return bool
      */
     public function isEngine($bundleName)
@@ -150,8 +155,8 @@ class BundleParser
     }
 
     /**
-     * @param $bundleName
-     *
+     * @param string $bundleName
+
      * @return SplFileInfo[]
      */
     protected function findBundleNamespaceDirectoriesForBundle($bundleName)
@@ -159,7 +164,8 @@ class BundleParser
         $directories = (new Finder())
             ->directories()
             ->depth('== 0')
-            ->in($this->config->getBundleDirectory() . $bundleName . '/src');
+            ->in($this->config->getBundleDirectory() . $bundleName . '/src')
+        ;
 
         return $directories;
     }

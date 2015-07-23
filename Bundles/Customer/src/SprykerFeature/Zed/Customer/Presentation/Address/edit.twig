@@ -1,0 +1,26 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Edit address' %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_header_content %}
+            <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-default">{{ 'Back to Addresses' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/address/view?id_customer_address={{ id_customer_address }}" class="btn btn-sm btn-default">{{ 'View Address' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/view?id_customer={{ id_customer }}" class="btn btn-sm btn-default">{{ 'View Customer' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ form(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

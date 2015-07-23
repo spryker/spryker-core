@@ -143,6 +143,7 @@ class CheckoutFacadeTest extends Test
     {
         $customer = new SpyCustomer();
         $customer
+            ->setCustomerReference('TestCustomer1')
             ->setEmail('max@mustermann.de')
             ->setFirstName('Max')
             ->setLastName('Mustermann')

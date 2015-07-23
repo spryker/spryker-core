@@ -17,7 +17,7 @@ class DetailsTable extends AbstractTable
         $this->loadObjectCollection($data);
 
         $config = new TableConfiguration();
-        $config->setHeaders([
+        $config->setHeader([
             'header1' => 'First header',
         ]);
 

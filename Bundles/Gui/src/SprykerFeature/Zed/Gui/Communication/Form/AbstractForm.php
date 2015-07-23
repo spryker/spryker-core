@@ -1,27 +1,29 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Gui\Communication\Form;
 
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
-use Symfony\Component\Form\FormErrorIterator;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * Class AbstractForm
- */
 abstract class AbstractForm
 {
 
     /**
      * @var Form
      */
-    protected $form = null;
+    protected $form;
 
     /**
      * @var Request
@@ -32,6 +34,11 @@ abstract class AbstractForm
      * @var FormFactory
      */
     private $formFactory;
+
+    /**
+     * @var string
+     */
+    protected $defaultDataType;
 
     /**
      * Prepares form
@@ -60,9 +67,26 @@ abstract class AbstractForm
         $this->request = $app['request'];
         $this->formFactory = $app['form.factory'];
 
-        $this->form = $this->formFactory->create();
+        $this->form = $this->formFactory->create('form', $this->getDefaultDataType());
 
         return $this;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setDefaultDataType($type = null)
+    {
+        $this->defaultDataType = $type;
+
+        return $this;
+    }
+
+    protected function getDefaultDataType()
+    {
+        return $this->defaultDataType;
     }
 
     /**
@@ -104,6 +128,10 @@ abstract class AbstractForm
      */
     public function createView()
     {
+        if ($this->getDefaultDataType() instanceof AbstractTransfer) {
+            $this->setData($this->getData(false));
+        }
+
         return $this->form->createView();
     }
 
@@ -136,7 +164,13 @@ abstract class AbstractForm
      */
     public function getData()
     {
-        return $this->form->getData();
+        $data = $this->form->getData();
+
+        if (is_null($this->getDefaultDataType()) && $this->getDefaultDataType() instanceof AbstractTransfer) {
+            return $this->getDefaultDataType()->fromArray($data, true);
+        }
+
+        return $data;
     }
 
     /**
@@ -160,7 +194,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param string $name 
+     * @param string $name
      * @param array $options
      *
      * @return $this

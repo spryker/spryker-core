@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -38,5 +37,4 @@ class IndexController extends AbstractController
             'grid' => $grid->renderData(),
         ];
     }
-
 }

@@ -24,6 +24,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 abstract class AbstractController
 {
 
+    const DEPENDENCY_CONTAINER = 'DependencyContainer';
+    const TWIG_MESSENGER_PLUGIN = 'TwigMessengerPlugin';
+
     /**
      * @var Application
      */
@@ -59,8 +62,8 @@ abstract class AbstractController
         $this->application = $application;
         $this->locator = $locator;
 
-        if ($factory->exists('DependencyContainer')) {
-            $this->dependencyContainer = $factory->create('DependencyContainer', $factory, $locator);
+        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
+            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
         }
     }
 
@@ -69,7 +72,7 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
+        return $this->getTwig()->getExtension(self::TWIG_MESSENGER_PLUGIN)->getMessenger();
     }
 
     /**

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -45,7 +44,7 @@ class GlossaryStorage implements GlossaryStorageInterface
     }
 
     /**
-     * @param string $keyName
+     * @param $keyName
      * @param array $parameters
      *
      * @return string

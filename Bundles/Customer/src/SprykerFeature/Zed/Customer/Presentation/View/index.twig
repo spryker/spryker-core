@@ -1,0 +1,86 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'View Cusomter' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_header_content %}
+            <a href="/customer/" class="btn btn-sm btn-primary">{{ 'Back to Customers' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/edit?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'Edit Customer' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'Manage Addresses' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+    <div>
+        <h1>{{ customer.salutation }} {{ customer.last_name }} {{ customer.first_name }}</h1>
+
+        <table class="table">
+            <thead></thead>
+            <tbody>
+            <tr>
+                <th>{{ 'Email' | trans }}</th>
+                <td>{{ customer.email }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Customer ID' | trans }}</th>
+                <td>{{ customer.id_customer }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Gender' | trans }}</th>
+                <td>{{ customer.gender }}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            {% if addresses.customer_address_items is empty %}
+                <tr>
+                    <td colspan="2">
+                            <span class="text-muted">
+                                {{ 'No addresses found.' | trans }}
+                            </span>
+                        <a class="text-info" href="/customer/address/add?id_customer={{ id_customer }}">{{ 'Add a new address' | trans }}</a>
+                    </td>
+
+                </tr>
+            {% else %}
+                {% for address in addresses.customer_address_items %}
+                    <tr>
+                        <th>
+                            {% if address.id_customer_address == customer.default_shipping_address %}
+                                Shipping
+                            {% endif %}
+                            {% if address.id_customer_address == customer.default_billing_address %}
+                                Billing
+                            {% endif %}
+                            Address
+                            {% if address.comment|default %}
+                                ({{ address.comment }})
+                            {% endif %}
+                        </th>
+                        <td>
+                            {% spaceless %}
+                                {{ address.address1 }}
+                                {{ address.address2 }}
+                                {{ address.address3 }},
+                                {{ address.zip_code }}
+                                {{ address.city }}
+                            {% endspaceless %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

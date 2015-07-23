@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="ProductOption">
+        <property name="idOptionValueUsage" type="int" />
+        <property name="localeCode" type="string " />
+        <property name="labelOptionType" type="string" />
+        <property name="labelOptionValue" type="string" />
+        <property name="price" type="int" />
+        <property name="taxSet" type="TaxSet" />
+        <property name="grossPrice" type="int" />
+        <property name="priceToPay" type="int" />
+    </transfer>
+
+</transfers>

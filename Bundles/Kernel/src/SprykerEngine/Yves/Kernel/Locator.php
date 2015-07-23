@@ -10,6 +10,7 @@ use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Shared\Kernel\BundleProxy;
 use SprykerEngine\Shared\Kernel\TransferLocator;
 use SprykerEngine\Client\Kernel\Service\ClientLocator;
+use SprykerEngine\Yves\Kernel\Communication\PluginLocator;
 
 class Locator extends AbstractLocatorLocator
 {

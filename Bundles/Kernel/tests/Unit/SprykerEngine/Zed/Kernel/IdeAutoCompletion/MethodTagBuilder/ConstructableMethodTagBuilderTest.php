@@ -6,7 +6,6 @@
 
 namespace Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion;
 
-use SprykerFeature\Shared\Library\Autoloader;
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConstructableMethodTagBuilder;
 
 /**
@@ -18,7 +17,6 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testBuildMethodTagsShouldReturnVendorMethodTagIfProjectDoesNotOverrideIt()
     {
-        Autoloader::allowNamespace('VendorNamespace');
         $options = [
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',
@@ -46,7 +44,6 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testBuildMethodTagsShouldReturnProjectMethodTagIfProjectOverrideIt()
     {
-        Autoloader::allowNamespace('ProjectNamespace');
         $options = [
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',
@@ -66,9 +63,28 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    public function testMethodTagsForYvesShouldContainCommunicationIfClassNamePartLevelIsSet()
+    {
+        $options = [
+            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => '',
+            ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
+            ConstructableMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
+            ConstructableMethodTagBuilder::OPTION_KEY_CLASS_NAME_PART_LEVEL => 3,
+        ];
+
+        require_once(__DIR__ . '/Fixtures/src/ProjectNamespace/Application/Bundle/Communication/Form/FooForm.php');
+
+        $methodTagBuilder = new ConstructableMethodTagBuilder($options);
+        $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
+
+        $expectedMethodTag =
+            ' * @method \ProjectNamespace\Application\Bundle\Communication\Form\FooForm createCommunicationFormFooForm()'
+        ;
+        $this->assertContains($expectedMethodTag, $methodTags);
+    }
+
     public function testBuildMethodTagsShouldReturnMethodNameWithParamsIfClassConstructorHasParams()
     {
-        Autoloader::allowNamespace('ProjectNamespace');
         $options = [
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Persistence/',
@@ -84,6 +100,32 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
             ' * @method \ProjectNamespace\Application\Bundle\Persistence\BundleQueryContainer createBundleQueryContainer(array $foo, $bar = true, $baz = null, $baz2 = \'abc\', $baz3 = \'\\\\\')'
         ;
         $this->assertContains($expectedMethodTag, $methodTags);
+    }
+
+    public function testBuildMethodTagsShouldNotReturnMethodTagIfNotInstantiable()
+    {
+        $options = [
+            ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
+            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',
+            ConstructableMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
+            ConstructableMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
+        ];
+
+        require_once __DIR__ . '/Fixtures/src/ProjectNamespace/Application/Bundle/Communication/Plugin/Baz.php';
+        require_once __DIR__ . '/Fixtures/src/ProjectNamespace/Application/Bundle/Communication/Plugin/AbstractFoo.php';
+
+        $methodTagBuilder = new ConstructableMethodTagBuilder($options);
+        $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
+
+        $expectedMethodTag =
+            ' * @method \ProjectNamespace\Application\Bundle\Communication\Plugin\Baz createPluginBaz()'
+        ;
+        $this->assertContains($expectedMethodTag, $methodTags);
+
+        $notAllowedMethodTag =
+            ' * @method \ProjectNamespace\Application\Bundle\Communication\Plugin\AbstractFoo createPluginAbstractFoo()'
+        ;
+        $this->assertNotContains($notAllowedMethodTag, $methodTags);
     }
 
 }

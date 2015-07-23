@@ -1,0 +1,62 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'View address' %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_header_content %}
+            <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-default">{{ 'Manage Addresses' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/address/edit?id_customer_address={{ id_customer_address }}" class="btn btn-sm btn-primary">{{ 'Edit Address' | trans }}</a>&nbsp;&nbsp;&nbsp;
+        {% endblock %}
+
+        {% block widget_content %}
+
+        <h1>{{ address.salutation }} {{ address.last_name }} {{ address.first_name }}</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>{{ 'Company' | trans }}</th>
+                <td>{{ address.company }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Address Line 1' | trans }}</th>
+                <td>{{ address.address1 }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Address Line 2' | trans }}</th>
+                <td>{{ address.address2 }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Address Line 3' | trans }}</th>
+                <td>{{ address.address3 }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'ZipCode' | trans }}</th>
+                <td>{{ address.zip_code }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'City' | trans }}</th>
+                <td>{{ address.city }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Country' | trans }}</th>
+                <td>{{ address.fk_country }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Phone' | trans }}</th>
+                <td>{{ address.phone }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

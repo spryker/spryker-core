@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -130,5 +129,4 @@ class GlossaryFacadeTest extends Test
 
         $this->assertNotSame($variant1->getValue(), $variant2->getValue());
     }
-
 }
