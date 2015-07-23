@@ -7,7 +7,7 @@ use Prophecy\Argument;
 use SprykerEngine\Client\Kernel\Service\Factory;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
-class WishlistDependecyContainerSpec extends ObjectBehavior
+class WishlistDependencyContainerSpec extends ObjectBehavior
 {
     function let(Factory $factory, LocatorLocatorInterface $locator)
     {
@@ -16,7 +16,7 @@ class WishlistDependecyContainerSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('SprykerFeature\Client\Wishlist\Service\WishlistDependecyContainer');
+        $this->shouldHaveType('SprykerFeature\Client\Wishlist\Service\WishlistDependencyContainer');
     }
 
     function it_extends_abstract()

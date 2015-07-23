@@ -2,6 +2,7 @@
 
 namespace spec\SprykerFeature\Client\Wishlist\Service;
 
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
@@ -11,29 +12,28 @@ use Generated\Shared\Transfer\WishlistTransfer;
 
 class WishlistClientSpec extends ObjectBehavior
 {
-    function let(FactoryInterface $factory, LocatorLocatorInterface $locator)
+    public function let(FactoryInterface $factory, LocatorLocatorInterface $locator)
     {
         $this->beConstructedWith($factory, $locator);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('SprykerFeature\Client\Wishlist\Service\WishlistClient');
     }
 
-    function it_extends_abstract()
+    public function it_extends_abstract()
     {
         $this->shouldHaveType('SprykerEngine\Client\Kernel\Service\AbstractClient');
     }
 
-    function it_calls_getwishlist_method_and_brings_wishlistdata()
+
+    public function it_calls_add_item_method()
     {
-        $this->getWishlist()->shouldBeAnInstanceOf(WishlistTransfer::class);
+        //$this->addItem(new WishlistItemTransfer());
     }
+
+
 }
 
 
-class WishlistItemStruct extends \ArrayObject
-{
-
-}

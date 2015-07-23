@@ -1,0 +1,35 @@
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          defaultIdMethod="native"
+          defaultPhpNamingMethod="underscore"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          identifierQuoting="true"
+          namespace="SprykerFeature\Zed\Wishlist\Persistence\Propel"
+          package="vendor.spryker.spryker.Bundles.Wishlist.src.SprykerFeature.Zed.Wishlist.Persistence.Propel">
+
+    <table name="spy_wishlist" phpName="SpyWishlist">
+        <column name="id_wishlist" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_customer" required="true" type="INTEGER" />
+        <unique>
+            <unique-column name="fk_customer"/>
+        </unique>
+        <foreign-key foreignTable="spy_customer">
+            <reference local="fk_customer" foreign="id_customer"/>
+        </foreign-key>
+    </table>
+
+    <table name="spy_wishlist_item" phpName="SpyWishlistItem">
+        <column name="id_wishlist_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="quantity" required="true" type="INTEGER" />
+        <column name="added_at" required="true" type="TIMESTAMP" />
+        <column name="fk_wishlist" required="true" type="INTEGER" />
+        <foreign-key foreignTable="spy_wishlist" phpName="SpyWishlist">
+            <reference foreign="id_wishlist" local="fk_wishlist"/>
+        </foreign-key>
+        <column name="fk_concrete_product" required="true" type="INTEGER" />
+        <foreign-key foreignTable="spy_product">
+            <reference foreign="id_product" local="fk_concrete_product"/>
+        </foreign-key>
+    </table>
+
+</database>

@@ -8,10 +8,20 @@
         <property name="items" type="WishlistItem[]" singular="item" />
     </transfer>
 
+    <transfer name="WishlistChange">
+        <property name="customer" type="Customer" />
+        <property name="items" type="WishlistItem[]" singular="item" />
+    </transfer>
+
+    <transfer name="WishlistProduct">
+        <property name="concreteSku" type="string"/>
+        <property name="abstractSku" type="string"/>
+    </transfer>
+
     <transfer name="WishlistItem">
         <property name="id" type="int"/>
-        <property name="created_at" type=""/>
-        <property name="sku" type="string"/>
+        <property name="addedAt" type="string"/>
+        <property name="product" type="WishlistProduct"/>
         <property name="quantity" type="int"/>
         <property name="options" type="OrderItemOption[]" singular="option" />
     </transfer>
