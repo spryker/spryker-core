@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Auth\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Auth\Communication\AuthDependencyContainer;
+use SprykerFeature\Zed\Auth\Communication\Form\ResetPasswordForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,22 +25,33 @@ class PasswordController extends AbstractController
      */
     public function resetAction(Request $request)
     {
-        $facade = $this->getDependencyContainer()->locateAuthFacade();
 
-        $form = $this->getDependencyContainer()->createResetPasswordForm($request);
-        $form->init();
+        $form = $this->getDependencyContainer()
+            ->createResetPasswordForm($request)
+            ->init()
+        ;
+        $form->handleRequest();
 
-        $formData = $form->getRequestData();
+        $message = $messageType = null;
 
-        if ($form->isValid()) {
-//            if ($facade->resetPassword($formData['username'])) {
-                return $this->jsonResponse([], 200, [
-                    'Spy-Location' => '/',
-                ]);
-//            }
+        if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {
+            // @todo implement resetPassword in AuthFacade
+            $formData = $form->getData();
+            $facade = $this->getDependencyContainer()->locateAuthFacade();
+            if ($facade->resetPassword($formData[ResetPasswordForm::EMAIL])) {
+                $message = 'Password sent on email';
+                $messageType = 'success';
+            } else {
+                $message = 'User not found';
+                $messageType = 'error';
+            }
         }
 
-        return $this->jsonResponse($form->toArray(), 400);
+        return $this->viewResponse([
+            'form' => $form->createView(),
+            'message' => $message,
+            'messageType' => $messageType,
+        ]);
     }
 
 }

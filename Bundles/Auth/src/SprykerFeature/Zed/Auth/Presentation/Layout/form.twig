@@ -1,0 +1,37 @@
+{% block form_row -%}
+    {% spaceless %}
+        <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+            <div class="{{ block('form_group_class') }}">
+                {{ form_widget(form) }}
+                {{ form_errors(form) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{%- endblock form_row %}
+
+{% block text_widget %}
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+            {{ block('form_widget_simple') }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block password_widget %}
+    {%- set type = type|default('password') -%}
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+            {{ block('form_widget_simple') }}
+            {#<span class="input-group-addon"><a href="/auth/password/reset">Forgot ?</a></span>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block url_widget %}
+    {%- set type = type|default('password') -%}
+    <div class="form-group">
+        <a href="{{ attr.href | default('') }}" {{ block('widget_attributes') }}>{{ attr.title | default('') | raw | trans }}</a>
+    </div>
+{% endblock %}
