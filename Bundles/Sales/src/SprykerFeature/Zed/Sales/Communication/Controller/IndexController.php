@@ -7,8 +7,13 @@
 namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\Sales\Communication\Table\OrdersTable;
 
+/**
+ * @method SalesDependencyContainer getDependencyContainer()
+ */
 class IndexController extends AbstractController
 {
 
@@ -20,10 +25,9 @@ class IndexController extends AbstractController
     public function indexAction(Request $request)
     {
         $table = $this->getDependencyContainer()->createOrdersTable();
-        $table->init();
 
         return [
-            'orders' => $table,
+            'orders' => $table->render(),
         ];
     }
 

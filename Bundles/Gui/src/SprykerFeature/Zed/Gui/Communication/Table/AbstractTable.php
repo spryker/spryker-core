@@ -56,16 +56,29 @@ abstract class AbstractTable
     protected $defaultUrl = 'table';
 
     /**
-     * @var null
+     * @var bool
+     */
+    private $initialized = false;
+
+    /**
+     * @var string
      */
     protected $tableIdentifier;
 
+    /**
+     * @return null
+     */
     public function init()
     {
+        if ($this->initialized) {
+            return null;
+        }
+        $this->initialized = true;
         $this->locator = Locator::getInstance();
         $this->request = $this->locator->application()
             ->pluginPimple()
-            ->getApplication()['request'];
+            ->getApplication()['request']
+        ;
         $config = $this->newTableConfiguration();
         $config->setPageLength($this->getLimit());
         $config = $this->configure($config);
@@ -269,6 +282,7 @@ abstract class AbstractTable
 
     /**
      * @return string
+     * @deprecated Please use ->render() method
      */
     public function __toString()
     {
@@ -280,6 +294,8 @@ abstract class AbstractTable
      */
     public function render()
     {
+        $this->init();
+
         $twigVars = [
             'config' => $this->prepareConfig(),
         ];
@@ -294,19 +310,22 @@ abstract class AbstractTable
      */
     public function prepareConfig()
     {
-        $configArray = [
-            'tableId' => $this->getTableIdentifier(),
-            'options' => $this->config->getTableOptions()->toArray(),
-            'url' => $this->defaultUrl,
-        ];
-
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
+                'tableId' => $this->getTableIdentifier(),
+                'options' => $this->config->getTableOptions()->toArray(),
                 'header' => $this->config->getHeader(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
                 'url' => (true === is_null($this->config->getUrl())) ? $this->defaultUrl : $this->config->getUrl(),
+            ];
+        } else {
+            $configArray = [
+                'tableId' => $this->getTableIdentifier(),
+                'options' => (new TableOptions())->toArray(),
+                'url' => $this->defaultUrl,
+                'header' => [],
             ];
         }
 
@@ -366,6 +385,8 @@ abstract class AbstractTable
      */
     public function fetchData()
     {
+        $this->init();
+
         $data = $this->prepareData($this->config);
         $this->loadData($data);
         $wrapperArray = [
