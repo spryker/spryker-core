@@ -28,7 +28,6 @@ class PasswordController extends AbstractController
 
         $form = $this->getDependencyContainer()
             ->createResetPasswordForm($request)
-            ->init()
         ;
         $form->handleRequest();
 

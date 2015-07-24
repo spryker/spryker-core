@@ -66,25 +66,22 @@ abstract class AbstractTable
     protected $tableIdentifier;
 
     /**
-     * @return null
-     *
      * @deprecated this method will become private and will be called in this class ONLY
      */
     public function init()
     {
-        if ($this->initialized) {
-            return null;
+        if (!$this->initialized) {
+            $this->initialized = true;
+            $this->locator = Locator::getInstance();
+            $this->request = $this->locator->application()
+                ->pluginPimple()
+                ->getApplication()['request']
+            ;
+            $config = $this->newTableConfiguration();
+            $config->setPageLength($this->getLimit());
+            $config = $this->configure($config);
+            $this->setConfiguration($config);
         }
-        $this->initialized = true;
-        $this->locator = Locator::getInstance();
-        $this->request = $this->locator->application()
-            ->pluginPimple()
-            ->getApplication()['request']
-        ;
-        $config = $this->newTableConfiguration();
-        $config->setPageLength($this->getLimit());
-        $config = $this->configure($config);
-        $this->setConfiguration($config);
     }
 
     /**

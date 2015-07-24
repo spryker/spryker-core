@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
-class TableOptions
+use SprykerFeature\Zed\Gui\Communication\Table\TableOptionsInterface;
+
+class TableOptions implements TableOptionsInterface
 {
 
     /**

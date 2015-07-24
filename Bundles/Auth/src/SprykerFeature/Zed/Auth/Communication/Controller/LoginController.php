@@ -28,7 +28,6 @@ class LoginController extends AbstractController
     {
         $form = $this->getDependencyContainer()
             ->createLoginForm($request)
-            ->init()
         ;
         $form->handleRequest();
 

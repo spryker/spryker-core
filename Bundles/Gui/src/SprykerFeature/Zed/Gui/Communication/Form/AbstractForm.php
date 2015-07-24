@@ -108,17 +108,14 @@ abstract class AbstractForm
      */
     public function init()
     {
-        if ($this->initialized) {
-            return $this;
+        if (!$this->initialized) {
+            $this->initialized = true;
+            $this->injectDependencies()
+                ->buildFormFields();
+
+            $data = $this->populateFormFields();
+            $this->setData($data);
         }
-        $this->initialized = true;
-        $this->injectDependencies()
-            ->buildFormFields();
-
-        $data = $this->populateFormFields();
-        $this->setData($data);
-
-        return $this;
     }
 
     /**

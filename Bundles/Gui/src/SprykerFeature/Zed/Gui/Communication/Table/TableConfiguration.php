@@ -6,6 +6,9 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
+use SprykerFeature\Zed\Gui\Communication\Table\TableOptionsInterface;
+use SprykerFeature\Zed\Gui\Communication\Table\TableOptions;
+
 class TableConfiguration
 {
 
@@ -41,6 +44,9 @@ class TableConfiguration
         $this->tableOptions = new TableOptions();
     }
 
+    /**
+     * @return TableOptionsInterface
+     */
     public function getTableOptions()
     {
         return $this->tableOptions;
