@@ -85,9 +85,11 @@ abstract class AbstractTable
     }
 
     /**
+     * @todo find a better solution (remove it)
      * @param string $name
      *
      * @return string
+     * @deprecated this method should not be needed.
      */
     public function buildAlias($name)
     {
