@@ -56,6 +56,11 @@ abstract class AbstractTable
     protected $defaultUrl = 'table';
 
     /**
+     * @var string
+     */
+    protected $tableClass;
+
+    /**
      * @var bool
      */
     private $initialized = false;
@@ -67,6 +72,8 @@ abstract class AbstractTable
 
     /**
      * @deprecated this method will become private and will be called in this class ONLY
+     *
+     * @return $this
      */
     public function init()
     {
@@ -82,6 +89,8 @@ abstract class AbstractTable
             $config = $this->configure($config);
             $this->setConfiguration($config);
         }
+
+        return $this;
     }
 
     /**
@@ -94,11 +103,7 @@ abstract class AbstractTable
      */
     public function buildAlias($name)
     {
-        return str_replace([
-            '.',
-            '(',
-            ')',
-        ], '', $name);
+        return str_replace(['.', '(', ')'], '', $name);
     }
 
     /**
@@ -292,7 +297,7 @@ abstract class AbstractTable
      */
     public function __toString()
     {
-        return $this->render();
+        //return $this->render();
     }
 
     /**
@@ -308,7 +313,7 @@ abstract class AbstractTable
 
         return $this->getTwig()
             ->render('index.twig', $twigVars)
-            ;
+        ;
     }
 
     /**
@@ -319,8 +324,7 @@ abstract class AbstractTable
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
                 'tableId' => $this->getTableIdentifier(),
-                'options' => $this->config->getTableOptions()
-                    ->toArray(),
+                'options' => $this->config->getTableOptions()->toArray(),
                 'header' => $this->config->getHeader(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
@@ -330,7 +334,7 @@ abstract class AbstractTable
         } else {
             $configArray = [
                 'tableId' => $this->getTableIdentifier(),
-                'options' => (new TableOptions())->toArray(),
+                'class' => $this->tableClass,
                 'url' => $this->defaultUrl,
                 'header' => [],
             ];
