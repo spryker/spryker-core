@@ -6,6 +6,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesAddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()
@@ -22,7 +23,6 @@ class EditController extends AbstractController
     {
         $idOrder = $request->get('id-sales-order');
         $form = $this->getDependencyContainer()->createCustomerForm($idOrder);
-        $form->init();
         $form->handleRequest();
 
         if ($request->isMethod('POST') && $form->isValid()) {
@@ -49,7 +49,7 @@ class EditController extends AbstractController
         $idOrder = $request->get('id-sales-order');
         $idOrderAddress = $request->get('id-address');
 
-        $form = $this->getDependencyContainer()->createAddressForm($idOrderAddress)->init();
+        $form = $this->getDependencyContainer()->createAddressForm($idOrderAddress);
         $form->handleRequest();
 
         if ($request->isMethod('POST') && $form->isValid()) {

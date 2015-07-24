@@ -67,6 +67,8 @@ abstract class AbstractTable
 
     /**
      * @return null
+     *
+     * @deprecated this method will become private and will be called in this class ONLY
      */
     public function init()
     {

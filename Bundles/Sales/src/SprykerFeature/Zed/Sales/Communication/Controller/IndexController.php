@@ -37,7 +37,6 @@ class IndexController extends AbstractController
     public function tableAction()
     {
         $table = $this->getDependencyContainer()->createOrdersTable();
-        $table->init();
 
         return $this->jsonResponse(
             $table->fetchData()

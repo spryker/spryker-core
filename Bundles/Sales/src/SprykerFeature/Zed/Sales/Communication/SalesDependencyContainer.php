@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Communication\Table\OrdersTable;
 use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
+use SprykerFeature\Zed\Sales\Communication\Form\AddressForm;
 
 /**
  * @method SalesCommunication getFactory()
