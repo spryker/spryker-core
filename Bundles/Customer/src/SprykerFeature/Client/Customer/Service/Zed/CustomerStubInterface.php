@@ -6,7 +6,7 @@
 namespace SprykerFeature\Client\Customer\Service\Zed;
 
 use Generated\Shared\Customer\CustomerInterface;
-use Generated\Shared\Transfer\CustomerAddressInterface;
+use Generated\Shared\Customer\CustomerAddressInterface;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 

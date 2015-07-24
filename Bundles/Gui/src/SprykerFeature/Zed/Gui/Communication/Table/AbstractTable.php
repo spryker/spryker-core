@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Gui\Communication\Table;
 
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -55,21 +56,44 @@ abstract class AbstractTable
     protected $defaultUrl = 'table';
 
     /**
-     * @var null
+     * @var bool
+     */
+    private $initialized = false;
+
+    /**
+     * @var string
      */
     protected $tableIdentifier;
 
+    /**
+     * @deprecated this method will become private and will be called in this class ONLY
+     */
     public function init()
     {
-        $this->locator = Locator::getInstance();
-        $this->request = $this->locator->application()
-            ->pluginPimple()
-            ->getApplication()['request']
-        ;
-        $config = $this->newTableConfiguration();
-        $config->setPageLength($this->getLimit());
-        $config = $this->configure($config);
-        $this->setConfiguration($config);
+        if (!$this->initialized) {
+            $this->initialized = true;
+            $this->locator = Locator::getInstance();
+            $this->request = $this->locator->application()
+                ->pluginPimple()
+                ->getApplication()['request']
+            ;
+            $config = $this->newTableConfiguration();
+            $config->setPageLength($this->getLimit());
+            $config = $this->configure($config);
+            $this->setConfiguration($config);
+        }
+    }
+
+    /**
+     * @todo find a better solution (remove it)
+     * @param string $name
+     *
+     * @return string
+     * @deprecated this method should not be needed.
+     */
+    public function buildAlias($name)
+    {
+        return str_replace(['.', '(', ')'], '', $name);
     }
 
     /**
@@ -125,17 +149,17 @@ abstract class AbstractTable
     }
 
     /**
-     * @param $order
-     * @param $data
+     * @param array $headers
+     * @param array $row
      *
      * @return array
      */
-    protected function reOrderByHeaders($order, $data)
+    protected function reOrderByHeaders(array $headers, array $row)
     {
         $result = [];
 
-        foreach ($order as $key => $value) {
-            $result[$key] = $data[$key];
+        foreach ($headers as $key => $value) {
+            $result[$key] = $row[$key];
         }
 
         return $result;
@@ -259,6 +283,7 @@ abstract class AbstractTable
 
     /**
      * @return string
+     * @deprecated Please use ->render() method
      */
     public function __toString()
     {
@@ -270,6 +295,8 @@ abstract class AbstractTable
      */
     public function render()
     {
+        $this->init();
+
         $twigVars = [
             'config' => $this->prepareConfig(),
         ];
@@ -287,6 +314,7 @@ abstract class AbstractTable
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
                 'tableId' => $this->getTableIdentifier(),
+                'options' => $this->config->getTableOptions()->toArray(),
                 'header' => $this->config->getHeader(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
@@ -295,8 +323,10 @@ abstract class AbstractTable
             ];
         } else {
             $configArray = [
-                'tableId' => 'table-' . md5(time()),
+                'tableId' => $this->getTableIdentifier(),
+                'options' => (new TableOptions())->toArray(),
                 'url' => $this->defaultUrl,
+                'header' => [],
             ];
         }
 
@@ -348,7 +378,7 @@ abstract class AbstractTable
         ;
         $data = $query->find();
 
-        return $data->toArray();
+        return $data->toArray(null, false, TableMap::TYPE_COLNAME);
     }
 
     /**
@@ -356,6 +386,8 @@ abstract class AbstractTable
      */
     public function fetchData()
     {
+        $this->init();
+
         $data = $this->prepareData($this->config);
         $this->loadData($data);
         $wrapperArray = [

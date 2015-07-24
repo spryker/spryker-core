@@ -84,13 +84,6 @@ class GlossaryFacade extends AbstractFacade
         return $keyManager->deleteKey($keyName);
     }
 
-    public function synchronizeKeys()
-    {
-        $keyManager = $this->getDependencyContainer()->createKeyManager();
-
-        $keyManager->synchronizeKeys();
-    }
-
     /**
      * @param string $keyName
      * @param LocaleTransfer $locale

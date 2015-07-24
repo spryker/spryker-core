@@ -1,7 +1,7 @@
-{% if config.headers is defined %}
+{% if config.header is defined %}
 <thead>
     <tr>
-        {% for id, value in config.headers %}
+        {% for id, value in config.header %}
         <th id="{{ id }}">
             {{ value }}
         </th>
