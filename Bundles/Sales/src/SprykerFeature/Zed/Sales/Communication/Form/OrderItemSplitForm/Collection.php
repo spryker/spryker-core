@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
 class Collection
 {
     const SPLIT_SUBMIT_URL = '/sales/order-item-split/split';
+    const FORM_NOT_FOUND_MESSAGE = 'Form with "%d" is not set.';
 
     /**
      * @var SpySalesOrderItem[]
@@ -70,7 +71,7 @@ class Collection
     public function getById($formIndexId)
     {
         if (!$this->isFormSet($formIndexId)) {
-            throw new \InvalidArgumentException(sprintf('Form with "%d" is not set.', $formIndexId));
+            throw new \InvalidArgumentException(sprintf(self::FORM_NOT_FOUND_MESSAGE, $formIndexId));
         }
 
         return $this->forms[$formIndexId];
