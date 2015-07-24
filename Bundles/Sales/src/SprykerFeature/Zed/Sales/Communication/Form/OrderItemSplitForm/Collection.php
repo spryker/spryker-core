@@ -12,6 +12,8 @@ use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
 
 class Collection
 {
+    const SPLIT_SUBMIT_URL = '/sales/order-item-split/split';
+
     /**
      * @var SpySalesOrderItem[]
      */
@@ -23,13 +25,10 @@ class Collection
     private $forms = [];
 
     /**
-     * Builder constructor.
-     *
      * @param SpySalesOrderItem[]|ObjectCollection $orderItems
      */
-    public function __construct(
-        ObjectCollection $orderItems
-    ) {
+    public function __construct(ObjectCollection $orderItems)
+    {
         $this->orderItems = $orderItems;
     }
 
@@ -39,12 +38,14 @@ class Collection
     public function create()
     {
         foreach ($this->orderItems as $orderItem) {
-            $form = $orderItemSplitForm = $this->getOrderItemSplitForm()
+            $form = $this->createOrderItemSplitForm()
                 ->init(
-                    ['action' => '/sales/orderItemSplit/split'],
                     [
-                        'id_order_item' => $orderItem->getIdSalesOrderItem(),
-                        'id_order' => $orderItem->getFkSalesOrder()
+                        'action' => self::SPLIT_SUBMIT_URL
+                    ],
+                    [
+                        OrderItemSplitForm::ID_ORDER_ITEM=> $orderItem->getIdSalesOrderItem(),
+                        OrderItemSplitForm::ID_ORDER => $orderItem->getFkSalesOrder()
                     ]
                 );
             $this->forms[$orderItem->getIdSalesOrderItem()] = $form->createView();
@@ -56,13 +57,13 @@ class Collection
     /**
      * @return OrderItemSplitForm
      */
-    protected function getOrderItemSplitForm()
+    protected function createOrderItemSplitForm()
     {
         return new OrderItemSplitForm();
     }
 
     /**
-     * @param $formIndexId
+     * @param integer $formIndexId
      *
      * @return OrderItemSplitForm
      */

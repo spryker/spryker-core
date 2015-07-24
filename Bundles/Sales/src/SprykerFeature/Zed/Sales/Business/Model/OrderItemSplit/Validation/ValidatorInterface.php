@@ -19,5 +19,5 @@ interface ValidatorInterface
     /**
      * @return array
      */
-    public function getValidationMessages();
+    public function getMessages();
 }

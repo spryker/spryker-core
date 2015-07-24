@@ -12,7 +12,7 @@ interface CalculatorInterface
      * @param SpySalesOrderItem $salesOrderItem
      * @param integer           $quantity
      *
-     * @return int
+     * @return integer
      */
     public function calculateQuantityAmountLeft(SpySalesOrderItem $salesOrderItem, $quantity);
 }

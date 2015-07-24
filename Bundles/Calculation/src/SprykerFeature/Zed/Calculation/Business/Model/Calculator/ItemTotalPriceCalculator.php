@@ -10,7 +10,6 @@ use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class ItemTotalPriceCalculator implements CalculatorPluginInterface
 {
-
     /**
      * @param CalculableInterface $calculableContainer
      */

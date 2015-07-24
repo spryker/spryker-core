@@ -9,7 +9,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\ItemGrouper;
 use Generated\Shared\ItemGrouper\GroupableContainerInterface;
 
-
 /**
  * @method ItemGrouperDependencyContainer getDependencyContainer()
  */

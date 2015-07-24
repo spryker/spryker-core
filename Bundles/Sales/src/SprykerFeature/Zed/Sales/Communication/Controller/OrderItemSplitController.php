@@ -7,12 +7,18 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
+use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
+use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
 
 /**
+ * @method SalesDependencyContainer getDependencyContainer()
  * @method SalesFacade getFacade()
  */
 class OrderItemSplitController extends AbstractController
 {
+    const SALES_ORDER_DETAIL_URL = '/sales/details?id-sales-order=%d';
+    const SPLIT_SUCCESS_MESSAGE = 'Order item with "%d" was successfully split.';
+
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -24,19 +30,16 @@ class OrderItemSplitController extends AbstractController
 
         if ($orderItemForm->isValid()) {
             $splitResponseTransfer = $this->getFacade()
-                ->splitSalesOrderItem($data['id_order_item'], $data['quantity']);
+                ->splitSalesOrderItem($data[OrderItemSplitForm::ID_ORDER_ITEM], $data[OrderItemSplitForm::QUANTITY]);
 
-            //@todo clarify twig extension behaviour
-            /*if (!$splitResponseTransfer->getSuccess()) {
-                $this->addMessageError(implode('<br />', $splitResponseTransfer->getValidationMessages()));
+          /*  if (!$splitResponseTransfer->getSuccess()) {
+                $this->addMessageError($splitResponseTransfer->getValidationMessages());
             } else {
-                $this->addMessageSuccess(
-                    sprintf('Order item with "%d" was successfully split', $data['id_order_item'])
-                );
+                $this->addMessageSuccess($splitResponseTransfer->getSuccessMessage());
             }*/
         }
 
-         return $this->redirectResponse(sprintf('/sales/details?id-sales-order=%d', $data['id_order']));
+        return $this->redirectResponse(sprintf(self::SALES_ORDER_DETAIL_URL, $data[OrderItemSplitForm::ID_ORDER]));
     }
 }
 

@@ -10,6 +10,10 @@ use Symfony\Component\Validator\Constraints;
 
 class OrderItemSplitForm extends AbstractForm
 {
+    const QUANTITY = 'quantity';
+    const ID_ORDER_ITEM = 'id_order_item';
+    const ID_ORDER = 'id_order';
+
     /**
      * Prepares form
      *
@@ -18,7 +22,7 @@ class OrderItemSplitForm extends AbstractForm
     protected function buildFormFields()
     {
         return $this->addText(
-            'quantity',
+            self::QUANTITY,
             [
                 'label' => 'Quantity',
                 'constraints' => [
@@ -32,8 +36,8 @@ class OrderItemSplitForm extends AbstractForm
                 ]
             ]
         )
-            ->addHidden('id_order_item')
-            ->addHidden('id_order')
+            ->addHidden(self::ID_ORDER_ITEM)
+            ->addHidden(self::ID_ORDER)
             ->addSubmit();
     }
 

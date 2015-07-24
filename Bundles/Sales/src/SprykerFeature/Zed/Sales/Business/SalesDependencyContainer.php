@@ -62,12 +62,12 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return Model\OrderItemSplit\Splitter
+     * @return Model\OrderItemSplit\ItemSplit
      */
     public function createOrderItemSplitter()
     {
-        return $this->getFactory()->createModelOrderItemSplitSplitter(
-            $this->createSplitterValidator(),
+        return $this->getFactory()->createModelOrderItemSplitItemSplit(
+            $this->createSplitValidator(),
             $this->createSalesQueryContainer(),
             $this->getFactory()->createModelOrderItemSplitCalculator()
         );
@@ -76,7 +76,7 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return Model\OrderItemSplit\Validation\Validator
      */
-    protected function createSplitterValidator()
+    protected function createSplitValidator()
     {
         return $this->getFactory()->createModelOrderItemSplitValidationValidator();
     }

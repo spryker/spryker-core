@@ -11,7 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class ItemGrouperCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const ITEM_GROUPER_FACADE = 'item_grouper';
+    const ITEM_GROUPER_FACADE = 'item_grouper_facade';
 
     /**
      * @param Container $container

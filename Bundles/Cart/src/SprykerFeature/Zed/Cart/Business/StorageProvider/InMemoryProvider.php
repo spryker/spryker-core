@@ -16,6 +16,17 @@ class InMemoryProvider implements StorageProviderInterface
 
     /**
      * @param CartInterface $cart
+     * @param ChangeInterface $increasedItems
+     *
+     * @return CartInterface
+     */
+    public function increaseItems(CartInterface $cart, ChangeInterface $increasedItems)
+    {
+        return $this->addItems($cart, $increasedItems);
+    }
+
+    /**
+     * @param CartInterface $cart
      * @param ChangeInterface $change
      *
      * @return CartInterface
@@ -44,6 +55,35 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
+     * @param \ArrayObject|CartItemInterface[] $cartItems
+     *
+     * @return array
+     */
+    protected function createCartIndex(\ArrayObject $cartItems)
+    {
+        $cartIndex = [];
+
+        foreach ($cartItems as $key => $cartItem) {
+            if (!empty($cartItem->getGroupKey())) {
+                $cartIndex[$cartItem->getGroupKey()] = $key;
+            }
+        }
+
+        return $cartIndex;
+    }
+
+    /**
+     * @param CartInterface $cart
+     * @param ChangeInterface $decreasedItems
+     *
+     * @return CartInterface
+     */
+    public function decreaseItems(CartInterface $cart, ChangeInterface $decreasedItems)
+    {
+        return $this->removeItems($cart, $decreasedItems);
+    }
+
+    /**
      * @param CartInterface $cart
      * @param ChangeInterface $change
      *
@@ -63,6 +103,8 @@ class InMemoryProvider implements StorageProviderInterface
 
             if (isset($cartIndex[$item->getGroupKey()])) {
                 $this->decreaseExistingItem($existingItems, $cartIndex[$item->getGroupKey()], $item);
+            } else {
+                $this->decreaseBySku($existingItems, $item);
             }
         }
 
@@ -70,30 +112,8 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $increasedItems
-     *
-     * @return CartInterface
-     */
-    public function increaseItems(CartInterface $cart, ChangeInterface $increasedItems)
-    {
-        return $this->addItems($cart, $increasedItems);
-    }
-
-    /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $decreasedItems
-     *
-     * @return CartInterface
-     */
-    public function decreaseItems(CartInterface $cart, ChangeInterface $decreasedItems)
-    {
-        return $this->removeItems($cart, $decreasedItems);
-    }
-
-    /**
      * @param CartItemInterface[] $existingItems
-     * @param int $index
+     * @param integer $index
      * @param CartItemInterface $item
      */
     private function decreaseExistingItem($existingItems, $index, $item)
@@ -109,21 +129,17 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \ArrayObject|CartItemInterface[] $cartItems
-     *
-     * @return array
+     * @param CartItemInterface[] $existingItems
+     * @param CartItemInterface $changedItem
      */
-    protected function createCartIndex(\ArrayObject $cartItems)
+    protected function decreaseBySku(array $existingItems, CartItemInterface $changedItem)
     {
-        $cartIndex = [];
-
-        foreach ($cartItems as $key => $cartItem) {
-            if (!empty($cartItem->getGroupKey())) {
-                $cartIndex[$cartItem->getGroupKey()] = $key;
+        foreach ($existingItems as $index => $cartIndexItem) {
+            if ($cartIndexItem->getSku() == $changedItem->getSku()) {
+                $this->decreaseExistingItem($existingItems, $index, $changedItem);
+                return;
             }
         }
-
-        return $cartIndex;
     }
 
 }

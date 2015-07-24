@@ -21,26 +21,6 @@ class Group
      *
      * @return GroupableContainerInterface
      */
-    public function groupByKeyWithExpanding(GroupableContainerInterface $groupableItems)
-    {
-        foreach ($groupableItems->getItems() as $item) {
-            if ($item->getQuantity() > 1) {
-                for ($i = 1; $i <= $item->getQuantity(); $i++) {
-                    $this->fillIndex($item);
-                }
-            } else {
-                $this->fillIndex($item);
-            }
-        }
-
-        return (new GroupableContainerTransfer())->setItems(new \ArrayObject($this->groupedItems));
-    }
-
-    /**
-     * @param GroupableContainerInterface $groupableItems
-     *
-     * @return GroupableContainerInterface
-     */
     public function groupByKey(GroupableContainerInterface $groupableItems)
     {
         foreach ($groupableItems->getItems() as $item) {

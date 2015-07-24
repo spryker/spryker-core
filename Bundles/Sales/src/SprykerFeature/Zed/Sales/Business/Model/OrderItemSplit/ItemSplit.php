@@ -6,15 +6,14 @@
 
 namespace SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit;
 
-use Generated\Shared\Transfer\SplitResponseTransfer;
-use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
-use Propel\Runtime\Map\TableMap;
+use Generated\Shared\Transfer\ItemSplitResponseTransfer;
+use SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation\Messages;
 use SprykerFeature\Zed\Sales\Persistence;
 use SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation;
 use Propel\Runtime\Propel;
-use Generated\Shared\Sales\SplitResponseInterface;
+use Generated\Shared\Sales\ItemSplitResponseInterface;
 
-class Splitter
+class ItemSplit
 {
     /**
      * @var Validation\ValidatorInterface
@@ -50,7 +49,7 @@ class Splitter
      * @param integer $orderItemId
      * @param integer $quantityToSplit
      *
-     * @return SplitResponseInterface
+     * @return ItemSplitResponseInterface
      * @throws \Exception
      */
     public function split($orderItemId, $quantityToSplit)
@@ -59,11 +58,11 @@ class Splitter
             ->querySalesOrderItem()
             ->findOneByIdSalesOrderItem($orderItemId);
 
-        $splitResponse = new SplitResponseTransfer();
+        $splitResponse = new ItemSplitResponseTransfer();
         if (false === $this->validator->isValid($salesOrderItem, $quantityToSplit)) {
             return $splitResponse
                 ->setSuccess(false)
-                ->setValidationMessages($this->validator->getValidationMessages());
+                ->setValidationMessages($this->validator->getMessages());
         }
 
         try {
@@ -74,7 +73,10 @@ class Splitter
 
             Propel::getConnection()->commit();
 
-            return $splitResponse->setSuccess(true);
+            return $splitResponse
+                ->setSuccess(true)
+                ->setSuccessMessage(sprintf(Messages::SPLIT_SUCCESS_MESSAGE, $salesOrderItem->getIdSalesOrderItem()));
+
         } catch (\Exception $e) {
             Propel::getConnection()->rollBack();
             throw $e;
