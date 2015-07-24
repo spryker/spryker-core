@@ -297,7 +297,7 @@ abstract class AbstractTable
      */
     public function __toString()
     {
-        //return $this->render();
+        return 'please use ->render() method';
     }
 
     /**
