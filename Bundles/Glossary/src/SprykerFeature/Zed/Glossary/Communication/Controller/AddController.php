@@ -35,8 +35,10 @@ class AddController extends AbstractController
         if ($glossaryForm->isValid()) {
             $data = $glossaryForm->getData();
 
-            $facade = $this->getDependencyContainer()->createGlossaryFacade();
-            $facade->saveGlossaryKeyTranslations($data);
+            $facade = $this->getFacade();
+
+            die(dump($facade));
+            // $facade->saveGlossaryKeyTranslations($data);
 
             // return $this->redirectResponse('/glossary/');
         }

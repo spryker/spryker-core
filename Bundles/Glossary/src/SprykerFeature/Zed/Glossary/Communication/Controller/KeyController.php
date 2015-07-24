@@ -5,11 +5,14 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication\Controller;
 
+use Generated\Shared\Transfer\TranslationTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKey;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,10 +20,28 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @method GlossaryCommunication getFactory()
  * @method GlossaryDependencyContainer getDependencyContainer()
+ * @method GlossaryFacade getFacade()
  */
 class KeyController extends AbstractController
 {
+
     const ID_GLOSSARY_KEY = 'id_glossary_key';
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function ajaxAction(Request $request)
+    {
+        $idGlossaryKey = $request->get(self::ID_GLOSSARY_KEY);
+
+        $result = $this->getFacade()
+            ->getTranslations($idGlossaryKey)
+        ;
+
+        return $this->jsonResponse($result);
+    }
 
     /**
      * @return array
@@ -56,7 +77,7 @@ class KeyController extends AbstractController
      */
     public function addAction()
     {
-        
+
         $keyForm = $this->getDependencyContainer()
             ->createKeyForm('add', false)
         ;
@@ -67,13 +88,9 @@ class KeyController extends AbstractController
         if ($keyForm->isValid()) {
             $data = $keyForm->getData();
 
-            $key = $this->createKey();
-            $key->setNew(true);
-
-            $key->setKey($data[$this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_KEY)]);
-            $key->setIsActive(true === $data[$this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_IS_ACTIVE)] ? 1 : 0);
-
-            $key->save();
+            $result = $this->getFacade()
+                ->createKey($data)
+            ;
 
             return $this->redirectResponse('/glossary/key/');
         }
@@ -101,14 +118,9 @@ class KeyController extends AbstractController
         if ($keyForm->isValid()) {
             $data = $keyForm->getData();
 
-            $key = $this->createKey();
-            $key->setNew(false);
-
-            $key->setIdGlossaryKey($data[$this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY)]);
-            $key->setKey($data[$this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_KEY)]);
-            $key->setIsActive(true === $data[$this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_IS_ACTIVE)] ? 1 : 0);
-
-            $key->save();
+            $result = $this->getFacade()
+                ->updateKey($data)
+            ;
 
             return $this->redirectResponse('/glossary/key/');
         }
@@ -119,21 +131,19 @@ class KeyController extends AbstractController
     }
 
     /**
-     * @param string $key
-     *
-     * @return string
-     */
-    private function cutTablePrefix($key) {
-        $position = mb_strpos($key, '.');
-        return (false !== $position) ? mb_substr($key, $position + 1) : $key;
-    }
-
-    /**
      * @return SpyGlossaryKey
      */
     public function createKey()
     {
         return new SpyGlossaryKey();
+    }
+
+    /**
+     * @return SpyGlossaryTranslation
+     */
+    public function createTranslation()
+    {
+        return new TranslationTransfer();
     }
 
 }

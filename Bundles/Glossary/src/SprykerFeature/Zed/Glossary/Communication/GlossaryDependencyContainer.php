@@ -17,6 +17,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Zed\Glossary\Communication\Form\TranslationForm;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator;
 
 /**
@@ -25,6 +26,7 @@ use Symfony\Component\Validator\Validator;
  */
 class GlossaryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return GlossaryToLocaleInterface
      */
@@ -138,6 +140,5 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
             ->createFormTranslationForm($translationQuery, $glossaryKeyQuery, $locales, $type)
             ;
     }
-
 
 }

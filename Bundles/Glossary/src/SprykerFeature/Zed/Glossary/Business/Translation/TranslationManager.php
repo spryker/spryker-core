@@ -8,8 +8,10 @@ namespace SprykerFeature\Zed\Glossary\Business\Translation;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Exception\PropelException;
+use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
+use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
@@ -17,6 +19,7 @@ use SprykerFeature\Zed\Glossary\Business\Key\KeyManagerInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation;
 
@@ -45,19 +48,14 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected $localeFacade;
 
-
     /**
      * @param GlossaryQueryContainerInterface $glossaryQueryContainer
      * @param GlossaryToTouchInterface $touchFacade
      * @param GlossaryToLocaleInterface $localeFacade
      * @param KeyManagerInterface $keyManager
      */
-    public function __construct(
-        GlossaryQueryContainerInterface $glossaryQueryContainer,
-        GlossaryToTouchInterface $touchFacade,
-        GlossaryToLocaleInterface $localeFacade,
-        KeyManagerInterface $keyManager
-    ) {
+    public function __construct(GlossaryQueryContainerInterface $glossaryQueryContainer, GlossaryToTouchInterface $touchFacade, GlossaryToLocaleInterface $localeFacade, KeyManagerInterface $keyManager)
+    {
         $this->glossaryQueryContainer = $glossaryQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->keyManager = $keyManager;
@@ -77,7 +75,9 @@ class TranslationManager implements TranslationManagerInterface
         }
 
         if (true === $this->keyManager->hasKey($formData['key'])) {
-            $glossaryKey = $this->keyManager->getKey($formData['key'])->getIdGlossaryKey();
+            $glossaryKey = $this->keyManager->getKey($formData['key'])
+                ->getIdGlossaryKey()
+            ;
         } else {
             $glossaryKey = $this->keyManager->createKey($formData['key']);
         }
@@ -87,11 +87,7 @@ class TranslationManager implements TranslationManagerInterface
         foreach ($availableLocales as $localeId => $localeName) {
             if (array_key_exists('locale_' . $localeId, $formData)) {
                 $locale = $this->localeFacade->getLocale($availableLocales[$localeId]);
-                $translationTransfer = $this->createTranslationTransfer(
-                    $locale,
-                    $glossaryKey,
-                    $formData['locale_' . $locale->getIdLocale()]
-                );
+                $translationTransfer = $this->createTranslationTransfer($locale, $glossaryKey, $formData['locale_' . $locale->getIdLocale()]);
 
                 $this->saveTranslation($translationTransfer);
             }
@@ -125,8 +121,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function hasTranslationByIds($idKey, $idLocale)
     {
-        $translationCount = $this->glossaryQueryContainer
-            ->queryTranslationByIds($idKey, $idLocale)
+        $translationCount = $this->glossaryQueryContainer->queryTranslationByIds($idKey, $idLocale)
             ->count()
         ;
 
@@ -146,11 +141,15 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive)
     {
-        $idKey = $this->keyManager->getKey($keyName)->getPrimaryKey();
+        $idKey = $this->keyManager->getKey($keyName)
+            ->getPrimaryKey()
+        ;
         $idLocale = $locale->getIdLocale();
 
         if (null === $idLocale) {
-            $idLocale = $this->localeFacade->getLocale($locale->getLocaleName())->getIdLocale();
+            $idLocale = $this->localeFacade->getLocale($locale->getLocaleName())
+                ->getIdLocale()
+            ;
         }
 
         return $this->createTranslationByIds($idKey, $idLocale, $value, $isActive);
@@ -165,16 +164,9 @@ class TranslationManager implements TranslationManagerInterface
     protected function checkTranslationDoesNotExist($idKey, $idLocale)
     {
         if ($this->hasTranslationByIds($idKey, $idLocale)) {
-            throw new TranslationExistsException(
-                sprintf(
-                    'Tried to create a translation for keyId %s, localeId %s, but it already exists',
-                    $idKey,
-                    $idLocale
-                )
-            );
+            throw new TranslationExistsException(sprintf('Tried to create a translation for keyId %s, localeId %s, but it already exists', $idKey, $idLocale));
         };
     }
-
 
     /**
      * @param string $keyName
@@ -184,8 +176,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function hasTranslation($keyName, LocaleTransfer $locale)
     {
-        $translationCount = $this->glossaryQueryContainer
-            ->queryTranslationByNames($keyName, $locale->getLocaleName())
+        $translationCount = $this->glossaryQueryContainer->queryTranslationByNames($keyName, $locale->getLocaleName())
             ->count()
         ;
 
@@ -208,8 +199,7 @@ class TranslationManager implements TranslationManagerInterface
 
         $translation = new SpyGlossaryTranslation();
 
-        $translation
-            ->setFkGlossaryKey($idKey)
+        $translation->setFkGlossaryKey($idKey)
             ->setFkLocale($idLocale)
             ->setValue($value)
             ->setIsActive($isActive)
@@ -225,10 +215,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function insertActiveTouchRecord($idItem)
     {
-        $this->touchFacade->touchActive(
-            self::TOUCH_TRANSLATION,
-            $idItem
-        );
+        $this->touchFacade->touchActive(self::TOUCH_TRANSLATION, $idItem);
     }
 
     /**
@@ -299,10 +286,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function insertDeletedTouchRecord($idItem)
     {
-        $this->touchFacade->touchDeleted(
-            self::TOUCH_TRANSLATION,
-            $idItem
-        );
+        $this->touchFacade->touchDeleted(self::TOUCH_TRANSLATION, $idItem);
     }
 
     /**
@@ -356,10 +340,7 @@ class TranslationManager implements TranslationManagerInterface
     public function saveTranslation(TranslationTransfer $transferTranslation)
     {
         if ($this->hasTranslationByIds($transferTranslation->getFkGlossaryKey(), $transferTranslation->getFkLocale())) {
-            $translationEntity = $this->getTranslationByIds(
-                $transferTranslation->getFkGlossaryKey(),
-                $transferTranslation->getFkLocale()
-            );
+            $translationEntity = $this->getTranslationByIds($transferTranslation->getFkGlossaryKey(), $transferTranslation->getFkLocale());
             $translationEntity->setValue($transferTranslation->getValue());
             $translationEntity->save();
 
@@ -403,12 +384,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function createTranslationFromTransfer(TranslationTransfer $transferTranslation)
     {
-        $newTransferTranslation = $this->createTranslationByIds(
-            $transferTranslation->getFkGlossaryKey(),
-            $transferTranslation->getFkLocale(),
-            $transferTranslation->getValue(),
-            $transferTranslation->getIsActive()
-        );
+        $newTransferTranslation = $this->createTranslationByIds($transferTranslation->getFkGlossaryKey(), $transferTranslation->getFkLocale(), $transferTranslation->getValue(), $transferTranslation->getIsActive());
 
         return $newTransferTranslation;
     }
@@ -420,7 +396,9 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function createAndTouchTranslationFromTransfer(TranslationTransfer $transferTranslation)
     {
-        Propel::getConnection()->beginTransaction();
+        Propel::getConnection()
+            ->beginTransaction()
+        ;
 
         $transferTranslationNew = $this->createTranslationFromTransfer($transferTranslation);
 
@@ -428,7 +406,9 @@ class TranslationManager implements TranslationManagerInterface
             $this->insertActiveTouchRecord($transferTranslationNew->getIdGlossaryTranslation());
         }
 
-        Propel::getConnection()->commit();
+        Propel::getConnection()
+            ->commit()
+        ;
 
         return $transferTranslationNew;
     }
@@ -442,15 +422,12 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function getTranslationByIds($idKey, $idLocale)
     {
-        $translation = $this->glossaryQueryContainer
-            ->queryTranslationByIds($idKey, $idLocale)
+        $translation = $this->glossaryQueryContainer->queryTranslationByIds($idKey, $idLocale)
             ->findOne()
         ;
 
         if (!$translation) {
-            throw new MissingTranslationException(
-                sprintf('Could not find a translation for keyId %s, localeId %s', $idKey, $idLocale)
-            );
+            throw new MissingTranslationException(sprintf('Could not find a translation for keyId %s, localeId %s', $idKey, $idLocale));
         }
 
         return $translation;
@@ -479,7 +456,9 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function translateByKeyId($idKey, array $data = [])
     {
-        $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
+        $idLocale = $this->localeFacade->getCurrentLocale()
+            ->getIdLocale()
+        ;
         $translation = $this->getTranslationByIds($idKey, $idLocale);
 
         return str_replace(array_keys($data), array_values($data), $translation->getValue());
@@ -497,8 +476,12 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function createTranslationForCurrentLocale($keyName, $value, $isActive = true)
     {
-        $idKey = $this->keyManager->getKey($keyName)->getPrimaryKey();
-        $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
+        $idKey = $this->keyManager->getKey($keyName)
+            ->getPrimaryKey()
+        ;
+        $idLocale = $this->localeFacade->getCurrentLocale()
+            ->getIdLocale()
+        ;
 
         return $this->createTranslationByIds($idKey, $idLocale, $value, $isActive);
     }
@@ -516,13 +499,17 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
-        Propel::getConnection()->beginTransaction();
+        Propel::getConnection()
+            ->beginTransaction()
+        ;
 
         $translation = $this->createTranslation($keyName, $locale, $value, $isActive);
         if ($isActive) {
             $this->insertActiveTouchRecord($translation->getIdGlossaryTranslation());
         }
-        Propel::getConnection()->commit();
+        Propel::getConnection()
+            ->commit()
+        ;
 
         return $translation;
     }
@@ -547,7 +534,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param SpyGlossaryTranslation $translation
-
+     *
      * @return TranslationTransfer
      */
     protected function doUpdateTranslation(SpyGlossaryTranslation $translation)
@@ -561,7 +548,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param SpyGlossaryTranslation $translation
-
+     *
      * @return TranslationTransfer
      * @throws \Exception
      * @throws PropelException
@@ -572,11 +559,11 @@ class TranslationManager implements TranslationManagerInterface
             return $translation;
         }
 
-        Propel::getConnection()->beginTransaction();
+        Propel::getConnection()
+            ->beginTransaction()
+        ;
 
-        $isActiveModified = $translation->isColumnModified(
-            SpyGlossaryTranslationTableMap::COL_IS_ACTIVE
-        );
+        $isActiveModified = $translation->isColumnModified(SpyGlossaryTranslationTableMap::COL_IS_ACTIVE);
 
         $translation->save();
 
@@ -586,7 +573,9 @@ class TranslationManager implements TranslationManagerInterface
             $this->insertDeletedTouchRecord($translation->getIdGlossaryTranslation());
         }
 
-        Propel::getConnection()->commit();
+        Propel::getConnection()
+            ->commit()
+        ;
 
         return $this->convertEntityToTranslationTransfer($translation);
     }
@@ -609,7 +598,9 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function touchCurrentTranslationForKeyId($idKey)
     {
-        $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
+        $idLocale = $this->localeFacade->getCurrentLocale()
+            ->getIdLocale()
+        ;
         $translation = $this->getTranslationByIds($idKey, $idLocale);
         $this->insertActiveTouchRecord($translation->getIdGlossaryTranslation());
     }
@@ -623,15 +614,13 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function getTranslationEntityByNames($keyName, $localeName)
     {
-        $translation = $this->glossaryQueryContainer
-            ->queryTranslationByNames($keyName, $localeName)
+        $translation = $this->glossaryQueryContainer->queryTranslationByNames($keyName, $localeName)
             ->findOne()
         ;
         if (!$translation) {
-            throw new MissingTranslationException(
-                sprintf('Could not find a translation for key %s, locale %s', $keyName, $localeName)
-            );
+            throw new MissingTranslationException(sprintf('Could not find a translation for key %s, locale %s', $keyName, $localeName));
         }
+
         return $translation;
     }
 
@@ -643,12 +632,33 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function getTranslationEntityById($idTranslation)
     {
-        $translation = $this->glossaryQueryContainer->queryTranslations()->findPk($idTranslation);
+        $translation = $this->glossaryQueryContainer->queryTranslations()
+            ->findPk($idTranslation)
+        ;
         if (!$translation) {
-            throw new MissingTranslationException(
-                sprintf('Could not find a translation with id %s', $idTranslation)
-            );
+            throw new MissingTranslationException(sprintf('Could not find a translation with id %s', $idTranslation));
         }
+
         return $translation;
+    }
+
+    /**
+     * @param int $idGlossaryKey
+     */
+    public function getTranslations($idGlossaryKey)
+    {
+        $translations = $this->glossaryQueryContainer->queryTranslations()
+            ->findByFkGlossaryKey($idGlossaryKey);
+
+        $result = [];
+        if (!empty($translations)) {
+            $translations = $translations->toArray(null, false, TableMap::TYPE_COLNAME);
+
+            foreach($translations as $value) {
+                $result[$value[SpyGlossaryTranslationTableMap::COL_FK_LOCALE]] = $value[SpyGlossaryTranslationTableMap::COL_VALUE];
+            }
+        }
+
+        return $result;
     }
 }

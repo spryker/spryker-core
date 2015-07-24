@@ -22,16 +22,16 @@ class GlossaryFacade extends AbstractFacade
 {
     
     /**
-     * @param string $keyName
+     * @param array $data
      *
      * @return int
      * @throws KeyExistsException
      */
-    public function createKey($keyName)
+    public function createKey($data)
     {
         $keyManager = $this->getDependencyContainer()->createKeyManager();
 
-        return $keyManager->createKey($keyName);
+        return $keyManager->createKey($data);
     }
 
     /**
@@ -59,17 +59,16 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param string $oldKeyName
-     * @param string $newKeyName
+     * @param array $data
      *
      * @return bool
      * @throws MissingKeyException
      */
-    public function updateKey($oldKeyName, $newKeyName)
+    public function updateKey($data)
     {
         $keyManager = $this->getDependencyContainer()->createKeyManager();
 
-        return $keyManager->updateKey($oldKeyName, $newKeyName);
+        return $keyManager->updateKey($data);
     }
 
     /**
@@ -164,6 +163,17 @@ class GlossaryFacade extends AbstractFacade
         return $translationManager->getTranslationByKeyName($keyName, $locale);
     }
 
+    /**
+     * @param int $idGlossaryKey
+     *
+     * @return TranslationTransfer
+     */
+    public function getTranslations($idGlossaryKey)
+    {
+        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+
+        return $translationManager->getTranslations($idGlossaryKey);
+    }
     /**
      * @param string $keyName
      * @param LocaleTransfer $locale

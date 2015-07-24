@@ -5,10 +5,20 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Customer\Business\CustomerFacade;
+use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use Generated\Shared\Transfer\CustomerTransfer;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
+/**
+ * @method CustomerCommunication getFactory()
+ * @method CustomerQueryContainerInterface getQueryContainer()
+ * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerFacade getFacade()
+ */
 class AddController extends AbstractController
 {
 

@@ -50,6 +50,7 @@
 
             </nav>
         </div>
+        {% if widget_title is not defined %}
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
                 <h2>{% block section_title %}{{ section_title | default('') | trans }}{% endblock %}</h2>
@@ -67,6 +68,7 @@
 
             </div>
         </div>
+        {% endif %}
         <div class="wrapper wrapper-content animated fadeInRight">
 
             {% block content -%}

@@ -9,6 +9,8 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKey;
 
 class KeyManager implements KeyManagerInterface
@@ -26,35 +28,23 @@ class KeyManager implements KeyManagerInterface
         $this->queryContainer = $queryContainer;
     }
 
-    /**
-     * @param string $currentKeyName
-     * @param string $newKeyName
-     *
-     * @return bool
-     * @throws MissingKeyException
-     */
-    public function updateKey($currentKeyName, $newKeyName)
-    {
-        $this->checkKeyDoesExist($currentKeyName);
 
-        $key = $this->getKey($currentKeyName);
-        $key->setKey($newKeyName);
-
-        return true;
-    }
 
     /**
-     * @param string $keyName
+     * @param array $data
      *
      * @throws MissingKeyException
      */
-    protected function checkKeyDoesExist($keyName)
+    protected function checkKeyDoesExist($data)
     {
-        if (!$this->hasKey($keyName)) {
+        $key = $this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_KEY);
+        $name = isset($data[$key]) ? $data[$key] : false;
+
+        if (!empty($name) && !$this->hasKey($name)) {
             throw new MissingKeyException(
                 sprintf(
                     'Tried to update key %s, but it does not exist',
-                    $keyName
+                    $name
                 )
             );
         }
@@ -111,35 +101,76 @@ class KeyManager implements KeyManagerInterface
     }
 
     /**
-     * @param string $keyName
+     * @param array $data
      *
      * @return int
      * @throws KeyExistsException
      * @throws PropelException
      */
-    public function createKey($keyName)
+    public function createKey($data)
     {
-        $this->checkKeyDoesNotExist($keyName);
+        $this->checkKeyDoesNotExist($data);
 
-        $keyEntity = new SpyGlossaryKey();
-        $keyEntity->setKey($keyName);
-        $keyEntity->save();
+        $key = new SpyGlossaryKey();
+        $key->setNew(true);
 
-        return $keyEntity->getPrimaryKey();
+        $key->setKey($data[$this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_KEY)]);
+        $key->setIsActive(true === $data[$this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_IS_ACTIVE)] ? 1 : 0);
+
+        $key->save();
+
+        return $key->getPrimaryKey();
     }
 
     /**
-     * @param string $keyName
+     * @param array $data
+     *
+     * @return bool
+     * @throws MissingKeyException
+     */
+    public function updateKey($data)
+    {
+        $this->checkKeyDoesExist($data);
+
+        $key = new SpyGlossaryKey();
+        $key->setNew(false);
+
+        $key->setIdGlossaryKey($data[$this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY)]);
+        $key->setKey($data[$this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_KEY)]);
+        $key->setIsActive(true === $data[$this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_IS_ACTIVE)] ? 1 : 0);
+
+        $key->save();
+
+        return true;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    private function cutTablePrefix($key)
+    {
+        $position = mb_strrpos($key, '.');
+
+        return (false !== $position) ? mb_substr($key, $position + 1) : $key;
+    }
+
+    /**
+     * @param array $data
      *
      * @throws KeyExistsException
      */
-    protected function checkKeyDoesNotExist($keyName)
+    protected function checkKeyDoesNotExist($data)
     {
-        if ($this->hasKey($keyName)) {
+        $key = $this->cutTablePrefix(SpyGlossaryKeyTableMap::COL_KEY);
+        $name = isset($data[$key]) ? $data[$key] : false;
+
+        if (!empty($name) && $this->hasKey($name)) {
             throw new KeyExistsException(
                 sprintf(
                     'Tried to create key %s, but it already exists',
-                    $keyName
+                    $name
                 )
             );
         }

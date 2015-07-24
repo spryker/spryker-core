@@ -31,7 +31,7 @@ class CustomerForm extends AbstractForm
     const ID_CUSTOMER = 'id_customer';
 
     /**
-     * @var SpyCustomerQueryQuery
+     * @var SpyCustomerQuery
      */
     protected $customerQuery;
 

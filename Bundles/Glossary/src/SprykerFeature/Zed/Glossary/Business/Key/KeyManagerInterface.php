@@ -13,14 +13,14 @@ use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKey;
 interface KeyManagerInterface
 {
     /**
-     * @param string $keyName
+     * @param array $data
      *
      * @return int
      * @throws KeyExistsException
      * @throws \Exception
      * @throws PropelException
      */
-    public function createKey($keyName);
+    public function createKey($data);
 
     /**
      * @param string $keyName
@@ -38,13 +38,12 @@ interface KeyManagerInterface
     public function getKey($keyName);
 
     /**
-     * @param string $currentKeyName
-     * @param string $newKeyName
+     * @param array $data
      *
      * @return bool
      * @throws MissingKeyException
      */
-    public function updateKey($currentKeyName, $newKeyName);
+    public function updateKey($data);
 
     /**
      * @param string $keyName

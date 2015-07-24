@@ -146,4 +146,11 @@ interface TranslationManagerInterface
      * @param int $idKey
      */
     public function touchCurrentTranslationForKeyId($idKey);
+
+    /**
+     * @param int $idGlossaryKey
+     *
+     * @return mixed
+     */
+    public function getTranslations($idGlossaryKey);
 }
