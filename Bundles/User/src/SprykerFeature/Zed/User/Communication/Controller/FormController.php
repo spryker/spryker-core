@@ -32,10 +32,12 @@ class FormController extends AbstractController
             $user->fromArray($formData);
             $user->setIdUser($request->query->get('id'));
 
-            $newStatus = ($formData['status'] === true)
-                ? SpyUserTableMap::COL_STATUS_ACTIVE
-                : SpyUserTableMap::COL_STATUS_BLOCKED
-            ;
+            if ($formData['status']) {
+                $newStatus = SpyUserTableMap::COL_STATUS_ACTIVE;
+            } else {
+                $newStatus = SpyUserTableMap::COL_STATUS_BLOCKED;
+            }
+
             $user->setStatus($newStatus);
 
             $facade->updateUser($user);

@@ -67,7 +67,7 @@ class TableConfiguration
      */
     public function setHeader(array $header)
     {
-        if ($this->isAssoc($header) === true) {
+        if ($this->isAssoc($header)) {
             $this->header = $header;
         }
     }
