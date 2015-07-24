@@ -32,6 +32,22 @@ class ProductManager implements ProductManagerInterface
      */
     public function expandItems(ChangeInterface $change)
     {
+        foreach ($change->getItems() as $cartItem) {
+
+            $concreteProductTransfer = $this->productFacade->getConcreteProduct($cartItem->getSku());
+
+            $cartItem->setId($concreteProductTransfer->getIdConcreteProduct())
+                ->setIdAbstractProduct($concreteProductTransfer->getIdAbstractProduct())
+                ->setAbstractSku($concreteProductTransfer->getAbstractProductSku())
+                ->setName($concreteProductTransfer->getName());
+
+            $taxSetTransfer = $concreteProductTransfer->getTaxSet();
+
+            if (null !== $taxSetTransfer) {
+                $cartItem->setTaxSet($taxSetTransfer);
+            }
+        }
+
         return $change;
     }
 

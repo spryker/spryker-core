@@ -5,7 +5,9 @@
 
     <transfer name="CartItem">
         <property name="id" type="int" />
+        <property name="idAbstractProduct" type="int" />
         <property name="abstractSku" type="string" />
+        <property name="name" type="string" />
         <property name="taxSet" type="TaxSet" />
     </transfer>
 

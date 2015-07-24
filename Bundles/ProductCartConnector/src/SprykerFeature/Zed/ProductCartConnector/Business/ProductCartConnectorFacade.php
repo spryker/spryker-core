@@ -20,9 +20,9 @@ class ProductCartConnectorFacade extends AbstractFacade
      *
      * @return ChangeInterface
      */
-    public function addGrossProductToItems(ChangeInterface $change)
+    public function expandItems(ChangeInterface $change)
     {
-        return $this->getDependencyContainer()->createProductManager()->addGrossProductToItems($change);
+        return $this->getDependencyContainer()->createProductManager()->expandItems($change);
     }
 
 }

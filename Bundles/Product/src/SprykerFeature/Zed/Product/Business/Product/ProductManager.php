@@ -481,9 +481,6 @@ class ProductManager implements ProductManagerInterface
         return $effectiveTaxRate;
     }
 
-
-
-
     /**
      * @param string $concreteSku
      *
@@ -597,7 +594,6 @@ class ProductManager implements ProductManagerInterface
 
         return $concreteProduct->getSpyAbstractProduct()->getSku();
     }
-
 
     /**
      * @param array $attributes
