@@ -59,18 +59,7 @@ class GlossaryDependencyContainer extends AbstractBusinessDependencyContainer
     public function createKeyManager()
     {
         return $this->getFactory()->createKeyKeyManager(
-            $this->createKeySource(),
             $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return KeySourceInterface
-     */
-    protected function createKeySource()
-    {
-        return $this->getFactory()->createKeyFileKeySource(
-            $this->getConfig()->getGlossaryKeyFileName()
         );
     }
 

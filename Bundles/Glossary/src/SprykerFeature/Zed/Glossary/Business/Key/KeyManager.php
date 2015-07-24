@@ -19,17 +19,10 @@ class KeyManager implements KeyManagerInterface
     protected $queryContainer;
 
     /**
-     * @var KeySourceInterface
-     */
-    protected $keySource;
-
-    /**
-     * @param KeySourceInterface $keySource
      * @param GlossaryQueryContainerInterface $queryContainer
      */
-    public function __construct(KeySourceInterface $keySource, GlossaryQueryContainerInterface $queryContainer)
+    public function __construct(GlossaryQueryContainerInterface $queryContainer)
     {
-        $this->keySource = $keySource;
         $this->queryContainer = $queryContainer;
     }
 
@@ -115,17 +108,6 @@ class KeyManager implements KeyManagerInterface
         $entity->save();
 
         return true;
-    }
-
-    public function synchronizeKeys()
-    {
-        $keyArray = $this->keySource->retrieveKeyArray();
-
-        foreach ($keyArray as $keyName) {
-            if (!$this->hasKey($keyName)) {
-                $this->createKey($keyName);
-            }
-        }
     }
 
     /**
