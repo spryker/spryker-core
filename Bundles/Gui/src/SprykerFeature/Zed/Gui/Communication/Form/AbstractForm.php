@@ -41,6 +41,11 @@ abstract class AbstractForm
     protected $defaultDataType;
 
     /**
+     * @var bool
+     */
+    private $initialized = false;
+
+    /**
      * Prepares form
      *
      * @return $this
@@ -99,16 +104,18 @@ abstract class AbstractForm
 
     /**
      * @return $this
+     * @deprecated this method will become private and will be called in this class ONLY in handleRequest()
      */
     public function init()
     {
-        $this->injectDependencies()
-            ->buildFormFields();
+        if (!$this->initialized) {
+            $this->initialized = true;
+            $this->injectDependencies()
+                ->buildFormFields();
 
-        $data = $this->populateFormFields();
-        $this->setData($data);
-
-        return $this;
+            $data = $this->populateFormFields();
+            $this->setData($data);
+        }
     }
 
     /**
@@ -129,7 +136,7 @@ abstract class AbstractForm
     public function createView()
     {
         if ($this->getDefaultDataType() instanceof AbstractTransfer) {
-            $this->setData($this->getData(false));
+            $this->setData($this->getData());
         }
 
         return $this->form->createView();
@@ -140,6 +147,8 @@ abstract class AbstractForm
      */
     public function handleRequest()
     {
+        $this->init();
+
         return $this->form->handleRequest($this->request);
     }
 

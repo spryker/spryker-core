@@ -10,7 +10,7 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_header_content %}
-            <a href="/customer/" class="btn btn-sm btn-primary">{{ 'Back to Customers' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/" class="btn btn-sm btn-default">{{ 'Back to Customers' | trans }}</a>&nbsp;&nbsp;&nbsp;
             <a href="/customer/edit?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'Edit Customer' | trans }}</a>&nbsp;&nbsp;&nbsp;
             <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'Manage Addresses' | trans }}</a>
         {% endblock %}
