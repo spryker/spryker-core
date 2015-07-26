@@ -1,6 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Wishlist\Persistance;
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace SprykerFeature\Zed\Wishlist\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -8,12 +12,13 @@ use Generated\Shared\Wishlist\WishlistItemInterface;
 use Generated\Shared\Customer\CustomerInterface;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\Map\SpyWishlistItemTableMap;
+use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlist;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItemQuery;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 use Propel\Runtime\ActiveQuery\Join;
-
 
 class WishlistQueryContainer extends AbstractQueryContainer
 {
@@ -21,6 +26,11 @@ class WishlistQueryContainer extends AbstractQueryContainer
 
     const CONCRETE_SKU_COL_NAME = "concrete_sku";
 
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return SpyWishlist
+     */
     public function queryCustomerWishlist(CustomerInterface $customerTransfer)
     {
         $wishlist = SpyWishlistQuery::create()
@@ -29,6 +39,11 @@ class WishlistQueryContainer extends AbstractQueryContainer
         return $wishlist;
     }
 
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return array
+     */
     public function queryCustomerWishlistItemsArray(CustomerInterface $customerTransfer)
     {
         return SpyWishlistItemQuery::create()
@@ -61,6 +76,11 @@ class WishlistQueryContainer extends AbstractQueryContainer
             ->getArrayCopy();
     }
 
+    /**
+     * @param WishlistItemInterface $wishlistItemTransfer
+     *
+     * @return SpyProduct
+     */
     public function queryConcreteProduct(WishlistItemInterface $wishlistItemTransfer)
     {
         $concreteProduct = SpyProductQuery::create()
@@ -69,11 +89,19 @@ class WishlistQueryContainer extends AbstractQueryContainer
         return $concreteProduct;
     }
 
+    /**
+     * @return SpyWishlistItemQuery
+     */
     public function getWishlistItemQuery()
     {
         return SpyWishlistItemQuery::create();
     }
 
+    /**
+     * @param WishlistItemInterface $wishlistTransfer
+     *
+     * @return SpyWishlistItemQuery
+     */
     public function filterWishlistItemQueryByPrimaryKey(WishlistItemInterface $wishlistTransfer)
     {
         return $this->getWishlistItemQuery()

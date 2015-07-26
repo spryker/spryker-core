@@ -1,10 +1,16 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Wishlist\Business;
 
-use Generated\Shared\Wishlist\WishlistItemInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\WishlistBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Wishlist\Business\Integrator\EntityIntegrator;
+use SprykerFeature\Zed\Wishlist\Business\Integrator\TransferObjectIntegrator;
+use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItemQuery;
 use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainer;
 
 /**
@@ -13,19 +19,29 @@ use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainer;
  */
 class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
 {
-    public function getEntityIntegrator()
+
+    /**
+     * @return EntityIntegrator
+     */
+    public function createEntityIntegrator()
     {
         return $this->getFactory()
             ->createIntegratorEntityIntegrator($this->getQueryContainer());
     }
 
-    public function getTransferObjectIntegrator()
+    /**
+     * @return TransferObjectIntegrator
+     */
+    public function createTransferObjectIntegrator()
     {
         return $this->getFactory()
-            ->createIntegratorTransferObjectIntegrator($this->getEntityIntegrator());
+            ->createIntegratorTransferObjectIntegrator($this->createEntityIntegrator());
     }
 
-    public function getWishlistItemQuery()
+    /**
+     * @return SpyWishlistItemQuery
+     */
+    public function createWishlistItemQuery()
     {
         return $this->getQueryContainer()->getWishlistItemQuery();
     }

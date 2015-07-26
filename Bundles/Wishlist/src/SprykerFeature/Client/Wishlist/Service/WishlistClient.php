@@ -1,63 +1,73 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Client\Wishlist\Service;
 
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
+use Generated\Shared\Wishlist\WishlistInterface;
 use Generated\Shared\Wishlist\WishlistItemInterface;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
-use SprykerFeature\Zed\Wishlist\Business\WishlistDependencyContainer;
+use SprykerFeature\Client\Wishlist\Service\WishlistDependencyContainer;
 
 /**
  * @method WishlistDependencyContainer getDependencyContainer()
  */
-class WishlistClient extends AbstractClient
+class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
 
+    /**
+     * @param WishlistItemInterface $wishlistItemTransfer
+     */
     public function removeItem(WishlistItemInterface $wishlistItemTransfer)
     {
         $this->getDependencyContainer()
-            ->createZedStub()
-            ->removeItem($wishlistItemTransfer);
+            ->createRemoveAction()
+            ->setTransferObject($wishlistItemTransfer)
+            ->execute();
     }
 
+    /**
+     * @param WishlistItemInterface $wishlistItemTransfer
+     */
     public function saveItem(WishlistItemInterface $wishlistItemTransfer)
     {
-        $changeTransfer = (new WishlistChangeTransfer())->addItem($wishlistItemTransfer);
-        $this->invokeCustomer($changeTransfer);
+        $changeTransfer = (new WishlistChangeTransfer())
+            ->addItem($wishlistItemTransfer);
+
         $this->getDependencyContainer()
-             ->createZedStub()
-             ->saveItems($changeTransfer);
+            ->createSaveAction()
+            ->setTransferObject($changeTransfer)
+            ->execute();
     }
 
+    /**
+     * @return WishlistInterface
+     */
     public function getWishlist()
     {
-        $customer = $this->getCustomer();
         return $this->getDependencyContainer()
-            ->createZedStub()
-            ->findWishlistByCustomer($customer);
+            ->createGetAction()
+            ->execute()
+            ->getResponse();
     }
 
-
-    protected function invokeCustomer(WishlistChangeInterface $changeTransfer)
-    {
-        $customer = $this->getCustomer();
-
-        if(!$customer instanceof CustomerInterface) {
-            return;
-        }
-
-        $changeTransfer->setCustomer($customer);
-    }
-
-    protected function getCustomer()
+    /**
+     * @return WishlistInterface
+     */
+    public function mergeWishlist()
     {
         return $this->getDependencyContainer()
-            ->createSession()
-            ->getCustomer();
+            ->createMergeAction()
+            ->execute()
+            ->getResponse();
 
     }
+
 
 
 }
