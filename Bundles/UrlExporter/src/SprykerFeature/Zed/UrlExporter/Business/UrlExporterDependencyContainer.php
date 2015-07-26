@@ -7,8 +7,8 @@
 namespace SprykerFeature\Zed\UrlExporter\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\UrlExporterBusiness;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\UrlExporter\Business\Builder\RedirectBuilderInterface;
 use SprykerFeature\Zed\UrlExporter\Business\Builder\UrlBuilderInterface;
 

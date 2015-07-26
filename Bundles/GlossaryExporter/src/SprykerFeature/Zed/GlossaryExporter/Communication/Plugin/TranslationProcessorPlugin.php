@@ -10,8 +10,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Zed\Collector\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\GlossaryExporter\Communication\GlossaryExporterDependencyContainer;
 
 /**

@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
+use SprykerFeature\Zed\Collector\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\ProductSearch\Business\ProductSearchFacade;
 use SprykerFeature\Zed\ProductSearch\Communication\ProductSearchDependencyContainer;
 

@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\ProductOptionExporter\Communication\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
+use SprykerFeature\Zed\Collector\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\ProductOptionExporter\Communication\ProductOptionExporterDependencyContainer;
 
 /**

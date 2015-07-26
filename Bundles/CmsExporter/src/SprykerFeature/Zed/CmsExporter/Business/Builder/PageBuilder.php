@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\CmsExporter\Business\Builder;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class PageBuilder implements PageBuilderInterface
 {

@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\GlossaryExporter\Communication\Plugin;
 
-use SprykerFeature\Shared\Glossary\Code\KeyBuilder\GlossaryKeyBuilder;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Glossary\Code\KeyBuilder\GlossaryKeyBuilder;
 
 class KeyBuilderPlugin extends AbstractPlugin implements KeyBuilderInterface
 {

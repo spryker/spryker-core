@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\ProductFrontendExporterAvailabilityConnector\Commun
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
+use SprykerFeature\Zed\Collector\Dependency\Plugin\DataProcessorPluginInterface;
 
 class ProductAvailabilityProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {

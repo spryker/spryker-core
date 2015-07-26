@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Decider;
 
-use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
+use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 
 class ProductExportDecider implements ProductExportDeciderInterface
 {

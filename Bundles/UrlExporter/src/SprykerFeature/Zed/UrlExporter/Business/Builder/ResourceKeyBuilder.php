@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\UrlExporter\Business\Builder;
 
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuilder;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 
 class ResourceKeyBuilder extends SharedResourceKeyBuilder
 {

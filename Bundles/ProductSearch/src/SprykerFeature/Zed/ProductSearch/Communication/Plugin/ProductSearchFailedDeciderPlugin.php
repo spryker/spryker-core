@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Communication\Plugin;
 
-use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\ExportFailedDeciderPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
+use SprykerFeature\Zed\Collector\Dependency\Plugin\ExportFailedDeciderPluginInterface;
 
 class ProductSearchFailedDeciderPlugin extends AbstractPlugin implements ExportFailedDeciderPluginInterface
 {

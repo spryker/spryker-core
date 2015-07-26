@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\CmsExporter\Communication\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\CmsExporter\Communication\CmsExporterDependencyContainer;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
+use SprykerFeature\Zed\Collector\Dependency\Plugin\DataProcessorPluginInterface;
 
 /**
  * @method CmsExporterDependencyContainer getDependencyContainer()

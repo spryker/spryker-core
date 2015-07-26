@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductFrontendExporterConnectorBusiness;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Decider\ProductExportDeciderInterface;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Dependency\Facade\ProductFrontendExporterToProductInterface;

@@ -13,7 +13,7 @@ interface ProductCategoryFrontendExporterToCategoryExporterInterface
 {
 
     /**
-     * @param array  $data
+     * @param array $data
      * @param string $idsField
      * @param string $namesField
      * @param string $urlsField

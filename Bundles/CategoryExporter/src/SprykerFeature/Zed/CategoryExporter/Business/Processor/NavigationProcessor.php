@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\CategoryExporter\Business\Processor;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\CategoryExporter\Business\Formatter\CategoryNodeFormatterInterface;
 
 class NavigationProcessor implements NavigationProcessorInterface

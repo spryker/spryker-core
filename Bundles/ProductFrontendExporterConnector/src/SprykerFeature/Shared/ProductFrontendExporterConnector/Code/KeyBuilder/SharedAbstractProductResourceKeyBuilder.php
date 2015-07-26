@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Shared\ProductFrontendExporterConnector\Code\KeyBuilder;
 
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuilder;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 use SprykerFeature\Shared\Product\ProductConfig;
 
 abstract class SharedAbstractProductResourceKeyBuilder extends SharedResourceKeyBuilder

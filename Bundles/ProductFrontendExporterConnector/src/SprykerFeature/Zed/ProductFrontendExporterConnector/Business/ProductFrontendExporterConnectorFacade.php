@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
+use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 
 /**
  * @method ProductFrontendExporterConnectorDependencyContainer getDependencyContainer()

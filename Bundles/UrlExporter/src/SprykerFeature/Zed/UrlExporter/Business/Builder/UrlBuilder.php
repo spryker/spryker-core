@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\UrlExporter\Business\Builder;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class UrlBuilder implements UrlBuilderInterface
 {

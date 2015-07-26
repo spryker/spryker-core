@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\ProductSearch\Business\Processor;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class ProductSearchProcessor implements ProductSearchProcessorInterface
 {

@@ -11,8 +11,8 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\CategoryExporter\Business\CategoryExporterFacade;
 use SprykerFeature\Zed\CategoryExporter\Communication\CategoryExporterDependencyContainer;
-use SprykerFeature\Zed\FrontendExporter\Business\Model\BatchResultInterface;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
+use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
+use SprykerFeature\Zed\Collector\Dependency\Plugin\DataProcessorPluginInterface;
 
 /**
  * @method CategoryExporterDependencyContainer getDependencyContainer()

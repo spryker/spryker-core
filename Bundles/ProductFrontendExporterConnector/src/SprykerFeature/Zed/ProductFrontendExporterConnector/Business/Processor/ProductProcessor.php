@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\ProductFrontendExporterConnector\Business\Processor;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\ProductFrontendExporterConnector\Dependency\Facade\ProductFrontendExporterToProductInterface;
 
 class ProductProcessor implements ProductProcessorInterface

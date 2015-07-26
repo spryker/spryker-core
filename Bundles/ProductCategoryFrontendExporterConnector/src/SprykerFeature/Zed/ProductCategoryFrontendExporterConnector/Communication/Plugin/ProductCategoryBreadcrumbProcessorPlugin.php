@@ -8,14 +8,13 @@ namespace SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Communicat
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
+use SprykerFeature\Zed\Collector\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\ProductCategoryFrontendExporterConnector\Communication\ProductCategoryFrontendExporterConnectorDependencyContainer;
 
 /**
  * @method ProductCategoryFrontendExporterConnectorDependencyContainer getDependencyContainer()
  */
-class ProductCategoryBreadcrumbProcessorPlugin extends AbstractPlugin implements
-    DataProcessorPluginInterface
+class ProductCategoryBreadcrumbProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
 {
 
     /**
