@@ -6,12 +6,11 @@
 
 namespace SprykerFeature\Zed\FrontendExporter\Persistence;
 
-use SprykerFeature\Zed\FrontendExporter\Persistence\Propel\SpyFrontendExporterTouchQuery;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
+use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 
 class FrontendExporterQueryContainer extends AbstractQueryContainer
 {
@@ -20,7 +19,7 @@ class FrontendExporterQueryContainer extends AbstractQueryContainer
      * @param string $type
      * @param \DateTime $lastExportedAt
      *
-     * @return SpyFrontendExporterTouchQuery
+     * @return SpyTouchQuery
      */
     public function createBasicExportableQuery($type, \DateTime $lastExportedAt)
     {
