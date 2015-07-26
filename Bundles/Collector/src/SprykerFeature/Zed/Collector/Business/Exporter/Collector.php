@@ -25,8 +25,8 @@ class Collector
     protected $queryContainer;
 
     /**
-     * @param CollectorQueryContainer  $queryContainer
-     * @param ExporterInterface         $exporter
+     * @param CollectorQueryContainer $queryContainer
+     * @param ExporterInterface $exporter
      */
     public function __construct(
         CollectorQueryContainer $queryContainer,

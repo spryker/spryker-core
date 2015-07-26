@@ -10,7 +10,7 @@ interface WriterInterface
 {
 
     /**
-     * @param array  $dataSet
+     * @param array $dataSet
      * @param string $type
      *
      * @return bool
