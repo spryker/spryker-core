@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\FrontendExporter;
 
-use SprykerFeature\Shared\Library\Config;
+use SprykerEngine\Shared\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\FrontendExporter\Dependency\Plugin\ExportFailedDeciderPluginInterface;
