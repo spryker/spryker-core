@@ -6,6 +6,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrderQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CustomerForm extends AbstractForm
 {
@@ -37,15 +39,21 @@ class CustomerForm extends AbstractForm
             'placeholder' => '-select-',
             'choices' => $this->getSalutationOptions(),
         ])
-            ->addText(self::FIRST_NAME)
-            ->addText(self::LAST_NAME)
-            ->addText(self::EMAIL)
-            ->addSubmit(self::SUBMIT, [
-                'label' => 'Save',
-                'attr' => [
-                    'class' => 'btn btn-primary',
-                ]
-            ]);
+            ->addText(self::FIRST_NAME, [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ])
+            ->addText(self::LAST_NAME, [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ])
+            ->addText(self::EMAIL, [
+                'constraints' => [
+                    new Email(),
+                ],
+            ])
         ;
     }
 
