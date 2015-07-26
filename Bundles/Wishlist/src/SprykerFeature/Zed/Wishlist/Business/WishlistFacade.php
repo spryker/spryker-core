@@ -17,16 +17,41 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class WishlistFacade extends AbstractFacade
 {
+    /**
+     * @param WishlistChangeInterface $changeTransfer
+     *
+     * @return WishlistInterface
+     */
+    public function groupAddedItems(WishlistChangeInterface $changeTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createTransferObjectIntegrator()
+            ->groupAddedItems($changeTransfer);
+    }
+
+    /**
+     * @param WishlistChangeInterface $changeTransfer
+     *
+     * @return WishlistInterface
+     */
+    public function ungroupRemovedItems(WishlistChangeInterface $changeTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createTransferObjectIntegrator()
+            ->ungroupRemovedItems($changeTransfer);
+    }
+
 
     /**
      * @param WishlistChangeInterface $changeTransfer
      */
-    public function saveItems(WishlistChangeInterface $changeTransfer)
+    public function storeItems(WishlistChangeInterface $changeTransfer)
     {
         $this->getDependencyContainer()
             ->createEntityIntegrator()
             ->saveItems($changeTransfer);
     }
+
 
     /**
      * @param CustomerInterface $customerTransfer
@@ -58,13 +83,18 @@ class WishlistFacade extends AbstractFacade
      *
      * @return int
      */
-    public function removeItem(WishlistItemInterface $wishlistItemTransfer)
+    public function removeItem(WishlistChangeInterface $changeTransfer)
     {
         return  $this->getDependencyContainer()
             ->createEntityIntegrator()
-            ->removeItem($wishlistItemTransfer);
+            ->removeItems($changeTransfer);
     }
 
+    /**
+     * @param WishlistInterface $wishlist
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
     public function mergeWishlist(WishlistInterface $wishlist)
     {
         return $this->getDependencyContainer()

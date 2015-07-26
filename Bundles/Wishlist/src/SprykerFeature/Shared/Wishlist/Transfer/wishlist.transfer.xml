@@ -11,6 +11,8 @@
     <transfer name="WishlistChange">
         <property name="customer" type="Customer" />
         <property name="items" type="WishlistItem[]" singular="item" />
+        <property name="addedItems" type="WishlistItem[]" singular="item" />
+        <property name="removedItems" type="WishlistItem[]" singular="item" />
     </transfer>
 
     <transfer name="WishlistProduct">

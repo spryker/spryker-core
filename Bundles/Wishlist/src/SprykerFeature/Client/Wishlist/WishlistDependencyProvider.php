@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Client\Wishlist;
 
 use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
@@ -11,6 +15,13 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
 
     const SESSION = "session";
 
+    const CUSTOMER_CLIENT = "customer_client";
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
     public function provideServiceLayerDependencies(Container $container)
     {
         $container[self::SERVICE_ZED] = function (Container $container) {
@@ -21,5 +32,10 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
             return $container->getLocator()->session()->client();
         };
 
+        $container[self::CUSTOMER_CLIENT] = function (Container $container) {
+            return $container->getLocator()->customer()->client();
+        };
+
+        return $container;
     }
 }

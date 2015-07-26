@@ -51,7 +51,7 @@ class EntityIntegrator
     public function getItems(CustomerInterface $customerTransfer)
     {
         return $this->queryContainer
-                    ->queryCustomerWishlistItemsArray($customerTransfer);
+            ->queryCustomerWishlistItemsArray($customerTransfer);
     }
 
     /**
@@ -62,7 +62,7 @@ class EntityIntegrator
     {
         $idWishlist = $this->getCustomerIdWishlist($changeTransfer->getCustomer());
 
-        foreach ($changeTransfer->getItems() as $itemTransfer) {
+        foreach ($changeTransfer->getAddedItems() as $itemTransfer) {
 
             $idProduct = $this->getWishlistItemIdProduct($itemTransfer);
 
@@ -72,7 +72,7 @@ class EntityIntegrator
                 ->setQuantity($itemTransfer->getQuantity())
                 ->setAddedAt($itemTransfer->getAddedAt());
 
-            if(null !== $itemTransfer->getId()) {
+            if (null !== $itemTransfer->getId()) {
                 $item->setPrimaryKey($itemTransfer->getId());
             }
 
@@ -82,14 +82,15 @@ class EntityIntegrator
 
     /**
      * @param WishlistItemInterface $wishlistItemTransfer
-     *
-     * @return int
      */
-    public function removeItem(WishlistItemInterface $wishlistItemTransfer)
+    public function removeItems(WishlistChangeInterface $changeTransfer)
     {
-        return $this->queryContainer
-             ->filterWishlistItemQueryByPrimaryKey($wishlistItemTransfer)
-             ->delete();
+        foreach ($changeTransfer->getRemovedItems() as $item) {
+            $this->queryContainer
+                ->filterWishlistItemQueryByPrimaryKey($item)
+                ->delete();
+        }
+
     }
 
     /**
@@ -110,13 +111,13 @@ class EntityIntegrator
      */
     protected function getCustomerIdWishlist(CustomerInterface $customerTransfer)
     {
-        if(!$this->customerHasWishlist($customerTransfer)) {
+        if (!$this->customerHasWishlist($customerTransfer)) {
             $this->createCustomerWishlist($customerTransfer);
         }
 
         return $this->queryContainer
-                    ->queryCustomerWishlist($customerTransfer)
-                    ->getIdWishlist();
+            ->queryCustomerWishlist($customerTransfer)
+            ->getIdWishlist();
 
     }
 
@@ -139,8 +140,8 @@ class EntityIntegrator
      */
     protected function createCustomerWishlist(CustomerInterface $customerTransfer)
     {
-       return (new SpyWishlist())
-           ->setFkCustomer($customerTransfer->getIdCustomer())#
-           ->save();
+        return (new SpyWishlist())
+            ->setFkCustomer($customerTransfer->getIdCustomer())#
+            ->save();
     }
 }

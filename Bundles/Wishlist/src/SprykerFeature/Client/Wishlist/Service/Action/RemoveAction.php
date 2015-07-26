@@ -8,35 +8,52 @@
 namespace SprykerFeature\Client\Wishlist\Service\Action;
 
 
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Wishlist\WishlistChangeInterface;
+use Generated\Shared\Wishlist\WishlistItemInterface;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
 class RemoveAction extends AbstractActionFactory
 {
+    private $changeTransfer;
 
+    /**
+     * @param TransferInterface $transfer
+     *
+     * @return RemoveAction
+     */
     public function setTransferObject(TransferInterface $transfer)
     {
-        if (!$transfer instanceof WishlistInterface) {
-            throw new \InvalidArgumentException( printf("Wishlist Remove Action should get WishlistInterface transfer object"));
+        if (!$transfer instanceof WishlistItemInterface) {
+            throw new \InvalidArgumentException("WishlistItem Remove Action needs WishlistItemInterface argument");
         }
 
-        $this->transferObject = $transfer;
+        $this->changeTransfer = (new WishlistChangeTransfer())
+            ->setRemovedItems(new \ArrayObject($transfer));
 
         return $this;
     }
 
     protected function handleSession()
     {
-        if(!$this->transferObject instanceof TransferInterface) {
-            throw new \RuntimeException("Transfer Object should be set in oder to use Wishlist Remove action");
+        if (!$this->changeTransfer instanceof WishlistChangeInterface) {
+            throw new \InvalidArgumentException( printf("Wishlist Remove Action should get WishlistChangeInterface transfer object for handling a remove routine on Zed side"));
         }
 
-        $this->session->set(self::WISHLIST_SESSION_IDENTIFIER, $this->transferObject);
+        if(null === $sessionItems = $this->session->get(self::$wishlistSessionID)) {
+            return;
+        }
+
+        $this->changeTransfer->setItems($sessionItems->getItems());
+
+        $wishlist = $this->client->call($this->getUrl('ungroup'), $this->changeTransfer);
+
+        $this->session->set(self::$wishlistSessionID, $wishlist);
     }
 
     protected function handleZed()
     {
-        $this->client->call($this->getUrl('remove'), $this->transferObject);
+        $this->client->call($this->getUrl('remove'), $this->changeTransfer);
     }
 
 }

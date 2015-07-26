@@ -26,7 +26,7 @@ class MergeAction extends AbstractActionFactory
             throw new \InvalidArgumentException("It is not possible to merge Wishlist with Database with a customer");
         }
 
-        $this->sessionWishlist = $this->session->get(self::WISHLIST_SESSION_IDENTIFIER);
+        $this->sessionWishlist = $this->session->get(self::$wishlistSessionID);
         $this->sessionWishlist->setCustomer($this->customerTransfer);
     }
 

@@ -17,7 +17,7 @@ use Generated\Shared\Wishlist\WishlistItemInterface;
 use Generated\Shared\Wishlist\WishlistProductInterface;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItem;
-use Zend\Stdlib\ArrayObject;
+use ArrayObject;
 
 class TransferObjectIntegrator
 {
@@ -37,8 +37,10 @@ class TransferObjectIntegrator
     public function getWishlistTransfer(CustomerInterface $customerTransfer)
     {
         $wishlistTransfer = $this->getWishlistTransferInstance();
+
         $wishlistTransfer->setCustomer($customerTransfer);
-        $wishlistTransfer->setItems($this->getWishlistItemsArrayObject($customerTransfer));
+
+        $wishlistTransfer->setItems($this->getWishlistEntityItemsArrayObject($customerTransfer));
 
         return $wishlistTransfer;
     }
@@ -50,26 +52,99 @@ class TransferObjectIntegrator
      */
     public function mergeWishlist(WishlistInterface $wishlistTransfer)
     {
-        $databaseWishlistItems = $this->getWishlistItemsArrayObject($wishlistTransfer->getCustomer());
+        $databaseWishlistItems = $this->getWishlistEntityItemsArrayObject($wishlistTransfer->getCustomer());
 
-        $changeWishlistTransfer = $this->getWishlistChangeTransferForCustomer($wishlistTransfer->getCustomer());
+        $changeWishlistTransfer = $this->getWishlistChangeTransferInstance();
 
-        foreach ($wishlistTransfer->getItems() as $wishlistItem) {
+        $changeWishlistTransfer->setAddedItems($this->groupItems($wishlistTransfer->getItems(), $databaseWishlistItems));
 
-            $equalDatabaseItem = $this->getEqualByProduct($wishlistItem->getProduct(), $databaseWishlistItems->getItems());
-
-            if(null !== $equalDatabaseItem) {
-
-                $this->mergeWishlistItems($equalDatabaseItem, $wishlistItem);
-            }
-
-            $this->appendWishlistItem($changeWishlistTransfer, $wishlistItem);
-
-        }
+        $changeWishlistTransfer->setCustomer($wishlistTransfer->getCustomer());
 
         $this->em->saveItems($changeWishlistTransfer);
 
         return $this->getWishlistTransfer($changeWishlistTransfer->getCustomer());
+    }
+
+    /**
+     * @param WishlistChangeInterface $changeTransfer
+     *
+     * @return WishlistInterface
+     */
+    public function groupAddedItems(WishlistChangeInterface $changeTransfer)
+    {
+        $wishlistTransfer = $this->getWishlistTransferInstance();
+
+        $groupedItems = $this->groupItems($changeTransfer->getAddedItems(), $changeTransfer->getItems());
+
+        $wishlistTransfer->setItems($groupedItems);
+
+        return $wishlistTransfer;
+    }
+
+    /**
+     * @param WishlistChangeInterface $changeTransfer
+     *
+     * @return WishlistInterface
+     */
+    public function ungroupRemovedItems(WishlistChangeInterface $changeTransfer)
+    {
+        $wishlistTransfer = $this->getWishlistTransferInstance();
+
+        $groupedItems = $this->ungroupItems($changeTransfer->getRemovedItems(), $changeTransfer->getItems());
+
+        $wishlistTransfer->setItems($groupedItems);
+
+        return $wishlistTransfer;
+    }
+
+    /**
+     * @param \ArrayObject $newItems
+     * @param \ArrayObject $existingItems
+     *
+     * @return \ArrayObject
+     */
+    protected function groupItems(ArrayObject $newItems, ArrayObject $existingItems)
+    {
+        $groupedItems = [];
+
+        foreach ($newItems as $newItem) {
+
+            $equalItem = $this->getEqualByProduct($newItem->getProduct(), $existingItems);
+
+            if(null !== $equalItem) {
+
+                $this->mergeWishlistItems($equalItem, $newItem);
+            }
+
+            $groupedItems[] = $newItem;
+        }
+
+        return $this->wrapInArrayObject($groupedItems);
+    }
+
+    /**
+     * @param \ArrayObject $removedItems
+     * @param \ArrayObject $existingItems
+     *
+     * @return \ArrayObject
+     */
+    protected function ungroupItems(ArrayObject $removedItems, ArrayObject $existingItems)
+    {
+        $groupedItems = [];
+
+        foreach ($existingItems as $item) {
+
+            $equalItem = $this->getEqualByProduct($item->getProduct(), $removedItems);
+
+            if(null !== $equalItem) {
+
+                continue;
+            }
+
+            $groupedItems[] = $item;
+        }
+
+        return $this->wrapInArrayObject($groupedItems);
     }
 
     /**
@@ -83,16 +158,12 @@ class TransferObjectIntegrator
         $wishlistItem = $databaseWishlistItem;
     }
 
-    protected function appendWishlistItem(WishlistChangeInterface $changeTransfer, WishlistItemInterface $item)
-    {
-        $changeTransfer->getItems()[] = $item;
-    }
 
     /**
      * @param WishlistProductInterface $wishlistProductTransfer
      * @param ArrayObject $wishlistItems
      *
-     * @return bool
+     * @return WishlistItemInterface
      */
     protected function getEqualByProduct(WishlistProductInterface $wishlistProductTransfer, ArrayObject $wishlistItems)
     {
@@ -113,7 +184,7 @@ class TransferObjectIntegrator
      *
      * @return \ArrayObject
      */
-    protected function getWishlistItemsArrayObject(CustomerInterface $customerTransfer)
+    protected function getWishlistEntityItemsArrayObject(CustomerInterface $customerTransfer)
     {
         $wishlistItems = array_map(function(SpyWishlistItem $item){
 
@@ -155,15 +226,15 @@ class TransferObjectIntegrator
      */
     protected function wrapInArrayObject(array $array)
     {
-        return new \ArrayObject($array);
+        return new ArrayObject($array);
     }
 
     /**
      * @return WishlistChangeInterface
      */
-    protected function getWishlistChangeTransferForCustomer(CustomerInterface $customerTransfer)
+    protected function getWishlistChangeTransferInstance()
     {
-        return (new WishlistChangeTransfer())->setCustomer($customerTransfer);
+        return new WishlistChangeTransfer();
     }
 
     /**

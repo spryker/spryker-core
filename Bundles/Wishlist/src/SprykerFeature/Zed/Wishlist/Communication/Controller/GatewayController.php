@@ -32,19 +32,41 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param WishlistChangeInterface $changeTransfer
      */
-    public function saveAction(WishlistChangeInterface $changeTransfer)
+    public function storeAction(WishlistChangeInterface $changeTransfer)
     {
-        return $this->getFacade()->saveItems($changeTransfer);
+        return $this->getFacade()->storeItems($changeTransfer);
     }
+
+    /**
+     * @param WishlistChangeInterface $changeTransfer
+     *
+     * @return WishlistInterface
+     */
+    public function groupAction(WishlistChangeInterface $changeTransfer)
+    {
+        return $this->getFacade()->groupAddedItems($changeTransfer);
+    }
+
+    /**
+     * @param WishlistChangeInterface $changeTransfer
+     *
+     * @return WishlistInterface
+     */
+    public function ungroupAction(WishlistChangeInterface $changeTransfer)
+    {
+        return $this->getFacade()->ungroupRemovedItems($changeTransfer);
+    }
+
+
 
     /**
      * @param WishlistItemInterface $itemTransfer
      *
      * @return int
      */
-    public function removeAction(WishlistItemInterface $itemTransfer)
+    public function removeAction(WishlistChangeInterface $changeTransfer)
     {
-        return $this->getFacade()->removeItem($itemTransfer);
+        return $this->getFacade()->removeItem($changeTransfer);
     }
 
 
