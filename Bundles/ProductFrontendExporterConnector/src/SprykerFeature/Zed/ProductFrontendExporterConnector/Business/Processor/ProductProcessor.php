@@ -64,16 +64,16 @@ class ProductProcessor implements ProductProcessorInterface
      */
     protected function filterProductData(array $productData)
     {
-        //TODO get this from the settings, instead of hardcoding it
+        // @TODO get this from the settings, instead of hardcoding it
         $allowedFields = [
-            'abstract_sku' => true,
-            'abstract_attributes' => true,
-            'abstract_name' => true,
-            'url' => true,
-            'concrete_products' => true,
+            'abstract_sku',
+            'abstract_attributes',
+            'abstract_name',
+            'url',
+            'concrete_products',
         ];
 
-        return array_intersect_key($productData, $allowedFields);
+        return array_intersect_key($productData, array_flip($allowedFields));
     }
 
 }
