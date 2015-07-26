@@ -7,6 +7,8 @@ use Generated\Shared\Transfer\SalesAddressTransfer;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AddressForm extends AbstractForm
 {
@@ -61,10 +63,23 @@ class AddressForm extends AbstractForm
                 'placeholder' => '-select-',
                 'choices' => $this->getSalutationOptions(),
             ])
-            ->addText(self::FIRST_NAME)
+            ->addText(self::FIRST_NAME, [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ])
             ->addText(self::MIDDLE_NAME)
-            ->addText(self::LAST_NAME)
-            ->addText(self::EMAIL)
+            ->addText(self::LAST_NAME, [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ])
+            ->addText(self::EMAIL, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Email(),
+                ],
+            ])
             ->addText(self::ADDRESS_1)
             ->addText(self::COMPANY)
             ->addText(self::CITY)
@@ -74,13 +89,6 @@ class AddressForm extends AbstractForm
             ->addText(self::CELL_PHONE)
             ->addText(self::DESCRIPTION)
             ->addTextarea(self::COMMENT)
-
-            ->addSubmit(self::SUBMIT, [
-                'label' => 'Save',
-                'attr' => [
-                    'class' => 'btn btn-primary',
-                ]
-            ]);
         ;
     }
 
