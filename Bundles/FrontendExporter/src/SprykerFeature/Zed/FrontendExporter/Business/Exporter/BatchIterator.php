@@ -53,12 +53,7 @@ class BatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Return the current element
-     *
-     * @link http://php.net/manual/en/iterator.current.php
-     *
-     * @return mixed Can return any type.
+     * {@inheritdoc}
      */
     public function current()
     {
@@ -66,10 +61,7 @@ class BatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Move forward to next element
-     *
-     * @link http://php.net/manual/en/iterator.next.php
+     * {@inheritdoc}
      */
     public function next()
     {
@@ -82,12 +74,7 @@ class BatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Return the key of the current element
-     *
-     * @link http://php.net/manual/en/iterator.key.php
-     *
-     * @return mixed scalar on success, or null on failure.
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -95,13 +82,7 @@ class BatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Checks if current position is valid
-     *
-     * @link http://php.net/manual/en/iterator.valid.php
-     *
-     * @return bool The return value will be casted to boolean and then evaluated.
-     * Returns true on success or false on failure.
+     * {@inheritdoc}
      */
     public function valid()
     {
@@ -109,10 +90,7 @@ class BatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Rewind the Iterator to the first element
-     *
-     * @link http://php.net/manual/en/iterator.rewind.php
+     * {@inheritdoc}
      */
     public function rewind()
     {
@@ -122,15 +100,7 @@ class BatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * (PHP 5 &gt;= 5.1.0)<br/>
-     * Count elements of an object
-     *
-     * @link http://php.net/manual/en/countable.count.php
-     *
-     * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
+     * {@inheritdoc}
      */
     public function count()
     {
