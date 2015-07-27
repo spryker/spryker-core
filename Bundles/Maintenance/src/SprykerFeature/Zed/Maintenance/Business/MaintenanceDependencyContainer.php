@@ -10,6 +10,7 @@ use Generated\Shared\Maintenance\InstalledPackagesInterface;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\MaintenanceBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\BundleCodeStyleFixer;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\BundleParser;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\Graph;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\Manager;
@@ -130,6 +131,17 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
         $bundleParser = $this->createDependencyBundleParser();
 
         return $this->getFactory()->createDependencyManager($bundleParser);
+    }
+
+    /**
+     * @return BundleCodeStyleFixer
+     */
+    public function createBundleCodeStyleFixer()
+    {
+        return $this->getFactory()->createCodeStyleFixerBundleCodeStyleFixer(
+            $this->getConfig()->getPathToRoot(),
+            $this->getConfig()->getBundleDirectory()
+        );
     }
 
 }

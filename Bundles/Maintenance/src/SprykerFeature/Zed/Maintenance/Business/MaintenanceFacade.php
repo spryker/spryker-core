@@ -56,4 +56,12 @@ class MaintenanceFacade extends AbstractFacade
         return $this->getDependencyContainer()->createDependencyGraph()->draw($bundleName);
     }
 
+    /**
+     * @param $bundle
+     */
+    public function fixCodeStyle($bundle)
+    {
+        $this->getDependencyContainer()->createBundleCodeStyleFixer()->fixBundleCodeStyle($bundle);
+    }
+
 }
