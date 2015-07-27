@@ -10,6 +10,7 @@ namespace SprykerFeature\Zed\Shipment\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Shipment\Business\Model\Carrier;
+use SprykerFeature\Zed\Shipment\Business\Model\Method;
 
 /**
  * @method ShipmentBusiness getFactory()
