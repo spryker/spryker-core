@@ -23,4 +23,16 @@ class ItemGrouperFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createGrouper()->groupByKey($groupAbleItems);
     }
+
+    /**
+     * @param GroupableContainerInterface $groupableItems
+     *
+     * @return GroupableContainerInterface
+     */
+    public function groupItemsByKeyForNewCollection(GroupableContainerInterface $groupableItems)
+    {
+        return $this->getDependencyContainer()
+            ->createGrouper($regroupAllItemCollection = true)
+            ->groupByKey($groupableItems);
+    }
 }

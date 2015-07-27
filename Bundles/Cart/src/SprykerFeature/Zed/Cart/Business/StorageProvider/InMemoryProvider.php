@@ -13,7 +13,6 @@ use Generated\Shared\Cart\CartItemInterface;
 
 class InMemoryProvider implements StorageProviderInterface
 {
-
     /**
      * @param CartInterface $cart
      * @param ChangeInterface $increasedItems
@@ -34,38 +33,12 @@ class InMemoryProvider implements StorageProviderInterface
     public function addItems(CartInterface $cart, ChangeInterface $change)
     {
         $existingItems = $cart->getItems();
-        $cartIndex = $this->createCartIndex($existingItems);
-
         foreach ($change->getItems() as $item) {
             $this->isValidQuantity($item);
-
-            if (isset($cartIndex[$item->getGroupKey()])) {
-                $existingItem = $existingItems->offsetGet($cartIndex[$item->getGroupKey()]);
-                $existingItem->setQuantity($existingItem->getQuantity() + $item->getQuantity());
-            } else {
-                $existingItems->append($item);
-            }
+            $existingItems->append($item);
         }
 
         return $cart;
-    }
-
-    /**
-     * @param \ArrayObject|CartItemInterface[] $cartItems
-     *
-     * @return array
-     */
-    protected function createCartIndex(\ArrayObject $cartItems)
-    {
-        $cartIndex = [];
-
-        foreach ($cartItems as $index => $cartItem) {
-            if (!empty($cartItem->getGroupKey())) {
-                $cartIndex[$cartItem->getGroupKey()] = $index;
-            }
-        }
-
-        return $cartIndex;
     }
 
     /**
@@ -101,6 +74,24 @@ class InMemoryProvider implements StorageProviderInterface
         }
 
         return $cart;
+    }
+
+    /**
+     * @param \ArrayObject|CartItemInterface[] $cartItems
+     *
+     * @return array
+     */
+    protected function createCartIndex(\ArrayObject $cartItems)
+    {
+        $cartIndex = [];
+
+        foreach ($cartItems as $index => $cartItem) {
+            if (!empty($cartItem->getGroupKey())) {
+                $cartIndex[$cartItem->getGroupKey()] = $index;
+            }
+        }
+
+        return $cartIndex;
     }
 
     /**

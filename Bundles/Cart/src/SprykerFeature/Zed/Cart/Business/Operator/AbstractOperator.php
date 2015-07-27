@@ -7,12 +7,15 @@
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
 use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Cart\CartItemInterface;
+use Generated\Shared\Transfer\GroupableContainerTransfer;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use Generated\Shared\Cart\ChangeInterface;
 use Psr\Log\LoggerInterface;
 use SprykerFeature\Zed\Cart\Business\Model\CalculableContainer;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
+use SprykerFeature\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
 abstract class AbstractOperator implements OperatorInterface
 {
@@ -36,20 +39,27 @@ abstract class AbstractOperator implements OperatorInterface
      * @var ItemExpanderPluginInterface[]
      */
     private $itemExpanderPlugins = [];
+    /**
+     * @var ItemGrouperFacade
+     */
+    private $itemGrouperFacade;
 
     /**
      * @param StorageProviderInterface $storageProvider
-     * @param CalculationFacade $cartCalculator
-     * @param LoggerInterface $messenger
+     * @param CalculationFacade        $cartCalculator
+     * @param ItemGrouperFacade        $itemGrouperFacade
+     * @param LoggerInterface          $messenger
      */
     public function __construct(
         StorageProviderInterface $storageProvider,
         CalculationFacade $cartCalculator,
+        ItemGrouperFacade $itemGrouperFacade,
         LoggerInterface $messenger = null //@todo to be discussed
-) {
+    ) {
         $this->storageProvider = $storageProvider;
         $this->messenger = $messenger;
         $this->cartCalculator = $cartCalculator;
+        $this->itemGrouperFacade = $itemGrouperFacade;
     }
 
     /**
@@ -117,6 +127,21 @@ abstract class AbstractOperator implements OperatorInterface
     public function addItemExpanderPlugin(ItemExpanderPluginInterface $itemExpander)
     {
         $this->itemExpanderPlugins[] = $itemExpander;
+    }
+
+    /**
+     * @param CartInterface $cart
+     *
+     * @return CartItemInterface
+     */
+    protected function groupCartItems(CartInterface $cart)
+    {
+        $groupAbleItems = new GroupableContainerTransfer();
+        $groupAbleItems->setItems($cart->getItems());
+
+        $groupedItems = $this->itemGrouperFacade->groupItemsByKey($groupAbleItems);
+
+        return $cart->setItems($groupedItems->getItems());
     }
 
 }

@@ -32,14 +32,17 @@ class GroupKeyExpander
      */
     protected function buildGroupKey(CartItemInterface $cartItem)
     {
+        $currentGroupKey = $cartItem->getGroupKey();
         if (empty($cartItem->getProductOptions())) {
-            return $cartItem->getGroupKey();
+            return $currentGroupKey;
         }
 
         $sortedProductOptions = $this->sortOptions((array) $cartItem->getProductOptions());
         $optionGroupKey = $this->combineOptionParts($sortedProductOptions);
 
-        $currentGroupKey = $cartItem->getGroupKey();
+        if (empty($optionGroupKey)) {
+            return $currentGroupKey;
+        }
 
         return !empty($currentGroupKey) ? $currentGroupKey . '_' . $optionGroupKey : $optionGroupKey;
     }

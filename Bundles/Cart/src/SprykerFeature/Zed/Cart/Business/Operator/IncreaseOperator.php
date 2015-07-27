@@ -21,7 +21,9 @@ class IncreaseOperator extends AbstractOperator
      */
     protected function changeCart(CartInterface $cart, ChangeInterface $change)
     {
-        return $this->storageProvider->increaseItems($cart, $change);
+        $cart = $this->storageProvider->increaseItems($cart, $change);
+
+        return $this->groupCartItems($cart);
     }
 
     /**

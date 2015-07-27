@@ -21,7 +21,9 @@ class AddOperator extends AbstractOperator
      */
     protected function changeCart(CartInterface $cart, ChangeInterface $change)
     {
-        return $this->storageProvider->addItems($cart, $change);
+        $cart = $this->storageProvider->addItems($cart, $change);
+
+        return $this->groupCartItems($cart);
     }
 
     /**

@@ -18,10 +18,13 @@ use SprykerFeature\Zed\ItemGrouper\ItemGrouperConfig;
 class ItemGrouperDependencyContainer extends AbstractBusinessDependencyContainer
 {
     /**
+     * @param bool $regroupAllItemCollection
+     *
      * @return Model\Group
      */
-    public function createGrouper()
+    public function createGrouper($regroupAllItemCollection = false)
     {
-        return $this->getFactory()->createModelGroup($this->getConfig()->getGroupingThreshold());
+        return $this->getFactory()
+            ->createModelGroup($this->getConfig()->getGroupingThreshold(), $regroupAllItemCollection);
     }
 }

@@ -5,11 +5,8 @@
 
 namespace SprykerFeature\Zed\ItemGrouper\Business\Model;
 
-use Generated\Client\Ide\Cart;
-use Generated\Shared\Cart\CartItemInterface;
 use Generated\Shared\ItemGrouper;
 use Generated\Shared\ItemGrouper\GroupableContainerInterface;
-use Generated\Shared\Sales\OrderItemInterface;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
@@ -26,11 +23,18 @@ class Group
     private $threshold;
 
     /**
-     * @param integer $threshold
+     * @var bool
      */
-    public function __construct($threshold)
+    private $regroupAllItemCollection;
+
+    /**
+     * @param integer $threshold
+     * @param boolean $regroupAllItemCollection;
+     */
+    public function __construct($threshold, $regroupAllItemCollection)
     {
         $this->threshold = $threshold;
+        $this->regroupAllItemCollection = $regroupAllItemCollection;
     }
 
     /**
@@ -56,13 +60,14 @@ class Group
      */
     protected function fillIndex($item)
     {
-        $groupKey = $item->getGroupKey();
+        $groupKey = !empty($item->getGroupKey()) ? $item->getGroupKey() : count($this->groupedItems) + 1;
+
         if (!isset($this->groupedItems[$groupKey])) {
-            $item->setQuantity(1);
-            $this->groupedItems[$groupKey] = clone $item;
+            $this->setQuantity($item);
+            $this->groupedItems[$groupKey] = $item;
         } else {
             $groupedItem = $this->groupedItems[$groupKey];
-            $groupedOrderItems[$groupKey] = $groupedItem->setQuantity(
+            $this->groupedItems[$groupKey] = $groupedItem->setQuantity(
                 $groupedItem->getQuantity() + $item->getQuantity()
             );
         }
@@ -76,5 +81,15 @@ class Group
     protected function isThresholdReached(GroupableContainerInterface $groupableItems)
     {
         return ($this->threshold > 0 && $this->threshold < count($groupableItems->getItems()));
+    }
+
+    /**
+     * @param ItemTransfer $item
+     */
+    protected function setQuantity($item)
+    {
+        if (true === $this->regroupAllItemCollection) {
+            $item->setQuantity(1);
+        }
     }
 }

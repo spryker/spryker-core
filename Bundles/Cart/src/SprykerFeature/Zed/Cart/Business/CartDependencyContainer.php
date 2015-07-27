@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Zed\Cart\CartConfig;
 use SprykerFeature\Zed\Cart\CartDependencyProvider;
 use SprykerFeature\Zed\Cart\Business\Model;
+use SprykerFeature\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
 /**
  * @method CartBusiness getFactory()
@@ -31,7 +32,8 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getFactory()
                 ->createOperatorAddOperator(
                     $this->createStorageProvider(),
-                    $this->createCartCalculator()
+                    $this->createCartCalculator(),
+                    $this->getItemGrouper()
                 //@todo messenger
             )
         );
@@ -46,7 +48,8 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getFactory()
                 ->createOperatorIncreaseOperator(
                     $this->createStorageProvider(),
-                    $this->createCartCalculator()
+                    $this->createCartCalculator(),
+                    $this->getItemGrouper()
                 //@todo messenger
             )
         );
@@ -61,7 +64,8 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getFactory()
                 ->createOperatorRemoveOperator(
                     $this->createStorageProvider(),
-                    $this->createCartCalculator()
+                    $this->createCartCalculator(),
+                    $this->getItemGrouper()
                 //@todo messenger
             )
         );
@@ -76,7 +80,8 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getFactory()
                 ->createOperatorDecreaseOperator(
                     $this->createStorageProvider(),
-                    $this->createCartCalculator()
+                    $this->createCartCalculator(),
+                    $this->getItemGrouper()
                 //@todo messenger
             )
         );
@@ -88,6 +93,14 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     protected function createStorageProvider()
     {
         return $this->getFactory()->createStorageProviderInMemoryProvider();
+    }
+
+    /**
+     * @return ItemGrouperFacade
+     */
+    public function getItemGrouper()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::FACADE_ITEM_GROUPER);
     }
 
     /**
