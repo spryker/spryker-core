@@ -109,4 +109,11 @@ interface GlossaryQueryContainerInterface
      * @return ModelCriteria
      */
     public function queryDistinctLocalesFromQuery(ModelCriteria $query);
+
+    /**
+     * @param string $key
+     *
+     * @return array
+     */
+    public function queryByKey($key);
 }

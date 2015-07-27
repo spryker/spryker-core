@@ -7,9 +7,20 @@
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Customer\Business\CustomerFacade;
+use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method CustomerCommunication getFactory()
+ * @method CustomerQueryContainerInterface getQueryContainer()
+ * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerFacade getFacade()
+ */
 class AddressController extends AbstractController
 {
 
@@ -22,7 +33,6 @@ class AddressController extends AbstractController
     {
         $idCustomer = $request->get('id_customer');
 
-        /** @var CustomerTable $table */
         $table = $this->getDependencyContainer()
             ->createCustomerAddressTable($idCustomer)
         ;
@@ -41,7 +51,6 @@ class AddressController extends AbstractController
     {
         $idCustomer = $request->get('id_customer');
 
-        /** @var CustomerTable $table */
         $table = $this->getDependencyContainer()
             ->createCustomerAddressTable($idCustomer)
         ;
@@ -105,7 +114,6 @@ class AddressController extends AbstractController
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
-        /** @var AddressForm $addressForm */
         $addressForm = $this->getDependencyContainer()
             ->createAddressForm('update')
         ;
@@ -116,7 +124,6 @@ class AddressController extends AbstractController
         if (true === $addressForm->isValid()) {
             $data = $addressForm->getData();
 
-            /** @var CustomerAddressTransfer $customerAddress */
             $customerAddress = $this->createCustomerAddressTransfer();
             $customerAddress->fromArray($data, true);
 
@@ -143,7 +150,6 @@ class AddressController extends AbstractController
     {
         $idCustomer = intval($request->get('id_customer'));
 
-        /** @var AddressForm $addressForm */
         $addressForm = $this->getDependencyContainer()
             ->createAddressForm('add')
         ;
@@ -155,7 +161,6 @@ class AddressController extends AbstractController
             $data = $addressForm->getData();
             $data['fk_customer'] = $idCustomer;
 
-            /** @var CustomerAddressTransfer $customerAddress */
             $customerAddress = $this->createCustomerAddressTransfer();
             $customerAddress->fromArray($data, true);
 
@@ -173,7 +178,7 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @return CustomerTransfer
+     * @return CustomerAddressTransfer
      */
     protected function createCustomerAddressTransfer()
     {

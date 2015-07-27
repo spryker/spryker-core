@@ -1,25 +1,24 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
 
+{% set widget_title = 'Translations' %}
 
-{% block body_class %}spy-page{% endblock %}
-
+{% block head_title widget_title %}
+{% block section_title widget_title %}
 
 {% block content %}
-    <section
-        spy-app="spyLayout,spyFormat,spyGrid,spyForm"
-        ng-controller="ComController"
-    >
-        <div spy-form-update="openLayer(); read($argument)" scope="key_edit" channel="glossary"></div>
-        <div spy-form-update="closeLayer()" scope="key_edit" channel="glossary"></div>
-        <div spy-form-abort="closeLayer()" scope="key_edit" channel="glossary"></div>
-        <div spy-form-update="read()" scope="grid" channel="glossary"></div>
 
-        <spy-listen on="glossary_edit" do="openLayer(); read($argument)" scope="key_edit" channel="glossary"></spy-listen>
+    {% embed '@Gui/Partials/widget.twig' %}
 
-        {% include '@Glossary/Partials/form-add-translation.twig' %}
+        {% block widget_header_content %}
+            <a href="/glossary/add" class="btn btn-primary ">{{ 'Add a translation' | trans }}</a>&nbsp;&nbsp;&nbsp;
+        {% endblock %}
 
-        {% include '@Glossary/Partials/glossary-grid.twig' %}
+        {% block widget_content %}
 
-        {% include '@Glossary/Partials/form-edit-translation.twig' %}
-    </section>
+            {{ glossaryTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
 {% endblock %}

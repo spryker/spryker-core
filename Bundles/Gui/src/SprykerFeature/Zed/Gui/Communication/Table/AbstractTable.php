@@ -86,6 +86,7 @@ abstract class AbstractTable
 
     /**
      * @todo find a better solution (remove it)
+     *
      * @param string $name
      *
      * @return string
@@ -93,7 +94,11 @@ abstract class AbstractTable
      */
     public function buildAlias($name)
     {
-        return str_replace(['.', '(', ')'], '', $name);
+        return str_replace([
+            '.',
+            '(',
+            ')',
+        ], '', $name);
     }
 
     /**
@@ -268,7 +273,7 @@ abstract class AbstractTable
     /**
      * @return mixed
      */
-    public function getSearchTherm()
+    public function getSearchTerm()
     {
         return $this->request->query->get('search', null);
     }
@@ -303,7 +308,7 @@ abstract class AbstractTable
 
         return $this->getTwig()
             ->render('index.twig', $twigVars)
-        ;
+            ;
     }
 
     /**
@@ -314,7 +319,8 @@ abstract class AbstractTable
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
                 'tableId' => $this->getTableIdentifier(),
-                'options' => $this->config->getTableOptions()->toArray(),
+                'options' => $this->config->getTableOptions()
+                    ->toArray(),
                 'header' => $this->config->getHeader(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
@@ -348,14 +354,11 @@ abstract class AbstractTable
         $orderColumn = $columns[$order[0]['column']];
         $this->total = $query->count();
         $query->orderBy($orderColumn, $order[0]['dir']);
-        $searchTherm = $this->getSearchTherm();
+        $searchTerm = $this->getSearchTerm();
 
-        if (mb_strlen($searchTherm['value']) > 0) {
+        if (mb_strlen($searchTerm['value']) > 0) {
             $isFirst = true;
-
             $query->setIdentifierQuoting(true);
-            $tableName = $query->getTableMap()
-                ->getName();
 
             foreach ($config->getSearchable() as $value) {
                 if (!$isFirst) {
@@ -364,10 +367,9 @@ abstract class AbstractTable
                     $isFirst = false;
                 }
 
-                $query->where(sprintf('LOWER(%s.%s) LIKE ?', $tableName, $query->getTableMap()
-                    ->getColumnByPhpName($value)
-                    ->getName()), '%' . mb_strtolower($searchTherm['value']) . '%');
+                $query->where(sprintf("LOWER(%s) LIKE '%s'", $value, '%' . mb_strtolower($searchTerm['value']) . '%'));
             }
+
             $this->filtered = $query->count();
         } else {
             $this->filtered = $this->total;
@@ -400,4 +402,27 @@ abstract class AbstractTable
         return $wrapperArray;
     }
 
+    /**
+     * Drop table name from key
+     *
+     * @param string $key
+     *
+     * @return string
+     */
+    public function cutTablePrefix($key)
+    {
+        $position = mb_strpos($key, '.');
+
+        return (false !== $position) ? mb_substr($key, $position + 1) : $key;
+    }
+
+    /**
+     * @param string $str
+     *
+     * @return string
+     */
+    public function camelize($str)
+    {
+        return str_replace(' ', '', ucwords(mb_strtolower(str_replace('_', ' ', $str))));
+    }
 }

@@ -5,10 +5,19 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
+use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Customer\Business\CustomerFacade;
+use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
+/**
+ * @method CustomerCommunication getFactory()
+ * @method CustomerQueryContainerInterface getQueryContainer()
+ * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerFacade getFacade()
+ */
 class AddController extends AbstractController
 {
 
@@ -17,9 +26,8 @@ class AddController extends AbstractController
      */
     public function indexAction()
     {
-        /** @var CustomerForm $customerForm */
         $form = $this->getDependencyContainer()
-                     ->createCustomerForm('add')
+            ->createCustomerForm('add')
         ;
         $form->init();
 
@@ -31,8 +39,8 @@ class AddController extends AbstractController
             $customerTransfer = $this->createCustomerTransfer();
             $customerTransfer->fromArray($data, true);
 
-            $lastInsertId = $this->getFacade()
-                                 ->registerCustomer($customerTransfer)
+            $this->getFacade()
+                ->registerCustomer($customerTransfer)
             ;
 
             return $this->redirectResponse('/customer/');

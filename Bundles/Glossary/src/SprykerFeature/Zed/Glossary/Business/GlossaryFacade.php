@@ -20,7 +20,7 @@ use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
  */
 class GlossaryFacade extends AbstractFacade
 {
-    
+
     /**
      * @param string $keyName
      *

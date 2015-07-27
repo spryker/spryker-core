@@ -364,4 +364,15 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     {
         return $this->queryKeys()->filterByIdGlossaryKey($idKey);
     }
+
+    /**
+     * @param string $key
+     */
+    public function queryByKey($key)
+    {
+        $keyQuery = $this->queryKeys();
+        $keyQuery->filterByKey('%' . mb_strtolower($key) . '%', Criteria::LIKE);
+
+        return $keyQuery;
+    }
 }

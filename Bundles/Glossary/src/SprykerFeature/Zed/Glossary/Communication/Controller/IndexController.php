@@ -9,7 +9,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method GlossaryFacade getFacade()
@@ -20,21 +20,39 @@ class IndexController extends AbstractController
 {
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $availableLocales = $this->getDependencyContainer()
             ->createEnabledLocales()
         ;
 
-        $grid = $this->getDependencyContainer()->createGlossaryKeyTranslationGrid($request);
+        $table = $this->getDependencyContainer()
+            ->createTranslationTable($availableLocales)
+        ;
+        $table->init();
 
-        return [
+        return $this->viewResponse([
             'locales' => $availableLocales,
-            'grid' => $grid->renderData(),
-        ];
+            'glossaryTable' => $table,
+        ]);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $availableLocales = $this->getDependencyContainer()
+            ->createEnabledLocales()
+        ;
+
+        $table = $this->getDependencyContainer()
+            ->createTranslationTable($availableLocales)
+        ;
+        $table->init();
+
+        return $this->jsonResponse($table->fetchData());
     }
 }

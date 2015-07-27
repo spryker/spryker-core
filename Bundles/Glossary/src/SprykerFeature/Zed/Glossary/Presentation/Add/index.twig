@@ -1,0 +1,60 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Add a translation' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_header_content %}
+            <a href="/glossary/" class="btn btn-sm btn-default">{{ 'Back to Translations' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ form(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script type="text/javascript">
+        ;(function ($) {
+
+            $(document).ready(function () {
+                $('#form_glossary_key').blur(function () {
+                    var obj = $('#form_glossary_key').val();
+
+                    $.ajax({
+                        url: '/glossary/key/ajax',
+                        type: 'GET',
+                        data: {term: obj}
+                    }).done(function(data) {
+                        changed = false;
+                        $.each(data, function(i, item) {
+                            var key = '#form_locale_' + i;
+
+                            value = $(key).val();
+                            if (!value.length) {
+                                $(key).val(item);
+                                changed = true;
+                            }
+                        });
+
+                        if (changed) {
+                            $('#form_submit').text('Save');
+                        }
+                    });
+                });
+            });
+
+        })(jQuery);
+    </script>
+{% endblock %}
