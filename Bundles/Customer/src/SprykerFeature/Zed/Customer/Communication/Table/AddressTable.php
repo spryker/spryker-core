@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Table;
 
+use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerAddressTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
@@ -30,7 +31,7 @@ class AddressTable extends AbstractTable
     protected $customerQuery;
 
     /**
-     * @var
+     * @var int
      */
     protected $idCustomer;
 
