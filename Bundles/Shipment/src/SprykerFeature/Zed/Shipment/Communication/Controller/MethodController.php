@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Shipment\Business\ShipmentFacade;
 use SprykerFeature\Zed\Shipment\Communication\ShipmentDependencyContainer;
@@ -31,9 +32,9 @@ class MethodController extends AbstractController
 
         if ($form->isValid()) {
             $data = $form->getData();
-            $carrierTransfer = new ShipmentCarrierTransfer();
-            $carrierTransfer->fromArray($data, true);
-            $this->getFacade()->createCarrier($carrierTransfer);
+            $methodTransfer = new ShipmentMethodTransfer();
+            $methodTransfer->fromArray($data, true);
+            $this->getFacade()->createMethod($methodTransfer);
 
             return $this->redirectResponse('/shipment/');
         }
