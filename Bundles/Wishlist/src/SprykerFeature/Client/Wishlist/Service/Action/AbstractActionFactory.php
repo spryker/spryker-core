@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 abstract class AbstractActionFactory
 {
-    public static $wishlistSessionID = null;
+    private static $wishlistSessionID = null;
 
     protected $url_pattern = "/wishlist/gateway/%s";
 
@@ -40,11 +40,17 @@ abstract class AbstractActionFactory
 
         $this->customerTransfer = $customerTransfer;
 
+    }
+
+    public static function getWishlistSessionID()
+    {
         if (null === self::$wishlistSessionID) {
 
             self::$wishlistSessionID = APPLICATION_ENV . "_wishlist";
 
         }
+
+        return self::$wishlistSessionID;
     }
 
 

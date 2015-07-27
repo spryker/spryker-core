@@ -122,7 +122,6 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $requestTransfer = $this->createRequestTransfer($transferObject, $metaTransfers);
         $request = $this->createGuzzleRequest($pathInfo, $requestTransfer, $timeoutInSeconds);
         $this->logRequest($pathInfo, $requestTransfer, $request->getBody());
-
         
         $this->forwardDebugSession($request);
         $response = $this->sendRequest($request);

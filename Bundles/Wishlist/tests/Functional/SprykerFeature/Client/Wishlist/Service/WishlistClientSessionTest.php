@@ -2,8 +2,6 @@
 
 namespace Functional\SprykerFeature\Client\Wishlist\Service;
 
-use Generated\Shared\Wishlist\WishlistInterface;
-use Generated\Shared\Wishlist\WishlistItemInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 
 /**
@@ -16,11 +14,23 @@ use SprykerEngine\Zed\Kernel\Locator;
 class WishlistClientSessionTest extends \PHPUnit_Framework_TestCase
 {
 
+    use WishlistClientTestSetup;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->wishlistClient = $this->getWishlistClient();
+
+    }
+
     /**
      * @group WishlistClientTestAdd
+     * @group WishlistClientSessionTest
      */
     public function testAddToSessionWishlistItem()
     {
+
         //Given
         $product = new \Generated\Shared\Transfer\WishlistProductTransfer();
         $product->setConcreteSku("136823");
@@ -32,15 +42,11 @@ class WishlistClientSessionTest extends \PHPUnit_Framework_TestCase
         $wishlistitem->setQuantity(2);
         $wishlistitem->setAddedAt(time());
 
-        Locator::getInstance()
-            ->wishlist()
-            ->client()
+        $this->wishlistClient
             ->saveItem($wishlistitem);
 
         //Then
-        $items = Locator::getInstance()
-            ->wishlist()
-            ->client()
+        $items = $this->wishlistClient
             ->getWishlist();
 
 
@@ -49,6 +55,7 @@ class WishlistClientSessionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @group WishlistClientTestUpdateAdd
+     * @group WishlistClientSessionTest
      */
     public function testUpdateToSessionWishlistItem()
     {
@@ -63,10 +70,7 @@ class WishlistClientSessionTest extends \PHPUnit_Framework_TestCase
         $wishlistitem->setQuantity(3);
         $wishlistitem->setAddedAt(time());
 
-        Locator::getInstance()
-            ->wishlist()
-            ->client()
-            ->saveItem($wishlistitem);
+        $this->wishlistClient->saveItem($wishlistitem);
 
         // And
         $product = new \Generated\Shared\Transfer\WishlistProductTransfer();
@@ -79,17 +83,11 @@ class WishlistClientSessionTest extends \PHPUnit_Framework_TestCase
         $wishlistitem2->setQuantity(2);
         $wishlistitem2->setAddedAt(time());
 
-        Locator::getInstance()
-            ->wishlist()
-            ->client()
-            ->saveItem($wishlistitem2);
+        $this->wishlistClient->saveItem($wishlistitem2);
 
 
         //Then
-        $items = Locator::getInstance()
-            ->wishlist()
-            ->client()
-            ->getWishlist();
+        $items = $this->wishlistClient->getWishlist();
 
 
         \PHPUnit_Framework_Assert::assertEquals(2, count($items->getItems()));
@@ -100,12 +98,12 @@ class WishlistClientSessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group WishlistClientSessionTest
      * @group WishlistClientTestDelete
      * @depends testUpdateToSessionWishlistItem
      */
-    public function testRemoveWhislistItem($items)
+    public function testRemoveWhislistItem()
     {
-
         //Given
         $product = new \Generated\Shared\Transfer\WishlistProductTransfer();
         $product->setConcreteSku("136823");
@@ -115,15 +113,10 @@ class WishlistClientSessionTest extends \PHPUnit_Framework_TestCase
         $wishlistitem->setProduct($product);
 
         // When
-        Locator::getInstance()
-            ->wishlist()
-            ->client()
-            ->removeItem($wishlistitem);
+        $this->wishlistClient->removeItem($wishlistitem);
 
         //Then
-        $wishlist = Locator::getInstance()
-            ->wishlist()->client()->getWishlist();
-
+        $wishlist = $this->wishlistClient->getWishlist();
 
         $this->assertEquals(1, count($wishlist->getItems()));
     }

@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Wishlist\Business\Integrator;
 
-use Generated\Shared\CustomerCheckoutConnector\CustomerInterface;
+use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistItemInterface;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlist;
@@ -66,16 +66,19 @@ class EntityIntegrator
 
             $idProduct = $this->getWishlistItemIdProduct($itemTransfer);
 
-            $item = (new SpyWishlistItem())
-                ->setFkWishlist($idWishlist)
-                ->setFkConcreteProduct($idProduct)
-                ->setQuantity($itemTransfer->getQuantity())
-                ->setAddedAt($itemTransfer->getAddedAt());
 
             if (null !== $itemTransfer->getId()) {
-                $item->setPrimaryKey($itemTransfer->getId());
+
+                $item = $this->queryContainer->queryWishlistItemByIdWishlistItem($itemTransfer->getId());
+            }
+            else {
+                $item = (new SpyWishlistItem())
+                    ->setAddedAt($itemTransfer->getAddedAt())
+                    ->setFkWishlist($idWishlist)
+                    ->setFkConcreteProduct($idProduct);
             }
 
+            $item->setQuantity($itemTransfer->getQuantity());
             $item->save();
         }
     }

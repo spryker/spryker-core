@@ -27,7 +27,6 @@ class WishlistDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createSaveAction()
     {
-
        return $this->getFactory()
             ->createActionSaveAction(
                 $this->getProvidedDependency(WishlistDependencyProvider::SESSION),
@@ -72,10 +71,10 @@ class WishlistDependencyContainer extends AbstractServiceDependencyContainer
     {
         return $this->getFactory()
             ->createActionMergeAction(
-                $this->getProvidedDependency(WishlistDependencyProvider::SESSION,
+                $this->getProvidedDependency(WishlistDependencyProvider::SESSION),
                 $this->getProvidedDependency(WishlistDependencyProvider::SERVICE_ZED),
                 $this->getProvidedDependency(WishlistDependencyProvider::CUSTOMER_CLIENT)->getCustomer()
-                ));
+                );
     }
 
 }

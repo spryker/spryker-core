@@ -275,7 +275,7 @@ class TransferObjectIntegrator
         $wishlitsProductTransfer->setConcreteSku($concreteSku);
 
         $abstractSku = $item->getVirtualColumn($this->em->getAbstractSkuColumnName());
-        $wishlitsProductTransfer->setConcreteSku($abstractSku);
+        $wishlitsProductTransfer->setAbstractSku($abstractSku);
 
         return $wishlitsProductTransfer;
     }

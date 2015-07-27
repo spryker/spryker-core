@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\Map\SpyWishlistItemTableMap;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlist;
+use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItem;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItemQuery;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
@@ -35,6 +36,19 @@ class WishlistQueryContainer extends AbstractQueryContainer
     {
         $wishlist = SpyWishlistQuery::create()
             ->findOneByFkCustomer($customerTransfer->getIdCustomer());
+
+        return $wishlist;
+    }
+
+    /**
+     * @param int $idWishlistItem
+     *
+     * @return SpyWishlistItem
+     */
+    public function queryWishlistItemByIdWishlistItem($idWishlistItem)
+    {
+        $wishlist = SpyWishlistItemQuery::create()
+            ->findOneByIdWishlistItem($idWishlistItem);
 
         return $wishlist;
     }

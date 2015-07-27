@@ -26,7 +26,7 @@ class GetAction extends AbstractActionFactory
 
     protected function handleSession()
     {
-        $response = $this->session->get(self::$wishlistSessionID);
+        $response = $this->session->get(self::getWishlistSessionID());
 
         $this->setResponse($response);
     }

@@ -10,7 +10,6 @@ namespace SprykerFeature\Client\Wishlist\Service\Action;
 
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
 use Generated\Shared\Wishlist\WishlistItemInterface;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
@@ -28,7 +27,6 @@ class SaveAction extends AbstractActionFactory
      */
     public function setTransferObject(TransferInterface $transfer)
     {
-
         if (!$transfer instanceof WishlistItemInterface) {
             throw new \InvalidArgumentException( printf("Save Action should get "));
         }
@@ -45,22 +43,22 @@ class SaveAction extends AbstractActionFactory
             throw new \RuntimeException("Transfer Object should be set and implement WishlistChangeInterface, in oder to use Wishlist Save action");
         }
 
-        if(null !== $sessionItems = $this->session->get(self::$wishlistSessionID)) {
+        if(null !== $sessionItems = $this->session->get(self::getWishlistSessionID())) {
 
             $this->changeTransfer->setItems($sessionItems->getItems());
 
         }
 
-
         $wishlistItems = $this->client->call($this->getUrl('group'), $this->changeTransfer, null, true);
 
 
-        $this->session->set(self::$wishlistSessionID, $wishlistItems);
+        $this->session->set(self::getWishlistSessionID(), $wishlistItems);
     }
 
     protected function handleZed()
     {
-        $this->client->call($this->getUrl('store'), $this->changeTransfer);
+        $this->changeTransfer->setCustomer($this->customerTransfer);
+        $this->client->call($this->getUrl('store'), $this->changeTransfer, null, true);
     }
 
 

@@ -40,15 +40,15 @@ class RemoveAction extends AbstractActionFactory
             throw new \InvalidArgumentException( printf("Wishlist Remove Action should get WishlistChangeInterface transfer object for handling a remove routine on Zed side"));
         }
 
-        if(null === $sessionItems = $this->session->get(self::$wishlistSessionID)) {
+        if(null === $sessionItems = $this->session->get(self::getWishlistSessionID())) {
             return;
         }
 
         $this->changeTransfer->setItems($sessionItems->getItems());
 
-        $wishlist = $this->client->call($this->getUrl('ungroup'), $this->changeTransfer);
+        $wishlist = $this->client->call($this->getUrl('ungroup'), $this->changeTransfer, null, true);
 
-        $this->session->set(self::$wishlistSessionID, $wishlist);
+        $this->session->set(self::getWishlistSessionID(), $wishlist);
     }
 
     protected function handleZed()
