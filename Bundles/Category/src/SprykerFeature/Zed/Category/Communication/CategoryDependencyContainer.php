@@ -13,10 +13,15 @@ use SprykerFeature\Zed\Category\CategoryDependencyProvider;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryForm;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
 use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
+use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
+use SprykerFeature\Zed\Category\Communication\Table\RootNodeTable;
+use SprykerFeature\Zed\Category\Communication\Table\UrlTable;
+use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CategoryCommunication getFactory()
+ * @method CategoryQueryContainer getQueryContainer()
  */
 class CategoryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
@@ -44,6 +49,47 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
             $this->getQueryContainer()->queryCategory($locale->getIdLocale()),
             $request
         );
+    }
+
+    /**
+     *
+     * @return RootNodeTable
+     */
+    public function createRootNodeTable()
+    {
+        $categoryQueryContainer = $this->getQueryContainer();
+        $rootNodeQuery = $categoryQueryContainer->queryRootNodes();
+
+        return $this->getFactory()->createTableRootNodeTable($rootNodeQuery);
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return CategoryAttributeTable
+     */
+    public function createCategoryAttributeTable($idCategory)
+    {
+        $categoryQueryContainer = $this->getQueryContainer();
+        $categoryAttributesQuery = $categoryQueryContainer->queryAttributeByCategoryIdAndLocale(
+            $idCategory,
+            $this->getCurrentLocale()->getIdLocale()
+        );
+
+        return $this->getFactory()->createTableCategoryAttributeTable($categoryAttributesQuery);
+    }
+
+    /**
+     * @param $idCategoryNode
+     *
+     * @return UrlTable
+     */
+    public function createUrlTable($idCategoryNode)
+    {
+        $urlQuery = $this->getQueryContainer()
+            ->queryUrlByIdCategoryNode($idCategoryNode)
+        ;
+        return $this->getFactory()->createTableUrlTable($urlQuery);
     }
 
     /**

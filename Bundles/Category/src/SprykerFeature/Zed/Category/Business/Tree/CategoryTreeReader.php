@@ -40,7 +40,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         return $this->queryContainer
             ->queryFirstLevelChildrenByIdLocale($idNode, $locale->getIdLocale())
             ->find()
-            ;
+        ;
     }
 
     /**
@@ -68,7 +68,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         return $this->queryContainer
             ->queryPath($idNode, $locale->getIdLocale(), $excludeRootNode, $onlyParents)
             ->find()
-            ;
+        ;
     }
 
     /**
@@ -204,7 +204,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         return $this->queryContainer
             ->queryNodeById($idNode)
             ->findOne()
-            ;
+        ;
     }
 
     /**
@@ -234,7 +234,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         return $this->queryContainer
             ->queryRootNode()
             ->find()
-            ;
+        ;
     }
 
     /**
@@ -247,45 +247,59 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         return $this->queryContainer
             ->queryNodesByCategoryId($idCategory)
             ->find()
-            ;
+        ;
     }
 
     /**
+     * @param $idCategory
      * @param LocaleTransfer $localeTransfer
      *
-     * @return SpyCategoryNode[]
+     * @return \SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode[]
      */
-    public function getTree(LocaleTransfer $localeTransfer)
+    public function getTree($idCategory, LocaleTransfer $localeTransfer)
     {
-        $tree = $this->getTreeNodesRecursively($localeTransfer);
+        $rootNodes = $this->getRootNodes();
+        foreach ($rootNodes as $rootNode) {
+            if ($rootNode->getFkCategory() == $idCategory){
+                return $this->getTreeNodesRecursively($rootNode, $localeTransfer, true);
+            }
+        }
+        $tree = $this->getTreeNodesRecursively(null, $localeTransfer, true);
 
         return $tree;
     }
 
     /**
      * @param SpyCategoryNode $node
-     * @param LocaleTransfer  $localeTransfer
+     * @param LocaleTransfer $localeTransfer
+     * @param bool $isRoot
      *
-     * @return SpyCategoryNode[]
+     * @return array
      */
-    private function getTreeNodesRecursively(LocaleTransfer $localeTransfer, SpyCategoryNode $node = null)
+    private function getTreeNodesRecursively(SpyCategoryNode $node = null, LocaleTransfer $localeTransfer, $isRoot = false)
     {
         $tree = [];
         if ($node == null) {
             $children = $this->getRootNodes();
-            $parentId = '#';
         } else {
             $children = $this->getChildren($node->getIdCategoryNode(), $localeTransfer);
+        }
+        if ($isRoot){
+            $parentId = '#';
+            $nodeOpened = true;
+        } else {
             $parentId = $node->getIdCategoryNode();
+            $nodeOpened = false;
         }
         foreach ($children as $child) {
             $tree[] = [
-                'id' => $child->getIdCategoryNode(),
+                'id'     => $child->getIdCategoryNode(),
                 'parent' => $parentId,
-                'text' => $child->getCategory()->getAttributes()->getFirst()->getName(),
+                'text'   => $child->getCategory()->getAttributes()->getFirst()->getName(),
+                'state'  => ['opened' => $nodeOpened],
             ];
             if ($child->countDescendants() > 0) {
-                $tree = array_merge($tree, $this->getTreeNodesRecursively($localeTransfer, $child));
+                $tree = array_merge($tree, $this->getTreeNodesRecursively($child, $localeTransfer));
             }
         }
 

@@ -1,22 +1,56 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
 
-
+{% set widget_title = 'Category' %}
 {% block body_class %}spy-page{% endblock %}
-
-
-{% block title_content %}{{ "Category" | trans }}{% endblock %}
-{% block section_title %}{{ "Category" | trans }}{% endblock %}
+{% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block content %}
 
-    {% include '@Gui/Partials/Table/header.twig' with { table_title: 'Category List' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes listing' } %}
 
-    <div id="jstree_category"></div>
+        {% block widget_content %}
 
-    {% include '@Gui/Partials/Table/footer.twig' %}
+            {{ rootNodeTable | raw }}
 
+        {% endblock %}
+
+    {% endembed %}
+
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Category node tree' } %}
+
+        {% block widget_content %}
+
+            <div id="jstree_category"></div>
+
+        {% endblock %}
+
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attributes of the selected category' } %}
+
+        {% block widget_content %}
+            {#{ categoryAttributeTable.tableId }#}
+            {{ categoryAttributeTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Urls for selected category' } %}
+
+        {% block widget_content %}
+
+            {{ categoryUrlTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+    
 {% endblock %}
 
 {% block temp_footer_js %}
     <script src="/bundles/Gui/scripts/plugins/jsTree/jstree.min.js"></script>
 {% endblock %}
+
+

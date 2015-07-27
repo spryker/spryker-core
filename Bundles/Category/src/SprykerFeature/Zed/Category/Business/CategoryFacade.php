@@ -149,16 +149,13 @@ class CategoryFacade extends AbstractFacade
         ;
     }
 
-    /**
-     * @param LocaleTransfer $locale
-     *
-     * @return array
-     */
-    public function getTreeAsArray(LocaleTransfer $locale)
+
+    public function getTree($idCategoryNode, LocaleTransfer $locale)
     {
+
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getTree($locale)
+            ->getTree($idCategoryNode, $locale)
         ;
     }
 

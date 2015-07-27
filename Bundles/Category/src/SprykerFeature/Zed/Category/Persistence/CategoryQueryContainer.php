@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Category\Persistence;
 
+use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryAttribute;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
@@ -22,6 +23,7 @@ use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
+use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 class CategoryQueryContainer extends AbstractQueryContainer
 {
@@ -96,6 +98,29 @@ class CategoryQueryContainer extends AbstractQueryContainer
         return SpyCategoryNodeQuery::create()
             ->filterByFkParentCategoryNode($idNode)
             ;
+    }
+
+    /**
+     *
+     * @return SpyCategoryNodeQuery
+     */
+    public function queryRootNodes()
+    {
+        return SpyCategoryAttributeQuery::create()
+            ->joinLocale()
+            ->addJoin(
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
+                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
+                Criteria::INNER_JOIN
+            )
+            ->addAnd(
+                SpyCategoryNodeTableMap::COL_IS_ROOT,
+                1,
+            Criteria::EQUAL
+            )
+            ->withColumn(
+                SpyLocaleTableMap::COL_LOCALE_NAME
+            );
     }
 
     /**
@@ -328,7 +353,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
             )
             ->withColumn(SpyCategoryTableMap::COL_ID_CATEGORY, 'id_category')
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
-            ;
+        ;
     }
 
     /**
@@ -342,7 +367,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
         return SpyCategoryAttributeQuery::create()
             ->filterByFkLocale($idLocale)
             ->filterByFkCategory($idCategory)
-            ;
+        ;
     }
 
     /**
@@ -358,7 +383,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
         return SpyCategoryAttributeQuery::create()
             ->filterByName($name)
             ->filterByFkLocale($idLocale)
-            ;
+        ;
     }
 
     /**
@@ -642,6 +667,16 @@ class CategoryQueryContainer extends AbstractQueryContainer
         ;
 
         return $nodeQuery;
+    }
+
+    /**
+     * @param $idCategoryNode
+     *
+     * @return SpyUrlQuery
+     */
+    public function queryUrlByIdCategoryNode($idCategoryNode)
+    {
+        return SpyUrlQuery::create()->filterByFkResourceCategorynode($idCategoryNode);
     }
 
 }
