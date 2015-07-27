@@ -10,9 +10,9 @@ use Generated\Shared\Transfer\CollectionTransfer;
 use SprykerFeature\Zed\Library\Copy;
 use Propel\Runtime\Collection\ObjectCollection;
 use Generated\Shared\Transfer\UserTransfer;
-use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserUserTableMap;
+use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
 use SprykerFeature\Zed\User\UserConfig;
-use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUser;
+use SprykerFeature\Zed\User\Persistence\Propel\SpyUser;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use SprykerFeature\Zed\User\Business\Exception\UsernameExistsException;
@@ -108,10 +108,10 @@ class User implements UserInterface
      */
     public function save(UserTransfer $user)
     {
-        if ($user->getIdUserUser() !== null) {
-            $entity = $this->getEntityUserById($user->getIdUserUser());
+        if ($user->getIdUser() !== null) {
+            $entity = $this->getEntityUserById($user->getIdUser());
         } else {
-            $entity = new SpyUserUser();
+            $entity = new SpyUser();
         }
 
         $entity->setFirstName($user->getFirstName());
@@ -234,7 +234,7 @@ class User implements UserInterface
     {
         $entity = $this->queryContainer
             ->queryUserById($id)
-            ->filterByStatus(SpyUserUserTableMap::COL_STATUS_ACTIVE)
+            ->filterByStatus(SpyUserTableMap::COL_STATUS_ACTIVE)
             ->findOne()
         ;
 
@@ -310,7 +310,7 @@ class User implements UserInterface
             $transferUser = new UserTransfer();
 
             // TODO why setting the id? why is everything the username?
-            $transferUser->setIdUserUser(0);
+            $transferUser->setIdUser(0);
 
             $transferUser->setFirstName($username)
                 ->setLastName($username)
@@ -342,11 +342,11 @@ class User implements UserInterface
     }
 
     /**
-     * @param SpyUserUser $entity
+     * @param SpyUser $entity
      *
      * @return UserTransfer
      */
-    protected function entityToTransfer(SpyUserUser $entity)
+    protected function entityToTransfer(SpyUser $entity)
     {
         $transfer = new UserTransfer();
         $transfer = Copy::entityToTransfer($transfer, $entity);

@@ -90,7 +90,7 @@ class AuthTest extends Test
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $token = $this->authFacade->getUserToken($userDto);
-        $fakeToken = md5(sprintf('%s%s', $userDto->getPassword(), $userDto->getIdUserUser()));
+        $fakeToken = md5(sprintf('%s%s', $userDto->getPassword(), $userDto->getIdUser()));
 
         $this->assertEquals($fakeToken, $token);
 
@@ -186,7 +186,7 @@ class AuthTest extends Test
 
         $currentUserDto = $this->userFacade->getCurrentUser();
         $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $currentUserDto);
-        $this->assertEquals($userDto->getIdUserUser(), $currentUserDto->getIdUserUser());
+        $this->assertEquals($userDto->getIdUser(), $currentUserDto->getIdUser());
         $this->assertEquals($userDto->getUsername(), $currentUserDto->getUsername());
         $this->assertEquals($userDto->getPassword(), $currentUserDto->getPassword());
         $this->assertEquals($userDto->getFirstName(), $currentUserDto->getFirstName());

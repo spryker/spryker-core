@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
 class UserGrid extends AbstractGrid
 {
 
-    const ID = 'id_user_user';
+    const ID = 'id_user';
     const FIRST_NAME = 'first_name';
     const LAST_NAME = 'last_name';
     const USERNAME = 'username';

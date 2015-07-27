@@ -149,8 +149,8 @@ class Installer implements InstallerInterface
                 throw new UserNotFoundException();
             }
 
-            if (!$this->group->hasUser($group->getIdAclGroup(), $user->getIdUserUser())) {
-                $this->group->addUser($user->getIdUserUser(), $group->getIdAclGroup());
+            if (!$this->group->hasUser($group->getIdAclGroup(), $user->getIdUser())) {
+                $this->group->addUser($user->getIdUser(), $group->getIdAclGroup());
             }
         }
     }

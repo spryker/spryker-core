@@ -4,7 +4,7 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="User">
-        <property name="idUserUser" type="int" />
+        <property name="idUser" type="int" />
         <property name="username" type="string" />
         <property name="password" type="string" />
         <property name="firstName" type="string" />

@@ -134,7 +134,7 @@ abstract class AbstractTable
         $tableData = [];
 
         $headers = $this->config->getHeader();
-        $isArray = (true === is_array($headers));
+        $isArray = is_array($headers);
         foreach ($data as $row) {
             if ($isArray) {
                 $row = array_intersect_key($row, $headers);

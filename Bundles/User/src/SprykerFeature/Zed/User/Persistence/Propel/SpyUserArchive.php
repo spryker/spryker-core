@@ -1,14 +1,11 @@
 <?php
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
 
 namespace SprykerFeature\Zed\User\Persistence\Propel;
 
-use SprykerFeature\Zed\User\Persistence\Propel\Base\SpyUserUser as BaseSpyUserUser;
+use SprykerFeature\Zed\User\Persistence\Propel\Base\SpyUserArchive as BaseSpyUserArchive;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_user_user' table.
+ * Skeleton subclass for representing a row from the 'spy_user_archive' table.
  *
  *
  *
@@ -17,7 +14,7 @@ use SprykerFeature\Zed\User\Persistence\Propel\Base\SpyUserUser as BaseSpyUserUs
  * long as it does not already exist in the output directory.
  *
  */
-class SpyUserUser extends BaseSpyUserUser
+class SpyUserArchive extends BaseSpyUserArchive
 {
 
 }

@@ -8,8 +8,8 @@
           namespaceAutoPackage="false"
           package="vendor.spryker.spryker.Bundles.User.src.SprykerFeature.Zed.User.Persistence.Propel">
 
-    <table name="spy_user_user" idMethod="native" phpName="SpyUserUser">
-        <column name="id_user_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+    <table name="spy_user" idMethod="native" phpName="SpyUser">
+        <column name="id_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="first_name" required="true" size="45" type="VARCHAR"/>
         <column name="last_name" required="true" size="255" type="VARCHAR"/>
         <column name="username" required="true" size="45" type="VARCHAR"/>

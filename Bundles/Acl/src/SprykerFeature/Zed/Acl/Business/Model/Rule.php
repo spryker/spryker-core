@@ -326,14 +326,14 @@ class Rule implements RuleInterface
             return true;
         }
 
-        $group = $this->group->getUserGroup($user->getIdUserUser());
+        $group = $this->group->getUserGroup($user->getIdUser());
         $rules = $this->getRulesForGroupId($group->getIdAclGroup());
 
         if ($this->facadeUser->isSystemUser($user)) {
             return false;
         }
 
-        $group = $this->group->getUserGroup($user->getIdUserUser());
+        $group = $this->group->getUserGroup($user->getIdUser());
         if ($group === null) {
             return false;
         }

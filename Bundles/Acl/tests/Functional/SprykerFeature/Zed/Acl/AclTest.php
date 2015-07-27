@@ -369,7 +369,7 @@ class AclTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $added = $this->facade->addUserToGroup($userDto->getIdUserUser(), $groupDto->getIdAclGroup());
+        $added = $this->facade->addUserToGroup($userDto->getIdUser(), $groupDto->getIdAclGroup());
         $this->assertEquals($added, 1);
     }
 
@@ -386,10 +386,10 @@ class AclTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $added = $this->facade->addUserToGroup($userDto->getIdUserUser(), $groupDto->getIdAclGroup());
+        $added = $this->facade->addUserToGroup($userDto->getIdUser(), $groupDto->getIdAclGroup());
         $this->assertEquals($added, 1);
 
-        $userGroupDto = $this->facade->getUserGroup($userDto->getIdUserUser());
+        $userGroupDto = $this->facade->getUserGroup($userDto->getIdUser());
         $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $userGroupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertEquals($groupData['name'], $groupDto->getName());
@@ -408,7 +408,7 @@ class AclTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $added = $this->facade->addUserToGroup($userDto->getIdUserUser(), $groupDto->getIdAclGroup());
+        $added = $this->facade->addUserToGroup($userDto->getIdUser(), $groupDto->getIdAclGroup());
         $this->assertEquals($added, 1);
 
         foreach ($ruleData as $current) {
@@ -443,7 +443,7 @@ class AclTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $added = $this->facade->addUserToGroup($userDto->getIdUserUser(), $groupDto->getIdAclGroup());
+        $added = $this->facade->addUserToGroup($userDto->getIdUser(), $groupDto->getIdAclGroup());
         $this->assertEquals($added, 1);
 
         foreach ($ruleData as $current) {
@@ -476,7 +476,7 @@ class AclTest extends Test
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
 
-        $added = $this->facade->addUserToGroup($userDto->getIdUserUser(), $groupDto->getIdAclGroup());
+        $added = $this->facade->addUserToGroup($userDto->getIdUser(), $groupDto->getIdAclGroup());
         $this->assertEquals($added, 1);
 
         foreach ($ruleData as $current) {

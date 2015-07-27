@@ -20,6 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
 class FormController extends AbstractController
 {
 
+    const ID = 'id';
+    const FIRST_NAME = 'first_name';
+    const LAST_NAME = 'last_name';
+    const USERNAME = 'username';
+    const PASSWORD = 'password';
+    const ID_ACL_GROUP = 'id_acl_group';
+
     /**
      * @param Request $request
      *
@@ -29,7 +36,7 @@ class FormController extends AbstractController
     {
         $form = $this->getDependencyContainer()->createUserWithGroupForm($request);
 
-        $idUser = $request->get('id');
+        $idUser = $request->get(self::ID);
 
         if (false === empty($idUser)) {
             $form->setUserId($idUser);
@@ -43,14 +50,14 @@ class FormController extends AbstractController
             $userGroup = false;
 
             $user = new UserTransfer();
-            $user->setFirstName($data['first_name'])
-                ->setLastName($data['last_name'])
-                ->setUsername($data['username'])
-                ->setPassword($data['password'])
+            $user->setFirstName($data[self::FIRST_NAME])
+                ->setLastName($data[self::LAST_NAME])
+                ->setUsername($data[self::USERNAME])
+                ->setPassword($data[self::PASSWORD])
             ;
 
             if (false === empty($idUser)) {
-                $user->setIdUserUser($data['id_user_user']);
+                $user->setIdUser($data[self::ID_USER]);
                 $user = $this->getDependencyContainer()->createUserFacade()
                     ->updateUser($user)
                 ;
@@ -59,7 +66,7 @@ class FormController extends AbstractController
                     ->getUserGroup($idUser)
                 ;
 
-                if ($userGroup->getIdAclGroup() !== $data['id_acl_group']) {
+                if ($userGroup->getIdAclGroup() !== $data[self::ID_ACL_GROUP]) {
                     $this->getFacade()
                         ->removeUserFromGroup($idUser, $userGroup->getIdAclGroup())
                     ;
@@ -75,8 +82,8 @@ class FormController extends AbstractController
                 ;
             }
 
-            if ($userGroup === false || $userGroup->getIdAclGroup() !== $data['id_acl_group']) {
-                $this->getFacade()->addUserToGroup($user->getIdUserUser(), $data['id_acl_group']);
+            if ($userGroup === false || $userGroup->getIdAclGroup() !== $data[self::ID_ACL_GROUP]) {
+                $this->getFacade()->addUserToGroup($user->getIdUser(), $data[self::ID_ACL_GROUP]);
             }
         }
 
