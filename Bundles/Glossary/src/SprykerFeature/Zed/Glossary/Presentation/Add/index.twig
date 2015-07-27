@@ -37,14 +37,20 @@
                         type: 'GET',
                         data: {term: obj}
                     }).done(function(data) {
+                        changed = false;
                         $.each(data, function(i, item) {
                             var key = '#form_locale_' + i;
 
                             value = $(key).val();
                             if (!value.length) {
                                 $(key).val(item);
+                                changed = true;
                             }
                         });
+
+                        if (changed) {
+                            $('#form_submit').text('Save');
+                        }
                     });
                 });
             });

@@ -79,7 +79,7 @@ class KeyController extends AbstractController
         $term = $request->get(self::TERM);
 
         $keys = $this->getQueryContainer()
-            ->queryByKey($term)
+            ->queryByKey($term)->find()
         ;
 
         if ($keys) {
