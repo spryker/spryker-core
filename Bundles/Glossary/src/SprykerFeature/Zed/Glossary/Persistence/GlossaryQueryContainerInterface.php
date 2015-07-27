@@ -27,12 +27,6 @@ interface GlossaryQueryContainerInterface
     public function queryActiveKeysByName($keyName);
 
     /**
-     * @param string $keyName
-     *
-     * @return SpyGlossaryKeyQuery
-     */
-    public function queryActiveKeysByNameForAjax($keyName);
-    /**
      * @return SpyGlossaryKeyQuery
      */
     public function queryKeys();
