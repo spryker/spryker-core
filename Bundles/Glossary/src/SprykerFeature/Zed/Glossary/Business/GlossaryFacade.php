@@ -14,25 +14,24 @@ use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
 
 /**
  * @method GlossaryDependencyContainer getDependencyContainer()
  */
 class GlossaryFacade extends AbstractFacade
 {
-    
+
     /**
-     * @param array $data
+     * @param string $keyName
      *
      * @return int
      * @throws KeyExistsException
      */
-    public function createKey($data)
+    public function createKey($keyName)
     {
         $keyManager = $this->getDependencyContainer()->createKeyManager();
 
-        return $keyManager->createKey($data);
+        return $keyManager->createKey($keyName);
     }
 
     /**
@@ -60,16 +59,17 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param array $data
+     * @param string $oldKeyName
+     * @param string $newKeyName
      *
      * @return bool
      * @throws MissingKeyException
      */
-    public function updateKey($data)
+    public function updateKey($oldKeyName, $newKeyName)
     {
         $keyManager = $this->getDependencyContainer()->createKeyManager();
 
-        return $keyManager->updateKey($data);
+        return $keyManager->updateKey($oldKeyName, $newKeyName);
     }
 
     /**
@@ -164,17 +164,6 @@ class GlossaryFacade extends AbstractFacade
         return $translationManager->getTranslationByKeyName($keyName, $locale);
     }
 
-    /**
-     * @param string $idGlossaryKey
-     *
-     * @return TranslationTransfer
-     */
-    public function getTranslations($key)
-    {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
-
-        return $translationManager->getTranslations($key);
-    }
     /**
      * @param string $keyName
      * @param LocaleTransfer $locale
@@ -298,17 +287,5 @@ class GlossaryFacade extends AbstractFacade
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
         $translationManager->touchCurrentTranslationForKeyId($idKey);
-    }
-
-    /**
-     * @param string $query
-     *
-     * @return SpyGlossaryKeyQuery
-     */
-    public function buildSuggestedKeys($query)
-    {
-        $translationManager = $this->getDependencyContainer()->createKeyManager();
-
-        return $translationManager->buildSuggestedKeys($query);
     }
 }
