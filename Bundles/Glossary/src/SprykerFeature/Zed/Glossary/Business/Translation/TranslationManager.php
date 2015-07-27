@@ -26,6 +26,8 @@ class TranslationManager implements TranslationManagerInterface
 {
 
     const TOUCH_TRANSLATION = 'translation';
+    const GLOSSARY_KEY = 'glossary_key';
+    const LOCALE_PREFIX = 'locale_';
 
     /**
      * @var GlossaryQueryContainerInterface
@@ -69,24 +71,24 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function saveGlossaryKeyTranslations(array $formData)
     {
-        if (false === isset($formData['glossary_key']) || empty($formData['glossary_key'])) {
+        if (!isset($formData[self::GLOSSARY_KEY]) || empty($formData[self::GLOSSARY_KEY])) {
             throw new MissingKeyException('Glossary Key cannot be empty');
         }
 
-        if (true === $this->keyManager->hasKey($formData['glossary_key'])) {
-            $glossaryKey = $this->keyManager->getKey($formData['glossary_key'])
+        if (!$this->keyManager->hasKey($formData[self::GLOSSARY_KEY])) {
+            $glossaryKey = $this->keyManager->createKey($formData[self::GLOSSARY_KEY]);
+        } else {
+            $glossaryKey = $this->keyManager->getKey($formData[self::GLOSSARY_KEY])
                 ->getIdGlossaryKey()
             ;
-        } else {
-            $glossaryKey = $this->keyManager->createKey($formData['glossary_key']);
         }
 
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
         foreach ($availableLocales as $localeId => $localeName) {
-            if (array_key_exists('locale_' . $localeId, $formData)) {
+            if (array_key_exists(self::LOCALE_PREFIX . $localeId, $formData)) {
                 $locale = $this->localeFacade->getLocale($availableLocales[$localeId]);
-                $translationTransfer = $this->createTranslationTransfer($locale, $glossaryKey, $formData['locale_' . $locale->getIdLocale()]);
+                $translationTransfer = $this->createTranslationTransfer($locale, $glossaryKey, $formData[self::LOCALE_PREFIX . $locale->getIdLocale()]);
 
                 $this->saveTranslation($translationTransfer);
             }
