@@ -71,11 +71,9 @@ abstract class AbstractTable
     protected $tableIdentifier;
 
     /**
-     * @deprecated this method will become private and will be called in this class ONLY
-     *
      * @return $this
      */
-    public function init()
+    private function init()
     {
         if (!$this->initialized) {
             $this->initialized = true;
@@ -103,7 +101,11 @@ abstract class AbstractTable
      */
     public function buildAlias($name)
     {
-        return str_replace(['.', '(', ')'], '', $name);
+        return str_replace(
+            ['.', '(', ')'],
+            '',
+            $name
+        );
     }
 
     /**
@@ -315,7 +317,7 @@ abstract class AbstractTable
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
                 'tableId' => $this->getTableIdentifier(),
-                'options' => $this->config->getTableOptions()->toArray(),
+                'class' => $this->tableClass,
                 'header' => $this->config->getHeader(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
@@ -335,6 +337,8 @@ abstract class AbstractTable
     }
 
     /**
+     * @todo to be rafactored, does to many things and is hard to understand
+     *
      * @param ModelCriteria $query
      * @param TableConfiguration $config
      *

@@ -36,10 +36,9 @@ class AddressController extends AbstractController
         $table = $this->getDependencyContainer()
             ->createCustomerAddressTable($idCustomer)
         ;
-        $table->init();
 
         return $this->viewResponse([
-            'addressTable' => $table,
+            'addressTable' => $table->render(),
             'id_customer' => $idCustomer,
         ]);
     }
@@ -54,7 +53,6 @@ class AddressController extends AbstractController
         $table = $this->getDependencyContainer()
             ->createCustomerAddressTable($idCustomer)
         ;
-        $table->init();
 
         return $this->jsonResponse($table->fetchData());
     }
