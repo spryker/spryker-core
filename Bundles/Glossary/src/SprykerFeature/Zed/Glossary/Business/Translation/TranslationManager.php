@@ -11,7 +11,7 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
+use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocaleQuery;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
@@ -19,7 +19,6 @@ use SprykerFeature\Zed\Glossary\Business\Key\KeyManagerInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation;
 
@@ -70,16 +69,16 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function saveGlossaryKeyTranslations(array $formData)
     {
-        if (false === isset($formData['key']) || empty($formData['key'])) {
+        if (false === isset($formData['glossary_key']) || empty($formData['glossary_key'])) {
             throw new MissingKeyException('Glossary Key cannot be empty');
         }
 
-        if (true === $this->keyManager->hasKey($formData['key'])) {
-            $glossaryKey = $this->keyManager->getKey($formData['key'])
+        if (true === $this->keyManager->hasKey($formData['glossary_key'])) {
+            $glossaryKey = $this->keyManager->getKey($formData['glossary_key'])
                 ->getIdGlossaryKey()
             ;
         } else {
-            $glossaryKey = $this->keyManager->createKey($formData['key']);
+            $glossaryKey = $this->keyManager->createKey($formData['glossary_key']);
         }
 
         $availableLocales = $this->localeFacade->getAvailableLocales();
@@ -642,23 +641,4 @@ class TranslationManager implements TranslationManagerInterface
         return $translation;
     }
 
-    /**
-     * @param int $idGlossaryKey
-     */
-    public function getTranslations($idGlossaryKey)
-    {
-        $translations = $this->glossaryQueryContainer->queryTranslations()
-            ->findByFkGlossaryKey($idGlossaryKey);
-
-        $result = [];
-        if (!empty($translations)) {
-            $translations = $translations->toArray(null, false, TableMap::TYPE_COLNAME);
-
-            foreach($translations as $value) {
-                $result[$value[SpyGlossaryTranslationTableMap::COL_FK_LOCALE]] = $value[SpyGlossaryTranslationTableMap::COL_VALUE];
-            }
-        }
-
-        return $result;
-    }
 }

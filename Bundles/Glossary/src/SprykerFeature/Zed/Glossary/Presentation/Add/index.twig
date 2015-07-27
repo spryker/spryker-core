@@ -29,33 +29,26 @@
         ;(function ($) {
 
             $(document).ready(function () {
-                $('#form_fk_glossary_key').change(function () {
-                    var obj = $('#form_fk_glossary_key').val();
+                $('#form_glossary_key').blur(function () {
+                    var obj = $('#form_glossary_key').val();
 
                     $.ajax({
                         url: '/glossary/key/ajax',
                         type: 'GET',
-                        data: {id_glossary_key: obj}
+                        data: {term: obj}
                     }).done(function(data) {
                         $.each(data, function(i, item) {
                             var key = '#form_locale_' + i;
-                            if ($(key).length) {
-                                value = $(key).val();
-                                if (!value.length) {
-                                    $(key).val(item);
-                                }
+
+                            value = $(key).val();
+                            if (!value.length) {
+                                $(key).val(item);
                             }
                         });
                     });
-                });
-
-                $("select[readonly]").live("focus mousedown mouseup click",function(e){
-                    e.preventDefault();
-                    e.stopPropagation();
                 });
             });
 
         })(jQuery);
     </script>
 {% endblock %}
-

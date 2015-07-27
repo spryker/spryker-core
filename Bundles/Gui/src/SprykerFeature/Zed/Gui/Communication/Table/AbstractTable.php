@@ -11,7 +11,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
-use Propel\Runtime\Map\TableMap;
 
 abstract class AbstractTable
 {
@@ -76,8 +75,7 @@ abstract class AbstractTable
             $this->locator = Locator::getInstance();
             $this->request = $this->locator->application()
                 ->pluginPimple()
-                ->getApplication()['request']
-            ;
+                ->getApplication()['request'];
             $config = $this->newTableConfiguration();
             $config->setPageLength($this->getLimit());
             $config = $this->configure($config);
@@ -87,6 +85,7 @@ abstract class AbstractTable
 
     /**
      * @todo find a better solution (remove it)
+     *
      * @param string $name
      *
      * @return string
@@ -94,7 +93,11 @@ abstract class AbstractTable
      */
     public function buildAlias($name)
     {
-        return str_replace(['.', '(', ')'], '', $name);
+        return str_replace([
+            '.',
+            '(',
+            ')',
+        ], '', $name);
     }
 
     /**
@@ -231,8 +234,7 @@ abstract class AbstractTable
         /** @var \Twig_Environment $twig */
         $twig = $this->locator->application()
             ->pluginPimple()
-            ->getApplication()['twig']
-        ;
+            ->getApplication()['twig'];
 
         if ($twig === null) {
             throw new \LogicException('Twig environment not set up.');
@@ -269,7 +271,7 @@ abstract class AbstractTable
     /**
      * @return mixed
      */
-    public function getSearchTherm()
+    public function getSearchTerm()
     {
         return $this->request->query->get('search', null);
     }
@@ -304,7 +306,7 @@ abstract class AbstractTable
 
         return $this->getTwig()
             ->render('index.twig', $twigVars)
-        ;
+            ;
     }
 
     /**
@@ -315,7 +317,8 @@ abstract class AbstractTable
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
                 'tableId' => $this->getTableIdentifier(),
-                'options' => $this->config->getTableOptions()->toArray(),
+                'options' => $this->config->getTableOptions()
+                    ->toArray(),
                 'header' => $this->config->getHeader(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
@@ -349,14 +352,11 @@ abstract class AbstractTable
         $orderColumn = $columns[$order[0]['column']];
         $this->total = $query->count();
         $query->orderBy($orderColumn, $order[0]['dir']);
-        $searchTherm = $this->getSearchTherm();
+        $searchTerm = $this->getSearchTerm();
 
-        if (mb_strlen($searchTherm['value']) > 0) {
+        if (mb_strlen($searchTerm['value']) > 0) {
             $isFirst = true;
-
             $query->setIdentifierQuoting(true);
-            $tableName = $query->getTableMap()
-                ->getName();
 
             foreach ($config->getSearchable() as $value) {
                 if (!$isFirst) {
@@ -365,8 +365,9 @@ abstract class AbstractTable
                     $isFirst = false;
                 }
 
-                $query->where(sprintf('LOWER(%s.%s) LIKE ?', $value, '%' . mb_strtolower($searchTherm['value']) . '%'));
+                $query->where(sprintf("LOWER(%s) LIKE '%s'", $value, '%' . mb_strtolower($searchTerm['value']) . '%'));
             }
+
             $this->filtered = $query->count();
         } else {
             $this->filtered = $this->total;
@@ -397,22 +398,6 @@ abstract class AbstractTable
         ];
 
         return $wrapperArray;
-    }
-
-    /**
-     * Build Alias for column
-     *
-     * @param string $column
-     *
-     * @return string
-     */
-    public function buildAlias($column)
-    {
-        return str_replace([
-            '.',
-            '(',
-            ')',
-        ], '', $column);
     }
 
     /**

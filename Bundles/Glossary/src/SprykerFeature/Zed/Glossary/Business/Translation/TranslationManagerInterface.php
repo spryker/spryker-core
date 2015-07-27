@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
+use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocaleQuery;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
@@ -147,10 +148,4 @@ interface TranslationManagerInterface
      */
     public function touchCurrentTranslationForKeyId($idKey);
 
-    /**
-     * @param int $idGlossaryKey
-     *
-     * @return mixed
-     */
-    public function getTranslations($idGlossaryKey);
 }

@@ -6,8 +6,6 @@
 namespace SprykerFeature\Zed\Glossary\Communication\Form;
 
 use Propel\Runtime\Map\TableMap;
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
@@ -62,6 +60,10 @@ class TranslationForm extends AbstractForm
         $fkGlossaryKey = $this->request->get(self::FK_GLOSSARY_KEY);
 
         if (!empty($fkGlossaryKey)) {
+            $key = $this->glossaryKeyQuery->findOneByIdGlossaryKey($fkGlossaryKey);
+
+            $result['glossary_key'] = $key->getKey();
+
             $translations = $this->glossaryTranslationQuery->filterByFkGlossaryKey($fkGlossaryKey)
                 ->find()
             ;
@@ -69,19 +71,10 @@ class TranslationForm extends AbstractForm
             if (!empty($translations)) {
                 $translations = $translations->toArray(null, false, TableMap::TYPE_COLNAME);
 
-                $position = mb_strpos(SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY, '.');
-                if (false !== $position) {
-                    $key = mb_substr(SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY,  $position + 1);
-                }
-
-                if (!empty($key)) {
-                    $result[$key] = $translations[0][SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY];
-                }
-
                 foreach ($translations as $value) {
                     $result['locale_' . $value[SpyGlossaryTranslationTableMap::COL_FK_LOCALE]] = $value[SpyGlossaryTranslationTableMap::COL_VALUE];
                 }
-            }
+    }
         }
 
         return $result;
@@ -92,25 +85,28 @@ class TranslationForm extends AbstractForm
      */
     public function buildFormFields()
     {
-        $glossaryKeyOptions = [
-            'label' => self::NAME,
-            'placeholder' => 'Select one',
-            'choices' => $this->getKeyOptions(),
-        ];
 
         if (self::UPDATE === $this->type) {
-            $glossaryKeyOptions['attr'] = [
+            $this->addText('glossary_key', [
+                'label' => self::NAME,
+                'attr' => [
                 'readonly' => 'readonly',
-            ];
-
-            $this->addChoice('fk_glossary_key', $glossaryKeyOptions);
+                ],
+            ]);
         } else {
-            $this->addChoice('fk_glossary_key', $glossaryKeyOptions);
+            $this->addAutosuggest('glossary_key', [
+                'label' => self::NAME,
+                'url' => '/glossary/key/suggest',
+            ]);
         }
 
         foreach ($this->locales as $key => $locale) {
             $this->addText('locale_' . $key, [
                 'label' => $locale,
+                'constraints' => [
+                    new NotBlank(),
+                    new Required(),
+                ]
             ]);
         }
 
@@ -124,19 +120,4 @@ class TranslationForm extends AbstractForm
         return $this;
     }
 
-    private function getKeyOptions()
-    {
-        $result = [];
-
-        $keys = $this->glossaryKeyQuery->findByIsActive(true);
-        if (!empty($keys)) {
-            $keys = $keys->toArray(null, false, TableMap::TYPE_COLNAME);
-
-            foreach ($keys as $value) {
-                $result[$value[SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY]] = $value[SpyGlossaryKeyTableMap::COL_KEY];
-            }
-        }
-
-        return $result;
-    }
 }

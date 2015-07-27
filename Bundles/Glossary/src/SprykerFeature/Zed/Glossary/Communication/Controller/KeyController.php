@@ -7,25 +7,27 @@ namespace SprykerFeature\Zed\Glossary\Communication\Controller;
 
 use Generated\Shared\Transfer\TranslationTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
-use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Map\TableMap;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKey;
+use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method GlossaryCommunication getFactory()
  * @method GlossaryDependencyContainer getDependencyContainer()
  * @method GlossaryFacade getFacade()
+ * @method GlossaryQueryContainer getQueryContainer()
  */
 class KeyController extends AbstractController
 {
 
-    const ID_GLOSSARY_KEY = 'id_glossary_key';
+    const TERM = 'term';
 
     /**
      * @param Request $request
@@ -34,108 +36,61 @@ class KeyController extends AbstractController
      */
     public function ajaxAction(Request $request)
     {
-        $idGlossaryKey = $request->get(self::ID_GLOSSARY_KEY);
+        $term = $request->get(self::TERM);
 
-        $result = $this->getFacade()
-            ->getTranslations($idGlossaryKey)
+        $key = $this->getQueryContainer()
+            ->queryKey($term)
+            ->findOne()
         ;
+
+        $idGlossaryKey = false;
+        if (!empty($key)) {
+            $idGlossaryKey = $key->getIdGlossaryKey();
+        }
+
+        $translations = [];
+        if ($idGlossaryKey) {
+            $translations = $this->getQueryContainer()
+                ->queryTranslations()
+                ->findByFkGlossaryKey($idGlossaryKey)
+            ;
+
+        }
+
+        $result = [];
+        if (!empty($translations)) {
+            $translations = $translations->toArray(null, false, TableMap::TYPE_COLNAME);
+
+            foreach ($translations as $value) {
+                $result[$value[SpyGlossaryTranslationTableMap::COL_FK_LOCALE]] = $value[SpyGlossaryTranslationTableMap::COL_VALUE];
+            }
+        }
 
         return $this->jsonResponse($result);
     }
 
     /**
-     * @return array
-     */
-    public function indexAction()
-    {
-        $table = $this->getDependencyContainer()
-            ->createKeyTable()
-        ;
-        $table->init();
-
-        return $this->viewResponse([
-            'keyTable' => $table,
-        ]);
-    }
-
-    /**
+     * @param Request $request
+     *
      * @return JsonResponse
      */
-    public function tableAction()
+    public function suggestAction(Request $request)
     {
-        $table = $this->getDependencyContainer()
-            ->createKeyTable()
+        $term = $request->get(self::TERM);
+
+        $keys = $this->getQueryContainer()
+            ->queryByKey($term)
         ;
-        $table->init();
 
-        return $this->jsonResponse($table->fetchData());
-    }
+        if ($keys) {
+            $keys = $keys->toArray(null, false, TableMap::TYPE_COLNAME);
 
-    /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @return array|RedirectResponse
-     */
-    public function addAction()
-    {
-
-        $keyForm = $this->getDependencyContainer()
-            ->createKeyForm('add', false)
-        ;
-        $keyForm->init();
-
-        $keyForm->handleRequest();
-
-        if ($keyForm->isValid()) {
-            $data = $keyForm->getData();
-
-            $result = $this->getFacade()
-                ->createKey($data)
-            ;
-
-            return $this->redirectResponse('/glossary/key/');
+            foreach ($keys as $value) {
+                $result[] = $value[SpyGlossaryKeyTableMap::COL_KEY];
+            }
         }
 
-        return $this->viewResponse([
-            'form' => $keyForm->createView(),
-        ]);
-    }
-
-    /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @return array|RedirectResponse
-     */
-    public function editAction(Request $request)
-    {
-        $idGlossaryKey = $request->get(self::ID_GLOSSARY_KEY);
-
-        $keyForm = $this->getDependencyContainer()
-            ->createKeyForm('update', $idGlossaryKey)
-        ;
-        $keyForm->init();
-
-        $keyForm->handleRequest();
-
-        if ($keyForm->isValid()) {
-            $data = $keyForm->getData();
-
-            $result = $this->getFacade()
-                ->updateKey($data)
-            ;
-
-            return $this->redirectResponse('/glossary/key/');
-        }
-
-        return $this->viewResponse([
-            'form' => $keyForm->createView(),
-        ]);
-    }
-
-    /**
-     * @return SpyGlossaryKey
-     */
-    public function createKey()
-    {
-        return new SpyGlossaryKey();
+        return $this->jsonResponse($result);
     }
 
     /**

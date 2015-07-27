@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
 
 /**
  * @method GlossaryDependencyContainer getDependencyContainer()
@@ -164,15 +165,15 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idGlossaryKey
+     * @param string $idGlossaryKey
      *
      * @return TranslationTransfer
      */
-    public function getTranslations($idGlossaryKey)
+    public function getTranslations($key)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
-        return $translationManager->getTranslations($idGlossaryKey);
+        return $translationManager->getTranslations($key);
     }
     /**
      * @param string $keyName
@@ -297,5 +298,17 @@ class GlossaryFacade extends AbstractFacade
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
         $translationManager->touchCurrentTranslationForKeyId($idKey);
+    }
+
+    /**
+     * @param string $query
+     *
+     * @return SpyGlossaryKeyQuery
+     */
+    public function buildSuggestedKeys($query)
+    {
+        $translationManager = $this->getDependencyContainer()->createKeyManager();
+
+        return $translationManager->buildSuggestedKeys($query);
     }
 }

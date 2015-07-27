@@ -7,11 +7,13 @@ namespace SprykerFeature\Zed\Glossary\Communication\Controller;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
 
 /**
  * @method GlossaryCommunication getFactory()
  * @method GlossaryDependencyContainer getDependencyContainer()
+ * @method GlossaryFacade getFacade()
  */
 class EditController extends AbstractController
 {
@@ -35,9 +37,10 @@ class EditController extends AbstractController
         if ($glossaryForm->isValid()) {
             $data = $glossaryForm->getData();
 
-            $facade = $this->getDependencyContainer()->createGlossaryFacade();
+            $facade = $this->getFacade();
             $facade->saveGlossaryKeyTranslations($data);
-            // return $this->redirectResponse('/glossary/');
+
+            return $this->redirectResponse('/glossary/');
         }
 
         return $this->viewResponse([

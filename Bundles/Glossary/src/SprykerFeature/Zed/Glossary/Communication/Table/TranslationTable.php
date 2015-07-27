@@ -59,7 +59,10 @@ class TranslationTable extends AbstractTable
             $headers[$value] = $value;
         }
 
-        $config->setSearchable($headers);
+        $config->setSearchable([
+            SpyGlossaryTranslationTableMap::COL_VALUE,
+            SpyGlossaryKeyTableMap::COL_KEY
+        ]);
 
         $headers[self::ACTIONS] = self::ACTIONS;
 
@@ -128,11 +131,7 @@ class TranslationTable extends AbstractTable
         foreach ($lines as $value) {
             $fkGlossaryKey = $value[SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY];
 
-            $details = [];
-            foreach ($this->locales as $locale) {
-                $details = $this->getDetails($fkGlossaryKey);
-            }
-
+            $details = $this->getDetails($fkGlossaryKey);
             $result[] = array_merge($value, $details);
         }
 
