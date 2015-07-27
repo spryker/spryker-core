@@ -14,7 +14,7 @@
         <property name="fkShipmentCarrier" type="int" />
         <property name="fkGlossaryKeyMethodName" type="int" />
         <property name="fkGlossaryKeyMethodDescription" type="int" />
-        <property name="price" type="string" />
+        <property name="price" type="int" />
         <property name="isActive" type="bool" />
     </transfer>
 
