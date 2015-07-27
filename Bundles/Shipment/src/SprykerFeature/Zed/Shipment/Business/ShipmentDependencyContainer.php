@@ -23,4 +23,11 @@ class ShipmentDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelCarrier();
     }
+    /**
+     * @return Method
+     */
+    public function createMethodModel()
+    {
+        return $this->getFactory()->createModelMethod();
+    }
 }
