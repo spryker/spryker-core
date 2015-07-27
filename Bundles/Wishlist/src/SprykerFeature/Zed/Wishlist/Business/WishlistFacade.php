@@ -98,7 +98,7 @@ class WishlistFacade extends AbstractFacade
     public function mergeWishlist(WishlistInterface $wishlist)
     {
         return $this->getDependencyContainer()
-            ->createTransferObjectIntegrator()
+            ->createMergeransferObjectIntegrator()
             ->mergeWishlist($wishlist);
     }
 

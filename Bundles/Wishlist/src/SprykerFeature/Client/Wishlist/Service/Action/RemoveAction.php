@@ -29,7 +29,7 @@ class RemoveAction extends AbstractActionFactory
         }
 
         $this->changeTransfer = (new WishlistChangeTransfer())
-            ->setRemovedItems(new \ArrayObject($transfer));
+            ->setRemovedItems(new \ArrayObject([$transfer]));
 
         return $this;
     }

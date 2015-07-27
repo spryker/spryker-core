@@ -34,7 +34,7 @@ class SaveAction extends AbstractActionFactory
         }
 
         $this->changeTransfer = (new WishlistChangeTransfer())
-            ->setAddedItems(new \ArrayObject($transfer));
+            ->setAddedItems(new \ArrayObject([$transfer]));
 
         return $this;
     }
@@ -51,7 +51,9 @@ class SaveAction extends AbstractActionFactory
 
         }
 
+
         $wishlistItems = $this->client->call($this->getUrl('group'), $this->changeTransfer, null, true);
+
 
         $this->session->set(self::$wishlistSessionID, $wishlistItems);
     }

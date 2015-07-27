@@ -21,12 +21,22 @@ use ArrayObject;
 
 class TransferObjectIntegrator
 {
+    const MERGE_MODE = "merge";
+
+    const OVERWRITE_MODE = "overwrite";
+
+    protected $em;
+
+    protected $mode;
+
     /**
      * @param EntityIntegrator $em
+     * @param string $mode
      */
-    public function __construct(EntityIntegrator $em)
+    public function __construct(EntityIntegrator $em, $mode=self::OVERWRITE_MODE)
     {
         $this->em = $em;
+        $this->mode = $mode;
     }
 
     /**
@@ -111,15 +121,29 @@ class TransferObjectIntegrator
 
             $equalItem = $this->getEqualByProduct($newItem->getProduct(), $existingItems);
 
-            if(null !== $equalItem) {
+            if (null !== $equalItem) {
 
-                $this->mergeWishlistItems($equalItem, $newItem);
+                $newItem = $this->integrate($equalItem, $newItem);
+                $existingItems = $this->ungroupItems($this->wrapInArrayObject([$newItem]), $existingItems);
             }
 
             $groupedItems[] = $newItem;
         }
 
-        return $this->wrapInArrayObject($groupedItems);
+        $this->appendItems($existingItems, $this->wrapInArrayObject($groupedItems));
+
+        return $existingItems;
+    }
+
+    /**
+     * @param ArrayObject $removedItems
+     * @param ArrayObject $existingItems
+     */
+    protected function appendItems(ArrayObject $existingItems, ArrayObject $appendingItems)
+    {
+        foreach ($appendingItems as $item) {
+            $existingItems[] = $item;
+        }
     }
 
     /**
@@ -136,7 +160,7 @@ class TransferObjectIntegrator
 
             $equalItem = $this->getEqualByProduct($item->getProduct(), $removedItems);
 
-            if(null !== $equalItem) {
+            if (null !== $equalItem) {
 
                 continue;
             }
@@ -148,14 +172,52 @@ class TransferObjectIntegrator
     }
 
     /**
-     * @param WishlistItemInterface $databaseWishlistItem
+     * @param WishlistItemInterface $existingWishlistItem
      * @param WishlistItemInterface $wishlistItem
+     *
+     * @return WishlistItemInterface
      */
-    protected function mergeWishlistItems(WishlistItemInterface $databaseWishlistItem, WishlistItemInterface $wishlistItem)
+    protected function integrate(WishlistItemInterface $existingWishlistItem, WishlistItemInterface $wishlistItem)
     {
-        $quantity = $databaseWishlistItem->getQuantity() + $wishlistItem->getQuantity();
-        $databaseWishlistItem->setQuantity($quantity);
-        $wishlistItem = $databaseWishlistItem;
+        switch($this->mode) {
+            case self::OVERWRITE_MODE:
+                $item = $this->overwriteWishlistItems($existingWishlistItem, $wishlistItem);
+                break;
+            case self::MERGE_MODE:
+            default:
+                $item = $this->mergeWishlistItems($existingWishlistItem, $wishlistItem);
+                break;
+        }
+
+        return $item;
+    }
+
+    /**
+     * @param WishlistItemInterface $existingWishlistItem
+     * @param WishlistItemInterface $wishlistItem
+     *
+     * @return WishlistItemInterface
+     */
+    protected function mergeWishlistItems(WishlistItemInterface $existingWishlistItem, WishlistItemInterface $wishlistItem)
+    {
+        $quantity = $existingWishlistItem->getQuantity() + $wishlistItem->getQuantity();
+        $existingWishlistItem->setQuantity($quantity);
+
+        return $existingWishlistItem;
+    }
+
+    /**
+     * @param WishlistItemInterface $existingWishlistItem
+     * @param WishlistItemInterface $wishlistItem
+     *
+     * @return WishlistItemInterface
+     */
+    protected function overwriteWishlistItems(WishlistItemInterface $existingWishlistItem, WishlistItemInterface $wishlistItem)
+    {
+        $wishlistItem->getQuantity();
+        $existingWishlistItem->setQuantity($wishlistItem->getQuantity());
+
+        return $existingWishlistItem;
     }
 
 
@@ -163,13 +225,13 @@ class TransferObjectIntegrator
      * @param WishlistProductInterface $wishlistProductTransfer
      * @param ArrayObject $wishlistItems
      *
-     * @return WishlistItemInterface
+     * @return WishlistItemInterface|null
      */
     protected function getEqualByProduct(WishlistProductInterface $wishlistProductTransfer, ArrayObject $wishlistItems)
     {
         foreach ($wishlistItems as $wishlistItem) {
 
-            if($wishlistProductTransfer == $wishlistItem->getProduct()){
+            if ($wishlistProductTransfer == $wishlistItem->getProduct()) {
 
                 return $wishlistItem;
 
@@ -186,7 +248,7 @@ class TransferObjectIntegrator
      */
     protected function getWishlistEntityItemsArrayObject(CustomerInterface $customerTransfer)
     {
-        $wishlistItems = array_map(function(SpyWishlistItem $item){
+        $wishlistItems = array_map(function (SpyWishlistItem $item) {
 
             return $this->getWishlistItemTransferInstance()
                 ->setId($item->getIdWishlistItem())
@@ -216,7 +278,6 @@ class TransferObjectIntegrator
         $wishlitsProductTransfer->setConcreteSku($abstractSku);
 
         return $wishlitsProductTransfer;
-
     }
 
     /**

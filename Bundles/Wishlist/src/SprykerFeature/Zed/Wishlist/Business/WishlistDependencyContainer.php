@@ -38,6 +38,12 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
             ->createIntegratorTransferObjectIntegrator($this->createEntityIntegrator());
     }
 
+    public function createMergeransferObjectIntegrator()
+    {
+        return $this->getFactory()
+            ->createIntegratorTransferObjectIntegrator($this->createEntityIntegrator(), TransferObjectIntegrator::MERGE_MODE);
+    }
+
     /**
      * @return SpyWishlistItemQuery
      */
