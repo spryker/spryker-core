@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Shipment\Communication\Controller;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Shipment\Business\ShipmentFacade;
-use SprykerFeature\Zed\Shipment\Communication\Form\CarrierForm;
 use SprykerFeature\Zed\Shipment\Communication\ShipmentDependencyContainer;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,22 +19,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CarrierController extends AbstractController
 {
-
+    const ADD = 'add';
+    const UPDATE = 'update';
     /**
      * @return Response
      */
     public function addAction()
     {
-        /** @var CarrierForm $form */
-        $form = $this->getDependencyContainer()
-            ->createCarrierForm('add');
-        $form->init();
+        $form = $this->getDependencyContainer()->createCarrierForm(self::ADD);
         $form->handleRequest();
 
         if ($form->isValid()) {
             $data = $form->getData();
             $carrierTransfer = new ShipmentCarrierTransfer();
             $carrierTransfer->fromArray($data, true);
+            $this->getFacade()->createCarrier($carrierTransfer);
 
             return $this->redirectResponse('/shipment/');
         }
