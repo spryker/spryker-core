@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication\Controller;
 
-use Generated\Shared\Transfer\TranslationTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
 use Propel\Runtime\Map\TableMap;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
@@ -14,7 +13,6 @@ use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -91,14 +89,6 @@ class KeyController extends AbstractController
         }
 
         return $this->jsonResponse($result);
-    }
-
-    /**
-     * @return SpyGlossaryTranslation
-     */
-    public function createTranslation()
-    {
-        return new TranslationTransfer();
     }
 
 }

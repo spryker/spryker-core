@@ -5,18 +5,16 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication;
 
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Glossary\Communication\Form\KeyForm;
-
-use SprykerFeature\Zed\Glossary\Communication\Table\KeyTable;
-use SprykerFeature\Zed\Glossary\Communication\Table\TranslationTable;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
+use SprykerFeature\Zed\Glossary\Communication\Form\KeyForm;
 use SprykerFeature\Zed\Glossary\Communication\Form\TranslationForm;
+use SprykerFeature\Zed\Glossary\Communication\Table\KeyTable;
+use SprykerFeature\Zed\Glossary\Communication\Table\TranslationTable;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
+use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator;
 
@@ -43,7 +41,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
         return $this->getLocator()
             ->glossary()
             ->facade()
-            ;
+        ;
     }
 
     /**
@@ -53,7 +51,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getLocaleFacade()
             ->getAvailableLocales()
-            ;
+        ;
     }
 
     /**
@@ -64,7 +62,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
         return $this->getLocator()
             ->glossary()
             ->queryContainer()
-            ;
+        ;
     }
 
     /**
@@ -84,7 +82,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
 
         return $this->getFactory()
             ->createFormKeyForm($keyQuery, $subQuery, $type, $idGlossaryKey)
-            ;
+        ;
     }
 
     /**
@@ -100,7 +98,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
 
         return $this->getFactory()
             ->createTableKeyTable($keyQuery)
-            ;
+        ;
     }
 
     /**
@@ -120,7 +118,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
 
         return $this->getFactory()
             ->createTableTranslationTable($translationQuery, $subQuery, $locales)
-            ;
+        ;
     }
 
     /**
@@ -138,7 +136,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
 
         return $this->getFactory()
             ->createFormTranslationForm($translationQuery, $glossaryKeyQuery, $locales, $type)
-            ;
+        ;
     }
 
 }

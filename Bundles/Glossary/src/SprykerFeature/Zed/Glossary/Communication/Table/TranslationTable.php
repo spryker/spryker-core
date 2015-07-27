@@ -26,7 +26,7 @@ class TranslationTable extends AbstractTable
     /**
      * @var SpyGlossaryTranslationQuery
      */
-    protected $localeQuery;
+    protected $subGlossaryQuery;
 
     /**
      * @var array
@@ -36,10 +36,10 @@ class TranslationTable extends AbstractTable
     /**
      * @param SpyGlossaryTranslationQuery $glossaryQuery
      */
-    public function __construct(SpyGlossaryTranslationQuery $gQuery, SpyGlossaryTranslationQuery $lKey, array $locales)
+    public function __construct(SpyGlossaryTranslationQuery $glossaryQuery, SpyGlossaryTranslationQuery $subGlossaryKey, array $locales)
     {
-        $this->glossaryQuery = $gQuery;
-        $this->localeQuery = $lKey;
+        $this->glossaryQuery = $glossaryQuery;
+        $this->subGlossaryQuery = $subGlossaryKey;
 
         $this->locales = $locales;
     }
@@ -87,7 +87,7 @@ class TranslationTable extends AbstractTable
     private function getDetails($fkGlossaryKey)
     {
         $keyName = $this->camelize($this->cutTablePrefix(SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY));
-        $locales = $this->localeQuery->filterBy($keyName, $fkGlossaryKey)
+        $locales = $this->subGlossaryQuery->filterBy($keyName, $fkGlossaryKey)
             ->leftJoinLocale()
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME)
             ->find()
@@ -142,8 +142,6 @@ class TranslationTable extends AbstractTable
 
         return $result;
     }
-
-
 
     /**
      * @param array $details
