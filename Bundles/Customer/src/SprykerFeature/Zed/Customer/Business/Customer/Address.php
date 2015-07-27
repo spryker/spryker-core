@@ -340,8 +340,8 @@ class Address
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
-        $id_address = $customer->getDefaultShippingAddress();
-        $address = $this->queryContainer->queryAddress($id_address)
+        $idAddress = $customer->getDefaultShippingAddress();
+        $address = $this->queryContainer->queryAddress($idAddress)
             ->findOne()
         ;
         if ($address === null) {
@@ -361,8 +361,8 @@ class Address
     public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
-        $id_address = $customer->getDefaultBillingAddress();
-        $address = $this->queryContainer->queryAddress($id_address)
+        $idAddress = $customer->getDefaultBillingAddress();
+        $address = $this->queryContainer->queryAddress($idAddress)
             ->findOne()
         ;
         if ($address === null) {
@@ -382,6 +382,52 @@ class Address
         ;
 
         return explode('_', $localeName)[1];
+    }
+
+    /**
+     * @param CustomerAddressTransfer $addressTransfer
+     *
+     * @throws AddressNotFoundException
+     * @throws CustomerNotFoundException
+     * @throws PropelException
+     *
+     * @return CustomerAddressTransfer
+     */
+    public function deleteAddress(CustomerAddressTransfer $addressTransfer)
+    {
+        $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
+
+        $entity = $this->queryContainer
+            ->queryAddressForCustomer(
+                $addressTransfer->getIdCustomerAddress(),
+                $customer->getEmail()
+            )
+            ->findOne()
+        ;
+
+        if(!$entity) {
+            throw new AddressNotFoundException();
+        }
+
+        $wasDefault = false;
+        if ($customer->getDefaultShippingAddress() === $entity->getIdCustomerAddress()) {
+            $customer->setDefaultShippingAddress(null);
+            $wasDefault = true;
+        }
+        if ($customer->getDefaultBillingAddress() === $entity->getIdCustomerAddress()) {
+            $customer->setDefaultBillingAddress(null);
+            $wasDefault = true;
+        }
+        if ($wasDefault) {
+            $customer->save();
+        }
+
+        $oldAddressTransfer = $this->entityToTransfer($entity);
+        $oldAddressTransfer->setIdCustomerAddress(null);
+
+        $entity->delete();
+
+        return $oldAddressTransfer;
     }
 
 }
