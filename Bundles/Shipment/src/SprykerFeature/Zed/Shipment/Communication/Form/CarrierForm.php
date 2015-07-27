@@ -15,6 +15,7 @@ class CarrierForm extends AbstractForm
     const UPDATE = 'update';
     const NAME_FIELD = 'fkGlossaryKeyCarrierName';
     const IS_ACTIVE_FIELD = 'isActive';
+    const CARRIER_ID = 'carrier_id';
 
     /**
      * @var SpyShipmentCarrierQuery
@@ -46,10 +47,16 @@ class CarrierForm extends AbstractForm
         $this->addAutosuggest(
             self::NAME_FIELD,
             [
+                'label' => 'Carrier name',
                 'url' => '/glossary/ajax/keys'
             ]
         );
-        $this->addCheckbox(self::IS_ACTIVE_FIELD);
+        $this->addCheckbox(
+            self::IS_ACTIVE_FIELD,
+            [
+                'label' => 'Enabled?'
+            ]
+        );
 
         return $this;
     }
@@ -59,11 +66,20 @@ class CarrierForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        $carrier = $this->carrierQuery->findOne();
+        $result = [];
+        $carrierId = $this->request->get(self::CARRIER_ID);
 
-        return [
-            self::NAME_FIELD => $carrier->getFkGlossaryKeyCarrierName(),
-            self::IS_ACTIVE_FIELD => $carrier->getIsActive()
-        ];
+        if (is_null($carrierId) === false) {
+            $carrier = $this
+                ->carrierQuery
+                ->findOneByIdShipmentCarrier($carrierId)
+            ;
+            $result = [
+                self::NAME_FIELD => $carrier->getFkGlossaryKeyCarrierName(),
+                self::IS_ACTIVE_FIELD => $carrier->getIsActive()
+            ];
+        }
+
+        return $result;
     }
 }
