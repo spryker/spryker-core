@@ -81,7 +81,7 @@ class CountryForm extends AbstractForm
                 ]
             )
             ->addHidden('id_country')
-            ->addSubmit();
+        ;
 
     }
 

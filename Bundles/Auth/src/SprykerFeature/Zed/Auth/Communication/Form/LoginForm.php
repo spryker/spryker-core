@@ -13,7 +13,6 @@ class LoginForm extends AbstractForm
 {
     const USERNAME = 'username';
     const PASSWORD = 'password';
-    const SUBMIT = 'submit';
 
     /**
      * @return $this
@@ -31,13 +30,6 @@ class LoginForm extends AbstractForm
                 'constraints' => [
                     new Assert\Required(),
                     new Assert\NotBlank(),
-                ]
-            ])
-
-            ->addSubmit(self::SUBMIT, [
-                'label' => 'Login',
-                'attr' => [
-                    'class' => 'btn btn-success btn-block',
                 ]
             ])
         ;

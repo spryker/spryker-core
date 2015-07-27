@@ -116,6 +116,8 @@ abstract class AbstractForm
             $data = $this->populateFormFields();
             $this->setData($data);
         }
+
+        return $this;
     }
 
     /**
@@ -586,6 +588,7 @@ abstract class AbstractForm
      * @param array $options
      *
      * @return $this
+     * @deprecated Forms should not have submit buttons http://symfony.com/doc/current/best_practices/forms.html#form-button-configuration
      */
     public function addSubmit($name = 'submit', $options = [])
     {

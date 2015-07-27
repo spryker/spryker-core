@@ -121,12 +121,6 @@ class AddressForm extends AbstractForm
                         new Length(['max' => 255]),
                     ],
                 ])
-            ->addSubmit('submit', [
-                    'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
-                    'attr' => [
-                        'class' => 'btn btn-primary',
-                    ],
-                ])
             ;
     }
 
