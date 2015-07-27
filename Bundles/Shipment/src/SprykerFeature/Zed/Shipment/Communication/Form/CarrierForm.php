@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Shipment\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\ShipmentCarrierQuery;
+use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
 
 class CarrierForm extends AbstractForm
 {
@@ -16,7 +16,7 @@ class CarrierForm extends AbstractForm
     const UPDATE = 'update';
 
     /**
-     * @var ShipmentCarrierQuery
+     * @var SpyShipmentCarrierQuery
      */
     protected $carrierQuery;
 
@@ -26,11 +26,11 @@ class CarrierForm extends AbstractForm
     protected $type;
 
     /**
-     * @param ShipmentCarrierQuery $carrierQuery
+     * @param SpyShipmentCarrierQuery $carrierQuery
      * @param string $type
      */
     public function __construct(
-        ShipmentCarrierQuery $carrierQuery,
+        SpyShipmentCarrierQuery $carrierQuery,
         $type = self::ADD
     ) {
         $this->carrierQuery = $carrierQuery;
@@ -43,21 +43,12 @@ class CarrierForm extends AbstractForm
     protected function buildFormFields()
     {
         $this->addAutosuggest(
-            'carrier_name',
+            'fkGlossaryKeyCarrierName',
             [
                 'url' => '/glossary/ajax/keys'
             ]
         );
-
-        $this->addSubmit(
-            'submit',
-            [
-                'label' => $this->type,
-                'attr' => [
-                    'class' => 'btn btn-primary',
-                ],
-            ]
-        );
+        $this->addCheckbox('isActive');
 
         return $this;
     }
