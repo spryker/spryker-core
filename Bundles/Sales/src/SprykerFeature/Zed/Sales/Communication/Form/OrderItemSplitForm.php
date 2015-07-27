@@ -13,6 +13,9 @@ class OrderItemSplitForm extends AbstractForm
     const QUANTITY = 'quantity';
     const ID_ORDER_ITEM = 'id_order_item';
     const ID_ORDER = 'id_order';
+    const VALIDATE_MESSAGE_NUMERIC = 'Please provide numeric value.';
+    const VALIDATION_MESSAGE_QUANTITY = 'Please provide quantity.';
+
 
     /**
      * Prepares form
@@ -27,11 +30,11 @@ class OrderItemSplitForm extends AbstractForm
                 'label' => 'Quantity',
                 'constraints' => [
                     new Constraints\NotBlank([
-                        'message' => 'Please provide quantity'
+                        'message' => self::VALIDATION_MESSAGE_QUANTITY
                     ]),
                     new Constraints\Regex([
-                        'pattern' => '/^[0-9]+$/',
-                        'message' => 'Please provide numeric value'
+                        'pattern' => '/^\d+$/',
+                        'message' => self::VALIDATE_MESSAGE_NUMERIC
                     ])
                 ]
             ]

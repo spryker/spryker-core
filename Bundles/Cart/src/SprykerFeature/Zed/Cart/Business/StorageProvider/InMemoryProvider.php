@@ -37,11 +37,7 @@ class InMemoryProvider implements StorageProviderInterface
         $cartIndex = $this->createCartIndex($existingItems);
 
         foreach ($change->getItems() as $item) {
-            if ($item->getQuantity() < 1) {
-                throw new InvalidArgumentException(
-                    sprintf('Could not increase cart item %d with %d as value', $item->getSku(), $item->getQuantity())
-                );
-            }
+            $this->isValidQuantity($item);
 
             if (isset($cartIndex[$item->getGroupKey()])) {
                 $existingItem = $existingItems->offsetGet($cartIndex[$item->getGroupKey()]);
@@ -63,9 +59,9 @@ class InMemoryProvider implements StorageProviderInterface
     {
         $cartIndex = [];
 
-        foreach ($cartItems as $key => $cartItem) {
+        foreach ($cartItems as $index => $cartItem) {
             if (!empty($cartItem->getGroupKey())) {
-                $cartIndex[$cartItem->getGroupKey()] = $key;
+                $cartIndex[$cartItem->getGroupKey()] = $index;
             }
         }
 
@@ -95,11 +91,7 @@ class InMemoryProvider implements StorageProviderInterface
         $cartIndex = $this->createCartIndex($existingItems);
 
         foreach ($change->getItems() as $item) {
-            if ($item->getQuantity() < 1) {
-                throw new InvalidArgumentException(
-                    sprintf('Could not decrease cart item %d with %d as value', $item->getSku(), $item->getQuantity())
-                );
-            }
+            $this->isValidQuantity($item);
 
             if (isset($cartIndex[$item->getGroupKey()])) {
                 $this->decreaseExistingItem($existingItems, $cartIndex[$item->getGroupKey()], $item);
@@ -140,6 +132,26 @@ class InMemoryProvider implements StorageProviderInterface
                 return;
             }
         }
+    }
+
+    /**
+     * @param CartItemInterface $item
+     *
+     * @return bool
+     */
+    protected function isValidQuantity(CartItemInterface $item)
+    {
+        if ($item->getQuantity() < 1) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Could not change cart item "%d" with "%d" as value.',
+                    $item->getSku(),
+                    $item->getQuantity()
+                )
+            );
+        }
+
+        return true;
     }
 
 }

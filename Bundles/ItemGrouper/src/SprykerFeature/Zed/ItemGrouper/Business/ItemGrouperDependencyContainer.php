@@ -9,9 +9,11 @@ namespace SprykerFeature\Zed\ItemGrouper\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\ItemGrouperBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ItemGrouper\Business\Model;
+use SprykerFeature\Zed\ItemGrouper\ItemGrouperConfig;
 
 /**
  * @method ItemGrouperBusiness getFactory()
+ * @method ItemGrouperConfig getConfig()
  */
 class ItemGrouperDependencyContainer extends AbstractBusinessDependencyContainer
 {
@@ -20,6 +22,6 @@ class ItemGrouperDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createGrouper()
     {
-        return $this->getFactory()->createModelGroup();
+        return $this->getFactory()->createModelGroup($this->getConfig()->getGroupingThreshold());
     }
 }

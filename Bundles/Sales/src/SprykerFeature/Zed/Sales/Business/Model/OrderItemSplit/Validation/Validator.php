@@ -47,7 +47,7 @@ class Validator implements ValidatorInterface
      */
     protected function isValidQuantity(Persistence\Propel\SpySalesOrderItem $salesOrderItem, $quantityToSplit)
     {
-        if ($salesOrderItem->getQuantity() <= $quantityToSplit) {
+        if ($quantityToSplit < 1 || $salesOrderItem->getQuantity() <= $quantityToSplit) {
             $this->messages[] = Messages::VALIDATE_QUANTITY_MESSAGE;
             return false;
         }
