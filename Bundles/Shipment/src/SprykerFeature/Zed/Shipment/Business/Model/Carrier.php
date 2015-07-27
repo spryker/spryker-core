@@ -23,9 +23,10 @@ class Carrier
         $carrierEntity
             ->setFkGlossaryKeyCarrierName(
                 $carrierTransfer->getFkGlossaryKeyCarrierName()
-            );
-        $carrierEntity->setIsActive($carrierTransfer->getIsActive());
-        $carrierEntity->save();
+            )
+            ->setIsActive($carrierTransfer->getIsActive())
+            ->save()
+        ;
 
         return $carrierEntity->getPrimaryKey();
     }
