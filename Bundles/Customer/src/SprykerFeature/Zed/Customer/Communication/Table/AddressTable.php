@@ -142,13 +142,13 @@ class AddressTable extends AbstractTable
         $idCustomerAddress = !empty($details[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS]) ? $details[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS] : false;
         if (false !== $idCustomerAddress) {
             $links = [
-                'Edit' => '/customer/address/edit/?id_customer_address=%d',
-                'View' => '/customer/address/view/?id_customer_address=%d',
+                'Edit' => '/customer/address/edit/?id_customer_address=',
+                'View' => '/customer/address/view/?id_customer_address=',
             ];
 
             $result = [];
             foreach ($links as $key => $value) {
-                $result[] = sprintf('<a href="%s" class="btn btn-xs btn-white">%s</a>', sprintf($value, $idCustomerAddress), $key);
+                $result[] = '<a href="' . $value . $idCustomerAddress .'" class="btn btn-xs btn-white">' . $key . '</a>';
             }
 
             $result = implode('&nbsp;&nbsp;&nbsp;', $result);

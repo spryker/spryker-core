@@ -6,13 +6,12 @@
 namespace SprykerFeature\Zed\Glossary\Communication\Table;
 
 use Propel\Runtime\Map\TableMap;
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryTranslationQuery;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
+use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
+use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 class TranslationTable extends AbstractTable
 {
@@ -160,13 +159,12 @@ class TranslationTable extends AbstractTable
         $idGlossaryKey = !empty($details[$glossaryKey]) ? $details[$glossaryKey] : false;
         if (false !== $idGlossaryKey) {
             $links = [
-                'Edit' => '/glossary/edit/?fk_glossary_key=%d',
+                'Edit' => '/glossary/edit/?fk_glossary_key=',
             ];
 
             $result = [];
-            $template = '<a href="%s" class="btn btn-xs btn-white">%s</a>';
             foreach ($links as $key => $value) {
-                $result[] = sprintf($template, sprintf($value, $idGlossaryKey), $key);
+                $result[] = '<a href="' . $value . $idGlossaryKey . '" class="btn btn-xs btn-white">' . $key . '</a>';
             }
 
             $result = implode('&nbsp;&nbsp;&nbsp;', $result);

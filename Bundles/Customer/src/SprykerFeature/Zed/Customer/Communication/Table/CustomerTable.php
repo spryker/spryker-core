@@ -124,9 +124,8 @@ class CustomerTable extends AbstractTable
             ];
 
             $result = [];
-            $template = '<a href="%s" class="btn btn-xs btn-white">%s</a>';
             foreach ($links as $key => $value) {
-                $result[] = sprintf($template, sprintf($value, $idCustomer), $key);
+                $result[] = '<a href="' . $value . $idCustomer . '" class="btn btn-xs btn-white">' . $key . '</a>';
             }
 
             $result = implode('&nbsp;&nbsp;&nbsp;', $result);
