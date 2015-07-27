@@ -11,9 +11,10 @@ use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
 
 class CarrierForm extends AbstractForm
 {
-
     const ADD = 'add';
     const UPDATE = 'update';
+    const NAME_FIELD = 'fkGlossaryKeyCarrierName';
+    const IS_ACTIVE_FIELD = 'isActive';
 
     /**
      * @var SpyShipmentCarrierQuery
@@ -43,12 +44,12 @@ class CarrierForm extends AbstractForm
     protected function buildFormFields()
     {
         $this->addAutosuggest(
-            'fkGlossaryKeyCarrierName',
+            self::NAME_FIELD,
             [
                 'url' => '/glossary/ajax/keys'
             ]
         );
-        $this->addCheckbox('isActive');
+        $this->addCheckbox(self::IS_ACTIVE_FIELD);
 
         return $this;
     }
@@ -58,6 +59,11 @@ class CarrierForm extends AbstractForm
      */
     protected function populateFormFields()
     {
+        $carrier = $this->carrierQuery->findOne();
 
+        return [
+            self::NAME_FIELD => $carrier->getFkGlossaryKeyCarrierName(),
+            self::IS_ACTIVE_FIELD => $carrier->getIsActive()
+        ];
     }
 }
