@@ -15,6 +15,14 @@ use SprykerEngine\Shared\Transfer\TransferInterface;
 
 class RemoveAction extends AbstractActionFactory
 {
+
+    const ZED_CONTROLLER_FILTER_ACTION = 'ungroup';
+
+    const ZED_CONTROLLER_PERSISTENCE_ACTION = 'remove';
+
+    /**
+     * @var WishlistChangeInterface
+     */
     private $changeTransfer;
 
     /**
@@ -25,7 +33,7 @@ class RemoveAction extends AbstractActionFactory
     public function setTransferObject(TransferInterface $transfer)
     {
         if (!$transfer instanceof WishlistItemInterface) {
-            throw new \InvalidArgumentException("WishlistItem Remove Action needs WishlistItemInterface argument");
+            throw new \InvalidArgumentException('WishlistItem Remove Action needs WishlistItemInterface argument');
         }
 
         $this->changeTransfer = (new WishlistChangeTransfer())
@@ -34,10 +42,10 @@ class RemoveAction extends AbstractActionFactory
         return $this;
     }
 
-    protected function handleSession()
+    protected function synchronizeSessionLayer()
     {
         if (!$this->changeTransfer instanceof WishlistChangeInterface) {
-            throw new \InvalidArgumentException( printf("Wishlist Remove Action should get WishlistChangeInterface transfer object for handling a remove routine on Zed side"));
+            throw new \InvalidArgumentException('Wishlist Remove Action should get WishlistChangeInterface transfer object for handling a remove routine on Zed side');
         }
 
         if(null === $sessionItems = $this->session->get(self::getWishlistSessionID())) {
@@ -46,14 +54,14 @@ class RemoveAction extends AbstractActionFactory
 
         $this->changeTransfer->setItems($sessionItems->getItems());
 
-        $wishlist = $this->client->call($this->getUrl('ungroup'), $this->changeTransfer, null, true);
+        $wishlist = $this->client->call($this->getUrl(self::ZED_CONTROLLER_FILTER_ACTION), $this->changeTransfer, null, true);
 
         $this->session->set(self::getWishlistSessionID(), $wishlist);
     }
 
-    protected function handleZed()
+    protected function synchronizePersistingLayer()
     {
-        $this->client->call($this->getUrl('remove'), $this->changeTransfer);
+        $this->client->call($this->getUrl(self::ZED_CONTROLLER_PERSISTENCE_ACTION), $this->changeTransfer);
     }
 
 }

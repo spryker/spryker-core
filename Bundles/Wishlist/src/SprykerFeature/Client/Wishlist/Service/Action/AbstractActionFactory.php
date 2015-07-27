@@ -7,24 +7,46 @@
 namespace SprykerFeature\Client\Wishlist\Service\Action;
 
 use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Wishlist\WishlistInterface;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 abstract class AbstractActionFactory
 {
+    /**
+     * @var null|string
+     */
     private static $wishlistSessionID = null;
 
-    protected $url_pattern = "/wishlist/gateway/%s";
+    /**
+     * @var string
+     */
+    protected $urlPattern = '/wishlist/gateway/%s';
 
+    /**
+     * @var TransferInterface
+     */
     protected $transferObject;
 
+    /**
+     * @var SessionInterface
+     */
     protected $session;
 
+    /**
+     * @var ZedRequestClient
+     */
     protected $client;
 
+    /**
+     * @var CustomerInterface|null
+     */
     protected $customerTransfer;
 
+    /**
+     * @var WishlistInterface
+     */
     protected $response;
 
     /**
@@ -42,35 +64,46 @@ abstract class AbstractActionFactory
 
     }
 
+    /**
+     * @return string
+     */
     public static function getWishlistSessionID()
     {
         if (null === self::$wishlistSessionID) {
 
-            self::$wishlistSessionID = APPLICATION_ENV . "_wishlist";
+            self::$wishlistSessionID = APPLICATION_ENV . '_wishlist';
 
         }
 
         return self::$wishlistSessionID;
     }
 
-
+    /**
+     * @return AbstractActionFactory
+     */
     public function execute()
     {
-        $this->handleSession();
+        $this->synchronizeSessionLayer();
 
         if (null !== $this->customerTransfer) {
-            $this->handleZed();
+            $this->synchronizePersistingLayer();
         }
 
         return $this;
     }
 
+    /**
+     * @return WishlistInterface
+     */
     public function getResponse()
     {
         return $this->response;
     }
 
-    protected function setResponse(TransferInterface $response = null)
+    /**
+     * @param WishlistInterface|null $response
+     */
+    protected function setResponse(WishlistInterface $response = null)
     {
         $this->response = $response;
     }
@@ -82,7 +115,7 @@ abstract class AbstractActionFactory
      */
     protected function getUrl($action)
     {
-        return sprintf($this->url_pattern, $action);
+        return sprintf($this->urlPattern, $action);
     }
 
     /**
@@ -92,9 +125,9 @@ abstract class AbstractActionFactory
      */
     abstract public function setTransferObject(TransferInterface $transfer);
 
-    abstract protected function handleSession();
+    abstract protected function synchronizeSessionLayer();
 
-    abstract protected function handleZed();
+    abstract protected function synchronizePersistingLayer();
 
 
 }

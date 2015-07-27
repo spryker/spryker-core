@@ -13,6 +13,7 @@ use SprykerEngine\Shared\Transfer\TransferInterface;
 
 class GetAction extends AbstractActionFactory
 {
+    const ZED_CONTROLLER_PERSISTENCE_ACTION = 'get-wishlist';
 
     /**
      * @param TransferInterface $transfer
@@ -24,16 +25,16 @@ class GetAction extends AbstractActionFactory
         return $this;
     }
 
-    protected function handleSession()
+    protected function synchronizeSessionLayer()
     {
         $response = $this->session->get(self::getWishlistSessionID());
 
         $this->setResponse($response);
     }
 
-    protected function handleZed()
+    protected function synchronizePersistingLayer()
     {
-        $response = $this->client->call($this->getUrl('get-wishlist'), $this->customerTransfer, [], true);
+        $response = $this->client->call($this->getUrl(self::ZED_CONTROLLER_PERSISTENCE_ACTION), $this->customerTransfer, [], true);
 
         $this->setResponse($response);
     }

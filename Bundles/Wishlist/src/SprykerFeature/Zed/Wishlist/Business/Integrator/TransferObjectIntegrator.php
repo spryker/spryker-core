@@ -25,17 +25,23 @@ class TransferObjectIntegrator
 
     const OVERWRITE_MODE = "overwrite";
 
-    protected $em;
+    /**
+     * @var EntityIntegrator
+     */
+    protected $ei;
 
+    /**
+     * @var string
+     */
     protected $mode;
 
     /**
      * @param EntityIntegrator $em
      * @param string $mode
      */
-    public function __construct(EntityIntegrator $em, $mode=self::OVERWRITE_MODE)
+    public function __construct(EntityIntegrator $ei, $mode=self::OVERWRITE_MODE)
     {
-        $this->em = $em;
+        $this->ei = $ei;
         $this->mode = $mode;
     }
 
@@ -70,7 +76,7 @@ class TransferObjectIntegrator
 
         $changeWishlistTransfer->setCustomer($wishlistTransfer->getCustomer());
 
-        $this->em->saveItems($changeWishlistTransfer);
+        $this->ei->saveItems($changeWishlistTransfer);
 
         return $this->getWishlistTransfer($changeWishlistTransfer->getCustomer());
     }
@@ -256,7 +262,7 @@ class TransferObjectIntegrator
                 ->setQuantity($item->getQuantity())
                 ->setProduct($this->getWishlistProductTransfer($item));
 
-        }, $this->em->getItems($customerTransfer));
+        }, $this->ei->getItems($customerTransfer));
 
         return $this->wrapInArrayObject($wishlistItems);
     }
@@ -271,10 +277,10 @@ class TransferObjectIntegrator
     {
         $wishlitsProductTransfer = $this->getWishlistProductTransferInstance();
 
-        $concreteSku = $item->getVirtualColumn($this->em->getConcreteSkuColumnName());
+        $concreteSku = $item->getVirtualColumn($this->ei->getConcreteSkuColumnName());
         $wishlitsProductTransfer->setConcreteSku($concreteSku);
 
-        $abstractSku = $item->getVirtualColumn($this->em->getAbstractSkuColumnName());
+        $abstractSku = $item->getVirtualColumn($this->ei->getAbstractSkuColumnName());
         $wishlitsProductTransfer->setAbstractSku($abstractSku);
 
         return $wishlitsProductTransfer;

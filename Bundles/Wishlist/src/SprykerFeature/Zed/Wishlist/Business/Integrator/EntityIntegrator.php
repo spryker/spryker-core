@@ -15,6 +15,9 @@ use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainer;
 
 class EntityIntegrator
 {
+    /**
+     * @var WishlistQueryContainer
+     */
     protected $queryContainer;
 
     /**

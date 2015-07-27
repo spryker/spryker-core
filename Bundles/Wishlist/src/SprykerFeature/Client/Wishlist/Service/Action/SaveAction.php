@@ -15,7 +15,13 @@ use SprykerEngine\Shared\Transfer\TransferInterface;
 
 class SaveAction extends AbstractActionFactory
 {
+    const ZED_CONTROLLER_FILTER_ACTION = 'group';
 
+    const ZED_CONTROLLER_PERSISTENCE_ACTION = 'store';
+
+    /**
+     * @var WishlistChangeInterface
+     */
     private $changeTransfer;
 
     /**
@@ -28,7 +34,7 @@ class SaveAction extends AbstractActionFactory
     public function setTransferObject(TransferInterface $transfer)
     {
         if (!$transfer instanceof WishlistItemInterface) {
-            throw new \InvalidArgumentException( printf("Save Action should get "));
+            throw new \InvalidArgumentException('Save Action should get');
         }
 
         $this->changeTransfer = (new WishlistChangeTransfer())
@@ -37,10 +43,10 @@ class SaveAction extends AbstractActionFactory
         return $this;
     }
 
-    protected function handleSession()
+    protected function synchronizeSessionLayer()
     {
         if(!$this->changeTransfer instanceof WishlistChangeInterface) {
-            throw new \RuntimeException("Transfer Object should be set and implement WishlistChangeInterface, in oder to use Wishlist Save action");
+            throw new \RuntimeException('Transfer Object should be set and implement WishlistChangeInterface, in oder to use Wishlist Save action');
         }
 
         if(null !== $sessionItems = $this->session->get(self::getWishlistSessionID())) {
@@ -49,16 +55,16 @@ class SaveAction extends AbstractActionFactory
 
         }
 
-        $wishlistItems = $this->client->call($this->getUrl('group'), $this->changeTransfer, null, true);
-
+        $wishlistItems = $this->client->call($this->getUrl(self::ZED_CONTROLLER_FILTER_ACTION), $this->changeTransfer, null, true);
 
         $this->session->set(self::getWishlistSessionID(), $wishlistItems);
     }
 
-    protected function handleZed()
+    protected function synchronizePersistingLayer()
     {
         $this->changeTransfer->setCustomer($this->customerTransfer);
-        $this->client->call($this->getUrl('store'), $this->changeTransfer, null, true);
+
+        $this->client->call($this->getUrl(self::ZED_CONTROLLER_PERSISTENCE_ACTION), $this->changeTransfer, null, true);
     }
 
 
