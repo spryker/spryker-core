@@ -7,8 +7,13 @@
 namespace SprykerFeature\Zed\Shipment\Business;
 
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
+/**
+ * @method ShipmentBusiness getFactory()
+ * @method ShipmentDependencyContainer getDependencyContainer()
+ */
 class ShipmentFacade extends AbstractFacade
 {
     /**
@@ -16,12 +21,12 @@ class ShipmentFacade extends AbstractFacade
      *
      * @return ShipmentCarrierTransfer
      */
-    public function registerCustomer(ShipmentCarrierTransfer $carrierTransfer)
+    public function createCarrier(ShipmentCarrierTransfer $carrierTransfer)
     {
-        $carrierManager = $this
+        $carrierModel = $this
             ->getDependencyContainer()
-            ->createCarrierManager();
+            ->createCarrierModel();
 
-        return $carrierManager->createCarrier($carrierTransfer);
+        return $carrierModel->create($carrierTransfer);
     }
 }

@@ -7,27 +7,27 @@ namespace SprykerFeature\Zed\Shipment\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\ShipmentCarrierQuery;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\ShipmentMethodQuery;
+use SprykerFeature\Zed\Shipment\Persistence\Propel\Base\SpyShipmentCarrierQuery;
+use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
 
 /**
- * @method ShipmentPersistence  getFactory()
+ * @method ShipmentPersistence getFactory()
  */
 class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQueryContainerInterface
 {
     /**
-     * @return ShipmentCarrierQuery
+     * @return SpyShipmentCarrierQuery
      */
     public function queryCarriers()
     {
-        return $this->getFactory()->createPropelShipmentCarrierQuery();
+        return $this->getFactory()->createPropelSpyShipmentCarrierQuery();
     }
 
     /**
-     * @return ShipmentMethodQuery
+     * @return SpyShipmentMethodQuery
      */
     public function queryMethods()
     {
-        return $this->getFactory()->createPropelShipmentMethodQuery();
+        return $this->getFactory()->createPropelSpyShipmentMethodQuery();
     }
 }

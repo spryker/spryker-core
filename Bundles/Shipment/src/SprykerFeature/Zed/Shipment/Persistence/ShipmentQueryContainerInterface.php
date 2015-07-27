@@ -5,18 +5,18 @@
 
 namespace SprykerFeature\Zed\Shipment\Persistence;
 
-use SprykerFeature\Zed\Shipment\Persistence\Propel\ShipmentCarrierQuery;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\ShipmentMethodQuery;
+use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
+use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
 
 interface ShipmentQueryContainerInterface
 {
     /**
-     * @return ShipmentCarrierQuery
+     * @return SpyShipmentCarrierQuery
      */
     public function queryCarriers();
 
     /**
-     * @return ShipmentMethodQuery
+     * @return SpyShipmentMethodQuery
      */
     public function queryMethods();
 }
