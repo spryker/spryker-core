@@ -340,8 +340,8 @@ class Address
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
-        $id_address = $customer->getDefaultShippingAddress();
-        $address = $this->queryContainer->queryAddress($id_address)
+        $idAddress = $customer->getDefaultShippingAddress();
+        $address = $this->queryContainer->queryAddress($idAddress)
             ->findOne()
         ;
         if ($address === null) {
@@ -361,8 +361,8 @@ class Address
     public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
     {
         $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
-        $id_address = $customer->getDefaultBillingAddress();
-        $address = $this->queryContainer->queryAddress($id_address)
+        $idAddress = $customer->getDefaultBillingAddress();
+        $address = $this->queryContainer->queryAddress($idAddress)
             ->findOne()
         ;
         if ($address === null) {

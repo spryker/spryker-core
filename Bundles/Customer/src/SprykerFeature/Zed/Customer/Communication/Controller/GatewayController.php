@@ -146,10 +146,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function newAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()
+        $addressTransfer = $this->getFacade()
             ->createAddress($addressTransfer)
         ;
-        $this->setSuccess($success);
+        $this->setSuccess($addressTransfer->getIdCustomerAddress() > 0);
 
         return $addressTransfer;
     }
