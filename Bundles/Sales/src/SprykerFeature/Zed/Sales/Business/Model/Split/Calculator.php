@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit;
+namespace SprykerFeature\Zed\Sales\Business\Model\Split;
 
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 

@@ -62,23 +62,23 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return Model\OrderItemSplit\ItemSplit
+     * @return Model\Split\OrderItemInterface
      */
     public function createOrderItemSplitter()
     {
-        return $this->getFactory()->createModelOrderItemSplitItemSplit(
+        return $this->getFactory()->createModelSplitOrderItem(
             $this->createSplitValidator(),
             $this->createSalesQueryContainer(),
-            $this->getFactory()->createModelOrderItemSplitCalculator()
+            $this->getFactory()->createModelSplitCalculator()
         );
     }
 
     /**
-     * @return Model\OrderItemSplit\Validation\Validator
+     * @return Model\Split\Validation\ValidatorInterface
      */
     protected function createSplitValidator()
     {
-        return $this->getFactory()->createModelOrderItemSplitValidationValidator();
+        return $this->getFactory()->createModelSplitValidationValidator();
     }
 
     /**

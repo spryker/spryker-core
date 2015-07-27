@@ -4,31 +4,36 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit;
+namespace SprykerFeature\Zed\Sales\Business\Model\Split;
 
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
-use SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation\Messages;
 use SprykerFeature\Zed\Sales\Persistence;
-use SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation;
+use SprykerFeature\Zed\Sales\Business\Model\Split\Validation;
 use Propel\Runtime\Propel;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Generated\Shared\Sales\ItemSplitResponseInterface;
 
-class ItemSplit
+class OrderItem implements OrderItemInterface
 {
+    /**
+     * @var ConnectionInterface
+     */
+    protected $databaseConnection;
+
     /**
      * @var Validation\ValidatorInterface
      */
-    private $validator;
+    protected $validator;
 
     /**
      * @var Persistence\SalesQueryContainerInterface
      */
-    private $salesQueryContainer;
+    protected $salesQueryContainer;
 
     /**
      * @var CalculatorInterface
      */
-    private $calculator;
+    protected $calculator;
 
     /**
      * @param Validation\ValidatorInterface $validator
@@ -66,21 +71,43 @@ class ItemSplit
         }
 
         try {
-            Propel::getConnection()->beginTransaction();
+            $this->getConnection()->beginTransaction();
 
             $this->copy($salesOrderItem, $quantityToSplit);
             $this->updateParentQuantity($salesOrderItem, $quantityToSplit);
 
-            Propel::getConnection()->commit();
+            $this->getConnection()->commit();
 
             return $splitResponse
                 ->setSuccess(true)
-                ->setSuccessMessage(sprintf(Messages::SPLIT_SUCCESS_MESSAGE, $salesOrderItem->getIdSalesOrderItem()));
+                ->setSuccessMessage(
+                    sprintf(Validation\Messages::SPLIT_SUCCESS_MESSAGE, $salesOrderItem->getIdSalesOrderItem())
+                );
 
         } catch (\Exception $e) {
-            Propel::getConnection()->rollBack();
+            $this->getConnection()->rollBack();
             throw $e;
         }
+    }
+
+    /**
+     * @return \Propel\Runtime\Connection\ConnectionInterface
+     */
+    protected function getConnection()
+    {
+        if (null === $this->databaseConnection) {
+            $this->databaseConnection = Propel::getConnection();
+        }
+
+        return $this->databaseConnection;
+    }
+
+    /**
+     * @param ConnectionInterface $databaseConnection
+     */
+    public function setDatabaseConnection(ConnectionInterface $databaseConnection)
+    {
+        $this->databaseConnection = $databaseConnection;
     }
 
     /**
@@ -109,7 +136,7 @@ class ItemSplit
         $copyOfSalesOrderItem->setCreatedAt(new \DateTime());
         $copyOfSalesOrderItem->setQuantity($quantity);
         $copyOfSalesOrderItem->setLastStateChange(new \DateTime());
-        $copyOfSalesOrderItem->save();
+        $copyOfSalesOrderItem->save($this->getConnection());
 
         return $copyOfSalesOrderItem;
     }
@@ -129,7 +156,7 @@ class ItemSplit
 
         $copyOfOrderItemOption->setCreatedAt(new \DateTime());
         $copyOfOrderItemOption->setFkSalesOrderItem($copyOfSalesOrderItem->getIdSalesOrderItem());
-        $copyOfOrderItemOption->save();
+        $copyOfOrderItemOption->save($this->getConnection());
 
         return $copyOfOrderItemOption;
     }
@@ -143,6 +170,6 @@ class ItemSplit
         $quantityAmountLeft = $this->calculator->calculateQuantityAmountLeft($salesOrderItem, $quantity);
 
         $salesOrderItem->setQuantity($quantityAmountLeft);
-        $salesOrderItem->save();
+        $salesOrderItem->save($this->getConnection());
     }
 }

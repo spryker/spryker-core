@@ -41,7 +41,7 @@ class OrderItemSplitForm extends AbstractForm
         )
             ->addHidden(self::ID_ORDER_ITEM)
             ->addHidden(self::ID_ORDER)
-            ->addSubmit();
+            ->addSubmit('Split');
     }
 
     /**

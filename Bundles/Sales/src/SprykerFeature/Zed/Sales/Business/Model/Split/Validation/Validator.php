@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation;
+namespace SprykerFeature\Zed\Sales\Business\Model\Split\Validation;
 
 use SprykerFeature\Zed\Sales\Persistence;
 
