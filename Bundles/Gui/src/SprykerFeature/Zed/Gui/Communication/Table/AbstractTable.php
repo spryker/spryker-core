@@ -293,15 +293,6 @@ abstract class AbstractTable
 
     /**
      * @return string
-     * @deprecated Please use ->render() method
-     */
-    public function __toString()
-    {
-        return 'please use ->render() method';
-    }
-
-    /**
-     * @return string
      */
     public function render()
     {
