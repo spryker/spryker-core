@@ -19,7 +19,7 @@ class CollectorDependencyContainer extends AbstractCommunicationDependencyContai
      */
     public function getInstallerFacade()
     {
-        return $this->getLocator()->collector()->facade();
+        return $this->getProvidedDependency(CollectorDependencyProvider::FACADE_COLLECTOR);
     }
 
     /**

@@ -48,7 +48,8 @@ class Collector
         $results = [];
 
         foreach ($types as $type) {
-            $result = $this->exporter->exportByType($type, $locale);
+            $result = $this->exporter->exportByType2($type, $locale);
+            //$result = $this->exporter->exportByType($type, $locale);
 
             $this->handleResult($result);
 

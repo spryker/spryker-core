@@ -19,8 +19,14 @@ use SprykerFeature\Zed\Collector\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerFeature\Zed\Collector\Persistence\CollectorQueryContainer;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 
-abstract class AbstractExporter implements ExporterInterface
+abstract class AbstractCollector implements ExporterInterface
 {
+
+    /**
+     * @TODO Interface
+     * @var []
+     */
+    protected $collectorPlugins = [];
 
     /**
      * @var DataProcessorPluginInterface[]
@@ -94,6 +100,14 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
+     * @param object $plugin
+     */
+    public function addCollectorPlugin($plugin)
+    {
+        $this->collectorPlugins[$plugin->getTouchItemType()][] = $plugin;
+    }
+
+    /**
      * @param DataProcessorPluginInterface $processor
      */
     public function addDataProcessor(DataProcessorPluginInterface $processor)
@@ -115,6 +129,59 @@ abstract class AbstractExporter implements ExporterInterface
     public function addDecider(ExportFailedDeciderPluginInterface $decider)
     {
         $this->decider[$decider->getProcessableType()] = $decider;
+    }
+
+    /**
+     * @param string $type
+     * @param LocaleTransfer $locale
+     *
+     * @return BatchResultInterface|null
+     */
+    public function exportByType2($type, LocaleTransfer $locale)
+    {
+        $result = clone $this->batchResultPrototype;
+        $result->setProcessedLocale($locale);
+
+        if (!array_key_exists($type, $this->collectorPlugins)) {
+            $result->setProcessedCount(0);
+            $result->setIsFailed(false);
+            $result->setTotalCount(0);
+
+            return $result;
+        }
+
+        $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $locale);
+
+        $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $lastRunDatetime);
+        $baseQuery->setFormatter($this->getFormatter());
+
+        /** @var @TODO Interface $collector */
+        foreach ($this->collectorPlugins[$type] as $collector) {
+            $collectorBaseQuery = clone $baseQuery;
+            $collector->run($collectorBaseQuery, $locale, $result, $this->writer);
+            //$baseQuery = $collector->run($collectorBaseQuery, $locale, $result);
+        }
+
+        //$result->setTotalCount($resultSets->count());
+
+        /*
+        foreach ($resultSets as $resultSet) {
+            $result->setFetchedCount(count($resultSet));
+
+            $exportableData = $this->processData($resultSet, $type, $locale);
+            $this->writeExportableData($exportableData, $type);
+            $result->increaseProcessedCount(count($exportableData));
+
+            if ($this->isExportFailed($type, $result)) {
+                $result->setIsFailed(true);
+
+                return $result;
+            }
+        }
+        */
+
+
+        return $this->finishExport($result, $type);
     }
 
     /**

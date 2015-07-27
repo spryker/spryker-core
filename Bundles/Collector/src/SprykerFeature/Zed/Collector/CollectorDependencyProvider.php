@@ -12,7 +12,11 @@ use SprykerEngine\Zed\Kernel\Container;
 class CollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_LOCALE = 'locale facade';
+    const FACADE_COLLECTOR = 'collector_facade';
+
+    const QUERY_CONTAINER_COLLECTOR = 'collector_query_container';
+
+    const FACADE_LOCALE = 'locale_facade';
 
     /**
      * @var Container
@@ -22,6 +26,10 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->provideLocaleFacade($container);
+
+        $container[self::QUERY_CONTAINER_COLLECTOR] = function (Container $container) {
+            return $container->getLocator()->collector()->queryContainer();
+        };
 
         return $container;
     }
@@ -34,6 +42,10 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->provideLocaleFacade($container);
+
+        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+            return $container->getLocator()->collector()->facade();
+        };
 
         return $container;
     }

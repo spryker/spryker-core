@@ -11,7 +11,7 @@ use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Zed\Collector\Business\Exporter\Collector;
 use SprykerFeature\Zed\Collector\Business\Exporter\Reader\KeyValue\RedisReader;
-use SprykerFeature\Zed\Collector\Business\Exporter\SearchExporter;
+use SprykerFeature\Zed\Collector\Business\Exporter\SearchCollector;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Collector\Business\Exporter\ExporterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
@@ -49,7 +49,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCollectorQueryContainer()
     {
-        return $this->getLocator()->collector()->queryContainer();
+        return $this->getProvidedDependency(CollectorDependencyProvider::QUERY_CONTAINER_COLLECTOR);
     }
 
     /**
@@ -59,7 +59,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $config = $this->getConfig();
 
-        $keyValueExporter = $this->getFactory()->createExporterKeyValueExporter(
+        $keyValueExporter = $this->getFactory()->createExporterKeyValueCollector(
             $this->createCollectorQueryContainer(),
             $this->createKeyValueWriter(),
             $this->createKeyValueMarker(),
@@ -70,6 +70,9 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
         $keyValueExporter->setStandardChunkSize($config->getStandardChunkSize());
         $keyValueExporter->setChunkSizeTypeMap($config->getChunkSizeTypeMap());
 
+        foreach ($config->getStorageCollectors() as $collectorPlugin) {
+            $keyValueExporter->addCollectorPlugin($collectorPlugin);
+        }
         foreach ($config->getKeyValueProcessors() as $keyValueProcessor) {
             $keyValueExporter->addDataProcessor($keyValueProcessor);
         }
@@ -176,11 +179,11 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      * @param WriterInterface $searchWriter
      * @param CollectorConfig $config
      *
-     * @return SearchExporter
+     * @return SearchCollector
      */
     protected function createElasticsearchExporter(WriterInterface $searchWriter, CollectorConfig $config)
     {
-        $searchExporter = $this->getFactory()->createExporterSearchExporter(
+        $searchExporter = $this->getFactory()->createExporterSearchCollector(
             $this->createCollectorQueryContainer(),
             $searchWriter,
             $this->createSearchMarker(),
@@ -190,6 +193,10 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
 
         $searchExporter->setStandardChunkSize($config->getStandardChunkSize());
         $searchExporter->setChunkSizeTypeMap($config->getChunkSizeTypeMap());
+
+        foreach ($config->getSearchCollectors() as $collectorPlugin) {
+            $searchExporter->addCollectorPlugin($collectorPlugin);
+        }
 
         foreach ($config->getSearchExportFailedDeciders() as $searchDecider) {
             $searchExporter->addDecider($searchDecider);
