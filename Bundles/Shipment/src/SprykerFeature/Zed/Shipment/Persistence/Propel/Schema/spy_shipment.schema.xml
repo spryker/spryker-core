@@ -8,7 +8,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
 
-    <table name="spy_shipment_carrier" phpName="ShipmentCarrier" identifierQuoting="true">
+    <table name="spy_shipment_carrier" phpName="SpyShipmentCarrier" identifierQuoting="true">
         <column name="id_shipment_carrier" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_glossary_key_carrier_name" type="INTEGER" required="true" />
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
@@ -22,7 +22,7 @@
         </index>
     </table>
 
-    <table name="spy_shipment_method" phpName="ShipmentMethod" identifierQuoting="true">
+    <table name="spy_shipment_method" phpName="SpyShipmentMethod" identifierQuoting="true">
         <column name="id_shipment_method" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shipment_carrier" type="INTEGER" required="true" />
         <column name="fk_glossary_key_method_name" type="INTEGER" required="true" />
