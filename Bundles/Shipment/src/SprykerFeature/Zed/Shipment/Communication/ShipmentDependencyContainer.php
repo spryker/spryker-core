@@ -37,4 +37,14 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
 
         return $this->getFactory()->createFormCarrierForm($carrierQuery);
     }
+
+    /**
+     * @return CarrierForm
+     */
+    public function createMethodForm()
+    {
+        $methodQuery = $this->getQueryContainer()->queryMethods();
+
+        return $this->getFactory()->createFormMethodForm($methodQuery);
+    }
 }
