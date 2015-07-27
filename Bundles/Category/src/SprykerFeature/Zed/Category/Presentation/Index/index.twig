@@ -49,7 +49,8 @@
     
 {% endblock %}
 
-{% block temp_footer_js %}
+{% block footer_js %}
+    {{ parent() }}
     <script src="/bundles/Gui/scripts/plugins/jsTree/jstree.min.js"></script>
 {% endblock %}
 

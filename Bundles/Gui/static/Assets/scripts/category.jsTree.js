@@ -43,9 +43,7 @@ $(document).ready(function () {
         categoryAttributeTable.ajax.url('/category/index/categoryAttributeTable?id=' + selectedCategory).load();
         urlTable.ajax.url('/category/index/urlTable?id=' + selectedCategory).load();
     });
-});
 
-$(document).ready(function() {
     $('#root_node_table').find('tbody').on('click', function(event) {
         window.alert('woohoo');
         $(oTable.fnSettings().aoData).each(function() {
