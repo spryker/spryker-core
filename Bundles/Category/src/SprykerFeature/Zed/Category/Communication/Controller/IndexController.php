@@ -28,22 +28,18 @@ class IndexController extends AbstractController
         $rootNodeTable = $this->getDependencyContainer()
             ->createRootNodeTable()
         ;
-        $rootNodeTable->init();
-
         $categoryAttributeTable = $this->getDependencyContainer()
-            ->createCategoryAttributeTable(0)
+            ->createCategoryAttributeTable(null)
         ;
-        $categoryAttributeTable->init();
 
         $urlTable = $this->getDependencyContainer()
-            ->createUrlTable(0)
+            ->createUrlTable(null)
         ;
-        $urlTable->init();
 
         return $this->viewResponse([
             'rootNodeTable' => $rootNodeTable,
             'categoryAttributeTable' => $categoryAttributeTable,
-            'categoryUrlTable' => $urlTable,
+            'categoryUrlTable' => $urlTable->render(),
         ]);
     }
 
@@ -55,7 +51,6 @@ class IndexController extends AbstractController
         $table = $this->getDependencyContainer()
             ->createRootNodeTable()
         ;
-        $table->init();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -69,10 +64,9 @@ class IndexController extends AbstractController
      */
     public function categoryAttributeTableAction(Request $request)
     {
-        $table = $this->getDependencyContainer()
-            ->createCategoryAttributeTable($request->get('id'))
-        ;
-        $table->init();
+       $table = $this->getDependencyContainer()
+                ->createCategoryAttributeTable($request->get('id_node'))
+       ;
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -87,8 +81,8 @@ class IndexController extends AbstractController
     public function urlTableAction(Request $request)
     {
         $table = $this->getDependencyContainer()
-            ->createUrlTable($request->get('id'));
-        $table->init();
+            ->createUrlTable($request->get('id_node'))
+        ;
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -141,6 +135,7 @@ class IndexController extends AbstractController
     }
 
     /**
+     * for lazy loading the nodes
      * @param Request $request
      *
      * @return JsonResponse
@@ -157,7 +152,11 @@ class IndexController extends AbstractController
         );
     }
 
-
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function getTreeNodesAction(Request $request)
     {
         $tree = $this->getFacade()
@@ -168,17 +167,6 @@ class IndexController extends AbstractController
             );
 
         return $this->jsonResponse($tree);
-    }
-
-    public function getCategoryAttributesAction(Request $request)
-    {
-        $attributes = [
-            [
-                "test" => 234
-            ]
-        ];
-
-        return $this->jsonResponse($attributes);
     }
 
     /**

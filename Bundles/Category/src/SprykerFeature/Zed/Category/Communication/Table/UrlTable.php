@@ -5,17 +5,14 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Table;
 
-
+use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 class UrlTable extends AbstractTable
 {
-    const FK_RESOURCE_CATEGORYNODE = 'FkResourceCategorynode';
-    const FK_LOCALE = 'FkLocale';
-    const URL = 'Url';
-    const FK_RESOURCE_REDIRECT = 'FkResourceRedirect';
     const TABLE_IDENTIFIER = 'url_table';
 
     /**
@@ -35,14 +32,21 @@ class UrlTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeaders([
-            self::FK_RESOURCE_CATEGORYNODE => 'Category node Id',
-            self::FK_LOCALE => 'Fk Locale',
-            self::URL => 'Url',
-            self::FK_RESOURCE_REDIRECT => 'Fk Resource Redirect'
+        $config->getTableOptions()->setClass([
+            'table',
+            'table-stripped',
+            'table-bordered',
+            'table-hover',
+            'gui-table-data-category-lazy',
+        ]);
+        $config->setHeader([
+            SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE => 'Category node Id',
+            SpyUrlTableMap::COL_FK_LOCALE  => 'Fk Locale',
+            SpyUrlTableMap::COL_URL => 'Url',
+            SpyUrlTableMap::COL_FK_RESOURCE_REDIRECT => 'Fk Resource Redirect'
         ]);
         $config->setSortable([
-            self::URL,
+            SpyUrlTableMap::COL_URL,
         ]);
 
         return $config;
@@ -60,10 +64,10 @@ class UrlTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $attribute) {
             $results[] = [
-                self::FK_RESOURCE_CATEGORYNODE => $attribute[self::FK_RESOURCE_CATEGORYNODE],
-                self::FK_LOCALE => $attribute[self::FK_LOCALE],
-                self::URL => $attribute[self::URL],
-                self::FK_RESOURCE_REDIRECT => $attribute[self::FK_RESOURCE_REDIRECT],
+                SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE => $attribute[SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE],
+                SpyUrlTableMap::COL_FK_LOCALE => $attribute['spy_localelocale_name'], //@todo: refactor when table alias is fixed (missing .)
+                SpyUrlTableMap::COL_URL => $attribute[SpyUrlTableMap::COL_URL],
+                SpyUrlTableMap::COL_FK_RESOURCE_REDIRECT => $attribute[SpyUrlTableMap::COL_FK_RESOURCE_REDIRECT],
             ];
         }
         unset($queryResults);

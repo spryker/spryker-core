@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -102,7 +103,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
 
     /**
      *
-     * @return SpyCategoryNodeQuery
+     * @return SpyCategoryAttributeQuery
      */
     public function queryRootNodes()
     {
@@ -337,9 +338,18 @@ class CategoryQueryContainer extends AbstractQueryContainer
     }
 
     /**
+     * @param $idNode
+     *
+     * @return SpyCategoryNodeQuery
+     */
+    public function queryCategoryNodeByNodeId($idNode)
+    {
+        return SpyCategoryNodeQuery::create()->filterByIdCategoryNode($idNode);
+    }
+
+    /**
      * @param int $idLocale
      *
-     * @return SpyCategoryQuery
      * @return SpyCategoryQuery
      */
     public function queryCategory($idLocale)
@@ -365,8 +375,10 @@ class CategoryQueryContainer extends AbstractQueryContainer
     public function queryAttributeByCategoryIdAndLocale($idCategory, $idLocale)
     {
         return SpyCategoryAttributeQuery::create()
+            ->joinLocale()
             ->filterByFkLocale($idLocale)
             ->filterByFkCategory($idCategory)
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME)
         ;
     }
 
@@ -676,7 +688,11 @@ class CategoryQueryContainer extends AbstractQueryContainer
      */
     public function queryUrlByIdCategoryNode($idCategoryNode)
     {
-        return SpyUrlQuery::create()->filterByFkResourceCategorynode($idCategoryNode);
+        return SpyUrlQuery::create()
+            ->joinSpyLocale()
+            ->filterByFkResourceCategorynode($idCategoryNode)
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME)
+        ;
     }
 
 }

@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
 use SprykerFeature\Zed\Category\Communication\Table\RootNodeTable;
 use SprykerFeature\Zed\Category\Communication\Table\UrlTable;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -64,15 +65,20 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param int $idCategory
+     * @param int $idCategoryNode
      *
      * @return CategoryAttributeTable
      */
-    public function createCategoryAttributeTable($idCategory)
+    public function createCategoryAttributeTable($idCategoryNode)
     {
+        if ($idCategoryNode == null) {
+            //@TODO: table initialisation with ajax then this part can be deleted
+            $idCategoryNode = $this->getQueryContainer()->queryRootNode()->findOne()->getIdCategoryNode();
+        }
+        $categoryNode = $this->getQueryContainer()->queryCategoryNodeByNodeId($idCategoryNode)->findOne();
         $categoryQueryContainer = $this->getQueryContainer();
         $categoryAttributesQuery = $categoryQueryContainer->queryAttributeByCategoryIdAndLocale(
-            $idCategory,
+            $categoryNode->getFkCategory(),
             $this->getCurrentLocale()->getIdLocale()
         );
 
@@ -86,6 +92,10 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createUrlTable($idCategoryNode)
     {
+        if ($idCategoryNode == null) {
+            //@TODO: table initialisation with ajax then this part can be deleted
+            $idCategoryNode = $this->getQueryContainer()->queryRootNode()->findOne()->getIdCategoryNode();
+        }
         $urlQuery = $this->getQueryContainer()
             ->queryUrlByIdCategoryNode($idCategoryNode)
         ;

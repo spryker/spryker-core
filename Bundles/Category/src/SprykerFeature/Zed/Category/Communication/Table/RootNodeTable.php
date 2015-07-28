@@ -5,22 +5,15 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Table;
 
-use Propel\Runtime\Map\TableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 
 class RootNodeTable extends AbstractTable
 {
-    const FK_CATEGORY = 'FkCategory';
-    const NAME = 'Name';
-    const FK_LOCALE = 'FkLocale';
     const TABLE_IDENTIFIER = 'root_node_table';
-    const CREATED_AT = 'CreatedAt';
-    const UPDATED_AT = 'UpdatedAt';
 
     /**
      * @param SpyCategoryAttributeQuery $categoryAttributeQuery
@@ -39,16 +32,24 @@ class RootNodeTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeaders([
-            self::FK_CATEGORY => 'Category Id',
-            self::NAME => 'Name',
-            self::FK_LOCALE => 'Locale Id',
-            self::CREATED_AT => 'Created At',
-            self::UPDATED_AT => 'Updated At',
+        $config->getTableOptions()->setClass([
+            'table',
+            'table-stripped',
+            'table-bordered',
+            'table-hover',
+            'gui-table-data-category',
+        ]);
+
+        $config->setHeader([
+            SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 'Category Id',
+            SpyCategoryAttributeTableMap::COL_NAME => 'Name',
+            SpyCategoryAttributeTableMap::COL_FK_LOCALE => 'Locale Id',
+            SpyCategoryAttributeTableMap::COL_CREATED_AT => 'Created At',
+            SpyCategoryAttributeTableMap::COL_UPDATED_AT => 'Updated At',
         ]);
         $config->setSortable([
-            self::CREATED_AT,
-            self::NAME,
+            SpyCategoryAttributeTableMap::COL_CREATED_AT,
+            SpyCategoryAttributeTableMap::COL_NAME,
         ]);
 
         return $config;
@@ -66,11 +67,11 @@ class RootNodeTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $attribute) {
             $results[] = [
-                self::FK_CATEGORY => $attribute[self::FK_CATEGORY],
-                self::NAME => $attribute[self::NAME],
-                self::FK_LOCALE => $attribute['spy_localelocale_name'], //@todo: refactor when table alias is fixed (missing .)
-                self::CREATED_AT => $attribute[self::CREATED_AT],
-                self::UPDATED_AT => $attribute[self::UPDATED_AT],
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => $attribute[SpyCategoryAttributeTableMap::COL_FK_CATEGORY],
+                SpyCategoryAttributeTableMap::COL_NAME => $attribute[SpyCategoryAttributeTableMap::COL_NAME],
+                SpyCategoryAttributeTableMap::COL_FK_LOCALE => $attribute['spy_localelocale_name'], //@todo: refactor when table alias is fixed (missing .)
+                SpyCategoryAttributeTableMap::COL_CREATED_AT => $attribute[SpyCategoryAttributeTableMap::COL_CREATED_AT],
+                SpyCategoryAttributeTableMap::COL_UPDATED_AT => $attribute[SpyCategoryAttributeTableMap::COL_UPDATED_AT],
             ];
         }
         unset($queryResults);

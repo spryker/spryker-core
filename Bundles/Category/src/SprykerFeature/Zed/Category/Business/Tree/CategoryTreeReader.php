@@ -254,7 +254,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param $idCategory
      * @param LocaleTransfer $localeTransfer
      *
-     * @return \SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode[]
+     * @return SpyCategoryNode[]
      */
     public function getTree($idCategory, LocaleTransfer $localeTransfer)
     {
@@ -274,7 +274,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param LocaleTransfer $localeTransfer
      * @param bool $isRoot
      *
-     * @return array
+     * @return SpyCategoryNode[]
      */
     private function getTreeNodesRecursively(SpyCategoryNode $node = null, LocaleTransfer $localeTransfer, $isRoot = false)
     {
@@ -294,6 +294,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         foreach ($children as $child) {
             $tree[] = [
                 'id'     => $child->getIdCategoryNode(),
+                'id_category' => $child->getFkCategory(),
                 'parent' => $parentId,
                 'text'   => $child->getCategory()->getAttributes()->getFirst()->getName(),
                 'state'  => ['opened' => $nodeOpened],

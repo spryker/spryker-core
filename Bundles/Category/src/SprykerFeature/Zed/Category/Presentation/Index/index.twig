@@ -16,8 +16,11 @@
 
     {% endembed %}
 
-
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Category node tree' } %}
+    {% embed '@Gui/Partials/widget.twig' with {
+        widget_title: 'Category node tree',
+        row_class: 'hidden',
+        row_id: 'category-node-tree'
+    } %}
 
         {% block widget_content %}
 
@@ -27,7 +30,11 @@
 
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attributes of the selected category' } %}
+    {% embed '@Gui/Partials/widget.twig' with {
+        widget_title: 'Attributes of the selected category',
+        row_class: 'hidden',
+        row_id: 'attributes-table'
+    } %}
 
         {% block widget_content %}
             {#{ categoryAttributeTable.tableId }#}
@@ -37,7 +44,11 @@
 
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Urls for selected category' } %}
+    {% embed '@Gui/Partials/widget.twig' with {
+        widget_title: 'Urls for the selected category node',
+        row_class: 'hidden',
+        row_id: 'url-table'
+    } %}
 
         {% block widget_content %}
 
@@ -49,9 +60,15 @@
     
 {% endblock %}
 
+{% block head_css %}
+    {{ parent() }}
+    {#<link rel="stylesheet" href=""/>#}
+{% endblock %}
+
 {% block footer_js %}
     {{ parent() }}
     <script src="/bundles/Gui/scripts/plugins/jsTree/jstree.min.js"></script>
+    <script src="/bundles/Gui/scripts/category.jsTree.js"></script>
 {% endblock %}
 
 
