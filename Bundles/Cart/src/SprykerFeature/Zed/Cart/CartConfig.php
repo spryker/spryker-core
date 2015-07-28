@@ -17,9 +17,6 @@ class CartConfig extends AbstractBundleConfig
      */
     public function getCartItemPlugins()
     {
-        return [
-            $this->getLocator()->cart()->pluginProductIdPlugin(),
-            $this->getLocator()->cart()->pluginCartItemAbstractSkuPlugin()
-        ];
+        return [];
     }
 }
