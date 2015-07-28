@@ -23,6 +23,7 @@
     </transfer>
 
     <transfer name="CartItem">
+        <property name="id" type="int" />
         <property name="sku" type="string" />
         <property name="uniqueIdentifier" type="string" />
         <property name="groupKey" type="string"/>
