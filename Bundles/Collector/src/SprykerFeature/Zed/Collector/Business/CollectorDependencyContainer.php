@@ -8,11 +8,12 @@ namespace SprykerFeature\Zed\Collector\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CollectorBusiness;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Zed\Collector\Business\Exporter\Collector;
 use SprykerFeature\Zed\Collector\Business\Exporter\Reader\KeyValue\RedisReader;
 use SprykerFeature\Zed\Collector\Business\Exporter\SearchCollector;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Collector\Business\Exporter\ExporterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use SprykerFeature\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
@@ -23,7 +24,6 @@ use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 use SprykerFeature\Zed\Collector\Business\Model\FailedResultInterface;
 use SprykerFeature\Zed\Collector\CollectorConfig;
 use SprykerFeature\Zed\Collector\CollectorDependencyProvider;
-use SprykerFeature\Zed\Collector\Persistence\CollectorQueryContainer;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 
 /**
@@ -39,17 +39,17 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
     public function createYvesKeyValueExporter()
     {
         return $this->getFactory()->createExporterCollector(
-            $this->createCollectorQueryContainer(),
+            $this->createTouchQueryContainer(),
             $this->createKeyValueExporter()
         );
     }
 
     /**
-     * @return CollectorQueryContainer
+     * @return TouchQueryContainer
      */
-    protected function createCollectorQueryContainer()
+    protected function createTouchQueryContainer()
     {
-        return $this->getProvidedDependency(CollectorDependencyProvider::QUERY_CONTAINER_COLLECTOR);
+        return $this->getProvidedDependency(CollectorDependencyProvider::QUERY_CONTAINER_TOUCH);
     }
 
     /**
@@ -60,7 +60,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
         $config = $this->getConfig();
 
         $keyValueExporter = $this->getFactory()->createExporterKeyValueCollector(
-            $this->createCollectorQueryContainer(),
+            $this->createTouchQueryContainer(),
             $this->createKeyValueWriter(),
             $this->createKeyValueMarker(),
             $this->createFailedResultModel(),
@@ -70,8 +70,8 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
         $keyValueExporter->setStandardChunkSize($config->getStandardChunkSize());
         $keyValueExporter->setChunkSizeTypeMap($config->getChunkSizeTypeMap());
 
-        foreach ($config->getStorageCollectors() as $collectorPlugin) {
-            $keyValueExporter->addCollectorPlugin($collectorPlugin);
+        foreach ($config->getStorageCollectors() as $touchItemType => $collectorPlugin) {
+            $keyValueExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
         }
         foreach ($config->getKeyValueProcessors() as $keyValueProcessor) {
             $keyValueExporter->addDataProcessor($keyValueProcessor);
@@ -153,7 +153,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
         $config = $this->getConfig();
 
         return $this->getFactory()->createExporterCollector(
-            $this->createCollectorQueryContainer(),
+            $this->createTouchQueryContainer(),
             $this->createElasticsearchExporter(
                 $searchWriter,
                 $config
@@ -167,7 +167,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
     public function getYvesSearchUpdateExporter()
     {
         return $this->getFactory()->createExporterCollector(
-            $this->createCollectorQueryContainer(),
+            $this->createTouchQueryContainer(),
             $this->createElasticsearchExporter(
                 $this->createSearchUpdateWriter(),
                 $this->getConfig()
@@ -184,7 +184,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
     protected function createElasticsearchExporter(WriterInterface $searchWriter, CollectorConfig $config)
     {
         $searchExporter = $this->getFactory()->createExporterSearchCollector(
-            $this->createCollectorQueryContainer(),
+            $this->createTouchQueryContainer(),
             $searchWriter,
             $this->createSearchMarker(),
             $this->createFailedResultModel(),

@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Zed\Collector\Business\Model\BatchResult;
+use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 use SprykerFeature\Zed\Collector\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\Collector\Dependency\Plugin\QueryExpanderPluginInterface;
 
@@ -28,7 +28,7 @@ interface ExporterInterface
      * @param string $type
      * @param LocaleTransfer $locale
      *
-     * @return BatchResult
+     * @return BatchResultInterface
      */
     public function exportByType($type, LocaleTransfer $locale);
 

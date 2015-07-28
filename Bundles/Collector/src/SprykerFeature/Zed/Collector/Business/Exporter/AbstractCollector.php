@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Formatter\AbstractFormatter;
+use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerFeature\Zed\Collector\Business\Exporter\Exception\ProcessException;
 use SprykerFeature\Zed\Collector\Business\Exporter\Exception\WriteException;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
@@ -16,7 +17,6 @@ use SprykerFeature\Zed\Collector\Business\Model\FailedResultInterface;
 use SprykerFeature\Zed\Collector\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\Collector\Dependency\Plugin\ExportFailedDeciderPluginInterface;
 use SprykerFeature\Zed\Collector\Dependency\Plugin\QueryExpanderPluginInterface;
-use SprykerFeature\Zed\Collector\Persistence\CollectorQueryContainer;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 
 abstract class AbstractCollector implements ExporterInterface
@@ -54,7 +54,7 @@ abstract class AbstractCollector implements ExporterInterface
     protected $marker;
 
     /**
-     * @var CollectorQueryContainer
+     * @var TouchQueryContainer
      */
     protected $queryContainer;
 
@@ -79,32 +79,33 @@ abstract class AbstractCollector implements ExporterInterface
     private $chunkSizeTypeMap = [];
 
     /**
-     * @param CollectorQueryContainer $queryContainer
+     * @param TouchQueryContainer $queryContainer
      * @param WriterInterface $writer
      * @param MarkerInterface $marker
      * @param FailedResultInterface $failedResultPrototype
      * @param BatchResultInterface $batchResultPrototype
      */
     public function __construct(
-        CollectorQueryContainer $queryContainer,
+        TouchQueryContainer $queryContainer,
         WriterInterface $writer,
         MarkerInterface $marker,
         FailedResultInterface $failedResultPrototype,
         BatchResultInterface $batchResultPrototype
     ) {
+        $this->queryContainer = $queryContainer;
         $this->writer = $writer;
+        $this->marker = $marker;
         $this->failedResultPrototype = $failedResultPrototype;
         $this->batchResultPrototype = $batchResultPrototype;
-        $this->marker = $marker;
-        $this->queryContainer = $queryContainer;
     }
 
     /**
+     * @param string $touchItemType
      * @param object $plugin
      */
-    public function addCollectorPlugin($plugin)
+    public function addCollectorPlugin($touchItemType, $plugin)
     {
-        $this->collectorPlugins[$plugin->getTouchItemType()][] = $plugin;
+        $this->collectorPlugins[$touchItemType] = $plugin;
     }
 
     /**
@@ -135,9 +136,9 @@ abstract class AbstractCollector implements ExporterInterface
      * @param string $type
      * @param LocaleTransfer $locale
      *
-     * @return BatchResultInterface|null
+     * @return BatchResultInterface
      */
-    public function exportByType2($type, LocaleTransfer $locale)
+    public function exportByType($type, LocaleTransfer $locale)
     {
         $result = clone $this->batchResultPrototype;
         $result->setProcessedLocale($locale);
@@ -150,36 +151,14 @@ abstract class AbstractCollector implements ExporterInterface
             return $result;
         }
 
+        $collector = $this->collectorPlugins[$type];
+
         $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $locale);
 
         $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $lastRunDatetime);
         $baseQuery->setFormatter($this->getFormatter());
 
-        /** @var @TODO Interface $collector */
-        foreach ($this->collectorPlugins[$type] as $collector) {
-            $collectorBaseQuery = clone $baseQuery;
-            $collector->run($collectorBaseQuery, $locale, $result, $this->writer);
-            //$baseQuery = $collector->run($collectorBaseQuery, $locale, $result);
-        }
-
-        //$result->setTotalCount($resultSets->count());
-
-        /*
-        foreach ($resultSets as $resultSet) {
-            $result->setFetchedCount(count($resultSet));
-
-            $exportableData = $this->processData($resultSet, $type, $locale);
-            $this->writeExportableData($exportableData, $type);
-            $result->increaseProcessedCount(count($exportableData));
-
-            if ($this->isExportFailed($type, $result)) {
-                $result->setIsFailed(true);
-
-                return $result;
-            }
-        }
-        */
-
+        $collector->run($baseQuery, $locale, $result, $this->writer);
 
         return $this->finishExport($result, $type);
     }
@@ -190,7 +169,7 @@ abstract class AbstractCollector implements ExporterInterface
      *
      * @return BatchResultInterface|null
      */
-    public function exportByType($type, LocaleTransfer $locale)
+    public function exportByType2($type, LocaleTransfer $locale)
     {
         $result = clone $this->batchResultPrototype;
         $result->setProcessedLocale($locale);

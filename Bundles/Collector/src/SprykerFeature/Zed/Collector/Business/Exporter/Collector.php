@@ -7,12 +7,17 @@
 namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerFeature\Zed\Collector\Business\Exporter\Exception\BatchResultException;
-use SprykerFeature\Zed\Collector\Business\Model\BatchResult;
-use SprykerFeature\Zed\Collector\Persistence\CollectorQueryContainer;
+use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 
 class Collector
 {
+
+    /**
+     * @var TouchQueryContainer
+     */
+    protected $queryContainer;
 
     /**
      * @var ExporterInterface
@@ -20,26 +25,21 @@ class Collector
     protected $exporter;
 
     /**
-     * @var CollectorQueryContainer
-     */
-    protected $queryContainer;
-
-    /**
-     * @param CollectorQueryContainer $queryContainer
+     * @param TouchQueryContainer $queryContainer
      * @param ExporterInterface $exporter
      */
     public function __construct(
-        CollectorQueryContainer $queryContainer,
+        TouchQueryContainer $queryContainer,
         ExporterInterface $exporter
     ) {
-        $this->exporter = $exporter;
         $this->queryContainer = $queryContainer;
+        $this->exporter = $exporter;
     }
 
     /**
      * @param LocaleTransfer $locale
      *
-     * @return array|BatchResult[]
+     * @return BatchResultInterface[]
      */
     public function exportForLocale(LocaleTransfer $locale)
     {
@@ -48,12 +48,11 @@ class Collector
         $results = [];
 
         foreach ($types as $type) {
-            $result = $this->exporter->exportByType2($type, $locale);
-            //$result = $this->exporter->exportByType($type, $locale);
+            $result = $this->exporter->exportByType($type, $locale);
 
             $this->handleResult($result);
 
-            if ($result instanceof BatchResult) {
+            if ($result instanceof BatchResultInterface) {
                 $results[$type] = $result;
             }
         }
@@ -62,9 +61,9 @@ class Collector
     }
 
     /**
-     * @param BatchResult $result
+     * @param BatchResultInterface $result
      */
-    protected function handleResult(BatchResult $result)
+    protected function handleResult(BatchResultInterface $result)
     {
         if ($result->isFailed()) {
             throw new BatchResultException(

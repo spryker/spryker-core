@@ -15,8 +15,6 @@ use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 class Installer extends AbstractInstallerPlugin
 {
 
-    /**
-     */
     public function install()
     {
         $this->getDependencyContainer()->getInstallerFacade()->install($this->messenger);

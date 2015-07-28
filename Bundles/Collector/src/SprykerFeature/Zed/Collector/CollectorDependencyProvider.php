@@ -14,7 +14,7 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_COLLECTOR = 'collector_facade';
 
-    const QUERY_CONTAINER_COLLECTOR = 'collector_query_container';
+    const QUERY_CONTAINER_TOUCH = 'touch_query_container';
 
     const FACADE_LOCALE = 'locale_facade';
 
@@ -27,8 +27,8 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->provideLocaleFacade($container);
 
-        $container[self::QUERY_CONTAINER_COLLECTOR] = function (Container $container) {
-            return $container->getLocator()->collector()->queryContainer();
+        $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+            return $container->getLocator()->touch()->queryContainer();
         };
 
         return $container;
