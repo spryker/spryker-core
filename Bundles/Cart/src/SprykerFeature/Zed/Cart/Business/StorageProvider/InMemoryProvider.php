@@ -117,9 +117,9 @@ class InMemoryProvider implements StorageProviderInterface
      */
     protected function decreaseBySku(\ArrayObject $existingItems, CartItemInterface $changedItem)
     {
-        foreach ($existingItems as $index => $cartIndexItem) {
+        foreach ($existingItems as $key => $cartIndexItem) {
             if ($cartIndexItem->getSku() === $changedItem->getSku()) {
-                $this->decreaseExistingItem($existingItems, $index, $changedItem);
+                $this->decreaseExistingItem($existingItems, $key, $changedItem);
                 return;
             }
         }
