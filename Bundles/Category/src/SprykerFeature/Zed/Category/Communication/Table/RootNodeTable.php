@@ -32,14 +32,6 @@ class RootNodeTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->getTableOptions()->setClass([
-            'table',
-            'table-stripped',
-            'table-bordered',
-            'table-hover',
-            'gui-table-data-category',
-        ]);
-
         $config->setHeader([
             SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 'Category Id',
             SpyCategoryAttributeTableMap::COL_NAME => 'Name',

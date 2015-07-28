@@ -32,13 +32,6 @@ class UrlTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->getTableOptions()->setClass([
-            'table',
-            'table-stripped',
-            'table-bordered',
-            'table-hover',
-            'gui-table-data-category-lazy',
-        ]);
         $config->setHeader([
             SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE => 'Category node Id',
             SpyUrlTableMap::COL_FK_LOCALE  => 'Fk Locale',

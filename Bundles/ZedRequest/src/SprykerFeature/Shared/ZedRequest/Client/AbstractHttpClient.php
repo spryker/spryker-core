@@ -320,14 +320,16 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected function forwardDebugSession(EntityEnclosingRequest $request)
     {
         if (Config::get(YvesConfig::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
-            $cookie = new Cookie();
-            $cookie->setName(trim(Config::get(YvesConfig::TRANSFER_DEBUG_SESSION_NAME)));
-            $cookie->setValue($_COOKIE[Config::get(YvesConfig::TRANSFER_DEBUG_SESSION_NAME)]);
-            $cookie->setDomain(Config::get(SystemConfig::HOST_ZED_API));
-            $cookieArray = new ArrayCookieJar(true);
-            $cookieArray->add($cookie);
+            if (isset($_COOKIE[Config::get(YvesConfig::TRANSFER_DEBUG_SESSION_NAME)])) {
+                $cookie = new Cookie();
+                $cookie->setName(trim(Config::get(YvesConfig::TRANSFER_DEBUG_SESSION_NAME)));
+                $cookie->setValue($_COOKIE[Config::get(YvesConfig::TRANSFER_DEBUG_SESSION_NAME)]);
+                $cookie->setDomain(Config::get(SystemConfig::HOST_ZED_API));
+                $cookieArray = new ArrayCookieJar(true);
+                $cookieArray->add($cookie);
 
-            $request->addSubscriber(new CookiePlugin($cookieArray));
+                $request->addSubscriber(new CookiePlugin($cookieArray));
+            }
         }
     }
 
