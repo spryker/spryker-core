@@ -45,7 +45,6 @@
     "spryker/product-exporter": "self.version",
     "spryker/product-frontend-exporter-availability-connector": "self.version",
     "spryker/product-frontend-exporter-connector": "self.version",
-    "spryker/product-frontend-exporter-price-connector": "self.version",
     "spryker/product-image": "self.version",
     "spryker/product-search": "self.version",
     "spryker/product-search-availability-connector": "self.version",
