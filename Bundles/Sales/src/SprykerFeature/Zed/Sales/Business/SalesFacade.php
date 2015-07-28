@@ -105,14 +105,14 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param integer $salesOrderItemId
+     * @param integer $idSalesOrderItem
      * @param integer $quantity
      *
      * @return ItemSplitResponseInterface
      */
-    public function splitSalesOrderItem($salesOrderItemId, $quantity)
+    public function splitSalesOrderItem($idSalesOrderItem, $quantity)
     {
-        return $this->getDependencyContainer()->createOrderItemSplitter()->split($salesOrderItemId, $quantity);
+        return $this->getDependencyContainer()->createOrderItemSplitter()->split($idSalesOrderItem, $quantity);
     }
 
     /**

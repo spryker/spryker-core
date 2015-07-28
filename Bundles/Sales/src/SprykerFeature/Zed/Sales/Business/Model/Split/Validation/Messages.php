@@ -13,6 +13,9 @@ class Messages
     const VALIDATE_DISCOUNTED_OPTION_MESSAGE = 'Could not split when order item have discounted option.';
     const SPLIT_SUCCESS_MESSAGE = 'Order item with "%d" was successfully split.';
 
+    /**
+     * Static container class, no need instatiation
+     */
     private function __construct()
     {
     }

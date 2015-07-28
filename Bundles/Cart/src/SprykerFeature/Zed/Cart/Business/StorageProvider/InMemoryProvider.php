@@ -85,9 +85,9 @@ class InMemoryProvider implements StorageProviderInterface
     {
         $cartIndex = [];
 
-        foreach ($cartItems as $index => $cartItem) {
+        foreach ($cartItems as $key => $cartItem) {
             if (!empty($cartItem->getGroupKey())) {
-                $cartIndex[$cartItem->getGroupKey()] = $index;
+                $cartIndex[$cartItem->getGroupKey()] = $key;
             }
         }
 
@@ -118,7 +118,7 @@ class InMemoryProvider implements StorageProviderInterface
     protected function decreaseBySku(\ArrayObject $existingItems, CartItemInterface $changedItem)
     {
         foreach ($existingItems as $index => $cartIndexItem) {
-            if ($cartIndexItem->getSku() == $changedItem->getSku()) {
+            if ($cartIndexItem->getSku() === $changedItem->getSku()) {
                 $this->decreaseExistingItem($existingItems, $index, $changedItem);
                 return;
             }

@@ -23,7 +23,7 @@ class AddOperator extends AbstractOperator
     {
         $cart = $this->storageProvider->addItems($cart, $change);
 
-        return $this->groupCartItems($cart);
+        return $this->getGroupedCartItems($cart);
     }
 
     /**

@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Sales\Business\Model\Split\Validation;
 
-use SprykerFeature\Zed\Sales\Persistence;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
 class Validator implements ValidatorInterface
 {
@@ -16,12 +16,12 @@ class Validator implements ValidatorInterface
     private $messages = [];
 
     /**
-     * @param Persistence\Propel\SpySalesOrderItem $salesOrderItem
+     * @param SpySalesOrderItem $salesOrderItem
      * @param integer                              $quantityToSplit
      *
      * @return bool
      */
-    public function isValid(Persistence\Propel\SpySalesOrderItem $salesOrderItem, $quantityToSplit)
+    public function isValid(SpySalesOrderItem $salesOrderItem, $quantityToSplit)
     {
         $this->isValidQuantity($salesOrderItem, $quantityToSplit);
         $this->isBundled($salesOrderItem);
@@ -40,12 +40,12 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * @param Persistence\Propel\SpySalesOrderItem $salesOrderItem
+     * @param SpySalesOrderItem $salesOrderItem
      * @param integer                              $quantityToSplit
      *
      * @return bool
      */
-    protected function isValidQuantity(Persistence\Propel\SpySalesOrderItem $salesOrderItem, $quantityToSplit)
+    protected function isValidQuantity(SpySalesOrderItem $salesOrderItem, $quantityToSplit)
     {
         if ($quantityToSplit < 1 || $salesOrderItem->getQuantity() <= $quantityToSplit) {
             $this->messages[] = Messages::VALIDATE_QUANTITY_MESSAGE;
@@ -56,11 +56,11 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * @param Persistence\Propel\SpySalesOrderItem $salesOrderItem
+     * @param SpySalesOrderItem $salesOrderItem
      *
      * @return bool
      */
-    protected function isBundled(Persistence\Propel\SpySalesOrderItem $salesOrderItem)
+    protected function isBundled(SpySalesOrderItem $salesOrderItem)
     {
         if (null !== $salesOrderItem->getFkSalesOrderItemBundle()) {
             $this->messages[] = Messages::VALIDATE_BUNDLE_MESSAGE;
@@ -71,11 +71,11 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * @param Persistence\Propel\SpySalesOrderItem $salesOrderItem
+     * @param SpySalesOrderItem $salesOrderItem
      *
      * @return bool
      */
-    protected function isDiscounted(Persistence\Propel\SpySalesOrderItem $salesOrderItem)
+    protected function isDiscounted(SpySalesOrderItem $salesOrderItem)
     {
         if ($salesOrderItem->countDiscounts() > 0) {
             $this->messages[] = Messages::VALIDATE_DISCOUNTED_MESSAGE;
@@ -86,18 +86,20 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * @param Persistence\Propel\SpySalesOrderItem $salesOrderItem
+     * @param SpySalesOrderItem$salesOrderItem
      *
      * @return bool
      */
-    protected function isDiscountedOption(Persistence\Propel\SpySalesOrderItem $salesOrderItem)
+    protected function isDiscountedOption(SpySalesOrderItem $salesOrderItem)
     {
-        if ($salesOrderItem->countOptions() > 0) {
-            foreach ($salesOrderItem->getOptions() as $orderItemOption) {
-                if ($orderItemOption->countDiscounts() > 0) {
-                    $this->messages[] = Messages::VALIDATE_DISCOUNTED_OPTION_MESSAGE;
-                    return true;
-                }
+        if ($salesOrderItem->countOptions() <= 0) {
+            return false;
+        }
+
+        foreach ($salesOrderItem->getOptions() as $orderItemOption) {
+            if ($orderItemOption->countDiscounts() > 0) {
+                $this->messages[] = Messages::VALIDATE_DISCOUNTED_OPTION_MESSAGE;
+                return true;
             }
         }
 

@@ -23,7 +23,7 @@ class IncreaseOperator extends AbstractOperator
     {
         $cart = $this->storageProvider->increaseItems($cart, $change);
 
-        return $this->groupCartItems($cart);
+        return $this->getGroupedCartItems($cart);
     }
 
     /**

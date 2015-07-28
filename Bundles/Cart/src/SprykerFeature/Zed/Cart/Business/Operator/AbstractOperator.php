@@ -132,16 +132,18 @@ abstract class AbstractOperator implements OperatorInterface
     /**
      * @param CartInterface $cart
      *
-     * @return CartItemInterface
+     * @return CartInterface
      */
-    protected function groupCartItems(CartInterface $cart)
+    protected function getGroupedCartItems(CartInterface $cart)
     {
         $groupAbleItems = new GroupableContainerTransfer();
         $groupAbleItems->setItems($cart->getItems());
 
         $groupedItems = $this->itemGrouperFacade->groupItemsByKey($groupAbleItems);
 
-        return $cart->setItems($groupedItems->getItems());
+        $cart->setItems($groupedItems->getItems());
+
+        return $cart;
     }
 
 }

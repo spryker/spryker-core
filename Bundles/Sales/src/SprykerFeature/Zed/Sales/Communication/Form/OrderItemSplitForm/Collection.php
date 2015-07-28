@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
+use SprykerFeature\Zed\Sales\Communication\Exception\FormNotFoundException;
 
 class Collection
 {
@@ -65,23 +66,24 @@ class Collection
      * @param integer $formIndexId
      *
      * @return OrderItemSplitForm
+     * @throws FormNotFoundException
      */
     public function getById($formIndexId)
     {
         if (!$this->isFormSet($formIndexId)) {
-            throw new \InvalidArgumentException(sprintf(self::FORM_NOT_FOUND_MESSAGE, $formIndexId));
+            throw new FormNotFoundException(sprintf(self::FORM_NOT_FOUND_MESSAGE, $formIndexId));
         }
 
         return $this->forms[$formIndexId];
     }
 
     /**
-     * @param integer $formIndexId
+     * @param integer $idFormIndex
      *
      * @return bool
      */
-    public function isFormSet($formIndexId)
+    public function isFormSet($idFormIndex)
     {
-        return isset($this->forms[$formIndexId]);
+        return isset($this->forms[$idFormIndex]);
     }
 }

@@ -7,7 +7,10 @@
 namespace SprykerFeature\Zed\Sales\Business\Model\Split;
 
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
-use SprykerFeature\Zed\Sales\Persistence;
+use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\Business\Model\Split\Validation;
 use Propel\Runtime\Propel;
 use Propel\Runtime\Connection\ConnectionInterface;
@@ -22,12 +25,12 @@ class OrderItem implements OrderItemInterface
     protected $databaseConnection;
 
     /**
-     * @var Validation\ValidatorInterface
+     * @var ValidatorInterface
      */
     protected $validator;
 
     /**
-     * @var Persistence\SalesQueryContainerInterface
+     * @var SalesQueryContainerInterface
      */
     protected $salesQueryContainer;
 
@@ -37,13 +40,13 @@ class OrderItem implements OrderItemInterface
     protected $calculator;
 
     /**
-     * @param Validation\ValidatorInterface $validator
-     * @param Persistence\SalesQueryContainerInterface $salesQueryContainer
+     * @param ValidatorInterface $validator
+     * @param SalesQueryContainerInterface $salesQueryContainer
      * @param CalculatorInterface $splitCalculator
      */
     public function __construct(
-        Validation\ValidatorInterface $validator,
-        Persistence\SalesQueryContainerInterface $salesQueryContainer,
+        ValidatorInterface $validator,
+        SalesQueryContainerInterface $salesQueryContainer,
         CalculatorInterface $splitCalculator
     ) {
         $this->validator = $validator;
@@ -52,17 +55,17 @@ class OrderItem implements OrderItemInterface
     }
 
     /**
-     * @param integer $orderItemId
+     * @param integer $idSalesOrderItem
      * @param integer $quantityToSplit
      *
      * @return ItemSplitResponseInterface
      * @throws \Exception
      */
-    public function split($orderItemId, $quantityToSplit)
+    public function split($idSalesOrderItem, $quantityToSplit)
     {
         $salesOrderItem = $this->salesQueryContainer
             ->querySalesOrderItem()
-            ->findOneByIdSalesOrderItem($orderItemId);
+            ->findOneByIdSalesOrderItem($idSalesOrderItem);
 
         $splitResponse = new ItemSplitResponseTransfer();
         if (false === $this->validator->isValid($salesOrderItem, $quantityToSplit)) {
@@ -112,10 +115,10 @@ class OrderItem implements OrderItemInterface
     }
 
     /**
-     * @param Persistence\Propel\SpySalesOrderItem $salesOrderItem
+     * @param SpySalesOrderItem $salesOrderItem
      * @param integer $quantity
      */
-    protected function copy(Persistence\Propel\SpySalesOrderItem $salesOrderItem, $quantity)
+    protected function copy(SpySalesOrderItem $salesOrderItem, $quantity)
     {
         $copyOfSalesOrderItem = $this->createSalesOrderItemCopy($salesOrderItem, $quantity);
 
@@ -125,12 +128,12 @@ class OrderItem implements OrderItemInterface
     }
 
     /**
-     * @param Persistence\Propel\SpySalesOrderItem $salesOrderItem
+     * @param SpySalesOrderItem $salesOrderItem
      * @param integer $quantity
      *
-     * @return Persistence\Propel\SpySalesOrderItem
+     * @return SpySalesOrderItem
      */
-    protected function createSalesOrderItemCopy(Persistence\Propel\SpySalesOrderItem $salesOrderItem, $quantity)
+    protected function createSalesOrderItemCopy(SpySalesOrderItem $salesOrderItem, $quantity)
     {
         $copyOfSalesOrderItem = $salesOrderItem->copy(false);
 
@@ -144,14 +147,14 @@ class OrderItem implements OrderItemInterface
     }
 
     /**
-     * @param Persistence\Propel\SpySalesOrderItemOption $salesOrderItemOption
-     * @param Persistence\Propel\SpySalesOrderItem $copyOfSalesOrderItem
+     * @param SpySalesOrderItemOption $salesOrderItemOption
+     * @param SpySalesOrderItem $copyOfSalesOrderItem
      *
-     * @return Persistence\Propel\SpySalesOrderItemOption
+     * @return SpySalesOrderItemOption
      */
     protected function createOrderItemOptionCopy(
-        Persistence\Propel\SpySalesOrderItemOption $salesOrderItemOption,
-        Persistence\Propel\SpySalesOrderItem $copyOfSalesOrderItem
+        SpySalesOrderItemOption $salesOrderItemOption,
+        SpySalesOrderItem $copyOfSalesOrderItem
     ) {
 
         $copyOfOrderItemOption = $salesOrderItemOption->copy(false);
@@ -164,10 +167,10 @@ class OrderItem implements OrderItemInterface
     }
 
     /**
-     * @param Persistence\Propel\SpySalesOrderItem $salesOrderItem
+     * @param SpySalesOrderItem $salesOrderItem
      * @param integer $quantity
      */
-    protected function updateParentQuantity(Persistence\Propel\SpySalesOrderItem $salesOrderItem, $quantity)
+    protected function updateParentQuantity(SpySalesOrderItem $salesOrderItem, $quantity)
     {
         $quantityAmountLeft = $this->calculator->calculateQuantityAmountLeft($salesOrderItem, $quantity);
 

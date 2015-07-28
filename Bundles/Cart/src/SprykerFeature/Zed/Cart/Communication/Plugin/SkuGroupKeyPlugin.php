@@ -31,6 +31,13 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
     protected function buildGroupKey(CartItemInterface $cartItem)
     {
         $groupKey = $cartItem->getGroupKey();
-        return !empty($groupKey) ? $groupKey . '-' . $cartItem->getSku() : $cartItem->getSku();
+        if (empty($groupKey)) {
+            return $cartItem->getSku();
+        }
+
+        $groupKey = $groupKey . '-' . $cartItem->getSku();
+
+        return $groupKey;
+
     }
 }

@@ -9,11 +9,11 @@ use Generated\Shared\Sales\ItemSplitResponseInterface;
 interface OrderItemInterface
 {
     /**
-     * @param integer $orderItemId
+     * @param integer $idSalesOrderItem
      * @param integer $quantityToSplit
      *
      * @return ItemSplitResponseInterface
      * @throws \Exception
      */
-    public function split($orderItemId, $quantityToSplit);
+    public function split($idSalesOrderItem, $quantityToSplit);
 }
