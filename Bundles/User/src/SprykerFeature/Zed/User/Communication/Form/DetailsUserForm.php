@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\User\Communication\Form;
 
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
-use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserUserTableMap;
+use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DetailsUserForm extends AbstractForm
@@ -32,7 +32,7 @@ class DetailsUserForm extends AbstractForm
             'first_name' => $userDetails->getFirstName(),
             'last_name' => $userDetails->getLastName(),
             'username' => $userDetails->getUsername(),
-            'status' => (SpyUserUserTableMap::COL_STATUS_ACTIVE === $userDetails->getStatus()),
+            'status' => (SpyUserTableMap::COL_STATUS_ACTIVE === $userDetails->getStatus()),
         ];
     }
 

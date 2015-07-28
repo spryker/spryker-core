@@ -31,7 +31,7 @@ class CustomerForm extends AbstractForm
     const ID_CUSTOMER = 'id_customer';
 
     /**
-     * @var SpyCustomerQueryQuery
+     * @var SpyCustomerQuery
      */
     protected $customerQuery;
 
@@ -137,13 +137,6 @@ class CustomerForm extends AbstractForm
                 ])
             ;
         }
-
-        $this->addSubmit('submit', [
-            'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
-            'attr' => [
-                'class' => 'btn btn-primary',
-            ],
-        ]);
 
         return $this;
     }

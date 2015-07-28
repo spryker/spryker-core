@@ -45,6 +45,7 @@ class CountryManager implements CountryManagerInterface
     /**
      * @param string $iso2code
      * @param array $countryData
+     *
      * @deprecated
      *
      * @throws CountryExistsException
@@ -70,6 +71,7 @@ class CountryManager implements CountryManagerInterface
 
     /**
      * @param CountryInterface $countryTransfer
+     *
      * @return int
      */
     public function saveCountry(CountryInterface $countryTransfer)

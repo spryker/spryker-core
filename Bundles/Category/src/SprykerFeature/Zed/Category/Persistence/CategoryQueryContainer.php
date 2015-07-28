@@ -6,12 +6,14 @@
 
 namespace SprykerFeature\Zed\Category\Persistence;
 
+use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryAttribute;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -22,6 +24,7 @@ use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
+use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 class CategoryQueryContainer extends AbstractQueryContainer
 {
@@ -96,6 +99,29 @@ class CategoryQueryContainer extends AbstractQueryContainer
         return SpyCategoryNodeQuery::create()
             ->filterByFkParentCategoryNode($idNode)
             ;
+    }
+
+    /**
+     *
+     * @return SpyCategoryAttributeQuery
+     */
+    public function queryRootNodes()
+    {
+        return SpyCategoryAttributeQuery::create()
+            ->joinLocale()
+            ->addJoin(
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
+                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
+                Criteria::INNER_JOIN
+            )
+            ->addAnd(
+                SpyCategoryNodeTableMap::COL_IS_ROOT,
+                1,
+            Criteria::EQUAL
+            )
+            ->withColumn(
+                SpyLocaleTableMap::COL_LOCALE_NAME
+            );
     }
 
     /**
@@ -312,9 +338,18 @@ class CategoryQueryContainer extends AbstractQueryContainer
     }
 
     /**
+     * @param $idNode
+     *
+     * @return SpyCategoryNodeQuery
+     */
+    public function queryCategoryNodeByNodeId($idNode)
+    {
+        return SpyCategoryNodeQuery::create()->filterByIdCategoryNode($idNode);
+    }
+
+    /**
      * @param int $idLocale
      *
-     * @return SpyCategoryQuery
      * @return SpyCategoryQuery
      */
     public function queryCategory($idLocale)
@@ -328,7 +363,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
             )
             ->withColumn(SpyCategoryTableMap::COL_ID_CATEGORY, 'id_category')
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
-            ;
+        ;
     }
 
     /**
@@ -340,9 +375,11 @@ class CategoryQueryContainer extends AbstractQueryContainer
     public function queryAttributeByCategoryIdAndLocale($idCategory, $idLocale)
     {
         return SpyCategoryAttributeQuery::create()
+            ->joinLocale()
             ->filterByFkLocale($idLocale)
             ->filterByFkCategory($idCategory)
-            ;
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME)
+        ;
     }
 
     /**
@@ -358,7 +395,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
         return SpyCategoryAttributeQuery::create()
             ->filterByName($name)
             ->filterByFkLocale($idLocale)
-            ;
+        ;
     }
 
     /**
@@ -642,6 +679,20 @@ class CategoryQueryContainer extends AbstractQueryContainer
         ;
 
         return $nodeQuery;
+    }
+
+    /**
+     * @param $idCategoryNode
+     *
+     * @return SpyUrlQuery
+     */
+    public function queryUrlByIdCategoryNode($idCategoryNode)
+    {
+        return SpyUrlQuery::create()
+            ->joinSpyLocale()
+            ->filterByFkResourceCategorynode($idCategoryNode)
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME)
+        ;
     }
 
 }

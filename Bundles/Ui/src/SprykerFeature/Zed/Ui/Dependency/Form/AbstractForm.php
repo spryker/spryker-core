@@ -17,6 +17,9 @@ use SprykerFeature\Zed\Ui\Dependency\Plugin\FormPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Exception;
 
+/**
+ * @deprecated use Gui AbstractForm
+ */
 abstract class AbstractForm
 {
 
@@ -53,14 +56,19 @@ abstract class AbstractForm
 
     /**
      * @return array
+     * @deprecated use Gui AbstractForm
      */
     abstract protected function getDefaultData();
 
+    /**
+     * @deprecated use Gui AbstractForm
+     */
     abstract public function addFormFields();
 
     /**
      * @param Request $request
      * @param QueryContainerInterface $queryContainer
+     * @deprecated use Gui AbstractForm
      */
     public function __construct(
         Request $request = null,
@@ -76,6 +84,9 @@ abstract class AbstractForm
         $this->queryContainer = $queryContainer;
     }
 
+    /**
+     * @deprecated use Gui AbstractForm
+     */
     public function init()
     {
         $preparedValues = array_merge($this->getDefaultData(), $this->stateContainer->getRequestData());
@@ -89,6 +100,7 @@ abstract class AbstractForm
 
     /**
      * @return AutoCompletion
+     * @deprecated use Gui AbstractForm
      */
     public function getLocator()
     {
@@ -97,6 +109,7 @@ abstract class AbstractForm
 
     /**
      * @return $this|StateContainerInterface
+     * @deprecated use Gui AbstractForm
      */
     public function getStateContainer()
     {
@@ -105,6 +118,7 @@ abstract class AbstractForm
 
     /**
      * @return bool
+     * @deprecated use Gui AbstractForm
      */
     protected function isEveryPluginValid()
     {
@@ -121,6 +135,7 @@ abstract class AbstractForm
      * @throws Exception
      *
      * @return bool
+     * @deprecated use Gui AbstractForm
      */
     public function isValid()
     {
@@ -137,6 +152,7 @@ abstract class AbstractForm
 
     /**
      * @return string
+     * @deprecated use Gui AbstractForm
      */
     protected function getState()
     {
@@ -152,6 +168,7 @@ abstract class AbstractForm
      * @throws Exception
      *
      * @return array|mixed
+     * @deprecated use Gui AbstractForm
      */
     public function renderData()
     {
@@ -160,6 +177,7 @@ abstract class AbstractForm
 
     /**
      * @return array
+     * @deprecated use Gui AbstractForm
      */
     public function renderDataForTwig()
     {
@@ -177,6 +195,7 @@ abstract class AbstractForm
      * @throws Exception
      *
      * @return array|mixed
+     * @deprecated use Gui AbstractForm
      */
     public function toArray()
     {
@@ -198,6 +217,7 @@ abstract class AbstractForm
      * @param $name
      *
      * @return Field
+     * @deprecated use Gui AbstractForm
      */
     public function addField($name)
     {
@@ -216,6 +236,7 @@ abstract class AbstractForm
      * @param $name
      *
      * @return SubForm
+     * @deprecated use Gui AbstractForm
      */
     public function addSubForm($name)
     {
@@ -234,6 +255,7 @@ abstract class AbstractForm
      * @param $name
      *
      * @return SubForm
+     * @deprecated use Gui AbstractForm
      */
     public function getSubFormByName($name)
     {
@@ -244,6 +266,7 @@ abstract class AbstractForm
      * @param $name
      *
      * @return Field
+     * @deprecated use Gui AbstractForm
      */
     public function getFieldByName($name)
     {
@@ -252,6 +275,7 @@ abstract class AbstractForm
 
     /**
      * @return array|mixed
+     * @deprecated use Gui AbstractForm
      */
     public function getRequestData()
     {
@@ -260,6 +284,7 @@ abstract class AbstractForm
 
     /**
      * @return array
+     * @deprecated use Gui AbstractForm
      */
     public function setActiveValuesToDefault()
     {

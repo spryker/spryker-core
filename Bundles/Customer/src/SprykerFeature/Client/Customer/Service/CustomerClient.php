@@ -170,4 +170,34 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         return $this->getDependencyContainer()->createZedCustomerStub()->createAddress($addressTransfer);
     }
 
+    /**
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
+     */
+    public function deleteAddress(CustomerAddressInterface $addressTransfer)
+    {
+        return $this->getDependencyContainer()->createZedCustomerStub()->deleteAddress($addressTransfer);
+    }
+
+    /**
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
+     */
+    public function setDefaultShippingAddress(CustomerAddressInterface $addressTransfer)
+    {
+        return $this->getDependencyContainer()->createZedCustomerStub()->setDefaultShippingAddress($addressTransfer);
+    }
+
+    /**
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
+     */
+    public function setDefaultBillingAddress(CustomerAddressInterface $addressTransfer)
+    {
+        return $this->getDependencyContainer()->createZedCustomerStub()->setDefaultBillingAddress($addressTransfer);
+    }
+
 }

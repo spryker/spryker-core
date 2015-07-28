@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class CountryDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const USER_QUERY_CONTAINER = 'USER_QUERY_CONTAINER';
 
     /**
@@ -26,4 +27,5 @@ class CountryDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
 }

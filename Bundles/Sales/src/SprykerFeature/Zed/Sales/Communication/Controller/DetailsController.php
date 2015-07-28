@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
+use SprykerFeature\Zed\Sales\Communication\Form;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()
@@ -31,40 +32,40 @@ class DetailsController extends AbstractController
 
         $orderEntity = $this->getQueryContainer()
             ->querySalesOrderById($idOrder)
-            ->findOne()
-        ;
+            ->findOne();
+
         $orderItems = $this->getQueryContainer()
             ->querySalesOrderItemsWithState($idOrder)
-            ->find()
-        ;
+            ->find();
+
+        $orderItemSplitFormCollection = $this->getDependencyContainer()->getOrderItemSplitFormCollection($orderItems);
+
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
         $allEvents = $this->groupEvents($events);
         $expenses = $this->getQueryContainer()
             ->querySalesExpensesByOrderId($idOrder)
-            ->find()
-        ;
+            ->find();
         $shippingAddress = $this->getQueryContainer()
             ->querySalesOrderAddressById($orderEntity->getFkSalesOrderAddressShipping())
-            ->findOne()
-        ;
+            ->findOne();
         if ($orderEntity->getFkSalesOrderAddressShipping() === $orderEntity->getFkSalesOrderAddressBilling()) {
             $billingAddress = $shippingAddress;
         } else {
             $billingAddress = $this->getQueryContainer()
                 ->querySalesOrderAddressById($orderEntity->getFkSalesOrderAddressBilling())
-                ->findOne()
-            ;
+                ->findOne();
         }
 
         return [
-            'idOrder' => $idOrder,
-            'orderDetails' => $orderEntity,
-            'orderItems' => $orderItems,
-            'events' => $events,
-            'allEvents' => $allEvents,
-            'expenses' => $expenses,
-            'billingAddress' => $billingAddress,
-            'shippingAddress' => $shippingAddress,
+            'idOrder'            => $idOrder,
+            'orderDetails'       => $orderEntity,
+            'orderItems'         => $orderItems,
+            'events'             => $events,
+            'allEvents'          => $allEvents,
+            'expenses'           => $expenses,
+            'billingAddress'     => $billingAddress,
+            'shippingAddress'    => $shippingAddress,
+            'orderItemSplitFormCollection' => $orderItemSplitFormCollection->create()
         ];
     }
 

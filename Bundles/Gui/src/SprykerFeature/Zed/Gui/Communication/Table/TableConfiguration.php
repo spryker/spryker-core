@@ -5,21 +5,24 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
+use SprykerFeature\Zed\Gui\Communication\Table\TableOptionsInterface;
+use SprykerFeature\Zed\Gui\Communication\Table\TableOptions;
+
 class TableConfiguration
 {
 
     /**
-     * @var
+     * @var string
      */
     protected $url;
 
     /**
      * @var array
      */
-    private $headers;
+    private $header;
 
     /**
-     * @var
+     * @var int
      */
     private $pageLength;
 
@@ -36,21 +39,21 @@ class TableConfiguration
     /**
      * @return array
      */
-    public function getHeaders()
+    public function getHeader()
     {
-        return $this->headers;
+        return $this->header;
     }
 
     /**
      * @todo Zed Translation in Template
      *
-     * @param array $headers Provide php names for table columns
+     * @param array $header Provide php names for table columns
      *                       if you are goin to user Propel Query as data population
      */
-    public function setHeaders(array $headers)
+    public function setHeader(array $header)
     {
-        if ($this->isAssoc($headers) === true) {
-            $this->headers = $headers;
+        if ($this->isAssoc($header)) {
+            $this->header = $header;
         }
     }
 
@@ -67,7 +70,7 @@ class TableConfiguration
      */
     public function setSortable(array $sortable)
     {
-        $this->sortableFields = array_intersect($sortable, array_keys($this->headers));
+        $this->sortableFields = array_intersect($sortable, array_keys($this->header));
     }
 
     /**
@@ -75,7 +78,7 @@ class TableConfiguration
      */
     public function getSearchable()
     {
-        return !empty($this->searchableFields) ? $this->searchableFields : array_keys($this->headers);
+        return !empty($this->searchableFields) ? $this->searchableFields : array_keys($this->header);
     }
 
     /**

@@ -4,26 +4,27 @@ namespace SprykerFeature\Zed\Country\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
-use SprykerFeature\Zed\User\Persistence\Propel\Base\SpyUserUserQuery;
+use SprykerFeature\Zed\User\Persistence\Propel\Base\SpyUserQuery;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
 class CountryForm extends AbstractForm
 {
+
     /**
      * @var SpyCountryQuery
      */
     protected $countryQuery;
 
     /**
-     * @var SpyUserUserQuery
+     * @var SpyUserQuery
      */
     protected $userQuery;
 
     /**
      * @param SpyCountryQuery $countryQuery
      */
-    public function __construct(SpyCountryQuery $countryQuery, SpyUserUserQuery $userQuery)
+    public function __construct(SpyCountryQuery $countryQuery, SpyUserQuery $userQuery)
     {
         $this->countryQuery = $countryQuery;
         $this->userQuery = $userQuery;
@@ -40,13 +41,13 @@ class CountryForm extends AbstractForm
                 'label' => 'ISO2 Code',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please provide correct ISO2 Code'
+                        'message' => 'Please provide correct ISO2 Code',
                     ]),
                     new Length([
                         'min' => 2,
-                        'max' => 2
-                    ])
-                ]
+                        'max' => 2,
+                    ]),
+                ],
             ]
         )
             ->addText('iso3_code',
@@ -56,9 +57,9 @@ class CountryForm extends AbstractForm
                         new NotBlank(),
                         new Length([
                             'min' => 3,
-                            'max' => 3
-                        ])
-                    ]
+                            'max' => 3,
+                        ]),
+                    ],
                 ]
             )
             ->addText('name',
@@ -66,7 +67,7 @@ class CountryForm extends AbstractForm
                     'label' => 'Country Name',
                     'constraints' => [
                         new NotBlank(),
-                    ]
+                    ],
                 ]
             )
             ->addCheckbox('postal_code_mandatory',
@@ -80,7 +81,7 @@ class CountryForm extends AbstractForm
                 ]
             )
             ->addHidden('id_country')
-            ->addSubmit();
+        ;
 
     }
 
@@ -102,4 +103,5 @@ class CountryForm extends AbstractForm
 
         return $result;
     }
+
 }

@@ -11,13 +11,17 @@
 
         {% block widget_header_content %}
             <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-default">{{ 'Back to Addresses' | trans }}</a>&nbsp;&nbsp;&nbsp;
-            <a href="/customer/address/view?id_customer_address={{ id_customer_address }}" class="btn btn-sm btn-default">{{ 'View Address' | trans }}</a>&nbsp;&nbsp;&nbsp;
-            <a href="/customer/view?id_customer={{ id_customer }}" class="btn btn-sm btn-default">{{ 'View Customer' | trans }}</a>
+            <a href="/customer/address/view?id_customer_address={{ id_customer_address }}" class="btn btn-sm btn-primary">{{ 'View Address' | trans }}</a>&nbsp;&nbsp;&nbsp;
+            <a href="/customer/view?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'View Customer' | trans }}</a>
         {% endblock %}
 
         {% block widget_content %}
 
-            {{ form(form) }}
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
 
         {% endblock %}
 

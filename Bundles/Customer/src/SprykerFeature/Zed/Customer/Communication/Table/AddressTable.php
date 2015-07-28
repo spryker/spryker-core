@@ -5,6 +5,8 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Table;
 
+use Propel\Runtime\Collection\ObjectCollection;
+use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerAddressTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
@@ -14,18 +16,10 @@ class AddressTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
+
     const DEFAULT_BILLING_ADDRESS = 'default_billing_address';
     const DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
-    const ID_CUSTOMER_ADDRESS = 'IdCustomerAddress';
-    const LAST_NAME = 'LastName';
-    const FIRST_NAME = 'FirstName';
-    const ADDRESS_1 = 'Address1';
-    const ADDRESS_2 = 'Address2';
-    const ADDRESS_3 = 'Address3';
-    const COMPANY = 'Company';
-    const ZIP_CODE = 'ZipCode';
-    const CITY = 'City';
-    const COUNTRY = 'Country';
+
     /**
      * @var SpyCustomerAddressQuery
      */
@@ -37,7 +31,7 @@ class AddressTable extends AbstractTable
     protected $customerQuery;
 
     /**
-     * @var
+     * @var int
      */
     protected $idCustomer;
 
@@ -56,36 +50,36 @@ class AddressTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeaders([
-            self::ID_CUSTOMER_ADDRESS => '#',
-            self::LAST_NAME => 'Last Name',
-            self::FIRST_NAME => 'First Name',
-            self::ADDRESS_1 => 'Address ',
-            self::ADDRESS_2 => 'Address (2nd line)',
-            self::ADDRESS_3 => 'Address (3rd line)',
-            self::COMPANY => self::COMPANY,
-            self::ZIP_CODE => 'Zip Code',
-            self::CITY => self::CITY,
-            self::COUNTRY => self::COUNTRY,
-            self::ACTIONS => self::ACTIONS,
+        $config->setHeader([
+            SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS => '#',
+            SpyCustomerAddressTableMap::COL_LAST_NAME => 'Last Name',
+            SpyCustomerAddressTableMap::COL_FIRST_NAME => 'First Name',
+            SpyCustomerAddressTableMap::COL_ADDRESS1 => 'Address ',
+            SpyCustomerAddressTableMap::COL_ADDRESS2 => 'Address (2nd line)',
+            SpyCustomerAddressTableMap::COL_ADDRESS3 => 'Address (3rd line)',
+            SpyCustomerAddressTableMap::COL_COMPANY => SpyCustomerAddressTableMap::COL_COMPANY,
+            SpyCustomerAddressTableMap::COL_ZIP_CODE => 'Zip Code',
+            SpyCustomerAddressTableMap::COL_CITY => 'City',
+            $this->buildAlias(SpyCustomerAddressTableMap::COL_FK_COUNTRY) => 'Country',
+            self::ACTIONS => 'Actions',
         ]);
 
         $config->setSortable([
-            self::ID_CUSTOMER_ADDRESS,
-            self::FIRST_NAME,
-            self::LAST_NAME,
-            self::ZIP_CODE,
-            self::COUNTRY,
+            SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS,
+            SpyCustomerAddressTableMap::COL_FIRST_NAME,
+            SpyCustomerAddressTableMap::COL_LAST_NAME,
+            SpyCustomerAddressTableMap::COL_ZIP_CODE,
+            SpyCustomerAddressTableMap::COL_FK_COUNTRY,
         ]);
 
         $config->setSearchable([
-            self::ID_CUSTOMER_ADDRESS,
-            self::LAST_NAME,
-            self::FIRST_NAME,
-            self::ADDRESS_1,
-            self::ADDRESS_2,
-            self::ADDRESS_3,
-            self::ZIP_CODE,
+            SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS,
+            SpyCustomerAddressTableMap::COL_LAST_NAME,
+            SpyCustomerAddressTableMap::COL_FIRST_NAME,
+            SpyCustomerAddressTableMap::COL_ADDRESS1,
+            SpyCustomerAddressTableMap::COL_ADDRESS2,
+            SpyCustomerAddressTableMap::COL_ADDRESS3,
+            SpyCustomerAddressTableMap::COL_ZIP_CODE,
         ]);
 
         $config->setUrl(sprintf('table?id_customer=%d', $this->idCustomer));
@@ -102,7 +96,7 @@ class AddressTable extends AbstractTable
     {
         $query = $this->addressQuery->filterByFkCustomer($this->idCustomer)
             ->leftJoinCountry('country')
-            ->withColumn('country.name', self::COUNTRY)
+            ->withColumn('country.name', $this->buildAlias(SpyCustomerAddressTableMap::COL_FK_COUNTRY))
         ;
         $lines = $this->runQuery($query, $config);
 
@@ -118,7 +112,7 @@ class AddressTable extends AbstractTable
 
         if (!empty($lines)) {
             foreach ($lines as $key => $value) {
-                $id = !empty($value[self::ID_CUSTOMER_ADDRESS]) ? $value[self::ID_CUSTOMER_ADDRESS] : false;
+                $id = !empty($value[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS]) ? $value[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS] : false;
 
                 $tags = [];
                 if ((false === is_bool($id)) && ($id === $defaultBillingAddress)) {
@@ -128,7 +122,7 @@ class AddressTable extends AbstractTable
                     $tags[] = '<span class="label label-danger" title="Default shipping address">SHIPPING</span>';
                 }
 
-                $lines[$key][self::ADDRESS_1] = (!empty($tags) ? implode('&nbsp;', $tags) . '&nbsp;' : '') . $lines[$key][self::ADDRESS_1];
+                $lines[$key][SpyCustomerAddressTableMap::COL_ADDRESS1] = (!empty($tags) ? implode('&nbsp;', $tags) . '&nbsp;' : '') . $lines[$key][SpyCustomerAddressTableMap::COL_ADDRESS1];
 
                 $lines[$key][self::ACTIONS] = $this->buildLinks($value);
             }
@@ -146,16 +140,16 @@ class AddressTable extends AbstractTable
     {
         $result = '';
 
-        $idCustomerAddress = !empty($details[self::ID_CUSTOMER_ADDRESS]) ? $details[self::ID_CUSTOMER_ADDRESS] : false;
+        $idCustomerAddress = !empty($details[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS]) ? $details[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS] : false;
         if (false !== $idCustomerAddress) {
             $links = [
-                'Edit' => '/customer/address/edit/?id_customer_address=%d',
-                'View' => '/customer/address/view/?id_customer_address=%d',
+                'Edit' => '/customer/address/edit/?id_customer_address=',
+                'View' => '/customer/address/view/?id_customer_address=',
             ];
 
             $result = [];
             foreach ($links as $key => $value) {
-                $result[] = sprintf('<a href="%s" class="btn btn-xs btn-white">%s</a>', sprintf($value, $idCustomerAddress), $key);
+                $result[] = '<a href="' . $value . $idCustomerAddress .'" class="btn btn-xs btn-white">' . $key . '</a>';
             }
 
             $result = implode('&nbsp;&nbsp;&nbsp;', $result);

@@ -45,7 +45,7 @@ class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
     {
         $productOptionTransfer = (new ProductOptionTransfer)
             ->setIdOptionValueUsage($this->ids['idUsageLarge'])
-            ->setLocalCode(self::LOCALE_CODE);
+            ->setLocaleCode(self::LOCALE_CODE);
 
         $cartItemTransfer = (new CartItemTransfer())
             ->addProductOption($productOptionTransfer);
@@ -58,7 +58,7 @@ class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
         $productOptionTransfer = $changeTransfer->getItems()[0]->getProductOptions()[0];
 
         $this->assertEquals($this->ids['idUsageLarge'], $productOptionTransfer->getIdOptionValueUsage());
-        $this->assertEquals(self::LOCALE_CODE, $productOptionTransfer->getLocalCode());
+        $this->assertEquals(self::LOCALE_CODE, $productOptionTransfer->getLocaleCode());
         $this->assertEquals('Size', $productOptionTransfer->getLabelOptionType());
         $this->assertEquals('Large', $productOptionTransfer->getLabelOptionValue());
         $this->assertEquals(199, $productOptionTransfer->getPrice());

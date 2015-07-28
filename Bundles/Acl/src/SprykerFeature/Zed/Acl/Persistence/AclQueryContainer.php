@@ -24,8 +24,8 @@ use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRolesQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRuleQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRoleQuery;
-use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserUserTableMap;
-use SprykerFeature\Zed\User\Persistence\Propel\SpyUserUserQuery;
+use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
+use SprykerFeature\Zed\User\Persistence\Propel\SpyUserQuery;
 
 /**
  * @method AclDependencyContainer getDependencyContainer()
@@ -136,7 +136,7 @@ class AclQueryContainer extends AbstractQueryContainer
         $query = $this->getDependencyContainer()->createUserHasRoleQuery();
 
         $query->filterByFkAclGroup($idGroup)
-              ->filterByFkUserUser($idUser);
+              ->filterByFkUser($idUser);
 
         return $query;
     }
@@ -144,7 +144,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idGroup
      *
-     * @return SpyUserUserQuery
+     * @return SpyUserQuery
      */
     public function queryGroupUsers($idGroup)
     {
@@ -153,8 +153,8 @@ class AclQueryContainer extends AbstractQueryContainer
         $join = new Join();
 
         $join->addCondition(
-            SpyUserUserTableMap::COL_ID_USER_USER,
-            SpyAclUserHasGroupTableMap::COL_FK_USER_USER
+            SpyUserTableMap::COL_ID_USER_USER,
+            SpyAclUserHasGroupTableMap::COL_FK_USER
         );
 
         $query->addJoinObject($join, self::GROUP_JOIN);
@@ -295,22 +295,22 @@ class AclQueryContainer extends AbstractQueryContainer
     {
         $query = $this->getDependencyContainer()->createGroupQuery();
         $query->useSpyAclUserHasGroupQuery()
-            ->filterByFkUserUser($idUser)
+            ->filterByFkUser($idUser)
             ->endUse();
 
         return $query;
     }
 
     /**
-     * @return SpyUserUserQuery
+     * @return SpyUserQuery
      */
     public function queryUsersWithGroup()
     {
         $query = $this->getDependencyContainer()->createUserQuery();
 
         $query->addJoin(
-            SpyUserUserTableMap::COL_ID_USER_USER,
-            SpyAclUserHasGroupTableMap::COL_FK_USER_USER,
+            SpyUserTableMap::COL_ID_USER_USER,
+            SpyAclUserHasGroupTableMap::COL_FK_USER,
             Criteria::LEFT_JOIN
         );
 
@@ -329,7 +329,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idGroup
      *
-     * @return SpyUserUserQuery
+     * @return SpyUserQuery
      */
     public function queryUsersWithGroupByGroupId($idGroup)
     {

@@ -9,8 +9,11 @@ namespace SprykerFeature\Zed\Sales\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesBusiness;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Sales\Business\Model;
 use SprykerFeature\Zed\Sales\Business\Model\CommentManager;
 use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;
+use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItemInterface;
+use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use SprykerFeature\Zed\Sales\Dependency\Plugin\OrderReferenceGeneratorInterface;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
@@ -60,6 +63,26 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
     public function createSalesQueryContainer()
     {
         return $this->getQueryContainer();
+    }
+
+    /**
+     * @return OrderItemInterface
+     */
+    public function createOrderItemSplitter()
+    {
+        return $this->getFactory()->createModelSplitOrderItem(
+            $this->createSplitValidator(),
+            $this->createSalesQueryContainer(),
+            $this->getFactory()->createModelSplitCalculator()
+        );
+    }
+
+    /**
+     * @return ValidatorInterface
+     */
+    protected function createSplitValidator()
+    {
+        return $this->getFactory()->createModelSplitValidationValidator();
     }
 
     /**

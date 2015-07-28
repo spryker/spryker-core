@@ -10,12 +10,16 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_header_content %}
-            <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'Back to Manage Addresses' | trans }}</a>
+            <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-default">{{ 'Back to Manage Addresses' | trans }}</a>
         {% endblock %}
 
         {% block widget_content %}
 
-            {{ form(form) }}
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
 
         {% endblock %}
 

@@ -146,9 +146,50 @@ class GatewayController extends AbstractGatewayController
      */
     public function newAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()
+        $addressTransfer = $this->getFacade()
             ->createAddress($addressTransfer)
         ;
+        $this->setSuccess($addressTransfer->getIdCustomerAddress() > 0);
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @param CustomerAddressTransfer $addressTransfer
+     *
+     * @return CustomerAddressTransfer
+     */
+    public function deleteAddressAction(CustomerAddressTransfer $addressTransfer)
+    {
+        $success = $this->getFacade()
+            ->deleteAddress($addressTransfer)
+        ;
+        $this->setSuccess($success);
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @param CustomerAddressTransfer $addressTransfer
+     *
+     * @return CustomerAddressTransfer
+     */
+    public function defaultBillingAddressAction(CustomerAddressTransfer $addressTransfer)
+    {
+        $success = $this->getFacade()->setDefaultBillingAddress($addressTransfer);
+        $this->setSuccess($success);
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @param CustomerAddressTransfer $addressTransfer
+     *
+     * @return CustomerAddressTransfer
+     */
+    public function defaultShippingAddressAction(CustomerAddressTransfer $addressTransfer)
+    {
+        $success = $this->getFacade()->setDefaultShippingAddress($addressTransfer);
         $this->setSuccess($success);
 
         return $addressTransfer;

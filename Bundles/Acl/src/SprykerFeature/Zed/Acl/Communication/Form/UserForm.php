@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class UserForm extends AbstractForm
 {
 
-    const FIELD_USER_ID = 'id_user_user';
+    const FIELD_USER_ID = 'id_user';
     const FIELD_USER_FIRST_NAME = 'first_name';
     const FIELD_USER_LAST_NAME = 'last_name';
     const FIELD_USER_USERNAME = 'username';
@@ -65,7 +65,7 @@ class UserForm extends AbstractForm
 
         if ($this->getUserId()) {
             $query = $this->getAclQueryContainer()->queryUsersWithGroup();
-            $query->filterByIdUserUser($this->getUserId());
+            $query->filterByIdUser($this->getUserId());
 
             $entity = $query->findOne();
 

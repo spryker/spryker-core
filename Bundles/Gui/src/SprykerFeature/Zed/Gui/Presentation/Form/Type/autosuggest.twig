@@ -1,14 +1,3 @@
 {% block autosuggest_widget %}
-    {{ form_widget(form) }}
-    <script type="text/javascript">
-        (function ($) {
-            jQuery(window).load(function () {
-                $('#{{ id }}').autocomplete({
-                    serviceUrl: '{{ url }}',
-                    minChars: 1,
-                    type: 'GET'
-                });
-            });
-        })(jQuery);
-    </script>
+    {{ form_widget(form, { 'attr': {'class': 'spryker-form-autocomplete', 'data-url':  url} }) }}
 {% endblock %}

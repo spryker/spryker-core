@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: vsevoloddolgopolov
@@ -10,8 +11,6 @@ namespace SprykerFeature\Zed\Product\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerEngine\Zed\Gui\Business\ProductForm;
-use SprykerEngine\Zed\Kernel\Locator;
 
 class ProductController extends AbstractController
 {
@@ -20,6 +19,5 @@ class ProductController extends AbstractController
     {
 
     }
-
 
 }

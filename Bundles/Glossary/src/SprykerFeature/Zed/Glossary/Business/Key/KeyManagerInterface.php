@@ -52,6 +52,4 @@ interface KeyManagerInterface
      * @return bool
      */
     public function deleteKey($keyName);
-
-    public function synchronizeKeys();
 }

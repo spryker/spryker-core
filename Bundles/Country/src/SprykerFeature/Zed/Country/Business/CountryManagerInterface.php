@@ -29,6 +29,7 @@ interface CountryManagerInterface
 
     /**
      * @param CountryInterface $countryTransfer
+     *
      * @return int
      */
     public function saveCountry(CountryInterface $countryTransfer);

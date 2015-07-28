@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Gui\Communication\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -7,12 +11,9 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-/**
- * Class AutosuggestType
- * @package SprykerFeature\Zed\Gui\Communication\Form\Type
- */
 class SelectType extends AbstractType
 {
+
     /**
      * @param FormView $view
      * @param FormInterface $form
@@ -50,4 +51,5 @@ class SelectType extends AbstractType
     {
         return 'select';
     }
+
 }

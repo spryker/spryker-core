@@ -1,6 +1,6 @@
 <table
-    border="1"
-    class="table table-striped table-bordered table-hover gui-table-data"
+    border="0"
+    class="table table-stripped table-bordered table-hover {{ config.class | default('gui-table-data') }}"
     data-ajax="/{{ app.request.get('module') }}/{{ app.request.get('controller') }}/{{ config.url }}"
     data-processing="true"
     data-server-side="true"
@@ -10,7 +10,7 @@
         data-page-length="{{ config.pageLength }}"
     {%  endif %}
     data-columns='[
-    {% for id, value in config.headers %}
+    {% for id, value in config.header %}
         {% if id in config.sortable %}
         { "orderable": true }
         {% else %}

@@ -18,7 +18,7 @@ class DeployPreparePropelConsole extends Console
 {
 
     const COMMAND_NAME = 'setup:deploy:prepare_propel';
-    const DESCRIPTION = 'This command prepares propel configuration on appserver';
+    const DESCRIPTION = 'Prepares propel configuration on appserver';
 
     protected function configure()
     {

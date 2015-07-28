@@ -7,11 +7,21 @@ namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Customer\Business\CustomerFacade;
+use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * @method CustomerCommunication getFactory()
+ * @method CustomerQueryContainerInterface getQueryContainer()
+ * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerFacade getFacade()
+ */
 class EditController extends AbstractController
 {
 
@@ -28,7 +38,6 @@ class EditController extends AbstractController
         $form = $this->getDependencyContainer()
             ->createCustomerForm('update')
         ;
-        $form->init();
 
         $form->handleRequest();
 
@@ -42,14 +51,14 @@ class EditController extends AbstractController
                 ->updateCustomer($customer)
             ;
 
-            $defaultBillingAddress = !empty($data['default_billing_address']) ? $data['default_billing_address'] : false;
-            if (false === empty($defaultBillingAddress)) {
-                $this->updateBillingAddress($idCustomer, $defaultBillingAddress);
+            $defaultBilling = !empty($data['default_billing_address']) ? $data['default_billing_address'] : false;
+            if (!empty($defaultBilling)) {
+                $this->updateBillingAddress($idCustomer, $defaultBilling);
             }
 
-            $defaultShippingAddress = !empty($data['default_shipping_address']) ? $data['default_shipping_address'] : false;
-            if (false === empty($defaultShippingAddress)) {
-                $this->updateShippingAddress($idCustomer, $defaultShippingAddress);
+            $defaultShipping = !empty($data['default_shipping_address']) ? $data['default_shipping_address'] : false;
+            if (!empty($defaultShipping)) {
+                $this->updateShippingAddress($idCustomer, $defaultShipping);
             }
 
             return $this->redirectResponse(sprintf('/customer/view/?id_customer=%d', $idCustomer));

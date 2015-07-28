@@ -58,7 +58,7 @@ class ProductOptionReader implements ProductOptionReaderInterface
 
         $productOptionTransfer = new ProductOptionTransfer();
         $productOptionTransfer->setIdOptionValueUsage($idProductOptionValueUsage)
-            ->setLocalCode($localeCode);
+            ->setLocaleCode($localeCode);
 
         $result =  $this->queryContainer->queryProductOptionValueUsageWithAssociatedAttributes(
             $idProductOptionValueUsage, $localeTransfer->getIdLocale()

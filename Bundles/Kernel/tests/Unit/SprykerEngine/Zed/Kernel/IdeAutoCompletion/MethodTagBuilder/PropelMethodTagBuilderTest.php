@@ -8,7 +8,6 @@ namespace Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion;
 
 use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\PropelMethodTagBuilder;
 use SprykerFeature\Shared\Library\Autoloader;
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConstructableMethodTagBuilder;
 
 /**
  * @group SprykerEngine
@@ -26,12 +25,12 @@ class PropelMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
             PropelMethodTagBuilder::OPTION_KEY_APPLICATION => 'Application',
             PropelMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Persistence/',
             PropelMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src/',
-            PropelMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/'
+            PropelMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src/',
         ];
 
-        require_once(__DIR__ . '/Fixtures/vendor/vendor/package/src/VendorNamespace/Application/Bundle/Persistence/Propel/Bar.php');
-        require_once(__DIR__ . '/Fixtures/vendor/vendor/package/src/VendorNamespace/Application/Bundle/Persistence/Propel/Base/IgnoredClass.php');
-        require_once(__DIR__ . '/Fixtures/vendor/vendor/package/src/VendorNamespace/Application/Bundle/Persistence/Propel/Map/IgnoredClass.php');
+        require_once __DIR__ . '/Fixtures/vendor/vendor/package/src/VendorNamespace/Application/Bundle/Persistence/Propel/Bar.php';
+        require_once __DIR__ . '/Fixtures/vendor/vendor/package/src/VendorNamespace/Application/Bundle/Persistence/Propel/Base/IgnoredClass.php';
+        require_once __DIR__ . '/Fixtures/vendor/vendor/package/src/VendorNamespace/Application/Bundle/Persistence/Propel/Map/IgnoredClass.php';
 
         $methodTagBuilder = new PropelMethodTagBuilder($options);
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle');

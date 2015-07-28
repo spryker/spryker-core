@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Auth\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Shared\Auth\Messages\Messages;
 use SprykerFeature\Zed\Auth\Communication\AuthDependencyContainer;
+use SprykerFeature\Zed\Auth\Communication\Form\LoginForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,49 +26,32 @@ class LoginController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createLoginForm($request);
+        $form = $this->getDependencyContainer()
+            ->createLoginForm($request)
+        ;
+        $form->handleRequest();
 
-        $form->init();
+        $message = null;
+
+        if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {
+            $formData = $form->getData();
+
+            $isLogged = $this->getDependencyContainer()
+                ->locateAuthFacade()
+                ->login($formData[LoginForm::USERNAME], $formData[LoginForm::PASSWORD])
+            ;
+
+            if (true === $isLogged) {
+                return $this->redirectResponse('/');
+            } else {
+                $message = 'Authentication failed';
+            }
+        }
 
         return $this->viewResponse([
-            'form' => json_encode($form->toArray()),
+            'form' => $form->createView(),
+            'message' => $message,
         ]);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function checkAction(Request $request)
-    {
-        $statusCode = 401;
-        $headers = [];
-
-        $facade = $this->getDependencyContainer()->locateAuthFacade();
-
-        $form = $this->getDependencyContainer()->createLoginForm($request);
-        $form->init();
-
-        $formData = $form->getRequestData();
-
-        if (false === $form->isValid()) {
-            return $this->jsonResponse($form->toArray(), $statusCode, $headers);
-        }
-
-        //Business logic validation
-        $isLogged = $facade->login($formData['username'], $formData['password']);
-        $response = $form->toArray();
-
-        if (true === $isLogged) {
-            $statusCode = 200;
-            $headers['Spy-Location'] = '/';
-        } else {
-            $response['fields'][0]['messages'][] = Messages::ERROR_LOGIN_NOT_FOUND;
-            $statusCode = 401;
-        }
-
-        return $this->jsonResponse(['content' => $response], $statusCode, $headers);
     }
 
 }

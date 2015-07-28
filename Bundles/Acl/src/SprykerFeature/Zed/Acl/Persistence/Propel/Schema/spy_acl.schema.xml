@@ -46,10 +46,10 @@
     </table>
 
     <table name="spy_acl_user_has_group" isCrossRef="true">
-        <column name="fk_user_user" type="integer" primaryKey="true"/>
+        <column name="fk_user" type="integer" primaryKey="true"/>
         <column name="fk_acl_group" type="integer" primaryKey="true"/>
-        <foreign-key foreignTable="spy_user_user" onDelete="CASCADE">
-            <reference local="fk_user_user" foreign="id_user_user"/>
+        <foreign-key foreignTable="spy_user" onDelete="CASCADE">
+            <reference local="fk_user" foreign="id_user"/>
         </foreign-key>
         <foreign-key foreignTable="spy_acl_group" onDelete="CASCADE">
             <reference local="fk_acl_group" foreign="id_acl_group"/>

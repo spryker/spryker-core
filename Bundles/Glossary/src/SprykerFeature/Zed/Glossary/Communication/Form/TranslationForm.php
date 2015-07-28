@@ -5,66 +5,119 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication\Form;
 
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
-use Symfony\Component\HttpFoundation\Request;
+use Propel\Runtime\Map\TableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 
 class TranslationForm extends AbstractForm
 {
 
-    protected $localeFacade;
+    const ADD = 'add';
+    const UPDATE = 'update';
+    const FK_GLOSSARY_KEY = 'fk_glossary_key';
+    const NAME = 'Name';
 
     /**
-     * @param Request $request
-     * @param QueryContainerInterface $queryContainer
-     * @param GlossaryToLocaleInterface $localeFacade
+     * @var SpyGlossaryTranslationQuery
      */
-    public function __construct(
-        Request $request,
-        QueryContainerInterface $queryContainer,
-        GlossaryToLocaleInterface $localeFacade
-    ) {
-        parent::__construct($request, $queryContainer);
-        $this->localeFacade = $localeFacade;
+    protected $glossaryTranslationQuery;
+
+    /**
+     * @var SpyGlossaryKeyQuery
+     */
+    protected $glossaryKeyQuery;
+
+    /**
+     * @var array
+     */
+    protected $locales;
+
+    /**
+     * @var string
+     */
+    protected $type;
+
+    public function __construct(SpyGlossaryTranslationQuery $glossaryTranslationQuery, SpyGlossaryKeyQuery $glossaryKeyQuery, $locales, $type)
+    {
+        $this->glossaryTranslationQuery = $glossaryTranslationQuery;
+        $this->glossaryKeyQuery = $glossaryKeyQuery;
+
+        $this->locales = $locales;
+        $this->type = $type;
     }
 
     /**
      * @return array
      */
-    protected function getDefaultData()
+    protected function populateFormFields()
     {
-        $idGlossaryKey = $this->stateContainer
-            ->getRequestValue('id_glossary_key')
-        ;
+        $result = [];
 
-        $translations = [];
-        $translatedValues = $this->queryContainer
-            ->queryTranslationsByKeyId($idGlossaryKey)
-        ;
+        $fkGlossaryKey = $this->request->get(self::FK_GLOSSARY_KEY);
 
-        foreach ($translatedValues as $translation) {
-            $translations['locale_' . $translation->getFkLocale()] = $translation->getValue();
-        }
+        if (!empty($fkGlossaryKey)) {
+            $key = $this->glossaryKeyQuery->findOneByIdGlossaryKey($fkGlossaryKey);
 
-        return $translations;
-    }
+            $result['glossary_key'] = $key->getKey();
 
-    /**
-     * @return array
-     */
-    public function addFormFields()
-    {
-        $fields = [];
-
-        $locales = $this->localeFacade->getAvailableLocales();
-
-        foreach ($locales as $localeId => $locale) {
-            $fields[] = $this->addField('locale_' . $localeId)
-                ->setLabel($locale)
+            $translations = $this->glossaryTranslationQuery->filterByFkGlossaryKey($fkGlossaryKey)
+                ->find()
             ;
+
+            if (!empty($translations)) {
+                $translations = $translations->toArray(null, false, TableMap::TYPE_COLNAME);
+
+                foreach ($translations as $value) {
+                    $result['locale_' . $value[SpyGlossaryTranslationTableMap::COL_FK_LOCALE]] = $value[SpyGlossaryTranslationTableMap::COL_VALUE];
+                }
+    }
         }
 
-        return $fields;
+        return $result;
     }
+
+    /**
+     * @return array
+     */
+    public function buildFormFields()
+    {
+
+        if (self::UPDATE === $this->type) {
+            $this->addText('glossary_key', [
+                'label' => self::NAME,
+                'attr' => [
+                'readonly' => 'readonly',
+                ],
+            ]);
+        } else {
+            $this->addAutosuggest('glossary_key', [
+                'label' => self::NAME,
+                'url' => '/glossary/key/suggest',
+            ]);
+        }
+
+        foreach ($this->locales as $key => $locale) {
+            $this->addText('locale_' . $key, [
+                'label' => $locale,
+                'constraints' => [
+                    new NotBlank(),
+                    new Required(),
+                ]
+            ]);
+        }
+
+        $this->addSubmit('submit', [
+            'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
+            'attr' => [
+                'class' => 'btn btn-primary',
+            ],
+        ]);
+
+        return $this;
+    }
+
 }

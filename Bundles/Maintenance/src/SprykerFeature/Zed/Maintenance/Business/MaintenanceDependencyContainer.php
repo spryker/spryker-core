@@ -10,6 +10,7 @@ use Generated\Shared\Maintenance\InstalledPackagesInterface;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\MaintenanceBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\BundleCodeStyleFixer;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\BundleParser;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\Graph;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\Manager;
@@ -17,7 +18,6 @@ use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\Installed
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
 /**
@@ -109,6 +109,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $bundleParser = $this->createDependencyBundleParser();
         $manager = $this->createDependencyManager();
+
         return $this->getFactory()->createDependencyGraph($bundleParser, $manager);
     }
 
@@ -118,6 +119,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     public function createDependencyBundleParser()
     {
         $config = $this->getConfig();
+
         return $this->getFactory()->createDependencyBundleParser($config);
     }
 
@@ -127,7 +129,19 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     public function createDependencyManager()
     {
         $bundleParser = $this->createDependencyBundleParser();
+
         return $this->getFactory()->createDependencyManager($bundleParser);
+    }
+
+    /**
+     * @return BundleCodeStyleFixer
+     */
+    public function createBundleCodeStyleFixer()
+    {
+        return $this->getFactory()->createCodeStyleFixerBundleCodeStyleFixer(
+            $this->getConfig()->getPathToRoot(),
+            $this->getConfig()->getBundleDirectory()
+        );
     }
 
 }

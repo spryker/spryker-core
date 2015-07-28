@@ -42,6 +42,7 @@ class TwigServiceProvider extends SilexTwigServiceProvider
             $namespace = Config::get(SystemConfig::PROJECT_NAMESPACE);
 
             $storeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
+
             return new Filesystem(
                 [
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/',
@@ -71,7 +72,6 @@ class TwigServiceProvider extends SilexTwigServiceProvider
         $app['twig.global.variables'] = $app->share(function () {
              return [];
         });
-
 
         $app['twig'] = $app->share(
             $app->extend(
@@ -139,20 +139,18 @@ class TwigServiceProvider extends SilexTwigServiceProvider
     }
 
     /**
-     * @return void
      */
-    protected  function provideFormTypeExtension()
+    protected function provideFormTypeExtension()
     {
         $this->app['form.type.extensions'] = $this->app->share(function () {
-            return array(
-                new NoValidateTypeExtension()
-            );
+            return [
+                new NoValidateTypeExtension(),
+            ];
         });
 
     }
 
     /**
-     * @return void
      */
     protected function provideFormTypeTemplates()
     {
@@ -164,7 +162,7 @@ class TwigServiceProvider extends SilexTwigServiceProvider
 
         $files = new \FilesystemIterator($path, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::KEY_AS_PATHNAME);
 
-        $typeTemplates = array();
+        $typeTemplates = [];
         foreach ($files as $file) {
             $typeTemplates[] = $file->getFilename();
         }
@@ -173,4 +171,5 @@ class TwigServiceProvider extends SilexTwigServiceProvider
             'bootstrap_3_layout.html.twig',
         ], $typeTemplates);
     }
+
 }

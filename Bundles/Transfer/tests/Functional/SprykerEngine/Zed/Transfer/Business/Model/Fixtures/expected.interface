@@ -7,12 +7,13 @@
 namespace Generated\Shared\Test;
 
 use Generated\Shared\Transfer\OrderItemTransfer;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
-interface CatFaceInterface
+interface CatFaceInterface extends TransferInterface
 {
 
     /**

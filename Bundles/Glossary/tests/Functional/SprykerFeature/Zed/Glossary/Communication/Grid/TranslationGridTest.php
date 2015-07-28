@@ -10,7 +10,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\Glossary\Communication\Grid\TranslationGrid;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryKeyQuery;
 use Symfony\Component\HttpFoundation\Request;
@@ -82,29 +81,6 @@ class TranslationGridTest extends Test
     private function getGlossaryQueryContainer()
     {
         return $this->getLocator()->glossary()->queryContainer();
-    }
-
-    public function testRenderedDataShouldContainFormColumnsWithNameOfGivenLocales()
-    {
-        $grid = new TranslationGrid($this->query, $this->request, array_keys($this->locales));
-        $gridData = $grid->renderData();
-
-        $localeIds = array_keys($this->locales);
-
-        $this->assertSame($localeIds[0], $gridData['content']['columns'][$localeIds[0]]['name']);
-        $this->assertSame($localeIds[1], $gridData['content']['columns'][$localeIds[1]]['name']);
-    }
-
-//    public function testRenderedDataShouldContainColumnResultsWithNameOfGivenLocales()
-    public function testRenderedGridDataShouldContainColumnsWhereIdOfGivenLocaleIsTheColumnKey()
-    {
-        $grid = new TranslationGrid($this->query, $this->request, array_keys($this->locales));
-        $gridData = $grid->renderData();
-
-        $localeIds = array_keys($this->locales);
-
-        $this->assertArrayHasKey($localeIds[0], $gridData['content']['columns']);
-        $this->assertArrayHasKey($localeIds[1], $gridData['content']['columns']);
     }
 
 }

@@ -293,4 +293,23 @@ class CustomerFacadeTest extends Test
         $this->assertNotNull($renderedAddress);
     }
 
+    public function testDeleteAddress()
+    {
+        $customerTransfer = $this->createTestCustomer();
+        $addressTransfer = new CustomerAddressTransfer();
+        $addressTransfer->setEmail($customerTransfer->getEmail());
+        $addressTransfer->setFirstName(self::TESTER_NAME);
+        $addressTransfer->setLastName(self::TESTER_NAME);
+        $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
+        $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
+        $this->assertNotNull($addressTransfer);
+        $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
+
+        $addresses = $customerTransfer->getAddresses()->getCustomerAddressItems();
+        $addressTransfer = $addresses[0];
+
+        $deletedAddress = $this->customerFacade->deleteAddress($addressTransfer);
+        $this->assertNotNull($deletedAddress);
+    }
+
 }

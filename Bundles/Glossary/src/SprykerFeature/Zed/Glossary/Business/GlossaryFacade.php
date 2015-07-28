@@ -20,7 +20,7 @@ use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
  */
 class GlossaryFacade extends AbstractFacade
 {
-    
+
     /**
      * @param string $keyName
      *
@@ -82,13 +82,6 @@ class GlossaryFacade extends AbstractFacade
         $keyManager = $this->getDependencyContainer()->createKeyManager();
 
         return $keyManager->deleteKey($keyName);
-    }
-
-    public function synchronizeKeys()
-    {
-        $keyManager = $this->getDependencyContainer()->createKeyManager();
-
-        $keyManager->synchronizeKeys();
     }
 
     /**

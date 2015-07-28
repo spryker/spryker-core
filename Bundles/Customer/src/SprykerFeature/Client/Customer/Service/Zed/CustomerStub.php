@@ -7,11 +7,12 @@
 namespace SprykerFeature\Client\Customer\Service\Zed;
 
 use Generated\Shared\Customer\CustomerInterface;
-use Generated\Shared\Transfer\CustomerAddressInterface;
+use Generated\Shared\Customer\CustomerAddressInterface;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
+use Generated\Shared\Transfer\CustomerAddressTransfer;
 
 class CustomerStub implements CustomerStubInterface
 {
@@ -19,7 +20,7 @@ class CustomerStub implements CustomerStubInterface
     /**
      * @var ZedRequestClient
      */
-    private $zedStub;
+    protected $zedStub;
 
     /**
      * @param ZedRequestClient $zedStub
@@ -133,6 +134,36 @@ class CustomerStub implements CustomerStubInterface
     public function createAddress(CustomerAddressInterface $addressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/new-address', $addressTransfer);
+    }
+
+    /**
+     * @param CustomerAddressInterface $customerAddressTransfer
+     *
+     * @return CustomerAddressTransfer
+     */
+    public function deleteAddress(CustomerAddressInterface $customerAddressTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/delete-address', $customerAddressTransfer);
+    }
+
+    /**
+     * @param CustomerAddressInterface $customerAddressInterface
+     *
+     * @return CustomerAddressTransfer
+     */
+    public function setDefaultBillingAddress(CustomerAddressInterface $customerAddressInterface)
+    {
+        return $this->zedStub->call('/customer/gateway/default-billing-address', $customerAddressInterface);
+    }
+
+    /**
+     * @param CustomerAddressInterface $customerAddressInterface
+     *
+     * @return CustomerAddressTransfer
+     */
+    public function setDefaultShippingAddress(CustomerAddressInterface $customerAddressInterface)
+    {
+        return $this->zedStub->call('/customer/gateway/default-shipping-address', $customerAddressInterface);
     }
 
 }

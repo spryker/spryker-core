@@ -61,9 +61,6 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
-        $cartItemTax = new TaxItemTransfer();
-        $cartItemTax->setPercentage(10);
-        $cartItem->setTax($cartItemTax);
 
         $cart->addItem($cartItem);
 
@@ -71,9 +68,6 @@ class CartFacadeTest extends AbstractFunctionalTest
         $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
-        $newItemTax = new TaxItemTransfer();
-        $newItemTax->setPercentage(10);
-        $newItem->setTax($newItemTax);
 
         $cartChange = new ChangeTransfer();
         $cartChange->setCart($cart);
@@ -102,9 +96,6 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
-        $cartItemTax = new TaxItemTransfer();
-        $cartItemTax->setPercentage(10);
-        $cartItem->setTax($cartItemTax);
 
         $cart->addItem($cartItem);
 
@@ -112,9 +103,6 @@ class CartFacadeTest extends AbstractFunctionalTest
         $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
-        $newItemTax = new TaxItemTransfer();
-        $newItemTax->setPercentage(10);
-        $newItem->setTax($newItemTax);
 
         $cartChange = new ChangeTransfer();
         $cartChange->setCart($cart);
@@ -122,11 +110,14 @@ class CartFacadeTest extends AbstractFunctionalTest
 
         $changedCart = $this->cartFacade->increaseQuantity($cartChange);
         $cartItems = $changedCart->getItems();
-        $this->assertCount(1, $cartItems);
+        $this->assertCount(2, $cartItems);
 
         /** @var CartItemTransfer $changedItem */
-        $changedItem = $cartItems[0];
-        $this->assertEquals(4, $changedItem->getQuantity());
+        $changedItem = $cartItems[1];
+        $this->assertEquals(3, $changedItem->getQuantity());
+
+        $changedItem = $cartItems[self::DUMMY_1_SKU_CONCRETE_PRODUCT];
+        $this->assertEquals(1, $changedItem->getQuantity());
     }
 
     public function testRemoveFromCart()
@@ -136,9 +127,6 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $cartItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(1);
-        $cartItemTax = new TaxItemTransfer();
-        $cartItemTax->setPercentage(10);
-        $cartItem->setTax($cartItemTax);
 
         $cart->addItem($cartItem);
 
@@ -146,9 +134,6 @@ class CartFacadeTest extends AbstractFunctionalTest
         $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
-        $newItemTax = new TaxItemTransfer();
-        $newItemTax->setPercentage(10);
-        $newItem->setTax($newItemTax);
 
         $cartChange = new ChangeTransfer();
         $cartChange->setCart($cart);
@@ -166,9 +151,6 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cartItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
-        $cartItemTax = new TaxItemTransfer();
-        $cartItemTax->setPercentage(10);
-        $cartItem->setTax($cartItemTax);
 
         $cart->addItem($cartItem);
 
@@ -176,9 +158,6 @@ class CartFacadeTest extends AbstractFunctionalTest
         $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
-        $newItemTax = new TaxItemTransfer();
-        $newItemTax->setPercentage(10);
-        $newItem->setTax($newItemTax);
 
         $cartChange = new ChangeTransfer();
         $cartChange->setCart($cart);

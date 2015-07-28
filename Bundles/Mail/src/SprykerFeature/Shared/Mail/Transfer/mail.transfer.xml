@@ -22,9 +22,9 @@
         <property name="idSalesOrderItem" type="int" />
         <property name="name" type="string" />
         <property name="sku" type="string" />
-        <property name="grossPrice" type="string" />
-        <property name="totalPrice" type="string" />
-        <property name="quantity" type="string" />
+        <property name="grossPrice" type="int" />
+        <property name="totalPrice" type="int" />
+        <property name="quantity" type="int" />
     </transfer>
 
     <transfer name="MailRecipient">

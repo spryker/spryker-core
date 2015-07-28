@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -7,6 +8,7 @@ namespace SprykerFeature\Zed\Gui\Communication\Table;
 
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -54,20 +56,56 @@ abstract class AbstractTable
     protected $defaultUrl = 'table';
 
     /**
-     * @var null
+     * @var string
+     */
+    protected $tableClass;
+
+    /**
+     * @var bool
+     */
+    private $initialized = false;
+
+    /**
+     * @var string
      */
     protected $tableIdentifier;
 
-    public function init()
+    /**
+     * @return $this
+     */
+    private function init()
     {
-        $this->locator = Locator::getInstance();
-        $this->request = $this->locator->application()
-            ->pluginPimple()
-            ->getApplication()['request'];
-        $config = $this->newTableConfiguration();
-        $config->setPageLength($this->getLimit());
-        $config = $this->configure($config);
-        $this->setConfiguration($config);
+        if (!$this->initialized) {
+            $this->initialized = true;
+            $this->locator = Locator::getInstance();
+            $this->request = $this->locator->application()
+                ->pluginPimple()
+                ->getApplication()['request']
+            ;
+            $config = $this->newTableConfiguration();
+            $config->setPageLength($this->getLimit());
+            $config = $this->configure($config);
+            $this->setConfiguration($config);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @todo find a better solution (remove it)
+     *
+     * @param string $name
+     *
+     * @return string
+     * @deprecated this method should not be needed.
+     */
+    public function buildAlias($name)
+    {
+        return str_replace(
+            ['.', '(', ')'],
+            '',
+            $name
+        );
     }
 
     /**
@@ -107,8 +145,8 @@ abstract class AbstractTable
     {
         $tableData = [];
 
-        $headers = $this->config->getHeaders();
-        $isArray = (true === is_array($headers));
+        $headers = $this->config->getHeader();
+        $isArray = is_array($headers);
         foreach ($data as $row) {
             if ($isArray) {
                 $row = array_intersect_key($row, $headers);
@@ -123,17 +161,17 @@ abstract class AbstractTable
     }
 
     /**
-     * @param $order
-     * @param $data
+     * @param array $headers
+     * @param array $row
      *
      * @return array
      */
-    protected function reOrderByHeaders($order, $data)
+    protected function reOrderByHeaders(array $headers, array $row)
     {
         $result = [];
 
-        foreach ($order as $key => $value) {
-            $result[$key] = $data[$key];
+        foreach ($headers as $key => $value) {
+            $result[$key] = $row[$key];
         }
 
         return $result;
@@ -176,9 +214,11 @@ abstract class AbstractTable
     }
 
     /**
+     * @param string $prefix
+     *
      * @return $this
      */
-    protected function generateTableIdentifier($prefix='table-')
+    protected function generateTableIdentifier($prefix = 'table-')
     {
         $this->tableIdentifier = uniqid($prefix);
 
@@ -199,11 +239,11 @@ abstract class AbstractTable
      */
     private function getTwig()
     {
-
         /** @var \Twig_Environment $twig */
         $twig = $this->locator->application()
             ->pluginPimple()
-            ->getApplication()['twig'];
+            ->getApplication()['twig']
+        ;
 
         if ($twig === null) {
             throw new \LogicException('Twig environment not set up.');
@@ -240,7 +280,7 @@ abstract class AbstractTable
     /**
      * @return mixed
      */
-    public function getSearchTherm()
+    public function getSearchTerm()
     {
         return $this->request->query->get('search', null);
     }
@@ -256,23 +296,17 @@ abstract class AbstractTable
     /**
      * @return string
      */
-    public function __toString()
-    {
-        return $this->render();
-    }
-
-    /**
-     * @return string
-     */
     public function render()
     {
+        $this->init();
+
         $twigVars = [
             'config' => $this->prepareConfig(),
         ];
 
         return $this->getTwig()
             ->render('index.twig', $twigVars)
-            ;
+        ;
     }
 
     /**
@@ -283,7 +317,8 @@ abstract class AbstractTable
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
                 'tableId' => $this->getTableIdentifier(),
-                'headers' => $this->config->getHeaders(),
+                'class' => $this->tableClass,
+                'header' => $this->config->getHeader(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
@@ -291,8 +326,10 @@ abstract class AbstractTable
             ];
         } else {
             $configArray = [
-                'tableId' => 'table-' . md5(time()),
+                'tableId' => $this->getTableIdentifier(),
+                'class' => $this->tableClass,
                 'url' => $this->defaultUrl,
+                'header' => [],
             ];
         }
 
@@ -300,6 +337,8 @@ abstract class AbstractTable
     }
 
     /**
+     * @todo to be rafactored, does to many things and is hard to understand
+     *
      * @param ModelCriteria $query
      * @param TableConfiguration $config
      *
@@ -310,19 +349,15 @@ abstract class AbstractTable
         $limit = $config->getPageLength();
         $offset = $this->getOffset();
         $order = $this->getOrders();
-        $columns = array_keys($config->getHeaders());
+        $columns = array_keys($config->getHeader());
         $orderColumn = $columns[$order[0]['column']];
         $this->total = $query->count();
         $query->orderBy($orderColumn, $order[0]['dir']);
-        $searchTherm = $this->getSearchTherm();
+        $searchTerm = $this->getSearchTerm();
 
-        if (mb_strlen($searchTherm['value']) > 0) {
+        if (mb_strlen($searchTerm['value']) > 0) {
             $isFirst = true;
-
             $query->setIdentifierQuoting(true);
-            $tableName = $query->getTableMap()
-                ->getName()
-            ;
 
             foreach ($config->getSearchable() as $value) {
                 if (!$isFirst) {
@@ -331,10 +366,9 @@ abstract class AbstractTable
                     $isFirst = false;
                 }
 
-                $query->where(sprintf('LOWER(%s.%s) LIKE ?', $tableName, $query->getTableMap()
-                    ->getColumnByPhpName($value)
-                    ->getName()), '%' . mb_strtolower($searchTherm['value']) . '%');
+                $query->where(sprintf("LOWER(%s) LIKE '%s'", $value, '%' . mb_strtolower($searchTerm['value']) . '%'));
             }
+
             $this->filtered = $query->count();
         } else {
             $this->filtered = $this->total;
@@ -345,7 +379,7 @@ abstract class AbstractTable
         ;
         $data = $query->find();
 
-        return $data->toArray();
+        return $data->toArray(null, false, TableMap::TYPE_COLNAME);
     }
 
     /**
@@ -353,6 +387,8 @@ abstract class AbstractTable
      */
     public function fetchData()
     {
+        $this->init();
+
         $data = $this->prepareData($this->config);
         $this->loadData($data);
         $wrapperArray = [
@@ -363,5 +399,29 @@ abstract class AbstractTable
         ];
 
         return $wrapperArray;
+    }
+
+    /**
+     * Drop table name from key
+     *
+     * @param string $key
+     *
+     * @return string
+     */
+    public function cutTablePrefix($key)
+    {
+        $position = mb_strpos($key, '.');
+
+        return (false !== $position) ? mb_substr($key, $position + 1) : $key;
+    }
+
+    /**
+     * @param string $str
+     *
+     * @return string
+     */
+    public function camelize($str)
+    {
+        return str_replace(' ', '', ucwords(mb_strtolower(str_replace('_', ' ', $str))));
     }
 }

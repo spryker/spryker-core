@@ -44,13 +44,14 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
 
         $changedCart = $this->provider->addItems($cart, $change);
         $changedItems = $changedCart->getItems();
-        $this->assertCount(1, $changedItems);
+        $this->assertCount(2, $changedItems);
 
         /** @var CartItemTransfer $changedItem */
         $changedItem = $changedItems[0];
+
         $this->assertEquals($itemId, $changedItem->getId());
         $this->assertEquals(
-            $existingQuantity + $newQuantity,
+            1,
             $changedItem->getQuantity()
         );
     }
@@ -127,7 +128,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Could not increase cart item 123 with -3 as value
+     * @expectedExceptionMessage Could not change cart item "123" with "-3" as value.
      */
     public function testIncreaseWithNegativeValue()
     {
@@ -142,7 +143,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Could not increase cart item 123 with 0 as value
+     * @expectedExceptionMessage Could not change cart item "123" with "0" as value.
      */
     public function testIncreaseWithZeroValue()
     {
@@ -157,7 +158,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Could not decrease cart item 123 with -3 as value
+     * @expectedExceptionMessage Could not change cart item "123" with "-3" as value.
      */
     public function testDecreaseWithNegativeValue()
     {
@@ -172,7 +173,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Could not decrease cart item 123 with 0 as value
+     * @expectedExceptionMessage Could not change cart item "123" with "0" as value.
      */
     public function testDecreaseWithZeroValue()
     {

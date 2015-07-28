@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -34,6 +35,7 @@ class BundleParser
 
     /**
      * @param $bundleName
+     *
      * @return array
      */
     public function parseOutgoingDependencies($bundleName)
@@ -49,6 +51,7 @@ class BundleParser
      * We only detect dependencies which are declared in the class' use statement
      *
      * @param $bundle
+     *
      * @return array
      */
     protected function parseDependencies($bundle)
@@ -71,6 +74,7 @@ class BundleParser
 
     /**
      * @param $bundle
+     *
      * @return SplFileInfo[]
      */
     protected function findAllFilesOfBundle($bundle)
@@ -86,6 +90,7 @@ class BundleParser
 
     /**
      * @param array $dependencies
+     *
      * @return array
      */
     protected function filterCoreClasses(array $dependencies)
@@ -111,6 +116,7 @@ class BundleParser
     /**
      * @param array $allFileDependencies
      * @param $bundle
+     *
      * @return array
      */
     protected function filterBundleDependencies(array $allFileDependencies, $bundle)
@@ -150,6 +156,7 @@ class BundleParser
 
     /**
      * @param string $bundleName
+
      * @return SplFileInfo[]
      */
     protected function findBundleNamespaceDirectoriesForBundle($bundleName)

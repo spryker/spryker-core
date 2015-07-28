@@ -21,6 +21,9 @@ use SprykerFeature\Zed\Url\Business\UrlFacade;
 class ProductFacadeTest extends Test
 {
 
+    const SKU_ABSTRACT_PRODUCT = 'Abstract product sku';
+    const SKU_CONCRETE_PRODUCT = 'Concrete product sku';
+
     /**
      * @var ProductFacade
      */
@@ -244,6 +247,31 @@ class ProductFacadeTest extends Test
         $this->assertEquals($idAbstractProduct, $url->getResourceId());
         $this->assertEquals('abstract_product', $url->getResourceType());
         $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
+    }
+
+    /**
+     * @group Product
+     */
+    public function testGetAbstractSkuFromConcreteProduct()
+    {
+        $this->assertFalse($this->productFacade->hasConcreteProduct(self::SKU_CONCRETE_PRODUCT));
+
+        $abstractProduct = new AbstractProductTransfer();
+        $abstractProduct->setSku(self::SKU_ABSTRACT_PRODUCT);
+        $abstractProduct->setAttributes([]);
+        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
+
+        $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
+
+        $concreteProduct = new ConcreteProductTransfer();
+        $concreteProduct->setSku(self::SKU_CONCRETE_PRODUCT);
+        $concreteProduct->setAttributes([]);
+        $concreteProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
+        $this->productFacade->createConcreteProduct($concreteProduct, $idAbstractProduct);
+
+        $this->assertTrue($this->productFacade->hasConcreteProduct(self::SKU_CONCRETE_PRODUCT));
+
+        $this->assertEquals($this->productFacade->getAbstractSkuFromConcreteProduct(self::SKU_CONCRETE_PRODUCT), self::SKU_ABSTRACT_PRODUCT);
     }
 
 }

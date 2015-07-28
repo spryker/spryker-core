@@ -1,30 +1,29 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Gui\Communication\Form;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
-use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Acl\Tests\Domain\AuditLoggerTest;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
-use Symfony\Component\Form\FormErrorIterator;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * Class AbstractForm
- * @package SprykerFeature\Zed\Gui\Communication\Form
- */
 abstract class AbstractForm
 {
+
     /**
      * @var Form
      */
-    protected $form = null;
+    protected $form;
 
     /**
      * @var Request
@@ -36,8 +35,20 @@ abstract class AbstractForm
      */
     private $formFactory;
 
+    /**
+     * @var string
+     */
     protected $defaultDataType;
 
+    /**
+     * @var bool
+     */
+    private $initialized = false;
+
+    /**
+     * @var array
+     */
+    protected $options = [];
 
     /**
      * Prepares form
@@ -66,12 +77,29 @@ abstract class AbstractForm
         $this->request = $app['request'];
         $this->formFactory = $app['form.factory'];
 
-        $this->form = $this->formFactory->create('form', $this->getDefaultDataType());
+        $this->form = $this->formFactory->create('form', $this->getDefaultDataType(), $this->options);
 
         return $this;
     }
 
-    public function setDefaultDataType($type=null)
+    /**
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setDefaultDataType($type = null)
     {
         $this->defaultDataType = $type;
 
@@ -93,15 +121,18 @@ abstract class AbstractForm
 
     /**
      * @return $this
+     * @deprecated this method will become private and will be called in this class ONLY in handleRequest()
      */
     public function init()
     {
-        $this->injectDependencies()
-            ->buildFormFields()
-        ;
+        if (!$this->initialized) {
+            $this->initialized = true;
+            $this->injectDependencies()
+                ->buildFormFields();
 
-        $data = $this->populateFormFields();
-        $this->setData($data);
+            $data = $this->populateFormFields();
+            $this->setData($data);
+        }
 
         return $this;
     }
@@ -113,6 +144,9 @@ abstract class AbstractForm
      */
     public function setData($data)
     {
+        if (!$this->initialized) {
+            $this->init();
+        }
         $this->form->setData($data);
 
         return $this;
@@ -124,7 +158,7 @@ abstract class AbstractForm
     public function createView()
     {
         if ($this->getDefaultDataType() instanceof AbstractTransfer) {
-            $this->setData($this->getData(false));
+            $this->setData($this->getData());
         }
 
         return $this->form->createView();
@@ -135,6 +169,8 @@ abstract class AbstractForm
      */
     public function handleRequest()
     {
+        $this->init();
+
         return $this->form->handleRequest($this->request);
     }
 
@@ -189,7 +225,7 @@ abstract class AbstractForm
     }
 
     /**
-     * @param string $name 
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -572,6 +608,7 @@ abstract class AbstractForm
      * @param array $options
      *
      * @return $this
+     * @deprecated Forms should not have submit buttons http://symfony.com/doc/current/best_practices/forms.html#form-button-configuration
      */
     public function addSubmit($name = 'submit', $options = [])
     {
@@ -620,4 +657,5 @@ abstract class AbstractForm
 
         return $this;
     }
+
 }
