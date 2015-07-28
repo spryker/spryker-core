@@ -2,10 +2,18 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategoryQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 
-class VoucherForm extends AbstractForm
+class PoolCategoryForm extends AbstractForm
 {
+    protected $poolCategory;
+
+    public function __constructor(SpyDiscountVoucherPoolCategoryQuery $poolCategoryQuery, $idPoolCategory)
+    {
+        $this->poolCategory = $poolCategoryQuery->findOneByIdDiscountVoucherPoolCategory($idPoolCategory);
+    }
+
     /**
      * Prepares form
      *
@@ -14,22 +22,7 @@ class VoucherForm extends AbstractForm
     protected function buildFormFields()
     {
         $this
-//            ->addText('poll')
-            ->addChoice('poll', [
-                'label' => 'Salutation',
-                'placeholder' => 'Select one',
-                'choices' => $this->getPolls(),
-            ])
             ->addText('name')
-            ->addChoice('validity', [
-                'label' => 'Salutation',
-                'placeholder' => 'Select one',
-                'choices' => $this->getValidity(),
-            ])
-//            ->addText('combinate')
-            ->addCheckbox('combine', [
-                'label' => 'Combinable',
-            ])
         ;
     }
 
