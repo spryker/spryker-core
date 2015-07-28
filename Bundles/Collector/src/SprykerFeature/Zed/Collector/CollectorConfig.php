@@ -8,66 +8,17 @@ namespace SprykerFeature\Zed\Collector;
 
 use SprykerEngine\Shared\Config;
 use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Zed\Collector\Dependency\Plugin\DataProcessorPluginInterface;
-use SprykerFeature\Zed\Collector\Dependency\Plugin\ExportFailedDeciderPluginInterface;
-use SprykerFeature\Zed\Collector\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class CollectorConfig extends AbstractBundleConfig
 {
 
-    /**
-     * @return DataProcessorPluginInterface[]
-     */
-    public function getKeyValueProcessors()
+    public function getSearchCollectors()
     {
         return [];
     }
 
-    /**
-     * @return QueryExpanderPluginInterface[]
-     */
-    public function getKeyValueQueryExpander()
-    {
-        return [];
-    }
-
-    /**
-     * @return ExportFailedDeciderPluginInterface[]
-     */
-    public function getKeyValueExportFailedDeciders()
-    {
-        return [];
-    }
-
-    /**
-     * @return ExportFailedDeciderPluginInterface[]
-     */
-    public function getSearchExportFailedDeciders()
-    {
-        return [];
-    }
-
-    /**
-     * @return QueryExpanderPluginInterface[]
-     */
-    public function getSearchQueryExpander()
-    {
-        return [];
-    }
-
-    /**
-     * @return DataProcessorPluginInterface[]
-     */
-    public function getSearchProcessors()
-    {
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    public function getSearchUpdateProcessors()
+    public function getStorageCollectors()
     {
         return [];
     }

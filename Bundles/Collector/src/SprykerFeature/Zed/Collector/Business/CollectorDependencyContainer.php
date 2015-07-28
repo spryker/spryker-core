@@ -73,17 +73,6 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
         foreach ($config->getStorageCollectors() as $touchItemType => $collectorPlugin) {
             $keyValueExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
         }
-        foreach ($config->getKeyValueProcessors() as $keyValueProcessor) {
-            $keyValueExporter->addDataProcessor($keyValueProcessor);
-        }
-
-        foreach ($config->getKeyValueQueryExpander() as $queryExpander) {
-            $keyValueExporter->addQueryExpander($queryExpander);
-        }
-
-        foreach ($config->getKeyValueExportFailedDeciders() as $decider) {
-            $keyValueExporter->addDecider($decider);
-        }
 
         return $keyValueExporter;
     }
@@ -194,20 +183,9 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
         $searchExporter->setStandardChunkSize($config->getStandardChunkSize());
         $searchExporter->setChunkSizeTypeMap($config->getChunkSizeTypeMap());
 
-        foreach ($config->getSearchCollectors() as $collectorPlugin) {
-            $searchExporter->addCollectorPlugin($collectorPlugin);
-        }
 
-        foreach ($config->getSearchExportFailedDeciders() as $searchDecider) {
-            $searchExporter->addDecider($searchDecider);
-        }
-
-        foreach ($config->getSearchQueryExpander() as $queryExpander) {
-            $searchExporter->addQueryExpander($queryExpander);
-        }
-
-        foreach ($config->getSearchProcessors() as $processor) {
-            $searchExporter->addDataProcessor($processor);
+        foreach ($config->getSearchCollectors() as $touchItemType => $collectorPlugin) {
+            $searchExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
         }
 
         return $searchExporter;
