@@ -1,0 +1,26 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set section_title = 'Pool Categories list' %}
+
+{% block breadcrumb %}
+    <li><a href="/discount/pool">{{ 'Pools' | trans }}</a></li>
+    <li class="active"><strong>{{ 'Pools Categories' | trans }}</strong></li>
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: section_title } %}
+
+        {% block widget_header_content %}
+            <a class="btn btn-sm btn-primary" href="/discount/pool/create">{{ 'Create Poll' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ categories | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

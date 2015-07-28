@@ -3,13 +3,18 @@
 {% set section_title = 'Create Pool Category' %}
 
 {% block breadcrumb %}
-    <li><a href="/discount/voucher">{{ 'Pools' | trans }}</a></li>
+    <li><a href="/discount/pool">{{ 'Pools' | trans }}</a></li>
+    <li><a href="/discount/pool/categories">{{ 'Pools Categories' | trans }}</a></li>
     <li class="active"><strong>{{ section_title | trans }}</strong></li>
 {% endblock %}
 
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: section_title } %}
+
+        {% block widget_header_content %}
+            <a class="btn btn-primary" href="/discount/pool/categories">{{ 'View Categories' | trans }}</a>
+        {% endblock %}
 
         {% block widget_content %}
 

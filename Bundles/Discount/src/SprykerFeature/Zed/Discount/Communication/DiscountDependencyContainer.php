@@ -42,6 +42,20 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
 //        return $this->getFactory()->createFormVoucherForm();
 //    }
 
+    public function createPoolCategoriesTable()
+    {
+        $poolCategoriesQuery = $this->getQueryContainer()->queryDiscountVoucherPoolCategory();
+
+        return $this->getFactory()->createTableVoucherPoolCategoryTable($poolCategoriesQuery);
+    }
+
+    public function createVoucherPoolTable()
+    {
+        $poolQuery = $this->getQueryContainer()->queryDiscountVoucherPool();
+
+        return $this->getFactory()->createTableVoucherPoolTable($poolQuery);
+    }
+
     public function createPoolCategoryForm($idPoolCategory)
     {
         $poolCategoryQuery = $this->getQueryContainer()
@@ -49,6 +63,15 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         ;
 
         return $this->getFactory()->createFormPoolCategoryForm($poolCategoryQuery, $idPoolCategory);
+    }
+
+    public function createPoolForm($idPoolCategory)
+    {
+        $poolQuery = $this->getQueryContainer()
+            ->queryDiscountVoucherPool()
+        ;
+
+        return $this->getFactory()->createFormPoolForm($poolQuery, $idPoolCategory);
     }
 
     /**
