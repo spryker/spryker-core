@@ -9,8 +9,10 @@ namespace Functional\SprykerFeature\Zed\Tax;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use SprykerFeature\Zed\Tax\Business\TaxFacade;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRateQuery;
@@ -30,6 +32,7 @@ class WriterTest extends Test
     const DUMMY_TAX_RATE1_PERCENTAGE = 2.5;
     const DUMMY_TAX_RATE2_NAME = 'Regional';
     const DUMMY_TAX_RATE2_PERCENTAGE = 10;
+    const NON_EXISTENT_ID = 999999999;
 
     /**
      * @var TaxFacade
@@ -212,12 +215,16 @@ class WriterTest extends Test
 
     public function testExceptionRaisedIfAttemptingToUpdateNonExistentTaxRate()
     {
-        $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
-
         $taxRateTransfer = $this->createTaxRateTransfer();
-        $taxRateTransfer->setIdTaxRate(9999999999);
+        $taxRateTransfer->setIdTaxRate(self::NON_EXISTENT_ID);
 
-        $this->taxFacade->updateTaxRate($taxRateTransfer);
+        $exceptionOccurred = false;
+        try {
+            $this->taxFacade->updateTaxRate($taxRateTransfer);
+        } catch (ResourceNotFoundException $e) {
+            $exceptionOccurred = true;
+        }
+        $this->assertTrue($exceptionOccurred);
     }
 
     public function testExceptionRaisedIfAttemptingToRemoveTaxRateFromTaxSetWithSingleTaxRate()
