@@ -18,4 +18,8 @@
         <property name="isActive" type="bool" />
     </transfer>
 
+    <transfer name="Order">
+        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethos" />
+    </transfer>
+
 </transfers>
