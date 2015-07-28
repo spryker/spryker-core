@@ -18,7 +18,7 @@ class InstallElasticsearch extends AbstractInstaller
     private $client;
 
     /**
-     * @var
+     * @var string
      */
     private $indexName;
 
@@ -32,15 +32,11 @@ class InstallElasticsearch extends AbstractInstaller
         $this->indexName = $indexName;
     }
 
-    /**
-     */
     public function install()
     {
         $this->createIndex();
     }
 
-    /**
-     */
     protected function createIndex()
     {
         $index = $this->client->getIndex($this->indexName);
