@@ -30,7 +30,6 @@ class ItemPriceToPayCalculator implements
                 $priceToPay = $item->getGrossPrice();
             }
 
-            $priceToPay += $this->sumExpenses($item->getExpenses());
             $priceToPay += $this->sumOptions($item->getOptions());
 
             $item->setPriceToPay($priceToPay);

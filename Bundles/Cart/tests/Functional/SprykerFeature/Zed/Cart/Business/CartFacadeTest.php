@@ -110,11 +110,14 @@ class CartFacadeTest extends AbstractFunctionalTest
 
         $changedCart = $this->cartFacade->increaseQuantity($cartChange);
         $cartItems = $changedCart->getItems();
-        $this->assertCount(1, $cartItems);
+        $this->assertCount(2, $cartItems);
 
         /** @var CartItemTransfer $changedItem */
-        $changedItem = $cartItems[0];
-        $this->assertEquals(4, $changedItem->getQuantity());
+        $changedItem = $cartItems[1];
+        $this->assertEquals(3, $changedItem->getQuantity());
+
+        $changedItem = $cartItems[self::DUMMY_1_SKU_CONCRETE_PRODUCT];
+        $this->assertEquals(1, $changedItem->getQuantity());
     }
 
     public function testRemoveFromCart()

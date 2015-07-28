@@ -30,6 +30,7 @@ class CalculationConfig extends AbstractBundleConfig
             $this->getLocator()->calculation()->pluginOptionPriceToPayCalculatorPlugin(),
             $this->getLocator()->calculation()->pluginGrandTotalTotalsCalculatorPlugin(),
             $this->getLocator()->calculation()->pluginTaxTotalsCalculatorPlugin(),
+            $this->getLocator()->calculation()->pluginItemTotalPriceCalculatorPlugin()
         ];
     }
 

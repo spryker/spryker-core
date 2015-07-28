@@ -136,6 +136,15 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
+     * @param CalculableInterface $calculableContainer
+     */
+    public function calculateItemTotalPrice(CalculableInterface $calculableContainer)
+    {
+        $calculator = $this->getDependencyContainer()->getItemTotalCalculator();
+        $calculator->recalculate($calculableContainer);
+    }
+
+    /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
@@ -176,5 +185,7 @@ class CalculationFacade extends AbstractFacade
         $calculator = $this->getDependencyContainer()->getTaxTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
+
+
 
 }

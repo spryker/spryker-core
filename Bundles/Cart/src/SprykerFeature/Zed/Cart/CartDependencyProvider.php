@@ -14,6 +14,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_CALCULATION = 'calculation facade';
     const FACADE_PRODUCT = 'product facade';
+    const FACADE_ITEM_GROUPER = 'item grouper facade';
 
     /**
      * @param Container $container
@@ -24,6 +25,10 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_CALCULATION] = function (Container $container) {
             return $container->getLocator()->calculation()->facade();
+        };
+
+        $container[self::FACADE_ITEM_GROUPER] = function (Container $container) {
+            return $container->getLocator()->itemGrouper()->facade() ;
         };
 
         return $container;

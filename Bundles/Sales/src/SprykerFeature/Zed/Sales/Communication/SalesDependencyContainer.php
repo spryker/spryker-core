@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Sales\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesCommunication;
+use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,13 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
             null,
             $this->getQueryContainer()
         );
+    }
+    /**
+     * @return Form\OrderItemSplitForm
+     */
+    public function getOrderItemSplitForm()
+    {
+        return $this->getFactory()->createFormOrderItemSplitForm();
     }
 
     /**
@@ -98,6 +106,16 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getFactory()->createGridOrderItemsGrid(
             $this->getQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder));
+    }
+
+    /**
+     * @param ObjectCollection $orderItems
+     *
+     * @return Collection
+     */
+    public function getOrderItemSplitFormCollection(ObjectCollection $orderItems)
+    {
+        return $this->getFactory()->createFormOrderItemSplitFormCollection($orderItems);
     }
 
     /**

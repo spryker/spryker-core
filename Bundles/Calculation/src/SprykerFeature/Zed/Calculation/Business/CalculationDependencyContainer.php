@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Business;
 
+use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ItemTotalPriceCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\StackExecutor;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpensePriceToPayCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
@@ -109,6 +110,14 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getFactory()->createModelCalculatorSubtotalTotalsCalculator();
     }
 
+    /**
+     * @return ItemTotalPriceCalculator
+     */
+    public function getItemTotalCalculator()
+    {
+        return $this->getFactory()->createModelCalculatorItemTotalPriceCalculator();
+    }
+    
     /**
      * @return SubtotalWithoutItemExpensesTotalsCalculator
      */

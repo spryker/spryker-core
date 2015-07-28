@@ -20,27 +20,14 @@ class CartItemProductOptionPlugin extends AbstractPlugin implements ItemExpander
 {
 
     /**
-     * @var ProductOptionManagerInterface
-     */
-    private $productOptionManager;
-
-    /**
-     * @param Factory $factory
-     * @param Locator $locator
-     */
-    public function __construct(Factory $factory, Locator $locator)
-    {
-        parent::__construct($factory, $locator);
-        $this->productOptionManager = $this->getDependencyContainer()->createFacade();
-    }
-
-    /**
      * @param ChangeInterface $change
      *
      * @return ChangeInterface
      */
     public function expandItems(ChangeInterface $change)
     {
-        return $this->productOptionManager->expandProductOptions($change);
+        $this->getFacade()->expandProductOptions($change);
+
+        return $change;
     }
 }

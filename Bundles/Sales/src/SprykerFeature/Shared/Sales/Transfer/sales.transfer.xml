@@ -79,14 +79,13 @@
         <property name="fkOmsOrderItemStatus" type="int" />
         <property name="name" type="string" />
         <property name="sku" type="string" />
-        <property name="uniqueIdentifier" type="string" />
+        <property name="groupKey" type="string"/>
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
         <property name="taxSet" type="TaxSet" />
         <property name="quantity" type="int" />
         <property name="discounts" type="Discount[]" singular="discount" />
         <property name="options" type="OrderItemOption[]" singular="option" />
-        <property name="expenses" type="Expense[]" singular="expense" />
         <property name="unitGrossPrice" type="int" />
         <property name="unitPriceToPay" type="int" />
         <property name="variety" type="string" />
@@ -149,6 +148,12 @@
 
     <transfer name="RegularRedirectPaymentCancellation">
         <property name="orderId" type="string" />
+    </transfer>
+
+    <transfer name="ItemSplitResponse">
+        <property name="success" type="boolean" />
+        <property name="validationMessages" type="array" singular="code" />
+        <property name="successMessage" type="string" />
     </transfer>
 
 </transfers>

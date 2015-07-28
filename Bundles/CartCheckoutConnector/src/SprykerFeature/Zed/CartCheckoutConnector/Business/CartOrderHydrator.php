@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OrderItemTransfer;
 
 class CartOrderHydrator implements CartOrderHydratorInterface
 {
-
     /**
      * @param OrderInterface $order
      * @param CheckoutRequestInterface $request
@@ -23,14 +22,10 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     {
         $cart = $request->getCart();
 
-        $orderItems = $this->transformCartItemsToOrderItems($cart->getItems());
-        $order->setItems($orderItems);
-
-        $order
+        $order->setItems($this->transformCartItemsToOrderItems($cart->getItems()))
             ->setTotals($cart->getTotals())
             ->setDiscounts($cart->getDiscounts())
-            ->setExpenses($cart->getExpenses())
-        ;
+            ->setExpenses($cart->getExpenses());
     }
 
     /**
@@ -40,19 +35,30 @@ class CartOrderHydrator implements CartOrderHydratorInterface
      */
     protected function transformCartItemsToOrderItems(\ArrayObject $cartItems)
     {
-        $result = [];
-
+        $orderItems = [];
         foreach ($cartItems as $cartItem) {
-            $orderItem = $this->getOrderItemTransfer();
-            $orderItem->setGrossPrice($cartItem->getGrossPrice());
-            $orderItem->setQuantity($cartItem->getQuantity());
-            $orderItem->setPriceToPay($cartItem->getPriceToPay());
-            $orderItem->setSku($cartItem->getSku());
-            $orderItem->setName($cartItem->getName());
-            $result[] = $orderItem;
+            if ($cartItem->getQuantity() > 1) {
+                $orderItems = array_merge($orderItems, $this->expandCartItem($cartItem));
+            } else {
+                $orderItems[] = $this->createOrderItemTransfer($cartItem);
+            }
         }
 
-        return new \ArrayObject($result);
+        return new \ArrayObject($orderItems);
+    }
+
+    /**
+     * @param CartItemTransfer $cartItem
+     *
+     * @return array
+     */
+    protected function expandCartItem(CartItemTransfer $cartItem)
+    {
+        $result = [];
+        for ($i = 1; $i <= $cartItem->getQuantity(); $i++) {
+            $result[] = $this->createOrderItemTransfer($cartItem);
+        }
+        return $result;
     }
 
     /**
@@ -61,6 +67,23 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     protected function getOrderItemTransfer()
     {
         return new OrderItemTransfer();
+    }
+
+    /**
+     * @param CartItemTransfer $cartItem
+     *
+     * @return OrderItemInterface
+     */
+    protected function createOrderItemTransfer(CartItemTransfer $cartItem)
+    {
+        $orderItem = $this->getOrderItemTransfer();
+        $orderItem->setGrossPrice($cartItem->getGrossPrice());
+        $orderItem->setQuantity(1);
+        $orderItem->setPriceToPay($cartItem->getPriceToPay());
+        $orderItem->setSku($cartItem->getSku());
+        $orderItem->setName($cartItem->getName());
+
+        return $orderItem;
     }
 
 }
