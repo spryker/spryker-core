@@ -38,7 +38,6 @@ class EditController extends AbstractController
         $form = $this->getDependencyContainer()
             ->createCustomerForm('update')
         ;
-        $form->init();
 
         $form->handleRequest();
 

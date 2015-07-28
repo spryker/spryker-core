@@ -1,6 +1,6 @@
 <table
     border="0"
-    class="{{ config.options.tableClass | join(' ') }}"
+    class="table table-stripped table-bordered table-hover {{ config.class | default('gui-table-data') }}"
     data-ajax="/{{ app.request.get('module') }}/{{ app.request.get('controller') }}/{{ config.url }}"
     data-processing="true"
     data-server-side="true"

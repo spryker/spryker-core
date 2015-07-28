@@ -56,6 +56,11 @@ abstract class AbstractTable
     protected $defaultUrl = 'table';
 
     /**
+     * @var string
+     */
+    protected $tableClass;
+
+    /**
      * @var bool
      */
     private $initialized = false;
@@ -66,9 +71,9 @@ abstract class AbstractTable
     protected $tableIdentifier;
 
     /**
-     * @deprecated this method will become private and will be called in this class ONLY
+     * @return $this
      */
-    public function init()
+    private function init()
     {
         if (!$this->initialized) {
             $this->initialized = true;
@@ -82,6 +87,8 @@ abstract class AbstractTable
             $config = $this->configure($config);
             $this->setConfiguration($config);
         }
+
+        return $this;
     }
 
     /**
@@ -94,11 +101,11 @@ abstract class AbstractTable
      */
     public function buildAlias($name)
     {
-        return str_replace([
-            '.',
-            '(',
-            ')',
-        ], '', $name);
+        return str_replace(
+            ['.', '(', ')'],
+            '',
+            $name
+        );
     }
 
     /**
@@ -288,15 +295,6 @@ abstract class AbstractTable
 
     /**
      * @return string
-     * @deprecated Please use ->render() method
-     */
-    public function __toString()
-    {
-        return $this->render();
-    }
-
-    /**
-     * @return string
      */
     public function render()
     {
@@ -308,7 +306,7 @@ abstract class AbstractTable
 
         return $this->getTwig()
             ->render('index.twig', $twigVars)
-            ;
+        ;
     }
 
     /**
@@ -319,8 +317,7 @@ abstract class AbstractTable
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configArray = [
                 'tableId' => $this->getTableIdentifier(),
-                'options' => $this->config->getTableOptions()
-                    ->toArray(),
+                'class' => $this->tableClass,
                 'header' => $this->config->getHeader(),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
@@ -330,7 +327,7 @@ abstract class AbstractTable
         } else {
             $configArray = [
                 'tableId' => $this->getTableIdentifier(),
-                'options' => (new TableOptions())->toArray(),
+                'class' => $this->tableClass,
                 'url' => $this->defaultUrl,
                 'header' => [],
             ];
@@ -340,6 +337,8 @@ abstract class AbstractTable
     }
 
     /**
+     * @todo to be rafactored, does to many things and is hard to understand
+     *
      * @param ModelCriteria $query
      * @param TableConfiguration $config
      *

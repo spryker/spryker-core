@@ -29,7 +29,6 @@ class AddController extends AbstractController
         $form = $this->getDependencyContainer()
             ->createCustomerForm('add')
         ;
-        $form->init();
 
         $form->handleRequest();
 
