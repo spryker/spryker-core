@@ -27,7 +27,6 @@
     "spryker/document": "self.version",
     "spryker/git": "self.version",
     "spryker/glossary": "self.version",
-    "spryker/glossary-exporter": "self.version",
     "spryker/installer": "self.version",
     "spryker/invoice": "self.version",
     "spryker/kernel": "self.version",
