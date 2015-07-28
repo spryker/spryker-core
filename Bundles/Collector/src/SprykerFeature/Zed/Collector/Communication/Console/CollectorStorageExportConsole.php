@@ -15,11 +15,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method CollectorDependencyContainer getDependencyContainer()
  * @method CollectorFacade getFacade()
  */
-class ExportSearchConsole extends AbstractExporterConsole
+class CollectorStorageExportConsole extends AbstractCollectorConsole
 {
 
-    const COMMAND_NAME = 'frontend-exporter:export-search';
-    const COMMAND_DESCRIPTION = 'Export search';
+    const COMMAND_NAME = 'collector:storage:export';
+    const COMMAND_DESCRIPTION = 'Collector export storage';
 
     protected function configure()
     {
@@ -32,11 +32,13 @@ class ExportSearchConsole extends AbstractExporterConsole
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $locale = $this->getDependencyContainer()->createLocaleFacade()->getCurrentLocale();
-        $exportResults = $this->getFacade()->exportSearchForLocale($locale);
+        $exportResults = $this->getFacade()->exportKeyValueForLocale($locale);
 
         $this->info($this->buildSummary($exportResults));
     }

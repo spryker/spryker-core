@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Collector\Communication\Console;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResult;
 
-abstract class AbstractExporterConsole extends Console
+abstract class AbstractCollectorConsole extends Console
 {
 
     /**

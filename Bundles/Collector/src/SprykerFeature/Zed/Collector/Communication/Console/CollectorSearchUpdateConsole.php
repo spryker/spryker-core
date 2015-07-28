@@ -15,11 +15,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method CollectorDependencyContainer getDependencyContainer()
  * @method CollectorFacade getFacade()
  */
-class UpdateSearchConsole extends AbstractExporterConsole
+class CollectorSearchUpdateConsole extends AbstractCollectorConsole
 {
 
-    const COMMAND_NAME = 'frontend-exporter:update-search';
-    const COMMAND_DESCRIPTION = 'Update search';
+    const COMMAND_NAME = 'collector:search:update';
+    const COMMAND_DESCRIPTION = 'Collect update search';
 
     protected function configure()
     {
