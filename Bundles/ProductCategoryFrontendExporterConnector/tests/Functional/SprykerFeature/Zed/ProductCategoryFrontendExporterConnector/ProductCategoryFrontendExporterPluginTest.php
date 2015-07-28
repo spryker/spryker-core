@@ -141,11 +141,9 @@ class ProductCategoryFrontendExporterPluginTest extends Test
 
         $this->doExporterTest(
             [
-                $this->locator->productFrontendExporterConnector()->pluginProductQueryExpanderPlugin(),
                 $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbQueryExpanderPlugin(),
             ],
             [
-                $this->locator->productFrontendExporterConnector()->pluginProductProcessorPlugin(),
                 $this->locator->productCategoryFrontendExporterConnector()->pluginProductCategoryBreadcrumbProcessorPlugin(),
             ],
             ['de.abcde.resource.abstract_product.' . $idAbstractProduct => [
