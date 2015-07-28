@@ -225,8 +225,6 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param LocaleTransfer $localeTransfer
-     *
      * @return SpyCategoryNode[]
      */
     public function getRootNodes()
@@ -260,7 +258,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         $rootNodes = $this->getRootNodes();
         foreach ($rootNodes as $rootNode) {
-            if ($rootNode->getFkCategory() == $idCategory){
+            if ($rootNode->getFkCategory() === $idCategory){
                 return $this->getTreeNodesRecursively($rootNode, $localeTransfer, true);
             }
         }
@@ -279,7 +277,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     private function getTreeNodesRecursively(SpyCategoryNode $node = null, LocaleTransfer $localeTransfer, $isRoot = false)
     {
         $tree = [];
-        if ($node == null) {
+        if (null === $node ) {
             $children = $this->getRootNodes();
         } else {
             $children = $this->getChildren($node->getIdCategoryNode(), $localeTransfer);
