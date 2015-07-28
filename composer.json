@@ -61,7 +61,6 @@
     "spryker/ui": "self.version",
     "spryker/ui-example": "self.version",
     "spryker/url": "self.version",
-    "spryker/url-exporter": "self.version",
     "spryker/user": "self.version",
     "spryker/yves": "self.version",
     "spryker/zed-request": "self.version"
