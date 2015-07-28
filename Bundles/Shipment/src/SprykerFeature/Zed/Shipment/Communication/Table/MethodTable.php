@@ -15,7 +15,12 @@ use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
 
 class MethodTable extends AbstractTable
 {
-    const CARRIER = 'carrier';
+    const CARRIER = 'Carrier';
+    const METHOD = 'Method';
+    const DESCRIPTION = 'Description';
+    const PRICE = 'Price';
+    const ACTIVE = 'Active';
+    const ACTIONS = 'Actions';
 
     /**
      * @var SpyShipmentMethodQuery
@@ -39,10 +44,20 @@ class MethodTable extends AbstractTable
     {
         $config->setHeader([
             SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD => '#',
-            SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => 'Carrier',
-            SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_NAME => 'Method',
-            SpyShipmentMethodTableMap::COL_IS_ACTIVE => 'Active'
+            SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => self::CARRIER,
+            SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_NAME
+                => self::METHOD,
+            SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_DESCRIPTION
+                => self::DESCRIPTION,
+            SpyShipmentMethodTableMap::COL_PRICE => self::PRICE,
+            SpyShipmentMethodTableMap::COL_IS_ACTIVE => self::ACTIVE,
+            self::ACTIONS => self::ACTIONS
         ]);
+
+        $config->setSortable([
+            SpyShipmentMethodTableMap::COL_PRICE
+        ]);
+
         $config->setUrl('table');
 
         return $config;
@@ -59,15 +74,28 @@ class MethodTable extends AbstractTable
         $queryResults = $this->runQuery($query, $config);
         $results = [];
         foreach ($queryResults as $item) {
+            $methodQuery = clone $query;
+            $method = $methodQuery
+                ->findOneByIdShipmentMethod(
+                    $item[SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD]
+                );
+
             $results[] = [
                 SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD
                     => $item[SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD],
                 SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER
-                    => $item[SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER],
+                    => $method
+                    ->getShipmentCarrier()
+                    ->getSpyGlossaryKey()
+                    ->getKey(),
                 SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_NAME
-                    => $item[SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_NAME],
+                    => $method->getGlossaryKeyName()->getKey(),
+                SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_DESCRIPTION
+                    => $method->getGlossaryKeyDescription()->getKey(),
+                SpyShipmentMethodTableMap::COL_PRICE => $method->getPrice(),
                 SpyShipmentMethodTableMap::COL_IS_ACTIVE
-                    => $item[SpyShipmentMethodTableMap::COL_IS_ACTIVE]
+                    => $item[SpyShipmentMethodTableMap::COL_IS_ACTIVE],
+                self::ACTIONS => ''
                 ];
         }
         unset($queryResults);
