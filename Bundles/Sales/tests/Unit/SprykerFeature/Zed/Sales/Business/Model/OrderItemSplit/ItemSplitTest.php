@@ -11,6 +11,9 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
 
 class ItemSplitTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var array
+     */
     private $notCopiedOrderItemFields = [
         'id_sales_order_item',
         'last_state_change',
@@ -21,13 +24,16 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
 
     ];
 
+    /**
+     * @var array
+     */
     private $notCopiedOrderItemOptionFields = [
         'created_at',
         'updated_at',
         'fk_sales_order_item'
     ];
 
-    public function testItemSplitWithValidOrderItem()
+    public function testIsOrderItemDataCopied()
     {
         $spySalesOrderItem = $this->createOrderItem();
 

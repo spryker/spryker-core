@@ -57,7 +57,7 @@ class GroupKeyExpander
         usort(
             $options,
             function (ProductOptionInterface $a, ProductOptionInterface $b) {
-                return ($a->getIdOptionValueUsage() < $b->getIdOptionValueUsage()) ? 1 : -1;
+                return ($a->getIdOptionValueUsage() < $b->getIdOptionValueUsage()) ? -1 : 1;
             }
         );
 
@@ -75,6 +75,6 @@ class GroupKeyExpander
         foreach ($sortedProductOptions as $option) {
             $groupKeyPart[] = $option->getIdOptionValueUsage();
         }
-        return implode('_', $groupKeyPart);
+        return implode('-', $groupKeyPart);
     }
 }

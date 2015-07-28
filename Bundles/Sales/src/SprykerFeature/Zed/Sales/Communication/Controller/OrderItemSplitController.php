@@ -32,7 +32,8 @@ class OrderItemSplitController extends AbstractController
             $splitResponseTransfer = $this->getFacade()
                 ->splitSalesOrderItem($data[OrderItemSplitForm::ID_ORDER_ITEM], $data[OrderItemSplitForm::QUANTITY]);
 
-          /*  if (!$splitResponseTransfer->getSuccess()) {
+           /*@Todo this needs to be enabled when flash messenger is implemented.
+          if (!$splitResponseTransfer->getSuccess()) {
                 $this->addMessageError($splitResponseTransfer->getValidationMessages());
             } else {
                 $this->addMessageSuccess($splitResponseTransfer->getSuccessMessage());
