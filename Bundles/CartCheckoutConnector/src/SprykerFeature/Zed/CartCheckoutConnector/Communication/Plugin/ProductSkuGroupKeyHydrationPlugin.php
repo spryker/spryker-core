@@ -33,6 +33,6 @@ class ProductSkuGroupKeyHydrationPlugin extends AbstractPlugin implements Checko
     protected function buildGroupKey(OrderItemInterface $orderItem)
     {
         $groupKey = $orderItem->getGroupKey();
-        return !empty($groupKey) ? $groupKey . '_' . $orderItem->getSku() : $orderItem->getSku();
+        return !empty($groupKey) ? $groupKey . '-' . $orderItem->getSku() : $orderItem->getSku();
     }
 }

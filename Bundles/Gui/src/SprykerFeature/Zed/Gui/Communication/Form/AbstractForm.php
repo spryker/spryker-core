@@ -46,6 +46,11 @@ abstract class AbstractForm
     private $initialized = false;
 
     /**
+     * @var array
+     */
+    protected $options = [];
+
+    /**
      * Prepares form
      *
      * @return $this
@@ -72,7 +77,19 @@ abstract class AbstractForm
         $this->request = $app['request'];
         $this->formFactory = $app['form.factory'];
 
-        $this->form = $this->formFactory->create('form', $this->getDefaultDataType());
+        $this->form = $this->formFactory->create('form', $this->getDefaultDataType(), $this->options);
+
+        return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
 
         return $this;
     }
@@ -127,6 +144,9 @@ abstract class AbstractForm
      */
     public function setData($data)
     {
+        if (!$this->initialized) {
+            $this->init();
+        }
         $this->form->setData($data);
 
         return $this;

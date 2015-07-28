@@ -15,6 +15,7 @@ use Generated\Shared\Sales\ItemSplitResponseInterface;
 
 class OrderItem implements OrderItemInterface
 {
+    const SPLIT_MARKER = 'split#';
     /**
      * @var ConnectionInterface
      */
@@ -133,6 +134,7 @@ class OrderItem implements OrderItemInterface
     {
         $copyOfSalesOrderItem = $salesOrderItem->copy(false);
 
+        $copyOfSalesOrderItem->setGroupKey(self::SPLIT_MARKER . $copyOfSalesOrderItem->getGroupKey());
         $copyOfSalesOrderItem->setCreatedAt(new \DateTime());
         $copyOfSalesOrderItem->setQuantity($quantity);
         $copyOfSalesOrderItem->setLastStateChange(new \DateTime());

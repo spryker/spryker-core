@@ -44,7 +44,7 @@ class GroupKeyExpander
             return $currentGroupKey;
         }
 
-        return !empty($currentGroupKey) ? $currentGroupKey . '_' . $optionGroupKey : $optionGroupKey;
+        return !empty($currentGroupKey) ? $currentGroupKey . '-' . $optionGroupKey : $optionGroupKey;
     }
 
     /**

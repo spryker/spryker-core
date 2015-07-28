@@ -16,7 +16,8 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         'last_state_change',
         'quantity',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'group_key'
 
     ];
 
@@ -39,6 +40,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         $createdCopy = $spySalesOrderItem->getCreatedCopy();
         $this->assertEquals(1, $createdCopy->getQuantity());
         $this->assertEquals(4, $spySalesOrderItem->getQuantity());
+        $this->assertEquals(OrderItem::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
 
         $oldSalesOrderItemArray = $spySalesOrderItem->toArray();
         $copyofItemSalesOrderItemArray = $createdCopy->toArray();

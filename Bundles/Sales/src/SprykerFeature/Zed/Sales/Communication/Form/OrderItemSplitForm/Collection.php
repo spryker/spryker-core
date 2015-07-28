@@ -40,15 +40,13 @@ class Collection
     {
         foreach ($this->orderItems as $orderItem) {
             $form = $this->createOrderItemSplitForm()
-                ->init(
-                    [
-                        'action' => self::SPLIT_SUBMIT_URL
-                    ],
-                    [
-                        OrderItemSplitForm::ID_ORDER_ITEM=> $orderItem->getIdSalesOrderItem(),
-                        OrderItemSplitForm::ID_ORDER => $orderItem->getFkSalesOrder()
-                    ]
-                );
+                ->setOptions(['action' => self::SPLIT_SUBMIT_URL])
+                ->setData([
+                    OrderItemSplitForm::ID_ORDER_ITEM => $orderItem->getIdSalesOrderItem(),
+                    OrderItemSplitForm::ID_ORDER => $orderItem->getFkSalesOrder()
+                 ])
+               ;
+
             $this->forms[$orderItem->getIdSalesOrderItem()] = $form->createView();
         }
 
