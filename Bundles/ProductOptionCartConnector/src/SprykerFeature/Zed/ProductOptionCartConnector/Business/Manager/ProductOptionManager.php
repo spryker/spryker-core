@@ -32,8 +32,9 @@ class ProductOptionManager implements ProductOptionManagerInterface
     {
         foreach ($change->getItems() as $cartItem) {
             $this->expandProductOptionTransfers($cartItem);
-
         }
+
+        return $change;
     }
 
     /**
@@ -51,7 +52,6 @@ class ProductOptionManager implements ProductOptionManagerInterface
                 $productOption->getIdOptionValueUsage(),
                 $productOption->getLocaleCode()
             );
-
         }
     }
 }
