@@ -60,7 +60,7 @@ abstract class AbstractForm
     /**
      * Set the values for fields
      *
-     * @return $this
+     * @return array
      */
     abstract protected function populateFormFields();
 

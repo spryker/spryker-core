@@ -2,14 +2,22 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategory;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategoryQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 
 class PoolCategoryForm extends AbstractForm
 {
+    /**
+     * @var SpyDiscountVoucherPoolCategory $poolCategory
+     */
     protected $poolCategory;
 
-    public function __constructor(SpyDiscountVoucherPoolCategoryQuery $poolCategoryQuery, $idPoolCategory)
+    /**
+     * @param SpyDiscountVoucherPoolCategoryQuery $poolCategoryQuery
+     * @param int $idPoolCategory
+     */
+    public function __construct(SpyDiscountVoucherPoolCategoryQuery $poolCategoryQuery, $idPoolCategory)
     {
         $this->poolCategory = $poolCategoryQuery->findOneByIdDiscountVoucherPoolCategory($idPoolCategory);
     }
@@ -26,6 +34,9 @@ class PoolCategoryForm extends AbstractForm
         ;
     }
 
+    /**
+     * @return array
+     */
     private function getValidity()
     {
         $vouchers = [];
@@ -37,6 +48,9 @@ class PoolCategoryForm extends AbstractForm
         return $vouchers;
     }
 
+    /**
+     * @return array
+     */
     private function getPolls()
     {
         return [
@@ -46,13 +60,18 @@ class PoolCategoryForm extends AbstractForm
     }
 
     /**
-     * Set the values for fields
-     *
-     * @return $this
+     * @return array
      */
     protected function populateFormFields()
     {
-        // @TODO: Implement populateFormFields() method.
+        $name = ($this->poolCategory instanceof SpyDiscountVoucherPoolCategory)
+            ? $this->poolCategory->getName()
+            : ''
+        ;
+
+        return [
+            'name' => $name,
+        ];
     }
 
 }

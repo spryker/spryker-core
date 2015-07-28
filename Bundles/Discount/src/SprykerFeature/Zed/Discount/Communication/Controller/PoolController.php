@@ -17,6 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
 class PoolController extends AbstractController
 {
 
+    /**
+     * @param Request $request
+     * @param int $idPoolCategory
+     *
+     * @return array
+     */
     public function createCategoryAction(Request $request, $idPoolCategory = 0)
     {
         $form = $this->getDependencyContainer()->createPoolCategoryForm($idPoolCategory);
@@ -36,23 +42,16 @@ class PoolController extends AbstractController
         ];
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     public function editCategoryAction(Request $request)
     {
         $idPoolCategory = $request->query->get('id', 0);
 
         return $this->createCategoryAction($request, $idPoolCategory);
-    }
-
-    public function indexAction()
-    {
-    }
-
-    public function categoryAction()
-    {
-    }
-
-    public function poolAction()
-    {
     }
 
 }
