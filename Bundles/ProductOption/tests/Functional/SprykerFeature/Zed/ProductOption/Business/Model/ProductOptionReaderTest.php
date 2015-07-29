@@ -164,11 +164,12 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
             ->getValueConstraintsForValueUsage($this->ids['idUsageGreen']);
 
         $this->assertCount(2, $result);
+
         $this->assertEquals('ALLOW', $result[0]['operator']);
-        $this->assertEquals($this->ids['idUsageLarge'], $result[0]['valueUsageId']);
+        $this->assertEquals($this->ids['idUsageSmall'], $result[0]['valueUsageId']);
 
         $this->assertEquals('ALLOW', $result[1]['operator']);
-        $this->assertEquals($this->ids['idUsageSmall'], $result[1]['valueUsageId']);
+        $this->assertEquals($this->ids['idUsageLarge'], $result[1]['valueUsageId']);
 
         $result = $this->facade
             ->getValueConstraintsForValueUsage($this->ids['idUsageBlue']);
@@ -196,8 +197,8 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
             ->getValueConstraintsForValueUsageByOperator($this->ids['idUsageGreen'], 'ALLOW');
 
         $this->assertCount(2, $result);
-        $this->assertEquals($this->ids['idUsageLarge'], $result[0]);
-        $this->assertEquals($this->ids['idUsageSmall'], $result[1]);
+        $this->assertEquals($this->ids['idUsageSmall'], $result[0]);
+        $this->assertEquals($this->ids['idUsageLarge'], $result[1]);
 
         $result = $this->facade
             ->getValueConstraintsForValueUsageByOperator($this->ids['idUsageGreen'], 'NOT');
@@ -210,7 +211,7 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
             ->getConfigPresetsForConcreteProduct($this->ids['idConcreteProduct']);
 
         $this->assertCount(2, $result);
-        $this->assertEquals(1, $result[0]['isdefault']);
+        $this->assertEquals(1, $result[0]['isDefault']);
     }
 
     public function testQueryValueUsagesForConfigPreset()

@@ -285,6 +285,7 @@ class DbFixturesLoader
             ->setFkProductOptionValueUsageB($ids['idUsageSmall'])
             ->setOperator('ALLOW')
         ;
+
         $productOptionValueUsageConstraintEntity->save();
 
         $productOptionValueUsageConstraintEntity = new SpyProductOptionValueUsageConstraint();
