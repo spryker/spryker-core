@@ -104,6 +104,7 @@ class CmsFacadeTest extends Test
 
         $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
+        $page->setIsActive(true);
 
         $pageCountBeforeCreation = $pageQuery->count();
         $page = $this->cmsFacade->savePage($page);
@@ -124,6 +125,7 @@ class CmsFacadeTest extends Test
 
         $page = new PageTransfer();
         $page->setFkTemplate($template1->getIdCmsTemplate());
+        $page->setIsActive(true);
 
         $page = $this->cmsFacade->savePage($page);
 
@@ -188,6 +190,8 @@ class CmsFacadeTest extends Test
 
         $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
+        $page->setIsActive(true);
+
         $page = $this->cmsFacade->savePage($page);
 
         $pageKeyMapping = new PageKeyMappingTransfer();
@@ -215,6 +219,8 @@ class CmsFacadeTest extends Test
 
         $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
+        $page->setIsActive(true);
+
         $page = $this->cmsFacade->savePage($page);
 
         $pageKeyMapping = new PageKeyMappingTransfer();
@@ -246,6 +252,7 @@ class CmsFacadeTest extends Test
 
         $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
+        $page->setIsActive(true);
 
         $page = $this->cmsFacade->savePage($page);
 
@@ -272,6 +279,7 @@ class CmsFacadeTest extends Test
 
         $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
+        $page->setIsActive(true);
 
         $page = $this->cmsFacade->savePage($page);
         $this->cmsFacade->addPlaceholderText($page, 'Placeholder1', 'A Placeholder Translation');
