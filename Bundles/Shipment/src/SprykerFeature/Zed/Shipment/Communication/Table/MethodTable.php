@@ -46,9 +46,9 @@ class MethodTable extends AbstractTable
             SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD => '#',
             SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => self::CARRIER,
             SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_NAME
-                => self::METHOD,
+            => self::METHOD,
             SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_DESCRIPTION
-                => self::DESCRIPTION,
+            => self::DESCRIPTION,
             SpyShipmentMethodTableMap::COL_PRICE => self::PRICE,
             SpyShipmentMethodTableMap::COL_IS_ACTIVE => self::ACTIVE,
             self::ACTIONS => self::ACTIONS
@@ -82,21 +82,20 @@ class MethodTable extends AbstractTable
 
             $results[] = [
                 SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD
-                    => $item[SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD],
+                => $item[SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD],
                 SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER
-                    => $method
+                => $method
                     ->getShipmentCarrier()
-                    ->getSpyGlossaryKey()
-                    ->getKey(),
+                    ->getName(),
                 SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_NAME
-                    => $method->getGlossaryKeyName()->getKey(),
+                => $method->getName(),
                 SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_DESCRIPTION
-                    => $method->getGlossaryKeyDescription()->getKey(),
+                => $method->getGlossaryKeyDescription()->getKey(),
                 SpyShipmentMethodTableMap::COL_PRICE => $method->getPrice(),
                 SpyShipmentMethodTableMap::COL_IS_ACTIVE
-                    => $item[SpyShipmentMethodTableMap::COL_IS_ACTIVE],
+                => $item[SpyShipmentMethodTableMap::COL_IS_ACTIVE],
                 self::ACTIONS => ''
-                ];
+            ];
         }
         unset($queryResults);
 
