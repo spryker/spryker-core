@@ -19,16 +19,13 @@ use Symfony\Component\HttpFoundation\Response;
 class CarrierController extends AbstractController
 {
 
-    const ADD = 'add';
-    const UPDATE = 'update';
-
     /**
      * @return Response
      */
     public function addAction()
     {
         $form = $this->getDependencyContainer()
-            ->createCarrierForm(self::ADD)
+            ->createCarrierForm()
         ;
         $form->handleRequest();
 

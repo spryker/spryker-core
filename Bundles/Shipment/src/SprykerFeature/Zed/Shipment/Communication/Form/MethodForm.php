@@ -17,8 +17,6 @@ use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
 class MethodForm extends AbstractForm
 {
 
-    const ADD = 'add';
-    const UPDATE = 'update';
     const NAME_FIELD = 'name';
     const NAME_GLOSSARY_FIELD = 'fkGlossaryKeyMethodName';
     const DESCRIPTION_GLOSSARY_FIELD = 'fkGlossaryKeyMethodDescription';
@@ -37,23 +35,14 @@ class MethodForm extends AbstractForm
     protected $carrierQuery;
 
     /**
-     * @var string
-     */
-    protected $type;
-
-    /**
      * @param SpyShipmentMethodQuery $methodQuery
      * @param SpyShipmentCarrierQuery $carrierQuery
      * @param string $type
      */
-    public function __construct(
-        SpyShipmentMethodQuery $methodQuery,
-        SpyShipmentCarrierQuery $carrierQuery,
-        $type = self::ADD
-    ) {
+    public function __construct(SpyShipmentMethodQuery $methodQuery, SpyShipmentCarrierQuery $carrierQuery)
+    {
         $this->methodQuery = $methodQuery;
         $this->carrierQuery = $carrierQuery;
-        $this->type = $type;
     }
 
     /**
@@ -61,40 +50,30 @@ class MethodForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $this->addChoice(
-            self::CARRIER_FIELD,
-            [
-                'label' => 'Carrier',
-                'placeholder' => 'Select one',
-                'choices' => $this->getCarrierOptions(),
-            ]
-        );
-        $this->addText(
-            self::NAME_FIELD,
-            [
-                'label' => 'Name'
-            ]
-        );
-        $this->addAutosuggest(
-            self::NAME_GLOSSARY_FIELD,
-            [
-                'label' => 'Name glossary key',
-                'url' => '/glossary/ajax/keys'
-            ]
-        );
-        $this->addAutosuggest(
-            self::DESCRIPTION_GLOSSARY_FIELD,
-            [
-                'label' => 'Description glossary key',
-                'url' => '/glossary/ajax/keys'
-            ]
-        );
-        $this->addMoney(
-            self::PRICE_FIELD,
-            [
-                'label' => 'Price'
-            ]
-        );
+        $this->addChoice(self::CARRIER_FIELD, [
+            'label' => 'Carrier',
+            'placeholder' => 'Select one',
+            'choices' => $this->getCarrierOptions(),
+        ])
+        ;
+        $this->addText(self::NAME_FIELD, [
+            'label' => 'Name'
+        ])
+        ;
+        $this->addAutosuggest(self::NAME_GLOSSARY_FIELD, [
+            'label' => 'Name glossary key',
+            'url' => '/glossary/ajax/keys'
+        ])
+        ;
+        $this->addAutosuggest(self::DESCRIPTION_GLOSSARY_FIELD, [
+            'label' => 'Description glossary key',
+            'url' => '/glossary/ajax/keys'
+        ])
+        ;
+        $this->addMoney(self::PRICE_FIELD, [
+            'label' => 'Price'
+        ])
+        ;
         $this->addCheckbox('isActive');
 
         return $this;
@@ -105,7 +84,9 @@ class MethodForm extends AbstractForm
      */
     protected function populateFormFields()
     {
+        $result = [];
 
+        return $result;
     }
 
     /**
@@ -118,8 +99,7 @@ class MethodForm extends AbstractForm
 
         if (empty($carriers) === false) {
             foreach ($carriers as $carrier) {
-                $result[$carrier->getIdShipmentCarrier()]
-                    = $carrier->getName();
+                $result[$carrier->getIdShipmentCarrier()] = $carrier->getName();
             }
         }
 

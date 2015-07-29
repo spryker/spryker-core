@@ -11,8 +11,7 @@ use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
 
 class CarrierForm extends AbstractForm
 {
-    const ADD = 'add';
-    const UPDATE = 'update';
+
     const NAME_GLOSSARY_FIELD = 'fkGlossaryKeyCarrierName';
     const NAME_FIELD = 'name';
     const IS_ACTIVE_FIELD = 'isActive';
@@ -24,20 +23,12 @@ class CarrierForm extends AbstractForm
     protected $carrierQuery;
 
     /**
-     * @var string
-     */
-    protected $type;
-
-    /**
      * @param SpyShipmentCarrierQuery $carrierQuery
      * @param string $type
      */
-    public function __construct(
-        SpyShipmentCarrierQuery $carrierQuery,
-        $type = self::ADD
-    ) {
+    public function __construct(SpyShipmentCarrierQuery $carrierQuery)
+    {
         $this->carrierQuery = $carrierQuery;
-        $this->type = $type;
     }
 
     /**
@@ -45,25 +36,19 @@ class CarrierForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $this->addText(
-            self::NAME_FIELD,
-            [
+        $this->addText(self::NAME_FIELD, [
                 'label' => 'Name'
-            ]
-        );
-        $this->addAutosuggest(
-            self::NAME_GLOSSARY_FIELD,
-            [
+            ])
+        ;
+        $this->addAutosuggest(self::NAME_GLOSSARY_FIELD, [
                 'label' => 'Name glossary key',
                 'url' => '/glossary/ajax/keys'
-            ]
-        );
-        $this->addCheckbox(
-            self::IS_ACTIVE_FIELD,
-            [
+            ])
+        ;
+        $this->addCheckbox(self::IS_ACTIVE_FIELD, [
                 'label' => 'Enabled?'
-            ]
-        );
+            ])
+        ;
 
         return $this;
     }
@@ -77,10 +62,7 @@ class CarrierForm extends AbstractForm
         $carrierId = $this->request->get(self::CARRIER_ID);
 
         if (is_null($carrierId) === false) {
-            $carrier = $this
-                ->carrierQuery
-                ->findOneByIdShipmentCarrier($carrierId)
-            ;
+            $carrier = $this->carrierQuery->findOneByIdShipmentCarrier($carrierId);
             $result = [
                 self::NAME_FIELD => $carrier->getFkGlossaryKeyCarrierName(),
                 self::IS_ACTIVE_FIELD => $carrier->getIsActive()

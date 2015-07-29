@@ -20,16 +20,13 @@ use Symfony\Component\HttpFoundation\Response;
 class MethodController extends AbstractController
 {
 
-    const ADD = 'add';
-    const UPDATE = 'update';
-
     /**
      * @return Response
      */
     public function addAction()
     {
         $form = $this->getDependencyContainer()
-            ->createMethodForm(self::ADD)
+            ->createMethodForm()
         ;
         $form->handleRequest();
 
