@@ -17,6 +17,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class ShipmentFacade extends AbstractFacade
 {
+
     /**
      * @param ShipmentCarrierTransfer $carrierTransfer
      *
@@ -24,9 +25,9 @@ class ShipmentFacade extends AbstractFacade
      */
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer)
     {
-        $carrierModel = $this
-            ->getDependencyContainer()
-            ->createCarrierModel();
+        $carrierModel = $this->getDependencyContainer()
+            ->createCarrierModel()
+        ;
 
         return $carrierModel->create($carrierTransfer);
     }
@@ -38,9 +39,9 @@ class ShipmentFacade extends AbstractFacade
      */
     public function createMethod(ShipmentMethodTransfer $methodTransfer)
     {
-        $methodModel = $this
-            ->getDependencyContainer()
-            ->createMethodModel();
+        $methodModel = $this->getDependencyContainer()
+            ->createMethodModel()
+        ;
 
         return $methodModel->create($methodTransfer);
     }
