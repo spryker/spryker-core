@@ -18,8 +18,8 @@ class MethodForm extends AbstractForm
 {
 
     const NAME_FIELD = 'name';
-    const NAME_GLOSSARY_FIELD = 'fkGlossaryKeyMethodName';
-    const DESCRIPTION_GLOSSARY_FIELD = 'fkGlossaryKeyMethodDescription';
+    const NAME_GLOSSARY_FIELD = 'glossaryKeyName';
+    const DESCRIPTION_GLOSSARY_FIELD = 'glossaryKeyDescription';
     const IS_ACTIVE_FIELD = 'isActive';
     const PRICE_FIELD = 'price';
     const CARRIER_FIELD = 'fkShipmentCarrier';
