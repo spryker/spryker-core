@@ -17,30 +17,35 @@ use Symfony\Component\HttpFoundation\Response;
  * @method ShipmentDependencyContainer getDependencyContainer()
  * @method ShipmentFacade getFacade()
  */
-
 class MethodController extends AbstractController
 {
+
     const ADD = 'add';
     const UPDATE = 'update';
+
     /**
      * @return Response
      */
     public function addAction()
     {
-        $form = $this->getDependencyContainer()->createMethodForm(self::ADD);
+        $form = $this->getDependencyContainer()
+            ->createMethodForm(self::ADD)
+        ;
         $form->handleRequest();
 
         if ($form->isValid()) {
             $data = $form->getData();
             $methodTransfer = new ShipmentMethodTransfer();
             $methodTransfer->fromArray($data, true);
-            $this->getFacade()->createMethod($methodTransfer);
+            $this->getFacade()
+                ->createMethod($methodTransfer)
+            ;
 
             return $this->redirectResponse('/shipment/');
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
-        ]);
+            ]);
     }
 }
