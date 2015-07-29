@@ -17,6 +17,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
 
     const TEMPLATE_NAME = 'template_name';
     const TEMPLATE_PATH = 'template_path';
+    const URL = 'url';
 
     /**
      * @return SpyCmsTemplateQuery
@@ -78,6 +79,16 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(self::TEMPLATE_NAME)
             ->withColumn(self::TEMPLATE_PATH)
         ;
+    }
+
+    public function queryPageWithTemplatesAndUrls()
+    {
+        return $this->queryPages()
+            ->leftJoinCmsTemplate(null, Criteria::LEFT_JOIN)
+            ->leftJoinSpyUrl(null,Criteria::LEFT_JOIN)
+            ->withColumn(self::TEMPLATE_NAME)
+            ->withColumn(self::URL)
+            ;
     }
 
     /**

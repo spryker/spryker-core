@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Table;
 
+use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsPageTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
@@ -28,7 +29,8 @@ class CmsTable extends AbstractTable{
     {
         $config->setHeader([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE => 'Page Id',
-            SpyCmsPageTableMap::COL_FK_TEMPLATE => 'Template',
+            CmsQueryContainer::TEMPLATE_NAME => 'Template',
+            CmsQueryContainer::URL => 'url'
         ]);
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
@@ -45,18 +47,17 @@ class CmsTable extends AbstractTable{
     {
         $query = $this->pageQuery;
         $queryResults = $this->runQuery($query, $config);
-//        $results = [];
-//        foreach ($queryResults as $item) {
-//            echo '<pre>';
-//            print_r($item);
-//            die;
-//            $results[] = [
-//                SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-//                SpyCmsPageTableMap::COL_FK_TEMPLATE  => $item[SpyCmsPageTableMap::COL_FK_TEMPLATE],
-//            ];
-//        }
-//        unset($queryResults);
+        $results = [];
 
-        return $queryResults;
+        foreach ($queryResults as $item) {
+            $results[] = [
+                SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+                CmsQueryContainer::TEMPLATE_NAME => $item[CmsQueryContainer::TEMPLATE_NAME],
+                CmsQueryContainer::URL => $item[CmsQueryContainer::URL]
+            ];
+        }
+        unset($queryResults);
+
+        return $results;
     }
 }

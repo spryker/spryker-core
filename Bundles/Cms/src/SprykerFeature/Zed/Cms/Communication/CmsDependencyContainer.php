@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Cms\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CmsCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 
@@ -43,8 +44,23 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createCmsTable()
     {
-        $pageQuery = $this->getQueryContainer()->queryPagesWithTemplates();
+        $pageQuery = $this->getQueryContainer()->queryPageWithTemplatesAndUrls();
 
         return $this->getFactory()->createTableCmsTable($pageQuery);
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return CmsForm
+     */
+    public function createCmsForm($type)
+    {
+        $templateQuery = $this->getQueryContainer()
+            ->queryTemplates();
+
+        return $this->getFactory()
+            ->createFormCmsForm($templateQuery ,$type)
+            ;
     }
 }
