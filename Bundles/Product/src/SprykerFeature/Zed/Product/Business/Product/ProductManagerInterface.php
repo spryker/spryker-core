@@ -155,4 +155,11 @@ interface ProductManagerInterface
      */
     public function getAbstractSkuFromConcreteProduct($sku);
 
+    /**
+     * @param string $concreteSku
+     *
+     * @return ConcreteProductInterface
+     */
+    public function getConcreteProduct($concreteSku);
+
 }

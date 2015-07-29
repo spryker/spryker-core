@@ -1,6 +1,6 @@
 <?php
 
-namespace Cart\Codeception\Module;
+namespace ProductCartConnector\Codeception\Module;
 
 use Codeception\Module;
 use Codeception\TestCase;
