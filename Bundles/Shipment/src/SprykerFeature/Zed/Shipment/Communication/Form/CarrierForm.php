@@ -13,7 +13,8 @@ class CarrierForm extends AbstractForm
 {
     const ADD = 'add';
     const UPDATE = 'update';
-    const NAME_FIELD = 'fkGlossaryKeyCarrierName';
+    const NAME_GLOSSARY_FIELD = 'fkGlossaryKeyCarrierName';
+    const NAME_FIELD = 'name';
     const IS_ACTIVE_FIELD = 'isActive';
     const CARRIER_ID = 'carrier_id';
 
@@ -44,10 +45,16 @@ class CarrierForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $this->addAutosuggest(
+        $this->addText(
             self::NAME_FIELD,
             [
-                'label' => 'Carrier name',
+                'label' => 'Name'
+            ]
+        );
+        $this->addAutosuggest(
+            self::NAME_GLOSSARY_FIELD,
+            [
+                'label' => 'Name glossary key',
                 'url' => '/glossary/ajax/keys'
             ]
         );

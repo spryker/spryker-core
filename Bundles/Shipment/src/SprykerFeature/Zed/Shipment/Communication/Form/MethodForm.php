@@ -19,8 +19,9 @@ class MethodForm extends AbstractForm
 
     const ADD = 'add';
     const UPDATE = 'update';
-    const NAME_FIELD = 'fkGlossaryKeyMethodName';
-    const DESCRIPTION_FIELD = 'fkGlossaryKeyMethodDescription';
+    const NAME_FIELD = 'name';
+    const NAME_GLOSSARY_FIELD = 'fkGlossaryKeyMethodName';
+    const DESCRIPTION_GLOSSARY_FIELD = 'fkGlossaryKeyMethodDescription';
     const IS_ACTIVE_FIELD = 'isActive';
     const PRICE_FIELD = 'price';
     const CARRIER_FIELD = 'fkShipmentCarrier';
@@ -68,17 +69,23 @@ class MethodForm extends AbstractForm
                 'choices' => $this->getCarrierOptions(),
             ]
         );
-        $this->addAutosuggest(
+        $this->addText(
             self::NAME_FIELD,
             [
-                'label' => 'Name',
+                'label' => 'Name'
+            ]
+        );
+        $this->addAutosuggest(
+            self::NAME_GLOSSARY_FIELD,
+            [
+                'label' => 'Name glossary key',
                 'url' => '/glossary/ajax/keys'
             ]
         );
         $this->addAutosuggest(
-            self::DESCRIPTION_FIELD,
+            self::DESCRIPTION_GLOSSARY_FIELD,
             [
-                'label' => 'Description',
+                'label' => 'Description glossary key',
                 'url' => '/glossary/ajax/keys'
             ]
         );
@@ -112,7 +119,7 @@ class MethodForm extends AbstractForm
         if (empty($carriers) === false) {
             foreach ($carriers as $carrier) {
                 $result[$carrier->getIdShipmentCarrier()]
-                    = $carrier->getSpyGlossaryKey()->getKey();
+                    = $carrier->getName();
             }
         }
 
