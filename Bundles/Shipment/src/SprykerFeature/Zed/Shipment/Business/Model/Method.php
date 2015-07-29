@@ -28,6 +28,7 @@ class Method
                 $methodTransfer->getFkGlossaryKeyMethodDescription()
             )
             ->setPrice($methodTransfer->getPrice())
+            ->setName($methodTransfer->getName())
             ->setIsActive($methodTransfer->getIsActive())
             ->save()
         ;
