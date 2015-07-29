@@ -10,7 +10,7 @@
 
     <table name="spy_shipment_carrier" phpName="SpyShipmentCarrier" identifierQuoting="true">
         <column name="id_shipment_carrier" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="glossary_key_carrier_name" type="INTEGER" required="true" />
+        <column name="glossary_key_name" type="INTEGER" required="true" />
         <column name="name" required="true" size="255" type="VARCHAR" />
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
 
@@ -22,8 +22,8 @@
     <table name="spy_shipment_method" phpName="SpyShipmentMethod" identifierQuoting="true">
         <column name="id_shipment_method" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shipment_carrier" type="INTEGER" required="true" />
-        <column name="glossary_key_method_name" type="INTEGER" required="true" />
-        <column name="glossary_key_method_description" type="INTEGER" />
+        <column name="glossary_key_name" type="INTEGER" required="true" />
+        <column name="glossary_key_description" type="INTEGER" />
         <column name="name" required="true" size="255" type="VARCHAR" />
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
         <column name="price" type="INTEGER" required="false" />
