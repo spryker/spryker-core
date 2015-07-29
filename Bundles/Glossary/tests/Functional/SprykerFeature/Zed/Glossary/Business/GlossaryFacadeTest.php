@@ -25,6 +25,8 @@ use Symfony\Component\HttpFoundation\Request;
 class GlossaryFacadeTest extends Test
 {
 
+    const GLOSSARY_KEY = 'key';
+
     /**
      * @var SpyGlossaryKeyQuery
      */
@@ -96,7 +98,7 @@ class GlossaryFacadeTest extends Test
         $facade = $this->getGlossaryFacade();
 
         $formData = [
-            'glossary_key' => 'form.button.save',
+            self::GLOSSARY_KEY => 'form.button.save',
         ];
         foreach ($this->locales as $localeId => $localeName) {
             $formData['locale_' . $localeId] = 'save ' . $localeId;
@@ -114,18 +116,18 @@ class GlossaryFacadeTest extends Test
         $locale = $this->buildLocaleTransferObject($localesIds);
 
         $formData = [
-            'glossary_key' => 'form.button.save',
+            self::GLOSSARY_KEY => 'form.button.save',
             'locale_' . $localesIds[0] => 'save_1',
         ];
 
         $facade->saveGlossaryKeyTranslations($formData);
 
-        $variant1 = $facade->getTranslation($formData['glossary_key'], $locale);
+        $variant1 = $facade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
 
         $formData['locale_' . $localesIds[0]] = 'save_1_updated';
 
         $facade->saveGlossaryKeyTranslations($formData);
-        $variant2 = $facade->getTranslation($formData['glossary_key'], $locale);
+        $variant2 = $facade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
 
         $this->assertNotSame($variant1->getValue(), $variant2->getValue());
     }

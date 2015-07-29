@@ -196,6 +196,7 @@ class GlossaryTest extends Test
         $transferTranslation->setFkGlossaryKey($keyId);
         $transferTranslation->setFkLocale($locale->getIdLocale());
         $transferTranslation->setValue('some Value');
+        $transferTranslation->setIsActive(true);
 
         $this->assertEquals(0, $specificTranslationQuery->count());
 
