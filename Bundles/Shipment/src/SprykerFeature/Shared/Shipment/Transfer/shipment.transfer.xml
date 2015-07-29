@@ -5,7 +5,7 @@
 
     <transfer name="ShipmentCarrier">
         <property name="idShipmentCarrier" type="int" />
-        <property name="fkGlossaryKeyCarrierName" type="int" />
+        <property name="glossaryKeyCarrierName" type="int" />
         <property name="name" type="string" />
         <property name="isActive" type="bool" />
     </transfer>
@@ -13,15 +13,16 @@
     <transfer name="ShipmentMethod">
         <property name="idShipmentMethod" type="int" />
         <property name="fkShipmentCarrier" type="int" />
-        <property name="fkGlossaryKeyMethodName" type="int" />
-        <property name="fkGlossaryKeyMethodDescription" type="int" />
+        <property name="glossaryKeyMethodName" type="int" />
+        <property name="glossaryKeyMethodDescription" type="int" />
         <property name="name" type="string" />
         <property name="price" type="int" />
         <property name="isActive" type="bool" />
     </transfer>
 
     <transfer name="Order">
-        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethos" />
+        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod" />
+        <property name="shipmentDeliveryTime" type="int" />
     </transfer>
 
 </transfers>

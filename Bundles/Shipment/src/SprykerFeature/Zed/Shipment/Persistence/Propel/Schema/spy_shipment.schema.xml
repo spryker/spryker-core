@@ -10,13 +10,9 @@
 
     <table name="spy_shipment_carrier" phpName="SpyShipmentCarrier" identifierQuoting="true">
         <column name="id_shipment_carrier" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_glossary_key_carrier_name" type="INTEGER" required="true" />
+        <column name="glossary_key_carrier_name" type="INTEGER" required="true" />
         <column name="name" required="true" size="255" type="VARCHAR" />
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
-
-        <foreign-key foreignTable="spy_glossary_key">
-            <reference local="fk_glossary_key_carrier_name" foreign="id_glossary_key" phpName="GlossaryKeyName" refPhpName="ShipmentCarrierName"/>
-        </foreign-key>
 
         <index name="is_active">
             <index-column name="is_active"/>
@@ -26,20 +22,17 @@
     <table name="spy_shipment_method" phpName="SpyShipmentMethod" identifierQuoting="true">
         <column name="id_shipment_method" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shipment_carrier" type="INTEGER" required="true" />
-        <column name="fk_glossary_key_method_name" type="INTEGER" required="true" />
-        <column name="fk_glossary_key_method_description" type="INTEGER" />
+        <column name="glossary_key_method_name" type="INTEGER" required="true" />
+        <column name="glossary_key_method_description" type="INTEGER" />
         <column name="name" required="true" size="255" type="VARCHAR" />
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
         <column name="price" type="INTEGER" required="false" />
+        <column name="availability_plugin" size="255" type="VARCHAR" />
+        <column name="price_calculation_plugin" size="255" type="VARCHAR" />
+        <column name="delivery_time_plugin" size="255" type="VARCHAR" />
 
         <foreign-key foreignTable="spy_shipment_carrier" phpName="ShipmentCarrier" refPhpName="ShipmentMethods">
             <reference local="fk_shipment_carrier" foreign="id_shipment_carrier"/>
-        </foreign-key>
-        <foreign-key foreignTable="spy_glossary_key" phpName="GlossaryKeyName" refPhpName="GlossaryKeyName">
-            <reference local="fk_glossary_key_method_name" foreign="id_glossary_key"/>
-        </foreign-key>
-        <foreign-key foreignTable="spy_glossary_key" phpName="GlossaryKeyDescription"  refPhpName="GlossaryKeyDescription">
-            <reference local="fk_glossary_key_method_description" foreign="id_glossary_key"/>
         </foreign-key>
 
         <index name="is_active">
@@ -47,5 +40,13 @@
         </index>
     </table>
 
+    <table name="spy_sales_order">
+        <column name="fk_shipment_method" type="INTEGER" />
+        <column name="shipment_delivery_time" type="INTEGER" />
+
+        <foreign-key foreignTable="spy_shipment_method" phpName="ShipmentMethod" refPhpName="ShipmentMethods">
+            <reference local="fk_shipment_method" foreign="id_shipment_method"/>
+        </foreign-key>
+    </table>
 
 </database>
