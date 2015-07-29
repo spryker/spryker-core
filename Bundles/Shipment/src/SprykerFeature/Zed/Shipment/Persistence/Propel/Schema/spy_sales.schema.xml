@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<database name="zed"
+          namespace="SprykerFeature\Zed\Sales\Persistence\Propel"
+          namespaceAutoPackage="false"
+          package="vendor.spryker.spryker.Bundles.Sales.src.SprykerFeature.Zed.Sales.Persistence.Propel"
+          defaultIdMethod="native"
+          defaultPhpNamingMethod="underscore"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+
+    <table name="spy_sales_order">
+        <column name="fk_shipment_method" type="INTEGER" />
+        <column name="shipment_delivery_time" type="INTEGER" />
+
+        <foreign-key foreignTable="spy_shipment_method" phpName="ShipmentMethod" refPhpName="ShipmentMethods">
+            <reference local="fk_shipment_method" foreign="id_shipment_method"/>
+        </foreign-key>
+    </table>
+
+</database>
