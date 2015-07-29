@@ -106,6 +106,7 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $concreteProductTransfer->setSku($concreteSku);
         $concreteProductTransfer->setAttributes([]);
         $concreteProductTransfer->addLocalizedAttributes($localizedAttributes);
+        $concreteProductTransfer->setIsActive(true);
         $this->productFacade->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
 
         $categoryTransfer = new CategoryTransfer();
