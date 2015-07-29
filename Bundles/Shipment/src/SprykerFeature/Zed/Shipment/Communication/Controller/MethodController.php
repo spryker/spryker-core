@@ -46,6 +46,6 @@ class MethodController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            ]);
+        ]);
     }
 }

@@ -16,24 +16,29 @@ use Symfony\Component\HttpFoundation\Response;
  * @method ShipmentDependencyContainer getDependencyContainer()
  * @method ShipmentFacade getFacade()
  */
-
 class CarrierController extends AbstractController
 {
+
     const ADD = 'add';
     const UPDATE = 'update';
+
     /**
      * @return Response
      */
     public function addAction()
     {
-        $form = $this->getDependencyContainer()->createCarrierForm(self::ADD);
+        $form = $this->getDependencyContainer()
+            ->createCarrierForm(self::ADD)
+        ;
         $form->handleRequest();
 
         if ($form->isValid()) {
             $data = $form->getData();
             $carrierTransfer = new ShipmentCarrierTransfer();
             $carrierTransfer->fromArray($data, true);
-            $this->getFacade()->createCarrier($carrierTransfer);
+            $this->getFacade()
+                ->createCarrier($carrierTransfer)
+            ;
 
             return $this->redirectResponse('/shipment/');
         }
