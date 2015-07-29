@@ -6,21 +6,28 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolCategoryForm;
+use SprykerFeature\Zed\Discount\Communication\Form\PoolForm;
+use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
+use Propel\Runtime\Map\TableMap;
+use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 
 /**
  * @method VoucherDependencyContainer getDependencyContainer()
  * @method DiscountQueryContainer getQueryContainer()
+ * @var DiscountFacade $facade
  */
 class PoolController extends AbstractController
 {
 
-    const TERM = 'key';
+    const TERM = 'term';
+    const BLANK = '';
 
     public function createAction($idPoolCategory = 0)
     {
@@ -29,11 +36,26 @@ class PoolController extends AbstractController
 
         if ($form->isValid()) {
             $facade = $this->getFacade();
+            $formData = $form->getData();
 
-            $category = new VoucherPoolTransfer();
-            $category->fromArray($form->getData());
+            $pool = new VoucherPoolTransfer();
+            $pool->fromArray($formData, true);
 
-            $facade->createDiscountVoucherPoolCategory($category);
+            $category = $this->getQueryContainer()
+                ->queryDiscountVoucherPoolCategory()
+                ->findOneByName($formData[PoolForm::VOUCHER_POOL_CATEGORY])
+            ;
+
+            $pool->setFkDiscountVoucherPoolCategory($category->getIdDiscountVoucherPoolCategory());
+            $pool = $facade->createDiscountVoucherPool($pool);
+
+            $discount = new DiscountTransfer();
+            $discount->fromArray($formData, true);
+            $discount->setDisplayName(self::BLANK);
+            $discount->setCollectorPlugin(self::BLANK);
+            $discount->setFkDiscountVoucherPool($pool->getIdDiscountVoucherPool());
+
+            $facade->createDiscount($discount);
         }
 
         return [
@@ -71,38 +93,38 @@ class PoolController extends AbstractController
      *
      * @return array
      */
-    public function editCategoryAction()
-    {
-        $idPoolCategory = $request->query->get('id', 0);
-
-        return $this->createCategoryAction($idPoolCategory);
-    }
+//    public function editCategoryAction()
+//    {
+//        $idPoolCategory = $request->query->get('id', 0);
+//
+//        return $this->createCategoryAction($idPoolCategory);
+//    }
 
     /**
      * @param Request $request
      *
      * @return array
      */
-    public function categoriesAction(Request $request)
-    {
-        $table = $this->getDependencyContainer()->createPoolCategoriesTable();
-
-        return [
-            'categories' => $table->render(),
-        ];
-    }
+//    public function categoriesAction(Request $request)
+//    {
+//        $table = $this->getDependencyContainer()->createPoolCategoriesTable();
+//
+//        return [
+//            'categories' => $table->render(),
+//        ];
+//    }
 
     /**
      * @return JsonResponse
      */
-    public function categoriesTableAction()
-    {
-        $table = $this->getDependencyContainer()->createPoolCategoriesTable();
-
-        return $this->jsonResponse(
-            $table->fetchData()
-        );
-    }
+//    public function categoriesTableAction()
+//    {
+//        $table = $this->getDependencyContainer()->createPoolCategoriesTable();
+//
+//        return $this->jsonResponse(
+//            $table->fetchData()
+//        );
+//    }
 
     public function indexAction()
     {
@@ -131,7 +153,7 @@ class PoolController extends AbstractController
 
         $categories = $this->getQueryContainer()
             ->queryDiscountVoucherPoolCategory()
-            ->findByName($term)
+            ->findByName('%' . $term . '%')
         ;
 
         $result = [];
@@ -139,9 +161,7 @@ class PoolController extends AbstractController
             $names = $categories->toArray(null, false, TableMap::TYPE_COLNAME);
 
             foreach ($names as $value) {
-                var_dump($value);
-                die;
-                $result[] = $value[SpyGlossaryKeyTableMap::COL_KEY];
+                $result[] = $value[SpyDiscountVoucherPoolCategoryTableMap::COL_NAME];
             }
         }
 

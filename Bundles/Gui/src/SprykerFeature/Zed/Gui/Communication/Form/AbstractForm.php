@@ -221,7 +221,9 @@ abstract class AbstractForm
      */
     public function add($name, $type, $options = [])
     {
-        return $this->form->add($name, $type, $options);
+        $this->form->add($name, $type, $options);
+
+        return $this;
     }
 
     /**

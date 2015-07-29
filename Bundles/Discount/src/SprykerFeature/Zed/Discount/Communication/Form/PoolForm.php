@@ -2,12 +2,22 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 
 class PoolForm extends AbstractForm
 {
+
+    const NAME = 'name';
+    const VOUCHER_POOL_CATEGORY = 'voucher_pool_category';
+    const IS_INFINITELY_USABLE = 'is_infinitely_usable';
+    const IS_ACTIVE = 'is_active';
+    const AMOUNT = 'amount';
+    const AMOUNT_TYPE = 'type';
+
     /**
      * @var SpyDiscountVoucherPoolCategory $poolCategory
      */
@@ -30,14 +40,26 @@ class PoolForm extends AbstractForm
     protected function buildFormFields()
     {
         $this
-            ->addText('name')
-//            ->addText('fk_discount_voucher_pool_category')
-            ->addAutosuggest('fk_discount_voucher_pool_category', [
+            ->addText(self::NAME)
+            ->addAutosuggest(self::VOUCHER_POOL_CATEGORY, [
                 'label' => 'Pool category',
                 'url' => '/discount/pool/category-suggest'
             ])
-            ->addCheckbox('is_infinitely_usable')
-            ->addCheckbox('is_active')
+            ->addText(self::AMOUNT)
+            ->add(self::AMOUNT_TYPE, 'choice', [
+                'label' => 'Value type',
+                'empty_value' => false,
+                'choices' => [
+                    SpyDiscountTableMap::COL_TYPE_FIXED => SpyDiscountTableMap::COL_TYPE_FIXED,
+                    SpyDiscountTableMap::COL_TYPE_PERCENT => SpyDiscountTableMap::COL_TYPE_PERCENT,
+                ]
+            ])
+            ->addCheckbox(self::IS_INFINITELY_USABLE, [
+                'label' => 'Unlimited',
+            ])
+            ->addCheckbox(self::IS_ACTIVE, [
+                'label' => 'Active',
+            ])
         ;
     }
 
@@ -77,7 +99,8 @@ class PoolForm extends AbstractForm
         ;
 
         return [
-            'name' => $name,
+            self::NAME => $name,
+//            self::VALUE_TYPE => false,
         ];
     }
 
