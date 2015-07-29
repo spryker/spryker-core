@@ -15,6 +15,9 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
 
+    const TEMPLATE_NAME = 'template_name';
+    const TEMPLATE_PATH = 'template_path';
+
     /**
      * @return SpyCmsTemplateQuery
      */
@@ -72,8 +75,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->queryPages()
             ->leftJoinCmsTemplate(null, Criteria::LEFT_JOIN)
-            ->withColumn('template_name')
-            ->withColumn('template_path')
+            ->withColumn(self::TEMPLATE_NAME)
+            ->withColumn(self::TEMPLATE_PATH)
         ;
     }
 

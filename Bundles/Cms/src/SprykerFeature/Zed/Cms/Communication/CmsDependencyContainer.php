@@ -38,4 +38,13 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         return $this->getLocator()->cms()->queryContainer();
     }
 
+    /**
+     * @return OrdersTable
+     */
+    public function createCmsTable()
+    {
+        $pageQuery = $this->getQueryContainer()->queryPagesWithTemplates();
+
+        return $this->getFactory()->createTableCmsTable($pageQuery);
+    }
 }

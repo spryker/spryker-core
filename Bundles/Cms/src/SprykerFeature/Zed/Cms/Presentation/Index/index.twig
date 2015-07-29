@@ -1,6 +1,28 @@
 {% extends '@Application/Layout/layout.twig' %}
 
 {% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS page' } %} {# or you can add here custom widget_title variable #}
+
+        {% block widget_header_content %}
+            <a class="btn btn-sm btn-default" href="/customer/url/here/">{{ 'Go Back to list' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {#{{ form_start(form) form}}#}
+            {#{{ form_widget(form) }}#}
+
+            {#<input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />#}
+            {#{{ form_end(form) }}#}
+
+            <p>here is my grid</p>
+            {{ pages | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+    {#
     <section
             class="spy-layout compact"
             spy-app="spyGrid, spyForm"
@@ -46,4 +68,5 @@
         </div>
 
     </section>
+    #}
 {% endblock %}

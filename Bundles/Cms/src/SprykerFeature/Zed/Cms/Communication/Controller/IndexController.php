@@ -19,7 +19,23 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        return [];
+        $table = $this->getDependencyContainer()->createCmsTable();
+
+        return [
+            'pages' => $table->render(),
+        ];
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()->createCmsTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
     }
 
 }
