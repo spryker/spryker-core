@@ -49,11 +49,6 @@ class CountryFacadeTest extends AbstractFunctionalTest
         $this->countryQueryContainer = new CountryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Country'), $this->locator);
     }
 
-    protected function eraseCountries()
-    {
-        SpyCountryQuery::create()->deleteAll();
-    }
-
     /**
      * @return MessengerInterface
      */
@@ -64,9 +59,7 @@ class CountryFacadeTest extends AbstractFunctionalTest
 
     public function testInitdbInstallation()
     {
-        $this->markTestSkipped('Wrong test scenario');
-
-        $this->eraseCountries();
+        $this->markTestSkipped('This test was using a mechanism to truncate tables, this is wrong in tests');
 
         $countryQuery = $this->countryQueryContainer->queryCountries();
 
