@@ -27,6 +27,8 @@ class ProductOptionManager implements ProductOptionManagerInterface
 
     /**
      * @param ChangeInterface $change
+     *
+     * @return ChangeInterface
      */
     public function expandProductOptions(ChangeInterface $change)
     {
