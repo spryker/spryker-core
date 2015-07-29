@@ -45,9 +45,9 @@ class MethodTable extends AbstractTable
         $config->setHeader([
             SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD => '#',
             SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => self::CARRIER,
-            SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_NAME
+            SpyShipmentMethodTableMap::COL_NAME
             => self::METHOD,
-            SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_DESCRIPTION
+            SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION
             => self::DESCRIPTION,
             SpyShipmentMethodTableMap::COL_PRICE => self::PRICE,
             SpyShipmentMethodTableMap::COL_IS_ACTIVE => self::ACTIVE,
@@ -87,9 +87,9 @@ class MethodTable extends AbstractTable
                 => $method
                     ->getShipmentCarrier()
                     ->getName(),
-                SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_NAME
+                SpyShipmentMethodTableMap::COL_NAME
                 => $method->getName(),
-                SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_DESCRIPTION
+                SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION
                 => $method->getGlossaryKeyDescription()->getKey(),
                 SpyShipmentMethodTableMap::COL_PRICE => $method->getPrice(),
                 SpyShipmentMethodTableMap::COL_IS_ACTIVE
