@@ -157,7 +157,7 @@ class CartFacadeTest extends AbstractFunctionalTest
         $changedItem = $cartItems[1];
         $this->assertEquals(3, $changedItem->getQuantity());
 
-        $changedItem = $cartItems[self::DUMMY_1_SKU_CONCRETE_PRODUCT];
+        $changedItem = $cartItems[2];
         $this->assertEquals(1, $changedItem->getQuantity());
     }
 
