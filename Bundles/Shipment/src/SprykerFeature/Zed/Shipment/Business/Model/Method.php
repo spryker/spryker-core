@@ -21,15 +21,18 @@ class Method
         $methodEntity = new SpyShipmentMethod();
         $methodEntity
             ->setFkShipmentCarrier($methodTransfer->getFkShipmentCarrier())
-            ->setFkGlossaryKeyMethodName(
-                $methodTransfer->getFkGlossaryKeyMethodName()
+            ->setGlossaryKeyName(
+                $methodTransfer->getGlossaryKeyName()
             )
-            ->setFkGlossaryKeyMethodDescription(
-                $methodTransfer->getFkGlossaryKeyMethodDescription()
+            ->setGlossaryKeyDescription(
+                $methodTransfer->getGlossaryKeyDescription()
             )
             ->setPrice($methodTransfer->getPrice())
             ->setName($methodTransfer->getName())
             ->setIsActive($methodTransfer->getIsActive())
+            ->setAvailabilityPlugin($methodTransfer->getAvailabilityPlugin())
+            ->setPriceCalculationPlugin($methodTransfer->getPriceCalculationPlugin())
+            ->setDeliveryTimePlugin($methodTransfer->getPriceCalculationPlugin())
             ->save()
         ;
 
