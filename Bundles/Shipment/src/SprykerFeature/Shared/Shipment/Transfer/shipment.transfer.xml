@@ -6,6 +6,7 @@
     <transfer name="ShipmentCarrier">
         <property name="idShipmentCarrier" type="int" />
         <property name="fkGlossaryKeyCarrierName" type="int" />
+        <property name="name" type="string" />
         <property name="isActive" type="bool" />
     </transfer>
 
@@ -14,6 +15,7 @@
         <property name="fkShipmentCarrier" type="int" />
         <property name="fkGlossaryKeyMethodName" type="int" />
         <property name="fkGlossaryKeyMethodDescription" type="int" />
+        <property name="name" type="string" />
         <property name="price" type="int" />
         <property name="isActive" type="bool" />
     </transfer>
