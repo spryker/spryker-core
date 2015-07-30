@@ -5,9 +5,11 @@
 
 namespace SprykerFeature\Zed\Shipment\Business\Model;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Shipment\ShipmentInterface;
+use Generated\Shared\Shipment\ShipmentMethodInterface;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-
+use Generated\Shared\Transfer\ShipmentTransfer;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethod;
 use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
@@ -55,16 +57,22 @@ class Method
         return $methodEntity->getPrimaryKey();
     }
 
-    public function getAvailableMethods(OrderTransfer $orderTransfer)
+    /**
+     * @param CartInterface $cartTransfer
+     *
+     * @return ShipmentInterface
+     */
+    public function getAvailableMethods(CartInterface $cartTransfer)
     {
-        $response = [];
+        $shipmentTransfer = new ShipmentTransfer();
         $methods = $this->queryContainer->queryActiveMethods()->find();
 
         foreach ($methods as $method) {
-            
             $methodTransfer = new ShipmentMethodTransfer();
             $methodTransfer->fromArray($method->toArray());
+            $shipmentTransfer->addMethod($methodTransfer);
         }
-        return $response;
+
+        return $shipmentTransfer;
     }
 }

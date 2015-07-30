@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
 use SprykerFeature\Zed\Shipment\ShipmentConfig;
+use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
 class MethodForm extends AbstractForm
@@ -36,23 +37,23 @@ class MethodForm extends AbstractForm
     protected $carrierQuery;
 
     /**
-     * @var ShipmentConfig
+     * @var array
      */
-    protected $config;
+    protected $plugins;
 
     /**
      * @param SpyShipmentMethodQuery $methodQuery
      * @param SpyShipmentCarrierQuery $carrierQuery
-     * @param ShipmentConfig $config
+     * @param $plugins
      */
     public function __construct(
         SpyShipmentMethodQuery $methodQuery,
         SpyShipmentCarrierQuery $carrierQuery,
-        ShipmentConfig $config
+        $plugins
     ) {
         $this->methodQuery = $methodQuery;
         $this->carrierQuery = $carrierQuery;
-        $this->config = $config;
+        $this->plugins = $plugins;
     }
 
     /**
@@ -88,8 +89,8 @@ class MethodForm extends AbstractForm
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
             'choice_list' => new ChoiceList(
-                array_keys($this->config->getAvailabilityPlugins()),
-                array_keys($this->config->getAvailabilityPlugins())
+                array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS]),
+                array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS])
             )
         ])
         ;
@@ -97,8 +98,8 @@ class MethodForm extends AbstractForm
             'label' => 'Price Calculation Plugin',
             'placeholder' => 'Select one',
             'choice_list' => new ChoiceList(
-                array_keys($this->config->getPriceCalculationPlugins()),
-                array_keys($this->config->getPriceCalculationPlugins())
+                array_keys($this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS]),
+                array_keys($this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS])
             )
         ])
         ;
@@ -106,8 +107,8 @@ class MethodForm extends AbstractForm
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
             'choice_list' => new ChoiceList(
-                array_keys($this->config->getDeliveryTimePlugins()),
-                array_keys($this->config->getDeliveryTimePlugins())
+                array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS]),
+                array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS])
             )
         ])
         ;
