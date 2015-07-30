@@ -2,27 +2,28 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Table;
 
+use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherTableMap;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-class DiscountVoucherTable extends AbstractTable
+class DiscountTable extends AbstractTable
 {
     const COL_OPTIONS = 'options';
     const PARAM_ID_POOL = 'id-pool';
 
     /**
-     * @var SpyDiscountVoucherPoolQuery
+     * @var SpyDiscountQuery
      */
-    protected $voucherQuery;
+    protected $discountQuery;
 
     /**
-     * @param SpyDiscountVoucherQuery $discountVoucher
+     * @param SpyDiscountQuery $discountQuery
      */
-    public function __construct(SpyDiscountVoucherQuery $discountVoucher)
+    public function __construct(SpyDiscountQuery $discountQuery)
     {
-        $this->voucherQuery = $discountVoucher;
+        $this->discountQuery = $discountQuery;
     }
 
     /**
@@ -34,9 +35,19 @@ class DiscountVoucherTable extends AbstractTable
     {
 
         $config->setHeader([
-            SpyDiscountVoucherTableMap::COL_ID_DISCOUNT_VOUCHER => 'Id',
-            SpyDiscountVoucherTableMap::COL_CREATED_AT => 'Created',
-            SpyDiscountVoucherTableMap::COL_IS_ACTIVE => 'Is active',
+//            SpyDiscountVoucherTableMap::COL_ID_DISCOUNT_VOUCHER => 'Id',
+//            SpyDiscountVoucherTableMap::COL_CREATED_AT => 'Created',
+//            SpyDiscountVoucherTableMap::COL_IS_ACTIVE => 'Is active',
+
+            SpyDiscountVoucherTableMap::COL_CREATED_AT => 'date created',
+            SpyDiscountTableMap::COL_VALID_TO => 'valid until',
+
+            'voucher_name' => 'voucher name',
+            'voucher_pool' => 'voucher pool',
+            'category' => 'category',
+            'code' => 'code',
+            'value' => 'value',
+            'status' => 'status',
         ]);
 
         return $config;
@@ -51,14 +62,23 @@ class DiscountVoucherTable extends AbstractTable
     {
         $results = [];
 
-        $queryResults = $this->runQuery($this->voucherQuery, $config);
+        $queryResults = $this->runQuery($this->discountQuery, $config);
 
         foreach ($queryResults as $item) {
 //            $editUrl = $this->getEditUrl($item);
             $results[] = [
-                SpyDiscountVoucherTableMap::COL_ID_DISCOUNT_VOUCHER => $item[SpyDiscountVoucherTableMap::COL_ID_DISCOUNT_VOUCHER],
-                SpyDiscountVoucherTableMap::COL_CREATED_AT => $item[SpyDiscountVoucherTableMap::COL_CREATED_AT],
-                SpyDiscountVoucherTableMap::COL_IS_ACTIVE => $item[SpyDiscountVoucherTableMap::COL_IS_ACTIVE],
+//                SpyDiscountVoucherTableMap::COL_ID_DISCOUNT_VOUCHER => $item[SpyDiscountVoucherTableMap::COL_ID_DISCOUNT_VOUCHER],
+//                SpyDiscountVoucherTableMap::COL_CREATED_AT => $item[SpyDiscountVoucherTableMap::COL_CREATED_AT],
+//                SpyDiscountVoucherTableMap::COL_IS_ACTIVE => $item[SpyDiscountVoucherTableMap::COL_IS_ACTIVE],
+
+                'date_created' => 'date created',
+                'valid_until' => 'valid until',
+                'voucher_name' => 'voucher name',
+                'voucher_pool' => 'voucher pool',
+                'category' => 'category',
+                'code' => 'code',
+                'value' => 'value',
+                'status' => 'status',
 
 //                SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL],
 //                SpyDiscountVoucherPoolTableMap::COL_NAME => $item[SpyDiscountVoucherPoolTableMap::COL_NAME],

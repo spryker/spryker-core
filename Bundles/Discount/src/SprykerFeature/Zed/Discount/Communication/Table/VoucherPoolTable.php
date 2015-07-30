@@ -41,8 +41,16 @@ class VoucherPoolTable extends AbstractTable
         $config->setUrl(self::CONTROLLER_TABLE_ACTION);
 
         $config->setHeader([
-            SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => 'Id',
-            SpyDiscountVoucherPoolTableMap::COL_NAME => 'Name',
+            'date_created' => 'date created',
+            'valid_until' => 'valid until',
+            'voucher_name' => 'voucher name',
+            'voucher_pool' => 'voucher pool',
+            'category' => 'category',
+            'code' => 'code',
+            'value' => 'value',
+            'status' => 'status',
+//            SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => 'Id',
+//            SpyDiscountVoucherPoolTableMap::COL_NAME => 'Name',
             self::COL_OPTIONS => 'Options',
         ]);
 
@@ -63,9 +71,16 @@ class VoucherPoolTable extends AbstractTable
         foreach ($queryResults as $item) {
             $editUrl = $this->getEditUrl($item);
             $results[] = [
-                SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL],
-                SpyDiscountVoucherPoolTableMap::COL_NAME => $item[SpyDiscountVoucherPoolTableMap::COL_NAME],
-
+//                SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL],
+//                SpyDiscountVoucherPoolTableMap::COL_NAME => $item[SpyDiscountVoucherPoolTableMap::COL_NAME],
+                'date_created' => 'date created',
+                'valid_until' => 'valid until',
+                'voucher_name' => 'voucher name',
+                'voucher_pool' => 'voucher pool',
+                'category' => 'category',
+                'code' => 'code',
+                'value' => 'value',
+                'status' => 'status',
                 self::COL_OPTIONS => sprintf(
                     '<a href="%s" class="btn btn-sm btn-primary">Edit</a>',
                     $editUrl
