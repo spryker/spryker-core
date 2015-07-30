@@ -14,6 +14,7 @@
         <column name="display_name" type="VARCHAR" size="255" required="true"/>
         <column name="description" type="VARCHAR" size="1024"/>
         <column name="amount" type="FLOAT" required="true" />
+        <column name="type" type="ENUM" valueSet="fixed, percent" />
         <column name="calculator_plugin" type="VARCHAR" size="255"/>
         <column name="collector_plugin" type="VARCHAR" size="255" required="true"/>
         <column name="is_privileged" type="BOOLEAN" default="false" />

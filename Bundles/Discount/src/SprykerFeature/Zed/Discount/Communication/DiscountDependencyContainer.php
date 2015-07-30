@@ -8,25 +8,26 @@ namespace SprykerFeature\Zed\Discount\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\Communication\Form\DecisionRuleForm;
-use SprykerFeature\Zed\Discount\Communication\Form\DiscountForm;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherPoolCategoryForm;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherPoolForm;
-use SprykerFeature\Zed\Discount\Communication\Grid\DecisionRuleGrid;
-use SprykerFeature\Zed\Discount\Communication\Grid\DiscountGrid;
-use SprykerFeature\Zed\Discount\Communication\Grid\VoucherGrid;
-use SprykerFeature\Zed\Discount\Communication\Grid\VoucherPoolCategoryGrid;
-use SprykerFeature\Zed\Discount\Communication\Grid\VoucherPoolGrid;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
+use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
+use SprykerFeature\Zed\Discount\Communication\Form\PoolCategoryForm;
+use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 
 /**
  * @method DiscountCommunication getFactory()
  */
 class DiscountDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+    /**
+     * @return VoucherForm
+     */
+    public function createFormVoucherForm()
+    {
+        return $this->getFactory()->createFormVoucherForm();
+    }
 
     /**
      * @return DiscountFacade
@@ -34,6 +35,58 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function getDiscountFacade()
     {
         return $this->getLocator()->discount()->facade();
+    }
+
+    /**
+     * @return VoucherPoolCategoryTable
+     */
+    public function createPoolCategoriesTable()
+    {
+        $poolCategoriesQuery = $this->getQueryContainer()->queryDiscountVoucherPoolCategory();
+
+        return $this->getFactory()->createTableVoucherPoolCategoryTable($poolCategoriesQuery);
+    }
+
+    /**
+     * @return VoucherPoolTable
+     */
+    public function createVoucherPoolTable()
+    {
+        $poolQuery = $this->getQueryContainer()->queryDiscountVoucherPool();
+
+        return $this->getFactory()->createTableVoucherPoolTable($poolQuery);
+    }
+
+    /**
+     * @param id $idPoolCategory
+     *
+     * @return PoolCategoryForm
+     */
+    public function createPoolCategoryForm($idPoolCategory)
+    {
+        $poolCategoryQuery = $this->getQueryContainer()
+            ->queryDiscountVoucherPoolCategory()
+        ;
+
+        return $this->getFactory()->createFormPoolCategoryForm($poolCategoryQuery, $idPoolCategory);
+    }
+
+    /**
+     * @param $idPool
+     *
+     * @return Form\PoolForm
+     */
+    public function createPoolForm($idPool=0)
+    {
+        $poolQuery = $this->getQueryContainer()
+            ->queryDiscountVoucherPool()
+        ;
+
+        $discountQuery = $this->getQueryContainer()
+            ->queryDiscount()
+        ;
+
+        return $this->getFactory()->createFormPoolForm($poolQuery, $discountQuery, $idPool);
     }
 
     /**

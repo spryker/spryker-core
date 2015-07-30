@@ -231,6 +231,18 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
+     * @param string $poolCategoryName
+     *
+     * @return SpyDiscountVoucherPoolCategory
+     */
+    public function getOrCreateDiscountVoucherPoolCategoryByName($poolCategoryName)
+    {
+        return $this->getDependencyContainer()->getDiscountVoucherPoolCategoryWriter()
+            ->getOrCreateByName($poolCategoryName)
+        ;
+    }
+
+    /**
      * @param string $pluginName
      *
      * @return DiscountCalculatorPluginInterface

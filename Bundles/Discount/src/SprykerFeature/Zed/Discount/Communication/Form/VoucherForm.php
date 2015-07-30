@@ -1,155 +1,58 @@
 <?php
 
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
-
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints as Assert;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 
 class VoucherForm extends AbstractForm
 {
-
-    const ID_DISCOUNT_VOUCHER = 'id_discount_voucher';
-    const FK_DISCOUNT_VOUCHER_POOL = 'fk_discount_voucher_pool';
-    const CODE = 'code';
-    const IS_ACTIVE = 'is_active';
-
     /**
-     * @var DiscountQueryContainer
+     * Prepares form
+     *
+     * @return VoucherForm
      */
-    protected $queryContainer;
-
-    /**
-     * @var DiscountFacade
-     */
-    protected $discountFacade;
-
-    /**
-     * @var DiscountCommunication
-     */
-    protected $factory;
-
-    /**
-     * @param Request $request
-     * @param DiscountQueryContainerInterface $queryContainer
-     * @param DiscountFacadeInterface $discountFacade
-     * @param FactoryInterface $factory
-     */
-    public function __construct(
-        Request $request,
-        DiscountQueryContainerInterface $queryContainer,
-        DiscountFacadeInterface $discountFacade,
-        FactoryInterface $factory
-    ) {
-        $this->discountFacade = $discountFacade;
-        $this->factory = $factory;
-        parent::__construct($request, $queryContainer);
-    }
-
-    /**
-     * @return array|\SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field[]
-     */
-    public function addFormFields()
+    protected function buildFormFields()
     {
-        $this->addField(self::ID_DISCOUNT_VOUCHER)
-            ->setConstraints([
-                new Assert\Optional([
-                    new Assert\Type([
-                        'type' => 'integer',
-                    ]),
-                ]),
-            ]);
-
-        $this->addField(self::FK_DISCOUNT_VOUCHER_POOL)
-            ->setAccepts($this->getVoucherPools())
-            ->setRefresh(false)
-            ->setConstraints([
-                new Assert\Type([
-                    'type' => 'integer',
-                ]),
-                new Assert\Choice([
-                    'choices' => array_column($this->getVoucherPools(), 'value'),
-                    'message' => 'Please choose one of the given Voucher Pools',
-                ]),
-                new Assert\NotBlank(),
+        $this
+            ->addChoice('poll', [
+                'label' => 'Salutation',
+                'placeholder' => 'Select one',
+                'choices' => $this->getPolls(),
             ])
-            ->setValueHook(function ($value) {
-                return $value ? (int) $value : null;
-            });
-
-        $this->addField(self::CODE)
-            ->setConstraints([
-                new Assert\Type([
-                    'type' => 'string',
-                ]),
-                new Assert\NotBlank(),
-                $this->factory->createConstraintCodeExists(
-                    $this->queryContainer,
-                    $this->getIdDiscount()
-                ),
-            ]);
-
-        $this->addField(self::IS_ACTIVE)
-            ->setConstraints([
-                new Assert\Type(
-                    ['type' => 'boolean']
-                ),
-            ]);
+            ->addText('name')
+            ->addChoice('validity', [
+                'label' => 'Salutation',
+                'placeholder' => 'Select one',
+                'choices' => $this->getValidity(),
+            ])
+            ->addCheckbox('combine', [
+                'label' => 'Combinable',
+            ])
+        ;
     }
 
     /**
      * @return array
      */
-    protected function getDefaultData()
+    private function getValidity()
     {
-        $idDiscountVoucher = $this->stateContainer->getRequestValue(self::ID_DISCOUNT_VOUCHER);
-        $discountVoucherEntity = $this->queryContainer->queryDiscountVoucher()->findPk($idDiscountVoucher);
+        $vouchers = [];
 
-        if ($discountVoucherEntity) {
-            return $discountVoucherEntity->toArray();
+        for ($i=3; $i<=20; $i++) {
+            $vouchers[$i] = $i . ' Years';
         }
 
-        return [
-            self::IS_ACTIVE => true,
-        ];
+        return $vouchers;
     }
 
     /**
-     * @return array
+     * Set the values for fields
+     *
+     * @return $this
      */
-    protected function getVoucherPools()
+    protected function populateFormFields()
     {
-        $voucherPools = $this->queryContainer->queryVoucherPool()->find();
-
-        $data = [];
-        /** @var SpyDiscountVoucherPool $voucherPool */
-        foreach ($voucherPools as $voucherPool) {
-            $data[] = [
-                'value' => $voucherPool->getPrimaryKey(),
-                'label' => $voucherPool->getName(),
-            ];
-        }
-
-        return $data;
-    }
-
-    /**
-     * @return int
-     */
-    protected function getIdDiscount()
-    {
-        return $this->stateContainer->getRequestValue(self::ID_DISCOUNT_VOUCHER);
+        return [];
     }
 
 }

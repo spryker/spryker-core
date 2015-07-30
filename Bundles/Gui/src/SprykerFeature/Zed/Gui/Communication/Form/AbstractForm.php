@@ -60,7 +60,7 @@ abstract class AbstractForm
     /**
      * Set the values for fields
      *
-     * @return $this
+     * @return array
      */
     abstract protected function populateFormFields();
 
@@ -221,7 +221,9 @@ abstract class AbstractForm
      */
     public function add($name, $type, $options = [])
     {
-        return $this->form->add($name, $type, $options);
+        $this->form->add($name, $type, $options);
+
+        return $this;
     }
 
     /**

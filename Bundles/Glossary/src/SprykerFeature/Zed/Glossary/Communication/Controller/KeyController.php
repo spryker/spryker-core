@@ -80,6 +80,7 @@ class KeyController extends AbstractController
             ->queryByKey($term)->find()
         ;
 
+        $result = [];
         if ($keys) {
             $keys = $keys->toArray(null, false, TableMap::TYPE_COLNAME);
 
