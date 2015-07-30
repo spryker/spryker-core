@@ -1,25 +1,25 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
 
+{% set section_title = 'Vouchers list' %}
 
-{% block body_class %}spy-page{% endblock %}
-
+{% block breadcrumb %}
+    <li class="active"><strong>{{ section_title | trans }}</strong></li>
+{% endblock %}
 
 {% block content %}
-    <div
-        spy-app="spyFormat, spyGrid, spyForm, spyLayout"
-        ng-strict-di
-        ng-controller="ComController"
-    >
-        <div spy-form-update="update()" scope="voucher-grid" channel="voucher-form"></div>
-        <div spy-form-update="closeLayer()" scope="voucher-form" channel="voucher-form"></div>
-        <div spy-form-abort="closeLayer()" scope="voucher-form" channel="voucher-form"></div>
 
-        <spy-listen on="voucher-create-click" do="create = true ; read($argument); openLayer()" scope="voucher-form" channel="voucher-form"></spy-listen>
-        <spy-listen on="voucher-update-click" do="create = false; read($argument); openLayer()" scope="voucher-form" channel="voucher-form"></spy-listen>
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: section_title } %}
 
-        {% include '@Discount/Partials/navigation.twig' %}
+        {% block widget_header_content %}
+            <a class="btn btn-sm btn-primary" href="/discount/voucher/create">{{ 'Create Voucher' | trans }}</a>
+        {% endblock %}
 
-        {% include '@Discount/Grid/voucher-grid.twig' %}
-        {% include '@Discount/Form/voucher-form.twig' %}
-    </div>
+        {% block widget_content %}
+
+            {{ vouchers | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
 {% endblock %}

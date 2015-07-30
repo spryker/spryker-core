@@ -42,14 +42,20 @@ class VoucherController extends AbstractController
 
     public function indexAction()
     {
+        $table = $this->getDependencyContainer()->createVoucherTable();
+
+        return [
+            'vouchers' => $table->render(),
+        ];
     }
 
-    public function categoryAction()
+    public function tableAction()
     {
-    }
+        $table = $this->getDependencyContainer()->createVoucherTable();
 
-    public function poolAction()
-    {
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
     }
 
 }
