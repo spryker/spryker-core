@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Shipment\Business\Model\Carrier;
 use SprykerFeature\Zed\Shipment\Business\Model\Method;
 use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
+use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
  * @method ShipmentBusiness getFactory()
@@ -35,7 +36,10 @@ class ShipmentDependencyContainer extends AbstractBusinessDependencyContainer
     public function createMethodModel()
     {
         return $this->getFactory()
-            ->createModelMethod($this->getQueryContainer())
+            ->createModelMethod(
+                $this->getQueryContainer(),
+                $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
+            )
             ;
     }
 }

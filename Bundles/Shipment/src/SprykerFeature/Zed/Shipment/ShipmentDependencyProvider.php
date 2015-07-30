@@ -26,4 +26,15 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     {
         return $container;
     }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        return $container;
+    }
+
 }
