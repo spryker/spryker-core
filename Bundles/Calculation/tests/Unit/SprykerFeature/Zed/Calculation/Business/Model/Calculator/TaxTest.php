@@ -6,6 +6,7 @@
 
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -181,6 +182,48 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(693, $groupedTaxSets[0]->getAmount());
     }
 
+    public function testCalculateTaxOnProductOption()
+    {
+        $caslculableContainer = $this->getOrderTransfer();
+        /** @var OrderTransfer $orderTransfer */
+        $orderTransfer = $caslculableContainer->getCalculableObject();
+        $orderItemTransfer = $this->getOrderItemTransfer();
+        $optionTransfer = $this->getProductOptionTransfer();
+
+        $taxRate10 = (new TaxRateTransfer())
+            ->setRate(self::TAX_PERCENTAGE_30)
+            ->setIdTaxRate(self::ID_TAX_SET_1);
+        $taxSetTransfer = (new TaxSetTransfer)
+            ->setIdTaxSet(self::ID_TAX_SET_1)
+            ->addTaxRate($taxRate10);
+
+        $orderItemTransfer->setTaxSet($taxSetTransfer)
+            ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
+            ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
+
+        $optionTransfer->setTaxSet($taxSetTransfer)
+            ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
+            ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
+
+        $orderItemTransfer->addProductOption($optionTransfer);
+        $orderTransfer->addItem($orderItemTransfer);
+
+        $totalsTransfer = $this->getTotalsTransfer();
+        $calculator = $this->getCalculator();
+
+        $calculator->recalculateTotals($totalsTransfer, $caslculableContainer, $orderTransfer->getItems());
+
+        $orderItemTaxSet = $orderItemTransfer->getTaxSet();
+        $orderItemOptionTaxSet = $orderItemTransfer->getProductOptions()[0]->getTaxSet();
+
+        $this->assertEquals(231, $orderItemTaxSet->getAmount());
+        $this->assertEquals(231, $orderItemOptionTaxSet->getAmount());
+
+        $groupedTaxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
+        $this->assertCount(1, $groupedTaxSets);
+        $this->assertEquals(462, $groupedTaxSets[0]->getAmount());
+    }
+
     /**
      * @return TaxTotalsCalculator
      */
@@ -217,6 +260,16 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $expense = new ExpenseTransfer();
 
         return $expense;
+    }
+
+    /**
+     * @return ProductOptionTransfer
+     */
+    private function getProductOptionTransfer()
+    {
+        $option = new ProductOptionTransfer();
+
+        return $option;
     }
 
     /**

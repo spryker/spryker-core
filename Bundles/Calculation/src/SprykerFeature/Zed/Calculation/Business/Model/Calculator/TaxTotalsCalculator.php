@@ -12,6 +12,7 @@ use Generated\Shared\Calculation\CartInterface;
 use Generated\Shared\Calculation\OrderItemInterface;
 use Generated\Shared\Calculation\CartItemInterface;
 use Generated\Shared\Calculation\TaxSetInterface;
+use Generated\Shared\Calculation\ProductOptionInterface;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
@@ -61,6 +62,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         foreach ($calculableItems as $item) {
             $this->calculateTax($item);
             $this->calculateTaxForExpenses($item->getExpenses());
+            $this->calculateTaxForProductOptions($item->getProductOptions());
         }
 
         /** @var $order CartInterface|OrderInterface **/
@@ -100,6 +102,16 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     {
         foreach ($expenses as $expense) {
             $this->calculateTax($expense);
+        }
+    }
+
+    /**
+     *  @param ProductOptionInterface[] $options
+     */
+    public function calculateTaxForProductOptions($options)
+    {
+        foreach ($options as $option) {
+            $this->calculateTax($option);
         }
     }
 
