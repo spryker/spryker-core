@@ -21,6 +21,7 @@
         <property name="name" type="string" />
         <property name="price" type="int" />
         <property name="isActive" type="bool" />
+        <property name="time" type="int" />
     </transfer>
 
     <transfer name="Order">
