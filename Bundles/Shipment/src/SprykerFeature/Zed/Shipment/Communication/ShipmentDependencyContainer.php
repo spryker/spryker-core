@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Zed\Shipment\Communication\Form\CarrierForm;
 use SprykerFeature\Zed\Shipment\Communication\Table\MethodTable;
 use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainer;
+use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
  * @method ShipmentCommunication getFactory()
@@ -48,7 +49,11 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
 
         return $this
             ->getFactory()
-            ->createFormMethodForm($methodQuery, $carrierQuery, $this->getConfig())
+            ->createFormMethodForm(
+                $methodQuery,
+                $carrierQuery,
+                $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
+            )
             ;
     }
 }
