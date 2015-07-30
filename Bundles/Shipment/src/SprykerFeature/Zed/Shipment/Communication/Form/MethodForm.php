@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Shipment\Communication\Form;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
-use SprykerFeature\Zed\Shipment\ShipmentConfig;
 use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
@@ -44,12 +43,12 @@ class MethodForm extends AbstractForm
     /**
      * @param SpyShipmentMethodQuery $methodQuery
      * @param SpyShipmentCarrierQuery $carrierQuery
-     * @param $plugins
+     * @param array $plugins
      */
     public function __construct(
         SpyShipmentMethodQuery $methodQuery,
         SpyShipmentCarrierQuery $carrierQuery,
-        $plugins
+        array $plugins
     ) {
         $this->methodQuery = $methodQuery;
         $this->carrierQuery = $carrierQuery;
