@@ -12,8 +12,16 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 class VoucherPoolTable extends AbstractTable
 {
+    const COL_OPTIONS = 'options';
+
+    /**
+     * @var SpyDiscountVoucherPoolQuery
+     */
     protected $poolQuery;
 
+    /**
+     * @param SpyDiscountVoucherPoolQuery $discountVoucherPool
+     */
     public function __construct(SpyDiscountVoucherPoolQuery $discountVoucherPool)
     {
         $this->poolQuery = $discountVoucherPool;
@@ -22,15 +30,16 @@ class VoucherPoolTable extends AbstractTable
     /**
      * @param TableConfiguration $config
      *
-     * @return mixed
+     * @return TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
         $config->setUrl('poolTable');
 
         $config->setHeader([
+            SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => 'Id',
             SpyDiscountVoucherPoolTableMap::COL_NAME => 'Name',
-            'options' => 'Options',
+            self::COL_OPTIONS => 'Options',
         ]);
 
         return $config;
@@ -39,7 +48,7 @@ class VoucherPoolTable extends AbstractTable
     /**
      * @param TableConfiguration $config
      *
-     * @return mixed
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -49,14 +58,14 @@ class VoucherPoolTable extends AbstractTable
 
         foreach ($queryResults as $item) {
             $results[] = [
+                SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL],
                 SpyDiscountVoucherPoolTableMap::COL_NAME => $item[SpyDiscountVoucherPoolTableMap::COL_NAME],
-                'options' => sprintf(
+                self::COL_OPTIONS => sprintf(
                     '<a href="/discount/pool/edit?id=%d" class="btn btn-sm btn-primary">Edit</a>',
                     $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL]
                 ),
             ];
         }
-
 
         return $results;
     }

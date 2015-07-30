@@ -54,4 +54,26 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
         return $discountVoucherPoolCategoryEntity;
     }
 
+    /**
+     * @param string $discountPoolCategoryName
+     *
+     * @return SpyDiscountVoucherPoolCategory
+     */
+    public function getOrCreateByName($discountPoolCategoryName)
+    {
+        $category = $this->getQueryContainer()
+            ->queryDiscountVoucherPoolCategory()
+            ->findOneByName($discountPoolCategoryName)
+        ;
+
+        if (is_null($category)) {
+            $categoryTransfer = new VoucherPoolCategoryTransfer();
+            $categoryTransfer->setName($discountPoolCategoryName);
+
+            return $this->create($categoryTransfer);
+        }
+
+        return $category;
+    }
+
 }

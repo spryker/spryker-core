@@ -14,7 +14,8 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: section_title } %}
 
         {% block widget_header_content %}
-            <a class="btn btn-primary" href="/discount/pool">{{ 'View Pools' | trans }}</a>
+            <a class="btn btn-sm btn-primary" href="/discount/pool">{{ 'View Pools' | trans }}</a>
+            <a class="btn btn-sm btn-primary" href="/discount/pool/create-category">{{ 'Create Pool Category' | trans }}</a>
         {% endblock %}
 
         {% block widget_content %}

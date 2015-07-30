@@ -31,6 +31,9 @@ class PoolController extends AbstractController
     const TERM = 'term';
     const BLANK = '';
 
+    /**
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function createAction()
     {
         $form = $this->getDependencyContainer()->createPoolForm();
@@ -43,10 +46,7 @@ class PoolController extends AbstractController
             $pool = new VoucherPoolTransfer();
             $pool->fromArray($formData, true);
 
-            $category = $this->getQueryContainer()
-                ->queryDiscountVoucherPoolCategory()
-                ->findOneByName($formData[PoolForm::VOUCHER_POOL_CATEGORY])
-            ;
+            $category = $facade->getOrCreateDiscountVoucherPoolCategoryByName($formData[PoolForm::VOUCHER_POOL_CATEGORY]);
 
             $pool->setFkDiscountVoucherPoolCategory($category->getIdDiscountVoucherPoolCategory());
             $pool = $facade->createDiscountVoucherPool($pool);
@@ -58,6 +58,8 @@ class PoolController extends AbstractController
             $discount->setFkDiscountVoucherPool($pool->getIdDiscountVoucherPool());
 
             $facade->createDiscount($discount);
+
+            return $this->redirectResponse(sprintf('/discount/pool/edit?id=%d', $pool->getIdDiscountVoucherPool()));
         }
 
         return [
@@ -65,6 +67,12 @@ class PoolController extends AbstractController
         ];
     }
 
+    /**
+     * @param Request $request
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function editAction(Request $request)
     {
         $idPool = $request->query->get('id');
@@ -80,26 +88,21 @@ class PoolController extends AbstractController
             $poolTransfer = new VoucherPoolTransfer();
             $poolTransfer->fromArray(array_merge($pool->toArray(), $formData), true);
 
-            $category = $this->getQueryContainer()
-                ->queryDiscountVoucherPoolCategory()
-                ->findOneByName($formData[PoolForm::VOUCHER_POOL_CATEGORY])
-            ;
+            $category = $facade->getOrCreateDiscountVoucherPoolCategoryByName($formData[PoolForm::VOUCHER_POOL_CATEGORY]);
+            $poolTransfer->setFkDiscountVoucherPoolCategory($category->getIdDiscountVoucherPoolCategory());
 
-            $pool->setFkDiscountVoucherPoolCategory($category->getIdDiscountVoucherPoolCategory());
-//            $facade->updateDiscountVoucherPool($poolTransfer);
+            $facade->updateDiscountVoucherPool($poolTransfer);
 
             $discount = $this->getQueryContainer()->queryDiscount()->findOneByFkDiscountVoucherPool($idPool);
             $discount->setAmount($formData[PoolForm::AMOUNT]);
             $discount->setType($formData[PoolForm::AMOUNT_TYPE]);
 
             $discountTransfer = new DiscountTransfer();
-            $discountTransfer->fromArray($discount->toArray());
-
-            echo '<pre>';
-            print_r($discountTransfer);
-            die;
+            $discountTransfer->fromArray($discount->toArray(), true);
 
             $facade->updateDiscount($discountTransfer);
+
+            return $this->redirectResponse(sprintf('/discount/pool/edit?id=%d', $idPool));
         }
 
         return [
@@ -108,7 +111,6 @@ class PoolController extends AbstractController
     }
 
     /**
-     * @param Request $request
      * @param int $idPoolCategory
      *
      * @return array
@@ -137,38 +139,38 @@ class PoolController extends AbstractController
      *
      * @return array
      */
-//    public function editCategoryAction()
-//    {
-//        $idPoolCategory = $request->query->get('id', 0);
-//
-//        return $this->createCategoryAction($idPoolCategory);
-//    }
+    public function editCategoryAction()
+    {
+        $idPoolCategory = $request->query->get('id', 0);
+
+        return $this->createCategoryAction($idPoolCategory);
+    }
 
     /**
      * @param Request $request
      *
      * @return array
      */
-//    public function categoriesAction(Request $request)
-//    {
-//        $table = $this->getDependencyContainer()->createPoolCategoriesTable();
-//
-//        return [
-//            'categories' => $table->render(),
-//        ];
-//    }
+    public function categoriesAction(Request $request)
+    {
+        $table = $this->getDependencyContainer()->createPoolCategoriesTable();
+
+        return [
+            'categories' => $table->render(),
+        ];
+    }
 
     /**
      * @return JsonResponse
      */
-//    public function categoriesTableAction()
-//    {
-//        $table = $this->getDependencyContainer()->createPoolCategoriesTable();
-//
-//        return $this->jsonResponse(
-//            $table->fetchData()
-//        );
-//    }
+    public function categoriesTableAction()
+    {
+        $table = $this->getDependencyContainer()->createPoolCategoriesTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
 
     public function indexAction()
     {
