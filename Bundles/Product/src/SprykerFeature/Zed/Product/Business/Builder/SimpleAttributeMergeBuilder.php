@@ -49,6 +49,9 @@ class SimpleAttributeMergeBuilder
                 }
                 $decodedAttributes = json_decode($concreteAttributes[$i], true);
                 $decodedLocalizedAttributes = json_decode($concreteLocalizedAttributes[$i], true);
+                if (is_null($decodedLocalizedAttributes)) {
+                    $decodedLocalizedAttributes = [];
+                }
                 $mergedAttributes = array_merge($decodedAttributes, $decodedLocalizedAttributes);
 
                 $processedConcreteSkus[$concreteSkus[$i]] = true;
