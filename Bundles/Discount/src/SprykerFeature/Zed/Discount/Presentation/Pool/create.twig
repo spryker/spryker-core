@@ -1,6 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
+{% if section_title is not defined %}
 {% set section_title = 'Create Pool' %}
+{% endif %}
 
 {% block breadcrumb %}
     <li><a href="/discount/pool">{{ 'Pools' | trans }}</a></li>
@@ -12,24 +14,19 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: section_title } %}
 
         {% block widget_header_content %}
-            <a class="btn btn-primary" href="/discount/pool/categories">{{ 'View Pools' | trans }}</a>
+            <a class="btn btn-primary" href="/discount/pool">{{ 'View Pools' | trans }}</a>
         {% endblock %}
 
         {% block widget_content %}
 
-            {{ form_start(form) }}
+        {{ form_start(form) }}
             {{ form_widget(form) }}
 
             <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
-            {{ form_end(form) }}
+        {{ form_end(form) }}
 
         {% endblock %}
 
     {% endembed %}
-
-{% endblock %}
-
-{% block css %}
-    {{ parent() }}
 
 {% endblock %}

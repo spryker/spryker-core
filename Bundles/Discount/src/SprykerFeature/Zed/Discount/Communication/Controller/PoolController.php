@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
+use Composer\DependencyResolver\Pool;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
@@ -17,9 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use Propel\Runtime\Map\TableMap;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
+use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 
 /**
- * @method VoucherDependencyContainer getDependencyContainer()
+ * @method DiscountDependencyContainer getDependencyContainer()
  * @method DiscountQueryContainer getQueryContainer()
  * @var DiscountFacade $facade
  */
@@ -29,9 +31,9 @@ class PoolController extends AbstractController
     const TERM = 'term';
     const BLANK = '';
 
-    public function createAction($idPoolCategory = 0)
+    public function createAction()
     {
-        $form = $this->getDependencyContainer()->createPoolForm($idPoolCategory);
+        $form = $this->getDependencyContainer()->createPoolForm();
         $form->handleRequest();
 
         if ($form->isValid()) {
@@ -56,6 +58,48 @@ class PoolController extends AbstractController
             $discount->setFkDiscountVoucherPool($pool->getIdDiscountVoucherPool());
 
             $facade->createDiscount($discount);
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
+    }
+
+    public function editAction(Request $request)
+    {
+        $idPool = $request->query->get('id');
+
+        $form = $this->getDependencyContainer()->createPoolForm($idPool);
+        $form->handleRequest();
+
+        if ($form->isValid()) {
+            $facade = $this->getFacade();
+            $formData = $form->getData();
+
+            $pool = $this->getQueryContainer()->queryDiscountVoucherPool()->findOneByIdDiscountVoucherPool($idPool);
+            $poolTransfer = new VoucherPoolTransfer();
+            $poolTransfer->fromArray(array_merge($pool->toArray(), $formData), true);
+
+            $category = $this->getQueryContainer()
+                ->queryDiscountVoucherPoolCategory()
+                ->findOneByName($formData[PoolForm::VOUCHER_POOL_CATEGORY])
+            ;
+
+            $pool->setFkDiscountVoucherPoolCategory($category->getIdDiscountVoucherPoolCategory());
+//            $facade->updateDiscountVoucherPool($poolTransfer);
+
+            $discount = $this->getQueryContainer()->queryDiscount()->findOneByFkDiscountVoucherPool($idPool);
+            $discount->setAmount($formData[PoolForm::AMOUNT]);
+            $discount->setType($formData[PoolForm::AMOUNT_TYPE]);
+
+            $discountTransfer = new DiscountTransfer();
+            $discountTransfer->fromArray($discount->toArray());
+
+            echo '<pre>';
+            print_r($discountTransfer);
+            die;
+
+            $facade->updateDiscount($discountTransfer);
         }
 
         return [
