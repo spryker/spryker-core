@@ -135,7 +135,7 @@ class MethodForm extends AbstractForm
         $carriers = $this->carrierQuery->filterByIsActive(true)->find();
         $result = [];
 
-        if (empty($carriers) === false) {
+        if (!empty($carriers)) {
             foreach ($carriers as $carrier) {
                 $result[$carrier->getIdShipmentCarrier()] = $carrier->getName();
             }
