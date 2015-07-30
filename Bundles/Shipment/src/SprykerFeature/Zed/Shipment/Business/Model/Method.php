@@ -5,12 +5,28 @@
 
 namespace SprykerFeature\Zed\Shipment\Business\Model;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethod;
+use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class Method
 {
+
+    /**
+     * @var ShipmentQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @param ShipmentQueryContainerInterface $queryContainer
+     */
+    public function __construct(ShipmentQueryContainerInterface $queryContainer)
+    {
+        $this->queryContainer = $queryContainer;
+    }
+
     /**
      * @param ShipmentMethodTransfer $methodTransfer
      *
@@ -37,5 +53,18 @@ class Method
         ;
 
         return $methodEntity->getPrimaryKey();
+    }
+
+    public function getAvailableMethods(OrderTransfer $orderTransfer)
+    {
+        $response = [];
+        $methods = $this->queryContainer->queryActiveMethods()->find();
+
+        foreach ($methods as $method) {
+            
+            $methodTransfer = new ShipmentMethodTransfer();
+            $methodTransfer->fromArray($method->toArray());
+        }
+        return $response;
     }
 }
