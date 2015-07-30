@@ -5,9 +5,12 @@ namespace SprykerFeature\Zed\Discount\Communication\Form;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategory;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategoryQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PoolCategoryForm extends AbstractForm
 {
+    const COL_NAME = 'name';
+
     /**
      * @var SpyDiscountVoucherPoolCategory $poolCategory
      */
@@ -30,33 +33,12 @@ class PoolCategoryForm extends AbstractForm
     protected function buildFormFields()
     {
         $this
-            ->addText('name')
+            ->addText(self::COL_NAME, [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ])
         ;
-    }
-
-    /**
-     * @return array
-     */
-    private function getValidity()
-    {
-        $vouchers = [];
-
-        for ($i=3; $i<=20; $i++) {
-            $vouchers[$i] = $i . ' Years';
-        }
-
-        return $vouchers;
-    }
-
-    /**
-     * @return array
-     */
-    private function getPolls()
-    {
-        return [
-            'alfa',
-            'beta',
-        ];
     }
 
     /**
@@ -70,7 +52,7 @@ class PoolCategoryForm extends AbstractForm
         ;
 
         return [
-            'name' => $name,
+            self::COL_NAME => $name,
         ];
     }
 

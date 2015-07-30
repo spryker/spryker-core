@@ -98,23 +98,23 @@ class PoolForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        if ($this->pool instanceof SpyDiscountVoucherPool) {
-            $defaultData = [
-                self::NAME => $this->pool->getName(),
-                self::VOUCHER_POOL_CATEGORY => $this->pool->getVirtualColumn(self::VOUCHER_POOL_CATEGORY),
-                self::IS_ACTIVE => $this->pool->getIsActive(),
-                self::IS_INFINITELY_USABLE => $this->pool->getIsInfinitelyUsable(),
-            ];
-
-            if ($this->discount instanceof SpyDiscount) {
-                $defaultData[self::AMOUNT] = $this->discount->getAmount();
-                $defaultData[self::AMOUNT_TYPE] = $this->discount->getType();
-            }
-
-            return $defaultData;
+        if (!$this->pool instanceof SpyDiscountVoucherPool) {
+            return [];
         }
 
-        return [];
+        $defaultData = [
+            self::NAME => $this->pool->getName(),
+            self::VOUCHER_POOL_CATEGORY => $this->pool->getVirtualColumn(self::VOUCHER_POOL_CATEGORY),
+            self::IS_ACTIVE => $this->pool->getIsActive(),
+            self::IS_INFINITELY_USABLE => $this->pool->getIsInfinitelyUsable(),
+        ];
+
+        if ($this->discount instanceof SpyDiscount) {
+            $defaultData[self::AMOUNT] = $this->discount->getAmount();
+            $defaultData[self::AMOUNT_TYPE] = $this->discount->getType();
+        }
+
+        return $defaultData;
     }
 
 }

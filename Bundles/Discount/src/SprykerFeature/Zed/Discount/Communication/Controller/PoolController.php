@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\VoucherPoolTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolCategoryForm;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolForm;
+use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
+use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
@@ -59,7 +61,11 @@ class PoolController extends AbstractController
 
             $facade->createDiscount($discount);
 
-            return $this->redirectResponse(sprintf('/discount/pool/edit?id=%d', $pool->getIdDiscountVoucherPool()));
+            return $this->redirectResponse(sprintf(
+                VoucherPoolTable::URL_DISCOUNT_POOL_EDIT,
+                VoucherPoolTable::PARAM_ID_POOL,
+                $pool->getIdDiscountVoucherPool()
+            ));
         }
 
         return [
@@ -75,7 +81,7 @@ class PoolController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idPool = $request->query->get('id');
+        $idPool = $request->query->get(VoucherPoolTable::PARAM_ID_POOL);
 
         $form = $this->getDependencyContainer()->createPoolForm($idPool);
         $form->handleRequest();
@@ -102,7 +108,11 @@ class PoolController extends AbstractController
 
             $facade->updateDiscount($discountTransfer);
 
-            return $this->redirectResponse(sprintf('/discount/pool/edit?id=%d', $idPool));
+            return $this->redirectResponse(sprintf(
+                VoucherPoolTable::URL_DISCOUNT_POOL_EDIT,
+                VoucherPoolTable::PARAM_ID_POOL,
+                $idPool
+            ));
         }
 
         return [
@@ -139,7 +149,7 @@ class PoolController extends AbstractController
      *
      * @return array
      */
-    public function editCategoryAction()
+    public function editCategoryAction(Request $request)
     {
         $idPoolCategory = $request->query->get('id', 0);
 

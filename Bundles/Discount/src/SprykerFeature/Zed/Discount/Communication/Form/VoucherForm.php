@@ -9,12 +9,11 @@ class VoucherForm extends AbstractForm
     /**
      * Prepares form
      *
-     * @return $this
+     * @return VoucherForm
      */
     protected function buildFormFields()
     {
         $this
-//            ->addText('poll')
             ->addChoice('poll', [
                 'label' => 'Salutation',
                 'placeholder' => 'Select one',
@@ -26,13 +25,15 @@ class VoucherForm extends AbstractForm
                 'placeholder' => 'Select one',
                 'choices' => $this->getValidity(),
             ])
-//            ->addText('combinate')
             ->addCheckbox('combine', [
                 'label' => 'Combinable',
             ])
         ;
     }
 
+    /**
+     * @return array
+     */
     private function getValidity()
     {
         $vouchers = [];
@@ -44,14 +45,6 @@ class VoucherForm extends AbstractForm
         return $vouchers;
     }
 
-    private function getPolls()
-    {
-        return [
-            'alfa',
-            'beta',
-        ];
-    }
-
     /**
      * Set the values for fields
      *
@@ -59,7 +52,7 @@ class VoucherForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        // @TODO: Implement populateFormFields() method.
+        return [];
     }
 
 }

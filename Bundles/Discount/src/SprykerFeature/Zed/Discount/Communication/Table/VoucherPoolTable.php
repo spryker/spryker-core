@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Table;
 
+use SprykerFeature\Zed\Discount\Communication\Controller\PoolController;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
@@ -13,6 +14,9 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 class VoucherPoolTable extends AbstractTable
 {
     const COL_OPTIONS = 'options';
+    const URL_DISCOUNT_POOL_EDIT = '/discount/pool/edit?%s=%d';
+    const PARAM_ID_POOL = 'id-pool';
+    const CONTROLLER_TABLE_ACTION = 'poolTable';
 
     /**
      * @var SpyDiscountVoucherPoolQuery
@@ -34,7 +38,7 @@ class VoucherPoolTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setUrl('poolTable');
+        $config->setUrl(self::CONTROLLER_TABLE_ACTION);
 
         $config->setHeader([
             SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => 'Id',
@@ -57,17 +61,35 @@ class VoucherPoolTable extends AbstractTable
         $queryResults = $this->runQuery($this->poolQuery, $config);
 
         foreach ($queryResults as $item) {
+            $editUrl = $this->getEditUrl($item);
             $results[] = [
                 SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL],
                 SpyDiscountVoucherPoolTableMap::COL_NAME => $item[SpyDiscountVoucherPoolTableMap::COL_NAME],
+
                 self::COL_OPTIONS => sprintf(
-                    '<a href="/discount/pool/edit?id=%d" class="btn btn-sm btn-primary">Edit</a>',
-                    $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL]
+                    '<a href="%s" class="btn btn-sm btn-primary">Edit</a>',
+                    $editUrl
                 ),
             ];
         }
 
         return $results;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    private function getEditUrl(array $item)
+    {
+        $editUrl = sprintf(
+            self::URL_DISCOUNT_POOL_EDIT,
+            self::PARAM_ID_POOL,
+            $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL]
+        );
+
+        return $editUrl;
     }
 
 }
