@@ -17,8 +17,8 @@
     <transfer name="ShipmentMethod">
         <property name="idShipmentMethod" type="int" />
         <property name="fkShipmentCarrier" type="int" />
-        <property name="glossaryKeyName" type="int" />
-        <property name="glossaryKeyDescription" type="int" />
+        <property name="glossaryKeyName" type="string" />
+        <property name="glossaryKeyDescription" type="string" />
         <property name="availabilityPlugin" type="string" />
         <property name="priceCalculationPlugin" type="string" />
         <property name="deliveryTimePlugin" type="string" />
