@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Cms\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CmsCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 
@@ -65,14 +64,17 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
+     * @param int $idUrl
      * @param string $type
      *
      * @return CmsRedirectForm
      */
-    public function createCmsRedirectForm($type)
+    public function createCmsRedirectForm($type, $idUrl = null)
     {
+        $queryUrl = $this->getQueryContainer()->queryUrlByIdWithRedirect($idUrl);
+
         return $this->getFactory()
-            ->createFormCmsRedirectForm($type)
+            ->createFormCmsRedirectForm($queryUrl, $type)
             ;
     }
 }

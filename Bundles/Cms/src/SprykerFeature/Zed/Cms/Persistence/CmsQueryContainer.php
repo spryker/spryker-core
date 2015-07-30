@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Cms\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
@@ -159,6 +160,26 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         $query->filterByFkPage($idCmsPage);
 
         return $query;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return SpyUrlQuery
+     */
+    public function queryUrlByIdWithRedirect($id)
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)->queryUrlByIdWithRedirect($id);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return SpyUrlQuery
+     */
+    public function queryRedirectById($id)
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)->queryRedirectById($id);
     }
 
 }

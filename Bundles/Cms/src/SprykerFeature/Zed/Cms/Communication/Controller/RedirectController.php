@@ -7,6 +7,8 @@ namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
 
 
+use Generated\Shared\Transfer\RedirectTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
@@ -55,22 +57,32 @@ class RedirectController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idRedirect = $request->get('id_redirect');
+        $idUrl = $request->get('id_url');
 
-        echo $idRedirect;
-        exit;
         $form = $this->getDependencyContainer()
-            ->createCmsRedirectForm('update');
+            ->createCmsRedirectForm('update', $idUrl);
 
         $form->handleRequest();
 
         if ($form->isValid()) {
             $data = $form->getData();
 
+            $spyUrl = $this->getQueryContainer()->queryUrlByIdWithRedirect($idUrl)->findOne();
+            //todo check the resource type
+            if($spyUrl){
+                $urlTransfer = (new UrlTransfer())->fromArray($spyUrl->toArray(),true);
+                $urlTransfer->setUrl($data[CmsRedirectForm::FROM_URL]);
+                $urlTransfer->setFkRedirect($spyUrl->getFkResourceRedirect());
+                $urlTransfer->setResourceId($spyUrl->getResourceId());
+                $urlTransfer->setResourceType($spyUrl->getResourceType());
+                $this->getUrlFacade()->saveUrl($urlTransfer);
 
-//            $redirectTransfer = $this->getUrlFacade()->createRedirect($data[CmsRedirectForm::TO_URL]);
-//            $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
-//            $this->getUrlFacade()->createRedirectUrl($data[CmsRedirectForm::FROM_URL],$localeTransfer,$redirectTransfer->getIdRedirect());
+                $spyRedirect = $this->getQueryContainer()->queryRedirectById($spyUrl->getFkResourceRedirect())->findOne();
+                $redirectTransfer = (new RedirectTransfer())->fromArray($spyRedirect->toArray());
+                $redirectTransfer->setToUrl($data[CmsRedirectForm::TO_URL]);
+                $this->getUrlFacade()->saveRedirect($redirectTransfer);
+
+            }
 
             return $this->redirectResponse('/cms/');
         }

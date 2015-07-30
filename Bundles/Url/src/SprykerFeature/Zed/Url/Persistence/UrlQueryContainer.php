@@ -99,4 +99,21 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         ;
     }
 
+    /**
+     * @param int $id
+     *
+     * @return SpyUrlQuery
+     */
+    public function queryUrlByIdWithRedirect($id)
+    {
+        $query = SpyUrlQuery::create();
+        $query
+            ->leftJoinSpyRedirect(null,Criteria::LEFT_JOIN)
+            ->withColumn('to_url','toUrl')
+            ->filterByIdUrl($id)
+        ;
+
+        return $query;
+    }
+
 }

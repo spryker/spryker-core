@@ -14,6 +14,8 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const URL_BUNDLE = 'url_bundle';
     const LOCALE_BUNDLE = 'locale_bundle';
 
+    const URL_QUERY_CONTAINER = 'url_query_container';
+
     /**
      * @param Container $container
      *
@@ -30,5 +32,12 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container[self::URL_QUERY_CONTAINER] = function (Container $container) {
+            return $container->getLocator()->url()->queryContainer();
+        };
     }
 }
