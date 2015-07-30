@@ -5,9 +5,6 @@
 
 namespace SprykerEngine\Zed\Propel\Communication\Console;
 
-use Propel\Runtime\Connection\ConnectionManagerSingle;
-use Propel\Runtime\Propel;
-use Propel\Runtime\ServiceContainer\StandardServiceContainer;
 use SprykerEngine\Shared\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Console\Business\Model\Console;
@@ -38,7 +35,7 @@ class CreateDatabaseConsole extends Console
     {
         $this->info('Creating Database');
 
-        if(Config::get(SystemConfig::ZED_DB_ENGINE) === 'pgsql') {
+        if (Config::get(SystemConfig::ZED_DB_ENGINE) === 'pgsql') {
             $this->createPostgresDatabaseIfNotExists();
         } else {
             $this->createMysqlDatabaseIfNotExists();
@@ -66,6 +63,7 @@ class CreateDatabaseConsole extends Console
     /**
      * @throws \Exception
      * @return bool
+     *
      * @todo no sudo, vagrant user is missing for pgsql
      */
     private function existsPostgresDatabase()
