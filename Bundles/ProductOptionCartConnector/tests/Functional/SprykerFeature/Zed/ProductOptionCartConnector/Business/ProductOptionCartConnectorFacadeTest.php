@@ -61,7 +61,7 @@ class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
         $this->assertEquals(self::LOCALE_CODE, $productOptionTransfer->getLocaleCode());
         $this->assertEquals('Size', $productOptionTransfer->getLabelOptionType());
         $this->assertEquals('Large', $productOptionTransfer->getLabelOptionValue());
-        $this->assertEquals(199, $productOptionTransfer->getPrice());
+        $this->assertEquals(199, $productOptionTransfer->getGrossPrice());
 
         $taxSetTransfer = $productOptionTransfer->getTaxSet();
 

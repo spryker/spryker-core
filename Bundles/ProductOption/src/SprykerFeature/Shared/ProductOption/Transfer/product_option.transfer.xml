@@ -8,8 +8,8 @@
         <property name="localeCode" type="string " />
         <property name="labelOptionType" type="string" />
         <property name="labelOptionValue" type="string" />
-        <property name="price" type="int" />
         <property name="taxSet" type="TaxSet" />
+        <property name="discounts" type="Discount[]" singular="discount" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
     </transfer>

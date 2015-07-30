@@ -85,7 +85,7 @@
         <property name="taxSet" type="TaxSet" />
         <property name="quantity" type="int" />
         <property name="discounts" type="Discount[]" singular="discount" />
-        <property name="options" type="OrderItemOption[]" singular="option" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="unitGrossPrice" type="int" />
         <property name="unitPriceToPay" type="int" />
         <property name="variety" type="string" />
@@ -96,15 +96,14 @@
         <property name="orderItems" type="OrderItem[]" singular="orderItem" />
     </transfer>
 
-    <transfer name="OrderItemOption">
-        <property name="identifier" type="int" />
-        <property name="name" type="string" />
-        <property name="description" type="string" />
+    <transfer name="ProductOption">
+        <property name="idOptionValueUsage" type="int" />
+        <property name="labelOptionType" type="string" />
+        <property name="labelOptionValue" type="string" />
+        <property name="taxSet" type="TaxSet" />
+        <property name="discounts" type="Discount[]" singular="discount" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
-        <property name="taxSet" type="TaxSet" />
-        <property name="type" type="string" />
-        <property name="discounts" type="Discount[]" singular="discount" />
     </transfer>
 
     <transfer name="OrderItemStatus">

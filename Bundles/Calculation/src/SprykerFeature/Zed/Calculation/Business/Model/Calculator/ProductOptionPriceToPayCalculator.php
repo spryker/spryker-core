@@ -6,11 +6,13 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\OrderItemOptionInterface;
+use Generated\Shared\Calculation\CartItemInterface;
+use Generated\Shared\Calculation\OrderItemInterface;
+use Generated\Shared\Calculation\ProductOptionInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
-class OptionPriceToPayCalculator implements
+class ProductOptionPriceToPayCalculator implements
     CalculatorPluginInterface
 {
 
@@ -21,11 +23,11 @@ class OptionPriceToPayCalculator implements
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {
-        foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
-            foreach ($item->getOptions() as $option) {
+        $items = $this->getItems($calculableContainer);
+        foreach ($items as $item) {
+            foreach ($item->getProductOptions() as $option) {
                 $priceToPay = $option->getGrossPrice();
                 $priceToPay -= $this->sumDiscounts($option);
-
                 $priceToPay = max(0, $priceToPay);
                 $option->setPriceToPay($priceToPay);
             }
@@ -33,11 +35,11 @@ class OptionPriceToPayCalculator implements
     }
 
     /**
-     * @param OrderItemOptionInterface $option
+     * @param ProductOptionInterface $option
      *
      * @return int
      */
-    protected function sumDiscounts(OrderItemOptionInterface $option)
+    protected function sumDiscounts(ProductOptionInterface $option)
     {
         $discountAmount = 0;
         foreach ($option->getDiscounts() as $discount) {
@@ -47,4 +49,13 @@ class OptionPriceToPayCalculator implements
         return $discountAmount;
     }
 
+    /**
+     * @param CalculableInterface $calculableContainer
+     *
+     * @return CartItemInterface[]|OrderItemInterface[]
+     */
+    protected function getItems(CalculableInterface $calculableContainer)
+    {
+        return $calculableContainer->getCalculableObject()->getItems();
+    }
 }

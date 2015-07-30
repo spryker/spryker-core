@@ -19,7 +19,7 @@ class RemoveAllCalculatedDiscountsCalculator
         foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
             $item->setDiscounts(new \ArrayObject());
 
-            foreach ($item->getOptions() as $option) {
+            foreach ($item->getProductOptions() as $option) {
                 $option->setDiscounts(new \ArrayObject());
             }
             foreach ($item->getExpenses() as $expense) {

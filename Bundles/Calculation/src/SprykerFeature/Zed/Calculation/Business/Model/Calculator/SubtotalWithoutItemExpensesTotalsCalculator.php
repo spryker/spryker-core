@@ -53,7 +53,7 @@ class SubtotalWithoutItemExpensesTotalsCalculator implements
     protected function sumOptions($item)
     {
         $optionsPrice = 0;
-        foreach ($item->getOptions() as $option) {
+        foreach ($item->getProductOptions() as $option) {
             $optionsPrice += $option->getGrossPrice();
         }
 
