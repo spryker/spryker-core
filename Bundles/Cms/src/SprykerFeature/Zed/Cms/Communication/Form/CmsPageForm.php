@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
-class CmsForm extends AbstractForm
+class CmsPageForm extends AbstractForm
 {
 
     const TEMPLATE_NAME = 'fkTemplate';
@@ -26,14 +26,6 @@ class CmsForm extends AbstractForm
     protected $templateQuery;
     protected $type;
 
-//    /**
-//     * @param SpyCmsPageQuery $pageQuery
-//     */
-//    public function __construct(SpyCmsPageQuery $pageQuery)
-//    {
-//        $this->pageQuery = $pageQuery;
-//    }
-
     /**
      * @param SpyCmsTemplateQuery $templateQuery
      */
@@ -45,7 +37,7 @@ class CmsForm extends AbstractForm
     }
 
     /**
-     * @return CmsForm
+     * @return CmsPageForm
      */
     protected function buildFormFields()
     {
@@ -60,10 +52,6 @@ class CmsForm extends AbstractForm
                     new NotBlank(),
                     new Length(['max' => 256]),
                 ],
-            ])
-            ->addChoice(self::URL_TYPE,[
-                'label' => 'URL Type',
-                'choices' => $this->getUrlTypes(),
             ])
             ->addCheckbox(self::IS_ACTIVE, [
                 'label' => 'Active',
@@ -85,13 +73,6 @@ class CmsForm extends AbstractForm
         }
 
         return $result;
-    }
-
-    public function getUrlTypes(){
-        return [
-            self::PAGE,
-            self::REDIRECT,
-        ];
     }
 
     /**

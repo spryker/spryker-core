@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsForm;
+use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
 
 /**
@@ -19,7 +19,7 @@ use SprykerFeature\Zed\Url\Business\UrlFacade;
  * @method CmsFacade getFacade()
  */
 
-class AddController extends AbstractController
+class PageController extends AbstractController
 {
 
     /**
@@ -28,7 +28,7 @@ class AddController extends AbstractController
     public function indexAction()
     {
         $form = $this->getDependencyContainer()
-            ->createCmsForm('add');
+            ->createCmsPageForm('add');
 
         $form->handleRequest();
 
@@ -43,7 +43,7 @@ class AddController extends AbstractController
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
 
             $this->getFacade()
-                ->createPageUrl($pageTransfer,$data[CmsForm::URL])
+                ->createPageUrl($pageTransfer,$data[CmsPageForm::URL])
             ;
 
             return $this->redirectResponse('/cms/');

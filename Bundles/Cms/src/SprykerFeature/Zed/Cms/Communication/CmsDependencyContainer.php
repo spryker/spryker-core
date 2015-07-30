@@ -52,15 +52,15 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     /**
      * @param string $type
      *
-     * @return CmsForm
+     * @return CmsPageForm
      */
-    public function createCmsForm($type)
+    public function createCmsPageForm($type)
     {
         $templateQuery = $this->getQueryContainer()
             ->queryTemplates();
 
         return $this->getFactory()
-            ->createFormCmsForm($templateQuery ,$type)
+            ->createFormCmsPageForm($templateQuery ,$type)
             ;
     }
 }
