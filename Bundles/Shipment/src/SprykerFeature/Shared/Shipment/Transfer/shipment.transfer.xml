@@ -9,7 +9,7 @@
 
     <transfer name="ShipmentCarrier">
         <property name="idShipmentCarrier" type="int" />
-        <property name="glossaryKeyName" type="int" />
+        <property name="glossaryKeyName" type="string" />
         <property name="name" type="string" />
         <property name="isActive" type="bool" />
     </transfer>
