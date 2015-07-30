@@ -117,8 +117,8 @@
         <column name="gross_price" type="INTEGER" required="true" description="/price for one unit including tax, without shipping, coupons/"/>
         <column name="price_to_pay" type="INTEGER" required="true" description="/value that the customer has to pay./"/>
         <column name="tax_percentage" type="INTEGER" required="false"/>
-        <column name="quantity" type="INTEGER" size="11" unsigned="true" default="1" required="true" description="/Quantity ordered for item/"/>
-        <column name="group_key" type="VARCHAR" size="255" required="false" description="/Grouping key used to split order items to separate quantity buckets/"/>
+        <column name="quantity" type="INTEGER" unsigned="true" default="1" required="true" description="/Quantity ordered for item/"/>
+        <column name="group_key" type="VARCHAR" size="255" required="false" description=""/>
 
         <behavior name="timestampable"/>
 
