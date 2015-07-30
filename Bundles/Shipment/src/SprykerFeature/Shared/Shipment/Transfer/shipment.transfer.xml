@@ -3,6 +3,10 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
+    <transfer name="Shipment">
+        <property name="methods" type="ShipmentMethod[]" singular="method" />
+    </transfer>
+
     <transfer name="ShipmentCarrier">
         <property name="idShipmentCarrier" type="int" />
         <property name="glossaryKeyName" type="int" />
@@ -27,6 +31,10 @@
     <transfer name="Order">
         <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod" />
         <property name="shipmentDeliveryTime" type="int" />
+    </transfer>
+
+    <transfer name="CheckoutRequest">
+        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod" />
     </transfer>
 
 </transfers>
