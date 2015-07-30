@@ -2,10 +2,28 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class VoucherForm extends AbstractForm
 {
+
+    const FIELD_POOL = 'pool';
+
+    /**
+     * @var SpyDiscountVoucherPoolQuery
+     */
+    protected $poolQuery;
+
+    /**
+     * @param SpyDiscountVoucherPoolQuery $poolQuery
+     */
+    public function __construct(SpyDiscountVoucherPoolQuery $poolQuery)
+    {
+        $this->poolQuery = $poolQuery;
+    }
+
     /**
      * Prepares form
      *
@@ -14,19 +32,13 @@ class VoucherForm extends AbstractForm
     protected function buildFormFields()
     {
         $this
-            ->addChoice('poll', [
-                'label' => 'Salutation',
+            ->addChoice(self::FIELD_POOL, [
+                'label' => 'Pool',
                 'placeholder' => 'Select one',
                 'choices' => $this->getPolls(),
-            ])
-            ->addText('name')
-            ->addChoice('validity', [
-                'label' => 'Salutation',
-                'placeholder' => 'Select one',
-                'choices' => $this->getValidity(),
-            ])
-            ->addCheckbox('combine', [
-                'label' => 'Combinable',
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ])
         ;
     }
@@ -34,15 +46,19 @@ class VoucherForm extends AbstractForm
     /**
      * @return array
      */
-    private function getValidity()
+    public function getPolls()
     {
-        $vouchers = [];
+        $poolResult = $this->poolQuery->find()->toArray();
 
-        for ($i=3; $i<=20; $i++) {
-            $vouchers[$i] = $i . ' Years';
+        $pools = [];
+
+        if (!empty($poolResult)) {
+            foreach ($poolResult as $item) {
+                $pools[$item['IdDiscountVoucherPool']] = $item['Name'];
+            }
         }
 
-        return $vouchers;
+        return $pools;
     }
 
     /**

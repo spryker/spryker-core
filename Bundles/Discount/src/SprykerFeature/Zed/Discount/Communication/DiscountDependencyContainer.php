@@ -26,7 +26,9 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createFormVoucherForm()
     {
-        return $this->getFactory()->createFormVoucherForm();
+        $poolQuery = $this->getQueryContainer()->queryDiscountVoucherPool();
+
+        return $this->getFactory()->createFormVoucherForm($poolQuery);
     }
 
     /**
