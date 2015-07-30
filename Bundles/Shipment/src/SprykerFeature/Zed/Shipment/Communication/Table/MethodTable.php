@@ -21,6 +21,7 @@ class MethodTable extends AbstractTable
     const PRICE = 'Price';
     const ACTIVE = 'Active';
     const ACTIONS = 'Actions';
+    const PLUGINS = 'Plugins';
 
     /**
      * @var SpyShipmentMethodQuery
@@ -45,11 +46,10 @@ class MethodTable extends AbstractTable
         $config->setHeader([
             SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD => '#',
             SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => self::CARRIER,
-            SpyShipmentMethodTableMap::COL_NAME
-            => self::METHOD,
-            SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION
-            => self::DESCRIPTION,
+            SpyShipmentMethodTableMap::COL_NAME => self::METHOD,
+            SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION => self::DESCRIPTION,
             SpyShipmentMethodTableMap::COL_PRICE => self::PRICE,
+            self::PLUGINS => self::PLUGINS,
             SpyShipmentMethodTableMap::COL_IS_ACTIVE => self::ACTIVE,
             self::ACTIONS => self::ACTIONS
         ]);
@@ -82,18 +82,15 @@ class MethodTable extends AbstractTable
 
             $results[] = [
                 SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD
-                => $item[SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD],
-                SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER
-                => $method
-                    ->getShipmentCarrier()
-                    ->getName(),
-                SpyShipmentMethodTableMap::COL_NAME
-                => $method->getName(),
-                SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION
-                => $method->getGlossaryKeyDescription()->getKey(),
+                    => $item[SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD],
+                SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => $method->getShipmentCarrier()->getName(),
+                SpyShipmentMethodTableMap::COL_NAME => $method->getName(),
+                SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION => $method->getGlossaryKeyDescription(),
                 SpyShipmentMethodTableMap::COL_PRICE => $method->getPrice(),
-                SpyShipmentMethodTableMap::COL_IS_ACTIVE
-                => $item[SpyShipmentMethodTableMap::COL_IS_ACTIVE],
+                self::PLUGINS => 'Availability ' . $method->getAvailabilityPlugin() .
+                    ' | Price ' . $method->getPriceCalculationPlugin() .
+                    ' | Delivery ' . $method->getDeliveryTimePlugin(),
+                SpyShipmentMethodTableMap::COL_IS_ACTIVE => $item[SpyShipmentMethodTableMap::COL_IS_ACTIVE],
                 self::ACTIONS => ''
             ];
         }
