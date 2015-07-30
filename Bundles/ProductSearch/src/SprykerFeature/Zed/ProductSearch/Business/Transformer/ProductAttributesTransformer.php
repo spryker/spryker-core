@@ -79,6 +79,9 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                     }
                     $encodedAttributes = json_decode($concreteAttributes[$i], true);
                     $encodedLocalizedAttributes = json_decode($concreteLocalizedAttributes[$i], true);
+                    if (is_null($encodedLocalizedAttributes)) {
+                        $encodedLocalizedAttributes = [];
+                    }
                     $mergedAttributes = array_merge($encodedAttributes, $encodedLocalizedAttributes);
 
                     $lastSku = $concreteSkus[$i];
