@@ -5,70 +5,58 @@ namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrderQuery;
+use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
-class CmsPageForm extends AbstractForm
+class CmsRedirectForm extends AbstractForm
 {
 
-    const TEMPLATE_NAME = 'fkTemplate';
-    const URL = 'url';
-    const URL_TYPE = 'url_type';
-    const PAGE = 'Page';
-    const IS_ACTIVE = 'is_active';
+    const ID_REDIRECT = "idRedirect";
+    const FROM_URL = 'from_url';
+    const TO_URL = 'to_url';
 
-    protected $templateQuery;
     protected $type;
 
     /**
-     * @param SpyCmsTemplateQuery $templateQuery
+     * @param string $type
      */
 
-    public function __construct(SpyCmsTemplateQuery $templateQuery,$type)
+    public function __construct($type)
     {
-        $this->templateQuery = $templateQuery;
         $this->type = $type;
     }
 
     /**
-     * @return CmsPageForm
+     * @return CmsRedirectForm
      */
     protected function buildFormFields()
     {
-        return $this->addChoice(self::TEMPLATE_NAME, [
-            'label' => 'Template',
-            'choices' => $this->getTemplateList(),
+        return $this->addHidden(self::ID_REDIRECT, [
+            'label' => 'Redirect ID',
         ])
-            ->addText(self::URL, [
-                'label' => 'URL',
+            ->addText(self::FROM_URL, [
+            'label' => 'From URL',
+            'constraints' => [
+                new Required(),
+                new NotBlank(),
+                new Length(['max' => 256]),
+            ],
+        ])
+            ->addText(self::TO_URL, [
+                'label' => 'To URL',
                 'constraints' => [
                     new Required(),
                     new NotBlank(),
                     new Length(['max' => 256]),
                 ],
             ])
-            ->addCheckbox(self::IS_ACTIVE, [
-                'label' => 'Active',
-            ])
         ;
     }
 
-    /**
-     * @return array
-     */
-    protected function getTemplateList()
-    {
-
-        $templates = $this->templateQuery->find();
-
-        $result = [];
-        foreach($templates->getData() as $template){
-            $result[$template->getIdCmsTemplate()] = $template->getTemplateName();
-        }
-
-        return $result;
-    }
 
     /**
      * @return array

@@ -63,4 +63,16 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
             ->createFormCmsPageForm($templateQuery ,$type)
             ;
     }
+
+    /**
+     * @param string $type
+     *
+     * @return CmsRedirectForm
+     */
+    public function createCmsRedirectForm($type)
+    {
+        return $this->getFactory()
+            ->createFormCmsRedirectForm($type)
+            ;
+    }
 }
