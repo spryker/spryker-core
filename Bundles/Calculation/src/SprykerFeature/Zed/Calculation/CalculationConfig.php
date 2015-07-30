@@ -27,7 +27,7 @@ class CalculationConfig extends AbstractBundleConfig
             $this->getLocator()->calculation()->pluginGrandTotalTotalsCalculatorPlugin(),
             $this->getLocator()->calculation()->pluginExpensePriceToPayCalculatorPlugin(),
             $this->getLocator()->calculation()->pluginItemPriceToPayCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginOptionPriceToPayCalculatorPlugin(),
+            $this->getLocator()->calculation()->pluginProductOptionPriceToPayCalculatorPlugin(),
             $this->getLocator()->calculation()->pluginGrandTotalTotalsCalculatorPlugin(),
             $this->getLocator()->calculation()->pluginTaxTotalsCalculatorPlugin(),
             $this->getLocator()->calculation()->pluginItemTotalPriceCalculatorPlugin()
