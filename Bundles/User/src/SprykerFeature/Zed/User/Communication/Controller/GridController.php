@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\User\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\User\Communication\UserDependencyContainer;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,11 +20,11 @@ class GridController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function indexAction(Request $request)
     {
-        $grid = $this->getDependencyContainer()->getUserGrid($request);
+        $grid = $this->getDependencyContainer()->createUserGrid($request);
 
         return $this->jsonResponse($grid->renderData());
     }
