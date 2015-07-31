@@ -7,7 +7,7 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerEngine\Shared\Config;
@@ -260,7 +260,7 @@ class CalculatorTest extends Test
     protected function getOrderWithTwoItems()
     {
         $order = new OrderTransfer();
-        $item = new OrderItemTransfer();
+        $item = new ItemTransfer();
         $itemCollection = new OrderItemsTransfer();
 
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_500);

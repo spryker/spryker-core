@@ -3,8 +3,8 @@
 namespace Unit\SprykerFeature\Zed\Cart\Business\StorageProvider;
 
 use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\CartItemInterface;
-use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Cart\ItemInterface;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use Generated\Shared\Transfer\CartTransfer;
@@ -46,7 +46,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $changedItems = $changedCart->getItems();
         $this->assertCount(2, $changedItems);
 
-        /** @var CartItemTransfer $changedItem */
+        /** @var ItemTransfer $changedItem */
         $changedItem = $changedItems[0];
 
         $this->assertEquals($itemId, $changedItem->getId());
@@ -69,7 +69,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $changedItems);
 
         $skuIndex = [];
-        /* @var CartItemInterface $cartItem */
+        /* @var ItemInterface $cartItem */
         foreach ($changedItems as $key => $changedItem) {
             $skuIndex[$changedItem->getId()] = $key;
         }
@@ -77,12 +77,12 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey($itemId, $skuIndex);
         $this->assertArrayHasKey($newId, $skuIndex);
 
-        /** @var CartItemInterface $addedItem */
+        /** @var ItemInterface $addedItem */
         $addedItem = $changedItems[$skuIndex[$newId]];
         $this->assertEquals($newId, $addedItem->getId());
         $this->assertEquals($newQuantity, $addedItem->getQuantity());
 
-        /** @var CartItemInterface $existingItem */
+        /** @var ItemInterface $existingItem */
         $existingItem = $changedItems[$skuIndex[$itemId]];
         $this->assertEquals($itemId, $existingItem->getId());
         $this->assertEquals($existingQuantity, $existingItem->getQuantity());
@@ -109,7 +109,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $changedCart = $this->provider->removeItems($cart, $change);
         $changedItems = $changedCart->getItems();
         $this->assertCount(1, $changedItems);
-        /** @var CartItemInterface $item */
+        /** @var ItemInterface $item */
         $item = $changedItems[0];
         $this->assertEquals($itemId, $item->getId());
         $this->assertEquals($existingQuantity, $item->getQuantity());
@@ -205,11 +205,11 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
      * @param string $itemId
      * @param int $itemQuantity
      *
-     * @return CartItemInterface|CartItemTransfer|AbstractTransfer
+     * @return ItemInterface|ItemTransfer|AbstractTransfer
      */
     protected function createItem($itemId, $itemQuantity)
     {
-        $existingItem = new CartItemTransfer();
+        $existingItem = new ItemTransfer();
         $existingItem->setId($itemId);
         $existingItem->setSku($itemId);
         $existingItem->setQuantity($itemQuantity);

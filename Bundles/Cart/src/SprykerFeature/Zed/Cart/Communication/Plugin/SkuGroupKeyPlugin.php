@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Cart\Communication\Plugin;
 
-use Generated\Shared\Cart\CartItemInterface;
+use Generated\Shared\Cart\ItemInterface;
 use Generated\Shared\Cart\ChangeInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
@@ -24,11 +24,11 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
     }
 
     /**
-     * @param CartItemInterface $cartItem
+     * @param ItemInterface $cartItem
      *
      * @return string
      */
-    protected function buildGroupKey(CartItemInterface $cartItem)
+    protected function buildGroupKey(ItemInterface $cartItem)
     {
         $groupKey = $cartItem->getGroupKey();
         if (empty($groupKey)) {

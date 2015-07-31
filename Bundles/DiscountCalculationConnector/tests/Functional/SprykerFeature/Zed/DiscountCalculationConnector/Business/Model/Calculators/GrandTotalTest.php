@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
@@ -166,11 +166,11 @@ class GrandTotalTest extends Test
     }
 
     /**
-     * @return OrderItemTransfer
+     * @return ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new OrderItemTransfer();
+        $item = new ItemTransfer();
 
         return $item;
     }

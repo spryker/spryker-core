@@ -4,13 +4,13 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Order">
-        <property name="items" type="OrderItem[]"  singular="item" />
+        <property name="items" type="Item[]"  singular="item" />
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="totals" type="Totals" />
     </transfer>
 
     <transfer name="OrderItems">
-        <property name="orderItems" type="OrderItem[]" singular="orderItem" />
+        <property name="orderItems" type="Item[]" singular="orderItem" />
     </transfer>
 
     <transfer name="Discount">

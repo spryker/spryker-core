@@ -6,14 +6,12 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\CartItemInterface;
-use Generated\Shared\Calculation\OrderItemInterface;
+use Generated\Shared\Calculation\ItemInterface;
 use Generated\Shared\Calculation\ProductOptionInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
-class ProductOptionPriceToPayCalculator implements
-    CalculatorPluginInterface
+class ProductOptionPriceToPayCalculator implements CalculatorPluginInterface
 {
 
     /**
@@ -52,7 +50,7 @@ class ProductOptionPriceToPayCalculator implements
     /**
      * @param CalculableInterface $calculableContainer
      *
-     * @return CartItemInterface[]|OrderItemInterface[]
+     * @return ItemInterface[]
      */
     protected function getItems(CalculableInterface $calculableContainer)
     {

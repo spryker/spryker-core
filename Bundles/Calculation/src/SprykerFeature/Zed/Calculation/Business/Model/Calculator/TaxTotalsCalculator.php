@@ -9,8 +9,7 @@ namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\CartInterface;
-use Generated\Shared\Calculation\OrderItemInterface;
-use Generated\Shared\Calculation\CartItemInterface;
+use Generated\Shared\Calculation\ItemInterface;
 use Generated\Shared\Calculation\TaxSetInterface;
 use Generated\Shared\Calculation\ProductOptionInterface;
 use Generated\Shared\Transfer\TaxTotalTransfer;
@@ -42,7 +41,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableInterface $calculableContainer
-     * @param CartItemInterface[]|OrderItemInterface[] $calculableItems
+     * @param ItemInterface[]|ItemInterface[] $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
@@ -55,7 +54,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param CalculableInterface $calculableContainer
-     * @param CartItemInterface[]|OrderItemInterface[] $calculableItems
+     * @param ItemInterface[]|ItemInterface[] $calculableItems
      */
     public function calculateTaxAmountsForTaxableItems(CalculableInterface $calculableContainer, $calculableItems)
     {
@@ -71,7 +70,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param OrderItemInterface|CartItemInterface $taxableItem
+     * @param ItemInterface|ItemInterface $taxableItem
      */
     private function calculateTax($taxableItem)
     {

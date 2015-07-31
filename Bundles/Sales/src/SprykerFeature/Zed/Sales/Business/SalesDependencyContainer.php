@@ -12,7 +12,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Sales\Business\Model;
 use SprykerFeature\Zed\Sales\Business\Model\CommentManager;
 use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;
-use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItemInterface;
+use SprykerFeature\Zed\Sales\Business\Model\Split\ItemInterface;
 use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use SprykerFeature\Zed\Sales\Dependency\Plugin\OrderReferenceGeneratorInterface;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -66,7 +66,7 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return OrderItemInterface
+     * @return ItemInterface
      */
     public function createOrderItemSplitter()
     {

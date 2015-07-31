@@ -6,16 +6,15 @@
 
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Calculation\OrderItemInterface;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
+use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -53,7 +52,8 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountForAnOrderWithOneItemWithCouponDiscountAmount()
+    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountForAnOrderWithOneItemWithCouponDiscountAmount(
+    )
     {
         $order = $this->getOrderWithFixtureData();
 
@@ -83,7 +83,8 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithOneItemAndBothDiscounts()
+    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithOneItemAndBothDiscounts(
+    )
     {
         $order = $this->getOrderWithFixtureData();
 
@@ -117,7 +118,8 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithTwoItemsAndBothDiscounts()
+    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithTwoItemsAndBothDiscounts(
+    )
     {
         $order = $this->getOrderWithFixtureData();
 
@@ -166,7 +168,9 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPriceDiscount()
     {
-        return new DiscountTransfer();
+        $discountTransfer = new DiscountTransfer();
+
+        return $discountTransfer;
     }
 
     /**
@@ -180,11 +184,11 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderItemTransfer
+     * @return ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new OrderItemTransfer();
+        $item = new ItemTransfer();
 
         return $item;
     }
@@ -200,7 +204,7 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     /**
      * @param CalculableInterface $order
      *
-     * @return OrderItemInterface[]
+     * @return ItemInterface[]
      */
     protected function getItems(CalculableInterface $calculableContainer)
     {

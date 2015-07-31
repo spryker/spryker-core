@@ -6,19 +6,22 @@
 
 namespace SprykerFeature\Zed\Sales\Business\Model\Split;
 
+use Generated\Shared\Sales\ItemSplitResponseInterface;
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
+use Propel\Runtime\Connection\ConnectionInterface;
+use Propel\Runtime\Propel;
+use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
+use SprykerFeature\Zed\Sales\Business\Model\Split\Validation;
 use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use SprykerFeature\Zed\Sales\Business\Model\Split\Validation;
-use Propel\Runtime\Propel;
-use Propel\Runtime\Connection\ConnectionInterface;
-use Generated\Shared\Sales\ItemSplitResponseInterface;
 
-class OrderItem implements OrderItemInterface
+class Item implements ItemInterface
 {
+
     const SPLIT_MARKER = 'split#';
+
     /**
      * @var ConnectionInterface
      */
@@ -76,7 +79,6 @@ class OrderItem implements OrderItemInterface
 
         try {
             $this->getConnection()->beginTransaction();
-
             $this->copy($salesOrderItem, $quantityToSplit);
             $this->updateParentQuantity($salesOrderItem, $quantityToSplit);
 
@@ -95,7 +97,7 @@ class OrderItem implements OrderItemInterface
     }
 
     /**
-     * @return \Propel\Runtime\Connection\ConnectionInterface
+     * @return ConnectionInterface
      */
     protected function getConnection()
     {

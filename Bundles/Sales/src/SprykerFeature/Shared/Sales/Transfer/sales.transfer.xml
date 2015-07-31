@@ -13,7 +13,7 @@
         <property name="billingAddress" type="SalesAddress" />
         <property name="shippingAddress" type="SalesAddress" />
         <property name="customer" type="Customer" />
-        <property name="items" type="OrderItem[]"  singular="item" />
+        <property name="items" type="Item[]"  singular="item" />
         <property name="payment" type="string" />
         <property name="process" type="string" />
         <property name="couponCodes" type="array" singular="couponCode" />
@@ -73,7 +73,7 @@
         <property name="customerId" type="string" />
     </transfer>
 
-    <transfer name="OrderItem">
+    <transfer name="Item">
         <property name="idSalesOrderItem" type="int" />
         <property name="fkSalesOrder" type="int" />
         <property name="fkOmsOrderItemStatus" type="int" />
@@ -89,11 +89,11 @@
         <property name="unitGrossPrice" type="int" />
         <property name="unitPriceToPay" type="int" />
         <property name="variety" type="string" />
-        <property name="status" type="OrderItemStatus[]" />
+        <property name="status" type="ItemStatus[]" />
     </transfer>
 
     <transfer name="OrderItems">
-        <property name="orderItems" type="OrderItem[]" singular="orderItem" />
+        <property name="orderItems" type="Item[]" singular="orderItem" />
     </transfer>
 
     <transfer name="ProductOption">

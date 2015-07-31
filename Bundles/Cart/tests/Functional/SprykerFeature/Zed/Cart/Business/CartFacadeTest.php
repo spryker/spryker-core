@@ -8,7 +8,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use Generated\Shared\Transfer\ChangeTransfer;
-use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use SprykerFeature\Zed\Cart\Business\CartDependencyContainer;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
@@ -101,13 +101,13 @@ class CartFacadeTest extends AbstractFunctionalTest
     public function testAddToCart()
     {
         $cart = new CartTransfer();
-        $cartItem = new CartItemTransfer();
+        $cartItem = new ItemTransfer();
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
 
         $cart->addItem($cartItem);
 
-        $newItem = new CartItemTransfer();
+        $newItem = new ItemTransfer();
         $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
 
@@ -119,7 +119,7 @@ class CartFacadeTest extends AbstractFunctionalTest
 
         $this->assertCount(2, $changedCart->getItems());
 
-        /** @var CartItemTransfer $item */
+        /** @var ItemTransfer $item */
         foreach ($cart->getItems() as $item) {
             if ($item->getSku() === $cartItem->getSku()) {
                 $this->assertEquals($cartItem->getQuantity(), $item->getQuantity());
@@ -134,13 +134,13 @@ class CartFacadeTest extends AbstractFunctionalTest
     public function testIncreaseCartQuantity()
     {
         $cart = new CartTransfer();
-        $cartItem = new CartItemTransfer();
+        $cartItem = new ItemTransfer();
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
 
         $cart->addItem($cartItem);
 
-        $newItem = new CartItemTransfer();
+        $newItem = new ItemTransfer();
         $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
@@ -153,7 +153,7 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cartItems = $changedCart->getItems();
         $this->assertCount(2, $cartItems);
 
-        /** @var CartItemTransfer $changedItem */
+        /** @var ItemTransfer $changedItem */
         $changedItem = $cartItems[1];
         $this->assertEquals(3, $changedItem->getQuantity());
 
@@ -164,14 +164,14 @@ class CartFacadeTest extends AbstractFunctionalTest
     public function testRemoveFromCart()
     {
         $cart = new CartTransfer();
-        $cartItem = new CartItemTransfer();
+        $cartItem = new ItemTransfer();
         $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $cartItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(1);
 
         $cart->addItem($cartItem);
 
-        $newItem = new CartItemTransfer();
+        $newItem = new ItemTransfer();
         $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
@@ -188,13 +188,13 @@ class CartFacadeTest extends AbstractFunctionalTest
     public function testDecreaseCartItem()
     {
         $cart = new CartTransfer();
-        $cartItem = new CartItemTransfer();
+        $cartItem = new ItemTransfer();
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
 
         $cart->addItem($cartItem);
 
-        $newItem = new CartItemTransfer();
+        $newItem = new ItemTransfer();
         $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
 
@@ -205,7 +205,7 @@ class CartFacadeTest extends AbstractFunctionalTest
         $changedCart = $this->cartFacade->decreaseQuantity($cartChange);
         $cartItems = $changedCart->getItems();
         $this->assertCount(1, $cartItems);
-        /** @var CartItemTransfer $changedItem */
+        /** @var ItemTransfer $changedItem */
         $changedItem = $cartItems[0];
         $this->assertEquals(2, $changedItem->getQuantity());
     }

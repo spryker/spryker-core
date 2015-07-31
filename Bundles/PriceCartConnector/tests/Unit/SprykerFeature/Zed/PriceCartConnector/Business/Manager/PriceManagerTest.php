@@ -6,7 +6,7 @@
 
 namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business;
 
-use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManager;
@@ -29,7 +29,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $priceFacadeStub->addValidityStub('123', true);
 
         $itemCollection = new ChangeTransfer();
-        $item = new CartItemTransfer();
+        $item = new ItemTransfer();
         $item->setSku(123);
         $item->setId(123);
         $itemCollection->addItem($item);
@@ -54,7 +54,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $priceFacadeStub->addValidityStub('123', false);
 
         $itemCollection = new ChangeTransfer();
-        $item = new CartItemTransfer();
+        $item = new ItemTransfer();
         $item->setId(123);
         $item->setSku(123);
         $itemCollection->addItem($item);

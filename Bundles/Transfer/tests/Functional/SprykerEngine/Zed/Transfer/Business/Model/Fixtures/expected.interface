@@ -6,7 +6,7 @@
 
 namespace Generated\Shared\Test;
 
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
 /**
@@ -29,14 +29,14 @@ interface CatFaceInterface extends TransferInterface
     public function getName();
 
     /**
-     * @param OrderItemTransfer $item
+     * @param ItemTransfer $item
      *
      * @return $this
      */
-    public function setItem(OrderItemTransfer $item);
+    public function setItem(ItemTransfer $item);
 
     /**
-     * @return OrderItemTransfer
+     * @return ItemTransfer
      */
     public function getItem();
 
@@ -48,15 +48,15 @@ interface CatFaceInterface extends TransferInterface
     public function setItems(\ArrayObject $items);
 
     /**
-     * @return OrderItemTransfer[]
+     * @return ItemTransfer[]
      */
     public function getItems();
 
     /**
-     * @param OrderItemTransfer $item
+     * @param ItemTransfer $item
      *
      * @return $this
      */
-    public function addItem(OrderItemTransfer $item);
+    public function addItem(ItemTransfer $item);
 
 }
