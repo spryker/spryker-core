@@ -17,7 +17,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-class OrderItem implements OrderItemInterface
+class Item implements ItemInterface
 {
 
     const SPLIT_MARKER = 'split#';

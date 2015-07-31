@@ -6,7 +6,7 @@ namespace SprykerFeature\Zed\Sales\Business\Model\Split;
 
 use Generated\Shared\Sales\ItemSplitResponseInterface;
 
-interface OrderItemInterface
+interface ItemInterface
 {
     /**
      * @param integer $idSalesOrderItem
