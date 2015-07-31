@@ -7,7 +7,7 @@
 
 namespace Unit\SprykerFeature\Zed\ItemGrouper\Business\Model;
 
-use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 use SprykerFeature\Zed\ItemGrouper\Business\Model\Group;
 
@@ -60,17 +60,17 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     protected function getGroupableContainer()
     {
         $cartItems = [];
-        $cartItem = new CartItemTransfer();
+        $cartItem = new ItemTransfer();
         $cartItem->setGroupKey('A');
         $cartItem->setQuantity(1);
         $cartItems[] = $cartItem;
 
-        $cartItem = new CartItemTransfer();
+        $cartItem = new ItemTransfer();
         $cartItem->setGroupKey('A');
         $cartItem->setQuantity(1);
         $cartItems[] = $cartItem;
 
-        $cartItem = new CartItemTransfer();
+        $cartItem = new ItemTransfer();
         $cartItem->setGroupKey('B');
         $cartItem->setQuantity(1);
         $cartItems[] = $cartItem;

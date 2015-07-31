@@ -6,7 +6,7 @@
 
 namespace Functional\SprykerFeature\Zed\ProductCartConnector\Business\Plugin;
 
-use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
@@ -99,19 +99,19 @@ class ProductCartPluginTest extends AbstractFunctionalTest
             ->save();
 
         $changeTransfer = new ChangeTransfer();
-        $cartItemTransfer = new CartItemTransfer();
-        $cartItemTransfer->setSku(self::SKU_CONCRETE_PRODUCT);
-        $changeTransfer->addItem($cartItemTransfer);
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku(self::SKU_CONCRETE_PRODUCT);
+        $changeTransfer->addItem($itemTransfer);
 
         $this->productCartConnectorFacade->expandItems($changeTransfer);
 
-        $expandedCartItemTransfer = $changeTransfer->getItems()[0];
+        $expandedItemTransfer = $changeTransfer->getItems()[0];
 
-        $this->assertEquals(self::SKU_ABSTRACT_PRODUCT, $expandedCartItemTransfer->getAbstractSku());
-        $this->assertEquals(self::SKU_CONCRETE_PRODUCT, $expandedCartItemTransfer->getSku());
-        $this->assertEquals($abstractProductEntity->getIdAbstractProduct(), $expandedCartItemTransfer->getIdAbstractProduct());
-        $this->assertEquals($concreteProductEntity->getIdProduct(), $expandedCartItemTransfer->getId());
-        $expandedTSetTransfer = $expandedCartItemTransfer->getTaxSet();
+        $this->assertEquals(self::SKU_ABSTRACT_PRODUCT, $expandedItemTransfer->getAbstractSku());
+        $this->assertEquals(self::SKU_CONCRETE_PRODUCT, $expandedItemTransfer->getSku());
+        $this->assertEquals($abstractProductEntity->getIdAbstractProduct(), $expandedItemTransfer->getIdAbstractProduct());
+        $this->assertEquals($concreteProductEntity->getIdProduct(), $expandedItemTransfer->getId());
+        $expandedTSetTransfer = $expandedItemTransfer->getTaxSet();
         $this->assertNotNull($expandedTSetTransfer);
         $this->assertEquals(self::TAX_SET_NAME, $expandedTSetTransfer->getName());
     }

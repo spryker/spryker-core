@@ -6,7 +6,7 @@
 
 namespace ClientUnit\SprykerFeature\Client\Cart\Service;
 
-use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use SprykerEngine\Client\Kernel\Factory;
 use SprykerEngine\Client\Kernel\Locator;
@@ -92,7 +92,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
 
     public function testAddItemMustOnlyExceptTransferInterfaceAsArgument()
     {
-        $cartItemTransfer = new CartItemTransfer();
+        $itemTransfer = new ItemTransfer();
         $cartTransfer = new CartTransfer();
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->once())
@@ -109,17 +109,17 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
-        $cartTransfer = $cartClientMock->addItem($cartItemTransfer);
+        $cartTransfer = $cartClientMock->addItem($itemTransfer);
 
         $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
     }
 
     public function testRemoveItemMustOnlyExceptTransferInterfaceAsArgument()
     {
-        $cartItemTransfer = new CartItemTransfer();
-        $cartItemTransfer->setId('identifier');
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setId('identifier');
         $cartTransfer = new CartTransfer();
-        $cartTransfer->addItem($cartItemTransfer);
+        $cartTransfer->addItem($itemTransfer);
 
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->exactly(2))
@@ -136,19 +136,19 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
-        $cartTransfer = $cartClientMock->removeItem($cartItemTransfer);
+        $cartTransfer = $cartClientMock->removeItem($itemTransfer);
 
         $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
     }
 
     public function testChangeItemQuantityMustOnlyExceptTransferInterfaceAsArgument()
     {
-        $cartItemTransfer = new CartItemTransfer();
-        $cartItemTransfer->setQuantity(2);
-        $cartItemTransfer->setId('identifier');
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(2);
+        $itemTransfer->setId('identifier');
 
         $cartTransfer = new CartTransfer();
-        $cartTransfer->addItem($cartItemTransfer);
+        $cartTransfer->addItem($itemTransfer);
 
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->exactly(3))
@@ -169,23 +169,23 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
-        $cartItemTransfer = new CartItemTransfer();
-        $cartItemTransfer->setQuantity(1);
-        $cartItemTransfer->setId('identifier');
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(1);
+        $itemTransfer->setId('identifier');
 
-        $cartTransfer = $cartClientMock->changeItemQuantity($cartItemTransfer);
+        $cartTransfer = $cartClientMock->changeItemQuantity($itemTransfer);
 
         $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
     }
 
     public function testChangeItemQuantityMustCallDecreaseItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
     {
-        $cartItemTransfer = new CartItemTransfer();
-        $cartItemTransfer->setQuantity(2);
-        $cartItemTransfer->setId('identifier');
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(2);
+        $itemTransfer->setId('identifier');
 
         $cartTransfer = new CartTransfer();
-        $cartTransfer->addItem($cartItemTransfer);
+        $cartTransfer->addItem($itemTransfer);
 
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->exactly(3))
@@ -206,23 +206,23 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
-        $cartItemTransfer = new CartItemTransfer();
-        $cartItemTransfer->setQuantity(1);
-        $cartItemTransfer->setId('identifier');
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(1);
+        $itemTransfer->setId('identifier');
 
-        $cartTransfer = $cartClientMock->changeItemQuantity($cartItemTransfer);
+        $cartTransfer = $cartClientMock->changeItemQuantity($itemTransfer);
 
         $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
     }
 
     public function testChangeItemQuantityMustCallIncreaseItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
     {
-        $cartItemTransfer = new CartItemTransfer();
-        $cartItemTransfer->setQuantity(1);
-        $cartItemTransfer->setId('identifier');
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(1);
+        $itemTransfer->setId('identifier');
 
         $cartTransfer = new CartTransfer();
-        $cartTransfer->addItem($cartItemTransfer);
+        $cartTransfer->addItem($itemTransfer);
 
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->exactly(3))
@@ -243,11 +243,11 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
-        $cartItemTransfer = new CartItemTransfer();
-        $cartItemTransfer->setQuantity(2);
-        $cartItemTransfer->setId('identifier');
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(2);
+        $itemTransfer->setId('identifier');
 
-        $cartTransfer = $cartClientMock->changeItemQuantity($cartItemTransfer);
+        $cartTransfer = $cartClientMock->changeItemQuantity($itemTransfer);
 
         $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
     }

@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\TotalsInterface;
-use Generated\Shared\Cart\CartItemInterface;
+use Generated\Shared\Cart\ItemInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
@@ -46,7 +46,7 @@ class SubtotalWithoutItemExpensesTotalsCalculator implements
     }
 
     /**
-     * @param CartItemInterface $item
+     * @param ItemInterface $item
      *
      * @return int
      */

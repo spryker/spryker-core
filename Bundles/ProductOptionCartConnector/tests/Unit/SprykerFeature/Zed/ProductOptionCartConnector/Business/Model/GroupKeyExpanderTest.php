@@ -6,7 +6,7 @@
 
 namespace Unit\SprykerFeature\Zed\ProductOptionCartConnector\Business\Model;
 
-use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use SprykerFeature\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 use Generated\Shared\Transfer\ChangeTransfer;
@@ -89,7 +89,7 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = new ChangeTransfer();
 
         foreach ($cartItems as $cartItem => $options) {
-            $cartItem = new CartItemTransfer();
+            $cartItem = new ItemTransfer();
             foreach ($options as $option) {
                 $cartItem->addProductOption($option);
             }

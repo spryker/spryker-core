@@ -7,7 +7,7 @@ namespace SprykerFeature\Zed\ProductOptionCartConnector\Business\Model;
 
 use Generated\Shared\Cart\ChangeInterface;
 use Generated\Shared\ProductOption\ProductOptionInterface;
-use Generated\Shared\ProductOptionCartConnector\CartItemInterface;
+use Generated\Shared\ProductOptionCartConnector\ItemInterface;
 
 class GroupKeyExpander
 {
@@ -26,11 +26,11 @@ class GroupKeyExpander
     }
     
     /**
-     * @param CartItemInterface $cartItem
+     * @param ItemInterface $cartItem
      *
      * @return string
      */
-    protected function buildGroupKey(CartItemInterface $cartItem)
+    protected function buildGroupKey(ItemInterface $cartItem)
     {
         $currentGroupKey = $cartItem->getGroupKey();
         if (empty($cartItem->getProductOptions())) {

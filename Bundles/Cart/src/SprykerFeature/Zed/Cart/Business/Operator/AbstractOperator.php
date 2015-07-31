@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
 use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\CartItemInterface;
+use Generated\Shared\Cart\ItemInterface;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use Generated\Shared\Cart\ChangeInterface;

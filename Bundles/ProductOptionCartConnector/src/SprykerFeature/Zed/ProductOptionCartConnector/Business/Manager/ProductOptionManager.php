@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\ProductOptionCartConnector\Business\Manager;
 
 use Generated\Shared\Cart\ChangeInterface;
-use Generated\Shared\ProductOptionCartConnector\CartItemInterface;
+use Generated\Shared\ProductOptionCartConnector\ItemInterface;
 use SprykerFeature\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface;
 
 class ProductOptionManager implements ProductOptionManagerInterface
@@ -40,9 +40,9 @@ class ProductOptionManager implements ProductOptionManagerInterface
     }
 
     /**
-     * @param CartItemInterface $cartItem
+     * @param ItemInterface $cartItem
      */
-    public function expandProductOptionTransfers(CartItemInterface $cartItem)
+    public function expandProductOptionTransfers(ItemInterface $cartItem)
     {
         foreach ($cartItem->getProductOptions() as &$productOption) {
 

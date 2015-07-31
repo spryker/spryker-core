@@ -6,15 +6,17 @@
 
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\ItemOptionTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Calculation\OrderItemInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
+use Generated\Shared\Transfer\ItemTransfer;
+use SprykerFeature\Zed\Calculation\Business\Model\Calculator\OptionPriceToPayCalculator;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
@@ -180,11 +182,11 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderItemTransfer
+     * @return ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new OrderItemTransfer();
+        $item = new ItemTransfer();
 
         return $item;
     }

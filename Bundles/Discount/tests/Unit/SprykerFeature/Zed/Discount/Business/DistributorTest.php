@@ -7,7 +7,7 @@
 namespace Unit\SprykerFeature\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -157,14 +157,14 @@ class DistributorTest extends Test
     /**
      * @param array $grossPrices
      *
-     * @return array|OrderItemTransfer[]
+     * @return array|ItemTransfer[]
      */
     protected function getItems(array $grossPrices)
     {
         $items = [];
 
         foreach ($grossPrices as $grossPrice) {
-            $item = new OrderItemTransfer();
+            $item = new ItemTransfer();
             $item->setGrossPrice($grossPrice);
             $items[] = $item;
         }

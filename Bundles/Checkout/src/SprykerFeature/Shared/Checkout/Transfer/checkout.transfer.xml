@@ -5,7 +5,7 @@
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int" />
-        <property name="items" type="OrderItem[]"  singular="item" />
+        <property name="items" type="Item[]"  singular="item" />
         <property name="customer" type="Customer" />
         <property name="totals" type="Totals" />
         <property name="discounts" type="Discount[]" singular="discount" />
@@ -37,7 +37,7 @@
         <property name="updatedAt" type="string" />
     </transfer>
 
-    <transfer name="OrderItem">
+    <transfer name="Item">
         <property name="idSalesOrderItem" type="int" />
         <property name="sku" type="string" />
         <property name="grossPrice" type="int" />

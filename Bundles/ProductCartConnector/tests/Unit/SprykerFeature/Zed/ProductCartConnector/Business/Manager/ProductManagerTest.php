@@ -6,7 +6,7 @@
 namespace Unit\SprykerFeature\Zed\ProductCartConnector\Business\Manager;
 
 
-use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
@@ -114,9 +114,9 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     private function getChangeTransfer()
     {
         $changeTransfer = new ChangeTransfer();
-        $cartItemTransfer = new CartItemTransfer();
-        $cartItemTransfer->setSku(self::CONCRETE_SKU);
-        $changeTransfer->addItem($cartItemTransfer);
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku(self::CONCRETE_SKU);
+        $changeTransfer->addItem($itemTransfer);
 
         return $changeTransfer;
     }
@@ -145,5 +145,5 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMock('SprykerFeature\Zed\Product\Business\ProductFacade', ['getConcreteProduct'], [], '', false);
     }
-    
+
 }

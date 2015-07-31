@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="CartItem">
+    <transfer name="Item">
         <property name="id" type="int" />
         <property name="idAbstractProduct" type="int" />
         <property name="abstractSku" type="string" />
@@ -12,7 +12,7 @@
     </transfer>
 
     <transfer name="Change">
-        <property name="items" type="CartItem[]" singular="item" />
+        <property name="items" type="Item[]" singular="item" />
     </transfer>
 
 </transfers>

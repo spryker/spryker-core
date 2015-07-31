@@ -7,7 +7,7 @@
 namespace SprykerFeature\Client\Cart\Service;
 
 use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\CartItemInterface;
+use Generated\Shared\Cart\ItemInterface;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
@@ -60,13 +60,13 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param CartItemInterface $cartItemTransfer
+     * @param ItemInterface $itemTransfer
      *
      * @return CartInterface
      */
-    public function addItem(CartItemInterface $cartItemTransfer)
+    public function addItem(ItemInterface $itemTransfer)
     {
-        $changeTransfer = $this->prepareCartChange($cartItemTransfer);
+        $changeTransfer = $this->prepareCartChange($itemTransfer);
         $cartTransfer = $this->getZedStub()->addItem($changeTransfer);
 
         return $this->handleCartResponse($cartTransfer);
@@ -81,18 +81,18 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param CartItemInterface $cartItemTransfer
+     * @param ItemInterface $itemTransfer
      *
      * @return CartInterface
      */
-    public function removeItem(CartItemInterface $cartItemTransfer)
+    public function removeItem(ItemInterface $itemTransfer)
     {
-        $cartItemTransfer = $this->mergeCartItems(
-            $cartItemTransfer,
-            $this->getItemByIdentifier($cartItemTransfer->getSku())
+        $itemTransfer = $this->mergeCartItems(
+            $itemTransfer,
+            $this->getItemByIdentifier($itemTransfer->getSku())
         );
 
-        $changeTransfer = $this->prepareCartChange($cartItemTransfer);
+        $changeTransfer = $this->prepareCartChange($itemTransfer);
         $cartTransfer = $this->getZedStub()->removeItem($changeTransfer);
 
         return $this->handleCartResponse($cartTransfer);
@@ -103,17 +103,17 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @return CartItemInterface
+     * @return ItemInterface
      */
     private function getItemByIdentifier($identifier)
     {
         $cartTransfer = $this->getCart();
 
-        foreach ($cartTransfer->getItems() as $cartItemTransfer) {
-            if ($cartItemTransfer->getSku() === $identifier) {
-                $existingCartItemTransfer = clone $cartItemTransfer;
-                $existingCartItemTransfer->setGroupKey(null);
-                return $existingCartItemTransfer;
+        foreach ($cartTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getSku() === $identifier) {
+                $existingItemTransfer = clone $itemTransfer;
+                $existingItemTransfer->setGroupKey(null);
+                return $existingItemTransfer;
             }
         }
 
@@ -121,34 +121,34 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param CartItemInterface $cartItemTransfer
+     * @param ItemInterface $itemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function changeItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1)
+    public function changeItemQuantity(ItemInterface $itemTransfer, $quantity = 1)
     {
         if ($quantity === 0) {
-            return $this->removeItem($cartItemTransfer);
+            return $this->removeItem($itemTransfer);
         }
 
-        $cartItemTransfer = $this->getItemByIdentifier($cartItemTransfer->getSku());
-        if ($cartItemTransfer->getQuantity() > $quantity) {
-            return $this->decreaseItemQuantity($cartItemTransfer, $quantity);
+        $itemTransfer = $this->getItemByIdentifier($itemTransfer->getSku());
+        if ($itemTransfer->getQuantity() > $quantity) {
+            return $this->decreaseItemQuantity($itemTransfer, $quantity);
         } else {
-            return $this->increaseItemQuantity($cartItemTransfer, $quantity);
+            return $this->increaseItemQuantity($itemTransfer, $quantity);
         }
     }
 
     /**
-     * @param CartItemInterface $cartItemTransfer
+     * @param ItemInterface $itemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function decreaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1)
+    public function decreaseItemQuantity(ItemInterface $itemTransfer, $quantity = 1)
     {
-        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity($cartItemTransfer, $quantity);
+        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity($itemTransfer, $quantity);
 
         $cartTransfer = $this->getZedStub()->decreaseItemQuantity($changeTransfer);
 
@@ -156,12 +156,12 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param CartItemInterface $cartItemTransfer
+     * @param ItemInterface $itemTransfer
      * @param int $quantity
      *
      * @return CartInterface
      */
-    public function increaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1)
+    public function increaseItemQuantity(ItemInterface $itemTransfer, $quantity = 1)
     {
         $changeTransfer = $this->createChangeTransferWithAdjustedQuantity($cartItemTransfer, $quantity);
 
@@ -194,14 +194,14 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param CartItemInterface $cartItemTransfer
+     * @param ItemInterface $itemTransfer
      *
      * @return ChangeTransfer
      */
-    private function prepareCartChange(CartItemInterface $cartItemTransfer)
+    private function prepareCartChange(ItemInterface $itemTransfer)
     {
         $changeTransfer = $this->createCartChange();
-        $changeTransfer->addItem($cartItemTransfer);
+        $changeTransfer->addItem($itemTransfer);
 
         return $changeTransfer;
     }
@@ -248,21 +248,21 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param CartItemInterface $cartItemTransfer
+     * @param ItemInterface $itemTransfer
      * @param int $quantity
      *
      * @return ChangeTransfer
      */
-    private function createChangeTransferWithAdjustedQuantity(CartItemInterface $cartItemTransfer, $quantity)
+    private function createChangeTransferWithAdjustedQuantity(ItemInterface $itemTransfer, $quantity)
     {
-        $cartItemTransfer = $this->mergeCartItems(
-            $cartItemTransfer,
-            $this->getItemByIdentifier($cartItemTransfer->getSku())
+        $itemTransfer = $this->mergeCartItems(
+            $itemTransfer,
+            $this->getItemByIdentifier($itemTransfer->getSku())
         );
 
-        $cartItemTransfer->setQuantity($quantity);
+        $itemTransfer->setQuantity($quantity);
 
-        return $this->prepareCartChange($cartItemTransfer);
+        return $this->prepareCartChange($itemTransfer);
     }
 
     /**
@@ -278,18 +278,18 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param CartItemInterface $newCartItemTransfer
-     * @param CartItemInterface $oldCartItemByIdentifier
+     * @param ItemInterface $newItemTransfer
+     * @param ItemInterface $oldItemByIdentifier
      *
-     * @return CartItemInterface
+     * @return ItemInterface
      */
-    private function mergeCartItems(CartItemInterface $newCartItemTransfer, CartItemInterface $oldCartItemByIdentifier)
+    private function mergeCartItems(ItemInterface $newItemTransfer, ItemInterface $oldItemByIdentifier)
     {
-        $newCartItemTransfer->fromArray(
-            $oldCartItemByIdentifier->toArray()
+        $newItemTransfer->fromArray(
+            $oldItemByIdentifier->toArray()
         );
 
-        return $newCartItemTransfer;
+        return $newItemTransfer;
     }
 
 }

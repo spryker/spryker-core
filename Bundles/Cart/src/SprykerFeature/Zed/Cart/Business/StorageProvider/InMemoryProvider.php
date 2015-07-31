@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Cart\Business\StorageProvider;
 use Generated\Shared\Cart\ChangeInterface;
 use SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException;
 use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\CartItemInterface;
+use Generated\Shared\Cart\ItemInterface;
 
 class InMemoryProvider implements StorageProviderInterface
 {
@@ -77,7 +77,7 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \ArrayObject|CartItemInterface[] $cartItems
+     * @param \ArrayObject|ItemInterface[] $cartItems
      *
      * @return array
      */
@@ -95,9 +95,9 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartItemInterface[] $existingItems
+     * @param ItemInterface[] $existingItems
      * @param integer $index
-     * @param CartItemInterface $item
+     * @param ItemInterface $item
      */
     private function decreaseExistingItem($existingItems, $index, $item)
     {
@@ -113,9 +113,9 @@ class InMemoryProvider implements StorageProviderInterface
 
     /**
      * @param \ArrayObject $existingItems
-     * @param CartItemInterface $changedItem
+     * @param ItemInterface $changedItem
      */
-    protected function decreaseBySku(\ArrayObject $existingItems, CartItemInterface $changedItem)
+    protected function decreaseBySku(\ArrayObject $existingItems, ItemInterface $changedItem)
     {
         foreach ($existingItems as $key => $cartIndexItem) {
             if ($cartIndexItem->getSku() === $changedItem->getSku()) {
@@ -126,11 +126,11 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartItemInterface $item
+     * @param ItemInterface $item
      *
      * @return bool
      */
-    protected function isValidQuantity(CartItemInterface $item)
+    protected function isValidQuantity(ItemInterface $item)
     {
         if ($item->getQuantity() < 1) {
             throw new InvalidArgumentException(

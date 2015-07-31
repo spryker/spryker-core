@@ -8,9 +8,8 @@ namespace SprykerFeature\Zed\CartCheckoutConnector\Business;
 
 use Generated\Shared\CartCheckoutConnector\CheckoutRequestInterface;
 use Generated\Shared\CartCheckoutConnector\OrderInterface;
-use Generated\Shared\CartCheckoutConnector\OrderItemInterface;
-use Generated\Shared\Transfer\CartItemTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\CartCheckoutConnector\ItemInterface;
+use Generated\Shared\Transfer\ItemTransfer;
 
 class CartOrderHydrator implements CartOrderHydratorInterface
 {
@@ -29,7 +28,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     }
 
     /**
-     * @param \ArrayObject|CartItemTransfer[] $cartItems
+     * @param \ArrayObject|ItemTransfer[] $cartItems
      *
      * @return \ArrayObject
      */
@@ -40,7 +39,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
             if ($cartItem->getQuantity() > 1) {
                 $orderItems = array_merge($orderItems, $this->expandCartItem($cartItem));
             } else {
-                $orderItems[] = $this->createOrderItemTransfer($cartItem);
+                $orderItems[] = $this->createItemTransfer($cartItem);
             }
         }
 
@@ -48,35 +47,35 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     }
 
     /**
-     * @param CartItemTransfer $cartItem
+     * @param ItemTransfer $cartItem
      *
      * @return array
      */
-    protected function expandCartItem(CartItemTransfer $cartItem)
+    protected function expandCartItem(ItemTransfer $cartItem)
     {
         $result = [];
         for ($i = 1; $i <= $cartItem->getQuantity(); $i++) {
-            $result[] = $this->createOrderItemTransfer($cartItem);
+            $result[] = $this->createItemTransfer($cartItem);
         }
         return $result;
     }
 
     /**
-     * @return OrderItemInterface
+     * @return ItemInterface
      */
-    protected function getOrderItemTransfer()
+    protected function getItemTransfer()
     {
-        return new OrderItemTransfer();
+        return new ItemTransfer();
     }
 
     /**
-     * @param CartItemTransfer $cartItem
+     * @param ItemTransfer $cartItem
      *
-     * @return OrderItemInterface
+     * @return ItemInterface
      */
-    protected function createOrderItemTransfer(CartItemTransfer $cartItem)
+    protected function createItemTransfer(ItemTransfer $cartItem)
     {
-        $orderItem = $this->getOrderItemTransfer();
+        $orderItem = $this->getItemTransfer();
         $orderItem->setGrossPrice($cartItem->getGrossPrice());
         $orderItem->setQuantity(1);
         $orderItem->setPriceToPay($cartItem->getPriceToPay());

@@ -9,7 +9,7 @@ namespace Functional\SprykerFeature\Zed\Checkout\Business;
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\Checkout\Dependency\MockOmsOrderHydrator;
 use Functional\SprykerFeature\Zed\Checkout\Dependency\OmsFacade;
-use Generated\Shared\Transfer\CartItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
@@ -209,7 +209,7 @@ class CheckoutFacadeTest extends Test
             ->save()
         ;
 
-        $item = new CartItemTransfer();
+        $item = new ItemTransfer();
         $item
             ->setSku('OSB1339')
             ->setQuantity(2)
@@ -308,7 +308,7 @@ class CheckoutFacadeTest extends Test
             ->save()
         ;
 
-        $item1 = new CartItemTransfer();
+        $item1 = new ItemTransfer();
         $item1
             ->setSku('OSB1337')
             ->setQuantity(1)
@@ -317,7 +317,7 @@ class CheckoutFacadeTest extends Test
             ->setName('Product1')
         ;
 
-        $item2 = new CartItemTransfer();
+        $item2 = new ItemTransfer();
         $item2
             ->setSku('OSB1338')
             ->setQuantity(1)
