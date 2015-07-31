@@ -3,6 +3,8 @@
 namespace SprykerFeature\Zed\Discount\Communication\Table;
 
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
+use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
+use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
@@ -39,15 +41,14 @@ class DiscountTable extends AbstractTable
 //            SpyDiscountVoucherTableMap::COL_CREATED_AT => 'Created',
 //            SpyDiscountVoucherTableMap::COL_IS_ACTIVE => 'Is active',
 
-            SpyDiscountVoucherTableMap::COL_CREATED_AT => 'date created',
             SpyDiscountTableMap::COL_VALID_TO => 'valid until',
 
-            'voucher_name' => 'voucher name',
-            'voucher_pool' => 'voucher pool',
-            'category' => 'category',
-            'code' => 'code',
-            'value' => 'value',
-            'status' => 'status',
+//            'voucher_name' => 'voucher name',
+//            'voucher_pool' => 'voucher pool',
+//            'category' => 'category',
+//            'code' => 'code',
+//            'value' => 'value',
+//            'status' => 'status',
         ]);
 
         return $config;
@@ -62,32 +63,41 @@ class DiscountTable extends AbstractTable
     {
         $results = [];
 
-        $queryResults = $this->runQuery($this->discountQuery, $config);
+        $query = $this->discountQuery
+            ->withColumn(SpyDiscountVoucherPoolTableMap::COL_NAME, 'voucher_pool')
+            ->withColumn(SpyDiscountVoucherPoolCategoryTableMap::COL_NAME, 'voucher_pool_category')
+            ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, 'code')
+            ->useVoucherPoolQuery()
+                ->useDiscountVoucherQuery()
+                ->endUse()
+                ->useVoucherPoolCategoryQuery()
+                ->endUse()
+            ->endUse()
+        ;
+
+        $queryResults = $this->runQuery($query, $config);
 
         foreach ($queryResults as $item) {
 //            $editUrl = $this->getEditUrl($item);
             $results[] = [
-//                SpyDiscountVoucherTableMap::COL_ID_DISCOUNT_VOUCHER => $item[SpyDiscountVoucherTableMap::COL_ID_DISCOUNT_VOUCHER],
-//                SpyDiscountVoucherTableMap::COL_CREATED_AT => $item[SpyDiscountVoucherTableMap::COL_CREATED_AT],
-//                SpyDiscountVoucherTableMap::COL_IS_ACTIVE => $item[SpyDiscountVoucherTableMap::COL_IS_ACTIVE],
+                SpyDiscountTableMap::COL_CREATED_AT => $item[SpyDiscountTableMap::COL_CREATED_AT],
+                SpyDiscountTableMap::COL_VALID_TO => $item[SpyDiscountTableMap::COL_VALID_TO],
+                SpyDiscountTableMap::COL_DISPLAY_NAME => $item[SpyDiscountTableMap::COL_DISPLAY_NAME],
+                SpyDiscountTableMap::COL_IS_ACTIVE => $item[SpyDiscountTableMap::COL_IS_ACTIVE],
 
-                'date_created' => 'date created',
-                'valid_until' => 'valid until',
-                'voucher_name' => 'voucher name',
-                'voucher_pool' => 'voucher pool',
-                'category' => 'category',
-                'code' => 'code',
-                'value' => 'value',
-                'status' => 'status',
-
-//                SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL],
-//                SpyDiscountVoucherPoolTableMap::COL_NAME => $item[SpyDiscountVoucherPoolTableMap::COL_NAME],
+                'voucher_pool' => $item['voucher_pool'],
+                'voucher_pool_category' => $item['voucher_pool_category'],
+                'code' => $item['code'],
 
 //                self::COL_OPTIONS => sprintf(
 //                    '<a href="%s" class="btn btn-sm btn-primary">Edit</a>',
 //                    $editUrl
 //                ),
             ];
+//            echo '<pre>';
+//            print_r($item);
+//            print_r($results);
+//            die;
         }
 
         return $results;
