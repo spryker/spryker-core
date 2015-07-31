@@ -119,7 +119,7 @@ class Method
      */
     public function hasMethod($idMethod)
     {
-        $methodQuery = $this->queryContainer->queryMethod($idMethod);
+        $methodQuery = $this->queryContainer->queryMethodByIdMethod($idMethod);
 
         return $methodQuery->count() > 0;
     }
@@ -131,7 +131,7 @@ class Method
      */
     public function deleteMethod($idMethod)
     {
-        $methodQuery = $this->queryContainer->queryMethod($idMethod);
+        $methodQuery = $this->queryContainer->queryMethodByIdMethod($idMethod);
         $entity = $methodQuery->findOne();
 
         if ($entity) {
@@ -149,7 +149,8 @@ class Method
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
         if ($this->hasMethod($methodTransfer->getIdShipmentMethod())) {
-            $methodEntity = $this->queryContainer->queryMethod($methodTransfer->getIdShipmentMethod())->findOne();
+            $methodEntity =
+                $this->queryContainer->queryMethodByIdMethod($methodTransfer->getIdShipmentMethod())->findOne();
             $methodEntity
                 ->setFkShipmentCarrier($methodTransfer->getFkShipmentCarrier())
                 ->setGlossaryKeyName($methodTransfer->getGlossaryKeyName())

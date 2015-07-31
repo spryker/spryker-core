@@ -52,7 +52,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
      *
      * @return SpyShipmentMethodQuery
      */
-    public function queryMethod($idMethod)
+    public function queryMethodByIdMethod($idMethod)
     {
         $query = $this->queryMethods();
         $query->filterByIdShipmentMethod($idMethod);
