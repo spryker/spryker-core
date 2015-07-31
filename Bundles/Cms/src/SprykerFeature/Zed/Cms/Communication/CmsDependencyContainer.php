@@ -49,6 +49,16 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
+     * @return OrdersTable
+     */
+    public function createCmsRedirectTable()
+    {
+        $urlQuery = $this->getQueryContainer()->queryUrlsWithRedirect();
+
+        return $this->getFactory()->createTableCmsRedirectTable($urlQuery);
+    }
+
+    /**
      * @param string $type
      *
      * @return CmsPageForm

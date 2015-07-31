@@ -2,19 +2,17 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS page' } %} {# or you can add here custom widget_title variable #}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS page' } %}
 
         {% block widget_header_content %}
 
-            <a class="btn btn-sm btn-primary" href="/cms/page/add/">{{ 'Add Cms Page' | trans }}</a>
             <a class="btn btn-sm btn-primary" href="/cms/redirect/add/">{{ 'Add Cms Redirect' | trans }}</a>
 
         {% endblock %}
 
         {% block widget_content %}
 
-
-            {{ pages | raw }}
+            {{ urls | raw }}
 
         {% endblock %}
 

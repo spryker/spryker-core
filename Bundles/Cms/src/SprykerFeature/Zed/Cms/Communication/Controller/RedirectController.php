@@ -26,6 +26,32 @@ class RedirectController extends AbstractController
 {
 
     /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function indexAction()
+    {
+        $table = $this->getDependencyContainer()->createCmsRedirectTable();
+
+        return [
+            'urls' => $table->render(),
+        ];
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()->createCmsRedirectTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
+
+    /**
      * @return array
      */
     public function addAction()
@@ -43,7 +69,7 @@ class RedirectController extends AbstractController
             $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
             $this->getUrlFacade()->createRedirectUrl($data[CmsRedirectForm::FROM_URL],$localeTransfer,$redirectTransfer->getIdRedirect());
 
-            return $this->redirectResponse('/cms/');
+            return $this->redirectResponse('/cms/redirect/');
         }
 
         return $this->viewResponse([
@@ -84,7 +110,7 @@ class RedirectController extends AbstractController
 
             }
 
-            return $this->redirectResponse('/cms/');
+            return $this->redirectResponse('/cms/redirect/');
         }
 
         return $this->viewResponse([

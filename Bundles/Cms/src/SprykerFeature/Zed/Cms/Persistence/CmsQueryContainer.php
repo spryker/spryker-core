@@ -19,6 +19,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const TEMPLATE_NAME = 'template_name';
     const TEMPLATE_PATH = 'template_path';
     const URL = 'url';
+    const TO_URL = 'toUrl';
 
     /**
      * @return SpyCmsTemplateQuery
@@ -180,6 +181,15 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryRedirectById($id)
     {
         return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)->queryRedirectById($id);
+    }
+
+    /**
+     *
+     * @return SpyUrlQuery
+     */
+    public function queryUrlsWithRedirect()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)->queryUrlsWithRedirect();
     }
 
 }
