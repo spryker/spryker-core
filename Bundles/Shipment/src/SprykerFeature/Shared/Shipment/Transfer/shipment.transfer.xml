@@ -29,11 +29,12 @@
     </transfer>
 
     <transfer name="Order">
-        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod" />
+        <property name="shipmentMethod" type="ShipmentMethod" />
         <property name="shipmentDeliveryTime" type="int" />
     </transfer>
 
     <transfer name="CheckoutRequest">
+        <property name="shipmentMethodId" type="int" />
         <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod" />
     </transfer>
 
