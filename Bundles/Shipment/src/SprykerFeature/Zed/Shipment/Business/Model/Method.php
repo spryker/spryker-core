@@ -111,6 +111,7 @@ class Method
         return $shipmentTransfer;
     }
 
+
     /**
      * @param int $idMethod
      *
