@@ -97,7 +97,7 @@ class OrderItem implements OrderItemInterface
     }
 
     /**
-     * @return \Propel\Runtime\Connection\ConnectionInterface
+     * @return ConnectionInterface
      */
     protected function getConnection()
     {
