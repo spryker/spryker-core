@@ -58,6 +58,13 @@ class MethodTable extends AbstractTable
             SpyShipmentMethodTableMap::COL_PRICE
         ]);
 
+        $config->setSearchable([
+            SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER,
+            SpyShipmentMethodTableMap::COL_NAME,
+            SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION,
+            SpyShipmentMethodTableMap::COL_PRICE
+        ]);
+
         $config->setUrl('table');
 
         return $config;
