@@ -4,7 +4,7 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Order">
-        <property name="items" type="OrderItem[]"  singular="item" />
+        <property name="items" type="Item[]"  singular="item" />
     </transfer>
 
     <transfer name="CheckoutRequest">

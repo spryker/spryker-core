@@ -27,7 +27,7 @@
         <property name="sku" type="string" />
         <property name="uniqueIdentifier" type="string" />
         <property name="groupKey" type="string"/>
-        <property name="options" type="ItemOption[]" singular="option" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="quantity" type="int" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
