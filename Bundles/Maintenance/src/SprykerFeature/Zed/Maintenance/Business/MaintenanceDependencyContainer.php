@@ -145,7 +145,6 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
         );
     }
 
-
     /**
      * @return PropelMigrationCleanerInterface
      */
