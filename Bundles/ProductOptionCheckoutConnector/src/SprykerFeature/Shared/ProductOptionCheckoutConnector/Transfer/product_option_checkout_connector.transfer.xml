@@ -11,12 +11,7 @@
         <property name="cart" type="Cart" />
     </transfer>
 
-    <transfer name="CartItem">
-        <property name="sku" type="string" />
-        <property name="productOptions" type="ProductOption[]" singular="productOption" />
-    </transfer>
-
-    <transfer name="OrderItem">
+    <transfer name="Item">
         <property name="sku" type="string" />
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
     </transfer>

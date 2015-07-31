@@ -187,7 +187,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $caslculableContainer = $this->getOrderTransfer();
         /** @var OrderTransfer $orderTransfer */
         $orderTransfer = $caslculableContainer->getCalculableObject();
-        $orderItemTransfer = $this->getOrderItemTransfer();
+        $itemTransfer = $this->getItemTransfer();
         $optionTransfer = $this->getProductOptionTransfer();
 
         $taxRate10 = (new TaxRateTransfer())
@@ -197,7 +197,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             ->setIdTaxSet(self::ID_TAX_SET_1)
             ->addTaxRate($taxRate10);
 
-        $orderItemTransfer->setTaxSet($taxSetTransfer)
+        $itemTransfer->setTaxSet($taxSetTransfer)
             ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
             ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
 
@@ -205,16 +205,16 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
             ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
 
-        $orderItemTransfer->addProductOption($optionTransfer);
-        $orderTransfer->addItem($orderItemTransfer);
+        $itemTransfer->addProductOption($optionTransfer);
+        $orderTransfer->addItem($itemTransfer);
 
         $totalsTransfer = $this->getTotalsTransfer();
         $calculator = $this->getCalculator();
 
         $calculator->recalculateTotals($totalsTransfer, $caslculableContainer, $orderTransfer->getItems());
 
-        $orderItemTaxSet = $orderItemTransfer->getTaxSet();
-        $orderItemOptionTaxSet = $orderItemTransfer->getProductOptions()[0]->getTaxSet();
+        $orderItemTaxSet = $itemTransfer->getTaxSet();
+        $orderItemOptionTaxSet = $itemTransfer->getProductOptions()[0]->getTaxSet();
 
         $this->assertEquals(231, $orderItemTaxSet->getAmount());
         $this->assertEquals(231, $orderItemOptionTaxSet->getAmount());

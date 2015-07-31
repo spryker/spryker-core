@@ -7,9 +7,8 @@
 namespace SprykerFeature\Zed\ProductOptionCheckoutConnector\Business;
 
 use Generated\Shared\ProductOptionCheckoutConnector\CheckoutRequestInterface;
-use Generated\Shared\ProductOptionCheckoutConnector\CartItemInterface;
 use Generated\Shared\ProductOptionCheckoutConnector\OrderInterface;
-use Generated\Shared\ProductOptionCheckoutConnector\OrderItemInterface;
+use Generated\Shared\ProductOptionCheckoutConnector\ItemInterface;
 
 class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
 {
@@ -25,8 +24,8 @@ class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
     }
 
     /**
-     * @param \ArrayObject|CartItemInterface[] $cartItems
-     * @param \ArrayObject|OrderItemInterface[] $orderItems
+     * @param \ArrayObject|ItemInterface[] $cartItems
+     * @param \ArrayObject|ItemInterface[] $orderItems
      */
     private function transferProductOptionsFromCartToOrder(\ArrayObject $cartItems, \ArrayObject $orderItems)
     {
@@ -36,10 +35,10 @@ class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
     }
 
     /**
-     * @param CartItemInterface $cartItem
-     * @param \ArrayObject|OrderItemInterface[] $orderItems
+     * @param ItemInterface $cartItem
+     * @param \ArrayObject|ItemInterface[] $orderItems
      */
-    private function transferItemOptions(CartItemInterface $cartItem, \ArrayObject $orderItems)
+    private function transferItemOptions(ItemInterface $cartItem, \ArrayObject $orderItems)
     {
         foreach ($orderItems as $orderItem) {
 

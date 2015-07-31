@@ -5,10 +5,9 @@
 
 namespace Unit\SprykerFeature\Zed\ProductOptionCheckoutConnector\Business;
 
-use Generated\Shared\Transfer\CartItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use SprykerFeature\Zed\ProductOptionCheckoutConnector\Business\ProductOptionOrderHydrator;
@@ -54,7 +53,7 @@ class ProductOptionOrderHydratorTest extends \PHPUnit_Framework_TestCase
      */
     private function getOrderFixture()
     {
-        $orderItem = new OrderItemTransfer();
+        $orderItem = new ItemTransfer();
         $orderItem->setSku(self::CONCRETE_SKU);
 
         $order = new OrderTransfer();
@@ -71,7 +70,7 @@ class ProductOptionOrderHydratorTest extends \PHPUnit_Framework_TestCase
         $productOption = new ProductOptionTransfer();
         $productOption->setLabelOptionType(self::LABEL_OPTION_TYPE);
 
-        $cartItem = new CartItemTransfer();
+        $cartItem = new ItemTransfer();
         $cartItem->setSku(self::CONCRETE_SKU);
         $cartItem->addProductOption($productOption);
 

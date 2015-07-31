@@ -163,7 +163,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function increaseItemQuantity(ItemInterface $itemTransfer, $quantity = 1)
     {
-        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity($cartItemTransfer, $quantity);
+        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity($itemTransfer, $quantity);
 
         $cartTransfer = $this->getZedStub()->increaseItemQuantity($changeTransfer);
 
