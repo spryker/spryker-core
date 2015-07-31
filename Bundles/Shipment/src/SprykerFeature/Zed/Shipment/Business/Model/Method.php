@@ -133,10 +133,10 @@ class Method
     {
         $methodQuery = $this->queryContainer->queryMethod($idMethod);
         $entity = $methodQuery->findOne();
-        if (!$entity) {
-            return true;
+
+        if ($entity) {
+            $entity->delete();
         }
-        $entity->delete();
 
         return true;
     }
