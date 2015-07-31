@@ -111,7 +111,9 @@ class CartClient extends AbstractClient implements CartClientInterface
 
         foreach ($cartTransfer->getItems() as $cartItemTransfer) {
             if ($cartItemTransfer->getSku() === $identifier) {
-                return $cartItemTransfer;
+                $existingCopy = clone $cartItemTransfer;
+                $existingCopy->setGroupKey(null);
+                return $existingCopy;
             }
         }
 
@@ -146,9 +148,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function decreaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1)
     {
-        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity(
-            $cartItemTransfer, $cartItemTransfer->getQuantity() - $quantity
-        );
+        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity($cartItemTransfer, $quantity);
 
         $cartTransfer = $this->getZedStub()->decreaseItemQuantity($changeTransfer);
 
@@ -163,9 +163,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function increaseItemQuantity(CartItemInterface $cartItemTransfer, $quantity = 1)
     {
-        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity(
-            $cartItemTransfer, $cartItemTransfer->getQuantity() + $quantity
-        );
+        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity($cartItemTransfer, $quantity);
 
         $cartTransfer = $this->getZedStub()->increaseItemQuantity($changeTransfer);
 
