@@ -28,6 +28,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
 
     private function deletePostgresDatabaseIfNotExists()
     {
+        // @todo make it work without sudo
         $dropDatabaseCommand = 'sudo dropdb --if-exists ' . Config::get(SystemConfig::ZED_DB_DATABASE);
         $process = new Process($dropDatabaseCommand);
         $process->run();
