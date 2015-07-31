@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="Order">
+        <property name="items" type="OrderItem[]"  singular="item" />
+    </transfer>
+
+    <transfer name="CheckoutRequest">
+        <property name="cart" type="Cart" />
+    </transfer>
+
+    <transfer name="CartItem">
+        <property name="sku" type="string" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
+    </transfer>
+
+    <transfer name="OrderItem">
+        <property name="sku" type="string" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
+    </transfer>
+
+</transfers>
+
