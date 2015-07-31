@@ -91,6 +91,21 @@ class WishlistQueryContainer extends AbstractQueryContainer
     }
 
     /**
+     * @param integer $concreteSku
+     * @param integer $abstractSku
+     *
+     * @return Propel\SpyWishlistItem[]
+     */
+    public function getWishlistItemByConcreteAndAbstractSku($concreteSku, $abstractSku)
+    {
+        $criteria = (new Criteria())
+          ->add(SpyWishlistItemTableMap::COL_CONCRETE_SKU, $concreteSku)
+          ->addAnd(SpyWishlistItemTableMap::COL_ABSTRACT_SKU, $concreteSku);
+
+        return SpyWishlistItemQuery::create(null, $criteria)->find();
+    }
+
+    /**
      * @param WishlistItemInterface $wishlistItemTransfer
      *
      * @return SpyProduct

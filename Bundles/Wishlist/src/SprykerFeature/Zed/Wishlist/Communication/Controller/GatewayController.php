@@ -6,10 +6,8 @@
 
 namespace SprykerFeature\Zed\Wishlist\Communication\Controller;
 
-use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
-use Generated\Shared\Wishlist\WishlistItemInterface;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Wishlist\Business\WishlistFacade;
 
@@ -18,66 +16,43 @@ use SprykerFeature\Zed\Wishlist\Business\WishlistFacade;
  */
 class GatewayController extends AbstractGatewayController
 {
-
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param WishlistChangeInterface $changeTransfer
      *
      * @return WishlistInterface
      */
-    public function getWishlistAction(CustomerInterface $customerTransfer)
+    public function addItemAction(WishlistChangeInterface $changeTransfer)
     {
-        return $this->getFacade()->getWishlist($customerTransfer);
-    }
-
-    /**
-     * @param WishlistChangeInterface $changeTransfer
-     */
-    public function storeAction(WishlistChangeInterface $changeTransfer)
-    {
-        return $this->getFacade()->storeItems($changeTransfer);
+        return $this->getFacade()->addItem($changeTransfer);
     }
 
     /**
      * @param WishlistChangeInterface $changeTransfer
      *
      * @return WishlistInterface
-     */
-    public function groupAction(WishlistChangeInterface $changeTransfer)
-    {
-        return $this->getFacade()->groupAddedItems($changeTransfer);
-    }
-
-    /**
-     * @param WishlistChangeInterface $changeTransfer
-     *
-     * @return WishlistInterface
-     */
-    public function ungroupAction(WishlistChangeInterface $changeTransfer)
-    {
-        return $this->getFacade()->ungroupRemovedItems($changeTransfer);
-    }
-
-
-
-    /**
-     * @param WishlistItemInterface $itemTransfer
-     *
-     * @return int
      */
     public function removeAction(WishlistChangeInterface $changeTransfer)
     {
         return $this->getFacade()->removeItem($changeTransfer);
     }
 
-
     /**
-     * @param WishlistInterface $wishlistTransfer
+     * @param WishlistChangeInterface $changeTransfer
      *
      * @return WishlistInterface
      */
-    public function mergeAction(WishlistInterface $wishlistTransfer)
+    public function decreaseQuantityAction(WishlistChangeInterface $changeTransfer)
     {
-        return $this->getFacade()->mergeWishlist($wishlistTransfer);
+        return $this->getFacade()->decreaseQuantity($changeTransfer);
     }
 
+    /**
+     * @param WishlistChangeInterface $changeTransfer
+     *
+     * @return WishlistInterface
+     */
+    public function increaseQuantityAction(WishlistChangeInterface $changeTransfer)
+    {
+        return $this->getFacade()->increaseQuantity($changeTransfer);
+    }
 }

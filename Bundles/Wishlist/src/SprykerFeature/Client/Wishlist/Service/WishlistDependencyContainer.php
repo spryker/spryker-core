@@ -8,12 +8,10 @@ namespace SprykerFeature\Client\Wishlist\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\WishlistService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
-use SprykerFeature\Client\Wishlist\Service\Action\GetAction;
-use SprykerFeature\Client\Wishlist\Service\Action\MergeAction;
-use SprykerFeature\Client\Wishlist\Service\Action\RemoveAction;
-use SprykerFeature\Client\Wishlist\Service\Action\SaveAction;
+use SprykerFeature\Client\Wishlist\Service\Session\WishlistSessionInterface;
+use SprykerFeature\Client\Wishlist\Service\Storage\WishlistStorageInterface;
+use SprykerFeature\Client\Wishlist\Service\Zed\WishlistStubInterface;
 use SprykerFeature\Client\Wishlist\WishlistDependencyProvider;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @method WishlistService getFactory()
@@ -22,59 +20,39 @@ class WishlistDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**
-     * @throws \ErrorException
-     * @return SaveAction
+     * @return WishlistSessionInterface
      */
-    public function createSaveAction()
+    public function createSession()
     {
-       return $this->getFactory()
-            ->createActionSaveAction(
-                $this->getProvidedDependency(WishlistDependencyProvider::SESSION),
-                $this->getProvidedDependency(WishlistDependencyProvider::SERVICE_ZED),
-                $this->getProvidedDependency(WishlistDependencyProvider::CUSTOMER_CLIENT)->getCustomer()
-                );
+        $session = $this->getFactory()->createSessionWishlistSession(
+            $this->getProvidedDependency(WishlistDependencyProvider::SESSION)
+        );
+
+        return $session;
     }
 
     /**
-     * @throws \ErrorException
-     * @return RemoveAction
+     * @return WishlistStubInterface
      */
-    public function createRemoveAction()
+    public function createZedStub()
     {
-        return $this->getFactory()
-            ->createActionRemoveAction(
-                $this->getProvidedDependency(WishlistDependencyProvider::SESSION),
-                $this->getProvidedDependency(WishlistDependencyProvider::SERVICE_ZED),
-                $this->getProvidedDependency(WishlistDependencyProvider::CUSTOMER_CLIENT)->getCustomer()
-                );
+        $zedStub = $this->getProvidedDependency(WishlistDependencyProvider::SERVICE_ZED);
+        $cartStub = $this->getFactory()->createZedWishlistStub($zedStub);
+
+        return $cartStub;
     }
 
     /**
-     * @throws \ErrorException
-     * @return GetAction
+     *
+     * @return WishlistStorageInterface
      */
-    public function createGetAction()
+    public function createStorage()
     {
-        return $this->getFactory()
-            ->createActionGetAction(
-                $this->getProvidedDependency(WishlistDependencyProvider::SESSION),
-                $this->getProvidedDependency(WishlistDependencyProvider::SERVICE_ZED),
-                $this->getProvidedDependency(WishlistDependencyProvider::CUSTOMER_CLIENT)->getCustomer()
-                );
+        return $this->getFactory()->createStorageWishlistStorage(
+            $this->getProvidedDependency(WishlistDependencyProvider::STORAGE)
+        );
     }
 
-    /**
-     * @throws \ErrorException
-     * @return MergeAction
-     */
-    public function createMergeAction()
-    {
-        return $this->getFactory()
-            ->createActionMergeAction(
-                $this->getProvidedDependency(WishlistDependencyProvider::SESSION),
-                $this->getProvidedDependency(WishlistDependencyProvider::SERVICE_ZED),
-                $this->getProvidedDependency(WishlistDependencyProvider::CUSTOMER_CLIENT)->getCustomer()
-                );
-    }
+
 
 }

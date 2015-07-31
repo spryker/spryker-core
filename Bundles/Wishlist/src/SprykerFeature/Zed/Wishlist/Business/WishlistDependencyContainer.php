@@ -6,11 +6,10 @@
 
 namespace SprykerFeature\Zed\Wishlist\Business;
 
+use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\WishlistBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Wishlist\Business\Integrator\EntityIntegrator;
-use SprykerFeature\Zed\Wishlist\Business\Integrator\TransferObjectIntegrator;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItemQuery;
+use SprykerFeature\Zed\Wishlist\Business\Storage\StorageInterface;
 use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainer;
 
 /**
@@ -19,37 +18,81 @@ use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainer;
  */
 class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
 {
-
     /**
-     * @return EntityIntegrator
+     * @param WishlistChangeInterface $wishlistChange
+     *
+     * @return Operator\Add
      */
-    public function createEntityIntegrator()
+    public function createAddOperator(WishlistChangeInterface $wishlistChange)
     {
-        return $this->getFactory()
-            ->createIntegratorEntityIntegrator($this->getQueryContainer());
-    }
-
-    /**
-     * @return TransferObjectIntegrator
-     */
-    public function createTransferObjectIntegrator()
-    {
-        return $this->getFactory()
-            ->createIntegratorTransferObjectIntegrator($this->createEntityIntegrator());
-    }
-
-    public function createMergeransferObjectIntegrator()
-    {
-        return $this->getFactory()
-            ->createIntegratorTransferObjectIntegrator($this->createEntityIntegrator(), TransferObjectIntegrator::MERGE_MODE);
+        $storage = $this->createStorage($wishlistChange);
+        return $this->getFactory()->createOperatorAdd($storage, $wishlistChange);
     }
 
     /**
-     * @return SpyWishlistItemQuery
+     * @param WishlistChangeInterface $wishlistChange
+     *
+     * @return Operator\Increase
      */
-    public function createWishlistItemQuery()
+    public function createIncreaseOperator(WishlistChangeInterface $wishlistChange)
     {
-        return $this->getQueryContainer()->getWishlistItemQuery();
+        $storage = $this->createStorage($wishlistChange);
+        return $this->getFactory()->createOperatorIncrease($storage, $wishlistChange);
     }
 
+    /**
+     * @param WishlistChangeInterface $wishlistChange
+     *
+     * @return Operator\Decrease
+     */
+    public function createDecreaseOperator(WishlistChangeInterface $wishlistChange)
+    {
+        $storage = $this->createStorage($wishlistChange);
+        return $this->getFactory()->createOperatorDecrease($storage, $wishlistChange);
+    }
+
+    /**
+     * @param WishlistChangeInterface $wishlistChange
+     *
+     * @return Operator\Remove
+     */
+    public function createRemoveOperator(WishlistChangeInterface $wishlistChange)
+    {
+        $storage = $this->createStorage($wishlistChange);
+        return $this->getFactory()->createOperatorRemove($storage, $wishlistChange);
+    }
+
+    /**
+     * @param WishlistChangeInterface $wishlistChange
+     *
+     * @return StorageInterface
+     */
+    protected function createStorage(WishlistChangeInterface $wishlistChange)
+    {
+        if (null !==$wishlistChange->getCustomer()) {
+            return $this->createPropelStorage($wishlistChange);
+        }
+        return $this->createInMemoryStrorage($wishlistChange);
+
+    }
+
+    /**
+     * @param WishlistChangeInterface $wishlistChange
+     *
+     * @return Storage\Propel
+     */
+    protected function createPropelStorage(WishlistChangeInterface $wishlistChange)
+    {
+        return $this->getFactory()->createStoragePropel($this->getQueryContainer(), $wishlistChange->getWishlist());
+    }
+
+    /**
+     * @param WishlistChangeInterface $wishlistChange
+     *
+     * @return Storage\InMemory
+     */
+    protected function createInMemoryStrorage(WishlistChangeInterface $wishlistChange)
+    {
+        return $this->getFactory()->createStorageInMemory($wishlistChange->getWishlist());
+    }
 }

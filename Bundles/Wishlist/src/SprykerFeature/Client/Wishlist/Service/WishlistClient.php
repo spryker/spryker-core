@@ -15,29 +15,19 @@ use SprykerEngine\Client\Kernel\Service\AbstractClient;
 /**
  * @method WishlistDependencyContainer getDependencyContainer()
  */
-class WishlistClient extends AbstractClient implements WishlistClientInterface
+class WishlistClient extends AbstractClient
 {
-
-    /**
-     * @param WishlistItemInterface $wishlistItemTransfer
-     */
-    public function removeItem(WishlistItemInterface $wishlistItemTransfer)
+    public function addItem(WishlistItemInterface $wishlistItem)
     {
-        $this->getDependencyContainer()
-            ->createRemoveAction()
-            ->setTransferObject($wishlistItemTransfer)
-            ->execute();
-    }
+        $wishlist = $this->getSession()->getWishlist();
 
-    /**
-     * @param WishlistItemInterface $wishlistItemTransfer
-     */
-    public function saveItem(WishlistItemInterface $wishlistItemTransfer)
-    {
-        $this->getDependencyContainer()
-            ->createSaveAction()
-            ->setTransferObject($wishlistItemTransfer)
-            ->execute();
+        $wishlistChange = new WishlistChangeTransfer();
+        $wishlistChange->setWishlist($wishlist);
+        $wishlistChange->addItem($wishlistItem);
+
+        $wishlist = $this->getZedStub()->addItem($wishlistChange);
+
+        $this->getSession()->setWishlist($wishlist);
     }
 
     /**
@@ -45,24 +35,71 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      */
     public function getWishlist()
     {
-        return $this->getDependencyContainer()
-            ->createGetAction()
-            ->execute()
-            ->getResponse();
+        $wishlistItems = $this->getSession()->getWishlist();
+        return $this->getStorage()->expandProductDetails($wishlistItems);
+    }
+
+    public function increaseItemQuantity(WishlistItemInterface $wishlistItem)
+    {
+        $wishlist = $this->getSession()->getWishlist();
+
+        $wishlistChange = new WishlistChangeTransfer();
+        $wishlistChange->setWishlist($wishlist);
+        $wishlistChange->addItem($wishlistItem);
+
+        $wishlist = $this->getZedStub()->increaseQuantity($wishlistChange);
+
+        $this->getSession()->setWishlist($wishlist);
+    }
+
+    public function decreaseItemQuantity(WishlistItemInterface $wishlistItem)
+    {
+        $wishlist = $this->getSession()->getWishlist();
+
+        $wishlistChange = new WishlistChangeTransfer();
+        $wishlistChange->setWishlist($wishlist);
+        $wishlistChange->addItem($wishlistItem);
+
+        $wishlist = $this->getZedStub()->descreaseQuantity($wishlistChange);
+
+        $this->getSession()->setWishlist($wishlist);
+    }
+
+
+    public function remoteItem(WishlistItemInterface $wishlistItem)
+    {
+        $wishlist = $this->getSession()->getWishlist();
+
+        $wishlistChange = new WishlistChangeTransfer();
+        $wishlistChange->setWishlist($wishlist);
+        $wishlistChange->addItem($wishlistItem);
+
+        $wishlist = $this->getZedStub()->removeItem($wishlistChange);
+
+        $this->getSession()->setWishlist($wishlist);
     }
 
     /**
-     * @return WishlistInterface
+     * @return Session\WishlistSessionInterface
      */
-    public function mergeWishlist()
+    protected function getSession()
     {
-        return $this->getDependencyContainer()
-            ->createMergeAction()
-            ->execute()
-            ->getResponse();
-
+        return $this->getDependencyContainer()->createSession();
     }
 
+    /**
+     * @return Zed\WishlistStubInterface
+     */
+    protected function getZedStub()
+    {
+        return $this->getDependencyContainer()->createZedStub();
+    }
 
-
+    /**
+     * @return Storage\WishlistStorageInterface
+     */
+    protected function getStorage()
+    {
+        return $this->getDependencyContainer()->createStorage();
+    }
 }

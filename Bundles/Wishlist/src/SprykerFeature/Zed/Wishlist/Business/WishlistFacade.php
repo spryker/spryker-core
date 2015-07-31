@@ -6,10 +6,8 @@
 
 namespace SprykerFeature\Zed\Wishlist\Business;
 
-use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
-use Generated\Shared\Wishlist\WishlistItemInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -18,89 +16,43 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 class WishlistFacade extends AbstractFacade
 {
     /**
-     * @param WishlistChangeInterface $changeTransfer
+     * @param WishlistChangeInterface $wishlistChange
      *
      * @return WishlistInterface
      */
-    public function groupAddedItems(WishlistChangeInterface $changeTransfer)
+    public function addItem(WishlistChangeInterface $wishlistChange)
     {
-        return $this->getDependencyContainer()
-            ->createTransferObjectIntegrator()
-            ->groupAddedItems($changeTransfer);
+        return $this->getDependencyContainer()->createAddOperator($wishlistChange)->executeOperation();
     }
 
     /**
-     * @param WishlistChangeInterface $changeTransfer
+     * @param WishlistChangeInterface $wishlistChange
      *
      * @return WishlistInterface
      */
-    public function ungroupRemovedItems(WishlistChangeInterface $changeTransfer)
+    public function removeItem(WishlistChangeInterface $wishlistChange)
     {
-        return $this->getDependencyContainer()
-            ->createTransferObjectIntegrator()
-            ->ungroupRemovedItems($changeTransfer);
+        return $this->getDependencyContainer()->createRemoveOperator($wishlistChange)->executeOperation();
     }
 
-
     /**
-     * @param WishlistChangeInterface $changeTransfer
-     */
-    public function storeItems(WishlistChangeInterface $changeTransfer)
-    {
-        $this->getDependencyContainer()
-            ->createEntityIntegrator()
-            ->saveItems($changeTransfer);
-    }
-
-
-    /**
-     * @param CustomerInterface $customerTransfer
+     * @param WishlistChangeInterface $wishlistChange
      *
      * @return WishlistInterface
      */
-    public function getWishlist(CustomerInterface $customerTransfer)
+    public function decreaseQuantity(WishlistChangeInterface $wishlistChange)
     {
-        return $this->getDependencyContainer()
-            ->createTransferObjectIntegrator()
-            ->getWishlistTransfer($customerTransfer);
+        return $this->getDependencyContainer()->createIncreaseOperator($wishlistChange)->executeOperation();
     }
 
     /**
-     * @param WishlistItemInterface $wishlistItemTransfer
+     * @param WishlistChangeInterface $wishlistChange
      *
      * @return WishlistInterface
      */
-    public function getWishlistItemQuery(WishlistItemInterface $wishlistItemTransfer)
+    public function increaseQuantity(WishlistChangeInterface $wishlistChange)
     {
-        return $this->getDependencyContainer()
-            ->createTransferObjectIntegrator()
-            ->getWishlistTransfer($wishlistItemTransfer);
-
+        return $this->getDependencyContainer()->createIncreaseOperator($wishlistChange)->executeOperation();
     }
-
-    /**
-     * @param WishlistItemInterface $wishlistItemTransfer
-     *
-     * @return int
-     */
-    public function removeItem(WishlistChangeInterface $changeTransfer)
-    {
-        return  $this->getDependencyContainer()
-            ->createEntityIntegrator()
-            ->removeItems($changeTransfer);
-    }
-
-    /**
-     * @param WishlistInterface $wishlist
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function mergeWishlist(WishlistInterface $wishlist)
-    {
-        return $this->getDependencyContainer()
-            ->createMergeransferObjectIntegrator()
-            ->mergeWishlist($wishlist);
-    }
-
 
 }

@@ -12,10 +12,8 @@ use SprykerEngine\Client\Kernel\Container;
 class WishlistDependencyProvider extends AbstractDependencyProvider
 {
     const SERVICE_ZED = 'service_zed';
-
     const SESSION = 'session';
-
-    const CUSTOMER_CLIENT = 'customer_client';
+    const STORAGE = 'store';
 
     /**
      * @param Container $container
@@ -32,8 +30,8 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
             return $container->getLocator()->session()->client();
         };
 
-        $container[self::CUSTOMER_CLIENT] = function (Container $container) {
-            return $container->getLocator()->customer()->client();
+        $container[self::STORAGE] = function (Container $container) {
+            return $container->getLocator()->storage()->client();
         };
 
         return $container;

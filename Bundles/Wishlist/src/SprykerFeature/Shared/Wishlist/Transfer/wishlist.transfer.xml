@@ -10,6 +10,7 @@
 
     <transfer name="WishlistChange">
         <property name="customer" type="Customer" />
+        <property name="wishlist" type="Wishlist" />
         <property name="items" type="WishlistItem[]" singular="item" />
         <property name="addedItems" type="WishlistItem[]" singular="item" />
         <property name="removedItems" type="WishlistItem[]" singular="item" />
@@ -25,6 +26,9 @@
         <property name="addedAt" type="string"/>
         <property name="product" type="WishlistProduct"/>
         <property name="quantity" type="int"/>
+        <property name="group_key" type="string" />
+        <property name="concrete_sku" type="string" />
+        <property name="abstract_sku" type="string" />
         <property name="options" type="OrderItemOption[]" singular="option" />
     </transfer>
 </transfers>
