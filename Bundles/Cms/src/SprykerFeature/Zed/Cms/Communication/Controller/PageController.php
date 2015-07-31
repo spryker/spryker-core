@@ -21,11 +21,36 @@ use SprykerFeature\Zed\Url\Business\UrlFacade;
 
 class PageController extends AbstractController
 {
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function indexAction()
+    {
+        $table = $this->getDependencyContainer()->createCmsTable();
+
+        return [
+            'pages' => $table->render(),
+        ];
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()->createCmsTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
 
     /**
      * @return array
      */
-    public function indexAction()
+    public function addAction()
     {
         $form = $this->getDependencyContainer()
             ->createCmsPageForm('add');
@@ -37,8 +62,6 @@ class PageController extends AbstractController
 
             $pageTransfer = new PageTransfer();
             $pageTransfer->fromArray($data, true);
-
-//            $this->getUrlFacade()->saveRedirect()
 
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
 
@@ -55,15 +78,5 @@ class PageController extends AbstractController
 
     }
 
-    /**
-     * @return UrlFacade
-     */
-    private function getUrlFacade()
-    {
-        return $this
-            ->getDependencyContainer()
-            ->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE)
-        ;
-    }
 
 }

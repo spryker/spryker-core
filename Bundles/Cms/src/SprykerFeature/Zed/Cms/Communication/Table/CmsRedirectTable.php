@@ -40,6 +40,13 @@ class CmsRedirectTable extends AbstractTable{
             SpyUrlTableMap::COL_URL,
         ]);
 
+        $config->setSearchable([
+            SpyUrlTableMap::COL_ID_URL,
+            SpyUrlTableMap::COL_URL,
+            CmsQueryContainer::TO_URL => 'to_url',
+        ]);
+
+
         return $config;
     }
     /**
@@ -68,7 +75,8 @@ class CmsRedirectTable extends AbstractTable{
 
     private function buildLinks($item)
     {
-        $result = '<a href="/cms/redirect/edit/?id_url='.$item[SpyUrlTableMap::COL_ID_URL].'" class="btn btn-xs btn-white">Edit</a>';
+        $result = '<a href="/cms/redirect/edit/?id_url='.$item[SpyUrlTableMap::COL_ID_URL].'" class="btn btn-xs btn-white">Edit</a>&nbsp;
+                   <a href="/cms/redirect/delete/?id_url='.$item[SpyUrlTableMap::COL_ID_URL].'" class="btn btn-xs btn-white">Delete</a>';
 
         return $result;
     }
