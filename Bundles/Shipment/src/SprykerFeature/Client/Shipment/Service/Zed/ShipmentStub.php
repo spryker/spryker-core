@@ -33,6 +33,6 @@ class ShipmentStub implements ShipmentStubInterface
      */
     public function getAvailableMethods(CartInterface $cartTransfer)
     {
-        return $this->zedStub->call('/shipment/gateway/get-available-methods', $cartTransfer);
+        return $this->zedStub->call('/shipment/gateway/get-available-methods', $cartTransfer, null, true);
     }
 }
