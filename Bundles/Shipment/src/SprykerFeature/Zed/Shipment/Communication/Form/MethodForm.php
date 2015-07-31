@@ -16,6 +16,7 @@ class MethodForm extends AbstractForm
 {
 
     const NAME_FIELD = 'name';
+    const ID_FIELD = 'idShipmentMethod';
     const NAME_GLOSSARY_FIELD = 'glossaryKeyName';
     const DESCRIPTION_GLOSSARY_FIELD = 'glossaryKeyDescription';
     const IS_ACTIVE_FIELD = 'isActive';
@@ -41,18 +42,26 @@ class MethodForm extends AbstractForm
     protected $plugins;
 
     /**
+     * @var int|null
+     */
+    protected $idMethod;
+
+    /**
      * @param SpyShipmentMethodQuery $methodQuery
      * @param SpyShipmentCarrierQuery $carrierQuery
      * @param array $plugins
+     * @param int|null $idMethod
      */
     public function __construct(
         SpyShipmentMethodQuery $methodQuery,
         SpyShipmentCarrierQuery $carrierQuery,
-        array $plugins
+        array $plugins,
+        $idMethod = null
     ) {
         $this->methodQuery = $methodQuery;
         $this->carrierQuery = $carrierQuery;
         $this->plugins = $plugins;
+        $this->idMethod = $idMethod;
     }
 
     /**
@@ -113,18 +122,13 @@ class MethodForm extends AbstractForm
         ;
         $this->addCheckbox('isActive');
 
+        if (!is_null($this->idMethod)) {
+            $this->addHidden(self::ID_FIELD);
+        }
+
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    protected function populateFormFields()
-    {
-        $result = [];
-
-        return $result;
-    }
 
     /**
      * @return array
@@ -141,5 +145,26 @@ class MethodForm extends AbstractForm
         }
 
         return $result;
+    }
+
+    /**
+     * @return array
+     */
+    protected function populateFormFields()
+    {
+        $method = $this->methodQuery->findOneByIdShipmentMethod($this->idMethod);
+
+        return [
+            self::ID_FIELD => $method->getIdShipmentMethod(),
+            self::CARRIER_FIELD => $method->getFkShipmentCarrier(),
+            self::NAME_FIELD => $method->getName(),
+            self::NAME_GLOSSARY_FIELD => $method->getGlossaryKeyName(),
+            self::DESCRIPTION_GLOSSARY_FIELD =>$method->getGlossaryKeyDescription(),
+            self::PRICE_FIELD => $method->getPrice(),
+            self::AVAILABILITY_PLUGIN_FIELD => $method->getAvailabilityPlugin(),
+            self::PRICE_CALCULATION_PLUGIN_FIELD => $method->getPriceCalculationPlugin(),
+            self::DELIVERY_TIME_PLUGIN_FIELD => $method->getDeliveryTimePlugin(),
+            self::IS_ACTIVE_FIELD => $method->getIsActive()
+        ];
     }
 }

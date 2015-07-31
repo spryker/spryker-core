@@ -30,4 +30,11 @@ interface ShipmentQueryContainerInterface
      * @return SpyShipmentMethodQuery
      */
     public function queryActiveMethods();
+
+    /**
+     * @param int $idMethod
+     *
+     * @return SpyShipmentMethodQuery
+     */
+    public function queryMethod($idMethod);
 }

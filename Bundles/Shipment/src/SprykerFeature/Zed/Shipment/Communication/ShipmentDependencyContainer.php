@@ -40,9 +40,12 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
+     * @param int|null $idMethod
+     *
      * @return CarrierForm
+     * @throws \ErrorException
      */
-    public function createMethodForm()
+    public function createMethodForm($idMethod = null)
     {
         $methodQuery = $this->getQueryContainer()->queryMethods();
         $carrierQuery = $this->getQueryContainer()->queryCarriers();
@@ -52,7 +55,8 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
             ->createFormMethodForm(
                 $methodQuery,
                 $carrierQuery,
-                $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
+                $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS),
+                $idMethod
             )
             ;
     }

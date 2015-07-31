@@ -61,4 +61,46 @@ class ShipmentFacade extends AbstractFacade
 
         return $methodModel->getAvailableMethods($cartTransfer);
     }
+
+    /**
+     * @param int $idMethod
+     *
+     * @return bool
+     */
+    public function hasMethod($idMethod)
+    {
+        $methodModel = $this->getDependencyContainer()
+            ->createMethodModel()
+        ;
+
+        return $methodModel->hasMethod($idMethod);
+    }
+
+    /**
+     * @param int $idMethod
+     *
+     * @return bool
+     */
+    public function deleteMethod($idMethod)
+    {
+        $methodModel = $this->getDependencyContainer()
+            ->createMethodModel()
+        ;
+
+        return $methodModel->deleteMethod($idMethod);
+    }
+
+    /**
+     * @param ShipmentMethodTransfer $methodTransfer
+     *
+     * @return ShipmentCarrierTransfer
+     */
+    public function updateMethod(ShipmentMethodTransfer $methodTransfer)
+    {
+        $methodModel = $this->getDependencyContainer()
+            ->createMethodModel()
+        ;
+
+        return $methodModel->updateMethod($methodTransfer);
+    }
 }

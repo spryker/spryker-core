@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Shipment\ShipmentInterface;
+use Generated\Shared\Transfer\CartTransfer;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Shipment\Business\ShipmentFacade;
 use SprykerFeature\Zed\Shipment\Communication\ShipmentDependencyContainer;

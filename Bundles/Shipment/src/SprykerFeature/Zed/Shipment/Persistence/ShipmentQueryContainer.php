@@ -46,4 +46,17 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     {
         return $this->queryMethods()->filterByIsActive(true);
     }
+
+    /**
+     * @param int $idMethod
+     *
+     * @return SpyShipmentMethodQuery
+     */
+    public function queryMethod($idMethod)
+    {
+        $query = $this->queryMethods();
+        $query->filterByIdShipmentMethod($idMethod);
+
+        return $query;
+    }
 }
