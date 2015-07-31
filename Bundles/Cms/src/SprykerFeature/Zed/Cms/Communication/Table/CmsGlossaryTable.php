@@ -38,7 +38,8 @@ class CmsGlossaryTable extends AbstractTable{
         $config->setHeader([
             SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING => 'Id',
             SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => 'Placeholder',
-            SpyCmsGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY => 'Glossary Key',
+            CmsQueryContainer::KEY => 'Glossary Key',
+            CmsQueryContainer::TRANS => 'Glossary Value',
         ]);
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
@@ -57,12 +58,13 @@ class CmsGlossaryTable extends AbstractTable{
         $query = $this->glossaryQuery;
         $queryResults = $this->runQuery($query, $config);
         $results = [];
-        
+
         foreach ($queryResults as $item) {
             $results[] = [
                 SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
                 SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => $item[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER],
-                SpyCmsGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY => $item["".CmsQueryContainer::GLOSSARY_KEY.""],
+                CmsQueryContainer::KEY => $item[CmsQueryContainer::KEY],
+                CmsQueryContainer::TRANS => $item[CmsQueryContainer::TRANS],
             ];
         }
         unset($queryResults);

@@ -12,6 +12,8 @@ use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
@@ -20,7 +22,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const TEMPLATE_PATH = 'template_path';
     const URL = 'url';
     const TO_URL = 'toUrl';
-    const GLOSSARY_KEY = '`key`';
+    const TRANS = 'trans';
+    const KEY = 'keyname';
 
     /**
      * @return SpyCmsTemplateQuery
@@ -171,10 +174,15 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryGlossaryKeyMappingsWithKeyByPageId($idCmsPage)
     {
-        $query = $this->queryGlossaryKeyMappings();
-        $query->filterByFkPage($idCmsPage);
-        $query->leftJoinGlossaryKey(null,Criteria::LEFT_JOIN);
-        $query->withColumn(self::GLOSSARY_KEY);
+        $query = $this->queryGlossaryKeyMappings()
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY)
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANS)
+            ->filterByFkPage($idCmsPage)
+            ->useGlossaryKeyQuery()
+                ->useSpyGlossaryTranslationQuery()
+                ->endUse()
+            ->endUse()
+        ;
 
         return $query;
     }
