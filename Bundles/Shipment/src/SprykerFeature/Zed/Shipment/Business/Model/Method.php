@@ -10,6 +10,8 @@ use Generated\Shared\Shipment\ShipmentInterface;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
+use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
+use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodPriceCalculationPluginInterface;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethod;
 use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
@@ -87,6 +89,20 @@ class Method
             }
 
             if ($isAvailable) {
+                $priceCalculationPlugins = $this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS];
+
+                if (array_key_exists($method->getPriceCalculationPlugin(), $priceCalculationPlugins)) {
+                    /** @var ShipmentMethodPriceCalculationPluginInterface $priceCalculationPlugin */
+                    $priceCalculationPlugin = $priceCalculationPlugins[$method->getPriceCalculationPlugin()];
+                    $methodTransfer->setPrice($priceCalculationPlugin->getPrice($cartTransfer));
+                }
+
+                $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
+                if (array_key_exists($method->getDeliveryTimePlugin(), $deliveryTimePlugins)) {
+                    /** @var ShipmentMethodDeliveryTimePluginInterface $deliveryTimePlugin */
+                    $deliveryTimePlugin = $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
+                    $methodTransfer->setTime($deliveryTimePlugin->getTime($cartTransfer));
+                }
                 $shipmentTransfer->addMethod($methodTransfer);
             }
 

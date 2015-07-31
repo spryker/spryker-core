@@ -152,19 +152,23 @@ class MethodForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        $method = $this->methodQuery->findOneByIdShipmentMethod($this->idMethod);
+        if (!is_null($this->idMethod)) {
+            $method = $this->methodQuery->findOneByIdShipmentMethod($this->idMethod);
 
-        return [
-            self::ID_FIELD => $method->getIdShipmentMethod(),
-            self::CARRIER_FIELD => $method->getFkShipmentCarrier(),
-            self::NAME_FIELD => $method->getName(),
-            self::NAME_GLOSSARY_FIELD => $method->getGlossaryKeyName(),
-            self::DESCRIPTION_GLOSSARY_FIELD =>$method->getGlossaryKeyDescription(),
-            self::PRICE_FIELD => $method->getPrice(),
-            self::AVAILABILITY_PLUGIN_FIELD => $method->getAvailabilityPlugin(),
-            self::PRICE_CALCULATION_PLUGIN_FIELD => $method->getPriceCalculationPlugin(),
-            self::DELIVERY_TIME_PLUGIN_FIELD => $method->getDeliveryTimePlugin(),
-            self::IS_ACTIVE_FIELD => $method->getIsActive()
-        ];
+            return [
+                self::ID_FIELD => $method->getIdShipmentMethod(),
+                self::CARRIER_FIELD => $method->getFkShipmentCarrier(),
+                self::NAME_FIELD => $method->getName(),
+                self::NAME_GLOSSARY_FIELD => $method->getGlossaryKeyName(),
+                self::DESCRIPTION_GLOSSARY_FIELD => $method->getGlossaryKeyDescription(),
+                self::PRICE_FIELD => $method->getPrice(),
+                self::AVAILABILITY_PLUGIN_FIELD => $method->getAvailabilityPlugin(),
+                self::PRICE_CALCULATION_PLUGIN_FIELD => $method->getPriceCalculationPlugin(),
+                self::DELIVERY_TIME_PLUGIN_FIELD => $method->getDeliveryTimePlugin(),
+                self::IS_ACTIVE_FIELD => $method->getIsActive()
+            ];
+        }
+
+        return [];
     }
 }
