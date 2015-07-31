@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Calculation\ExpenseInterface;
 use Generated\Shared\Calculation\TotalsInterface;
-use Generated\Shared\Calculation\OrderItemOptionInterface;
+use Generated\Shared\Calculation\ProductOptionInterface;
 use Generated\Shared\Sales\OrderItemsInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
@@ -48,7 +48,7 @@ class SubtotalTotalsCalculator implements
         foreach ($calculableItems as $item) {
             for ($i = 0; $i < $item->getQuantity(); $i++) {
                 $subtotal += $item->getGrossPrice();
-                $subtotal += $this->sumOptions($item->getOptions());
+                $subtotal += $this->sumOptions($item->getProductOptions());
                 $subtotal += $this->sumExpenses($item->getExpenses());
             }
         }
@@ -57,7 +57,7 @@ class SubtotalTotalsCalculator implements
     }
 
     /**
-     * @param \ArrayObject|OrderItemOptionInterface[] $options
+     * @param \ArrayObject|ProductOptionInterface[] $options
      *
      * @return int
      */

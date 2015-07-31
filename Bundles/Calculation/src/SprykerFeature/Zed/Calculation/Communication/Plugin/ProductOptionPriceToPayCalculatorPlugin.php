@@ -14,7 +14,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method CalculationFacade getFacade()
  */
-class OptionPriceToPayCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
+class ProductOptionPriceToPayCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
 
     /**

@@ -12,7 +12,7 @@ use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpensePriceToPayCa
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ItemPriceToPayCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\OptionPriceToPayCalculator;
+use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
@@ -79,11 +79,11 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return OptionPriceToPayCalculator
+     * @return ProductOptionPriceToPayCalculator
      */
     public function getOptionPriceToPayCalculator()
     {
-        return $this->getFactory()->createModelCalculatorOptionPriceToPayCalculator();
+        return $this->getFactory()->createModelCalculatorProductOptionPriceToPayCalculator();
     }
 
     /**

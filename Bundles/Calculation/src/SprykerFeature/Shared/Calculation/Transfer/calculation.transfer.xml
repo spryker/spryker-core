@@ -94,6 +94,7 @@
         <property name="priceToPay" type="int" />
         <property name="taxSet" type="TaxSet" />
         <property name="expenses" type="Expense[]" singular="expense" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
     </transfer>
 
     <transfer name="CartItem">
@@ -101,11 +102,14 @@
         <property name="priceToPay" type="int" />
         <property name="taxSet" type="TaxSet" />
         <property name="expenses" type="Expense[]" singular="expense" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
     </transfer>
 
-    <transfer name="OrderItemOption">
-        <property name="grossPrice" type="int" />
+    <transfer name="ProductOption">
+        <property name="taxSet" type="TaxSet" />
         <property name="discounts" type="Discount[]" singular="discount" />
+        <property name="grossPrice" type="int" />
+        <property name="priceToPay" type="int" />
     </transfer>
 
     <transfer name="CalculableContainer">

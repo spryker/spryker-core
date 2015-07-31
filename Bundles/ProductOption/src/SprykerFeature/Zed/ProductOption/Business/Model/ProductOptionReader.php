@@ -78,9 +78,9 @@ class ProductOptionReader implements ProductOptionReaderInterface
 
         $price = $result[self::COL_PRICE];
         if (null === $price) {
-            $productOptionTransfer->setPrice(0);
+            $productOptionTransfer->setGrossPrice(0);
         } else {
-            $productOptionTransfer->setPrice((int) $price);
+            $productOptionTransfer->setGrossPrice((int) $price);
         }
 
         $taxSetEntity = $this->queryContainer->queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage)
