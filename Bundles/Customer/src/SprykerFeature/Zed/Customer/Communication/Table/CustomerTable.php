@@ -118,14 +118,14 @@ class CustomerTable extends AbstractTable
         $idCustomer = !empty($details[SpyCustomerTableMap::COL_ID_CUSTOMER]) ? $details[SpyCustomerTableMap::COL_ID_CUSTOMER] : false;
         if (false !== $idCustomer) {
             $links = [
-                'View' => '/customer/view/?id_customer=%d',
-                'Edit' => '/customer/edit/?id_customer=%d',
-                'Manage addresses' => '/customer/address/?id_customer=%d',
+                'View' => '/customer/view/?id_customer=',
+                'Edit' => '/customer/edit/?id_customer=',
+                'Manage addresses' => '/customer/address/?id_customer=',
             ];
 
             $result = [];
-            foreach ($links as $key => $value) {
-                $result[] = '<a href="' . $value . $idCustomer . '" class="btn btn-xs btn-white">' . $key . '</a>';
+            foreach ($links as $label => $url) {
+                $result[] = '<a href="' . $url . $idCustomer . '" class="btn btn-xs btn-white">' . $label . '</a>';
             }
 
             $result = implode('&nbsp;&nbsp;&nbsp;', $result);
