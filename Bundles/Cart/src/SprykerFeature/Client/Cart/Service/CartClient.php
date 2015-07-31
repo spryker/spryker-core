@@ -111,9 +111,9 @@ class CartClient extends AbstractClient implements CartClientInterface
 
         foreach ($cartTransfer->getItems() as $cartItemTransfer) {
             if ($cartItemTransfer->getSku() === $identifier) {
-                $existingCopy = clone $cartItemTransfer;
-                $existingCopy->setGroupKey(null);
-                return $existingCopy;
+                $existingCartItemTransfer = clone $cartItemTransfer;
+                $existingCartItemTransfer->setGroupKey(null);
+                return $existingCartItemTransfer;
             }
         }
 
