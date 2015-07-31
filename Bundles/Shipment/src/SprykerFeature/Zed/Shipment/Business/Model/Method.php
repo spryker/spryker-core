@@ -82,7 +82,7 @@ class Method
 
             if (array_key_exists($method->getAvailabilityPlugin(), $availabilityPlugins)) {
                 /** @var ShipmentMethodAvailabilityPluginInterface $availabilityPlugin */
-                $availabilityPlugin = $method->getAvailabilityPlugin();
+                $availabilityPlugin = $availabilityPlugins[$method->getAvailabilityPlugin()];
                 $isAvailable = $availabilityPlugin->isAvailable($cartTransfer);
             }
 
