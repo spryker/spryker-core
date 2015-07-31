@@ -79,7 +79,7 @@ class PoolForm extends AbstractForm
                 ],
             ])
             ->addAutosuggest(self::VOUCHER_POOL_CATEGORY, [
-                'label' => 'Pool category',
+                'label' => 'Pool Category',
                 'url' => '/discount/pool/category-suggest',
                 'constraints' => [
                     new NotBlank(),
@@ -94,7 +94,7 @@ class PoolForm extends AbstractForm
                 ],
             ])
             ->add(self::AMOUNT_TYPE, 'choice', [
-                'label' => 'Value type',
+                'label' => 'Value Type',
                 'empty_value' => false,
                 'choices' => [
                     SpyDiscountTableMap::COL_TYPE_FIXED => SpyDiscountTableMap::COL_TYPE_FIXED,
@@ -102,16 +102,16 @@ class PoolForm extends AbstractForm
                 ]
             ])
             ->addDate(self::VALID_FROM, [
-                'label' => 'Valid from',
+                'label' => 'Valid From',
             ])
             ->addDate(self::VALID_TO, [
-                'label' => 'Valid until'
+                'label' => 'Valid Until'
             ])
             ->addCheckbox(self::IS_INFINITELY_USABLE, [
                 'label' => 'Unlimited',
             ])
             ->addCheckbox(self::IS_PRIVILEGED, [
-                'label' => 'Is privileged',
+                'label' => 'Is Privileged',
             ])
             ->addCheckbox(self::IS_ACTIVE, [
                 'label' => 'Active',
