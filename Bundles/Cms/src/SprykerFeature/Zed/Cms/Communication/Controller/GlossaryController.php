@@ -10,37 +10,41 @@ namespace SprykerFeature\Zed\Cms\Communication\Controller;
 use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
-use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
-use SprykerFeature\Zed\Url\Business\UrlFacade;
+use Symfony\Component\HttpFoundation\Request;
+
 
 /**
  * @method CmsDependencyContainer getDependencyContainer()
  * @method CmsFacade getFacade()
  */
 
-class PageController extends AbstractController
+class GlossaryController extends AbstractController
 {
     /**
      * @param Request $request
      *
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $table = $this->getDependencyContainer()->createCmsTable();
+        $idPage = $request->get('id_page');
+
+        $table = $this->getDependencyContainer()->createCmsGlossaryTable($idPage);
 
         return [
-            'pages' => $table->render(),
+            'keyMaps' => $table->render(),
         ];
     }
 
     /**
      * @return JsonResponse
      */
-    public function tableAction()
+    public function tableAction(Request $request)
     {
-        $table = $this->getDependencyContainer()->createCmsTable();
+        $idPage = $request->get('id_page');
+
+        $table = $this->getDependencyContainer()->createCmsGlossaryTable($idPage);
 
         return $this->jsonResponse(
             $table->fetchData()

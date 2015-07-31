@@ -20,6 +20,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const TEMPLATE_PATH = 'template_path';
     const URL = 'url';
     const TO_URL = 'toUrl';
+    const GLOSSARY_KEY = '`key`';
 
     /**
      * @return SpyCmsTemplateQuery
@@ -159,6 +160,21 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         $query = $this->queryGlossaryKeyMappings();
         $query->filterByFkPage($idCmsPage);
+
+        return $query;
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingsWithKeyByPageId($idCmsPage)
+    {
+        $query = $this->queryGlossaryKeyMappings();
+        $query->filterByFkPage($idCmsPage);
+        $query->leftJoinGlossaryKey(null,Criteria::LEFT_JOIN);
+        $query->withColumn(self::GLOSSARY_KEY);
 
         return $query;
     }

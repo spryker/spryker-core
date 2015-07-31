@@ -39,7 +39,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @return OrdersTable
+     * @return CmsTable
      */
     public function createCmsTable()
     {
@@ -49,13 +49,24 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @return OrdersTable
+     * @return CmsRedirectTable
      */
     public function createCmsRedirectTable()
     {
         $urlQuery = $this->getQueryContainer()->queryUrlsWithRedirect();
 
         return $this->getFactory()->createTableCmsRedirectTable($urlQuery);
+    }
+
+    /**
+     * @param int $id
+     * @return CmsGlossaryTable
+     */
+    public function createCmsGlossaryTable($idPage)
+    {
+        $glossaryQuery = $this->getQueryContainer()->queryGlossaryKeyMappingsWithKeyByPageId($idPage);
+
+        return $this->getFactory()->createTableCmsGlossaryTable($glossaryQuery,$idPage);
     }
 
     /**
