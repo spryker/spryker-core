@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Discount\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
+use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,7 +89,9 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
             ->queryDiscount()
         ;
 
-        return $this->getFactory()->createFormPoolForm($poolQuery, $discountQuery, $idPool);
+        $store = $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
+
+        return $this->getFactory()->createFormPoolForm($poolQuery, $discountQuery, $store, $idPool);
     }
 
     /**

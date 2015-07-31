@@ -5,20 +5,20 @@
         <title>Discount</title>
         <bundle>discount</bundle>
         <pages>
-            <poll>
+            <pool>
                 <label>Pool</label>
                 <title>Pool</title>
                 <bundle>discount</bundle>
                 <controller>pool</controller>
                 <action>index</action>
-            </poll>
-            <poll-create>
+            </pool>
+            <pool-create>
                 <label>Create Pool</label>
                 <title>Create Pool</title>
                 <bundle>discount</bundle>
                 <controller>pool</controller>
                 <action>create</action>
-            </poll-create>
+            </pool-create>
         </pages>
     </discount>
 </config>

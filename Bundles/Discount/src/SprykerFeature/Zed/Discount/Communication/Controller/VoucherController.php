@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Discount\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
@@ -19,7 +20,7 @@ class VoucherController extends AbstractController
     const NR_VOUCHERS = 1;
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function createAction()
     {
@@ -28,7 +29,6 @@ class VoucherController extends AbstractController
 
         if ($form->isValid()) {
             $formData = $form->getData();
-
             $this->getFacade()->createVoucherCodes(self::NR_VOUCHERS, $formData[VoucherForm::FIELD_POOL], false);
 
             return $this->redirectResponse('/discount/voucher');

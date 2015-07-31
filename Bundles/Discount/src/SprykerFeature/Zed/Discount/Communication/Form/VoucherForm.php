@@ -35,7 +35,7 @@ class VoucherForm extends AbstractForm
             ->addChoice(self::FIELD_POOL, [
                 'label' => 'Pool',
                 'placeholder' => 'Select one',
-                'choices' => $this->getPolls(),
+                'choices' => $this->getPools(),
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -46,11 +46,10 @@ class VoucherForm extends AbstractForm
     /**
      * @return array
      */
-    public function getPolls()
+    private function getPools()
     {
-        $poolResult = $this->poolQuery->find()->toArray();
-
         $pools = [];
+        $poolResult = $this->poolQuery->find()->toArray();
 
         if (!empty($poolResult)) {
             foreach ($poolResult as $item) {
