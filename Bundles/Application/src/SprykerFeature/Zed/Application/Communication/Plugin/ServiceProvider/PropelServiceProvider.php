@@ -37,7 +37,7 @@ class PropelServiceProvider implements ServiceProviderInterface
 
         /** @var StandardServiceContainer $serviceContainer */
         $serviceContainer = Propel::getServiceContainer();
-        $serviceContainer->setAdapterClass('zed', 'pgsql');
+        $serviceContainer->setAdapterClass('zed', Config::get(SystemConfig::ZED_DB_ENGINE));
         $serviceContainer->setConnectionManager('zed', $manager);
         $serviceContainer->setDefaultDatasource('zed');
 

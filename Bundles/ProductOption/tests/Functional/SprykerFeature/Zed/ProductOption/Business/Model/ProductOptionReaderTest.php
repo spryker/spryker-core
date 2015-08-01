@@ -140,7 +140,7 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->assertCount(4, $result);
         $this->assertEquals('Large', $result[0]['label']);
         $this->assertEquals('199', $result[0]['price']);
-        $this->assertEquals('Medium', $result[2]['label']);
+        $this->assertEquals('Medium', $result[1]['label']);
         $this->assertNull($result[1]['price']);
     }
 

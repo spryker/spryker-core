@@ -32,13 +32,12 @@ class PropelMigrationCleaner implements PropelMigrationCleanerInterface
 
         $baseFolders = $this->finder->getBaseFolders();
 
-        die(dump($baseFolders));
         if (!empty($baseFolders)) {
             $result = true;
 
             $fileSystem = new Filesystem();
             foreach($baseFolders as $folder) {
-                // $fileSystem->remove($folder);
+                $fileSystem->remove($folder);
             }
         }
 

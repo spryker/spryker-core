@@ -395,6 +395,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->useSpyProductOptionTypeUsageQuery()
                 ->filterByIdProductOptionTypeUsage($idTypeUsage)
             ->endUse()
+            ->orderByIdProductOptionValueUsage()
             ->select([self::ID_VALUE_USAGE, self::SEQUENCE, self::LABEL, self::PRICE])
             ->find()
         ;

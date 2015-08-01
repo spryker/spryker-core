@@ -39,5 +39,7 @@ class PropelMigrationCleanerConsole extends Console
 
         $facade = $this->getFacade();
         $facade->cleanPropelMigration();
+
+        $this->info('Cleanup finished.');
     }
 }
