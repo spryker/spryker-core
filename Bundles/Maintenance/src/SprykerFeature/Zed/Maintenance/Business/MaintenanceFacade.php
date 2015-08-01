@@ -63,7 +63,7 @@ class MaintenanceFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->createBundleCodeStyleFixer()->fixBundleCodeStyle($bundle);
     /**
-     * @return void
+     * @return bool
      */
     public function cleanPropelMigration()
     {
