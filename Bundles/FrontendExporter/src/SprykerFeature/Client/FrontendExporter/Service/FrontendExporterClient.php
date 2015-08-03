@@ -8,7 +8,6 @@ namespace SprykerFeature\Client\FrontendExporter\Service;
 
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerFeature\Client\FrontendExporter\Service\Matcher\UrlMatcherInterface;
-use SprykerFeature\Yves\FrontendExporter\Business\Model\UrlResource;
 
 /**
  * @todo Rename all YvesExport Bundles to PageExport or just Export.
@@ -21,8 +20,6 @@ class FrontendExporterClient extends AbstractClient implements UrlMatcherInterfa
     /**
      * @param $url
      * @param $localeName
-     *
-     * @return UrlResource
      */
     public function matchUrl($url, $localeName)
     {
