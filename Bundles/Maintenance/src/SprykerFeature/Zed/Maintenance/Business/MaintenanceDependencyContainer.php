@@ -145,6 +145,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
         );
     }
 
+
     /**
      * @return PropelMigrationCleanerInterface
      */
@@ -159,5 +160,4 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelPropelBaseFolderFinder($this->getConfig()->getPathToSpryker());
     }
-
 }
