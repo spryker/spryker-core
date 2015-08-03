@@ -546,13 +546,4 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
         return $statement->fetch(\PDO::FETCH_COLUMN);
     }
-
-    /**
-     * @return ConnectionInterface
-     */
-    private function getConnection()
-    {
-        return Propel::getConnection();
-    }
-
 }
