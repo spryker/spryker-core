@@ -8,6 +8,9 @@
         <property name="sku" type="string" />
         <property name="productImageUrl" type="string" />
         <property name="abstractProductSku" type="string" />
+        <property name="idAbstractProduct" type="int" />
+        <property name="taxSet" type="TaxSet" />
+        <property name="name" type="string" />
         <property name="attributes" type="array" singular="attribute" />
         <property name="localizedAttributes" type="LocalizedAttributes[]" />
         <property name="isActive" type="bool" />
@@ -25,6 +28,18 @@
         <property name="locale" type="Locale" />
         <property name="name" type="string" />
         <property name="attributes" type="array" singular="attribute" />
+    </transfer>
+
+    <transfer name="TaxSet">
+        <property name="idTaxSet" type="int" />
+        <property name="name" type="string" />
+        <property name="taxRates" type="TaxRate[]" singular="taxRate" />
+    </transfer>
+
+    <transfer name="TaxRate">
+        <property name="idTaxRate" type="int" />
+        <property name="name" type="string" />
+        <property name="rate" type="int" />
     </transfer>
 
 </transfers>

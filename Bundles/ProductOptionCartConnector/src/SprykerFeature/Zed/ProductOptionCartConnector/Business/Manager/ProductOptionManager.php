@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\ProductOptionCartConnector\Business\Manager;
 
 use Generated\Shared\Cart\ChangeInterface;
-use Generated\Shared\ProductOptionCartConnector\CartItemInterface;
+use Generated\Shared\ProductOptionCartConnector\ItemInterface;
 use SprykerFeature\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface;
 
 class ProductOptionManager implements ProductOptionManagerInterface
@@ -27,19 +27,22 @@ class ProductOptionManager implements ProductOptionManagerInterface
 
     /**
      * @param ChangeInterface $change
+     *
+     * @return ChangeInterface
      */
     public function expandProductOptions(ChangeInterface $change)
     {
         foreach ($change->getItems() as $cartItem) {
             $this->expandProductOptionTransfers($cartItem);
-
         }
+
+        return $change;
     }
 
     /**
-     * @param CartItemInterface $cartItem
+     * @param ItemInterface $cartItem
      */
-    public function expandProductOptionTransfers(CartItemInterface $cartItem)
+    public function expandProductOptionTransfers(ItemInterface $cartItem)
     {
         foreach ($cartItem->getProductOptions() as &$productOption) {
 
@@ -51,7 +54,6 @@ class ProductOptionManager implements ProductOptionManagerInterface
                 $productOption->getIdOptionValueUsage(),
                 $productOption->getLocaleCode()
             );
-
         }
     }
 }

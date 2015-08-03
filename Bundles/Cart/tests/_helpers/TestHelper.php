@@ -26,7 +26,7 @@ class TestHelper extends Module
     public function _before(TestCase $e)
     {
         parent::_before($e);
-//        Propel::getWriteConnection('zed')->beginTransaction();
+        Propel::getWriteConnection('zed')->beginTransaction();
     }
 
     /**
@@ -35,7 +35,7 @@ class TestHelper extends Module
     public function _after(TestCase $e)
     {
         parent::_after($e);
-//        Propel::getWriteConnection('zed')->rollBack();
+        Propel::getWriteConnection('zed')->rollBack();
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_destroy();
         }

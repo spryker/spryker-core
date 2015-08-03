@@ -6,13 +6,14 @@
 
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelper;
@@ -44,7 +45,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     public function testTaxCalculatedForOrderWithOrderItemAndSingleTaxSet()
     {
         $orderTransfer = $this->getOrderTransfer();
-        $orderItemTransfer = $this->getOrderItemTransfer();
+        $itemTransfer = $this->getItemTransfer();
 
         $taxRate10 = (new TaxRateTransfer())
             ->setRate(self::TAX_PERCENTAGE_10)
@@ -58,11 +59,11 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             ->addTaxRate($taxRate10)
             ->addTaxRate($taxRate20);
 
-        $orderItemTransfer->setTaxSet($taxSetTransfer)
+        $itemTransfer->setTaxSet($taxSetTransfer)
            ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
            ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
 
-        $orderTransfer->getCalculableObject()->addItem($orderItemTransfer);
+        $orderTransfer->getCalculableObject()->addItem($itemTransfer);
 
         $totalsTransfer = $this->getTotalsTransfer();
         $calculator = $this->getCalculator();
@@ -100,23 +101,23 @@ class TaxTest extends \PHPUnit_Framework_TestCase
 
         $orderTransfer = $this->getOrderTransfer();
 
-        $orderItemTransfer1 = $this->getOrderItemTransfer();
-        $orderItemTransfer1->setTaxSet($taxSetTransfer1)
+        $itemTransfer1 = $this->getItemTransfer();
+        $itemTransfer1->setTaxSet($taxSetTransfer1)
             ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
             ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $orderTransfer->getCalculableObject()->addItem($orderItemTransfer1);
+        $orderTransfer->getCalculableObject()->addItem($itemTransfer1);
 
-        $orderItemTransfer2 = $this->getOrderItemTransfer();
-        $orderItemTransfer2->setTaxSet($taxSetTransfer2)
+        $itemTransfer2 = $this->getItemTransfer();
+        $itemTransfer2->setTaxSet($taxSetTransfer2)
             ->setGrossPrice(self::ITEM_GROSS_PRICE_450)
             ->setPriceToPay(self::ITEM_GROSS_PRICE_450);
-        $orderTransfer->getCalculableObject()->addItem($orderItemTransfer2);
+        $orderTransfer->getCalculableObject()->addItem($itemTransfer2);
 
-        $orderItemTransfer3 = $this->getOrderItemTransfer();
-        $orderItemTransfer3->setTaxSet($taxSetTransfer3)
+        $itemTransfer3 = $this->getItemTransfer();
+        $itemTransfer3->setTaxSet($taxSetTransfer3)
             ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
             ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
-        $orderTransfer->getCalculableObject()->addItem($orderItemTransfer3);
+        $orderTransfer->getCalculableObject()->addItem($itemTransfer3);
 
         $totalsTransfer = $this->getTotalsTransfer();
         $calculator = $this->getCalculator();
@@ -135,7 +136,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $caslculableContainer = $this->getOrderTransfer();
         /** @var OrderTransfer $orderTransfer */
         $orderTransfer = $caslculableContainer->getCalculableObject();
-        $orderItemTransfer = $this->getOrderItemTransfer();
+        $itemTransfer = $this->getItemTransfer();
         $orderExpenseTransfer = $this->getExpenseTransfer();
         $orderItemExpenseTransfer = $this->getExpenseTransfer();
 
@@ -146,7 +147,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             ->setIdTaxSet(self::ID_TAX_SET_1)
             ->addTaxRate($taxRate10);
 
-        $orderItemTransfer->setTaxSet($taxSetTransfer)
+        $itemTransfer->setTaxSet($taxSetTransfer)
             ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
             ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
 
@@ -158,8 +159,8 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
             ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
 
-        $orderItemTransfer->addExpense($orderItemExpenseTransfer);
-        $orderTransfer->addItem($orderItemTransfer);
+        $itemTransfer->addExpense($orderItemExpenseTransfer);
+        $orderTransfer->addItem($itemTransfer);
         $orderTransfer->addExpense($orderExpenseTransfer);
 
         $totalsTransfer = $this->getTotalsTransfer();
@@ -168,8 +169,8 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $calculator->recalculateTotals($totalsTransfer, $caslculableContainer, $orderTransfer->getItems());
 
         $orderExpenseeTaxSet = $orderTransfer->getExpenses()[0]->getTaxSet();
-        $orderItemTaxSet = $orderItemTransfer->getTaxSet();
-        $orderItemExpenseTaxSet = $orderItemTransfer->getExpenses()[0]->getTaxSet();
+        $orderItemTaxSet = $itemTransfer->getTaxSet();
+        $orderItemExpenseTaxSet = $itemTransfer->getExpenses()[0]->getTaxSet();
 
         $this->assertEquals(231, $orderExpenseeTaxSet->getAmount());
 
@@ -179,6 +180,48 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $groupedTaxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
         $this->assertCount(1, $groupedTaxSets);
         $this->assertEquals(693, $groupedTaxSets[0]->getAmount());
+    }
+
+    public function testCalculateTaxOnProductOption()
+    {
+        $caslculableContainer = $this->getOrderTransfer();
+        /** @var OrderTransfer $orderTransfer */
+        $orderTransfer = $caslculableContainer->getCalculableObject();
+        $itemTransfer = $this->getItemTransfer();
+        $optionTransfer = $this->getProductOptionTransfer();
+
+        $taxRate10 = (new TaxRateTransfer())
+            ->setRate(self::TAX_PERCENTAGE_30)
+            ->setIdTaxRate(self::ID_TAX_SET_1);
+        $taxSetTransfer = (new TaxSetTransfer)
+            ->setIdTaxSet(self::ID_TAX_SET_1)
+            ->addTaxRate($taxRate10);
+
+        $itemTransfer->setTaxSet($taxSetTransfer)
+            ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
+            ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
+
+        $optionTransfer->setTaxSet($taxSetTransfer)
+            ->setGrossPrice(self::ITEM_GROSS_PRICE_1000)
+            ->setPriceToPay(self::ITEM_GROSS_PRICE_1000);
+
+        $itemTransfer->addProductOption($optionTransfer);
+        $orderTransfer->addItem($itemTransfer);
+
+        $totalsTransfer = $this->getTotalsTransfer();
+        $calculator = $this->getCalculator();
+
+        $calculator->recalculateTotals($totalsTransfer, $caslculableContainer, $orderTransfer->getItems());
+
+        $orderItemTaxSet = $itemTransfer->getTaxSet();
+        $orderItemOptionTaxSet = $itemTransfer->getProductOptions()[0]->getTaxSet();
+
+        $this->assertEquals(231, $orderItemTaxSet->getAmount());
+        $this->assertEquals(231, $orderItemOptionTaxSet->getAmount());
+
+        $groupedTaxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
+        $this->assertCount(1, $groupedTaxSets);
+        $this->assertEquals(462, $groupedTaxSets[0]->getAmount());
     }
 
     /**
@@ -200,11 +243,11 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderItemTransfer
+     * @return ItemTransfer
      */
-    private function getOrderItemTransfer()
+    private function getItemTransfer()
     {
-        $item = new OrderItemTransfer();
+        $item = new ItemTransfer();
 
         return $item;
     }
@@ -217,6 +260,16 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $expense = new ExpenseTransfer();
 
         return $expense;
+    }
+
+    /**
+     * @return ProductOptionTransfer
+     */
+    private function getProductOptionTransfer()
+    {
+        $option = new ProductOptionTransfer();
+
+        return $option;
     }
 
     /**

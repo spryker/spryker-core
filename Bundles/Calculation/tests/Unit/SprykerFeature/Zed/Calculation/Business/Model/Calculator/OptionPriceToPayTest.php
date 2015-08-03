@@ -6,14 +6,15 @@
 
 namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
-use Generated\Shared\Transfer\OrderItemOptionTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\OptionPriceToPayCalculator;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -38,19 +39,21 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
 
         $option = $this->getItemOption();
         $option->setGrossPrice(self::ITEM_OPTION_1000);
-        $item->addOption($option);
+        $item->addProductOption($option);
 
-        $calculator = new OptionPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ProductOptionPriceToPayCalculator(Locator::getInstance());
         $calculator->recalculate($order);
 
-        foreach ($order->getCalculableObject()->getItems() as $item) {
-            foreach ($item->getOptions() as $option) {
+        $items = $this->getItems($order);
+        foreach ($items as $item) {
+            foreach ($item->getProductOptions() as $option) {
                 $this->assertEquals(self::ITEM_OPTION_1000, $option->getPriceToPay());
             }
         }
     }
 
-    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountForAnOrderWithOneItemWithCouponDiscountAmount()
+    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountForAnOrderWithOneItemWithCouponDiscountAmount(
+    )
     {
         $order = $this->getOrderWithFixtureData();
 
@@ -60,17 +63,18 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
 
         $option = $this->getItemOption();
         $option->setGrossPrice(self::ITEM_OPTION_1000);
-        $item->addOption($option);
+        $item->addProductOption($option);
 
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $option->addDiscount($discount);
 
-        $calculator = new OptionPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ProductOptionPriceToPayCalculator(Locator::getInstance());
         $calculator->recalculate($order);
 
-        foreach ($order->getCalculableObject()->getItems() as $item) {
-            foreach ($item->getOptions() as $option) {
+        $items = $this->getItems($order);
+        foreach ($items as $item) {
+            foreach ($item->getProductOptions() as $option) {
                 $this->assertEquals(
                     self::ITEM_OPTION_1000 - self::ITEM_COUPON_DISCOUNT_AMOUNT,
                     $option->getPriceToPay()
@@ -79,7 +83,8 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithOneItemAndBothDiscounts()
+    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithOneItemAndBothDiscounts(
+    )
     {
         $order = $this->getOrderWithFixtureData();
 
@@ -89,7 +94,7 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
 
         $option = $this->getItemOption();
         $option->setGrossPrice(self::ITEM_OPTION_1000);
-        $item->addOption($option);
+        $item->addProductOption($option);
 
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
@@ -99,11 +104,12 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $option->addDiscount($discount);
 
-        $calculator = new OptionPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ProductOptionPriceToPayCalculator(Locator::getInstance());
         $calculator->recalculate($order);
 
-        foreach ($order->getCalculableObject()->getItems() as $item) {
-            foreach ($item->getOptions() as $option) {
+        $items = $this->getItems($order);
+        foreach ($items as $item) {
+            foreach ($item->getProductOptions() as $option) {
                 $this->assertEquals(
                     self::ITEM_OPTION_1000 - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_SALESRULE_DISCOUNT_AMOUNT,
                     $option->getPriceToPay()
@@ -112,7 +118,8 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithTwoItemsAndBothDiscounts()
+    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithTwoItemsAndBothDiscounts(
+    )
     {
         $order = $this->getOrderWithFixtureData();
 
@@ -121,7 +128,7 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
 
         $option = $this->getItemOption();
         $option->setGrossPrice(self::ITEM_OPTION_1000);
-        $item->addOption($option);
+        $item->addProductOption($option);
 
         $discount = $this->getPriceDiscount();
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
@@ -134,11 +141,12 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         $order->getCalculableObject()->addItem($item);
         $order->getCalculableObject()->addItem(clone $item);
 
-        $calculator = new OptionPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ProductOptionPriceToPayCalculator(Locator::getInstance());
         $calculator->recalculate($order);
 
-        foreach ($order->getCalculableObject()->getItems() as $item) {
-            foreach ($item->getOptions() as $option) {
+        $items = $this->getItems($order);
+        foreach ($items as $item) {
+            foreach ($item->getProductOptions() as $option) {
                 $this->assertEquals(
                     self::ITEM_OPTION_1000 - self::ITEM_COUPON_DISCOUNT_AMOUNT - self::ITEM_SALESRULE_DISCOUNT_AMOUNT,
                     $option->getPriceToPay()
@@ -148,11 +156,11 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderItemOptionTransfer
+     * @return ProductOptionTransfer
      */
     protected function getItemOption()
     {
-        return new OrderItemOptionTransfer();
+        return new ProductOptionTransfer();
     }
 
     /**
@@ -160,7 +168,9 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPriceDiscount()
     {
-        return new DiscountTransfer();
+        $discountTransfer = new DiscountTransfer();
+
+        return $discountTransfer;
     }
 
     /**
@@ -174,11 +184,11 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderItemTransfer
+     * @return ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new OrderItemTransfer();
+        $item = new ItemTransfer();
 
         return $item;
     }
@@ -189,6 +199,16 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     private function getLocator()
     {
         return Locator::getInstance();
+    }
+
+    /**
+     * @param CalculableInterface $order
+     *
+     * @return ItemInterface[]
+     */
+    protected function getItems(CalculableInterface $calculableContainer)
+    {
+        return $calculableContainer->getCalculableObject()->getItems();
     }
 
 }

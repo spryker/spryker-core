@@ -9,7 +9,7 @@ namespace Generated\Shared\Transfer;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 use Generated\Shared\Test\CatFaceInterface as TestCatFaceInterface;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -24,7 +24,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     protected $name;
 
     /**
-     * @var OrderItemTransfer $item
+     * @var ItemTransfer $item
      */
     protected $item;
 
@@ -60,11 +60,11 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
-     * @param OrderItemTransfer $item
+     * @param ItemTransfer $item
      *
      * @return $this
      */
-    public function setItem(OrderItemTransfer $item)
+    public function setItem(ItemTransfer $item)
     {
         $this->item = $item;
         $this->addModifiedProperty('item');
@@ -73,7 +73,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
-     * @return OrderItemTransfer
+     * @return ItemTransfer
      */
     public function getItem()
     {
@@ -94,7 +94,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
-     * @return OrderItemTransfer[]
+     * @return ItemTransfer[]
      */
     public function getItems()
     {
@@ -102,11 +102,11 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
-     * @param OrderItemTransfer $item
+     * @param ItemTransfer $item
      *
      * @return $this
      */
-    public function addItem(OrderItemTransfer $item)
+    public function addItem(ItemTransfer $item)
     {
         $this->items[] = $item;
         $this->addModifiedProperty('items');

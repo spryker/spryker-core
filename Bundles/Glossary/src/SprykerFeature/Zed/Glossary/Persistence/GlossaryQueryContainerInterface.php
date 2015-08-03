@@ -20,6 +20,13 @@ interface GlossaryQueryContainerInterface
     public function queryKey($keyName);
 
     /**
+     * @param string $keyName
+     *
+     * @return SpyGlossaryKeyQuery
+     */
+    public function queryActiveKeysByName($keyName);
+
+    /**
      * @return SpyGlossaryKeyQuery
      */
     public function queryKeys();

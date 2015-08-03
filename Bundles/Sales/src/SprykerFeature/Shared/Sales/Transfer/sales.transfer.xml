@@ -13,7 +13,7 @@
         <property name="billingAddress" type="SalesAddress" />
         <property name="shippingAddress" type="SalesAddress" />
         <property name="customer" type="Customer" />
-        <property name="items" type="OrderItem[]"  singular="item" />
+        <property name="items" type="Item[]"  singular="item" />
         <property name="payment" type="string" />
         <property name="process" type="string" />
         <property name="couponCodes" type="array" singular="couponCode" />
@@ -73,7 +73,7 @@
         <property name="customerId" type="string" />
     </transfer>
 
-    <transfer name="OrderItem">
+    <transfer name="Item">
         <property name="idSalesOrderItem" type="int" />
         <property name="fkSalesOrder" type="int" />
         <property name="fkOmsOrderItemStatus" type="int" />
@@ -85,26 +85,25 @@
         <property name="taxSet" type="TaxSet" />
         <property name="quantity" type="int" />
         <property name="discounts" type="Discount[]" singular="discount" />
-        <property name="options" type="OrderItemOption[]" singular="option" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="unitGrossPrice" type="int" />
         <property name="unitPriceToPay" type="int" />
         <property name="variety" type="string" />
-        <property name="status" type="OrderItemStatus[]" />
+        <property name="status" type="ItemStatus[]" />
     </transfer>
 
     <transfer name="OrderItems">
-        <property name="orderItems" type="OrderItem[]" singular="orderItem" />
+        <property name="orderItems" type="Item[]" singular="orderItem" />
     </transfer>
 
-    <transfer name="OrderItemOption">
-        <property name="identifier" type="int" />
-        <property name="name" type="string" />
-        <property name="description" type="string" />
+    <transfer name="ProductOption">
+        <property name="idOptionValueUsage" type="int" />
+        <property name="labelOptionType" type="string" />
+        <property name="labelOptionValue" type="string" />
+        <property name="taxSet" type="TaxSet" />
+        <property name="discounts" type="Discount[]" singular="discount" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
-        <property name="taxSet" type="TaxSet" />
-        <property name="type" type="string" />
-        <property name="discounts" type="Discount[]" singular="discount" />
     </transfer>
 
     <transfer name="OrderItemStatus">

@@ -31,11 +31,10 @@ class IndexController extends AbstractController
         $table = $this->getDependencyContainer()
             ->createTranslationTable($availableLocales)
         ;
-        $table->init();
 
         return $this->viewResponse([
             'locales' => $availableLocales,
-            'glossaryTable' => $table,
+            'glossaryTable' => $table->render(),
         ]);
     }
 
@@ -51,7 +50,6 @@ class IndexController extends AbstractController
         $table = $this->getDependencyContainer()
             ->createTranslationTable($availableLocales)
         ;
-        $table->init();
 
         return $this->jsonResponse($table->fetchData());
     }

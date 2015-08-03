@@ -159,7 +159,8 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getFactory()->createProductProductManager(
             $this->getQueryContainer(),
             $this->getTouchFacade(),
-            $this->getUrlFacade()
+            $this->getUrlFacade(),
+            $this->getLocaleFacade()
         );
     }
 

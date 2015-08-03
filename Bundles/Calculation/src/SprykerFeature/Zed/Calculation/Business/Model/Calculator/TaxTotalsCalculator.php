@@ -9,9 +9,9 @@ namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\Calculation\OrderInterface;
 use Generated\Shared\Calculation\CartInterface;
-use Generated\Shared\Calculation\OrderItemInterface;
-use Generated\Shared\Calculation\CartItemInterface;
+use Generated\Shared\Calculation\ItemInterface;
 use Generated\Shared\Calculation\TaxSetInterface;
+use Generated\Shared\Calculation\ProductOptionInterface;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
@@ -41,7 +41,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableInterface $calculableContainer
-     * @param CartItemInterface[]|OrderItemInterface[] $calculableItems
+     * @param ItemInterface[]|ItemInterface[] $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
@@ -54,13 +54,14 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param CalculableInterface $calculableContainer
-     * @param CartItemInterface[]|OrderItemInterface[] $calculableItems
+     * @param ItemInterface[]|ItemInterface[] $calculableItems
      */
     public function calculateTaxAmountsForTaxableItems(CalculableInterface $calculableContainer, $calculableItems)
     {
         foreach ($calculableItems as $item) {
             $this->calculateTax($item);
             $this->calculateTaxForExpenses($item->getExpenses());
+            $this->calculateTaxForProductOptions($item->getProductOptions());
         }
 
         /** @var $order CartInterface|OrderInterface **/
@@ -69,7 +70,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param OrderItemInterface|CartItemInterface $taxableItem
+     * @param ItemInterface|ItemInterface $taxableItem
      */
     private function calculateTax($taxableItem)
     {
@@ -100,6 +101,16 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     {
         foreach ($expenses as $expense) {
             $this->calculateTax($expense);
+        }
+    }
+
+    /**
+     *  @param ProductOptionInterface[] $options
+     */
+    public function calculateTaxForProductOptions($options)
+    {
+        foreach ($options as $option) {
+            $this->calculateTax($option);
         }
     }
 

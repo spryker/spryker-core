@@ -63,7 +63,7 @@ class FixedTest extends \PHPUnit_Framework_TestCase
         $items = [];
 
         foreach ($grossPrices as $grossPrice) {
-            $item = new \Generated\Shared\Transfer\OrderItemTransfer();
+            $item = new \Generated\Shared\Transfer\ItemTransfer();
             $item->setGrossPrice($grossPrice);
             $items[] = $item;
         }

@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
@@ -218,11 +218,11 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return OrderItemTransfer
+     * @return ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new OrderItemTransfer();
+        $item = new ItemTransfer();
 
         return $item;
     }

@@ -8,7 +8,7 @@ namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ItemPriceToPayCalculator;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
@@ -125,7 +125,9 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPriceDiscount()
     {
-        return new DiscountTransfer();
+        $discountTransfer = new DiscountTransfer();
+
+        return $discountTransfer;
     }
 
     /**
@@ -139,11 +141,11 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderItemTransfer
+     * @return ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        $item = new OrderItemTransfer();
+        $item = new ItemTransfer();
 
         return $item;
     }

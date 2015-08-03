@@ -13,7 +13,7 @@ use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
@@ -130,11 +130,11 @@ class DiscountsTest extends Test
     }
 
     /**
-     * @return OrderItemTransfer
+     * @return ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
-        return new OrderItemTransfer();
+        return new ItemTransfer();
     }
 
     /**

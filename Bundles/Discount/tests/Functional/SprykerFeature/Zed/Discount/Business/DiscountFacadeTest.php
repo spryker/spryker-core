@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Percentage;
@@ -334,7 +334,7 @@ class DiscountFacadeTest extends Test
     {
         $order = $this->getOrderWithFixtureData();
 
-        $item = new OrderItemTransfer();
+        $item = new ItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
         $order->getCalculableObject()->addItem($item);
 
@@ -346,7 +346,7 @@ class DiscountFacadeTest extends Test
     {
         $order = $this->getOrderWithFixtureData();
 
-        $item = new OrderItemTransfer();
+        $item = new ItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
         $expense = new ExpenseTransfer();
@@ -368,7 +368,7 @@ class DiscountFacadeTest extends Test
         $order->getCalculableObject()->addExpense($expense);
 
         $itemCollection = new OrderItemsTransfer();
-        $item = new OrderItemTransfer();
+        $item = new ItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
         $expense = new ExpenseTransfer();
@@ -447,14 +447,14 @@ class DiscountFacadeTest extends Test
     /**
      * @param array $grossPrices
      *
-     * @return OrderItemTransfer[]
+     * @return ItemTransfer[]
      */
     protected function getItems(array $grossPrices)
     {
         $items = [];
 
         foreach ($grossPrices as $grossPrice) {
-            $item = new OrderItemTransfer();
+            $item = new ItemTransfer();
             $item->setGrossPrice($grossPrice);
             $items[] = $item;
         }

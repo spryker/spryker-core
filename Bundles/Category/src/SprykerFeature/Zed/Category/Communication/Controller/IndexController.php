@@ -37,8 +37,8 @@ class IndexController extends AbstractController
         ;
 
         return $this->viewResponse([
-            'rootNodeTable' => $rootNodeTable,
-            'categoryAttributeTable' => $categoryAttributeTable,
+            'rootNodeTable' => $rootNodeTable->render(),
+            'categoryAttributeTable' => $categoryAttributeTable->render(),
             'categoryUrlTable' => $urlTable->render(),
         ]);
     }

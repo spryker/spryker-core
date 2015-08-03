@@ -10,7 +10,7 @@ use Generated\Shared\Calculation\DiscountItemsInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\DiscountCalculationConnector\DiscountInterface;
 use Generated\Shared\DiscountCalculationConnector\ExpenseInterface;
-use Generated\Shared\DiscountCalculationConnector\OrderItemOptionInterface;
+use Generated\Shared\DiscountCalculationConnector\ProductOptionInterface;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTotalItemTransfer;
 use Generated\Shared\Sales\OrderItemsInterface;
@@ -52,7 +52,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
         foreach ($discountableItems as $item) {
             $discountAmount += $this->sumItemDiscounts($item->getDiscounts());
             $discountAmount += $this->sumItemExpenseDiscounts($item->getExpenses());
-            $discountAmount += $this->sumOptionDiscounts($item->getOptions());
+            $discountAmount += $this->sumOptionDiscounts($item->getProductOptions());
         }
 
         $discountAmount += $this->sumTotalExpenseDiscounts($discountableContainer);
@@ -107,7 +107,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
                 $this->transformDiscountToDiscountTotalItemInArray($discount, $orderExpenseItems);
             }
 
-            foreach ($container->getOptions() as $option) {
+            foreach ($container->getProductOptions() as $option) {
                 foreach ($option->getDiscounts() as $discount) {
                     $this->transformDiscountToDiscountTotalItemInArray($discount, $orderExpenseItems);
                 }
@@ -190,7 +190,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|OrderItemOptionInterface[] $options
+     * @param \ArrayObject|ProductOptionInterface[] $options
      *
      * @return int
      */
@@ -199,7 +199,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
         $discountAmount = 0;
 
         foreach ($options as $option) {
-            if ($option instanceof OrderItemOptionInterface) {
+            if ($option instanceof ProductOptionInterface) {
                 foreach ($option->getDiscounts() as $discount) {
                     $discountAmount += $discount->getAmount();
                 }

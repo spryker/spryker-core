@@ -264,4 +264,14 @@ class ProductFacade extends AbstractFacade
         return $this->getDependencyContainer()->createProductManager()->getAbstractSkuFromConcreteProduct($sku);
     }
 
+    /**
+     * @param string $concreteSku
+     *
+     * @return ConcreteProductInterface
+     */
+    public function getConcreteProduct($concreteSku)
+    {
+        return $this->getDependencyContainer()->createProductManager()->getConcreteProduct($concreteSku);
+    }
+
 }

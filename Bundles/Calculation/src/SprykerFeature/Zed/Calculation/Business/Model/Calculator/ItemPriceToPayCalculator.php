@@ -6,14 +6,14 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Calculation\ItemInterface;
 use Generated\Shared\Calculation\DiscountInterface;
 use Generated\Shared\Calculation\ExpenseInterface;
-use Generated\Shared\Sales\OrderItemOptionInterface;
+use Generated\Shared\Calculation\ProductOptionInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
-class ItemPriceToPayCalculator implements
-    CalculatorPluginInterface
+class ItemPriceToPayCalculator implements CalculatorPluginInterface
 {
 
     /**
@@ -21,7 +21,9 @@ class ItemPriceToPayCalculator implements
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {
-        foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
+        $items = $this->getItems($calculableContainer);
+        foreach ($items as $item) {
+
             $priceToPay = $item->getGrossPrice();
             $priceToPay -= $this->sumDiscounts($item->getDiscounts());
 
@@ -30,7 +32,7 @@ class ItemPriceToPayCalculator implements
                 $priceToPay = $item->getGrossPrice();
             }
 
-            $priceToPay += $this->sumOptions($item->getOptions());
+            $priceToPay += $this->sumOptions($item->getProductOptions());
 
             $item->setPriceToPay($priceToPay);
         }
@@ -67,7 +69,7 @@ class ItemPriceToPayCalculator implements
     }
 
     /**
-     * @param \ArrayObject|OrderItemOptionInterface[] $options
+     * @param \ArrayObject|ProductOptionInterface[] $options
      *
      * @return int
      */
@@ -79,6 +81,16 @@ class ItemPriceToPayCalculator implements
         }
 
         return $optionsAmount;
+    }
+
+    /**
+     * @param CalculableInterface $calculableContainer
+     *
+     * @return ItemInterface[]
+     */
+    protected function getItems(CalculableInterface $calculableContainer)
+    {
+        return $calculableContainer->getCalculableObject()->getItems();
     }
 
 }

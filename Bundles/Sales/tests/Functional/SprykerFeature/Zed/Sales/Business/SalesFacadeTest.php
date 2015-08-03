@@ -8,7 +8,7 @@ namespace Functional\SprykerFeature\Zed\Sales\Business;
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\Sales\Business\Dependency\CountryFacade;
 use Functional\SprykerFeature\Zed\Sales\Business\Dependency\OmsFacade;
-use Generated\Shared\Transfer\OrderItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesAddressTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -201,7 +201,7 @@ class SalesFacadeTest extends Test
         $initialState->save();
         $this->assertNotNull($initialState->getIdOmsOrderItemState());
 
-        $item1 = new OrderItemTransfer();
+        $item1 = new ItemTransfer();
         $item1
             ->setName('item-test-1')
             ->setSku('sku1')
@@ -210,7 +210,7 @@ class SalesFacadeTest extends Test
             ->setQuantity(2)
         ;
 
-        $item2 = new OrderItemTransfer();
+        $item2 = new ItemTransfer();
         $item2
             ->setName('item-test-2')
             ->setSku('sku2')
@@ -265,7 +265,7 @@ class SalesFacadeTest extends Test
         $process->setName('some process');
         $process->save();
 
-        $item1 = new OrderItemTransfer();
+        $item1 = new ItemTransfer();
         $item1
             ->setName('item-test-1')
             ->setSku('sku1')

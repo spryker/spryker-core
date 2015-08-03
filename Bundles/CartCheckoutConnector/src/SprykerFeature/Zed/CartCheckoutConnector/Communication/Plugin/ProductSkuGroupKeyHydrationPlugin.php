@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\CartCheckoutConnector\Communication\Plugin;
 
-use Generated\Shared\Sales\OrderItemInterface;
+use Generated\Shared\Sales\ItemInterface;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
@@ -25,11 +25,11 @@ class ProductSkuGroupKeyHydrationPlugin extends AbstractPlugin implements Checko
     }
 
     /**
-     * @param OrderItemInterface $orderItem
+     * @param ItemInterface $orderItem
      *
      * @return string
      */
-    protected function buildGroupKey(OrderItemInterface $orderItem)
+    protected function buildGroupKey(ItemInterface $orderItem)
     {
         $groupKey = $orderItem->getGroupKey();
         if (empty($groupKey)) {

@@ -5,54 +5,20 @@
         <title>Discount</title>
         <bundle>discount</bundle>
         <pages>
-            <index>
-                <label>Discount</label>
-                <title>Discount</title>
+            <pool>
+                <label>Pool</label>
+                <title>Pool</title>
                 <bundle>discount</bundle>
-                <controller>index</controller>
+                <controller>pool</controller>
                 <action>index</action>
-                <order>0</order>
-                <shortcut>d</shortcut>
-            </index>
-            <decision-rule>
-                <label>Decision Rule</label>
-                <title>Decision Rule</title>
+            </pool>
+            <pool-create>
+                <label>Create Pool</label>
+                <title>Create Pool</title>
                 <bundle>discount</bundle>
-                <controller>index</controller>
-                <action>decision</action>
-                <order>1</order>
-            </decision-rule>
-            <voucher>
-                <label>Voucher</label>
-                <title>Voucher</title>
-                <bundle>discount</bundle>
-                <pages>
-                    <voucher-index>
-                        <label>Edit Voucher</label>
-                        <title>Edit Voucher</title>
-                        <bundle>discount</bundle>
-                        <controller>voucher</controller>
-                        <action>index</action>
-                        <order>0</order>
-                    </voucher-index>
-                    <voucher-pool>
-                        <label>Voucher Pool</label>
-                        <title>Voucher Pool</title>
-                        <bundle>discount</bundle>
-                        <controller>voucher</controller>
-                        <action>pool</action>
-                        <order>1</order>
-                    </voucher-pool>
-                    <voucher-category>
-                        <label>Voucher Pool</label>
-                        <title>Voucher Pool</title>
-                        <bundle>discount</bundle>
-                        <controller>voucher</controller>
-                        <action>category</action>
-                        <order>2</order>
-                    </voucher-category>
-                </pages>
-            </voucher>
+                <controller>pool</controller>
+                <action>create</action>
+            </pool-create>
         </pages>
     </discount>
 </config>

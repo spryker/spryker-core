@@ -9,11 +9,6 @@ namespace SprykerEngine\Shared\Kernel;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 
-/**
- * This class represents a store!
- *
- * @see https://project-a.atlassian.net/wiki/display/YUZ/Store+concept
- */
 class Store
 {
 

@@ -1,0 +1,27 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Add a carrier company' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_header_content %}
+            <a href="/shipment/" class="btn btn-sm btn-default">{{ 'Back to Shipment Methods' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Add' | trans }}" />
+            {{ form_end(form) }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
