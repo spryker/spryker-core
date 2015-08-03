@@ -22,7 +22,7 @@ class MethodTable extends AbstractTable
     const ACTIVE = 'Active';
     const ACTIONS = 'Actions';
     const PLUGINS = 'Plugins';
-    const ID_METHOD_PARAMETER = 'id_method';
+    const ID_METHOD_PARAMETER = 'id-method';
 
     /**
      * @var SpyShipmentMethodQuery

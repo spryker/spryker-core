@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 class MethodController extends AbstractController
 {
 
-    const ID_METHOD_PARAMETER = 'id_method';
+    const ID_METHOD_PARAMETER = 'id-method';
 
     /**
      * @return Response
