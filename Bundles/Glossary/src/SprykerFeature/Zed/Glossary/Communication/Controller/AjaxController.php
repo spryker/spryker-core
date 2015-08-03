@@ -20,9 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AjaxController extends AbstractController
 {
+
     const SEARCH_TERM = 'term';
-    const AUTOCOMPLETE_LABEL = 'label';
-    const AUTOCOMPLETE_VALUE = 'value';
 
     /**
      * @param Request $request
@@ -32,21 +31,11 @@ class AjaxController extends AbstractController
     public function keysAction(Request $request)
     {
         $term = $request->query->get(self::SEARCH_TERM);
-        $keys = $this
-            ->getDependencyContainer()
+        $keys = $this->getDependencyContainer()
             ->createQueryContainer()
             ->queryActiveKeysByName('%' . $term . '%')
-            ->withColumn(
-                SpyGlossaryKeyTableMap::COL_KEY,
-                self::AUTOCOMPLETE_LABEL
-            )
-            ->withColumn(
-                SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY,
-                self::AUTOCOMPLETE_VALUE
-            )
             ->select([
-                self::AUTOCOMPLETE_LABEL,
-                self::AUTOCOMPLETE_VALUE
+                SpyGlossaryKeyTableMap::COL_KEY
             ])
             ->find()
             ->toArray()

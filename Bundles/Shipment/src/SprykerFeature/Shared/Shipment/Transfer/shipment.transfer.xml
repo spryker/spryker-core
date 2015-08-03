@@ -3,9 +3,13 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
+    <transfer name="Shipment">
+        <property name="methods" type="ShipmentMethod[]" singular="method" />
+    </transfer>
+
     <transfer name="ShipmentCarrier">
         <property name="idShipmentCarrier" type="int" />
-        <property name="fkGlossaryKeyCarrierName" type="int" />
+        <property name="glossaryKeyName" type="string" />
         <property name="name" type="string" />
         <property name="isActive" type="bool" />
     </transfer>
@@ -13,15 +17,25 @@
     <transfer name="ShipmentMethod">
         <property name="idShipmentMethod" type="int" />
         <property name="fkShipmentCarrier" type="int" />
-        <property name="fkGlossaryKeyMethodName" type="int" />
-        <property name="fkGlossaryKeyMethodDescription" type="int" />
+        <property name="glossaryKeyName" type="string" />
+        <property name="glossaryKeyDescription" type="string" />
+        <property name="availabilityPlugin" type="string" />
+        <property name="priceCalculationPlugin" type="string" />
+        <property name="deliveryTimePlugin" type="string" />
         <property name="name" type="string" />
         <property name="price" type="int" />
         <property name="isActive" type="bool" />
+        <property name="time" type="int" />
     </transfer>
 
     <transfer name="Order">
-        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethos" />
+        <property name="shipmentMethod" type="ShipmentMethod" />
+        <property name="shipmentDeliveryTime" type="int" />
+    </transfer>
+
+    <transfer name="CheckoutRequest">
+        <property name="shipmentMethodId" type="int" />
+        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod" />
     </transfer>
 
 </transfers>

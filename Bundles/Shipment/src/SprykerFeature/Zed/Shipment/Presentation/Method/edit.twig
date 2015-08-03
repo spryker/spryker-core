@@ -1,6 +1,6 @@
-{% extends '@Gui/Layout/layout.twig' %}
+    {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Add a shipment method' %}
+{% set widget_title = 'Edit a shipment method' %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -17,12 +17,12 @@
             <div class="row">
 
                 <div class="col-sm-6 b-r">
-                    <h3 class="m-t-none m-b">{{ 'New Shipment Method' | trans }}</h3>
+                    <h3 class="m-t-none m-b">{{ 'Shipment Method' | trans }}</h3>
 
                     {{ form_start(form) }}
                     {{ form_widget(form) }}
 
-                    <input type="submit" class="btn btn-primary" value="{{ 'Add' | trans }}" />
+                    <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
 
                     {{ form_end(form) }}
 

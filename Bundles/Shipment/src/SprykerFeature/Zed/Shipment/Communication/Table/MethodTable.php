@@ -21,6 +21,8 @@ class MethodTable extends AbstractTable
     const PRICE = 'Price';
     const ACTIVE = 'Active';
     const ACTIONS = 'Actions';
+    const PLUGINS = 'Plugins';
+    const ID_METHOD_PARAMETER = 'id-method';
 
     /**
      * @var SpyShipmentMethodQuery
@@ -43,18 +45,23 @@ class MethodTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD => '#',
+            SpyShipmentMethodTableMap::COL_IS_ACTIVE => '',
             SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => self::CARRIER,
-            SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_NAME
-            => self::METHOD,
-            SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_DESCRIPTION
-            => self::DESCRIPTION,
+            SpyShipmentMethodTableMap::COL_NAME => self::METHOD,
+            SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION => self::DESCRIPTION,
             SpyShipmentMethodTableMap::COL_PRICE => self::PRICE,
-            SpyShipmentMethodTableMap::COL_IS_ACTIVE => self::ACTIVE,
+            self::PLUGINS => self::PLUGINS,
             self::ACTIONS => self::ACTIONS
         ]);
 
         $config->setSortable([
+            SpyShipmentMethodTableMap::COL_PRICE
+        ]);
+
+        $config->setSearchable([
+            SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER,
+            SpyShipmentMethodTableMap::COL_NAME,
+            SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION,
             SpyShipmentMethodTableMap::COL_PRICE
         ]);
 
@@ -81,23 +88,26 @@ class MethodTable extends AbstractTable
                 );
 
             $results[] = [
-                SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD
-                => $item[SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD],
-                SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER
-                => $method
-                    ->getShipmentCarrier()
-                    ->getName(),
-                SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_NAME
-                => $method->getName(),
-                SpyShipmentMethodTableMap::COL_FK_GLOSSARY_KEY_METHOD_DESCRIPTION
-                => $method->getGlossaryKeyDescription()->getKey(),
+                SpyShipmentMethodTableMap::COL_IS_ACTIVE =>
+                    '<span class="label '
+                    . (($method->isActive()) ? 'label-success">Activated' : 'label-danger">Disabled')  . '</span>',
+                SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => $method->getShipmentCarrier()->getName(),
+                SpyShipmentMethodTableMap::COL_NAME => $method->getName(),
+                SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION => $method->getGlossaryKeyDescription(),
                 SpyShipmentMethodTableMap::COL_PRICE => $method->getPrice(),
-                SpyShipmentMethodTableMap::COL_IS_ACTIVE
-                => $item[SpyShipmentMethodTableMap::COL_IS_ACTIVE],
-                self::ACTIONS => ''
+                self::PLUGINS => 'Availability ' . $method->getAvailabilityPlugin() .
+                    ' | Price ' . $method->getPriceCalculationPlugin() .
+                    ' | Delivery ' . $method->getDeliveryTimePlugin(),
+                self::ACTIONS =>
+                    '<div class="btn-group btn-group-sm" role="group">' .
+                    '<a class="btn btn-outline btn-default" href="/shipment/method/edit?' . self::ID_METHOD_PARAMETER . '='
+                    . $item[SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD] . '"><i class="fa fa-paste"></i> Edit</a>' .
+                    '<a class="btn btn-outline  btn-default" href="/shipment/method/delete?' . self::ID_METHOD_PARAMETER . '='
+                    . $item[SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD] . '"><i class="fa fa-times"></i> Delete</a>' .
+                    '</div>'
+
             ];
         }
-        unset($queryResults);
 
         return $results;
     }

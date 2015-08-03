@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Shipment\Business;
 
+use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Shipment\ShipmentInterface;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentBusiness;
@@ -44,5 +46,61 @@ class ShipmentFacade extends AbstractFacade
         ;
 
         return $methodModel->create($methodTransfer);
+    }
+
+    /**
+     * @param CartInterface $cartTransfer
+     *
+     * @return ShipmentInterface
+     */
+    public function getAvailableMethods(CartInterface $cartTransfer)
+    {
+        $methodModel = $this->getDependencyContainer()
+            ->createMethodModel()
+        ;
+
+        return $methodModel->getAvailableMethods($cartTransfer);
+    }
+
+    /**
+     * @param int $idMethod
+     *
+     * @return bool
+     */
+    public function hasMethod($idMethod)
+    {
+        $methodModel = $this->getDependencyContainer()
+            ->createMethodModel()
+        ;
+
+        return $methodModel->hasMethod($idMethod);
+    }
+
+    /**
+     * @param int $idMethod
+     *
+     * @return bool
+     */
+    public function deleteMethod($idMethod)
+    {
+        $methodModel = $this->getDependencyContainer()
+            ->createMethodModel()
+        ;
+
+        return $methodModel->deleteMethod($idMethod);
+    }
+
+    /**
+     * @param ShipmentMethodTransfer $methodTransfer
+     *
+     * @return ShipmentCarrierTransfer
+     */
+    public function updateMethod(ShipmentMethodTransfer $methodTransfer)
+    {
+        $methodModel = $this->getDependencyContainer()
+            ->createMethodModel()
+        ;
+
+        return $methodModel->updateMethod($methodTransfer);
     }
 }

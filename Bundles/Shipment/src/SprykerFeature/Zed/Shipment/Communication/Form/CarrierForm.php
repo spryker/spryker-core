@@ -12,7 +12,7 @@ use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
 class CarrierForm extends AbstractForm
 {
 
-    const NAME_GLOSSARY_FIELD = 'fkGlossaryKeyCarrierName';
+    const NAME_GLOSSARY_FIELD = 'glossaryKeyName';
     const NAME_FIELD = 'name';
     const IS_ACTIVE_FIELD = 'isActive';
     const CARRIER_ID = 'carrier_id';

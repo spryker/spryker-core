@@ -24,10 +24,39 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     }
 
     /**
+     * @return SpyShipmentCarrierQuery
+     */
+    public function queryActiveCarriers()
+    {
+        return $this->queryCarriers()->findByIsActive(true);
+    }
+
+    /**
      * @return SpyShipmentMethodQuery
      */
     public function queryMethods()
     {
         return $this->getFactory()->createPropelSpyShipmentMethodQuery();
+    }
+
+    /**
+     * @return SpyShipmentMethodQuery
+     */
+    public function queryActiveMethods()
+    {
+        return $this->queryMethods()->filterByIsActive(true);
+    }
+
+    /**
+     * @param int $idMethod
+     *
+     * @return SpyShipmentMethodQuery
+     */
+    public function queryMethodByIdMethod($idMethod)
+    {
+        $query = $this->queryMethods();
+        $query->filterByIdShipmentMethod($idMethod);
+
+        return $query;
     }
 }

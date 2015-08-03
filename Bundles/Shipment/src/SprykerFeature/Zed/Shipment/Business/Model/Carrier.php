@@ -22,8 +22,8 @@ class Carrier
         $carrierEntity = new SpyShipmentCarrier();
         $carrierEntity
             ->setName($carrierTransfer->getName())
-            ->setFkGlossaryKeyCarrierName(
-                $carrierTransfer->getFkGlossaryKeyCarrierName()
+            ->setGlossaryKeyName(
+                $carrierTransfer->getGlossaryKeyName()
             )
             ->setIsActive($carrierTransfer->getIsActive())
             ->save()
