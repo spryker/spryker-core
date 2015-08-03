@@ -313,13 +313,13 @@ class DbFixturesLoader
         $ids['idConfigPresetB'] = $productOptionConfigurationPresetEntity->getIdProductOptionConfigurationPreset();
 
         $data = [
-            $ids['idConfigPresetA'] => $ids['idUsageRed'],
-            $ids['idConfigPresetA'] => $ids['idUsageMedium'],
-            $ids['idConfigPresetB'] => $ids['idUsageGreen'],
-            $ids['idConfigPresetB'] => $ids['idUsageLarge']
+            $ids['idUsageRed'] => $ids['idConfigPresetA'],
+            $ids['idUsageMedium'] => $ids['idConfigPresetA'],
+            $ids['idUsageGreen'] => $ids['idConfigPresetB'],
+            $ids['idUsageLarge'] => $ids['idConfigPresetB'],
         ];
 
-        foreach ($data as $fkProductOptionConfigurationPreset => $fkProductOptionValueUsage) {
+        foreach ($data as $fkProductOptionValueUsage => $fkProductOptionConfigurationPreset) {
             $productOptionConfigurationPresetValueEntity = new SpyProductOptionConfigurationPresetValue();
             $productOptionConfigurationPresetValueEntity
                 ->setFkProductOptionConfigurationPreset($fkProductOptionConfigurationPreset)

@@ -210,7 +210,6 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
 
     public function testQueryValueUsagesForConfigPreset()
     {
-        $this->markTestSkipped('Result set is only 1 for psql instead of 2 with mysql');
         $result = $this->facade
             ->getValueUsagesForConfigPreset($this->ids['idConfigPresetA']);
 
