@@ -5,9 +5,9 @@
   "description": "This package provides the user interface and frontend resources for Zed.",
 
   "author": {
-    "name": "Project A Ventures",
+    "name": "Spryker",
     "email": "info@spryker.com",
-    "url": "http://www.project-a.com/"
+    "url": "http://www.spryker.com/"
   },
 
   "scripts": {
