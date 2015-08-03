@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Shipment\Business\ShipmentFacade;
 use SprykerFeature\Zed\Shipment\Communication\ShipmentDependencyContainer;
 
 /**
- * @method ShipmentDependencyContainer getDependencyContainer()
  * @method ShipmentFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController
