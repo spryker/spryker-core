@@ -62,13 +62,13 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @return DiscountTable
+     * @return DiscountVoucherTable
      */
-    public function createVoucherTable()
+    public function createDiscountVoucherTable()
     {
-        $discountQuery = $this->getQueryContainer()->queryDiscount();
+        $discountVoucherQuery = $this->getQueryContainer()->queryDiscountVoucher();
 
-        return $this->getFactory()->createTableDiscountTable($discountQuery);
+        return $this->getFactory()->createTableDiscountVoucherTable($discountVoucherQuery);
     }
 
     /**

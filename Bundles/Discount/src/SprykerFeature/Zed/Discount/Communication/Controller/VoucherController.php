@@ -12,9 +12,11 @@ use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountFacade getFacade()
  */
 class VoucherController extends AbstractController
 {
@@ -60,7 +62,7 @@ class VoucherController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createVoucherTable();
+        $table = $this->getDependencyContainer()->createDiscountVoucherTable();
 
         return [
             'vouchers' => $table->render(),
@@ -72,7 +74,7 @@ class VoucherController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createVoucherTable();
+        $table = $this->getDependencyContainer()->createDiscountVoucherTable();
 
         return $this->jsonResponse(
             $table->fetchData()

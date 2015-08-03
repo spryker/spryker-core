@@ -14,9 +14,11 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 class VoucherPoolTable extends AbstractTable
 {
     const COL_OPTIONS = 'options';
+    const COL_CATEGORY_NAME = 'category_name';
     const URL_DISCOUNT_POOL_EDIT = '/discount/pool/edit?%s=%d';
     const PARAM_ID_POOL = 'id-pool';
     const CONTROLLER_TABLE_ACTION = 'poolTable';
+
 
     /**
      * @var SpyDiscountVoucherPoolQuery
@@ -41,16 +43,9 @@ class VoucherPoolTable extends AbstractTable
         $config->setUrl(self::CONTROLLER_TABLE_ACTION);
 
         $config->setHeader([
-            'date_created' => 'date created',
-            'valid_until' => 'valid until',
-            'voucher_name' => 'voucher name',
-            'voucher_pool' => 'voucher pool',
-            'category' => 'category',
-            'code' => 'code',
-            'value' => 'value',
-            'status' => 'status',
-//            SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => 'Id',
-//            SpyDiscountVoucherPoolTableMap::COL_NAME => 'Name',
+            SpyDiscountVoucherPoolTableMap::COL_CREATED_AT => 'Date Created',
+            SpyDiscountVoucherPoolTableMap::COL_NAME => 'Pool Name',
+            self::COL_CATEGORY_NAME => 'Category Name',
             self::COL_OPTIONS => 'Options',
         ]);
 
@@ -66,21 +61,22 @@ class VoucherPoolTable extends AbstractTable
     {
         $results = [];
 
-        $queryResults = $this->runQuery($this->poolQuery, $config);
+        $query = $this->poolQuery
+            ->withColumn(SpyDiscountVoucherPoolCategoryTableMap::COL_NAME, 'category_name')
+            ->useVoucherPoolCategoryQuery()
+            ->endUse()
+            ->groupByIdDiscountVoucherPool()
+        ;
+
+
+        $queryResults = $this->runQuery($query, $config);
 
         foreach ($queryResults as $item) {
             $editUrl = $this->getEditUrl($item);
             $results[] = [
-//                SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL => $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL],
-//                SpyDiscountVoucherPoolTableMap::COL_NAME => $item[SpyDiscountVoucherPoolTableMap::COL_NAME],
-                'date_created' => 'date created',
-                'valid_until' => 'valid until',
-                'voucher_name' => 'voucher name',
-                'voucher_pool' => 'voucher pool',
-                'category' => 'category',
-                'code' => 'code',
-                'value' => 'value',
-                'status' => 'status',
+                SpyDiscountVoucherPoolTableMap::COL_CREATED_AT => $item[SpyDiscountVoucherPoolTableMap::COL_CREATED_AT],
+                SpyDiscountVoucherPoolTableMap::COL_NAME => $item[SpyDiscountVoucherPoolTableMap::COL_NAME],
+                self::COL_CATEGORY_NAME => $item[self::COL_CATEGORY_NAME],
                 self::COL_OPTIONS => sprintf(
                     '<a href="%s" class="btn btn-sm btn-primary">Edit</a>',
                     $editUrl
