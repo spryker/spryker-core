@@ -34,6 +34,7 @@ class TwigSettings
     {
         return [
             $this->getLocator()->twig()->pluginTwigNative(),
+            $this->getLocator()->price()->pluginTwigPrice()
         ];
     }
 
@@ -42,9 +43,15 @@ class TwigSettings
      */
     public function getTwigFunctions()
     {
+        $twigCustomer = $this->getLocator()->customer()->pluginTwigCustomer()
+            ->setCustomerClient($this->getLocator()->customer()->client())
+        ;
+
         return [
             $this->getLocator()->price()->pluginTwigPrice(),
             $this->getLocator()->cms()->pluginTwigCms(),
+            $twigCustomer,
+            $this->getLocator()->assets()->pluginTwigAsset()
         ];
     }
 
