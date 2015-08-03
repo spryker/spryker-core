@@ -5,8 +5,6 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
-
-
 use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
@@ -18,9 +16,9 @@ use SprykerFeature\Zed\Url\Business\UrlFacade;
  * @method CmsDependencyContainer getDependencyContainer()
  * @method CmsFacade getFacade()
  */
-
 class PageController extends AbstractController
 {
+
     /**
      * @param Request $request
      *
@@ -28,7 +26,10 @@ class PageController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createCmsTable();
+
+        $table = $this->getDependencyContainer()
+            ->createCmsTable()
+        ;
 
         return [
             'pages' => $table->render(),
@@ -40,11 +41,11 @@ class PageController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createCmsTable();
+        $table = $this->getDependencyContainer()
+            ->createCmsTable()
+        ;
 
-        return $this->jsonResponse(
-            $table->fetchData()
-        );
+        return $this->jsonResponse($table->fetchData());
     }
 
     /**
@@ -53,7 +54,8 @@ class PageController extends AbstractController
     public function addAction()
     {
         $form = $this->getDependencyContainer()
-            ->createCmsPageForm('add');
+            ->createCmsPageForm('add')
+        ;
 
         $form->handleRequest();
 
@@ -63,18 +65,34 @@ class PageController extends AbstractController
             $pageTransfer = new PageTransfer();
             $pageTransfer->fromArray($data, true);
 
-            $pageTransfer = $this->getFacade()->savePage($pageTransfer);
-
-            $this->getFacade()
-                ->createPageUrl($pageTransfer,$data[CmsPageForm::URL])
+            $pageTransfer = $this->getFacade()
+                ->savePage($pageTransfer)
             ;
 
-            return $this->redirectResponse('/cms/');
+            $urlTransfer = $this->getFacade()
+                ->createPageUrl($pageTransfer, $data[CmsPageForm::URL])
+            ;
+
+            $this->getUrlFacade()
+                ->touchUrlActive($urlTransfer->getIdUrl())
+            ;
+
+
+            return $this->redirectResponse('/cms/glossary/?id_page='.$pageTransfer->getIdCmsPage());
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
         ]);
+    }
 
+    /**
+     * @return UrlFacade
+     */
+    private function getUrlFacade()
+    {
+        return $this->getDependencyContainer()
+            ->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE)
+            ;
     }
 }

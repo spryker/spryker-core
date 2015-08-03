@@ -13,6 +13,8 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsTable extends AbstractTable{
 
+    const ACTIONS = 'Actions';
+
     /**
      * @param SpyCmsPage $pageQuery
      */
@@ -30,7 +32,8 @@ class CmsTable extends AbstractTable{
         $config->setHeader([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE => 'Page Id',
             CmsQueryContainer::TEMPLATE_NAME => 'Template',
-            CmsQueryContainer::URL => 'url'
+            CmsQueryContainer::URL => 'url',
+            self::ACTIONS => self::ACTIONS
         ]);
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
@@ -53,11 +56,19 @@ class CmsTable extends AbstractTable{
             $results[] = [
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
                 CmsQueryContainer::TEMPLATE_NAME => $item[CmsQueryContainer::TEMPLATE_NAME],
-                CmsQueryContainer::URL => $item[CmsQueryContainer::URL]
+                CmsQueryContainer::URL => $item[CmsQueryContainer::URL],
+                self::ACTIONS => $this->buildLinks($item),
             ];
         }
         unset($queryResults);
 
         return $results;
+    }
+
+    private function buildLinks($item)
+    {
+        $result = '<a href="/cms/glossary/?id_page='.$item[SpyCmsPageTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Manage glossaries</a>';
+
+        return $result;
     }
 }

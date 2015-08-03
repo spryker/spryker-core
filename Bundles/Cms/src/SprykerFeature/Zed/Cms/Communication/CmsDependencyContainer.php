@@ -62,9 +62,9 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      * @param int $id
      * @return CmsGlossaryTable
      */
-    public function createCmsGlossaryTable($idPage)
+    public function createCmsGlossaryTable($idPage, $fkLocale)
     {
-        $glossaryQuery = $this->getQueryContainer()->queryGlossaryKeyMappingsWithKeyByPageId($idPage);
+        $glossaryQuery = $this->getQueryContainer()->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $fkLocale);
 
         return $this->getFactory()->createTableCmsGlossaryTable($glossaryQuery,$idPage);
     }
@@ -96,6 +96,24 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
         return $this->getFactory()
             ->createFormCmsRedirectForm($queryUrl, $type)
+            ;
+    }
+
+    /**
+     * @param int $idUrl
+     * @param string $type
+     *
+     * @return CmsRedirectForm
+     */
+    public function createCmsGlossaryForm($type, $idPage, $idMapping = null)
+    {
+        $glossaryQuery = null;
+
+        if($idMapping)
+            $glossaryQuery = $this->getQueryContainer()->queryGlossaryKeyMappingWithKeyById($idMapping);
+
+        return $this->getFactory()
+            ->createFormCmsGlossaryForm($glossaryQuery, $type, $idPage, $idMapping)
             ;
     }
 }

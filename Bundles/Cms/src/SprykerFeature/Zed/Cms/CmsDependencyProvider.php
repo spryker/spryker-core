@@ -15,6 +15,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const LOCALE_BUNDLE = 'locale_bundle';
 
     const URL_QUERY_CONTAINER = 'url_query_container';
+    const GLOSSARY_QUERY_CONTAINER = 'glossary_query_container';
 
     /**
      * @param Container $container
@@ -38,6 +39,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::URL_QUERY_CONTAINER] = function (Container $container) {
             return $container->getLocator()->url()->queryContainer();
+        };
+
+        $container[self::GLOSSARY_QUERY_CONTAINER] = function (Container $container) {
+            return $container->getLocator()->glossary()->queryContainer();
         };
     }
 }

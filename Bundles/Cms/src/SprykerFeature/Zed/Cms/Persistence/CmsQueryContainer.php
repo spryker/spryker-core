@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
@@ -145,6 +146,23 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @param int $idMapping
+     *
+     * @return SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingWithKeyById($idMapping)
+    {
+        $query = $this->queryGlossaryKeyMappings();
+        $query
+            ->filterByIdCmsGlossaryKeyMapping($idMapping)
+            ->leftJoinGlossaryKey()
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY)
+        ;
+
+        return $query;
+    }
+
+    /**
      * @return SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappings()
@@ -172,7 +190,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      *
      * @return SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingsWithKeyByPageId($idCmsPage)
+    public function queryGlossaryKeyMappingsWithKeyByPageId($idCmsPage,$fkLocale)
     {
         $query = $this->queryGlossaryKeyMappings()
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY)
@@ -180,6 +198,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->filterByFkPage($idCmsPage)
             ->useGlossaryKeyQuery()
                 ->useSpyGlossaryTranslationQuery()
+                ->filterByFkLocale($fkLocale)
                 ->endUse()
             ->endUse()
         ;
@@ -215,5 +234,16 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)->queryUrlsWithRedirect();
     }
+
+    /**
+     *
+     * @return SpyGlossaryKeyQuery
+     */
+    public function queryKey($key)
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::GLOSSARY_QUERY_CONTAINER)->queryKey($key);
+    }
+
+
 
 }

@@ -16,6 +16,8 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsGlossaryTable extends AbstractTable{
 
+    const ACTIONS = 'Actions';
+
     protected $glossaryQuery;
 
     protected $idPage;
@@ -40,6 +42,7 @@ class CmsGlossaryTable extends AbstractTable{
             SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => 'Placeholder',
             CmsQueryContainer::KEY => 'Glossary Key',
             CmsQueryContainer::TRANS => 'Glossary Value',
+            self::ACTIONS => self::ACTIONS
         ]);
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
@@ -65,10 +68,22 @@ class CmsGlossaryTable extends AbstractTable{
                 SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => $item[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER],
                 CmsQueryContainer::KEY => $item[CmsQueryContainer::KEY],
                 CmsQueryContainer::TRANS => $item[CmsQueryContainer::TRANS],
+                self::ACTIONS => $this->buildLinks($item)
             ];
         }
         unset($queryResults);
 
         return $results;
+    }
+
+    private function buildLinks($item)
+    {
+        $mappingParam = 'id_mapping='.$item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING];
+        $pageParam = 'id_page='.$this->idPage;
+
+        $result = '<a href="/cms/glossary/edit/?'.$mappingParam.'&'.$pageParam.'" class="btn btn-xs btn-white">Edit</a>&nbsp;
+                   <a href="/cms/glossary/delete/?'.$mappingParam.'&'.$pageParam.'" class="btn btn-xs btn-white">Delete</a>';
+
+        return $result;
     }
 }
