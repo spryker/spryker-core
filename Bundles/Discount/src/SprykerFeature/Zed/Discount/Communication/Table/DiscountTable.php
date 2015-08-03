@@ -12,8 +12,11 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 class DiscountTable extends AbstractTable
 {
+    const URL_DISCOUNT_EDIT = '/discount/voucher/edit?id-discount=%d';
     const COL_OPTIONS = 'options';
-    const PARAM_ID_POOL = 'id-pool';
+    const COL_VOUCHER_POOL = 'voucher_pool';
+    const COL_VOUCHER_POOL_CATEGORY = 'voucher_pool_category';
+    const COL_CODE = 'code';
 
     /**
      * @var SpyDiscountQuery
@@ -37,18 +40,14 @@ class DiscountTable extends AbstractTable
     {
 
         $config->setHeader([
-//            SpyDiscountVoucherTableMap::COL_ID_DISCOUNT_VOUCHER => 'Id',
-//            SpyDiscountVoucherTableMap::COL_CREATED_AT => 'Created',
-//            SpyDiscountVoucherTableMap::COL_IS_ACTIVE => 'Is active',
-
-            SpyDiscountTableMap::COL_VALID_TO => 'valid until',
-
-//            'voucher_name' => 'voucher name',
-//            'voucher_pool' => 'voucher pool',
-//            'category' => 'category',
-//            'code' => 'code',
-//            'value' => 'value',
-//            'status' => 'status',
+            SpyDiscountTableMap::COL_CREATED_AT => 'Created At',
+            SpyDiscountTableMap::COL_VALID_TO => 'Valid To',
+            SpyDiscountTableMap::COL_DISPLAY_NAME => 'Discount Name',
+            self::COL_VOUCHER_POOL => 'Pool Name',
+            self::COL_VOUCHER_POOL_CATEGORY => 'Pool Category',
+            self::COL_CODE => 'Code',
+            SpyDiscountTableMap::COL_AMOUNT => 'Amount',
+            self::COL_OPTIONS => 'Options',
         ]);
 
         return $config;
@@ -78,45 +77,31 @@ class DiscountTable extends AbstractTable
         $queryResults = $this->runQuery($query, $config);
 
         foreach ($queryResults as $item) {
-//            $editUrl = $this->getEditUrl($item);
             $results[] = [
                 SpyDiscountTableMap::COL_CREATED_AT => $item[SpyDiscountTableMap::COL_CREATED_AT],
                 SpyDiscountTableMap::COL_VALID_TO => $item[SpyDiscountTableMap::COL_VALID_TO],
                 SpyDiscountTableMap::COL_DISPLAY_NAME => $item[SpyDiscountTableMap::COL_DISPLAY_NAME],
-                SpyDiscountTableMap::COL_IS_ACTIVE => $item[SpyDiscountTableMap::COL_IS_ACTIVE],
-
-                'voucher_pool' => $item['voucher_pool'],
-                'voucher_pool_category' => $item['voucher_pool_category'],
-                'code' => $item['code'],
-
-//                self::COL_OPTIONS => sprintf(
-//                    '<a href="%s" class="btn btn-sm btn-primary">Edit</a>',
-//                    $editUrl
-//                ),
+                SpyDiscountTableMap::COL_AMOUNT => $item[SpyDiscountTableMap::COL_AMOUNT],
+                self::COL_VOUCHER_POOL => $item['voucher_pool'],
+                self::COL_VOUCHER_POOL_CATEGORY => $item['voucher_pool_category'],
+                self::COL_CODE => $item['code'],
+                self::COL_OPTIONS => $this->writeActiveCheckbox($item),
             ];
-//            echo '<pre>';
-//            print_r($item);
-//            print_r($results);
-//            die;
         }
 
         return $results;
     }
 
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
-    private function getEditUrl(array $item)
+    private function writeActiveCheckbox($item)
     {
-        $editUrl = sprintf(
-            self::URL_DISCOUNT_POOL_EDIT,
-            self::PARAM_ID_POOL,
-            $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL]
+        $input = sprintf(
+            '<label><input type="checkbox" %s name="%d" value="on" id="active-%d" /> Active</label>',
+            ($item[SpyDiscountTableMap::COL_IS_ACTIVE]) ? 'checked="checked"' : '',
+            $item[SpyDiscountTableMap::COL_ID_DISCOUNT],
+            $item[SpyDiscountTableMap::COL_ID_DISCOUNT]
         );
 
-        return $editUrl;
+        return $input;
     }
 
 }
