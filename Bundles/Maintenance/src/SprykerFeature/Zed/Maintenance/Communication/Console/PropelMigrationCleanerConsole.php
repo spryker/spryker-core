@@ -1,12 +1,13 @@
 <?php
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
 
+/**
+ * (c) Spryker Systems GmbH copyright protected.
+ */
 namespace SprykerFeature\Zed\Maintenance\Communication\Console;
 
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
+use SprykerFeature\Zed\Setup\Communication\Console\InstallConsole;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -15,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PropelMigrationCleanerConsole extends Console
 {
-    const COMMAND_NAME = 'maintenance:clean-propel-base';
-    const COMMAND_DESCRIPTION = 'Clean up Propel base files';
+    const COMMAND_NAME = 'maintenance:rebuild-propel';
+    const COMMAND_DESCRIPTION = 'Rebuild Propel models after database server switch';
 
     protected function configure()
     {
@@ -28,18 +29,20 @@ class PropelMigrationCleanerConsole extends Console
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      *
      * @throws \Exception
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Traversing Bundles...');
+        $this->info('Traversing Bundles for Propel models...');
 
         $facade = $this->getFacade();
         $facade->cleanPropelMigration();
 
         $this->info('Cleanup finished.');
+
+        $this->runDependingCommand(InstallConsole::COMMAND_NAME);
     }
 }
