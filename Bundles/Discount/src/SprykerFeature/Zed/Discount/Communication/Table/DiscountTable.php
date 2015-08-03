@@ -72,6 +72,7 @@ class DiscountTable extends AbstractTable
                 ->useVoucherPoolCategoryQuery()
                 ->endUse()
             ->endUse()
+            ->groupByIdDiscount()
         ;
 
         $queryResults = $this->runQuery($query, $config);
@@ -95,7 +96,7 @@ class DiscountTable extends AbstractTable
     private function writeActiveCheckbox($item)
     {
         $input = sprintf(
-            '<label><input type="checkbox" %s name="%d" value="on" id="active-%d" /> Active</label>',
+            '<label><input type="checkbox" %s name="activate[]" value="on" class="active-checkbox" id="active-%d" /> Active</label>',
             ($item[SpyDiscountTableMap::COL_IS_ACTIVE]) ? 'checked="checked"' : '',
             $item[SpyDiscountTableMap::COL_ID_DISCOUNT],
             $item[SpyDiscountTableMap::COL_ID_DISCOUNT]

@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
@@ -39,6 +40,19 @@ class VoucherController extends AbstractController
             'form' => $form->createView(),
         ];
 
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function statusAction(Request $request)
+    {
+        $discountId = $request->request->get('id');
+        $response = $this->getFacade()->toggleDiscountActiveStatus($discountId);
+
+        return $this->jsonResponse($response);
     }
 
     /**

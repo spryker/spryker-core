@@ -22,6 +22,7 @@ use SprykerEngine\Zed\Kernel\Business\ModelResult;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule as DecisionRule;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
@@ -142,6 +143,22 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function updateDiscount(DiscountTransfer $discountTransfer)
     {
         return $this->getDependencyContainer()->getDiscountWriter()->update($discountTransfer);
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return array
+     */
+    public function toggleDiscountActiveStatus($idDiscount)
+    {
+        $response = $this->getDependencyContainer()->getDiscountWriter()->toggleActiveStatus($idDiscount);
+
+        return [
+            'code' => Response::HTTP_OK,
+            'id' => $response->getIdDiscount(),
+            'newStaus' => $response->getIsActive(),
+        ];
     }
 
     /**

@@ -44,4 +44,22 @@ class DiscountWriter extends AbstractWriter
         return $discountEntity;
     }
 
+    /**
+     * @param int $idDiscount
+     *
+     * @return DiscountTransfer
+     */
+    public function toggleActiveStatus($idDiscount)
+    {
+        $queryContainer = $this->getQueryContainer();
+        $discountEntity = $queryContainer->queryDiscount()->findPk($idDiscount);
+        if (!$discountEntity->isActive()) {
+            $discountEntity->setIsActive(true);
+        } else {
+            $discountEntity->setIsActive(false);
+        }
+        $discountEntity->save();
+
+        return (new DiscountTransfer())->fromArray($discountEntity->toArray(), true);
+    }
 }
