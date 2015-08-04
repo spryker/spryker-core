@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-class CmsTable extends AbstractTable{
+class CmsPageTable extends AbstractTable{
 
     const ACTIONS = 'Actions';
 
@@ -67,7 +67,8 @@ class CmsTable extends AbstractTable{
 
     private function buildLinks($item)
     {
-        $result = '<a href="/cms/glossary/?id_page='.$item[SpyCmsPageTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Manage glossaries</a>';
+        $result = '<a href="/cms/glossary/?id_page='.$item[SpyCmsPageTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Manage glossaries</a>&nbsp;
+        <a href="/cms/page/edit/?id_page='.$item[SpyCmsPageTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Edit</a>';
 
         return $result;
     }

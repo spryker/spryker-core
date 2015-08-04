@@ -20,14 +20,17 @@ class CmsGlossaryTable extends AbstractTable{
 
     protected $glossaryQuery;
 
+    protected $placeholders;
+
     protected $idPage;
     /**
      * @param int $idPage
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      */
-    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery,$idPage){
+    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery,$idPage, $placeholders = null){
         $this->glossaryQuery = $glossaryQuery;
         $this->idPage = $idPage;
+        $this->placeholders = $placeholders;
     }
 
     /**
@@ -60,6 +63,8 @@ class CmsGlossaryTable extends AbstractTable{
     {
         $query = $this->glossaryQuery;
         $queryResults = $this->runQuery($query, $config);
+
+        $mappedPlaceholders = [];
         $results = [];
 
         foreach ($queryResults as $item) {
@@ -70,8 +75,24 @@ class CmsGlossaryTable extends AbstractTable{
                 CmsQueryContainer::TRANS => $item[CmsQueryContainer::TRANS],
                 self::ACTIONS => $this->buildLinks($item)
             ];
+            $mappedPlaceholders[] = $item[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER];
         }
+
         unset($queryResults);
+
+
+        foreach($this->placeholders as $place){
+
+            if(!in_array($place,$mappedPlaceholders)){
+                $results[] = [
+                    SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING => null,
+                    SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => $place,
+                    CmsQueryContainer::KEY => null,
+                    CmsQueryContainer::TRANS => null,
+                    self::ACTIONS => $this->buildPlaceholderLinks($place)
+                ];
+            }
+        }
 
         return $results;
     }
@@ -85,5 +106,10 @@ class CmsGlossaryTable extends AbstractTable{
                    <a href="/cms/glossary/delete/?'.$mappingParam.'&'.$pageParam.'" class="btn btn-xs btn-white">Delete</a>';
 
         return $result;
+    }
+
+    private function buildPlaceholderLinks($placeholder)
+    {
+        return '<a href="/cms/glossary/add/?id_page='.$this->idPage.'&placeholder='.$placeholder.'" class="btn btn-xs btn-white">Map a Glossary</a>';
     }
 }

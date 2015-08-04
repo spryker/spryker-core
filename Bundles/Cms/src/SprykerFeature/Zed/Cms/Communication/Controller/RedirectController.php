@@ -66,8 +66,11 @@ class RedirectController extends AbstractController
 
 
             $redirectTransfer = $this->getUrlFacade()->createRedirect($data[CmsRedirectForm::TO_URL]);
+            $this->getUrlFacade()->touchRedirectActive($redirectTransfer);
+
             $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
-            $this->getUrlFacade()->createRedirectUrl($data[CmsRedirectForm::FROM_URL],$localeTransfer,$redirectTransfer->getIdRedirect());
+            $urlTransfer = $this->getUrlFacade()->createRedirectUrl($data[CmsRedirectForm::FROM_URL],$localeTransfer,$redirectTransfer->getIdRedirect());
+            $this->getUrlFacade()->touchUrlActive($urlTransfer->getIdUrl());
 
             return $this->redirectResponse('/cms/redirect/');
         }
@@ -101,12 +104,14 @@ class RedirectController extends AbstractController
                 $urlTransfer->setFkRedirect($spyUrl->getFkResourceRedirect());
                 $urlTransfer->setResourceId($spyUrl->getResourceId());
                 $urlTransfer->setResourceType($spyUrl->getResourceType());
-                $this->getUrlFacade()->saveUrl($urlTransfer);
+                $urlTransfer = $this->getUrlFacade()->saveUrl($urlTransfer);
+                $this->getUrlFacade()->touchUrlActive($urlTransfer->getIdUrl());
 
                 $spyRedirect = $this->getQueryContainer()->queryRedirectById($spyUrl->getFkResourceRedirect())->findOne();
                 $redirectTransfer = (new RedirectTransfer())->fromArray($spyRedirect->toArray());
                 $redirectTransfer->setToUrl($data[CmsRedirectForm::TO_URL]);
-                $this->getUrlFacade()->saveRedirect($redirectTransfer);
+                $redirectTransfer = $this->getUrlFacade()->saveRedirect($redirectTransfer);
+//                $this->getUrlFacade()->touchRedirectActive($redirectTransfer);
 
             }
 

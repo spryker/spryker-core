@@ -25,16 +25,19 @@ class CmsGlossaryForm extends AbstractForm
 
     protected $idMapping;
 
+    protected $placeholder;
+
     /**
      * @param string $type
      */
 
-    public function __construct($glossaryQuery, $type, $idPage, $idMapping)
+    public function __construct($glossaryQuery, $type, $idPage, $idMapping, $placeholder)
     {
         $this->glossaryQuery = $glossaryQuery;
         $this->type = $type;
         $this->idPage = $idPage;
         $this->idMapping = $idMapping;
+        $this->placeholder = $placeholder;
     }
 
     /**
@@ -74,6 +77,11 @@ class CmsGlossaryForm extends AbstractForm
             self::FK_PAGE => $this->idPage,
             self::ID_KEY_MAPPING => $this->idMapping
         ];
+
+        if ($this->placeholder) {
+            $formItems[self::PLACEHOLDER] = $this->placeholder;
+        }
+
         if ($this->glossaryQuery) {
             $glossaryMapping = $this->glossaryQuery->findOne();
 

@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Cms\Persistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
+use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
@@ -21,6 +22,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
 
     const TEMPLATE_NAME = 'template_name';
     const TEMPLATE_PATH = 'template_path';
+    const ID_URL = 'id_url';
     const URL = 'url';
     const TO_URL = 'toUrl';
     const TRANS = 'trans';
@@ -242,6 +244,29 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryKey($key)
     {
         return $this->getProvidedDependency(CmsDependencyProvider::GLOSSARY_QUERY_CONTAINER)->queryKey($key);
+    }
+
+    public function queryPageWithTemplatesAndUrlByPageId($idCmsPage)
+    {
+        return $this->queryPages()
+            ->leftJoinCmsTemplate(null, Criteria::LEFT_JOIN)
+            ->leftJoinSpyUrl(null,Criteria::LEFT_JOIN)
+            ->withColumn(self::TEMPLATE_NAME)
+            ->withColumn(self::URL)
+            ->withColumn(self::ID_URL,'idUrl')
+            ->withColumn(self::TEMPLATE_PATH)
+            ->withColumn(CmsPageForm::IS_ACTIVE)
+            ->filterByIdCmsPage($idCmsPage)
+            ;
+    }
+
+    /**
+     *
+     * @return SpyUrlQuery
+     */
+    public function queryUrlById($url)
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)->queryUrlById($url);
     }
 
 

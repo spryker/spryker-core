@@ -6,11 +6,13 @@
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\PageTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CmsDependencyContainer getDependencyContainer()
@@ -28,7 +30,7 @@ class PageController extends AbstractController
     {
 
         $table = $this->getDependencyContainer()
-            ->createCmsTable()
+            ->createCmsPageTable()
         ;
 
         return [
@@ -42,7 +44,7 @@ class PageController extends AbstractController
     public function tableAction()
     {
         $table = $this->getDependencyContainer()
-            ->createCmsTable()
+            ->createCmsPageTable()
         ;
 
         return $this->jsonResponse($table->fetchData());
@@ -79,6 +81,55 @@ class PageController extends AbstractController
 
 
             return $this->redirectResponse('/cms/glossary/?id_page='.$pageTransfer->getIdCmsPage());
+        }
+
+        return $this->viewResponse([
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @return array
+     */
+    public function editAction(Request $request)
+    {
+
+        $idPage = $request->get('id_page');
+
+        $form = $this->getDependencyContainer()
+            ->createCmsPageForm('update', $idPage)
+        ;
+
+        $form->handleRequest();
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+
+            $pageTransfer = new PageTransfer();
+            $pageTransfer->fromArray($data, true);
+
+            $pageTransfer = $this->getFacade()
+                ->savePage($pageTransfer)
+            ;
+
+            $spyUrl = $this->getQueryContainer()->queryUrlById($data['id_url'])->findOne();
+
+            $urlTransfer = (new UrlTransfer())->fromArray($spyUrl->toArray(),true);
+
+            $urlTransfer->setFkPage($pageTransfer->getIdCmsPage());
+            $urlTransfer->setResourceId($spyUrl->getResourceId());
+            $urlTransfer->setResourceType($spyUrl->getResourceType());
+            $urlTransfer->setUrl($data['url']);
+
+            $urlTransfer = $this->getUrlFacade()->saveUrl($urlTransfer);
+
+
+            $this->getUrlFacade()
+                ->touchUrlActive($urlTransfer->getIdUrl())
+            ;
+
+
+            return $this->redirectResponse('/cms/page/');
         }
 
         return $this->viewResponse([

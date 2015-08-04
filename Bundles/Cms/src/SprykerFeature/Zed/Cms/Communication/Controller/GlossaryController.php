@@ -12,10 +12,12 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
+use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CmsDependencyContainer getDependencyContainer()
+ * @method CmsQueryContainer getQueryContainer()
  * @method CmsFacade getFacade()
  */
 class GlossaryController extends AbstractController
@@ -29,6 +31,7 @@ class GlossaryController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPage = $request->get('id_page');
+        $spyPageUrl = $this->getQueryContainer()->queryPageWithTemplatesAndUrlByPageId($idPage)->findOne();
 
         $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
 
@@ -39,6 +42,7 @@ class GlossaryController extends AbstractController
         return [
             'keyMaps' => $table->render(),
             'idPage' => $idPage,
+            'url' => $spyPageUrl->getUrl()
         ];
     }
 
@@ -51,8 +55,13 @@ class GlossaryController extends AbstractController
 
         $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
 
+        // it's Hardcoded and must be corrected
+        $tempFile = $_SERVER['DOCUMENT_ROOT'].'/../../../src/Pyz/Yves/Cms/Theme/demoshop/template/static_full_page.twig';
+        $placeholders = $this->findTemplatePlaceholders($tempFile);
+
+
         $table = $this->getDependencyContainer()
-            ->createCmsGlossaryTable($idPage, $localeTransfer->getIdLocale())
+            ->createCmsGlossaryTable($idPage, $localeTransfer->getIdLocale(), $placeholders)
         ;
 
         return $this->jsonResponse($table->fetchData());
@@ -66,8 +75,10 @@ class GlossaryController extends AbstractController
 
         $idPage = $request->get('id_page');
 
+        $placeholder = $request->get('placeholder');
+
         $form = $this->getDependencyContainer()
-            ->createCmsGlossaryForm('add', $idPage)
+            ->createCmsGlossaryForm('add', $idPage, null, $placeholder)
         ;
 
         $form->handleRequest();
@@ -156,5 +167,23 @@ class GlossaryController extends AbstractController
         return $this->getFacade()
             ->touchPageActive($pageTransfer)
         ;
+    }
+
+    private function findTemplatePlaceholders($tempFile){
+
+        $placeholderMap = [];
+
+        $handle = fopen($tempFile, "r");
+        if ($handle) {
+            while (($line = fgets($handle)) !== false) {
+                preg_match('/^<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9]*" -->$/', $line, $cmsPlaceholderLine);
+                if(!empty($cmsPlaceholderLine)){
+                    preg_match('/"([^"]+)"/', $cmsPlaceholderLine[0], $placeholder);
+                    $placeholderMap[] = $placeholder[1];
+                }
+            }
+            fclose($handle);
+        }
+        return $placeholderMap;
     }
 }
