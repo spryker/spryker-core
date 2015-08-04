@@ -1,8 +1,0 @@
-.spy-layout.n2 {
-	$w2 : $_wMinTile * 2 + $_xGutter;
-
-	@include smin($w2) {
-		@include n2;
-		@include n2f1;
-	}
-}
