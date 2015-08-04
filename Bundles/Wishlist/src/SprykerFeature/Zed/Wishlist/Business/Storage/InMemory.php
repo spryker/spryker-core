@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\Wishlist\Business\Storage;
 
+use Generated\Shared\Wishlist\ItemInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
-use Generated\Shared\Wishlist\WishlistItemInterface;
 
 class InMemory extends BaseStorage implements StorageInterface
 {
@@ -35,12 +35,7 @@ class InMemory extends BaseStorage implements StorageInterface
     {
         $wishlistIndex = $this->createIndex();
         foreach ($wishlistChange->getItems() as $wishlistItem) {
-
-            if (isset($wishlistIndex[$wishlistItem->getGroupKey()])) {
-                $this->decreaseExistingItem($wishlistIndex[$wishlistItem->getGroupKey()], $wishlistItem);
-            } else {
-                $this->decreaseByConcreteSku($wishlistItem);
-            }
+            $this->reduceTransferItem($wishlistIndex, $wishlistItem);
         }
 
         return $this->wishlist;
@@ -67,12 +62,26 @@ class InMemory extends BaseStorage implements StorageInterface
     }
 
     /**
-     * @param WishlistItemInterface $wishlistItem
+     * @param array $wishlistIndex
+     * @param ItemInterface $wishlistItem
      */
-    protected function decreaseByConcreteSku(WishlistItemInterface $wishlistItem)
+    protected function reduceTransferItem(array $wishlistIndex, ItemInterface $wishlistItem)
+    {
+        if (isset($wishlistIndex[$wishlistItem->getGroupKey()])) {
+            $this->decreaseExistingItem($wishlistIndex[$wishlistItem->getGroupKey()], $wishlistItem);
+        } else {
+            $this->decreaseByProductIdentifier($wishlistItem);
+        }
+    }
+
+    /**
+     * @param ItemInterface $wishlistItem
+     */
+    protected function decreaseByProductIdentifier(ItemInterface $wishlistItem)
     {
         foreach ($this->wishlist->getItems() as $key => $existingItem) {
-            if ($existingItem->getConcreteSku() === $wishlistItem->getConcreteSku()) {
+            if ($existingItem->getIdProduct() === $wishlistItem->getIdProduct()
+                && $existingItem->getIdAbstractProduct() == $wishlistItem->getIdAbstractProduct()) {
                 $this->decreaseExistingItem($key, $wishlistItem);
                 return;
             }
@@ -81,9 +90,9 @@ class InMemory extends BaseStorage implements StorageInterface
 
     /**
      * @param integer $index
-     * @param WishlistItemInterface $itemToChange
+     * @param ItemInterface $itemToChange
      */
-    private function decreaseExistingItem($index, WishlistItemInterface $itemToChange)
+    protected function decreaseExistingItem($index, ItemInterface $itemToChange)
     {
         $existingItems = $this->wishlist->getItems();
         $existingItem = $existingItems[$index];

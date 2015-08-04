@@ -6,11 +6,21 @@
 
 namespace SprykerFeature\Zed\Wishlist\Business;
 
+use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
+use Generated\Shared\Wishlist\WishlistInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\WishlistBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Wishlist\Business\Model\Customer;
 use SprykerFeature\Zed\Wishlist\Business\Storage\StorageInterface;
+use SprykerFeature\Zed\Wishlist\Business\Storage\Propel;
+use SprykerFeature\Zed\Wishlist\Business\Storage\InMemory;
 use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainer;
+use SprykerFeature\Zed\Wishlist\Business\Operator\Add;
+use SprykerFeature\Zed\Wishlist\Business\Operator\Increase;
+use SprykerFeature\Zed\Wishlist\Business\Operator\Remove;
+use SprykerFeature\Zed\Wishlist\Business\Operator\Decrease;
+use SprykerFeature\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
  * @method WishlistBusiness getFactory()
@@ -21,7 +31,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @param WishlistChangeInterface $wishlistChange
      *
-     * @return Operator\Add
+     * @return Add
      */
     public function createAddOperator(WishlistChangeInterface $wishlistChange)
     {
@@ -32,7 +42,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @param WishlistChangeInterface $wishlistChange
      *
-     * @return Operator\Increase
+     * @return Increase
      */
     public function createIncreaseOperator(WishlistChangeInterface $wishlistChange)
     {
@@ -43,7 +53,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @param WishlistChangeInterface $wishlistChange
      *
-     * @return Operator\Decrease
+     * @return Decrease
      */
     public function createDecreaseOperator(WishlistChangeInterface $wishlistChange)
     {
@@ -54,7 +64,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @param WishlistChangeInterface $wishlistChange
      *
-     * @return Operator\Remove
+     * @return Remove
      */
     public function createRemoveOperator(WishlistChangeInterface $wishlistChange)
     {
@@ -69,7 +79,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createStorage(WishlistChangeInterface $wishlistChange)
     {
-        if (null !==$wishlistChange->getCustomer()) {
+        if (null !== $wishlistChange->getCustomer()) {
             return $this->createPropelStorage($wishlistChange);
         }
         return $this->createInMemoryStrorage($wishlistChange);
@@ -79,20 +89,36 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @param WishlistChangeInterface $wishlistChange
      *
-     * @return Storage\Propel
+     * @return Propel
      */
     protected function createPropelStorage(WishlistChangeInterface $wishlistChange)
     {
-        return $this->getFactory()->createStoragePropel($this->getQueryContainer(), $wishlistChange->getWishlist());
+        return $this->getFactory()->createStoragePropel(
+            $this->getQueryContainer(),
+            $this->createCustomer($wishlistChange->getCustomer()),
+            $wishlistChange->getWishlist(),
+            $wishlistChange->getCustomer(),
+            $this->getProvidedDependency(WishlistDependencyProvider::PRODUCT_FACADE)
+        );
     }
 
     /**
      * @param WishlistChangeInterface $wishlistChange
      *
-     * @return Storage\InMemory
+     * @return InMemory
      */
     protected function createInMemoryStrorage(WishlistChangeInterface $wishlistChange)
     {
         return $this->getFactory()->createStorageInMemory($wishlistChange->getWishlist());
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return Customer
+     */
+    public function createCustomer(CustomerInterface $customerTransfer)
+    {
+        return $this->getFactory()->createModelCustomer($this->getQueryContainer(), $customerTransfer);
     }
 }

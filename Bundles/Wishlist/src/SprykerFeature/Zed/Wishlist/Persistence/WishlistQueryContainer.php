@@ -8,114 +8,52 @@ namespace SprykerFeature\Zed\Wishlist\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Generated\Shared\Wishlist\WishlistItemInterface;
-use Generated\Shared\Customer\CustomerInterface;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\Map\SpyWishlistItemTableMap;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlist;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItem;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItemQuery;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
-use Propel\Runtime\ActiveQuery\Join;
+
 
 class WishlistQueryContainer extends AbstractQueryContainer
 {
-    const ABSTRACT_SKU_COL_NAME = "abstract_sku";
-
-    const CONCRETE_SKU_COL_NAME = "concrete_sku";
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param integer $idWishlist
+     * @param integer $idAbstractProduct
+     * @param integer $idConcreateProduct
      *
-     * @return SpyWishlist
+     * @return SpyWishlistItemQuery
      */
-    public function queryCustomerWishlist(CustomerInterface $customerTransfer)
-    {
-        $wishlist = SpyWishlistQuery::create()
-            ->findOneByFkCustomer($customerTransfer->getIdCustomer());
+    public function filterCustomerByConcreteAndAbstractId(
+        $idWishlist,
+        $idAbstractProduct,
+        $idConcreateProduct = null
+    ) {
+        $criteria = new Criteria();
+        $criteria->add(SpyWishlistItemTableMap::COL_FK_WISHLIST, $idWishlist);
 
-        return $wishlist;
+        if (isset($idConcreateProduct)) {
+            $criteria->addAnd(SpyWishlistItemTableMap::COL_FK_PRODUCT, $idConcreateProduct)
+                ->addAnd(SpyWishlistItemTableMap::COL_FK_ABSTRACT_PRODUCT, $idAbstractProduct);
+        } else {
+            $criteria->addAnd(SpyWishlistItemTableMap::COL_FK_ABSTRACT_PRODUCT, $idAbstractProduct);
+        }
+
+        return SpyWishlistItemQuery::create(null, $criteria);
     }
 
     /**
-     * @param int $idWishlistItem
+     * @param integer $idWishlist
+     * @param string $groupKey
      *
-     * @return SpyWishlistItem
+     * @return SpyWishlistItemQuery
      */
-    public function queryWishlistItemByIdWishlistItem($idWishlistItem)
+    public function filterCustomerByGroupKey($idWishlist, $groupKey)
     {
-        $wishlist = SpyWishlistItemQuery::create()
-            ->findOneByIdWishlistItem($idWishlistItem);
+        $criteria = new Criteria();
+        $criteria->add(SpyWishlistItemTableMap::COL_FK_WISHLIST, $idWishlist);
+        $criteria->addAnd(SpyWishlistItemTableMap::COL_GROUP_KEY, $groupKey);
 
-        return $wishlist;
-    }
-
-    /**
-     * @param CustomerInterface $customerTransfer
-     *
-     * @return array
-     */
-    public function queryCustomerWishlistItemsArray(CustomerInterface $customerTransfer)
-    {
-        return SpyWishlistItemQuery::create()
-            ->useSpyWishlistQuery('w')
-            ->filterByFkCustomer($customerTransfer->getIdCustomer())
-            ->endUse()
-            ->addJoinObject(
-                new Join(
-                    SpyWishlistItemTableMap::COL_FK_CONCRETE_PRODUCT,
-                    SpyProductTableMap::COL_ID_PRODUCT,
-                    Criteria::LEFT_JOIN
-
-                ), 'c')
-            ->addJoinObject(
-                new Join(
-                    SpyProductTableMap::COL_FK_ABSTRACT_PRODUCT,
-                    SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
-                    Criteria::LEFT_JOIN
-
-                ), 'a')
-            ->withColumn(
-                spyAbstractProductTableMap::COL_SKU,
-                self::ABSTRACT_SKU_COL_NAME
-            )
-            ->withColumn(
-                SpyProductTableMap::COL_SKU,
-                self::CONCRETE_SKU_COL_NAME
-            )
-            ->find()
-            ->getArrayCopy();
-    }
-
-    /**
-     * @param integer $concreteSku
-     * @param integer $abstractSku
-     *
-     * @return Propel\SpyWishlistItem[]
-     */
-    public function getWishlistItemByConcreteAndAbstractSku($concreteSku, $abstractSku)
-    {
-        $criteria = (new Criteria())
-          ->add(SpyWishlistItemTableMap::COL_CONCRETE_SKU, $concreteSku)
-          ->addAnd(SpyWishlistItemTableMap::COL_ABSTRACT_SKU, $concreteSku);
-
-        return SpyWishlistItemQuery::create(null, $criteria)->find();
-    }
-
-    /**
-     * @param WishlistItemInterface $wishlistItemTransfer
-     *
-     * @return SpyProduct
-     */
-    public function queryConcreteProduct(WishlistItemInterface $wishlistItemTransfer)
-    {
-        $concreteProduct = SpyProductQuery::create()
-            ->findOneBySku($wishlistItemTransfer->getProduct()->getConcreteSku());
-
-        return $concreteProduct;
+        return SpyWishlistItemQuery::create(null, $criteria);
     }
 
     /**
@@ -127,16 +65,10 @@ class WishlistQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param WishlistItemInterface $wishlistTransfer
-     *
-     * @return SpyWishlistItemQuery
+     * @return SpyWishlistQuery
      */
-    public function filterWishlistItemQueryByPrimaryKey(WishlistItemInterface $wishlistTransfer)
+    public function getWishlistQuery()
     {
-        return $this->getWishlistItemQuery()
-            ->filterByPrimaryKey($wishlistTransfer->getId());
-
+        return SpyWishlistQuery::create();
     }
-
-
 }

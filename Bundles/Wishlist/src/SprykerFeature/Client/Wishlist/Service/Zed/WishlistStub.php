@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Client\Wishlist\Service\Zed;
 
+use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
 use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
@@ -63,6 +64,16 @@ class WishlistStub implements WishlistStubInterface
     public function increaseQuantity(WishlistChangeInterface $wishlistChange)
     {
         return $this->zedClientStub->call('/wishlist/gateway/increase-quantity', $wishlistChange);
+    }
+
+    /**
+     * @param CustomerInterface $customer
+     *
+     * @return WishlistInterface
+     */
+    public function getCustomerWishlist(CustomerInterface $customer)
+    {
+        return $this->zedClientStub->call('/wishlist/gateway/get-customer-wishlist', $customer);
     }
 
 

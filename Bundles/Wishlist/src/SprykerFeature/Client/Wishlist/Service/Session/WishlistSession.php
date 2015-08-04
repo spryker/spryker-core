@@ -37,13 +37,13 @@ class WishlistSession implements WishlistSessionInterface
     }
 
     /**
-     * @param WishlistInterface $cartTransfer
+     * @param WishlistInterface $wishlist
      *
      * @return $this
      */
-    public function setWishlist(WishlistInterface $cartTransfer)
+    public function setWishlist(WishlistInterface $wishlist)
     {
-        $this->session->set(self::WISHLIST_SESSION_IDENTIFIER, $cartTransfer);
+        $this->session->set(self::WISHLIST_SESSION_IDENTIFIER, $wishlist);
 
         return $this;
     }

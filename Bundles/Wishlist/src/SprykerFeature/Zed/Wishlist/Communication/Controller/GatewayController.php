@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Wishlist\Communication\Controller;
 
+use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -31,7 +32,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return WishlistInterface
      */
-    public function removeAction(WishlistChangeInterface $changeTransfer)
+    public function removeItemAction(WishlistChangeInterface $changeTransfer)
     {
         return $this->getFacade()->removeItem($changeTransfer);
     }
@@ -54,5 +55,15 @@ class GatewayController extends AbstractGatewayController
     public function increaseQuantityAction(WishlistChangeInterface $changeTransfer)
     {
         return $this->getFacade()->increaseQuantity($changeTransfer);
+    }
+
+    /**
+     * @param CustomerInterface $customer
+     *
+     * @return WishlistInterface
+     */
+    public function getCustomerWishlist(CustomerInterface $customer)
+    {
+        return $this->getFacade()->getCustomerWishlist($customer);
     }
 }

@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Wishlist\Business\Operator;
 
 use Generated\Shared\Wishlist\WishlistChangeInterface;
+use Generated\Shared\Wishlist\WishlistInterface;
 
 class Remove extends AbstractOperator
 {
@@ -13,9 +14,10 @@ class Remove extends AbstractOperator
     /**
      * @param WishlistChangeInterface $wishlistItem
      *
+     * @return WishlistInterface
      */
     protected function applyOperation(WishlistChangeInterface $wishlistItem)
     {
-        // TODO: Implement applyOperation() method.
+        return $this->storage->removeItems($wishlistItem);
     }
 }

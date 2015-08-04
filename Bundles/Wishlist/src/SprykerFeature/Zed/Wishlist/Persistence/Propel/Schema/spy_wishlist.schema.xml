@@ -23,12 +23,20 @@
         <column name="quantity" required="true" type="INTEGER" />
         <column name="added_at" required="true" type="TIMESTAMP" />
         <column name="fk_wishlist" required="true" type="INTEGER" />
-        <column name="group_key" required="true" type="VARCHAR" />
-        <column name="concrete_sku" required="true" type="VARCHAR" />
-        <column name="abstract_sku" required="false" type="VARCHAR" />
+        <column name="group_key" required="false" type="VARCHAR" />
 
         <foreign-key foreignTable="spy_wishlist" phpName="SpyWishlist">
             <reference foreign="id_wishlist" local="fk_wishlist"/>
+        </foreign-key>
+
+        <column name="fk_product" required="false" type="INTEGER" />
+        <foreign-key foreignTable="spy_product">
+            <reference foreign="id_product" local="fk_product"/>
+        </foreign-key>
+
+        <column name="fk_abstract_product" required="true" type="INTEGER" />
+        <foreign-key foreignTable="spy_abstract_product">
+            <reference foreign="id_abstract_product" local="fk_abstract_product"/>
         </foreign-key>
 
     </table>
