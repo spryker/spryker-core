@@ -113,7 +113,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
      */
     public function getConnection()
     {
-        return Propel::getConnection();
+        return $this->getProvidedDependency('propel connection');
     }
 
     /**
