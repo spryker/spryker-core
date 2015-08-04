@@ -26,6 +26,8 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 
 /**
  * @group Zed
@@ -255,6 +257,60 @@ class SalesFacadeTest extends Test
         $this->assertSame($item2->getGrossPrice(), $item2Entity->getGrossPrice());
         $this->assertSame($item2->getPriceToPay(), $item2Entity->getPriceToPay());
         $this->assertSame($item2->getQuantity(), $item2Entity->getQuantity());
+    }
+
+    public function testSaveOrderCreatesAndFillsOrderItemOption()
+    {
+        $orderTransfer = $this->getValidBaseOrderTransfer();
+
+        $initialState = SpyOmsOrderItemStateQuery::create()->filterByName(OmsConfig::INITIAL_STATUS)->findOneOrCreate();
+        $initialState->save();
+        $this->assertNotNull($initialState->getIdOmsOrderItemState());
+
+        $taxSet = new TaxSetTransfer();
+        $taxSet->setEffectiveRate(20);
+        $taxSet->setAmount(231);
+
+        $productOption = new ProductOptionTransfer();
+        $productOption
+            ->setIdOptionValueUsage(1)
+            ->setLabelOptionType('Color')
+            ->setLabelOptionValue('Red')
+            ->setGrossPrice(1000)
+            ->setPriceToPay(1000)
+            ->setTaxSet($taxSet);
+
+        $item = new ItemTransfer();
+        $item
+            ->setName('item-test-1')
+            ->setSku('sku1')
+            ->setGrossPrice(120)
+            ->setPriceToPay(100)
+            ->setQuantity(2)
+            ->addProductOption($productOption)
+        ;
+
+        $orderTransfer->addItem($item);
+
+        $this->salesFacade->saveOrder($orderTransfer);
+
+        $itemQuery = SpySalesOrderItemQuery::create()
+            ->filterByName('item-test-1')
+        ;
+
+        $itemEntity = $itemQuery->findOne();
+        $this->assertNotNull($itemEntity);
+
+        $optionsCollection = $itemEntity->getOptions();
+        $this->assertEquals(1, $optionsCollection->count());
+
+        $optionEntity = $optionsCollection[0];
+        $this->assertEquals('Color', $optionEntity->getLabelOptionType());
+        $this->assertEquals('Red', $optionEntity->getLabelOptionValue());
+        $this->assertEquals(1000, $optionEntity->getGrossPrice());
+        $this->assertEquals(1000, $optionEntity->getPriceToPay());
+        $this->assertEquals(20, $optionEntity->getTaxPercentage());
+        $this->assertEquals(231, $optionEntity->getTaxAmount());
     }
 
     public function testSaveOrderAttachesProcessToItem()

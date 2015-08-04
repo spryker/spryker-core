@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SalesAddressTransfer;
 use Propel\Runtime\Propel;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
 
 class OrderManager
 {
@@ -83,9 +85,9 @@ class OrderManager
             $itemEntity->setFkOmsOrderProcess($fkOrderProcess);
             $itemEntity->setQuantity(!is_null($item->getQuantity()) ? $item->getQuantity() : 1);
             $itemEntity->setGroupKey($item->getGroupKey());
-
             $itemEntity->save();
             $item->setIdSalesOrderItem($itemEntity->getIdSalesOrderItem());
+            $this->saveProductOptions($item);
         }
 
         Propel::getConnection()->commit();
@@ -94,6 +96,24 @@ class OrderManager
         $orderTransfer->setOrderReference($orderEntity->getOrderReference());
         
         return $orderTransfer;
+    }
+
+    /**
+     * @param ItemTransfer $item
+     */
+    protected function saveProductOptions(ItemTransfer $item)
+    {
+        foreach ($item->getProductOptions() as $productOption) {
+            $optionEntity = new SpySalesOrderItemOption();
+            $optionEntity->setFkSalesOrderItem($item->getIdSalesOrderItem());
+            $optionEntity->setLabelOptionType($productOption->getLabelOptionType());
+            $optionEntity->setLabelOptionValue($productOption->getLabelOptionValue());
+            $optionEntity->setGrossPrice($productOption->getGrossPrice());
+            $optionEntity->setPriceToPay($productOption->getPriceToPay());
+            $optionEntity->setTaxPercentage($productOption->getTaxSet()->getEffectiveRate());
+            $optionEntity->setTaxAmount($productOption->getTaxSet()->getAmount());
+            $optionEntity->save();
+        }
     }
 
     /**

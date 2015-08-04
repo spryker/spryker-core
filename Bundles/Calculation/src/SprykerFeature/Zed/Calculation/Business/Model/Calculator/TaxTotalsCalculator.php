@@ -89,7 +89,9 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         }
 
         $taxAmountForTaxSet = $this->priceCalculationHelper->getTaxValueFromPrice($taxableAmount, $effectiveTaxRate);
-        $taxSet->setAmount($taxAmountForTaxSet);
+
+        $taxSet->setAmount($taxAmountForTaxSet)
+            ->setEffectiveRate($effectiveTaxRate);
 
         $this->calculatedTaxSets[] = clone $taxSet;
     }

@@ -92,6 +92,11 @@
         <property name="status" type="ItemStatus[]" />
     </transfer>
 
+    <transfer name="TaxSet">
+        <property name="effectiveRate" type="int" />
+        <property name="amount" type="int" />
+    </transfer>
+
     <transfer name="OrderItems">
         <property name="orderItems" type="Item[]" singular="orderItem" />
     </transfer>
