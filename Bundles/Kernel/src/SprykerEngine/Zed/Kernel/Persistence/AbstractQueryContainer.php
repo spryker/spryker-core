@@ -35,6 +35,9 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
      */
     private $container;
 
+
+    private $connection;
+
     /**
      * @param Factory $factory
      * @param Locator $locator
@@ -108,8 +111,16 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     /**
      * @return ConnectionInterface
      */
-    protected function getConnection()
+    public function getConnection()
     {
         return Propel::getConnection();
+    }
+
+    /**
+     * @param ConnectionInterface $connection
+     */
+    public function setConnection(ConnectionInterface $connection)
+    {
+        $this->connection = $connection;
     }
 }
