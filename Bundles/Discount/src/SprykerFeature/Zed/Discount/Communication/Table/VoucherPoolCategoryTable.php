@@ -9,8 +9,14 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 class VoucherPoolCategoryTable extends AbstractTable
 {
+    /**
+     * @var SpyDiscountVoucherPoolCategoryQuery
+     */
     protected $categoriesQuery;
 
+    /**
+     * @param SpyDiscountVoucherPoolCategoryQuery $discountVoucherPoolCategory
+     */
     public function __construct(SpyDiscountVoucherPoolCategoryQuery $discountVoucherPoolCategory)
     {
         $this->categoriesQuery = $discountVoucherPoolCategory;
@@ -51,7 +57,6 @@ class VoucherPoolCategoryTable extends AbstractTable
                 ),
             ];
         }
-
 
         return $results;
     }

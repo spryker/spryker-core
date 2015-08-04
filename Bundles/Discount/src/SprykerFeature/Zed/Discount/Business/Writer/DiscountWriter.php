@@ -44,4 +44,5 @@ class DiscountWriter extends AbstractWriter
         return $discountEntity;
     }
 
+
 }

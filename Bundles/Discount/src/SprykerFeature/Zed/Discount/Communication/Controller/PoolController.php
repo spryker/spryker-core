@@ -21,6 +21,7 @@ use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use Propel\Runtime\Map\TableMap;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
@@ -34,7 +35,7 @@ class PoolController extends AbstractController
     const BLANK = '';
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function createAction()
     {
@@ -61,11 +62,7 @@ class PoolController extends AbstractController
 
             $facade->createDiscount($discount);
 
-            return $this->redirectResponse(sprintf(
-                VoucherPoolTable::URL_DISCOUNT_POOL_EDIT,
-                VoucherPoolTable::PARAM_ID_POOL,
-                $pool->getIdDiscountVoucherPool()
-            ));
+            return $this->redirectResponse('/discount/pool');
         }
 
         return [
@@ -77,7 +74,7 @@ class PoolController extends AbstractController
      * @param Request $request
      *
      * @throws \Propel\Runtime\Exception\PropelException
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function editAction(Request $request)
     {
@@ -182,6 +179,9 @@ class PoolController extends AbstractController
         );
     }
 
+    /**
+     * @return array
+     */
     public function indexAction()
     {
         $table = $this->getDependencyContainer()->createVoucherPoolTable();
@@ -203,6 +203,11 @@ class PoolController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function categorySuggestAction(Request $request)
     {
         $term = $request->get(self::TERM);

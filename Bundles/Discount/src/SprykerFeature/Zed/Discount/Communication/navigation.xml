@@ -5,20 +5,20 @@
         <title>Discount</title>
         <bundle>discount</bundle>
         <pages>
+            <voucher>
+                <label>Vouchers List</label>
+                <title>Vouchers List</title>
+                <bundle>discount</bundle>
+                <controller>voucher</controller>
+                <action>index</action>
+            </voucher>
             <pool>
-                <label>Pool</label>
-                <title>Pool</title>
+                <label>Pool List</label>
+                <title>Pool List</title>
                 <bundle>discount</bundle>
                 <controller>pool</controller>
                 <action>index</action>
             </pool>
-            <pool-create>
-                <label>Create Pool</label>
-                <title>Create Pool</title>
-                <bundle>discount</bundle>
-                <controller>pool</controller>
-                <action>create</action>
-            </pool-create>
         </pages>
     </discount>
 </config>
