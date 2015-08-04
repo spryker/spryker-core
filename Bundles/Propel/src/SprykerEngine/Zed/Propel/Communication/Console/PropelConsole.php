@@ -34,8 +34,8 @@ class PropelConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->runDependingCommand(ConvertConfigConsole::COMMAND_NAME);
-        $this->runDependingCommand(PostgresqlCompatibilityConsole::COMMAND_NAME);
         $this->runDependingCommand(CreateDatabaseConsole::COMMAND_NAME);
+        $this->runDependingCommand(PostgresqlCompatibilityConsole::COMMAND_NAME);
         $this->runDependingCommand(SchemaCopyConsole::COMMAND_NAME);
         $this->runDependingCommand(BuildModelConsole::COMMAND_NAME);
         $this->runDependingCommand(DiffConsole::COMMAND_NAME);
