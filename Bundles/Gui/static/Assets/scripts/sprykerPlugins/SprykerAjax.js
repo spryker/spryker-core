@@ -35,4 +35,11 @@ function SprykerAjax() {
         };
         this.ajaxSubmit(options, 'changeStatusMarkInGrid');
     }
+
+    this.getCategoryTreeByCategoryId = function(idCategory) {
+        var options = {
+            id: idCategory
+        };
+        this.setUrl('/category/list/node').ajaxSubmit(options, 'categoryDisplayNodeTree');
+    }
 }

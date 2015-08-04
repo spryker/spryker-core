@@ -26,4 +26,13 @@ function SprykerAjaxCallbacks() {
             this.alerter.error(ajaxResponse.message);
         }
     }
+
+    this.categoryDisplayNodeTree = function(ajaxResponse){
+        $('#category-node-tree').removeClass('hidden');
+        $('#jstree-container').html('<div id="jstree-category"></div>');
+        $('#jstree-category').jstree({ 'core' : {
+                'data' : ajaxResponse.data
+            }
+        });
+    }
 }
