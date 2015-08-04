@@ -32,7 +32,8 @@ class ListController extends AbstractController
 
     public function nodeAction(Request $request)
     {
-        if ($request->get('id') == 14) {
+        $idCategory = $request->get('id');
+        if ($idCategory == 14) {
             $data = [
                 'text' => 'Categ 14',
                 'state' => [
@@ -63,6 +64,12 @@ class ListController extends AbstractController
         return $this->jsonResponse([
             'code' => Response::HTTP_OK,
             'data' => $data,
+            'idCategory' => $idCategory,
         ]);
+    }
+
+    public function attributesAction(Request $request)
+    {
+
     }
 }

@@ -31,19 +31,19 @@
 
     {% endembed %}
 
-    {#
     {% embed '@Gui/Partials/widget.twig' with {
     widget_title: 'Attributes of the selected category',
     row_id: 'attributes-table'
     } %}
 
         {% block widget_content %}
-            {{ categoryAttributeTable | raw }}
-
+            {#{{ categoryAttributeTable | raw }}#}
+            <div id="category-attributes">-attributes-</div>
         {% endblock %}
 
     {% endembed %}
 
+    {#
     {% embed '@Gui/Partials/widget.twig' with {
     widget_title: 'Urls for the selected category node',
     row_id: 'url-table'

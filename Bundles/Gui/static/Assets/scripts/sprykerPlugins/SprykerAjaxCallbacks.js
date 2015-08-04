@@ -27,12 +27,18 @@ function SprykerAjaxCallbacks() {
         }
     }
 
+    /**
+     * @param ajaxResponse
+     */
     this.categoryDisplayNodeTree = function(ajaxResponse){
         $('#category-node-tree').removeClass('hidden');
         $('#jstree-container').html('<div id="jstree-category"></div>');
-        $('#jstree-category').jstree({ 'core' : {
+        console.log(ajaxResponse);
+        $('#jstree-category').jstree({
+            'core' : {
                 'data' : ajaxResponse.data
             }
         });
+        SprykerAjax().getCategoryAttributes(ajaxResponse.idCategory);
     }
 }

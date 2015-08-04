@@ -42,4 +42,11 @@ function SprykerAjax() {
         };
         this.setUrl('/category/list/node').ajaxSubmit(options, 'categoryDisplayNodeTree');
     }
+
+    this.getCategoryAttributes = function(idCategory) {
+        var options = {
+            id: idCategory
+        }
+        this.setUrl('/category/list/attributes').ajaxSubmit(options, 'categoryDisplayAttributes');
+    }
 }
