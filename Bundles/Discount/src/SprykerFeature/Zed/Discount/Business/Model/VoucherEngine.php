@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use SprykerFeature\Zed\Discount\Business\DiscountSettingsInterface;
+use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool as VoucherPoolEntity;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 
 /**
  * Class VoucherEngine
@@ -18,7 +18,7 @@ class VoucherEngine
 {
 
     /**
-     * @var DiscountSettingsInterface
+     * @var DiscountConfigInterface
      */
     protected $settings;
 
@@ -28,10 +28,10 @@ class VoucherEngine
     protected $queryContainer;
 
     /**
-     * @param DiscountSettingsInterface $settings
+     * @param DiscountConfigInterface $settings
      * @param DiscountQueryContainer $queryContainer
      */
-    public function __construct(DiscountSettingsInterface $settings, DiscountQueryContainer $queryContainer)
+    public function __construct(DiscountConfigInterface $settings, DiscountQueryContainer $queryContainer)
     {
         $this->settings = $settings;
         $this->queryContainer = $queryContainer;
@@ -71,7 +71,7 @@ class VoucherEngine
      * @param string $code
      * @param int $idVoucherPool
      *
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher
+     * @return SpyDiscountVoucher
      */
     public function createVoucherCode($code, $idVoucherPool)
     {
@@ -80,7 +80,8 @@ class VoucherEngine
             ->setFkDiscountVoucherPool($idVoucherPool)
             ->setIsActive(true)
             ->setCode($code)
-            ->save();
+            ->save()
+        ;
 
         return $voucherEntity;
     }
@@ -96,10 +97,10 @@ class VoucherEngine
         $allowedCharacters = $this->settings->getVoucherCodeCharacters();
         srand((double) microtime() * 1000000);
 
-        $consonants = $allowedCharacters[DiscountSettingsInterface::KEY_VOUCHER_CODE_CONSONANTS];
-        $vowels = $allowedCharacters[DiscountSettingsInterface::KEY_VOUCHER_CODE_VOWELS];
-        $numbers = $allowedCharacters[DiscountSettingsInterface::KEY_VOUCHER_CODE_NUMBERS];
-        $specialCharacters = $allowedCharacters[DiscountSettingsInterface::KEY_VOUCHER_CODE_SPECIAL_CHARACTERS];
+        $consonants = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_CONSONANTS];
+        $vowels = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_VOWELS];
+        $numbers = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_NUMBERS];
+        $specialCharacters = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_SPECIAL_CHARACTERS];
 
         $code = '';
 
@@ -129,12 +130,12 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherPoolEntity $voucherPoolEntity
+     * @param SpyDiscountVoucherPool $voucherPoolEntity
      * @param string $code
      *
      * @return string
      */
-    protected function getCodeWithTemplate(VoucherPoolEntity $voucherPoolEntity, $code)
+    protected function getCodeWithTemplate(SpyDiscountVoucherPool $voucherPoolEntity, $code)
     {
         $template = $voucherPoolEntity->getTemplate();
         $replacementString = $this->settings->getVoucherPoolTemplateReplacementString();

@@ -6,26 +6,23 @@
 
 namespace SprykerFeature\Zed\Discount\Business\DecisionRule;
 
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
+use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-/**
- * Class Voucher
- */
 class Voucher
 {
 
     const REASON_VOUCHER_CODE_NOT_AVAILABLE = 'Voucher code is not valid';
 
     /**
-     * @var DiscountQueryContainer
+     * @var DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
     /**
-     * @param DiscountQueryContainer $discountQueryContainer
+     * @param DiscountQueryContainerInterface $discountQueryContainer
      */
-    public function __construct(DiscountQueryContainer $discountQueryContainer)
+    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {
         $this->discountQueryContainer = $discountQueryContainer;
     }

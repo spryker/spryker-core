@@ -13,6 +13,8 @@ use SprykerFeature\Zed\Discount\Business\Calculator\Percentage;
 use SprykerFeature\Zed\Discount\Business\Collector\Item;
 use SprykerFeature\Zed\Discount\Business\Collector\ItemExpense;
 use SprykerFeature\Zed\Discount\Business\Collector\Expense;
+use SprykerFeature\Zed\Discount\Business\Distributor\Distributor;
+use SprykerFeature\Zed\Discount\Business\Model\Calculator;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherWriter;
@@ -27,13 +29,12 @@ use SprykerFeature\Zed\Discount\Business\Model\Discount;
 use SprykerFeature\Zed\Discount\Business\Model\VoucherEngine;
 use SprykerFeature\Zed\Discount\Business\Model\CalculatorInterface;
 use SprykerFeature\Zed\Discount\Business\Collector\CollectorInterface;
-use SprykerFeature\Zed\Discount\Business\Model\Distributor;
-use SprykerFeature\Zed\Discount\Business\Model\Calculator;
 use SprykerFeature\Zed\Discount\Business\Model\DecisionRuleEngine;
 
 /**
  * @method DiscountBusiness getFactory()
  * @method DiscountConfig getConfig()
+ * @method DiscountQueryContainer getQueryContainer()
  */
 class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
 {
@@ -57,13 +58,11 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @ param OrderInterface $container
      * @param CalculableInterface $container
      *
      * @return Discount
      */
     public function getDiscount(CalculableInterface $container)
-    //public function getDiscount(OrderInterface $container)
     {
         return $this->getFactory()->createModelDiscount(
             $container,
@@ -129,7 +128,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     public function getDiscountWriter()
     {
         return $this->getFactory()->createWriterDiscountWriter(
-            $this->getLocator()
+            $this->getQueryContainer()
         );
     }
 
@@ -139,7 +138,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     public function getDiscountDecisionRuleWriter()
     {
         return $this->getFactory()->createWriterDiscountDecisionRuleWriter(
-            $this->getLocator()
+            $this->getQueryContainer()
         );
     }
 
@@ -149,7 +148,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     public function getDiscountVoucherWriter()
     {
         return $this->getFactory()->createWriterDiscountVoucherWriter(
-            $this->getLocator()
+            $this->getQueryContainer()
         );
     }
 
@@ -159,7 +158,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     public function getDiscountVoucherPoolWriter()
     {
         return $this->getFactory()->createWriterDiscountVoucherPoolWriter(
-            $this->getLocator()
+            $this->getQueryContainer()
         );
     }
 
@@ -169,16 +168,8 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     public function getDiscountVoucherPoolCategoryWriter()
     {
         return $this->getFactory()->createWriterDiscountVoucherPoolCategoryWriter(
-            $this->getLocator()
+            $this->getQueryContainer()
         );
-    }
-
-    /**
-     * @return DiscountQueryContainer
-     */
-    protected function getQueryContainer()
-    {
-        return $this->getLocator()->discount()->queryContainer();
     }
 
     /**
@@ -202,9 +193,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getDistributor()
     {
-        return $this->getFactory()->createModelDistributor(
-            $this->getLocator()
-        );
+        return $this->getFactory()->createDistributorDistributor();
     }
 
     /**
@@ -241,4 +230,5 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createCollectorExpense();
     }
+
 }

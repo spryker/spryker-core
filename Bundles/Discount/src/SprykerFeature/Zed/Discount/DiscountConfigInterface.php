@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business;
+namespace SprykerFeature\Zed\Discount;
 
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
-interface DiscountSettingsInterface
+interface DiscountConfigInterface
 {
 
     const KEY_VOUCHER_CODE_CONSONANTS = 'consonants';

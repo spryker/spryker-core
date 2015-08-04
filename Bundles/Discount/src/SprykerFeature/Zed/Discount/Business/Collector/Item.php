@@ -13,13 +13,10 @@ class Item implements CollectorInterface
 {
 
     /**
-     * @ param OrderInterface $container
-     *
      * @param CalculableInterface $container
      *
      * @return array
      */
-    //public function collect(OrderInterface $container)
     public function collect(CalculableInterface $container)
     {
         $discountableItems = [];
