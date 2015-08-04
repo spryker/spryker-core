@@ -12,6 +12,7 @@ use Generated\Shared\Wishlist\WishlistInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\WishlistBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Wishlist\Business\Model\Customer;
+use SprykerFeature\Zed\Wishlist\Business\Operator\AbstractOperator;
 use SprykerFeature\Zed\Wishlist\Business\Storage\StorageInterface;
 use SprykerFeature\Zed\Wishlist\Business\Storage\Propel;
 use SprykerFeature\Zed\Wishlist\Business\Storage\InMemory;
@@ -36,7 +37,9 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     public function createAddOperator(WishlistChangeInterface $wishlistChange)
     {
         $storage = $this->createStorage($wishlistChange);
-        return $this->getFactory()->createOperatorAdd($storage, $wishlistChange);
+        $operator = $this->getFactory()->createOperatorAdd($storage, $wishlistChange);
+        $this->provideOperatorPlugins($operator);
+        return $operator;
     }
 
     /**
@@ -47,7 +50,9 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     public function createIncreaseOperator(WishlistChangeInterface $wishlistChange)
     {
         $storage = $this->createStorage($wishlistChange);
-        return $this->getFactory()->createOperatorIncrease($storage, $wishlistChange);
+        $operator = $this->getFactory()->createOperatorIncrease($storage, $wishlistChange);
+        $this->provideOperatorPlugins($operator);
+        return $operator;
     }
 
     /**
@@ -58,7 +63,9 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     public function createDecreaseOperator(WishlistChangeInterface $wishlistChange)
     {
         $storage = $this->createStorage($wishlistChange);
-        return $this->getFactory()->createOperatorDecrease($storage, $wishlistChange);
+        $operator = $this->getFactory()->createOperatorDecrease($storage, $wishlistChange);
+        $this->provideOperatorPlugins($operator);
+        return $operator;
     }
 
     /**
@@ -69,7 +76,18 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     public function createRemoveOperator(WishlistChangeInterface $wishlistChange)
     {
         $storage = $this->createStorage($wishlistChange);
-        return $this->getFactory()->createOperatorRemove($storage, $wishlistChange);
+        $operator = $this->getFactory()->createOperatorRemove($storage, $wishlistChange);
+        $this->provideOperatorPlugins($operator);
+        return $operator;
+    }
+
+    /**
+     * @param AbstractOperator $operator
+     */
+    protected function provideOperatorPlugins(AbstractOperator $operator)
+    {
+        $operator->setPostSavePlugins($this->getProvidedDependency(WishlistDependencyProvider::POST_SAVE_PLUGINS));
+        $operator->setPreSavePlugins($this->getProvidedDependency(WishlistDependencyProvider::PRE_SAVE_PLUGINS));
     }
 
     /**

@@ -18,25 +18,14 @@ class WishlistQueryContainer extends AbstractQueryContainer
 
     /**
      * @param integer $idWishlist
-     * @param integer $idAbstractProduct
-     * @param integer $idConcreateProduct
+     * @param integer $idProduct
      *
      * @return SpyWishlistItemQuery
      */
-    public function filterCustomerByConcreteAndAbstractId(
-        $idWishlist,
-        $idAbstractProduct,
-        $idConcreateProduct = null
-    ) {
+    public function filterCustomerByProductId($idWishlist, $idProduct) {
         $criteria = new Criteria();
-        $criteria->add(SpyWishlistItemTableMap::COL_FK_WISHLIST, $idWishlist);
-
-        if (isset($idConcreateProduct)) {
-            $criteria->addAnd(SpyWishlistItemTableMap::COL_FK_PRODUCT, $idConcreateProduct)
-                ->addAnd(SpyWishlistItemTableMap::COL_FK_ABSTRACT_PRODUCT, $idAbstractProduct);
-        } else {
-            $criteria->addAnd(SpyWishlistItemTableMap::COL_FK_ABSTRACT_PRODUCT, $idAbstractProduct);
-        }
+        $criteria->add(SpyWishlistItemTableMap::COL_FK_WISHLIST, $idWishlist)
+            ->addAnd(SpyWishlistItemTableMap::COL_FK_PRODUCT, $idProduct);
 
         return SpyWishlistItemQuery::create(null, $criteria);
     }

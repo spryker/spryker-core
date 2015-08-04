@@ -104,7 +104,7 @@ class Propel extends BaseStorage implements StorageInterface
             }
 
             $quantityDifference = $spyWishlistItem->getQuantity() - $wishlistItem->getQuantity();
-            if ($quantityDifference <= 1) {
+            if ($quantityDifference <= 1 || $wishlistItem->getQuantity() === -1) {
                 $spyWishlistItem->delete();
             } else {
                 $spyWishlistItem->setQuantity($quantityDifference);
@@ -154,11 +154,10 @@ class Propel extends BaseStorage implements StorageInterface
         $spyWishlistItem = new SpyWishlistItem();
         $spyWishlistItem->setGroupKey($wishlistItem->getGroupKey());
 
-        $idConcreteProduct = $this->productFacade->getConcreteProductIdBySku($wishlistItem->getConcreteSku());
-        $idAbstractProduct = $this->productFacade->getAbstractProductIdBySku($wishlistItem->getAbstractSku());
+        $concreteProduct = $this->productFacade->getConcreteProduct($wishlistItem->getSku());
 
-        $spyWishlistItem->setFkProduct($idConcreteProduct);
-        $spyWishlistItem->setFkAbstractProduct($idAbstractProduct);
+        $spyWishlistItem->setFkProduct($concreteProduct->getIdConcreteProduct());
+        $spyWishlistItem->setFkAbstractProduct($concreteProduct->getIdAbstractProduct());
 
         $spyWishlistItem->setFkWishlist($spyWishList->getIdWishlist());
         $spyWishlistItem->setQuantity($wishlistItem->getQuantity());
@@ -184,18 +183,16 @@ class Propel extends BaseStorage implements StorageInterface
         $spyWishlistItem = null;
         if (!empty($wishlistItem->getGroupKey())) {
             $spyWishlistItem = $this->wishlistQueryContainer
-                ->filterCustomerByGroupKey($spyWishlist->getIdWishlistItem(), $wishlistItem->getGroupKey())
+                ->filterCustomerByGroupKey($spyWishlist->getIdWishlist(), $wishlistItem->getGroupKey())
                 ->findOne();
 
         }
 
         if (empty($spyWishlistItem)) {
-            $idConcreateProduct = $this->productFacade->getConcreteProductIdBySku($wishlistItem->getConcreteSku());
-            $idAbstractId = $this->productFacade->getAbstractProductIdBySku($wishlistItem->getAbstractSku());
+            $idConcreateProduct = $this->productFacade->getConcreteProductIdBySku($wishlistItem->getSku());
             $spyWishlistItem = $this->wishlistQueryContainer
-                ->filterCustomerByConcreteAndAbstractId(
-                    $spyWishlist->getIdWishlistItem(),
-                    $idAbstractId,
+                ->filterCustomerByProductId(
+                    $spyWishlist->getIdWishlist(),
                     $idConcreateProduct
                 )->findOne();
 
@@ -207,7 +204,7 @@ class Propel extends BaseStorage implements StorageInterface
     /**
      * @param integer $idCustomer
      *
-     * @return SpyWishlistItem
+     * @return SpyWishlist
      */
     protected function getSpyWishlist($idCustomer)
     {

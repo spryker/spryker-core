@@ -80,9 +80,7 @@ class InMemory extends BaseStorage implements StorageInterface
     protected function decreaseByProductIdentifier(ItemInterface $wishlistItem)
     {
         foreach ($this->wishlist->getItems() as $key => $existingItem) {
-            if ($existingItem->getIdProduct() === $wishlistItem->getIdProduct()
-                && $existingItem->getIdAbstractProduct() == $wishlistItem->getIdAbstractProduct()) {
-                $this->decreaseExistingItem($key, $wishlistItem);
+            if ($existingItem->getSku() === $wishlistItem->getSku()) {
                 return;
             }
         }

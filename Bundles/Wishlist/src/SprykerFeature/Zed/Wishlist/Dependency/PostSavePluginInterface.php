@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Bundles\Wishlist\src\SprykerFeature\Zed\Wishlist\Dependency;
+namespace SprykerFeature\Zed\Wishlist\Dependency;
 
 use Generated\Shared\Wishlist\WishlistInterface;
 

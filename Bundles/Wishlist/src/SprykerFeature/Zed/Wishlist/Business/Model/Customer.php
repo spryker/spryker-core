@@ -45,10 +45,11 @@ class Customer
         $wishlistTransfer = new WishlistTransfer();
         foreach ($wishlist->getSpyWishlistItems() as $spyWishlistItem) {
             $wishlistItemTransfer = new ItemTransfer();
+            $spyProduct = $spyWishlistItem->getSpyProduct();
             $wishlistItemTransfer->setGroupKey($spyWishlistItem->getGroupKey())
                 ->setAddedAt($spyWishlistItem->getAddedAt())
                 ->setIdAbstractProduct($spyWishlistItem->getFkAbstractProduct())
-                ->setIdProduct($spyWishlistItem->getFkProduct())
+                ->setSku($spyProduct->getSku())
                 ->setQuantity($spyWishlistItem->getQuantity());
 
             $wishlistTransfer->addItem($wishlistItemTransfer);

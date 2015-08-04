@@ -71,6 +71,7 @@ class WishlistClient extends AbstractClient
     public function removeItem(ItemInterface $wishlistItem)
     {
         $wishlistChange = $this->createChangeTransfer($wishlistItem);
+
         $wishlist = $this->getZedStub()->removeItem($wishlistChange);
 
         $this->getSession()->setWishlist($wishlist);
@@ -84,7 +85,8 @@ class WishlistClient extends AbstractClient
     public function getCustomerWishlist()
     {
         $wishlistItems = $this->getSession()->getWishlist();
-        return $this->getStorage()->expandProductDetails($wishlistItems);
+        $this->getStorage()->expandProductDetails($wishlistItems);
+        return $wishlistItems;
     }
 
     /**

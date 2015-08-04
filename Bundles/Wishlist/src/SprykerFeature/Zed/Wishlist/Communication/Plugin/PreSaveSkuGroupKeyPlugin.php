@@ -3,13 +3,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Bundles\Wishlist\src\SprykerFeature\Zed\Wishlist\Communication\Controller\Plugins;
+namespace SprykerFeature\Zed\Wishlist\Communication\Plugin;
 
-use Bundles\Wishlist\src\SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
 use Generated\Shared\Wishlist\ItemInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
-class PreSaveSkuGroupKeyPlugin implements PreSavePluginInterface
+class PreSaveSkuGroupKeyPlugin extends AbstractPlugin implements PreSavePluginInterface
 {
     /**
      * @param WishlistChangeInterface $wishlist
@@ -17,7 +18,7 @@ class PreSaveSkuGroupKeyPlugin implements PreSavePluginInterface
     public function trigger(WishlistChangeInterface $wishlist)
     {
         foreach ($wishlist->getItems() as $item) {
-            $item->setGroupKey($this->buildKey($item));
+            $item->setGroupKey($this->buildGroupKey($item));
         }
     }
 
@@ -30,10 +31,10 @@ class PreSaveSkuGroupKeyPlugin implements PreSavePluginInterface
     {
         $groupKey = $cartItem->getGroupKey();
         if (empty($groupKey)) {
-            return $cartItem->getAbstractSku();
+            return $cartItem->getSku();
         }
 
-        $groupKey = $groupKey . '-' . $cartItem->getAbstractSku();
+        $groupKey = $groupKey . '-' . $cartItem->getSku();
 
         return $groupKey;
 

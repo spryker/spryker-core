@@ -9,8 +9,8 @@ namespace SprykerFeature\Zed\Wishlist\Business\Operator;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
 use SprykerFeature\Zed\Wishlist\Business\Storage\StorageInterface;
-use Bundles\Wishlist\src\SprykerFeature\Zed\Wishlist\Dependency\PostSavePluginInterface;
-use Bundles\Wishlist\src\SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
+use SprykerFeature\Zed\Wishlist\Dependency\PostSavePluginInterface;
+use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
 abstract class AbstractOperator
 {
@@ -74,6 +74,22 @@ abstract class AbstractOperator
         foreach ($this->postSavePlugins as $plugin) {
             $plugin->trigger($wishlist);
         }
+    }
+
+    /**
+     * @param PreSavePluginInterface[] $preSavePlugins
+     */
+    public function setPreSavePlugins(array $preSavePlugins)
+    {
+        $this->preSavePlugins = $preSavePlugins;
+    }
+
+    /**
+     * @param PostSavePluginInterface[] $postSavePlugins
+     */
+    public function setPostSavePlugins(array $postSavePlugins)
+    {
+        $this->postSavePlugins = $postSavePlugins;
     }
 
     /**

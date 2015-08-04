@@ -33,20 +33,24 @@ class WishlistStorage implements WishlistStorageInterface
      */
     public function expandProductDetails(WishlistInterface $wishlist)
     {
-        $productData = $this->storageClient->get('de.de_de.resource.abstract_product.32');
-
         foreach ($wishlist->getItems() as $item) {
+            $productData = $this->storageClient->get(
+                sprintf('de.de_de.resource.abstract_product.%d', $item->getIdAbstractProduct())
+            );
             $abstractProduct = new AbstractProductTransfer();
             $abstractProduct->setSku($productData['abstract_sku']);
             $abstractProduct->setAttributes($productData['abstract_attributes']);
             $abstractProduct->setIsActive($productData['available']);
 
             foreach ($productData['concrete_products'] as $product) {
+                if ($product['sku'] !== $item->getSku()) {
+                    continue;
+                }
                 $concreteProduct = new ConcreteProductTransfer();
                 $concreteProduct->setName($product['name']);
                 $concreteProduct->setSku($product['sku']);
                 $concreteProduct->setAttributes($product['attributes']);
-                $item->addConcreteProduct($concreteProduct);
+                $item->setConcreteProduct($concreteProduct);
             }
 
             $item->setAbstractProduct($abstractProduct);
