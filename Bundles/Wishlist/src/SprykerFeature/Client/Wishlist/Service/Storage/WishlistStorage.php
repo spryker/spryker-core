@@ -9,6 +9,7 @@ namespace SprykerFeature\Client\Wishlist\Service\Storage;
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Wishlist\WishlistInterface;
+use SprykerFeature\Client\Product\Service\ProductClientInterface;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 
 class WishlistStorage implements WishlistStorageInterface
@@ -19,11 +20,18 @@ class WishlistStorage implements WishlistStorageInterface
     private $storageClient;
 
     /**
-     * @param StorageClientInterface $storageClient
+     * @var ProductClient
      */
-    public function __construct(StorageClientInterface $storageClient)
+    private $productClient;
+
+    /**
+     * @param StorageClientInterface $storageClient
+     * @param ProductClientInterface $productClient
+     */
+    public function __construct(StorageClientInterface $storageClient, ProductClientInterface $productClient)
     {
         $this->storageClient = $storageClient;
+        $this->productClient = $productClient;
     }
 
     /**
@@ -34,9 +42,10 @@ class WishlistStorage implements WishlistStorageInterface
     public function expandProductDetails(WishlistInterface $wishlist)
     {
         foreach ($wishlist->getItems() as $item) {
-            $productData = $this->storageClient->get(
-                sprintf('de.de_de.resource.abstract_product.%d', $item->getIdAbstractProduct())
-            );
+            $productData = $this
+                ->productClient
+                ->getAbstractProductFromStorageByIdForCurrentLocale($item->getIdAbstractProduct());
+
             $abstractProduct = new AbstractProductTransfer();
             $abstractProduct->setSku($productData['abstract_sku']);
             $abstractProduct->setAttributes($productData['abstract_attributes']);

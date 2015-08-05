@@ -11,8 +11,7 @@ use SprykerEngine\Client\Kernel\Container;
 
 class ProductDependencyProvider extends AbstractDependencyProvider
 {
-
-
+    const LOCALE_CLIENT = 'LOCALE_CLIENT';
     const KV_STORAGE = 'KV_STORAGE';
 
     /**
@@ -24,6 +23,10 @@ class ProductDependencyProvider extends AbstractDependencyProvider
     {
         $container[self::KV_STORAGE] = function (Container $container) {
             return $container->getLocator()->storage()->client();
+        };
+
+        $container[self::LOCALE_CLIENT] = function (Container $container) {
+            return $container->getLocator()->locale()->client();
         };
 
         return $container;

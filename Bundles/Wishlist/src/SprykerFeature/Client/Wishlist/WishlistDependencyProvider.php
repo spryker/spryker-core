@@ -14,6 +14,8 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
     const SERVICE_ZED = 'service_zed';
     const SESSION = 'session';
     const STORAGE = 'store';
+    const PRODUCT_CLIENT = 'product_client';
+    const CUSTOMER_CLIENT = 'customer_client';
 
     /**
      * @param Container $container
@@ -32,6 +34,14 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
 
         $container[self::STORAGE] = function (Container $container) {
             return $container->getLocator()->storage()->client();
+        };
+
+        $container[self::PRODUCT_CLIENT] = function (Container $container) {
+            return $container->getLocator()->product()->client();
+        };
+
+        $container[self::CUSTOMER_CLIENT] = function (Container $container) {
+            return $container->getLocator()->customer()->client();
         };
 
         return $container;

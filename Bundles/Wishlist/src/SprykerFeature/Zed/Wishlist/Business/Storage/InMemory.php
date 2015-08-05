@@ -11,7 +11,7 @@ use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 
-class InMemory extends BaseStorage implements StorageInterface
+class InMemory implements StorageInterface
 {
     /**
      * @var ProductFacade
@@ -19,14 +19,20 @@ class InMemory extends BaseStorage implements StorageInterface
     protected $productFacade;
 
     /**
+     * @var WishlistInterface
+     */
+    protected $wishlist;
+
+    /**
      * @param WishlistInterface $wishlist
      * @param ProductFacade     $productFacade
      */
     public function __construct(WishlistInterface $wishlist, ProductFacade $productFacade)
     {
-        parent::__construct($wishlist);
         $this->productFacade = $productFacade;
+        $this->wishlist = $wishlist;
     }
+
     /**
      * @param WishlistChangeInterface $wishlistChange
      *
@@ -87,7 +93,7 @@ class InMemory extends BaseStorage implements StorageInterface
     }
 
     /**
-     * @param array $wishlistIndex
+     * @param array         $wishlistIndex
      * @param ItemInterface $wishlistItem
      */
     protected function reduceTransferItem(array $wishlistIndex, ItemInterface $wishlistItem)
@@ -112,7 +118,7 @@ class InMemory extends BaseStorage implements StorageInterface
     }
 
     /**
-     * @param integer $index
+     * @param integer       $index
      * @param ItemInterface $itemToChange
      */
     protected function decreaseExistingItem($index, ItemInterface $itemToChange)
@@ -126,5 +132,21 @@ class InMemory extends BaseStorage implements StorageInterface
         } else {
             unset($existingItems[$index]);
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function createIndex()
+    {
+        $wishlistItem = $this->wishlist->getItems();
+        $wishlistIndex = [];
+        foreach ($wishlistItem as $key => $cartItem) {
+            if (!empty($cartItem->getGroupKey())) {
+                $wishlistIndex[$cartItem->getGroupKey()] = $key;
+            }
+        }
+
+        return $wishlistIndex;
     }
 }

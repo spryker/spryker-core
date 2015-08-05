@@ -15,7 +15,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method WishlistDependencyContainer getDependencyContainer()
  */
-class WishlistFacade extends AbstractFacade
+class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {
     /**
      * @param WishlistChangeInterface $wishlistChange

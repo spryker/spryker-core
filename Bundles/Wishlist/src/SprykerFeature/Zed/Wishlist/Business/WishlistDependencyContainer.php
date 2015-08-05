@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Wishlist\Business;
 
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\WishlistBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Wishlist\Business\Model\Customer;

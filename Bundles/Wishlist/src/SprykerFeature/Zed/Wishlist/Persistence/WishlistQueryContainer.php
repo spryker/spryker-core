@@ -12,17 +12,16 @@ use SprykerFeature\Zed\Wishlist\Persistence\Propel\Map\SpyWishlistItemTableMap;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItemQuery;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistQuery;
 
-
-class WishlistQueryContainer extends AbstractQueryContainer
+class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQueryContainerInterface
 {
-
     /**
      * @param integer $idWishlist
      * @param integer $idProduct
      *
      * @return SpyWishlistItemQuery
      */
-    public function filterCustomerByProductId($idWishlist, $idProduct) {
+    public function filterCustomerWishlistByProductId($idWishlist, $idProduct)
+    {
         $criteria = new Criteria();
         $criteria->add(SpyWishlistItemTableMap::COL_FK_WISHLIST, $idWishlist)
             ->addAnd(SpyWishlistItemTableMap::COL_FK_PRODUCT, $idProduct);
@@ -36,7 +35,7 @@ class WishlistQueryContainer extends AbstractQueryContainer
      *
      * @return SpyWishlistItemQuery
      */
-    public function filterCustomerByGroupKey($idWishlist, $groupKey)
+    public function filterCustomerWishlistByGroupKey($idWishlist, $groupKey)
     {
         $criteria = new Criteria();
         $criteria->add(SpyWishlistItemTableMap::COL_FK_WISHLIST, $idWishlist);

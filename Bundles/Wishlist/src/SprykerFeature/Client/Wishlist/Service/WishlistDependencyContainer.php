@@ -8,6 +8,7 @@ namespace SprykerFeature\Client\Wishlist\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\WishlistService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
+use SprykerFeature\Client\Customer\Service\CustomerClientInterface;
 use SprykerFeature\Client\Wishlist\Service\Session\WishlistSessionInterface;
 use SprykerFeature\Client\Wishlist\Service\Storage\WishlistStorageInterface;
 use SprykerFeature\Client\Wishlist\Service\Zed\WishlistStubInterface;
@@ -43,16 +44,21 @@ class WishlistDependencyContainer extends AbstractServiceDependencyContainer
     }
 
     /**
-     *
      * @return WishlistStorageInterface
      */
     public function createStorage()
     {
         return $this->getFactory()->createStorageWishlistStorage(
-            $this->getProvidedDependency(WishlistDependencyProvider::STORAGE)
+            $this->getProvidedDependency(WishlistDependencyProvider::STORAGE),
+            $this->getProvidedDependency(WishlistDependencyProvider::PRODUCT_CLIENT)
         );
     }
 
-
-
+    /**
+     * @return CustomerClientInterface
+     */
+    public function getCustomerClient()
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::CUSTOMER_CLIENT);
+    }
 }

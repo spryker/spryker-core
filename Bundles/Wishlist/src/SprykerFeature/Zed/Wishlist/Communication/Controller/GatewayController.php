@@ -10,10 +10,10 @@ use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use SprykerFeature\Zed\Wishlist\Business\WishlistFacade;
+use SprykerFeature\Zed\Wishlist\Business\WishlistFacadeInterface;
 
 /**
- * @method WishlistFacade  getFacade()
+ * @method WishlistFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

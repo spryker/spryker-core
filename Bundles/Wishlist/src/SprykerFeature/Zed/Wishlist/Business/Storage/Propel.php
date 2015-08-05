@@ -13,13 +13,13 @@ use Generated\Shared\Wishlist\WishlistInterface;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlist;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItem;
-use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainer;
 use SprykerFeature\Zed\Wishlist\Business\Model\Customer;
+use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
-class Propel extends BaseStorage implements StorageInterface
+class Propel  implements StorageInterface
 {
     /**
-     * @var WishlistQueryContainer
+     * @var WishlistQueryContainerInterface
      */
     protected $wishlistQueryContainer;
 
@@ -44,21 +44,19 @@ class Propel extends BaseStorage implements StorageInterface
     protected $productFacade;
 
     /**
-     * @param WishlistQueryContainer $wishlistQueryContainer
+     * @param WishlistQueryContainerInterface $wishlistQueryContainer
      * @param Customer               $customer
      * @param WishlistInterface      $wishlist
      * @param CustomerInterface      $customerTransfer
      * @param ProductFacade          $productFacade
      */
     public function __construct(
-        WishlistQueryContainer $wishlistQueryContainer,
+        WishlistQueryContainerInterface $wishlistQueryContainer,
         Customer $customer,
         WishlistInterface $wishlist,
         CustomerInterface $customerTransfer,
         ProductFacade $productFacade
     ) {
-        parent::__construct($wishlist);
-
         $this->wishlistQueryContainer = $wishlistQueryContainer;
         $this->customerTransfer = $customerTransfer;
         $this->wishlist = $wishlist;
@@ -170,7 +168,7 @@ class Propel extends BaseStorage implements StorageInterface
     /**
      * @param ItemInterface $wishlistItem
      *
-     * @return SpyWishlistItem
+     * @return SpyWishlistItem|null
      */
     protected function getSpyWishlistItem(ItemInterface $wishlistItem)
     {
@@ -184,7 +182,7 @@ class Propel extends BaseStorage implements StorageInterface
         $spyWishlistItem = null;
         if (!empty($wishlistItem->getGroupKey())) {
             $spyWishlistItem = $this->wishlistQueryContainer
-                ->filterCustomerByGroupKey($spyWishlist->getIdWishlist(), $wishlistItem->getGroupKey())
+                ->filterCustomerWishlistByGroupKey($spyWishlist->getIdWishlist(), $wishlistItem->getGroupKey())
                 ->findOne();
 
         }
@@ -192,7 +190,7 @@ class Propel extends BaseStorage implements StorageInterface
         if (empty($spyWishlistItem)) {
             $idConcreateProduct = $this->productFacade->getConcreteProductIdBySku($wishlistItem->getSku());
             $spyWishlistItem = $this->wishlistQueryContainer
-                ->filterCustomerByProductId(
+                ->filterCustomerWishlistByProductId(
                     $spyWishlist->getIdWishlist(),
                     $idConcreateProduct
                 )->findOne();

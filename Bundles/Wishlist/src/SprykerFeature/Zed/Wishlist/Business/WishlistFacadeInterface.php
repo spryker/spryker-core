@@ -2,13 +2,17 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Client\Wishlist\Service\Zed;
+namespace SprykerFeature\Zed\Wishlist\Business;
 
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
 
-interface WishlistStubInterface
+
+/**
+ * @method WishlistDependencyContainer getDependencyContainer()
+ */
+interface WishlistFacadeInterface
 {
     /**
      * @param WishlistChangeInterface $wishlistChange
@@ -29,7 +33,7 @@ interface WishlistStubInterface
      *
      * @return WishlistInterface
      */
-    public function descreaseQuantity(WishlistChangeInterface $wishlistChange);
+    public function decreaseQuantity(WishlistChangeInterface $wishlistChange);
 
     /**
      * @param WishlistChangeInterface $wishlistChange
@@ -39,9 +43,9 @@ interface WishlistStubInterface
     public function increaseQuantity(WishlistChangeInterface $wishlistChange);
 
     /**
-     * @param CustomerInterface $customer
+     * @param CustomerInterface $customerTransfer
      *
      * @return WishlistInterface
      */
-    public function getCustomerWishlist(CustomerInterface $customer);
+    public function getCustomerWishlist(CustomerInterface $customerTransfer);
 }
