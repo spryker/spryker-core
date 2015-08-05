@@ -127,7 +127,10 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createInMemoryStrorage(WishlistChangeInterface $wishlistChange)
     {
-        return $this->getFactory()->createStorageInMemory($wishlistChange->getWishlist());
+        return $this->getFactory()->createStorageInMemory(
+            $wishlistChange->getWishlist(),
+            $this->getProvidedDependency(WishlistDependencyProvider::PRODUCT_FACADE)
+        );
     }
 
     /**

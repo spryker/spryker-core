@@ -31,16 +31,17 @@ class Propel extends BaseStorage implements StorageInterface
     /**
      * @var CustomerInterface
      */
-    private $customerTransfer;
+    protected $customerTransfer;
 
     /**
      * @var Customer
      */
-    private $customer;
+    protected $customer;
+
     /**
      * @var ProductFacade
      */
-    private $productFacade;
+    protected $productFacade;
 
     /**
      * @param WishlistQueryContainer $wishlistQueryContainer
@@ -104,7 +105,7 @@ class Propel extends BaseStorage implements StorageInterface
             }
 
             $quantityDifference = $spyWishlistItem->getQuantity() - $wishlistItem->getQuantity();
-            if ($quantityDifference <= 1 || $wishlistItem->getQuantity() === -1) {
+            if ($quantityDifference <= 1 || $wishlistItem->getQuantity() === 0) {
                 $spyWishlistItem->delete();
             } else {
                 $spyWishlistItem->setQuantity($quantityDifference);
