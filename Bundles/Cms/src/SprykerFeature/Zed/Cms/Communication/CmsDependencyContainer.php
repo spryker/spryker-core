@@ -25,10 +25,10 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createCmsGrid(Request $request)
     {
-        return $this->getFactory()->createGridCmsGrid(
-            $this->getQueryContainer()->queryPagesWithTemplates(),
-            $request
-        );
+        return $this->getFactory()
+            ->createGridCmsGrid($this->getQueryContainer()
+                ->queryPagesWithTemplates(), $request)
+            ;
     }
 
     /**
@@ -36,7 +36,10 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getQueryContainer()
     {
-        return $this->getLocator()->cms()->queryContainer();
+        return $this->getLocator()
+            ->cms()
+            ->queryContainer()
+            ;
     }
 
     /**
@@ -44,9 +47,13 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createCmsPageTable()
     {
-        $pageQuery = $this->getQueryContainer()->queryPageWithTemplatesAndUrls();
+        $pageQuery = $this->getQueryContainer()
+            ->queryPageWithTemplatesAndUrls()
+        ;
 
-        return $this->getFactory()->createTableCmsPageTable($pageQuery);
+        return $this->getFactory()
+            ->createTableCmsPageTable($pageQuery)
+            ;
     }
 
     /**
@@ -54,9 +61,13 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createCmsRedirectTable()
     {
-        $urlQuery = $this->getQueryContainer()->queryUrlsWithRedirect();
+        $urlQuery = $this->getQueryContainer()
+            ->queryUrlsWithRedirect()
+        ;
 
-        return $this->getFactory()->createTableCmsRedirectTable($urlQuery);
+        return $this->getFactory()
+            ->createTableCmsRedirectTable($urlQuery)
+            ;
     }
 
     /**
@@ -69,9 +80,13 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsGlossaryTable($idPage, $fkLocale, $placeholders = null)
     {
 
-        $glossaryQuery = $this->getQueryContainer()->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $fkLocale);
+        $glossaryQuery = $this->getQueryContainer()
+            ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $fkLocale)
+        ;
 
-        return $this->getFactory()->createTableCmsGlossaryTable($glossaryQuery,$idPage, $placeholders);
+        return $this->getFactory()
+            ->createTableCmsGlossaryTable($glossaryQuery, $idPage, $placeholders)
+            ;
     }
 
     /**
@@ -85,11 +100,15 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
         $pageUrlQuery = null;
 
-        if($idPage)
-            $pageUrlQuery = $this->getQueryContainer()->queryPageWithTemplatesAndUrlByPageId($idPage);
+        if (intval($idPage) > 0) {
+            $pageUrlQuery = $this->getQueryContainer()
+                ->queryPageWithTemplatesAndUrlByPageId($idPage)
+            ;
+        }
 
         $templateQuery = $this->getQueryContainer()
-            ->queryTemplates();
+            ->queryTemplates()
+        ;
 
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE);
 
@@ -106,7 +125,9 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createCmsRedirectForm($formType, $idUrl = null)
     {
-        $queryUrl = $this->getQueryContainer()->queryUrlByIdWithRedirect($idUrl);
+        $queryUrl = $this->getQueryContainer()
+            ->queryUrlByIdWithRedirect($idUrl)
+        ;
 
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE);
 
@@ -127,8 +148,11 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         $glossaryQuery = null;
 
-        if($idMapping)
-            $glossaryQuery = $this->getQueryContainer()->queryGlossaryKeyMappingWithKeyById($idMapping);
+        if (intval($idMapping) > 0) {
+            $glossaryQuery = $this->getQueryContainer()
+                ->queryGlossaryKeyMappingWithKeyById($idMapping)
+            ;
+        }
 
         return $this->getFactory()
             ->createFormCmsGlossaryForm($glossaryQuery, $idPage, $idMapping, $placeholder)
