@@ -72,7 +72,8 @@ class OrderManager
 
         $orderEntity->save();
 
-        $fkOrderProcess = $this->omsFacade->getProcessEntity($orderTransfer->getProcess())->getIdOmsOrderProcess();
+        $processName = $this->omsFacade->selectProcess($orderTransfer->getProcess());
+        $orderProcess = $this->omsFacade->getProcessEntity($processName);
 
         foreach ($orderTransfer->getItems() as $item) {
             $itemEntity = new SpySalesOrderItem();
@@ -82,7 +83,7 @@ class OrderManager
             $itemEntity->setSku($item->getSku());
             $itemEntity->setGrossPrice($item->getGrossPrice());
             $itemEntity->setPriceToPay($item->getPriceToPay());
-            $itemEntity->setFkOmsOrderProcess($fkOrderProcess);
+            $itemEntity->setProcess($orderProcess);
             $itemEntity->setQuantity(!is_null($item->getQuantity()) ? $item->getQuantity() : 1);
             $itemEntity->setGroupKey($item->getGroupKey());
             $itemEntity->save();

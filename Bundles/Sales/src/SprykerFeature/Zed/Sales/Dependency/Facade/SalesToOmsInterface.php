@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Sales\Dependency\Facade;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
 
@@ -20,4 +21,10 @@ interface SalesToOmsInterface
      */
     public function getProcessEntity($processName);
 
+    /**
+     * @param OrderTransfer $transferOrder
+     *
+     * @return string
+     */
+    public function selectProcess(OrderTransfer $transferOrder);
 }
