@@ -51,6 +51,13 @@ class CmsGlossaryTable extends AbstractTable{
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
         ]);
 
+        $config->setSearchable([
+            SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING,
+            SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER,
+            CmsQueryContainer::KEY => '`key`',
+            CmsQueryContainer::TRANS => 'value',
+        ]);
+
         $config->setUrl(sprintf('table?id_page=%d', $this->idPage));
         return $config;
     }
@@ -79,7 +86,6 @@ class CmsGlossaryTable extends AbstractTable{
         }
 
         unset($queryResults);
-
 
         foreach($this->placeholders as $place){
 

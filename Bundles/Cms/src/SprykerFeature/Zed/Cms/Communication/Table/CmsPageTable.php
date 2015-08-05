@@ -39,6 +39,12 @@ class CmsPageTable extends AbstractTable{
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
         ]);
 
+        $config->setSearchable([
+            SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+            CmsQueryContainer::TEMPLATE_NAME,
+            CmsQueryContainer::URL,
+        ]);
+
         return $config;
     }
     /**
@@ -67,8 +73,8 @@ class CmsPageTable extends AbstractTable{
 
     private function buildLinks($item)
     {
-        $result = '<a href="/cms/glossary/?id_page='.$item[SpyCmsPageTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Manage glossaries</a>&nbsp;
-        <a href="/cms/page/edit/?id_page='.$item[SpyCmsPageTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Edit</a>';
+        $result = '<a href="/cms/glossary/?id_page='.$item[SpyCmsPageTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Edit glossaries</a>&nbsp;
+        <a href="/cms/page/edit/?id_page='.$item[SpyCmsPageTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Edit page</a>';
 
         return $result;
     }

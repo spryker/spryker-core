@@ -111,7 +111,7 @@ class RedirectController extends AbstractController
                 $redirectTransfer = (new RedirectTransfer())->fromArray($spyRedirect->toArray());
                 $redirectTransfer->setToUrl($data[CmsRedirectForm::TO_URL]);
                 $redirectTransfer = $this->getUrlFacade()->saveRedirect($redirectTransfer);
-//                $this->getUrlFacade()->touchRedirectActive($redirectTransfer);
+                $this->getUrlFacade()->touchRedirectActive($redirectTransfer);
 
             }
 

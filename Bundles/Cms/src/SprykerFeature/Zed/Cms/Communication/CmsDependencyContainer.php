@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Cms\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CmsCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 
@@ -86,8 +87,10 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         $templateQuery = $this->getQueryContainer()
             ->queryTemplates();
 
+        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE);
+
         return $this->getFactory()
-            ->createFormCmsPageForm($templateQuery, $pageUrlQuery, $type, $idPage)
+            ->createFormCmsPageForm($templateQuery, $pageUrlQuery, $type, $idPage, $urlFacade)
             ;
     }
 
@@ -101,8 +104,10 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         $queryUrl = $this->getQueryContainer()->queryUrlByIdWithRedirect($idUrl);
 
+        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE);
+
         return $this->getFactory()
-            ->createFormCmsRedirectForm($queryUrl, $type)
+            ->createFormCmsRedirectForm($queryUrl, $type, $urlFacade)
             ;
     }
 
