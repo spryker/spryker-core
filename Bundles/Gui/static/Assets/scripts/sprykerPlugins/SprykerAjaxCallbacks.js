@@ -1,11 +1,15 @@
 'use strict';
 
 function SprykerAjaxCallbacks() {
+    var self = this;
+
     /* HTML success code */
-    var codeSuccess = 200;
+    self.codeSuccess = 200;
 
     /* Alerted object, display alerts with model from bootstrap */
-    this.alerter = new SprykerAlert();
+    self.alerter = new SprykerAlert();
+
+    self.spyAj = new SprykerAjax();
 
     /**
      * Response:
@@ -19,26 +23,43 @@ function SprykerAjaxCallbacks() {
      * </code>
      * @param ajaxResponse
      */
-    this.changeStatusMarkInGrid = function(ajaxResponse){
-        if (ajaxResponse.code == codeSuccess) {
+    self.changeStatusMarkInGrid = function(ajaxResponse){
+        if (ajaxResponse.code == self.codeSuccess) {
             $('#active-' + ajaxResponse.id).prop('checked', ajaxResponse.newStatus);
         } else {
-            this.alerter.error(ajaxResponse.message);
+            self.alerter.error(ajaxResponse.message);
         }
     }
 
     /**
      * @param ajaxResponse
      */
-    this.categoryDisplayNodeTree = function(ajaxResponse){
+    self.categoryDisplayNodeTree = function(ajaxResponse){
         $('#category-node-tree').removeClass('hidden');
         $('#jstree-container').html('<div id="jstree-category"></div>');
-        console.log(ajaxResponse);
         $('#jstree-category').jstree({
             'core' : {
                 'data' : ajaxResponse.data
             }
         });
-        SprykerAjax().getCategoryAttributes(ajaxResponse.idCategory);
+        self.spyAj.getCategoryAttributes(ajaxResponse.idCategory);
+        self.spyAj.getCategoryUrls(ajaxResponse.idCategory);
+    }
+
+    /**
+     *
+     * @param ajaxResponse
+     */
+    self.categoryDisplayAttributes = function(ajaxResponse){
+        $('#attributes-table').removeClass('hidden');
+        $('#category-attributes').html(ajaxResponse);
+    }
+
+    /**
+     * @param ajaxResponse
+     */
+    self.categoryDisplayUrls = function(ajaxResponse){
+        $('#url-table').removeClass('hidden');
+        $('#category-urls').html(ajaxResponse);
     }
 }
