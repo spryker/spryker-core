@@ -12,6 +12,8 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 class RedirectBuilder implements RedirectBuilderInterface
 {
 
+    const TYPE = 'redirect';
+
     /**
      * @var KeyBuilderInterface
      */
@@ -36,9 +38,13 @@ class RedirectBuilder implements RedirectBuilderInterface
         $returnedResultSet = [];
         foreach ($redirectResultSet as $index => $redirect) {
             //TODO make this more pretty
-            $this->redirectKeyBuilder->setResourceType('redirect');
+            $this->redirectKeyBuilder->setResourceType(self::TYPE);
 
-            $redirectKey = $this->redirectKeyBuilder->generateKey($redirect['redirect_id'], $locale->getLocaleName());
+            $data = [
+                'value' => $redirect['redirect_id'],
+                'resourceType' => self::TYPE,
+            ];
+            $redirectKey = $this->redirectKeyBuilder->generateKey($data, $locale->getLocaleName());
             $returnedResultSet[$redirectKey] = [
                 'from_url' => $redirect['from_url'],
                 'to_url' => $redirect['to_url'],
