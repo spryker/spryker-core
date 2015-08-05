@@ -25,7 +25,7 @@
         <column name="po_box" size="255" type="VARCHAR"/>
         <column name="phone" size="255" type="VARCHAR"/>
         <column name="cell_phone" size="255" type="VARCHAR"/>
-        <column name="description" size="255" type="VARCHAR"/>e
+        <column name="description" size="255" type="VARCHAR"/>
         <column name="comment" size="255" type="VARCHAR"/>
         <column name="email" size="255" type="VARCHAR" required="false"/>
 
