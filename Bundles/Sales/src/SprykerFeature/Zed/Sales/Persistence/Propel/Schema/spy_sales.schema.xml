@@ -25,7 +25,7 @@
         <column name="po_box" size="255" type="VARCHAR"/>
         <column name="phone" size="255" type="VARCHAR"/>
         <column name="cell_phone" size="255" type="VARCHAR"/>
-        <column name="description" size="255" type="VARCHAR"/>e
+        <column name="description" size="255" type="VARCHAR"/>
         <column name="comment" size="255" type="VARCHAR"/>
         <column name="email" size="255" type="VARCHAR" required="false"/>
 
@@ -142,13 +142,12 @@
     <table name="spy_sales_order_item_option" phpName="SpySalesOrderItemOption">
         <column name="id_sales_order_item_option" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
         <column name="fk_sales_order_item" type="INTEGER" required="true" />
-
-        <column name="identifier" type="VARCHAR" size="255" required="false" />
-        <column name="name" type="VARCHAR" size="255" required="true" />
-        <column name="description" type="LONGVARCHAR" required="false" />
+        <column name="label_option_type" type="VARCHAR" required="true" />
+        <column name="label_option_value" type="VARCHAR" required="true" />
         <column name="gross_price" type="INTEGER" required="true" default="0" />
         <column name="price_to_pay" type="INTEGER" required="true" default="0" />
         <column name="tax_percentage" type="INTEGER" required="true" default="0" />
+        <column name="tax_amount" type="INTEGER" required="true" default="0" />
 
         <behavior name="timestampable"/>
 
@@ -156,8 +155,6 @@
             <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
         </foreign-key>
     </table>
-
-
 
     <table name="spy_sales_order_note" phpName="SpySalesOrderNote">
         <column name="id_sales_order_note" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
