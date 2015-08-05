@@ -3,11 +3,17 @@
 namespace SprykerFeature\Zed\Category\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ListController extends AbstractController
 {
+
+    /**
+     * @return array
+     */
     public function indexAction()
     {
         $rootCategories = $this->getDependencyContainer()
@@ -19,6 +25,9 @@ class ListController extends AbstractController
         ]);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function rootNodeTableAction()
     {
         $table = $this->getDependencyContainer()
@@ -30,46 +39,66 @@ class ListController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function nodeAction(Request $request)
     {
         $idCategory = $request->get('id');
-        if ($idCategory == 14) {
-            $data = [
-                'text' => 'Categ 14',
-                'state' => [
-                    'opened' => true,
-                    'selected' => true
-                ],
-                'children' => [
-                    'Child 1',
-                    'Child 2',
-                    'Child 3',
-                ]
-            ];
-        } else {
-            $data = [
-                'text' => 'Categ 19',
-                'state' => [
-                    'opened' => true,
-                    'selected' => true
-                ],
-                'children' => [
-                    'Child 4',
-                    'Child 5',
-                    'Child 6'
-                ]
-            ];
-        }
+
+        $children = $this->getFacade()
+            ->getNodeTreeForJsDisplay(
+                $idCategory,
+                $this->getDependencyContainer()->getCurrentLocale()
+            )
+        ;
 
         return $this->jsonResponse([
             'code' => Response::HTTP_OK,
-            'data' => $data,
+            'data' => $children,
             'idCategory' => $idCategory,
         ]);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     public function attributesAction(Request $request)
     {
+        $idCategory = $request->get('id');
 
+        /* @var CategoryAttributeTable $table */
+        $table = $this->getDependencyContainer()
+            ->createCategoryAttributeTable($idCategory)
+        ;
+
+        $tableData['table'] = $table->fetchData();
+        $tableData['table']['header'] = $table->getConfiguration()->getHeader();
+
+        return $this->viewResponse($tableData);
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function urlsAction(Request $request)
+    {
+        $idCategory = $request->get('id');
+
+        $table = $this->getDependencyContainer()
+            ->createUrlTable($idCategory)
+        ;
+
+        $tableData['table'] = $table->fetchData();
+        $tableData['table']['header'] = $table->getConfiguration()->getHeader();
+
+        return $this->viewResponse($tableData);
+    }
+
 }

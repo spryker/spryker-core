@@ -304,4 +304,36 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
         return $tree;
     }
+
+    /**
+     * @param int $idCategory
+     * @param LocaleTransfer $locale
+     *
+     * @return array
+     */
+    public function getTreeNodeChildren($idCategory, LocaleTransfer $locale)
+    {
+        $categories = $this->getTree(
+            $idCategory,
+            $locale
+        );
+
+        $children = [];
+        $children['state'] = [
+            'opened' => true,
+            'selected' => true,
+        ];
+
+        foreach ($categories as $item) {
+            if ($item['parent'] == '#') {
+                $children['text'] = $item['text'];
+            } else {
+                $children['children'][] = $item['text'];
+
+            }
+        }
+
+        return $children;
+    }
+
 }

@@ -33,6 +33,7 @@
 
     {% embed '@Gui/Partials/widget.twig' with {
     widget_title: 'Attributes of the selected category',
+    row_class: 'hidden',
     row_id: 'attributes-table'
     } %}
 
@@ -43,20 +44,20 @@
 
     {% endembed %}
 
-    {#
     {% embed '@Gui/Partials/widget.twig' with {
     widget_title: 'Urls for the selected category node',
+    row_class: 'hidden',
     row_id: 'url-table'
     } %}
 
         {% block widget_content %}
 
-            {{ categoryUrlTable | raw }}
+            {#{{ categoryUrlTable | raw }}#}
+            <div id="category-urls"></div>
 
         {% endblock %}
 
     {% endembed %}
-    #}
 
 {% endblock %}
 
