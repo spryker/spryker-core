@@ -1,0 +1,14 @@
+<table class="table table-stripped table-bordered table-hover" border="1">
+<tr>
+    {% for title in table.header %}
+    <td>{{ title | trans }}</td>
+    {% endfor %}
+</tr>
+{% for rows in table.data %}
+<tr>
+    {% for column in rows %}
+    <td>{{ column }}</td>
+    {% endfor %}
+</tr>
+{% endfor %}
+</table>
