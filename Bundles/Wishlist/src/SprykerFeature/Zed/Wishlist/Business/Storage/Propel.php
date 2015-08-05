@@ -150,7 +150,7 @@ class Propel  implements StorageInterface
             $spyWishList = $this->createSpyWishlist($idCustomer);
         }
 
-        $spyWishlistItem = new SpyWishlistItem();
+        $spyWishlistItem = $this->wishlistQueryContainer->getSpyWishlistItem();
         $spyWishlistItem->setGroupKey($wishlistItem->getGroupKey());
 
         $concreteProduct = $this->productFacade->getConcreteProduct($wishlistItem->getSku());
@@ -188,11 +188,11 @@ class Propel  implements StorageInterface
         }
 
         if (empty($spyWishlistItem)) {
-            $idConcreateProduct = $this->productFacade->getConcreteProductIdBySku($wishlistItem->getSku());
+            $idConcreteProduct = $this->productFacade->getConcreteProductIdBySku($wishlistItem->getSku());
             $spyWishlistItem = $this->wishlistQueryContainer
                 ->filterCustomerWishlistByProductId(
                     $spyWishlist->getIdWishlist(),
-                    $idConcreateProduct
+                    $idConcreteProduct
                 )->findOne();
 
         }
@@ -223,7 +223,7 @@ class Propel  implements StorageInterface
      */
     protected function createSpyWishlist($idCustomer)
     {
-        $spyWishlist = new SpyWishlist();
+        $spyWishlist = $this->wishlistQueryContainer->getSpyWishlist();
         $spyWishlist->setFkCustomer($idCustomer);
         $spyWishlist->save();
 

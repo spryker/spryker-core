@@ -4,6 +4,8 @@
  */
 namespace SprykerFeature\Zed\Wishlist\Persistence;
 
+use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlist;
+use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItem;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItemQuery;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistQuery;
 
@@ -34,4 +36,14 @@ interface WishlistQueryContainerInterface
      * @return SpyWishlistQuery
      */
     public function getWishlistQuery();
+
+    /**
+     * @return SpyWishlist
+     */
+    public function getSpyWishlist();
+
+    /**
+     * @return SpyWishlistItem
+     */
+    public function getSpyWishlistItem();
 }
