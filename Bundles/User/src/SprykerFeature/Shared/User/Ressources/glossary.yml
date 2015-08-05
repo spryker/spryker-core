@@ -1,0 +1,11 @@
+keys:
+  user.login.forgot_password:
+    translations:
+      de_CH: 'Vergessen?'
+
+  user.register.terms:
+      translations:
+       de_CH: 'Ich akzeptiere die AGB'
+  user.register.new_customer:
+      translations:
+       de_CH: 'Ich bin Neukunde'

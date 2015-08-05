@@ -1,0 +1,46 @@
+keys:
+  catalog.currency:
+    translations:
+      de_CH: '€'
+  catalog.filter.active:
+    translations:
+      de_CH: 'Aktive Filter'
+  catalog.filter.color:
+    translations:
+      de_CH: 'Farbe'
+  catalog.filter.extras:
+    translations:
+      de_CH: 'Sonstige Merkmale'
+  catalog.filter.price:
+    translations:
+      de_CH: 'Preisspanne'
+  catalog.filter.pricerangeFrom:
+    translations:
+      de_CH: 'Preisspanne von'
+  catalog.filter.pricerangeTo:
+    translations:
+      de_CH: 'bis'
+  catalog.filter.show:
+    translations:
+      de_CH: 'Filter einblenden'
+  catalog.filter.hide:
+    translations:
+      de_CH: 'Filter ausblenden'
+  catalog.itemsFound:
+    translations:
+      de_CH: 'Figuren gefunden'
+  catalog.loading:
+    translations:
+      de_CH: 'Loading'
+  catalog.next:
+    translations:
+      de_CH: 'weiter'
+  catalog.prev:
+    translations:
+      de_CH: 'zurück'
+  catalog.sort:
+    translations:
+      de_CH: 'Sortierung'
+  catalog.search.empty:
+    translations:
+      de_CH: 'Kategorie leer'
