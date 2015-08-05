@@ -10,15 +10,19 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_header_content %}
+
             <a href="/cms/redirect/" class="btn btn-sm btn-default">{{ 'Back to CMS redirect' | trans }}</a>
+
         {% endblock %}
 
         {% block widget_content %}
 
             {{ form_start(form) }}
+
                 {{ form_widget(form) }}
 
                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+
             {{ form_end(form) }}
 
         {% endblock %}

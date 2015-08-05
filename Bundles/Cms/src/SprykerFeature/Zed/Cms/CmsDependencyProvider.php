@@ -35,6 +35,12 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::URL_QUERY_CONTAINER] = function (Container $container) {

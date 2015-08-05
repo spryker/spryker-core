@@ -60,7 +60,10 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param int $id
+     * @param int $idPage
+     * @param int $fkLocale
+     * @param array $placeholders
+     *
      * @return CmsGlossaryTable
      */
     public function createCmsGlossaryTable($idPage, $fkLocale, $placeholders = null)
@@ -72,11 +75,12 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param string $type
+     * @param string $formType
+     * @param int $idPage
      *
      * @return CmsPageForm
      */
-    public function createCmsPageForm($type, $idPage = null)
+    public function createCmsPageForm($formType, $idPage = null)
     {
 
         $pageUrlQuery = null;
@@ -90,34 +94,36 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE);
 
         return $this->getFactory()
-            ->createFormCmsPageForm($templateQuery, $pageUrlQuery, $type, $idPage, $urlFacade)
+            ->createFormCmsPageForm($templateQuery, $pageUrlQuery, $formType, $idPage, $urlFacade)
             ;
     }
 
     /**
+     * @param string $formType
      * @param int $idUrl
-     * @param string $type
      *
      * @return CmsRedirectForm
      */
-    public function createCmsRedirectForm($type, $idUrl = null)
+    public function createCmsRedirectForm($formType, $idUrl = null)
     {
         $queryUrl = $this->getQueryContainer()->queryUrlByIdWithRedirect($idUrl);
 
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE);
 
         return $this->getFactory()
-            ->createFormCmsRedirectForm($queryUrl, $type, $urlFacade)
+            ->createFormCmsRedirectForm($queryUrl, $formType, $urlFacade)
             ;
     }
 
     /**
-     * @param int $idUrl
-     * @param string $type
+     * @param string $formType
+     * @param int $idPage
+     * @param int $idMapping
+     * @param array $placeholder
      *
      * @return CmsGlossaryForm
      */
-    public function createCmsGlossaryForm($type, $idPage, $idMapping = null, $placeholder = null)
+    public function createCmsGlossaryForm($idPage, $idMapping = null, $placeholder = null)
     {
         $glossaryQuery = null;
 
@@ -125,7 +131,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
             $glossaryQuery = $this->getQueryContainer()->queryGlossaryKeyMappingWithKeyById($idMapping);
 
         return $this->getFactory()
-            ->createFormCmsGlossaryForm($glossaryQuery, $type, $idPage, $idMapping, $placeholder)
+            ->createFormCmsGlossaryForm($glossaryQuery, $idPage, $idMapping, $placeholder)
             ;
     }
 }

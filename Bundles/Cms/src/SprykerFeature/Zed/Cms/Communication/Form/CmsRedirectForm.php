@@ -2,15 +2,10 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
-
-use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrderQuery;
-use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
-use SprykerFeature\Zed\Url\Persistence\UrlQueryContainer;
+use SprykerFeature\Zed\Url\Business\UrlFacade;
+use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
@@ -25,21 +20,34 @@ class CmsRedirectForm extends AbstractForm
     const FROM_URL = 'from_url';
     const TO_URL = 'to_url';
 
-
+    /**
+     * @var SpyUrlQuery
+     */
     protected $urlQuery;
 
+    /**
+     * @var UrlFacade
+     */
     protected $urlFacade;
 
-    protected $type;
+    /**
+     * @var string
+     */
+    protected $formType;
 
     /**
      * @param string $type
      */
 
-    public function __construct($urlQuery, $type, $urlFacade)
+    /**
+     * @param SpyUrlQuery $urlQuery
+     * @param string $formType
+     * @param UrlFacade $urlFacade
+     */
+    public function __construct(SpyUrlQuery $urlQuery, $formType, UrlFacade $urlFacade)
     {
         $this->urlQuery = $urlQuery;
-        $this->type = $type;
+        $this->formType = $formType;
         $this->urlFacade = $urlFacade;
     }
 
@@ -55,7 +63,7 @@ class CmsRedirectForm extends AbstractForm
             new Length(['max' => 256]),
         ];
 
-        if (self::ADD === $this->type) {
+        if (self::ADD === $this->formType) {
             $urlConstraints[] = new Callback([
                 'methods' => [
                     function ($url, ExecutionContext $context) {
@@ -72,14 +80,14 @@ class CmsRedirectForm extends AbstractForm
             'constraints' => $urlConstraints,
         ];
 
-        if (self::UPDATE == $this->type) {
+        if (self::UPDATE == $this->formType) {
             $urlParams['disabled'] = 'disabled';
         }
 
         return $this->addHidden(self::ID_REDIRECT, [
             'label' => 'Redirect ID',
         ])
-            ->addText(self::FROM_URL,$urlParams)
+            ->addText(self::FROM_URL, $urlParams)
             ->addText(self::TO_URL, [
                 'label' => 'To URL',
                 'constraints' => [
@@ -88,9 +96,8 @@ class CmsRedirectForm extends AbstractForm
                     new Length(['max' => 256]),
                 ],
             ])
-        ;
+            ;
     }
-
 
     /**
      * @return array
@@ -99,7 +106,7 @@ class CmsRedirectForm extends AbstractForm
     {
         $spyUrl = $this->urlQuery->findOne();
 
-        if($spyUrl){
+        if ($spyUrl) {
             return [
                 self::FROM_URL => $spyUrl->getUrl(),
                 self::TO_URL => $spyUrl->getToUrl(),

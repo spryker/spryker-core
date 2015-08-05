@@ -11,14 +11,22 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-class CmsPageTable extends AbstractTable{
+class CmsPageTable extends AbstractTable
+{
 
     const ACTIONS = 'Actions';
+    const REQUEST_ID_PAGE = 'id-page';
 
     /**
-     * @param SpyCmsPage $pageQuery
+     * @var SpyCmsPageQuery
      */
-    public function __construct(SpyCmsPageQuery $pageQuery){
+    protected $pageQuery;
+
+    /**
+     * @param SpyCmsPageQuery $pageQuery
+     */
+    public function __construct(SpyCmsPageQuery $pageQuery)
+    {
         $this->pageQuery = $pageQuery;
     }
 
@@ -33,7 +41,7 @@ class CmsPageTable extends AbstractTable{
             SpyCmsPageTableMap::COL_ID_CMS_PAGE => 'Page Id',
             CmsQueryContainer::TEMPLATE_NAME => 'Template',
             CmsQueryContainer::URL => 'url',
-            self::ACTIONS => self::ACTIONS
+            self::ACTIONS => self::ACTIONS,
         ]);
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
@@ -47,6 +55,7 @@ class CmsPageTable extends AbstractTable{
 
         return $config;
     }
+
     /**
      * @param TableConfiguration $config
      *
@@ -71,10 +80,15 @@ class CmsPageTable extends AbstractTable{
         return $results;
     }
 
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
     private function buildLinks($item)
     {
-        $result = '<a href="/cms/glossary/?id_page='.$item[SpyCmsPageTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Edit glossaries</a>&nbsp;
-        <a href="/cms/page/edit/?id_page='.$item[SpyCmsPageTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Edit page</a>';
+        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit glossaries</a>&nbsp;
+        <a href="/cms/page/edit/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit page</a>';
 
         return $result;
     }

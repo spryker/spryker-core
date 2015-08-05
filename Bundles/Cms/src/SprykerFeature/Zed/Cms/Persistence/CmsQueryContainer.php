@@ -46,9 +46,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryTemplateByPath($path)
     {
         $query = $this->queryTemplates();
-        $query
-            ->filterByTemplatePath($path)
-        ;
+        $query->filterByTemplatePath($path);
 
         return $query;
     }
@@ -61,9 +59,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryTemplateById($id)
     {
         $query = $this->queryTemplates();
-        $query
-            ->filterByIdCmsTemplate($id)
-        ;
+        $query->filterByIdCmsTemplate($id);
 
         return $query;
     }
@@ -87,14 +83,17 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->leftJoinCmsTemplate(null, Criteria::LEFT_JOIN)
             ->withColumn(self::TEMPLATE_NAME)
             ->withColumn(self::TEMPLATE_PATH)
-        ;
+            ;
     }
 
+    /**
+     * @return SpyCmsPageQuery
+     */
     public function queryPageWithTemplatesAndUrls()
     {
         return $this->queryPages()
             ->leftJoinCmsTemplate(null, Criteria::LEFT_JOIN)
-            ->leftJoinSpyUrl(null,Criteria::LEFT_JOIN)
+            ->leftJoinSpyUrl(null, Criteria::LEFT_JOIN)
             ->withColumn(self::TEMPLATE_NAME)
             ->withColumn(self::URL)
             ;
@@ -108,9 +107,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryPageById($id)
     {
         $query = $this->queryPages();
-        $query
-            ->filterByIdCmsPage($id)
-        ;
+        $query->filterByIdCmsPage($id);
 
         return $query;
     }
@@ -124,8 +121,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryGlossaryKeyMapping($idPage, $placeholder)
     {
         $query = $this->queryGlossaryKeyMappings();
-        $query
-            ->filterByFkPage($idPage)
+        $query->filterByFkPage($idPage)
             ->filterByPlaceholder($placeholder)
         ;
 
@@ -140,9 +136,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryGlossaryKeyMappingById($idMapping)
     {
         $query = $this->queryGlossaryKeyMappings();
-        $query
-            ->filterByIdCmsGlossaryKeyMapping($idMapping)
-        ;
+        $query->filterByIdCmsGlossaryKeyMapping($idMapping);
 
         return $query;
     }
@@ -155,8 +149,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryGlossaryKeyMappingWithKeyById($idMapping)
     {
         $query = $this->queryGlossaryKeyMappings();
-        $query
-            ->filterByIdCmsGlossaryKeyMapping($idMapping)
+        $query->filterByIdCmsGlossaryKeyMapping($idMapping)
             ->leftJoinGlossaryKey()
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY)
         ;
@@ -189,19 +182,20 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
 
     /**
      * @param int $idCmsPage
+     * @param int $fkLocale
      *
      * @return SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingsWithKeyByPageId($idCmsPage,$fkLocale)
+    public function queryGlossaryKeyMappingsWithKeyByPageId($idCmsPage, $fkLocale)
     {
         $query = $this->queryGlossaryKeyMappings()
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANS)
             ->filterByFkPage($idCmsPage)
             ->useGlossaryKeyQuery()
-                ->useSpyGlossaryTranslationQuery()
-                ->filterByFkLocale($fkLocale)
-                ->endUse()
+            ->useSpyGlossaryTranslationQuery()
+            ->filterByFkLocale($fkLocale)
+            ->endUse()
             ->endUse()
         ;
 
@@ -209,23 +203,27 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @param int $id
+     * @param int $idUrl
      *
      * @return SpyUrlQuery
      */
-    public function queryUrlByIdWithRedirect($id)
+    public function queryUrlByIdWithRedirect($idUrl)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)->queryUrlByIdWithRedirect($id);
+        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
+            ->queryUrlByIdWithRedirect($idUrl)
+            ;
     }
 
     /**
-     * @param int $id
+     * @param int $idRedirect
      *
      * @return SpyUrlQuery
      */
-    public function queryRedirectById($id)
+    public function queryRedirectById($idRedirect)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)->queryRedirectById($id);
+        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
+            ->queryRedirectById($idRedirect)
+            ;
     }
 
     /**
@@ -234,26 +232,36 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryUrlsWithRedirect()
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)->queryUrlsWithRedirect();
+        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
+            ->queryUrlsWithRedirect()
+            ;
     }
 
     /**
+     * @param string $key
      *
      * @return SpyGlossaryKeyQuery
      */
     public function queryKey($key)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::GLOSSARY_QUERY_CONTAINER)->queryKey($key);
+        return $this->getProvidedDependency(CmsDependencyProvider::GLOSSARY_QUERY_CONTAINER)
+            ->queryKey($key)
+            ;
     }
 
+    /**
+     * @param int $idCmsPage
+     *
+     * @return SpyCmsPageQuery
+     */
     public function queryPageWithTemplatesAndUrlByPageId($idCmsPage)
     {
         return $this->queryPages()
             ->leftJoinCmsTemplate(null, Criteria::LEFT_JOIN)
-            ->leftJoinSpyUrl(null,Criteria::LEFT_JOIN)
+            ->leftJoinSpyUrl(null, Criteria::LEFT_JOIN)
             ->withColumn(self::TEMPLATE_NAME)
             ->withColumn(self::URL)
-            ->withColumn(self::ID_URL,'idUrl')
+            ->withColumn(self::ID_URL, 'idUrl')
             ->withColumn(self::TEMPLATE_PATH)
             ->withColumn(CmsPageForm::IS_ACTIVE)
             ->filterByIdCmsPage($idCmsPage)
@@ -261,14 +269,15 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @param int $idUrl
      *
      * @return SpyUrlQuery
      */
-    public function queryUrlById($url)
+    public function queryUrlById($idUrl)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)->queryUrlById($url);
+        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
+            ->queryUrlById($idUrl)
+            ;
     }
-
-
 
 }

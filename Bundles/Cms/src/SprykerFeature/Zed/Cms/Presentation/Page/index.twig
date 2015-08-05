@@ -5,6 +5,7 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS page' } %} {# or you can add here custom widget_title variable #}
 
         {% block widget_header_content %}
+
             <a href="/cms/" class="btn btn-sm btn-default">{{ 'Back to CMS' | trans }}</a>
             <a class="btn btn-sm btn-primary" href="/cms/page/add/">{{ 'Add CMS Page' | trans }}</a>
 

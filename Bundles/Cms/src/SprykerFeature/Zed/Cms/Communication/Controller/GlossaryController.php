@@ -14,10 +14,12 @@ use SprykerFeature\Shared\Yves\YvesConfig;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsGlossaryForm;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
+use SprykerFeature\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
+use Functional\SprykerFeature\Zed\Glossary\Mock\LocaleFacade;
+use Pyz\Zed\Cms\Communication\CmsDependencyContainer;
 
 /**
  * @method CmsDependencyContainer getDependencyContainer()
@@ -27,6 +29,8 @@ use Symfony\Component\HttpFoundation\Request;
 class GlossaryController extends AbstractController
 {
 
+    const REDIRECT_ADDRESS = '/cms/glossary/';
+
     /**
      * @param Request $request
      *
@@ -34,7 +38,7 @@ class GlossaryController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idPage = $request->get('id_page');
+        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
         $spyPageUrl = $this->getQueryContainer()
             ->queryPageWithTemplatesAndUrlByPageId($idPage)
             ->findOne()
@@ -56,11 +60,13 @@ class GlossaryController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
      * @return JsonResponse
      */
     public function tableAction(Request $request)
     {
-        $idPage = $request->get('id_page');
+        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
         $localeTransfer = $this->getLocaleFacade()
             ->getCurrentLocale()
@@ -79,8 +85,8 @@ class GlossaryController extends AbstractController
 
         if (isset($searchArray['value']) && !empty($searchArray['value'])) {
             $foundPlaceholders = [];
-            foreach($placeholders as $place){
-                if(stripos($place,$searchArray['value']) !== false){
+            foreach ($placeholders as $place) {
+                if (stripos($place, $searchArray['value']) !== false) {
                     $foundPlaceholders[] = $place;
                 }
             }
@@ -95,17 +101,19 @@ class GlossaryController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
      * @return array
      */
     public function addAction(Request $request)
     {
 
-        $idPage = $request->get('id_page');
+        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
         $placeholder = $request->get('placeholder');
 
         $form = $this->getDependencyContainer()
-            ->createCmsGlossaryForm('add', $idPage, null, $placeholder)
+            ->createCmsGlossaryForm($idPage, null, $placeholder)
         ;
 
         $form->handleRequest();
@@ -118,6 +126,7 @@ class GlossaryController extends AbstractController
                 ->queryKey($data[CmsGlossaryForm::GLOSSARY_KEY])
                 ->findOne()
             ;
+
             $pageKeyMappingTransfer->setFkGlossaryKey($spyGlossaryKey->getIdGlossaryKey());
 
             $this->getFacade()
@@ -126,7 +135,7 @@ class GlossaryController extends AbstractController
 
             $this->touchActivePage($idPage);
 
-            return $this->redirectResponse('/cms/glossary/?id_page=' . $idPage);
+            return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
         }
 
         return $this->viewResponse([
@@ -135,13 +144,18 @@ class GlossaryController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     public function editAction(Request $request)
     {
-        $idMapping = $request->get('id_mapping');
-        $idPage = $request->get('id_page');
+        $idMapping = $request->get(CmsGlossaryTable::REQUEST_ID_MAPPING);
+        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
         $form = $this->getDependencyContainer()
-            ->createCmsGlossaryForm('update', $idPage, $idMapping)
+            ->createCmsGlossaryForm($idPage, $idMapping)
         ;
 
         $form->handleRequest();
@@ -162,7 +176,7 @@ class GlossaryController extends AbstractController
 
             $this->touchActivePage($idPage);
 
-            return $this->redirectResponse('/cms/glossary/?id_page=' . $idPage);
+            return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
         }
 
         return $this->viewResponse([
@@ -171,9 +185,27 @@ class GlossaryController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function deleteAction(Request $request)
     {
-        $idMapping = $request->get('id_mapping');
+        // @todo Popup confirmation is needed.
+        $idMapping = $request->get(CmsGlossaryTable::REQUEST_ID_MAPPING);
+        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
+
+        $mappingGlossary = $this->getQueryContainer()
+            ->queryGlossaryKeyMappingById($idMapping)
+            ->findone()
+        ;
+        $pageTransfer = (new PageTransfer())->setIdCmsPage($idPage);
+        $this->getFacade()
+            ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder())
+        ;
+
+        return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
     }
 
     /**
@@ -186,6 +218,10 @@ class GlossaryController extends AbstractController
             ;
     }
 
+    /**
+     * @param $idPage
+     *
+     */
     private function touchActivePage($idPage)
     {
         $spyPage = $this->getQueryContainer()
@@ -194,11 +230,16 @@ class GlossaryController extends AbstractController
         ;
         $pageTransfer = (new PageTransfer())->fromArray($spyPage->toArray());
 
-        return $this->getFacade()
+        $this->getFacade()
             ->touchPageActive($pageTransfer)
             ;
     }
 
+    /**
+     * @param string $tempFile
+     *
+     * @return array
+     */
     private function findTemplatePlaceholders($tempFile)
     {
 
@@ -219,6 +260,12 @@ class GlossaryController extends AbstractController
         return $placeholderMap;
     }
 
+    /**
+     * @param string $templatePath
+     *
+     * @throws \Exception
+     * @return string
+     */
     private function getTemplatePhysicalAddress($templatePath)
     {
         $config = Config::getInstance();

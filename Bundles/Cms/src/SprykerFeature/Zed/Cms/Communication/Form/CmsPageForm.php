@@ -2,8 +2,9 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
-
+use Pyz\Zed\Url\Business\UrlFacade;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -21,29 +22,48 @@ class CmsPageForm extends AbstractForm
     const TEMPLATE_NAME = 'fkTemplate';
     const ID_URL = 'idUrl';
     const URL = 'url';
-    const URL_TYPE = 'url_type';
+    const CURRENT_TEMPLATE = 'cur_temp';
     const PAGE = 'Page';
     const IS_ACTIVE = 'is_active';
 
+    /**
+     * @var SpyCmsTemplateQuery
+     */
     protected $templateQuery;
 
+    /**
+     * @var SpyCmsPageQuery
+     */
     protected $pageUrlQuery;
 
-    protected $type;
+    /**
+     * @var string
+     */
+    protected $formType;
 
+    /**
+     * @var int
+     */
     protected $idPage;
 
+    /**
+     * @var UrlFacade
+     */
     protected $urlFacade;
 
     /**
      * @param SpyCmsTemplateQuery $templateQuery
+     * @param mixed $pageUrlQuery
+     * @param string $formType
+     * @param int $idPage
+     * @param UrlFacade $urlFacade
      */
 
-    public function __construct(SpyCmsTemplateQuery $templateQuery, $pageUrlQuery,$type, $idPage, $urlFacade)
+    public function __construct(SpyCmsTemplateQuery $templateQuery, $pageUrlQuery, $formType, $idPage, UrlFacade $urlFacade)
     {
         $this->templateQuery = $templateQuery;
         $this->pageUrlQuery = $pageUrlQuery;
-        $this->type = $type;
+        $this->formType = $formType;
         $this->idPage = $idPage;
         $this->urlFacade = $urlFacade;
     }
@@ -59,7 +79,7 @@ class CmsPageForm extends AbstractForm
             new Length(['max' => 256]),
         ];
 
-        if (self::ADD === $this->type) {
+        if (self::ADD === $this->formType) {
             $urlConstraints[] = new Callback([
                 'methods' => [
                     function ($url, ExecutionContext $context) {
@@ -76,26 +96,28 @@ class CmsPageForm extends AbstractForm
             'constraints' => $urlConstraints,
         ];
 
-        if (self::UPDATE == $this->type) {
+        if (self::UPDATE == $this->formType) {
             $urlParams['disabled'] = 'disabled';
         }
 
-
-        return $this->addHidden(self::ID_CMS_PAGE,[
-            'label'=> 'id_page'
+        return $this->addHidden(self::ID_CMS_PAGE, [
+            'label' => 'id_page',
         ])
-            ->addHidden(CmsQueryContainer::ID_URL,[
-                'label' => 'id_url'
+            ->addHidden(CmsQueryContainer::ID_URL, [
+                'label' => 'id_url',
+            ])
+            ->addHidden(self::CURRENT_TEMPLATE, [
+                'label' => self::CURRENT_TEMPLATE,
             ])
             ->addChoice(self::TEMPLATE_NAME, [
-            'label' => 'Template',
-            'choices' => $this->getTemplateList(),
-        ])
+                'label' => 'Template',
+                'choices' => $this->getTemplateList(),
+            ])
             ->addText(self::URL, $urlParams)
             ->addCheckbox(self::IS_ACTIVE, [
                 'label' => 'Active',
             ])
-        ;
+            ;
     }
 
     /**
@@ -107,7 +129,7 @@ class CmsPageForm extends AbstractForm
         $templates = $this->templateQuery->find();
 
         $result = [];
-        foreach($templates->getData() as $template){
+        foreach ($templates->getData() as $template) {
             $result[$template->getIdCmsTemplate()] = $template->getTemplateName();
         }
 
@@ -124,10 +146,11 @@ class CmsPageForm extends AbstractForm
 
             return [
                 self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
-                //            self::TEMPLATE_NAME => $pageUrlTemplate->getFkTemplate(),
+                self::TEMPLATE_NAME => $pageUrlTemplate->getFkTemplate(),
                 self::URL => $pageUrlTemplate->getUrl(),
+                self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
                 self::IS_ACTIVE => $pageUrlTemplate->getIsActive(),
-                CmsQueryContainer::ID_URL => $pageUrlTemplate->getIdUrl()
+                CmsQueryContainer::ID_URL => $pageUrlTemplate->getIdUrl(),
             ];
         }
     }

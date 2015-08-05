@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
+use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,8 +22,9 @@ use Symfony\Component\HttpFoundation\Request;
 class PageController extends AbstractController
 {
 
+    const REDIRECT_ADDRESS = '/cms/glossary/';
+
     /**
-     * @param Request $request
      *
      * @return array
      */
@@ -79,8 +81,7 @@ class PageController extends AbstractController
                 ->touchUrlActive($urlTransfer->getIdUrl())
             ;
 
-
-            return $this->redirectResponse('/cms/glossary/?id_page='.$pageTransfer->getIdCmsPage());
+            return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage());
         }
 
         return $this->viewResponse([
@@ -89,12 +90,14 @@ class PageController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
      * @return array
      */
     public function editAction(Request $request)
     {
 
-        $idPage = $request->get('id_page');
+        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
         $form = $this->getDependencyContainer()
             ->createCmsPageForm('update', $idPage)
@@ -112,24 +115,32 @@ class PageController extends AbstractController
                 ->savePage($pageTransfer)
             ;
 
-            $spyUrl = $this->getQueryContainer()->queryUrlById($data['id_url'])->findOne();
+            $spyUrl = $this->getQueryContainer()
+                ->queryUrlById($data['id_url'])
+                ->findOne()
+            ;
 
-            $urlTransfer = (new UrlTransfer())->fromArray($spyUrl->toArray(),true);
+            $urlTransfer = (new UrlTransfer())->fromArray($spyUrl->toArray(), true);
 
             $urlTransfer->setFkPage($pageTransfer->getIdCmsPage());
             $urlTransfer->setResourceId($spyUrl->getResourceId());
             $urlTransfer->setResourceType($spyUrl->getResourceType());
+
+            if (intval($data['cur_temp']) !== intval($data['fkTemplate'])) {
+                $this->deleteMappedGlossary($idPage);
+            }
+
             $urlTransfer->setUrl($data['url']);
 
-            $urlTransfer = $this->getUrlFacade()->saveUrl($urlTransfer);
-
+            $urlTransfer = $this->getUrlFacade()
+                ->saveUrl($urlTransfer)
+            ;
 
             $this->getUrlFacade()
                 ->touchUrlActive($urlTransfer->getIdUrl())
             ;
 
-
-            return $this->redirectResponse('/cms/page/');
+            return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage());
         }
 
         return $this->viewResponse([
@@ -145,5 +156,19 @@ class PageController extends AbstractController
         return $this->getDependencyContainer()
             ->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE)
             ;
+    }
+
+    private function deleteMappedGlossary($idPage)
+    {
+        $mappedGlossaries = $this->getQueryContainer()
+            ->queryGlossaryKeyMappingsByPageId($idPage)
+            ->find()
+        ;
+        $pageTransfer = (new PageTransfer())->setIdCmsPage($idPage);
+        foreach ($mappedGlossaries->getData() as $glossaryMapping) {
+            $this->getFacade()
+                ->deletePageKeyMapping($pageTransfer, $glossaryMapping->getPlaceholder())
+            ;
+        }
     }
 }

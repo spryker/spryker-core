@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
-
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -16,25 +15,36 @@ class CmsGlossaryForm extends AbstractForm
     const GLOSSARY_KEY = 'glossary_key';
     const ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
 
-
+    /**
+     * @var SpyCmsGlossaryKeyMappingQuery
+     */
     protected $glossaryQuery;
 
-    protected $type;
-
+    /**
+     * @var int
+     */
     protected $idPage;
 
+    /**
+     * @var int
+     */
     protected $idMapping;
 
+    /**
+     * @var array
+     */
     protected $placeholder;
 
     /**
-     * @param string $type
+     * @param Mixed $glossaryQuery
+     * @param int $idPage
+     * @param int $idMapping
+     * @param array $placeholder
      */
 
-    public function __construct($glossaryQuery, $type, $idPage, $idMapping, $placeholder)
+    public function __construct($glossaryQuery, $idPage, $idMapping, $placeholder)
     {
         $this->glossaryQuery = $glossaryQuery;
-        $this->type = $type;
         $this->idPage = $idPage;
         $this->idMapping = $idMapping;
         $this->placeholder = $placeholder;
@@ -45,28 +55,26 @@ class CmsGlossaryForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        return $this->addHidden(self::FK_PAGE,
-            [
-                'label' => 'Page Id'
+        return $this->addHidden(self::FK_PAGE, [
+                'label' => 'Page Id',
             ])
-        ->addHidden(self::ID_KEY_MAPPING,
-            [
-                'label' => 'key mapping Id'
+            ->addHidden(self::ID_KEY_MAPPING, [
+                    'label' => 'key mapping Id',
+                ])
+            ->addText(self::PLACEHOLDER, [
+                'label' => 'Placeholder',
+                'constraints' => [
+                    new Required(),
+                    new NotBlank(),
+                    new Length(['max' => 256]),
+                ],
             ])
-        ->addText(self::PLACEHOLDER, [
-            'label' => 'Placeholder',
-            'constraints' => [
-                new Required(),
-                new NotBlank(),
-                new Length(['max' => 256]),
-            ],
-        ])
-          ->addAutosuggest(self::GLOSSARY_KEY, [
-              'label' => 'Glossary Key',
-              'url' => '/glossary/key/suggest',
-          ]);
+            ->addAutosuggest(self::GLOSSARY_KEY, [
+                'label' => 'Glossary Key',
+                'url' => '/glossary/key/suggest',
+            ])
+            ;
     }
-
 
     /**
      * @return array
@@ -75,7 +83,7 @@ class CmsGlossaryForm extends AbstractForm
     {
         $formItems = [
             self::FK_PAGE => $this->idPage,
-            self::ID_KEY_MAPPING => $this->idMapping
+            self::ID_KEY_MAPPING => $this->idMapping,
         ];
 
         if ($this->placeholder) {
