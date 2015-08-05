@@ -142,7 +142,7 @@ class Writer implements WriterInterface
         }
 
         $productEntity->save();
-        $this->insertTouchRecord(self::TOUCH_PRODUCT, $productEntity->getIdPriceProduct());
+        $this->insertTouchRecord(self::TOUCH_PRODUCT, $productEntity->getFkAbstractProduct());
 
         return $productEntity;
     }
