@@ -29,7 +29,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     protected $item;
 
     /**
-     * @var \ArrayObject $items
+     * @var ItemTransfer[] $items
      */
     protected $items;
 
@@ -81,7 +81,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
-     * @param \ArrayObject $items
+     * @param ItemTransfer[] $items
      *
      * @return $this
      */
