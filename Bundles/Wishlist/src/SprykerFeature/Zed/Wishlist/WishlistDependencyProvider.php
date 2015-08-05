@@ -8,6 +8,10 @@ namespace SprykerFeature\Zed\Wishlist;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
+use SprykerFeature\Zed\Wishlist\Business\Operator\Add;
+use SprykerFeature\Zed\Wishlist\Business\Operator\Decrease;
+use SprykerFeature\Zed\Wishlist\Business\Operator\Increase;
+use SprykerFeature\Zed\Wishlist\Business\Operator\Remove;
 
 class WishlistDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -45,7 +49,12 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function preSavePlugins(Container $container)
     {
-        return [];
+        return [
+            Add::OPERATION_NAME => [],
+            Decrease::OPERATION_NAME => [],
+            Increase::OPERATION_NAME => [],
+            Remove::OPERATION_NAME => [],
+        ];
     }
 
     /**
@@ -55,6 +64,11 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function postSavePlugins(Container $container)
     {
-        return [];
+        return [
+            Add::OPERATION_NAME => [],
+            Decrease::OPERATION_NAME => [],
+            Increase::OPERATION_NAME => [],
+            Remove::OPERATION_NAME => [],
+        ];
     }
 }

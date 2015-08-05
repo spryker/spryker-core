@@ -61,7 +61,9 @@ abstract class AbstractOperator
      */
     protected function preSave(WishlistChangeInterface $wishlistChange)
     {
-        foreach ($this->preSavePlugins as $plugin) {
+        $operationPlugins = $this->preSavePlugins[$this->getOperatorName()];
+
+        foreach ($operationPlugins as $plugin) {
             $plugin->trigger($wishlistChange);
         }
     }
@@ -71,7 +73,9 @@ abstract class AbstractOperator
      */
     protected function postSave(WishlistInterface $wishlist)
     {
-        foreach ($this->postSavePlugins as $plugin) {
+        $operationPlugins = $this->postSavePlugins[$this->getOperatorName()];
+
+        foreach ($operationPlugins as $plugin) {
             $plugin->trigger($wishlist);
         }
     }
@@ -97,6 +101,11 @@ abstract class AbstractOperator
      *
      */
     abstract protected function applyOperation(WishlistChangeInterface $wishlistItem);
+
+    /**
+     * @return string
+     */
+    abstract protected function getOperatorName();
 
 
 }

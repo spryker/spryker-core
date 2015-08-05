@@ -10,6 +10,7 @@ use Generated\Shared\Wishlist\WishlistInterface;
 
 class Remove extends AbstractOperator
 {
+    const OPERATION_NAME = 'REMOVE';
 
     /**
      * @param WishlistChangeInterface $wishlistItem
@@ -19,5 +20,13 @@ class Remove extends AbstractOperator
     protected function applyOperation(WishlistChangeInterface $wishlistItem)
     {
         return $this->storage->removeItems($wishlistItem);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getOperatorName()
+    {
+        return self::OPERATION_NAME;
     }
 }
