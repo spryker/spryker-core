@@ -22,13 +22,17 @@ class EditController extends AbstractController
     public function customerAction(Request $request)
     {
         $idOrder = $request->get('id-sales-order');
-        $form = $this->getDependencyContainer()->createCustomerForm($idOrder);
+        $form = $this->getDependencyContainer()
+            ->createCustomerForm($idOrder)
+        ;
         $form->handleRequest();
 
         if ($request->isMethod('POST') && $form->isValid()) {
 
             $orderTransfer = (new OrderTransfer())->fromArray($form->getData(), true);
-            $this->getFacade()->updateOrderCustomer($orderTransfer, $idOrder);
+            $this->getFacade()
+                ->updateOrderCustomer($orderTransfer, $idOrder)
+            ;
 
             return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
         }
@@ -49,13 +53,17 @@ class EditController extends AbstractController
         $idOrder = $request->get('id-sales-order');
         $idOrderAddress = $request->get('id-address');
 
-        $form = $this->getDependencyContainer()->createAddressForm($idOrderAddress);
+        $form = $this->getDependencyContainer()
+            ->createAddressForm($idOrderAddress)
+        ;
         $form->handleRequest();
 
         if ($request->isMethod('POST') && $form->isValid()) {
 
             $addressTransfer = (new SalesAddressTransfer())->fromArray($form->getData(), true);
-            $this->getFacade()->updateOrderAddress($addressTransfer, $idOrderAddress);
+            $this->getFacade()
+                ->updateOrderAddress($addressTransfer, $idOrderAddress)
+            ;
 
             return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
         }
