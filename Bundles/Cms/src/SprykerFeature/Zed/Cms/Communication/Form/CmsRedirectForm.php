@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
+use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyRedirectTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
@@ -23,7 +24,7 @@ class CmsRedirectForm extends AbstractForm
     /**
      * @var SpyUrlQuery
      */
-    protected $urlQuery;
+    protected $urlByIdQuery;
 
     /**
      * @var UrlFacade
@@ -40,13 +41,13 @@ class CmsRedirectForm extends AbstractForm
      */
 
     /**
-     * @param SpyUrlQuery $urlQuery
+     * @param SpyUrlQuery $urlByIdQuery
      * @param string $formType
      * @param UrlFacade $urlFacade
      */
-    public function __construct(SpyUrlQuery $urlQuery, $formType, UrlFacade $urlFacade)
+    public function __construct(SpyUrlQuery $urlByIdQuery, $formType, UrlFacade $urlFacade)
     {
-        $this->urlQuery = $urlQuery;
+        $this->urlByIdQuery = $urlByIdQuery;
         $this->formType = $formType;
         $this->urlFacade = $urlFacade;
     }
@@ -84,9 +85,7 @@ class CmsRedirectForm extends AbstractForm
             $urlParams['disabled'] = 'disabled';
         }
 
-        return $this->addHidden(self::ID_REDIRECT, [
-            'label' => 'Redirect ID',
-        ])
+        return $this->addHidden(self::ID_REDIRECT)
             ->addText(self::FROM_URL, $urlParams)
             ->addText(self::TO_URL, [
                 'label' => 'To URL',
@@ -104,7 +103,7 @@ class CmsRedirectForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        $spyUrl = $this->urlQuery->findOne();
+        $spyUrl = $this->urlByIdQuery->findOne();
 
         if ($spyUrl) {
             return [

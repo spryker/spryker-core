@@ -192,11 +192,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANS)
             ->filterByFkPage($idCmsPage)
-            ->useGlossaryKeyQuery()
-            ->useSpyGlossaryTranslationQuery()
-            ->filterByFkLocale($fkLocale)
-            ->endUse()
-            ->endUse()
+                ->useGlossaryKeyQuery()
+                    ->useSpyGlossaryTranslationQuery()
+                        ->filterByFkLocale($fkLocale)
+                    ->endUse()
+                ->endUse()
         ;
 
         return $query;

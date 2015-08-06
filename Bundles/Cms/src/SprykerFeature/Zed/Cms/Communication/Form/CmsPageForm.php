@@ -34,7 +34,7 @@ class CmsPageForm extends AbstractForm
     /**
      * @var SpyCmsPageQuery
      */
-    protected $pageUrlQuery;
+    protected $pageUrlByIdQuery;
 
     /**
      * @var string
@@ -53,16 +53,16 @@ class CmsPageForm extends AbstractForm
 
     /**
      * @param SpyCmsTemplateQuery $templateQuery
-     * @param mixed $pageUrlQuery
+     * @param mixed $pageUrlByIdQuery
      * @param string $formType
      * @param int $idPage
      * @param UrlFacade $urlFacade
      */
 
-    public function __construct(SpyCmsTemplateQuery $templateQuery, $pageUrlQuery, $formType, $idPage, UrlFacade $urlFacade)
+    public function __construct(SpyCmsTemplateQuery $templateQuery, $pageUrlByIdQuery, $formType, $idPage, UrlFacade $urlFacade)
     {
         $this->templateQuery = $templateQuery;
-        $this->pageUrlQuery = $pageUrlQuery;
+        $this->pageUrlByIdQuery = $pageUrlByIdQuery;
         $this->formType = $formType;
         $this->idPage = $idPage;
         $this->urlFacade = $urlFacade;
@@ -100,15 +100,9 @@ class CmsPageForm extends AbstractForm
             $urlParams['disabled'] = 'disabled';
         }
 
-        return $this->addHidden(self::ID_CMS_PAGE, [
-            'label' => 'id_page',
-        ])
-            ->addHidden(CmsQueryContainer::ID_URL, [
-                'label' => 'id_url',
-            ])
-            ->addHidden(self::CURRENT_TEMPLATE, [
-                'label' => self::CURRENT_TEMPLATE,
-            ])
+        return $this->addHidden(self::ID_CMS_PAGE)
+            ->addHidden(CmsQueryContainer::ID_URL)
+            ->addHidden(self::CURRENT_TEMPLATE)
             ->addChoice(self::TEMPLATE_NAME, [
                 'label' => 'Template',
                 'choices' => $this->getTemplateList(),
@@ -142,7 +136,7 @@ class CmsPageForm extends AbstractForm
     protected function populateFormFields()
     {
         if ($this->idPage) {
-            $pageUrlTemplate = $this->pageUrlQuery->findOne();
+            $pageUrlTemplate = $this->pageUrlByIdQuery->findOne();
 
             return [
                 self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),

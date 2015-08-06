@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Url\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyRedirectTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyRedirectQuery;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrl;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
@@ -69,8 +70,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     {
         $query = SpyUrlQuery::create();
         $query
-            ->joinSpyRedirect(null,Criteria::INNER_JOIN)
-            ->withColumn('to_url','toUrl')
+            ->innerJoinSpyRedirect()
+            ->withColumn(SpyRedirectTableMap::COL_TO_URL,'toUrl')
         ;
 
         return $query;
@@ -122,8 +123,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     {
         $query = SpyUrlQuery::create();
         $query
-            ->leftJoinSpyRedirect(null,Criteria::LEFT_JOIN)
-            ->withColumn('to_url','toUrl')
+            ->leftJoinSpyRedirect()
+            ->withColumn(SpyRedirectTableMap::COL_TO_URL,'toUrl')
             ->filterByIdUrl($id)
         ;
 

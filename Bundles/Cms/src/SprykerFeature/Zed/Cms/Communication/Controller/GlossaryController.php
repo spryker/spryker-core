@@ -198,7 +198,7 @@ class GlossaryController extends AbstractController
 
         $mappingGlossary = $this->getQueryContainer()
             ->queryGlossaryKeyMappingById($idMapping)
-            ->findone()
+            ->findOne()
         ;
         $pageTransfer = (new PageTransfer())->setIdCmsPage($idPage);
         $this->getFacade()
@@ -232,7 +232,7 @@ class GlossaryController extends AbstractController
 
         $this->getFacade()
             ->touchPageActive($pageTransfer)
-            ;
+        ;
     }
 
     /**
@@ -242,22 +242,12 @@ class GlossaryController extends AbstractController
      */
     private function findTemplatePlaceholders($tempFile)
     {
-
         $placeholderMap = [];
+        $fileContent = file_get_contents($tempFile);
+        preg_match_all('/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9]*" -->/', $fileContent, $cmsPlaceholderLine);
+        preg_match_all('/"([^"]+)"/', implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
 
-        $handle = fopen($tempFile, "r");
-        if ($handle) {
-            while (($line = fgets($handle)) !== false) {
-                preg_match('/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9]*" -->/', $line, $cmsPlaceholderLine);
-                if (!empty($cmsPlaceholderLine)) {
-                    preg_match('/"([^"]+)"/', $cmsPlaceholderLine[0], $placeholder);
-                    $placeholderMap[] = $placeholder[1];
-                }
-            }
-            fclose($handle);
-        }
-
-        return $placeholderMap;
+        return $placeholderMap[1];
     }
 
     /**
@@ -275,7 +265,4 @@ class GlossaryController extends AbstractController
         return $physicalAddress;
     }
 
-    private function getGlossaryFacade(){
-
-    }
 }

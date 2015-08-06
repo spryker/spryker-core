@@ -22,7 +22,7 @@ class CmsGlossaryForm extends AbstractForm
     /**
      * @var SpyCmsGlossaryKeyMappingQuery
      */
-    protected $glossaryQuery;
+    protected $glossaryByIdQuery;
 
     /**
      * @var int
@@ -45,7 +45,7 @@ class CmsGlossaryForm extends AbstractForm
     protected $cmsFacade;
 
     /**
-     * @param Mixed $glossaryQuery
+     * @param Mixed $glossaryByIdQuery
      * @param int $idPage
      * @param int $idMapping
      * @param array $placeholder
@@ -53,9 +53,9 @@ class CmsGlossaryForm extends AbstractForm
      * @param GlossaryFacade $glossaryFacade
      */
 
-    public function __construct($glossaryQuery, $idPage, $idMapping, $placeholder, CmsFacade $cmsFacade)
+    public function __construct($glossaryByIdQuery, $idPage, $idMapping, $placeholder, CmsFacade $cmsFacade)
     {
-        $this->glossaryQuery = $glossaryQuery;
+        $this->glossaryByIdQuery = $glossaryByIdQuery;
         $this->idPage = $idPage;
         $this->idMapping = $idMapping;
         $this->placeholder = $placeholder;
@@ -88,7 +88,7 @@ class CmsGlossaryForm extends AbstractForm
         $keyConstraints[] = new Callback([
             'methods' => [
                 function ($key, ExecutionContext $context) {
-                    if (!$this->glossaryQuery->useGlossaryKeyQuery()
+                    if (!$this->glossaryByIdQuery->useGlossaryKeyQuery()
                         ->findOneByKey($key)
                     ) {
                         $context->addViolation('Key does not exist.');
@@ -106,12 +106,8 @@ class CmsGlossaryForm extends AbstractForm
             $placeholderParams['disabled'] = 'disabled';
         }
 
-        return $this->addHidden(self::FK_PAGE, [
-            'label' => 'Page Id',
-        ])
-            ->addHidden(self::ID_KEY_MAPPING, [
-                'label' => 'key mapping Id',
-            ])
+        return $this->addHidden(self::FK_PAGE)
+            ->addHidden(self::ID_KEY_MAPPING)
             ->addText(self::PLACEHOLDER, $placeholderParams)
             ->addAutosuggest(self::GLOSSARY_KEY, [
                 'label' => 'Glossary Key',
@@ -136,7 +132,7 @@ class CmsGlossaryForm extends AbstractForm
         }
 
         if (intval($this->idMapping) > 0) {
-            $glossaryMapping = $this->glossaryQuery->findOne();
+            $glossaryMapping = $this->glossaryByIdQuery->findOne();
 
             if ($glossaryMapping) {
                 $formItems[self::PLACEHOLDER] = $glossaryMapping->getPlaceholder();

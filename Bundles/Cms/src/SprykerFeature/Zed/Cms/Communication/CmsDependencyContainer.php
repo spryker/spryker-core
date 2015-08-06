@@ -98,10 +98,10 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsPageForm($formType, $idPage = null)
     {
 
-        $pageUrlQuery = null;
+        $pageUrlByIdQuery = null;
 
         if (intval($idPage) > 0) {
-            $pageUrlQuery = $this->getQueryContainer()
+            $pageUrlByIdQuery = $this->getQueryContainer()
                 ->queryPageWithTemplatesAndUrlByPageId($idPage)
             ;
         }
@@ -113,7 +113,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE);
 
         return $this->getFactory()
-            ->createFormCmsPageForm($templateQuery, $pageUrlQuery, $formType, $idPage, $urlFacade)
+            ->createFormCmsPageForm($templateQuery, $pageUrlByIdQuery, $formType, $idPage, $urlFacade)
             ;
     }
 
@@ -125,14 +125,14 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createCmsRedirectForm($formType, $idUrl = null)
     {
-        $queryUrl = $this->getQueryContainer()
+        $queryUrlById = $this->getQueryContainer()
             ->queryUrlByIdWithRedirect($idUrl)
         ;
 
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE);
 
         return $this->getFactory()
-            ->createFormCmsRedirectForm($queryUrl, $formType, $urlFacade)
+            ->createFormCmsRedirectForm($queryUrlById, $formType, $urlFacade)
             ;
     }
 
@@ -147,12 +147,12 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsGlossaryForm($idPage, $idMapping = null, $placeholder = null, $cmsFacade)
     {
 
-        $glossaryQuery = $this->getQueryContainer()
+        $glossaryMappingByIdQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingWithKeyById($idMapping)
         ;
 
         return $this->getFactory()
-            ->createFormCmsGlossaryForm($glossaryQuery, $idPage, $idMapping, $placeholder, $cmsFacade)
+            ->createFormCmsGlossaryForm($glossaryMappingByIdQuery, $idPage, $idMapping, $placeholder, $cmsFacade)
             ;
     }
 }

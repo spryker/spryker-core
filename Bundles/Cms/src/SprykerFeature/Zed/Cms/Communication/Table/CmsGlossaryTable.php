@@ -9,6 +9,8 @@ use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsGlossaryKeyMappingTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsPageTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -68,11 +70,11 @@ class CmsGlossaryTable extends AbstractTable
         $config->setSearchable([
             SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING,
             SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER,
-            CmsQueryContainer::KEY => '`key`',
-            CmsQueryContainer::TRANS => 'value',
+            CmsQueryContainer::KEY => SpyGlossaryKeyTableMap::COL_KEY,
+            CmsQueryContainer::TRANS => SpyGlossaryTranslationTableMap::COL_VALUE,
         ]);
 
-        $config->setUrl(sprintf('table?'.CmsPageTable::REQUEST_ID_PAGE.'=%d', $this->idPage));
+        $config->setUrl(sprintf('table?' . CmsPageTable::REQUEST_ID_PAGE . '=%d', $this->idPage));
 
         return $config;
     }
