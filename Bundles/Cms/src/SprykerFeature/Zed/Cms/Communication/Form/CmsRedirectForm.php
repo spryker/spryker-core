@@ -4,7 +4,6 @@ namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
-use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyRedirectTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
@@ -17,7 +16,7 @@ class CmsRedirectForm extends AbstractForm
 
     const ADD = 'add';
     const UPDATE = 'update';
-    const ID_REDIRECT = "id_redirect";
+    const ID_REDIRECT = 'id_redirect';
     const FROM_URL = 'from_url';
     const TO_URL = 'to_url';
 
@@ -81,7 +80,7 @@ class CmsRedirectForm extends AbstractForm
             'constraints' => $urlConstraints,
         ];
 
-        if (self::UPDATE == $this->formType) {
+        if (self::UPDATE === $this->formType) {
             $urlParams['disabled'] = 'disabled';
         }
 

@@ -7,13 +7,11 @@
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends AbstractController
 {
 
     /**
-     *
      * @return array
      */
     public function indexAction()

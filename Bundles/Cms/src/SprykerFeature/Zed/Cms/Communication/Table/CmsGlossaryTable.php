@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -39,7 +40,6 @@ class CmsGlossaryTable extends AbstractTable
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      * @param int $idPage
      * @param array $placeholders
-     *
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      */
     public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, $idPage, $placeholders = null)
@@ -146,4 +146,5 @@ class CmsGlossaryTable extends AbstractTable
     {
         return '<a href="/cms/glossary/add/?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $this->idPage . '&placeholder=' . $placeholder . '" class="btn btn-xs btn-white">Add Glossary</a>';
     }
+
 }

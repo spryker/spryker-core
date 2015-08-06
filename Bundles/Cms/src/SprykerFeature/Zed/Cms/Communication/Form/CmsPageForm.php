@@ -96,7 +96,7 @@ class CmsPageForm extends AbstractForm
             'constraints' => $urlConstraints,
         ];
 
-        if (self::UPDATE == $this->formType) {
+        if (self::UPDATE === $this->formType) {
             $urlParams['disabled'] = 'disabled';
         }
 

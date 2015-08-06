@@ -155,4 +155,5 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
             ->createFormCmsGlossaryForm($glossaryMappingByIdQuery, $idPage, $idMapping, $placeholder, $cmsFacade)
             ;
     }
+
 }

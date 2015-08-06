@@ -227,7 +227,6 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     *
      * @return SpyUrlQuery
      */
     public function queryUrlsWithRedirect()

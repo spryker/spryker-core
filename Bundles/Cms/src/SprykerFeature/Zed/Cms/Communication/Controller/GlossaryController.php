@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -220,7 +221,6 @@ class GlossaryController extends AbstractController
 
     /**
      * @param $idPage
-     *
      */
     private function touchActivePage($idPage)
     {
@@ -260,6 +260,7 @@ class GlossaryController extends AbstractController
      * @param string $templatePath
      *
      * @throws \Exception
+     *
      * @return string
      */
     private function getTemplatePhysicalAddress($templatePath)

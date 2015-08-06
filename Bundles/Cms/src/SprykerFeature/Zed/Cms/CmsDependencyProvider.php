@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const URL_BUNDLE = 'url_bundle';
     const LOCALE_BUNDLE = 'locale_bundle';
 
@@ -51,4 +52,5 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->glossary()->queryContainer();
         };
     }
+
 }
