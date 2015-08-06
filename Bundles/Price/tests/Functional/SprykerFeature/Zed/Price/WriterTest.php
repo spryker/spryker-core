@@ -66,7 +66,7 @@ class WriterTest extends Test
         $request = SpyPriceProductQuery::create()->filterBySpyAbstractProduct($abstractProduct)->find();
         $this->assertEquals(0, count($request));
 
-        $transferPriceProduct = $this->setTransferPriceProduct(
+        $transferPriceProduct = $this->setTransferPriceAbstractProduct(
             self::DUMMY_SKU_ABSTRACT_PRODUCT,
             self::DUMMY_PRICE_TYPE_1
         );
@@ -86,6 +86,7 @@ class WriterTest extends Test
 
         $transferPriceProduct = $this->setTransferPriceProduct(
             self::DUMMY_SKU_CONCRETE_PRODUCT,
+            self::DUMMY_SKU_ABSTRACT_PRODUCT,
             self::DUMMY_PRICE_TYPE_2
         );
         $this->priceFacade->createPriceForProduct($transferPriceProduct);
@@ -102,7 +103,7 @@ class WriterTest extends Test
         $this->assertEquals(0, count($request));
 
         $this->deletePriceEntitiesAbstract($abstractProduct);
-        $transferPriceProduct = $this->setTransferPriceProduct(
+        $transferPriceProduct = $this->setTransferPriceAbstractProduct(
             self::DUMMY_SKU_ABSTRACT_PRODUCT,
             self::DUMMY_PRICE_TYPE_1
         );
@@ -111,7 +112,7 @@ class WriterTest extends Test
             ->filterBySpyAbstractProduct($abstractProduct)
             ->findOne();
 
-        $transferPriceProduct = $this->setTransferPriceProduct(
+        $transferPriceProduct = $this->setTransferPriceAbstractProduct(
             self::DUMMY_SKU_ABSTRACT_PRODUCT,
             self::DUMMY_PRICE_TYPE_2
         );
@@ -125,13 +126,27 @@ class WriterTest extends Test
         $this->assertEquals(1, count($request));
     }
 
-    protected function setTransferPriceProduct($sku, $priceType)
+    protected function setTransferPriceProduct($sku, $abstractSku, $priceType)
     {
         $transferPriceProduct = new PriceProductTransfer();
         $transferPriceProduct
             ->setPrice(100)
             ->setSkuProduct($sku)
-            ->setPriceTypeName($priceType);
+            ->setSkuAbstractProduct($abstractSku)
+            ->setPriceTypeName($priceType)
+        ;
+
+        return $transferPriceProduct;
+    }
+
+    protected function setTransferPriceAbstractProduct($abstractSku, $priceType)
+    {
+        $transferPriceProduct = new PriceProductTransfer();
+        $transferPriceProduct
+            ->setPrice(100)
+            ->setSkuAbstractProduct($abstractSku)
+            ->setPriceTypeName($priceType)
+        ;
 
         return $transferPriceProduct;
     }
